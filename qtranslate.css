@@ -1,0 +1,115 @@
+//.hide{ display:none; }
+
+/* Language switch buttons on post, category, tag editors */
+.qtranxs-lang-switch-wrap
+{
+	//margin: 10px 0;
+	margin: 0;
+}
+
+.qtranxs-lang-switch
+{
+	border: 1px solid  #ccc;
+	background-image: linear-gradient(to top,#e5e5e5,#f4f4f4);
+	//margin-top: 2px;
+	//padding: 8px;
+	padding: 0 0 2px 4px;
+	margin: 0 4px 0 0;
+	cursor: default;
+	display: inline-block;
+}
+
+.qtranxs-lang-switch.active
+{
+	border-color: #888;
+	background-image: none;
+	background-color: #bbb;
+	color: #555;
+}
+
+
+.qtranxs-lang-switch>*
+{
+	vertical-align: middle;
+	margin-right: 4px;
+}
+
+
+/* Language menu items */
+
+.qtranxs-lang-menu
+{
+	background-position: top right;
+	padding-left: 0;
+	padding-right: 22px;
+}
+
+.qtranxs-lang-menu-item
+{
+	padding-left: 15px;
+	background-position: center left;
+	background-position-x: 5px;
+	background-position-y:50%;
+}
+
+
+/* Admin bar language icons */
+
+#wpadminbar #wp-admin-bar-language>div.ab-item
+{
+	padding-right: 30px;
+	cursor: default;
+}
+#wpadminbar #wp-admin-bar-language>div.ab-item,
+#wpadminbar #wp-admin-bar-language ul li
+{
+	background-repeat: no-repeat;
+	background-position: right; 
+	background-size: 22px;
+}
+
+
+/* qTranslate-X config page */
+
+#qtranxs-languages-menu img {
+	vertical-align: middle;
+}
+.qtranxs-language-list td
+{
+	vertical-align: middle;
+}
+
+
+/* qTranslate-X widget */
+
+.top-widget
+{
+	width: auto;
+}
+.qtranxs-widget ul li
+{
+	display: inline;
+	list-style-type: none;
+	opacity: 0.5;
+	-o-transition: 1s ease opacity;
+	-moz-transition: 1s ease opacity;
+	-webkit-transition: 1s ease opacity;
+	transition: 1s ease opacity;
+}
+.qtranxs-widget ul
+{
+	margin: 0;
+}
+.qtranxs-widget ul li.active
+{
+	opacity: 0.8;
+}
+.qtranxs-widget ul li:hover
+{
+	opacity: 1;
+}
+.qtranxs-widget img
+{
+	box-shadow: none;
+	vertical-align: middle;
+}
