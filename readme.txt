@@ -1,9 +1,9 @@
 === qTranslate-X ===
 Developed by: Qian Qin, John Clause
-Contributors: johnclause, vavooon, chineseleper, chsxf, michel.weimerskirch
+Contributors: johnclause, chineseleper, vavooon, chsxf, michel.weimerskirch
 Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, translation
 Requires at least: 3.9
-Tested up to: 4.0.1
+Tested up to: 4.1
 Stable tag: 2.6.3
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -12,20 +12,20 @@ Adds user friendly and database friendly multilingual content management and tra
 
 == Description ==
 
-This plugin is a descendant of qTranslate, which has apparently been abandoned by the original author, [Qian Qin](http://www.qianqin.de/qtranslate/ "the original author of qTranslate"). You will find a lot of useful information through reading qTranslate's original documentation, which is not duplicated here in full. There are other plugins, which offer multilingual support, but it seems that Qian Qin has the best original design and many people have been pleasantly using his plugin. It stores all translations in the same single post, which makes it easy to maintain and to use it with other plugins. However, the user interface of former qTranslate got out of sync with the recent versions of Wordpress, especially after WP went to tinyMCE 4. There is a number of forks of qTranslate, see for example, [mqTranslate](https://wordpress.org/plugins/mqtranslate/ "mqTranslate plugin"), [qTranslate Plus](https://wordpress.org/plugins/qtranslate-xp/ "qTranslate Plus plugin") and [zTranslate](https://wordpress.org/plugins/ztranslate/ "zTranslate plugin"). They all try to fix qTranslate's user interface preserving its original backend, which is what this plugin does too. This plugin is a hybrid of all of them and fixes a few bugs in each of them. I hope that this one it the most complete working version which combines the best features of qTranslate, mqTranslate, qTranslate Plus and zTranslate.
+This plugin is a descendant of qTranslate, which has apparently been abandoned by the original author, [Qian Qin](http://www.qianqin.de/qtranslate/ "the original author of qTranslate"). You will find a lot of useful information through reading [qTranslate](https://wordpress.org/plugins/qtranslate/ "Original qTranslate plugin")'s original documentation, which is not duplicated here in full. There are other plugins, which offer multilingual support, but it seems that Qian Qin has the best original design and many people have been pleasantly using his plugin. It stores all translations in the same single post, which makes it easy to maintain and to use it with other plugins. However, the user interface of former qTranslate got out of sync with the recent versions of Wordpress, especially after WP went to TinyMCE 4. There is a number of forks of [qTranslate](https://wordpress.org/plugins/qtranslate/ "Original qTranslate plugin"), see for example, [mqTranslate](https://wordpress.org/plugins/mqtranslate/ "mqTranslate plugin"), [qTranslate Plus](https://wordpress.org/plugins/qtranslate-xp/ "qTranslate Plus plugin") and [zTranslate](https://wordpress.org/plugins/ztranslate/ "zTranslate plugin"). They all try to fix qTranslate's user interface preserving its original backend, which is what this plugin does too. This plugin is a hybrid of all of them and fixes a few bugs in each of them. I hope that this one it the most complete working version which combines the best features of [qTranslate](https://wordpress.org/plugins/qtranslate/ "Original qTranslate plugin"), [mqTranslate](https://wordpress.org/plugins/mqtranslate/ "mqTranslate fork"), [qTranslate Plus](https://wordpress.org/plugins/qtranslate-xp/ "qTranslate Plus fork") and [zTranslate](https://wordpress.org/plugins/ztranslate/ "zTranslate fork").
 
 We suggest all mentioned authors to get together and to continue supporting one single qTranslate-ish plugin in a joint effort.
 
 qTranslate-X makes creation of multilingual content as easy as working with a single language. Here are some features:
 
-- One-Click-Switching between the languages - Change the language as easy as switching between Visual and HTML
-- Language customizations without changing the .mo files - it uses Quick-Tags
-- Multilingual dates out of the box - Translates dates and time for you
-- Comes with a lot of languages already builtin! - English, German, Simplified Chinese and a lot of others
-- Choose one of 3 Modes to make your URLs pretty and SEO-friendly. - The everywhere compatible `?lang=en`, simple and beautiful `/en/foo/` or nice and neat `en.yoursite.com`
+- One-Click-Switching between the languages - Changing the language as easy as switching between Visual and HTML.
+- Language customizations without changing the .mo files - it uses Quick-Tags.
+- Multilingual dates out of the box - Translates dates and time for you.
+- Comes with a lot of languages already builtin - English, German, Simplified Chinese and a lot of others.
+- Choose one of 3 Modes to make your URLs pretty and SEO-friendly. - The everywhere compatible `?lang=en`, simple and beautiful `/en/foo/` or nice and neat `en.yoursite.com`.
 - One language for each URL - Users and SEO will thank you for not mixing multilingual content.
-
-qTranslate-X supports unlimited number of languages, which can be easily added/modified/deleted via the comfortable Configuration Page. All you need to do is activate the plugin and start writing the content!
+- qTranslate-X supports unlimited number of languages, which can be easily added/modified/deleted via a comfortable Configuration Page at Settings->Languages.
+- You may use [Google XML Sitemaps v3 for qTranslate](https://wordpress.org/plugins/google-xml-sitemaps-v3-for-qtranslate/) plugin to rebuild your XML sitemap for better SEO support.
 
 == Installation ==
 
@@ -34,9 +34,12 @@ Installation of this plugin is no different from any other plugin:
 1. Download the plugin from [here](http://wordpress.org/plugins/qtranslate-x/ "qTranslate-X").
 1. Extract all the files.
 1. Upload everything (keeping the directory structure) to the `/wp-content/plugins/` directory.
-1. Activate the plugin through the 'Plugins' menu in WordPress.
-1. Configure languages desirable.
+1. Deactivate plugin qTranslate, mqTranslate, qTranslate Plus, or zTranslate, if you running any.
+1. Activate qTranslate-X through the 'Plugins' configuration page in WordPress.
+1. Open Settings->Languages configuration page and add/delete/disable any languages you need.
 1. Add the qTranslate Widget or Language Switcher menu item to let your visitors switch the language.
+1. You may use [Google XML Sitemaps v3 for qTranslate](https://wordpress.org/plugins/google-xml-sitemaps-v3-for-qtranslate/) plugin to rebuild your XML sitemap for better SEO support.
+1. Upgrading from [qTranslate](https://wordpress.org/plugins/qtranslate/ "qTranslate original plugin") required no additional actions, qTranslate-X will continue to work from the database entries of qTranslate. One may also go back to qTranslate at any time. Upgrading from other qTranslate forks may require re-configuration of the languages and taxonomies names.
 
 == Frequently Asked Questions ==
 
@@ -59,15 +62,21 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 
 == Upgrade Notice ==
 
-Upgrading from [qTranslate](https://wordpress.org/plugins/qtranslate/ "qTranslate original plugin") required no additional actions, qTranslate-X will continue to work from the database entries of qTranslate. One may also go back to qTranslate at any time.
+* Upgrading from [qTranslate](https://wordpress.org/plugins/qtranslate/ "qTranslate original plugin") required no additional actions, qTranslate-X will continue to work from the database entries of qTranslate. One may also go back to qTranslate at any time.
+* Upgrading from other qTranslate forks may require re-configuration of the languages and taxonomies names.
+* Former page and post translations are untouched and preserved.
+* Upgrading from other multilingual frameworks will require custom re-configuration. We suggest to search for a plugin, which may be already implemented to transfer the translations to qTranslate or to qTranslate-X. If a plugin works for one, it should work for other too, since qTranslate-X and qTranslate share the same database structures.
 
 == Screenshots ==
 
 1. Editing screen showing the buttons to switch the languages. Pressing a button does not make a call to the server, the editing happens locally, until "Update" button is pressed, the same way as it is for one language.
-
-Other screenshots provided are from the original [qTranslate](https://wordpress.org/plugins/qtranslate/screenshots/ "qTranslate screenshots") plugin.
+2. Language Management Interface
+3. qTranslate translation services
 
 == Changelog ==
+
+= 2.6.4 =
+* improved Description, FAQ and other documentation.
 
 = 2.6.3 (2014-12) (initial changes after zTranslate) =
 
@@ -78,6 +87,11 @@ Other screenshots provided are from the original [qTranslate](https://wordpress.
 * more translation on tag and category editor pages
 * added 'post_title' filter to translate all titles fetched for display purpose
 * fixed problem with comment date display in some themes
+
+== Credentials ==
+
+* The code of this plugin mostly originally based on [qTranslate](https://wordpress.org/plugins/qtranslate/ "qTranslate original plugin") and [zTranslate](https://wordpress.org/plugins/ztranslate/ "zTranslate fork").
+* Most flags in flags directory are made by Luc Balemans and downloaded from [FOTW Flags Of The World website](http://flagspot.net/flags/ "FOTW Flags Of The World website")
 
 == Desirable Unimplemented Features ==
 
