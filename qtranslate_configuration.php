@@ -584,18 +584,43 @@ function qtranxf_conf() {
 				</td>
 			</tr>
 		</table>
-		<script type="text/javascript">
-		// <![CDATA[
-			function showAdvanced() {
-				var el = document.getElementById('qtranslate-advanced');
-				if (el.style.display == 'block')
-					el.style.display = 'none';
-				else
-					el.style.display='block';
-				return false;
-			}
-		// ]]>
-		</script>
+<script type="text/javascript">
+// <![CDATA[
+	function qtranxj_getcookie(cname)
+	{
+		var nm = cname + "=";
+		var ca = document.cookie.split(';');
+		for(var i=0; i<ca.length; i++) {
+			var c = ca[i];
+			var p = c.indexOf(nm);
+			if (p >= 0) return c.substring(p+nm.length,c.length);
+		}
+		return '';
+	}
+	function qtranxj_delcookie(cname)
+	{
+		var date = new Date();
+		date.setTime(date.getTime()-(24*60*60*1000));
+		document.cookie=cname+'=; expires='+date.toGMTString();
+	}
+	function showAdvanced() {
+		var el = document.getElementById('qtranslate-advanced');
+		if (el.style.display == 'block'){
+			qtranxj_delcookie('ShowAdvanced');
+			el.style.display = 'none';
+		}else{
+			document.cookie='ShowAdvanced=1';
+			el.style.display='block';
+		}
+		return false;
+	}
+	if(qtranxj_getcookie('ShowAdvanced')){
+		document.getElementById('qtranslate-advanced').style.display='block';
+	}else{
+		document.getElementById('qtranslate-advanced').style.display='none';
+	}
+// ]]>
+</script>
 <?php do_action('qtranslate_configuration', $clean_uri); ?>
 		<p class="submit">
                         <input type="submit" name="submit" class="button-primary" value="<?php _e('Save Changes', 'qtranslate') ?>" />

@@ -469,11 +469,19 @@ function qts_config_hook($request_uri) {
 // <![CDATA[
 	function showServices() {
 		var el = document.getElementById('qtranslate-services');
-		if (el.style.display == 'block')
+		if (el.style.display == 'block'){
 			el.style.display = 'none';
-		else
+			qtranxj_delcookie('ShowServices');
+		}else{
+			document.cookie='ShowServices=1';
 			el.style.display='block';
+		}
 		return false;
+	}
+	if(qtranxj_getcookie('ShowServices')){
+		document.getElementById('qtranslate-services').style.display='block';
+	}else{
+		document.getElementById('qtranslate-services').style.display='none';
 	}
 // ]]>
 </script>

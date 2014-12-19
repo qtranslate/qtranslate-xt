@@ -3,7 +3,7 @@
 Plugin Name: qTranslate-X
 Plugin URI: http://wordpress.org/plugins/qtranslate-x/
 Description: Adds userfriendly multilingual content support into Wordpress. For Problems visit the <a href="https://wordpress.org/support/plugin/qtranslate-x/">Support Forum</a>.
-Version: 2.6.5
+Version: 2.7
 Author: John Clause, Qian Qin
 Author URI: http://www.qianqin.de
 Tags: multilingual, multi, language, admin, tinymce, Polyglot, bilingual, widget, switcher, professional, human, translation, service, qTranslate, zTranslate, mqTranslate, qTranslate Plus
@@ -156,6 +156,7 @@ $q_config['url_mode'] = QTX_URL_PATH;
 $q_config['pre_domain']['de'] = "de";
 $q_config['pre_domain']['en'] = "en";
 $q_config['pre_domain']['zh'] = "zh";
+$q_config['pre_domain']['ru'] = "ru";
 $q_config['pre_domain']['fi'] = "fs";
 $q_config['pre_domain']['fr'] = "fr";
 $q_config['pre_domain']['nl'] = "nl";
@@ -175,6 +176,7 @@ $q_config['pre_domain']['gl'] = "gl";
 $q_config['language_name']['de'] = "Deutsch";
 $q_config['language_name']['en'] = "English";
 $q_config['language_name']['zh'] = "中文";
+$q_config['language_name']['ru'] = "Русский";
 $q_config['language_name']['fi'] = "suomi";
 $q_config['language_name']['fr'] = "Français";
 $q_config['language_name']['nl'] = "Nederlands";
@@ -195,6 +197,7 @@ $q_config['language_name']['gl'] = "galego";
 $q_config['locale']['de'] = "de_DE";
 $q_config['locale']['en'] = "en_US";
 $q_config['locale']['zh'] = "zh_CN";
+$q_config['locale']['ru'] = "ru_RU";
 $q_config['locale']['fi'] = "fi";
 $q_config['locale']['fr'] = "fr_FR";
 $q_config['locale']['nl'] = "nl_NL";
@@ -215,6 +218,7 @@ $q_config['locale']['gl'] = "gl_ES";
 $q_config['not_available']['de'] = "Leider ist der Eintrag nur auf %LANG:, : und % verfügbar.";
 $q_config['not_available']['en'] = "Sorry, this entry is only available in %LANG:, : and %.";
 $q_config['not_available']['zh'] = "对不起，此内容只适用于%LANG:，:和%。";
+$q_config['not_available']['ru'] = "Извините, этот техт доступен только в %LANG:, : и %.";
 $q_config['not_available']['fi'] = "Anteeksi, mutta tämä kirjoitus on saatavana ainoastaan näillä kielillä: %LANG:, : ja %.";
 $q_config['not_available']['fr'] = "Désolé, cet article est seulement disponible en %LANG:, : et %.";
 $q_config['not_available']['nl'] = "Onze verontschuldigingen, dit bericht is alleen beschikbaar in %LANG:, : en %.";
@@ -240,6 +244,7 @@ $q_config['use_strftime'] = QTX_DATE;
 $q_config['date_format']['en'] = '%A %B %e%q, %Y';
 $q_config['date_format']['de'] = '%A, der %e. %B %Y';
 $q_config['date_format']['zh'] = '%x %A';
+$q_config['date_format']['ru'] = '%A %B %e%q, %Y';
 $q_config['date_format']['fi'] = '%e.&m.%C';
 $q_config['date_format']['fr'] = '%A %e %B %Y';
 $q_config['date_format']['nl'] = '%d/%m/%y';
@@ -258,6 +263,7 @@ $q_config['date_format']['gl'] = '%d de %B de %Y';
 $q_config['time_format']['en'] = '%I:%M %p';
 $q_config['time_format']['de'] = '%H:%M';
 $q_config['time_format']['zh'] = '%I:%M%p';
+$q_config['time_format']['ru'] = '%H:%M';
 $q_config['time_format']['fi'] = '%H:%M';
 $q_config['time_format']['fr'] = '%H:%M';
 $q_config['time_format']['nl'] = '%H:%M';
@@ -278,6 +284,7 @@ $q_config['time_format']['gl'] = '%H:%M hrs.';
 $q_config['flag']['en'] = 'gb.png';
 $q_config['flag']['de'] = 'de.png';
 $q_config['flag']['zh'] = 'cn.png';
+$q_config['flag']['ru'] = 'ru.png';
 $q_config['flag']['fi'] = 'fi.png';
 $q_config['flag']['fr'] = 'fr.png';
 $q_config['flag']['nl'] = 'nl.png';

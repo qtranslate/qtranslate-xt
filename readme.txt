@@ -4,7 +4,7 @@ Contributors: johnclause, chineseleper, vavooon, chsxf, michel.weimerskirch
 Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, translation
 Requires at least: 3.9
 Tested up to: 4.1
-Stable tag: 2.6.4
+Stable tag: 2.7
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -74,6 +74,9 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 3. qTranslate translation services
 
 == Changelog ==
+
+= 2.7 =
+* enabled translations of image captions, titles and descriptions.
 
 = 2.6.4 =
 * improved Description, FAQ and other documentation.
