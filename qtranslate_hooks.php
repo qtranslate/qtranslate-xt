@@ -265,7 +265,7 @@ add_filter('get_comment_date',				'qtranxf_dateFromCommentForCurrentLanguage',0,
 add_filter('get_comment_time',				'qtranxf_timeFromCommentForCurrentLanguage',0,4);
 add_filter('get_post_modified_time',		'qtranxf_timeModifiedFromPostForCurrentLanguage',0,3);
 add_filter('get_the_time',					'qtranxf_timeFromPostForCurrentLanguage',0,3);
-add_filter('get_the_date',					'qtranxf_dateFromPostForCurrentLanguage',0,4);
+add_filter('get_the_date',					'qtranxf_dateFromPostForCurrentLanguage',0,2);
 add_filter('locale',						'qtranxf_localeForCurrentLanguage',99);
 add_filter('the_title',						'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', 0);//WP: fires for display purposes only
 add_filter('post_title',					'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', 0);

@@ -163,18 +163,20 @@ function qtranxf_convertDateFormatToStrftimeFormat($format) {
 
 function qtranxf_convertFormat($format, $default_format) {
 	global $q_config;
+	// if timestamp is requested, don't replace it 
+	if('U'==$format) return qtrans_convertDateFormatToStrftimeFormat($format); 
 	// check for multilang formats
-				$format = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($format);
-				$default_format = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($default_format);
+	$format = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($format);
+	$default_format = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($default_format);
 	switch($q_config['use_strftime']) {
-								case QTX_DATE:
+		case QTX_DATE:
 			if($format=='') $format = $default_format;
-												return qtranxf_convertDateFormatToStrftimeFormat($format);
-								case QTX_DATE_OVERRIDE:
-												return qtranxf_convertDateFormatToStrftimeFormat($default_format);
-								case QTX_STRFTIME:
+			return qtranxf_convertDateFormatToStrftimeFormat($format);
+		case QTX_DATE_OVERRIDE:
+			return qtranxf_convertDateFormatToStrftimeFormat($default_format);
+		case QTX_STRFTIME:
 			return $format;
-								case QTX_STRFTIME_OVERRIDE:
+		case QTX_STRFTIME_OVERRIDE:
 			return $default_format;
 	}
 }
