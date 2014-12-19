@@ -1,6 +1,6 @@
 === qTranslate-X ===
 Developed by: Qian Qin, John Clause
-Contributors: johnclause, chineseleper, vavooon, chsxf, michel.weimerskirch
+Contributors: johnclause, chineseleper, Vavooon, chsxf, michel.weimerskirch
 Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, translation
 Requires at least: 3.9
 Tested up to: 4.1
