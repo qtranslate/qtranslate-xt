@@ -54,4 +54,14 @@ function qtranxf_add_lang_icons ()
 	}
 	echo "</style>\n";
 }
+
+function qtranxf_get_attachment_image_attributes($attr, $attachment, $size)
+{
+	foreach( $attr as $name => $value ){
+		if($name!=='alt') continue;
+		$attr[$name]=qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($value);
+	}
+	return $attr;
+}
+add_filter('wp_get_attachment_image_attributes', 'qtranxf_get_attachment_image_attributes',0,3);
 ?>
