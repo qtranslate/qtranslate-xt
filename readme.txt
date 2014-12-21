@@ -6,7 +6,7 @@ Requires at least: 3.9
 Tested up to: 4.1
 Stable tag: 2.7.3
 License: GPLv3 or later
-Donate link: <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top"><input type="hidden" name="cmd" value="_s-xclick"><input type="hidden" name="hosted_button_id" value="QEXEK3HX8AR6U"><input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to payonline!"><img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1"></form>
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QEXEK3HX8AR6U
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 Adds user friendly and database friendly multilingual content management and translation support. It is a fork and a bug fixer of qTranslate.
