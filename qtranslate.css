@@ -27,31 +27,24 @@
 	color: #555;
 }
 
-
 .qtranxs-lang-switch>*
 {
 	vertical-align: middle;
 	margin-right: 4px;
 }
 
+/* Language menu items
 
-/* Language menu items */
-
-.qtranxs-lang-menu
+.qtranxs-lang-menu img
 {
-	background-position: top right;
-	padding-left: 0;
-	padding-right: 22px;
+	vertical-align: middle;
 }
 
-.qtranxs-lang-menu-item
+.qtranxs-lang-menu-item img
 {
-	padding-left: 15px;
-	background-position: center left;
-	background-position-x: 5px;
-	background-position-y:50%;
+	vertical-align: middle;
 }
-
+*/
 
 /* Admin bar language icons */
 

@@ -39,19 +39,19 @@ if (!wp_next_scheduled('qts_cron_hook')) {
 
 define('QTS_FAST_TIMEOUT',						10);
 define('QTS_VERIFY',								'verify');
-define('QTS_GET_SERVICES',						'get_services');
-define('QTS_INIT_TRANSLATION',					'init_translation');
-define('QTS_RETRIEVE_TRANSLATION',				'retrieve_translation');
+define('QTS_GET_SERVICES', 'get_services');
+define('QTS_INIT_TRANSLATION', 'init_translation');
+define('QTS_RETRIEVE_TRANSLATION', 'retrieve_translation');
 define('QTS_QUOTE',								'quote');
 define('QTS_STATE_OPEN',							'open');
-define('QTS_STATE_ERROR',						'error');
-define('QTS_STATE_CLOSED',						'closed');
-define('QTS_ERROR_INVALID_LANGUAGE',				'QTS_ERROR_INVALID_LANGUAGE');
-define('QTS_ERROR_NOT_SUPPORTED_LANGUAGE',		'QTS_ERROR_NOT_SUPPORTED_LANGUAGE');
-define('QTS_ERROR_INVALID_SERVICE',				'QTS_ERROR_INVALID_SERVICE');
-define('QTS_ERROR_INVALID_ORDER',				'QTS_ERROR_INVALID_ORDER');
-define('QTS_ERROR_SERVICE_GENERIC',				'QTS_ERROR_SERVICE_GENERIC');
-define('QTS_ERROR_SERVICE_UNKNOWN',				'QTS_ERROR_SERVICE_UNKNOWN');
+define('QTS_STATE_ERROR', 'error');
+define('QTS_STATE_CLOSED', 'closed');
+define('QTS_ERROR_INVALID_LANGUAGE', 'QTS_ERROR_INVALID_LANGUAGE');
+define('QTS_ERROR_NOT_SUPPORTED_LANGUAGE', 'QTS_ERROR_NOT_SUPPORTED_LANGUAGE');
+define('QTS_ERROR_INVALID_SERVICE', 'QTS_ERROR_INVALID_SERVICE');
+define('QTS_ERROR_INVALID_ORDER', 'QTS_ERROR_INVALID_ORDER');
+define('QTS_ERROR_SERVICE_GENERIC', 'QTS_ERROR_SERVICE_GENERIC');
+define('QTS_ERROR_SERVICE_UNKNOWN', 'QTS_ERROR_SERVICE_UNKNOWN');
 define('QTS_DEBUG',								'QTS_DEBUG');
 
 // error messages
@@ -64,17 +64,17 @@ $qts_error_messages[QTS_ERROR_SERVICE_UNKNOWN] =			__('An unknown error occured 
 $qts_error_messages[QTS_DEBUG] =							__('The server returned a debugging message.','qtranslate');
 
 // hooks
-add_action('qtranslate_css',					'qts_css');
-add_action('qts_cron_hook',						'qts_cron');
-add_action('qtranslate_configuration',			'qts_config_hook');
-add_action('qtranslate_loadConfig',				'qts_load');
-add_action('qtranslate_saveConfig',				'qts_save');
-add_action('qtranslate_clean_uri',				'qts_clean_uri');
-add_action('admin_menu',						'qts_init');
-add_action('wp_ajax_qts_quote', 					'qts_quote');
+add_action('qtranslate_css', 'qts_css');
+add_action('qts_cron_hook', 'qts_cron');
+add_action('qtranslate_configuration', 'qts_config_hook');
+add_action('qtranslate_loadConfig', 'qts_load');
+add_action('qtranslate_saveConfig', 'qts_save');
+add_action('qtranslate_clean_uri', 'qts_clean_uri');
+add_action('admin_menu', 'qts_init');
+add_action('wp_ajax_qts_quote', 'qts_quote');
 
-add_filter('manage_order_columns',				'qts_order_columns');
-add_filter('qtranslate_configuration_pre',		'qts_config_pre_hook');
+add_filter('manage_order_columns', 'qts_order_columns');
+add_filter('qtranslate_configuration_pre', 'qts_config_pre_hook');
 
 // serializing/deserializing functions
 function qts_base64_serialize($var) {
@@ -213,13 +213,13 @@ function qts_init() {
 	global $q_config;
 	if($q_config['qtranslate_services']) {
 	/* disabled for meta box
-		add_filter('qtranslate_toolbar',			'qts_toobar');
-		add_filter('qtranslate_modify_editor_js',	'qts_editor_js');
+		add_filter('qtranslate_toolbar', 'qts_toobar');
+		add_filter('qtranslate_modify_editor_js', 'qts_editor_js');
 	*/
 		add_meta_box('translatediv', __('Translate to','qtranslate'), 'qts_translate_box', 'post', 'side', 'core');
 		add_meta_box('translatediv', __('Translate to','qtranslate'), 'qts_translate_box', 'page', 'side', 'core');
 		
-		add_action('qtranslate_languageColumn',			'qts_translateButtons', 10, 2);
+		add_action('qtranslate_languageColumn', 'qts_translateButtons', 10, 2);
 		
 		// add plugin page without menu link for users with permission
 		if(current_user_can('edit_published_posts')) {
@@ -244,7 +244,7 @@ function qts_cleanup($var, $action) {
 	switch($action) {
 		case QTS_GET_SERVICES:
 			foreach($var as $service_id => $service) {
-				// make array out ouf serialized field
+				// make array out of serialized field
 				$fields = array();
 				$required_fields = explode('|',$service['service_required_fields']);
 				foreach($required_fields as $required_field) {
@@ -270,7 +270,7 @@ function qts_cleanup($var, $action) {
 function qts_config_pre_hook($message) {
 	global $q_config;
 	if(isset($_POST['default_language'])) {
-		qtranxf_checkSetting('qtranslate_services', true, QT_BOOLEAN);
+		qtranxf_checkSetting('qtranslate_services', true, QTX_BOOLEAN);
 		qts_load();
 		if($q_config['qtranslate_services']) {
 			$services = qts_queryQS(QTS_GET_SERVICES);
