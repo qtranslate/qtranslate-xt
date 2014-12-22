@@ -22,6 +22,7 @@ function qtranxf_add_js ()
 	wp_register_script( 'qtranslate-script', plugins_url( '/qtranslate.min.js', __FILE__ ) );
 	//wp_register_script( 'qtranslate-script', plugins_url( '/qtranslate.js', __FILE__ ) );
 	wp_enqueue_script( 'qtranslate-script' );
+	wp_deregister_script( 'autosave' );//autosave script saves the active language only and messes it up later in a hard way
 }
 
 function qtranxf_add_config ()
@@ -534,26 +535,26 @@ function qtranxf_conf() {
 				</td>
 			</tr>
 			<tr valign="top">
-                                <th scope="row"><?php _e('Detect Browser Language', 'qtranslate');?></th>
+				<th scope="row"><?php _e('Detect Browser Language', 'qtranslate');?></th>
 				<td>
-                                        <label for="detect_browser_language"><input type="checkbox" name="detect_browser_language" id="detect_browser_language" value="1"<?php echo ($q_config['detect_browser_language'])?' checked="checked"':''; ?>/> <?php _e('Detect the language of the browser and redirect accordingly.', 'qtranslate'); ?></label>
+					<label for="detect_browser_language"><input type="checkbox" name="detect_browser_language" id="detect_browser_language" value="1"<?php echo ($q_config['detect_browser_language'])?' checked="checked"':''; ?>/> <?php _e('Detect the language of the browser and redirect accordingly.', 'qtranslate'); ?></label>
 					<br/>
-                                        <?php _e('When the frontpage is visited via bookmark/external link/type-in, the visitor will be forwarded to the correct URL for the language specified by his browser.', 'qtranslate'); ?>
+					<?php _e('When the frontpage is visited via bookmark/external link/type-in, the visitor will be forwarded to the correct URL for the language specified by his browser.', 'qtranslate'); ?>
 				</td>
 			</tr>
 		</table>
-								<h3><?php _e('Advanced Settings', 'qtranslate') ?><span id="qtranxs-show-advanced"> (<a name="advanced_settings" href="#" onclick="return showAdvanced();"><?php echo __('Show', 'qtranslate').' / '.__('Hide', 'qtranslate'); ?></a>)</span></h3>
-								<table class="form-table" id="qtranslate-advanced" style="display: none">
+		<h3><?php _e('Advanced Settings', 'qtranslate') ?><span id="qtranxs-show-advanced"> (<a name="advanced_settings" href="#" onclick="return showAdvanced();"><?php echo __('Show', 'qtranslate').' / '.__('Hide', 'qtranslate'); ?></a>)</span></h3>
+		<table class="form-table" id="qtranslate-advanced" style="display: none">
 			<tr>
-                                <th scope="row"><?php _e('URL Modification Mode', 'qtranslate') ?></th>
+				<th scope="row"><?php _e('URL Modification Mode', 'qtranslate') ?></th>
 				<td>
-                                        <fieldset><legend class="hidden"><?php _e('URL Modification Mode', 'qtranslate') ?></legend>
-																								<label title="Query Mode"><input type="radio" name="url_mode" value="<?php echo QTX_URL_QUERY; ?>" <?php echo ($q_config['url_mode']==QTX_URL_QUERY)?"checked=\"checked\"":""; ?> /> <?php _e('Use Query Mode (?lang=en)', 'qtranslate'); ?></label><br />
-																								<label title="Pre-Path Mode"><input type="radio" name="url_mode" value="<?php echo QTX_URL_PATH; ?>" <?php echo ($q_config['url_mode']==QTX_URL_PATH)?"checked=\"checked\"":""; ?> /> <?php _e('Use Pre-Path Mode (Default, puts /en/ in front of URL)', 'qtranslate'); ?></label><br />
-																								<label title="Pre-Domain Mode"><input type="radio" name="url_mode" value="<?php echo QTX_URL_DOMAIN; ?>" <?php echo ($q_config['url_mode']==QTX_URL_DOMAIN)?"checked=\"checked\"":""; ?> /> <?php _e('Use Pre-Domain Mode (uses http://en.yoursite.com)', 'qtranslate'); ?></label><br />
+					<fieldset><legend class="hidden"><?php _e('URL Modification Mode', 'qtranslate') ?></legend>
+						<label title="Pre-Path Mode"><input type="radio" name="url_mode" value="<?php echo QTX_URL_PATH; ?>" <?php echo ($q_config['url_mode']==QTX_URL_PATH)?"checked=\"checked\"":""; ?> /> <?php echo __('Use Pre-Path Mode (Default, puts /en/ in front of URL)', 'qtranslate').'. SEO '.__('friendly', 'qtranslate').'.'; ?></label><br />
+						<label title="Pre-Domain Mode"><input type="radio" name="url_mode" value="<?php echo QTX_URL_DOMAIN; ?>" <?php echo ($q_config['url_mode']==QTX_URL_DOMAIN)?"checked=\"checked\"":""; ?> /> <?php echo __('Use Pre-Domain Mode (uses http://en.yoursite.com)', 'qtranslate').'. '.__('You will need to configure DNS sub-domains on your site.', 'qtranslate'); ?></label><br />
+						<label title="Query Mode"><input type="radio" name="url_mode" value="<?php echo QTX_URL_QUERY; ?>" <?php echo ($q_config['url_mode']==QTX_URL_QUERY)?"checked=\"checked\"":""; ?> /> <?php echo __('Use Query Mode (?lang=en)', 'qtranslate').'. '.__('Most SEO unfriendly, not recommended.', 'qtranslate'); ?></label><br />
 					</fieldset><br/>
-                                        <?php _e('Pre-Path and Pre-Domain mode will only work with mod_rewrite/pretty permalinks. Additional Configuration is needed for Pre-Domain mode!', 'qtranslate'); ?><br/>
-                                        <label for="hide_default_language"><input type="checkbox" name="hide_default_language" id="hide_default_language" value="1"<?php echo ($q_config['hide_default_language'])?' checked="checked"':''; ?>/> <?php _e('Hide URL language information for default language.', 'qtranslate'); ?></label>
+					<?php _e('Pre-Path and Pre-Domain mode will only work with mod_rewrite/pretty permalinks. Additional Configuration is needed for Pre-Domain mode!', 'qtranslate'); ?><br/>
+					<label for="hide_default_language"><input type="checkbox" name="hide_default_language" id="hide_default_language" value="1"<?php echo ($q_config['hide_default_language'])?' checked="checked"':''; ?>/> <?php _e('Hide URL language information for default language.', 'qtranslate'); ?></label>
 				</td>
 			</tr>
 			<tr valign="top">

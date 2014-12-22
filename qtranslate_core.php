@@ -63,7 +63,9 @@ function qtranxf_init() {
 	
 	// extract url information
 	$q_config['url_info'] = qtranxf_extractURL($_SERVER['REQUEST_URI'], $_SERVER["HTTP_HOST"], isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '');
-	
+
+	$q_config['WP_CONTENT_URL'] = trailingslashit(WP_CONTENT_URL);
+
 	// set test cookie
 	setcookie('qtrans_cookie_test', 'qTranslateookie Test', 0, $q_config['url_info']['home'], $q_config['url_info']['host']);
 	// check cookies for admin
