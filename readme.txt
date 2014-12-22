@@ -45,7 +45,7 @@ Installation of this plugin is no different from any other plugin:
 
 == Frequently Asked Questions ==
 
-= How do I translate custom configuration fields, which are not handled by language switch buttons?
+= How do I translate custom configuration fields, which are not handled by language switch buttons? =
 
 Some themes have additional to the standard WP design fields, which need to be translated. In such a case, enter all translations in one field using syntax like this:
 
