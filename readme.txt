@@ -1,6 +1,6 @@
 === qTranslate-X ===
 Developed by: John Clause based on original code by Qian Qin
-Contributors: johnclause, chineseleper
+Contributors: johnclause, chineseleper, Vavooon
 Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, translation
 Requires at least: 3.9
 Tested up to: 4.1
@@ -21,6 +21,7 @@ qTranslate-X makes creation of multilingual content as easy as working with a si
 
 - One-click local switching between the languages - Changing the language as easy as switching between Visual and HTML.
 - Language customizations without changing the .mo files - It uses Quick-Tags.
+- In-line syntax '`<!--:en-->English Text<--:--><!--:de-->Deutsch<--:-->`' or '`[:en]English Text[:de]Deutsch`' for theme-custom fields gets them translated. See [FAQ](https://wordpress.org/plugins/qtranslate-x/faq/ "qTranslate-X FAQ") for more information.
 - Multilingual dates out of the box - Translates dates and time for you.
 - Comes with a lot of languages already builtin - English, German, Simplified Chinese and a lot of others.
 - Choose one of 3 Modes to make your URLs pretty and SEO-friendly. - The everywhere compatible `?lang=en`, simple and beautiful `/en/foo/` or nice and neat `en.yoursite.com`.
@@ -40,11 +41,25 @@ Installation of this plugin is no different from any other plugin:
 1. Open Settings->Languages configuration page and add/delete/disable any languages you need.
 1. Add the qTranslate Widget or Language Switcher menu item to let your visitors switch the language.
 1. You may use [Google XML Sitemaps v3 for qTranslate](https://wordpress.org/plugins/google-xml-sitemaps-v3-for-qtranslate/) plugin to rebuild your XML sitemap for better SEO support.
-1. Upgrading from [qTranslate](https://wordpress.org/plugins/qtranslate/ "qTranslate original plugin") required no additional actions, qTranslate-X will continue to work from the database entries of qTranslate. One may also go back to qTranslate at any time. Upgrading from other qTranslate forks may require re-configuration of the languages and taxonomies names.
+1. Upgrading from [qTranslate](https://wordpress.org/plugins/qtranslate/ "qTranslate original plugin") required no additional actions, qTranslate-X will continue to work from the database entries of qTranslate. One may also go back to qTranslate at any time. Upgrading from other qTranslate forks may require re-configuration of the languages and taxonomies names, unless you rename corresponding database entries directly.
 
 == Frequently Asked Questions ==
 
-= What is wrong with qTranslate? =
+= How do I translate custom configuration fields, which are not handled by language switch buttons?
+
+Some themes have additional to the standard WP design fields, which need to be translated. In such a case, enter all translations in one field using syntax like this:
+
+`<!--:en-->English Text<--:--><!--:de-->Deutsch<--:-->`
+
+or like this
+
+`[:en]English Text[:de]Deutsch`
+
+If a theme uses __() function before displaying those fields, then they will be shown correctly, otherwise suggest theme author to put __() calls in. Most themes do it this way.
+
+The '`[:]`' syntax works well for one-line text fields, while '`<--:-->`' syntax is more suitable for text areas.
+
+= What is wrong with the original qTranslate? =
 
 qTranslate still works fine at frontend, except one known to me bug of incorrect date display in comments for some themes. However, its backend breaks tinyMCE content editor in post editing page. Many people have been reporting the problems, but the author keeps silence. qTranslate-X uses the same database backend, and updated admin interface with a slightly different design.
 
