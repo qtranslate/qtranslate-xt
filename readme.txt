@@ -55,7 +55,7 @@ or like this
 
 `[:en]English Text[:de]Deutsch`
 
-If a theme uses __() function before displaying those fields, then they will be shown correctly, otherwise suggest theme author to put __() calls in. Most themes do it this way.
+If a theme uses `__()` [translate](http://codex.wordpress.org/Function_Reference/_2 "WP Function 'translate'") function before displaying those fields, then they will be shown correctly, otherwise suggest theme author to put `__()` calls in. Most themes do it this way.
 
 The '`[:]`' syntax works well for one-line text fields, while '`<--:-->`' syntax is more suitable for text areas.
 
