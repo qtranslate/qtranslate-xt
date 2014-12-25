@@ -55,13 +55,13 @@ define('QTS_ERROR_SERVICE_UNKNOWN', 'QTS_ERROR_SERVICE_UNKNOWN');
 define('QTS_DEBUG',								'QTS_DEBUG');
 
 // error messages
-$qts_error_messages[QTS_ERROR_INVALID_LANGUAGE] =			__('The language/s do not have a valid ISO 639-1 representation.','qtranslate');
-$qts_error_messages[QTS_ERROR_NOT_SUPPORTED_LANGUAGE] =	__('The language/s you used are not supported by the service.','qtranslate');
-$qts_error_messages[QTS_ERROR_INVALID_SERVICE] =			__('There is no such service.','qtranslate');
-$qts_error_messages[QTS_ERROR_INVALID_ORDER] =			__('The system could not process your order.','qtranslate');
+$qts_error_messages[QTS_ERROR_INVALID_LANGUAGE] = __('The language/s do not have a valid ISO 639-1 representation.','qtranslate');
+$qts_error_messages[QTS_ERROR_NOT_SUPPORTED_LANGUAGE] = __('The language/s you used are not supported by the service.','qtranslate');
+$qts_error_messages[QTS_ERROR_INVALID_SERVICE] = __('There is no such service.','qtranslate');
+$qts_error_messages[QTS_ERROR_INVALID_ORDER] = __('The system could not process your order.','qtranslate');
 $qts_error_messages[QTS_ERROR_SERVICE_GENERIC] =			__('There has been an error with the selected service.','qtranslate');
 $qts_error_messages[QTS_ERROR_SERVICE_UNKNOWN] =			__('An unknown error occured with the selected service.','qtranslate');
-$qts_error_messages[QTS_DEBUG] =							__('The server returned a debugging message.','qtranslate');
+$qts_error_messages[QTS_DEBUG] =											__('The server returned a debugging message.','qtranslate');
 
 // hooks
 add_action('qtranslate_css', 'qts_css');
@@ -171,6 +171,7 @@ function qts_translateButtons($available_languages, $missing_languages) {
 }
 
 function qts_css() {
+//<style type="text/css" media="screen">
 ?>
 p.error {background-color:#ffebe8;border-color:#c00;border-width:1px;border-style:solid;padding:0 .6em;margin:5px 15px 2px;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px;border-radius:3px;}
 p.error a{color:#c00;}
@@ -189,6 +190,7 @@ p.error a{color:#c00;}
 #submitboxcontainer p { margin:6px 6px ; }
 .qts_submit { text-align:right; padding:6px }
 <?php
+//</style>
 }
 
 function qts_load() {
@@ -367,8 +369,8 @@ function qts_order_columns($columns) {
 function qts_config_hook($request_uri) {
 	global $q_config;
 ?>
-<h3><?php _e('qTranslate Services Settings', 'qtranslate') ?><span id="qtranslate-show-services"> (<a name="qtranslate_service_settings" href="#" onclick="return showServices();"><?php echo __('Show', 'qtranslate').' / '.__('Hide', 'qtranslate'); ?></a>)</span></h3>
-<table class="form-table" id="qtranslate-services" style="display: none">
+<h3><?php _e('qTranslate Services Settings', 'qtranslate'); qtranxf_putShowHide('service'); ?></h3>
+<table class="form-table" id="qtranslate-admin-service" style="display: none">
 	<tr>
 		<th scope="row"><?php _e('qTranslate Services', 'qtranslate') ?></th>
 		<td>
@@ -433,10 +435,20 @@ function qts_config_hook($request_uri) {
 <?php } ?>
 		</td>
 	</tr>
+<?php
+			if(!empty($services)){
+				$showservices=false;
+				foreach($services as $service) {
+					if(sizeof($service['service_required_fields'])==0) continue;
+					$showservices=true;
+					break;
+				}
+			if($showservices){
+?>
 	<tr valign="top">
 		<th scope="row" colspan="2">
 			<h4><?php _e('Service Configuration', 'qtranslate');?></h4>
-			<p class="description"><!--<?php _e('Below, you will find configuration settings for qTranslate Service Providers, which are required for them to operate.', 'qtranslate'); ?>--></p>
+			<p class="description"><?php _e('Below, you will find configuration settings for qTranslate Service Providers, which are required for them to operate.', 'qtranslate'); ?></p>
 		</th>
 	</tr>
 <?php
@@ -461,28 +473,13 @@ function qts_config_hook($request_uri) {
 <?php
 				}
 			}
-		}
+		}}}
 	}
 ?>
 </table>
 <script type="text/javascript">
 // <![CDATA[
-	function showServices() {
-		var el = document.getElementById('qtranslate-services');
-		if (el.style.display == 'block'){
-			el.style.display = 'none';
-			qtranxj_delcookie('ShowServices');
-		}else{
-			document.cookie='ShowServices=1';
-			el.style.display='block';
-		}
-		return false;
-	}
-	if(qtranxj_getcookie('ShowServices')){
-		document.getElementById('qtranslate-services').style.display='block';
-	}else{
-		document.getElementById('qtranslate-services').style.display='none';
-	}
+	readShowHideCookie('qtranslate-admin-service');
 // ]]>
 </script>
 <?php

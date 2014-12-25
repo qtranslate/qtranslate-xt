@@ -3,7 +3,7 @@
 Plugin Name: qTranslate-X
 Plugin URI: http://wordpress.org/plugins/qtranslate-x/
 Description: Adds userfriendly multilingual content support into Wordpress. For Problems visit the <a href="https://wordpress.org/support/plugin/qtranslate-x/">Support Forum</a>.
-Version: 2.7.5
+Version: 2.7.6
 Author: John Clause based on original code by Qian Qin
 Author URI: http://www.qianqin.de
 Tags: multilingual, multi, language, admin, tinymce, Polyglot, bilingual, widget, switcher, professional, human, translation, service, qTranslate, zTranslate, mqTranslate, qTranslate Plus
@@ -114,9 +114,12 @@ define('QTX_BOOLEAN',	2);
 define('QTX_INTEGER',	3);
 define('QTX_URL',	4);
 define('QTX_LANGUAGE',	5);
+define('QTX_ARRAY',	6);
+
 define('QTX_URL_QUERY',	1);
 define('QTX_URL_PATH',	2);
 define('QTX_URL_DOMAIN',	3);
+
 define('QTX_STRFTIME_OVERRIDE',	1);
 define('QTX_DATE_OVERRIDE',	2);
 define('QTX_DATE',	3);
@@ -171,6 +174,7 @@ $q_config['pre_domain']['ar'] = "ar";
 $q_config['pre_domain']['pt'] = "pt";
 $q_config['pre_domain']['pl'] = "pl";
 $q_config['pre_domain']['gl'] = "gl";
+$q_config['pre_domain']['tr'] = "tr";
 
 // Names for languages in the corresponding language, add more if needed
 $q_config['language_name']['de'] = "Deutsch";
@@ -191,6 +195,7 @@ $q_config['language_name']['ar'] = "العربية";
 $q_config['language_name']['pt'] = "Português";
 $q_config['language_name']['pl'] = "Polski";
 $q_config['language_name']['gl'] = "galego";
+$q_config['language_name']['tr'] = "Turkish";
 
 // Locales for languages
 // see locale -a for available locales
@@ -212,6 +217,7 @@ $q_config['locale']['ar'] = "ar";
 $q_config['locale']['pt'] = "pt_BR";
 $q_config['locale']['pl'] = "pl_PL";
 $q_config['locale']['gl'] = "gl_ES";
+$q_config['locale']['tr'] = "tr_TR";
 
 // Language not available messages
 // %LANG:<normal_seperator>:<last_seperator>% generates a list of languages seperated by <normal_seperator> except for the last one, where <last_seperator> will be used instead.
@@ -233,6 +239,7 @@ $q_config['not_available']['ar'] = "عفوا، هذه المدخلة موجود�
 $q_config['not_available']['pt'] = "Desculpe-nos, mas este texto esta apenas disponível em %LANG:, : y %.";
 $q_config['not_available']['pl'] = "Przepraszamy, ten wpis jest dostępny tylko w języku %LANG:, : i %.";
 $q_config['not_available']['gl'] = "Sentímolo moito, ista entrada atopase unicamente en %LANG;,: e %.";
+$q_config['not_available']['tr'] = "Sorry, this entry is only available in %LANG:, : and %.";
 
 // qTranslate Services
 $q_config['qtranslate_services'] = false;
@@ -259,6 +266,7 @@ $q_config['date_format']['ar'] = '%d/%m/%Y';
 $q_config['date_format']['pt'] = '%d de %B de %Y';
 $q_config['date_format']['pl'] = '%d/%m/%y';
 $q_config['date_format']['gl'] = '%d de %B de %Y';
+$q_config['date_format']['tr'] = '%A %B %e%q, %Y';
 
 $q_config['time_format']['en'] = '%I:%M %p';
 $q_config['time_format']['de'] = '%H:%M';
@@ -278,6 +286,7 @@ $q_config['time_format']['ar'] = '%H:%M';
 $q_config['time_format']['pt'] = '%H:%M hrs.';
 $q_config['time_format']['pl'] = '%H:%M';
 $q_config['time_format']['gl'] = '%H:%M hrs.';
+$q_config['time_format']['tr'] = '%H:%M';
 
 // Flag images configuration
 // Look in /flags/ directory for a huge list of flags for usage
@@ -299,6 +308,7 @@ $q_config['flag']['ar'] = 'arle.png';
 $q_config['flag']['pt'] = 'br.png';
 $q_config['flag']['pl'] = 'pl.png';
 $q_config['flag']['gl'] = 'galego.png';
+$q_config['flag']['tr'] = 'tr.png';
 
 // Location of flags (needs trailing slash!)
 $q_config['flag_location'] = 'plugins/qtranslate-x/flags/';

@@ -279,7 +279,10 @@ function qtranxf_validateBool($var, $default) {
 // loads config via get_option and defaults to values set on top
 function qtranxf_loadConfig() {
 	global $q_config;
-	
+
+	//for other plugins and jave scripts to be able to fork by version
+	//$q_config['version'] = get_plugin_data( plugins_url( '/qtranslate.php', __FILE__ ), false, false )['Version'];
+
 	// Load everything
 	$language_names = get_option('qtranslate_language_names');
 	$enabled_languages = get_option('qtranslate_enabled_languages');
@@ -298,7 +301,8 @@ function qtranxf_loadConfig() {
 	$auto_update_mo = get_option('qtranslate_auto_update_mo');
 	$term_name = get_option('qtranslate_term_name');
 	$hide_default_language = get_option('qtranslate_hide_default_language');
-	
+	$custom_fields = get_option('qtranslate_custom_fields');
+
 	// default if not set
 	if(!is_array($date_formats)) $date_formats = $q_config['date_format'];
 	if(!is_array($time_formats)) $time_formats = $q_config['time_format'];
@@ -308,6 +312,7 @@ function qtranxf_loadConfig() {
 	if(!is_array($language_names)) $language_names = $q_config['language_name'];
 	if(!is_array($enabled_languages)) $enabled_languages = $q_config['enabled_languages'];
 	if(!is_array($term_name)) $term_name = $q_config['term_name'];
+	if(!is_array($custom_fields)) $custom_fields = array();
 	if(empty($ignore_file_types)) $ignore_file_types = $q_config['ignore_file_types'];
 	if(empty($default_language)) $default_language = $q_config['default_language'];
 	if(empty($use_strftime)) $use_strftime = $q_config['use_strftime'];
@@ -343,7 +348,8 @@ function qtranxf_loadConfig() {
 	$q_config['auto_update_mo'] = $auto_update_mo;
 	$q_config['hide_default_language'] = $hide_default_language;
 	$q_config['term_name'] = $term_name;
-	
+	$q_config['custom_fields'] = $custom_fields;
+
 	do_action('qtranslate_loadConfig');
 }
 
@@ -365,6 +371,7 @@ function qtranxf_saveConfig() {
 	update_option('qtranslate_url_mode', $q_config['url_mode']);
 	update_option('qtranslate_term_name', $q_config['term_name']);
 	update_option('qtranslate_use_strftime', $q_config['use_strftime']);
+	update_option('qtranslate_custom_fields', $q_config['custom_fields']);
 	if($q_config['detect_browser_language'])
 		update_option('qtranslate_detect_browser_language', '1');
 	else
@@ -541,6 +548,7 @@ function qtranxf_timeFromCommentForCurrentLanguage($old_date, $format = '', $gmt
 
 /* END DATE TIME FUNCTIONS */
 
+if (!function_exists('qtranxf_useTermLib')){
 function qtranxf_useTermLib($obj) {
 	global $q_config;
 	if(is_array($obj)) {
@@ -560,6 +568,7 @@ function qtranxf_useTermLib($obj) {
 	}
 	return $obj;
 }
+}
 
 function qtranxf_convertBlogInfoURL($url, $what) {
 	if($what=='stylesheet_url') return $url;
@@ -569,6 +578,7 @@ function qtranxf_convertBlogInfoURL($url, $what) {
 	return qtranxf_convertURL($url);
 }
 
+if (!function_exists('qtranxf_convertURL')){
 function qtranxf_convertURL($url='', $lang='', $forceadmin = false, $showDefaultLanguage = false) {
 	global $q_config;
 	
@@ -683,6 +693,7 @@ function qtranxf_convertURL($url='', $lang='', $forceadmin = false, $showDefault
 	
 	return $complete;
 }
+}
 
 // splits text with language tags into array
 function qtranxf_split($text, $quicktags = true) {
@@ -793,6 +804,7 @@ function qtranxf_enableLanguage($lang) {
 	return true;
 }
 
+if (!function_exists('qtranxf_use')){
 function qtranxf_use($lang, $text, $show_available=false) {
 	global $q_config;
 	// return full string if language is not enabled
@@ -860,6 +872,7 @@ function qtranxf_use($lang, $text, $show_available=false) {
 		}
 	}
 	return "<p>".preg_replace('/%LANG:([^:]*):([^%]*)%/', $language_list, $q_config['not_available'][$lang])."</p>";
+}
 }
 
 function qtranxf_showAllSeperated($text) {

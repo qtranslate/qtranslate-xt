@@ -60,9 +60,11 @@ function qtranxf_insertDropDownElement($language, $url, $id){
 	return $html;
 }
 
+if (!function_exists('qtranxf_getLanguage')){
 function qtranxf_getLanguage() {
-    global $q_config;
-    return $q_config['language'];
+	global $q_config;
+	return $q_config['language'];
+}
 }
 
 function qtranxf_getLanguageName($lang = '') {
