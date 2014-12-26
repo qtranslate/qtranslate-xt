@@ -104,10 +104,47 @@ function qtranxf_home_url($href)
 add_filter('home_url', 'qtranxf_home_url');
 
 function qtranxf_esc_html($text) {
+	//echo "\nqtranxf_esc_html:text=$text\n";
 	return qtranxf_useDefaultLanguage($text);
 }
 // filter options
 add_filter('esc_html', 'qtranxf_esc_html', 0);
+
+/*
+function qtranxf_translate($text){
+	$lang=qtranxf_getLanguage();
+	echo "\nqtranxf_translate:lang=".$lang."\n";
+	echo "text=$text\n";
+	$split_regex = "#(<!--:[^-]+-->|\[:[a-z]{2}\])#ism";
+	$skip=true;
+	$quicktags=false;
+	$blocks = preg_split($split_regex, $text, -1, PREG_SPLIT_NO_EMPTY|PREG_SPLIT_DELIM_CAPTURE);
+	foreach($blocks as $block) {
+		echo "block=$block\n";
+		if(preg_match("#^<!--:([a-z]{2})-->$#ism", $block, $matches)) {
+			$skip=($lang != $matches[1]);
+			continue;
+		} elseif($quicktags && preg_match("#^\[:([a-z]{2})\]$#ism", $block, $matches)) {
+			$skip=($lang != $matches[1]);
+			continue;
+		} elseif(preg_match("#^<!--:-->$#ism", $block, $matches)) {
+			$skip=false;
+			continue;
+		// detect defective more tag
+		//} elseif(preg_match("#^<!--more-->$#ism", $block, $matches)) {
+		//	foreach($q_config['enabled_languages'] as $language) {
+		//		$result[$language] .= $block;
+		//	}
+		//	continue;
+		}
+		if($skip) continue;
+		$result .= $block;
+	}
+	return $result;
+	//return qtranxf_useDefaultLanguage($text);
+}
+//add_filter('wpseo_title', 'qtranxf_translate', 0);
+*/
 
 // Compability with Default Widgets
 qtranxf_optionFilter();

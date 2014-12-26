@@ -162,6 +162,16 @@ function qtranxf_fixAdminBar($wp_admin_bar) {
 	}
 }
 
+/*
+//it was a test
+function qtranxf_wpseo_replacements($replacements){
+	foreach($replacements as $key => $s) {
+		$replacements[$key]=__($s);
+	}
+	return $replacements;
+}
+*/
+
 // Hooks for Plugin compatibility
 
 function qtranxf_supercache_dir($uri) {

@@ -625,14 +625,6 @@ function qtranxf_conf() {
 				</td>
 			</tr>
 			<tr valign="top">
-				<th scope="row"><?php _e('Flag Image Path', 'qtranslate');?></th>
-				<td>
-					<?php echo trailingslashit(WP_CONTENT_URL); ?><input type="text" name="flag_location" id="flag_location" value="<?php echo $q_config['flag_location']; ?>" style="width:50%"/>
-					<br/>
-					<?php _e('Path to the flag images under wp-content, with trailing slash. (Default: plugins/qtranslate-x/flags/)', 'qtranslate'); ?>
-				</td>
-			</tr>
-			<tr valign="top">
 				<th scope="row"><?php _e('Custom Fields', 'qtranslate');?></th>
 				<td>
 					<input type="text" name="custom_fields" id="qtranxs_custom_fields" value="<?php echo implode(' ',$q_config['custom_fields']); ?>" style="width:100%">
