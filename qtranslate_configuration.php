@@ -1,5 +1,6 @@
 <?php // encoding: utf-8
-/*  Copyright 2008  Qian Qin  (email : mail@qianqin.de)
+/*
+	Copyright 2014  qTranslate Team  (email : qTranslateTeam@gmail.com )
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -8,26 +9,102 @@
 
 	This program is distributed in the hope that it will be useful,
 	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
 	GNU General Public License for more details.
 
 	You should have received a copy of the GNU General Public License
 	along with this program; if not, write to the Free Software
-	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 */
 
-function qtranxf_add_js ()
+require_once(dirname(__FILE__)."/admin/import_export.php");
+require_once(dirname(__FILE__)."/admin/activation_hook.php");
+
+function qtranxf_update_config()
 {
-	wp_register_script( 'qtranslate-script', plugins_url( '/qtranslate.min.js', __FILE__ ) );
+	//if(!defined('WP_ADMIN')) return;
+	if(!current_user_can('manage_options')) return;
+	if(isset($_POST['qtranslate_reset']) && isset($_POST['qtranslate_reset2'])) {
+		// reset all settings
+		delete_option('qtranslate_language_names');
+		delete_option('qtranslate_enabled_languages');
+		delete_option('qtranslate_default_language');
+		delete_option('qtranslate_flag_location');
+		delete_option('qtranslate_flags');
+		delete_option('qtranslate_locales');
+		delete_option('qtranslate_na_messages');
+		delete_option('qtranslate_date_formats');
+		delete_option('qtranslate_time_formats');
+		delete_option('qtranslate_use_strftime');
+		delete_option('qtranslate_ignore_file_types');
+		delete_option('qtranslate_url_mode');
+		delete_option('qtranslate_detect_browser_language');
+		delete_option('qtranslate_hide_untranslated');
+		delete_option('qtranslate_auto_update_mo');
+		delete_option('qtranslate_next_update_mo');
+		delete_option('qtranslate_hide_default_language');
+		delete_option('qtranslate_custom_fields');
+		if(isset($_POST['qtranslate_reset3'])) {
+			delete_option('qtranslate_term_name');
+		}
+	}
+}
+add_action('qtranxf_init_begin','qtranxf_update_config',10);
+
+function qtranxf_add_admin_js () {
+	global $q_config;
 	//wp_register_script( 'qtranslate-script', plugins_url( '/qtranslate.js', __FILE__ ) );
+	wp_register_script( 'qtranslate-script', plugins_url( '/qtranslate.min.js', __FILE__ ) );
 	wp_enqueue_script( 'qtranslate-script' );
 	wp_deregister_script( 'autosave' );//autosave script saves the active language only and messes it up later in a hard way
-}
-
-function qtranxf_add_config ()
-{
-	global $q_config;
-	echo "<script>var qTranslateConfig=".json_encode($q_config).";</script>";
+	//echo '<script>var qTranslateConfig='.json_encode($q_config).';</script>';
+?>
+<script type="text/javascript">
+// <![CDATA[
+	var qTranslateConfig=<?php echo json_encode($q_config); ?>;
+	function qtranxj_getcookie(cname)
+	{
+		var nm = cname + "=";
+		var ca = document.cookie.split(';');
+		for(var i=0; i<ca.length; i++) {
+			var c = ca[i];
+			var p = c.indexOf(nm);
+			if (p >= 0) return c.substring(p+nm.length,c.length);
+		}
+		return '';
+	}
+	function qtranxj_delcookie(cname)
+	{
+		var date = new Date();
+		date.setTime(date.getTime()-(24*60*60*1000));
+		document.cookie=cname+'=; expires='+date.toGMTString();
+	}
+	function qtranxj_readShowHideCookie(id) {
+		var e=document.getElementById(id);
+		if(!e) return;
+		if(qtranxj_getcookie(id)){
+			e.style.display='block';
+		}else{
+			e.style.display='none';
+		}
+	}
+	function qtranxj_toggleShowHide(id) {
+		var e = document.getElementById(id);
+		if (e.style.display == 'block'){
+			qtranxj_delcookie(id);
+			e.style.display = 'none';
+		}else{
+			document.cookie=id+'=1';
+			e.style.display='block';
+		}
+		return false;
+	}
+<?php
+	do_action('qtranslate_js');
+?>
+//]]>
+</script>
+<?php
 }
 
 function qtranxf_add_admin_lang_icons ()
@@ -43,9 +120,8 @@ function qtranxf_add_admin_lang_icons ()
 	echo "</style>\n";
 }
 
-function qtranxf_adminHeader() {
-	wp_register_style( 'qtranslate-admin-style', plugins_url('qtranslate_configuration.css', __FILE__) );
-	wp_enqueue_style( 'qtranslate-admin-style' );
+function qtranxf_add_admin_css () {
+	qtranxf_add_admin_lang_icons();
 	echo "<style type=\"text/css\" media=\"screen\">\n";
 /*
 	echo ".qtranxs_title_input { border:0pt none; font-size:1.7em; outline-color:invert; outline-style:none; outline-width:medium; padding:0pt; width:100%; }\n";
@@ -63,7 +139,14 @@ function qtranxf_adminHeader() {
 	//echo "#qtranxs_debug { width:100%; height:200px }";
 	do_action('qtranslate_css');
 	echo "</style>\n";
-	return qtranxf_optionFilter('disable');
+}
+
+function qtranxf_admin_head() {
+	wp_register_style( 'qtranslate-admin-style', plugins_url('qtranslate_configuration.css', __FILE__) );
+	wp_enqueue_style( 'qtranslate-admin-style' );
+	qtranxf_add_admin_css();
+	qtranxf_add_admin_js();
+	qtranxf_optionFilter('disable');
 }
 
 /* qTranslate-X Management Interface */
@@ -175,60 +258,46 @@ function qtranxf_language_form($lang = '', $language_code = '', $language_name =
 <?php
 }
 
-function qtranxf_checkSetting($var, $updateOption = false, $type = QTX_STRING) {
+function qtranxf_updateSetting($var, $type = QTX_STRING) {
 	global $q_config;
-	if(!isset($_POST['submit']))
-		return false;
+	if(!isset($_POST['submit'])) return false;
 	switch($type) {
 		case QTX_URL:
-			$_POST[$var] = trailingslashit($_POST[$var]);
 		case QTX_LANGUAGE:
 		case QTX_STRING:
-			if(isset($_POST[$var])) {
-				if($type != QTX_LANGUAGE || qtranxf_isEnabled($_POST[$var])) {
-					$q_config[$var] = $_POST[$var];
-				}
-				if($updateOption) {
-					update_option('qtranslate_'.$var, $q_config[$var]);
-				}
-				return true;
-			}
-			break;
+			if(!isset($_POST[$var])) return false;
+			if($type == QTX_URL) $_POST[$var] = trailingslashit($_POST[$var]);
+			else if($type == QTX_LANGUAGE && !qtranxf_isEnabled($_POST[$var])) return false;
+			if($q_config[$var] == $_POST[$var]) return false;
+			$q_config[$var] = $_POST[$var];
+			update_option('qtranslate_'.$var, $q_config[$var]);
+			return true;
 		case QTX_ARRAY:
-			if(isset($_POST[$var])) {
-				$q_config[$var] = preg_split('/[\s,]+/',$_POST[$var]);
-				if($updateOption) {
-					update_option('qtranslate_'.$var, $q_config[$var]);
-				}
-				return true;
-			}
-			break;
+			if(!isset($_POST[$var])) return false;
+			$val=preg_split('/[\s,]+/',$_POST[$var]);
+			$diff=array_diff($q_config[$var],$val);
+			if(empty($diff)) return false;
+			$q_config[$var] = $val;
+			update_option('qtranslate_'.$var, $q_config[$var]);
+			return true;
 		case QTX_BOOLEAN:
-			if(isset($_POST['submit'])) {
-				if(isset($_POST[$var])&&$_POST[$var]==1) {
-					$q_config[$var] = true;
-				} else {
-					$q_config[$var] = false;
-				}
-				if($updateOption) {
-					if($q_config[$var]) {
-						update_option('qtranslate_'.$var, '1');
-					} else {
-						update_option('qtranslate_'.$var, '0');
-					}
-				}
-				return true;
+			if(isset($_POST[$var])&&$_POST[$var]==1) {
+				if($q_config[$var]) return false;
+				$q_config[$var] = true;
+				update_option('qtranslate_'.$var, '1');
+			} else {
+				if(!$q_config[$var]) return false;
+				$q_config[$var] = false;
+				update_option('qtranslate_'.$var, '0');
 			}
-			break;
+			return true;
 		case QTX_INTEGER:
-			if(isset($_POST['submit']) && isset($_POST[$var])) {
-				$q_config[$var] = intval($_POST[$var]);
-				if($updateOption) {
-					update_option('qtranslate_'.$var, $q_config[$var]);
-				}
-				return true;
-			}
-			break;
+			if(!isset($_POST[$var])) return false;
+			$val = intval($_POST[$var]);
+			if($q_config[$var] == $val) return false;
+			$q_config[$var] = $val;
+			update_option('qtranslate_'.$var, $q_config[$var]);
+			return true;
 	}
 	return false;
 }
@@ -255,8 +324,18 @@ function qtranxf_useAdminTermLib($obj) {
 	}
 }
 
-function qtranxf_putShowHide($nm) {
-	echo '<span id="qtranxs-show-'.$nm.'"> ( <a name="qtranslate_'.$nm.'_settings" href="#" onclick="return toggleShowHide(\'qtranslate-admin-'.$nm.'\');">'.__('Show', 'qtranslate').' / '.__('Hide', 'qtranslate').'</a> )</span>';
+function qtranxf_admin_section_start($section, $nm) {
+	echo '<h3>'.__($section, 'qtranslate').'<span id="qtranxs-show-'.$nm.'"> ( <a name="qtranslate_'.$nm.'_settings" href="#" onclick="return qtranxj_toggleShowHide(\'qtranslate-admin-'.$nm.'\');">'.__('Show', 'qtranslate').' / '.__('Hide', 'qtranslate').'</a> )</span></h3>';
+}
+
+function qtranxf_admin_section_end($nm) {
+?>
+<script type="text/javascript">
+//<![CDATA[
+	qtranxj_readShowHideCookie('qtranslate-admin-<?php echo $nm; ?>');
+// ]]>
+</script>
+<?php
 }
 
 function qtranxf_conf() {
@@ -285,19 +364,19 @@ function qtranxf_conf() {
 
 	// check for action
 	if(isset($_POST['qtranslate_reset']) && isset($_POST['qtranslate_reset2'])) {
-		$message = __('qTranslate-X has been reset.', 'qtranslate');
+		$message = __('qTranslate&#8209;X has been reset.', 'qtranslate');
 	} elseif(isset($_POST['default_language'])) {
 		// save settings
-		qtranxf_checkSetting('default_language', true, QTX_LANGUAGE);
-		qtranxf_checkSetting('flag_location', true, QTX_URL);
-		qtranxf_checkSetting('ignore_file_types', true, QTX_STRING);
-		qtranxf_checkSetting('detect_browser_language', true, QTX_BOOLEAN);
-		qtranxf_checkSetting('hide_untranslated', true, QTX_BOOLEAN);
-		qtranxf_checkSetting('use_strftime', true, QTX_INTEGER);
-		qtranxf_checkSetting('url_mode', true, QTX_INTEGER);
-		qtranxf_checkSetting('auto_update_mo', true, QTX_BOOLEAN);
-		qtranxf_checkSetting('hide_default_language', true, QTX_BOOLEAN);
-		qtranxf_checkSetting('custom_fields', true, QTX_ARRAY);
+		qtranxf_updateSetting('default_language', QTX_LANGUAGE);
+		qtranxf_updateSetting('flag_location', QTX_URL);
+		qtranxf_updateSetting('ignore_file_types', QTX_STRING);
+		qtranxf_updateSetting('detect_browser_language', QTX_BOOLEAN);
+		qtranxf_updateSetting('hide_untranslated', QTX_BOOLEAN);
+		qtranxf_updateSetting('use_strftime', QTX_INTEGER);
+		qtranxf_updateSetting('url_mode', QTX_INTEGER);
+		qtranxf_updateSetting('auto_update_mo', QTX_BOOLEAN);
+		qtranxf_updateSetting('hide_default_language', QTX_BOOLEAN);
+		qtranxf_updateSetting('custom_fields', QTX_ARRAY);
 		if(isset($_POST['update_mo_now']) && $_POST['update_mo_now']=='1' && qtranxf_updateGettextDatabases(true))
 			$message = __('Gettext databases updated.', 'qtranslate');
 	}
@@ -512,7 +591,7 @@ function qtranxf_conf() {
 <h2><?php _e('Language Management (qTranslate Configuration)', 'qtranslate'); ?></h2>
 <div class="tablenav"><?php printf(__('For help on how to configure qTranslate correctly, take a look at the <a href="%1$s">qTranslate FAQ</a> and the <a href="%2$s">Support Forum</a>.', 'qtranslate'), 'http://wordpress.org/plugins/qtranslate-x/faq/', 'https://wordpress.org/support/plugin/qtranslate-x'); ?></div>
 	<form action="<?php echo $clean_uri;?>" method="post">
-		<h3><?php _e('General Settings', 'qtranslate'); qtranxf_putShowHide('general'); ?></h3>
+	<?php  qtranxf_admin_section_start('General Settings','general'); ?>
 		<table class="form-table" id="qtranslate-admin-general">
 			<tr>
 				<th scope="row"><?php _e('Default Language / Order', 'qtranslate') ?></th>
@@ -554,7 +633,8 @@ function qtranxf_conf() {
 				</td>
 			</tr>
 		</table>
-		<h3><?php _e('Advanced Settings', 'qtranslate'); qtranxf_putShowHide('advanced'); ?></h3>
+	<?php qtranxf_admin_section_end('general'); ?>
+	<?php qtranxf_admin_section_start('Advanced Settings','advanced'); ?>
 		<table class="form-table" id="qtranslate-admin-advanced" style="display: none">
 			<tr>
 				<th scope="row"><?php _e('URL Modification Mode', 'qtranslate') ?></th>
@@ -605,30 +685,10 @@ function qtranxf_conf() {
 				</td>
 			</tr>
 			<tr valign="top">
-				<th scope="row"><?php _e('Reset qTranslate', 'qtranslate');?></th>
-				<td>
-					<label for="qtranslate_reset"><input type="checkbox" name="qtranslate_reset" id="qtranslate_reset" value="1"/> <?php _e('Check this box and click Save Changes to reset all qTranslate settings.', 'qtranslate'); ?></label>
-					<br/>
-					<label for="qtranslate_reset2"><input type="checkbox" name="qtranslate_reset2" id="qtranslate_reset2" value="1"/> <?php _e('Yes, I really want to reset qTranslate.', 'qtranslate'); ?></label>
-					<br/>
-					<label for="qtranslate_reset3"><input type="checkbox" name="qtranslate_reset3" id="qtranslate_reset3" value="1"/> <?php _e('Also delete Translations for Categories/Tags/Link Categories.', 'qtranslate'); ?></label>
-					<br/>
-					<?php _e('If something isn\'t working correctly, you can always try to reset all qTranslate settings. A Reset won\'t delete any posts but will remove all settings (including all languages added).', 'qtranslate'); ?>
-				</td>
-			</tr>
-			<tr valign="top">
-				<th scope="row"><?php _e('Convert Database', 'qtranslate');?></th>
-				<td>
-					<?php printf(__('If you are updating from qTranslate 1.x or Polyglot, <a href="%s">click here</a> to convert posts to the new language tag format.', 'qtranslate'), $clean_uri.'&convert=true'); ?>
-					<?php printf(__('If you have installed qTranslate for the first time on a Wordpress with existing posts, you can either go through all your posts manually and save them in the correct language or <a href="%s">click here</a> to mark all existing posts as written in the default language.', 'qtranslate'), $clean_uri.'&markdefault=true'); ?>
-					<?php _e('Both processes are <b>irreversible</b>! Be sure to make a full database backup before clicking one of the links.', 'qtranslate'); ?>
-				</td>
-			</tr>
-			<tr valign="top">
 				<th scope="row"><?php _e('Custom Fields', 'qtranslate');?></th>
 				<td>
 					<input type="text" name="custom_fields" id="qtranxs_custom_fields" value="<?php echo implode(' ',$q_config['custom_fields']); ?>" style="width:100%">
-					<p><?php printf(__('Enter "id" attribute of text fields from your theme, which you wish to translate. This applies to post, pages and media editors (/wp-admin/post*). To lookup "id", right-click on the field in the post or the page editor and choose "Inspect Element". Look for an attribute of the field named "id". Enter it here, as many as you need, space-separated. After saving configuration, these fields will start responding to the language switching buttons, and you can enter different text for each language. For more information, read %sFAQ%s.', 'qtranslate'),'<a href="https://wordpress.org/plugins/qtranslate-x/faq/">','</a>'); ?></p>
+					<p><?php printf(__('Enter "id" attribute of text fields from your theme, which you wish to translate. This applies to post, page and media editors (/wp-admin/post*). To lookup "id", right-click on the field in the post or the page editor and choose "Inspect Element". Look for an attribute of the field named "id". Enter it here, as many as you need, space-separated. After saving configuration, these fields will start responding to the language switching buttons, and you can enter different text for each language. For more information, read %sFAQ%s.', 'qtranslate'),'<a href="https://wordpress.org/plugins/qtranslate-x/faq/">','</a>'); ?></p>
 				</td>
 			</tr>
 <?php/*
@@ -650,49 +710,7 @@ function qtranxf_conf() {
 			</tr>
 */?>
 		</table>
-<script type="text/javascript">
-// <![CDATA[
-	function qtranxj_getcookie(cname)
-	{
-		var nm = cname + "=";
-		var ca = document.cookie.split(';');
-		for(var i=0; i<ca.length; i++) {
-			var c = ca[i];
-			var p = c.indexOf(nm);
-			if (p >= 0) return c.substring(p+nm.length,c.length);
-		}
-		return '';
-	}
-	function qtranxj_delcookie(cname)
-	{
-		var date = new Date();
-		date.setTime(date.getTime()-(24*60*60*1000));
-		document.cookie=cname+'=; expires='+date.toGMTString();
-	}
-	function readShowHideCookie(id) {
-		var e=document.getElementById(id);
-		if(!e) return;
-		if(qtranxj_getcookie(id)){
-			e.style.display='block';
-		}else{
-			e.style.display='none';
-		}
-	}
-	function toggleShowHide(id) {
-		var e = document.getElementById(id);
-		if (e.style.display == 'block'){
-			qtranxj_delcookie(id);
-			e.style.display = 'none';
-		}else{
-			document.cookie=id+'=1';
-			e.style.display='block';
-		}
-		return false;
-	}
-	readShowHideCookie('qtranslate-admin-general');
-	readShowHideCookie('qtranslate-admin-advanced');
-// ]]>
-</script>
+	<?php qtranxf_admin_section_end('advanced'); ?>
 <?php do_action('qtranslate_configuration', $clean_uri); ?>
 		<p class="submit">
 			<input type="submit" name="submit" class="button-primary" value="<?php _e('Save Changes', 'qtranslate') ?>" />
@@ -855,15 +873,12 @@ function qtranxf_add_language_menu( $wp_admin_bar )
 	}
 }
 
-add_filter('admin_head', 'qtranxf_add_css');
-add_filter('admin_head', 'qtranxf_add_js');
-add_filter('admin_head', 'qtranxf_add_config');
-add_filter('admin_head', 'qtranxf_add_admin_lang_icons');
 add_filter('get_term', 'qtranxf_useAdminTermLib',0);
 add_filter('get_terms', 'qtranxf_useAdminTermLib',0);
 
+add_action('admin_head', 'qtranxf_add_css');
+add_action('admin_head', 'qtranxf_admin_head');
 add_action('admin_head-nav-menus.php', 'qtranxf_add_nav_menu_metabox');
-add_action('admin_head', 'qtranxf_adminHeader');
 add_action('admin_menu', 'qtranxf_adminMenu');
 add_action('admin_bar_menu', 'qtranxf_add_language_menu', 999);
 add_action('wp_before_admin_bar_render', 'qtranxf_fixAdminBar');

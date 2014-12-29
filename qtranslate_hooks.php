@@ -1,6 +1,6 @@
 <?php // encoding: utf-8
-
-/*Copyright 2008 Qian Qin(email : mail@qianqin.de)
+/*
+	Copyright 2014  qTranslate Team  (email : qTranslateTeam@gmail.com )
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
 
 	You should have received a copy of the GNU General Public License
 	along with this program; if not, write to the Free Software
-	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA02110-1301USA
+	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 */
 
 /* qTranslate-X Hooks */

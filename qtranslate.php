@@ -1,19 +1,23 @@
 <?php // encoding: utf-8
-/*
+/**
 Plugin Name: qTranslate-X
 Plugin URI: http://wordpress.org/plugins/qtranslate-x/
-Description: Adds userfriendly multilingual content support into Wordpress. For Problems visit the <a href="https://wordpress.org/support/plugin/qtranslate-x/">Support Forum</a>.
-Version: 2.7.7
+Description: Adds user-friendly and database-friendly multilingual content support into WordPress.
+Version: 2.7.8
 Author: John Clause based on original code by Qian Qin
-Author URI: http://www.qianqin.de
-Tags: multilingual, multi, language, admin, tinymce, Polyglot, bilingual, widget, switcher, professional, human, translation, service, qTranslate, zTranslate, mqTranslate, qTranslate Plus
+Author URI: http://qtranslatexteam.wordpress.com/about
+Tags: multilingual, multi, language, admin, tinymce, Polyglot, bilingual, widget, switcher, professional, human, translation, service, qTranslate, zTranslate, mqTranslate, qTranslate Plus, WPML
+License: GPL2
+Author e-mail: qTranslateTeam@gmail.com
+Original Author: Qian Qin (http://www.qianqin.de mail@qianqin.de)
 */
+/* Unused keywords (as described in http://codex.wordpress.org/Writing_a_Plugin):
+ * Text Domain: Optional. Plugin's text domain for localization. Example: mytextdomain
+ * Domain Path: Optional. Plugin's relative directory path to .mo files. Example: /locale/
+ * Network: Optional. Whether the plugin can only be activated network wide. Example: true
+ */
 /*
-	Most flags in flags directory are made by Luc Balemans and downloaded from
-	FOTW Flags Of The World website at http://flagspot.net/flags/
-	(http://www.crwflags.com/FOTW/FLAGS/wflags.html)
-*/
-/*  Copyright 2008  Qian Qin  (email : mail@qianqin.de)
+	Copyright 2014  qTranslate Team  (email : qTranslateTeam@gmail.com )
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -22,12 +26,17 @@ Tags: multilingual, multi, language, admin, tinymce, Polyglot, bilingual, widget
 
 	This program is distributed in the hope that it will be useful,
 	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
 	GNU General Public License for more details.
 
 	You should have received a copy of the GNU General Public License
 	along with this program; if not, write to the Free Software
-	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
+*/
+/*
+	Most flags in flags directory are made by Luc Balemans and downloaded from
+	FOTW Flags Of The World website at http://flagspot.net/flags/
+	(http://www.crwflags.com/FOTW/FLAGS/wflags.html)
 */
 /*
 	Default Language Contributers
@@ -91,29 +100,6 @@ if ( ! function_exists( 'add_filter' ) ) {
 if ( ! defined( 'QTRANSLATE_FILE' ) ) {
 	define( 'QTRANSLATE_FILE', __FILE__ );
 }
-
-/* Check if other qTranslate forks are activated. */
-
-function qtranxf_activation_check()
-{
-	if ( is_plugin_active( 'qtranslate/qtranslate.php' ) ) {
-		deactivate_plugins(basename(__FILE__)); // Deactivate ourself
-		wp_die("qTranslate-X plugin cannot run concurrently with qTranslate, please deactivate qTranslate.");
-	}
-	if ( is_plugin_active( 'ztranslate/ztranslate.php' ) ) {
-		deactivate_plugins(basename(__FILE__)); // Deactivate ourself
-		wp_die("qTranslate-X plugin cannot run concurrently with zTranslate, please deactivate zTranslate.");
-	}
-	if ( is_plugin_active( 'qtranslate-xp/ppqtranslate.php' ) ) {
-		deactivate_plugins(basename(__FILE__)); // Deactivate ourself
-		wp_die("qTranslate-X plugin cannot run concurrently with 'qTranslate Plus', please deactivate 'qTranslate Plus'.");
-	}
-	if ( is_plugin_active( 'mqtranslate/mqtranslate.php' ) ) {
-		deactivate_plugins(basename(__FILE__)); // Deactivate ourself
-		wp_die("qTranslate-X plugin cannot run concurrently with mqTranslate, please deactivate mqTranslate.");
-	}
-}
-register_activation_hook(__FILE__, 'qtranxf_activation_check');
 
 /* DEFAULT CONFIGURATION PART BEGINS HERE */
 
@@ -497,6 +483,8 @@ $q_config['windows_locale']['zh'] = "Chinese";
 $q_config['windows_locale']['zu'] = "Zulu";
 
 // Load qTranslate-X
+
+register_activation_hook(__FILE__, 'qtranxf_activation_hook');//does not work if inside qtranslate_configuration.php
 
 require_once(dirname(__FILE__)."/qtranslate_utils.php");
 require_once(dirname(__FILE__)."/qtranslate_core.php");

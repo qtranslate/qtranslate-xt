@@ -1,6 +1,6 @@
 <?php // encoding: utf-8
-
-/*  Copyright 2008  Qian Qin  (email : mail@qianqin.de)
+/*
+	Copyright 2014  qTranslate Team  (email : qTranslateTeam@gmail.com )
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -9,46 +9,24 @@
 
 	This program is distributed in the hope that it will be useful,
 	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
 	GNU General Public License for more details.
 
 	You should have received a copy of the GNU General Public License
 	along with this program; if not, write to the Free Software
-	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 */
 
-/* qTranslateore Functions */
+/* qTranslate Functions */
 
 function qtranxf_init() {
 	global $q_config;
 	// check if it isn't already initialized
 	if(defined('QTRANX_INIT')) return;
 	define('QTRANX_INIT',true);
-	// load configuration if not beeing reseted
-	if(defined('WP_ADMIN') && current_user_can('manage_options') && isset($_POST['qtranslate_reset']) && isset($_POST['qtranslate_reset2'])) {
-		// reset all settings
-		delete_option('qtranslate_language_names');
-		delete_option('qtranslate_enabled_languages');
-		delete_option('qtranslate_default_language');
-		delete_option('qtranslate_flag_location');
-		delete_option('qtranslate_flags');
-		delete_option('qtranslate_locales');
-		delete_option('qtranslate_na_messages');
-		delete_option('qtranslate_date_formats');
-		delete_option('qtranslate_time_formats');
-		delete_option('qtranslate_use_strftime');
-		delete_option('qtranslate_ignore_file_types');
-		delete_option('qtranslate_url_mode');
-		delete_option('qtranslate_detect_browser_language');
-		delete_option('qtranslate_hide_untranslated');
-		delete_option('qtranslate_auto_update_mo');
-		delete_option('qtranslate_next_update_mo');
-		delete_option('qtranslate_hide_default_language');
-		delete_option('qtranslate_custom_fields');
-		if(isset($_POST['qtranslate_reset3'])) {
-			delete_option('qtranslate_term_name');
-		}
-	}
+
+	do_action('qtranxf_init_begin');
+
 	qtranxf_loadConfig();
 	if(isset($_COOKIE['qtrans_cookie_test'])) {
 		$q_config['cookie_enabled'] = true;
@@ -950,7 +928,7 @@ function qtranxf_add_css ()
 	wp_enqueue_style( 'qtranslate-style' );
 }
 
-function qtranxf_optionFilter($do='enable') {
+function qtranxf_optionFilter($do='enable') {//do we need it?
 	$options = array(	'option_widget_pages',
 						'option_widget_archives',
 						'option_widget_meta',
@@ -962,12 +940,12 @@ function qtranxf_optionFilter($do='enable') {
 						'option_widget_rss',
 						'option_widget_tag_cloud'
 					);
-	foreach($options as $option) {
-		if($do!='disable') {
+	if($do!='disable'){
+		foreach($options as $option)
 			add_filter($option, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
-		} else {
-			remove_filter($option, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage');
-		}
+	}else{
+		foreach($options as $option)
+			remove_filter($option, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
 	}
 }
 ?>

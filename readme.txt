@@ -1,15 +1,15 @@
 === qTranslate-X ===
-Developed by: John Clause based on original code by Qian Qin
+Developed by: qTranslate Team based on original code by Qian Qin
 Contributors: johnclause, chineseleper, Vavooon
 Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, translation
 Requires at least: 3.9
 Tested up to: 4.1
-Stable tag: 2.7.7
+Stable tag: 2.7.8
 License: GPLv3 or later
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QEXEK3HX8AR6U
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Adds user friendly and database friendly multilingual content management and translation support. It is a fork and a bug fixer of qTranslate.
+Adds user-friendly and database-friendly multilingual content management and translation support. It is a fork and a bug fixer of qTranslate.
 
 == Description ==
 
@@ -110,6 +110,10 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 3. qTranslate translation services
 
 == Changelog ==
+
+= 2.7.8 =
+* user-friendly activation hook to deactivate/import/export other qTranslate forks.
+* import/export settings from other forks
 
 = 2.7.7 =
 * improved automatic downloading of gettext databases from WP repository.

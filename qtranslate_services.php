@@ -1,20 +1,20 @@
 <?php // encoding: utf-8
+/*
+	Copyright 2014  qTranslate Team  (email : qTranslateTeam@gmail.com )
 
-/*  Copyright 2008  Qian Qin  (email : mail@qianqin.de)
+	This program is free software; you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation; either version 2 of the License, or
+	(at your option) any later version.
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    (at your option) any later version.
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
+	GNU General Public License for more details.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+	You should have received a copy of the GNU General Public License
+	along with this program; if not, write to the Free Software
+	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 */
 
 /* qTranslate Services */
@@ -52,21 +52,21 @@ define('QTS_ERROR_INVALID_SERVICE', 'QTS_ERROR_INVALID_SERVICE');
 define('QTS_ERROR_INVALID_ORDER', 'QTS_ERROR_INVALID_ORDER');
 define('QTS_ERROR_SERVICE_GENERIC', 'QTS_ERROR_SERVICE_GENERIC');
 define('QTS_ERROR_SERVICE_UNKNOWN', 'QTS_ERROR_SERVICE_UNKNOWN');
-define('QTS_DEBUG',								'QTS_DEBUG');
+define('QTS_DEBUG','QTS_DEBUG');
 
 // error messages
 $qts_error_messages[QTS_ERROR_INVALID_LANGUAGE] = __('The language/s do not have a valid ISO 639-1 representation.','qtranslate');
 $qts_error_messages[QTS_ERROR_NOT_SUPPORTED_LANGUAGE] = __('The language/s you used are not supported by the service.','qtranslate');
 $qts_error_messages[QTS_ERROR_INVALID_SERVICE] = __('There is no such service.','qtranslate');
 $qts_error_messages[QTS_ERROR_INVALID_ORDER] = __('The system could not process your order.','qtranslate');
-$qts_error_messages[QTS_ERROR_SERVICE_GENERIC] =			__('There has been an error with the selected service.','qtranslate');
-$qts_error_messages[QTS_ERROR_SERVICE_UNKNOWN] =			__('An unknown error occured with the selected service.','qtranslate');
-$qts_error_messages[QTS_DEBUG] =											__('The server returned a debugging message.','qtranslate');
+$qts_error_messages[QTS_ERROR_SERVICE_GENERIC] = __('There has been an error with the selected service.','qtranslate');
+$qts_error_messages[QTS_ERROR_SERVICE_UNKNOWN] = __('An unknown error occured with the selected service.','qtranslate');
+$qts_error_messages[QTS_DEBUG] = __('The server returned a debugging message.','qtranslate');
 
 // hooks
 add_action('qtranslate_css', 'qts_css');
 add_action('qts_cron_hook', 'qts_cron');
-add_action('qtranslate_configuration', 'qts_config_hook');
+add_action('qtranslate_configuration', 'qts_config_hook', 10);
 add_action('qtranslate_loadConfig', 'qts_load');
 add_action('qtranslate_saveConfig', 'qts_save');
 add_action('qtranslate_clean_uri', 'qts_clean_uri');
@@ -272,7 +272,7 @@ function qts_cleanup($var, $action) {
 function qts_config_pre_hook($message) {
 	global $q_config;
 	if(isset($_POST['default_language'])) {
-		qtranxf_checkSetting('qtranslate_services', true, QTX_BOOLEAN);
+		qtranxf_updateSetting('qtranslate_services', QTX_BOOLEAN);
 		qts_load();
 		if($q_config['qtranslate_services']) {
 			$services = qts_queryQS(QTS_GET_SERVICES);
@@ -368,8 +368,8 @@ function qts_order_columns($columns) {
 
 function qts_config_hook($request_uri) {
 	global $q_config;
+	qtranxf_admin_section_start('qTranslate Services Settings','service');
 ?>
-<h3><?php _e('qTranslate Services Settings', 'qtranslate'); qtranxf_putShowHide('service'); ?></h3>
 <table class="form-table" id="qtranslate-admin-service" style="display: none">
 	<tr>
 		<th scope="row"><?php _e('qTranslate Services', 'qtranslate') ?></th>
@@ -477,12 +477,8 @@ function qts_config_hook($request_uri) {
 	}
 ?>
 </table>
-<script type="text/javascript">
-// <![CDATA[
-	readShowHideCookie('qtranslate-admin-service');
-// ]]>
-</script>
 <?php
+	qtranxf_admin_section_end('service');
 }
 
 function qts_cron() {
@@ -910,5 +906,4 @@ function qts_editor_js($content) {
 		";
 	return $content;
 }
-
 ?>
