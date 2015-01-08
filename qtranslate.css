@@ -72,37 +72,5 @@
 	vertical-align: middle;
 }
 
-
-/* qTranslate-X widget */
-
-.top-widget
-{
-	width: auto;
-}
-.qtranxs-widget ul li
-{
-	display: inline;
-	list-style-type: none;
-	opacity: 0.5;
-	-o-transition: 1s ease opacity;
-	-moz-transition: 1s ease opacity;
-	-webkit-transition: 1s ease opacity;
-	transition: 1s ease opacity;
-}
-.qtranxs-widget ul
-{
-	margin: 0;
-}
-.qtranxs-widget ul li.active
-{
-	opacity: 0.8;
-}
-.qtranxs-widget ul li:hover
-{
-	opacity: 1;
-}
-.qtranxs-widget img
-{
-	box-shadow: none;
-	vertical-align: middle;
-}
+/* not sure what this for */
+.top-widget { width: auto; }

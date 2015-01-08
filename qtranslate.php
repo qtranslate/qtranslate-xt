@@ -3,7 +3,7 @@
 Plugin Name: qTranslate-X
 Plugin URI: http://wordpress.org/plugins/qtranslate-x/
 Description: Adds user-friendly and database-friendly multilingual content support into WordPress.
-Version: 2.7.8
+Version: 2.8
 Author: John Clause based on original code by Qian Qin
 Author URI: http://qtranslatexteam.wordpress.com/about
 Tags: multilingual, multi, language, admin, tinymce, Polyglot, bilingual, widget, switcher, professional, human, translation, service, qTranslate, zTranslate, mqTranslate, qTranslate Plus, WPML
@@ -111,6 +111,7 @@ define('QTX_INTEGER',	3);
 define('QTX_URL',	4);
 define('QTX_LANGUAGE',	5);
 define('QTX_ARRAY',	6);
+//define('QTX_ARRAY_STRING',	7);
 
 define('QTX_URL_QUERY',	1);
 define('QTX_URL_PATH',	2);
@@ -120,6 +121,10 @@ define('QTX_STRFTIME_OVERRIDE',	1);
 define('QTX_DATE_OVERRIDE',	2);
 define('QTX_DATE',	3);
 define('QTX_STRFTIME',	4);
+
+define('QTX_COOKIE_NAME','language');
+
+define('QTX_IGNORE_FILE_TYPES','gif,jpg,jpeg,png,pdf,swf,tif,rar,zip,7z,mpg,divx,mpeg,avi,css,js');
 
 $q_config = array();
 
@@ -132,12 +137,14 @@ $q_config['enabled_languages'] = array(
 
 // sets default language
 $q_config['default_language'] = 'en';
+$q_config['language'] = $q_config['default_language'];//otherwise some early called (before qtranxf_init) functions complain
 
 // enables browser language detection
 $q_config['detect_browser_language'] = true;
 
 // hide pages without content
 $q_config['hide_untranslated'] = false;
+$q_config['show_displayed_language_prefix'] = true;
 
 // automatically update .mo files
 $q_config['auto_update_mo'] = true;
@@ -310,11 +317,11 @@ $q_config['flag']['tr'] = 'tr.png';
 $q_config['flag_location'] = 'plugins/qtranslate-x/flags/';
 
 // Don't convert URLs to this file types
-$q_config['ignore_file_types'] = 'gif,jpg,jpeg,png,pdf,swf,tif,rar,zip,7z,mpg,divx,mpeg,avi,css,js';
+//$q_config['ignore_file_types'] = explode(',',QTX_IGNORE_FILE_TYPES);
 
 /* DEFAULT CONFIGURATION PART ENDS HERE */
 
-$q_config['term_name'] = array();
+$q_config['term_name'] = array();//is it in use?
 
 // Full country names as locales for Windows systems
 $q_config['windows_locale']['aa'] = "Afar";
@@ -500,4 +507,19 @@ if(is_admin()){
 
 // set hooks at the end
 require_once(dirname(__FILE__)."/qtranslate_hooks.php");
+
+/* not working this way
+if(file_exists(WP_PLUGIN_DIR.'/mqtranslate/mqtranslate.php')
+ ||file_exists(WP_PLUGIN_DIR.'/qtranslate/qtranslate.php')
+ //||file_exists(WP_PLUGIN_DIR.'/qtranslate-xp/ppqtranslate.php')
+ //||file_exists(WP_PLUGIN_DIR.'/ztranslate/ztranslate.php')
+){
+	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+	if(!is_plugin_active( 'mqtranslate/mqtranslate.php' )
+	&& !is_plugin_active( 'qtranslate/qtranslate.php' )
+	){
+		require_once(dirname(__FILE__)."/qtranslate_compatibility.php");
+	}
+}
+*/
 ?>

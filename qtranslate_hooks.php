@@ -17,47 +17,28 @@
 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 */
 
-/* qTranslate-X Hooks */
+// Exit if accessed directly
+if ( !defined( 'ABSPATH' ) ) exit;
 
-function qtranxf_header(){
-	global $q_config;
-	echo "\n<meta http-equiv=\"Content-Language\" content=\"".str_replace('_','-',$q_config['locale'][$q_config['language']])."\" />\n";
-	$css = "<style type=\"text/css\" media=\"screen\">\n";
-				$css .=".qtranxf_flag span { display:none }\n";
-				$css .=".qtranxf_flag { height:12px; width:18px; display:block }\n";
-				$css .=".qtranxf_flag_and_text { padding-left:20px }\n";
-	$baseurl = WP_CONTENT_URL;
-	if(isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == '1' || $_SERVER['HTTPS'] == 'on')) {
-		$baseurl = preg_replace('#^http://#','https://', $baseurl);
-	}
-	foreach($q_config['enabled_languages'] as $language) {
-								$css .=".qtranxf_flag_".$language." { background:url(".$baseurl.'/'.$q_config['flag_location'].$q_config['flag'][$language].") no-repeat }\n";
-	}
-	$css .="</style>\n";
-	// skip the rest if 404
-	if(is_404()) return;
-	// set links to translations of current page
-	foreach($q_config['enabled_languages'] as $language) {
-								if($language != qtranxf_getLanguage())
-												echo '<link hreflang="'.$language.'" href="'.qtranxf_convertURL('',$language).'" rel="alternate" />'."\n";
-	}	
-}
+/* qTranslate-X Hooks */
 
 function qtranxf_localeForCurrentLanguage($locale){
 	global $q_config;
 	// try to figure out the correct locale
+	$lang = $q_config['language'];
+	$locale_lang=$q_config['locale'][$lang];
 	$locale = array();
-	$locale[] = $q_config['locale'][$q_config['language']].".utf8";
-	$locale[] = $q_config['locale'][$q_config['language']]."@euro";
-	$locale[] = $q_config['locale'][$q_config['language']];
-	$locale[] = $q_config['windows_locale'][$q_config['language']];
-	$locale[] = $q_config['language'];
-	
+	$locale[] = $locale_lang.".utf8";
+	$locale[] = $locale_lang."@euro";
+	$locale[] = $locale_lang;
+	$locale[] = $q_config['windows_locale'][$lang];
+	$locale[] = $lang;
+
 	// return the correct locale and most importantly set it (wordpress doesn't, which is bad)
-	// only set LC_TIME as everyhing else doesn't seem to work with windows
+	// only set LC_TIME as everything else doesn't seem to work with windows
 	setlocale(LC_TIME, $locale);
-	
-	return $q_config['locale'][$q_config['language']];
+
+	return $locale_lang;
 }
 
 function qtranxf_useCurrentLanguageIfNotFoundShowAvailable($content) {
@@ -67,6 +48,9 @@ function qtranxf_useCurrentLanguageIfNotFoundShowAvailable($content) {
 
 function qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($content) {
 	global $q_config;
+	//if(!isset($q_config['language'])){
+	//	qtranxf_dbg_log('$q_config[language] is not set:',debug_backtrace());
+	//}
 	return qtranxf_use($q_config['language'], $content, false);
 }
 
@@ -183,13 +167,34 @@ function qtranxf_supercache_dir($uri) {
 	}
 	$uri = preg_replace('/[ <>\'\"\r\n\t\(\)]/', '', str_replace( '/index.php', '/', str_replace( '..', '', preg_replace("/(\?.*)?$/", '', $uri ) ) ) );
 	$uri = str_replace( '\\', '', $uri );
-	$uri = strtolower(preg_replace('/:.*$/', '',  $_SERVER["HTTP_HOST"])) . $uri; // To avoid XSS attacs
+	$uri = strtolower(preg_replace('/:.*$/', '',  $_SERVER["HTTP_HOST"])) . $uri; // To avoid XSS attacks
 	return $uri;
 }
 add_filter('supercache_dir', 'qtranxf_supercache_dir',0);
 
+//function qtranxf_gettext($translated_text, $text, $domain) {
+function qtranxf_gettext($translated_text) {
+	//same as qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage
+	global $q_config;
+	if(!isset($q_config['language'])){
+		//qtranxf_dbg_log('$q_config[language] is not set:',debug_backtrace());
+		return $translated_text;
+	}
+	return qtranxf_use($q_config['language'], $translated_text, false);
+}
+
+//function qtranxf_gettext_with_context($translated_text, $text, $context, $domain) {
+function qtranxf_gettext_with_context($translated_text) {
+	//same as qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage
+	global $q_config;
+	if(!isset($q_config['language'])){
+		//qtranxf_dbg_log('$q_config[language] is not set:',debug_backtrace());
+		return $translated_text;
+	}
+	return qtranxf_use($q_config['language'], $translated_text, false);
+}
+
 // Hooks (Actions)
-add_action('wp_head', 'qtranxf_header');
 // add_action('category_edit_form', 'qtranxf_modifyTermFormFor');
 // //add_action('post_tag_edit_form', 'qtranxf_modifyTermFormFor');
 // add_action('link_category_edit_form', 'qtranxf_modifyTermFormFor');
@@ -200,6 +205,11 @@ add_action('widgets_init', 'qtranxf_widget_init');
 add_action('plugins_loaded', 'qtranxf_init', 2);
 
 // Hooks (execution time critical filters) 
+add_filter('gettext', 'qtranxf_gettext',0);
+add_filter('gettext_with_context', 'qtranxf_gettext_with_context',0);
+//add_filter('gettext', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
+//add_filter('gettext_with_context', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
+
 add_filter('the_content', 'qtranxf_useCurrentLanguageIfNotFoundShowAvailable', 0);
 add_filter('the_excerpt', 'qtranxf_useCurrentLanguageIfNotFoundShowAvailable', 0);
 add_filter('the_excerpt_rss', 'qtranxf_useCurrentLanguageIfNotFoundShowAvailable', 0);
@@ -228,7 +238,6 @@ add_filter('get_wp_title_rss', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLa
 add_filter('wp_title_rss', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
 add_filter('the_title_rss', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
 add_filter('the_content_rss', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
-add_filter('gettext', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
 add_filter('get_pages', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
 add_filter('category_description', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
 add_filter('bloginfo_rss', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
@@ -239,9 +248,10 @@ add_filter('link_name', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage'
 add_filter('link_description', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
 add_filter('pre_option_rss_language', 'qtranxf_getLanguage',0);
 add_filter('the_author', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
-add_filter( "_wp_post_revision_field_post_title", 'qtranxf_showAllSeperated', 0);
-add_filter( "_wp_post_revision_field_post_content", 'qtranxf_showAllSeperated', 0);
-add_filter( "_wp_post_revision_field_post_excerpt", 'qtranxf_showAllSeperated', 0);
+
+add_filter('_wp_post_revision_field_post_title', 'qtranxf_showAllSeperated', 0);
+add_filter('_wp_post_revision_field_post_content', 'qtranxf_showAllSeperated', 0);
+add_filter('_wp_post_revision_field_post_excerpt', 'qtranxf_showAllSeperated', 0);
 
 // // Hooks (execution time non-critical filters) 
 add_filter('author_feed_link', 'qtranxf_convertURL');

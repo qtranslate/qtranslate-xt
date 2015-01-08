@@ -17,12 +17,57 @@
 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 */
 
-add_filter( 'wp_get_nav_menu_items',  'qtranxf_get_nav_menu_items', 0, 3 );
+// Exit if accessed directly
+if ( !defined( 'ABSPATH' ) ) exit;
+
+function qtranxf_add_lang_icons_css ()
+{
+	global $q_config;
+	echo '<style type="text/css">'.PHP_EOL;
+	foreach($q_config['enabled_languages'] as $lang) 
+	{
+		echo '.qtranxs_flag_'.$lang.' {background-image: url('.trailingslashit(WP_CONTENT_URL).$q_config['flag_location'].$q_config['flag'][$lang].'); background-repeat: no-repeat;}'.PHP_EOL;
+	}
+	do_action('qtranxf_head_add_css');
+	echo '</style>'.PHP_EOL;
+}
+//add_filter('wp_head', 'qtranxf_add_lang_icons_css');
+
+function qtranxf_head(){
+	global $q_config;
+	echo "\n<meta http-equiv=\"Content-Language\" content=\"".str_replace('_','-',$q_config['locale'][$q_config['language']])."\" />\n";
+	qtranxf_add_lang_icons_css();
+/*
+	$css = "<style type=\"text/css\" media=\"screen\">\n";
+	$css .=".qtranxs_flag span { display:none }\n";
+	$css .=".qtranxs_flag { height:12px; width:18px; display:block }\n";
+	$css .=".qtranxs_flag_and_text { padding-left:20px }\n";
+	$baseurl = WP_CONTENT_URL;
+	if(isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == '1' || $_SERVER['HTTPS'] == 'on')) {
+		$baseurl = preg_replace('#^http://#','https://', $baseurl);
+	}
+	foreach($q_config['enabled_languages'] as $language) {
+		$css .=".qtranxs_flag_".$language." { background:url(".$baseurl.'/'.$q_config['flag_location'].$q_config['flag'][$language].") no-repeat }\n";
+	}
+	//$css .= get_option('qtranslate_widget_css',QTX_WIDGET_CSS);
+	$css .="</style>\n";
+	echo apply_filters('qtranslate_header_css',$css);
+*/
+	// skip the rest if 404 //what if the menu is still shown through 404.php?
+	//if(is_404()) return;
+	// set links to translations of current page
+	foreach($q_config['enabled_languages'] as $language) {
+		if($language != qtranxf_getLanguage())
+			echo '<link hreflang="'.$language.'" href="'.qtranxf_convertURL('',$language).'" rel="alternate" />'."\n";
+	}
+}
+add_action('wp_head', 'qtranxf_head');
+
 function qtranxf_get_nav_menu_items( $items, $menu, $args )
 {
 	global $q_config;
 	$language=$q_config['language'];
-	$flag_location=$q_config['WP_CONTENT_URL'].$q_config['flag_location'];
+	$flag_location=trailingslashit(WP_CONTENT_URL).$q_config['flag_location'];
 	$itemid=0;
 	$menu_order=0;
   $qtransmenu=null;
@@ -33,11 +78,12 @@ function qtranxf_get_nav_menu_items( $items, $menu, $args )
 		if( !isset( $item->url ) || strstr( $item->url, '#qtransLangSw' ) === FALSE ) continue;
 		$item->title=__('Language','qtranslate').':'.'&nbsp;<img src="'.$flag_location.$q_config['flag'][$language].'">';
 		$item->url=null;
-		//$item->classes[] = 'qtranxs-flag-'.$language;
+		//$item->classes[] = 'qtranxs_flag_'.$language;
 		$item->classes[] = 'qtranxs-lang-menu';
 		$qtransmenu = $item;
 	}
 	if(!$qtransmenu) return $items;
+	$url='';//it will keep the same page
 	foreach($q_config['enabled_languages'] as $lang)
 	{
 		$item=new WP_Post((object)array('ID' => ++$itemid));
@@ -55,25 +101,14 @@ function qtranxf_get_nav_menu_items( $items, $menu, $args )
 		if($lang!=$language)
 			$item->url=qtranxf_convertURL($url, $lang, false, true);
 		$item->classes=array();
-		//$item->classes[] = 'qtranxs-flag-'.$lang;
+		//$item->classes[] = 'qtranxs_flag_'.$lang;
 		$item->classes[] = 'qtranxs-lang-menu-item';
 		$items[]=$item;
 		++$menu->count;
 	}
 	return $items;
 }
-
-function qtranxf_add_lang_icons ()
-{
-	global $q_config;
-	echo "<style>\n";
-	foreach($q_config['enabled_languages'] as $lang) 
-	{
-		echo '.qtranxs-flag-'.$lang.' {background-image: url('.trailingslashit(WP_CONTENT_URL).$q_config['flag_location'].$q_config['flag'][$lang]."); background-repeat: no-repeat;}\n";
-	}
-	echo "</style>\n";
-}
-add_filter('wp_head', 'qtranxf_add_lang_icons');
+add_filter( 'wp_get_nav_menu_items',  'qtranxf_get_nav_menu_items', 0, 3 );
 
 function qtranxf_postsFilter($posts) {
 	if(is_array($posts)) {
@@ -106,20 +141,30 @@ function qtranxf_excludeUntranslatedPosts($where) {
 // don't filter untranslated posts in admin
 add_filter('posts_where_request', 'qtranxf_excludeUntranslatedPosts');
 
-$qtranxv_home=get_home_url().'/';
-function qtranxf_home_url($href)
+function qtranxf_home_url($url, $path, $orig_scheme, $blog_id)
+{
+	global $q_config;
+	//qtranxf_dbg_log('qtranxf_home_url: url='.$url.'; path='.$path.'; orig_scheme='.$orig_scheme);
+	$url=qtranxf_convertURL($url,'',false,!$q_config['hide_default_language']);
+	//if((empty($path) && $q_config['url_mode'] == QT_URL_PATH) || $path == '/' || !empty($q_config['url_info']['explicit_default_language'])){
+	//	$url=qtranxf_convertURL($url, '', false, $q_config['url_info']['explicit_default_language']);
+	//}
+	//qtranxf_dbg_log('qtranxf_home_url: new='.$url,wp_debug_backtrace_summary(null,0,false));
+	return $url;
+}
+/*
+$qtranxv_home=trailingslashit(get_home_url());
+function qtranxf_home_url($url, $path, $orig_scheme, $blog_id)
 {
 	global $qtranxv_home;
-	if ($href===$qtranxv_home)
-	{
-		return qtranxf_convertURL($qtranxv_home);
-	}
-	else
-	{
+	if ($href===$qtranxv_home){
+		return qtranxf_convertURL($href);
+	}else{
 		return $href;
 	}
 }
-add_filter('home_url', 'qtranxf_home_url');
+*/
+add_filter('home_url', 'qtranxf_home_url', 0, 4);
 
 function qtranxf_esc_html($text) {
 	//echo "\nqtranxf_esc_html:text=$text\n";

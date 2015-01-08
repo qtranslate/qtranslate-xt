@@ -17,50 +17,88 @@
 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 */
 
+// Exit if accessed directly
+if ( !defined( 'ABSPATH' ) ) exit;
+
+define('QTX_WIDGET_CSS',
+'.qtranxs_widget ul { margin: 0; }
+.qtranxs_widget ul li
+{
+display: inline; /* horizontal list, use "list-item" or other appropriate value for vertical list */
+list-style-type: none; /* use "initial" or other to enable bullets */
+margin: 0 5px 0 0; /* adjust spacing between items */
+opacity: 0.5;
+-o-transition: 1s ease opacity;
+-moz-transition: 1s ease opacity;
+-webkit-transition: 1s ease opacity;
+transition: 1s ease opacity;
+}
+//.qtranxs_widget ul li span { margin: 0 5px 0 0; } /* other way to control spacing */
+.qtranxs_widget ul li.active { opacity: 0.8; }
+.qtranxs_widget ul li:hover { opacity: 1; }
+.qtranxs_widget img { box-shadow: none; vertical-align: middle; }
+.qtranxs_flag { height:12px; width:18px; display:block; }
+.qtranxs_flag_and_text { padding-left:20px; }
+.qtranxs_flag span { display:none; }
+');
+
 /* qTranslate-X Widget */
 
 class qTranslateXWidget extends WP_Widget {
 	function qTranslateXWidget() {
-		$widget_ops = array('classname' => 'qtranxs-widget', 'description' => __('Allows your visitors to choose a Language.', 'qtranslate') );
+		$widget_ops = array('classname' => 'qtranxs_widget', 'description' => __('Allows your visitors to choose a Language.', 'qtranslate') );
 		$this->WP_Widget('qtranslate', __('qTranslate Language Chooser', 'qtranslate'), $widget_ops);
+		//add_action('qtranxf_head_add_css',array($this,'head_add_css'));
 	}
-	
+
 	function widget($args, $instance) {
 		extract($args);
-		
+		echo '<style type="text/css">'.PHP_EOL;
+		echo empty($instance['widget-css']) ? QTX_WIDGET_CSS : $instance['widget-css'];
+		echo '</style>'.PHP_EOL;
 		echo $before_widget;
-                $title = empty($instance['title']) ? __('Language', 'qtranslate') : apply_filters('widget_title', $instance['title']);
-		$hide_title = empty($instance['hide-title']) ? false : 'on';
+		//$title = empty($instance['title']) ? __('Language', 'qtranslate') : apply_filters('widget_title', $instance['title']);
+		//$hide_title = empty($instance['hide-title']) ? false : 'on';
+		if(empty($instance['hide-title'])) {
+			$title = $instance['title'];
+			if(empty($title))
+				$title=__('Language', 'qtranslate');
+			$title=apply_filters('qtranxf_widget_title',$title.':');
+			echo $before_title . $title . $after_title;
+		}
 		$type = $instance['type'];
 		if($type!='text'&&$type!='image'&&$type!='both'&&$type!='dropdown') $type='text';
-
-		if($hide_title!='on') { echo $before_title . $title . $after_title; };
-								qtranxf_generateLanguageSelectCode($type, $this->id);
+		qtranxf_generateLanguageSelectCode($type, $this->id);
 		echo $after_widget;
 	}
-	
+
+	//function head_add_css() { echo $widget_options['widget-css']; }
+
 	function update($new_instance, $old_instance) {
 		$instance = $old_instance;
 		$instance['title'] = $new_instance['title'];
 		if(isset($new_instance['hide-title'])) $instance['hide-title'] = $new_instance['hide-title'];
 		$instance['type'] = $new_instance['type'];
-
+		$instance['widget-css'] = $new_instance['widget-css'];
 		return $instance;
 	}
-	
+
 	function form($instance) {
-		$instance = wp_parse_args( (array) $instance, array( 'title' => '', 'hide-title' => false, 'type' => 'text' ) );
+		$instance = wp_parse_args( (array) $instance, array( 'title' => '', 'hide-title' => false, 'type' => 'text', 'widget-css' => QTX_WIDGET_CSS ) );
 		$title = $instance['title'];
 		$hide_title = $instance['hide-title'];
 		$type = $instance['type'];
+		$widget_css = $instance['widget-css'];
+		if(empty($widget_css)) $widget_css=QTX_WIDGET_CSS;
 ?>
-                <p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:', 'qtranslate'); ?> <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($title); ?>" /></label></p>
-                <p><label for="<?php echo $this->get_field_id('hide-title'); ?>"><?php _e('Hide Title:', 'qtranslate'); ?> <input type="checkbox" id="<?php echo $this->get_field_id('hide-title'); ?>" name="<?php echo $this->get_field_name('hide-title'); ?>" <?php echo ($hide_title=='on')?'checked="checked"':''; ?>/></label></p>
-                <p><?php _e('Display:', 'qtranslate'); ?></p>
-                <p><label for="<?php echo $this->get_field_id('type'); ?>1"><input type="radio" name="<?php echo $this->get_field_name('type'); ?>" id="<?php echo $this->get_field_id('type'); ?>1" value="text"<?php echo ($type=='text')?' checked="checked"':'' ?>/> <?php _e('Text only', 'qtranslate'); ?></label></p>
-                <p><label for="<?php echo $this->get_field_id('type'); ?>2"><input type="radio" name="<?php echo $this->get_field_name('type'); ?>" id="<?php echo $this->get_field_id('type'); ?>2" value="image"<?php echo ($type=='image')?' checked="checked"':'' ?>/> <?php _e('Image only', 'qtranslate'); ?></label></p>
-                <p><label for="<?php echo $this->get_field_id('type'); ?>3"><input type="radio" name="<?php echo $this->get_field_name('type'); ?>" id="<?php echo $this->get_field_id('type'); ?>3" value="both"<?php echo ($type=='both')?' checked="checked"':'' ?>/> <?php _e('Text and Image', 'qtranslate'); ?></label></p>
-                <p><label for="<?php echo $this->get_field_id('type'); ?>4"><input type="radio" name="<?php echo $this->get_field_name('type'); ?>" id="<?php echo $this->get_field_id('type'); ?>4" value="dropdown"<?php echo ($type=='dropdown')?' checked="checked"':'' ?>/> <?php _e('Dropdown Box', 'qtranslate'); ?></label></p>
+<p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:', 'qtranslate'); ?> <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($title); ?>" /></label></p>
+<p><label for="<?php echo $this->get_field_id('hide-title'); ?>"><?php _e('Hide Title:', 'qtranslate'); ?> <input type="checkbox" id="<?php echo $this->get_field_id('hide-title'); ?>" name="<?php echo $this->get_field_name('hide-title'); ?>" <?php echo ($hide_title=='on')?'checked="checked"':''; ?>/></label></p>
+<p><?php _e('Display:', 'qtranslate'); ?></p>
+<p><label for="<?php echo $this->get_field_id('type'); ?>1"><input type="radio" name="<?php echo $this->get_field_name('type'); ?>" id="<?php echo $this->get_field_id('type'); ?>1" value="text"<?php echo ($type=='text')?' checked="checked"':'' ?>/> <?php _e('Text only', 'qtranslate'); ?></label></p>
+<p><label for="<?php echo $this->get_field_id('type'); ?>2"><input type="radio" name="<?php echo $this->get_field_name('type'); ?>" id="<?php echo $this->get_field_id('type'); ?>2" value="image"<?php echo ($type=='image')?' checked="checked"':'' ?>/> <?php _e('Image only', 'qtranslate'); ?></label></p>
+<p><label for="<?php echo $this->get_field_id('type'); ?>3"><input type="radio" name="<?php echo $this->get_field_name('type'); ?>" id="<?php echo $this->get_field_id('type'); ?>3" value="both"<?php echo ($type=='both')?' checked="checked"':'' ?>/> <?php _e('Text and Image', 'qtranslate'); ?></label></p>
+<p><label for="<?php echo $this->get_field_id('type'); ?>4"><input type="radio" name="<?php echo $this->get_field_name('type'); ?>" id="<?php echo $this->get_field_id('type'); ?>4" value="dropdown"<?php echo ($type=='dropdown')?' checked="checked"':'' ?>/> <?php _e('Dropdown Box', 'qtranslate'); ?></label></p>
+<p><label for="<?php echo $this->get_field_id('widget-css'); ?>"><?php echo __('Widget', 'qtranslate').' CSS:'; ?></label><br><textarea class="widefat" rows="6" name="<?php echo $this->get_field_name('widget-css'); ?>" id="<?php echo $this->get_field_id('widget-css'); ?>" /><?php echo esc_attr($widget_css); ?></textarea><br><small><?php _e('To reset to default, clear the text.','qtranslate'); ?></small></p>
 <?php
 	}
 }
@@ -71,67 +109,70 @@ function qtranxf_generateLanguageSelectCode($style='', $id='') {
 	if($style=='') $style='text';
 	if(is_bool($style)&&$style) $style='image';
 	if(is_404()) $url = get_option('home'); else $url = '';
-        if($id=='') $id = 'qtranslate';
+	if($id=='') $id = 'qtranslate';
 	$id .= '-chooser';
+	$flag_location=trailingslashit(WP_CONTENT_URL).$q_config['flag_location'];
 	switch($style) {
 		case 'image':
 		case 'text':
 		case 'dropdown':
-												echo '<ul class="qtranxf_language_chooser" id="'.$id.'">';
-												foreach(qtranxf_getSortedLanguages() as $language) {
+			echo PHP_EOL.'<ul class="qtranxs_language_chooser" id="'.$id.'">'.PHP_EOL;
+			foreach(qtranxf_getSortedLanguages() as $language) {
 				$classes = array('lang-'.$language);
-				if($language == $q_config['language'])
-					$classes[] = 'active';
-																echo '<li class="'. implode(' ', $classes) .'"><a href="'.qtranxf_convertURL($url, $language, false, true).'"';
+				if($language == $q_config['language']) $classes[] = 'active';
+				echo '<li class="'. implode(' ', $classes) .'"><a href="'.qtranxf_convertURL($url, $language, false, true).'"';
+				//echo '<li'; if($language == $q_config['language']) echo ' class="active"';
+				//echo '><a href="'.qtranxf_convertURL($url, $language, false, true).'"';
 				// set hreflang
-				echo ' hreflang="'.$language.'" title="'.$q_config['language_name'][$language].'"';
+				echo ' hreflang="'.$language.'"';
+				echo ' title="'.$q_config['language_name'][$language].'"';
 				if($style=='image')
-																				//echo ' class="qtranxf_flag qtranxf_flag_'.$language.'"';
+					echo ' class="qtranxs_image qtranxs_image_'.$language.'"';
+				//	echo ' class="qtranxs_flag qtranxs_flag_'.$language.'"';
+				elseif($style=='text')
+					echo ' class="qtranxs_text qtranxs_text_'.$language.'"';
 				echo '>';
-				if($style=='image')
-				{
-					echo '<img src="'.trailingslashit(WP_CONTENT_URL).$q_config['flag_location'].$q_config['flag'][$language].'"></img>';
-				}
+				if($style=='image') echo '<img src="'.$flag_location.$q_config['flag'][$language].'"/>';
 				echo '<span';
-				if($style=='image')
-					echo ' style="display:none"';
-				echo '>'.$q_config['language_name'][$language].'</span></a></li>';
+				if($style=='image') echo ' style="display:none"';
+				echo '>'.$q_config['language_name'][$language].'</span>';
+				echo '</a></li>'.PHP_EOL;
 			}
-												echo "</ul><div class=\"qtranxf_widget_end\"></div>";
+			echo '</ul><div class="qtranxs_widget_end"></div>'.PHP_EOL;
 			if($style=='dropdown') {
-				echo "<script type=\"text/javascript\">\n// <![CDATA[\r\n";
-				echo "var lc = document.getElementById('".$id."');\n";
-				echo "var s = document.createElement('select');\n";
-																echo "s.id = 'qtranxs_select_".$id."';\n";
-				echo "lc.parentNode.insertBefore(s,lc);";
+				echo '<script type="text/javascript">'.PHP_EOL.'// <![CDATA['.PHP_EOL;
+				echo "var lc = document.getElementById('".$id."');".PHP_EOL;
+				echo "var s = document.createElement('select');".PHP_EOL;
+				echo "s.id = 'qtranxs_select_".$id."';".PHP_EOL;
+				echo "lc.parentNode.insertBefore(s,lc);".PHP_EOL;
 				// create dropdown fields for each language
-																foreach(qtranxf_getSortedLanguages() as $language) {
-																				echo qtranxf_insertDropDownElement($language, qtranxf_convertURL($url, $language, false, true), $id);
+				foreach(qtranxf_getSortedLanguages() as $language) {
+					echo qtranxf_insertDropDownElement($language, qtranxf_convertURL($url, $language, false, true), $id);
 				}
 				// hide html language chooser text
-				echo "s.onchange = function() { document.location.href = this.value;}\n";
-				echo "lc.style.display='none';\n";
-				echo "// ]]>\n</script>\n";
+				echo "s.onchange = function() { document.location.href = this.value;}".PHP_EOL;
+				echo "lc.style.display='none';".PHP_EOL;
+				echo '// ]]>'.PHP_EOL.'</script>'.PHP_EOL;
 			}
 			break;
 		case 'both':
-												echo '<ul class="qtranxf_language_chooser" id="'.$id.'">';
-												foreach(qtranxf_getSortedLanguages() as $language) {
+			echo PHP_EOL.'<ul class="qtranxs_language_chooser" id="'.$id.'">'.PHP_EOL;
+			foreach(qtranxf_getSortedLanguages() as $language) {
 				echo '<li';
 				if($language == $q_config['language'])
 					echo ' class="active"';
-																echo '><a href="'.qtranxf_convertURL($url, $language).'"';
-																echo ' class="qtranxf_flag_'.$language.' qtranxf_flag_and_text" title="'.$q_config['language_name'][$language].'">';
-				echo '<img src="'.trailingslashit(WP_CONTENT_URL).$q_config['flag_location'].$q_config['flag'][$language].'"></img>';
-				echo '<span>'.$q_config['language_name'][$language].'</span></a></li>';
+				echo '><a href="'.qtranxf_convertURL($url, $language, false, true).'"';
+				echo ' class="qtranxs_flag_'.$language.' qtranxs_flag_and_text" title="'.$q_config['language_name'][$language].'">';
+				//echo '<img src="'.$flag_location.$q_config['flag'][$language].'"></img>';
+				echo '<span>'.$q_config['language_name'][$language].'</span></a></li>'.PHP_EOL;
 			}
-												echo "</ul><div class=\"qtranxf_widget_end\"></div>";
+			echo '</ul><div class="qtranxs_widget_end"></div>'.PHP_EOL;
 			break;
 	}
 }
 
 function qtranxf_widget_init() {
-				register_widget('qTranslateXWidget');
+	register_widget('qTranslateXWidget');
+	do_action('qtranxf_widget_init');
 }
-
 ?>

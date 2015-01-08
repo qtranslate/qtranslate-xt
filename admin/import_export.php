@@ -102,8 +102,8 @@ function qtranxf_admin_section_import_export($request_uri)
 		<tr valign="top" id="qtranslate-convert-database">
 			<th scope="row"><?php _e('Convert Database', 'qtranslate');?></th>
 			<td>
-				<?php printf(__('If you are updating from qTranslate 1.x or Polyglot, <a href="%s">click here</a> to convert posts to the new language tag format.', 'qtranslate'), $clean_uri.'&convert=true'); ?>
-				<?php printf(__('If you have installed qTranslate for the first time on a Wordpress with existing posts, you can either go through all your posts manually and save them in the correct language or <a href="%s">click here</a> to mark all existing posts as written in the default language.', 'qtranslate'), $clean_uri.'&markdefault=true'); ?>
+				<?php printf(__('If you are updating from qTranslate 1.x or Polyglot, <a href="%s">click here</a> to convert posts to the new language tag format.', 'qtranslate'), $request_uri.'&convert=true'); ?>
+				<?php printf(__('If you have installed qTranslate for the first time on a Wordpress with existing posts, you can either go through all your posts manually and save them in the correct language or <a href="%s">click here</a> to mark all existing posts as written in the default language.', 'qtranslate'), $request_uri.'&markdefault=true'); ?>
 				<?php _e('Both processes are <b>irreversible</b>! Be sure to make a full database backup before clicking one of the links.', 'qtranslate'); ?>
 			</td>
 		</tr>
@@ -120,7 +120,7 @@ function qtranxf_admin_section_import_export($request_uri)
 				<br/>
 				<label for="qtranslate_reset3"><input type="checkbox" name="qtranslate_reset3" id="qtranslate_reset3" value="1"/> <?php _e('Also delete Translations for Categories/Tags/Link Categories.', 'qtranslate'); ?></label>
 				<br/>
-				<?php _e('If something isn\'t working correctly, you can always try to reset all qTranslate settings. A Reset won\'t delete any posts but will remove all settings (including all languages added).', 'qtranslate'); ?>
+				<small><?php _e('If something isn\'t working correctly, you can always try to reset all qTranslate settings. A Reset won\'t delete any posts but will remove all settings (including all languages added).', 'qtranslate'); ?></small>
 			</td>
 		</tr>
 	</table>

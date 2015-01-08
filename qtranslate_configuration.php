@@ -17,6 +17,9 @@
 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 */
 
+// Exit if accessed directly
+if ( !defined( 'ABSPATH' ) ) exit;
+
 require_once(dirname(__FILE__)."/admin/import_export.php");
 require_once(dirname(__FILE__)."/admin/activation_hook.php");
 
@@ -40,12 +43,14 @@ function qtranxf_update_config()
 		delete_option('qtranslate_url_mode');
 		delete_option('qtranslate_detect_browser_language');
 		delete_option('qtranslate_hide_untranslated');
+		delete_option('qtranslate_show_displayed_language_prefix');
 		delete_option('qtranslate_auto_update_mo');
 		delete_option('qtranslate_next_update_mo');
 		delete_option('qtranslate_hide_default_language');
 		delete_option('qtranslate_custom_fields');
 		if(isset($_POST['qtranslate_reset3'])) {
 			delete_option('qtranslate_term_name');
+			delete_option('qtranslate_widget_css');
 		}
 	}
 }
@@ -56,12 +61,29 @@ function qtranxf_add_admin_js () {
 	//wp_register_script( 'qtranslate-script', plugins_url( '/qtranslate.js', __FILE__ ) );
 	wp_register_script( 'qtranslate-script', plugins_url( '/qtranslate.min.js', __FILE__ ) );
 	wp_enqueue_script( 'qtranslate-script' );
+
+	wp_dequeue_script('autosave');
 	wp_deregister_script( 'autosave' );//autosave script saves the active language only and messes it up later in a hard way
+
 	//echo '<script>var qTranslateConfig='.json_encode($q_config).';</script>';
+	$keys=array('enabled_languages','default_language','language','term_name','custom_fields','url_mode');
+	foreach($keys as $key){
+		$config[$key]=$q_config[$key];
+	}
+	$config['url_info_home']=$q_config['url_info']['home'];
+	//$config['WP_CONTENT_URL']=trailingslashit(WP_CONTENT_URL);
+	$config['flag_location']=trailingslashit(WP_CONTENT_URL).$q_config['flag_location'];
+	$config['flag']=array();
+	$config['language_name']=array();
+	foreach($q_config['enabled_languages'] as $lang)
+	{
+		$config['flag'][$lang]=$q_config['flag'][$lang];
+		$config['language_name'][$lang]=$q_config['language_name'][$lang];
+	}
 ?>
 <script type="text/javascript">
 // <![CDATA[
-	var qTranslateConfig=<?php echo json_encode($q_config); ?>;
+	var qTranslateConfig=<?php echo json_encode($config); ?>;
 	function qtranxj_getcookie(cname)
 	{
 		var nm = cname + "=";
@@ -275,11 +297,20 @@ function qtranxf_updateSetting($var, $type = QTX_STRING) {
 		case QTX_ARRAY:
 			if(!isset($_POST[$var])) return false;
 			$val=preg_split('/[\s,]+/',$_POST[$var]);
-			$diff=array_diff($q_config[$var],$val);
-			if(empty($diff)) return false;
+			if( qtranxf_array_compare($q_config[$var],$val) ) return false;
 			$q_config[$var] = $val;
 			update_option('qtranslate_'.$var, $q_config[$var]);
 			return true;
+/*
+		case QTX_ARRAY_STRING:
+			if(!isset($_POST[$var])) return false;
+			$val=preg_split('/[\s,]+/',strtolower($_POST[$var]));
+			$diff=array_diff($q_config[$var],$val);
+			if(empty($diff)) return false;
+			$q_config[$var] = $val;
+			update_option('qtranslate_'.$var, implode(',',$val));
+			return true;
+*/
 		case QTX_BOOLEAN:
 			if(isset($_POST[$var])&&$_POST[$var]==1) {
 				if($q_config[$var]) return false;
@@ -300,6 +331,32 @@ function qtranxf_updateSetting($var, $type = QTX_STRING) {
 			return true;
 	}
 	return false;
+}
+
+function qtranxf_updateSettingIgnoreFileTypes() {
+	global $q_config;
+	if(!isset($_POST['submit'])) return false;
+	$var='ignore_file_types';
+	if(!isset($_POST[$var])) return false;
+	$posted=preg_split('/[\s,]+/',strtolower($_POST[$var]));
+	$val=explode(',',QTX_IGNORE_FILE_TYPES);
+	foreach($posted as $v){
+		if(empty($v)) continue;
+		if(in_array($v,$val)) continue;
+		$val[]=$v;
+	}
+	if( qtranxf_array_compare($q_config[$var],$val) ) return false;
+	$q_config[$var] = $val;
+	update_option('qtranslate_'.$var, implode(',',$val));
+	return true;
+}
+
+function qtranxf_array_compare($a,$b) {
+	if(count($a)!=count($b)) return false;
+	//can be optimized
+	$diff_a=array_diff($a,$b);
+	$diff_b=array_diff($b,$a);
+	return empty($diff_a) && empty($diff_b);
 }
 
 function qtranxf_language_columns($columns) {
@@ -369,9 +426,11 @@ function qtranxf_conf() {
 		// save settings
 		qtranxf_updateSetting('default_language', QTX_LANGUAGE);
 		qtranxf_updateSetting('flag_location', QTX_URL);
-		qtranxf_updateSetting('ignore_file_types', QTX_STRING);
+		//qtranxf_updateSetting('ignore_file_types', QTX_ARRAY_STRING);
+		qtranxf_updateSettingIgnoreFileTypes();
 		qtranxf_updateSetting('detect_browser_language', QTX_BOOLEAN);
 		qtranxf_updateSetting('hide_untranslated', QTX_BOOLEAN);
+		qtranxf_updateSetting('show_displayed_language_prefix', QTX_BOOLEAN);
 		qtranxf_updateSetting('use_strftime', QTX_INTEGER);
 		qtranxf_updateSetting('url_mode', QTX_INTEGER);
 		qtranxf_updateSetting('auto_update_mo', QTX_BOOLEAN);
@@ -598,7 +657,7 @@ function qtranxf_conf() {
 				<td>
 					<fieldset id="qtranxs-languages-menu"><legend class="hidden"><?php _e('Default Language', 'qtranslate') ?></legend>
 				<?php
-																				foreach ( qtranxf_getSortedLanguages() as $key => $language ) {
+					foreach ( qtranxf_getSortedLanguages() as $key => $language ) {
 						echo "\t<label title='" . $q_config['language_name'][$language] . "'><input type='radio' name='default_language' value='" . $language . "'";
 						if ( $language == $q_config['default_language'] ) {
 							echo " checked='checked'";
@@ -610,18 +669,19 @@ function qtranxf_conf() {
 						echo ' '.$q_config['language_name'][$language] . "</label><br />\n";
 					}
 				?>
-					</br>
-					<?php printf(__('Choose the default language of your blog. This is the language which will be shown on %s. You can also change the order the languages by clicking on the arrows above.', 'qtranslate'), get_bloginfo('url')); ?>
+					<small><?php printf(__('Choose the default language of your blog. This is the language which will be shown on %s. You can also change the order the languages by clicking on the arrows above.', 'qtranslate'), get_bloginfo('url')); ?></small>
 					</fieldset>
 				</td>
 			</tr>
 			<tr valign="top">
 				<th scope="row"><?php _e('Hide Untranslated Content', 'qtranslate');?></th>
 				<td>
-					<label for="hide_untranslated"><input type="checkbox" name="hide_untranslated" id="hide_untranslated" value="1"<?php echo ($q_config['hide_untranslated'])?' checked="checked"':''; ?>/> <?php _e('Hide Content which is not available for the selected language.', 'qtranslate'); ?></label>
+					<label for="hide_untranslated"><input type="checkbox" name="hide_untranslated" id="hide_untranslated" value="1"<?php if($q_config['hide_untranslated']) echo ' checked="checked"'; ?>/> <?php _e('Hide Content which is not available for the selected language.', 'qtranslate'); ?></label>
 					<br/>
-					<?php _e('When checked, posts will be hidden if the content is not available for the selected language. If unchecked, a message will appear showing all the languages the content is available in.', 'qtranslate'); ?>
-					<?php _e('This function will not work correctly if you installed qTranslate on a blog with existing entries. In this case you will need to take a look at "Convert Database" under "Advanced Settings".', 'qtranslate'); ?>
+					<small><?php _e('When checked, posts will be hidden if the content is not available for the selected language. If unchecked, a message will appear showing all the languages the content is available in.', 'qtranslate'); ?>
+					<?php _e('This function will not work correctly if you installed qTranslate on a blog with existing entries. In this case you will need to take a look at "Convert Database" under "Advanced Settings".', 'qtranslate'); ?></small>
+					<br/><br/>
+					<label for="show_displayed_language_prefix"><input type="checkbox" name="show_displayed_language_prefix" id="show_displayed_language_prefix" value="1"<?php if($q_config['show_displayed_language_prefix']) echo ' checked="checked"'; ?>/> <?php _e('Show displayed language prefix when content is not available for the selected language.', 'qtranslate'); ?></label>
 				</td>
 			</tr>
 			<tr valign="top">
@@ -629,7 +689,7 @@ function qtranxf_conf() {
 				<td>
 					<label for="detect_browser_language"><input type="checkbox" name="detect_browser_language" id="detect_browser_language" value="1"<?php echo ($q_config['detect_browser_language'])?' checked="checked"':''; ?>/> <?php _e('Detect the language of the browser and redirect accordingly.', 'qtranslate'); ?></label>
 					<br/>
-					<?php _e('When the frontpage is visited via bookmark/external link/type-in, the visitor will be forwarded to the correct URL for the language specified by his browser.', 'qtranslate'); ?>
+					<small><?php _e('When the frontpage is visited via bookmark/external link/type-in, the visitor will be forwarded to the correct URL for the language specified by his browser.', 'qtranslate'); ?></small>
 				</td>
 			</tr>
 		</table>
@@ -643,8 +703,9 @@ function qtranxf_conf() {
 						<label title="Pre-Path Mode"><input type="radio" name="url_mode" value="<?php echo QTX_URL_PATH; ?>" <?php echo ($q_config['url_mode']==QTX_URL_PATH)?"checked=\"checked\"":""; ?> /> <?php echo __('Use Pre-Path Mode (Default, puts /en/ in front of URL)', 'qtranslate').'. SEO '.__('friendly', 'qtranslate').'.'; ?></label><br />
 						<label title="Pre-Domain Mode"><input type="radio" name="url_mode" value="<?php echo QTX_URL_DOMAIN; ?>" <?php echo ($q_config['url_mode']==QTX_URL_DOMAIN)?"checked=\"checked\"":""; ?> /> <?php echo __('Use Pre-Domain Mode (uses http://en.yoursite.com)', 'qtranslate').'. '.__('You will need to configure DNS sub-domains on your site.', 'qtranslate'); ?></label><br />
 						<label title="Query Mode"><input type="radio" name="url_mode" value="<?php echo QTX_URL_QUERY; ?>" <?php echo ($q_config['url_mode']==QTX_URL_QUERY)?"checked=\"checked\"":""; ?> /> <?php echo __('Use Query Mode (?lang=en)', 'qtranslate').'. '.__('Most SEO unfriendly, not recommended.', 'qtranslate'); ?></label><br />
-					</fieldset><br/>
-					<?php _e('Pre-Path and Pre-Domain mode will only work with mod_rewrite/pretty permalinks. Additional Configuration is needed for Pre-Domain mode!', 'qtranslate'); ?><br/>
+					</fieldset>
+					<small><?php _e('Pre-Path and Pre-Domain mode will only work with mod_rewrite/pretty permalinks. Additional Configuration is needed for Pre-Domain mode!', 'qtranslate'); ?></small>
+					<br/><br/>
 					<label for="hide_default_language"><input type="checkbox" name="hide_default_language" id="hide_default_language" value="1"<?php echo ($q_config['hide_default_language'])?' checked="checked"':''; ?>/> <?php _e('Hide URL language information for default language.', 'qtranslate'); ?></label>
 				</td>
 			</tr>
@@ -653,15 +714,15 @@ function qtranxf_conf() {
 				<td>
 					<?php echo trailingslashit(WP_CONTENT_URL); ?><input type="text" name="flag_location" id="flag_location" value="<?php echo $q_config['flag_location']; ?>" style="width:50%"/>
 					<br/>
-					<?php _e('Path to the flag images under wp-content, with trailing slash. (Default: plugins/qtranslate-x/flags/)', 'qtranslate'); ?>
+					<small><?php _e('Path to the flag images under wp-content, with trailing slash. (Default: plugins/qtranslate-x/flags/)', 'qtranslate'); ?></small>
 				</td>
 			</tr>
 			<tr valign="top">
 				<th scope="row"><?php _e('Ignore Links', 'qtranslate');?></th>
 				<td>
-					<input type="text" name="ignore_file_types" id="ignore_file_types" value="<?php echo $q_config['ignore_file_types']; ?>" style="width:100%"/>
+					<input type="text" name="ignore_file_types" id="ignore_file_types" value="<?php echo implode(',',array_diff($q_config['ignore_file_types'],explode(',',QTX_IGNORE_FILE_TYPES))); ?>" style="width:100%"/>
 					<br/>
-					<?php _e('Don\'t convert Links to files of the given file types. (Default: gif,jpg,jpeg,png,pdf,swf,tif,rar,zip,7z,mpg,divx,mpeg,avi,css,js)', 'qtranslate'); ?>
+					<small><?php printf(__('Don\'t convert links to files of the given file types. (Always included: %s)', 'qtranslate'),implode(', ',explode(',',QTX_IGNORE_FILE_TYPES))); ?></small>
 				</td>
 			</tr>
 			<tr valign="top">
@@ -671,7 +732,7 @@ function qtranxf_conf() {
 					<br/>
 					<label for="update_mo_now"><input type="checkbox" name="update_mo_now" id="update_mo_now" value="1" /> <?php _e('Update Gettext databases now.', 'qtranslate'); ?></label>
 					<br/>
-					<?php _e('qTranslate will query the Wordpress Localisation Repository every week and download the latest Gettext Databases (.mo Files).', 'qtranslate'); ?>
+					<small><?php _e('qTranslate will query the Wordpress Localisation Repository every week and download the latest Gettext Databases (.mo Files).', 'qtranslate'); ?></small>
 				</td>
 			</tr>
 			<tr valign="top">
@@ -681,17 +742,17 @@ function qtranxf_conf() {
 					<label><input type="radio" name="use_strftime" value="<?php echo QTX_DATE_OVERRIDE; ?>" <?php echo ($q_config['use_strftime']==QTX_DATE_OVERRIDE)?' checked="checked"':''; ?>/> <?php _e('Use emulated date function and replace formats with the predefined formats for each language.', 'qtranslate'); ?></label><br />
 					<label><input type="radio" name="use_strftime" value="<?php echo QTX_STRFTIME; ?>" <?php echo ($q_config['use_strftime']==QTX_STRFTIME)?' checked="checked"':''; ?>/> <?php _e('Use strftime instead of date.', 'qtranslate'); ?></label><br />
 					<label><input type="radio" name="use_strftime" value="<?php echo QTX_STRFTIME_OVERRIDE; ?>" <?php echo ($q_config['use_strftime']==QTX_STRFTIME_OVERRIDE)?' checked="checked"':''; ?>/> <?php _e('Use strftime instead of date and replace formats with the predefined formats for each language.', 'qtranslate'); ?></label><br />
-					<?php _e('Depending on the mode selected, additional customizations of the theme may be needed.', 'qtranslate'); ?>
+					<small><?php _e('Depending on the mode selected, additional customizations of the theme may be needed.', 'qtranslate'); ?></small>
 				</td>
 			</tr>
 			<tr valign="top">
 				<th scope="row"><?php _e('Custom Fields', 'qtranslate');?></th>
 				<td>
 					<input type="text" name="custom_fields" id="qtranxs_custom_fields" value="<?php echo implode(' ',$q_config['custom_fields']); ?>" style="width:100%">
-					<p><?php printf(__('Enter "id" attribute of text fields from your theme, which you wish to translate. This applies to post, page and media editors (/wp-admin/post*). To lookup "id", right-click on the field in the post or the page editor and choose "Inspect Element". Look for an attribute of the field named "id". Enter it here, as many as you need, space-separated. After saving configuration, these fields will start responding to the language switching buttons, and you can enter different text for each language. For more information, read %sFAQ%s.', 'qtranslate'),'<a href="https://wordpress.org/plugins/qtranslate-x/faq/">','</a>'); ?></p>
+					<p><small><?php printf(__('Enter "id" attribute of text fields from your theme, which you wish to translate. This applies to post, page and media editors (/wp-admin/post*). To lookup "id", right-click on the field in the post or the page editor and choose "Inspect Element". Look for an attribute of the field named "id". Enter it here, as many as you need, space-separated. After saving configuration, these fields will start responding to the language switching buttons, and you can enter different text for each language. For more information, read %sFAQ%s.', 'qtranslate'),'<a href="https://wordpress.org/plugins/qtranslate-x/faq/">','</a>'); ?></small></p>
 				</td>
 			</tr>
-<?php/*
+<?php /*
 			<tr>
 				<th scope="row"><?php _e('Debugging Information', 'qtranslate');?></th>
 				<td>
@@ -708,7 +769,7 @@ function qtranxf_conf() {
 					?></textarea>
 				</td>
 			</tr>
-*/?>
+*/ ?>
 		</table>
 	<?php qtranxf_admin_section_end('advanced'); ?>
 <?php do_action('qtranslate_configuration', $clean_uri); ?>

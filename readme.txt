@@ -4,7 +4,7 @@ Contributors: johnclause, chineseleper, Vavooon
 Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, translation
 Requires at least: 3.9
 Tested up to: 4.1
-Stable tag: 2.7.9
+Stable tag: 2.8
 License: GPLv3 or later
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QEXEK3HX8AR6U
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -29,6 +29,8 @@ qTranslate-X makes creation of multilingual content as easy as working with a si
 - One language for each URL - Users and SEO will thank you for not mixing multilingual content.
 - qTranslate-X supports unlimited number of languages, which can be easily added/modified/deleted via a comfortable Configuration Page at Settings->Languages.
 - You may use [Google XML Sitemaps v3 for qTranslate](https://wordpress.org/plugins/google-xml-sitemaps-v3-for-qtranslate/) plugin to rebuild your XML sitemap for better SEO support.
+- Custom CSS for "qTranslate Language Chooser" widget configurable via its properties.
+- Menu item "Language Switcher" to enable language choosing from a menu.
 
 You may still find a lot of useful information through reading [qTranslate](https://wordpress.org/plugins/qtranslate/ "Original qTranslate plugin")'s original documentation, which is not duplicated here in full. There are also other plugins, which offer multilingual support, but it seems that Qian Qin has very good original back-end design, and many people have been pleasantly using his plugin ever since. It stores all translations in the same single post, which makes it easy to maintain and to use it with other plugins. However, the user interface of former qTranslate got out of sync with the recent versions of Wordpress, especially after WP went to TinyMCE 4. There is a number of forks of qTranslate, see for example, [mqTranslate](https://wordpress.org/plugins/mqtranslate/ "mqTranslate plugin"), [qTranslate Plus](https://wordpress.org/plugins/qtranslate-xp/ "qTranslate Plus plugin") and [zTranslate](https://wordpress.org/plugins/ztranslate/ "zTranslate plugin"). They all try to fix qTranslate's user interface preserving its original back-end, which is what this plugin does too. This plugin is a hybrid of all of them and fixes a few bugs in each of them. It also has many new features too, like theme custom translatable fields, for example. We hope that this plugin is the most complete working version which combines the best features of [qTranslate](https://wordpress.org/plugins/qtranslate/ "Original qTranslate plugin"), [mqTranslate](https://wordpress.org/plugins/mqtranslate/ "mqTranslate fork"), [qTranslate Plus](https://wordpress.org/plugins/qtranslate-xp/ "qTranslate Plus fork") and [zTranslate](https://wordpress.org/plugins/ztranslate/ "zTranslate fork").
 
@@ -44,7 +46,7 @@ Installation of this plugin is no different from any other plugin:
 1. Deactivate plugin qTranslate, mqTranslate, qTranslate Plus, or zTranslate, if you running any.
 1. Activate qTranslate-X through the 'Plugins' configuration page in WordPress.
 1. Open Settings->Languages configuration page and add/delete/disable any languages you need.
-1. Add the qTranslate Widget or Language Switcher menu item to let your visitors switch the language.
+1. Add the "qTranslate Language Chooser" widget or "Language Switcher" menu item to let your visitors switch the language.
 1. You may use [Google XML Sitemaps v3 for qTranslate](https://wordpress.org/plugins/google-xml-sitemaps-v3-for-qtranslate/) plugin to rebuild your XML sitemap for better SEO support.
 1. Configure theme custom fields to be translatable if needed (Settings -> Languages: "Custom Fields").
 1. Upgrading from [qTranslate](https://wordpress.org/plugins/qtranslate/ "qTranslate original plugin") required no additional actions, qTranslate-X will continue to work from the database entries of qTranslate. One may also go back to qTranslate at any time. Upgrading from other qTranslate forks may require re-configuration of the languages and taxonomies names, unless you rename corresponding database entries directly.
@@ -98,9 +100,9 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 
 == Upgrade Notice ==
 
-* Upgrading from [qTranslate](https://wordpress.org/plugins/qtranslate/ "qTranslate original plugin") required no additional actions, qTranslate-X will continue to work from the database entries of qTranslate. One may also go back to qTranslate at any time.
-* Upgrading from other qTranslate forks may require re-configuration of the languages and taxonomies names.
-* Former page and post translations are untouched and preserved.
+* Upgrading from [qTranslate](https://wordpress.org/plugins/qtranslate/ "qTranslate original plugin") and [zTranslate](https://wordpress.org/plugins/ztranslate/ "zTranslate plugin") requires no additional actions, qTranslate-X will continue to work from the database entries of qTranslate. One may also go back to qTranslate at any time.
+* Upgrading from other qTranslate forks also painless with an additional step of configuration import. One may also go back at any time using configuration export.
+* Former page and post translations are untouched and preserved in any case.
 * Upgrading from other multilingual frameworks will require custom re-configuration. We suggest to search for a plugin, which may be already implemented to transfer the translations to qTranslate or to qTranslate-X. If a plugin works for one, it should work for other too, since qTranslate-X and qTranslate share the same database structures.
 
 == Screenshots ==
@@ -112,10 +114,14 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 == Changelog ==
 
 = 2.8 =
-* added option "Show displayed language prefix when Content is not available for the selected language"
+* added option "Show displayed language prefix when content is not available for the selected language".
+* compatibility with "BuddyPress" plugin and various improvements.
+* custom CSS for "qTranslate Language Chooser" widget configurable via its properties.
+* now always redirects to a canonical URL, as defined by options, before displaying a page.
+* use of cookies to carry the language chosen from session to session.
 
 = 2.7.9 =
-* created wrappers to make former qTranslate function names available: qtrans_getLanguage, qtrans_convertURL, qtrans_use, qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage.
+* [this does not work yet] created wrappers to make former qTranslate function names available: qtrans_getLanguage, qtrans_convertURL, qtrans_use, qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage.
 
 = 2.7.8 =
 * user-friendly activation hook to deactivate/import/export other qTranslate forks.

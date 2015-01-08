@@ -17,23 +17,63 @@
 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 */
 
+// Exit if accessed directly
+if ( !defined( 'ABSPATH' ) ) exit;
+
 /* qTranslate-X Utilities */
 
-function qtranxf_parseURL($url) {
-    $r  = '!(?:(\w+)://)?(?:(\w+)\:(\w+)@)?([^/:]+)?';
-    $r .= '(?:\:(\d*))?([^#?]+)?(?:\?([^#]+))?(?:#(.+$))?!i';
+/*
+if(defined('WP_DEBUG')&&WP_DEBUG){
+	if(!function_exists('qtranxf_dbg_log')){
+		function qtranxf_dbg_log($msg,$var=null){
+			//$d=ABSPATH.'/wp-logs';
+			//if(!file_exists($d)) mkdir($d);
+			//$f=$d.'/qtranslate.log';
+			$f=WP_CONTENT_DIR.'/debug-qtranslate.log';
+			if($var)
+				$msg .= "\n".var_export($var,true);
+			error_log($msg."\n",3,$f);
+		}
+	}
+	if(!function_exists('qtranxf_dbg_echo')){
+		function qtranxf_dbg_echo($msg,$var=null){
+			if($var)
+				$msg .= "<br>\n".var_export($var,true);
+			echo $msg."<br>\n";
+		}
+	}
+	assert_options(ASSERT_BAIL,true);
+//}else{
+//	function qtranxf_dbg_log($msg,$var=null){}
+//	function qtranxf_dbg_echo($msg){}
+	//assert_options(ASSERT_ACTIVE,false);
+	//assert_options(ASSERT_WARNING,false);
+	//assert_options(ASSERT_QUIET_EVAL,true);
+}// */
 
-    preg_match ( $r, $url, $out );
-    $result = @array(
-        "scheme" => $out[1],
-        "host" => $out[4].(($out[5]=='')?'':':'.$out[5]),
-        "user" => $out[2],
-        "pass" => $out[3],
-        "path" => $out[6],
-        "query" => $out[7],
-        "fragment" => $out[8]
-        );
-    return $result;
+function qtranxf_parseURL($url) {
+/*
+	if(function_exists('parse_url')){
+		$result = parse_url($url);
+		if(!isset($result['path'])) $result['path']='';
+		if(!isset($result['host'])) $result['host']='';
+		if(isset($result['port'])) $result['host'].=':'.$result['port'];
+	}else{
+*/
+	$r  = '!(?:(\w+)://)?(?:(\w+)\:(\w+)@)?([^/:]+)?';
+	$r .= '(?:\:(\d*))?([^#?]+)?(?:\?([^#]+))?(?:#(.+$))?!i';
+	preg_match ( $r, $url, $out );
+	$result = @array(
+		"scheme" => $out[1],
+		"host" => $out[4].(($out[5]=='')?'':':'.$out[5]),
+		"user" => $out[2],
+		"pass" => $out[3],
+		"path" => $out[6],
+		"query" => $out[7],
+		"fragment" => $out[8]
+		);
+//	}
+	return $result;
 }
 
 function qtranxf_stripSlashesIfNecessary($str) {
@@ -102,8 +142,8 @@ function qtranxf_getAvailableLanguages($text) {
 function qtranxf_isAvailableIn($post_id, $language='') {
 	global $q_config;
 	if($language == '') $language = $q_config['default_language'];
-	$post = &get_post($post_id);
-				$languages = qtranxf_getAvailableLanguages($post->post_content);
+	$p = get_post($post_id); $post = &$p;
+	$languages = qtranxf_getAvailableLanguages($post->post_content);
 	return in_array($language,$languages);
 }
 

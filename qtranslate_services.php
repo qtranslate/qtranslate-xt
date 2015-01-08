@@ -17,6 +17,9 @@
 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 */
 
+// Exit if accessed directly
+if ( !defined( 'ABSPATH' ) ) exit;
+
 /* qTranslate Services */
 
 // generate public key
@@ -377,7 +380,7 @@ function qts_config_hook($request_uri) {
 			<?php if(!qts_isOpenSSLAvailable()) { printf(__('<div id="message" class="error fade"><p>qTranslate Services could not load <a href="%s">OpenSSL</a>!</p></div>'), 'http://www.php.net/manual/book.openssl.php'); } ?>
 			<label for="qtranslate_services"><input type="checkbox" name="qtranslate_services" id="qtranslate_services" value="1"<?php echo ($q_config['qtranslate_services'])?' checked="checked"':''; ?>/> <?php _e('Enable qTranslate Services', 'qtranslate'); ?></label>
 			<br/>
-			<?php _e('With qTranslate Services, you will be able to use professional human translation services with a few clicks.', 'qtranslate'); ?><br />
+			<small><?php _e('With qTranslate Services, you will be able to use professional human translation services with a few clicks.', 'qtranslate'); ?></small>
 		</td>
 	</tr>
 <?php 
@@ -404,7 +407,7 @@ function qts_config_hook($request_uri) {
 				</tfoot>
 <?php
 		foreach($orders as $order) { 
-			$post = &get_post($order['post_id']);
+			$p = get_post($order['post_id']); $post = &$p;
 			if(!$post) continue;
 			$post->post_title = esc_html(qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($post->post_title));
 ?>
@@ -506,7 +509,7 @@ function qts_UpdateOrder($order_id) {
 		// update db if post is updated
 		if(isset($result['order_status']) && $result['order_status']==QTS_STATE_CLOSED) {
 			$order['post_id'] = intval($order['post_id']);
-			$post = &get_post($order['post_id']);
+			$p=get_post($order['post_id']); $post = &$p;
 			$title = qtranxf_split($post->post_title);
 			$content = qtranxf_split($post->post_content);
 			$title[$order['target_language']] = $result['order_translated_title'];
@@ -542,7 +545,7 @@ function qts_service() {
 	if(isset($_REQUEST['target_language'])&&qtranxf_isEnabled($_REQUEST['target_language']))
 		$translate_to = $_REQUEST['target_language'];
 	if($translate_to == $translate_from) $translate_to = '';
-	$post = &get_post($post_id);
+	$p = get_post($post_id); $post = &$p;
 	if(!$post) {
 		printf(__('Post with id "%s" not found!','qtranslate'), $post_id);
 		return;
@@ -838,7 +841,7 @@ function qts_quote() {
 	$service_id = $_POST['service_id'];
 	$translate_from = $_POST['translate_from'];
 	$translate_to = $_POST['translate_to'];
-	$post = &get_post($_POST['post_id']);
+	$p = get_post($_POST['post_id']); $post = &$p;
 	$post = qtranxf_use($translate_from, $post);
 	$post_title = $post->post_title;
 	$post_content = $post->post_content;
