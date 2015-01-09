@@ -36,6 +36,8 @@ You may still find a lot of useful information through reading [qTranslate](http
 
 We suggest all mentioned authors to get together and to continue supporting one single qTranslate-ish plugin in a joint effort.
 
+GitHub repository is available: https://github.com/qTranslate-Team/qtranslate-x.git
+
 == Installation ==
 
 Installation of this plugin is no different from any other plugin:
@@ -169,6 +171,12 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 * added 'post_title' filter to translate all titles fetched for display purpose
 * fixed problem with comment date display in some themes
 
+== Known Bugs ==
+
+* Incompatibility with plugin [WP Editor](https://wordpress.org/support/plugin/wp-editor). Language switching buttons do not change the content of main editor in pages and posts. For now, you would need to deactivate "WP Editor".
+* Message "The backup of this post in your browser is different from the version below" appears sometimes in the post editor. Clicking on "Restore the backup" may produce unexpected result, since backup has one language only,
+the one which was active at the time of the last pressing of button "Update". The code which causes this is in /wp-includes/js/autosave.js.
+
 == Credentials ==
 
 * The code of this plugin mostly originally based on [qTranslate](https://wordpress.org/plugins/qtranslate/ "qTranslate original plugin") and [zTranslate](https://wordpress.org/plugins/ztranslate/ "zTranslate fork").
@@ -177,10 +185,5 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 == Desirable Unimplemented Features ==
 
 * "Quick Edit" action in category or tag list pages will update the default language only.
-* Full screen editor mode does not have language switch buttons
-* If a language was switched on a page or post, but no edits were done, browser still complains about page changes, when leaving page.
-
-== Known Bugs ==
-
-* Message "The backup of this post in your browser is different from the version below" appears sometimes in the post editor. Clicking on "Restore the backup" may produce unexpected result, since backup has one language only,
-the one which was active at the time of the last pressing of button "Update". The code which causes this is in /wp-includes/js/autosave.js.
+* If a language was switched on a page or post, but no edits were done, browser sometimes still complains about page changes, when leaving page.
+* Full screen editor mode does not have language switch buttons (not applicable in WP 4.1 any more).
