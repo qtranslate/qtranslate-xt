@@ -37,14 +37,13 @@ function qtranxf_init() {
 		if($q_config['auto_update_mo']) qtranxf_updateGettextDatabases();
 		// update definitions if neccesary
 		if(current_user_can('manage_categories')) qtranxf_updateTermLibrary();
-	//	$cookie_name = 'qtrans_admin_language';
-	//}else{
-	//	$cookie_name = 'language';
+		$q_config['cookie_enabled']=isset($_COOKIE[QTX_COOKIE_NAME_ADMIN]);
+	}else{
+		$q_config['cookie_enabled']=isset($_COOKIE[QTX_COOKIE_NAME_FRONT]);
 	}
-	$q_config['cookie_enabled']=isset($_COOKIE[QTX_COOKIE_NAME]);
 
 	$host=$_SERVER['HTTP_HOST'];
-	//on different port it will not work for now
+	//on different port, it will not work for now
 	//if(isset($_SERVER['SERVER_PORT']) && !empty($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT']!='80'){
 	//	$host.=':'.$_SERVER['SERVER_PORT'];
 	//}
@@ -53,61 +52,6 @@ function qtranxf_init() {
 	//qtranxf_dbg_log('qtranxf_init: POST: ',$_POST);
 	$q_config['url_info'] = qtranxf_detect_language($_SERVER['REQUEST_URI'], $host, isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '');
 	//qtranxf_dbg_log('qtranxf_init: url_info: ',$q_config['url_info']);
-/*
-	// set test cookie
-	//setcookie('qtrans_cookie_test', 'qTranslateookie Test', 0, $q_config['url_info']['home'], $q_config['url_info']['host']);
-	// check cookies for admin
-	if(defined('WP_ADMIN')) {
-		if(isset($_GET['lang']) && qtranxf_isEnabled($_GET['lang'])) {
-			$q_config['language'] = $q_config['url_info']['language'];
-			setcookie('qtrans_admin_language', $q_config['language'], time()+60*60*24*30);
-		} elseif(isset($_COOKIE['qtrans_admin_language']) && qtranxf_isEnabled($_COOKIE['qtrans_admin_language'])) {
-			$q_config['language'] = $_COOKIE['qtrans_admin_language'];
-		} else {
-			$q_config['language'] = $q_config['default_language'];
-		}
-	} else {
-		$q_config['language'] = $q_config['url_info']['language'];
-	}
-
-//qtranxf_dbg_log('qtranxf_init: url_info:',$q_config['url_info']);
-//http_negotiate_language
-	if(!$q_config['url_info']['language']){
-		// detect language and forward if needed
-		if($q_config['detect_browser_language'] && $q_config['url_info']['redirect'] && !isset($_COOKIE['qtrans_cookie_test']) && $q_config['url_info']['language'] == $q_config['default_language']) {
-			$target = false;
-			$prefered_languages = array();
-			if(isset($_SERVER["HTTP_ACCEPT_LANGUAGE"]) && preg_match_all("#([^;,]+)(;[^,0-9]*([0-9\.]+)[^,]*)?#i",$_SERVER["HTTP_ACCEPT_LANGUAGE"], $matches, PREG_SET_ORDER)) {
-				$priority = 1.0;
-				foreach($matches as $match) {
-					if(!isset($match[3])) {
-						$pr = $priority;
-						$priority -= 0.001;
-					} else {
-						$pr = floatval($match[3]);
-					}
-					$prefered_languages[$match[1]] = $pr;
-				}
-				arsort($prefered_languages, SORT_NUMERIC);
-				foreach($prefered_languages as $language => $priority) {
-					if(strlen($language)>2) $language = substr($language,0,2);
-					if(qtranxf_isEnabled($language)) {
-						if($q_config['hide_default_language'] && $language == $q_config['default_language']) break;
-						$target = qtranxf_convertURL(get_option('home'),$language);
-						break;
-					}
-				}
-			}
-			$target = apply_filters('qtranslate_language_detect_redirect', $target);
-			if($target !== false) {
-	//qtranxf_dbg_log('qtranxf_init:detect_redirect: target='.$target);
-				wp_redirect($target);
-				exit();
-			}
-		}
-		$q_config['url_info']['language']=$q_config['default_language'];
-	}
-*/
 
 	$q_config['language'] = $q_config['url_info']['language'];
 	$q_config['language'] = apply_filters('qtranslate_language', $q_config['language']);
@@ -173,16 +117,28 @@ function qtranxf_resolveLangCase($lang,&$caseredirect)
 	return FALSE;
 }
 
+function qtranxf_get_language_cookie()
+{
+	if(defined('WP_ADMIN')){
+		if(isset($_COOKIE[QTX_COOKIE_NAME_ADMIN])) return $_COOKIE[QTX_COOKIE_NAME_ADMIN];
+	}else{
+		if(isset($_COOKIE[QTX_COOKIE_NAME_FRONT])) return $_COOKIE[QTX_COOKIE_NAME_FRONT];
+	}
+	return false;
+}
+
 function qtranxf_set_language_cookie($lang,$cookie_path)
 {
 	if(defined('WP_ADMIN')){
+		$cookie_name = QTX_COOKIE_NAME_ADMIN;
 		$cookie_path = trailingslashit($cookie_path).'wp-admin';
 	}else{
+		$cookie_name = QTX_COOKIE_NAME_FRONT;
 		if(strlen($cookie_path)>1)
 			$cookie_path=untrailingslashit($cookie_path);
 	}
 	//qtranxf_dbg_log('qtranxf_set_language_cookie: COOKIEPATH='.COOKIEPATH.'; cookie_path='.$cookie_path.'; lang='.$lang);
-	setcookie(QTX_COOKIE_NAME, $lang, time()+31536000, $cookie_path);//one year
+	setcookie($cookie_name, $lang, time()+31536000, $cookie_path);//one year
 	//two weeks 1209600
 }
 
@@ -279,10 +235,10 @@ function qtranxf_detect_language($url, $host, $referer) {
 		if($q_config['hide_default_language'] && $lang_url == $q_config['default_language'])
 			$doredirect=true;
 	}else{
-
-		if(isset($_COOKIE[QTX_COOKIE_NAME])){
+		$lang=qtranxf_get_language_cookie();
+		if($lang){
 			$cs=false;
-			$lang=qtranxf_resolveLangCase($_COOKIE[QTX_COOKIE_NAME],$cs);
+			$lang=qtranxf_resolveLangCase($lang,$cs);
 			//qtranxf_dbg_log('qtranxf_detect_language: cookie: lang='.$lang);
 		}
 
@@ -388,6 +344,27 @@ function qtranxf_validateBool($var, $default) {
 	if($var==='0') return false; elseif($var==='1') return true; else return $default;
 }
 
+function qtranxf_load_option($nm) {
+	global $q_config;
+	$val = get_option('qtranslate_'.$nm);
+	if(empty($val)) return;
+	$q_config[$nm]=$val;
+}
+
+function qtranxf_load_option_array($nm) {
+	global $q_config;
+	$val = get_option('qtranslate_'.$nm);
+	if(!is_array($val)) return;
+	$q_config[$nm]=$val;
+}
+
+function qtranxf_load_option_bool($nm) {
+	global $q_config;
+	$val = get_option('qtranslate_'.$nm);
+	if($val==='0') $q_config[$nm] = false;
+	elseif($val==='1') $q_config[$nm] = true;
+}
+
 // loads config via get_option and defaults to values set on top
 function qtranxf_loadConfig() {
 	global $q_config;
@@ -414,7 +391,10 @@ function qtranxf_loadConfig() {
 	$auto_update_mo = get_option('qtranslate_auto_update_mo');
 	$term_name = get_option('qtranslate_term_name');
 	$hide_default_language = get_option('qtranslate_hide_default_language');
-	$custom_fields = get_option('qtranslate_custom_fields');
+
+	qtranxf_load_option_array('custom_fields');
+	qtranxf_load_option_array('custom_field_classes');
+	qtranxf_load_option_array('text_field_filters');
 
 	// default if not set
 	if(!is_array($date_formats)) $date_formats = $q_config['date_format'];
@@ -425,18 +405,23 @@ function qtranxf_loadConfig() {
 	if(!is_array($language_names)) $language_names = $q_config['language_name'];
 	if(!is_array($enabled_languages)) $enabled_languages = $q_config['enabled_languages'];
 	if(!is_array($term_name)) $term_name = $q_config['term_name'];
-	if(!is_array($custom_fields)) $custom_fields = array();
-	//if(empty($ignore_file_types)) $ignore_file_types = $q_config['ignore_file_types'];
 	if(empty($default_language)) $default_language = $q_config['default_language'];
 	if(empty($use_strftime)) $use_strftime = $q_config['use_strftime'];
 	if(empty($url_mode)) $url_mode = $q_config['url_mode'];
 	if(!is_string($flag_location) || $flag_location==='') $flag_location = $q_config['flag_location'];
+
+	qtranxf_load_option_bool('detect_browser_language');
+	qtranxf_load_option_bool('hide_untranslated');
+	qtranxf_load_option_bool('show_displayed_language_prefix');
+	qtranxf_load_option_bool('auto_update_mo');
+	qtranxf_load_option_bool('hide_default_language');
+/*
 	$detect_browser_language = qtranxf_validateBool($detect_browser_language, $q_config['detect_browser_language']);
 	$hide_untranslated = qtranxf_validateBool($hide_untranslated, $q_config['hide_untranslated']);
 	$show_displayed_language_prefix = qtranxf_validateBool($show_displayed_language_prefix, $q_config['show_displayed_language_prefix']);
 	$auto_update_mo = qtranxf_validateBool($auto_update_mo, $q_config['auto_update_mo']);
 	$hide_default_language = qtranxf_validateBool($hide_default_language, $q_config['hide_default_language']);
-	
+*/
 	// url fix for upgrading users
 	$flag_location = trailingslashit(preg_replace('#^wp-content/#','',$flag_location));
 	
@@ -475,9 +460,16 @@ function qtranxf_loadConfig() {
 	$q_config['auto_update_mo'] = $auto_update_mo;
 	$q_config['hide_default_language'] = $hide_default_language;
 	$q_config['term_name'] = $term_name;
-	$q_config['custom_fields'] = $custom_fields;
 
+	foreach($q_config['text_field_filters'] as $nm){
+		add_filter($nm, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
+	}
 	do_action('qtranslate_loadConfig');
+}
+
+function qtranxf_update_option($nm) {
+	global $q_config;
+	update_option('qtranslate_'.$nm, $q_config[$nm]);
 }
 
 function qtranxf_update_option_bool($nm) {
@@ -488,7 +480,7 @@ function qtranxf_update_option_bool($nm) {
 		update_option('qtranslate_'.$nm, '0');
 }
 
-// saves entire configuration
+// saves entire configuration - it should be in admin only?
 function qtranxf_saveConfig() {
 	global $q_config;
 
@@ -505,7 +497,10 @@ function qtranxf_saveConfig() {
 	update_option('qtranslate_url_mode', $q_config['url_mode']);
 	update_option('qtranslate_term_name', $q_config['term_name']);
 	update_option('qtranslate_use_strftime', $q_config['use_strftime']);
-	update_option('qtranslate_custom_fields', $q_config['custom_fields']);
+
+	qtranxf_update_option('custom_fields');
+	qtranxf_update_option('custom_field_classes');
+	qtranxf_update_option('text_field_filters');
 
 	qtranxf_update_option_bool('detect_browser_language');
 	qtranxf_update_option_bool('hide_untranslated');

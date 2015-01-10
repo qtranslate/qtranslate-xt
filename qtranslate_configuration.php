@@ -66,7 +66,7 @@ function qtranxf_add_admin_js () {
 	wp_deregister_script( 'autosave' );//autosave script saves the active language only and messes it up later in a hard way
 
 	//echo '<script>var qTranslateConfig='.json_encode($q_config).';</script>';
-	$keys=array('enabled_languages','default_language','language','term_name','custom_fields','url_mode');
+	$keys=array('enabled_languages','default_language','language','term_name','custom_fields','custom_field_classes','url_mode');
 	foreach($keys as $key){
 		$config[$key]=$q_config[$key];
 	}
@@ -436,6 +436,8 @@ function qtranxf_conf() {
 		qtranxf_updateSetting('auto_update_mo', QTX_BOOLEAN);
 		qtranxf_updateSetting('hide_default_language', QTX_BOOLEAN);
 		qtranxf_updateSetting('custom_fields', QTX_ARRAY);
+		qtranxf_updateSetting('custom_field_classes', QTX_ARRAY);
+		qtranxf_updateSetting('text_field_filters', QTX_ARRAY);
 		if(isset($_POST['update_mo_now']) && $_POST['update_mo_now']=='1' && qtranxf_updateGettextDatabases(true))
 			$message = __('Gettext databases updated.', 'qtranslate');
 	}
@@ -746,10 +748,30 @@ function qtranxf_conf() {
 				</td>
 			</tr>
 			<tr valign="top">
-				<th scope="row"><?php _e('Custom Fields', 'qtranslate');?></th>
+				<th scope="row"><?php echo __('Custom Fields', 'qtranslate');?></th>
 				<td>
-					<input type="text" name="custom_fields" id="qtranxs_custom_fields" value="<?php echo implode(' ',$q_config['custom_fields']); ?>" style="width:100%">
-					<p><small><?php printf(__('Enter "id" attribute of text fields from your theme, which you wish to translate. This applies to post, page and media editors (/wp-admin/post*). To lookup "id", right-click on the field in the post or the page editor and choose "Inspect Element". Look for an attribute of the field named "id". Enter it here, as many as you need, space-separated. After saving configuration, these fields will start responding to the language switching buttons, and you can enter different text for each language. For more information, read %sFAQ%s.', 'qtranslate'),'<a href="https://wordpress.org/plugins/qtranslate-x/faq/">','</a>'); ?></small></p>
+					<?php printf(__('Enter "id" or "class" attribute of text fields from your theme, which you wish to translate. This applies to post, page and media editors (/wp-admin/post*). To lookup "id" or "class", right-click on the field in the post or the page editor and choose "Inspect Element". Look for an attribute of the field named "id" or "class". Enter it below, as many as you need, space- or comma-separated. After saving configuration, these fields will start responding to the language switching buttons, and you can enter different text for each language. The input fields of type %s will be parsed using %s syntax, while single line text fields will use %s syntax. If you need to override this behaviour, prepend prefix %s or %s to the name of the field to specify which syntax to use. For more information, read %sFAQ%s.', 'qtranslate'),'\'textarea\'',esc_html('<!--:-->'),'[:]','\'<\'','\'[\'','<a href="https://wordpress.org/plugins/qtranslate-x/faq/">','</a>'); ?>
+				</td>
+			</tr>
+			<tr valign="top">
+				<th scope="row" style="text-align: right">id:</th>
+				<td>
+					<input type="text" name="custom_fields" id="qtranxs_custom_fields" value="<?php echo implode(' ',$q_config['custom_fields']); ?>" style="width:100%"><br />
+					<small><?php _e('The value of "id" attribute is normally unique within one page, otherwise the first field found, having an id specified, is picked up.', 'qtranslate'); ?></small>
+				</td>
+			</tr>
+			<tr valign="top">
+				<th scope="row" style="text-align: right">class:</th>
+				<td>
+					<input type="text" name="custom_field_classes" id="qtranxs_custom_field_classes" value="<?php echo implode(' ',$q_config['custom_field_classes']); ?>" style="width:100%"><br>
+					<small><?php printf(__('All the fields of specified classes will respond to Language Switching Buttons. Be careful not to include a class, which would affect language-neutral fields. If you cannot uniquely identify a field needed neither by %s, nor by %s attribute, report the issue on %sSupport Forum%s', 'qtranslate'),'"id"', '"class"', '<a href="https://wordpress.org/support/plugin/qtranslate-x">','</a>'); ?></small>
+				</td>
+			</tr>
+			<tr valign="top">
+				<th scope="row"><?php echo __('Custom Filters', 'qtranslate');?></th>
+				<td>
+					<input type="text" name="text_field_filters" id="qtranxs_text_field_filters" value="<?php echo implode(' ',$q_config['text_field_filters']); ?>" style="width:100%"><br>
+					<small><?php printf(__('Names of filters (which are enabled on theme or other plugins via %s function) to add translation to. For more information, read %sFAQ%s.', 'qtranslate'),'apply_filters()','<a href="https://wordpress.org/plugins/qtranslate-x/faq/">','</a>'); ?></small>
 				</td>
 			</tr>
 <?php /*

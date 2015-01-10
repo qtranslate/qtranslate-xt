@@ -1,4 +1,4 @@
-/* this is a developer version of qtranslate.min.js before it is minimized */
+/* this is the developer version of qtranslate.min.js before it is minimized */
 /*
 //debuging tools, do not check in
 var cc=0;
@@ -9,7 +9,59 @@ function ct(v){ c(v); console.trace(); }
 qtranxj_split = function(text)
 {
 	var result = new Object;
-	for(var i=0; i<qTranslateConfig.enabled_languages.length; i++)
+	for(var i=0; i<qTranslateConfig.enabled_languages.length; ++i)
+	{
+		var lang=qTranslateConfig.enabled_languages[i];
+		result[lang] = '';
+	}
+	var split_regex_c = /<!--:-->/gi;
+	var blocks = text.xsplit(split_regex_c);
+	//c('qtranxj_split: blocks='+blocks);
+	//c('qtranxj_split: blocks.length='+blocks.length);
+	if(!qtranxj_isArray(blocks))
+		return result;
+	var matches, lang_regex, lang;
+	if(blocks.length>1){//there are matches
+		lang_regex = /<!--:([a-z]{2})-->/gi;
+		for(var i = 0;i<blocks.length;++i){
+			var b=blocks[i];
+			//c('blocks['+i+']='+b);
+			if(!b.length) continue;
+			matches = lang_regex.exec(b); lang_regex.lastIndex=0;
+			//c('matches='+matches);
+			if(matches==null) continue;
+			lang = matches[1];
+			result[lang] += b.substring(10);
+			//c('text='+result[lang]);
+		}
+	}else{
+		var split_regex_b = /(\[:[a-z]{2}\])/gi;
+		blocks = text.xsplit(split_regex_b);
+		if(!qtranxj_isArray(blocks))
+			return result;
+		lang_regex = /\[:([a-z]{2})\]/gi;
+		lang = false;
+		for(var i = 0;i<blocks.length;++i){
+			var b=blocks[i];
+			//c('blocks['+i+']='+b+'; lang='+lang);
+			if(lang){
+				result[lang] += b;
+				lang = false;
+			}else{
+				matches = lang_regex.exec(b); lang_regex.lastIndex=0;
+				if(matches==null) continue;
+				lang = matches[1];
+			}
+		}
+	}
+	return result;
+}
+
+/*
+qtranxj_split = function(text)
+{
+	var result = new Object;
+	for(var i=0; i<qTranslateConfig.enabled_languages.length; ++i)
 	{
 		var lang=qTranslateConfig.enabled_languages[i];
 		result[lang] = '';
@@ -40,7 +92,7 @@ qtranxj_split = function(text)
 	}else{
 		var matches;
 		var lang = false;
-		for(var i = 0;i<blocks.length;i++){
+		for(var i = 0;i<blocks.length;++i){
 			var b=blocks[i];
 			//c('blocks['+i+']='+b);
 			if(!b.length) continue;
@@ -55,17 +107,17 @@ qtranxj_split = function(text)
 		}
 	}
 	var morenextpage_regex = /(<!--more-->|<!--nextpage-->)+$/gi;
-	for(var i = 0;i<result.length;i++){
+	for(var i = 0;i<result.length;++i){
 		result[i] = result[i].replace(morenextpage_regex,'');
 	}
 	return result;
 }
-
+*/
 //"_c" stands for "comment"
 qtranxj_join_c = function(texts)
 {
 	var text = '';
-	for(var i=0; i<qTranslateConfig.enabled_languages.length; i++)
+	for(var i=0; i<qTranslateConfig.enabled_languages.length; ++i)
 	{
 		var lang=qTranslateConfig.enabled_languages[i];
 		var t = texts[lang];
@@ -81,7 +133,7 @@ qtranxj_join_c = function(texts)
 qtranxj_join_b = function(texts)
 {
 	var text = '';
-	for(var i=0; i<qTranslateConfig.enabled_languages.length; i++)
+	for(var i=0; i<qTranslateConfig.enabled_languages.length; ++i)
 	{
 		var lang=qTranslateConfig.enabled_languages[i];
 		var t = texts[lang];
@@ -96,7 +148,8 @@ function qtranxj_get_cookie(cname)
 {
 	var nm = cname + "=";
 	var ca = document.cookie.split(';');
-	for(var i=0; i<ca.length; i++){
+	//c('ca='+ca);
+	for(var i=0; i<ca.length; ++i){
 		var s = ca[i];
 		var sa = s.split('=');
 		if(sa[0].trim()!=cname) continue;
@@ -164,7 +217,7 @@ var qTranslateX=function()
 {
 	function ge(id){ return document.getElementById(id); }
 
-	var activeLanguage=qtranxj_get_cookie('qtrans_edit_language');
+	var activeLanguage=qtranxj_get_cookie('wp_qtrans_edit_language');
 	if(!activeLanguage)
 		activeLanguage=qTranslateConfig.language;
 
@@ -173,8 +226,9 @@ var qTranslateX=function()
 	{
 		var h=contentHooks[id];
 		var lang=languageSwitch.getActiveLanguage();
-		var morenextpage_regex = /(<!--more-->|<!--nextpage-->)+$/gi;
-		h.contents[lang]=value.replace(morenextpage_regex,'');;
+		//var morenextpage_regex = /(<!--more-->|<!--nextpage-->)+$/gi;
+		//h.contents[lang]=value.replace(morenextpage_regex,'');
+		h.contents[lang]=value;
 		if(h.separator==='<'){
 			h.mlContentField.value = qtranxj_join_c(h.contents);
 		}else{
@@ -231,8 +285,6 @@ var qTranslateX=function()
 			return false;
 		}
 
-		//var adminLanguage=qtranxj_get_cookie('qtrans_admin_language');
-		//if(!adminLanguage)
 		var adminLanguage=qTranslateConfig.language;
 
 		build_translator=function(langF,langT)
@@ -263,7 +315,7 @@ var qTranslateX=function()
 				var tr=rows[r];
 				var td=tr.getElementsByTagName('TD')[0];
 				var items=td.getElementsByClassName('inline');
-				for(var i=0; i<items.length; i++)
+				for(var i=0; i<items.length; ++i)
 				{
 					var e=items[i];
 					e.style.display='none';
@@ -298,7 +350,7 @@ var qTranslateX=function()
 				var nmF = nms[langF]||'';
 				var nmT = nms[langT]||'';
 				var items=td.getElementsByClassName('row-title');
-				for(var i=0; i<items.length; i++)
+				for(var i=0; i<items.length; ++i)
 				{
 					var e=items[i];
 					if(nmF)
@@ -316,7 +368,7 @@ var qTranslateX=function()
 			var items=tagCloud.getElementsByTagName('A');
 			if(!items.length) return;
 			var translator=build_translator(langF,langT);
-			for(var i=0; i<items.length; i++)
+			for(var i=0; i<items.length; ++i)
 			{
 					var e=items[i];
 					var nmF=e.innerHTML;
@@ -352,7 +404,7 @@ var qTranslateX=function()
 
 		var editinlines=document.getElementsByClassName('editinline');
 		//c('editinlines.length='+editinlines.length);
-		for(var i=0; i<editinlines.length; i++)
+		for(var i=0; i<editinlines.length; ++i)
 		{
 			var e=editinlines[i];
 			if(e.tagName!=='A') continue;
@@ -369,7 +421,7 @@ var qTranslateX=function()
 
 		var langs=qTranslateConfig.enabled_languages;
 		var newNameFields={};
-		for(var i=0; i<langs.length; i++)
+		for(var i=0; i<langs.length; ++i)
 		{
 			var lang=langs[i];
 			newNameFields[lang]=qtranxj_ce('input', {name: 'qtranx_term_'+lang, className: 'hidden', value: name[lang] || ''}, form, true);
@@ -415,6 +467,20 @@ var qTranslateX=function()
 			}
 			var f=ge(id);
 			addContentHook(f,form,sep);
+		}
+
+		for(var i=0; i<qTranslateConfig.custom_field_classes.length; ++i){
+			var nm=qTranslateConfig.custom_field_classes[i];
+			var sep;
+			if(nm.indexOf('<')==0 || nm.indexOf('[')==0){
+				sep=nm.substring(0,1);
+				nm=nm.substring(1);
+			}
+			var fields=form.getElementsByClassName(nm);
+			for(var j=0; j<fields.length; ++j){
+				f=fields[j];
+				addContentHook(f,form,sep);
+			}
 		}
 
 		var alttextField=ge('attachment_alt');
@@ -564,7 +630,7 @@ var qTranslateX=function()
 
 	setLangCookie=function()
 	{
-		document.cookie='qtrans_edit_language='+this.lang;
+		document.cookie='wp_qtrans_edit_language='+this.lang;
 	}
 
 	var matches = location.pathname.match(/(\/wp-admin\/([^\/]*))$/);
@@ -618,13 +684,13 @@ function LanguageSwitch(target,initial_language)
 		}
 		activeLanguage=tabSwitch.lang;
 		tabSwitch.classList.add('active');
-		for(var i=0; i<onTabSwitch.length; i++)
+		for(var i=0; i<onTabSwitch.length; ++i)
 		{
 			onTabSwitch[i].call(this);
 		}
 	}
 	location.pathname.indexOf();
-	for(var i=0; i<langs.length; i++)
+	for(var i=0; i<langs.length; ++i)
 	{
 		//var flags_location=qTranslateConfig.WP_CONTENT_URL+qTranslateConfig.flag_location;
 		var flag_location=qTranslateConfig.flag_location;

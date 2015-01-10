@@ -4,7 +4,7 @@ Contributors: johnclause, chineseleper, Vavooon
 Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, translation
 Requires at least: 3.9
 Tested up to: 4.1
-Stable tag: 2.8
+Stable tag: 2.9
 License: GPLv3 or later
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QEXEK3HX8AR6U
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -57,11 +57,11 @@ Installation of this plugin is no different from any other plugin:
 
 = Is it possible to translate theme custom fields? =
 
-Yes, some themes put additional text fields per page or per post. By default, those fields have no way to respond to language switching buttons in editors. However, you may enter "id" attribute of those fields into "Custom Fields" section of "Languages" configuration page in "Settings", and they will then respond to the language switching buttons allowing you to enter different text for each language. To lookup "id", right-click on the field in the post or the page editor, choose "Inspect Element", and look for an attribute of the field named "id".
+Yes, some themes put additional text fields per page or per post. By default, those fields have no way to respond to language switching buttons in editors. However, you may enter "id" or "class" name attribute of those fields into "Custom Fields" section of "Languages" configuration page in "Settings", and they will then respond to the language switching buttons allowing you to enter different text for each language. To lookup "id" or "class", right-click on the field in the post or the page editor, choose "Inspect Element", and look for which attributes are defined for that field. If you cannot uniquely distinct the field neither by if nor by class, report on the forum threads.
 
-The theme must pass those values through [translation](http://codex.wordpress.org/Function_Reference/_2) function '__()' before displaying on the output. Most themes do this by default, otherwise you may ask theme author to make this little modification for each field you need to be translatable.
+The theme must pass those values through [translation](http://codex.wordpress.org/Function_Reference/_2) function '__()' before displaying on the front-end output. If this is not done, you will see the text of all languages displayed one after another. Most themes use '__()' translation by default, otherwise you may ask theme author to make this little modification for each field you need to be translatable. However, sometimes, they pass a value through  'apply_filters()' function before displaying the value, and then you may put that filter name into configuration filed "Custom Filters" to get the value translated properly.
 
-Translatable fields, pre-configured by default:
+The following fields are pre-configured to be translatable by default:
 
 - all input fields of class "wp-editor-area", which normally include all TinyMCE visual editors.
 - fields with the following id: "title", "attachment_caption", "attachment_alt".
@@ -114,6 +114,12 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 3. qTranslate translation services
 
 == Changelog ==
+
+= 2.9 =
+* ability to enable "Custom Fields" by either "id" or "class" attribute.
+* ability to specify filters, which other theme or plugins define, to pass relevant data through the translation.
+* support for <!--more--> and <!--nextpage--> tags.
+* language cookie are renamed to minimize possible interference with other sites.
 
 = 2.8 =
 * added option "Show displayed language prefix when content is not available for the selected language".
@@ -174,6 +180,7 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 == Known Bugs ==
 
 * Incompatibility with plugin [WP Editor](https://wordpress.org/support/plugin/wp-editor). Language switching buttons do not change the content of main editor in pages and posts. For now, you would need to deactivate "WP Editor".
+* Sometimes after a new plugin update is released, the language switching buttons disappear on the first editor page load. Refresh the page to bring them back. Apparently, it has something to do with browse caching mechanism.
 * Message "The backup of this post in your browser is different from the version below" appears sometimes in the post editor. Clicking on "Restore the backup" may produce unexpected result, since backup has one language only,
 the one which was active at the time of the last pressing of button "Update". The code which causes this is in /wp-includes/js/autosave.js.
 
@@ -184,6 +191,7 @@ the one which was active at the time of the last pressing of button "Update". Th
 
 == Desirable Unimplemented Features ==
 
+* Add ability to put Language Switching buttons on other editors besides, post, pages and taxonomies.
 * "Quick Edit" action in category or tag list pages will update the default language only.
 * If a language was switched on a page or post, but no edits were done, browser sometimes still complains about page changes, when leaving page.
 * Full screen editor mode does not have language switch buttons (not applicable in WP 4.1 any more).
