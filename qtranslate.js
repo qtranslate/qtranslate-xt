@@ -39,18 +39,26 @@ qtranxj_split = function(text)
 		blocks = text.xsplit(split_regex_b);
 		if(!qtranxj_isArray(blocks))
 			return result;
-		lang_regex = /\[:([a-z]{2})\]/gi;
-		lang = false;
-		for(var i = 0;i<blocks.length;++i){
-			var b=blocks[i];
-			//c('blocks['+i+']='+b+'; lang='+lang);
-			if(lang){
+		if(blocks.length==1){//no language separator found, enter it to all languages
+			var b=blocks[0];
+			for(var j=0; j<qTranslateConfig.enabled_languages.length; ++j){
+				var lang=qTranslateConfig.enabled_languages[j];
 				result[lang] += b;
-				lang = false;
-			}else{
-				matches = lang_regex.exec(b); lang_regex.lastIndex=0;
-				if(matches==null) continue;
-				lang = matches[1];
+			}
+		}else{
+			lang_regex = /\[:([a-z]{2})\]/gi;
+			lang = false;
+			for(var i = 0;i<blocks.length;++i){
+				var b=blocks[i];
+				//c('blocks['+i+']='+b+'; lang='+lang);
+				if(lang){
+					result[lang] += b;
+					lang = false;
+				}else{
+					matches = lang_regex.exec(b); lang_regex.lastIndex=0;
+					if(matches==null) continue;
+					lang = matches[1];
+				}
 			}
 		}
 	}
