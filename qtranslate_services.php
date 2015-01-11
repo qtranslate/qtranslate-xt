@@ -630,7 +630,7 @@ function qts_service() {
 		if(isset($answer['error'])) {
 			$error = sprintf(__('An error occured: %s', 'qtranslate'), $qts_error_messages[$answer['error']]);
 			if($answer['message']!='') {
-				$error.='<br />'.sprintf(__('Additional information: %s', 'qtranslate'), qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($answer['message']));
+				$error.='<br/>'.sprintf(__('Additional information: %s', 'qtranslate'), qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($answer['message']));
 			}
 		}
 		if(isset($answer['order_id'])) {

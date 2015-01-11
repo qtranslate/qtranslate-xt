@@ -71,21 +71,54 @@ function qtranxf_get_nav_menu_items( $items, $menu, $args )
 	$itemid=0;
 	$menu_order=0;
   $qtransmenu=null;
+	$altlang=null;
+	$url='';//it will keep the same page
+	$tp='LM';
+	$flags=true;
 	foreach($items as $item)
 	{
 	  if($itemid<$item->ID) $itemid=$item->ID;
 	  if($menu_order<$item->menu_order) $menu_order=$item->menu_order;
 		if( !isset( $item->url ) || strstr( $item->url, '#qtransLangSw' ) === FALSE ) continue;
-		$item->title=__('Language','qtranslate').':'.'&nbsp;<img src="'.$flag_location.$q_config['flag'][$language].'">';
-		$item->url=null;
+		$qs=explode('?',$item->url);
+		if(count($qs)>1){
+			$pars=explode('&',$qs[1]);
+			foreach($pars as $par){
+				$ps=explode('=',$par);
+				switch($ps[0]){
+					case 'flags': $flags=($ps[1]!='no'); break;
+					case 'type': $tp=$ps[1]; break;
+				}
+			}
+		}
+		if($tp=='AL'){
+			foreach($q_config['enabled_languages'] as $lang){
+				if($lang==$language) continue;
+				$toplang=$lang;
+				$altlang=$lang;
+				break;
+			}
+			$item->title=$q_config['language_name'][$toplang];
+			$item->url=qtranxf_convertURL($url, $altlang, false, true);
+		}else{
+			$toplang=$language;
+			$item->title=__('Language','qtranslate');
+			$item->url=null;
+		}
+		if($flags){
+			$item->title.=':&nbsp;<img src="'.$flag_location.$q_config['flag'][$toplang].'">';
+		}
 		//$item->classes[] = 'qtranxs_flag_'.$language;
 		$item->classes[] = 'qtranxs-lang-menu';
 		$qtransmenu = $item;
 	}
 	if(!$qtransmenu) return $items;
-	$url='';//it will keep the same page
 	foreach($q_config['enabled_languages'] as $lang)
 	{
+		if($tp=='AL'){
+			if($lang==$language) continue;
+			if($lang==$altlang ) continue;
+		}
 		$item=new WP_Post((object)array('ID' => ++$itemid));
 		//$item->db_id=$item->ID;
 		$item->menu_item_parent=$qtransmenu->ID;
@@ -95,7 +128,10 @@ function qtranxf_get_nav_menu_items( $items, $menu, $args )
 		//$item->object_id=0;
 		$item->type='custom';
 		$item->type_label='Custom';
-		$item->title='<img src="'.$flag_location.$q_config['flag'][$lang].'">&nbsp;'.$q_config['language_name'][$lang];
+		$item->title=$q_config['language_name'][$lang];
+		if($flags){
+			$item->title='<img src="'.$flag_location.$q_config['flag'][$lang].'">&nbsp;'.$item->title;
+		}
 		$item->post_title=$item->title;
 		$item->post_name='language-menuitem-'.$lang;
 		if($lang!=$language)

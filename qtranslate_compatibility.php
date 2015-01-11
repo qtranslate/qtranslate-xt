@@ -19,8 +19,10 @@ if (!function_exists('qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage')){
 		return qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($content);
 	}
 }
-
-//if(!function_exists('qtrans_useTermLib')){//is not available any more
-//	function qtrans_useTermLib($obj){ return qtranxf_useTermLib($obj);
-//}
+if(!function_exists('qtrans_useTermLib')){
+	function qtrans_useTermLib($obj){ return qtranxf_useTermLib($obj); }
+}
+if(!function_exists('qtrans_getSortedLanguages')){
+	function qtrans_getSortedLanguages($reverse = false){ return qtranxf_getSortedLanguages($reverse); }
+}
 ?>

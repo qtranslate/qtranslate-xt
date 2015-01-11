@@ -86,6 +86,10 @@ function qtranxf_init() {
 	// fix url to prevent xss
 	$q_config['url_info']['url'] = qtranxf_convertURL(add_query_arg('lang',$q_config['default_language'],$q_config['url_info']['url']));
 
+	if($q_config['qtrans_compatibility']){
+		require_once(dirname(__FILE__)."/qtranslate_compatibility.php");
+	}
+
 	//allow other plugins to initialize whatever they need
 	do_action('qtranxf_init');
 
@@ -385,12 +389,7 @@ function qtranxf_loadConfig() {
 	$use_strftime = get_option('qtranslate_use_strftime');
 	$ignore_file_types = get_option('qtranslate_ignore_file_types');
 	$url_mode = get_option('qtranslate_url_mode');
-	$detect_browser_language = get_option('qtranslate_detect_browser_language');
-	$hide_untranslated = get_option('qtranslate_hide_untranslated');
-	$show_displayed_language_prefix = get_option('qtranslate_show_displayed_language_prefix');
-	$auto_update_mo = get_option('qtranslate_auto_update_mo');
 	$term_name = get_option('qtranslate_term_name');
-	$hide_default_language = get_option('qtranslate_hide_default_language');
 
 	qtranxf_load_option_array('custom_fields');
 	qtranxf_load_option_array('custom_field_classes');
@@ -415,12 +414,25 @@ function qtranxf_loadConfig() {
 	qtranxf_load_option_bool('show_displayed_language_prefix');
 	qtranxf_load_option_bool('auto_update_mo');
 	qtranxf_load_option_bool('hide_default_language');
+	qtranxf_load_option_bool('qtrans_compatibility');
 /*
+	$detect_browser_language = get_option('qtranslate_detect_browser_language');
+	$hide_untranslated = get_option('qtranslate_hide_untranslated');
+	$show_displayed_language_prefix = get_option('qtranslate_show_displayed_language_prefix');
+	$auto_update_mo = get_option('qtranslate_auto_update_mo');
+	$hide_default_language = get_option('qtranslate_hide_default_language');
+
 	$detect_browser_language = qtranxf_validateBool($detect_browser_language, $q_config['detect_browser_language']);
 	$hide_untranslated = qtranxf_validateBool($hide_untranslated, $q_config['hide_untranslated']);
 	$show_displayed_language_prefix = qtranxf_validateBool($show_displayed_language_prefix, $q_config['show_displayed_language_prefix']);
 	$auto_update_mo = qtranxf_validateBool($auto_update_mo, $q_config['auto_update_mo']);
 	$hide_default_language = qtranxf_validateBool($hide_default_language, $q_config['hide_default_language']);
+
+	$q_config['detect_browser_language'] = $detect_browser_language;
+	$q_config['hide_untranslated'] = $hide_untranslated;
+	$q_config['show_displayed_language_prefix'] = $show_displayed_language_prefix;
+	$q_config['auto_update_mo'] = $auto_update_mo;
+	$q_config['hide_default_language'] = $hide_default_language;
 */
 	// url fix for upgrading users
 	$flag_location = trailingslashit(preg_replace('#^wp-content/#','',$flag_location));
@@ -454,11 +466,6 @@ function qtranxf_loadConfig() {
 	$q_config['ignore_file_types'] = $val;
 
 	$q_config['url_mode'] = $url_mode;
-	$q_config['detect_browser_language'] = $detect_browser_language;
-	$q_config['hide_untranslated'] = $hide_untranslated;
-	$q_config['show_displayed_language_prefix'] = $show_displayed_language_prefix;
-	$q_config['auto_update_mo'] = $auto_update_mo;
-	$q_config['hide_default_language'] = $hide_default_language;
 	$q_config['term_name'] = $term_name;
 
 	foreach($q_config['text_field_filters'] as $nm){
