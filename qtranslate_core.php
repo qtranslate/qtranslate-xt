@@ -789,7 +789,7 @@ function qtranxf_ignored_file_type($path) {
 
 function qtranxf_language_nutral_path($path) {
 	//qtranxf_dbg_echo('qtranxf_language_nutral_path: path='.$path);
-	if(preg_match("#^(wp-login.php|wp-signup.php|wp-register.php|wp-cron.php|wp-admin/)#", $path)) return true;
+	if(preg_match("#^(wp-comments-post.php|wp-login.php|wp-signup.php|wp-register.php|wp-cron.php|wp-admin/)#", $path)) return true;
 	if(qtranxf_ignored_file_type($path)) return true;
 	return false;
 }
