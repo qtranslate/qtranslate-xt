@@ -73,40 +73,60 @@ function qtranxf_get_nav_menu_items( $items, $menu, $args )
   $qtransmenu=null;
 	$altlang=null;
 	$url='';//it will keep the same page
-	$tp='LM';
-	$flags=true;
+	//options
+	$type='LM';//[LM|AL]
+	$title='Language';//[none|Language|Current]
+	$current=true;//[shown|hidden]
+	$flags=true;//[none|all|items]
+	$topflag=true;
 	foreach($items as $item)
 	{
 	  if($itemid<$item->ID) $itemid=$item->ID;
 	  if($menu_order<$item->menu_order) $menu_order=$item->menu_order;
-		if( !isset( $item->url ) || strstr( $item->url, '#qtransLangSw' ) === FALSE ) continue;
-		$qs=explode('?',$item->url);
-		if(count($qs)>1){
-			$pars=explode('&',$qs[1]);
-			foreach($pars as $par){
-				$ps=explode('=',$par);
-				switch($ps[0]){
-					case 'flags': $flags=($ps[1]!='no'); break;
-					case 'type': $tp=$ps[1]; break;
-				}
+		if( !isset( $item->url ) || stristr( $item->url, 'qtransLangSw' ) === FALSE ) continue;
+		$p=strpos($item->url,'?');
+		if($p!==FALSE){
+			$qs=substr($item->url,$p+1);
+			$qs=str_replace('#','',$qs);
+			$pars=array(); parse_str($qs,$pars);
+			if(isset($pars['type']) && stripos($pars['type'],'AL')!==FALSE ) $type='AL';
+			if(isset($pars['flags'])){
+				$flags=(stripos($pars['flags'],'no')===FALSE);
+				if($flags) $topflag=(stripos($pars['flags'],'items')===FALSE);
+				else $topflag=false;
+			}
+			if(isset($pars['title'])){
+				$title=$pars['title'];
+				if(stripos($pars['title'],'no')!==FALSE) $title='';
+				if(!$topflag && empty($title)) $title='Language';
+			}
+			if(isset($pars['current'])){
+				$current=(stripos($pars['current'],'hid')===FALSE);
 			}
 		}
-		if($tp=='AL'){
+		if($type=='AL'){
 			foreach($q_config['enabled_languages'] as $lang){
 				if($lang==$language) continue;
 				$toplang=$lang;
 				$altlang=$lang;
 				break;
 			}
-			$item->title=$q_config['language_name'][$toplang];
+			$item->title=empty($title)?'':$q_config['language_name'][$toplang];
 			$item->url=qtranxf_convertURL($url, $altlang, false, true);
 		}else{
 			$toplang=$language;
-			$item->title=__('Language','qtranslate');
+			if(empty($title)){
+				$item->title='';
+			}elseif(stripos($title,'Current')!==FALSE){
+				$item->title=$q_config['language_name'][$toplang];
+			}else{
+				$item->title=__('Language','qtranslate');
+			}
 			$item->url=null;
 		}
-		if($flags){
-			$item->title.=':&nbsp;<img src="'.$flag_location.$q_config['flag'][$toplang].'">';
+		if($topflag){
+			if(!empty($item->title)) $item->title.=':&nbsp;';
+			$item->title.='<img src="'.$flag_location.$q_config['flag'][$toplang].'">';
 		}
 		//$item->classes[] = 'qtranxs_flag_'.$language;
 		$item->classes[] = 'qtranxs-lang-menu';
@@ -115,9 +135,11 @@ function qtranxf_get_nav_menu_items( $items, $menu, $args )
 	if(!$qtransmenu) return $items;
 	foreach($q_config['enabled_languages'] as $lang)
 	{
-		if($tp=='AL'){
+		if($type=='AL'){
 			if($lang==$language) continue;
 			if($lang==$altlang ) continue;
+		}elseif(!$current){
+			if($lang==$language) continue;
 		}
 		$item=new WP_Post((object)array('ID' => ++$itemid));
 		//$item->db_id=$item->ID;

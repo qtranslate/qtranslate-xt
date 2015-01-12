@@ -4,7 +4,7 @@ Contributors: johnclause, chineseleper, Vavooon
 Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, translation
 Requires at least: 3.9
 Tested up to: 4.1
-Stable tag: 2.9.2
+Stable tag: 2.9.3
 License: GPLv3 or later
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QEXEK3HX8AR6U
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -59,7 +59,7 @@ Installation of this plugin is no different from any other plugin:
 
 Yes, some themes put additional text fields per page or per post. By default, those fields have no way to respond to language switching buttons in editors. However, you may enter "id" or "class" name attribute of those fields into "Custom Fields" section of "Languages" configuration page in "Settings", and they will then respond to the language switching buttons allowing you to enter different text for each language. To lookup "id" or "class", right-click on the field in the post or the page editor, choose "Inspect Element", and look for which attributes are defined for that field. If you cannot uniquely distinct the field neither by if nor by class, report on the forum threads.
 
-The theme must pass those values through [translation](http://codex.wordpress.org/Function_Reference/_2) function '__()' before displaying on the front-end output. If this is not done, you will see the text of all languages displayed one after another. Most themes use '__()' translation by default, otherwise you may ask theme author to make this little modification for each field you need to be translatable. However, sometimes, they pass a value through  'apply_filters()' function before displaying the value, and then you may put that filter name into configuration filed "Custom Filters" to get the value translated properly.
+The theme must pass those values through [translation](http://codex.wordpress.org/Function_Reference/_2) function `__()` before displaying on the front-end output. If this is not done, you will see the text of all languages displayed one after another. Most themes use `__()` translation by default, otherwise you may ask theme author to make this little modification for each field you need to be translatable. However, sometimes, they pass a value through  'apply_filters()' function before displaying the value, and then you may put that filter name into configuration filed "Custom Filters" to get the value translated properly.
 
 The following fields are pre-configured to be translatable by default:
 
@@ -81,6 +81,32 @@ or like this
 If a theme uses `__()` [translate](http://codex.wordpress.org/Function_Reference/_2 "WP Function 'translate'") function before displaying those fields, then they will be shown correctly, otherwise suggest theme author to put `__()` calls in. Most themes do it this way.
 
 The '`[:]`' syntax works well for one-line text fields, while '`<--:-->`' syntax is more suitable for text areas.
+
+= Can I change the look of Language Switcher Menu? =
+
+The following query options can be typed in the field "URL" of "Language Menu" custom menu item, after "#qtransLangSw?", separated by "&", same way as options are provided on a query string:
+
+- type=[LM|AL] - type of menu:
+ - "LM" - Language Menu (default).
+ - "AL" - Alternative Language: the top menu entry displays the first available language other than the current.
+
+- title=[none|Language|Current] - title text of the top item:
+ - "Language" - word "Language" translated to current language (default).
+ - "none" - no title in the top of menu, flag only.
+ - "Current" - displays current language name.
+
+- flags=[none|all|items] - the way to display language flags:
+ - "none" - no flag is shown in any item, including the top item.
+ - "all" - all items show flag, including the top item.
+ - "items" - only sub-items show corresponding flag, top item does not.
+
+- current=[shown|hidden] - whether to display the current language in the menu.
+
+We understand that this is not a very user-friendly way to adjust the options, but it works, and we will provide a better in-editor interface to specify them in the future.
+
+= How do I customize images for flags? =
+
+If you wish to use different flag images, point option "Flag Image Path" to your own folder, containing custom images outside of "plugins" or "themes" folders. Most people would put it somewhere under "uploads" folder.
 
 = What is wrong with the original qTranslate? =
 
@@ -114,6 +140,11 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 3. qTranslate translation services
 
 == Changelog ==
+
+= 2.9.3 =
+* "Language Switcher" menu options, read [FAQ](https://wordpress.org/plugins/qtranslate-x/faq/) for more information.
+* fix for too early call to `current_user_can`, which caused a debug notice from within some other plugins.
+* fix for https://wordpress.org/support/topic/editor-adds-characters-before-text
 
 = 2.9.2 =
 * Option "Compatibility Functions" to enable former qTranslate function names: qtrans_getLanguage, qtrans_convertURL, qtrans_use, qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage, qtranxf_useTermLib and qtrans_getSortedLanguages

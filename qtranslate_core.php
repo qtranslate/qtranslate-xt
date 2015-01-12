@@ -22,48 +22,30 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 /* qTranslate Functions */
 
-function qtranxf_init() {
+function qtranxf_init_language() {
 	global $q_config;
 	// check if it isn't already initialized
-	if(defined('QTRANX_INIT')) return;
+	if(defined('QTRANX_INIT')){ echo "qtranxf_init_language second time"; return; }
 	define('QTRANX_INIT',true);
-
-	do_action('qtranxf_init_begin');
 
 	qtranxf_loadConfig();
 
-	if(defined('WP_ADMIN')){
-		// update Gettext Databases if on Backend
-		if($q_config['auto_update_mo']) qtranxf_updateGettextDatabases();
-		// update definitions if neccesary
-		if(current_user_can('manage_categories')) qtranxf_updateTermLibrary();
-		$q_config['cookie_enabled']=isset($_COOKIE[QTX_COOKIE_NAME_ADMIN]);
-	}else{
-		$q_config['cookie_enabled']=isset($_COOKIE[QTX_COOKIE_NAME_FRONT]);
-	}
+	$cookie_name = defined('WP_ADMIN') ? QTX_COOKIE_NAME_ADMIN : QTX_COOKIE_NAME_FRONT;
+	$q_config['cookie_enabled']=isset($_COOKIE[$cookie_name]);
 
 	$host=$_SERVER['HTTP_HOST'];
 	//on different port, it will not work for now
 	//if(isset($_SERVER['SERVER_PORT']) && !empty($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT']!='80'){
 	//	$host.=':'.$_SERVER['SERVER_PORT'];
 	//}
-	//qtranxf_dbg_log('qtranxf_init: IP='.$_SERVER['REMOTE_ADDR']);
-	//qtranxf_dbg_log('qtranxf_init: URL='.$host.$_SERVER['REQUEST_URI']);
-	//qtranxf_dbg_log('qtranxf_init: POST: ',$_POST);
+	//qtranxf_dbg_log('qtranxf_init_language: IP='.$_SERVER['REMOTE_ADDR']);
+	//qtranxf_dbg_log('qtranxf_init_language: URL='.$host.$_SERVER['REQUEST_URI']);
+	//qtranxf_dbg_log('qtranxf_init_language: POST: ',$_POST);
 	$q_config['url_info'] = qtranxf_detect_language($_SERVER['REQUEST_URI'], $host, isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '');
-	//qtranxf_dbg_log('qtranxf_init: url_info: ',$q_config['url_info']);
+	//qtranxf_dbg_log('qtranxf_init_language: url_info: ',$q_config['url_info']);
 
 	$q_config['language'] = $q_config['url_info']['language'];
 	$q_config['language'] = apply_filters('qtranslate_language', $q_config['language']);
-
-/*
-	// Check for WP Secret Key Mismatch
-	global $wp_default_secret_key;
-	if(strpos($q_config['url_info']['url'],'wp-login.php')!==false && defined('AUTH_KEY') && isset($wp_default_secret_key) && $wp_default_secret_key != AUTH_KEY) {
-		global $error;
-		$error = __('Your $wp_default_secret_key is mismatchting with your AUTH_KEY. This might cause you not to be able to login anymore.', 'qtranslate');
-	}
-*/
 
 	// Filter all options for language tags
 	if(!defined('WP_ADMIN')) {
@@ -73,15 +55,12 @@ function qtranxf_init() {
 		}
 	}
 
-	// load plugin translations
-	load_plugin_textdomain('qtranslate', false, dirname(plugin_basename( __FILE__ )).'/lang');
-
 	// remove traces of language (or better not?)
 	//unset($_GET['lang']);
-	//qtranxf_dbg_log('qtranxf_init: REQUEST_URI='.$_SERVER['REQUEST_URI']);
+	//qtranxf_dbg_log('qtranxf_init_language: REQUEST_URI='.$_SERVER['REQUEST_URI']);
 	//$_SERVER['REQUEST_URI'] = $q_config['url_info']['url'];
 	//$_SERVER['HTTP_HOST'] = $q_config['url_info']['host'];
-	//qtranxf_dbg_log('qtranxf_init: REQUEST_URI='.$_SERVER['REQUEST_URI']);
+	//qtranxf_dbg_log('qtranxf_init_language: REQUEST_URI='.$_SERVER['REQUEST_URI']);
 
 	// fix url to prevent xss
 	$q_config['url_info']['url'] = qtranxf_convertURL(add_query_arg('lang',$q_config['default_language'],$q_config['url_info']['url']));
@@ -90,19 +69,11 @@ function qtranxf_init() {
 		require_once(dirname(__FILE__)."/qtranslate_compatibility.php");
 	}
 
-	//allow other plugins to initialize whatever they need
-	do_action('qtranxf_init');
+	//allow other plugins to initialize whatever they need for language
+	do_action('qtranxf_init_language');
 
-/*
-	//"WordPress SEO" plugin support - not yet
-	//if(is_plugin_active( 'wordpress-seo/wp-seo.php' )){//in admin only
-	if ( defined( 'WPSEO_FILE' ) ) {
-		//add_filter('wpseo_replacements', 'qtranxf_wpseo_replacements', 0);
-		add_filter('wpseo_replacements', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', 0);
-	}
-*/
-//qtranxf_dbg_log('qtranxf_init: url_info.url='.$q_config['url_info']['url']);
-//qtranxf_dbg_log('qtranxf_init: language='.$q_config['language']);
+//qtranxf_dbg_log('qtranxf_init_language: url_info.url='.$q_config['url_info']['url']);
+//qtranxf_dbg_log('qtranxf_init_language: language='.$q_config['language']);
 }
 
 function qtranxf_resolveLangCase($lang,&$caseredirect)
@@ -344,6 +315,48 @@ function qtranxf_http_negotiate_language(){
 	return $lang;
 }
 
+function qtranxf_init() {
+	global $q_config;
+
+	do_action('qtranxf_init_begin');
+
+	if(defined('WP_ADMIN')){
+		// update Gettext Databases if on Backend
+		if($q_config['auto_update_mo']) qtranxf_updateGettextDatabases();
+		// update definitions if neccesary
+		if(current_user_can('manage_categories')) qtranxf_updateTermLibrary();
+	}
+/*
+	// Check for WP Secret Key Mismatch
+	global $wp_default_secret_key;
+	if(strpos($q_config['url_info']['url'],'wp-login.php')!==false && defined('AUTH_KEY') && isset($wp_default_secret_key) && $wp_default_secret_key != AUTH_KEY) {
+		global $error;
+		$error = __('Your $wp_default_secret_key is mismatchting with your AUTH_KEY. This might cause you not to be able to login anymore.', 'qtranslate');
+	}
+*/
+
+	// load plugin translations
+	load_plugin_textdomain('qtranslate', false, dirname(plugin_basename( __FILE__ )).'/lang');
+
+	if($q_config['qtrans_compatibility']){
+		require_once(dirname(__FILE__)."/qtranslate_compatibility.php");
+	}
+
+	foreach($q_config['text_field_filters'] as $nm){
+		add_filter($nm, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
+	}
+/*
+	//"WordPress SEO" plugin support - not yet
+	//if(is_plugin_active( 'wordpress-seo/wp-seo.php' )){//in admin only
+	if ( defined( 'WPSEO_FILE' ) ) {
+		//add_filter('wpseo_replacements', 'qtranxf_wpseo_replacements', 0);
+		add_filter('wpseo_replacements', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', 0);
+	}
+*/
+	//allow other plugins to initialize whatever they need for qTranslate
+	do_action('qtranxf_init');
+}
+
 function qtranxf_validateBool($var, $default) {
 	if($var==='0') return false; elseif($var==='1') return true; else return $default;
 }
@@ -468,9 +481,6 @@ function qtranxf_loadConfig() {
 	$q_config['url_mode'] = $url_mode;
 	$q_config['term_name'] = $term_name;
 
-	foreach($q_config['text_field_filters'] as $nm){
-		add_filter($nm, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
-	}
 	do_action('qtranslate_loadConfig');
 }
 

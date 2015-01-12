@@ -18,44 +18,43 @@
 */
 
 // Exit if accessed directly
-if ( !defined( 'ABSPATH' ) ) exit;
+if ( !defined( 'WP_ADMIN' ) ) exit;
 
 require_once(dirname(__FILE__)."/admin/import_export.php");
 require_once(dirname(__FILE__)."/admin/activation_hook.php");
 
-function qtranxf_update_config()
+function qtranxf_reset_config()
 {
-	//if(!defined('WP_ADMIN')) return;
 	if(!current_user_can('manage_options')) return;
-	if(isset($_POST['qtranslate_reset']) && isset($_POST['qtranslate_reset2'])) {
-		// reset all settings
-		delete_option('qtranslate_language_names');
-		delete_option('qtranslate_enabled_languages');
-		delete_option('qtranslate_default_language');
-		delete_option('qtranslate_flag_location');
-		delete_option('qtranslate_flags');
-		delete_option('qtranslate_locales');
-		delete_option('qtranslate_na_messages');
-		delete_option('qtranslate_date_formats');
-		delete_option('qtranslate_time_formats');
-		delete_option('qtranslate_use_strftime');
-		delete_option('qtranslate_ignore_file_types');
-		delete_option('qtranslate_url_mode');
-		delete_option('qtranslate_detect_browser_language');
-		delete_option('qtranslate_hide_untranslated');
-		delete_option('qtranslate_show_displayed_language_prefix');
-		delete_option('qtranslate_auto_update_mo');
-		delete_option('qtranslate_next_update_mo');
-		delete_option('qtranslate_hide_default_language');
-		delete_option('qtranslate_qtrans_compatibility');
-		delete_option('qtranslate_custom_fields');
-		if(isset($_POST['qtranslate_reset3'])) {
-			delete_option('qtranslate_term_name');
-			delete_option('qtranslate_widget_css');
-		}
+	if( !isset($_POST['qtranslate_reset']) || !isset($_POST['qtranslate_reset2']) ) return;
+	// reset all settings
+	delete_option('qtranslate_language_names');
+	delete_option('qtranslate_enabled_languages');
+	delete_option('qtranslate_default_language');
+	delete_option('qtranslate_flag_location');
+	delete_option('qtranslate_flags');
+	delete_option('qtranslate_locales');
+	delete_option('qtranslate_na_messages');
+	delete_option('qtranslate_date_formats');
+	delete_option('qtranslate_time_formats');
+	delete_option('qtranslate_use_strftime');
+	delete_option('qtranslate_ignore_file_types');
+	delete_option('qtranslate_url_mode');
+	delete_option('qtranslate_detect_browser_language');
+	delete_option('qtranslate_hide_untranslated');
+	delete_option('qtranslate_show_displayed_language_prefix');
+	delete_option('qtranslate_auto_update_mo');
+	delete_option('qtranslate_next_update_mo');
+	delete_option('qtranslate_hide_default_language');
+	delete_option('qtranslate_qtrans_compatibility');
+	delete_option('qtranslate_custom_fields');
+	if(isset($_POST['qtranslate_reset3'])) {
+		delete_option('qtranslate_term_name');
+		delete_option('qtranslate_widget_css');
 	}
+	qtranxf_loadConfig();
 }
-add_action('qtranxf_init_begin','qtranxf_update_config',10);
+add_action('qtranxf_init_begin','qtranxf_reset_config');
 
 function qtranxf_add_admin_js () {
 	global $q_config;
@@ -919,7 +918,7 @@ function qtranxf_nav_menu_metabox( $object )
 	<span class="list-controls hide-if-no-js">
 		<a href="javascript:void(0);" class="help" onclick="jQuery( '#help-login-links' ).toggle();"><?php _e( 'Help' ); ?></a>
 		<span class="hide-if-js" id="help-login-links"><br/><a name="help-login-links"></a>
-		Menu item added is replaced with a sub-menu of available languages when menu is rendered. Depending on how your theme renders menu you may need to override and customize css entries .qtranxs-lang-menu and .qtranxs-lang-menu-item, originally defined in qtranslate.css.
+		Menu item added is replaced with a sub-menu of available languages when menu is rendered. Depending on how your theme renders menu you may need to override and customize css entries .qtranxs-lang-menu and .qtranxs-lang-menu-item, originally defined in qtranslate.css. The field "URL" of inserted menu item allows additional configuration described in <a href="https://wordpress.org/plugins/qtranslate-x/faq" target="blank">FAQ</a>.<br>
 		</span>
 	</span>
 	<p class="button-controls">

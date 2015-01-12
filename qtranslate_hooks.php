@@ -201,8 +201,9 @@ function qtranxf_gettext_with_context($translated_text) {
 // add_action('category_add_form', 'qtranxf_modifyTermFormFor');
 // add_action('post_tag_add_form', 'qtranxf_modifyTermFormFor');
 // add_action('link_category_add_form', 'qtranxf_modifyTermFormFor');
+add_action('plugins_loaded', 'qtranxf_init_language', 2);//user is not authenticated yet
+add_action('init', 'qtranxf_init');//user is authenticated
 add_action('widgets_init', 'qtranxf_widget_init');
-add_action('plugins_loaded', 'qtranxf_init', 2);
 
 // Hooks (execution time critical filters) 
 add_filter('gettext', 'qtranxf_gettext',0);

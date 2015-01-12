@@ -31,8 +31,8 @@ qtranxj_split = function(text)
 			//c('matches='+matches);
 			if(matches==null) continue;
 			lang = matches[1];
-			result[lang] += b.substring(10);
-			//c('text='+result[lang]);
+			result[lang] += b.substring(b.indexOf('-->')+3);//b.substring(10);//stupid problem coming from TinyMCE like '<p><!--:en-->EN<!--:--><!--:de-->DE<!--:--></p>'
+			//c('text['+lang+']='+result[lang]);
 		}
 	}else{
 		var split_regex_b = /(\[:[a-z]{2}\])/gi;
@@ -134,6 +134,7 @@ qtranxj_join_c = function(texts)
 		text += t;
 		text += '<!--:-->';
 	}
+	//c('qtranxj_join_c:text:'+text);
 	return text;
 }
 
@@ -249,8 +250,8 @@ var qTranslateX=function()
 		if(!inpField) return;
 		var h=contentHooks[inpField.id]={};
 		h.contentField=inpField;
-		h.contents=qtranxj_split(inpField.value);
-		h.mlContentField=qtranxj_ce(inpField.tagName, {name: inpField.name, className: 'hidden', value: inpField.value}, form, true);
+		h.contents=qtranxj_split(inpField.value);//inpField.tagName
+		h.mlContentField=qtranxj_ce('input', {name: inpField.name, className: 'hidden', value: inpField.value}, form, true);
 		if(!separator){
 			if(inpField.tagName==='TEXTAREA')
 				separator='<';
