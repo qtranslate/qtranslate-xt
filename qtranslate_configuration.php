@@ -361,7 +361,7 @@ function qtranxf_array_compare($a,$b) {
 
 function qtranxf_language_columns($columns) {
 	return array(
-		'flag' => 'Flag',
+		'flag' => __('Flag', 'qtranslate'),
 		'name' => __('Name', 'qtranslate'),
 		'status' => __('Action', 'qtranslate'),
 		'status2' => '',
