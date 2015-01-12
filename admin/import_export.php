@@ -80,7 +80,7 @@ function qtranxf_add_row_migrate($nm,$plugin) {
 	<td>
 <?php
 	if($plugin=='qtranslate' || $plugin=='ztranslate'){
-		_e('There is no need to migrate any setting, the database schema is compatible with this plugin.');
+		_e('There is no need to migrate any setting, the database schema is compatible with this plugin.', 'qtranslate');
 	}else{
 ?>
 		<label for="qtranslate_no_migration"><input type="radio" name="<?php echo $plugin; ?>-migration" id="<?php echo $plugin; ?>_no_migration" value="none" checked /> <?php _e('Do not migrate any setting', 'qtranslate'); ?></label>
