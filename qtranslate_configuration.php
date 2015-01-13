@@ -59,7 +59,7 @@ add_action('qtranxf_init_begin','qtranxf_reset_config');
 function qtranxf_add_admin_js () {
 	global $q_config;
 	//wp_register_script( 'qtranslate-script', plugins_url( '/qtranslate.js', __FILE__ ) );
-	wp_register_script( 'qtranslate-script', plugins_url( '/qtranslate.min.js', __FILE__ ) );
+	wp_register_script( 'qtranslate-script', plugins_url( '/qtranslate.min.js', __FILE__ ), array(), QTX_VERSION );
 	wp_enqueue_script( 'qtranslate-script' );
 
 	wp_dequeue_script('autosave');
@@ -359,6 +359,7 @@ function qtranxf_array_compare($a,$b) {
 	return empty($diff_a) && empty($diff_b);
 }
 
+//this is not in use?
 function qtranxf_language_columns($columns) {
 	return array(
 		'flag' => __('Flag', 'qtranslate'),
@@ -368,6 +369,7 @@ function qtranxf_language_columns($columns) {
 		'status3' => ''
 		);
 }
+//add_filter('manage_language_columns', 'qtranxf_language_columns');
 
 function qtranxf_useAdminTermLib($obj) {
 	if ($_SERVER["SCRIPT_NAME"]==="/wp-admin/edit-tags.php" &&
@@ -963,6 +965,20 @@ function qtranxf_add_language_menu( $wp_admin_bar )
 		);
 	}
 }
+
+function qtranxf_links($links, $file){ // copied from Sociable Plugin
+	//Static so we don't call plugin_basename on every plugin row.
+	static $this_plugin;
+	if (!$this_plugin) $this_plugin = plugin_basename(dirname(__FILE__).'/qtranslate.php');
+
+	if ($file == $this_plugin){
+		$settings_link = '<a href="options-general.php?page=qtranslate-x">' . __('Settings', 'qtranslate') . '</a>';
+		array_unshift( $links, $settings_link ); // before other links
+	}
+	return $links;
+}
+add_filter('plugin_action_links', 'qtranxf_links', 10, 2);
+
 
 add_filter('get_term', 'qtranxf_useAdminTermLib',0);
 add_filter('get_terms', 'qtranxf_useAdminTermLib',0);

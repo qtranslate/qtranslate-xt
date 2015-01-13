@@ -73,18 +73,6 @@ function qtranxf_excludePages($pages) {
 	return array_merge($exclude, $pages);
 }
 
-function qtranxf_links($links, $file){ // copied from Sociable Plugin
-	//Static so we don't call plugin_basename on every plugin row.
-	static $this_plugin;
-	if (!$this_plugin) $this_plugin = plugin_basename(dirname(__FILE__).'/qtranslate.php');
-
-	if ($file == $this_plugin){
-		$settings_link = '<a href="options-general.php?page=qtranslate-x">' . __('Settings', 'qtranslate') . '</a>';
-		array_unshift( $links, $settings_link ); // before other links
-	}
-	return $links;
-}
-
 function qtranxf_languageColumnHeader($columns){
 	$new_columns = array();
 	if(isset($columns['cb'])) $new_columns['cb'] = '';
@@ -286,8 +274,6 @@ add_filter('comment_notification_subject', 'qtranxf_useCurrentLanguageIfNotFound
 // add_filter('the_editor', 'qtranxf_modifyRichEditor');
 //add_filter('admin_footer', 'qtranxf_modifyExcerpt');
 add_filter('bloginfo_url', 'qtranxf_convertBlogInfoURL',10,2);
-add_filter('plugin_action_links', 'qtranxf_links', 10, 2);
-add_filter('manage_language_columns', 'qtranxf_language_columns');
 add_filter('core_version_check_locale', 'qtranxf_versionLocale');
 add_filter('redirect_canonical', 'qtranxf_checkCanonical', 10, 2);
 ?>

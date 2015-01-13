@@ -913,18 +913,18 @@ function qtranxf_convertURL($url='', $lang='', $forceadmin = false, $showDefault
 }
 }
 
-// splits text with language tags into array
+/*
 function qtranxf_split($text, $quicktags = true) {
 	global $q_config;
-	
 	//init vars
 	$split_regex = "#(<!--[^-]*-->|\[:[a-z]{2}\])#ism";
+	//$split_regex = "#(<!--:[[a-z]{2}]?-->|\[:[a-z]{2}\])#ism";
 	$current_language = "";
 	$result = array();
 	foreach($q_config['enabled_languages'] as $language) {
 		$result[$language] = "";
 	}
-	
+
 	// split text at all xml comments
 	$blocks = preg_split($split_regex, $text, -1, PREG_SPLIT_NO_EMPTY|PREG_SPLIT_DELIM_CAPTURE);
 	foreach($blocks as $block) {
@@ -949,11 +949,11 @@ function qtranxf_split($text, $quicktags = true) {
 			$current_language = "";
 			continue;
 		// detect defective more tag
-		} elseif(preg_match("#^<!--more-->$#ism", $block, $matches)) {
-			foreach($q_config['enabled_languages'] as $language) {
-				$result[$language] .= $block;
-			}
-			continue;
+		//} elseif(preg_match("#^<!--more-->$#ism", $block, $matches)) {
+		//	foreach($q_config['enabled_languages'] as $language) {
+		//		$result[$language] .= $block;
+		//	}
+		//	continue;
 		}
 		// correctly categorize text block
 		if($current_language == "") {
@@ -966,10 +966,54 @@ function qtranxf_split($text, $quicktags = true) {
 			$result[$current_language] .= $block;
 		}
 	}
-	foreach($result as $lang => $lang_content) {
-		$result[$lang] = preg_replace("#(<!--more-->|<!--nextpage-->)+$#ism","",$lang_content);
+	//foreach($result as $lang => $lang_content) {
+	//	$result[$lang] = preg_replace("#(<!--more-->|<!--nextpage-->)+$#ism","",$lang_content);
+	//}
+	return $result;
+}// */
+
+if (!function_exists('qtranxf_split')){
+function qtranxf_split($text, $quicktags = true) {
+	global $q_config;
+	//$split_regex = "#(<!--[^-]*-->|\[:[a-z]{2}\])#ism";
+	$split_regex = "#(<!--:[a-z]{2}-->|<!--:-->|\[:[a-z]{2}\])#ism";
+	$result = array();
+	foreach($q_config['enabled_languages'] as $language) {
+		$result[$language] = '';
+	}
+	// split text at all language comments and quick tags
+	$blocks = preg_split($split_regex, $text, -1, PREG_SPLIT_NO_EMPTY|PREG_SPLIT_DELIM_CAPTURE);
+	if(count($blocks)==1){
+		$block=$blocks[0];
+		//no languages, put it in all languages then
+		foreach($q_config['enabled_languages'] as $language) {
+			$result[$language] = $block;
+		}
+	}else{
+		$current_language = false;
+		foreach($blocks as $block) {
+			# detect language tags
+			if(preg_match("#^<!--:([a-z]{2})-->$#ism", $block, $matches)) {
+				$current_language = $matches[1];
+				if(!qtranxf_isEnabled($current_language)) $current_language = false;
+				continue;
+			// detect quicktags
+			} elseif($quicktags && preg_match("#^\[:([a-z]{2})\]$#ism", $block, $matches)) {
+				$current_language = $matches[1];
+				if(!qtranxf_isEnabled($current_language)) $current_language = false;
+				continue;
+			// detect ending tags
+			} elseif(preg_match("#^<!--:-->$#ism", $block, $matches)) {
+				$current_language = false;
+				continue;
+			}
+			// correctly categorize text block
+			if(!$current_language) continue;
+			$result[$current_language] .= $block;
+		}
 	}
 	return $result;
+}
 }
 
 function qtranxf_join($texts) {

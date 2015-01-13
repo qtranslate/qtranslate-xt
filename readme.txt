@@ -4,7 +4,7 @@ Contributors: johnclause, chineseleper, Vavooon
 Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, translation
 Requires at least: 3.9
 Tested up to: 4.1
-Stable tag: 2.9.4
+Stable tag: 2.9.5
 License: GPLv3 or later
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QEXEK3HX8AR6U
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -28,9 +28,10 @@ qTranslate-X makes creation of multilingual content as easy as working with a si
 - Choose one of 3 Modes to make your URLs look pretty and SEO-friendly. - The simple and beautiful `/en/foo/`, or nice and neat `en.yoursite.com`, and everywhere compatible `?lang=en`.
 - One language for each URL - Users and SEO will thank you for not mixing multilingual content.
 - qTranslate-X supports unlimited number of languages, which can be easily added/modified/deleted via a comfortable Configuration Page at Settings->Languages.
-- You may use [Google XML Sitemaps v3 for qTranslate](https://wordpress.org/plugins/google-xml-sitemaps-v3-for-qtranslate/) plugin to rebuild your XML sitemap for better SEO support.
 - Custom CSS for "qTranslate Language Chooser" widget configurable via its properties.
 - Menu item "Language Switcher" to enable language choosing from a menu.
+- Use [Google XML Sitemaps v3 for qTranslate](https://wordpress.org/plugins/google-xml-sitemaps-v3-for-qtranslate/) plugin to rebuild your XML sitemap for better SEO support.
+- Use plugin [Qtranslate Slug](https://wordpress.org/plugins/qtranslate-slug/) if you need to translate slugs.
 
 You may still find a lot of useful information through reading [qTranslate](https://wordpress.org/plugins/qtranslate/ "Original qTranslate plugin")'s original documentation, which is not duplicated here in full. There are also other plugins, which offer multilingual support, but it seems that Qian Qin has very good original back-end design, and many people have been pleasantly using his plugin ever since. It stores all translations in the same single post, which makes it easy to maintain and to use it with other plugins. However, the user interface of former qTranslate got out of sync with the recent versions of Wordpress, especially after WP went to TinyMCE 4. There is a number of forks of qTranslate, see for example, [mqTranslate](https://wordpress.org/plugins/mqtranslate/ "mqTranslate plugin"), [qTranslate Plus](https://wordpress.org/plugins/qtranslate-xp/ "qTranslate Plus plugin") and [zTranslate](https://wordpress.org/plugins/ztranslate/ "zTranslate plugin"). They all try to fix qTranslate's user interface preserving its original back-end, which is what this plugin does too. This plugin is a hybrid of all of them and fixes a few bugs in each of them. It also has many new features too, like theme custom translatable fields, for example. We hope that this plugin is the most complete working version which combines the best features of [qTranslate](https://wordpress.org/plugins/qtranslate/ "Original qTranslate plugin"), [mqTranslate](https://wordpress.org/plugins/mqtranslate/ "mqTranslate fork"), [qTranslate Plus](https://wordpress.org/plugins/qtranslate-xp/ "qTranslate Plus fork") and [zTranslate](https://wordpress.org/plugins/ztranslate/ "zTranslate fork").
 
@@ -104,6 +105,14 @@ The following query options can be typed in the field "URL" of "Language Menu" c
 
 We understand that this is not a very user-friendly way to adjust the options, but it works, and we will provide a better in-editor interface to specify them in the future.
 
+= Can I translate slugs? =
+
+Use plugin [Qtranslate Slug](https://wordpress.org/plugins/qtranslate-slug/).
+
+= Can I build Google XML Sitemap, including pages with all different languages? =
+
+Use plugin [Google XML Sitemaps v3 for qTranslate](https://wordpress.org/plugins/google-xml-sitemaps-v3-for-qtranslate/)
+
 = How do I customize images for flags? =
 
 If you wish to use different flag images, point option "Flag Image Path" to your own folder, containing custom images outside of "plugins" or "themes" folders. Most people would put it somewhere under "uploads" folder.
@@ -140,6 +149,9 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 3. qTranslate translation services
 
 == Changelog ==
+
+= 2.9.5 =
+* more fixes for <!--more--> and <!--nextpage--> tags.
 
 = 2.9.4 =
 * fix for https://wordpress.org/support/topic/comment-shows-404-error

@@ -127,7 +127,7 @@ function qtranxf_startsWith($s, $n) {
 function qtranxf_getAvailableLanguages($text) {
 	global $q_config;
 	$result = array();
-				$content = qtranxf_split($text);
+	$content = qtranxf_split($text);
 	foreach($content as $language => $lang_text) {
 		$lang_text = trim($lang_text);
 		if(!empty($lang_text)) $result[] = $language;

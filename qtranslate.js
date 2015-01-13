@@ -14,6 +14,59 @@ qtranxj_split = function(text)
 		var lang=qTranslateConfig.enabled_languages[i];
 		result[lang] = '';
 	}
+	var split_regex = /(<!--:[a-z]{2}-->|<!--:-->|\[:[a-z]{2}\])/gi;
+	var blocks = text.xsplit(split_regex);
+	//c('qtranxj_split: blocks='+blocks);
+	//c('qtranxj_split: blocks.length='+blocks.length);
+	if(!qtranxj_isArray(blocks))
+		return result;
+	if(blocks.length==1){//no language separator found, enter it to all languages
+		var b=blocks[0];
+		for(var j=0; j<qTranslateConfig.enabled_languages.length; ++j){
+			var lang=qTranslateConfig.enabled_languages[j];
+			result[lang] += b;
+		}
+		return result;
+	}
+	var clang_regex=/<!--:([a-z]{2})-->/gi;
+	var c_end_regex=/<!--:-->/g;
+	var blang_regex=/\[:([a-z]{2})\]/gi;
+	lang = false;
+	for(var i = 0;i<blocks.length;++i){
+		var b=blocks[i];
+		//c('blocks['+i+']='+b);
+		if(!b.length) continue;
+		matches = clang_regex.exec(b); clang_regex.lastIndex=0;
+		if(matches!=null){
+			lang = matches[1];
+			continue;
+		}
+		matches = c_end_regex.exec(b); c_end_regex.lastIndex=0;
+		if(matches!=null){
+			lang = false;
+			continue;
+		}
+		matches = blang_regex.exec(b); blang_regex.lastIndex=0;
+		if(matches!=null){
+			lang = matches[1];
+			continue;
+		}
+		if(!lang) continue;
+		result[lang] += b;
+		lang = false;
+	}
+	return result;
+}
+
+/*
+qtranxj_split = function(text)
+{
+	var result = new Object;
+	for(var i=0; i<qTranslateConfig.enabled_languages.length; ++i)
+	{
+		var lang=qTranslateConfig.enabled_languages[i];
+		result[lang] = '';
+	}
 	var split_regex_c = /<!--:-->/gi;
 	var blocks = text.xsplit(split_regex_c);
 	//c('qtranxj_split: blocks='+blocks);
@@ -64,7 +117,7 @@ qtranxj_split = function(text)
 	}
 	return result;
 }
-
+*/
 /*
 qtranxj_split = function(text)
 {
@@ -121,10 +174,35 @@ qtranxj_split = function(text)
 	return result;
 }
 */
+qtranxj_allthesame = function(texts)
+{
+	if(qTranslateConfig.enabled_languages.length==0) return '';
+	var text = '';
+	//take first not empty
+	for(var i=0; i<qTranslateConfig.enabled_languages.length; ++i)
+	{
+		var lang=qTranslateConfig.enabled_languages[i];
+		var t = texts[lang];
+		if ( !t || t=='' ) continue;
+		text = t;
+		break;
+	}
+	for(var i=0; i<qTranslateConfig.enabled_languages.length; ++i)
+	{
+		var lang=qTranslateConfig.enabled_languages[i];
+		var t = texts[lang];
+		if ( !t || t=='' ) continue;
+		if(t!=text) return null;
+	}
+	return text;
+}
+
 //"_c" stands for "comment"
 qtranxj_join_c = function(texts)
 {
-	var text = '';
+	var text = qtranxj_allthesame(texts);
+	if(text!=null) return text;
+	text='';
 	for(var i=0; i<qTranslateConfig.enabled_languages.length; ++i)
 	{
 		var lang=qTranslateConfig.enabled_languages[i];
@@ -141,6 +219,8 @@ qtranxj_join_c = function(texts)
 //"b" stands for "bracket"
 qtranxj_join_b = function(texts)
 {
+	var text = qtranxj_allthesame(texts);
+	if(text!=null) return text;
 	var text = '';
 	for(var i=0; i<qTranslateConfig.enabled_languages.length; ++i)
 	{
