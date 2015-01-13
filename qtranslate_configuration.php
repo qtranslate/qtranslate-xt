@@ -359,7 +359,6 @@ function qtranxf_array_compare($a,$b) {
 	return empty($diff_a) && empty($diff_b);
 }
 
-//this is not in use?
 function qtranxf_language_columns($columns) {
 	return array(
 		'flag' => __('Flag', 'qtranslate'),
@@ -369,7 +368,7 @@ function qtranxf_language_columns($columns) {
 		'status3' => ''
 		);
 }
-//add_filter('manage_language_columns', 'qtranxf_language_columns');
+add_filter('manage_language_columns', 'qtranxf_language_columns');
 
 function qtranxf_useAdminTermLib($obj) {
 	if ($_SERVER["SCRIPT_NAME"]==="/wp-admin/edit-tags.php" &&

@@ -150,8 +150,11 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 
 == Changelog ==
 
+= 2.9.6 =
+* more fixes for `<!--more-->` and `<!--nextpage-->` tags and parsing multilingual texts.
+
 = 2.9.5 =
-* more fixes for <!--more--> and <!--nextpage--> tags.
+* more fixes for `<!--more-->` and `<!--nextpage-->` tags.
 
 = 2.9.4 =
 * fix for https://wordpress.org/support/topic/comment-shows-404-error
@@ -171,7 +174,7 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 = 2.9 =
 * ability to enable "Custom Fields" by either "id" or "class" attribute.
 * ability to specify filters, which other theme or plugins define, to pass relevant data through the translation.
-* support for <!--more--> and <!--nextpage--> tags.
+* support for `<!--more-->` and `<!--nextpage-->` tags.
 * language cookie are renamed to minimize possible interference with other sites.
 
 = 2.8 =
