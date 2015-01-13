@@ -1010,6 +1010,7 @@ function qtranxf_split($text, $quicktags = true) {
 			// correctly categorize text block
 			if(!$current_language) continue;
 			$result[$current_language] .= $block;
+			$current_language = false;
 		}
 	}
 	return $result;
