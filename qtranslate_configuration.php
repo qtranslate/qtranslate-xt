@@ -703,7 +703,7 @@ function qtranxf_conf() {
 				<th scope="row"><?php _e('URL Modification Mode', 'qtranslate') ?></th>
 				<td>
 					<fieldset><legend class="hidden"><?php _e('URL Modification Mode', 'qtranslate') ?></legend>
-						<label title="Pre-Path Mode"><input type="radio" name="url_mode" value="<?php echo QTX_URL_PATH; ?>" <?php echo ($q_config['url_mode']==QTX_URL_PATH)?"checked=\"checked\"":""; ?> /> <?php echo __('Use Pre-Path Mode (Default, puts /en/ in front of URL). SEO friendly.', 'qtranslate'); ?></label><br/>
+						<label title="Pre-Path Mode"><input type="radio" name="url_mode" value="<?php echo QTX_URL_PATH; ?>" <?php echo ($q_config['url_mode']==QTX_URL_PATH)?"checked=\"checked\"":""; ?> /> <?php echo __('Use Pre-Path Mode (Default, puts /en/ in front of URL)', 'qtranslate').'. '.__('SEO friendly.', 'qtranslate'); ?></label><br/>
 						<label title="Pre-Domain Mode"><input type="radio" name="url_mode" value="<?php echo QTX_URL_DOMAIN; ?>" <?php echo ($q_config['url_mode']==QTX_URL_DOMAIN)?"checked=\"checked\"":""; ?> /> <?php echo __('Use Pre-Domain Mode (uses http://en.yoursite.com)', 'qtranslate').'. '.__('You will need to configure DNS sub-domains on your site.', 'qtranslate'); ?></label><br/>
 						<label title="Query Mode"><input type="radio" name="url_mode" value="<?php echo QTX_URL_QUERY; ?>" <?php echo ($q_config['url_mode']==QTX_URL_QUERY)?"checked=\"checked\"":""; ?> /> <?php echo __('Use Query Mode (?lang=en)', 'qtranslate').'. '.__('Most SEO unfriendly, not recommended.', 'qtranslate'); ?></label><br/>
 					</fieldset>
