@@ -653,7 +653,7 @@ function qtranxf_conf() {
 <h2><?php _e('Language Management (qTranslate Configuration)', 'qtranslate'); ?></h2>
 <div class="tablenav"><?php printf(__('For help on how to configure qTranslate correctly, take a look at the <a href="%1$s">qTranslate FAQ</a> and the <a href="%2$s">Support Forum</a>.', 'qtranslate'), 'http://wordpress.org/plugins/qtranslate-x/faq/', 'https://wordpress.org/support/plugin/qtranslate-x'); ?></div>
 	<form action="<?php echo $clean_uri;?>" method="post">
-	<?php  qtranxf_admin_section_start('General Settings','general'); ?>
+	<?php  qtranxf_admin_section_start(__('General Settings', 'qtranslate'),'general'); ?>
 		<table class="form-table" id="qtranslate-admin-general">
 			<tr>
 				<th scope="row"><?php _e('Default Language / Order', 'qtranslate') ?></th>
@@ -697,7 +697,7 @@ function qtranxf_conf() {
 			</tr>
 		</table>
 	<?php qtranxf_admin_section_end('general'); ?>
-	<?php qtranxf_admin_section_start('Advanced Settings','advanced'); ?>
+	<?php qtranxf_admin_section_start(__('Advanced Settings', 'qtranslate'),'advanced'); ?>
 		<table class="form-table" id="qtranslate-admin-advanced" style="display: none">
 			<tr>
 				<th scope="row"><?php _e('URL Modification Mode', 'qtranslate') ?></th>
