@@ -654,7 +654,7 @@ function qtranxf_conf() {
 <h2><?php _e('Language Management (qTranslate Configuration)', 'qtranslate'); ?></h2>
 <div class="tablenav"><?php printf(__('For help on how to configure qTranslate correctly, take a look at the <a href="%1$s">qTranslate FAQ</a> and the <a href="%2$s">Support Forum</a>.', 'qtranslate'), 'http://wordpress.org/plugins/qtranslate-x/faq/', 'https://wordpress.org/support/plugin/qtranslate-x'); ?></div>
 	<form action="<?php echo $clean_uri;?>" method="post">
-	<?php  qtranxf_admin_section_start('General Settings','general'); ?>
+	<?php  qtranxf_admin_section_start(__('General Settings', 'qtranslate'),'general'); ?>
 		<table class="form-table" id="qtranslate-admin-general">
 			<tr>
 				<th scope="row"><?php _e('Default Language / Order', 'qtranslate') ?></th>
@@ -698,13 +698,13 @@ function qtranxf_conf() {
 			</tr>
 		</table>
 	<?php qtranxf_admin_section_end('general'); ?>
-	<?php qtranxf_admin_section_start('Advanced Settings','advanced'); ?>
+	<?php qtranxf_admin_section_start(__('Advanced Settings', 'qtranslate'),'advanced'); ?>
 		<table class="form-table" id="qtranslate-admin-advanced" style="display: none">
 			<tr>
 				<th scope="row"><?php _e('URL Modification Mode', 'qtranslate') ?></th>
 				<td>
 					<fieldset><legend class="hidden"><?php _e('URL Modification Mode', 'qtranslate') ?></legend>
-						<label title="Pre-Path Mode"><input type="radio" name="url_mode" value="<?php echo QTX_URL_PATH; ?>" <?php echo ($q_config['url_mode']==QTX_URL_PATH)?"checked=\"checked\"":""; ?> /> <?php echo __('Use Pre-Path Mode (Default, puts /en/ in front of URL)', 'qtranslate').'. SEO '.__('friendly', 'qtranslate').'.'; ?></label><br/>
+						<label title="Pre-Path Mode"><input type="radio" name="url_mode" value="<?php echo QTX_URL_PATH; ?>" <?php echo ($q_config['url_mode']==QTX_URL_PATH)?"checked=\"checked\"":""; ?> /> <?php echo __('Use Pre-Path Mode (Default, puts /en/ in front of URL)', 'qtranslate').'. '.__('SEO friendly.', 'qtranslate'); ?></label><br/>
 						<label title="Pre-Domain Mode"><input type="radio" name="url_mode" value="<?php echo QTX_URL_DOMAIN; ?>" <?php echo ($q_config['url_mode']==QTX_URL_DOMAIN)?"checked=\"checked\"":""; ?> /> <?php echo __('Use Pre-Domain Mode (uses http://en.yoursite.com)', 'qtranslate').'. '.__('You will need to configure DNS sub-domains on your site.', 'qtranslate'); ?></label><br/>
 						<label title="Query Mode"><input type="radio" name="url_mode" value="<?php echo QTX_URL_QUERY; ?>" <?php echo ($q_config['url_mode']==QTX_URL_QUERY)?"checked=\"checked\"":""; ?> /> <?php echo __('Use Query Mode (?lang=en)', 'qtranslate').'. '.__('Most SEO unfriendly, not recommended.', 'qtranslate'); ?></label><br/>
 					</fieldset>
@@ -779,7 +779,7 @@ function qtranxf_conf() {
 			<tr valign="top">
 				<th scope="row"><?php _e('Compatibility Functions', 'qtranslate');?></th>
 				<td>
-					<label for="qtrans_compatibility"><input type="checkbox" name="qtrans_compatibility" id="qtrans_compatibility" value="1"<?php echo ($q_config['qtrans_compatibility'])?' checked="checked"':''; ?>/>&nbsp;<?php printf(__('Enable function names compatibility for %s.', 'qtranslate'), 'qtrans_getLanguage, qtrans_convertURL, qtrans_use, qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage, qtranxf_useTermLib and qtrans_getSortedLanguages'); ?></label><br/>
+					<label for="qtrans_compatibility"><input type="checkbox" name="qtrans_compatibility" id="qtrans_compatibility" value="1"<?php echo ($q_config['qtrans_compatibility'])?' checked="checked"':''; ?>/>&nbsp;<?php printf(__('Enable function names compatibility for %s.', 'qtranslate'), 'qtrans_getLanguage, qtrans_convertURL, qtrans_use, qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage, qtranxf_useTermLib '.__('and', 'qtranslate').' qtrans_getSortedLanguages'); ?></label><br/>
 					<small><?php printf(__('Some plugins and themes use direct calls to the functions listed, which are defined in former %s plugin and some of its forks. Turning this flag on will enable those function to exists, which will make the dependent plugins and themes to work.  WordPress policy prohibits to define functions with the same names as in other plugins, since it generates user-unfriendly fatal errors, when two conflicting plugins are activated simultaneously. Before turning this option on, you have to make sure that there are no other plugins active, which define those functions.', 'qtranslate'), '<a href="https://wordpress.org/plugins/qtranslate/" target="_blank">qTranslate</a>'); ?></small>
 				</td>
 			</tr>
