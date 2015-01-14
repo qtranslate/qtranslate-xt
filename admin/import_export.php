@@ -96,7 +96,7 @@ function qtranxf_add_row_migrate($nm,$plugin) {
 
 function qtranxf_admin_section_import_export($request_uri)
 {
-	qtranxf_admin_section_start(__('Import').'/'.__('Export'),'import');
+	qtranxf_admin_section_start(__('Import', 'qtranslate').'/'.__('Export', 'qtranslate'),'import');
 ?>
 	<table class="form-table" id="qtranslate-admin-import" style="display: none">
 		<tr valign="top" id="qtranslate-convert-database">
