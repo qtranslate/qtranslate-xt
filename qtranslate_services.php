@@ -371,7 +371,7 @@ function qts_order_columns($columns) {
 
 function qts_config_hook($request_uri) {
 	global $q_config;
-	qtranxf_admin_section_start('qTranslate Services Settings','service');
+	qtranxf_admin_section_start(__('qTranslate Services Settings', 'qtranslate'),'service');
 ?>
 <table class="form-table" id="qtranslate-admin-service" style="display: none">
 	<tr>
