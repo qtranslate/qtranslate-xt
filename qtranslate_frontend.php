@@ -63,7 +63,7 @@ function qtranxf_head(){
 }
 add_action('wp_head', 'qtranxf_head');
 
-function qtranxf_get_nav_menu_items( $items, $menu, $args )
+function qtranxf_wp_get_nav_menu_items( $items, $menu, $args )
 {
 	global $q_config;
 	$language=$q_config['language'];
@@ -79,11 +79,21 @@ function qtranxf_get_nav_menu_items( $items, $menu, $args )
 	$current=true;//[shown|hidden]
 	$flags=true;//[none|all|items]
 	$topflag=true;
-	foreach($items as $item)
+	foreach($items as $key => $item)
 	{
-	  if($itemid<$item->ID) $itemid=$item->ID;
-	  if($menu_order<$item->menu_order) $menu_order=$item->menu_order;
-		if( !isset( $item->url ) || stristr( $item->url, 'qtransLangSw' ) === FALSE ) continue;
+		//qtranxf_dbg_echo('item->title:'.$item->title);
+		$qtransLangSw = isset( $item->url ) && stristr( $item->url, 'qtransLangSw' ) !== FALSE;
+		if(!$qtransLangSw){
+			$item_title=qtranxf_use($language, $item->title, false, true);
+			if(empty($item_title)){
+				unset($items[$key]);//remove menu item with empty title for this language
+				continue;
+			}
+			$item->title=$item_title;
+		}
+		if($itemid<$item->ID) $itemid=$item->ID;
+		if($menu_order<$item->menu_order) $menu_order=$item->menu_order;
+		if(!$qtransLangSw) continue;
 		$p=strpos($item->url,'?');
 		if($p!==FALSE){
 			$qs=substr($item->url,$p+1);
@@ -166,7 +176,26 @@ function qtranxf_get_nav_menu_items( $items, $menu, $args )
 	}
 	return $items;
 }
-add_filter( 'wp_get_nav_menu_items',  'qtranxf_get_nav_menu_items', 0, 3 );
+add_filter( 'wp_get_nav_menu_items',  'qtranxf_wp_get_nav_menu_items', 0, 3 );
+
+/*
+function qtranxf_wp_setup_nav_menu_item($menu_item) {
+	global $q_config;
+	if($menu_item->title==='[:ru][:en]EN'){
+		//echo "qtranxf_wp_setup_nav_menu_item: '$text'<br>\n";
+		//qtranxf_dbg_echo('menu_item:',$menu_item,true);
+		qtranxf_dbg_echo('menu_item->title:'.$menu_item->title);
+		//$menu_item->title='test';//is in use
+		//$menu_item->post_title='';//not in use in menu
+		//$menu_item->title='';
+		//unset($menu_item);
+	}
+	//return $menu_item;
+	return qtranxf_use($q_config['language'], $menu_item, false, true);
+	//return qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($menu_item);
+}
+add_filter('wp_setup_nav_menu_item', 'qtranxf_wp_setup_nav_menu_item');
+*/
 
 function qtranxf_postsFilter($posts) {
 	if(is_array($posts)) {
@@ -179,7 +208,8 @@ function qtranxf_postsFilter($posts) {
 }
 add_filter('the_posts', 'qtranxf_postsFilter');
 
-function qtranxf_get_attachment_image_attributes($attr, $attachment, $size)
+//function qtranxf_get_attachment_image_attributes($attr, $attachment, $size)
+function qtranxf_get_attachment_image_attributes($attr)
 {
 	foreach( $attr as $name => $value ){
 		if($name!=='alt') continue;
@@ -187,7 +217,8 @@ function qtranxf_get_attachment_image_attributes($attr, $attachment, $size)
 	}
 	return $attr;
 }
-add_filter('wp_get_attachment_image_attributes', 'qtranxf_get_attachment_image_attributes',0,3);
+add_filter('wp_get_attachment_image_attributes', 'qtranxf_get_attachment_image_attributes',0);
+//add_filter('wp_get_attachment_image_attributes', 'qtranxf_get_attachment_image_attributes',0,3);
 
 function qtranxf_excludeUntranslatedPosts($where) {
 	global $q_config, $wpdb;
@@ -225,8 +256,10 @@ function qtranxf_home_url($url, $path, $orig_scheme, $blog_id)
 add_filter('home_url', 'qtranxf_home_url', 0, 4);
 
 function qtranxf_esc_html($text) {
-	//echo "\nqtranxf_esc_html:text=$text\n";
-	return qtranxf_useDefaultLanguage($text);
+	//qtranxf_dbg_echo('qtranxf_esc_html:text='.$text,null,true);
+	//never saw a case when this needs to be translated at all ...
+	return qtranxf_useDefaultLanguage($text);//this does not make sense, does it?
+	//return qtranxf_useCurrentLanguageIfNotFoundShowEmpty($text);
 }
 // filter options
 add_filter('esc_html', 'qtranxf_esc_html', 0);
@@ -267,13 +300,13 @@ function qtranxf_translate($text){
 //add_filter('wpseo_title', 'qtranxf_translate', 0);
 */
 
-// Compability with Default Widgets
+
 qtranxf_optionFilter();
+add_filter('wp_head', 'qtranxf_add_css');
+
+// Compability with Default Widgets
 add_filter('widget_title', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
 add_filter('widget_text', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
-
-add_filter('wp_head', 'qtranxf_add_css');
-add_filter('wp_setup_nav_menu_item', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage');
 
 add_filter('get_comment_author', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
 add_filter('the_author', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);

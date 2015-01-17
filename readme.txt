@@ -4,7 +4,7 @@ Contributors: johnclause, chineseleper, Vavooon
 Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, translation
 Requires at least: 3.9
 Tested up to: 4.1
-Stable tag: 2.9.5
+Stable tag: 2.9.7
 License: GPLv3 or later
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QEXEK3HX8AR6U
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -21,7 +21,7 @@ qTranslate-X makes creation of multilingual content as easy as working with a si
 
 - One-click local switching between the languages - Changing the language as easy as switching between Visual and HTML.
 - Language customizations without changing the .mo files - It stores all the translations in the same post fields, while shows it to user for editing one by one depending on the language to edit chosen.
-- In-line syntax '`<!--:en-->English Text<--:--><!--:de-->Deutsch<--:-->`' or '`[:en]English Text[:de]Deutsch`' for theme-custom fields gets them translated. See [FAQ](https://wordpress.org/plugins/qtranslate-x/faq/ "qTranslate-X FAQ") for more information.
+- In-line syntax '`<!--:en-->English Text<!--:--><!--:de-->Deutsch<!--:-->`' or '`[:en]English Text[:de]Deutsch`' for theme-custom fields gets them translated. See [FAQ](https://wordpress.org/plugins/qtranslate-x/faq/ "qTranslate-X FAQ") for more information.
 - Multilingual dates out of the box - Translates dates and time for you.
 - Theme custom fields can be configured to be translatable too.
 - Comes with a number of languages already built-in - English, German, Simplified Chinese, for example, and many more.
@@ -73,7 +73,7 @@ This applies to post, pages and media editors (/wp-admin/post*).
 
 Some themes have additional to the standard WP design fields, which need to be translated. In such a case, enter all translations in one field using syntax like this:
 
-`<!--:en-->English Text<--:--><!--:de-->Deutsch<--:-->`
+`<!--:en-->English Text<!--:--><!--:de-->Deutsch<!--:-->`
 
 or like this
 
@@ -81,7 +81,7 @@ or like this
 
 If a theme uses `__()` [translate](http://codex.wordpress.org/Function_Reference/_2 "WP Function 'translate'") function before displaying those fields, then they will be shown correctly, otherwise suggest theme author to put `__()` calls in. Most themes do it this way.
 
-The '`[:]`' syntax works well for one-line text fields, while '`<--:-->`' syntax is more suitable for text areas.
+The '`[:]`' syntax works well for one-line text fields, while '`<!--:-->`' syntax is more suitable for text areas.
 
 = Can I change the look of Language Switcher Menu? =
 
@@ -104,6 +104,16 @@ The following query options can be typed in the field "URL" of "Language Menu" c
 - current=[shown|hidden] - whether to display the current language in the menu.
 
 We understand that this is not a very user-friendly way to adjust the options, but it works, and we will provide a better in-editor interface to specify them in the future.
+
+= Can I enable Language Switching Buttons on my plugin's custom page? =
+
+Yes, enter the relevant and distinctive part of your page URL into "Custom Pages" configuration option. When page is loaded, two Java scripts will be added, "admin/js/common.js" and "admin/js/edit-custom-page.js", from which you may figure out how it works. The Language Switching Buttons will control fields listed in "Custom Fields" option. Those fields will now store the input for all enabled languages. It is up to the theme and other relevant plugins, if those field values will show up translated on the front-end. Some theme and plugins pass the values through `__()` translation function and then values are translated. They might use `apply_filters` method, and then name of that filter can be listed in "Custom Filters" configuration option, in order to get the field translated on the front-end.
+
+If your case is still cannot be handled in this general way, you may develop your own Java script, similar to  "admin/js/edit-custom-page.js", and load it from your own file path using "qtranxf_custom_admin_js" hook. Looking through other "admin/js/edit-*.js" scripts may give you an idea how to do yours.
+
+= How can I customize menu depending on the language? =
+
+If you wish a menu item not to show up for a specific language, remove its translation for that language from "Navigation Label" field in menu editor.
 
 = Can I translate slugs? =
 
@@ -149,6 +159,15 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 3. qTranslate translation services
 
 == Changelog ==
+
+= 2.9.7 =
+* menu items with empty text for the current language are not shown any more.
+* enable Language Switching Buttons on menu editor page. Fields "Navigation Label", "Title Attribute" and "Description" now respond to Language Switching Buttons.
+* option "Custom Pages" to enable Language Switching Buttons on custom-defined pages.
+* split the qtranslate.js script into a few scripts in `admin/js/` folder to be loaded depending on the page which needs them.
+* updated qtranslate.pot and fixed proper translation of various strings in the code (thanks to Pedro Carvalho).
+* fix for when cookie 'wp_qtrans_edit_language' contains unavailable language.
+* various performance improvements.
 
 = 2.9.6 =
 * more fixes for `<!--more-->` and `<!--nextpage-->` tags and parsing multilingual texts.

@@ -41,6 +41,11 @@ function qtranxf_localeForCurrentLanguage($locale){
 	return $locale_lang;
 }
 
+function qtranxf_useCurrentLanguageIfNotFoundShowEmpty($content) {
+	global $q_config;
+	return qtranxf_use($q_config['language'], $content, false, true);
+}
+
 function qtranxf_useCurrentLanguageIfNotFoundShowAvailable($content) {
 	global $q_config;
 	return qtranxf_use($q_config['language'], $content, true);

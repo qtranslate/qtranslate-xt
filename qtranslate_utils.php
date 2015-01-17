@@ -22,30 +22,36 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 /* qTranslate-X Utilities */
 
-/*
+// /*
 if(defined('WP_DEBUG')&&WP_DEBUG){
 	if(!function_exists('qtranxf_dbg_log')){
-		function qtranxf_dbg_log($msg,$var=null){
+		function qtranxf_dbg_log($msg,$var=null,$bt=false){
 			//$d=ABSPATH.'/wp-logs';
 			//if(!file_exists($d)) mkdir($d);
 			//$f=$d.'/qtranslate.log';
 			$f=WP_CONTENT_DIR.'/debug-qtranslate.log';
 			if($var)
-				$msg .= "\n".var_export($var,true);
+				$msg .= PHP_EOL.var_export($var,true);
+			if($bt){
+				$msg .= PHP_EOL.var_export(debug_backtrace(),true);
+			}
 			error_log($msg."\n",3,$f);
 		}
 	}
 	if(!function_exists('qtranxf_dbg_echo')){
-		function qtranxf_dbg_echo($msg,$var=null){
+		function qtranxf_dbg_echo($msg,$var=null,$bt=false){
 			if($var)
-				$msg .= "<br>\n".var_export($var,true);
+				$msg .= '<br>'.PHP_EOL.var_export($var,true);
 			echo $msg."<br>\n";
+			if($bt){
+				debug_print_backtrace();
+			}
 		}
 	}
 	assert_options(ASSERT_BAIL,true);
-//}else{
-//	function qtranxf_dbg_log($msg,$var=null){}
-//	function qtranxf_dbg_echo($msg){}
+}else{
+	if(!function_exists('qtranxf_dbg_log')){ function qtranxf_dbg_log($msg,$var=null){} }
+	if(!function_exists('qtranxf_dbg_echo')){ function qtranxf_dbg_echo($msg){} }
 	//assert_options(ASSERT_ACTIVE,false);
 	//assert_options(ASSERT_WARNING,false);
 	//assert_options(ASSERT_QUIET_EVAL,true);

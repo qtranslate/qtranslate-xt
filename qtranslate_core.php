@@ -243,7 +243,7 @@ function qtranxf_detect_language($url, $host, $referer) {
 			}
 		}
 	}
-
+qtranxf_dbg_log('doredirect=',$doredirect);
 	if($doredirect){
 		$urlto=$result['host'].$result['url'];
 		if(isset($_SERVER['HTTPS']))
@@ -259,7 +259,9 @@ function qtranxf_detect_language($url, $host, $referer) {
 			//qtranxf_dbg_log('qtranxf_detect_language:doredirect: POST: ',$_POST);
 			$url_parsed=parse_url($url);
 			$tgt_parsed=parse_url($target);
-			if(isset($url_parsed['path']) && isset($tgt_parsed['path']) && $url_parsed['path'] != $tgt_parsed['path']){
+			$url_parsed_path=isset($url_parsed['path'])?rtrim($url_parsed['path'],'/?#'):'';
+			$tgt_parsed_path=isset($tgt_parsed['path'])?rtrim($tgt_parsed['path'],'/?#'):'';
+			if($url_parsed_path!=$tgt_parsed_path){
 				qtranxf_set_language_cookie($lang,$result['home']);
 				wp_redirect($target);
 				//header('Location: '.$target);
@@ -407,6 +409,7 @@ function qtranxf_loadConfig() {
 	qtranxf_load_option_array('custom_fields');
 	qtranxf_load_option_array('custom_field_classes');
 	qtranxf_load_option_array('text_field_filters');
+	qtranxf_load_option_array('custom_pages');
 
 	// default if not set
 	if(!is_array($date_formats)) $date_formats = $q_config['date_format'];
@@ -518,6 +521,7 @@ function qtranxf_saveConfig() {
 	qtranxf_update_option('custom_fields');
 	qtranxf_update_option('custom_field_classes');
 	qtranxf_update_option('text_field_filters');
+	qtranxf_update_option('custom_pages');
 
 	qtranxf_update_option_bool('detect_browser_language');
 	qtranxf_update_option_bool('hide_untranslated');
@@ -802,7 +806,7 @@ function qtranxf_convertURL($url='', $lang='', $forceadmin = false, $showDefault
 	if($url=='') $url = esc_url($q_config['url_info']['url']);
 	if($lang=='') $lang = $q_config['language'];
 	if(defined('WP_ADMIN')&&!$forceadmin) return $url;
-	if(!qtranxf_isEnabled($lang)) return "";
+	if(!qtranxf_isEnabled($lang)) return '';
 
 	// & workaround
 	$url = str_replace('&amp;','&',$url);
@@ -868,7 +872,8 @@ function qtranxf_convertURL($url='', $lang='', $forceadmin = false, $showDefault
 	switch($q_config['url_mode']) {
 		case QTX_URL_PATH:	// pre url
 			// might already have language information
-			if(preg_match("#^([a-z]{2})/#i",$url,$match)) {
+			//qtranxf_dbg_echo('qtranxf_convertURL:url='.$url);
+			if(preg_match("#^([a-z]{2})(/|$)#i",$url,$match)) {
 				if(qtranxf_isEnabled($match[1])) {
 					// found language information, remove it
 					$url = substr($url, 3);
@@ -913,6 +918,61 @@ function qtranxf_convertURL($url='', $lang='', $forceadmin = false, $showDefault
 }
 }
 
+//if (!function_exists('qtranxf_get_split_blocks')){
+// split text at all language comments and quick tags
+function qtranxf_get_language_blocks($text) {
+	$split_regex = "#(<!--:[a-z]{2}-->|<!--:-->|\[:[a-z]{2}\])#ism";
+	return preg_split($split_regex, $text, -1, PREG_SPLIT_NO_EMPTY|PREG_SPLIT_DELIM_CAPTURE);
+}
+//}
+
+if (!function_exists('qtranxf_split')){
+function qtranxf_split($text, $quicktags = true) {
+	$blocks = qtranxf_get_language_blocks($text);
+	return qtranxf_split_blocks($blocks,$quicktags);
+}
+}
+
+if (!function_exists('qtranxf_split_blocks')){
+function qtranxf_split_blocks($blocks, $quicktags = true) {
+	global $q_config;
+	$result = array();
+	foreach($q_config['enabled_languages'] as $language) {
+		$result[$language] = '';
+	}
+	$current_language = false;
+	foreach($blocks as $block) {
+		# detect language tags
+		if(preg_match("#^<!--:([a-z]{2})-->$#ism", $block, $matches)) {
+			$current_language = $matches[1];
+			if(!qtranxf_isEnabled($current_language)) $current_language = false;
+			continue;
+		// detect quicktags
+		} elseif($quicktags && preg_match("#^\[:([a-z]{2})\]$#ism", $block, $matches)) {
+			$current_language = $matches[1];
+			if(!qtranxf_isEnabled($current_language)) $current_language = false;
+			continue;
+		// detect ending tags
+		} elseif(preg_match("#^<!--:-->$#ism", $block, $matches)) {
+			$current_language = false;
+			continue;
+		}
+		// correctly categorize text block
+		if($current_language){
+			$result[$current_language] .= $block;
+			$current_language = false;
+		}else{
+			foreach($q_config['enabled_languages'] as $language) {
+				$result[$language] .= $block;
+			}
+		}
+	}
+	//it gets trimmed later in qtranxf_use() anyway, better to do it here
+	foreach($result as $lang => $text){
+		$result[$lang]=trim($text);
+	}
+	return $result;
+}
 /*
 function qtranxf_split($text, $quicktags = true) {
 	global $q_config;
@@ -971,56 +1031,23 @@ function qtranxf_split($text, $quicktags = true) {
 	//}
 	return $result;
 }// */
-
-if (!function_exists('qtranxf_split')){
-function qtranxf_split($text, $quicktags = true) {
-	global $q_config;
-	//$split_regex = "#(<!--[^-]*-->|\[:[a-z]{2}\])#ism";
-	$split_regex = "#(<!--:[a-z]{2}-->|<!--:-->|\[:[a-z]{2}\])#ism";
-	$result = array();
-	foreach($q_config['enabled_languages'] as $language) {
-		$result[$language] = '';
-	}
-	// split text at all language comments and quick tags
-	$blocks = preg_split($split_regex, $text, -1, PREG_SPLIT_NO_EMPTY|PREG_SPLIT_DELIM_CAPTURE);
-	$current_language = false;
-	foreach($blocks as $block) {
-		# detect language tags
-		if(preg_match("#^<!--:([a-z]{2})-->$#ism", $block, $matches)) {
-			$current_language = $matches[1];
-			if(!qtranxf_isEnabled($current_language)) $current_language = false;
-			continue;
-		// detect quicktags
-		} elseif($quicktags && preg_match("#^\[:([a-z]{2})\]$#ism", $block, $matches)) {
-			$current_language = $matches[1];
-			if(!qtranxf_isEnabled($current_language)) $current_language = false;
-			continue;
-		// detect ending tags
-		} elseif(preg_match("#^<!--:-->$#ism", $block, $matches)) {
-			$current_language = false;
-			continue;
-		}
-		// correctly categorize text block
-		if($current_language){
-			$result[$current_language] .= $block;
-			$current_language = false;
-		}else{
-			foreach($q_config['enabled_languages'] as $language) {
-				$result[$language] .= $block;
-			}
-		}
-	}
-	return $result;
-}
 }
 
 function qtranxf_join($texts) {
-	global $q_config;
 	if(!is_array($texts)) $texts = qtranxf_split($texts, false);
+	qtranxf_join_c($texts);
+}
+
+function qtranxf_join_c($texts) {
+	$text = '';
+	foreach($texts as $lang => $lang_text) {
+		$text .= '<!--:'.$lang.'-->'.$lang_text.'<!--:-->';
+	}
+/*
+	//should join all available, not only enabled?
+	global $q_config;
 	$split_regex = "#<!--more-->#ism";
 	$max = 0;
-	$text = "";
-	
 	foreach($q_config['enabled_languages'] as $language) {
 		$texts[$language] = preg_split($split_regex, $texts[$language]);
 		if(sizeof($texts[$language]) > $max) $max = sizeof($texts[$language]);
@@ -1034,6 +1061,15 @@ function qtranxf_join($texts) {
 				$text .= '<!--:'.$language.'-->'.$texts[$language][$i].'<!--:-->';
 			}
 		}
+	}
+*/
+	return $text;
+}
+
+function qtranxf_join_b($texts) {
+	$text = '';
+	foreach($texts as $lang => $lang_text) {
+		$text .= '[:'.$lang.']'.$lang_text;
 	}
 	return $text;
 }
@@ -1065,46 +1101,64 @@ function qtranxf_enableLanguage($lang) {
 }
 
 if (!function_exists('qtranxf_use')){
-function qtranxf_use($lang, $text, $show_available=false) {
+function qtranxf_use($lang, $text, $show_available=false, $show_empty=false) {
 	global $q_config;
 	// return full string if language is not enabled
-	if(!qtranxf_isEnabled($lang)) return $text;
+	//if(!qtranxf_isEnabled($lang)) return $text;//why?
 	if(is_array($text)) {
 		// handle arrays recursively
 		foreach($text as $key => $t) {
-			$text[$key] = qtranxf_use($lang,$text[$key],$show_available);
+			$text[$key] = qtranxf_use($lang,$text[$key],$show_available,$show_empty);
 		}
 		return $text;
 	}
-	
+
 	if(is_object($text)||@get_class($text) == '__PHP_Incomplete_Class') {
 		foreach(get_object_vars($text) as $key => $t) {
-			$text->$key = qtranxf_use($lang,$text->$key,$show_available);
+			$text->$key = qtranxf_use($lang,$text->$key,$show_available,$show_empty);
 		}
 		return $text;
 	}
-	
+
 	// prevent filtering weird data types and save some resources
-	if(!is_string($text) || $text == '') {
+	if(!is_string($text) || empty($text))//|| $text) == ''
 		return $text;
-	}
-	
+
 	// get content
-	$content = qtranxf_split($text);
-	// find available languages
-	$available_languages = array();
-	foreach($content as $language => $lang_text) {
-		$lang_text = trim($lang_text);
-		if(!empty($lang_text)) $available_languages[] = $language;
-	}
-	
-	// if no languages available show full text
-	if(sizeof($available_languages)==0) return $text;
+	$blocks = qtranxf_get_language_blocks($text);
+	//if($text==='[:ru][:en]EN'){
+	//qtranxf_dbg_echo('qtranxf_use:blocks:',$blocks,true);
+	//}
+	if(count($blocks)<=1)//no language is encoded in the $text, the most frequent case
+		return $text;
+	$content = qtranxf_split_blocks($blocks);
+	//$content = qtranxf_split($text);
+
 	// if content is available show the content in the requested language
 	if(!empty($content[$lang])) {
 		return $content[$lang];
+	}elseif($show_empty){
+		return '';
 	}
+
 	// content not available in requested language (bad!!) what now?
+
+	// find available languages
+	$available_languages = array();
+	foreach($content as $language => $lang_text) {
+		//$lang_text = trim($lang_text);//do we need to trim? not really ... but better trim in qtranxf_split_blocks then
+		//$content[$language]=$lang_text;
+		if(!empty($lang_text)) $available_languages[] = $language;
+	}
+
+	//// if no languages available show full text
+	//if(sizeof($available_languages)==0) return $text;//not is is not empty, since we called qtranxf_get_language_blocks
+	//// if content is available show the content in the requested language
+	//if(!empty($content[$lang])) {//already done above now
+	//	return $content[$lang];
+	//}
+	//// content not available in requested language (bad!!) what now?
+
 	if(!$show_available){
 		// check if content is available in default language, if not return first language found. (prevent empty result)
 		if($lang!=$q_config['default_language']){
@@ -1150,9 +1204,9 @@ function qtranxf_use($lang, $text, $show_available=false) {
 function qtranxf_showAllSeperated($text) {
 	if(empty($text)) return $text;
 	global $q_config;
-	$result = "";
+	$result = '';
 	foreach(qtranxf_getSortedLanguages() as $language) {
-		$result .= $q_config['language_name'][$language].":\n".qtranxf_use($language, $text)."\n\n";
+		$result .= $q_config['language_name'][$language].':'.PHP_EOL.qtranxf_use($language, $text).PHP_EOL.PHP_EOL;
 	}
 	return $result;
 }
@@ -1164,6 +1218,7 @@ function qtranxf_add_css ()
 }
 
 function qtranxf_optionFilter($do='enable') {//do we need it?
+	//qtranxf_dbg_echo('qtranxf_optionFilter: do='.$do);
 	$options = array(	'option_widget_pages',
 						'option_widget_archives',
 						'option_widget_meta',
@@ -1175,7 +1230,7 @@ function qtranxf_optionFilter($do='enable') {//do we need it?
 						'option_widget_rss',
 						'option_widget_tag_cloud'
 					);
-	if($do!='disable'){
+	if($do!='disable'){//this needs to be optimized if this function needed at all.
 		foreach($options as $option)
 			add_filter($option, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
 	}else{
