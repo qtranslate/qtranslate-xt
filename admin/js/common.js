@@ -6,7 +6,7 @@ function c(v){ ++cc; console.log('== '+cc+': '+v); }
 function ct(v){ c(v); console.trace(); }
 function co(t,o){ ++cc; console.log('== '+cc+': '+t+': %o',o); }
 
-qtranxj_split = function(text)
+qtranxj_split = function(text,keep_neutral_text)
 {
 	var result = new Object;
 	for(var i=0; i<qTranslateConfig.enabled_languages.length; ++i)
@@ -51,69 +51,18 @@ qtranxj_split = function(text)
 			lang = matches[1];
 			continue;
 		}
-		if(!lang) continue;
-		result[lang] += b;
-		lang = false;
+		if(lang){
+			result[lang] += b;
+			lang = false;
+		}else if(keep_neutral_text){
+			for(var key in result){
+				result[key] += b;
+			}
+		}
 	}
 	return result;
 }
 
-/*
-qtranxj_split = function(text)
-{
-	var result = new Object;
-	for(var i=0; i<qTranslateConfig.enabled_languages.length; ++i)
-	{
-		var lang=qTranslateConfig.enabled_languages[i];
-		result[lang] = '';
-	}
-	var split_regex_c = /(<!--.*?-->)/gi;
-	var blocks = text.xsplit(split_regex_c);
-	//c('qtranxj_split: blocks='+blocks);
-	if(!qtranxj_isArray(blocks))
-		return result;
-	var lang_begin_regex, lang_end_regex;
-	if(blocks.length>1){//there are matches, if the first block is empty
-		lang_begin_regex = /<!--:([a-z]{2})-->/gi;
-		lang_end_regex = /<!--:-->/gi;
-	}else{
-		var split_regex_b = /(\[:[a-z]{2}\])/gi;
-		blocks = text.xsplit(split_regex_b);
-		if(!qtranxj_isArray(blocks))
-			return result;
-		lang_begin_regex = /\[:([a-z]{2})\]/gi;
-	}
-	if(!blocks.length) return result;
-	if(blocks.length==1){//no language separator found, enter it to all languages
-			var b=blocks[0];
-			for(var j=0; j<qTranslateConfig.enabled_languages.length; j++){
-				var lang=qTranslateConfig.enabled_languages[j];
-				result[lang] += b;
-			}
-	}else{
-		var matches;
-		var lang = false;
-		for(var i = 0;i<blocks.length;++i){
-			var b=blocks[i];
-			//c('blocks['+i+']='+b);
-			if(!b.length) continue;
-			if ((matches = lang_begin_regex.exec(b)) != null){
-				lang = matches[1];
-			}else if(lang_end_regex && lang_end_regex.test(b)){
-				lang = false;
-			}else if(lang){
-				result[lang] += b;
-				lang = false;
-			}//else skip garbage which tinyMCE adds sometimes
-		}
-	}
-	var morenextpage_regex = /(<!--more-->|<!--nextpage-->)+$/gi;
-	for(var i = 0;i<result.length;++i){
-		result[i] = result[i].replace(morenextpage_regex,'');
-	}
-	return result;
-}
-*/
 qtranxj_allthesame = function(texts)
 {
 	if(qTranslateConfig.enabled_languages.length==0) return '';
@@ -267,7 +216,9 @@ var qTranslateX=function(pg)
 	{
 		var h=contentHooks[id];
 		var lang=languageSwitch.getActiveLanguage();
-		h.contents[lang]=value;
+		var text=value.trim();
+		c('updateFusedValueH['+id+']text:'+text);
+		h.contents[lang]=text;
 		if(h.separator==='<'){
 			h.mlContentField.value = qtranxj_join_c(h.contents);
 		}else{
@@ -280,7 +231,8 @@ var qTranslateX=function(pg)
 		if(!inpField) return false;
 		var h=contentHooks[inpField.id]={};
 		h.contentField=inpField;
-		h.contents=qtranxj_split(inpField.value);//inpField.tagName
+		c('addContentHook:inpField.value='+inpField.value);
+		h.contents=qtranxj_split(inpField.value,false);//inpField.tagName
 		h.mlContentField=qtranxj_ce('input', {name: inpField.name, type: 'hidden', className: 'hidden', value: inpField.value}, form, true);
 		if(!separator){
 			if(inpField.tagName==='TEXTAREA')
@@ -290,10 +242,25 @@ var qTranslateX=function(pg)
 		}
 		h.separator=separator;
 		inpField.name='edit-'+inpField.name;
-		inpField.value=h.contents[initialLanguage];
-		//c('addContentHookC:inpField.value='+inpField.value);
+		var text = h.contents[initialLanguage];
+		inpField.value=text;
+		//c('addContentHook:inpField.value='+inpField.value);
 		inpField.onblur=function(){ updateFusedValueH(this.id,this.value); }
-		return true;
+		if(inpField.tagName==='TEXTAREA'){
+			c('addContentHook:inpField.value='+inpField.value);
+			for(var lang in h.contents){
+				c('addContentHook:h.contents['+lang+']:'+h.contents[lang]);
+			}
+		}
+		if(window.tinyMCE){//never fired yet
+			for(var i=0; i<tinyMCE.editors.length; ++i){
+				var ed=tinyMCE.editors[i];
+				if(ed.id != inpField.id) continue;
+				c('addContentHook:updateTinyMCE');
+				updateTinyMCE(ed,text);
+			}
+		}
+		return h;
 	}
 	this.addContentHookC=function(inpField,form) { return addContentHook(inpField,form,'<'); }
 	this.addContentHookB=function(inpField,form) { return addContentHook(inpField,form,'['); }
@@ -319,7 +286,7 @@ var qTranslateX=function(pg)
 		var content = elem.innerHTML.replace(/&lt;!--:([a-z]{2}|)--&gt;/gi,'<!--:$1-->');//un-escape language HTML
 		//c('addDisplayHook: innerHTML='+elem.innerHTML);
 		//c('addDisplayHook: content='+content);
-		h.contents=qtranxj_split(content);
+		h.contents=qtranxj_split(content,true);
 		elem.innerHTML=h.contents[initialLanguage];
 		displayHooks.push(h);
 		return true;
@@ -346,6 +313,23 @@ var qTranslateX=function(pg)
 	}
 */
 
+	updateTinyMCE=function(ed,text)
+	{
+		c('updateTinyMCE: text:'+text);
+		if(!text.match(/^</)){
+			text='<p>'+text+'</p>';
+			c('updateTinyMCE: updated text:'+text);
+		}
+		/*
+		if(window.switchEditors){
+			//text = window.switchEditors.pre_wpautop( text );
+			text = window.switchEditors.wpautop(text);//does format 'raw' takes care of it?
+			c('updateTinyMCE:wpautop:'+text);
+		}
+		*/
+		ed.setContent(text,{format: 'raw'});//do we need 'raw'?
+	}
+
 	onTabSwitch=function()
 	{
 		setLangCookie(this.lang);
@@ -356,13 +340,14 @@ var qTranslateX=function(pg)
 		for(var key in contentHooks){
 			var h=contentHooks[key];
 			h.contentField.value=h.contents[this.lang];
+			c('onTabSwitch: h['+key+'].contentField.value:'+h.contentField.value);
 		}
 		if (!window.tinyMCE) return;
 		for(var i=0; i<tinyMCE.editors.length; ++i){
 			var ed=tinyMCE.editors[i];
 			var h=contentHooks[ed.id];
 			if(!h) continue;
-			ed.setContent(h.contentField.value);//, {format: 'raw'}
+			updateTinyMCE(ed,h.contentField.value);
 		}
 	}
 
@@ -378,7 +363,7 @@ var qTranslateX=function(pg)
 	this.addDisplayHooksByClass=function(nm,form)
 	{
 		var elems=form.getElementsByClassName(nm);
-		c('addDisplayHooksByClass: elems.length='+elems.length);
+		//c('addDisplayHooksByClass: elems.length='+elems.length);
 		for(var i=0; i<elems.length; ++i){
 			var e=elems[i];
 			addDisplayHook(e);
@@ -426,9 +411,26 @@ var qTranslateX=function(pg)
 			if(!h) return;
 			if(h.mce) return;
 			h.mce=e;
-			e.getBody().addEventListener('blur',function(){ updateFusedValueH(e.id, e.getContent());});
-			//c('h.contentField.value='+h.contentField.value);
-			//e.setContent(h.contentField.value);
+			e.getBody().addEventListener('blur',function(){
+					var text=e.getContent({format : 'raw'});
+					c('tinymce: onblur: text:'+text);
+					if(text.match(/^<p[^>]*>(\s|&nbsp;|<br[^>]*>)*<\/p>$/)){
+						text='';//workaround, need to learn how tinymce works ...
+						c('tinymce: onblur: empty text');
+					}else{
+						var matches = text.match(/^<p>\s*(.*)\s*<\/p>$/);
+						if(matches){
+							text=matches[1];
+							c('tinymce: onblur: removed plain <p>:'+text);
+						}
+					}
+					updateFusedValueH(e.id,text);
+				});
+			c('setEditorHooks: id='+id);
+			c('h.contentField.value='+h.contentField.value);
+			var text=e.getContent({format : 'raw'});
+			c('setEditorHooks: getContent(text):'+text);
+			//updateTinyMCE(e,text);//it does it on its own?
 		}
 
 		// Add listeners for fields change

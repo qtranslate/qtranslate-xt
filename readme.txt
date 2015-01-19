@@ -4,7 +4,7 @@ Contributors: johnclause, chineseleper, Vavooon
 Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, translation
 Requires at least: 3.9
 Tested up to: 4.1
-Stable tag: 2.9.7
+Stable tag: 2.9.6
 License: GPLv3 or later
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QEXEK3HX8AR6U
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -168,6 +168,8 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 * updated qtranslate.pot and fixed proper translation of various strings in the code (thanks to Pedro Carvalho).
 * fix for when cookie 'wp_qtrans_edit_language' contains unavailable language.
 * various performance improvements.
+* option "Editor Raw Mode" to be able to edit database text entries as they are, with language tag separators, without Language Switching Buttons.
+* fix for [random `<p>` in TinyMCE editors](https://github.com/qTranslate-Team/qtranslate-x/issues/5).
 
 = 2.9.6 =
 * more fixes for `<!--more-->` and `<!--nextpage-->` tags and parsing multilingual texts.

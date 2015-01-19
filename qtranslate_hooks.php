@@ -78,35 +78,6 @@ function qtranxf_excludePages($pages) {
 	return array_merge($exclude, $pages);
 }
 
-function qtranxf_languageColumnHeader($columns){
-	$new_columns = array();
-	if(isset($columns['cb'])) $new_columns['cb'] = '';
-	if(isset($columns['title'])) $new_columns['title'] = '';
-	if(isset($columns['author'])) $new_columns['author'] = '';
-	if(isset($columns['categories'])) $new_columns['categories'] = '';
-	if(isset($columns['tags'])) $new_columns['tags'] = '';
-	$new_columns['language'] = __('Languages', 'qtranslate');
-	return array_merge($new_columns, $columns);;
-}
-
-function qtranxf_languageColumn($column) {
-	global $q_config, $post;
-	if ($column == 'language') {
-		$available_languages = qtranxf_getAvailableLanguages($post->post_content);
-		$missing_languages = array_diff($q_config['enabled_languages'], $available_languages);
-		$available_languages_name = array();
-		$missing_languages_name = array();
-		foreach($available_languages as $language) {
-			$available_languages_name[] = $q_config['language_name'][$language];
-		}
-		$available_languages_names = join(", ", $available_languages_name);
-		
-		echo apply_filters('qtranslate_available_languages_names',$available_languages_names);
-		do_action('qtranslate_languageColumn', $available_languages, $missing_languages);
-	}
-	return $column;
-}
-
 function qtranxf_versionLocale() {
 	return 'en_US';
 }
@@ -218,7 +189,6 @@ add_filter('get_the_date', 'qtranxf_dateFromPostForCurrentLanguage',0,2);
 add_filter('locale', 'qtranxf_localeForCurrentLanguage',99);
 add_filter('the_title', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', 0);//WP: fires for display purposes only
 add_filter('post_title', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', 0);
-add_filter('term_name', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
 add_filter('tag_rows', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
 add_filter('list_cats', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
 add_filter('wp_list_categories', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
@@ -236,7 +206,7 @@ add_filter('get_pages', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage'
 add_filter('category_description', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
 add_filter('bloginfo_rss', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
 add_filter('the_category_rss', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
-add_filter('wp_generate_tag_cloud', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
+//add_filter('wp_generate_tag_cloud', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
 add_filter('term_links-post_tag', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
 add_filter('link_name', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
 add_filter('link_description', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
@@ -267,10 +237,6 @@ add_filter('post_comments_feed_link', 'qtranxf_convertURL');
 add_filter('tag_feed_link', 'qtranxf_convertURL');
 add_filter('get_pagenum_link', 'qtranxf_convertURL');
 add_filter('get_search_form', 'qtranxf_fixSearchForm', 10, 1);
-add_filter('manage_posts_columns', 'qtranxf_languageColumnHeader');
-add_filter('manage_posts_custom_column', 'qtranxf_languageColumn');
-add_filter('manage_pages_columns', 'qtranxf_languageColumnHeader');
-add_filter('manage_pages_custom_column', 'qtranxf_languageColumn');
 add_filter('wp_list_pages_excludes', 'qtranxf_excludePages');
 add_filter('comment_notification_text', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage');
 add_filter('comment_notification_headers', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage');

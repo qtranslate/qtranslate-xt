@@ -33,9 +33,9 @@ if(defined('WP_DEBUG')&&WP_DEBUG){
 			if($var)
 				$msg .= PHP_EOL.var_export($var,true);
 			if($bt){
-				$msg .= PHP_EOL.var_export(debug_backtrace(),true);
+				$msg .= PHP_EOL.'backtrace:'.PHP_EOL.var_export(debug_backtrace(),true);
 			}
-			error_log($msg."\n",3,$f);
+			error_log($msg.PHP_EOL,3,$f);
 		}
 	}
 	if(!function_exists('qtranxf_dbg_echo')){
@@ -98,7 +98,7 @@ function qtranxf_insertDropDownElement($language, $url, $id){
 		";
 	if($q_config['language']==$language)
 		$html .= "o.selected = 'selected';";
-	$html .= "
+		$html .= "
 		o.value = '".addslashes(htmlspecialchars_decode($url, ENT_NOQUOTES))."';
 		o.appendChild(l);
 		sb.appendChild(o);

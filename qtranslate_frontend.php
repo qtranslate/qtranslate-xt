@@ -184,7 +184,7 @@ function qtranxf_wp_setup_nav_menu_item($menu_item) {
 	if($menu_item->title==='[:ru][:en]EN'){
 		//echo "qtranxf_wp_setup_nav_menu_item: '$text'<br>\n";
 		//qtranxf_dbg_echo('menu_item:',$menu_item,true);
-		qtranxf_dbg_echo('menu_item->title:'.$menu_item->title);
+		//qtranxf_dbg_echo('menu_item->title:'.$menu_item->title);
 		//$menu_item->title='test';//is in use
 		//$menu_item->post_title='';//not in use in menu
 		//$menu_item->title='';
@@ -308,6 +308,7 @@ add_filter('wp_head', 'qtranxf_add_css');
 add_filter('widget_title', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
 add_filter('widget_text', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
 
+add_filter('term_name', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
 add_filter('get_comment_author', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
 add_filter('the_author', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
 add_filter('tml_title', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);

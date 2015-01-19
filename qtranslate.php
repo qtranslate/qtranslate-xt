@@ -3,7 +3,7 @@
 Plugin Name: qTranslate-X
 Plugin URI: http://wordpress.org/plugins/qtranslate-x/
 Description: Adds user-friendly and database-friendly multilingual content support into WordPress.
-Version: 2.9.7
+Version: 2.9.7b
 Author: John Clause based on original code by Qian Qin
 Author URI: http://qtranslatexteam.wordpress.com/about
 Tags: multilingual, multi, language, admin, tinymce, Polyglot, bilingual, widget, switcher, professional, human, translation, service, qTranslate, zTranslate, mqTranslate, qTranslate Plus, WPML
@@ -101,7 +101,7 @@ if ( ! defined( 'QTRANSLATE_FILE' ) ) {
 	define( 'QTRANSLATE_FILE', __FILE__ );
 }
 
-define('QTX_VERSION','2.9.7');
+define('QTX_VERSION','2.9.7b');
 
 /* DEFAULT CONFIGURATION PART BEGINS HERE */
 
@@ -156,6 +156,7 @@ $q_config['hide_default_language'] = true;
 
 //enables compatibility with former qtrans_* functions
 $q_config['qtrans_compatibility'] = false;
+$q_config['editor_mode'] = false;
 
 // sets default url mode 
 // QTX_URL_QUERY(1) - query (questionmark)
@@ -505,11 +506,16 @@ register_activation_hook(__FILE__, 'qtranxf_activation_hook');//does not work if
 require_once(dirname(__FILE__)."/qtranslate_utils.php");
 require_once(dirname(__FILE__)."/qtranslate_core.php");
 require_once(dirname(__FILE__)."/qtranslate_widget.php");
+
 if(is_admin()){
+
 	require_once(dirname(__FILE__)."/qtranslate_configuration.php");
+	require_once(dirname(__FILE__)."/admin/admin_utils.php");
+
 	// load qTranslate Services if available
 	if(file_exists(dirname(__FILE__)."/qtranslate_services.php"))
 		require_once(dirname(__FILE__)."/qtranslate_services.php");
+
 }else{
 	require_once(dirname(__FILE__)."/qtranslate_frontend.php");
 }
