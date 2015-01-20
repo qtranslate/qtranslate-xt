@@ -81,7 +81,7 @@ function qtranxf_wp_get_nav_menu_items( $items, $menu, $args )
 	$topflag=true;
 	foreach($items as $key => $item)
 	{
-		//qtranxf_dbg_echo('item->title:'.$item->title);
+		//qtranxf_dbg_echo('item->title:',$item);
 		$qtransLangSw = isset( $item->url ) && stristr( $item->url, 'qtransLangSw' ) !== FALSE;
 		if(!$qtransLangSw){
 			$item_title=qtranxf_use($language, $item->title, false, true);
@@ -91,6 +91,11 @@ function qtranxf_wp_get_nav_menu_items( $items, $menu, $args )
 			}
 			$item->title=$item_title;
 		}
+		$item->post_content=qtranxf_use($language, $item->post_content, false, true);
+		$item->post_title=qtranxf_use($language, $item->post_title, false, true);
+		$item->post_excerpt=qtranxf_use($language, $item->post_excerpt, false, true);
+		$item->description=qtranxf_use($language, $item->description, false, true);
+
 		if($itemid<$item->ID) $itemid=$item->ID;
 		if($menu_order<$item->menu_order) $menu_order=$item->menu_order;
 		if(!$qtransLangSw) continue;
