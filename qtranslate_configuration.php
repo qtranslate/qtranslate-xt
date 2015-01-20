@@ -135,7 +135,7 @@ function qtranxf_get_custom_admin_js ($url,$pages) {
 		Filter allows to load custom script.
 		Return path relative to the location of qTranslate-X plugin folder, when needed.
 	*/
-	$script=apply_filters('qtranxf_custom_admin_js',$url);
+	$script=apply_filters('qtranxf_custom_admin_js',null,$url);
 	if($script) return $script;
 	return false;
 }
@@ -145,18 +145,25 @@ function qtranxf_select_admin_js ($enqueue_script=false) {
 	if($q_config['editor_mode']!=0) return false;
 	if(!isset($_SERVER['SCRIPT_NAME'])) return false;
 	$script_name=$_SERVER['SCRIPT_NAME'];
-	switch($script_name){
-		case '/wp-admin/post-new.php':
-		case '/wp-admin/post.php':      $script='admin/js/edit-post'; break;
-		case '/wp-admin/edit-tags.php': $script='admin/js/edit-tags'; break;
-		case '/wp-admin/nav-menus.php':
+	if(!preg_match('#/wp-admin/([^/]+)\.php#',$script_name,$matches)) return false;
+	$fn=$matches[1];
+	switch($fn){
+		//case '/wp-admin/post-new.php':
+		//case '/wp-admin/post.php':
+		case 'post':
+		case 'post-new': $script='admin/js/edit-post'; break;
+		//case '/wp-admin/edit-tags.php':
+		case 'edit-tags': $script='admin/js/edit-tags'; break;
+		//case '/wp-admin/nav-menus.php':
+		case 'nav-menus':
 			if(isset($_SERVER['QUERY_STRING'])){
 				$qs=$_SERVER['QUERY_STRING'];
 				if(strpos($qs,'action=')!==FALSE) return false;
 			}
 			$script='admin/js/edit-nav-menus';
 			break;
-		case '/wp-admin/options-general.php':
+		//case '/wp-admin/options-general.php':
+		case 'options-general':
 			if(isset($_SERVER['QUERY_STRING'])){
 				$qs=$_SERVER['QUERY_STRING']; echo "qs=$qs<br>";
 				if(strpos($qs,'page=')!==FALSE) return false;
@@ -566,10 +573,10 @@ function qtranxf_conf() {
 		qtranxf_updateSetting('show_displayed_language_prefix', QTX_BOOLEAN);
 		qtranxf_updateSetting('use_strftime', QTX_INTEGER);
 		qtranxf_updateSetting('url_mode', QTX_INTEGER);
+		qtranxf_updateSetting('editor_mode', QTX_INTEGER);
 		qtranxf_updateSetting('auto_update_mo', QTX_BOOLEAN);
 		qtranxf_updateSetting('hide_default_language', QTX_BOOLEAN);
 		qtranxf_updateSetting('qtrans_compatibility', QTX_BOOLEAN);
-		qtranxf_updateSetting('editor_mode', QTX_BOOLEAN);
 		qtranxf_updateSetting('custom_fields', QTX_ARRAY);
 		qtranxf_updateSetting('custom_field_classes', QTX_ARRAY);
 		qtranxf_updateSetting('text_field_filters', QTX_ARRAY);
