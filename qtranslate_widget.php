@@ -63,7 +63,7 @@ class qTranslateXWidget extends WP_Widget {
 			$title = $instance['title'];
 			if(empty($title))
 				$title=__('Language', 'qtranslate');
-			$title=apply_filters('qtranxf_widget_title',$title.':');
+			$title=apply_filters('qtranslate_widget_title',$title.':');
 			echo $before_title . $title . $after_title;
 		}
 		$type = $instance['type'];

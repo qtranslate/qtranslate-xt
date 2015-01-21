@@ -137,7 +137,7 @@ function qtranxf_get_custom_admin_js ($url,$pages) {
 		Filter allows to load custom script.
 		Return path relative to the location of qTranslate-X plugin folder, when needed.
 	*/
-	$script=apply_filters('qtranxf_custom_admin_js',null,$url);
+	$script=apply_filters('qtranslate_custom_admin_js',null,$url);
 	if($script) return $script;
 	return false;
 }

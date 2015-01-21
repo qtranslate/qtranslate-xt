@@ -648,9 +648,17 @@ if (!function_exists('qtranxf_convertURL')){
 function qtranxf_convertURL($url='', $lang='', $forceadmin = false, $showDefaultLanguage = false) {
 	global $q_config;
 
-	// invalid language
-	if($url=='') $url = esc_url($q_config['url_info']['url']);
 	if($lang=='') $lang = $q_config['language'];
+	if(empty($url)){
+		if( !defined('WP_ADMIN') && defined('QTS_VERSION') ){
+			//quick workaround, but need a permanent solution
+			$url = qts_get_url($lang);//works only if "Hide URL language information for default language." is off
+			//qtranxf_dbg_echo('qtranxf_convertURL: url=',$url);
+			if(!empty($url))
+				return $url;
+		}
+		$url = esc_url($q_config['url_info']['url']);
+	}
 	if(defined('WP_ADMIN')&&!$forceadmin) return $url;
 	if(!qtranxf_isEnabled($lang)) return '';
 
@@ -760,6 +768,7 @@ function qtranxf_convertURL($url='', $lang='', $forceadmin = false, $showDefault
 	if($nottrailing && strpos($complete,'?')===false && strpos($complete,'#')===false && substr($complete,-1,1)=='/')
 		$complete = substr($complete,0,-1);
 
+	$complete = apply_filters('qtranslate_convertURL',$complete,$lang);
 	return $complete;
 }
 }
