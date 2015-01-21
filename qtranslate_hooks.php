@@ -53,9 +53,6 @@ function qtranxf_useCurrentLanguageIfNotFoundShowAvailable($content) {
 
 function qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($content) {
 	global $q_config;
-	//if(!isset($q_config['language'])){
-	//	qtranxf_dbg_log('$q_config[language] is not set:',debug_backtrace());
-	//}
 	return qtranxf_use($q_config['language'], $content, false);
 }
 

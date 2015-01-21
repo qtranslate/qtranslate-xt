@@ -170,6 +170,8 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 * various performance improvements.
 * option "Editor Raw Mode" to be able to edit database text entries as they are, with language tag separators, without Language Switching Buttons.
 * fix for [random `<p>` in TinyMCE editors](https://github.com/qTranslate-Team/qtranslate-x/issues/5).
+* fix for login problem when `siteurl` option is different from 'home'.
+* compatibility with (Qtranslate Slug](https://wordpress.org/plugins/qtranslate-slug/).
 
 = 2.9.6 =
 * more fixes for `<!--more-->` and `<!--nextpage-->` tags and parsing multilingual texts.

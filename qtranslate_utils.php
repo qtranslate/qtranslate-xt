@@ -25,13 +25,13 @@ if ( !defined( 'ABSPATH' ) ) exit;
 // /*
 if(defined('WP_DEBUG')&&WP_DEBUG){
 	if(!function_exists('qtranxf_dbg_log')){
-		function qtranxf_dbg_log($msg,$var=null,$bt=false){
+		function qtranxf_dbg_log($msg,$var='novar',$bt=false){
 			//$d=ABSPATH.'/wp-logs';
 			//if(!file_exists($d)) mkdir($d);
 			//$f=$d.'/qtranslate.log';
 			$f=WP_CONTENT_DIR.'/debug-qtranslate.log';
-			if($var)
-				$msg .= PHP_EOL.var_export($var,true);
+			if( $var !== 'novar' )
+				$msg .= var_export($var,true);
 			if($bt){
 				$msg .= PHP_EOL.'backtrace:'.PHP_EOL.var_export(debug_backtrace(),true);
 			}
@@ -39,9 +39,9 @@ if(defined('WP_DEBUG')&&WP_DEBUG){
 		}
 	}
 	if(!function_exists('qtranxf_dbg_echo')){
-		function qtranxf_dbg_echo($msg,$var=null,$bt=false){
-			if($var)
-				$msg .= '<br>'.PHP_EOL.var_export($var,true);
+		function qtranxf_dbg_echo($msg,$var='novar',$bt=false){
+			if( $var !== 'novar' )
+				$msg .= var_export($var,true);
 			echo $msg."<br>\n";
 			if($bt){
 				debug_print_backtrace();
@@ -50,22 +50,15 @@ if(defined('WP_DEBUG')&&WP_DEBUG){
 	}
 	assert_options(ASSERT_BAIL,true);
 }else{
-	if(!function_exists('qtranxf_dbg_log')){ function qtranxf_dbg_log($msg,$var=null){} }
-	if(!function_exists('qtranxf_dbg_echo')){ function qtranxf_dbg_echo($msg){} }
+	if(!function_exists('qtranxf_dbg_log')){ function qtranxf_dbg_log($msg,$var=null,$bt=false){} }
+	if(!function_exists('qtranxf_dbg_echo')){ function qtranxf_dbg_echo($msg,$var=null,$bt=false){} }
 	//assert_options(ASSERT_ACTIVE,false);
 	//assert_options(ASSERT_WARNING,false);
 	//assert_options(ASSERT_QUIET_EVAL,true);
 }// */
 
 function qtranxf_parseURL($url) {
-/*
-	if(function_exists('parse_url')){
-		$result = parse_url($url);
-		if(!isset($result['path'])) $result['path']='';
-		if(!isset($result['host'])) $result['host']='';
-		if(isset($result['port'])) $result['host'].=':'.$result['port'];
-	}else{
-*/
+	//this is not the same as native parse_url and so it is in use
 	$r  = '!(?:(\w+)://)?(?:(\w+)\:(\w+)@)?([^/:]+)?';
 	$r .= '(?:\:(\d*))?([^#?]+)?(?:\?([^#]+))?(?:#(.+$))?!i';
 	preg_match ( $r, $url, $out );
@@ -79,6 +72,18 @@ function qtranxf_parseURL($url) {
 		"fragment" => $out[8]
 		);
 //	}
+/*
+	$result = parse_url($url) + array(
+		'scheme' => '',
+		'host' => '',
+		'user' => '',
+		'pass' => '',
+		'path' => '',
+		'query' => '',
+		'fragment' => ''
+	);
+	isset($result['port']) and $result['host'] .= ':'. $result['port'];
+*/
 	return $result;
 }
 

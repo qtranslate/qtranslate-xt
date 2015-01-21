@@ -1,10 +1,10 @@
 /*
 //debuging tools, do not check in
-*/
 var cc=0;
 function c(v){ ++cc; console.log('== '+cc+': '+v); }
 function ct(v){ c(v); console.trace(); }
 function co(t,o){ ++cc; console.log('== '+cc+': '+t+': %o',o); }
+*/
 
 qtranxj_split = function(text,keep_neutral_text)
 {
@@ -217,7 +217,7 @@ var qTranslateX=function(pg)
 		var h=contentHooks[id];
 		var lang=languageSwitch.getActiveLanguage();
 		var text=value.trim();
-		c('updateFusedValueH['+id+']text:'+text);
+		//c('updateFusedValueH['+id+']text:'+text);
 		h.contents[lang]=text;
 		if(h.separator==='<'){
 			h.mlContentField.value = qtranxj_join_c(h.contents);
@@ -228,10 +228,12 @@ var qTranslateX=function(pg)
 
 	addContentHook=function(inpField,form,separator)
 	{
-		if(!inpField) return false;
+		//co('inpField:',inpField);
+		if( !inpField ) return false;
+		//if( typeof inpField.value !== 'string' ) return false;
 		var h=contentHooks[inpField.id]={};
 		h.contentField=inpField;
-		c('addContentHook:inpField.value='+inpField.value);
+		//c('addContentHook:inpField.value='+inpField.value);
 		h.contents=qtranxj_split(inpField.value,false);//inpField.tagName
 		h.mlContentField=qtranxj_ce('input', {name: inpField.name, type: 'hidden', className: 'hidden', value: inpField.value}, form, true);
 		if(!separator){
@@ -246,17 +248,19 @@ var qTranslateX=function(pg)
 		inpField.value=text;
 		//c('addContentHook:inpField.value='+inpField.value);
 		inpField.onblur=function(){ updateFusedValueH(this.id,this.value); }
+/*
 		if(inpField.tagName==='TEXTAREA'){
-			c('addContentHook:inpField.value='+inpField.value);
+			//c('addContentHook:inpField.value='+inpField.value);
 			for(var lang in h.contents){
-				c('addContentHook:h.contents['+lang+']:'+h.contents[lang]);
+				//c('addContentHook:h.contents['+lang+']:'+h.contents[lang]);
 			}
 		}
+*/
 		if(window.tinyMCE){//never fired yet
 			for(var i=0; i<tinyMCE.editors.length; ++i){
 				var ed=tinyMCE.editors[i];
 				if(ed.id != inpField.id) continue;
-				c('addContentHook:updateTinyMCE');
+				//c('addContentHook:updateTinyMCE');
 				updateTinyMCE(ed,text);
 			}
 		}
@@ -294,37 +298,18 @@ var qTranslateX=function(pg)
 
 	setLangCookie=function(lang) { document.cookie='wp_qtrans_edit_language='+lang; }
 
-/*
-	var matches = location.pathname.match(/(\/wp-admin\/([^\/]*))$/);
-	switch(matches && matches[1])
-	{
-		case "/wp-admin/post.php":
-		case "/wp-admin/post-new.php":
-			if(!postEdit()) return;
-			break;
-		case "/wp-admin/edit-tags.php":
-			if(!tagEdit()) return;
-			break;
-		case "/wp-admin/options-general.php":
-			if(location.search.indexOf('page=')>=0) return;
-			if(!optionsEdit()) return;
-			break;
-		default: return;
-	}
-*/
-
 	updateTinyMCE=function(ed,text)
 	{
-		c('updateTinyMCE: text:'+text);
+		//c('updateTinyMCE: text:'+text);
 		if(!text.match(/^</)){
 			text='<p>'+text+'</p>';
-			c('updateTinyMCE: updated text:'+text);
+			//c('updateTinyMCE: updated text:'+text);
 		}
 		/*
 		if(window.switchEditors){
 			//text = window.switchEditors.pre_wpautop( text );
 			text = window.switchEditors.wpautop(text);//does format 'raw' takes care of it?
-			c('updateTinyMCE:wpautop:'+text);
+			//c('updateTinyMCE:wpautop:'+text);
 		}
 		*/
 		ed.setContent(text,{format: 'raw'});//do we need 'raw'?
@@ -340,7 +325,7 @@ var qTranslateX=function(pg)
 		for(var key in contentHooks){
 			var h=contentHooks[key];
 			h.contentField.value=h.contents[this.lang];
-			c('onTabSwitch: h['+key+'].contentField.value:'+h.contentField.value);
+			//c('onTabSwitch: h['+key+'].contentField.value:'+h.contentField.value);
 		}
 		if (!window.tinyMCE) return;
 		for(var i=0; i<tinyMCE.editors.length; ++i){
@@ -412,24 +397,24 @@ var qTranslateX=function(pg)
 			if(h.mce) return;
 			h.mce=e;
 			e.getBody().addEventListener('blur',function(){
-					var text=e.getContent({format : 'raw'});
-					c('tinymce: onblur: text:'+text);
+					var text=e.getContent({format : 'raw'}).trim();
+					//c('tinymce: onblur: text:'+text);
 					if(text.match(/^<p[^>]*>(\s|&nbsp;|<br[^>]*>)*<\/p>$/)){
 						text='';//workaround, need to learn how tinymce works ...
-						c('tinymce: onblur: empty text');
+						//c('tinymce: onblur: empty text');
 					}else{
 						var matches = text.match(/^<p>\s*(.*)\s*<\/p>$/);
 						if(matches){
 							text=matches[1];
-							c('tinymce: onblur: removed plain <p>:'+text);
+							//c('tinymce: onblur: removed plain <p>:'+text);
 						}
 					}
 					updateFusedValueH(e.id,text);
 				});
-			c('setEditorHooks: id='+id);
-			c('h.contentField.value='+h.contentField.value);
-			var text=e.getContent({format : 'raw'});
-			c('setEditorHooks: getContent(text):'+text);
+			//c('setEditorHooks: id='+id);
+			//c('h.contentField.value='+h.contentField.value);
+			//var text=e.getContent({format : 'raw'});
+			//c('setEditorHooks: getContent(text):'+text);
 			//updateTinyMCE(e,text);//it does it on its own?
 		}
 

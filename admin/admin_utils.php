@@ -31,14 +31,14 @@ function qtranxf_get_terms_joined($terms, $taxonomies=null, $args=null) {
 }
 
 function qtranxf_useAdminTermLibJoin($obj, $taxonomies=null, $args=null) {
-	$script_name=$_SERVER['SCRIPT_NAME'];
-	//qtranxf_dbg_echo('qtranxf_useAdminTermLibJoin: $script_name='.$script_name);
+	global $pagenow;
+	//qtranxf_dbg_echo('qtranxf_useAdminTermLibJoin: $pagenow='.$pagenow);
 	//qtranxf_dbg_echo('qtranxf_useAdminTermLibJoin: $obj:',$obj);
 	//qtranxf_dbg_echo('qtranxf_useAdminTermLibJoin: $taxonomies:',$taxonomies);
 	//qtranxf_dbg_echo('qtranxf_useAdminTermLibJoin: $args:',$args);
-	switch($script_name){
-		case '/wp-admin/nav-menus.php':
-		case '/wp-admin/edit-tags.php':
+	switch($pagenow){
+		case 'nav-menus.php':
+		case 'edit-tags.php':
 			return qtranxf_get_terms_joined($obj);
 		default: return qtranxf_useTermLib($obj);
 	}
@@ -98,11 +98,11 @@ function qtranxf_updateTermLibraryJoin() {
 	if(!isset($_POST['qtrans_term_field_name'])) return;
 	$field=$_POST['qtrans_term_field_name'];
 	$default_name_original=$_POST['qtrans_term_field_default_name'];
-	qtranxf_dbg_log('$_POST:',$_POST);
+	//qtranxf_dbg_log('$_POST:',$_POST);
 	$field_value = qtranxf_stripSlashesIfNecessary($_POST[$field]);
-	qtranxf_dbg_log('$field_value='.$field_value);
+	//qtranxf_dbg_log('$field_value='.$field_value);
 	$names=qtranxf_split($field_value);
-	qtranxf_dbg_log('names=',$names);
+	//qtranxf_dbg_log('names=',$names);
 	$default_name=htmlspecialchars($names[$q_config['default_language']], ENT_NOQUOTES);
 	$_POST[$field]=$default_name;
 	if(empty($default_name))
@@ -119,7 +119,7 @@ function qtranxf_updateTermLibraryJoin() {
 
 /*
 function qtranxf_edit_terms($term_id, $taxonomy){
-	qtranxf_dbg_log('qtranxf_edit_terms: $name='.$name);
+	//qtranxf_dbg_log('qtranxf_edit_terms: $name='.$name);
 }
 add_action('edit_terms','qtranxf_edit_terms');
 */

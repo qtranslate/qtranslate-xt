@@ -111,6 +111,8 @@ function qtranxf_saveConfig() {
 	update_option('qtranslate_term_name', $q_config['term_name']);
 	update_option('qtranslate_use_strftime', $q_config['use_strftime']);
 
+	qtranxf_update_option_bool('editor_mode');//will be integer later
+
 	qtranxf_update_option('custom_fields');
 	qtranxf_update_option('custom_field_classes');
 	qtranxf_update_option('text_field_filters');
@@ -141,8 +143,9 @@ function qtranxf_get_custom_admin_js ($url,$pages) {
 }
 
 function qtranxf_select_admin_js ($enqueue_script=false) {
+	//global $pagenow;
 	global $q_config;
-	if($q_config['editor_mode']!=0) return false;
+	if($q_config['editor_mode']) return false;
 	if(!isset($_SERVER['SCRIPT_NAME'])) return false;
 	$script_name=$_SERVER['SCRIPT_NAME'];
 	if(!preg_match('#/wp-admin/([^/]+)\.php#',$script_name,$matches)) return false;
@@ -153,7 +156,13 @@ function qtranxf_select_admin_js ($enqueue_script=false) {
 		case 'post':
 		case 'post-new': $script='admin/js/edit-post'; break;
 		//case '/wp-admin/edit-tags.php':
-		case 'edit-tags': $script='admin/js/edit-tags'; break;
+		case 'edit-tags':
+			if(isset($_SERVER['QUERY_STRING']) && strpos($_SERVER['QUERY_STRING'],'action=edit')!==FALSE ){
+				$script='admin/js/edit-tag';
+			}else{
+				$script='admin/js/edit-tags';
+			}
+			break;
 		//case '/wp-admin/nav-menus.php':
 		case 'nav-menus':
 			if(isset($_SERVER['QUERY_STRING'])){
@@ -573,7 +582,7 @@ function qtranxf_conf() {
 		qtranxf_updateSetting('show_displayed_language_prefix', QTX_BOOLEAN);
 		qtranxf_updateSetting('use_strftime', QTX_INTEGER);
 		qtranxf_updateSetting('url_mode', QTX_INTEGER);
-		qtranxf_updateSetting('editor_mode', QTX_INTEGER);
+		qtranxf_updateSetting('editor_mode', QTX_BOOLEAN);
 		qtranxf_updateSetting('auto_update_mo', QTX_BOOLEAN);
 		qtranxf_updateSetting('hide_default_language', QTX_BOOLEAN);
 		qtranxf_updateSetting('qtrans_compatibility', QTX_BOOLEAN);
