@@ -48,7 +48,7 @@ class qTranslateXWidget extends WP_Widget {
 	function qTranslateXWidget() {
 		$widget_ops = array('classname' => 'qtranxs_widget', 'description' => __('Allows your visitors to choose a Language.', 'qtranslate') );
 		$this->WP_Widget('qtranslate', __('qTranslate Language Chooser', 'qtranslate'), $widget_ops);
-		//add_action('qtranxf_head_add_css',array($this,'head_add_css'));
+		//add_action('qtranslate_head_add_css',array($this,'head_add_css'));
 	}
 
 	function widget($args, $instance) {
@@ -173,6 +173,6 @@ function qtranxf_generateLanguageSelectCode($style='', $id='') {
 
 function qtranxf_widget_init() {
 	register_widget('qTranslateXWidget');
-	do_action('qtranxf_widget_init');
+	do_action('qtranslate_widget_init');
 }
 ?>

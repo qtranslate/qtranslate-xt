@@ -172,12 +172,14 @@ add_filter('gettext_with_context', 'qtranxf_gettext_with_context',0);
 //add_filter('gettext', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
 //add_filter('gettext_with_context', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
 
+add_filter('sanitize_title', 'qtranxf_useRawTitle',0, 3);
+
+add_filter('comment_moderation_subject', 'qtranxf_useDefaultLanguage',0);
+add_filter('comment_moderation_text', 'qtranxf_useDefaultLanguage',0);
+
 add_filter('the_content', 'qtranxf_useCurrentLanguageIfNotFoundShowAvailable', 0);
 add_filter('the_excerpt', 'qtranxf_useCurrentLanguageIfNotFoundShowAvailable', 0);
 add_filter('the_excerpt_rss', 'qtranxf_useCurrentLanguageIfNotFoundShowAvailable', 0);
-add_filter('sanitize_title', 'qtranxf_useRawTitle',0, 3);
-add_filter('comment_moderation_subject', 'qtranxf_useDefaultLanguage',0);
-add_filter('comment_moderation_text', 'qtranxf_useDefaultLanguage',0);
 add_filter('get_comment_date', 'qtranxf_dateFromCommentForCurrentLanguage',0,2);
 add_filter('get_comment_time', 'qtranxf_timeFromCommentForCurrentLanguage',0,4);
 add_filter('get_post_modified_time', 'qtranxf_timeModifiedFromPostForCurrentLanguage',0,3);
@@ -207,8 +209,9 @@ add_filter('the_category_rss', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLa
 add_filter('term_links-post_tag', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
 add_filter('link_name', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
 add_filter('link_description', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
-add_filter('pre_option_rss_language', 'qtranxf_getLanguage',0);
 add_filter('the_author', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
+
+add_filter('pre_option_rss_language', 'qtranxf_getLanguage',0);
 
 add_filter('_wp_post_revision_field_post_title', 'qtranxf_showAllSeperated', 0);
 add_filter('_wp_post_revision_field_post_content', 'qtranxf_showAllSeperated', 0);
@@ -233,8 +236,10 @@ add_filter('feed_link', 'qtranxf_convertURL');
 add_filter('post_comments_feed_link', 'qtranxf_convertURL');
 add_filter('tag_feed_link', 'qtranxf_convertURL');
 add_filter('get_pagenum_link', 'qtranxf_convertURL');
+
 add_filter('get_search_form', 'qtranxf_fixSearchForm', 10, 1);
 add_filter('wp_list_pages_excludes', 'qtranxf_excludePages');
+
 add_filter('comment_notification_text', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage');
 add_filter('comment_notification_headers', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage');
 add_filter('comment_notification_subject', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage');
@@ -243,5 +248,6 @@ add_filter('comment_notification_subject', 'qtranxf_useCurrentLanguageIfNotFound
 //add_filter('admin_footer', 'qtranxf_modifyExcerpt');
 add_filter('bloginfo_url', 'qtranxf_convertBlogInfoURL',10,2);
 add_filter('core_version_check_locale', 'qtranxf_versionLocale');
+
 add_filter('redirect_canonical', 'qtranxf_checkCanonical', 10, 2);
 ?>

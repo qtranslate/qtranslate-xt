@@ -70,7 +70,7 @@ function qtranxf_migrate_plugins()
 	qtranxf_migrate_plugin('qtranslate-xp');
 	//qtranxf_migrate_plugin('ztranslate');//ok same db
 }
-add_action('qtranxf_init_begin','qtranxf_migrate_plugins',11);
+add_action('qtranslate_init_begin','qtranxf_migrate_plugins',11);
 
 function qtranxf_add_row_migrate($nm,$plugin) {
 	if(!file_exists(WP_CONTENT_DIR.'/plugins/'.$plugin)) return;

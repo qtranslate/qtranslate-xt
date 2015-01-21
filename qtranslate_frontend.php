@@ -28,7 +28,7 @@ function qtranxf_add_lang_icons_css ()
 	{
 		echo '.qtranxs_flag_'.$lang.' {background-image: url('.trailingslashit(WP_CONTENT_URL).$q_config['flag_location'].$q_config['flag'][$lang].'); background-repeat: no-repeat;}'.PHP_EOL;
 	}
-	do_action('qtranxf_head_add_css');
+	do_action('qtranslate_head_add_css');
 	echo '</style>'.PHP_EOL;
 }
 //add_filter('wp_head', 'qtranxf_add_lang_icons_css');
@@ -229,6 +229,7 @@ function qtranxf_excludeUntranslatedPosts($where) {
 	global $q_config, $wpdb;
 	if($q_config['hide_untranslated'] && !is_singular()) {
 		$where .= " AND $wpdb->posts.post_content LIKE '%<!--:".qtranxf_getLanguage()."-->%'";
+		//$where .= " AND ( $wpdb->posts.post_content LIKE '%<!--:".qtranxf_getLanguage()."-->%' OR ( $wpdb->posts.post_content NOT LIKE '%<!--:-->%' )";
 	}
 	return $where;
 }

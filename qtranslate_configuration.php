@@ -73,7 +73,7 @@ function qtranxf_init_admin()
 		qtranxf_updateTermLibraryJoin();
 	}
 }
-add_action('qtranxf_init_begin','qtranxf_init_admin');
+add_action('qtranslate_init_begin','qtranxf_init_admin');
 
 function qtranxf_update_option($nm) {
 	global $q_config;

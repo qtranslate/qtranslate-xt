@@ -69,7 +69,7 @@ function qtranxf_init_language() {
 	}
 
 	//allow other plugins to initialize whatever they need for language
-	do_action('qtranxf_init_language');
+	do_action('qtranslate_init_language');
 
 //qtranxf_dbg_log('qtranxf_init_language: url_info.url='.$q_config['url_info']['url']);
 //qtranxf_dbg_log('qtranxf_init_language: language='.$q_config['language']);
@@ -331,7 +331,7 @@ function qtranxf_http_negotiate_language(){
 function qtranxf_init() {
 	global $q_config;
 
-	do_action('qtranxf_init_begin');
+	do_action('qtranslate_init_begin');
 
 /*
 	// Check for WP Secret Key Mismatch
@@ -357,7 +357,7 @@ function qtranxf_init() {
 	}
 */
 	//allow other plugins to initialize whatever they need for qTranslate
-	do_action('qtranxf_init');
+	do_action('qtranslate_init');
 }
 
 function qtranxf_validateBool($var, $default) {
@@ -443,25 +443,7 @@ function qtranxf_loadConfig() {
 	qtranxf_load_option_bool('auto_update_mo');
 	qtranxf_load_option_bool('hide_default_language');
 	qtranxf_load_option_bool('qtrans_compatibility');
-/*
-	$detect_browser_language = get_option('qtranslate_detect_browser_language');
-	$hide_untranslated = get_option('qtranslate_hide_untranslated');
-	$show_displayed_language_prefix = get_option('qtranslate_show_displayed_language_prefix');
-	$auto_update_mo = get_option('qtranslate_auto_update_mo');
-	$hide_default_language = get_option('qtranslate_hide_default_language');
 
-	$detect_browser_language = qtranxf_validateBool($detect_browser_language, $q_config['detect_browser_language']);
-	$hide_untranslated = qtranxf_validateBool($hide_untranslated, $q_config['hide_untranslated']);
-	$show_displayed_language_prefix = qtranxf_validateBool($show_displayed_language_prefix, $q_config['show_displayed_language_prefix']);
-	$auto_update_mo = qtranxf_validateBool($auto_update_mo, $q_config['auto_update_mo']);
-	$hide_default_language = qtranxf_validateBool($hide_default_language, $q_config['hide_default_language']);
-
-	$q_config['detect_browser_language'] = $detect_browser_language;
-	$q_config['hide_untranslated'] = $hide_untranslated;
-	$q_config['show_displayed_language_prefix'] = $show_displayed_language_prefix;
-	$q_config['auto_update_mo'] = $auto_update_mo;
-	$q_config['hide_default_language'] = $hide_default_language;
-*/
 	// url fix for upgrading users
 	$flag_location = trailingslashit(preg_replace('#^wp-content/#','',$flag_location));
 
@@ -652,10 +634,13 @@ function qtranxf_convertURL($url='', $lang='', $forceadmin = false, $showDefault
 	if(empty($url)){
 		if( !defined('WP_ADMIN') && defined('QTS_VERSION') ){
 			//quick workaround, but need a permanent solution
-			$url = qts_get_url($lang);//works only if "Hide URL language information for default language." is off
+			$url = qts_get_url($lang);
 			//qtranxf_dbg_echo('qtranxf_convertURL: url=',$url);
-			if(!empty($url))
+			if(!empty($url)){
+				if($q_config['hide_default_language'] && $lang==$q_config['default_language'] && $showDefaultLanguage)
+					$url=qtranxf_convertURL($url,$lang,$forceadmin,true);
 				return $url;
+			}
 		}
 		$url = esc_url($q_config['url_info']['url']);
 	}
@@ -1050,7 +1035,7 @@ function qtranxf_use($lang, $text, $show_available=false, $show_empty=false) {
 		foreach($available_languages as $language) {
 			if($i==1) $language_list  = $end_seperator.$language_list;
 			if($i>1) $language_list  = $normal_seperator.$language_list;
-			$language_list = "<a href=\"".qtranxf_convertURL('', $language)."\">".$q_config['language_name'][$language]."</a>".$language_list;
+			$language_list = "<a href=\"".qtranxf_convertURL('', $language, false, true)."\">".$q_config['language_name'][$language]."</a>".$language_list;
 			$i++;
 		}
 	}
