@@ -673,6 +673,9 @@ function qtranxf_conf() {
 		$wpdb->show_errors();
 		$result = $wpdb->get_results('SELECT ID, post_title, post_content FROM '.$wpdb->posts.' WHERE NOT (post_content LIKE "%<!--:-->%" OR post_title LIKE "%<!--:-->%")');
 		foreach($result as $post) {
+			$title=qtranxf_mark_default($post->post_title);
+			$content=qtranxf_mark_default($post->post_content);
+/*
 			$content = qtranxf_split($post->post_content);
 			$title = qtranxf_split($post->post_title);
 			foreach($q_config['enabled_languages'] as $language) {
@@ -683,7 +686,10 @@ function qtranxf_conf() {
 			}
 			$content = qtranxf_join_c($content);
 			$title = qtranxf_join_c($title);
-			$wpdb->query('UPDATE '.$wpdb->posts.' set post_content = "'.mysql_escape_string($content).'", post_title = "'.mysql_escape_string($title).'" WHERE ID='.$post->ID);
+*/
+			if( $title==$post->post_title && $content==$post->post_content ) continue;
+			//qtranxf_dbg_echo("markdefault:<br>\ntitle old: '".$post->post_title."'<br>\ntitle new: '".$title."'<br>\ncontent old: '".$post->post_content."'<br>\ncontent new: '".$content."'"); continue;
+			$wpdb->query('UPDATE '.$wpdb->posts.' set post_content = "'.mysql_real_escape_string($content).'", post_title = "'.mysql_real_escape_string($title).'" WHERE ID='.$post->ID);
 		}
 		$message = "All Posts marked as default language!";
 	} elseif(isset($_GET['edit'])){

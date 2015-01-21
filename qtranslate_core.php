@@ -799,6 +799,7 @@ function qtranxf_split_blocks($blocks, $quicktags = true) {
 		}
 		// correctly categorize text block
 		if($current_language){
+			if(!isset($result[$current_language])) $result[$current_language]='';
 			$result[$current_language] .= $block;
 			$current_language = false;
 		}else{

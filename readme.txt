@@ -172,6 +172,7 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 * fix for [random `<p>` in TinyMCE editors](https://github.com/qTranslate-Team/qtranslate-x/issues/5).
 * fix for login problem when `siteurl` option is different from 'home'.
 * compatibility with (Qtranslate Slug](https://wordpress.org/plugins/qtranslate-slug/).
+* fix for [blank translations](https://wordpress.org/support/topic/duplicates-everything-doesnt-work-all-times)
 
 = 2.9.6 =
 * more fixes for `<!--more-->` and `<!--nextpage-->` tags and parsing multilingual texts.

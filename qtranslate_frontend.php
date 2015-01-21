@@ -63,6 +63,29 @@ function qtranxf_head(){
 }
 add_action('wp_head', 'qtranxf_head');
 
+/*
+function qtranxf_remove_detached_children( $items )
+{
+	$keys=array();
+	foreach($items as $key => $item){
+		$keys[$item->ID]=$key;
+	}
+	do{
+		$more=false;
+		foreach($items as $key => $item){
+			//qtranxf_dbg_echo('item['.$key.']: '.$item->title.'; ID='.$item->ID.'; p='.$item->menu_item_parent);
+			if($item->menu_item_parent==0) continue;
+			if(!isset($keys[$item->menu_item_parent])) continue;
+			//qtranxf_dbg_echo('parent key='.$keys[$item->menu_item_parent]);
+			if(isset($items[$keys[$item->menu_item_parent]])) continue;
+			//qtranxf_dbg_echo('unset: item: '.$item->title.'; key='.$keys[$item->menu_item_parent]);
+			unset($items[$key]);
+			$more=true;
+		}
+	}while($more);
+}
+*/
+
 function qtranxf_wp_get_nav_menu_items( $items, $menu, $args )
 {
 	global $q_config;
@@ -79,18 +102,23 @@ function qtranxf_wp_get_nav_menu_items( $items, $menu, $args )
 	$current=true;//[shown|hidden]
 	$flags=true;//[none|all|items]
 	$topflag=true;
+	$itemsmodified=false;
 	foreach($items as $key => $item)
 	{
-		//qtranxf_dbg_echo('item->title:',$item);
+		//qtranxf_dbg_echo('qtranxf_wp_get_nav_menu_items: item: '.$item->title.'; p='.$item->menu_item_parent.'; ID='.$item->ID);
 		$qtransLangSw = isset( $item->url ) && stristr( $item->url, 'qtransLangSw' ) !== FALSE;
 		if(!$qtransLangSw){
 			$item_title=qtranxf_use($language, $item->title, false, true);
 			if(empty($item_title)){
+				//qtranxf_dbg_echo('removed item: '.$item->title.'; p='.$item->menu_item_parent);
 				unset($items[$key]);//remove menu item with empty title for this language
+				$itemsmodified=true;
 				continue;
 			}
 			$item->title=$item_title;
 		}
+		//qtranxf_dbg_echo('passed item: '.$item->title.'; p='.$item->menu_item_parent);
+
 		$item->post_content=qtranxf_use($language, $item->post_content, false, true);
 		$item->post_title=qtranxf_use($language, $item->post_title, false, true);
 		$item->post_excerpt=qtranxf_use($language, $item->post_excerpt, false, true);
@@ -147,6 +175,7 @@ function qtranxf_wp_get_nav_menu_items( $items, $menu, $args )
 		$item->classes[] = 'qtranxs-lang-menu';
 		$qtransmenu = $item;
 	}
+	//if(	$itemsmodified ) qtranxf_remove_detached_children($items);
 	if(!$qtransmenu) return $items;
 	foreach($q_config['enabled_languages'] as $lang)
 	{

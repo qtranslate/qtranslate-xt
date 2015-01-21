@@ -76,12 +76,13 @@ qtranxj_allthesame = function(texts)
 		text = t;
 		break;
 	}
+	if ( text=='' ) return text;
 	for(var i=0; i<qTranslateConfig.enabled_languages.length; ++i)
 	{
 		var lang=qTranslateConfig.enabled_languages[i];
 		var t = texts[lang];
-		if ( !t || t=='' ) continue;
-		if(t!=text) return null;
+		if ( t == text ) continue;
+		return null;
 	}
 	return text;
 }
