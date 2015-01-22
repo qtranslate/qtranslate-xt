@@ -165,7 +165,7 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 * enable Language Switching Buttons on menu editor page. Fields "Navigation Label", "Title Attribute" and "Description" now respond to Language Switching Buttons.
 * option "Custom Pages" to enable Language Switching Buttons on custom-defined pages.
 * split the qtranslate.js script into a few scripts in `admin/js/` folder to be loaded depending on the page which needs them.
-* updated qtranslate.pot and fixed proper translation of various strings in the code (thanks to [Pedro Carvalho](https://github.com/LC43)).
+* updated qtranslate.pot and fixed proper translation of various strings in the code (thanks to [Pedro Mendonça](https://github.com/pedro-mendonca)).
 * fix for when cookie 'wp_qtrans_edit_language' contains unavailable language.
 * various performance improvements.
 * option "Editor Raw Mode" to be able to edit database text entries as they are, with language tag separators, without Language Switching Buttons.
