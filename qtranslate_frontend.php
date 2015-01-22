@@ -35,7 +35,8 @@ function qtranxf_add_lang_icons_css ()
 
 function qtranxf_head(){
 	global $q_config;
-	echo "\n<meta http-equiv=\"Content-Language\" content=\"".str_replace('_','-',$q_config['locale'][$q_config['language']])."\" />\n";
+	$lang=$q_config['language'];
+	echo "\n<meta http-equiv=\"Content-Language\" content=\"".str_replace('_','-',$q_config['locale'][$lang])."\" />\n";
 	qtranxf_add_lang_icons_css();
 /*
 	$css = "<style type=\"text/css\" media=\"screen\">\n";
@@ -58,7 +59,7 @@ function qtranxf_head(){
 	// set links to translations of current page
 	foreach($q_config['enabled_languages'] as $language) {
 		if($language != qtranxf_getLanguage())
-			echo '<link hreflang="'.$language.'" href="'.qtranxf_convertURL('',$language).'" rel="alternate" />'."\n";
+			echo '<link hreflang="'.$language.'" href="'.qtranxf_convertURL('',$language,false,true).'" rel="alternate" />'."\n";
 	}
 }
 add_action('wp_head', 'qtranxf_head');
@@ -234,8 +235,12 @@ add_filter('wp_setup_nav_menu_item', 'qtranxf_wp_setup_nav_menu_item');
 function qtranxf_postsFilter($posts) {
 	if(is_array($posts)) {
 		foreach($posts as $post) {
+			//qtranxf_dbg_log('post_content:',$post->post_content,true);
 			$post->post_content = qtranxf_useCurrentLanguageIfNotFoundShowAvailable($post->post_content);
+			//qtranxf_dbg_log('post_content:',$post->post_content);
+			//qtranxf_dbg_log('$post-before:',$post);
 			$post = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($post);
+			//qtranxf_dbg_log('$post-after:',$post);
 		}
 	}
 	return $posts;
@@ -255,15 +260,35 @@ add_filter('wp_get_attachment_image_attributes', 'qtranxf_get_attachment_image_a
 //add_filter('wp_get_attachment_image_attributes', 'qtranxf_get_attachment_image_attributes',0,3);
 
 function qtranxf_excludeUntranslatedPosts($where) {
-	global $q_config, $wpdb;
-	if($q_config['hide_untranslated'] && !is_singular()) {
+	global $wpdb;
+	//qtranxf_dbg_echo('qtranxf_excludeUntranslatedPosts: $where: ',$where);
+	//qtranxf_dbg_echo('qtranxf_excludeUntranslatedPosts: is_singular(): ',is_singular());
+	$single_post_query=is_singular();
+	if($single_post_query){
+		$single_post_query = preg_match('/ID\s*=\s*[\'"]*(\d+)[\'"]*/i',$where,$matches)==1;
+		//qtranxf_dbg_echo('qtranxf_excludeUntranslatedPosts: $single_post_query: ',$single_post_query);
+		//if($single_post_query){
+		//	qtranxf_dbg_echo('qtranxf_excludeUntranslatedPosts: $matches[1]:',$matches[1]);
+		//}
+	}
+	if(!$single_post_query){
 		$where .= " AND $wpdb->posts.post_content LIKE '%<!--:".qtranxf_getLanguage()."-->%'";
-		//$where .= " AND ( $wpdb->posts.post_content LIKE '%<!--:".qtranxf_getLanguage()."-->%' OR ( $wpdb->posts.post_content NOT LIKE '%<!--:-->%' )";
 	}
 	return $where;
 }
-// don't filter untranslated posts in admin
-add_filter('posts_where_request', 'qtranxf_excludeUntranslatedPosts');
+
+function qtranxf_excludeUntranslatedPostComments($clauses, &$q/*WP_Comment_Query*/) {
+	global $wpdb;
+	//qtranxf_dbg_echo('qtranxf_excludeUntranslatedPostComments: $clauses: ',$clauses);
+	$single_post_query=is_singular();
+	if($single_post_query){
+		$single_post_query = preg_match('/comment_post_ID\s*=\s*[\'"]*(\d+)[\'"]*/i',$clauses['where'])==1;
+	}
+	if(!$single_post_query){
+		$clauses['where'] .= " AND $wpdb->posts.post_content LIKE '%<!--:".qtranxf_getLanguage()."-->%'";
+	}
+	return $clauses;
+}
 
 function qtranxf_home_url($url, $path, $orig_scheme, $blog_id)
 {

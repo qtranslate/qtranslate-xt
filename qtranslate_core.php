@@ -346,8 +346,15 @@ function qtranxf_init() {
 	// load plugin translations
 	load_plugin_textdomain('qtranslate', false, dirname(plugin_basename( __FILE__ )).'/lang');
 
-	foreach($q_config['text_field_filters'] as $nm){
-		add_filter($nm, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
+	if(!defined('WP_ADMIN')){
+		// don't filter untranslated posts in admin
+		if($q_config['hide_untranslated']){
+			add_filter('posts_where_request', 'qtranxf_excludeUntranslatedPosts');
+			add_filter('comments_clauses','qtranxf_excludeUntranslatedPostComments',10,2);
+		}
+		foreach($q_config['text_field_filters'] as $nm){
+			add_filter($nm, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage');
+		}
 	}
 /*
 	//"WordPress SEO" plugin support - not yet
@@ -628,7 +635,7 @@ function qtranxf_language_neutral_path($path) {
 }
 
 if (!function_exists('qtranxf_get_url_for_language')){
-function qtranxf_get_url_for_language($url, $lang, $showDefaultLanguage) {
+function qtranxf_get_url_for_language($url, $lang, $showLanguage) {
 	global $q_config;
 
 	// check for trailing slash
@@ -642,7 +649,7 @@ function qtranxf_get_url_for_language($url, $lang, $showDefaultLanguage) {
 		if($q_config['url_mode'] == QTX_URL_DOMAIN && preg_match("#^([a-z]{2}).#i",$urlinfo['host'],$match)) {
 			if(qtranxf_isEnabled($match[1])) {
 				// found language information, remove it
-				$url = preg_replace("/".$match[1]."\./i","",$url, 1);
+				$url = preg_replace('/'.$match[1]."\./i","",$url, 1);
 				// reparse url
 				$urlinfo = qtranxf_parseURL($url);
 			}
@@ -661,12 +668,12 @@ function qtranxf_get_url_for_language($url, $lang, $showDefaultLanguage) {
 	}
 
 	// check for query language information and remove if found
-	if(preg_match("#(&|\?)lang=([^&\#]+)#i",$url,$match) && qtranxf_isEnabled($match[2])) {
+	if(preg_match("#(&|\?)lang=([^&\#]+)#i",$url,$match)){// && qtranxf_isEnabled($match[2])) {
 		$url = preg_replace("#(&|\?)lang=".$match[2]."&?#i","$1",$url);
 	}
 
 	// remove any slashes out front
-	$url = ltrim($url,"/");
+	$url = ltrim($url,'/');
 
 	// remove any useless trailing characters
 	$url = rtrim($url,"?&");
@@ -679,13 +686,13 @@ function qtranxf_get_url_for_language($url, $lang, $showDefaultLanguage) {
 	//$pathinfo = pathinfo($urlinfo['path']);
 	//if(isset($pathinfo['extension']) && in_array(strtolower($pathinfo['extension']), $ignore_file_types)) {
 	//if(qtranxf_ignored_file_type($urlinfo['path'])){
-	//	return $home."/".$url;
+	//	return $home.'/'.$url;
 	//}
 
 	// ignore wp internal links
 	//if(preg_match("#^(wp-login.php|wp-signup.php|wp-register.php|wp-admin/)#", $url)) {
 	if(qtranxf_language_neutral_path($url)) {
-		return $home."/".$url;
+		return $home.'/'.$url;
 	}
 
 	switch($q_config['url_mode']) {
@@ -698,27 +705,32 @@ function qtranxf_get_url_for_language($url, $lang, $showDefaultLanguage) {
 					$url = substr($url, 3);
 				}
 			}
-			if($showDefaultLanguage || $lang!=$q_config['default_language']) $url = $lang."/".$url;
+			if($showLanguage) $url = $lang.'/'.$url;
 			break;
 		case QTX_URL_DOMAIN:	// pre domain
-			if($showDefaultLanguage ||$lang!=$q_config['default_language']) $home = preg_replace("#//#","//".$lang.".",$home,1);
+			if($showLanguage) $home = preg_replace("#//#","//".$lang.".",$home,1);
 			break;
 		default: // query
-			if($showDefaultLanguage || $lang!=$q_config['default_language']){
+			if($showLanguage){
+				//$url=add_query_arg('lang',$lang,$url);//it is doing much more than needed here
 				if(strpos($url,'?')===false) {
 					$url .= '?';
 				} else {
 					$url .= '&';
 				}
-				$url .= "lang=".$lang;
+				$url .= 'lang='.$lang;
 			}
+			break;
 	}
 
 	// see if cookies are activated
 	//if($q_config['hide_default_language'] && !$showDefaultLanguage) &&
-	if(!$showDefaultLanguage && !$q_config['cookie_enabled'] && !$q_config['url_info']['internal_referer'] && $urlinfo['path'] == '' && $lang == $q_config['default_language'] && $q_config['language'] != $q_config['default_language']) {
+	//if(!$showDefaultLanguage && $lang == $q_config['default_language'] &&
+	//if(!($showDefaultLanguage || $lang != $q_config['default_language']) &&
+	if(!$showLanguage && !$q_config['cookie_enabled'] && !$q_config['url_info']['internal_referer'] && $urlinfo['path'] == '' && $q_config['language'] != $q_config['default_language']) {
 		// :( now we have to make unpretty URLs
-		$url = preg_replace("#(&|\?)lang=".$match[2]."&?#i","$1",$url);
+		//$url=add_query_arg('lang',$lang,$url);//it is doing much more than needed here
+		//$url = preg_replace("#(&|\?)lang=".$match[2]."&?#i","$1",$url);//already removed above
 		if(strpos($url,'?')===false) {
 			$url .= '?';
 		} else {
@@ -727,7 +739,7 @@ function qtranxf_get_url_for_language($url, $lang, $showDefaultLanguage) {
 		$url .= "lang=".$lang;
 	}
 
-	$complete = $home."/".$url;
+	$complete = $home.'/'.$url;
 
 	// remove trailing slash if there wasn't one to begin with
 	if($nottrailing && strpos($complete,'?')===false && strpos($complete,'#')===false && substr($complete,-1,1)=='/')
@@ -772,7 +784,8 @@ function qtranxf_convertURL($url='', $lang='', $forceadmin = false, $showDefault
 	}
 
 	if(!$showDefaultLanguage) $showDefaultLanguage = !$q_config['hide_default_language'];
-	$complete = qtranxf_get_url_for_language($url, $lang, $showDefaultLanguage);
+	$showLanguage = $showDefaultLanguage || $lang != $q_config['default_language'];
+	$complete = qtranxf_get_url_for_language($url, $lang, $showLanguage);
 
 	// &amp; workaround
 	if($has_amp){
@@ -1061,10 +1074,14 @@ function qtranxf_use($lang, $text, $show_available=false, $show_empty=false) {
 		foreach($available_languages as $language) {
 			if($i==1) $language_list  = $end_seperator.$language_list;
 			if($i>1) $language_list  = $normal_seperator.$language_list;
-			$language_list = "<a href=\"".qtranxf_convertURL('', $language, false, true)."\">".$q_config['language_name'][$language]."</a>".$language_list;
+			$language_list = '<a href="'.qtranxf_convertURL('', $language, false, true).'">'.$q_config['language_name'][$language].'</a>'.$language_list;
 			$i++;
 		}
 	}
+	//qtranxf_dbg_echo('$language_list=',$language_list,true);
+	//if(isset($post)){
+	//	qtranxf_dbg_echo('$post='.$post);
+	//}
 	return "<p>".preg_replace('/%LANG:([^:]*):([^%]*)%/', $language_list, $q_config['not_available'][$lang])."</p>";
 }
 }

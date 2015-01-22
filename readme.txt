@@ -165,14 +165,16 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 * enable Language Switching Buttons on menu editor page. Fields "Navigation Label", "Title Attribute" and "Description" now respond to Language Switching Buttons.
 * option "Custom Pages" to enable Language Switching Buttons on custom-defined pages.
 * split the qtranslate.js script into a few scripts in `admin/js/` folder to be loaded depending on the page which needs them.
-* updated qtranslate.pot and fixed proper translation of various strings in the code (thanks to Pedro Carvalho).
+* updated qtranslate.pot and fixed proper translation of various strings in the code (thanks to [Pedro Carvalho](https://github.com/LC43)).
 * fix for when cookie 'wp_qtrans_edit_language' contains unavailable language.
 * various performance improvements.
 * option "Editor Raw Mode" to be able to edit database text entries as they are, with language tag separators, without Language Switching Buttons.
 * fix for [random `<p>` in TinyMCE editors](https://github.com/qTranslate-Team/qtranslate-x/issues/5).
 * fix for login problem when `siteurl` option is different from 'home'.
-* compatibility with (Qtranslate Slug](https://wordpress.org/plugins/qtranslate-slug/).
-* fix for [blank translations](https://wordpress.org/support/topic/duplicates-everything-doesnt-work-all-times)
+* compatibility with [Qtranslate Slug](https://wordpress.org/plugins/qtranslate-slug/).
+* fix for [blank translations](https://wordpress.org/support/topic/duplicates-everything-doesnt-work-all-times).
+* fix for `&amp;` in url [problem](https://wordpress.org/support/topic/strange-behavior-8).
+* fix for option [Hide Untranslated Content](https://wordpress.org/support/topic/cant-hide-the-non-existent-language-posts).
 
 = 2.9.6 =
 * more fixes for `<!--more-->` and `<!--nextpage-->` tags and parsing multilingual texts.
