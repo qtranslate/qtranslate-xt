@@ -269,6 +269,7 @@ function qtranxf_detect_language($url, $host, $referer) {
 		$target = apply_filters('qtranslate_language_detect_redirect', $target, $result);
 		if($target!==false){
 			//qtranxf_dbg_log('qtranxf_detect_language:doredirect: url='.$url);
+			//qtranxf_dbg_log('qtranxf_detect_language:doredirect: urlto='.$urlto);
 			//qtranxf_dbg_log('qtranxf_detect_language:doredirect: target='.$target);
 			//qtranxf_dbg_log('qtranxf_detect_language:doredirect: POST: ',$_POST);
 			$url_parsed=parse_url($url);
@@ -626,30 +627,9 @@ function qtranxf_language_neutral_path($path) {
 	return false;
 }
 
-if (!function_exists('qtranxf_convertURL')){
-function qtranxf_convertURL($url='', $lang='', $forceadmin = false, $showDefaultLanguage = false) {
+if (!function_exists('qtranxf_get_url_for_language')){
+function qtranxf_get_url_for_language($url, $lang, $showDefaultLanguage) {
 	global $q_config;
-
-	if($lang=='') $lang = $q_config['language'];
-	if(empty($url)){
-		if( !defined('WP_ADMIN') && defined('QTS_VERSION') ){
-			//quick workaround, but need a permanent solution
-			$url = qts_get_url($lang);
-			//qtranxf_dbg_echo('qtranxf_convertURL: url=',$url);
-			if(!empty($url)){
-				if($q_config['hide_default_language'] && $lang==$q_config['default_language'] && $showDefaultLanguage)
-					$url=qtranxf_convertURL($url,$lang,$forceadmin,true);
-				return $url;
-			}
-		}
-		$url = esc_url($q_config['url_info']['url']);
-	}
-	if(defined('WP_ADMIN')&&!$forceadmin) return $url;
-	if(!qtranxf_isEnabled($lang)) return '';
-
-	// & workaround
-	$url = str_replace('&amp;','&',$url);
-	$url = str_replace('&#038;','&',$url);
 
 	// check for trailing slash
 	$nottrailing = (strpos($url,'?')===false && strpos($url,'#')===false && substr($url,-1,1)!='/');
@@ -701,7 +681,7 @@ function qtranxf_convertURL($url='', $lang='', $forceadmin = false, $showDefault
 	//if(qtranxf_ignored_file_type($urlinfo['path'])){
 	//	return $home."/".$url;
 	//}
-	
+
 	// ignore wp internal links
 	//if(preg_match("#^(wp-login.php|wp-signup.php|wp-register.php|wp-admin/)#", $url)) {
 	if(qtranxf_language_neutral_path($url)) {
@@ -718,13 +698,13 @@ function qtranxf_convertURL($url='', $lang='', $forceadmin = false, $showDefault
 					$url = substr($url, 3);
 				}
 			}
-			if(!$q_config['hide_default_language'] || $lang!=$q_config['default_language'] || $showDefaultLanguage) $url = $lang."/".$url;
+			if($showDefaultLanguage || $lang!=$q_config['default_language']) $url = $lang."/".$url;
 			break;
 		case QTX_URL_DOMAIN:	// pre domain
-			if(!$q_config['hide_default_language']||$lang!=$q_config['default_language']) $home = preg_replace("#//#","//".$lang.".",$home,1);
+			if($showDefaultLanguage ||$lang!=$q_config['default_language']) $home = preg_replace("#//#","//".$lang.".",$home,1);
 			break;
 		default: // query
-			if(!$q_config['hide_default_language'] || $lang!=$q_config['default_language'] || $showDefaultLanguage){
+			if($showDefaultLanguage || $lang!=$q_config['default_language']){
 				if(strpos($url,'?')===false) {
 					$url .= '?';
 				} else {
@@ -735,7 +715,8 @@ function qtranxf_convertURL($url='', $lang='', $forceadmin = false, $showDefault
 	}
 
 	// see if cookies are activated
-	if($q_config['hide_default_language'] && !$showDefaultLanguage && !$q_config['cookie_enabled'] && !$q_config['url_info']['internal_referer'] && $urlinfo['path'] == '' && $lang == $q_config['default_language'] && $q_config['language'] != $q_config['default_language']) {
+	//if($q_config['hide_default_language'] && !$showDefaultLanguage) &&
+	if(!$showDefaultLanguage && !$q_config['cookie_enabled'] && !$q_config['url_info']['internal_referer'] && $urlinfo['path'] == '' && $lang == $q_config['default_language'] && $q_config['language'] != $q_config['default_language']) {
 		// :( now we have to make unpretty URLs
 		$url = preg_replace("#(&|\?)lang=".$match[2]."&?#i","$1",$url);
 		if(strpos($url,'?')===false) {
@@ -746,14 +727,58 @@ function qtranxf_convertURL($url='', $lang='', $forceadmin = false, $showDefault
 		$url .= "lang=".$lang;
 	}
 
-	// &amp; workaround
-	$complete = str_replace('&','&amp;',$home."/".$url);
+	$complete = $home."/".$url;
 
 	// remove trailing slash if there wasn't one to begin with
 	if($nottrailing && strpos($complete,'?')===false && strpos($complete,'#')===false && substr($complete,-1,1)=='/')
 		$complete = substr($complete,0,-1);
 
-	$complete = apply_filters('qtranslate_convertURL',$complete,$lang);
+	$complete = apply_filters('qtranslate_get_url_for_language',$complete,$lang);
+
+	return $complete;
+}
+}
+
+if (!function_exists('qtranxf_convertURL')){
+function qtranxf_convertURL($url='', $lang='', $forceadmin = false, $showDefaultLanguage = false) {
+	global $q_config;
+
+	if($lang=='') $lang = $q_config['language'];
+	if(empty($url)){
+		if( !defined('WP_ADMIN') && defined('QTS_VERSION') ){
+			//quick workaround, but need a permanent solution
+			$url = qts_get_url($lang);
+			//qtranxf_dbg_echo('qtranxf_convertURL: url=',$url);
+			if(!empty($url)){
+				if($q_config['hide_default_language'] && $showDefaultLanguage && $lang==$q_config['default_language'])
+					$url=qtranxf_convertURL($url,$lang,$forceadmin,true);
+				return $url;
+			}
+		}
+		$url = esc_url($q_config['url_info']['url']);
+	}
+	if(defined('WP_ADMIN')&&!$forceadmin) return $url;
+	if(!qtranxf_isEnabled($lang)) return '';
+
+	// & workaround
+	$has_amp=false;
+	if(strpos($url,'&amp;')!==false){
+		$url = str_replace('&amp;','&',$url);
+		$has_amp=true;
+	}
+	if(strpos($url,'&#038;')!==false){
+		$url = str_replace('&#038;','&',$url);
+		$has_amp=true;
+	}
+
+	if(!$showDefaultLanguage) $showDefaultLanguage = !$q_config['hide_default_language'];
+	$complete = qtranxf_get_url_for_language($url, $lang, $showDefaultLanguage);
+
+	// &amp; workaround
+	if($has_amp){
+		$complete = str_replace('&','&amp;',$complete);
+	}
+
 	return $complete;
 }
 }
