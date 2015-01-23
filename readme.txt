@@ -125,7 +125,7 @@ Use plugin [Google XML Sitemaps v3 for qTranslate](https://wordpress.org/plugins
 
 = How do I customize images for flags? =
 
-If you wish to use different flag images, point option "Flag Image Path" to your own folder, containing custom images outside of "plugins" or "themes" folders. Most people would put it somewhere under "uploads" folder.
+If you wish to use different flag images, point option "Flag Image Path" to your own folder, containing custom images outside of "plugins" or "themes" folders, where it will not be overridden during an update. Most people would put it somewhere under "uploads" folder.
 
 = What is wrong with the original qTranslate? =
 
@@ -175,6 +175,8 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 * fix for [blank translations](https://wordpress.org/support/topic/duplicates-everything-doesnt-work-all-times).
 * fix for `&amp;` in url [problem](https://wordpress.org/support/topic/strange-behavior-8).
 * fix for option [Hide Untranslated Content](https://wordpress.org/support/topic/cant-hide-the-non-existent-language-posts).
+* compatibility with plugin [Groups](https://wordpress.org/plugins/groups/), [issue](https://wordpress.org/support/topic/dropdown-doesnt-display-while-plugin-groups-is-active)
+
 
 = 2.9.6 =
 * more fixes for `<!--more-->` and `<!--nextpage-->` tags and parsing multilingual texts.

@@ -23,10 +23,11 @@ if ( !defined( 'ABSPATH' ) ) exit;
 function qtranxf_add_lang_icons_css ()
 {
 	global $q_config;
+	$flag_location=qtranxf_flag_location();
 	echo '<style type="text/css">'.PHP_EOL;
 	foreach($q_config['enabled_languages'] as $lang) 
 	{
-		echo '.qtranxs_flag_'.$lang.' {background-image: url('.trailingslashit(WP_CONTENT_URL).$q_config['flag_location'].$q_config['flag'][$lang].'); background-repeat: no-repeat;}'.PHP_EOL;
+		echo '.qtranxs_flag_'.$lang.' {background-image: url('.$flag_location.$q_config['flag'][$lang].'); background-repeat: no-repeat;}'.PHP_EOL;
 	}
 	do_action('qtranslate_head_add_css');
 	echo '</style>'.PHP_EOL;
@@ -91,7 +92,7 @@ function qtranxf_wp_get_nav_menu_items( $items, $menu, $args )
 {
 	global $q_config;
 	$language=$q_config['language'];
-	$flag_location=trailingslashit(WP_CONTENT_URL).$q_config['flag_location'];
+	$flag_location=qtranxf_flag_location();
 	$itemid=0;
 	$menu_order=0;
   $qtransmenu=null;
@@ -106,6 +107,7 @@ function qtranxf_wp_get_nav_menu_items( $items, $menu, $args )
 	$itemsmodified=false;
 	foreach($items as $key => $item)
 	{
+		//qtranxf_dbg_echo('qtranxf_wp_get_nav_menu_items: $item',$item);
 		//qtranxf_dbg_echo('qtranxf_wp_get_nav_menu_items: item: '.$item->title.'; p='.$item->menu_item_parent.'; ID='.$item->ID);
 		$qtransLangSw = isset( $item->url ) && stristr( $item->url, 'qtransLangSw' ) !== FALSE;
 		if(!$qtransLangSw){
@@ -192,7 +194,7 @@ function qtranxf_wp_get_nav_menu_items( $items, $menu, $args )
 		$item->menu_order=++$menu_order;
 		$item->post_type='nav_menu_item';
 		$item->object='custom';
-		//$item->object_id=0;
+		$item->object_id=$qtransmenu->object_id;
 		$item->type='custom';
 		$item->type_label='Custom';
 		$item->title=$q_config['language_name'][$lang];
@@ -208,10 +210,11 @@ function qtranxf_wp_get_nav_menu_items( $items, $menu, $args )
 		$item->classes[] = 'qtranxs-lang-menu-item';
 		$items[]=$item;
 		++$menu->count;
+		//qtranxf_dbg_echo('qtranxf_wp_get_nav_menu_items: $item',$item);
 	}
 	return $items;
 }
-add_filter( 'wp_get_nav_menu_items',  'qtranxf_wp_get_nav_menu_items', 0, 3 );
+add_filter( 'wp_get_nav_menu_items',  'qtranxf_wp_get_nav_menu_items', 20, 3 );
 
 /*
 function qtranxf_wp_setup_nav_menu_item($menu_item) {

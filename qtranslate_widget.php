@@ -111,7 +111,7 @@ function qtranxf_generateLanguageSelectCode($style='', $id='') {
 	if(is_404()) $url = get_option('home'); else $url = '';
 	if($id=='') $id = 'qtranslate';
 	$id .= '-chooser';
-	$flag_location=trailingslashit(WP_CONTENT_URL).$q_config['flag_location'];
+	$flag_location=qtranxf_flag_location();
 	switch($style) {
 		case 'image':
 		case 'text':

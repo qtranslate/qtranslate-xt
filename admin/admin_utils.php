@@ -27,7 +27,7 @@ function qtranxf_get_term_joined($obj,$taxonomy=null) {
 	}elseif(isset($q_config['term_name'][$obj])) {
 		$obj = qtranxf_join_b($q_config['term_name'][$obj]);
 		//'[:'.$q_config['language'].']'.$obj.
-		qtranxf_dbg_echo('qtranxf_get_term_joined: string:',$obj,true);
+		//qtranxf_dbg_echo('qtranxf_get_term_joined: string:',$obj,true);//never fired, we probably do not need it
 	}
 	return $obj;
 }
@@ -63,7 +63,7 @@ add_filter('get_terms', 'qtranxf_useAdminTermLibJoin',0, 3);
 
 //does someone use it?
 function qtranxf_useAdminTermLib($obj) {
-	qtranxf_dbg_echo('qtranxf_useAdminTermLib: $obj: ',$obj,true);
+	//qtranxf_dbg_echo('qtranxf_useAdminTermLib: $obj: ',$obj,true);
 	if ($script_name==='/wp-admin/edit-tags.php' &&
 		strstr($_SERVER['QUERY_STRING'], 'action=edit' )!==FALSE)
 	{

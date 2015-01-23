@@ -102,7 +102,11 @@ function qtranxf_fixSearchForm($form) {
 
 function qtranxf_fixAdminBar($wp_admin_bar) {
 	global $wp_admin_bar;
-	foreach($wp_admin_bar->get_nodes() as $node) {
+	if(!isset($wp_admin_bar)) return;
+	$nodes=$wp_admin_bar->get_nodes();
+	//qtranxf_dbg_echo('$nodes:',$nodes);
+	if(!isset($nodes)) return;//sometimes $nodes is NULL
+	foreach($nodes as $node) {
 		$wp_admin_bar->add_node(qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($node));
 	}
 }
