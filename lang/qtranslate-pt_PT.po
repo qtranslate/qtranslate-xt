@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: qTranslate-X 3.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-01-22 10:37-0000\n"
-"PO-Revision-Date: 2015-01-22 13:01-0000\n"
+"PO-Revision-Date: 2015-01-23 13:00-0000\n"
 "Last-Translator: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "Language-Team: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "Language: pt_PT\n"
@@ -1099,7 +1099,7 @@ msgstr "Título:"
 
 #: ../qtranslate_widget.php:95
 msgid "Hide Title:"
-msgstr "Esconder Título:"
+msgstr "Esconder título:"
 
 #: ../qtranslate_widget.php:96
 msgid "Display:"
