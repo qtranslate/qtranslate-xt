@@ -404,7 +404,7 @@ var qTranslateX=function(pg)
 						text='';//workaround, need to learn how tinymce works ...
 						//c('tinymce: onblur: empty text');
 					}else{
-						var matches = text.match(/^<p>\s*(.*)\s*<\/p>$/);
+						var matches = text.match(/^<p>\s*([^<]*)\s*<\/p>$/);
 						if(matches){
 							text=matches[1];
 							//c('tinymce: onblur: removed plain <p>:'+text);
