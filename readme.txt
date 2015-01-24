@@ -261,12 +261,13 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 * added 'post_title' filter to translate all titles fetched for display purpose
 * fixed problem with comment date display in some themes
 
-== Known Bugs ==
+== Known Issues ==
 
+* [WooCommerce](https://wordpress.org/plugins/woocommerce/) framework plugins: turn on option "Compatibility Functions".
 * Incompatibility with plugin [WP Editor](https://wordpress.org/support/plugin/wp-editor). Language switching buttons do not change the content of main editor in pages and posts. For now, you would need to deactivate "WP Editor".
-* Sometimes after a new plugin update is released, the language switching buttons disappear on the first editor page load. Refresh the page to bring them back. Apparently, it has something to do with browse caching mechanism.
 * Message "The backup of this post in your browser is different from the version below" appears sometimes in the post editor. Clicking on "Restore the backup" may produce unexpected result, since backup has one language only,
 the one which was active at the time of the last pressing of button "Update". The code which causes this is in /wp-includes/js/autosave.js.
+* Sometimes after a new plugin update is released, the language switching buttons disappear on the first editor page load. Refresh the page to bring them back. Apparently, it has something to do with browse caching mechanism.
 
 == Credentials ==
 

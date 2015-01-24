@@ -64,7 +64,7 @@ function qtranxf_init_language() {
 	// fix url to prevent xss
 	$q_config['url_info']['url'] = qtranxf_convertURL(add_query_arg('lang',$q_config['default_language'],$q_config['url_info']['url']));
 
-	if($q_config['qtrans_compatibility']){
+	if(isset($q_config['qtrans_compatibility']) && $q_config['qtrans_compatibility']){
 		require_once(dirname(__FILE__).'/qtranslate_compatibility.php');
 	}
 
@@ -424,7 +424,7 @@ function qtranxf_load_option_array($nm) {
 	$q_config[$nm]=$vals;
 }
 
-function qtranxf_load_option_bool($nm) {
+function qtranxf_load_option_bool( $nm ) {
 	global $q_config;
 	$val = get_option('qtranslate_'.$nm);
 	if($val==='0') $q_config[$nm] = false;

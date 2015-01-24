@@ -93,12 +93,13 @@ function qtranxf_update_option( $nm, $default_value=null ) {
 	}
 }
 
-function qtranxf_update_option_bool($nm) {
+function qtranxf_update_option_bool( $nm, $default_value=null ) {
 	global $q_config;
-	if($q_config[$nm])
-		update_option('qtranslate_'.$nm, '1');
-	else
-		update_option('qtranslate_'.$nm, '0');
+	if( !isset($q_config[$nm]) || ($default_value !== null && $default_value === $q_config[$nm]) ){
+		delete_option('qtranslate_'.$nm);
+	}else{
+		update_option('qtranslate_'.$nm, $q_config[$nm]?'1':'0');
+	}
 }
 
 // saves entire configuration - it should be in admin only?
@@ -133,6 +134,7 @@ function qtranxf_saveConfig() {
 	qtranxf_update_option_bool('show_displayed_language_prefix');
 	qtranxf_update_option_bool('auto_update_mo');
 	qtranxf_update_option_bool('hide_default_language');
+	qtranxf_update_option_bool('qtrans_compatibility');
 
 	do_action('qtranslate_saveConfig');
 }
@@ -177,7 +179,7 @@ function qtranxf_select_admin_js ($enqueue_script=false) {
 		case 'nav-menus':
 			if(isset($_SERVER['QUERY_STRING'])){
 				$qs=$_SERVER['QUERY_STRING'];
-				if(strpos($qs,'action=')!==FALSE) return false;
+				if(strpos($qs,'action=')!==FALSE && strpos($qs,'action=edit')===FALSE) return false;
 			}
 			$script='admin/js/edit-nav-menus';
 			break;
