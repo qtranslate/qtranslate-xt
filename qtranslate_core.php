@@ -317,7 +317,7 @@ function qtranxf_http_negotiate_language(){
 	if(function_exists('http_negotiate_language')){
 		$supported=array();
 		$supported[]=str_replace('_','-',$q_config['locale'][$q_config['default_language']]);
-		foreach($q_config['available_languages'] as $lang){
+		foreach($q_config['enabled_languages'] as $lang){
 			$supported[]=str_replace('_','-',$q_config['locale'][$lang]);
 		}
 		$lang = http_negotiate_language($supported);
