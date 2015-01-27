@@ -314,6 +314,7 @@ function qtranxf_get_browser_language(){
 }
 
 function qtranxf_http_negotiate_language(){
+	global $q_config;
 	if(function_exists('http_negotiate_language')){
 		$supported=array();
 		$supported[]=str_replace('_','-',$q_config['locale'][$q_config['default_language']]);
