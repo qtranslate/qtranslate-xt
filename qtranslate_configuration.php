@@ -1121,7 +1121,7 @@ function qtranxf_nav_menu_metabox( $object )
 	<span class="list-controls hide-if-no-js">
 		<a href="javascript:void(0);" class="help" onclick="jQuery( '#help-login-links' ).toggle();"><?php _e( 'Help', 'qtranslate' ); ?></a>
 		<span class="hide-if-js" id="help-login-links"><br/><a name="help-login-links"></a>
-		Menu item added is replaced with a sub-menu of available languages when menu is rendered. Depending on how your theme renders menu you may need to override and customize css entries .qtranxs-lang-menu and .qtranxs-lang-menu-item, originally defined in qtranslate.css. The field "URL" of inserted menu item allows additional configuration described in <a href="https://wordpress.org/plugins/qtranslate-x/faq" target="blank">FAQ</a>.<br>
+		<?php printf(__('Menu item added is replaced with a sub-menu of available languages when menu is rendered. Depending on how your theme renders menu you may need to override and customize css entries %s and %s, originally defined in %s. The field "URL" of inserted menu item allows additional configuration described in %sFAQ%s.', 'qtranslate' ), '.qtranxs-lang-menu', '.qtranxs-lang-menu-item', 'qtranslate.css', '<a href="https://wordpress.org/plugins/qtranslate-x/faq" target="blank">','</a>');?><br>
 		</span>
 	</span>
 	<p class="button-controls">
