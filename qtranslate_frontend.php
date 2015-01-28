@@ -271,7 +271,7 @@ function qtranxf_excludeUntranslatedPosts($where) {
 		$single_post_query = preg_match('/ID\s*=\s*[\'"]*(\d+)[\'"]*/i',$where,$matches)==1;
 		//qtranxf_dbg_echo('qtranxf_excludeUntranslatedPosts: $single_post_query: ',$single_post_query);
 		//if($single_post_query){
-		//	qtranxf_dbg_echo('qtranxf_excludeUntranslatedPosts: $matches[1]:',$matches[1]);
+		//	//qtranxf_dbg_echo('qtranxf_excludeUntranslatedPosts: $matches[1]:',$matches[1]);
 		//}
 	}
 	if(!$single_post_query){
@@ -296,11 +296,11 @@ function qtranxf_excludeUntranslatedPostComments($clauses, &$q/*WP_Comment_Query
 function qtranxf_home_url($url, $path, $orig_scheme, $blog_id)
 {
 	global $q_config;
+	$lang = $q_config['language'];
 	//qtranxf_dbg_log('qtranxf_home_url: url='.$url.'; path='.$path.'; orig_scheme='.$orig_scheme);
-	$url=qtranxf_convertURL($url,'',false,!$q_config['hide_default_language']);
-	//if((empty($path) && $q_config['url_mode'] == QT_URL_PATH) || $path == '/' || !empty($q_config['url_info']['explicit_default_language'])){
-	//	$url=qtranxf_convertURL($url, '', false, $q_config['url_info']['explicit_default_language']);
-	//}
+	$url = qtranxf_get_url_for_language($url, $lang, !$q_config['hide_default_language'] || $lang != $q_config['default_language']);
+	//qtranxf_dbg_log('qtranxf_home_url: url='.$url.'; lang='.$lang);
+	//$url=qtranxf_convertURL($url,$lang,false,!$q_config['hide_default_language']);
 	//qtranxf_dbg_log('qtranxf_home_url: new='.$url,wp_debug_backtrace_summary(null,0,false));
 	return $url;
 }

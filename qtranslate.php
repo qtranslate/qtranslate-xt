@@ -115,9 +115,10 @@ define('QTX_ARRAY',	6);
 define('QTX_BOOLEAN_SET',	7);
 //define('QTX_ARRAY_STRING',	8);
 
-define('QTX_URL_QUERY',	1);
-define('QTX_URL_PATH',	2);
-define('QTX_URL_DOMAIN',	3);
+define('QTX_URL_QUERY'  , 1);// query: domain.com?lang=en
+define('QTX_URL_PATH'   , 2);// pre path: domain.com/en
+define('QTX_URL_DOMAIN' , 3);// pre domain: en.domain.com
+define('QTX_URL_DOMAINS', 4);// domain per language
 
 define('QTX_STRFTIME_OVERRIDE',	1);
 define('QTX_DATE_OVERRIDE',	2);
@@ -159,13 +160,11 @@ $q_config['hide_default_language'] = true;
 $q_config['qtrans_compatibility'] = false;
 
 // sets default url mode 
-// QTX_URL_QUERY(1) - query (questionmark)
-// QTX_URL_PATH(2) - pre-path
-// QTX_URL_DOMAIN(3) - pre-domain
 $q_config['url_mode'] = QTX_URL_PATH;
 
 $q_config['editor_mode'] = false;//Language Switching Buttons on/off etc., will be integer later
 
+/*
 // pre-Domain Endings - for future use
 $q_config['pre_domain']['de'] = "de";
 $q_config['pre_domain']['en'] = "en";
@@ -186,6 +185,7 @@ $q_config['pre_domain']['pt'] = "pt";
 $q_config['pre_domain']['pl'] = "pl";
 $q_config['pre_domain']['gl'] = "gl";
 $q_config['pre_domain']['tr'] = "tr";
+*/
 
 // Names for languages in the corresponding language, add more if needed
 $q_config['language_name']['de'] = "Deutsch";

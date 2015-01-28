@@ -16,7 +16,9 @@ if(!function_exists('qtrans_use')){
 }
 if (!function_exists('qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage')){
 	function qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage($content){
-		return qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($content);
+		global $q_config;
+	$translated=qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($content);
+	return $translated;
 	}
 }
 if(!function_exists('qtrans_useTermLib')){

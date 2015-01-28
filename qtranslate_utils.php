@@ -273,10 +273,11 @@ function qtranxf_formatPostModifiedDateTime($format) {
 				return qtranxf_strftime(qtranxf_convertFormat($format, $format), mysql2date('U',$post->post_modified), '', $before, $after);
 }
 
-function qtranxf_realURL($url = '') {
-	global $q_config;
-	return $q_config['url_info']['original_url'];
-}
+//not in use
+//function qtranxf_realURL($url = '') {
+//	global $q_config;
+//	return $q_config['url_info']['original_url'];
+//}
 
 function qtranxf_getSortedLanguages($reverse = false) {
 	global $q_config;

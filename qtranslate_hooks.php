@@ -24,6 +24,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 function qtranxf_localeForCurrentLanguage($locale){
 	global $q_config;
+	if( !isset($q_config['language']) ) return $locale;
 	// try to figure out the correct locale
 	$lang = $q_config['language'];
 	$locale_lang=$q_config['locale'][$lang];
@@ -111,32 +112,6 @@ function qtranxf_fixAdminBar($wp_admin_bar) {
 	}
 }
 
-/*
-//it was a test
-function qtranxf_wpseo_replacements($replacements){
-	foreach($replacements as $key => $s) {
-		$replacements[$key]=__($s);
-	}
-	return $replacements;
-}
-*/
-
-// Hooks for Plugin compatibility
-
-function qtranxf_supercache_dir($uri) {
-	global $q_config;
-	if(isset($q_config['url_info']['original_url'])) {
-		$uri = $q_config['url_info']['original_url'];
-	} else {
-		$uri = $_SERVER['REQUEST_URI'];
-	}
-	$uri = preg_replace('/[ <>\'\"\r\n\t\(\)]/', '', str_replace( '/index.php', '/', str_replace( '..', '', preg_replace("/(\?.*)?$/", '', $uri ) ) ) );
-	$uri = str_replace( '\\', '', $uri );
-	$uri = strtolower(preg_replace('/:.*$/', '',  $_SERVER["HTTP_HOST"])) . $uri; // To avoid XSS attacks
-	return $uri;
-}
-add_filter('supercache_dir', 'qtranxf_supercache_dir',0);
-
 //function qtranxf_gettext($translated_text, $text, $domain) {
 function qtranxf_gettext($translated_text) {
 	//same as qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage
@@ -158,6 +133,33 @@ function qtranxf_gettext_with_context($translated_text) {
 	}
 	return qtranxf_use($q_config['language'], $translated_text, false);
 }
+
+// Hooks for Plugin compatibility
+/*
+//no need any more since $_SERVER['REQUEST_URI'] is no longer modified.
+function qtranxf_supercache_dir($uri) {
+	global $q_config;
+	if(isset($q_config['url_info']['original_url'])) {
+		$uri = $q_config['url_info']['original_url'];
+	} else {
+		$uri = $_SERVER['REQUEST_URI'];
+	}
+	$uri = preg_replace('/[ <>\'\"\r\n\t\(\)]/', '', str_replace( '/index.php', '/', str_replace( '..', '', preg_replace("/(\?.*)?$/", '', $uri ) ) ) );
+	$uri = str_replace( '\\', '', $uri );
+	$uri = strtolower(preg_replace('/:.*$/', '',  $_SERVER["HTTP_HOST"])) . $uri; // To avoid XSS attacks
+	return $uri;
+}
+add_filter('supercache_dir', 'qtranxf_supercache_dir',0);
+*/
+/*
+//it was a test
+function qtranxf_wpseo_replacements($replacements){
+	foreach($replacements as $key => $s) {
+		$replacements[$key]=__($s);
+	}
+	return $replacements;
+}
+*/
 
 // Hooks (Actions)
 // add_action('category_edit_form', 'qtranxf_modifyTermFormFor');
