@@ -176,7 +176,7 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 * fix for `&amp;` in url [problem](https://wordpress.org/support/topic/strange-behavior-8).
 * fix for option [Hide Untranslated Content](https://wordpress.org/support/topic/cant-hide-the-non-existent-language-posts).
 * compatibility with plugin [Groups](https://wordpress.org/plugins/groups/), [issue](https://wordpress.org/support/topic/dropdown-doesnt-display-while-plugin-groups-is-active)
-
+* fix for wrong language on [AJAX requests](https://wordpress.org/support/topic/qtranslate-x-im8-qtranslate-woocommerce-bug)
 
 = 2.9.6 =
 * more fixes for `<!--more-->` and `<!--nextpage-->` tags and parsing multilingual texts.
