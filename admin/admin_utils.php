@@ -2,17 +2,15 @@
 
 function qtranxf_detect_admin_language($language,$url_info) {
 	global $q_config;
+	$cs;
 	if(isset($_COOKIE[QTX_COOKIE_NAME_ADMIN])){
-		$cs;
 		$lang=qtranxf_resolveLangCase($_COOKIE[QTX_COOKIE_NAME_ADMIN],$cs);
 	}
 	if(!$lang){
 		$locale = get_locale();
 		//qtranxf_dbg_log('qtranxf_detect_admin_language: locale='.$locale);
-		$lang = substr($locale,0,2);
-		if(!qtranxf_isEnabled($lang)){
-			$lang = $q_config['default_language'];
-		}
+		$lang = qtranxf_resolveLangCase(substr($locale,0,2),$cs);
+		if(!$lang) $lang = $q_config['default_language'];
 	}
 	//qtranxf_dbg_log('qtranxf_detect_admin_language: lang='.$lang);
 	return $lang;

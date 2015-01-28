@@ -160,10 +160,11 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 
 == Changelog ==
 
-= 2.9.7 =
-* menu items with empty text for the current language are not shown any more.
+= 2.9.7.8 =
+* menu items with empty text for the current language are not shown any more ([WP issue](https://wordpress.org/support/topic/hide-specific-menu-item-for-1-language)).
 * enable Language Switching Buttons on menu editor page. Fields "Navigation Label", "Title Attribute" and "Description" now respond to Language Switching Buttons.
 * option "Custom Pages" to enable Language Switching Buttons on custom-defined pages.
+* [per-domain URL modification mode]https://wordpress.org/support/topic/qtranslate-tld-url-change-mode).
 * split the qtranslate.js script into a few scripts in `admin/js/` folder to be loaded depending on the page which needs them.
 * updated qtranslate.pot and fixed proper translation of various strings in the code (thanks to [Pedro Mendonça](https://github.com/pedro-mendonca)).
 * fix for when cookie 'wp_qtrans_edit_language' contains unavailable language.
