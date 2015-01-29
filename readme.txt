@@ -9,7 +9,7 @@ License: GPLv3 or later
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QEXEK3HX8AR6U
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Adds user-friendly and database-friendly multilingual content management and translation support. It is a fork and a bug fixer of qTranslate.
+Adds user-friendly multilingual content management and translation support. It is an up-to-date fork of qTranslate with many additional features.
 
 == Description ==
 
@@ -46,7 +46,7 @@ Installation of this plugin is no different from any other plugin:
 1. Download the plugin from [here](http://wordpress.org/plugins/qtranslate-x/ "qTranslate-X").
 1. Extract all the files.
 1. Upload everything (keeping the directory structure) to the `/wp-content/plugins/` directory.
-1. Deactivate plugin qTranslate, mqTranslate, qTranslate Plus, or zTranslate, if you running any.
+1. Deactivate plugin qTranslate, mqTranslate, qTranslate Plus, or zTranslate, if you are running any.
 1. Activate qTranslate-X through the 'Plugins' configuration page in WordPress.
 1. Open Settings->Languages configuration page and add/delete/disable any languages you need.
 1. Add the "qTranslate Language Chooser" widget or "Language Switcher" menu item to let your visitors switch the language.
