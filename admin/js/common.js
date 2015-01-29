@@ -213,18 +213,24 @@ var qTranslateX=function(pg)
 	var displayHooks=[];
 	var contentHooks={};
 
-	updateFusedValueH=function(id,value)
+	updateFusedValueHooked=function(h)
 	{
-		var h=contentHooks[id];
-		var lang=languageSwitch.getActiveLanguage();
-		var text=value.trim();
-		//c('updateFusedValueH['+id+']text:'+text);
-		h.contents[lang]=text;
 		if(h.separator==='<'){
 			h.mlContentField.value = qtranxj_join_c(h.contents);
 		}else{
 			h.mlContentField.value = qtranxj_join_b(h.contents);
 		}
+	}
+
+	updateFusedValueH=function(id,value)
+	{
+		var h=contentHooks[id];
+		//var lang=languageSwitch.getActiveLanguage();
+		var lang=h.lang;
+		var text=value.trim();
+		//c('updateFusedValueH['+id+']text:'+text);
+		h.contents[lang]=text;
+		updateFusedValueHooked(h);
 	}
 
 	addContentHook=function(inpField,form,separator)
@@ -245,7 +251,8 @@ var qTranslateX=function(pg)
 		}
 		h.separator=separator;
 		inpField.name='edit-'+inpField.name;
-		var text = h.contents[initialLanguage];
+		h.lang=initialLanguage;
+		var text = h.contents[h.lang];
 		inpField.value=text;
 		//c('addContentHook:inpField.value='+inpField.value);
 		inpField.onblur=function(){ updateFusedValueH(this.id,this.value); }
@@ -301,19 +308,21 @@ var qTranslateX=function(pg)
 
 	updateTinyMCE=function(ed,text)
 	{
+/*
 		//c('updateTinyMCE: text:'+text);
 		if(!text.match(/^</)){
 			text='<p>'+text+'</p>';
 			//c('updateTinyMCE: updated text:'+text);
 		}
-		/*
+*/
+		//c('updateTinyMCE: text:'+text);
 		if(window.switchEditors){
 			//text = window.switchEditors.pre_wpautop( text );
 			text = window.switchEditors.wpautop(text);//does format 'raw' takes care of it?
 			//c('updateTinyMCE:wpautop:'+text);
 		}
-		*/
-		ed.setContent(text,{format: 'raw'});//do we need 'raw'?
+		ed.setContent(text,{format: 'html'});
+		//ed.load({initial: false, format: 'html'});
 	}
 
 	onTabSwitch=function()
@@ -323,18 +332,40 @@ var qTranslateX=function(pg)
 			var h=displayHooks[i];
 			h.elem.innerHTML=h.contents[this.lang];
 		}
+/*
+		if (window.tinyMCE)
+		for(var i=0; i<tinyMCE.editors.length; ++i){
+			var ed=tinyMCE.editors[i];
+			var h=contentHooks[ed.id];
+			if(!h) continue;
+			//c('onTabSwitch: h['+ed.id+'].contentField.value before save:'+h.contentField.value);
+			ed.save({format: 'html'});
+			//c('onTabSwitch: h['+ed.id+'].contentField.value  after save:'+h.contentField.value);
+			h.contents[h.lang] = h.contentField.value;
+		}
+*/
 		for(var key in contentHooks){
 			var h=contentHooks[key];
+			if(h.mce){
+				h.mce.save({format: 'html'});
+				h.contents[h.lang] = h.contentField.value;
+			}
+			h.lang = this.lang;
 			h.contentField.value=h.contents[this.lang];
 			//c('onTabSwitch: h['+key+'].contentField.value:'+h.contentField.value);
+			if(h.mce){
+				updateTinyMCE(h.mce,h.contentField.value);
+			}
 		}
-		if (!window.tinyMCE) return;
+/*
+		if (window.tinyMCE)
 		for(var i=0; i<tinyMCE.editors.length; ++i){
 			var ed=tinyMCE.editors[i];
 			var h=contentHooks[ed.id];
 			if(!h) continue;
 			updateTinyMCE(ed,h.contentField.value);
 		}
+*/
 	}
 
 	var qtx=this;
@@ -387,18 +418,19 @@ var qTranslateX=function(pg)
 
 	this.addContentHooksTinyMCE=function()
 	{
-		function setEditorHooks(e)
+		function setEditorHooks(ed)
 		{
 			//window.onbeforeunload = function(){};
-			var id = e.id;
+			var id = ed.id;
 			//c('setEditorHooks: id='+id);
 			if (!id) return;
 			var h=contentHooks[id];
 			if(!h) return;
 			if(h.mce) return;
-			h.mce=e;
-			e.getBody().addEventListener('blur',function(){
-					var text=e.getContent({format : 'raw'}).trim();
+			h.mce=ed;
+			ed.getBody().addEventListener('blur',function(){
+/*
+					var text=ed.getContent({format : 'raw'}).trim();
 					//c('tinymce: onblur: text:'+text);
 					if(text.match(/^<p[^>]*>(\s|&nbsp;|<br[^>]*>)*<\/p>$/)){
 						text='';//workaround, need to learn how tinymce works ...
@@ -410,13 +442,19 @@ var qTranslateX=function(pg)
 							//c('tinymce: onblur: removed plain <p>:'+text);
 						}
 					}
-					updateFusedValueH(e.id,text);
+					updateFusedValueH(ed.id,text);
+*/
+					var h=contentHooks[ed.id];
+					//c('blur: h['+ed.id+'].contentField.value before save:'+h.contentField.value);
+					ed.save();
+					//c('blur: h['+ed.id+'].contentField.value  after save:'+h.contentField.value);
+					updateFusedValueHooked(h);
 				});
 			//c('setEditorHooks: id='+id);
 			//c('h.contentField.value='+h.contentField.value);
-			//var text=e.getContent({format : 'raw'});
+			updateTinyMCE(ed,h.contentField.value);
+			//var text=ed.getContent({format : 'raw'});
 			//c('setEditorHooks: getContent(text):'+text);
-			//updateTinyMCE(e,text);//it does it on its own?
 		}
 
 		// Add listeners for fields change
