@@ -996,14 +996,14 @@ function qtranxf_conf() {
 				<th scope="row"><?php _e('Compatibility Functions', 'qtranslate');?></th>
 				<td>
 					<label for="qtranxs_qtrans_compatibility"><input type="checkbox" name="qtrans_compatibility" id="qtranxs_qtrans_compatibility" value="1"<?php checked($q_config['qtrans_compatibility']); ?>/>&nbsp;<?php printf(__('Enable function names compatibility for %s.', 'qtranslate'), 'qtrans_getLanguage, qtrans_convertURL, qtrans_use, qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage, qtrans_useTermLib '.__('and', 'qtranslate').' qtrans_getSortedLanguages'); ?></label><br/>
-					<small><?php printf(__('Some plugins and themes use direct calls to the functions listed, which are defined in former %s plugin and some of its forks. Turning this flag on will enable those function to exists, which will make the dependent plugins and themes to work.  WordPress policy prohibits to define functions with the same names as in other plugins, since it generates user-unfriendly fatal errors, when two conflicting plugins are activated simultaneously. Before turning this option on, you have to make sure that there are no other plugins active, which define those functions.', 'qtranslate'), '<a href="https://wordpress.org/plugins/qtranslate/" target="_blank">qTranslate</a>'); ?></small>
+					<small><?php printf(__('Some plugins and themes use direct calls to the functions listed, which are defined in former %s plugin and some of its forks. Turning this flag on will enable those function to exists, which will make the dependent plugins and themes to work. WordPress policy prohibits to define functions with the same names as in other plugins, since it generates user-unfriendly fatal errors, when two conflicting plugins are activated simultaneously. Before turning this option on, you have to make sure that there are no other plugins active, which define those functions.', 'qtranslate'), '<a href="https://wordpress.org/plugins/qtranslate/" target="_blank">qTranslate</a>'); ?></small>
 				</td>
 			</tr>
 			<tr valign="top">
 				<th scope="row"><?php _e('Editor Raw Mode', 'qtranslate');?></th>
 				<td>
 					<label for="qtranxs_editor_mode"><input type="checkbox" name="editor_mode" id="qtranxs_editor_mode" value="1"<?php checked($q_config['editor_mode']); ?>/>&nbsp;<?php _e('Do not use Language Switching Buttons to edit multi-language text entries.', 'qtranslate'); ?></label><br/>
-					<small><?php _e('Some people prefer to edit the raw entries containing all languages together separated by language defining tags, as they are stored in database.'); ?></small>
+					<small><?php _e('Some people prefer to edit the raw entries containing all languages together separated by language defining tags, as they are stored in database.', 'qtranslate'); ?></small>
 				</td>
 			</tr>
 <?php /*
@@ -1088,7 +1088,7 @@ function qtranxf_nav_menu_metabox( $object )
 {
 	global $nav_menu_selected_id;
 
-	$elems = array( '#qtransLangSwLM#' => __('Language Menu') );
+	$elems = array( '#qtransLangSwLM#' => __('Language Menu', 'qtranslate') );
 
 	class qtranxcLangSwItems {
 		public $db_id = 0;
@@ -1137,14 +1137,14 @@ function qtranxf_nav_menu_metabox( $object )
 		</ul>
 	</div>
 	<span class="list-controls hide-if-no-js">
-		<a href="javascript:void(0);" class="help" onclick="jQuery( '#help-login-links' ).toggle();"><?php _e( 'Help' ); ?></a>
+		<a href="javascript:void(0);" class="help" onclick="jQuery( '#help-login-links' ).toggle();"><?php _e( 'Help', 'qtranslate' ); ?></a>
 		<span class="hide-if-js" id="help-login-links"><br/><a name="help-login-links"></a>
-		Menu item added is replaced with a sub-menu of available languages when menu is rendered. Depending on how your theme renders menu you may need to override and customize css entries .qtranxs-lang-menu and .qtranxs-lang-menu-item, originally defined in qtranslate.css. The field "URL" of inserted menu item allows additional configuration described in <a href="https://wordpress.org/plugins/qtranslate-x/faq" target="blank">FAQ</a>.<br>
+		<?php printf(__('Menu item added is replaced with a sub-menu of available languages when menu is rendered. Depending on how your theme renders menu you may need to override and customize css entries %s and %s, originally defined in %s. The field "URL" of inserted menu item allows additional configuration described in %sFAQ%s.', 'qtranslate' ), '.qtranxs-lang-menu', '.qtranxs-lang-menu-item', 'qtranslate.css', '<a href="https://wordpress.org/plugins/qtranslate-x/faq" target="blank">','</a>');?><br>
 		</span>
 	</span>
 	<p class="button-controls">
 		<span class="add-to-menu">
-			<input type="submit"<?php disabled( $nav_menu_selected_id, 0 ); ?> class="button-secondary submit-add-to-menu right" value="<?php esc_attr_e('Add to Menu'); ?>" name="add-qtranxs-langsw-menu-item" id="submit-qtranxs-langsw" />
+			<input type="submit"<?php disabled( $nav_menu_selected_id, 0 ); ?> class="button-secondary submit-add-to-menu right" value="<?php esc_attr_e('Add to Menu', 'qtranslate'); ?>" name="add-qtranxs-langsw-menu-item" id="submit-qtranxs-langsw" />
 			<span class="spinner"></span>
 		</span>
 	</p>
@@ -1154,7 +1154,7 @@ function qtranxf_nav_menu_metabox( $object )
 
 function qtranxf_add_nav_menu_metabox()
 {
-	add_meta_box( 'add-qtranxs-language-switcher', __( 'Language Switcher' ), 'qtranxf_nav_menu_metabox', 'nav-menus', 'side', 'default' );
+	add_meta_box( 'add-qtranxs-language-switcher', __( 'Language Switcher', 'qtranslate' ), 'qtranxf_nav_menu_metabox', 'nav-menus', 'side', 'default' );
 }
 
 function qtranxf_add_language_menu( $wp_admin_bar ) 
