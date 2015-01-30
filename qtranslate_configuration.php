@@ -142,23 +142,37 @@ function qtranxf_saveConfig() {
 	do_action('qtranslate_saveConfig');
 }
 
-function qtranxf_get_custom_admin_js ($url,$pages) {
-	foreach($pages as $page_path){
-		list($page,$path) = explode(':',$page_path);
-		if(strpos($url,$page)===FALSE) continue;
-		return isset($path)?$path:'admin/js/edit-custom-page';
+function qtranxf_get_custom_admin_js ($pages) {
+	global $pagenow;
+	//qtranxf_dbg_echo('qtranxf_get_custom_admin_js: $pagenow: ',$pagenow);
+	//qtranxf_dbg_echo('qtranxf_get_custom_admin_js: $script_name=',$script_name);
+	//if(!isset($_SERVER['REQUEST_URI'])) return false;
+	//$uri=$_SERVER['REQUEST_URI'];
+	$qs = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
+	foreach($pages as $page_conf){
+		//list($page,$path) = explode(':',$page_path);
+		$page_conf_parts = explode(':',$page_conf);
+		//qtranxf_dbg_echo('qtranxf_get_custom_admin_js: $page_conf_parts: ',$page_conf_parts);
+		$uri = $page_conf_parts[0];
+		$uri_parts = explode('?',$uri);
+		//qtranxf_dbg_echo('qtranxf_get_custom_admin_js: $uri_parts: ',$uri_parts);
+		$page = $uri_parts[0];
+		//qtranxf_dbg_echo('qtranxf_get_custom_admin_js: $page: ',$page);
+		if( $page !== $pagenow ) continue;
+		if(isset($uri_parts[1]) && strpos($qs,$uri_parts[1])===FALSE) continue;
+		return isset($page_conf_parts[1]) ? $page_conf_parts[1] : 'admin/js/edit-custom-page';
 	}
 	/*
 		Filter allows to load custom script.
 		Return path relative to the location of qTranslate-X plugin folder, when needed.
 	*/
-	$script=apply_filters('qtranslate_custom_admin_js',null,$url);
+	$script=apply_filters('qtranslate_custom_admin_js',null);
 	if($script) return $script;
 	return false;
 }
 
 function qtranxf_select_admin_js ($enqueue_script=false) {
-	//global $pagenow;
+	global $pagenow;
 	global $q_config;
 	if($q_config['editor_mode']) return false;
 	if(!isset($_SERVER['SCRIPT_NAME'])) return false;
@@ -169,7 +183,8 @@ function qtranxf_select_admin_js ($enqueue_script=false) {
 		//case '/wp-admin/post-new.php':
 		//case '/wp-admin/post.php':
 		case 'post':
-		case 'post-new': $script='admin/js/edit-post'; break;
+		case 'post-new':
+			$script='admin/js/edit-post'; break;
 		//case '/wp-admin/edit-tags.php':
 		case 'edit-tags':
 			if(isset($_SERVER['QUERY_STRING']) && strpos($_SERVER['QUERY_STRING'],'action=edit')!==FALSE ){
@@ -182,7 +197,12 @@ function qtranxf_select_admin_js ($enqueue_script=false) {
 		case 'nav-menus':
 			if(isset($_SERVER['QUERY_STRING'])){
 				$qs=$_SERVER['QUERY_STRING'];
-				if(strpos($qs,'action=')!==FALSE && strpos($qs,'action=edit')===FALSE) return false;
+				//qtranxf_dbg_echo('$qs=',$qs);
+				if(preg_match('/action=([^&#]+)/',$qs,$matches)){
+					//qtranxf_dbg_echo('$matches[1]=',$matches[1]);
+					if( $matches[1] != 'edit' ) return false;
+				}
+				//if(strpos($qs,'action=')!==FALSE && strpos($qs,'action=edit')===FALSE) return false;
 			}
 			$script='admin/js/edit-nav-menus';
 			break;
@@ -194,7 +214,8 @@ function qtranxf_select_admin_js ($enqueue_script=false) {
 			}
 			$script='admin/js/edit-options-general'; break;
 		default:
-			$script=qtranxf_get_custom_admin_js($script_name,$q_config['custom_pages']);
+			$script=qtranxf_get_custom_admin_js($q_config['custom_pages']);
+			//qtranxf_dbg_echo('qtranxf_select_admin_js: $script: ',$script);
 			if(!$script) return false;
 			break;
 	}
@@ -212,6 +233,7 @@ function qtranxf_select_admin_js ($enqueue_script=false) {
 		wp_register_script( 'qtranslate-admin-edit', $script_url, array('qtranslate-admin-common'), QTX_VERSION );
 		wp_enqueue_script( 'qtranslate-admin-edit' );
 	}
+	//qtranxf_dbg_echo('qtranxf_select_admin_js: $fn: ',$fn);
 	return $fn;
 }
 
@@ -988,7 +1010,7 @@ function qtranxf_conf() {
 			</tr>
 			<tr valign="top">
 				<th scope="row"><?php echo __('Custom Admin Pages', 'qtranslate');?></th>
-				<td>/wp-admin/&nbsp;<input type="text" name="custom_pages" id="qtranxs_custom_pages" value="<?php echo implode(' ',$q_config['custom_pages']); ?>" style="width:100%"><br>
+				<td><input type="text" name="custom_pages" id="qtranxs_custom_pages" value="<?php echo implode(' ',$q_config['custom_pages']); ?>" style="width:100%"><br>
 					<small><?php printf(__('List the custom admin page paths for which you wish Language Switching Buttons to show up. The Buttons will then control fields configured in "Custom Fields" section. You may only include part of the full URL after %s, including a distinctive query string if needed. As many as desired pages can be listed space/comma separated. For more information, read %sFAQ%s.', 'qtranslate'),'/wp-admin/','<a href="https://wordpress.org/plugins/qtranslate-x/faq/">','</a>'); ?></small>
 				</td>
 			</tr>
@@ -996,14 +1018,14 @@ function qtranxf_conf() {
 				<th scope="row"><?php _e('Compatibility Functions', 'qtranslate');?></th>
 				<td>
 					<label for="qtranxs_qtrans_compatibility"><input type="checkbox" name="qtrans_compatibility" id="qtranxs_qtrans_compatibility" value="1"<?php checked($q_config['qtrans_compatibility']); ?>/>&nbsp;<?php printf(__('Enable function names compatibility for %s.', 'qtranslate'), 'qtrans_getLanguage, qtrans_convertURL, qtrans_use, qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage, qtrans_useTermLib '.__('and', 'qtranslate').' qtrans_getSortedLanguages'); ?></label><br/>
-					<small><?php printf(__('Some plugins and themes use direct calls to the functions listed, which are defined in former %s plugin and some of its forks. Turning this flag on will enable those function to exists, which will make the dependent plugins and themes to work. WordPress policy prohibits to define functions with the same names as in other plugins, since it generates user-unfriendly fatal errors, when two conflicting plugins are activated simultaneously. Before turning this option on, you have to make sure that there are no other plugins active, which define those functions.', 'qtranslate'), '<a href="https://wordpress.org/plugins/qtranslate/" target="_blank">qTranslate</a>'); ?></small>
+					<small><?php printf(__('Some plugins and themes use direct calls to the functions listed, which are defined in former %s plugin and some of its forks. Turning this flag on will enable those function to exists, which will make the dependent plugins and themes to work.  WordPress policy prohibits to define functions with the same names as in other plugins, since it generates user-unfriendly fatal errors, when two conflicting plugins are activated simultaneously. Before turning this option on, you have to make sure that there are no other plugins active, which define those functions.', 'qtranslate'), '<a href="https://wordpress.org/plugins/qtranslate/" target="_blank">qTranslate</a>'); ?></small>
 				</td>
 			</tr>
 			<tr valign="top">
 				<th scope="row"><?php _e('Editor Raw Mode', 'qtranslate');?></th>
 				<td>
 					<label for="qtranxs_editor_mode"><input type="checkbox" name="editor_mode" id="qtranxs_editor_mode" value="1"<?php checked($q_config['editor_mode']); ?>/>&nbsp;<?php _e('Do not use Language Switching Buttons to edit multi-language text entries.', 'qtranslate'); ?></label><br/>
-					<small><?php _e('Some people prefer to edit the raw entries containing all languages together separated by language defining tags, as they are stored in database.', 'qtranslate'); ?></small>
+					<small><?php _e('Some people prefer to edit the raw entries containing all languages together separated by language defining tags, as they are stored in database.'); ?></small>
 				</td>
 			</tr>
 <?php /*
@@ -1088,7 +1110,7 @@ function qtranxf_nav_menu_metabox( $object )
 {
 	global $nav_menu_selected_id;
 
-	$elems = array( '#qtransLangSwLM#' => __('Language Menu', 'qtranslate') );
+	$elems = array( '#qtransLangSwLM#' => __('Language Menu') );
 
 	class qtranxcLangSwItems {
 		public $db_id = 0;
@@ -1137,14 +1159,14 @@ function qtranxf_nav_menu_metabox( $object )
 		</ul>
 	</div>
 	<span class="list-controls hide-if-no-js">
-		<a href="javascript:void(0);" class="help" onclick="jQuery( '#help-login-links' ).toggle();"><?php _e( 'Help', 'qtranslate' ); ?></a>
+		<a href="javascript:void(0);" class="help" onclick="jQuery( '#help-login-links' ).toggle();"><?php _e( 'Help' ); ?></a>
 		<span class="hide-if-js" id="help-login-links"><br/><a name="help-login-links"></a>
-		<?php printf(__('Menu item added is replaced with a sub-menu of available languages when menu is rendered. Depending on how your theme renders menu you may need to override and customize css entries %s and %s, originally defined in %s. The field "URL" of inserted menu item allows additional configuration described in %sFAQ%s.', 'qtranslate' ), '.qtranxs-lang-menu', '.qtranxs-lang-menu-item', 'qtranslate.css', '<a href="https://wordpress.org/plugins/qtranslate-x/faq" target="blank">','</a>');?><br>
+		Menu item added is replaced with a sub-menu of available languages when menu is rendered. Depending on how your theme renders menu you may need to override and customize css entries .qtranxs-lang-menu and .qtranxs-lang-menu-item, originally defined in qtranslate.css. The field "URL" of inserted menu item allows additional configuration described in <a href="https://wordpress.org/plugins/qtranslate-x/faq" target="blank">FAQ</a>.<br>
 		</span>
 	</span>
 	<p class="button-controls">
 		<span class="add-to-menu">
-			<input type="submit"<?php disabled( $nav_menu_selected_id, 0 ); ?> class="button-secondary submit-add-to-menu right" value="<?php esc_attr_e('Add to Menu', 'qtranslate'); ?>" name="add-qtranxs-langsw-menu-item" id="submit-qtranxs-langsw" />
+			<input type="submit"<?php disabled( $nav_menu_selected_id, 0 ); ?> class="button-secondary submit-add-to-menu right" value="<?php esc_attr_e('Add to Menu'); ?>" name="add-qtranxs-langsw-menu-item" id="submit-qtranxs-langsw" />
 			<span class="spinner"></span>
 		</span>
 	</p>
@@ -1154,7 +1176,7 @@ function qtranxf_nav_menu_metabox( $object )
 
 function qtranxf_add_nav_menu_metabox()
 {
-	add_meta_box( 'add-qtranxs-language-switcher', __( 'Language Switcher', 'qtranslate' ), 'qtranxf_nav_menu_metabox', 'nav-menus', 'side', 'default' );
+	add_meta_box( 'add-qtranxs-language-switcher', __( 'Language Switcher' ), 'qtranxf_nav_menu_metabox', 'nav-menus', 'side', 'default' );
 }
 
 function qtranxf_add_language_menu( $wp_admin_bar ) 

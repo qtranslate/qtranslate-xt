@@ -62,7 +62,7 @@ function qtranxf_init_language() {
 
 	//qtranxf_dbg_log('qtranxf_init_language: url_info: ',$url_info);
 
-	if(isset($url_info['doredirect'])){
+	if( !defined('WP_ADMIN') && !defined('DOING_AJAX') && !defined('DOING_CRON') && isset($url_info['doredirect'])){
 		$lang = $url_info['language'];
 		$scheme = isset($_SERVER['HTTPS'])?'https://':'http://';
 		$urlorg = $scheme.$host.$url;
@@ -250,6 +250,7 @@ function qtranxf_parse_language_info(&$url_info, $link=false) {
 		$url_info['url'] = preg_replace('/(&|&amp;|&#038;|\?)lang=[a-z]{2}(&|#)?/i',"$1",$url_info['url']);
 		$url_info['url'] = preg_replace('/(&|&amp;|&#038;|\?)+$/','',$url_info['url']);
 		if($lang_url && $lang !== $lang_url) $doredirect=true;
+		if( $q_config['url_mode']!=QTX_URL_QUERY || ($lang_url && $lang !== $lang_url) ) $doredirect=true;
 	}else if($lang_url){
 		$lang = $lang_url;
 		if($q_config['hide_default_language'] && $lang_url == $q_config['default_language']) $doredirect=true;

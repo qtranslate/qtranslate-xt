@@ -105,11 +105,15 @@ The following query options can be typed in the field "URL" of "Language Menu" c
 
 We understand that this is not a very user-friendly way to adjust the options, but it works, and we will provide a better in-editor interface to specify them in the future.
 
-= Can I enable Language Switching Buttons on my plugin's custom page? =
+= Can I enable Language Switching Buttons on my plugin custom page? =
 
 Yes, enter the relevant and distinctive part of your page URL into "Custom Pages" configuration option. When page is loaded, two Java scripts will be added, "admin/js/common.js" and "admin/js/edit-custom-page.js", from which you may figure out how it works. The Language Switching Buttons will control fields listed in "Custom Fields" option. Those fields will now store the input for all enabled languages. It is up to the theme and other relevant plugins, if those field values will show up translated on the front-end. Some theme and plugins pass the values through `__()` translation function and then values are translated. They might use `apply_filters` method, and then name of that filter can be listed in "Custom Filters" configuration option, in order to get the field translated on the front-end.
 
-If your case is still cannot be handled in this general way, you may develop your own Java script, similar to  "admin/js/edit-custom-page.js", and load it from your own file path using "qtranxf_custom_admin_js" hook. Looking through other "admin/js/edit-*.js" scripts may give you an idea how to do yours.
+If your case is still cannot be handled in this general way, you may develop your own Java script, similar to  "admin/js/edit-custom-page.js", and load it from your own file path using "qtranslate_custom_admin_js" hook. Looking through other "admin/js/edit-*.js" scripts may give you an idea how to do yours.
+
+This is a work in progress and any suggestions are appreciated. We will probably end up using some kind of an xml configuration file customizable per each plugin/theme which needs to be integrated. Such an xml-file will list pages with queries affected ("Custom Pages" option for now) along with ids and classes of fields on each page to have multilingual data either for editing or for display.
+
+Ideally, only such an xml configuration file will need to be created in order to integrate a plugin or theme without additional coding.
 
 = How can I customize menu depending on the language? =
 
@@ -160,7 +164,16 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 
 == Changelog ==
 
-= 2.9.7.8 =
+= 2.9.8.0 alpha =
+* [plugin integration design](https://wordpress.org/support/topic/plugin-integration-1)
+
+= 2.9.7.9 beta =
+* more fixes for [issue #5](https://github.com/qTranslate-Team/qtranslate-x/issues/5).
+
+= 2.9.7.8 beta =
+* fix for wrong language on [AJAX requests](https://wordpress.org/support/topic/qtranslate-x-im8-qtranslate-woocommerce-bug)
+
+= 2.9.7.7 beta =
 * menu items with empty text for the current language are not shown any more ([WP issue](https://wordpress.org/support/topic/hide-specific-menu-item-for-1-language)).
 * enable Language Switching Buttons on menu editor page. Fields "Navigation Label", "Title Attribute" and "Description" now respond to Language Switching Buttons.
 * option "Custom Pages" to enable Language Switching Buttons on custom-defined pages.
@@ -177,7 +190,6 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 * fix for `&amp;` in url [problem](https://wordpress.org/support/topic/strange-behavior-8).
 * fix for option [Hide Untranslated Content](https://wordpress.org/support/topic/cant-hide-the-non-existent-language-posts).
 * compatibility with plugin [Groups](https://wordpress.org/plugins/groups/), [issue](https://wordpress.org/support/topic/dropdown-doesnt-display-while-plugin-groups-is-active)
-* fix for wrong language on [AJAX requests](https://wordpress.org/support/topic/qtranslate-x-im8-qtranslate-woocommerce-bug)
 
 = 2.9.6 =
 * more fixes for `<!--more-->` and `<!--nextpage-->` tags and parsing multilingual texts.

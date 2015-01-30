@@ -227,10 +227,9 @@ var qTranslateX=function(pg)
 	{
 		var h=contentHooks[id];
 		//var lang=languageSwitch.getActiveLanguage();
-		var lang=h.lang;
 		var text=value.trim();
-		//c('updateFusedValueH['+id+']text:'+text);
-		h.contents[lang]=text;
+		//c('updateFusedValueH['+id+'] lang='+h.lang+'; text:'+text);
+		h.contents[h.lang]=text;
 		updateFusedValueHooked(h);
 	}
 
@@ -239,7 +238,9 @@ var qTranslateX=function(pg)
 		//co('inpField:',inpField);
 		if( !inpField ) return false;
 		//if( typeof inpField.value !== 'string' ) return false;
+		if(contentHooks[inpField.id]) return true;
 		var h=contentHooks[inpField.id]={};
+		//h.id=inpField.id;
 		h.contentField=inpField;
 		//c('addContentHook:inpField.value='+inpField.value);
 		h.contents=qtranxj_split(inpField.value,false);//inpField.tagName
@@ -255,7 +256,7 @@ var qTranslateX=function(pg)
 		h.lang=initialLanguage;
 		var text = h.contents[h.lang];
 		inpField.value=text;
-		//c('addContentHook:inpField.value='+inpField.value);
+		//c('addContentHook['+inpField.id+']['+h.lang+']: inpField.value='+inpField.value);
 		inpField.onblur=function(){ updateFusedValueH(this.id,this.value); }
 /*
 		if(inpField.tagName==='TEXTAREA'){
@@ -270,6 +271,7 @@ var qTranslateX=function(pg)
 				var ed=tinyMCE.editors[i];
 				if(ed.id != inpField.id) continue;
 				//c('addContentHook:updateTinyMCE');
+				h.mce=ed;
 				updateTinyMCE(ed,text);
 			}
 		}
@@ -478,16 +480,50 @@ var qTranslateX=function(pg)
 		});
 	}
 
+	this.getWrapForm=function(){
+		var wraps = document.getElementsByClassName('wrap');
+		for(var i=0; i < wraps.length; ++i){
+			var w = wraps[i];
+			var forms = w.getElementsByTagName('form');
+			if(forms.length) return forms[0];
+		}
+		var forms = document.getElementsByTagName('form');
+		for(var i=0; i < forms.length; ++i){
+			var f = forms[i];
+			wraps = f.getElementsByClassName('wrap');
+			if(wraps.length) return f;
+		}
+		return null;
+	}
+
+	this.getFormWrap=function(){
+		var forms = document.getElementsByTagName('form');
+		for(var i=0; i < forms.length; ++i){
+			var f = forms[i];
+			var wraps = f.getElementsByClassName('wrap');
+			if(wraps.length) return wraps[0];
+		}
+		var wraps = document.getElementsByClassName('wrap');
+		for(var i=0; i < wraps.length; ++i){
+			var w = wraps[i];
+			forms = w.getElementsByTagName('form');
+			if(forms.length) return w;
+		}
+		return null;
+	}
+
 	if(!pg.addContentHooks(this))
 		return;
 	{
 		var langSwitchWrap=qtranxj_ce('ul', {className: 'qtranxs-lang-switch-wrap'});
 		//var header=w.getElementsByTagName('h2')[0];
 		//header.parentNode.insertBefore(langSwitchWrap, header.nextElementSibling);
-		var w=document.getElementsByClassName('wrap')[0];
-		var f=pg.form;
-		if(!f)
-			f=w.getElementsByTagName('form')[0];
+		var f=pg.langSwitchWrapAnchor;
+		if(!f){
+			f = this.getWrapForm();
+			//var w = document.getElementsByClassName('wrap')[0];
+			//f = w.getElementsByTagName('form')[0];
+		}
 		f.parentNode.insertBefore(langSwitchWrap, f);
 		languageSwitch=new qtranxj_LanguageSwitch(langSwitchWrap,initialLanguage);
 		languageSwitch.onSwitch(onTabSwitch);

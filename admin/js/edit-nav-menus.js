@@ -16,7 +16,7 @@ new qTranslateX({
 		qtx.addDisplayHooksByClass('link-to-original',form);
 
 		//qtx.addContentHooks(form);
-		this.form=form;//causes buttons to be inserted in front of this form instead of the first form in div "wrap"
+		this.langSwitchWrapAnchor=form;//causes buttons to be inserted in front of this form instead of the first form in div "wrap"
 		return true;
 	}
 /*

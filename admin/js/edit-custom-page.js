@@ -4,10 +4,10 @@ Loaded for a page requested by the user on configuration
 new qTranslateX({
 	addContentHooks: function(qtx)
 	{
-		var forms=document.getElementsByTagName('FORM');
-		if(!forms.length) return false;
-		var form=forms[0];
+		var form = qtx.getWrapForm();
+		if(!form) return false;
 		qtx.addContentHooks(form);
+		this.langSwitchWrapAnchor=form;
 		return true;
 	}
 /*
