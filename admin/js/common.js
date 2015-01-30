@@ -220,6 +220,7 @@ var qTranslateX=function(pg)
 		}else{
 			h.mlContentField.value = qtranxj_join_b(h.contents);
 		}
+		//c('updateFusedValueHooked['+h.mce.id+'] text:'+h.mlContentField.value);
 	}
 
 	updateFusedValueH=function(id,value)
@@ -318,7 +319,7 @@ var qTranslateX=function(pg)
 		//c('updateTinyMCE: text:'+text);
 		if(window.switchEditors){
 			//text = window.switchEditors.pre_wpautop( text );
-			text = window.switchEditors.wpautop(text);//does format 'raw' takes care of it?
+			text = window.switchEditors.wpautop(text);
 			//c('updateTinyMCE:wpautop:'+text);
 		}
 		ed.setContent(text,{format: 'html'});
@@ -346,14 +347,16 @@ var qTranslateX=function(pg)
 */
 		for(var key in contentHooks){
 			var h=contentHooks[key];
-			if(h.mce){
+			var mce = h.mce && !h.mce.hidden;
+			if(mce){
+				//c('onTabSwitch: h['+key+'].contentField.value before save:'+h.contentField.value);
 				h.mce.save({format: 'html'});
 				h.contents[h.lang] = h.contentField.value;
 			}
 			h.lang = this.lang;
 			h.contentField.value=h.contents[this.lang];
 			//c('onTabSwitch: h['+key+'].contentField.value:'+h.contentField.value);
-			if(h.mce){
+			if(mce){
 				updateTinyMCE(h.mce,h.contentField.value);
 			}
 		}
@@ -448,13 +451,12 @@ var qTranslateX=function(pg)
 					//c('blur: h['+ed.id+'].contentField.value before save:'+h.contentField.value);
 					ed.save();
 					//c('blur: h['+ed.id+'].contentField.value  after save:'+h.contentField.value);
+					h.contents[h.lang] = h.contentField.value;
 					updateFusedValueHooked(h);
 				});
 			//c('setEditorHooks: id='+id);
 			//c('h.contentField.value='+h.contentField.value);
 			updateTinyMCE(ed,h.contentField.value);
-			//var text=ed.getContent({format : 'raw'});
-			//c('setEditorHooks: getContent(text):'+text);
 		}
 
 		// Add listeners for fields change
