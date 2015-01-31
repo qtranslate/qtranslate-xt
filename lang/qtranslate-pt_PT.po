@@ -381,7 +381,7 @@ msgstr "Activar"
 #, fuzzy, php-format
 msgid "Enable function name compatibility (%s)."
 msgstr ""
-"Activa compatibilidade de nomes de funções para %s, %s, %s, %s, %s e %s."
+"Activa compatibilidade de nomes de funções (%s)."
 
 #: qtranslate_services.php:382
 msgid "Enable qTranslate Services"
