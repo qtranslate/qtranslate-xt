@@ -1,20 +1,21 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR qTranslate Team
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: qTranslate-X 3.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-01-30 17:26-0700\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2011-12-15 05:29+0300\n"
+"Last-Translator: Tor-Bjorn Fjellner <poedit@fjellner.com>\n"
+"Language-Team: T-B <poedit@fjellner.com>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-Language: Swedish\n"
+"X-Poedit-Country: SWEDEN\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: e_;__;__ngettext\n"
+"X-Poedit-Basepath: C:\\Users\\Tobiadmin\\Desktop\\temp5\\qtranslate\n"
+"X-Poedit-SearchPath-0: C:\\Users\\Tobiadmin\\Desktop\\temp5\\qtranslate\n"
 
 #: qtranslate_configuration.php:466
 msgid ""
@@ -35,11 +36,13 @@ msgid ""
 "<div id=\"message\" class=\"error fade\"><p>qTranslate Services could not "
 "load <a href=\"%s\">OpenSSL</a>!</p></div>"
 msgstr ""
+"<div id=\"message\" class=\"error fade\"><p>qTranslate tjänster kunde ej "
+"ladda <a href=\"%s\">OpenSSL</a>!</p></div>"
 
 #: qtranslate_services.php:173
 #, php-format
 msgid "<div>Translate to %s</div>"
-msgstr ""
+msgstr "<div>Översätt till %s</div>"
 
 #: qtranslate_services.php:796
 msgid "<p><img src=\"images/wpspin_light.gif\"> Getting Quote...</p>"
@@ -48,11 +51,11 @@ msgstr ""
 #: qtranslate_services.php:875
 #, php-format
 msgid "<p>Price: %1$s %2$s</p>"
-msgstr ""
+msgstr "<p>Pris: %1$s %2$s</p>"
 
 #: admin/admin_utils.php:163 qtranslate_services.php:368
 msgid "Action"
-msgstr ""
+msgstr "Aktivitet"
 
 #: admin/activation_hook.php:37
 #, php-format
@@ -62,8 +65,9 @@ msgid ""
 msgstr ""
 
 #: qtranslate_configuration.php:1095
+#, fuzzy
 msgid "Add Language"
-msgstr ""
+msgstr "Språk"
 
 #: qtranslate_configuration.php:1098
 msgid "Add Language &raquo;"
@@ -72,11 +76,12 @@ msgstr ""
 #: qtranslate_services.php:634
 #, php-format
 msgid "Additional information: %s"
-msgstr ""
+msgstr "Tilläggsinformation: %s"
 
 #: qtranslate_configuration.php:916
+#, fuzzy
 msgid "Advanced Settings"
-msgstr ""
+msgstr "Inställningar"
 
 #: qtranslate_configuration.php:1001
 #, php-format
@@ -89,7 +94,7 @@ msgstr ""
 
 #: qtranslate_widget.php:49
 msgid "Allows your visitors to choose a Language."
-msgstr ""
+msgstr "Låter dina besökare välja språk."
 
 #: admin/import_export.php:122
 msgid "Also delete Translations for Categories/Tags/Link Categories."
@@ -97,12 +102,12 @@ msgstr ""
 
 #: qtranslate_services.php:883
 msgid "An error occured!"
-msgstr ""
+msgstr "Ett fel inträffade!"
 
 #: qtranslate_services.php:632
 #, php-format
 msgid "An error occured: %s"
-msgstr ""
+msgstr "Ett fel inträffade: %s"
 
 #: qtranslate_services.php:655
 #, php-format
@@ -110,10 +115,12 @@ msgid ""
 "An serious error occured and qTranslate Services cannot proceed. For help, "
 "please visit the <a href=\"%s\">Support Forum</a>"
 msgstr ""
+"Ett allvarligt fel inträffade. qTranslate-tjänsten kan ej fortsätta. Besök "
+"<a href=\"%s\">Supportforumet</a> för hjälp."
 
 #: qtranslate_services.php:66
 msgid "An unknown error occured with the selected service."
-msgstr ""
+msgstr "Ett okänt fel inträffade i vald tjänst."
 
 #: qtranslate_configuration.php:967
 msgid "Automatically check for .mo-Database Updates of installed languages."
@@ -133,7 +140,7 @@ msgstr ""
 
 #: qtranslate_configuration.php:788
 msgid "Cannot disable Default Language!"
-msgstr ""
+msgstr "Det går inte att stänga av huvudspråket!"
 
 #: qtranslate_services.php:781
 #, php-format
@@ -141,6 +148,8 @@ msgid ""
 "Cannot use this service, not all <a href=\"%s\">required fields</a> filled "
 "in for this service."
 msgstr ""
+"Kan inte använda tjänsten, vissa för tjänsten <a href=\"%s\">nödvändiga "
+"fält</a> är ej ifyllda."
 
 #: admin/import_export.php:118
 msgid "Check this box and click Save Changes to reset all qTranslate settings."
@@ -157,6 +166,8 @@ msgid ""
 "shown on %s. You can also change the order the languages by clicking on the "
 "arrows above."
 msgstr ""
+"Välj huvudspråk för din blogg. Detta språk kommer att visas på %s. Du kan "
+"också ändra språkens ordning genom att klicka på pilarna här ovanför."
 
 #: qtranslate_services.php:817
 msgid "Click to toggle"
@@ -182,11 +193,13 @@ msgstr ""
 #, php-format
 msgid "Could not write to \"%s\", Gettext Databases could not be downloaded!"
 msgstr ""
+"Det gick inte att skriva till \"%s\", Databaser för Gettext gick inte att "
+"ladda ned!"
 
 #: qtranslate_services.php:427
 #, php-format
 msgid "Current Status: %s"
-msgstr ""
+msgstr "Nuvarande status: %s"
 
 #: qtranslate_configuration.php:1012
 msgid "Custom Admin Pages"
@@ -217,8 +230,9 @@ msgid "Default"
 msgstr ""
 
 #: qtranslate_configuration.php:879
+#, fuzzy
 msgid "Default Language"
-msgstr ""
+msgstr "Målspråk"
 
 #: qtranslate_configuration.php:877
 msgid "Default Language / Order"
@@ -302,17 +316,19 @@ msgid ""
 msgstr ""
 
 #: qtranslate_configuration.php:1082
+#, fuzzy
 msgid "Edit"
-msgstr ""
+msgstr "Redigera %s"
 
 #: qtranslate_services.php:416
 #, php-format
 msgid "Edit %s"
-msgstr ""
+msgstr "Redigera %s"
 
 #: qtranslate_configuration.php:863
+#, fuzzy
 msgid "Edit Language"
-msgstr ""
+msgstr "Språk"
 
 #: qtranslate_configuration.php:1025
 msgid "Editor Raw Mode"
@@ -363,8 +379,9 @@ msgid "Export"
 msgstr ""
 
 #: admin/import_export.php:90
+#, fuzzy
 msgid "Export settings to "
-msgstr ""
+msgstr "Begär översättning"
 
 #: qtranslate_services.php:673
 msgid "Feel free to choose an action:"
@@ -384,14 +401,17 @@ msgid ""
 "For help on how to configure qTranslate correctly, take a look at the <a "
 "href=\"%1$s\">qTranslate FAQ</a> and the <a href=\"%2$s\">Support Forum</a>."
 msgstr ""
+"Du kan hitta hjälp med korrekta inställningar för qTranslate på <a href=\"%1"
+"$s\">qTranslate FAQ</a> och dess <a href=\"%2$s\">Supportforum</a>."
 
 #: qtranslate_configuration.php:874
+#, fuzzy
 msgid "General Settings"
-msgstr ""
+msgstr "Inställningar"
 
 #: qtranslate_configuration.php:654
 msgid "Gettext databases updated."
-msgstr ""
+msgstr "Gettext-databaser uppdaterade."
 
 #: qtranslate_configuration.php:1162
 msgid "Help"
@@ -406,8 +426,9 @@ msgid "Hide Content which is not available for the selected language."
 msgstr ""
 
 #: qtranslate_widget.php:95
+#, fuzzy
 msgid "Hide Title:"
-msgstr ""
+msgstr "Rubrik"
 
 #: qtranslate_configuration.php:926
 msgid "Hide URL language information for default language."
@@ -430,6 +451,9 @@ msgid ""
 "If you are updating from qTranslate 1.x or Polyglot, <a href=\"%s\">click "
 "here</a> to convert posts to the new language tag format."
 msgstr ""
+"Om du uppgraderat från qTranslate 1.x eller Polyglot, <a href=\"%s\">klicka "
+"här</a> för att konvertera inläggen till det nya sättet att märka upp "
+"språken."
 
 #: admin/import_export.php:107
 #, php-format
@@ -439,6 +463,10 @@ msgid ""
 "them in the correct language or <a href=\"%s\">click here</a> to mark all "
 "existing posts as written in the default language."
 msgstr ""
+"Om detta är första gången du installerar qTranslate på en Wordpress-site med "
+"existerande inlägg, så kan du antingen manuellt gå igenom alla inlägg och "
+"spara dem i rätt språk eller <a href=\"%s\">klicka här</a> för att ange att "
+"alla inlägg är skrivna på huvudspråket."
 
 #: qtranslate_configuration.php:957
 msgid "Ignore Links"
@@ -453,8 +481,9 @@ msgid "Import"
 msgstr ""
 
 #: admin/import_export.php:88
+#, fuzzy
 msgid "Import settings from "
-msgstr ""
+msgstr "Begär översättning"
 
 #: qtranslate_configuration.php:424
 msgid "Incorrect Flag Image Path! Please correct it!"
@@ -466,52 +495,55 @@ msgstr ""
 
 #: qtranslate_frontend.php:169 qtranslate_widget.php:65
 msgid "Language"
-msgstr ""
+msgstr "Språk"
 
 #: qtranslate_configuration.php:394
+#, fuzzy
 msgid "Language Code"
-msgstr ""
+msgstr "Språk"
 
 #: qtranslate_configuration.php:662
 msgid "Language Code has to be 2 characters long!"
-msgstr ""
+msgstr "Språkkoden skall vara 2 tecken lång!"
 
 #: qtranslate_configuration.php:386
 msgid "Language Management"
-msgstr ""
+msgstr "Språkhantering"
 
 #: qtranslate_configuration.php:871
 msgid "Language Management (qTranslate Configuration)"
 msgstr ""
 
 #: qtranslate_configuration.php:1113
+#, fuzzy
 msgid "Language Menu"
-msgstr ""
+msgstr "Språk"
 
 #: qtranslate_configuration.php:1179
+#, fuzzy
 msgid "Language Switcher"
-msgstr ""
+msgstr "Språk"
 
 #: qtranslate_configuration.php:794
 msgid "Language is already disabled!"
-msgstr ""
+msgstr "Språket är redan avstängt!"
 
 #: qtranslate_configuration.php:783
 msgid "Language is already enabled or invalid!"
-msgstr ""
+msgstr "Språket är antingen redan aktivt, eller ogiltigt!"
 
 #: qtranslate_configuration.php:802
 msgid "Language is already first!"
-msgstr ""
+msgstr "Språket ligger redan först!"
 
 #: qtranslate_configuration.php:818
 msgid "Language is already last!"
-msgstr ""
+msgstr "Språket ligger redan sist!"
 
 #: admin/admin_utils.php:176 qtranslate_configuration.php:386
 #: qtranslate_configuration.php:1057
 msgid "Languages"
-msgstr ""
+msgstr "Språk"
 
 #: qtranslate_services.php:678
 msgid "Let qTranslate Services check if any open orders are finished."
@@ -543,7 +575,7 @@ msgstr ""
 
 #: admin/admin_utils.php:162 qtranslate_configuration.php:439
 msgid "Name"
-msgstr ""
+msgstr "Namn"
 
 #: qtranslate_configuration.php:1008
 #, php-format
@@ -554,16 +586,17 @@ msgstr ""
 
 #: qtranslate_configuration.php:808 qtranslate_configuration.php:824
 msgid "New order saved."
-msgstr ""
+msgstr "Ny ordning har sparats."
 
 #: qtranslate_services.php:438
+#, fuzzy
 msgid "No open orders."
-msgstr ""
+msgstr "Ny ordning har sparats."
 
 #: qtranslate_configuration.php:791 qtranslate_configuration.php:798
 #: qtranslate_configuration.php:814
 msgid "No such language!"
-msgstr ""
+msgstr "Det språket finns inte!"
 
 #: qtranslate_configuration.php:462
 msgid "Not Available Message"
@@ -575,11 +608,11 @@ msgstr ""
 
 #: qtranslate_configuration.php:835
 msgid "Options saved."
-msgstr ""
+msgstr "Alternativen har sparats."
 
 #: qtranslate_services.php:312
 msgid "Order deleted."
-msgstr ""
+msgstr "Order annulerad."
 
 #: qtranslate_services.php:664
 msgid "Order successfully sent."
@@ -597,20 +630,22 @@ msgid ""
 msgstr ""
 
 #: qtranslate_services.php:748
+#, fuzzy
 msgid "Please choose a service first"
-msgstr ""
+msgstr "Var vänlig spara inlägget först."
 
 #: qtranslate_services.php:712
 msgid "Please choose the language you want to translate to:"
 msgstr ""
 
 #: qtranslate_services.php:737
+#, fuzzy
 msgid "Please confirm your order."
-msgstr ""
+msgstr "Systemet kunde inte utföra ditt kommand."
 
 #: qtranslate_services.php:336
 msgid "Please save your post first."
-msgstr ""
+msgstr "Var vänlig spara inlägget först."
 
 #: admin/import_export.php:79
 msgid "Plugin"
@@ -618,12 +653,12 @@ msgstr ""
 
 #: qtranslate_services.php:364
 msgid "Post Title"
-msgstr ""
+msgstr "Inläggsrubrik"
 
 #: qtranslate_services.php:551
 #, php-format
 msgid "Post with id \"%s\" not found!"
-msgstr ""
+msgstr "Inlägg med id \"%s\" hittades ej!"
 
 #: qtranslate_configuration.php:925
 msgid ""
@@ -634,11 +669,12 @@ msgstr ""
 
 #: qtranslate_services.php:745 qtranslate_services.php:880
 msgid "Request Translation"
-msgstr ""
+msgstr "Begär översättning"
 
 #: admin/import_export.php:116
+#, fuzzy
 msgid "Reset qTranslate"
-msgstr ""
+msgstr "Begär översättning"
 
 #: qtranslate_services.php:818
 msgid "Review Article"
@@ -658,7 +694,7 @@ msgstr ""
 
 #: qtranslate_services.php:365
 msgid "Service"
-msgstr ""
+msgstr "Tjänst"
 
 #: qtranslate_services.php:454
 msgid "Service Configuration"
@@ -666,7 +702,7 @@ msgstr ""
 
 #: qtranslate_configuration.php:1216
 msgid "Settings"
-msgstr ""
+msgstr "Inställningar"
 
 #: qtranslate_configuration.php:571
 msgid "Show"
@@ -699,15 +735,15 @@ msgstr ""
 
 #: qtranslate_services.php:366
 msgid "Source Language"
-msgstr ""
+msgstr "Källspråk"
 
 #: qtranslate_services.php:316
 msgid "Status updated for all open orders."
-msgstr ""
+msgstr "Status uppdaterad för alla aktiva beställningar."
 
 #: qtranslate_configuration.php:595
 msgid "Switching Language"
-msgstr ""
+msgstr "Språkbyte"
 
 #: qtranslate_configuration.php:595
 #, php-format
@@ -715,14 +751,17 @@ msgid ""
 "Switching language to %1$s... If the Dashboard isn't loading, use this <a "
 "href=\"%2$s\" title=\"Dashboard\">link</a>."
 msgstr ""
+"Byter språk till %1$s... Om kontrollpanelen inte laddas, använd denna <a "
+"href=\"%2$s\" title=\"Kontrollpanel\">länk</a>."
 
 #: qtranslate_services.php:367
 msgid "Target Language"
-msgstr ""
+msgstr "Målspråk"
 
 #: qtranslate_widget.php:99
+#, fuzzy
 msgid "Text and Image"
-msgstr ""
+msgstr "Målspråk"
 
 #: qtranslate_widget.php:97
 msgid "Text only"
@@ -730,15 +769,15 @@ msgstr ""
 
 #: qtranslate_configuration.php:660
 msgid "The Language must have a Locale!"
-msgstr ""
+msgstr "Språket måste ha en lokalisering angiven!"
 
 #: qtranslate_configuration.php:659
 msgid "The Language must have a Not-Available Message!"
-msgstr ""
+msgstr "Språket måste ha ett meddelande för saknad text!"
 
 #: qtranslate_configuration.php:661
 msgid "The Language must have a name!"
-msgstr ""
+msgstr "Språket måste ha ett namn!"
 
 #: qtranslate_configuration.php:441
 msgid ""
@@ -752,6 +791,8 @@ msgid ""
 "translation request is send, the current text for the target language will "
 "be overwritten."
 msgstr ""
+"Inlägget har redan en översättning till målspråket. Om en översättningsorder "
+"skickas kommer nuvarande text för målspråket att skrivas över."
 
 #: admin/activation_hook.php:39
 #, php-format
@@ -763,28 +804,28 @@ msgstr ""
 
 #: qtranslate_services.php:61
 msgid "The language/s do not have a valid ISO 639-1 representation."
-msgstr ""
+msgstr "Språket/språken saknar giltig förkortning enligt ISO 639-1."
 
 #: qtranslate_services.php:62
 msgid "The language/s you used are not supported by the service."
-msgstr ""
+msgstr "Språket/språken stöds ej av denna tjänst."
 
 #: qtranslate_services.php:559
 msgid "The requested Post has no content, no Translation possible."
-msgstr ""
+msgstr "Den begärda texten är tom. Översättning kan ej göras."
 
 #: qtranslate_services.php:67
 msgid "The server returned a debugging message."
-msgstr ""
+msgstr "Servern svarade med en text för felsökning."
 
 #: qtranslate_services.php:669
 #, php-format
 msgid "The service returned this message: %s"
-msgstr ""
+msgstr "Tjänsten returnerade följande meddelande: %s"
 
 #: qtranslate_services.php:64
 msgid "The system could not process your order."
-msgstr ""
+msgstr "Systemet kunde inte utföra ditt kommand."
 
 #: qtranslate_configuration.php:994
 msgid ""
@@ -794,11 +835,11 @@ msgstr ""
 
 #: qtranslate_services.php:65
 msgid "There has been an error with the selected service."
-msgstr ""
+msgstr "Ett fel inträffade med vald tjänst."
 
 #: qtranslate_configuration.php:666 qtranslate_configuration.php:672
 msgid "There is already a language with the same Language Code!"
-msgstr ""
+msgstr "Det finns redan ett språk med samma språkkod!"
 
 #: admin/import_export.php:83
 msgid ""
@@ -808,7 +849,7 @@ msgstr ""
 
 #: qtranslate_services.php:63
 msgid "There is no such service."
-msgstr ""
+msgstr "Någon sådan tjänst finns ej."
 
 #: qtranslate_configuration.php:901
 msgid ""
@@ -822,8 +863,9 @@ msgid "Time Format"
 msgstr ""
 
 #: qtranslate_widget.php:94
+#, fuzzy
 msgid "Title:"
-msgstr ""
+msgstr "Rubrik"
 
 #: qtranslate_widget.php:101
 msgid "To reset to default, clear the text."
@@ -834,14 +876,17 @@ msgstr ""
 msgid ""
 "To translate a post, please go to the <a href=\"%s\">edit posts overview</a>."
 msgstr ""
+"För att översätta ett inlägg, gå till <a href=\"%s\">huvudsida för "
+"redigering av inlägg</a>."
 
 #: qtranslate_services.php:901
 msgid "Translate"
-msgstr ""
+msgstr "Översätt"
 
 #: qtranslate_services.php:676
+#, fuzzy
 msgid "Translate a different post."
-msgstr ""
+msgstr "qTranslate har nollställts."
 
 #: qtranslate_services.php:675
 msgid "Translate this post to another language."
@@ -849,23 +894,26 @@ msgstr ""
 
 #: qtranslate_services.php:224 qtranslate_services.php:225
 msgid "Translate to"
-msgstr ""
+msgstr "Översätt till"
 
 #: qtranslate_services.php:765
+#, fuzzy
 msgid "Translation Service"
-msgstr ""
+msgstr "Översätt"
 
 #: qtranslate_configuration.php:919 qtranslate_configuration.php:921
 msgid "URL Modification Mode"
 msgstr ""
 
 #: qtranslate_configuration.php:965
+#, fuzzy
 msgid "Update Gettext Databases"
-msgstr ""
+msgstr "Gettext-databaser uppdaterade."
 
 #: qtranslate_configuration.php:969
+#, fuzzy
 msgid "Update Gettext databases now."
-msgstr ""
+msgstr "Gettext-databaser uppdaterade."
 
 #: qtranslate_configuration.php:927
 msgid "Use Per-Domain mode: specify separate domain for each language."
@@ -904,8 +952,9 @@ msgid "Use strftime instead of date."
 msgstr ""
 
 #: qtranslate_services.php:677
+#, fuzzy
 msgid "View all open orders."
-msgstr ""
+msgstr "Status uppdaterad för alla aktiva beställningar."
 
 #: qtranslate_services.php:679
 msgid "View this post."
@@ -965,6 +1014,8 @@ msgid ""
 "Your article is available in multiple languages. If you do not want to "
 "translate from %1$s, you can switch to one of the following languages: %2$s"
 msgstr ""
+"Din artikel finns i flera språk. Om du inte vill översätta från %1$s, kan du "
+"byta till något av följande språk: %2$s"
 
 #: qtranslate_services.php:824
 msgid ""
@@ -975,14 +1026,15 @@ msgid ""
 msgstr ""
 
 #: qtranslate_services.php:665
+#, fuzzy
 msgid ""
 "Your translation order has been successfully transfered to the selected "
 "service."
-msgstr ""
+msgstr "Ett fel inträffade med vald tjänst."
 
 #: qtranslate_services.php:868
 msgid "free"
-msgstr ""
+msgstr "ledig"
 
 #: admin/activation_hook.php:134
 #, php-format
@@ -995,16 +1047,18 @@ msgstr ""
 
 #: qtranslate_widget.php:50
 msgid "qTranslate Language Chooser"
-msgstr ""
+msgstr "qTranslate språkväljare"
 
 #: qtranslate_services.php:379 qtranslate_services.php:653
 #: qtranslate_services.php:663 qtranslate_services.php:687
+#, fuzzy
 msgid "qTranslate Services"
-msgstr ""
+msgstr "qTranslate har nollställts."
 
 #: qtranslate_services.php:374
+#, fuzzy
 msgid "qTranslate Services Settings"
-msgstr ""
+msgstr "qTranslate har nollställts."
 
 #: qtranslate_services.php:435
 #, php-format
@@ -1013,10 +1067,13 @@ msgid ""
 "translations are finished and update your posts accordingly. You can always "
 "<a href=\"%s\">check manually</a>."
 msgstr ""
+"qTranslate-tjänsten kommer automatiskt att kontrollera varje timme om "
+"översättningen är klar och i så fall uppdatera dina inlägg. Du kan när som "
+"helst <a href=\"%s\">kolla manuellt</a>."
 
 #: qtranslate_configuration.php:616
 msgid "qTranslate has been reset."
-msgstr ""
+msgstr "qTranslate har nollställts."
 
 #: qtranslate_configuration.php:971
 msgid ""
@@ -1026,9 +1083,62 @@ msgstr ""
 
 #: qtranslate_services.php:863 qtranslate_services.php:870
 msgid "unavailable"
-msgstr ""
+msgstr "ej tillgänglig"
 
 #: qtranslate_services.php:876
 #, php-format
 msgid "~ %1$s %2$s"
 msgstr ""
+
+#~ msgid ""
+#~ "If you encounter any problems and you are unable to solve them yourself, "
+#~ "you can visit the <a href=\"%s\">Support Forum</a>. Posting the following "
+#~ "Content will help other detect any misconfigurations."
+#~ msgstr ""
+#~ "Om du stöter på problem som du inte klarar att lösa själv, kan du besöka "
+#~ "<a href=\"%s\">Supportforumet</a>. Genom att ange följande text hjälper "
+#~ "du andra att upptäcka eventuella fel med konfigureringen."
+
+#, fuzzy
+#~ msgid "Master language"
+#~ msgstr "Målspråk"
+
+#, fuzzy
+#~ msgid "No language available"
+#~ msgstr "ej tillgänglig"
+
+#, fuzzy
+#~ msgid "No language selected"
+#~ msgstr "ej tillgänglig"
+
+#, fuzzy
+#~ msgid "Settings Migration"
+#~ msgstr "Inställningar"
+
+#, fuzzy
+#~ msgid ""
+#~ "The qTranslate Editor has disabled itself because it hasn't been tested "
+#~ "with your Wordpress version yet. This is done to prevent Wordpress from "
+#~ "malfunctioning. To remove this message permanently, please update "
+#~ "qTranslate to the <a href=\"http://wordpress.org/plugins/mqtranslate/\" "
+#~ "target=\"_blank\">corresponding version</a>."
+#~ msgstr ""
+#~ "Redigeraren qTranslate har blockerat sig själv eftersom den ännu ej "
+#~ "testats med din nuvarande version av Wordpress. Detta skyddar Wordpress "
+#~ "från att fallera. Du kan aktivera tillägget genom att <a href="
+#~ "\"javascript:qtrans_editorInit();\" title=\"Activate qTranslate\" id="
+#~ "\"qtrans_imsg_link\">klicka här</a> (kan leda till <b>förlust av data</"
+#~ "b>! Används på eget ansvar!). För att ta bort detta meddelande permanent, "
+#~ "uppdatera qTranslate till <a href=\"http://www.qianqin.de/qtranslate/"
+#~ "download/\">motsvarande version</a>."
+
+#~ msgid "Title"
+#~ msgstr "Rubrik"
+
+#, fuzzy
+#~ msgid "qTranslate Team Settings"
+#~ msgstr "qTranslate har nollställts."
+
+#, fuzzy
+#~ msgid "qTranslate User Language Settings"
+#~ msgstr "qTranslate språkväljare"

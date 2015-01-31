@@ -211,6 +211,11 @@ pip-log.txt
 
 #Translations
 # *.mo
+*.po.err
+*.po.bad
+*.po.org
+*.po.q
+*.po.mq
 
 #Mr Developer
 .mr.developer.cfg

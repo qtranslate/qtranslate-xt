@@ -613,7 +613,7 @@ function qtranxf_conf() {
 
 	// check for action
 	if(isset($_POST['qtranslate_reset']) && isset($_POST['qtranslate_reset2'])) {
-		$message = __('qTranslate&#8209;X has been reset.', 'qtranslate');
+		$message = __('qTranslate has been reset.', 'qtranslate');
 	} elseif(isset($_POST['default_language'])) {
 		// save settings
 		qtranxf_updateSetting('default_language', QTX_LANGUAGE);

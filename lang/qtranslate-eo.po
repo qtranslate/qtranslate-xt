@@ -1,20 +1,16 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR qTranslate Team
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: qTranslate-X 3.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-01-30 17:26-0700\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2011-01-20 16:09+0100\n"
+"Last-Translator: felix.zesch <felix.zesch@gmail.com>\n"
+"Language-Team: German <kde-i18n-de@kde.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.1\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #: qtranslate_configuration.php:466
 msgid ""
@@ -62,8 +58,9 @@ msgid ""
 msgstr ""
 
 #: qtranslate_configuration.php:1095
+#, fuzzy
 msgid "Add Language"
-msgstr ""
+msgstr "Lingvo"
 
 #: qtranslate_configuration.php:1098
 msgid "Add Language &raquo;"
@@ -217,8 +214,9 @@ msgid "Default"
 msgstr ""
 
 #: qtranslate_configuration.php:879
+#, fuzzy
 msgid "Default Language"
-msgstr ""
+msgstr "Lingvo"
 
 #: qtranslate_configuration.php:877
 msgid "Default Language / Order"
@@ -311,8 +309,9 @@ msgid "Edit %s"
 msgstr ""
 
 #: qtranslate_configuration.php:863
+#, fuzzy
 msgid "Edit Language"
-msgstr ""
+msgstr "Lingvo"
 
 #: qtranslate_configuration.php:1025
 msgid "Editor Raw Mode"
@@ -466,11 +465,12 @@ msgstr ""
 
 #: qtranslate_frontend.php:169 qtranslate_widget.php:65
 msgid "Language"
-msgstr ""
+msgstr "Lingvo"
 
 #: qtranslate_configuration.php:394
+#, fuzzy
 msgid "Language Code"
-msgstr ""
+msgstr "Lingvo"
 
 #: qtranslate_configuration.php:662
 msgid "Language Code has to be 2 characters long!"
@@ -478,19 +478,21 @@ msgstr ""
 
 #: qtranslate_configuration.php:386
 msgid "Language Management"
-msgstr ""
+msgstr "Lingvomastrumado"
 
 #: qtranslate_configuration.php:871
 msgid "Language Management (qTranslate Configuration)"
 msgstr ""
 
 #: qtranslate_configuration.php:1113
+#, fuzzy
 msgid "Language Menu"
-msgstr ""
+msgstr "Lingvo"
 
 #: qtranslate_configuration.php:1179
+#, fuzzy
 msgid "Language Switcher"
-msgstr ""
+msgstr "Lingvo"
 
 #: qtranslate_configuration.php:794
 msgid "Language is already disabled!"
@@ -511,7 +513,7 @@ msgstr ""
 #: admin/admin_utils.php:176 qtranslate_configuration.php:386
 #: qtranslate_configuration.php:1057
 msgid "Languages"
-msgstr ""
+msgstr "Lingvoj "
 
 #: qtranslate_services.php:678
 msgid "Let qTranslate Services check if any open orders are finished."
@@ -529,7 +531,7 @@ msgstr ""
 
 #: qtranslate_configuration.php:444
 msgid "Locale"
-msgstr ""
+msgstr "Lokaĵaro"
 
 #: qtranslate_configuration.php:465
 msgid ""
@@ -587,7 +589,7 @@ msgstr ""
 
 #: qtranslate_configuration.php:447
 msgid "PHP and Wordpress Locale for the language. (Example: en_US)"
-msgstr ""
+msgstr "PHP kaj Wordpress por tiu lingvo (ekz. eo)"
 
 #: qtranslate_configuration.php:953
 #, php-format
@@ -698,16 +700,18 @@ msgid ""
 msgstr ""
 
 #: qtranslate_services.php:366
+#, fuzzy
 msgid "Source Language"
-msgstr ""
+msgstr "Lingvo"
 
 #: qtranslate_services.php:316
 msgid "Status updated for all open orders."
 msgstr ""
 
 #: qtranslate_configuration.php:595
+#, fuzzy
 msgid "Switching Language"
-msgstr ""
+msgstr "Lingvo"
 
 #: qtranslate_configuration.php:595
 #, php-format
@@ -717,8 +721,9 @@ msgid ""
 msgstr ""
 
 #: qtranslate_services.php:367
+#, fuzzy
 msgid "Target Language"
-msgstr ""
+msgstr "Lingvo"
 
 #: qtranslate_widget.php:99
 msgid "Text and Image"
@@ -744,7 +749,7 @@ msgstr ""
 msgid ""
 "The Name of the language, which will be displayed on the site. (Example: "
 "English)"
-msgstr ""
+msgstr "La nomo de la lingvo, kiu estas montrota en la retejo (ekz. Esperanto)"
 
 #: qtranslate_services.php:568
 msgid ""
@@ -1032,3 +1037,10 @@ msgstr ""
 #, php-format
 msgid "~ %1$s %2$s"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Master language"
+#~ msgstr "Lingvo"
+
+#~ msgid "language_name"
+#~ msgstr "Esperanto"
