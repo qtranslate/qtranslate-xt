@@ -105,6 +105,10 @@ The following query options can be typed in the field "URL" of "Language Menu" c
 
 We understand that this is not a very user-friendly way to adjust the options, but it works, and we will provide a better in-editor interface to specify them in the future.
 
+= How can I prevent URL of a custom menu item from being converted =
+
+URL of a custom menu item gets converted to a URL for active language according to option "URL Modification Mode", unless query argument 'setlang=no' is added to the URL typed in. Such a query argument is removed when the item gets rendered.
+
 = Can I enable Language Switching Buttons on my plugin custom page? =
 
 Yes, enter the relevant and distinctive part of your page URL into "Custom Pages" configuration option. When page is loaded, two Java scripts will be added, "admin/js/common.js" and "admin/js/edit-custom-page.js", from which you may figure out how it works. The Language Switching Buttons will control fields listed in "Custom Fields" option. Those fields will now store the input for all enabled languages. It is up to the theme and other relevant plugins, if those field values will show up translated on the front-end. Some theme and plugins pass the values through `__()` translation function and then values are translated. They might use `apply_filters` method, and then name of that filter can be listed in "Custom Filters" configuration option, in order to get the field translated on the front-end.
@@ -164,8 +168,13 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 
 == Changelog ==
 
+= 2.9.8.1 alpha =
+* URL of a custom menu item gets converted to active language, unless query argument 'setlang=no' is added.
+* filter 'get_search_form' is no longer need, since we adjusted home_url() [issue #8](https://github.com/qTranslate-Team/qtranslate-x/issues/8)
+
 = 2.9.8.0 alpha =
 * [plugin integration design](https://wordpress.org/support/topic/plugin-integration-1)
+* po/mo files are updated. Translators needed.
 
 = 2.9.7.9 beta =
 * more fixes for [issue #5](https://github.com/qTranslate-Team/qtranslate-x/issues/5).

@@ -96,10 +96,13 @@ function qtranxf_checkCanonical($redirect_url, $requested_url) {
 	return $redirect_url;
 }
 
+/*
+//no longer needed since we adjusted home_url()
 function qtranxf_fixSearchForm($form) {
 	$form = preg_replace('#action="[^"]*"#','action="'.trailingslashit(qtranxf_convertURL(get_home_url())).'"',$form);
 	return $form;
 }
+*/
 
 function qtranxf_fixAdminBar($wp_admin_bar) {
 	global $wp_admin_bar;
@@ -243,7 +246,7 @@ add_filter('post_comments_feed_link', 'qtranxf_convertURL');
 add_filter('tag_feed_link', 'qtranxf_convertURL');
 add_filter('get_pagenum_link', 'qtranxf_convertURL');
 
-add_filter('get_search_form', 'qtranxf_fixSearchForm', 10, 1);
+//add_filter('get_search_form', 'qtranxf_fixSearchForm', 10, 1);//no longer needed since we adjusted home_url()
 add_filter('wp_list_pages_excludes', 'qtranxf_excludePages');
 
 add_filter('comment_notification_text', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage');

@@ -118,7 +118,14 @@ function qtranxf_wp_get_nav_menu_items( $items, $menu, $args )
 				$itemsmodified=true;
 				continue;
 			}
-			$item->title=$item_title;
+			$item->title = $item_title;
+			if($item->object == 'custom' && !empty($item->url)){
+				if(strpos($item->url,'setlang=no')===FALSE){
+					$item->url = qtranxf_convertURL($item->url,$language);
+				}else{
+					$item->url = remove_query_arg('setlang',$item->url);
+				}
+			}
 		}
 		//qtranxf_dbg_echo('passed item: '.$item->title.'; p='.$item->menu_item_parent);
 
