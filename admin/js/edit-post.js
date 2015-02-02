@@ -2,7 +2,7 @@
 	/wp-admin/post.php
 	/wp-admin/post-new.php
 */
-new qTranslateX({
+qTranslateConfig.js={
 
 	addContentHooks: function addContentHooks(qtx)
 	{
@@ -20,8 +20,6 @@ new qTranslateX({
 		qtx.addContentHookByIdC('attachment_caption',form);
 		qtx.addContentHookByIdB('attachment_alt',form);
 
-		//var post_name_field=ge('post_name');
-		//if (post_name_field) qtx.addContentHookB(post_name_field,form);
 		qtx.addContentHooks(form);
 
 		// Slug
@@ -43,6 +41,9 @@ new qTranslateX({
 				break;
 			case '3':
 				url.host=lang+'.'+url.host;
+				break;
+			case '4':
+				url.host=qTranslateConfig.domains[lang];
 				break;
 			}
 		}
@@ -88,7 +89,7 @@ new qTranslateX({
 				}
 			}
 		}
-		this.setSlugLanguage(qtx.getInitialLanguage());
+		this.setSlugLanguage(qtx.getActiveLanguage());
 
 		qtx.addContentHooksTinyMCE();
 
@@ -99,4 +100,4 @@ new qTranslateX({
 	{
 		this.setSlugLanguage(lang);
 	}
-});
+};

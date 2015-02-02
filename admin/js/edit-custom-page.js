@@ -1,7 +1,7 @@
 /*
 Loaded for a page requested by the user on configuration
 */
-new qTranslateX({
+qTranslateConfig.js={
 	addContentHooks: function(qtx)
 	{
 		var form = qtx.getWrapForm();
@@ -17,4 +17,4 @@ new qTranslateX({
 		//implement additional actions on tab click, if applicable.
 	}
 */
-});
+};

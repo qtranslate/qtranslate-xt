@@ -1,7 +1,7 @@
 /* loaded in 
 	/wp-admin/edit-tag.php?action=edit
 */
-new qTranslateX({
+qTranslateConfig.js={
 	addContentHooks: function(qtx)
 	{
 		var prefix, form = document.getElementById('edittag');
@@ -17,6 +17,8 @@ new qTranslateX({
 
 		qtx.addContentHookByIdC('description',form);
 
+		qtx.addDisplayHookById('parent');
+
 		return true;
 	}
-});
+};

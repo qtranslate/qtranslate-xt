@@ -3,6 +3,7 @@
 function qtranxf_detect_admin_language($language,$url_info) {
 	global $q_config;
 	$cs;
+	$lang;
 	if(isset($_COOKIE[QTX_COOKIE_NAME_ADMIN])){
 		$lang=qtranxf_resolveLangCase($_COOKIE[QTX_COOKIE_NAME_ADMIN],$cs);
 	}
@@ -194,6 +195,54 @@ function qtranxf_languageColumn($column) {
 	}
 	return $column;
 }
+
+function qtranxf_admin_list_cats($text) {
+	global $pagenow;
+	//qtranxf_dbg_echo('qtranxf_admin_list_cats: $text',$text);
+	switch($pagenow){
+		case 'edit-tags.php':
+			//replace [:] with <:>
+			$blocks = qtranxf_get_language_blocks($text);
+			if(count($blocks)<=1) return $text;
+			$texts = qtranxf_split_blocks($blocks);
+			$text = qtranxf_join_c($texts);
+			return $text;
+		default: return qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($text);
+	}
+}
+add_filter('list_cats', 'qtranxf_admin_list_cats',0);
+
+function qtranxf_admin_dropdown_cats($text) {
+	global $pagenow;
+	//qtranxf_dbg_echo('qtranxf_admin_list_cats: $text',$text);
+	switch($pagenow){
+		case 'edit-tags.php':
+			return $text;
+		default: return qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($text);
+	}
+}
+add_filter('wp_dropdown_cats', 'qtranxf_admin_dropdown_cats',0);
+
+function qtranxf_admin_category_description($text) {
+	global $pagenow;
+	switch($pagenow){
+		case 'edit-tags.php':
+			return $text;
+		default: return qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($text);
+	}
+}
+add_filter('category_description', 'qtranxf_admin_category_description',0);
+
+function qtranxf_admin_the_title($title) {
+	global $pagenow;
+	switch($pagenow){
+		//case 'edit-tags.php':
+		case 'nav-menus.php':
+			return $title;
+		default: return qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($title);
+	}
+}
+add_filter('the_title', 'qtranxf_admin_the_title', 0);//WP: fires for display purposes only
 
 function qtranxf_the_editor($editor_div)
 {

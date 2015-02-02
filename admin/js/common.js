@@ -1,10 +1,10 @@
 /*
 //debuging tools, do not check in
+*/
 var cc=0;
 function c(v){ ++cc; console.log('== '+cc+': '+v); }
 function ct(v){ c(v); console.trace(); }
 function co(t,o){ ++cc; console.log('== '+cc+': '+t+': %o',o); }
-*/
 
 qtranxj_split = function(text,keep_neutral_text)
 {
@@ -204,11 +204,11 @@ var qTranslateX=function(pg)
 		return false;
 	}
 
-	var initialLanguage=qtranxj_get_cookie('wp_qtrans_edit_language');
-	if(!initialLanguage || !isLanguageEnabled(initialLanguage))
-		initialLanguage=qTranslateConfig.language;
+	qTranslateConfig.activeLanguage = qtranxj_get_cookie('qtrans_edit_language');
+	if(!qTranslateConfig.activeLanguage || !isLanguageEnabled(qTranslateConfig.activeLanguage))
+		qTranslateConfig.activeLanguage = qTranslateConfig.language;
 
-	this.getInitialLanguage=function() { return initialLanguage; }
+	this.getActiveLanguage=function() { return qTranslateConfig.activeLanguage; }
 
 	var displayHooks=[];
 	var contentHooks={};
@@ -226,7 +226,6 @@ var qTranslateX=function(pg)
 	updateFusedValueH=function(id,value)
 	{
 		var h=contentHooks[id];
-		//var lang=languageSwitch.getActiveLanguage();
 		var text=value.trim();
 		//c('updateFusedValueH['+id+'] lang='+h.lang+'; text:'+text);
 		h.contents[h.lang]=text;
@@ -243,7 +242,9 @@ var qTranslateX=function(pg)
 		//h.id=inpField.id;
 		h.contentField=inpField;
 		//c('addContentHook:inpField.value='+inpField.value);
-		h.contents=qtranxj_split(inpField.value,false);//inpField.tagName
+		//h.contents=qtranxj_split(inpField.value,false);
+		h.contents=qtranxj_split(inpField.value,true);//keep neutral text from older times, just in case.
+														//inpField.tagName
 		h.mlContentField=qtranxj_ce('input', {name: inpField.name, type: 'hidden', className: 'hidden', value: inpField.value}, form, true);
 		if(!separator){
 			if(inpField.tagName==='TEXTAREA')
@@ -253,7 +254,7 @@ var qTranslateX=function(pg)
 		}
 		h.separator=separator;
 		inpField.name='edit-'+inpField.name;
-		h.lang=initialLanguage;
+		h.lang=qTranslateConfig.activeLanguage;
 		var text = h.contents[h.lang];
 		inpField.value=text;
 		//c('addContentHook['+inpField.id+']['+h.lang+']: inpField.value='+inpField.value);
@@ -302,12 +303,13 @@ var qTranslateX=function(pg)
 		//c('addDisplayHook: innerHTML='+elem.innerHTML);
 		//c('addDisplayHook: content='+content);
 		h.contents=qtranxj_split(content,true);
-		elem.innerHTML=h.contents[initialLanguage];
+		elem.innerHTML=h.contents[qTranslateConfig.activeLanguage];
 		displayHooks.push(h);
 		return true;
 	}
+	this.addDisplayHookById=function(id) { return addDisplayHook(this.ge(id)); }
 
-	setLangCookie=function(lang) { document.cookie='wp_qtrans_edit_language='+lang; }
+	setLangCookie=function(lang) { document.cookie='qtrans_edit_language='+lang; }
 
 	updateTinyMCE=function(ed,text)
 	{
@@ -382,24 +384,42 @@ var qTranslateX=function(pg)
 		pg.onTabSwitch(this.lang,qtx);
 	}
 
-	this.addDisplayHooksByClass=function(nm,form)
+	addDisplayHooks=function(elems)
 	{
-		var elems=form.getElementsByClassName(nm);
-		//c('addDisplayHooksByClass: elems.length='+elems.length);
+		//c('addDisplayHooks: elems.length='+elems.length);
 		for(var i=0; i<elems.length; ++i){
 			var e=elems[i];
+			//co('addDisplayHooks: e=',e);
 			addDisplayHook(e);
 		}
 	}
 
-	this.addContentHooksByClass=function(nm,form)
+	this.addDisplayHooksByClass=function(nm,container)
+	{
+		var elems=container.getElementsByClassName(nm);
+		addDisplayHooks(elems);
+	}
+
+	this.addDisplayHooksByTagInClass=function(nm,tag,container)
+	{
+		var elems=container.getElementsByClassName(nm);
+		//c('addDisplayHooksByClass: elems.length='+elems.length);
+		for(var i=0; i<elems.length; ++i){
+			var elem=elems[i];
+			var items=elem.getElementsByTagName(tag);
+			addDisplayHooks(items);
+		}
+	}
+
+	this.addContentHooksByClass=function(nm,form,container)
 	{
 		var sep;
 		if(nm.indexOf('<')==0 || nm.indexOf('[')==0){
 			sep=nm.substring(0,1);
 			nm=nm.substring(1);
 		}
-		var fields=form.getElementsByClassName(nm);
+		if(!container) container=form;
+		var fields=container.getElementsByClassName(nm);
 		//c('addContentHooksByClass: fields.length='+fields.length);
 		for(var i=0; i<fields.length; ++i){
 			var f=fields[i];
@@ -425,30 +445,15 @@ var qTranslateX=function(pg)
 	{
 		function setEditorHooks(ed)
 		{
-			//window.onbeforeunload = function(){};
 			var id = ed.id;
 			//c('setEditorHooks: id='+id);
+			//ct('setEditorHooks: id='+id);
 			if (!id) return;
 			var h=contentHooks[id];
 			if(!h) return;
 			if(h.mce) return;
 			h.mce=ed;
 			ed.getBody().addEventListener('blur',function(){
-/*
-					var text=ed.getContent({format : 'raw'}).trim();
-					//c('tinymce: onblur: text:'+text);
-					if(text.match(/^<p[^>]*>(\s|&nbsp;|<br[^>]*>)*<\/p>$/)){
-						text='';//workaround, need to learn how tinymce works ...
-						//c('tinymce: onblur: empty text');
-					}else{
-						var matches = text.match(/^<p>\s*([^<]*)\s*<\/p>$/);
-						if(matches){
-							text=matches[1];
-							//c('tinymce: onblur: removed plain <p>:'+text);
-						}
-					}
-					updateFusedValueH(ed.id,text);
-*/
 					var h=contentHooks[ed.id];
 					//c('blur: h['+ed.id+'].contentField.value before save:'+h.contentField.value);
 					ed.save();
@@ -456,9 +461,7 @@ var qTranslateX=function(pg)
 					h.contents[h.lang] = h.contentField.value;
 					updateFusedValueHooked(h);
 				});
-			//c('setEditorHooks: id='+id);
-			//c('h.contentField.value='+h.contentField.value);
-			updateTinyMCE(ed,h.contentField.value);
+			return h;
 		}
 
 		// Add listeners for fields change
@@ -469,7 +472,11 @@ var qTranslateX=function(pg)
 				}
 				for(var i=0; i<tinyMCE.editors.length; ++i){
 					var ed=tinyMCE.editors[i];
-					setEditorHooks(ed);
+					var h=setEditorHooks(ed);
+					if(!h) continue;
+					//c('addEventListener: id='+ed.id);
+					//c('h.contentField.value='+h.contentField.value);
+					updateTinyMCE(ed,h.contentField.value);
 				}
 				for(var key in contentHooks){
 					var h=contentHooks[key];
@@ -525,16 +532,16 @@ var qTranslateX=function(pg)
 			//f = w.getElementsByTagName('form')[0];
 		}
 		f.parentNode.insertBefore(langSwitchWrap, f);
-		languageSwitch=new qtranxj_LanguageSwitch(langSwitchWrap,initialLanguage);
+		languageSwitch=new qtranxj_LanguageSwitch(langSwitchWrap);
 		languageSwitch.onSwitch(onTabSwitch);
 		if(pg.onTabSwitch)
 			languageSwitch.onSwitch(onTabSwitchCustom);
 	}
 }
 
-function qtranxj_LanguageSwitch(target,initial_language)
+function qtranxj_LanguageSwitch(target)
 {
-	var langs=qTranslateConfig.enabled_languages, langNames=qTranslateConfig.language_name, activeLanguage=initial_language;
+	var langs=qTranslateConfig.enabled_languages, langNames=qTranslateConfig.language_name;
 	var tabSwitches={};
 	var onTabSwitchFunctions=[];
 	function switchTab()
@@ -544,14 +551,14 @@ function qtranxj_LanguageSwitch(target,initial_language)
 			alert('qTranslate-X: This should not have happened: Please, report this incident to the developers: !tabSwitch.lang');
 			return;
 		}
-		if ( activeLanguage === tabSwitch.lang ){
+		if ( qTranslateConfig.activeLanguage === tabSwitch.lang ){
 			return;
 		}
-		if (activeLanguage)
+		if (qTranslateConfig.activeLanguage)
 		{
-			tabSwitches[activeLanguage].classList.remove('active');
+			tabSwitches[qTranslateConfig.activeLanguage].classList.remove('active');
 		}
-		activeLanguage=tabSwitch.lang;
+		qTranslateConfig.activeLanguage=tabSwitch.lang;
 		tabSwitch.classList.add('active');
 		for(var i=0; i<onTabSwitchFunctions.length; ++i)
 		{
@@ -568,10 +575,9 @@ function qtranxj_LanguageSwitch(target,initial_language)
 		qtranxj_ce('img', {src: flag_location+qTranslateConfig.flag[lang]}, tabSwitch);
 		qtranxj_ce('span', {innerHTML: langNames[lang]}, tabSwitch);
 		tabSwitches[lang]=tabSwitch;
-		if ( activeLanguage == lang )
+		if ( qTranslateConfig.activeLanguage == lang )
 			tabSwitch.classList.add('active');
 	}
-	this.getActiveLanguage=function() { return activeLanguage; }
 	this.onSwitch=function(callback)
 	{
 		if (typeof callback==='function')
@@ -580,4 +586,5 @@ function qtranxj_LanguageSwitch(target,initial_language)
 		}
 	}
 }
-//new qTranslateX;
+
+jQuery(document).ready(function($){ new qTranslateX(qTranslateConfig.js); });

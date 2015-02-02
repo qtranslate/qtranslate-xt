@@ -14,6 +14,11 @@ if(!function_exists('qtrans_use')){
 		return qtranxf_use($lang, $text, $show_available);
 	}
 }
+if (!function_exists('qtrans_useCurrentLanguageIfNotFoundShowAvailable')){
+	function qtrans_useCurrentLanguageIfNotFoundShowAvailable($content){
+		return qtranxf_useCurrentLanguageIfNotFoundShowAvailable($content);
+	}
+}
 if (!function_exists('qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage')){
 	function qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage($content){
 		return qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($content);
@@ -24,5 +29,8 @@ if(!function_exists('qtrans_useTermLib')){
 }
 if(!function_exists('qtrans_getSortedLanguages')){
 	function qtrans_getSortedLanguages($reverse = false){ return qtranxf_getSortedLanguages($reverse); }
+}
+if(!function_exists('qtrans_generateLanguageSelectCode')){
+	function qtrans_generateLanguageSelectCode($style='', $id=''){ return qtranxf_generateLanguageSelectCode($style,$id); }
 }
 ?>

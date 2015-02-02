@@ -1,7 +1,7 @@
 /* loaded in 
 	/wp-admin/edit-tag.php
 */
-new qTranslateX({
+qTranslateConfig.js={
 	addContentHooks: function(qtx)
 	{
 		var form = document.getElementById('addtag');//AjaxForm
@@ -17,40 +17,40 @@ new qTranslateX({
 		var default_name=h.contents[qTranslateConfig.default_language];
 		qtranxj_ce('input', {name: 'qtrans_term_field_default_name', type: 'hidden', className: 'hidden', value: default_name }, form, true);
 
+		qtx.addDisplayHookById('parent');
+
 		var theList=document.getElementById('the-list');
 
-		hideQuickEdit=function(theList)
+		hideQuickEditRow=function(tr)
 		{
-			if(!theList) return;
-			var rows=theList.getElementsByTagName('TR');
-			for(var r=0; r<rows.length; r++)
+			var tds=tr.getElementsByTagName('TD');
+			if(!tds.length) return;
+			var td=tds[0];
+			var items=td.getElementsByClassName('inline');
+			for(var i=0; i<items.length; ++i)
 			{
-				var tr=rows[r];
-				var td=tr.getElementsByTagName('TD')[0];
-				var items=td.getElementsByClassName('inline');
-				for(var i=0; i<items.length; ++i)
-				{
-					var e=items[i];
-					e.style.display='none';
-				}
+				var e=items[i];
+				e.style.display='none';
 			}
 		}
-		hideQuickEdit(theList);
 
-		addDisplayHookTitle=function(theList)
+		addDisplayHookRows=function(theList)
 		{
+			addDisplayHookRows.running=true;
 			if(!theList) return;
 			var rows=theList.getElementsByTagName('TR');
 			for(var r=0; r<rows.length; r++)
 			{
 				var tr=rows[r];
+				//qtx.addDisplayHooksByClass('check-column',tr);
 				qtx.addDisplayHooksByClass('row-title',tr);
 				qtx.addDisplayHooksByClass('description',tr);
-				//var td=tr.getElementsByTagName('TD')[0];
-				//qtx.addDisplayHooksByClass('row-title',td);
+				qtx.addDisplayHooksByClass('slug',tr);
+				hideQuickEditRow(tr);
 			}
+			addDisplayHookRows.running=false;
 		}
-		addDisplayHookTitle(theList);
+		addDisplayHookRows(theList);
 
 		addDisplayHookTagCloud=function()
 		{
@@ -66,6 +66,14 @@ new qTranslateX({
 		}
 		addDisplayHookTagCloud();
 
+		var submit_button = document.getElementById('submit');
+		if(submit_button){
+			submit_button.addEventListener("click",function(){
+					window.location.replace(window.location.href);//reload page
+					//addDisplayHookRows(theList);//does not work, because the updates on theList has not yet propagated
+				});
+		}
+
 		return true;
 	}
-});
+};

@@ -56,6 +56,23 @@ Installation of this plugin is no different from any other plugin:
 
 == Frequently Asked Questions ==
 
+= Is my language supported or included? =
+
+Yes, all languages are supported and more and more get included. If yours is not included, you can easily add it through the Language Manager. If you are a native speaker of that language, consider sending us the information to be included permanently in the plugin configuration.
+
+
+= What language switching methods are available at front end? =
+
+- Add menu item "Language Switcher" to an appropriate menu on your site. It has a few customizable options as described in other FAQ topics or embedded help text.
+- Add widget "qTranslate Language Chooser" to an appropriate widget area on your site. It has a few customizable options as described in other FAQ topics or embedded help text.
+- Use direct call to `qtranxf_generateLanguageSelectCode($type,$id)` in your templates. Argument `$type` currently accepts 'image', 'text', 'both' and 'dropdown' choices, which match the choices available in "qTranslate Language Chooser" widget. Example: `<?php echo qtranxf_generateLanguageSelectCode('both'); ?>`. You can change the look of language select list via CSS entries.
+
+
+= I used to make direct calls to one of `qtrans_*` functions in my theme/plugin, but now those functions are not available. =
+
+Wordpress policy prohibits use of the same function names if they already defined in other plugins, since this possibly leads to user-unfriendly fatal errors. That is why all functions with prefix `qtrans_` were renamed to have prefix `qtranxf_`. However, once the plugin is running and all other conflicting plugins are disabled, you can turn on option "Compatibility Functions" and a number of former qTranslate methods with prefix `qtrans_` become available again. This ensures compatibility with other plugins and themes that used direct calls to qTranslate methods in their code.
+
+
 = Is it possible to translate theme custom fields? =
 
 Yes, some themes put additional text fields per page or per post. By default, those fields have no way to respond to language switching buttons in editors. However, you may enter "id" or "class" name attribute of those fields into "Custom Fields" section of "Languages" configuration page in "Settings", and they will then respond to the language switching buttons allowing you to enter different text for each language. To lookup "id" or "class", right-click on the field in the post or the page editor, choose "Inspect Element", and look for which attributes are defined for that field. If you cannot uniquely distinct the field neither by if nor by class, report on the forum threads.
@@ -103,6 +120,8 @@ The following query options can be typed in the field "URL" of "Language Menu" c
 
 - current=[shown|hidden] - whether to display the current language in the menu.
 
+For example, to show flag only in the top language menu item, enter `#qtransLangSw?title=none`, if in addition to this current language is not needed to be shown, enter `#qtransLangSw?title=none&current=hidden`, and so on.
+
 We understand that this is not a very user-friendly way to adjust the options, but it works, and we will provide a better in-editor interface to specify them in the future.
 
 = How can I prevent URL of a custom menu item from being converted =
@@ -148,6 +167,16 @@ Yes, there is a number of new features, mostly of a convenience significance, wh
 * Category and tag names in the lists on editing pages also respond to language switching and will display the taxonomy names in the currently editing language.
 * Theme custom fields can be made translatable in addition to the default translatable fields.
 
+
+= Does qTranslate-X preserve all the original functionality of qTranslate? =
+
+The correct strict answer would be 'No', although some sites may never notice it. What is modified, changed for a reason to provide better support for WP general design and policies, and to ensure better survivability on WP, themes and other plugins updates. While it may cause temporary grief and pain, it should work out better in a long run. Below is a list of the most important changes.
+
+- behaviour of function `home_url()` is changed to consistently and always return language-enabled URL. This allowed to provide better compatibility with other plugins and themes, some of which used to modify their code to offset inconsistent behaviour of former `home_url()`. Those tricky changes will have to be now undone.
+- language detection algorithm is modified to ensure canonical URL to be processed, otherwise we first redirect to a canonical URL.
+- language detection within AJAX calls has been improved and custom compatibility modifications in other plugins and themes may now become unnecessary.
+ 
+
 = How do I read the FAQ of the original qTranslate? =
 
 One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qtranslate/faq) and support forum [here](https://wordpress.org/support/plugin/qtranslate).
@@ -167,6 +196,11 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 3. qTranslate translation services
 
 == Changelog ==
+
+= 2.9.8.2 alpha =
+* updated "Compatibility Functions" option with `qtrans_generateLanguageSelectCode` and `qtrans_useCurrentLanguageIfNotFoundShowAvailable`.
+* more on TinyMCE compatibility
+* taxonomy editor pages improved to switch languages for additional display fields.
 
 = 2.9.8.1 alpha =
 * URL of a custom menu item gets converted to active language, unless query argument 'setlang=no' is added.
@@ -189,7 +223,7 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 * [per-domain URL modification mode]https://wordpress.org/support/topic/qtranslate-tld-url-change-mode).
 * split the qtranslate.js script into a few scripts in `admin/js/` folder to be loaded depending on the page which needs them.
 * updated qtranslate.pot and fixed proper translation of various strings in the code (thanks to [Pedro Mendonça](https://github.com/pedro-mendonca)).
-* fix for when cookie 'wp_qtrans_edit_language' contains unavailable language.
+* fix for when cookie 'qtrans_edit_language' contains unavailable language.
 * various performance improvements.
 * option "Editor Raw Mode" to be able to edit database text entries as they are, with language tag separators, without Language Switching Buttons.
 * fix for [random `<p>` in TinyMCE editors](https://github.com/qTranslate-Team/qtranslate-x/issues/5).
@@ -290,6 +324,8 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 * Message "The backup of this post in your browser is different from the version below" appears sometimes in the post editor. Clicking on "Restore the backup" may produce unexpected result, since backup has one language only,
 the one which was active at the time of the last pressing of button "Update". The code which causes this is in /wp-includes/js/autosave.js.
 * Sometimes after a new plugin update is released, the language switching buttons disappear on the first editor page load. Refresh the page to bring them back. Apparently, it has something to do with browse caching mechanism.
+* Search in Category/Tags editor works in default language only.
+* If default language name of new category/tag is empty, nothing gets added.
 
 == Credentials ==
 

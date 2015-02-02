@@ -1,7 +1,7 @@
 /*
 Loaded for /wp-admin/options-general.php
 */
-new qTranslateX({
+qTranslateConfig.js={
 	addContentHooks: function(qtx)
 	{
 		var forms=document.getElementsByTagName('FORM');
@@ -13,4 +13,4 @@ new qTranslateX({
 
 		return true;
 	}
-});
+};
