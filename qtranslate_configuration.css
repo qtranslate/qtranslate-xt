@@ -1,3 +1,4 @@
+/*
 .qtranxs_title_input {
 	border:0pt none;
 	font-size:1.7em;
@@ -13,7 +14,7 @@
 	border-width:1px;
 	padding:2px 3px;
 }
-#qtranxf_textarea_content {
+#qtranxs_textarea_content {
 	padding:6px;
 	border:0 none;
 	line-height:150%;
@@ -35,10 +36,11 @@
 	border-top-right-radius: 6px;
 	border-top-left-radius: 6px;
 }
+
 .hide-if-no-js.wp-switch-editor.switch-tmce { margin-left:6px !important; }
 #qtranxs_debug { width:100%; height:200px }
-#qtranxs_custom_fields { width:100%; }
 #postexcerpt textarea { height:4em; margin:0; width:98% }
+
 .qtranxs_lang_div {
 	float:right;
 	height:12px;
@@ -52,3 +54,55 @@
 	border-right: 1px solid #F7F7F7;
 	padding:6px 4px 8px 4px;
 }
+*/
+
+#qtranxs_custom_fields { width:100%; }
+
+/*
+//Language Switching Buttons as tabs
+
+.qtranxs-lang-switch-wrap {
+  margin: 15px 0 10px;
+  position: relative;
+}
+
+.qtranxs-lang-switch-wrap:before{
+  position: absolute;
+  content: ' ';
+  bottom:0;
+  left:0;
+  right:0;
+  z-index: 1;
+  border-bottom: 1px solid #ccc;
+}
+
+.qtranxs-lang-switch-wrap li.qtranxs-lang-switch{
+  position: relative;
+  border-color: #ccc;
+  padding: 10px 15px;
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+  background: none;
+  margin-right: 2px;
+  line-height: 1.42857143;
+  border: 1px solid transparent;
+  border-radius: 4px 4px 0 0;
+  opacity: 0.8;
+}
+
+.qtranxs-lang-switch-wrap li.qtranxs-lang-switch:hover{
+  background: #e0e0e0;
+  opacity: 1;
+}
+
+.qtranxs-lang-switch-wrap li.qtranxs-lang-switch.active, .qtranxs-lang-switch-wrap li.qtranxs-lang-switch.active:focus,
+.qtranxs-lang-switch-wrap li.qtranxs-lang-switch.active:hover {
+  color: #555;
+  cursor: default;
+  background-color: #f1f1f1;
+  border: 1px solid #ccc;
+  border-bottom-color: transparent;
+  opacity: 1;
+}
+*/

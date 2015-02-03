@@ -62,6 +62,7 @@ function qtranxf_head(){
 		if($language != qtranxf_getLanguage())
 			echo '<link hreflang="'.$language.'" href="'.qtranxf_convertURL('',$language,false,true).'" rel="alternate" />'."\n";
 	}
+	qtranxf_add_css();
 }
 add_action('wp_head', 'qtranxf_head');
 
@@ -107,11 +108,11 @@ function qtranxf_wp_get_nav_menu_items( $items, $menu, $args )
 	$itemsmodified=false;
 	foreach($items as $key => $item)
 	{
-		//qtranxf_dbg_echo('qtranxf_wp_get_nav_menu_items: $item',$item);
+		//qtranxf_dbg_echo('qtranxf_wp_get_nav_menu_items: $item: ',$item);
 		//qtranxf_dbg_echo('qtranxf_wp_get_nav_menu_items: item: '.$item->title.'; p='.$item->menu_item_parent.'; ID='.$item->ID);
 		$qtransLangSw = isset( $item->url ) && stristr( $item->url, 'qtransLangSw' ) !== FALSE;
 		if(!$qtransLangSw){
-			$item_title=qtranxf_use($language, $item->title, false, true);
+			$item_title=qtranxf_use_language($language, $item->title, false, true);
 			if(empty($item_title)){
 				//qtranxf_dbg_echo('removed item: '.$item->title.'; p='.$item->menu_item_parent);
 				unset($items[$key]);//remove menu item with empty title for this language
@@ -129,10 +130,10 @@ function qtranxf_wp_get_nav_menu_items( $items, $menu, $args )
 		}
 		//qtranxf_dbg_echo('passed item: '.$item->title.'; p='.$item->menu_item_parent);
 
-		$item->post_content=qtranxf_use($language, $item->post_content, false, true);
-		$item->post_title=qtranxf_use($language, $item->post_title, false, true);
-		$item->post_excerpt=qtranxf_use($language, $item->post_excerpt, false, true);
-		$item->description=qtranxf_use($language, $item->description, false, true);
+		$item->post_content=qtranxf_use_language($language, $item->post_content, false, true);
+		$item->post_title=qtranxf_use_language($language, $item->post_title, false, true);
+		$item->post_excerpt=qtranxf_use_language($language, $item->post_excerpt, false, true);
+		$item->description=qtranxf_use_language($language, $item->description, false, true);
 
 		if($itemid<$item->ID) $itemid=$item->ID;
 		if($menu_order<$item->menu_order) $menu_order=$item->menu_order;
@@ -226,7 +227,7 @@ add_filter( 'wp_get_nav_menu_items',  'qtranxf_wp_get_nav_menu_items', 20, 3 );
 /*
 function qtranxf_wp_setup_nav_menu_item($menu_item) {
 	global $q_config;
-	if($menu_item->title==='[:ru][:en]EN'){
+	if($menu_item->title==='test'){
 		//echo "qtranxf_wp_setup_nav_menu_item: '$text'<br>\n";
 		//qtranxf_dbg_echo('menu_item:',$menu_item,true);
 		//qtranxf_dbg_echo('menu_item->title:'.$menu_item->title);
@@ -242,20 +243,84 @@ function qtranxf_wp_setup_nav_menu_item($menu_item) {
 add_filter('wp_setup_nav_menu_item', 'qtranxf_wp_setup_nav_menu_item');
 */
 
-function qtranxf_postsFilter($posts) {
+function qtranxf_postsFilter($posts,&$query) {//WP_Query
+	global $q_config;
+	switch($query->query_vars['post_type']){
+		case 'nav_menu_item': return $posts;//will translate later in qtranxf_wp_get_nav_menu_items: to be able to filter empty labels.
+		default: break;
+	}
+	//qtranxf_dbg_echo('qtranxf_postsFilter: $post_type: ',$query->query_vars['post_type']);
+	//if(empty($query->query_vars['post_type'])){
+	//	qtranxf_dbg_echo('qtranxf_postsFilter: $query: ',$query,true);
+	//}
+	//if(empty($posts)){
+	//	qtranxf_dbg_echo('qtranxf_postsFilter: $posts: ',$posts,true);
+	//}
 	if(is_array($posts)) {
-		foreach($posts as $post) {
-			//qtranxf_dbg_log('post_content:',$post->post_content,true);
-			$post->post_content = qtranxf_useCurrentLanguageIfNotFoundShowAvailable($post->post_content);
+		$lang = $q_config['language'];
+		foreach($posts as $post) {//post is an object derived from WP_Post
+			//$post->post_content = qtranxf_useCurrentLanguageIfNotFoundShowAvailable($post->post_content);
+			//$post->post_content = qtranxf_use_language($lang, $post->post_content, true);
 			//qtranxf_dbg_log('post_content:',$post->post_content);
 			//qtranxf_dbg_log('$post-before:',$post);
-			$post = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($post);
+			//$post = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($post);
 			//qtranxf_dbg_log('$post-after:',$post);
+			foreach(get_object_vars($post) as $key => $txt) {
+				switch($key){//the quickest way to proceed
+					//known to skip
+					case 'ID'://int
+					case 'post_author':
+					case 'post_date':
+					case 'post_date_gmt':
+					case 'post_status':
+					case 'comment_status':
+					case 'ping_status':
+					case 'post_password':
+					case 'post_name': //slug!
+					case 'to_ping':
+					case 'pinged':
+					case 'post_modified':
+					case 'post_modified_gmt':
+					case 'post_parent': //int
+					case 'guid':
+					case 'menu_order': //int
+					case 'post_type':
+					case 'post_mime_type':
+					case 'comment_count':
+					case 'filter':
+						continue;
+					//known to translate
+					case 'post_content': $post->$key = qtranxf_use_language($lang, $txt, true); break;
+					case 'post_title':
+					case 'post_excerpt':
+					case 'post_content_filtered'://not sure how this is in use
+						$post->$key = qtranxf_use_language($lang, $txt, false);
+						break;
+					//other maybe, if it is a string, actually most likely it never comes here
+					default:
+						//qtranxf_dbg_echo('qtranxf_postsFilter: other: $post->'.$key.': ',$txt);
+						$post->$key = qtranxf_use($lang, $txt, false);
+						//if(!is_string($txt)){
+						//	qtranxf_dbg_echo('not string: $post->'.$key.': ',$txt);
+						//	continue;
+						//}
+						//qtranxf_dbg_echo('string: $post->'.$key.': ',$txt);
+						//$post->$key = qtranxf_use_language($lang, $txt, false);
+				}
+			}
 		}
 	}
 	return $posts;
 }
-add_filter('the_posts', 'qtranxf_postsFilter');
+add_filter('the_posts', 'qtranxf_postsFilter', 5, 2);
+
+/** allow all filters within WP_Query - many other add_filters may not be needed now? */
+function qtranxf_pre_get_posts( &$query ) {//WP_Query
+	//qtranxf_dbg_echo('qtranxf_pre_get_posts: $query: ',$query);
+	//'post_type'
+	$query->query_vars['suppress_filters'] = false;
+}
+add_action( 'pre_get_posts', 'qtranxf_pre_get_posts', 99 );
 
 //function qtranxf_get_attachment_image_attributes($attr, $attachment, $size)
 function qtranxf_get_attachment_image_attributes($attr)
@@ -269,8 +334,15 @@ function qtranxf_get_attachment_image_attributes($attr)
 add_filter('wp_get_attachment_image_attributes', 'qtranxf_get_attachment_image_attributes',0);
 //add_filter('wp_get_attachment_image_attributes', 'qtranxf_get_attachment_image_attributes',0,3);
 
-function qtranxf_excludeUntranslatedPosts($where) {
+function qtranxf_excludeUntranslatedPosts($where,&$query) {//WP_Query
 	global $wpdb;
+	//qtranxf_dbg_echo('qtranxf_excludeUntranslatedPosts: post_type: ',$query->query_vars['post_type']);
+	switch($query->query_vars['post_type']){
+		case 'page':
+		case 'post': break;
+		//case '': qtranxf_dbg_echo('qtranxf_excludeUntranslatedPosts: post_type is empty: $query: ',$query, true);
+		default: return $where;
+	}
 	//qtranxf_dbg_echo('qtranxf_excludeUntranslatedPosts: $where: ',$where);
 	//qtranxf_dbg_echo('qtranxf_excludeUntranslatedPosts: is_singular(): ',is_singular());
 	$single_post_query=is_singular();
@@ -334,6 +406,31 @@ function qtranxf_esc_html($text) {
 // filter options
 add_filter('esc_html', 'qtranxf_esc_html', 0);
 
+//filter added in qtranslate_hooks.php
+function qtranxf_trim_words( $text, $num_words, $more, $original_text ) {
+	global $q_config;
+	$blocks = qtranxf_get_language_blocks($original_text);
+	if ( count($blocks) <= 1 )
+		return $text;
+	$lang = $q_config['language'];
+	$text = qtranxf_use_block($lang, $blocks, true, false);
+	return wp_trim_words($text, $num_words, $more);
+}
+
+/*
+function qtranxf_img_caption_shortcode($output, $attr, $content) {
+	qtranxf_dbg_echo('qtranxf_img_caption_shortcode: attr:',$attr);
+	qtranxf_dbg_echo('qtranxf_img_caption_shortcode: content:',$content);
+	if(is_array($attr)){
+		foreach($attr as $key => $a){
+			$attr[$key] = qtranxf_useCurrentLanguageIfNotFoundShowEmpty($a);
+		}
+	}
+	return $output;
+}
+add_filter( 'img_caption_shortcode', 'qtranxf_img_caption_shortcode',10,3);
+*/
+
 /*
 function qtranxf_translate($text){
 	$lang=qtranxf_getLanguage();
@@ -372,7 +469,8 @@ function qtranxf_translate($text){
 
 
 qtranxf_optionFilter();
-add_filter('wp_head', 'qtranxf_add_css');
+
+//add_filter('wp_head', 'qtranxf_add_css');
 
 // Compability with Default Widgets
 add_filter('widget_title', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);

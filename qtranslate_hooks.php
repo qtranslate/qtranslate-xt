@@ -164,6 +164,10 @@ function qtranxf_wpseo_replacements($replacements){
 }
 */
 
+// Hooks defined differently in admin and frontend
+add_filter( 'wp_trim_words', 'qtranxf_trim_words', 0, 4);
+
+
 // Hooks (Actions)
 // add_action('category_edit_form', 'qtranxf_modifyTermFormFor');
 // //add_action('post_tag_edit_form', 'qtranxf_modifyTermFormFor');

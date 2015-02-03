@@ -240,7 +240,7 @@ function qtranxf_select_admin_js ($enqueue_script=false) {
 
 function qtranxf_add_admin_footer_js ( $enqueue_script=false ) {
 	global $q_config;
-	//wp_register_script( 'qtranslate-script', plugins_url( '/qtranslate.js', __FILE__ ) );
+	//wp_register_script( 'qtranslate-script', plugins_url( '/qtranslate.js', __FILE__ ), array(), QTX_VERSION );
 	//wp_register_script( 'qtranslate-script', plugins_url( '/qtranslate.min.js', __FILE__ ), array(), QTX_VERSION );
 	//wp_enqueue_script( 'qtranslate-script' );
 	$script_file=qtranxf_select_admin_js($enqueue_script);
@@ -349,14 +349,14 @@ function qtranxf_add_admin_lang_icons ()
 }
 
 function qtranxf_add_admin_css () {
-	wp_register_style( 'qtranslate-admin-style', plugins_url('qtranslate_configuration.css', __FILE__) );
+	wp_register_style( 'qtranslate-admin-style', plugins_url('qtranslate_configuration.css', __FILE__), array(), QTX_VERSION );
 	wp_enqueue_style( 'qtranslate-admin-style' );
 	qtranxf_add_admin_lang_icons();
 	echo '<style type="text/css" media="screen">'.PHP_EOL;
 /*
 	echo ".qtranxs_title_input { border:0pt none; font-size:1.7em; outline-color:invert; outline-style:none; outline-width:medium; padding:0pt; width:100%; }\n";
 	echo ".qtranxs_title_wrap { border-color:#CCCCCC; border-style:solid; border-width:1px; padding:2px 3px; }\n";
-	echo "#qtranxf_textarea_content { padding:6px; border:0 none; line-height:150%; outline: none; margin:0pt; width:100%; -moz-box-sizing: border-box;";
+	echo "#qtranxs_textarea_content { padding:6px; border:0 none; line-height:150%; outline: none; margin:0pt; width:100%; -moz-box-sizing: border-box;";
 	echo	"-webkit-box-sizing: border-box; -khtml-box-sizing: border-box; box-sizing: border-box; }\n";
 	echo ".qtranxs_title { -moz-border-radius: 6px 6px 0 0;";
 	echo	"-webkit-border-top-right-radius: 6px; -webkit-border-top-left-radius: 6px; -khtml-border-top-right-radius: 6px; -khtml-border-top-left-radius: 6px;";
@@ -904,7 +904,7 @@ function qtranxf_conf() {
 					<label for="hide_untranslated"><input type="checkbox" name="hide_untranslated" id="hide_untranslated" value="1"<?php checked($q_config['hide_untranslated']); ?>/> <?php _e('Hide Content which is not available for the selected language.', 'qtranslate'); ?></label>
 					<br/>
 					<small><?php _e('When checked, posts will be hidden if the content is not available for the selected language. If unchecked, a message will appear showing all the languages the content is available in.', 'qtranslate'); ?>
-					<?php _e('This function will not work correctly if you installed qTranslate on a blog with existing entries. In this case you will need to take a look at "Convert Database" under "Advanced Settings".', 'qtranslate'); ?></small>
+					<?php printf(__('This function will not work correctly if you installed %s on a blog with existing entries. In this case you will need to take a look at option "%s" under "%s" section.', 'qtranslate'),'qTranslate',__('Convert Database','qtranslate'),__('Import','qtranslate').'/'.__('Export','qtranslate')); ?></small>
 					<br/><br/>
 					<label for="show_displayed_language_prefix"><input type="checkbox" name="show_displayed_language_prefix" id="show_displayed_language_prefix" value="1"<?php checked($q_config['show_displayed_language_prefix']); ?>/> <?php _e('Show displayed language prefix when content is not available for the selected language.', 'qtranslate'); ?></label>
 				</td>
@@ -1031,7 +1031,7 @@ function qtranxf_conf() {
 				<th scope="row"><?php _e('Editor Raw Mode', 'qtranslate');?></th>
 				<td>
 					<label for="qtranxs_editor_mode"><input type="checkbox" name="editor_mode" id="qtranxs_editor_mode" value="1"<?php checked($q_config['editor_mode']); ?>/>&nbsp;<?php _e('Do not use Language Switching Buttons to edit multi-language text entries.', 'qtranslate'); ?></label><br/>
-					<small><?php _e('Some people prefer to edit the raw entries containing all languages together separated by language defining tags, as they are stored in database.'); ?></small>
+					<small><?php _e('Some people prefer to edit the raw entries containing all languages together separated by language defining tags, as they are stored in database.', 'qtranslate'); ?></small>
 				</td>
 			</tr>
 <?php /*
@@ -1166,8 +1166,8 @@ function qtranxf_nav_menu_metabox( $object )
 	</div>
 	<span class="list-controls hide-if-no-js">
 		<a href="javascript:void(0);" class="help" onclick="jQuery( '#help-login-links' ).toggle();"><?php _e( 'Help' ); ?></a>
-		<span class="hide-if-js" id="help-login-links"><br/><a name="help-login-links"></a>
-		Menu item added is replaced with a sub-menu of available languages when menu is rendered. Depending on how your theme renders menu you may need to override and customize css entries .qtranxs-lang-menu and .qtranxs-lang-menu-item, originally defined in qtranslate.css. The field "URL" of inserted menu item allows additional configuration described in <a href="https://wordpress.org/plugins/qtranslate-x/faq" target="blank">FAQ</a>.<br>
+		<span class="hide-if-js" id="help-login-links"><p><a name="help-login-links"></a>
+		<?php printf(__('Menu item added is replaced with a sub-menu of available languages when menu is rendered. Depending on how your theme renders menu you may need to override and customize css entries %s and %s, originally defined in %s. The field "URL" of inserted menu item allows additional configuration described in %sFAQ%s.', 'qtranslate' ), '.qtranxs-lang-menu', '.qtranxs-lang-menu-item', 'qtranslate.css', '<a href="https://wordpress.org/plugins/qtranslate-x/faq" target="blank">','</a>');?></p>
 		</span>
 	</span>
 	<p class="button-controls">

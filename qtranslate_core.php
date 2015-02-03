@@ -541,7 +541,7 @@ function qtranxf_init() {
 	if(!defined('WP_ADMIN')){
 		// don't filter untranslated posts in admin
 		if($q_config['hide_untranslated']){
-			add_filter('posts_where_request', 'qtranxf_excludeUntranslatedPosts');
+			add_filter('posts_where_request', 'qtranxf_excludeUntranslatedPosts',10,2);
 			add_filter('comments_clauses','qtranxf_excludeUntranslatedPostComments',10,2);
 		}
 		foreach($q_config['text_field_filters'] as $nm){
@@ -1219,7 +1219,7 @@ function qtranxf_enableLanguage($lang) {
 
 if (!function_exists('qtranxf_use')){
 function qtranxf_use($lang, $text, $show_available=false, $show_empty=false) {
-	global $q_config;
+	//global $q_config;
 	// return full string if language is not enabled
 	//if(!qtranxf_isEnabled($lang)) return $text;//why?
 	if(is_array($text)) {
@@ -1241,13 +1241,23 @@ function qtranxf_use($lang, $text, $show_available=false, $show_empty=false) {
 	if(!is_string($text) || empty($text))//|| $text) == ''
 		return $text;
 
-	// get content
+	return qtranxf_use_language($lang, $text, $show_available, $show_empty);
+}
+}
+
+if (!function_exists('qtranxf_use_language')){
+/** when $text is already known to be string */
+function qtranxf_use_language($lang, $text, $show_available=false, $show_empty=false) {
 	$blocks = qtranxf_get_language_blocks($text);
-	//if($text==='[:ru][:en]EN'){
-	//qtranxf_dbg_echo('qtranxf_use:blocks:',$blocks,true);
-	//}
 	if(count($blocks)<=1)//no language is encoded in the $text, the most frequent case
 		return $text;
+	return qtranxf_use_block($lang, $blocks, $show_available, $show_empty);
+}
+}
+
+if (!function_exists('qtranxf_use_block')){
+function qtranxf_use_block($lang, $blocks, $show_available=false, $show_empty=false) {
+	global $q_config;
 	$content = qtranxf_split_blocks($blocks);
 	//$content = qtranxf_split($text);
 
@@ -1334,7 +1344,7 @@ function qtranxf_showAllSeperated($text) {
 
 function qtranxf_add_css ()
 {
-	wp_register_style( 'qtranslate-style', plugins_url('qtranslate.css', __FILE__) );
+	wp_register_style( 'qtranslate-style', plugins_url('qtranslate.css', __FILE__), array(), QTX_VERSION );
 	wp_enqueue_style( 'qtranslate-style' );
 }
 

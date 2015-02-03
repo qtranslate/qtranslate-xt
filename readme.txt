@@ -33,6 +33,17 @@ qTranslate-X makes creation of multilingual content as easy as working with a si
 - Use [Google XML Sitemaps v3 for qTranslate](https://wordpress.org/plugins/google-xml-sitemaps-v3-for-qtranslate/) plugin to rebuild your XML sitemap for better SEO support.
 - Use plugin [Qtranslate Slug](https://wordpress.org/plugins/qtranslate-slug/) if you need to translate slugs.
 
+Below is the list of plugins made compatible, as reported by users:
+- [ALO EasyMail Newsletter](https://wordpress.org/support/plugin/alo-easymail)
+- [BuddyPress](https://wordpress.org/plugins/buddypress/) and its satellites.
+- [Google XML Sitemaps v3 for qTranslate](https://wordpress.org/plugins/google-xml-sitemaps-v3-for-qtranslate/)
+- [Groups](https://wordpress.org/plugins/groups/)
+- [Multiple content blocks](https://wordpress.org/plugins/multiple-content-blocks/)
+- [Qtranslate Slug](https://wordpress.org/plugins/qtranslate-slug/)
+- [WP Photo Album Plus](https://wordpress.org/plugins/wp-photo-album-plus/)
+
+If you encounter a conflicting a plugin, please let us know, and meanwhile try to use other plugin of similar functionality, if possible.
+
 You may still find a lot of useful information through reading [qTranslate](https://wordpress.org/plugins/qtranslate/ "Original qTranslate plugin")'s original documentation, which is not duplicated here in full. There are also other plugins, which offer multilingual support, but it seems that Qian Qin has very good original back-end design, and many people have been pleasantly using his plugin ever since. It stores all translations in the same single post, which makes it easy to maintain and to use it with other plugins. However, the user interface of former qTranslate got out of sync with the recent versions of Wordpress, especially after WP went to TinyMCE 4. There is a number of forks of qTranslate, see for example, [mqTranslate](https://wordpress.org/plugins/mqtranslate/ "mqTranslate plugin"), [qTranslate Plus](https://wordpress.org/plugins/qtranslate-xp/ "qTranslate Plus plugin") and [zTranslate](https://wordpress.org/plugins/ztranslate/ "zTranslate plugin"). They all try to fix qTranslate's user interface preserving its original back-end, which is what this plugin does too. This plugin is a hybrid of all of them and fixes a few bugs in each of them. It also has many new features too, like theme custom translatable fields, for example. We hope that this plugin is the most complete working version which combines the best features of [qTranslate](https://wordpress.org/plugins/qtranslate/ "Original qTranslate plugin"), [mqTranslate](https://wordpress.org/plugins/mqtranslate/ "mqTranslate fork"), [qTranslate Plus](https://wordpress.org/plugins/qtranslate-xp/ "qTranslate Plus fork") and [zTranslate](https://wordpress.org/plugins/ztranslate/ "zTranslate fork").
 
 We suggest all mentioned authors to get together and to continue supporting one single qTranslate-ish plugin in a joint effort.
@@ -196,6 +207,11 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 3. qTranslate translation services
 
 == Changelog ==
+
+= 2.9.8.3 alpha =
+* Translations of captions and attributes in standard WP galleries, which in fact much bigger change which will affect many places. Need to re-test all carefully.
+* improved run-time performance.
+* some improvements on plugin translation as suggested by [Gunu](https://wordpress.org/support/profile/grafcom).
 
 = 2.9.8.2 alpha =
 * updated "Compatibility Functions" option with `qtrans_generateLanguageSelectCode` and `qtrans_useCurrentLanguageIfNotFoundShowAvailable`.

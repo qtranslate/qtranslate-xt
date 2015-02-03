@@ -244,6 +244,20 @@ function qtranxf_admin_the_title($title) {
 }
 add_filter('the_title', 'qtranxf_admin_the_title', 0);//WP: fires for display purposes only
 
+//filter added in qtranslate_hooks.php
+function qtranxf_trim_words( $text, $num_words, $more, $original_text ) {
+	global $q_config;
+	$blocks = qtranxf_get_language_blocks($original_text);
+	if ( count($blocks) <= 1 )
+		return $text;
+	$lang = $q_config['language'];
+	$texts = qtranxf_split_blocks($blocks);
+	foreach($texts as $key => $txt){
+		$texts[$key] = wp_trim_words($txt, $num_words, $more);
+	}
+	return qtranxf_join_c($texts);
+}
+
 function qtranxf_the_editor($editor_div)
 {
 	// remove wpautop, which causes unmatched <p> on combined language strings
