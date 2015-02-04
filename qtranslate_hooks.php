@@ -49,17 +49,17 @@ function qtranxf_useCurrentLanguageIfNotFoundShowEmpty($content) {
 
 function qtranxf_useCurrentLanguageIfNotFoundShowAvailable($content) {
 	global $q_config;
-	return qtranxf_use($q_config['language'], $content, true);
+	return qtranxf_use($q_config['language'], $content, true, false);
 }
 
 function qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($content) {
 	global $q_config;
-	return qtranxf_use($q_config['language'], $content, false);
+	return qtranxf_use($q_config['language'], $content, false, false);
 }
 
 function qtranxf_useDefaultLanguage($content) {
 	global $q_config;
-	return qtranxf_use($q_config['default_language'], $content, false);
+	return qtranxf_use($q_config['default_language'], $content, false, false);
 }
 
 function qtranxf_excludePages($pages) {

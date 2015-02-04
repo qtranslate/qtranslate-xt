@@ -208,6 +208,9 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 
 == Changelog ==
 
+= 2.9.8.5 alpha =
+* more on option "Hide Content which is not available for the selected language"
+
 = 2.9.8.4 alpha =
 * .pot/.po files in order. Thanks to [Pedro Mendonça](https://github.com/pedro-mendonca) for an extensive discussion on the best way to proceed with translations.
 * added 500ms delay before page refresh after new tag insertion on wp-admin/edit-tags.php.
@@ -346,6 +349,7 @@ the one which was active at the time of the last pressing of button "Update". Th
 * Sometimes after a new plugin update is released, the language switching buttons disappear on the first editor page load. Refresh the page to bring them back. Apparently, it has something to do with browse caching mechanism.
 * Search in Category/Tags editor works in default language only.
 * If default language name of new category/tag is empty, nothing gets added.
+* If field "Alternative Text" on page "Edit Media" is left empty, then caption or title will be used untranslated in 'alt' attribute of image display. There is no WP hook provided to enable translation in such a case (see code of 'function wp_get_attachment_image'). However, if "Alternative Text" is filled with non-empty value, then it is shown translated and correctly. We could only re-implement the WP algorithm to be run for the second time under filter 'wp_get_attachment_image_attributes' with translation, which would hurt performance a little bit. If this is a real problem for you, let us know, we can put it in as an option, or submit pull request with your version of implementation. [WP topic](https://wordpress.org/support/topic/odd-behavior-with-photos-and-photo-galleries)
 
 == Credentials ==
 

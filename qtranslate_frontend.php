@@ -311,27 +311,21 @@ function qtranxf_pre_get_posts( &$query ) {//WP_Query
 }
 add_action( 'pre_get_posts', 'qtranxf_pre_get_posts', 99 );
 
-//function qtranxf_get_attachment_image_attributes($attr, $attachment, $size)
-function qtranxf_get_attachment_image_attributes($attr)
-{
-	foreach( $attr as $name => $value ){
-		if($name!=='alt') continue;
-		$attr[$name]=qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($value);
-	}
-	return $attr;
-}
-add_filter('wp_get_attachment_image_attributes', 'qtranxf_get_attachment_image_attributes',0);
-//add_filter('wp_get_attachment_image_attributes', 'qtranxf_get_attachment_image_attributes',0,3);
-
 function qtranxf_excludeUntranslatedPosts($where,&$query) {//WP_Query
 	global $wpdb;
 	//qtranxf_dbg_echo('qtranxf_excludeUntranslatedPosts: post_type: ',$query->query_vars['post_type']);
 	switch($query->query_vars['post_type']){
+		//known not to filter
+		case 'nav_menu_item':
+			return $where;
+		//known to filter
+		case '':
+		case 'any':
 		case 'page':
-		case 'post': break;
-		//case '': //qtranxf_dbg_echo('qtranxf_excludeUntranslatedPosts: post_type is empty: $query: ',$query, true);
-		default: return $where;
+		case 'post':
+		default: break;
 	}
+	//qtranxf_dbg_echo('qtranxf_excludeUntranslatedPosts: post_type is empty: $query: ',$query, true);
 	//qtranxf_dbg_echo('qtranxf_excludeUntranslatedPosts: $where: ',$where);
 	//qtranxf_dbg_echo('qtranxf_excludeUntranslatedPosts: is_singular(): ',is_singular());
 	$single_post_query=is_singular();
@@ -343,7 +337,8 @@ function qtranxf_excludeUntranslatedPosts($where,&$query) {//WP_Query
 		//}
 	}
 	if(!$single_post_query){
-		$where .= " AND $wpdb->posts.post_content LIKE '%<!--:".qtranxf_getLanguage()."-->%'";
+		//$where .= " AND ($wpdb->posts.post_content LIKE '%<!--:".qtranxf_getLanguage()."-->%' OR $wpdb->posts.post_content='')";
+		$where .= " AND ($wpdb->posts.post_content LIKE '%<!--:".qtranxf_getLanguage()."-->%')";
 	}
 	return $where;
 }
@@ -360,6 +355,35 @@ function qtranxf_excludeUntranslatedPostComments($clauses, &$q/*WP_Comment_Query
 	}
 	return $clauses;
 }
+
+//function qtranxf_get_attachment_image_attributes($attr, $attachment, $size)
+function qtranxf_get_attachment_image_attributes($attr, $attachment=null, $size=null)
+{
+	global $q_config;
+	$lang = $q_config['language'];
+	//qtranxf_dbg_echo('qtranxf_get_attachment_image_attributes: $attachment:',$attachment);
+	if(isset($attr['alt'])){
+		$attr['alt']=qtranxf_use_language($lang,$attr['alt'],false,false);
+	}
+	//foreach( $attr as $name => $value ){
+		//qtranxf_dbg_echo('qtranxf_get_attachment_image_attributes: $name='.$name.'; value='.$value);
+		//if($name!=='alt') continue;
+		//$attr[$name]=qtranxf_use_language($lang,$value,false,false);
+		////$attr[$name]=qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($value);
+	//}
+	return $attr;
+}
+add_filter('wp_get_attachment_image_attributes', 'qtranxf_get_attachment_image_attributes',5,3);
+
+/*
+function qtranxf_get_attachment_link( $link, $id=null, $size=null, $permalink=null, $icon=null, $text=null )
+{
+	global $q_config;
+	$lang = $q_config['language'];
+	return qtranxf_use_language($lang,$link,false,true);
+}
+add_filter( 'wp_get_attachment_link', 'qtranxf_get_attachment_link', 5, 6);
+*/
 
 function qtranxf_home_url($url, $path, $orig_scheme, $blog_id)
 {
