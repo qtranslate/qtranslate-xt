@@ -1172,7 +1172,7 @@ function qtranxf_nav_menu_metabox( $object )
 	</span>
 	<p class="button-controls">
 		<span class="add-to-menu">
-			<input type="submit"<?php disabled( $nav_menu_selected_id, 0 ); ?> class="button-secondary submit-add-to-menu right" value="<?php esc_attr_e('Add to Menu'); ?>" name="add-qtranxs-langsw-menu-item" id="submit-qtranxs-langsw" />
+			<input type="submit"<?php disabled( $nav_menu_selected_id, 0 ); ?> class="button-secondary submit-add-to-menu right" value="<?php esc_attr_e('Add to Menu', 'qtranslate'); ?>" name="add-qtranxs-langsw-menu-item" id="submit-qtranxs-langsw" />
 			<span class="spinner"></span>
 		</span>
 	</p>
