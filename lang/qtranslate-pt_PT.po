@@ -1,28 +1,26 @@
-# qTranslate-X
-# Developed by: qTranslate Team based on original code by Qian Qin
-# QTranslate-Team (https://qtranslatexteam.wordpress.com/about), 2015.
-# https://github.com/qTranslate-Team/qtranslate-x
-# This file is distributed under the same license as the PACKAGE package.
+# qTranslate-X Translation Template.
+# Copyright (C) 2015 qTranslate Team
+# This file is distributed under the same license as the qTranslate-X package.
+# qTranslate Team <qtranslateteam@gmail.com>, 2014.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: qTranslate-X 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-03 17:52-0700\n"
-"PO-Revision-Date: 2015-01-29 11:09-0000\n"
+"POT-Creation-Date: 2015-02-04 12:48-0000\n"
+"PO-Revision-Date: 2015-02-04 13:43-0000\n"
 "Last-Translator: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "Language-Team: Pedro Mendonça <ped.gaspar@gmail.com>\n"
+"Language: pt_PT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: pt_PT\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Generator: Poedit 1.7.4\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Poedit-Basepath: .\n"
+"X-Poedit-Basepath: ..\n"
 "X-Poedit-SearchPath-0: .\n"
-"X-Poedit-SearchPath-1: ..\n"
 
 #: admin/activation_hook.php:37
 #, php-format
@@ -82,22 +80,20 @@ msgid "Do not migrate any setting"
 msgstr "Não migrar opções"
 
 #: admin/import_export.php:88
-#, fuzzy
 msgid "Import settings from "
 msgstr "Importar definições de "
 
 #: admin/import_export.php:90
-#, fuzzy
 msgid "Export settings to "
 msgstr "Exportar definições para "
 
 #: admin/import_export.php:99 qtranslate_configuration.php:907
-msgid "Export"
-msgstr "﻿Exportar"
-
-#: admin/import_export.php:99 qtranslate_configuration.php:907
 msgid "Import"
 msgstr "Importar"
+
+#: admin/import_export.php:99 qtranslate_configuration.php:907
+msgid "Export"
+msgstr "﻿Exportar"
 
 #: admin/import_export.php:104 qtranslate_configuration.php:907
 msgid "Convert Database"
@@ -202,12 +198,12 @@ msgid "%LANG:&lt;normal_seperator&gt;:&lt;last_seperator&gt;% generates a list o
 msgstr "%LANG:&lt;normal_seperator&gt;:&lt;last_seperator&gt;% gera uma lista de idiomas separados por &lt;normal_seperator&gt; excepto para o último, onde deverá ser utilizado &lt;last_seperator&gt;."
 
 #: qtranslate_configuration.php:577
-msgid "Hide"
-msgstr "Esconder"
-
-#: qtranslate_configuration.php:577
 msgid "Show"
 msgstr "Mostrar"
+
+#: qtranslate_configuration.php:577
+msgid "Hide"
+msgstr "Esconder"
 
 #: qtranslate_configuration.php:584
 msgid "Save Changes"
@@ -223,9 +219,8 @@ msgid "Switching language to %1$s... If the Dashboard isn't loading, use this <a
 msgstr "Mudar idioma para %1$s... Se o Painel não carregar correctamente, utilize esta <a href=\"%2$s\" title=\"Painel\">ligação</a>."
 
 #: qtranslate_configuration.php:622
-#, fuzzy
 msgid "qTranslate has been reset."
-msgstr "O qTranslate&#8209;X foi reposto."
+msgstr "O qTranslate foi reposto."
 
 #: qtranslate_configuration.php:660
 msgid "Gettext databases updated."
@@ -336,12 +331,11 @@ msgid "When checked, posts will be hidden if the content is not available for th
 msgstr "Quando activado, os artigos serão escondidos se não estiverem disponíveis no idioma seleccionado. Se desactivado, será mostrada uma mensagem com todos os idiomas em que o conteúdo esteja disponível."
 
 #: qtranslate_configuration.php:907
-#, fuzzy, php-format
+#, php-format
 msgid "This function will not work correctly if you installed %s on a blog with existing entries. In this case you will need to take a look at option \"%s\" under \"%s\" section."
-msgstr "Esta função não correrá perfeitamente se instalar o qTranslate num blog que já tenha entradas. Neste caso deverá verificar a opção \"Converter base de dados\" dentro das \"Definições avançadas\"."
+msgstr "Esta função não correrá perfeitamente se instalar o %s num blog que já tenha entradas. Neste caso deverá verificar a opção \"%s\" na secção \"%s\"."
 
 #: qtranslate_configuration.php:909
-#, fuzzy
 msgid "Show displayed language prefix when content is not available for the selected language."
 msgstr "Mostrar prefixo do idioma quando o conteúdo não está disponível no idioma seleccionado."
 
@@ -366,20 +360,20 @@ msgid "URL Modification Mode"
 msgstr "Modo de modificação de URL"
 
 #: qtranslate_configuration.php:928
-msgid "Most SEO unfriendly, not recommended."
-msgstr "Não optimizado para motores de busca (SEO), não recomendado."
-
-#: qtranslate_configuration.php:928
 msgid "Use Query Mode (?lang=en)"
 msgstr "Utilizar modo de Query (?lang=en)"
 
-#: qtranslate_configuration.php:929
-msgid "SEO friendly."
-msgstr "Optimizado para motores de busca (SEO)."
+#: qtranslate_configuration.php:928
+msgid "Most SEO unfriendly, not recommended."
+msgstr "Não optimizado para motores de busca (SEO), não recomendado."
 
 #: qtranslate_configuration.php:929
 msgid "Use Pre-Path Mode (Default, puts /en/ in front of URL)"
 msgstr "Utilizar modo de pré-caminho (por omissão, inclui /en/ à frente do URL)"
+
+#: qtranslate_configuration.php:929
+msgid "SEO friendly."
+msgstr "Optimizado para motores de busca (SEO)."
 
 #: qtranslate_configuration.php:930
 msgid "Use Pre-Domain Mode (uses http://en.yoursite.com)"
@@ -398,9 +392,8 @@ msgid "Hide URL language information for default language."
 msgstr "Esconder informação do idioma do URL para o idioma por omissão."
 
 #: qtranslate_configuration.php:933
-#, fuzzy
 msgid "Use Per-Domain mode: specify separate user-defined domain for each language."
-msgstr "Utilize o modo por-domínio: especifique domínios diferentes para cada idioma."
+msgstr "Utilize o modo por-domínio: especifique para cada idioma um domínio definido pelo utilizador."
 
 #: qtranslate_configuration.php:950
 msgid "Domain for"
@@ -420,7 +413,7 @@ msgid "Ignore Links"
 msgstr "Ignorar ligações"
 
 #: qtranslate_configuration.php:967
-#, fuzzy, php-format
+#, php-format
 msgid "Don't convert links to files of the given file types. (Always included: %s)"
 msgstr "Não converter ligações para determinados tipos de ficheiro. (Incluindo sempre: %s)"
 
@@ -469,11 +462,12 @@ msgid "Custom Fields"
 msgstr "Campos personalizados"
 
 #: qtranslate_configuration.php:993
-#, fuzzy, php-format
+#, php-format
 msgid "Enter \"%s\" or \"%s\" attribute of text fields from your theme, which you wish to translate. This applies to post, page and media editors (%s). To lookup \"%s\" or \"%s\", right-click on the field in the post or the page editor and choose \"%s\". Look for an attribute of the field named \"%s\" or \"%s\". Enter it below, as many as you need, space- or comma-separated. After saving configuration, these fields will start responding to the language switching buttons, and you can enter different text for each language. The input fields of type %s will be parsed using %s syntax, while single line text fields will use %s syntax. If you need to override this behaviour, prepend prefix %s or %s to the name of the field to specify which syntax to use. For more information, read %sFAQ%s."
 msgstr "Introduza o atributo de \"%s\" ou \"%s\" dos campos de texto do seu tema que pretende traduzir. Isto é aplicável a artigos, páginas ou editores de media (%s). Para procurar um \"%s\" ou \"%s\", clique com o botão direito num campo no editor de artigo ou página e escolha \"%s\". Procure um atributo do campo, de nome \"%s\" ou \"%s\". Introduza abaixo, tantos quantos desejar, separados por espaço ou por vírgulas. Após guardar a configuração, estes campos começarão a responder aos botões de selecção de idioma, permitindo-lhe introduzir diferentes textos para cada idioma. Os campos de introdução do tipo %s serão analisados utilizando a sintaxe %s, campos de introdução simples utilizarão sintaxe %s. Se precisar de ultrapassar este comportamento, preceda os nomes dos campos com o prefixo %s ou %s para especificar que sintaxe utilizar. Para mais informações, leia as %sFAQ%s."
 
 #: qtranslate_configuration.php:993
+msgctxt "browser option"
 msgid "Inspect Element"
 msgstr "Inspeccionar elemento"
 
@@ -574,6 +568,10 @@ msgstr "﻿Ajuda"
 #, php-format
 msgid "Menu item added is replaced with a sub-menu of available languages when menu is rendered. Depending on how your theme renders menu you may need to override and customize css entries %s and %s, originally defined in %s. The field \"URL\" of inserted menu item allows additional configuration described in %sFAQ%s."
 msgstr "O item de menu adicionado é substituído por um submenu com os idiomas disponíveis quando o menu é apresentado. Dependendo como o seu tema apresenta o menu, pode necessitar de sobrepor e personalizar as entradas css %s e %s, definidas originalmente em %s. O campo \"URL\" do item de menu inserido permite configurações adicionais descritas nas %sFAQ%s."
+
+#: qtranslate_configuration.php:1175
+msgid "Add to Menu"
+msgstr "Adicionar ao menu"
 
 #: qtranslate_configuration.php:1185
 msgid "Language Switcher"
@@ -909,12 +907,15 @@ msgid "Dropdown Box"
 msgstr "Caixa de selecção"
 
 #: qtranslate_widget.php:101
+msgid "Widget"
+msgstr "﻿Widget"
+
+#: qtranslate_widget.php:101
 msgid "To reset to default, clear the text."
 msgstr "Para repor os valores originais, remova o texto."
 
-#: qtranslate_widget.php:101
-msgid "Widget"
-msgstr "﻿Widget"
+#~ msgid "Inspect Element"
+#~ msgstr "Inspeccionar elemento"
 
 #~ msgid "Show / Hide"
 #~ msgstr "Mostrar / Esconder"
@@ -941,10 +942,6 @@ msgstr "﻿Widget"
 #~ msgid "Comma-separated list of the custom post types for which you want qTranslate to keep multi-language values."
 #~ msgstr "Lista separada por vírgulas dos tipos de artigo personalizados que pretende que o qTranslate utilize múltiplas linguagem."
 
-#, fuzzy
-#~ msgid "Settings Migration"
-#~ msgstr "Definições"
-
 #~ msgid "Export settings only if qTranslate is installed."
 #~ msgstr "Exportar opções apenas se o qTranslate estiver instalado."
 
@@ -963,10 +960,6 @@ msgstr "﻿Widget"
 #~ msgid "Read only"
 #~ msgstr "Só de leitura"
 
-#, fuzzy
-#~ msgid "qTranslate User Language Settings"
-#~ msgstr "Definições dos Serviços qTranslate"
-
 #~ msgid "You can edit posts in"
 #~ msgstr "Pode editar artigos em"
 
@@ -975,7 +968,7 @@ msgstr "﻿Widget"
 
 #, fuzzy
 #~ msgid "No language available"
-#~ msgstr "indisponível"
+#~ msgstr "Indisponível"
 
 #~ msgid "As an Administrator, you can edit posts in all languages."
 #~ msgstr "Como administrador, pode editar artigos em todos os idiomas."
@@ -1001,13 +994,10 @@ msgstr "﻿Widget"
 #~ msgstr "Definições dos Serviços qTranslate"
 
 #~ msgid "User-level Language Protection"
-#~ msgstr "Protecção de Idioma por nível de utilizador"
+#~ msgstr "Protecção de idioma por nível de utilizador"
 
 #~ msgid "Enable user-level language protection"
 #~ msgstr "Activar protecção de idioma por nível de utilizador"
 
 #~ msgid "When enabled, this option allows you to select which language is editable on a user-level account basis."
 #~ msgstr "Quando activa, esta opção permite definir que idioma será editável baseado em níveis de utilizadores."
-
-#~ msgid "Add to Menu"
-#~ msgstr "Adicionar ao menu"
