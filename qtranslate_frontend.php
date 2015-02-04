@@ -245,68 +245,57 @@ add_filter('wp_setup_nav_menu_item', 'qtranxf_wp_setup_nav_menu_item');
 
 function qtranxf_postsFilter($posts,&$query) {//WP_Query
 	global $q_config;
+	//$post->post_content = qtranxf_useCurrentLanguageIfNotFoundShowAvailable($post->post_content);
+	//$posts = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($posts);
+	if(!is_array($posts)) return $posts;
+	//qtranxf_dbg_echo('qtranxf_postsFilter: $post_type: ',$query->query_vars['post_type']);
 	switch($query->query_vars['post_type']){
 		case 'nav_menu_item': return $posts;//will translate later in qtranxf_wp_get_nav_menu_items: to be able to filter empty labels.
 		default: break;
 	}
-	//qtranxf_dbg_echo('qtranxf_postsFilter: $post_type: ',$query->query_vars['post_type']);
-	//if(empty($query->query_vars['post_type'])){
-	//	qtranxf_dbg_echo('qtranxf_postsFilter: $query: ',$query,true);
-	//}
-	//if(empty($posts)){
-	//	qtranxf_dbg_echo('qtranxf_postsFilter: $posts: ',$posts,true);
-	//}
-	if(is_array($posts)) {
-		$lang = $q_config['language'];
-		foreach($posts as $post) {//post is an object derived from WP_Post
-			//$post->post_content = qtranxf_useCurrentLanguageIfNotFoundShowAvailable($post->post_content);
-			//$post->post_content = qtranxf_use_language($lang, $post->post_content, true);
-			//qtranxf_dbg_log('post_content:',$post->post_content);
-			//qtranxf_dbg_log('$post-before:',$post);
-			//$post = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($post);
-			//qtranxf_dbg_log('$post-after:',$post);
-			foreach(get_object_vars($post) as $key => $txt) {
-				switch($key){//the quickest way to proceed
-					//known to skip
-					case 'ID'://int
-					case 'post_author':
-					case 'post_date':
-					case 'post_date_gmt':
-					case 'post_status':
-					case 'comment_status':
-					case 'ping_status':
-					case 'post_password':
-					case 'post_name': //slug!
-					case 'to_ping':
-					case 'pinged':
-					case 'post_modified':
-					case 'post_modified_gmt':
-					case 'post_parent': //int
-					case 'guid':
-					case 'menu_order': //int
-					case 'post_type':
-					case 'post_mime_type':
-					case 'comment_count':
-					case 'filter':
-						continue;
-					//known to translate
-					case 'post_content': $post->$key = qtranxf_use_language($lang, $txt, true); break;
-					case 'post_title':
-					case 'post_excerpt':
-					case 'post_content_filtered'://not sure how this is in use
-						$post->$key = qtranxf_use_language($lang, $txt, false);
-						break;
-					//other maybe, if it is a string, actually most likely it never comes here
-					default:
-						//qtranxf_dbg_echo('qtranxf_postsFilter: other: $post->'.$key.': ',$txt);
-						$post->$key = qtranxf_use($lang, $txt, false);
-						//if(!is_string($txt)){
-						//	qtranxf_dbg_echo('not string: $post->'.$key.': ',$txt);
-						//	continue;
-						//}
-						//qtranxf_dbg_echo('string: $post->'.$key.': ',$txt);
-						//$post->$key = qtranxf_use_language($lang, $txt, false);
-				}
+	$lang = $q_config['language'];
+	foreach($posts as $post) {//post is an object derived from WP_Post
+		foreach(get_object_vars($post) as $key => $txt) {
+			switch($key){//the quickest way to proceed
+				//known to skip
+				case 'ID'://int
+				case 'post_author':
+				case 'post_date':
+				case 'post_date_gmt':
+				case 'post_status':
+				case 'comment_status':
+				case 'ping_status':
+				case 'post_password':
+				case 'post_name': //slug!
+				case 'to_ping':
+				case 'pinged':
+				case 'post_modified':
+				case 'post_modified_gmt':
+				case 'post_parent': //int
+				case 'guid':
+				case 'menu_order': //int
+				case 'post_type':
+				case 'post_mime_type':
+				case 'comment_count':
+				case 'filter':
+					continue;
+				//known to translate
+				case 'post_content': $post->$key = qtranxf_use_language($lang, $txt, true); break;
+				case 'post_title':
+				case 'post_excerpt':
+				case 'post_content_filtered'://not sure how this is in use
+					$post->$key = qtranxf_use_language($lang, $txt, false);
+					break;
+				//other maybe, if it is a string, most likely it never comes here
+				default:
+					//qtranxf_dbg_echo('qtranxf_postsFilter: other: $post->'.$key.': ',$txt);
+					$post->$key = qtranxf_use($lang, $txt, false);
+					//if(!is_string($txt)){
+					//	//qtranxf_dbg_echo('not string: $post->'.$key.': ',$txt);
+					//	continue;
+					//}
+					//qtranxf_dbg_echo('string: $post->'.$key.': ',$txt);
+					//$post->$key = qtranxf_use_language($lang, $txt, false);
 			}
 		}
 	}
@@ -340,7 +329,7 @@ function qtranxf_excludeUntranslatedPosts($where,&$query) {//WP_Query
 	switch($query->query_vars['post_type']){
 		case 'page':
 		case 'post': break;
-		//case '': qtranxf_dbg_echo('qtranxf_excludeUntranslatedPosts: post_type is empty: $query: ',$query, true);
+		//case '': //qtranxf_dbg_echo('qtranxf_excludeUntranslatedPosts: post_type is empty: $query: ',$query, true);
 		default: return $where;
 	}
 	//qtranxf_dbg_echo('qtranxf_excludeUntranslatedPosts: $where: ',$where);
@@ -418,51 +407,9 @@ function qtranxf_trim_words( $text, $num_words, $more, $original_text ) {
 }
 
 /*
-function qtranxf_img_caption_shortcode($output, $attr, $content) {
-	qtranxf_dbg_echo('qtranxf_img_caption_shortcode: attr:',$attr);
-	qtranxf_dbg_echo('qtranxf_img_caption_shortcode: content:',$content);
-	if(is_array($attr)){
-		foreach($attr as $key => $a){
-			$attr[$key] = qtranxf_useCurrentLanguageIfNotFoundShowEmpty($a);
-		}
-	}
-	return $output;
-}
-add_filter( 'img_caption_shortcode', 'qtranxf_img_caption_shortcode',10,3);
-*/
-
-/*
 function qtranxf_translate($text){
 	$lang=qtranxf_getLanguage();
-	echo "\nqtranxf_translate:lang=".$lang."\n";
-	echo "text=$text\n";
-	$split_regex = "#(<!--:[^-]+-->|\[:[a-z]{2}\])#ism";
-	$skip=true;
-	$quicktags=false;
-	$blocks = preg_split($split_regex, $text, -1, PREG_SPLIT_NO_EMPTY|PREG_SPLIT_DELIM_CAPTURE);
-	foreach($blocks as $block) {
-		echo "block=$block\n";
-		if(preg_match("#^<!--:([a-z]{2})-->$#ism", $block, $matches)) {
-			$skip=($lang != $matches[1]);
-			continue;
-		} elseif($quicktags && preg_match("#^\[:([a-z]{2})\]$#ism", $block, $matches)) {
-			$skip=($lang != $matches[1]);
-			continue;
-		} elseif(preg_match("#^<!--:-->$#ism", $block, $matches)) {
-			$skip=false;
-			continue;
-		// detect defective more tag
-		//} elseif(preg_match("#^<!--more-->$#ism", $block, $matches)) {
-		//	foreach($q_config['enabled_languages'] as $language) {
-		//		$result[$language] .= $block;
-		//	}
-		//	continue;
-		}
-		if($skip) continue;
-		$result .= $block;
-	}
-	return $result;
-	//return qtranxf_useDefaultLanguage($text);
+	return qtranxf_use($lang,$text);
 }
 //add_filter('wpseo_title', 'qtranxf_translate', 0);
 */

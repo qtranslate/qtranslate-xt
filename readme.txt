@@ -208,8 +208,12 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 
 == Changelog ==
 
+= 2.9.8.4 alpha =
+* .pot/.po files in order. Thanks to [Pedro Mendonça](https://github.com/pedro-mendonca) for an extensive discussion on the best way to proceed with translations.
+* added 500ms delay before page refresh after new tag insertion on wp-admin/edit-tags.php.
+
 = 2.9.8.3 alpha =
-* Translations of captions and attributes in standard WP galleries, which in fact much bigger change which will affect many places. Need to re-test all carefully.
+* Translations of captions and attributes in standard WP galleries, which is, in fact, much bigger change affecting many places. Need to re-test all carefully.
 * improved run-time performance.
 * some improvements on plugin translation as suggested by [Gunu](https://wordpress.org/support/profile/grafcom).
 

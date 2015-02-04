@@ -217,6 +217,8 @@ pip-log.txt
 *.po.cur
 *.po.q
 *.po.mq
+*.pedro
+*.po*-sorted
 
 #Mr Developer
 .mr.developer.cfg

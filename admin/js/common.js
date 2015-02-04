@@ -1,10 +1,10 @@
 /*
 //debuging tools, do not check in
-*/
 var cc=0;
 function c(v){ ++cc; console.log('== '+cc+': '+v); }
 function ct(v){ c(v); console.trace(); }
 function co(t,o){ ++cc; console.log('== '+cc+': '+t+': %o',o); }
+*/
 
 qtranxj_split = function(text,keep_neutral_text)
 {
