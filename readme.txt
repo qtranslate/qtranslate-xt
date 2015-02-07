@@ -33,7 +33,8 @@ qTranslate-X makes creation of multilingual content as easy as working with a si
 - Use [Google XML Sitemaps v3 for qTranslate](https://wordpress.org/plugins/google-xml-sitemaps-v3-for-qtranslate/) plugin to rebuild your XML sitemap for better SEO support.
 - Use plugin [Qtranslate Slug](https://wordpress.org/plugins/qtranslate-slug/) if you need to translate slugs.
 
-Below is the list of plugins made compatible, as reported by users:
+Below is the list of plugins recently made compatible, as reported by users:
+
 - [ALO EasyMail Newsletter](https://wordpress.org/support/plugin/alo-easymail)
 - [BuddyPress](https://wordpress.org/plugins/buddypress/) and its satellites.
 - [Google XML Sitemaps v3 for qTranslate](https://wordpress.org/plugins/google-xml-sitemaps-v3-for-qtranslate/)
@@ -46,7 +47,7 @@ If you encounter a conflicting a plugin, please let us know, and meanwhile try t
 
 You may still find a lot of useful information through reading [qTranslate](https://wordpress.org/plugins/qtranslate/ "Original qTranslate plugin")'s original documentation, which is not duplicated here in full. There are also other plugins, which offer multilingual support, but it seems that Qian Qin has very good original back-end design, and many people have been pleasantly using his plugin ever since. It stores all translations in the same single post, which makes it easy to maintain and to use it with other plugins. However, the user interface of former qTranslate got out of sync with the recent versions of Wordpress, especially after WP went to TinyMCE 4. There is a number of forks of qTranslate, see for example, [mqTranslate](https://wordpress.org/plugins/mqtranslate/ "mqTranslate plugin"), [qTranslate Plus](https://wordpress.org/plugins/qtranslate-xp/ "qTranslate Plus plugin") and [zTranslate](https://wordpress.org/plugins/ztranslate/ "zTranslate plugin"). They all try to fix qTranslate's user interface preserving its original back-end, which is what this plugin does too. This plugin is a hybrid of all of them and fixes a few bugs in each of them. It also has many new features too, like theme custom translatable fields, for example. We hope that this plugin is the most complete working version which combines the best features of [qTranslate](https://wordpress.org/plugins/qtranslate/ "Original qTranslate plugin"), [mqTranslate](https://wordpress.org/plugins/mqtranslate/ "mqTranslate fork"), [qTranslate Plus](https://wordpress.org/plugins/qtranslate-xp/ "qTranslate Plus fork") and [zTranslate](https://wordpress.org/plugins/ztranslate/ "zTranslate fork").
 
-We suggest all mentioned authors to get together and to continue supporting one single qTranslate-ish plugin in a joint effort.
+We organized an anonymous entity [qTranslate Team](https://github.com/qTranslate-Team) to maintain a joint authority of all qTranslate-ish plugins. Anyone is welcome to join with a contribution. Participating plugin authors should share the support efforts for each other.
 
 GitHub repository is available: https://github.com/qTranslate-Team/qtranslate-x.git
 
@@ -204,12 +205,15 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 
 1. Editing screen showing the buttons to switch the languages. Pressing a button does not make a call to the server, the editing happens locally, until "Update" button is pressed, the same way as it is for one language.
 2. Language Management Interface
-3. qTranslate translation services
 
 == Changelog ==
 
+= 2.9.8.6 alpha =
+* more on proper detection of front-end vs back-end on AJAX calls.
+
 = 2.9.8.5 alpha =
 * more on option "Hide Content which is not available for the selected language"
+* thanks to Marius Siroen for Dutch translation
 
 = 2.9.8.4 alpha =
 * .pot/.po files in order. Thanks to [Pedro Mendonça](https://github.com/pedro-mendonca) for an extensive discussion on the best way to proceed with translations.
@@ -342,14 +346,14 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 
 == Known Issues ==
 
-* [WooCommerce](https://wordpress.org/plugins/woocommerce/) framework plugins: turn on option "Compatibility Functions".
-* Incompatibility with plugin [WP Editor](https://wordpress.org/support/plugin/wp-editor). Language switching buttons do not change the content of main editor in pages and posts. For now, you would need to deactivate "WP Editor".
-* Message "The backup of this post in your browser is different from the version below" appears sometimes in the post editor. Clicking on "Restore the backup" may produce unexpected result, since backup has one language only,
-the one which was active at the time of the last pressing of button "Update". The code which causes this is in /wp-includes/js/autosave.js.
-* Sometimes after a new plugin update is released, the language switching buttons disappear on the first editor page load. Refresh the page to bring them back. Apparently, it has something to do with browse caching mechanism.
+* Turn on option "Compatibility Functions", if you use [WooCommerce](https://wordpress.org/plugins/woocommerce/) framework plugins, like [IM8 qTranslate WooCommerce](https://wordpress.org/plugins/im8-qtranslate-woocommerce/), [qTranslate support for WooCommerce](https://wordpress.org/plugins/qtranslate-support-for-woocommerce/), [WooCommerce-qTML](https://wordpress.org/plugins/woocommerce-qtml/), for example. Also it is needed for any theme, which claims its compatibility with former qTranslate.
+* If other plugin installs a custom TinyMCE editor on a translatable field served by qTranslate-X, then all kind of problems start to happen. Examples of 'offending' plugins are: [Fusion Page Builder](http://www.theme-fusion.com/), [Page Builder by SiteOrigin](https://wordpress.org/plugins/siteorigin-panels/), [Rich Text Tags](https://wordpress.org/plugins/rich-text-tags/), [WP Editor](https://wordpress.org/plugins/wp-editor/). We are looking into possibilities to enable integration with those plugins.
+* When [Jetpack by WordPress.com](https://wordpress.org/plugins/jetpack/) is enabled, pressing 'Save Changes' at Settings/General (/wp-admin/options-general.php) page, causes fields "Site Title" and "Tagline" to be emptied, if they had multilingual values. It only happens when Jetpack is connected to WordPress. For now, when you need to edit those values, deactivate Jetpack, make your edits, then re-activate JetPack again. Fortunately, that general setting page need not to be changed frequently. [WP topic](https://wordpress.org/support/topic/site-titletagline-disappear-on-general-settings-update)
+* Message "The backup of this post in your browser is different from the version below" appears sometimes in the post editor. Clicking on "Restore the backup" may produce unexpected result, since backup has one language only, the one which was active at the time of the last pressing of button "Update". The code which causes this is in /wp-includes/js/autosave.js. Autosave script is currently turned off to avoid this confusion.
 * Search in Category/Tags editor works in default language only.
-* If default language name of new category/tag is empty, nothing gets added.
 * If field "Alternative Text" on page "Edit Media" is left empty, then caption or title will be used untranslated in 'alt' attribute of image display. There is no WP hook provided to enable translation in such a case (see code of 'function wp_get_attachment_image'). However, if "Alternative Text" is filled with non-empty value, then it is shown translated and correctly. We could only re-implement the WP algorithm to be run for the second time under filter 'wp_get_attachment_image_attributes' with translation, which would hurt performance a little bit. If this is a real problem for you, let us know, we can put it in as an option, or submit pull request with your version of implementation. [WP topic](https://wordpress.org/support/topic/odd-behavior-with-photos-and-photo-galleries)
+* Page `/wp-admin/edit-tags.php?taxonomy=category`: if default language name of new category/tag is empty, nothing gets added.
+* [resolved] Sometimes after a new plugin update is released, the language switching buttons disappear on the first editor page load. Refresh the page to bring them back. Apparently, it has something to do with browse caching mechanism.
 
 == Credentials ==
 

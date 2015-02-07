@@ -551,7 +551,7 @@ function qts_service() {
 		printf(__('Post with id "%s" not found!','qtranslate'), $post_id);
 		return;
 	}
-	$default_service = intval(get_option('qts_default_service'));
+	$default_service = intval(get_option('qts_default_service'),0);
 	$service_settings = get_option('qts_service_settings');
 	// Detect available Languages and possible target languages
 	$available_languages = qtranxf_getAvailableLanguages($post->post_content);
@@ -770,6 +770,7 @@ if(!empty($message)) {
 		if($services = qts_queryQS(QTS_GET_SERVICES)) {
 			foreach($services as $service_id => $service) {
 				// check if we have data for all required fields
+				//if($service_id==1) continue;//qTranslate Services Test
 				$requirements_matched = true;
 				foreach($service['service_required_fields'] as $field) {
 					if(!isset($service_settings[$service_id][$field['name']]) || $service_settings[$service_id][$field['name']] == '') $requirements_matched = false;
@@ -792,6 +793,7 @@ if(!empty($message)) {
 </ul>
 <script type="text/javascript">
 	function chooseservice(id) {
+		if(id<=0) return;
 		jQuery('#qts_service_'+id).attr('checked','checked');
 		jQuery('#submitdiv .request').html('<?php _e('<p><img src="images/wpspin_light.gif"> Getting Quote...</p>', 'qtranslate'); ?>');
 		jQuery.post(ajaxurl, {

@@ -14,6 +14,11 @@ if(!function_exists('qtrans_use')){
 		return qtranxf_use($lang, $text, $show_available);
 	}
 }
+if (!function_exists('qtrans_useDefaultLanguage')){
+	function qtrans_useDefaultLanguage($content){
+		return qtranxf_useDefaultLanguage($content);
+	}
+}
 if (!function_exists('qtrans_useCurrentLanguageIfNotFoundShowAvailable')){
 	function qtrans_useCurrentLanguageIfNotFoundShowAvailable($content){
 		return qtranxf_useCurrentLanguageIfNotFoundShowAvailable($content);

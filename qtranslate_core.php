@@ -57,7 +57,7 @@ function qtranxf_init_language() {
 	$url_info['language'] = qtranxf_detect_language($url_info);
 	//qtranxf_dbg_log('qtranxf_init_language: url_info: ',$url_info);
 
-	$q_config['url_info'] = apply_filters('qtranslate_url_info', $url_info);//slug redirection etc.
+	$q_config['url_info'] = apply_filters('qtranslate_url_info', $url_info);//slug redirection etc.?
 	$url_info = $q_config['url_info'];
 
 	//qtranxf_dbg_log('qtranxf_init_language: url_info: ',$url_info);
@@ -83,11 +83,19 @@ function qtranxf_init_language() {
 	$q_config['url_info']['url'] = qtranxf_convertURL(add_query_arg('lang',$q_config['default_language'],$q_config['url_info']['url']));
 
 	// Filter all options for language tags
-	if(!defined('WP_ADMIN')) {
+	if($q_config['doing_front_end']) {
 		$alloptions = wp_load_alloptions();
 		foreach($alloptions as $option => $value) {
 			add_filter('option_'.$option, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
 		}
+		require_once(dirname(__FILE__)."/qtranslate_frontend.php");
+	}else{
+		require_once(dirname(__FILE__).'/qtranslate_configuration.php');
+		require_once(dirname(__FILE__).'/admin/admin_utils.php');
+
+		// load qTranslate Services if available
+		if(file_exists(dirname(__FILE__).'/qtranslate_services.php'))
+			require_once(dirname(__FILE__).'/qtranslate_services.php');
 	}
 
 	if(isset($q_config['qtrans_compatibility']) && $q_config['qtrans_compatibility']){
@@ -113,6 +121,8 @@ function qtranxf_detect_language(&$url_info) {
 
 	$lang = qtranxf_parse_language_info($url_info);
 
+	$q_config['doing_front_end'] = !defined('WP_ADMIN');
+	//$q_config['doing_front_end'] defines if we are at front- or back-end. Why WP do not have that, or do they?
 	while(!$lang)
 	{
 		if( defined('DOING_AJAX') && isset($_SERVER['HTTP_REFERER']) ){ //try to get language from HTTP_REFERER
@@ -130,10 +140,16 @@ function qtranxf_detect_language(&$url_info) {
 				//qtranxf_dbg_log('qtranxf_detect_language: referer_info: ',$referer);
 				$lang = qtranxf_parse_language_info($referer,true);
 				//qtranxf_dbg_log('qtranxf_detect_language: http_referer: lang=',$lang);
-				$url_info['referer_language'] = $lang ? $lang : $q_config['default_language'];
+				if($lang){
+					$url_info['referer_language'] = $lang;
+					$q_config['doing_front_end'] = true;
+				}else{
+					$url_info['referer_language'] = $q_config['default_language'];
+				}
 			}
-			if(!$lang && !qtranxf_language_neutral_path($referer['url'])){
+			if(!$lang && !qtranxf_language_neutral_path($referer['path'])){
 				$lang = $q_config['default_language'];
+				$q_config['doing_front_end'] = true;
 			}
 			//qtranxf_dbg_log('qtranxf_detect_language: DOING_AJAX: lang=',$lang);
 		}
@@ -538,7 +554,7 @@ function qtranxf_init() {
 	// load plugin translations
 	load_plugin_textdomain('qtranslate', false, dirname(plugin_basename( __FILE__ )).'/lang');
 
-	if(!defined('WP_ADMIN')){
+	if($q_config['doing_front_end']){
 		// don't filter untranslated posts in admin
 		if($q_config['hide_untranslated']){
 			add_filter('posts_where_request', 'qtranxf_excludeUntranslatedPosts',10,2);

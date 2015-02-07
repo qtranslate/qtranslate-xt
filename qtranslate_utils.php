@@ -48,10 +48,16 @@ if(defined('WP_DEBUG')&&WP_DEBUG){
 			}
 		}
 	}
+	if(!function_exists('qtranxf_dbg_log_if')){
+		function qtranxf_dbg_log_if($condition,$msg,$var='novar',$bt=false){
+			if($condition) qtranxf_dbg_log($msg,$var,$bt);
+		}
+	}
 	assert_options(ASSERT_BAIL,true);
 }else{
 	if(!function_exists('qtranxf_dbg_log')){ function qtranxf_dbg_log($msg,$var=null,$bt=false){} }
 	if(!function_exists('qtranxf_dbg_echo')){ function qtranxf_dbg_echo($msg,$var=null,$bt=false){} }
+	if(!function_exists('qtranxf_dbg_log_if')){ function qtranxf_dbg_log_if($condition,$msg,$var=null,$bt=false){} }
 	//assert_options(ASSERT_ACTIVE,false);
 	//assert_options(ASSERT_WARNING,false);
 	//assert_options(ASSERT_QUIET_EVAL,true);
