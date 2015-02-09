@@ -208,6 +208,7 @@ $q_config['language_name']['pt'] = "Português";
 $q_config['language_name']['pl'] = "Polski";
 $q_config['language_name']['gl'] = "galego";
 $q_config['language_name']['tr'] = "Turkish";
+$q_config['language_name']['et'] = "Eesti";
 
 // Locales for languages
 // see locale -a for available locales
@@ -230,6 +231,7 @@ $q_config['locale']['pt'] = "pt_BR";
 $q_config['locale']['pl'] = "pl_PL";
 $q_config['locale']['gl'] = "gl_ES";
 $q_config['locale']['tr'] = "tr_TR";
+$q_config['locale']['et'] = "et_ET";
 
 // Language not available messages
 // %LANG:<normal_seperator>:<last_seperator>% generates a list of languages seperated by <normal_seperator> except for the last one, where <last_seperator> will be used instead.
@@ -252,6 +254,7 @@ $q_config['not_available']['pt'] = "Desculpe-nos, mas este texto esta apenas dis
 $q_config['not_available']['pl'] = "Przepraszamy, ten wpis jest dostępny tylko w języku %LANG:, : i %.";
 $q_config['not_available']['gl'] = "Sentímolo moito, ista entrada atopase unicamente en %LANG;,: e %.";
 $q_config['not_available']['tr'] = "Sorry, this entry is only available in %LANG:, : and %.";
+$q_config['not_available']['et'] = "Vabandame, see kanne on saadaval ainult % LANG : ja %.";
 
 // strftime usage (backward compability)
 $q_config['use_strftime'] = QTX_DATE;
@@ -276,6 +279,7 @@ $q_config['date_format']['pt'] = '%d de %B de %Y';
 $q_config['date_format']['pl'] = '%d/%m/%y';
 $q_config['date_format']['gl'] = '%d de %B de %Y';
 $q_config['date_format']['tr'] = '%A %B %e%q, %Y';
+$q_config['date_format']['et'] = '%A %B %e%q, %Y';
 
 $q_config['time_format']['en'] = '%I:%M %p';
 $q_config['time_format']['de'] = '%H:%M';
@@ -296,6 +300,7 @@ $q_config['time_format']['pt'] = '%H:%M hrs.';
 $q_config['time_format']['pl'] = '%H:%M';
 $q_config['time_format']['gl'] = '%H:%M hrs.';
 $q_config['time_format']['tr'] = '%H:%M';
+$q_config['time_format']['et'] = '%H:%M';
 
 // Flag images configuration
 // Look in /flags/ directory for a huge list of flags for usage
@@ -318,6 +323,7 @@ $q_config['flag']['pt'] = 'br.png';
 $q_config['flag']['pl'] = 'pl.png';
 $q_config['flag']['gl'] = 'galego.png';
 $q_config['flag']['tr'] = 'tr.png';
+$q_config['flag']['et'] = 'ee.png';
 
 // Location of flags (needs trailing slash!)
 //$q_config['flag_location'] = 'plugins/qtranslate-x/flags/';
