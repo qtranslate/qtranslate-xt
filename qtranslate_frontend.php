@@ -134,6 +134,8 @@ function qtranxf_wp_get_nav_menu_items( $items, $menu, $args )
 		$item->post_title=qtranxf_use_language($language, $item->post_title, false, true);
 		$item->post_excerpt=qtranxf_use_language($language, $item->post_excerpt, false, true);
 		$item->description=qtranxf_use_language($language, $item->description, false, true);
+		if(isset($item->attr_title)) $item->attr_title=qtranxf_use_language($language, $item->attr_title, false, true);
+		//qtranxf_dbg_echo('qtranxf_wp_get_nav_menu_items: $item: ',$item);
 
 		if($itemid<$item->ID) $itemid=$item->ID;
 		if($menu_order<$item->menu_order) $menu_order=$item->menu_order;

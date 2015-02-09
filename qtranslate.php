@@ -3,7 +3,7 @@
 Plugin Name: qTranslate-X
 Plugin URI: http://wordpress.org/plugins/qtranslate-x/
 Description: Adds user-friendly and database-friendly multilingual content support into WordPress.
-Version: 2.9.8.6
+Version: 2.9.8.7
 Author: John Clause based on original code by Qian Qin
 Author URI: http://qtranslatexteam.wordpress.com/about
 Tags: multilingual, multi, language, admin, tinymce, Polyglot, bilingual, widget, switcher, professional, human, translation, service, qTranslate, zTranslate, mqTranslate, qTranslate Plus, WPML
@@ -101,7 +101,7 @@ if ( ! defined( 'QTRANSLATE_FILE' ) ) {
 	define( 'QTRANSLATE_FILE', __FILE__ );
 }
 
-define('QTX_VERSION','2.9.8.6');
+define('QTX_VERSION','2.9.8.7');
 
 /* DEFAULT CONFIGURATION PART BEGINS HERE */
 
@@ -252,9 +252,6 @@ $q_config['not_available']['pt'] = "Desculpe-nos, mas este texto esta apenas dis
 $q_config['not_available']['pl'] = "Przepraszamy, ten wpis jest dostępny tylko w języku %LANG:, : i %.";
 $q_config['not_available']['gl'] = "Sentímolo moito, ista entrada atopase unicamente en %LANG;,: e %.";
 $q_config['not_available']['tr'] = "Sorry, this entry is only available in %LANG:, : and %.";
-
-// qTranslate Services
-$q_config['qtranslate_services'] = false;
 
 // strftime usage (backward compability)
 $q_config['use_strftime'] = QTX_DATE;

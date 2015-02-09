@@ -166,6 +166,12 @@ Use plugin [Google XML Sitemaps v3 for qTranslate](https://wordpress.org/plugins
 
 If you wish to use different flag images, point option "Flag Image Path" to your own folder, containing custom images outside of "plugins" or "themes" folders, where it will not be overridden during an update. Most people would put it somewhere under "uploads" folder.
 
+= After activation qTranslate-X my front page goes into an infinite redirection loop. =
+
+qTranslate-X redirects to a canonical URL before rendering a page, which is necessary for some plugins ([BuddyPress](https://wordpress.org/plugins/buddypress/), for example) to work correctly. Canonical URL is defined based on options "Site Address (URL)" and "WordPress Address (URL)" from page /wp-admin/options-general.php, option "URL Modification Mode" from /wp-admin/options-general.php?page=qtranslate-x.
+
+If .htaccess then redirects to a different URL, an infinite redirection loop may occur, which can be fixed after proper editing of .htaccess file. In most cases, the default .htaccess from hosting service provider works correctly.
+
 = What is wrong with the original qTranslate? =
 
 qTranslate still works fine at frontend, except one known to me bug of incorrect date display in comments for some themes. However, its backend breaks tinyMCE content editor in post editing page. Many people have been reporting the problems, but the author keeps silence. qTranslate-X uses the same database backend, and updated admin interface with a slightly different design.
@@ -208,8 +214,9 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 
 == Changelog ==
 
-= 2.9.8.6 alpha =
+= 2.9.8.7 alpha =
 * more on proper detection of front-end vs back-end on AJAX calls.
+* 'attr_title' is now translated in menu display
 
 = 2.9.8.5 alpha =
 * more on option "Hide Content which is not available for the selected language"
@@ -347,13 +354,15 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 == Known Issues ==
 
 * Turn on option "Compatibility Functions", if you use [WooCommerce](https://wordpress.org/plugins/woocommerce/) framework plugins, like [IM8 qTranslate WooCommerce](https://wordpress.org/plugins/im8-qtranslate-woocommerce/), [qTranslate support for WooCommerce](https://wordpress.org/plugins/qtranslate-support-for-woocommerce/), [WooCommerce-qTML](https://wordpress.org/plugins/woocommerce-qtml/), for example. Also it is needed for any theme, which claims its compatibility with former qTranslate.
-* If other plugin installs a custom TinyMCE editor on a translatable field served by qTranslate-X, then all kind of problems start to happen. Examples of 'offending' plugins are: [Fusion Page Builder](http://www.theme-fusion.com/), [Page Builder by SiteOrigin](https://wordpress.org/plugins/siteorigin-panels/), [Rich Text Tags](https://wordpress.org/plugins/rich-text-tags/), [WP Editor](https://wordpress.org/plugins/wp-editor/). We are looking into possibilities to enable integration with those plugins.
+* If other plugin installs a custom TinyMCE editor on a translatable field served by qTranslate-X, then all kind of problems start to happen. Examples of 'offending' plugins are: [Fusion Page Builder](http://www.theme-fusion.com/), [Page Builder by SiteOrigin](https://wordpress.org/plugins/siteorigin-panels/), [Rich Text Tags](https://wordpress.org/plugins/rich-text-tags/), [Visual Composer](http://vc.wpbakery.com/), [WP Editor](https://wordpress.org/plugins/wp-editor/). We are looking into possibilities to enable integration with those plugins.
+* Editing of menu item description does not work properly on page `/wp-admin/nav-menus.php`.
 * When [Jetpack by WordPress.com](https://wordpress.org/plugins/jetpack/) is enabled, pressing 'Save Changes' at Settings/General (/wp-admin/options-general.php) page, causes fields "Site Title" and "Tagline" to be emptied, if they had multilingual values. It only happens when Jetpack is connected to WordPress. For now, when you need to edit those values, deactivate Jetpack, make your edits, then re-activate JetPack again. Fortunately, that general setting page need not to be changed frequently. [WP topic](https://wordpress.org/support/topic/site-titletagline-disappear-on-general-settings-update)
 * Message "The backup of this post in your browser is different from the version below" appears sometimes in the post editor. Clicking on "Restore the backup" may produce unexpected result, since backup has one language only, the one which was active at the time of the last pressing of button "Update". The code which causes this is in /wp-includes/js/autosave.js. Autosave script is currently turned off to avoid this confusion.
 * Search in Category/Tags editor works in default language only.
 * If field "Alternative Text" on page "Edit Media" is left empty, then caption or title will be used untranslated in 'alt' attribute of image display. There is no WP hook provided to enable translation in such a case (see code of 'function wp_get_attachment_image'). However, if "Alternative Text" is filled with non-empty value, then it is shown translated and correctly. We could only re-implement the WP algorithm to be run for the second time under filter 'wp_get_attachment_image_attributes' with translation, which would hurt performance a little bit. If this is a real problem for you, let us know, we can put it in as an option, or submit pull request with your version of implementation. [WP topic](https://wordpress.org/support/topic/odd-behavior-with-photos-and-photo-galleries)
 * Page `/wp-admin/edit-tags.php?taxonomy=category`: if default language name of new category/tag is empty, nothing gets added.
 * [resolved] Sometimes after a new plugin update is released, the language switching buttons disappear on the first editor page load. Refresh the page to bring them back. Apparently, it has something to do with browse caching mechanism.
+
 
 == Credentials ==
 

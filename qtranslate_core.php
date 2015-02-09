@@ -22,18 +22,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 
 function qtranxf_init_language() {
-	global $q_config;
-	// check if it isn't already initialized - it is always called once only
-	//if(defined('QTRANX_INIT')){ echo "qtranxf_init_language second time"; return; }
-	//define('QTRANX_INIT',true);
-	//global $pagenow; //qtranxf_dbg_log('qtranxf_init_language: pagenow='.$pagenow);
-	//qtranxf_dbg_log('qtranxf_init_language: WP_ADMIN=',defined('WP_ADMIN'));
-	//qtranxf_dbg_log('qtranxf_init_language: DOING_AJAX=',defined('DOING_AJAX'));
-	//if(defined('DOING_AJAX')){
-	//	//qtranxf_dbg_log('qtranxf_init_language: _REQUEST=',$_REQUEST);
-	//	//qtranxf_dbg_log('qtranxf_init_language: _GET=',$_GET);
-	//	//qtranxf_dbg_log('qtranxf_init_language: _POST=',$_POST);
-	//}
+	global $q_config, $pagenow;
 
 	qtranxf_loadConfig();
 
@@ -43,47 +32,53 @@ function qtranxf_init_language() {
 	if(isset($_SERVER['SERVER_PORT']) && !empty($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT']!='80'){
 		$host.=':'.$_SERVER['SERVER_PORT'];
 	}
-	//$referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
-	//qtranxf_dbg_log('qtranxf_init_language: IP='.$_SERVER['REMOTE_ADDR']);
-	//qtranxf_dbg_log('qtranxf_init_language: URL='.$host.$_SERVER['REQUEST_URI']);
 
 	$url = $_SERVER['REQUEST_URI'];
 
 	$url_info = array();
+
+	if(WP_DEBUG){
+		$url_info['pagenow'] = $pagenow;
+		if(defined('WP_ADMIN')&&WP_ADMIN) $url_info['WP_ADMIN'] = true;
+		if(defined('DOING_AJAX')) $url_info['DOING_AJAX_POST'] = $_POST;
+		if(defined('DOING_CRON')) $url_info['DOING_CRON_POST'] = $_POST;
+	}
+
 	$url_info['host'] = $host;
 	$url_info['url'] = $url;
 	$url_info['original_url'] = $url;//move below for debugging purpose only
 
 	$url_info['language'] = qtranxf_detect_language($url_info);
-	//qtranxf_dbg_log('qtranxf_init_language: url_info: ',$url_info);
+	$q_config['url_info'] = $url_info;
 
-	$q_config['url_info'] = apply_filters('qtranslate_url_info', $url_info);//slug redirection etc.?
-	$url_info = $q_config['url_info'];
-
-	//qtranxf_dbg_log('qtranxf_init_language: url_info: ',$url_info);
-
-	if( !defined('WP_ADMIN') && !defined('DOING_AJAX') && !defined('DOING_CRON') && isset($url_info['doredirect'])){
-		$lang = $url_info['language'];
-		$scheme = isset($_SERVER['HTTPS'])?'https://':'http://';
-		$urlorg = $scheme.$host.$url;
-		$urlstd = $scheme.$url_info['host'].$url_info['url'];
-		$urlnew = qtranxf_convertURL($urlstd,$lang);
-		$target = apply_filters('qtranslate_language_detect_redirect', $urlnew, $urlorg, $url_info);
-		//qtranxf_dbg_log('qtranxf_init_language: doredirect to '.$lang.PHP_EOL.'urlstd:'.$urlstd.PHP_EOL.'urlorg:'.$urlorg.PHP_EOL.'target:'.$target);
-		if($target!==false && $target != $urlorg){
-			wp_redirect($target);
-			//header('Location: '.$target);
-			exit();
+	if(isset($url_info['doredirect'])){
+		if(!defined('WP_ADMIN') && !defined('DOING_AJAX') && !defined('DOING_CRON') && empty($_POST)){
+			$lang = $url_info['language'];
+			$scheme = isset($_SERVER['HTTPS'])?'https://':'http://';
+			$urlorg = $scheme.$host.$url;
+			$urlstd = $scheme.$url_info['host'].$url_info['url'];
+			$urlnew = qtranxf_convertURL($urlstd,$lang);
+			$target = apply_filters('qtranslate_language_detect_redirect', $urlnew, $urlorg, $url_info);
+			qtranxf_dbg_log('qtranxf_init_language: doredirect to '.$lang.PHP_EOL.'urlstd:'.$urlstd.PHP_EOL.'urlorg:'.$urlorg.PHP_EOL.'target:'.$target);
+			if($target!==false && $target != $urlorg){
+				wp_redirect($target);
+				//header('Location: '.$target);
+				exit();
+			}else{
+				$url_info['doredirect'] .= ' - cancelled, because it goes to the same target.';
+			}
+		}else{
+			$url_info['doredirect'] .= ' - cancelled by WP_ADMIN or DOING_AJAX or DOING_CRON or not empty POST';
 		}
 	}
 
-	$q_config['language'] = apply_filters('qtranslate_language', $url_info['language']);
+	$q_config['language'] = apply_filters('qtranslate_language', $url_info['language'], $url_info);
 
 	// fix url to prevent xss
 	$q_config['url_info']['url'] = qtranxf_convertURL(add_query_arg('lang',$q_config['default_language'],$q_config['url_info']['url']));
 
 	// Filter all options for language tags
-	if($q_config['doing_front_end']) {
+	if($q_config['url_info']['doing_front_end']) {
 		$alloptions = wp_load_alloptions();
 		foreach($alloptions as $option => $value) {
 			add_filter('option_'.$option, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
@@ -104,180 +99,296 @@ function qtranxf_init_language() {
 
 	//allow other plugins to initialize whatever they need for language
 	do_action('qtranslate_init_language',$url_info);
-
-//qtranxf_dbg_log('qtranxf_init_language: url_info.url='.$q_config['url_info']['url']);
-//qtranxf_dbg_log('qtranxf_init_language: language='.$q_config['language']);
+	qtranxf_dbg_log('qtranxf_init_language: url_info: ',$url_info);
 }
 
+if(!function_exists('qtranxf_detect_language')){
 function qtranxf_detect_language(&$url_info) {
-	global $q_config;
-	//qtranxf_dbg_log('qtranxf_detect_language: url_info passed: ',$url_info);
-	//$home = parse_url(get_option('home'));//qtranxf_dbg_log("home:",$home);
-	//$home['path'] = isset($home['path'])?trailingslashit($home['path']):'/';
-	//$home['host'] = isset($home['host'])?$home['host'];
-	$home = qtranxf_parseURL(get_option('home'));
-	$home['path'] = isset($home['path']) ? trailingslashit($home['path']) : '/';
-	$url_info['home'] = $home['path'];
+	global $q_config, $pagenow;
+
+	$home_info = qtranxf_parseURL( get_option('home') );
+	$home_info['path'] = isset($home_info['path']) ? trailingslashit($home_info['path']) : '/';
+	$url_info['home'] = $home_info['path'];
+
+	$site_info;
+	if(defined('WP_ADMIN')){
+		$site_info = qtranxf_parseURL( get_option('siteurl') );
+		$site_info['path'] = isset($site_info['path']) ? trailingslashit($site_info['path']) : '/';
+		$url_info['url-home'] = $site_info['path'];
+	}else{
+		$url_info['url-home'] = $url_info['home'];
+	}
 
 	$lang = qtranxf_parse_language_info($url_info);
 
-	$q_config['doing_front_end'] = !defined('WP_ADMIN');
-	//$q_config['doing_front_end'] defines if we are at front- or back-end. Why WP do not have that, or do they?
-	while(!$lang)
-	{
-		if( defined('DOING_AJAX') && isset($_SERVER['HTTP_REFERER']) ){ //try to get language from HTTP_REFERER
-			$http_referer = $_SERVER['HTTP_REFERER'];
-			if(WP_DEBUG){
-				$url_info['http_referer'] = $http_referer;
-				//qtranxf_dbg_log('qtranxf_detect_language: http_referer=',$http_referer);
-			}
-			$referer = qtranxf_parseURL($http_referer);
-			if( $referer['host']==$url_info['host'] && qtranxf_startsWith($referer['path'],$home['path']) ) {
-				$url_info['internal_referer'] = true;
-				$referer['home'] = $home['path'];
-				$referer['url'] = $referer['path'];
-				if(!empty($referer['query'])) $referer['url'] .= '?'.$referer['query'];
-				//qtranxf_dbg_log('qtranxf_detect_language: referer_info: ',$referer);
-				$lang = qtranxf_parse_language_info($referer,true);
-				//qtranxf_dbg_log('qtranxf_detect_language: http_referer: lang=',$lang);
-				if($lang){
+	if( (!$lang || !isset($url_info['doing_front_end'])) && defined('DOING_AJAX') && isset($_SERVER['HTTP_REFERER'])){
+		//assert(WP_ADMIN);
+		//get language from HTTP_REFERER, if needed, and detect front- vs back-end
+		$http_referer = $_SERVER['HTTP_REFERER'];
+		$url_info['http_referer'] = $http_referer;
+		if(strpos($http_referer,'/wp-admin')!==FALSE){
+			$url_info['referer_admin'] = true;
+			$url_info['doing_front_end'] = false;
+		}else{
+			$ref_info = qtranxf_parseURL($http_referer);
+			if( $ref_info['host']==$url_info['host'] ) {
+				//determine $ref_info['url-home']
+				if(!defined('WP_ADMIN')){
+					$site_info = qtranxf_parseURL( get_option('siteurl') );
+					$site_info['path'] = isset($site_info['path']) ? trailingslashit($site_info['path']) : '/';
+				}
+				$home_path = $home_info['path'];
+				$site_path = $site_info['path'];
+				$home_path_len = strlen($home_path);
+				$site_path_len = strlen($site_path);
+				if($home_path_len > $site_path_len){
+					if(qtranxf_startsWith($ref_info['path'],$home_path)){
+						$ref_info['url-home'] = $home_path;
+						$ref_info['doing_front_end'] = true;
+					}elseif(qtranxf_startsWith($ref_info['path'],$site_path)){
+						$ref_info['url-home'] = $site_path;
+						$ref_info['doing_front_end'] = false;
+					}
+				}elseif($home_path_len < $site_path_len){
+					if(qtranxf_startsWith($ref_info['path'],$site_path)){
+						$ref_info['url-home'] = $site_path;
+						$ref_info['doing_front_end'] = false;
+					}elseif(qtranxf_startsWith($ref_info['path'],$home_path)){
+						$ref_info['url-home'] = $home_path;
+						$ref_info['doing_front_end'] = true;
+					}
+				}elseif($home_path != $site_path){
+					if(qtranxf_startsWith($ref_info['path'],$home_path)){
+						$ref_info['url-home'] = $home_path;
+						$ref_info['doing_front_end'] = true;
+					}elseif(qtranxf_startsWith($ref_info['path'],$site_path)){
+						$ref_info['url-home'] = $site_path;
+						$ref_info['doing_front_end'] = false;
+					}
+				}else{//$home_path == $site_path
+					if(qtranxf_startsWith($ref_info['path'],$home_path)){
+						$ref_info['url-home'] = $home_path;
+					}
+				}
+				if(isset($ref_info['url-home'])){
+					$url_info['internal_referer'] = true;
+					$ref_info['url'] = $ref_info['path'];
+					if(!$lang || !(isset($url_info['doing_front_end']) || $ref_info['doing_front_end'])){
+						if(!empty($ref_info['query'])) $ref_info['url'] .= '?'.$ref_info['query'];
+						$lang = qtranxf_parse_language_info($ref_info,true);
+					}
 					$url_info['referer_language'] = $lang;
-					$q_config['doing_front_end'] = true;
-				}else{
-					$url_info['referer_language'] = $q_config['default_language'];
+					if(!isset($url_info['doing_front_end']) && isset($ref_info['doing_front_end'])){
+						$url_info['doing_front_end'] = $ref_info['doing_front_end'];
+					}
 				}
 			}
-			if(!$lang && !qtranxf_language_neutral_path($referer['path'])){
+			if(!$lang && $q_config['hide_default_language']
+				&& isset($url_info['doing_front_end']) && $url_info['doing_front_end'] )
+			{
 				$lang = $q_config['default_language'];
-				$q_config['doing_front_end'] = true;
-			}
-			//qtranxf_dbg_log('qtranxf_detect_language: DOING_AJAX: lang=',$lang);
-		}
-		if($lang) break;
-
-		if( defined('WP_ADMIN') ){
-			$lang = apply_filters('qtranslate_detect_admin_language',$lang,$url_info);
-			//qtranxf_dbg_log('qtranxf_detect_language: admin: lang=',$lang);
-		}
-		if($lang) break;
-
-		if( !defined('WP_ADMIN') && isset($_COOKIE[QTX_COOKIE_NAME_FRONT]) ){
-			$cs;
-			$lang=qtranxf_resolveLangCase($_COOKIE[QTX_COOKIE_NAME_FRONT],$cs);
-			//qtranxf_dbg_log('qtranxf_detect_language: COOKIE: lang=',$lang);
-			if( $lang && (!$q_config['hide_default_language'] || $lang != $q_config['default_language']) ){
-				$url_info['doredirect']=true;
 			}
 		}
-		if($lang) break;
-
-		if($q_config['detect_browser_language']
-			&& ( !isset($_SERVER['HTTP_REFERER']) || strpos($_SERVER['HTTP_REFERER'],$home['host'])===FALSE ) ){
-			$urlunslashed=untrailingslashit($url_info['url']);
-			if(empty($urlunslashed)){
-				$lang=qtranxf_http_negotiate_language();
-				//qtranxf_dbg_log('qtranxf_detect_language: browser: lang=',$lang);
-			}
-		}
-		if($lang) break;
-
-		$lang = $q_config['default_language'];
-		if( !isset($url_info['doredirect'])
-			&& !defined('WP_ADMIN') && !defined('DOING_CRON') && !defined('DOING_AJAX')
-			&& (!$q_config['hide_default_language'] || $lang != $q_config['default_language'])
-		){
-			$language_neutral_path=qtranxf_language_neutral_path($url_info['path']);
-			//qtranxf_dbg_log('qtranxf_detect_language: language_neutral_path=',$language_neutral_path);
-			if(!$language_neutral_path){
-				$url_info['doredirect']=true;
-			}
-		}
-		break;
 	}
 
-	if(!defined('DOING_AJAX')) qtranxf_set_language_cookie($lang);
+	//$url_info['doing_front_end'] defines if we are in front- or back-end. Why WP does not have that, or does it?
+	if(!isset($url_info['doing_front_end'])) $url_info['doing_front_end'] = !defined('WP_ADMIN');
 
-	//qtranxf_dbg_log('qtranxf_detect_language: url_info: result: ',$url_info);
+	if(!$lang) {
+		if( $url_info['doing_front_end'] ){
+			$lang = qtranxf_detect_language_front($url_info);
+		}else{
+			$lang = qtranxf_detect_language_admin($url_info);
+		}
+	}
+
+	$url_info['language'] = $lang;
+	/**
+	 * Hook for possible other methods
+	 * Set $url_info['language'] with the result
+	*/
+	$url_info = apply_filters('qtranslate_detect_language', $url_info);
+	$lang = $url_info['language'];
+	if(!defined('DOING_AJAX')) qtranxf_set_language_cookie($lang);
 	return $lang;
+}
+}
+
+if(!function_exists('qtranxf_detect_language_admin')){
+function qtranxf_detect_language_admin(&$url_info) {
+	require_once(dirname(__FILE__).'/admin/admin_utils.php');
+	$url_info = apply_filters('qtranslate_detect_admin_language',$url_info);
+	return $url_info['lang_admin'];
+}
+}
+
+if(!function_exists('qtranxf_detect_language_front')){
+function qtranxf_detect_language_front(&$url_info) {
+	global $q_config;
+	//assert($url_info['doing_front_end']);
+	while(true){
+		if( isset($_COOKIE[QTX_COOKIE_NAME_FRONT]) ){
+			$cs=null;
+			$lang=qtranxf_resolveLangCase($_COOKIE[QTX_COOKIE_NAME_FRONT],$cs);
+			$url_info['lang_cookie_front'] = $lang;
+			if($lang) break;
+		}
+
+		if($q_config['detect_browser_language']
+			&& ( !isset($_SERVER['HTTP_REFERER']) || strpos($_SERVER['HTTP_REFERER'],$url_info['host'])===FALSE ) ){
+			$urlunslashed=untrailingslashit($url_info['wp-path']);
+			if(empty($urlunslashed)){
+				$lang=qtranxf_http_negotiate_language();
+				$url_info['lang_browser'] = $lang;
+				if($lang) break;
+			}
+		}
+
+		$lang = $q_config['default_language'];
+		break;
+	}
+	if( !isset($url_info['doredirect'])
+		//&& !defined('WP_ADMIN') && !defined('DOING_CRON') && !defined('DOING_AJAX')//will check later
+		&& (!$q_config['hide_default_language'] || $lang != $q_config['default_language'])
+		//&& !$url_info['language_neutral_path']//already so
+	){
+		$url_info['doredirect']='language needs to be shown in url';
+	}
+	return $lang;
+}
 }
 
 /**
-	Expected:
-	- $url_info['url']
-	- $url_info['host']
-	- $url_info['home']
-	
+ * Expects to be set before call:
+ * - $url_info['host']
+ * - $url_info['url-home']
+ * - $url_info['url']
 */
+if(!function_exists('qtranxf_parse_language_info')){
 function qtranxf_parse_language_info(&$url_info, $link=false) {
 	global $q_config;
+
+	$wp_path = substr($url_info['url'],strlen($url_info['url-home']));
+	$url_info['wp-path'] = $wp_path ? $wp_path : '';
+
 	$doredirect=false;
-	$lang_url=null;
-	if( !defined('WP_ADMIN') || $link )
-	switch($q_config['url_mode']) {
-		case QTX_URL_PATH: // pre path
-			$count;
-			$url=preg_replace('#^'.$url_info['home'].'#','',$url_info['url'],-1,$count);
-			//qtranxf_dbg_log('qtranxf_parse_language_info: count='.$count.'; url='.$url.PHP_EOL.'url_info[url]='.$url_info['url']);
-			if( $count > 0 && $url ) {
-				// might have language information
-				if(preg_match("#^([a-z]{2})(/.*)?$#i",$url,$match)) {
-					$lang_url = qtranxf_resolveLangCase($match[1],$doredirect);
-					if($lang_url) $url_info['url'] = $url_info['home'].substr($url, 3);
+
+	if( !defined('WP_ADMIN') || $link ){
+		$lang = null;
+		switch($q_config['url_mode']) {
+			case QTX_URL_PATH: // pre path
+				if(preg_match('#^([a-z]{2})(/.*)?$#i',$url_info['wp-path'],$match)) {
+					$lang = qtranxf_resolveLangCase($match[1],$doredirect);
+					if($lang){
+						$url_info['lang_url'] = $lang;
+						$url_info['url'] = $url_info['url-home'].substr($url_info['wp-path'],3);
+						$url_info['doing_front_end'] = true;
+						if(WP_DEBUG){
+							$url_info['url_mode'] = 'pre-path';
+						}
+					}
 				}
-			}
-			break;
-		case QTX_URL_DOMAIN: // pre domain
-			$host=$url_info['host'];
-			if(!empty($host)) {
-				if(preg_match("#^([a-z]{2})\.#i",$host,$match)) {
-					$lang_url = qtranxf_resolveLangCase($match[1],$doredirect);
-					if($lang_url) $url_info['host'] = substr($host, 3);
+				//}
+				break;
+			case QTX_URL_DOMAIN: // pre domain
+				$host=$url_info['host'];
+				if(!empty($host)) {
+					if(preg_match("#^([a-z]{2})\.#i",$host,$match)) {
+						$lang = qtranxf_resolveLangCase($match[1],$doredirect);
+						if($lang){
+							$url_info['lang_url'] = $lang;
+							$url_info['host'] = substr($host, 3);
+							$url_info['doing_front_end'] = true;
+							if(WP_DEBUG){
+								$url_info['url_mode'] = 'pre-domain';
+							}
+						}
+					}
 				}
-			}
-			break;
-		case QTX_URL_DOMAINS: // domain per language
-			$host=$url_info['host'];
-			if(!empty($host)){
-				foreach($q_config['enabled_languages'] as $lang){
-					if(!isset($q_config['domains'][$lang])) continue;
-					if($q_config['domains'][$lang] != $host) continue;
-					$lang_url = $lang;
-					break;
+				break;
+			case QTX_URL_DOMAINS: // domain per language
+				$host=$url_info['host'];
+				if(!empty($host)){
+					foreach($q_config['enabled_languages'] as $lang){//todo should have hash host->lang
+						if(!isset($q_config['domains'][$lang])) continue;
+						if($q_config['domains'][$lang] != $host) continue;
+						$url_info['lang_url'] = $lang;
+						if($lang != $q_config['default_language'] || strpos(get_option('siteurl'),$host) === FALSE){
+							$url_info['doing_front_end'] = true;
+						}
+						if(WP_DEBUG){
+							$url_info['url_mode'] = 'per-domain';
+						}
+						break;
+					}
 				}
-			}
-			break;
-		default: break;
+				break;
+			default:
+				/**
+				 * Hook for possible other methods
+				 * Set, if applicable:
+				 * $url_info['lang_url']
+				 * $url_info['doing_front_end']
+				 * $url_info['url'] - convert to language neutral
+				*/
+				$url_info = apply_filters('qtranslate_parse_language_info_url_mode', $url_info, $q_config['url_mode'], $link);
+				break;
+		}
 	}
-	//qtranxf_dbg_log('qtranxf_parse_language_info: lang_url:',$lang_url);
 
 	$lang = null;
-	if( isset($_GET['lang']) && !$link ){
-		$lang = qtranxf_resolveLangCase($_GET['lang'],$doredirect);
-		//qtranxf_dbg_log('qtranxf_parse_language_info: GET[lang]='.$lang);
+	if(!$link){
+		if(isset($_GET['lang'])){
+			$lang = qtranxf_resolveLangCase($_GET['lang'],$doredirect);
+			if($lang) $url_info['lang_query_get'] = $lang;//todo excessive?
+		}else if(isset($_POST['lang'])){
+			$lang = qtranxf_resolveLangCase($_POST['lang'],$doredirect);
+			if($lang) $url_info['lang_query_post'] = $lang;//todo excessive?
+		}
 	}else if(preg_match('/(&|&amp;|&#038;|\?)lang=([a-z]{2})/i',$url_info['url'],$match)) {
-		//qtranxf_dbg_log('qtranxf_parse_language_info: match:',$match);
 		$lang = qtranxf_resolveLangCase($match[2],$doredirect);
+		if($lang) $url_info['lang_query_link'] = $lang;//todo excessive?
 	}
-	//qtranxf_dbg_log('qtranxf_parse_language_info: lang_query:',$lang);
+	$url_info['lang_query'] = $lang;
 
 	if($lang){
 		//$url_info['url'] = preg_replace("#(&|\?)lang=".$lang."&?#i","$1",$url_info['url']);
 		//$url_info['url'] = preg_replace("#[\?\&]+$#i","",$url_info['url']);
 		$url_info['url'] = preg_replace('/(&|&amp;|&#038;|\?)lang=[a-z]{2}(&|#)?/i',"$1",$url_info['url']);
 		$url_info['url'] = preg_replace('/(&|&amp;|&#038;|\?)+$/','',$url_info['url']);
-		if($lang_url && $lang !== $lang_url) $doredirect=true;
-		if( $q_config['url_mode']!=QTX_URL_QUERY || ($lang_url && $lang !== $lang_url) ) $doredirect=true;
-	}else if($lang_url){
-		$lang = $lang_url;
-		if($q_config['hide_default_language'] && $lang_url == $q_config['default_language']) $doredirect=true;
+		if(isset($url_info['lang_url'])){
+			if($lang !== $lang_url) $doredirect=true;
+		}else{
+			if( $q_config['url_mode'] != QTX_URL_QUERY ) $doredirect=true;
+		}
+	}else if(isset($url_info['lang_url'])){
+		$lang = $url_info['lang_url'];
+		if($q_config['hide_default_language'] && $lang == $q_config['default_language']) $doredirect=true;
 	}
 
+	if($lang) $url_info['language'] = $lang;
+
 	if($doredirect){
-		$url_info['doredirect'] = true;
+		$url_info['doredirect'] = 'detected in parse_language_info';
 	}
-	//qtranxf_dbg_log('qtranxf_parse_language_info: lang=',$lang);
-	//qtranxf_dbg_log('qtranxf_parse_language_info: doredirect=',$doredirect);
+
+	if(!isset($url_info['doing_front_end'])){
+		$language_neutral_path=qtranxf_language_neutral_path($url_info['wp-path']);
+		$url_info['language_neutral_path'] = $language_neutral_path;
+		if(!$language_neutral_path){
+			$url_info['doing_front_end'] = true;
+		}
+	}
+
+	/**
+	 * Hook for possible other methods
+	 * Set $url_info['language'] with the result
+	*/
+	$url_info = apply_filters('qtranslate_parse_language_info', $url_info, $link);//slug?
+
+	if(isset($url_info['language'])) $lang = $url_info['language'];
 	return $lang;
+}
 }
 
 function qtranxf_setcookie_language($lang, $cookie_name, $cookie_path)
@@ -295,190 +406,6 @@ function qtranxf_set_language_cookie($lang)
 		qtranxf_setcookie_language( $lang, QTX_COOKIE_NAME_FRONT, COOKIEPATH );
 	}
 }
-
-
-/*
-function qtranxf_get_language_cookie()
-{
-	if(defined('WP_ADMIN')){
-		if(isset($_COOKIE[QTX_COOKIE_NAME_ADMIN])) return $_COOKIE[QTX_COOKIE_NAME_ADMIN];
-	}
-	if(isset($_COOKIE[QTX_COOKIE_NAME_FRONT])) return $_COOKIE[QTX_COOKIE_NAME_FRONT];
-	return false;
-}
-
-function qtranxf_detect_language($url, $host, $referer) {
-	global $q_config;
-	//$home = parse_url(get_option('home'));//qtranxf_dbg_log("home:",$home);
-	//$home['path'] = isset($home['path'])?trailingslashit($home['path']):'/';
-	//$home['host'] = isset($home['host'])?$home['host'];
-	$home = qtranxf_parseURL(get_option('home'));
-	$home['path'] = isset($home['path'])?trailingslashit($home['path']):'/';
-
-	$result = array();
-	//$result['language'] = $q_config['default_language'];
-	$result['url'] = $url;
-	$result['original_url'] = $url;
-	$result['host'] = $host;
-	$result['redirect'] = false;
-	$result['internal_referer'] = false;
-	$result['referer'] = $referer;
-	$result['home'] = $home['path'];
-
-	$referer = qtranxf_parseURL($referer);
-
-	$site = qtranxf_parseURL(get_option('siteurl'));
-	$site['path'] = isset($site['path'])?trailingslashit($site['path']):'/';
-	$language_neutral_path=$site['path']!=$home['path'] && qtranxf_startsWith($url,$site['path']);
-	if($language_neutral_path){
-		$url = substr($url,strlen($site['path']));
-	}else{
-		$url = substr($url,strlen($home['path']));
-	}
-	//$result['site_path']=$site['path'];
-
-	$doredirect=false;
-	$lang_url=null;
-	switch($q_config['url_mode']) {
-		case QTX_URL_PATH:
-			// pre url
-			if(!$language_neutral_path && $url) {
-				// might have language information
-				if(preg_match("#^([a-z]{2})(/.*)?$#i",$url,$match)) {
-					$lang_url = qtranxf_resolveLangCase($match[1],$doredirect);
-					if($lang_url){
-						// found language information
-						//$result['language'] = $lang_url;
-						$result['url'] = $home['path'].substr($url, 3);
-					}
-				}
-			}
-			break;
-		case QTX_URL_DOMAIN:
-			// pre domain
-			if($host) {
-				if(preg_match("#^([a-z]{2})\.#i",$host,$match)) {
-					$lang_url = qtranxf_resolveLangCase($match[1],$doredirect);
-					if($lang_url){
-						// found language information
-						//$result['language'] = $lang_url;
-						$result['host'] = substr($host, 3);
-					}
-				}
-			}
-		default: break;
-	}
-	//qtranxf_dbg_log('qtranxf_detect_language: url='.$url);
-	//qtranxf_dbg_log('qtranxf_detect_language: lang_url='.$lang_url);
-
-	// check if referrer is internal
-	if( $referer['host']==$result['host'] && qtranxf_startsWith($referer['path'], $home['path']) ) {
-		// user coming from internal link
-		$result['internal_referer'] = true;
-	}
-
-	$lang=null;
-	if(isset($_GET['lang'])){// language override given
-		$lang = qtranxf_resolveLangCase($_GET['lang'],$doredirect);
-		if($lang){
-			$result['url'] = preg_replace("#(&|\?)lang=".$lang."&?#i","$1",$result['url']);
-			$result['url'] = preg_replace("#[\?\&]+$#i","",$result['url']);
-		} elseif($home['host'] == $result['host'] && $home['path'] == $result['url']) {
-			if(empty($referer['host'])||!$q_config['hide_default_language']) {
-				$result['redirect'] = true;
-			}else{
-				// check if activating language detection is possible
-				if(preg_match("#^([a-z]{2}).#i",$referer['host'],$match)) {
-					$cs=false;
-					$lang = qtranxf_resolveLangCase($match[1],$cs);
-					if($lang) {
-						// found language information
-						$referer['host'] = substr($referer['host'], 3);
-					}
-				}
-				if(!$result['internal_referer']) {
-					// user coming from external link
-					$result['redirect'] = true;
-				}
-			}
-		}
-	}
-
-	if($lang){
-		//qtranxf_dbg_log('qtranxf_detect_language: GET[lang]='.$lang);
-		if($lang_url && $lang !== $lang_url) $doredirect=true;
-	}else if($lang_url){
-		$lang = $lang_url;
-		if($q_config['hide_default_language'] && $lang_url == $q_config['default_language'])
-			$doredirect=true;
-	}else{
-		$lang=qtranxf_get_language_cookie();
-		if($lang){
-			$cs=false;
-			$lang=qtranxf_resolveLangCase($lang,$cs);
-			//qtranxf_dbg_log('qtranxf_detect_language: cookie: lang=',$lang);
-		}
-
-		if(!$lang && $q_config['detect_browser_language']){
-			$lang=qtranxf_http_negotiate_language();
-			//qtranxf_dbg_log('qtranxf_detect_language: browser: lang=',$lang);
-		}
-
-		if(!$lang)
-			$lang = $q_config['default_language'];
-
-		if(!defined('WP_ADMIN') && !defined('DOING_CRON')
-			&& (!$q_config['hide_default_language'] || $lang != $q_config['default_language'])
-		){
-			//qtranxf_dbg_log('qtranxf_detect_language: language_neutral_path=',$language_neutral_path);
-			if(!$language_neutral_path){
-				$url_parsed=parse_url($url);//$url now does not have language information 
-				//qtranxf_dbg_log('qtranxf_detect_language: url_parsed:',$url_parsed);
-				if(isset($url_parsed['path'])){
-					$path=$url_parsed['path'];//$path does not have / in front
-					$language_neutral_path=qtranxf_language_neutral_path($path);
-				}
-			}
-			//qtranxf_dbg_log('qtranxf_detect_language: language_neutral_path=',$language_neutral_path);
-			if(!$language_neutral_path){
-				//qtranxf_dbg_log('qtranxf_detect_language: ignored_file_type=false; path='.$path);
-				$doredirect=true;
-			}
-		}
-	}
-
-	//qtranxf_dbg_log('doredirect=',$doredirect);
-	if($doredirect){
-		$urlto=$result['host'].$result['url'];
-		if(isset($_SERVER['HTTPS']))
-			$urlto='https://'.$urlto;
-		else
-			$urlto='http://'.$urlto;
-		//if(isset($_SERVER['QUERY_STRING'])) $url=
-		$target=qtranxf_convertURL($urlto,$lang,false,!$q_config['hide_default_language']);
-		$target = apply_filters('qtranslate_language_detect_redirect', $target, $result);
-		if($target!==false){
-			//qtranxf_dbg_log('qtranxf_detect_language:doredirect: url='.$url);
-			//qtranxf_dbg_log('qtranxf_detect_language:doredirect: urlto='.$urlto);
-			//qtranxf_dbg_log('qtranxf_detect_language:doredirect: target='.$target);
-			//qtranxf_dbg_log('qtranxf_detect_language:doredirect: POST: ',$_POST);
-			$url_parsed=parse_url($url);
-			$tgt_parsed=parse_url($target);
-			$url_parsed_path=isset($url_parsed['path'])?rtrim($url_parsed['path'],'/?#'):'';
-			$tgt_parsed_path=isset($tgt_parsed['path'])?rtrim($tgt_parsed['path'],'/?#'):'';
-			if($url_parsed_path!=$tgt_parsed_path){
-				qtranxf_set_language_cookie($lang);
-				wp_redirect($target);
-				//header('Location: '.$target);
-				exit();
-			}
-		}
-	}
-	qtranxf_set_language_cookie($lang);
-	$result['language'] = $lang;
-	return $result;
-}
-*/
 
 function qtranxf_get_browser_language(){
 	//qtranxf_dbg_log('qtranxf_get_browser_language: HTTP_ACCEPT_LANGUAGE:',$_SERVER["HTTP_ACCEPT_LANGUAGE"]);
@@ -554,7 +481,7 @@ function qtranxf_init() {
 	// load plugin translations
 	load_plugin_textdomain('qtranslate', false, dirname(plugin_basename( __FILE__ )).'/lang');
 
-	if($q_config['doing_front_end']){
+	if($q_config['url_info']['doing_front_end']){
 		// don't filter untranslated posts in admin
 		if($q_config['hide_untranslated']){
 			add_filter('posts_where_request', 'qtranxf_excludeUntranslatedPosts',10,2);
@@ -632,10 +559,11 @@ function qtranxf_load_option_array($nm) {
 	$q_config[$nm]=$vals;
 }
 
-function qtranxf_load_option_bool( $nm ) {
+function qtranxf_load_option_bool( $nm, $default=null ) {
 	global $q_config;
 	$val = get_option('qtranslate_'.$nm);
-	if($val==='0') $q_config[$nm] = false;
+	if($val===FALSE){ if(!is_null($default)) $q_config[$nm] = $default; }
+	elseif($val==='0') $q_config[$nm] = false;
 	elseif($val==='1') $q_config[$nm] = true;
 }
 

@@ -1,22 +1,25 @@
 <?php
 
-function qtranxf_detect_admin_language($language,$url_info) {
+function qtranxf_detect_admin_language($url_info) {
 	global $q_config;
-	$cs;
-	$lang;
+	$cs=null;
+	$lang=null;
 	if(isset($_COOKIE[QTX_COOKIE_NAME_ADMIN])){
 		$lang=qtranxf_resolveLangCase($_COOKIE[QTX_COOKIE_NAME_ADMIN],$cs);
+		$url_info['lang_cookie_admin'] = $lang;
 	}
 	if(!$lang){
 		$locale = get_locale();
-		//qtranxf_dbg_log('qtranxf_detect_admin_language: locale='.$locale);
+		$url_info['locale'] = $locale;
 		$lang = qtranxf_resolveLangCase(substr($locale,0,2),$cs);
+		$url_info['lang_locale'] = $lang;
 		if(!$lang) $lang = $q_config['default_language'];
 	}
-	//qtranxf_dbg_log('qtranxf_detect_admin_language: lang='.$lang);
-	return $lang;
+	$url_info['doing_front_end'] = false;
+	$url_info['lang_admin'] = $lang;
+	return $url_info;
 }
-add_filter('qtranslate_detect_admin_language','qtranxf_detect_admin_language',10,2);
+add_filter('qtranslate_detect_admin_language','qtranxf_detect_admin_language');
 
 function qtranxf_mark_default($text) {
 	global $q_config;

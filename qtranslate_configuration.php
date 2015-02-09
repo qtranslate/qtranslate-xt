@@ -261,7 +261,6 @@ function qtranxf_add_admin_footer_js ( $enqueue_script=false ) {
 		$config['domains']=$q_config['domains'];
 	}
 	$config['url_info_home']=$q_config['url_info']['home'];
-	//$config['WP_CONTENT_URL']=trailingslashit(WP_CONTENT_URL);
 	$config['flag_location']=qtranxf_flag_location();
 	$config['js']=array();
 	$config['flag']=array();
@@ -366,7 +365,8 @@ function qtranxf_add_admin_css () {
 	echo ".qtranxs_lang_div.active { background: #DFDFDF; border-left:1px solid #D0D0D0; border-right: 1px solid #F7F7F7; padding:6px 4px 8px 4px }";
 */
 	//echo "#qtranxs_debug { width:100%; height:200px }";
-	do_action('qtranslate_css');
+	do_action('qtranslate_admin_css');
+	do_action('qtranslate_css');//should not be used
 	echo '</style>'.PHP_EOL;
 }
 

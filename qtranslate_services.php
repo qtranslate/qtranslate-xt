@@ -22,31 +22,13 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 /* qTranslate Services */
 
-// generate public key
-$qts_public_key = '-----BEGIN PUBLIC KEY-----|MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDNccmB4Up9V9+vD5kWWiE6zpRV|m7y1sdFihreycdpmu3aPjKooG5LWUbTTyc993nTxV71SKuuYdkPzu5JxniAsI2N0|7DsySZ/bQ2/BEANNwJD3pmz4NmIHgIeNaUze/tvTZq6m+FTVHSvEqAaXJIsQbO19|HeegbfEpmCj1d/CgOwIDAQAB|-----END PUBLIC KEY-----|';
-
-// OpenSSL functions used
-$qts_openssl_functions_used = array(
-	'openssl_pkey_new',
-	'openssl_pkey_export',
-	'openssl_pkey_get_details',
-	'openssl_seal',
-	'openssl_open',
-	'openssl_free_key'
-	);
-
-// check schedule
-if (!wp_next_scheduled('qts_cron_hook')) {
-	wp_schedule_event( time(), 'hourly', 'qts_cron_hook' );
-}
-
-define('QTS_FAST_TIMEOUT',						10);
-define('QTS_VERIFY',								'verify');
+define('QTS_FAST_TIMEOUT', 10);
+define('QTS_VERIFY', 'verify');
 define('QTS_GET_SERVICES', 'get_services');
 define('QTS_INIT_TRANSLATION', 'init_translation');
 define('QTS_RETRIEVE_TRANSLATION', 'retrieve_translation');
-define('QTS_QUOTE',								'quote');
-define('QTS_STATE_OPEN',							'open');
+define('QTS_QUOTE', 'quote');
+define('QTS_STATE_OPEN', 'open');
 define('QTS_STATE_ERROR', 'error');
 define('QTS_STATE_CLOSED', 'closed');
 define('QTS_ERROR_INVALID_LANGUAGE', 'QTS_ERROR_INVALID_LANGUAGE');
@@ -57,23 +39,51 @@ define('QTS_ERROR_SERVICE_GENERIC', 'QTS_ERROR_SERVICE_GENERIC');
 define('QTS_ERROR_SERVICE_UNKNOWN', 'QTS_ERROR_SERVICE_UNKNOWN');
 define('QTS_DEBUG','QTS_DEBUG');
 
-// error messages
-$qts_error_messages[QTS_ERROR_INVALID_LANGUAGE] = __('The language/s do not have a valid ISO 639-1 representation.','qtranslate');
-$qts_error_messages[QTS_ERROR_NOT_SUPPORTED_LANGUAGE] = __('The language/s you used are not supported by the service.','qtranslate');
-$qts_error_messages[QTS_ERROR_INVALID_SERVICE] = __('There is no such service.','qtranslate');
-$qts_error_messages[QTS_ERROR_INVALID_ORDER] = __('The system could not process your order.','qtranslate');
-$qts_error_messages[QTS_ERROR_SERVICE_GENERIC] = __('There has been an error with the selected service.','qtranslate');
-$qts_error_messages[QTS_ERROR_SERVICE_UNKNOWN] = __('An unknown error occured with the selected service.','qtranslate');
-$qts_error_messages[QTS_DEBUG] = __('The server returned a debugging message.','qtranslate');
+/** runs once on file load */
+function qts_initialize()
+{
+	// generate public key
+	global $qts_public_key;
+	$qts_public_key = '-----BEGIN PUBLIC KEY-----|MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDNccmB4Up9V9+vD5kWWiE6zpRV|m7y1sdFihreycdpmu3aPjKooG5LWUbTTyc993nTxV71SKuuYdkPzu5JxniAsI2N0|7DsySZ/bQ2/BEANNwJD3pmz4NmIHgIeNaUze/tvTZq6m+FTVHSvEqAaXJIsQbO19|HeegbfEpmCj1d/CgOwIDAQAB|-----END PUBLIC KEY-----|';
+
+	// OpenSSL functions used
+	global $qts_openssl_functions_used;
+	$qts_openssl_functions_used = array(
+		'openssl_pkey_new',
+		'openssl_pkey_export',
+		'openssl_pkey_get_details',
+		'openssl_seal',
+		'openssl_open',
+		'openssl_free_key'
+		);
+
+	// error messages
+	global $qts_error_messages;
+	$qts_error_messages[QTS_ERROR_INVALID_LANGUAGE] = __('The language/s do not have a valid ISO 639-1 representation.','qtranslate');
+	$qts_error_messages[QTS_ERROR_NOT_SUPPORTED_LANGUAGE] = __('The language/s you used are not supported by the service.','qtranslate');
+	$qts_error_messages[QTS_ERROR_INVALID_SERVICE] = __('There is no such service.','qtranslate');
+	$qts_error_messages[QTS_ERROR_INVALID_ORDER] = __('The system could not process your order.','qtranslate');
+	$qts_error_messages[QTS_ERROR_SERVICE_GENERIC] = __('There has been an error with the selected service.','qtranslate');
+	$qts_error_messages[QTS_ERROR_SERVICE_UNKNOWN] = __('An unknown error occured with the selected service.','qtranslate');
+	$qts_error_messages[QTS_DEBUG] = __('The server returned a debugging message.','qtranslate');
+
+	// check schedule
+	if (!wp_next_scheduled('qts_cron_hook')) {
+		wp_schedule_event( time(), 'hourly', 'qts_cron_hook' );
+	}
+	qts_load();
+}
+qts_initialize();
 
 // hooks
-add_action('qtranslate_css', 'qts_css');
+add_action('admin_menu', 'qts_init');
+//add_action('qtranslate_init', 'qts_init');
+add_action('qtranslate_admin_css', 'qts_css');
 add_action('qts_cron_hook', 'qts_cron');
 add_action('qtranslate_configuration', 'qts_config_hook', 10);
 add_action('qtranslate_loadConfig', 'qts_load');
 add_action('qtranslate_saveConfig', 'qts_save');
 add_action('qtranslate_clean_uri', 'qts_clean_uri');
-add_action('admin_menu', 'qts_init');
 add_action('wp_ajax_qts_quote', 'qts_quote');
 
 add_filter('manage_order_columns', 'qts_order_columns');
@@ -174,8 +184,7 @@ function qts_translateButtons($available_languages, $missing_languages) {
 }
 
 function qts_css() {
-//<style type="text/css" media="screen">
-?>
+echo '
 p.error {background-color:#ffebe8;border-color:#c00;border-width:1px;border-style:solid;padding:0 .6em;margin:5px 15px 2px;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px;border-radius:3px;}
 p.error a{color:#c00;}
 #qts_boxes { margin-right:300px }
@@ -192,16 +201,22 @@ p.error a{color:#c00;}
 .qts_no-bottom-border { border-bottom:0 !important }
 #submitboxcontainer p { margin:6px 6px ; }
 .qts_submit { text-align:right; padding:6px }
-<?php
-//</style>
+';
 }
 
 function qts_load() {
 	global $q_config, $qts_public_key;
-	$qtranslate_services = get_option('qtranslate_qtranslate_services');
-	$qtranslate_services = qtranxf_validateBool($qtranslate_services, $q_config['qtranslate_services']);
-	$q_config['qtranslate_services'] = $qtranslate_services && qts_isOpenSSLAvailable();
-	if($q_config['qtranslate_services'] && is_string($qts_public_key)) {
+	// qTranslate Services
+	//$q_config['qtranslate_services'] = false;
+	qtranxf_load_option_bool('qtranslate_services',false);
+	//$qtranslate_services = get_option('qtranslate_qtranslate_services');
+	//$qtranslate_services = qtranxf_validateBool($qtranslate_services, $q_config['qtranslate_services']);
+	if(!$q_config['qtranslate_services']) return;
+	if(!qts_isOpenSSLAvailable()){
+		$q_config['qtranslate_services'] = false;
+		return;
+	}
+	if(is_string($qts_public_key)) {
 		$qts_public_key = openssl_get_publickey(join("\n",explode("|",$qts_public_key)));
 	}
 }
@@ -216,24 +231,23 @@ function qts_isOpenSSLAvailable() {
 
 function qts_init() {
 	global $q_config;
-	if($q_config['qtranslate_services']) {
+	if(!$q_config['qtranslate_services']) return;
 	/* disabled for meta box
 		add_filter('qtranslate_toolbar', 'qts_toobar');
 		add_filter('qtranslate_modify_editor_js', 'qts_editor_js');
 	*/
-		add_meta_box('translatediv', __('Translate to','qtranslate'), 'qts_translate_box', 'post', 'side', 'core');
-		add_meta_box('translatediv', __('Translate to','qtranslate'), 'qts_translate_box', 'page', 'side', 'core');
-		
-		add_action('qtranslate_languageColumn', 'qts_translateButtons', 10, 2);
-		
-		// add plugin page without menu link for users with permission
-		if(current_user_can('edit_published_posts')) {
-			//add_posts_page(__('Translate','qtranslate'), __('Translate','qtranslate'), 'edit_published_posts', 'qtranslate_services', 'qts_service');
-			global $_registered_pages;
-			$hookname = get_plugin_page_hookname('qtranslate_services', 'edit.php');
-			add_action($hookname, 'qts_service');
-			$_registered_pages[$hookname] = true;
-		}
+	add_meta_box('translatediv', __('Translate to','qtranslate'), 'qts_translate_box', 'post', 'side', 'core');
+	add_meta_box('translatediv', __('Translate to','qtranslate'), 'qts_translate_box', 'page', 'side', 'core');
+	
+	add_action('qtranslate_languageColumn', 'qts_translateButtons', 10, 2);
+	
+	// add plugin page without menu link for users with permission
+	if(current_user_can('edit_published_posts')) {
+		//add_posts_page(__('Translate','qtranslate'), __('Translate','qtranslate'), 'edit_published_posts', 'qtranslate_services', 'qts_service');
+		global $_registered_pages;
+		$hookname = get_plugin_page_hookname('qtranslate_services', 'edit.php');
+		add_action($hookname, 'qts_service');
+		$_registered_pages[$hookname] = true;
 	}
 }
 
@@ -378,8 +392,8 @@ function qts_config_hook($request_uri) {
 	<tr>
 		<th scope="row"><?php _e('qTranslate Services', 'qtranslate') ?></th>
 		<td>
-			<?php if(!qts_isOpenSSLAvailable()) { printf(__('<div id="message" class="error fade"><p>qTranslate Services could not load <a href="%s">OpenSSL</a>!</p></div>'), 'http://www.php.net/manual/book.openssl.php'); } ?>
-			<label for="qtranslate_services"><input type="checkbox" name="qtranslate_services" id="qtranslate_services" value="1"<?php echo ($q_config['qtranslate_services'])?' checked="checked"':''; ?>/> <?php _e('Enable qTranslate Services', 'qtranslate'); ?></label>
+			<?php if($q_config['qtranslate_services'] && !qts_isOpenSSLAvailable()) { printf(__('<div id="message" class="error fade"><p>qTranslate Services could not load <a href="%s">OpenSSL</a>!</p></div>'), 'http://www.php.net/manual/book.openssl.php'); } ?>
+			<label for="qtranslate_services"><input type="checkbox" name="qtranslate_services" id="qtranslate_services" value="1"<?php checked($q_config['qtranslate_services']); ?>/> <?php _e('Enable qTranslate Services', 'qtranslate'); ?></label>
 			<br/>
 			<small><?php _e('With qTranslate Services, you will be able to use professional human translation services with a few clicks.', 'qtranslate'); ?></small>
 		</td>
@@ -551,14 +565,14 @@ function qts_service() {
 		printf(__('Post with id "%s" not found!','qtranslate'), $post_id);
 		return;
 	}
-	$default_service = intval(get_option('qts_default_service'),0);
+	$default_service = intval(get_option('qts_default_service'),5);
 	$service_settings = get_option('qts_service_settings');
 	// Detect available Languages and possible target languages
 	$available_languages = qtranxf_getAvailableLanguages($post->post_content);
 	if(sizeof($available_languages)==0) {
 		$error = __('The requested Post has no content, no Translation possible.', 'qtranslate');
 	}
-	
+
 	// try to guess source and target language
 	if(!in_array($translate_from, $available_languages)) $translate_from = '';
 	$missing_languages = array_diff($q_config['enabled_languages'], $available_languages);
@@ -593,12 +607,19 @@ function qts_service() {
 	$post_excerpt = qtranxf_use($translate_from,$post->post_excerpt);
 	if(!empty($translate_from)) $translate_from_name  = $q_config['language_name'][$translate_from];
 	if(!empty($translate_to)) $translate_to_name = $q_config['language_name'][$translate_to];
+
+	$post_title_html = htmlspecialchars($post_title);
+	$permalink = get_permalink($post_id);
+	if($permalink){
+		if($translate_from_name) $permalink = qtranxf_convertURL($translate_from_name,$permalink);
+		$post_title_html = '<a href="'.$permalink.'" target="_blank">'.$post_title_html.'</a>';
+	}
 	if(!empty($translate_from) && !empty($translate_to)) {
-		$title = sprintf('Translate &quot;%1$s&quot; from %2$s to %3$s', htmlspecialchars($post_title), $translate_from_name, $translate_to_name);
+		$title = sprintf('Translate &quot;%1$s&quot; from %2$s to %3$s', $post_title_html, $translate_from_name, $translate_to_name);
 	} elseif(!empty($translate_from)) {
-		$title = sprintf('Translate &quot;%1$s&quot; from %2$s', htmlspecialchars($post_title), $translate_from_name);
+		$title = sprintf('Translate &quot;%1$s&quot; from %2$s', $post_title_html, $translate_from_name);
 	} else {
-		$title = sprintf('Translate &quot;%1$s&quot;', htmlspecialchars($post_title));
+		$title = sprintf('Translate &quot;%1$s&quot;', $post_title_html);
 	}
 	
 	// Check data
@@ -768,6 +789,18 @@ if(!empty($message)) {
 <ul>
 <?php
 		if($services = qts_queryQS(QTS_GET_SERVICES)) {
+			$default_service_ok = false;
+			foreach($services as $service_id => $service) {
+				if($service_id != $default_service) continue;
+				$default_service_ok = true;
+				break;
+			}
+			if(!$default_service_ok){
+				foreach($services as $service_id => $service) {
+					$default_service = $service_id;
+					break;
+				}
+			}
 			foreach($services as $service_id => $service) {
 				// check if we have data for all required fields
 				//if($service_id==1) continue;//qTranslate Services Test
@@ -785,7 +818,7 @@ if(!empty($message)) {
 <?php
 				} else {
 ?>
-<li><label><input type="radio" id="qts_service_<?php echo $service['service_id'];?>" onclick="chooseservice(this.value)" value="<?php echo $service['service_id'];?>" <?php echo $confirm?'disabled="disabled"':'name="service_id"'; ?> /> <b><?php echo qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($service['service_name']); ?></b> ( <a href="<?php echo $service['service_url']; ?>" target="_blank"><?php _e('Website', 'qtranslate'); ?></a> )</label><p class="service_description"><?php echo qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($service['service_description']); ?></p></li>
+<li><label><input type="radio" id="qts_service_<?php echo $service['service_id'];?>" onclick="chooseservice(this.value)" value="<?php echo $service['service_id']; ?>"<?php checked($service['service_id'],$default_service); ?> <?php echo $confirm?'disabled="disabled"':'name="service_id"'; ?> /> <b><?php echo qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($service['service_name']); ?></b> ( <a href="<?php echo $service['service_url']; ?>" target="_blank"><?php _e('Website', 'qtranslate'); ?></a> )</label><p class="service_description"><?php echo qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($service['service_description']); ?></p></li>
 <?php
 				}
 			}
@@ -793,7 +826,7 @@ if(!empty($message)) {
 </ul>
 <script type="text/javascript">
 	function chooseservice(id) {
-		if(id<=0) return;
+		if(id == '0') return;
 		jQuery('#qts_service_'+id).attr('checked','checked');
 		jQuery('#submitdiv .request').html('<?php _e('<p><img src="images/wpspin_light.gif"> Getting Quote...</p>', 'qtranslate'); ?>');
 		jQuery.post(ajaxurl, {
@@ -806,11 +839,11 @@ if(!empty($message)) {
 				eval(response);
 		});
 	}
-	
+
 	function sendorder() {
 		jQuery("#qtranslate-services-translate").submit();
 	}
-	
+
 	chooseservice('<?php echo isset($_REQUEST['service_id'])?$_REQUEST['service_id']:$default_service; ?>');
 </script>
 		</div>
@@ -831,8 +864,8 @@ if(!empty($message)) {
 <?php
 	}
 ?>
-</div>
 </form>
+</div>
 <?php
 }
 
