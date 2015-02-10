@@ -59,7 +59,7 @@ function qtranxf_init_language() {
 			$urlstd = $scheme.$url_info['host'].$url_info['url'];
 			$urlnew = qtranxf_convertURL($urlstd,$lang);
 			$target = apply_filters('qtranslate_language_detect_redirect', $urlnew, $urlorg, $url_info);
-			qtranxf_dbg_log('qtranxf_init_language: doredirect to '.$lang.PHP_EOL.'urlstd:'.$urlstd.PHP_EOL.'urlorg:'.$urlorg.PHP_EOL.'target:'.$target);
+			//qtranxf_dbg_log('qtranxf_init_language: doredirect to '.$lang.PHP_EOL.'urlstd:'.$urlstd.PHP_EOL.'urlorg:'.$urlorg.PHP_EOL.'target:'.$target);
 			if($target!==false && $target != $urlorg){
 				wp_redirect($target);
 				//header('Location: '.$target);
@@ -99,7 +99,7 @@ function qtranxf_init_language() {
 
 	//allow other plugins to initialize whatever they need for language
 	do_action('qtranslate_init_language',$url_info);
-	qtranxf_dbg_log('qtranxf_init_language: url_info: ',$url_info);
+	//qtranxf_dbg_log('qtranxf_init_language: url_info: ',$url_info);
 }
 
 if(!function_exists('qtranxf_detect_language')){

@@ -147,4 +147,40 @@ function qtranxf_admin_notices_plugin_conflicts()
 	qtranxf_admin_notice_plugin_conflict('zTranslate','ztranslate/ztranslate.php');
 }
 add_action('admin_notices', 'qtranxf_admin_notices_plugin_conflicts');
+
+function qtranxf_admin_notices_survey_request()
+{
+	$messages = get_option('qtranslate_admin_notices');
+	if(isset($messages['survey-translation-service'])) return;
+?>
+<script type="text/javascript">
+	function qtranxj_dismiss_admin_notice(id) {
+		jQuery('#qtranxs_'+id).css('display','none');
+		jQuery.post(ajaxurl, { action: 'qtranslate_admin_notice', notice_id: id }
+		//,function(response) { eval(response); }
+		);
+	}
+</script>
+<?php
+	echo '<div class="updated" id="qtranxs_survey-translation-service"><p style="font-size: larger;">';// text-align: center;
+	printf(__('Thank you for using %s plugin!','qtranslate'), '<a href="https://wordpress.org/plugins/qtranslate-x/" style="color:blue" target="_blank">qTranslate&#8209;X</a>');
+	echo '<br>';
+	printf(__('Please, help us to make decision on "%s" feature, press the button below.','qtranslate'),__('Translation Service', 'qtranslate'));
+	echo '</p><p><a class="button" href="http://www.marius-siroen.com/qTranslate-X/TranslateServices/" target="_blank">';
+	printf(__('Survey on "%s" feature','qtranslate'),__('Translation Service', 'qtranslate'));
+	echo '</a>&nbsp;&nbsp;&nbsp;<a class="button" href="javascript:qtranxj_dismiss_admin_notice(\'survey-translation-service\');">'.__('I have already done it, dismiss this message.', 'qtranslate');
+	echo '</a></p></div>';
+}
+add_action('admin_notices', 'qtranxf_admin_notices_survey_request');
+
+function qtranxf_ajax_qtranslate_admin_notice()
+{
+	if(!isset($_POST['notice_id'])) return;
+	$id = $_POST['notice_id'];
+	$messages = get_option('qtranslate_admin_notices',array());
+	$messages[$id] = time();
+	update_option('qtranslate_admin_notices',$messages);
+	//echo "jQuery('#qtranxs_+$id').css('display','none');"; die();
+}
+add_action('wp_ajax_qtranslate_admin_notice', 'qtranxf_ajax_qtranslate_admin_notice');
 ?>
