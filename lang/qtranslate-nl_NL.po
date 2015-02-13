@@ -83,7 +83,7 @@ msgstr "Vertaal Services"
 #: admin/activation_hook.php:170
 #, php-format
 msgid "Survey on \"%s\" feature"
-msgstr "Enquête ove der  \"%s\" functie"
+msgstr "Enquête over de  \"%s\" functie"
 
 #: admin/activation_hook.php:171
 msgid "I have already done it, dismiss this message."
