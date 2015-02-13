@@ -489,6 +489,7 @@ msgid "Enter \"%s\" or \"%s\" attribute of text fields from your theme, which yo
 msgstr ""
 
 #: qtranslate_configuration.php:994
+msgctxt "browser option"
 msgid "Inspect Element"
 msgstr ""
 

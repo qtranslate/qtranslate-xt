@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: qTranslate-X 3.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-02-10 18:54-0700\n"
-"PO-Revision-Date: 2015-02-04 13:43-0000\n"
+"PO-Revision-Date: 2015-02-13 12:46-0000\n"
 "Last-Translator: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "Language-Team: Pedro Mendonça <ped.gaspar@gmail.com>\n"
+"Language: pt_PT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: pt_PT\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Generator: Poedit 1.7.4\n"
@@ -53,12 +53,12 @@ msgstr "Desactivar"
 #: admin/activation_hook.php:166
 #, php-format
 msgid "Thank you for using %s plugin!"
-msgstr ""
+msgstr "Obrigado por utilizar o plugin %s!"
 
 #: admin/activation_hook.php:168
 #, php-format
 msgid "Please, help us to make decision on \"%s\" feature, press the button below."
-msgstr ""
+msgstr "Por favor, ajude-nos a decidir sobre o recurso de \"%s\", clique no botão abaixo."
 
 #: admin/activation_hook.php:168 admin/activation_hook.php:170
 #: qtranslate_services.php:786
@@ -68,11 +68,11 @@ msgstr "Serviço de Tradução"
 #: admin/activation_hook.php:170
 #, php-format
 msgid "Survey on \"%s\" feature"
-msgstr ""
+msgstr "Questionário sobre o recurso \"%s\""
 
 #: admin/activation_hook.php:171
 msgid "I have already done it, dismiss this message."
-msgstr ""
+msgstr "Já fiz isto, descartar esta mensagem."
 
 #: admin/admin_utils.php:165 qtranslate_configuration.php:404
 msgid "Flag"
@@ -417,7 +417,7 @@ msgstr "Esconder informação do idioma do URL para o idioma por omissão."
 
 #: qtranslate_configuration.php:932
 msgid "This is only applicable to Pre-Path and Pre-Domain mode."
-msgstr ""
+msgstr "Isto é apenas aplicável nos modos de pré-caminho e pré-domínio."
 
 #: qtranslate_configuration.php:934
 msgid "Use Per-Domain mode: specify separate user-defined domain for each language."
@@ -495,6 +495,7 @@ msgid "Enter \"%s\" or \"%s\" attribute of text fields from your theme, which yo
 msgstr "Introduza o atributo de \"%s\" ou \"%s\" dos campos de texto do seu tema que pretende traduzir. Isto é aplicável a artigos, páginas ou editores de media (%s). Para procurar um \"%s\" ou \"%s\", clique com o botão direito num campo no editor de artigo ou página e escolha \"%s\". Procure um atributo do campo, de nome \"%s\" ou \"%s\". Introduza abaixo, tantos quantos desejar, separados por espaço ou por vírgulas. Após guardar a configuração, estes campos começarão a responder aos botões de selecção de idioma, permitindo-lhe introduzir diferentes textos para cada idioma. Os campos de introdução do tipo %s serão analisados utilizando a sintaxe %s, campos de introdução simples utilizarão sintaxe %s. Se precisar de ultrapassar este comportamento, preceda os nomes dos campos com o prefixo %s ou %s para especificar que sintaxe utilizar. Para mais informações, leia as %sFAQ%s."
 
 #: qtranslate_configuration.php:994
+msgctxt "browser option"
 msgid "Inspect Element"
 msgstr "Inspeccionar elemento"
 
@@ -770,7 +771,7 @@ msgstr "Informação adicional: %s"
 #: qtranslate_services.php:676
 #, php-format
 msgid "An serious error occured and qTranslate Services cannot proceed. For help, please visit the <a href=\"%s\">Support Forum</a>"
-msgstr "Ocorreu um erro grave e os Serviços do qTranslate não conseguem prosseguir. Para ajuda, por favor visite o <a href=\"%s\">Fórum de Suporte</a>"
+msgstr "Ocorreu um erro grave e os Serviços qTranslate não conseguem prosseguir. Para ajuda, por favor visite o <a href=\"%s\">Fórum de Suporte</a>"
 
 #: qtranslate_services.php:685
 msgid "Order successfully sent."
@@ -803,7 +804,7 @@ msgstr "Ver todos os pedidos pendentes."
 
 #: qtranslate_services.php:699
 msgid "Let qTranslate Services check if any open orders are finished."
-msgstr "Permitir que os Serviços do qTranslate verifiquem se os pedidos pendentes estarão concluídos."
+msgstr "Permitir que os Serviços qTranslate verifiquem se os pedidos pendentes estarão concluídos."
 
 #: qtranslate_services.php:700
 msgid "View this post."
@@ -836,7 +837,7 @@ msgstr "Requesitar tradução"
 
 #: qtranslate_services.php:768
 msgid "Javascript is required for qTranslate Services"
-msgstr "É necessário o javascript para utlizar os Serviços do qTranslate"
+msgstr "É necessário o javascript para utlizar os Serviços qTranslate"
 
 #: qtranslate_services.php:769
 msgid "Please choose a service first"
@@ -844,7 +845,7 @@ msgstr "Por favor, primeiro escolha um serviço"
 
 #: qtranslate_services.php:778
 msgid "ERROR: Could not connect to qTranslate Services. Please try again later."
-msgstr "ERRO: Não foi possível estabelecer ligação aos Serviços do qTranslate. Por favor tente mais tarde."
+msgstr "ERRO: Não foi possível estabelecer ligação aos Serviços qTranslate. Por favor tente mais tarde."
 
 #: qtranslate_services.php:815
 #, php-format
@@ -865,7 +866,7 @@ msgstr "Rever artigo"
 
 #: qtranslate_services.php:859
 msgid "Your article will be SSL encrypted and securly sent to qTranslate Services, which will forward your text to the chosen Translation Service. Once qTranslate Services receives the translated text, it will automatically appear on your blog."
-msgstr "O seu artigo será encriptado por SSL e enviado em modo seguro para os Serviços do qTranslate, que reencaminharão o seu texto para o Serviço de Tradução escolhido. Assim que os Serviços do qTranslate receberem o texto traduzido, automaticamente aparecerão no seu blog."
+msgstr "O seu artigo será encriptado por SSL e enviado em modo seguro para os Serviços qTranslate, que reencaminharão o seu texto para o Serviço de Tradução escolhido. Assim que os Serviços qTranslate receberem o texto traduzido, automaticamente aparecerão no seu blog."
 
 #: qtranslate_services.php:898 qtranslate_services.php:905
 msgid "unavailable"
@@ -937,10 +938,10 @@ msgstr "Para repor os valores originais, remova o texto."
 msgid "Widget"
 msgstr "﻿Widget"
 
-#~ msgctxt "browser option"
 #~ msgid "Inspect Element"
 #~ msgstr "Inspeccionar elemento"
 
+#~ msgctxt "browser option"
 #~ msgid "Show / Hide"
 #~ msgstr "Mostrar / Esconder"
 
