@@ -260,6 +260,7 @@ function qts_save() {
 }
 
 function qts_cleanup($var, $action) {
+	if( !is_array($var) ) $var;
 	switch($action) {
 		case QTS_GET_SERVICES:
 			foreach($var as $service_id => $service) {
@@ -295,11 +296,11 @@ function qts_config_pre_hook($message) {
 			$services = qts_queryQS(QTS_GET_SERVICES);
 			$service_settings = get_option('qts_service_settings');
 			if(!is_array($service_settings)) $service_settings = array();
-			
+
 			foreach($services as $service_id => $service) {
 				// check if there are already settings for the field
 				if(!isset($service_settings[$service_id])||!is_array($service_settings[$service_id])) $service_settings[$service_id] = array();
-				
+
 				// update fields
 				foreach($service['service_required_fields'] as $field) {
 					if(isset($_POST['qts_'.$service_id.'_'.$field['name']])) {

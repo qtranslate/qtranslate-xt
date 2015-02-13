@@ -94,7 +94,7 @@ The theme must pass those values through [translation](http://codex.wordpress.or
 The following fields are pre-configured to be translatable by default:
 
 - all input fields of class "wp-editor-area", which normally include all TinyMCE visual editors.
-- fields with the following id: "title", "attachment_caption", "attachment_alt".
+- fields with the following id: "title", "excerpt", "attachment_caption", "attachment_alt".
 
 This applies to post, pages and media editors (/wp-admin/post*). 
 
@@ -215,8 +215,16 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 == Changelog ==
 
 = 3.0 =
+* not yet released
 * Includes all changes after version 2.9.6.
-* Please, do not forget to respond to survey on ['Translate Service' feature](http://www.marius-siroen.com/qTranslate-X/TranslateServices/)
+* Please, do not forget to respond to [survey on 'Translate Service' feature](http://www.marius-siroen.com/qTranslate-X/TranslateServices/) by courtesy of [Gunu (Marius Siroen)](https://profiles.wordpress.org/grafcom), whose continuous help is much appreciated.
+
+= 2.9.8.9 alpha =
+* Feature: editing of menu item description on page /wp-admin/nav-menus.php.
+* Feature: hooks for integration with other plugins
+* Improvement: safer comment query with cache support when 'Hide Untranslated Content' is on. [issue #17](https://github.com/qTranslate-Team/qtranslate-x/issues/17)
+* Compatibility: [PS Disable Auto Formatting](https://wordpress.org/plugins/ps-disable-auto-formatting/). [WP issue](https://wordpress.org/support/topic/incompatibility-with-ps-disable-auto-formatting)
+* Maintenance: .pot and .po files updated with new untranslated strings.
 
 = 2.9.8.8 alpha =
 * request for survey on ['Translate Service' feature](http://www.marius-siroen.com/qTranslate-X/TranslateServices/)
@@ -362,8 +370,7 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 == Known Issues ==
 
 * Turn on option "Compatibility Functions", if you use [WooCommerce](https://wordpress.org/plugins/woocommerce/) framework plugins, like [IM8 qTranslate WooCommerce](https://wordpress.org/plugins/im8-qtranslate-woocommerce/), [qTranslate support for WooCommerce](https://wordpress.org/plugins/qtranslate-support-for-woocommerce/), [WooCommerce-qTML](https://wordpress.org/plugins/woocommerce-qtml/), for example. Also it is needed for any theme, which claims its compatibility with former qTranslate.
-* If other plugin installs a custom TinyMCE editor on a translatable field served by qTranslate-X, then all kind of problems start to happen. Examples of 'offending' plugins are: [Crayon Syntax Highlighter](https://wordpress.org/plugins/crayon-syntax-highlighter/), [Fusion Page Builder](http://www.theme-fusion.com/), [Page Builder by SiteOrigin](https://wordpress.org/plugins/siteorigin-panels/), [Rich Text Tags](https://wordpress.org/plugins/rich-text-tags/), [Visual Composer](http://vc.wpbakery.com/), [WP Editor](https://wordpress.org/plugins/wp-editor/). We are looking into possibilities to enable integration with those plugins.
-* Editing of menu item description does not work properly on page `/wp-admin/nav-menus.php`.
+* If other plugin installs a custom TinyMCE editor on a translatable field served by qTranslate-X, then all kind of problems start to happen. Examples of 'offending' plugins are: [Crayon Syntax Highlighter](https://wordpress.org/plugins/crayon-syntax-highlighter/), [Fusion Page Builder](http://www.theme-fusion.com/), [Page Builder by SiteOrigin](https://wordpress.org/plugins/siteorigin-panels/), [Revolution Slider](http://revolution.themepunch.com/), [Rich Text Tags](https://wordpress.org/plugins/rich-text-tags/), [Visual Composer](http://vc.wpbakery.com/), [WP Editor](https://wordpress.org/plugins/wp-editor/). We are looking into possibilities to enable integration with those plugins.
 * Title of the site on admin pages is not displaying correctly [WP topic](https://wordpress.org/support/topic/title-dont-show-the-right-text-in-admin).
 * When [Jetpack by WordPress.com](https://wordpress.org/plugins/jetpack/) is enabled, pressing 'Save Changes' at Settings/General (/wp-admin/options-general.php) page, causes fields "Site Title" and "Tagline" to be emptied, if they had multilingual values. It only happens when Jetpack is connected to WordPress. For now, when you need to edit those values, deactivate Jetpack, make your edits, then re-activate JetPack again. Fortunately, that general setting page need not to be changed frequently. [WP topic](https://wordpress.org/support/topic/site-titletagline-disappear-on-general-settings-update)
 * Message "The backup of this post in your browser is different from the version below" appears sometimes in the post editor. Clicking on "Restore the backup" may produce unexpected result, since backup has one language only, the one which was active at the time of the last pressing of button "Update". The code which causes this is in /wp-includes/js/autosave.js. Autosave script is currently turned off to avoid this confusion.
@@ -371,6 +378,7 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 * If field "Alternative Text" on page "Edit Media" is left empty, then caption or title will be used untranslated in 'alt' attribute of image display. There is no WP hook provided to enable translation in such a case (see code of 'function wp_get_attachment_image'). However, if "Alternative Text" is filled with non-empty value, then it is shown translated and correctly. We could only re-implement the WP algorithm to be run for the second time under filter 'wp_get_attachment_image_attributes' with translation, which would hurt performance a little bit. If this is a real problem for you, let us know, we can put it in as an option, or submit pull request with your version of implementation. [WP topic](https://wordpress.org/support/topic/odd-behavior-with-photos-and-photo-galleries)
 * Page `/wp-admin/edit-tags.php?taxonomy=category`: if default language name of new category/tag is empty, nothing gets added.
 * Title field is overlaid with the prompt "Enter title here", after switching the language from another language with empty value of title. [Watch Video](http://youtu.be/o3HH65bEZ4s) reported by [fotkin](https://wordpress.org/support/profile/fotkin).
+* [resolved] Editing of menu item description does not work properly on page `/wp-admin/nav-menus.php`.
 * [resolved] Sometimes after a new plugin update is released, the language switching buttons disappear on the first editor page load. Refresh the page to bring them back. Apparently, it has something to do with browse caching mechanism.
 
 

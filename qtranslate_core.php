@@ -93,6 +93,7 @@ function qtranxf_init_language() {
 			require_once(dirname(__FILE__).'/qtranslate_services.php');
 	}
 
+	$q_config['qtrans_compatibility'] = apply_filters('qtranslate_compatibility', $q_config['qtrans_compatibility']);
 	if(isset($q_config['qtrans_compatibility']) && $q_config['qtrans_compatibility']){
 		require_once(dirname(__FILE__).'/qtranslate_compatibility.php');
 	}
@@ -884,7 +885,7 @@ function qtranxf_get_url_for_language($url, $lang, $showLanguage) {
 			break;
 		case QTX_URL_DOMAINS: // domain per language
 			return $q_config['domains'][$lang].'/'.$url;
-		default: // query
+		case QTX_URL_QUERY: // query
 			if($showLanguage){
 				//$url=add_query_arg('lang',$lang,$url);//it is doing much more than needed here
 				if(strpos($url,'?')===false) {
@@ -894,6 +895,9 @@ function qtranxf_get_url_for_language($url, $lang, $showLanguage) {
 				}
 				$url .= 'lang='.$lang;
 			}
+			break;
+		default:
+			$url = apply_filters('qtranslate_get_url_for_language_url_mode',$url,$lang,$showLanguage,$url_mode,$urlinfo);
 			break;
 	}
 

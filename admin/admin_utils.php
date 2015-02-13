@@ -250,7 +250,10 @@ add_filter('the_title', 'qtranxf_admin_the_title', 0);//WP: fires for display pu
 //filter added in qtranslate_hooks.php
 function qtranxf_trim_words( $text, $num_words, $more, $original_text ) {
 	global $q_config;
+	//qtranxf_dbg_log('qtranxf_trim_words: $text: ',$text);
+	//qtranxf_dbg_log('qtranxf_trim_words: $original_text: ',$original_text);
 	$blocks = qtranxf_get_language_blocks($original_text);
+	//qtranxf_dbg_log('qtranxf_trim_words: $blocks: ',$blocks);
 	if ( count($blocks) <= 1 )
 		return $text;
 	$lang = $q_config['language'];
@@ -258,7 +261,23 @@ function qtranxf_trim_words( $text, $num_words, $more, $original_text ) {
 	foreach($texts as $key => $txt){
 		$texts[$key] = wp_trim_words($txt, $num_words, $more);
 	}
-	return qtranxf_join_c($texts);
+	return qtranxf_join_b($texts);//has to be 'b', because 'c' gets stripped in /wp-admin/includes/nav-menu.php:182: esc_html( $item->description )
+}
+
+/**
+ * The same as core wp_htmledit_pre in /wp-includes/formatting.php,
+ * but with last argument of htmlspecialchars $double_encode off,
+ * which makes it to survive multiple applications from other plugins,
+ * for example, "PS Disable Auto Formatting" (https://wordpress.org/plugins/ps-disable-auto-formatting/)
+ * cited on support thread https://wordpress.org/support/topic/incompatibility-with-ps-disable-auto-formatting.
+ * @since 2.9.8.9
+*/
+if(!function_exists('qtranxf_htmledit_pre')){
+function qtranxf_htmledit_pre($output) {
+	if ( !empty($output) )
+		$output = htmlspecialchars($output, ENT_NOQUOTES, get_option( 'blog_charset' ), false ); // convert only < > &
+	return apply_filters( 'htmledit_pre', $output );
+}
 }
 
 function qtranxf_the_editor($editor_div)
@@ -266,7 +285,7 @@ function qtranxf_the_editor($editor_div)
 	// remove wpautop, which causes unmatched <p> on combined language strings
 	if('html' != wp_default_editor()) {
 		remove_filter('the_editor_content', 'wp_richedit_pre');
-		add_filter('the_editor_content', 'wp_htmledit_pre');
+		add_filter('the_editor_content', 'qtranxf_htmledit_pre', 99);
 	}
 	return $editor_div;
 }

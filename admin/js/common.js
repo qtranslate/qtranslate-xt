@@ -1,10 +1,10 @@
 /*
 //debuging tools, do not check in
+*/
 var cc=0;
 function c(v){ ++cc; console.log('== '+cc+': '+v); }
 function ct(v){ c(v); console.trace(); }
 function co(t,o){ ++cc; console.log('== '+cc+': '+t+': %o',o); }
-*/
 
 qtranxj_split = function(text,keep_neutral_text)
 {
@@ -16,8 +16,6 @@ qtranxj_split = function(text,keep_neutral_text)
 	}
 	var split_regex = /(<!--:[a-z]{2}-->|<!--:-->|\[:[a-z]{2}\])/gi;
 	var blocks = text.xsplit(split_regex);
-	//c('qtranxj_split: blocks='+blocks);
-	//c('qtranxj_split: blocks.length='+blocks.length);
 	if(!qtranxj_isArray(blocks))
 		return result;
 	if(blocks.length==1){//no language separator found, enter it to all languages
@@ -337,18 +335,6 @@ var qTranslateX=function(pg)
 			var h=displayHooks[i];
 			h.elem.innerHTML=h.contents[this.lang];
 		}
-/*
-		if (window.tinyMCE)
-		for(var i=0; i<tinyMCE.editors.length; ++i){
-			var ed=tinyMCE.editors[i];
-			var h=contentHooks[ed.id];
-			if(!h) continue;
-			//c('onTabSwitch: h['+ed.id+'].contentField.value before save:'+h.contentField.value);
-			ed.save({format: 'html'});
-			//c('onTabSwitch: h['+ed.id+'].contentField.value  after save:'+h.contentField.value);
-			h.contents[h.lang] = h.contentField.value;
-		}
-*/
 		for(var key in contentHooks){
 			var h=contentHooks[key];
 			var mce = h.mce && !h.mce.hidden;
@@ -411,6 +397,18 @@ var qTranslateX=function(pg)
 		}
 	}
 
+	addContentHooksByClassName=function(nm,form,container,sep)
+	{
+		if(!container) container=form;
+		var fields=container.getElementsByClassName(nm);
+		//if(sep=='[') //c('addContentHooksByClass: fields.length='+fields.length);
+		for(var i=0; i<fields.length; ++i){
+			var f=fields[i];
+			//if(sep=='[') //co('addContentHooksByClass: f: ',f);
+			addContentHook(f,form,sep);
+		}
+	}
+
 	this.addContentHooksByClass=function(nm,form,container)
 	{
 		var sep;
@@ -418,13 +416,7 @@ var qTranslateX=function(pg)
 			sep=nm.substring(0,1);
 			nm=nm.substring(1);
 		}
-		if(!container) container=form;
-		var fields=container.getElementsByClassName(nm);
-		//c('addContentHooksByClass: fields.length='+fields.length);
-		for(var i=0; i<fields.length; ++i){
-			var f=fields[i];
-			addContentHook(f,form,sep);
-		}
+		addContentHooksByClassName(nm,form,container,sep);
 	}
 
 	// adds custom hooks from configuration
@@ -439,6 +431,29 @@ var qTranslateX=function(pg)
 			var nm=qTranslateConfig.custom_field_classes[i];
 			this.addContentHooksByClass(nm,form);
 		}
+	}
+
+	this.addPageHooks=function(page_config)
+	{
+		for(var i=0; i < page_config.forms.length; ++i){
+			var frm = page_config.forms[i];
+			var form = document.getElementById(frm.form.id);
+			//co('form=',form);
+			if(!form) continue;
+			for(var k=0; k < frm.fields.length; ++k){
+				var fld = frm.fields[k];
+				var sep = fld.encode;
+				//co('fld=',fld);
+				//c('sep='+sep);
+				if(fld.id) this.addContentHookById(fld.id,form,sep);
+				else if(fld.class) addContentHooksByClassName(fld.class,form,form,sep);
+				else{
+					//todo tag, name
+					continue;
+				}
+			}
+		}
+		return true;
 	}
 
 	this.addContentHooksTinyMCE=function()
@@ -519,23 +534,44 @@ var qTranslateX=function(pg)
 		return null;
 	}
 
-	if(!pg.addContentHooks(this))
+	if( typeof(pg.addContentHooks) == "function" && !pg.addContentHooks(this) )
 		return;
+
+	if( qTranslateConfig.page_config && !this.addPageHooks(qTranslateConfig.page_config) )
+		return;
+
 	{
-		var langSwitchWrap=qtranxj_ce('ul', {className: 'qtranxs-lang-switch-wrap'});
-		//var header=w.getElementsByTagName('h2')[0];
-		//header.parentNode.insertBefore(langSwitchWrap, header.nextElementSibling);
-		var f=pg.langSwitchWrapAnchor;
-		if(!f){
-			f = this.getWrapForm();
-			//var w = document.getElementsByClassName('wrap')[0];
-			//f = w.getElementsByTagName('form')[0];
+		var anchors=[];
+		if(qTranslateConfig.page_config && qTranslateConfig.page_config.anchors){
+			for(var i=0; i < qTranslateConfig.page_config.anchors.length; ++i){
+				var anchor = qTranslateConfig.page_config.anchors[i];
+				var f = document.getElementById(anchor);
+				if(f) anchors.push(f);
+			}
 		}
-		f.parentNode.insertBefore(langSwitchWrap, f);
-		languageSwitch=new qtranxj_LanguageSwitch(langSwitchWrap);
-		languageSwitch.onSwitch(onTabSwitch);
-		if(pg.onTabSwitch)
-			languageSwitch.onSwitch(onTabSwitchCustom);
+		if(!anchors.length){
+			var f=pg.langSwitchWrapAnchor;
+			if(!f){
+				f = this.getWrapForm();
+			}
+			if(!f){
+				f = this.getWrapForm();
+				//var w = document.getElementsByClassName('wrap')[0];
+				//f = w.getElementsByTagName('form')[0];
+			}
+			if(f) anchors.push(f);
+		}
+		for(var i=0; i < anchors.length; ++i){
+			var anchor = anchors[i];
+			var langSwitchWrap=qtranxj_ce('ul', {className: 'qtranxs-lang-switch-wrap'});
+			//var header=w.getElementsByTagName('h2')[0];
+			//header.parentNode.insertBefore(langSwitchWrap, header.nextElementSibling);
+			anchor.parentNode.insertBefore( langSwitchWrap, anchor );
+			var languageSwitch = new qtranxj_LanguageSwitch(langSwitchWrap);
+			languageSwitch.onSwitch(onTabSwitch);
+			if(pg.onTabSwitch)
+				languageSwitch.onSwitch(onTabSwitchCustom);
+		}
 	}
 }
 

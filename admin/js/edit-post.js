@@ -10,6 +10,7 @@ qTranslateConfig.js={
 		if(!form) return false;
 
 		qtx.addContentHookByIdC('title',form);
+		qtx.addContentHookByIdC('excerpt',form);
 
 		var wpEditorAreas=form.getElementsByClassName('wp-editor-area');
 		for(var i=0; i<wpEditorAreas.length; ++i){

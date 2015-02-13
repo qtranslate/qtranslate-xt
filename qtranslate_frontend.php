@@ -347,7 +347,19 @@ function qtranxf_excludeUntranslatedPosts($where,&$query) {//WP_Query
 
 function qtranxf_excludeUntranslatedPostComments($clauses, &$q/*WP_Comment_Query*/) {
 	global $wpdb;
-	//qtranxf_dbg_echo('qtranxf_excludeUntranslatedPostComments: $clauses: ',$clauses);
+
+	//qtranxf_dbg_log('qtranxf_excludeUntranslatedPostComments: $clauses: ',$clauses);
+	//if(!isset($clauses['join'])) return $clauses;
+	//if(strpos($clauses['join'],$wpdb->posts) === FALSE) return $clauses;
+
+	if( !isset($clauses['join']) || empty($clauses['join']) ){
+		$clauses['join'] = "JOIN $wpdb->posts ON $wpdb->posts.ID = $wpdb->comments.comment_post_ID";
+	}elseif(strpos($clauses['join'],$wpdb->posts) === FALSE){
+		//do not break some more complex JOIN if it ever happens
+		return $clauses;
+	}
+	//qtranxf_dbg_log('qtranxf_excludeUntranslatedPostComments: $wpdb->posts found');
+
 	$single_post_query=is_singular();
 	if($single_post_query){
 		$single_post_query = preg_match('/comment_post_ID\s*=\s*[\'"]*(\d+)[\'"]*/i',$clauses['where'])==1;
@@ -357,6 +369,13 @@ function qtranxf_excludeUntranslatedPostComments($clauses, &$q/*WP_Comment_Query
 	}
 	return $clauses;
 }
+
+//this does not help, since they cut additional query_vars before generating cache key
+//function qtranxf_pre_get_comments(&$query) //WP_Comment_Query &$this
+//{
+//	$query->query_vars[QTX_COOKIE_NAME_FRONT] = qtranxf_getLanguage();
+//}
+//add_action( 'pre_get_comments', 'qtranxf_pre_get_comments' );
 
 //function qtranxf_get_attachment_image_attributes($attr, $attachment, $size)
 function qtranxf_get_attachment_image_attributes($attr, $attachment=null, $size=null)

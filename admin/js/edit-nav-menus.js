@@ -9,9 +9,6 @@ qTranslateConfig.js={
 
 		addMenuItemHooks=function(li,form)
 		{
-			//co('addMenuItemHooks: qtx',qtx);
-			//co('addMenuItemHooks: form',form);
-			//co('addMenuItemHooks: li',li);
 			qtx.addContentHooksByClass('edit-menu-item-title',form,li);
 			qtx.addContentHooksByClass('edit-menu-item-attr-title',form,li);
 			qtx.addContentHooksByClass('[edit-menu-item-description',form,li);//must use '[:]' separator style
@@ -37,25 +34,11 @@ qTranslateConfig.js={
 			var wp_addMenuItemToBottom = wpNavMenu.addMenuItemToBottom;
 			if( typeof wp_addMenuItemToBottom == 'function'){
 				wpNavMenu.addMenuItemToBottom = function( menuMarkup, req ) {
-					//co('menuMarkup: before',menuMarkup);
-					//get id of default description, which gets broken due to line "$menu_item->description = apply_filters( 'nav_menu_description', wp_trim_words( $menu_item->post_content, 200 ) );" in /wp-includes/nav-menu.php
-					var matches;
-					var rxd = /(<textarea id="edit-menu-item-description.*>)(.*)(<\/textarea>)/gi;
-					while((matches = rxd.exec(menuMarkup))){
-						//co('matches',matches);
-						menuMarkup = menuMarkup.replace(matches[0],matches[1]+matches[3]);
-					}
 					wp_addMenuItemToBottom( menuMarkup, req );
-					//co('menuMarkup: after',menuMarkup);
-					//co('req:',req);
-					//co('addMenuItemToBottom: form',form);
 					var rx = /id="menu-item-(\d+)"/gi;
 					while((matches = rx.exec(menuMarkup))){
-						//co('matches('+matches.length+')',matches);
 						var id = 'menu-item-'+matches[1];
-						//co('addMenuItemToBottom: id',id);
 						var li = document.getElementById(id);
-						//co('addMenuItemToBottom: li['+id+']',li);
 						if(li)
 							addMenuItemHooks(li,form);
 					}
@@ -71,9 +54,6 @@ qTranslateConfig.js={
 ,
 	onTabSwitch: function(lang,qtx)
 	{
-		//c('onTabSwitch: lang='+lang);
-		//co('onTabSwitch: qtx=',qtx);
-		//co('onTabSwitch: wpNavMenu',wpNavMenu);
 		if(wpNavMenu){
 			if( typeof wpNavMenu.refreshKeyboardAccessibility == 'function'){
 				wpNavMenu.refreshKeyboardAccessibility();

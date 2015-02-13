@@ -7,19 +7,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: qTranslate-X 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-04 12:48-0000\n"
+"POT-Creation-Date: 2015-02-10 18:54-0700\n"
 "PO-Revision-Date: 2015-02-09 22:47+0200\n"
+"Last-Translator: \n"
 "Language-Team: qTranslate Team Translators\n"
-"Language: ru_RU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: ru_RU\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Generator: Poedit 1.7.4\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"Last-Translator: \n"
 "X-Poedit-SearchPath-0: .\n"
 
 #: admin/activation_hook.php:37
@@ -50,20 +50,44 @@ msgstr "Плагин %s не может выполняться одноврем�
 msgid "Deactivate "
 msgstr "Деактивировать"
 
-#: admin/admin_utils.php:162 qtranslate_configuration.php:405
+#: admin/activation_hook.php:166
+#, php-format
+msgid "Thank you for using %s plugin!"
+msgstr ""
+
+#: admin/activation_hook.php:168
+#, php-format
+msgid "Please, help us to make decision on \"%s\" feature, press the button below."
+msgstr ""
+
+#: admin/activation_hook.php:168 admin/activation_hook.php:170
+#: qtranslate_services.php:786
+msgid "Translation Service"
+msgstr "Услуги по переводу"
+
+#: admin/activation_hook.php:170
+#, php-format
+msgid "Survey on \"%s\" feature"
+msgstr ""
+
+#: admin/activation_hook.php:171
+msgid "I have already done it, dismiss this message."
+msgstr ""
+
+#: admin/admin_utils.php:165 qtranslate_configuration.php:404
 msgid "Flag"
 msgstr "Флаг"
 
-#: admin/admin_utils.php:163 qtranslate_configuration.php:445
+#: admin/admin_utils.php:166 qtranslate_configuration.php:444
 msgid "Name"
 msgstr "Название"
 
-#: admin/admin_utils.php:164 qtranslate_services.php:368
+#: admin/admin_utils.php:167 qtranslate_services.php:382
 msgid "Action"
 msgstr "Действие"
 
-#: admin/admin_utils.php:177 qtranslate_configuration.php:392
-#: qtranslate_configuration.php:1063
+#: admin/admin_utils.php:180 qtranslate_configuration.php:391
+#: qtranslate_configuration.php:1064
 msgid "Languages"
 msgstr "Языки"
 
@@ -87,15 +111,15 @@ msgstr "Импорт настроек из"
 msgid "Export settings to "
 msgstr "Экспортировать настройки в"
 
-#: admin/import_export.php:99 qtranslate_configuration.php:907
-msgid "Import"
-msgstr "Импортировать"
-
-#: admin/import_export.php:99 qtranslate_configuration.php:907
+#: admin/import_export.php:99 qtranslate_configuration.php:906
 msgid "Export"
 msgstr "Экспортировать"
 
-#: admin/import_export.php:104 qtranslate_configuration.php:907
+#: admin/import_export.php:99 qtranslate_configuration.php:906
+msgid "Import"
+msgstr "Импортировать"
+
+#: admin/import_export.php:104 qtranslate_configuration.php:906
 msgid "Convert Database"
 msgstr "Преобразование базы данных"
 
@@ -133,740 +157,740 @@ msgstr "Также удалить Переводы Категорий / Мето
 msgid "If something isn't working correctly, you can always try to reset all qTranslate settings. A Reset won't delete any posts but will remove all settings (including all languages added)."
 msgstr "Если что-то не работает должным образом, вы всегда можете попытаться сбросить все настройки qTranslate. Сброс не удалит сообщения, но приведет к удалению всех настроек (в том числе всех добавленных языков)."
 
-#: qtranslate_configuration.php:392
+#: qtranslate_configuration.php:391
 msgid "Language Management"
 msgstr "Управление языками"
 
-#: qtranslate_configuration.php:400
+#: qtranslate_configuration.php:399
 msgid "Language Code"
 msgstr "Код языка"
 
-#: qtranslate_configuration.php:402
+#: qtranslate_configuration.php:401
 msgid "2-Letter <a href=\"http://www.w3.org/WAI/ER/IG/ert/iso639.htm#2letter\">ISO Language Code</a> for the Language you want to insert. (Example: en)"
 msgstr "2-буквы того языка, который Вы хотите добавить <a href=\"http://www.w3.org/WAI/ER/IG/ert/iso639.htm#2letter\">коды языков ISO</a>."
 
-#: qtranslate_configuration.php:430
+#: qtranslate_configuration.php:429
 msgid "Incorrect Flag Image Path! Please correct it!"
 msgstr "Неправильный путь к папке с флагами! Пожалуйста исправьте это."
 
-#: qtranslate_configuration.php:433
+#: qtranslate_configuration.php:432
 msgid "Choose the corresponding country flag for language. (Example: gb.png)"
 msgstr "Выберите соответствующий флаг страны языка. (Пример: gb.png)"
 
-#: qtranslate_configuration.php:447
+#: qtranslate_configuration.php:446
 msgid "The Name of the language, which will be displayed on the site. (Example: English)"
 msgstr "Название языка, которое будет отображаться на сайте. (Пример: Русский)"
 
-#: qtranslate_configuration.php:450
+#: qtranslate_configuration.php:449
 msgid "Locale"
 msgstr "Локаль"
 
-#: qtranslate_configuration.php:453
+#: qtranslate_configuration.php:452
 msgid "PHP and Wordpress Locale for the language. (Example: en_US)"
 msgstr "PHP и Wordpress локаль языка. (Пример: ru_RU)"
 
-#: qtranslate_configuration.php:454
+#: qtranslate_configuration.php:453
 msgid "You will need to install the .mo file for this language."
 msgstr "Вам нужно будет установить .mo-файл для данного языка."
 
-#: qtranslate_configuration.php:458
+#: qtranslate_configuration.php:457
 msgid "Date Format"
 msgstr "Формат даты"
 
-#: qtranslate_configuration.php:460
+#: qtranslate_configuration.php:459
 msgid "Depending on your Date / Time Conversion Mode, you can either enter a <a href=\"http://www.php.net/manual/function.strftime.php\">strftime</a> (use %q for day suffix (st,nd,rd,th)) or <a href=\"http://www.php.net/manual/function.date.php\">date</a> format. This field is optional. (Example: %A %B %e%q, %Y)"
 msgstr "В зависимости от формата вашего Времени/Даты, вы можете ввести <a href=\"http://www.php.net/manual/function.strftime.php\">strftime</a> (use %q for day suffix (st,nd,rd,th)) или <a href=\"http://www.php.net/manual/function.date.php\"> формат даты </a>. Это поле является необязательным. (Пример:%A %B %e%q, %Y)"
 
-#: qtranslate_configuration.php:463
+#: qtranslate_configuration.php:462
 msgid "Time Format"
 msgstr "Формат времени"
 
-#: qtranslate_configuration.php:465
+#: qtranslate_configuration.php:464
 msgid "Depending on your Date / Time Conversion Mode, you can either enter a <a href=\"http://www.php.net/manual/function.strftime.php\">strftime</a> or <a href=\"http://www.php.net/manual/function.date.php\">date</a> format. This field is optional. (Example: %I:%M %p)"
 msgstr "В зависимости от формата вашего Времени/Даты, вы можете ввести <a href=\"http://www.php.net/manual/function.strftime.php\">strftime</a> или <a href=\"http://www.php.net/manual/function.date.php\"> формат даты </a>. Это поле является необязательным. (Пример: %I:%M %p)"
 
-#: qtranslate_configuration.php:468
+#: qtranslate_configuration.php:467
 msgid "Not Available Message"
 msgstr "Сообщение о недоступности"
 
-#: qtranslate_configuration.php:471
+#: qtranslate_configuration.php:470
 msgid "Message to display if post is not available in the requested language. (Example: Sorry, this entry is only available in %LANG:, : and %.)"
 msgstr "Сообщение, отображаемое в случае отсутствия статьи на выбранном языке (Например: Извините, но эта статья доступна только на %LANG:, : и %.)"
 
-#: qtranslate_configuration.php:472
+#: qtranslate_configuration.php:471
 msgid "%LANG:&lt;normal_seperator&gt;:&lt;last_seperator&gt;% generates a list of languages seperated by &lt;normal_seperator&gt; except for the last one, where &lt;last_seperator&gt; will be used instead."
 msgstr "%LANG:&lt;normal_seperator&gt;:&lt;last_seperator&gt;% генерирует список языков, разделенных &lt;normal_seperator&gt; за исключением последнего, где &lt;last_seperator&gt; будет использоваться вместо используемого."
 
-#: qtranslate_configuration.php:577
-msgid "Show"
-msgstr "Показать"
-
-#: qtranslate_configuration.php:577
+#: qtranslate_configuration.php:576
 msgid "Hide"
 msgstr "Скрыть"
 
-#: qtranslate_configuration.php:584
+#: qtranslate_configuration.php:576
+msgid "Show"
+msgstr "Показать"
+
+#: qtranslate_configuration.php:583
 msgid "Save Changes"
 msgstr "Сохранить изменения"
 
-#: qtranslate_configuration.php:601
+#: qtranslate_configuration.php:600
 msgid "Switching Language"
 msgstr "Переключение языка"
 
-#: qtranslate_configuration.php:601
+#: qtranslate_configuration.php:600
 #, php-format
 msgid "Switching language to %1$s... If the Dashboard isn't loading, use this <a href=\"%2$s\" title=\"Dashboard\">link</a>."
 msgstr "Переключение языка в %1$s... Если панель не загружается, используйте эту <a href=\"%2$s\" title=\" панель\">ссылку</a> ."
 
-#: qtranslate_configuration.php:622
+#: qtranslate_configuration.php:621
 msgid "qTranslate has been reset."
 msgstr "qTranslate сброшен."
 
-#: qtranslate_configuration.php:660
+#: qtranslate_configuration.php:659
 msgid "Gettext databases updated."
 msgstr "базы данных Gettext обновлены."
 
-#: qtranslate_configuration.php:665
+#: qtranslate_configuration.php:664
 msgid "The Language must have a Not-Available Message!"
 msgstr "Язык должен иметь Сообщение о недоступности!"
 
-#: qtranslate_configuration.php:666
+#: qtranslate_configuration.php:665
 msgid "The Language must have a Locale!"
 msgstr "Язык должен иметь локаль!"
 
-#: qtranslate_configuration.php:667
+#: qtranslate_configuration.php:666
 msgid "The Language must have a name!"
 msgstr "Язык должен иметь название!"
 
-#: qtranslate_configuration.php:668
+#: qtranslate_configuration.php:667
 msgid "Language Code has to be 2 characters long!"
 msgstr "Код языка должен быть из 2-х символов!"
 
-#: qtranslate_configuration.php:672 qtranslate_configuration.php:678
+#: qtranslate_configuration.php:671 qtranslate_configuration.php:677
 msgid "There is already a language with the same Language Code!"
 msgstr "Уже существует язык с этим кодом!"
 
-#: qtranslate_configuration.php:789
+#: qtranslate_configuration.php:788
 msgid "Language is already enabled or invalid!"
 msgstr "Язык уже включен или недоступен!"
 
-#: qtranslate_configuration.php:794
+#: qtranslate_configuration.php:793
 msgid "Cannot disable Default Language!"
 msgstr "Не могу отключить язык по умолчанию!"
 
-#: qtranslate_configuration.php:797 qtranslate_configuration.php:804
-#: qtranslate_configuration.php:820
+#: qtranslate_configuration.php:796 qtranslate_configuration.php:803
+#: qtranslate_configuration.php:819
 msgid "No such language!"
 msgstr "Нет такого языка!"
 
-#: qtranslate_configuration.php:800
+#: qtranslate_configuration.php:799
 msgid "Language is already disabled!"
 msgstr "Язык уже отключен!"
 
-#: qtranslate_configuration.php:808
+#: qtranslate_configuration.php:807
 msgid "Language is already first!"
 msgstr "Язык уже установлен как язык по умолчанию!"
 
-#: qtranslate_configuration.php:814 qtranslate_configuration.php:830
+#: qtranslate_configuration.php:813 qtranslate_configuration.php:829
 msgid "New order saved."
 msgstr "Новый порядок сохранен."
 
-#: qtranslate_configuration.php:824
+#: qtranslate_configuration.php:823
 msgid "Language is already last!"
 msgstr "Language is already last!"
 
-#: qtranslate_configuration.php:841
+#: qtranslate_configuration.php:840
 msgid "Options saved."
 msgstr "Параметры сохранены."
 
-#: qtranslate_configuration.php:846
+#: qtranslate_configuration.php:845
 #, php-format
 msgid "Could not write to \"%s\", Gettext Databases could not be downloaded!"
 msgstr "Не удалось записать \"%s\",  базы данных Gettext не могут быть загружены!"
 
-#: qtranslate_configuration.php:869
+#: qtranslate_configuration.php:868
 msgid "Edit Language"
 msgstr "Изменить язык"
 
-#: qtranslate_configuration.php:872
+#: qtranslate_configuration.php:871
 msgid "Save Changes &raquo;"
 msgstr "Сохранить изменения &raquo;"
 
-#: qtranslate_configuration.php:877
+#: qtranslate_configuration.php:876
 msgid "Language Management (qTranslate Configuration)"
 msgstr "Управление языками (Конфигурация qTranslate)"
 
-#: qtranslate_configuration.php:878
+#: qtranslate_configuration.php:877
 #, php-format
 msgid "For help on how to configure qTranslate correctly, take a look at the <a href=\"%1$s\">qTranslate FAQ</a> and the <a href=\"%2$s\">Support Forum</a>."
 msgstr "Для получения справки о том, как настроить qTranslate правильно, посмотрите <a href=\"%1$s\">qTranslate FAQ</a> и <a href=\"%2$s\">форум</a> . <br> Перевод на русский язык <a href=\"http://viaestvita.net\">Via est Vita</a>"
 
-#: qtranslate_configuration.php:880
+#: qtranslate_configuration.php:879
 msgid "General Settings"
 msgstr "Общие настройки"
 
-#: qtranslate_configuration.php:883
+#: qtranslate_configuration.php:882
 msgid "Default Language / Order"
 msgstr "Язык по умолчанию"
 
-#: qtranslate_configuration.php:885
+#: qtranslate_configuration.php:884
 msgid "Default Language"
 msgstr "Язык по умолчанию"
 
-#: qtranslate_configuration.php:897
+#: qtranslate_configuration.php:896
 #, php-format
 msgid "Choose the default language of your blog. This is the language which will be shown on %s. You can also change the order the languages by clicking on the arrows above."
 msgstr "Выберите язык по умолчанию для вашего блога. Это язык, который будет показан на %s. Вы также можете изменить порядок языков, нажав на стрелки."
 
-#: qtranslate_configuration.php:902
+#: qtranslate_configuration.php:901
 msgid "Hide Untranslated Content"
 msgstr "Скрыть непереведенное  Содержимое"
 
-#: qtranslate_configuration.php:904
+#: qtranslate_configuration.php:903
 msgid "Hide Content which is not available for the selected language."
 msgstr "Скрыть контент, который не доступен для выбранного языка."
 
-#: qtranslate_configuration.php:906
+#: qtranslate_configuration.php:905
 msgid "When checked, posts will be hidden if the content is not available for the selected language. If unchecked, a message will appear showing all the languages the content is available in."
 msgstr "Когда включено, статьи будут скрыты, если контент отсутствует для выбранного языка. Если флажок не установлен, появится сообщение с указанием всех языков."
 
-#: qtranslate_configuration.php:907
+#: qtranslate_configuration.php:906
 #, php-format
 msgid "This function will not work correctly if you installed %s on a blog with existing entries. In this case you will need to take a look at option \"%s\" under \"%s\" section."
 msgstr "Эта функция не будет работать корректно, если вы установили %s на блог с существующими настройками. В этом случае вам необходимо взглянуть на \"%s\" в разделе \"%s\"."
 
-#: qtranslate_configuration.php:909
+#: qtranslate_configuration.php:908
 msgid "Show displayed language prefix when content is not available for the selected language."
 msgstr "Показывать префикс языка, когда содержимое недоступно для выбранного языка."
 
-#: qtranslate_configuration.php:913
+#: qtranslate_configuration.php:912
 msgid "Detect Browser Language"
 msgstr "Определить язык браузера"
 
-#: qtranslate_configuration.php:915
+#: qtranslate_configuration.php:914
 msgid "Detect the language of the browser and redirect accordingly."
 msgstr "Обнаруживает язык браузера и перенаправляет соответственно."
 
-#: qtranslate_configuration.php:917
+#: qtranslate_configuration.php:916
 msgid "When the frontpage is visited via bookmark/external link/type-in, the visitor will be forwarded to the correct URL for the language specified by his browser."
 msgstr "Когда главная страница посещается через закладки/внешние ссылки/type-in, посетитель будет направлен на правильный URL для языка, указанный в его браузере."
 
-#: qtranslate_configuration.php:922
+#: qtranslate_configuration.php:921
 msgid "Advanced Settings"
 msgstr "Дополнительные настройки"
 
-#: qtranslate_configuration.php:925 qtranslate_configuration.php:927
+#: qtranslate_configuration.php:924 qtranslate_configuration.php:926
 msgid "URL Modification Mode"
 msgstr "Режим URL-Модификации"
 
-#: qtranslate_configuration.php:928
+#: qtranslate_configuration.php:927
+msgid "Most SEO unfriendly, not recommended."
+msgstr "Больше всего не SEO дружелюбно, не рекомендуется."
+
+#: qtranslate_configuration.php:927
 msgid "Use Query Mode (?lang=en)"
 msgstr "Использование режима запроса (?lang=ru)"
 
 #: qtranslate_configuration.php:928
-msgid "Most SEO unfriendly, not recommended."
-msgstr "Больше всего не SEO дружелюбно, не рекомендуется."
+msgid "SEO friendly."
+msgstr "SEO дружелюбно."
 
-#: qtranslate_configuration.php:929
+#: qtranslate_configuration.php:928
 msgid "Use Pre-Path Mode (Default, puts /en/ in front of URL)"
 msgstr "Использование режима предварительно пути (по умолчанию, ставит /en/ перед URL)"
 
 #: qtranslate_configuration.php:929
-msgid "SEO friendly."
-msgstr "SEO дружелюбно."
-
-#: qtranslate_configuration.php:930
 msgid "Use Pre-Domain Mode (uses http://en.yoursite.com)"
 msgstr "Использование режима поддомена (использует http://en.yoursite.com)"
 
-#: qtranslate_configuration.php:930
+#: qtranslate_configuration.php:929
 msgid "You will need to configure DNS sub-domains on your site."
 msgstr "Вам нужно будет настроить DNS под-домены на вашем сайте."
 
-#: qtranslate_configuration.php:931
+#: qtranslate_configuration.php:930
 msgid "Pre-Path and Pre-Domain mode will only work with mod_rewrite/pretty permalinks. Additional Configuration is needed for Pre-Domain mode or Per-Domain mode."
 msgstr "Pre-Path и Pre-Domain режим будет работать только с mod_rewrite/pretty постоянными ссылками. Необходимы дополнительная настройка для режимов Pre-Domain и Pre-Path."
 
-#: qtranslate_configuration.php:932
+#: qtranslate_configuration.php:931
 msgid "Hide URL language information for default language."
 msgstr "Скрыть URL языка для языка по умолчанию."
 
-#: qtranslate_configuration.php:933
+#: qtranslate_configuration.php:932
+msgid "This is only applicable to Pre-Path and Pre-Domain mode."
+msgstr ""
+
+#: qtranslate_configuration.php:934
 msgid "Use Per-Domain mode: specify separate user-defined domain for each language."
 msgstr "Использование Per-Domain режима: укажите отдельные домены для каждого языка."
 
-#: qtranslate_configuration.php:950
+#: qtranslate_configuration.php:951
 msgid "Domain for"
 msgstr "Домен для"
 
-#: qtranslate_configuration.php:955
+#: qtranslate_configuration.php:956
 msgid "Flag Image Path"
 msgstr "Путь к изображениям флагов"
 
-#: qtranslate_configuration.php:959
+#: qtranslate_configuration.php:960
 #, php-format
 msgid "Path to the flag images under wp-content, with trailing slash. (Default: %s, clear the value above to reset it to the default)"
 msgstr "Путь к изображения флага в директории wp-content, с замыкающими слэш. (По умолчанию: %s, очистить значение выше, чтобы его сбросить в значение по умолчанию)"
 
-#: qtranslate_configuration.php:963
+#: qtranslate_configuration.php:964
 msgid "Ignore Links"
 msgstr "Игнорировать Ссылки"
 
-#: qtranslate_configuration.php:967
+#: qtranslate_configuration.php:968
 #, php-format
 msgid "Don't convert links to files of the given file types. (Always included: %s)"
 msgstr "Не преобразовать ссылки на файлы данного типа файлов. (Всегда включен: %s)"
 
-#: qtranslate_configuration.php:971
+#: qtranslate_configuration.php:972
 msgid "Update Gettext Databases"
 msgstr "Обновление баз данных Gettext"
 
-#: qtranslate_configuration.php:973
+#: qtranslate_configuration.php:974
 msgid "Automatically check for .mo-Database Updates of installed languages."
 msgstr "Автоматически проверять .mo обновления базы данных установленных языков."
 
-#: qtranslate_configuration.php:975
+#: qtranslate_configuration.php:976
 msgid "Update Gettext databases now."
 msgstr "Обновление баз данных Gettext сейчас."
 
-#: qtranslate_configuration.php:977
+#: qtranslate_configuration.php:978
 msgid "qTranslate will query the Wordpress Localisation Repository every week and download the latest Gettext Databases (.mo Files)."
 msgstr "qTranslate будет запрашивать репозиторий локализаций Wordpress каждую неделю, и скачивать последнюю  версию Gettext (.mo - файлы)."
 
-#: qtranslate_configuration.php:981
+#: qtranslate_configuration.php:982
 msgid "Date / Time Conversion"
 msgstr "Преобразование Даты/Времени"
 
-#: qtranslate_configuration.php:983
+#: qtranslate_configuration.php:984
 msgid "Use emulated date function."
 msgstr "эмулировать функции даты."
 
-#: qtranslate_configuration.php:984
+#: qtranslate_configuration.php:985
 msgid "Use emulated date function and replace formats with the predefined formats for each language."
 msgstr "эмулировать функции даты с заменой форматов предопределенных  для каждого языка."
 
-#: qtranslate_configuration.php:985
+#: qtranslate_configuration.php:986
 msgid "Use strftime instead of date."
 msgstr "strftime вместо даты."
 
-#: qtranslate_configuration.php:986
+#: qtranslate_configuration.php:987
 msgid "Use strftime instead of date and replace formats with the predefined formats for each language."
 msgstr "STRFTIME вместо даты с заменой форматов предопределенных для каждого языка."
 
-#: qtranslate_configuration.php:987
+#: qtranslate_configuration.php:988
 msgid "Depending on the mode selected, additional customizations of the theme may be needed."
 msgstr "В зависимости от выбранного режима, дополнительные настройки в теме могут быть необходимы."
 
-#: qtranslate_configuration.php:991
+#: qtranslate_configuration.php:992
 msgid "Custom Fields"
 msgstr "Пользовательские поля"
 
-#: qtranslate_configuration.php:993
+#: qtranslate_configuration.php:994
 #, php-format
 msgid "Enter \"%s\" or \"%s\" attribute of text fields from your theme, which you wish to translate. This applies to post, page and media editors (%s). To lookup \"%s\" or \"%s\", right-click on the field in the post or the page editor and choose \"%s\". Look for an attribute of the field named \"%s\" or \"%s\". Enter it below, as many as you need, space- or comma-separated. After saving configuration, these fields will start responding to the language switching buttons, and you can enter different text for each language. The input fields of type %s will be parsed using %s syntax, while single line text fields will use %s syntax. If you need to override this behaviour, prepend prefix %s or %s to the name of the field to specify which syntax to use. For more information, read %sFAQ%s."
 msgstr "Введите \"%s\" или \"%s\" атрибут текстового поля с вашей схемы, который вы хотели бы перевести. Это относиться к Постам, редакторам страниц и медиа (%s). Что бы найти \"%s\" или \"%s\", нажмите правой клавишей мышки на поле в Посту или в редакторе страниц и выбирите \"%s\". Найдите там атрибут поля под названием \"%s\" или \"%s\". Введите их тут через запятую. После сохранения конфигурации, эти поля начнут реагировать при переключении языка, и вы сможете ввести разные тексты для каждого языка. Поля ввода типа %s будут парснуты %s синтаксисом, а одностороннее поля с %s синтаксисом. Если вас не устраивает такое поведение, укажите префикс %s или %s к имени поля который что бы указать какой синтакс использовать. За дополнительной информацией можно обратиться в %sFAQ%s."
 
-#: qtranslate_configuration.php:993
-msgctxt "browser option"
+#: qtranslate_configuration.php:994
+#, fuzzy
 msgid "Inspect Element"
 msgstr "Исследовать элемент"
 
-#: qtranslate_configuration.php:1000
+#: qtranslate_configuration.php:1001
 msgid "The value of \"id\" attribute is normally unique within one page, otherwise the first field found, having an id specified, is picked up."
 msgstr "Значение атрибута \"id\" обычно уникален в пределах одной страницы, иначе первое поле которое будет найдено с этим идентификатором будет использовано."
 
-#: qtranslate_configuration.php:1007
+#: qtranslate_configuration.php:1008
 #, php-format
 msgid "All the fields of specified classes will respond to Language Switching Buttons. Be careful not to include a class, which would affect language-neutral fields. If you cannot uniquely identify a field needed neither by %s, nor by %s attribute, report the issue on %sSupport Forum%s"
 msgstr "Все поля указанного класса будет реагировать на кнопки переключения языка. Будьте осторожны, чтобы не включить класс, который затронет поля нейтральные к языку. Если вы не можете уникально идентифицировать поле необходимое %s, либо с атрибутом %s, сообщите о проблеме в %sSupport Forum%s"
 
-#: qtranslate_configuration.php:1011
+#: qtranslate_configuration.php:1012
 msgid "Custom Filters"
 msgstr "Пользовательские фильтры"
 
-#: qtranslate_configuration.php:1014
+#: qtranslate_configuration.php:1015
 #, php-format
 msgid "Names of filters (which are enabled on theme or other plugins via %s function) to add translation to. For more information, read %sFAQ%s."
 msgstr ""
 
-#: qtranslate_configuration.php:1018
+#: qtranslate_configuration.php:1019
 msgid "Custom Admin Pages"
 msgstr "Пользовательские админ страницы"
 
-#: qtranslate_configuration.php:1020
+#: qtranslate_configuration.php:1021
 #, php-format
 msgid "List the custom admin page paths for which you wish Language Switching Buttons to show up. The Buttons will then control fields configured in \"Custom Fields\" section. You may only include part of the full URL after %s, including a distinctive query string if needed. As many as desired pages can be listed space/comma separated. For more information, read %sFAQ%s."
 msgstr ""
 
-#: qtranslate_configuration.php:1024
+#: qtranslate_configuration.php:1025
 msgid "Compatibility Functions"
 msgstr "Совместимые функции"
 
-#: qtranslate_configuration.php:1026
+#: qtranslate_configuration.php:1027
 #, php-format
 msgid "Enable function name compatibility (%s)."
 msgstr "Включите функцию совместимость имени (%s)."
 
-#: qtranslate_configuration.php:1027
+#: qtranslate_configuration.php:1028
 #, php-format
 msgid "Some plugins and themes use direct calls to the functions listed, which are defined in former %s plugin and some of its forks. Turning this flag on will enable those function to exists, which will make the dependent plugins and themes to work. WordPress policy prohibits to define functions with the same names as in other plugins, since it generates user-unfriendly fatal errors, when two conflicting plugins are activated simultaneously. Before turning this option on, you have to make sure that there are no other plugins active, which define those functions."
 msgstr ""
 
-#: qtranslate_configuration.php:1031
+#: qtranslate_configuration.php:1032
 msgid "Editor Raw Mode"
 msgstr "Raw режим редактора"
 
-#: qtranslate_configuration.php:1033
+#: qtranslate_configuration.php:1034
 msgid "Do not use Language Switching Buttons to edit multi-language text entries."
 msgstr ""
 
-#: qtranslate_configuration.php:1034
+#: qtranslate_configuration.php:1035
 msgid "Some people prefer to edit the raw entries containing all languages together separated by language defining tags, as they are stored in database."
 msgstr ""
 
-#: qtranslate_configuration.php:1087
+#: qtranslate_configuration.php:1088
 msgid "Disable"
 msgstr "Отключить"
 
-#: qtranslate_configuration.php:1087
+#: qtranslate_configuration.php:1088
 msgid "Enable"
 msgstr "Включить"
 
-#: qtranslate_configuration.php:1088
+#: qtranslate_configuration.php:1089
 msgid "Edit"
 msgstr "Редактировать"
 
-#: qtranslate_configuration.php:1089
+#: qtranslate_configuration.php:1090
 msgid "Default"
 msgstr "По умолчанию"
 
-#: qtranslate_configuration.php:1089
+#: qtranslate_configuration.php:1090
 msgid "Delete"
 msgstr "Удалять"
 
-#: qtranslate_configuration.php:1094
+#: qtranslate_configuration.php:1095
 msgid "Enabling a language will cause qTranslate to update the Gettext-Database for the language, which can take a while depending on your server's connection speed."
 msgstr "Включение языка приведет к обновлению Gettext-базы данных для языка, это может занять некоторое время в зависимости от скорости соединения."
 
-#: qtranslate_configuration.php:1101
+#: qtranslate_configuration.php:1102
 msgid "Add Language"
 msgstr "Добавить язык"
 
-#: qtranslate_configuration.php:1104
+#: qtranslate_configuration.php:1105
 msgid "Add Language &raquo;"
 msgstr "Добавить язык &raquo;"
 
-#: qtranslate_configuration.php:1119
+#: qtranslate_configuration.php:1120
 msgid "Language Menu"
 msgstr "Языковое меню"
 
-#: qtranslate_configuration.php:1168
+#: qtranslate_configuration.php:1169
 msgid "Help"
 msgstr "Помощь"
 
-#: qtranslate_configuration.php:1170
+#: qtranslate_configuration.php:1171
 #, php-format
 msgid "Menu item added is replaced with a sub-menu of available languages when menu is rendered. Depending on how your theme renders menu you may need to override and customize css entries %s and %s, originally defined in %s. The field \"URL\" of inserted menu item allows additional configuration described in %sFAQ%s."
 msgstr ""
 
-#: qtranslate_configuration.php:1175
+#: qtranslate_configuration.php:1176
 msgid "Add to Menu"
 msgstr "Добавить в меню"
 
-#: qtranslate_configuration.php:1185
+#: qtranslate_configuration.php:1186
 msgid "Language Switcher"
 msgstr "Переключатель языка"
 
-#: qtranslate_configuration.php:1222
+#: qtranslate_configuration.php:1223
 msgid "Settings"
 msgstr "Настройки"
 
-#: qtranslate_frontend.php:177 qtranslate_widget.php:65
+#: qtranslate_frontend.php:179 qtranslate_widget.php:65
 msgid "Language"
 msgstr "Язык"
 
-#: qtranslate_services.php:61
+#: qtranslate_services.php:62
 msgid "The language/s do not have a valid ISO 639-1 representation."
 msgstr "Язык не соответствует ISO 639-1."
 
-#: qtranslate_services.php:62
+#: qtranslate_services.php:63
 msgid "The language/s you used are not supported by the service."
 msgstr "Выбранный вами язык не поддерживается."
 
-#: qtranslate_services.php:63
+#: qtranslate_services.php:64
 msgid "There is no such service."
 msgstr "Нет такого сервиса."
 
-#: qtranslate_services.php:64
+#: qtranslate_services.php:65
 msgid "The system could not process your order."
 msgstr "Система не может обработать Ваш заказ."
 
-#: qtranslate_services.php:65
+#: qtranslate_services.php:66
 msgid "There has been an error with the selected service."
 msgstr "Была ошибка с выбранной службой."
 
-#: qtranslate_services.php:66
+#: qtranslate_services.php:67
 msgid "An unknown error occured with the selected service."
 msgstr "Неизвестная ошибка с выбранным услугой."
 
-#: qtranslate_services.php:67
+#: qtranslate_services.php:68
 msgid "The server returned a debugging message."
 msgstr "Сервер вернул отладочное сообщение."
 
-#: qtranslate_services.php:173
+#: qtranslate_services.php:183
 #, php-format
 msgid "<div>Translate to %s</div>"
 msgstr "<div>Перевести на %s</div>"
 
-#: qtranslate_services.php:224 qtranslate_services.php:225
+#: qtranslate_services.php:239 qtranslate_services.php:240
 msgid "Translate to"
 msgstr "Перевести на"
 
-#: qtranslate_services.php:312
+#: qtranslate_services.php:326
 msgid "Order deleted."
 msgstr "Заказ удален."
 
-#: qtranslate_services.php:316
+#: qtranslate_services.php:330
 msgid "Status updated for all open orders."
 msgstr "Статус обновлен для всех открытых заказов."
 
-#: qtranslate_services.php:336
+#: qtranslate_services.php:350
 msgid "Please save your post first."
 msgstr "Пожалуйста, сначала сохраните ваш пост."
 
-#: qtranslate_services.php:364
+#: qtranslate_services.php:378
 msgid "Post Title"
 msgstr "Заголовок статьи"
 
-#: qtranslate_services.php:365
+#: qtranslate_services.php:379
 msgid "Service"
 msgstr "Обслуживание"
 
-#: qtranslate_services.php:366
+#: qtranslate_services.php:380
 msgid "Source Language"
 msgstr "Язык оригинала"
 
-#: qtranslate_services.php:367
+#: qtranslate_services.php:381
 msgid "Target Language"
 msgstr "Язык перевода"
 
-#: qtranslate_services.php:374
+#: qtranslate_services.php:388
 msgid "qTranslate Services Settings"
 msgstr "qTranslate Параметры служб"
 
-#: qtranslate_services.php:379 qtranslate_services.php:653
-#: qtranslate_services.php:663 qtranslate_services.php:687
+#: qtranslate_services.php:393 qtranslate_services.php:674
+#: qtranslate_services.php:684 qtranslate_services.php:708
 msgid "qTranslate Services"
 msgstr "qTranslate услуги"
 
-#: qtranslate_services.php:381
+#: qtranslate_services.php:395
 #, php-format
 msgid "<div id=\"message\" class=\"error fade\"><p>qTranslate Services could not load <a href=\"%s\">OpenSSL</a>!</p></div>"
 msgstr "<div id=\"message\" class=\"error fade\"><p>qTranslate Служба не удается загрузить <a href=\"%s\">OpenSSL</a>!</p></div>"
 
-#: qtranslate_services.php:382
+#: qtranslate_services.php:396
 msgid "Enable qTranslate Services"
 msgstr "Включить услуги qTranslate"
 
-#: qtranslate_services.php:384
+#: qtranslate_services.php:398
 msgid "With qTranslate Services, you will be able to use professional human translation services with a few clicks."
 msgstr "Благодаря услуги перевода qTranslate вы сможете пользоваться услугами профессиональных переводчиков всего с несколькими щелчками мыши."
 
-#: qtranslate_services.php:394
+#: qtranslate_services.php:408
 msgid "Open Orders"
 msgstr "Открытые заказы"
 
-#: qtranslate_services.php:416
+#: qtranslate_services.php:430
 #, php-format
 msgid "Edit %s"
 msgstr "Редактировать %s"
 
-#: qtranslate_services.php:417 qtranslate_services.php:464
-#: qtranslate_services.php:780 qtranslate_services.php:787
+#: qtranslate_services.php:431 qtranslate_services.php:478
+#: qtranslate_services.php:814 qtranslate_services.php:821
 msgid "Website"
 msgstr "Веб-сайт"
 
-#: qtranslate_services.php:427
+#: qtranslate_services.php:441
 #, php-format
 msgid "Current Status: %s"
 msgstr "Текущий статус:  %s"
 
-#: qtranslate_services.php:435
+#: qtranslate_services.php:449
 #, php-format
 msgid "qTranslate Services will automatically check every hour whether the translations are finished and update your posts accordingly. You can always <a href=\"%s\">check manually</a>."
 msgstr "qTranslate  будет автоматически проверять каждый час  закончены ли переводы и обновит  сообщения соответствующим образом. Вы всегда можете <a href=\\\"%s\\\">проверить вручную</a> ."
 
-#: qtranslate_services.php:436
+#: qtranslate_services.php:450
 msgid "Deleting an open order doesn't cancel it. You will have to logon to the service homepage and cancel it there."
 msgstr "Deleting an open order doesn't cancel it. You will have to logon to the service homepage and cancel it there."
 
-#: qtranslate_services.php:438
+#: qtranslate_services.php:452
 msgid "No open orders."
 msgstr "Отсутствие открытых заказов."
 
-#: qtranslate_services.php:454
+#: qtranslate_services.php:468
 msgid "Service Configuration"
 msgstr "Service Configuration"
 
-#: qtranslate_services.php:455
+#: qtranslate_services.php:469
 msgid "Below, you will find configuration settings for qTranslate Service Providers, which are required for them to operate."
 msgstr "Ниже вы найдете параметры конфигурации для услуг qTranslate, которые необходимы для их эксплуатации."
 
-#: qtranslate_services.php:535
+#: qtranslate_services.php:549
 #, php-format
 msgid "To translate a post, please go to the <a href=\"%s\">edit posts overview</a>."
 msgstr "Для перевода сообщения, перейдите к <a href=\"%s\">обзору и редактированию сообщения</a> ."
 
-#: qtranslate_services.php:551
+#: qtranslate_services.php:565
 #, php-format
 msgid "Post with id \"%s\" not found!"
 msgstr "Сообщение с идентификатором \"%s\" не найден!"
 
-#: qtranslate_services.php:559
+#: qtranslate_services.php:573
 msgid "The requested Post has no content, no Translation possible."
 msgstr "Сообщение без контента. Перевод не возможен."
 
-#: qtranslate_services.php:568
+#: qtranslate_services.php:582
 msgid "The Post already has content for the selected target language. If a translation request is send, the current text for the target language will be overwritten."
 msgstr "Текст уже переведен на выбранный язык. Если отправить запрос на перевод, нынешний текст на целевом языке будет перезаписан."
 
-#: qtranslate_services.php:632
+#: qtranslate_services.php:653
 #, php-format
 msgid "An error occured: %s"
 msgstr "Произошла ошибка: %s"
 
-#: qtranslate_services.php:634
+#: qtranslate_services.php:655
 #, php-format
 msgid "Additional information: %s"
 msgstr "Дополнительная информация: %s"
 
-#: qtranslate_services.php:655
+#: qtranslate_services.php:676
 #, php-format
 msgid "An serious error occured and qTranslate Services cannot proceed. For help, please visit the <a href=\"%s\">Support Forum</a>"
 msgstr "Серьезная ошибка. Для получения помощи, пожалуйста, посетите <a href=\"%s\">форум</a>"
 
-#: qtranslate_services.php:664
+#: qtranslate_services.php:685
 msgid "Order successfully sent."
 msgstr "Заказ успешно отправлен."
 
-#: qtranslate_services.php:665
+#: qtranslate_services.php:686
 msgid "Your translation order has been successfully transfered to the selected service."
 msgstr "Ваш заказ был успешно переведен в выбранный сервис."
 
-#: qtranslate_services.php:669
+#: qtranslate_services.php:690
 #, php-format
 msgid "The service returned this message: %s"
 msgstr "Служба вернула следующее сообщение: %s"
 
-#: qtranslate_services.php:673
+#: qtranslate_services.php:694
 msgid "Feel free to choose an action:"
 msgstr "Не стесняйтесь выбрать действие:"
 
-#: qtranslate_services.php:675
+#: qtranslate_services.php:696
 msgid "Translate this post to another language."
 msgstr "Перевести этот пост на другой язык."
 
-#: qtranslate_services.php:676
+#: qtranslate_services.php:697
 msgid "Translate a different post."
 msgstr "Перевести другой пост."
 
-#: qtranslate_services.php:677
+#: qtranslate_services.php:698
 msgid "View all open orders."
 msgstr "Просмотр всех открытых заказов."
 
-#: qtranslate_services.php:678
+#: qtranslate_services.php:699
 msgid "Let qTranslate Services check if any open orders are finished."
 msgstr "проверить, если какой-либо открытых ордеров закончены."
 
-#: qtranslate_services.php:679
+#: qtranslate_services.php:700
 msgid "View this post."
 msgstr "Посмотреть этот пост."
 
-#: qtranslate_services.php:704
+#: qtranslate_services.php:725
 #, php-format
 msgid "Your article is available in multiple languages. If you do not want to translate from %1$s, you can switch to one of the following languages: %2$s"
 msgstr "Ваша статья доступна на нескольких языках. Если вы не хотите перевести с %1$s, вы можете переключиться на один из следующих языков: %2$s"
 
-#: qtranslate_services.php:712
+#: qtranslate_services.php:733
 msgid "Please choose the language you want to translate to:"
 msgstr "Пожалуйста, выберите язык, который вы хотите перевести:"
 
-#: qtranslate_services.php:724
+#: qtranslate_services.php:745
 msgid "Continue"
 msgstr "Продолжать"
 
-#: qtranslate_services.php:735 qtranslate_services.php:738
+#: qtranslate_services.php:756 qtranslate_services.php:759
 msgid "Confirm Order"
 msgstr "Подтвердить заказ"
 
-#: qtranslate_services.php:737
+#: qtranslate_services.php:758
 msgid "Please confirm your order."
 msgstr "Пожалуйста, подтвердите свой заказ."
 
-#: qtranslate_services.php:745 qtranslate_services.php:880
+#: qtranslate_services.php:766 qtranslate_services.php:915
 msgid "Request Translation"
 msgstr "Запрос перевода"
 
-#: qtranslate_services.php:747
+#: qtranslate_services.php:768
 msgid "Javascript is required for qTranslate Services"
 msgstr "Javascript требуется для qTranslate Services"
 
-#: qtranslate_services.php:748
+#: qtranslate_services.php:769
 msgid "Please choose a service first"
 msgstr "Пожалуйста, выберите службу"
 
-#: qtranslate_services.php:757
+#: qtranslate_services.php:778
 msgid "ERROR: Could not connect to qTranslate Services. Please try again later."
 msgstr "ОШИБКА: Не удается подключиться к qTranslate Services. Пожалуйста, повторите попытку позже."
 
-#: qtranslate_services.php:765
-msgid "Translation Service"
-msgstr "Услуги по переводу"
-
-#: qtranslate_services.php:781
+#: qtranslate_services.php:815
 #, php-format
 msgid "Cannot use this service, not all <a href=\"%s\">required fields</a> filled in for this service."
 msgstr "Нельзя использовать эту услугу, не все <a href=\"%s\">обязательные поля</a> заполнены."
 
-#: qtranslate_services.php:796
+#: qtranslate_services.php:831
 msgid "<p><img src=\"images/wpspin_light.gif\"> Getting Quote...</p>"
 msgstr "<p><img src=\"images/wpspin_light.gif\"> Получение цитаты ... </p>"
 
-#: qtranslate_services.php:817
+#: qtranslate_services.php:852
 msgid "Click to toggle"
 msgstr "Нажмите, чтобы переключить"
 
-#: qtranslate_services.php:818
+#: qtranslate_services.php:853
 msgid "Review Article"
 msgstr "Обзор статьи"
 
-#: qtranslate_services.php:824
+#: qtranslate_services.php:859
 msgid "Your article will be SSL encrypted and securly sent to qTranslate Services, which will forward your text to the chosen Translation Service. Once qTranslate Services receives the translated text, it will automatically appear on your blog."
 msgstr "Ваша статья будет зашифрована с SSL и безопасно передана в услугу перевода qTranslate, который передаст ваш текст в выбранную службу перевода. После того как служба перевода qTranslate получит переведенный текст, он автоматически появится на вашем блоге."
 
-#: qtranslate_services.php:863 qtranslate_services.php:870
+#: qtranslate_services.php:898 qtranslate_services.php:905
 msgid "unavailable"
 msgstr "недоступно"
 
-#: qtranslate_services.php:868
+#: qtranslate_services.php:903
 msgid "free"
 msgstr "бесплатно"
 
-#: qtranslate_services.php:875
+#: qtranslate_services.php:910
 #, php-format
 msgid "<p>Price: %1$s %2$s</p>"
 msgstr "<p>Цена: %1$s %2$s</p>"
 
-#: qtranslate_services.php:876
+#: qtranslate_services.php:911
 #, php-format
 msgid "~ %1$s %2$s"
 msgstr "~ %1$s %2$s"
 
-#: qtranslate_services.php:883
+#: qtranslate_services.php:918
 msgid "An error occured!"
 msgstr "Произошла ошибка!"
 
-#: qtranslate_services.php:901
+#: qtranslate_services.php:936
 msgid "Translate"
 msgstr "Перевести"
 
@@ -907,12 +931,12 @@ msgid "Dropdown Box"
 msgstr "Выпадающий список"
 
 #: qtranslate_widget.php:101
-msgid "Widget"
-msgstr "Виджет"
-
-#: qtranslate_widget.php:101
 msgid "To reset to default, clear the text."
 msgstr "Сбросить к начальному состоянию, очистить текст."
+
+#: qtranslate_widget.php:101
+msgid "Widget"
+msgstr "Виджет"
 
 #~ msgid "Debugging Information"
 #~ msgstr "Отладочная информация"
