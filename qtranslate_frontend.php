@@ -37,7 +37,7 @@ function qtranxf_add_lang_icons_css ()
 function qtranxf_head(){
 	global $q_config;
 	$lang=$q_config['language'];
-	echo "\n<meta http-equiv=\"Content-Language\" content=\"".str_replace('_','-',$q_config['locale'][$lang])."\" />\n";
+	//echo "\n<meta http-equiv=\"Content-Language\" content=\"".str_replace('_','-',$q_config['locale'][$lang])."\" />\n";
 	qtranxf_add_lang_icons_css();
 /*
 	$css = "<style type=\"text/css\" media=\"screen\">\n";
@@ -59,8 +59,8 @@ function qtranxf_head(){
 	//if(is_404()) return;
 	// set links to translations of current page
 	foreach($q_config['enabled_languages'] as $language) {
-		if($language != qtranxf_getLanguage())
-			echo '<link hreflang="'.$language.'" href="'.qtranxf_convertURL('',$language,false,true).'" rel="alternate" />'."\n";
+		//if($language != qtranxf_getLanguage())
+		echo '<link hreflang="'.$language.'" href="'.qtranxf_convertURL('',$language,false,true).'" rel="alternate" />'.PHP_EOL;
 	}
 	qtranxf_add_css();
 }

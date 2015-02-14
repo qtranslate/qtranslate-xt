@@ -4,7 +4,7 @@ Contributors: johnclause, chineseleper, Vavooon
 Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, translation
 Requires at least: 3.9
 Tested up to: 4.1
-Stable tag: 2.9.6
+Stable tag: 3.0
 License: GPLv3 or later
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QEXEK3HX8AR6U
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -214,10 +214,11 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 
 == Changelog ==
 
-= 3.0 =
-* not yet released
+= 3.0 stable =
 * Includes all changes after version 2.9.6.
 * Please, do not forget to respond to [survey on 'Translate Service' feature](http://www.marius-siroen.com/qTranslate-X/TranslateServices/) by courtesy of [Gunu (Marius Siroen)](https://profiles.wordpress.org/grafcom), whose continuous help is much appreciated.
+* Feature:  framework for integration with other plugins and themes.
+* Maintenance: po/mo files updated.
 
 = 2.9.8.9 alpha =
 * Feature: editing of menu item description on page /wp-admin/nav-menus.php.
@@ -284,7 +285,7 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 * fix for option [Hide Untranslated Content](https://wordpress.org/support/topic/cant-hide-the-non-existent-language-posts).
 * compatibility with plugin [Groups](https://wordpress.org/plugins/groups/), [issue](https://wordpress.org/support/topic/dropdown-doesnt-display-while-plugin-groups-is-active)
 
-= 2.9.6 =
+= 2.9.6 stable =
 * more fixes for `<!--more-->` and `<!--nextpage-->` tags and parsing multilingual texts.
 
 = 2.9.5 =
@@ -373,6 +374,7 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 * If other plugin installs a custom TinyMCE editor on a translatable field served by qTranslate-X, then all kind of problems start to happen. Examples of 'offending' plugins are: [Crayon Syntax Highlighter](https://wordpress.org/plugins/crayon-syntax-highlighter/), [Fusion Page Builder](http://www.theme-fusion.com/), [Page Builder by SiteOrigin](https://wordpress.org/plugins/siteorigin-panels/), [Revolution Slider](http://revolution.themepunch.com/), [Rich Text Tags](https://wordpress.org/plugins/rich-text-tags/), [Visual Composer](http://vc.wpbakery.com/), [WP Editor](https://wordpress.org/plugins/wp-editor/). We are looking into possibilities to enable integration with those plugins.
 * Title of the site on admin pages is not displaying correctly [WP topic](https://wordpress.org/support/topic/title-dont-show-the-right-text-in-admin).
 * When [Jetpack by WordPress.com](https://wordpress.org/plugins/jetpack/) is enabled, pressing 'Save Changes' at Settings/General (/wp-admin/options-general.php) page, causes fields "Site Title" and "Tagline" to be emptied, if they had multilingual values. It only happens when Jetpack is connected to WordPress. For now, when you need to edit those values, deactivate Jetpack, make your edits, then re-activate JetPack again. Fortunately, that general setting page need not to be changed frequently. [WP topic](https://wordpress.org/support/topic/site-titletagline-disappear-on-general-settings-update)
+* There are reports about conflict with JetPack galleries. Workaround exists: [WP topic](https://wordpress.org/support/topic/site-titletagline-disappear-on-general-settings-update).
 * Message "The backup of this post in your browser is different from the version below" appears sometimes in the post editor. Clicking on "Restore the backup" may produce unexpected result, since backup has one language only, the one which was active at the time of the last pressing of button "Update". The code which causes this is in /wp-includes/js/autosave.js. Autosave script is currently turned off to avoid this confusion.
 * Search in Category/Tags editor works in default language only.
 * If field "Alternative Text" on page "Edit Media" is left empty, then caption or title will be used untranslated in 'alt' attribute of image display. There is no WP hook provided to enable translation in such a case (see code of 'function wp_get_attachment_image'). However, if "Alternative Text" is filled with non-empty value, then it is shown translated and correctly. We could only re-implement the WP algorithm to be run for the second time under filter 'wp_get_attachment_image_attributes' with translation, which would hurt performance a little bit. If this is a real problem for you, let us know, we can put it in as an option, or submit pull request with your version of implementation. [WP topic](https://wordpress.org/support/topic/odd-behavior-with-photos-and-photo-galleries)
