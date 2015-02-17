@@ -1,12 +1,15 @@
 /*
 //debuging tools, do not check in
-*/
 var cc=0;
 function c(v){ ++cc; console.log('== '+cc+': '+v); }
 function ct(v){ c(v); console.trace(); }
 function co(t,o){ ++cc; console.log('== '+cc+': '+t+': %o',o); }
+*/
 
-qtranxj_split = function(text,keep_neutral_text)
+/**
+ * since 3.1-b1 - closing tag [:]
+ */
+qtranxj_split = function(text)
 {
 	var result = new Object;
 	for(var i=0; i<qTranslateConfig.enabled_languages.length; ++i)
@@ -14,7 +17,7 @@ qtranxj_split = function(text,keep_neutral_text)
 		var lang=qTranslateConfig.enabled_languages[i];
 		result[lang] = '';
 	}
-	var split_regex = /(<!--:[a-z]{2}-->|<!--:-->|\[:[a-z]{2}\])/gi;
+	var split_regex = /(<!--:[a-z]{2}-->|<!--:-->|\[:[a-z]{2}\]|\[:\])/gi;
 	var blocks = text.xsplit(split_regex);
 	if(!qtranxj_isArray(blocks))
 		return result;
@@ -27,7 +30,7 @@ qtranxj_split = function(text,keep_neutral_text)
 		return result;
 	}
 	var clang_regex=/<!--:([a-z]{2})-->/gi;
-	var c_end_regex=/<!--:-->/g;
+	//var c_end_regex=/<!--:-->/g;
 	var blang_regex=/\[:([a-z]{2})\]/gi;
 	lang = false;
 	for(var i = 0;i<blocks.length;++i){
@@ -39,8 +42,9 @@ qtranxj_split = function(text,keep_neutral_text)
 			lang = matches[1];
 			continue;
 		}
-		matches = c_end_regex.exec(b); c_end_regex.lastIndex=0;
-		if(matches!=null){
+		//matches = c_end_regex.exec(b); c_end_regex.lastIndex=0;
+		//if(matches!=null){
+		if( b == '<!--:-->' || b == '[:]' ){
 			lang = false;
 			continue;
 		}
@@ -52,7 +56,7 @@ qtranxj_split = function(text,keep_neutral_text)
 		if(lang){
 			result[lang] += b;
 			lang = false;
-		}else if(keep_neutral_text){
+		}else{//keep neutral text
 			for(var key in result){
 				result[key] += b;
 			}
@@ -85,9 +89,14 @@ qtranxj_allthesame = function(texts)
 	return text;
 }
 
-//"_c" stands for "comment"
+/**
+ * "_c" stands for "comment"
+ * since 3.1-b1 - no _c any more
+ */
 qtranxj_join_c = function(texts)
 {
+	return qtranxj_join_b(texts);
+/*
 	var text = qtranxj_allthesame(texts);
 	if(text!=null) return text;
 	text='';
@@ -102,6 +111,7 @@ qtranxj_join_c = function(texts)
 	}
 	//c('qtranxj_join_c:text:'+text);
 	return text;
+*/
 }
 
 //"b" stands for "bracket"
@@ -117,6 +127,33 @@ qtranxj_join_b = function(texts)
 		if ( !t || t=='' ) continue;
 		text += '[:'+lang+']';
 		text += t;
+	}
+	if( text != '' ) text += '[:]';
+	return text;
+}
+
+/**
+ * since 3.1-b1
+ */
+qtranxj_join_byline = function(texts)
+{
+	var text = qtranxj_allthesame(texts);
+	if(text!=null) return text;
+	var lines;
+	for(var lang in texts){
+		texts[lang] = texts[lang].split('\n');
+	}
+	var text = '';
+	for(var i=0; true; ++i){
+		var ln;
+		for(var lang in texts){
+			if ( texts[lang].length() <= i ) continue;
+			var t = texts[lang][i];
+			if ( !t || t=='' ) continue;
+			ln[lang] = t;
+		}
+		if( !ln ) break;
+		text += qtranxj_join_b(ln);
 	}
 	return text;
 }
@@ -213,11 +250,19 @@ var qTranslateX=function(pg)
 
 	updateFusedValueHooked=function(h)
 	{
+		switch(h.separator){
+			case '<': h.mlContentField.value = qtranxj_join_c(h.contents); break;
+			case 'byline': h.mlContentField.value = qtranxj_join_byline(h.contents); break;
+			case '[':
+			default: h.mlContentField.value = qtranxj_join_b(h.contents); break;
+		}
+/*
 		if(h.separator==='<'){
 			h.mlContentField.value = qtranxj_join_c(h.contents);
 		}else{
 			h.mlContentField.value = qtranxj_join_b(h.contents);
 		}
+*/
 		//c('updateFusedValueHooked['+h.mce.id+'] text:'+h.mlContentField.value);
 	}
 
@@ -240,9 +285,8 @@ var qTranslateX=function(pg)
 		//h.id=inpField.id;
 		h.contentField=inpField;
 		//c('addContentHook:inpField.value='+inpField.value);
-		//h.contents=qtranxj_split(inpField.value,false);
-		h.contents=qtranxj_split(inpField.value,true);//keep neutral text from older times, just in case.
-														//inpField.tagName
+		h.contents=qtranxj_split(inpField.value);//keep neutral text from older times, just in case.
+		                        //inpField.tagName
 		h.mlContentField=qtranxj_ce('input', {name: inpField.name, type: 'hidden', className: 'hidden', value: inpField.value}, form, true);
 		if(!separator){
 			if(inpField.tagName==='TEXTAREA')
@@ -300,7 +344,7 @@ var qTranslateX=function(pg)
 		var content = elem.innerHTML.replace(/&lt;!--:([a-z]{2}|)--&gt;/gi,'<!--:$1-->');//un-escape language HTML
 		//c('addDisplayHook: innerHTML='+elem.innerHTML);
 		//c('addDisplayHook: content='+content);
-		h.contents=qtranxj_split(content,true);
+		h.contents=qtranxj_split(content);
 		elem.innerHTML=h.contents[qTranslateConfig.activeLanguage];
 		displayHooks.push(h);
 		return true;
@@ -311,13 +355,6 @@ var qTranslateX=function(pg)
 
 	updateTinyMCE=function(ed,text)
 	{
-/*
-		//c('updateTinyMCE: text:'+text);
-		if(!text.match(/^</)){
-			text='<p>'+text+'</p>';
-			//c('updateTinyMCE: updated text:'+text);
-		}
-*/
 		//c('updateTinyMCE: text:'+text);
 		if(window.switchEditors){
 			//text = window.switchEditors.pre_wpautop( text );
@@ -350,15 +387,6 @@ var qTranslateX=function(pg)
 				updateTinyMCE(h.mce,h.contentField.value);
 			}
 		}
-/*
-		if (window.tinyMCE)
-		for(var i=0; i<tinyMCE.editors.length; ++i){
-			var ed=tinyMCE.editors[i];
-			var h=contentHooks[ed.id];
-			if(!h) continue;
-			updateTinyMCE(ed,h.contentField.value);
-		}
-*/
 	}
 
 	var qtx=this;
@@ -442,14 +470,31 @@ var qTranslateX=function(pg)
 			if(!form) continue;
 			for(var k=0; k < frm.fields.length; ++k){
 				var fld = frm.fields[k];
-				var sep = fld.encode;
 				//co('fld=',fld);
-				//c('sep='+sep);
-				if(fld.id) this.addContentHookById(fld.id,form,sep);
-				else if(fld.class) addContentHooksByClassName(fld.class,form,form,sep);
-				else{
-					//todo tag, name
-					continue;
+				//c('encode='+fld.encode);
+				//c('id='+fld.id);
+				//c('class='+fld.class);
+				var sep = fld.encode;
+				switch( sep ){
+					case 'display':
+						if(fld.id) this.addDisplayHook(document.getElementById(fld.id));
+						else if(fld.class) this.addDisplayHooksByClass(fld.class,form);
+						else{
+							//todo tag, name
+							continue;
+						}
+						break;
+					case '[':
+					case '<':
+					case 'byline':
+					default:
+						if(fld.id) this.addContentHookById(fld.id,form,sep);
+						else if(fld.class) addContentHooksByClassName(fld.class,form,form,sep);
+						else{
+							//todo tag, name
+							continue;
+						}
+						break;
 				}
 			}
 		}
@@ -497,7 +542,9 @@ var qTranslateX=function(pg)
 					var h=contentHooks[key];
 					if(h.mce) continue;
 					if(h.contentField.tagName!=='TEXTAREA') continue;
-					tinyMCEPreInit.mceInit[key].init_instance_callback=function(ed){ setEditorHooks(ed); }
+					if(tinyMCEPreInit.mceInit[key]){
+						tinyMCEPreInit.mceInit[key].init_instance_callback=function(ed){ setEditorHooks(ed); }
+					}
 				}
 		});
 	}

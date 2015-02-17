@@ -324,11 +324,11 @@ function qts_config_pre_hook($message) {
 				}
 			}
 		}
-		$message = __('Order deleted.','qtranslate');
+		$message[] = __('Order deleted.','qtranslate');
 	}
 	if(isset($_GET['qts_cron'])) {
 		qts_cron();
-		$message = __('Status updated for all open orders.','qtranslate');
+		$message[] = __('Status updated for all open orders.','qtranslate');
 	}
 	return $message;
 }
@@ -530,8 +530,8 @@ function qts_UpdateOrder($order_id) {
 			$content = qtranxf_split($post->post_content);
 			$title[$order['target_language']] = $result['order_translated_title'];
 			$content[$order['target_language']] = $result['order_translated_text'];
-			$post->post_title = qtranxf_join_c($title);
-			$post->post_content = qtranxf_join_c($content);
+			$post->post_title = qtranxf_join_b($title);
+			$post->post_content = qtranxf_join_b($content);
 			$wpdb->show_errors();
 			$wpdb->query('UPDATE '.$wpdb->posts.' SET post_title="'.mysql_real_escape_string($post->post_title).'", post_content = "'.mysql_real_escape_string($post->post_content).'" WHERE ID = "'.$post->ID.'"');
 			wp_cache_add($post->ID, $post, 'posts');

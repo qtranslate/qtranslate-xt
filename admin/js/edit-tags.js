@@ -69,7 +69,7 @@ qTranslateConfig.js={
 		var submit_button = document.getElementById('submit');
 		if(submit_button){
 			submit_button.addEventListener("click",function(){
-					setTimeout(function(){window.location.reload();},500);
+					setTimeout(function(){window.location.reload();},800);
 					//addDisplayHookRows(theList);//does not work, because the updates on theList has not yet propagated
 				});
 		}

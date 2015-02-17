@@ -492,14 +492,7 @@ function qtranxf_init() {
 			add_filter($nm, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage');
 		}
 	}
-/*
-	//"WordPress SEO" plugin support - not yet
-	//if(is_plugin_active( 'wordpress-seo/wp-seo.php' )){//in admin only
-	if ( defined( 'WPSEO_FILE' ) ) {
-		//add_filter('wpseo_replacements', 'qtranxf_wpseo_replacements', 0);
-		add_filter('wpseo_replacements', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', 0);
-	}
-*/
+
 	//allow other plugins to initialize whatever they need for qTranslate
 	do_action('qtranslate_init');
 }
@@ -983,7 +976,7 @@ function qtranxf_convertURL($url='', $lang='', $forceadmin = false, $showDefault
 //if (!function_exists('qtranxf_get_split_blocks')){
 // split text at all language comments and quick tags
 function qtranxf_get_language_blocks($text) {
-	$split_regex = "#(<!--:[a-z]{2}-->|<!--:-->|\[:[a-z]{2}\])#ism";
+	$split_regex = "#(<!--:[a-z]{2}-->|<!--:-->|\[:[a-z]{2}\]|\[:\])#ism";
 	return preg_split($split_regex, $text, -1, PREG_SPLIT_NO_EMPTY|PREG_SPLIT_DELIM_CAPTURE);
 }
 //}
@@ -1015,7 +1008,8 @@ function qtranxf_split_blocks($blocks, $quicktags = true) {
 			//if(!qtranxf_isEnabled($current_language)) $current_language = false;//still need it
 			continue;
 		// detect ending tags
-		} elseif(preg_match("#^<!--:-->$#ism", $block, $matches)) {
+		//} elseif(preg_match("#^<!--:-->$#ism", $block, $matches) || preg_match("#^\[:\]$#ism", $block, $matches)) {
+		} elseif($block === '<!--:-->' || $block === '[:]') {
 			$current_language = false;
 			continue;
 		}
@@ -1096,10 +1090,11 @@ function qtranxf_split($text, $quicktags = true) {
 }// */
 }
 
-function qtranxf_join($texts) {
-	if(!is_array($texts)) $texts = qtranxf_split($texts, false);
-	qtranxf_join_c($texts);
-}
+// not in use?
+//function qtranxf_join($texts) {
+//	if(!is_array($texts)) $texts = qtranxf_split($texts, false);
+//	qtranxf_join_c($texts);
+//}
 
 function qtranxf_join_c($texts) {
 	$text = '';
@@ -1130,12 +1125,18 @@ function qtranxf_join_c($texts) {
 	return $text;
 }
 
-function qtranxf_join_b($texts) {
+function qtranxf_join_b_no_closing($texts) {
 	$text = '';
 	foreach($texts as $lang => $lang_text) {
 		if(empty($lang_text)) continue;
 		$text .= '[:'.$lang.']'.$lang_text;
 	}
+	return $text;
+}
+
+function qtranxf_join_b($texts) {
+	$text = qtranxf_join_b_no_closing($texts);
+	if(!empty($text)) $text .= '[:]';
 	return $text;
 }
 
@@ -1207,7 +1208,6 @@ if (!function_exists('qtranxf_use_block')){
 function qtranxf_use_block($lang, $blocks, $show_available=false, $show_empty=false) {
 	global $q_config;
 	$content = qtranxf_split_blocks($blocks);
-	//$content = qtranxf_split($text);
 
 	// if content is available show the content in the requested language
 	if(!empty($content[$lang])) {

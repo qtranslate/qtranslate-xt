@@ -432,10 +432,14 @@ function qtranxf_home_url($url, $path, $orig_scheme, $blog_id)
 add_filter('home_url', 'qtranxf_home_url', 0, 4);
 
 function qtranxf_esc_html($text) {
-	//qtranxf_dbg_echo('qtranxf_esc_html:text='.$text,null,true);
-	//never saw a case when this needs to be translated at all ...
-	return qtranxf_useDefaultLanguage($text);//this does not make sense, does it?
-	//return qtranxf_useCurrentLanguageIfNotFoundShowEmpty($text);
+	//qtranxf_dbg_echo('qtranxf_esc_html:text=',$text,true);
+	//return qtranxf_useDefaultLanguage($text);//this does not make sense, does it? - original code
+	//return qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($text);
+	/**
+	 * since 3.1-b1
+	 * used to return qtranxf_useDefaultLanguage($text)
+	*/
+	return qtranxf_useCurrentLanguageIfNotFoundShowEmpty($text);
 }
 // filter options
 add_filter('esc_html', 'qtranxf_esc_html', 0);

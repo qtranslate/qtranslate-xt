@@ -21,6 +21,79 @@ function qtranxf_detect_admin_language($url_info) {
 }
 add_filter('qtranslate_detect_admin_language','qtranxf_detect_admin_language');
 
+function qtranxf_convert_to_b($text) {
+	global $q_config;
+	$blocks = qtranxf_get_language_blocks($text);
+	if( count($blocks) > 1 ){
+		$texts = qtranxf_split_blocks($blocks);
+		$text = qtranxf_join_b($texts);
+	}
+	return $text;
+}
+
+function qtranxf_convert_to_b_no_closing($text) {
+	global $q_config;
+	$blocks = qtranxf_get_language_blocks($text);
+	if( count($blocks) > 1 ){
+		$texts = qtranxf_split_blocks($blocks);
+		$text = qtranxf_join_b_no_closing($texts);
+	}
+	return $text;
+}
+
+function qtranxf_convert_to_c($text) {
+	global $q_config;
+	$blocks = qtranxf_get_language_blocks($text);
+	if( count($blocks) > 1 ){
+		$texts = qtranxf_split_blocks($blocks);
+		$text = qtranxf_join_c($texts);
+	}
+	return $text;
+}
+
+function qtranxf_convert_database($action){
+	global $wpdb;
+	$wpdb->show_errors();
+	$result = $wpdb->get_results('SELECT ID, post_title, post_content, post_excerpt FROM '.$wpdb->posts);
+	if($result)
+	switch($action){
+		case 'b_only':
+			foreach($result as $post) {
+				$title=qtranxf_convert_to_b($post->post_title);
+				$content=qtranxf_convert_to_b($post->post_content);
+				$excerpt=qtranxf_convert_to_b($post->post_excerpt);
+				if( $title==$post->post_title && $content==$post->post_content && $excerpt==$post->post_excerpt ) continue;
+				$wpdb->query('UPDATE '.$wpdb->posts.' set post_content = "'.mysql_real_escape_string($content).'", post_title = "'.mysql_real_escape_string($title).'", post_excerpt = "'.mysql_real_escape_string($excerpt).'" WHERE ID='.$post->ID);
+			}
+			$alloptions = wp_load_alloptions();
+			foreach($alloptions as $option => $value) {
+				if(!is_string($value)) continue;
+				$text=qtranxf_convert_to_b($value);
+				if($text === $value) continue;
+				update_option($option,$value);
+			}
+			return __('Database has been converted to square bracket format.', 'qtranslate').'<br/>'.__('Note: custom entries are not touched.', 'qtranslate');;
+		case 'c_dual':
+			foreach($result as $post) {
+				$title=qtranxf_convert_to_c($post->post_title);
+				$content=qtranxf_convert_to_c($post->post_content);
+				$excerpt=qtranxf_convert_to_c($post->post_excerpt);
+				if( $title==$post->post_title && $content==$post->post_content && $excerpt==$post->post_excerpt ) continue;
+				$wpdb->query('UPDATE '.$wpdb->posts.' set post_content = "'.mysql_real_escape_string($content).'", post_title = "'.mysql_real_escape_string($title).'", post_excerpt = "'.mysql_real_escape_string($excerpt).'" WHERE ID='.$post->ID);
+			}
+			$alloptions = wp_load_alloptions();
+			foreach($alloptions as $option => $value) {
+				if(!is_string($value)) continue;
+				$text=qtranxf_convert_to_b_no_closing($value);
+				if($text === $value) continue;
+				update_option($option,$value);
+			}
+			return __('Database has been converted to legacy dual-tag format.', 'qtranslate').'<br/>'.__('Note: custom entries are not touched.', 'qtranslate');
+		default: break;
+	}
+	return '';
+}
+
 function qtranxf_mark_default($text) {
 	global $q_config;
 	$blocks = qtranxf_get_language_blocks($text);
@@ -33,7 +106,7 @@ function qtranxf_mark_default($text) {
 			$content[$language] = '';
 		}
 	}
-	return qtranxf_join_c($content);
+	return qtranxf_join_b($content);
 }
 
 function qtranxf_get_term_joined($obj,$taxonomy=null) {
@@ -208,7 +281,8 @@ function qtranxf_admin_list_cats($text) {
 			$blocks = qtranxf_get_language_blocks($text);
 			if(count($blocks)<=1) return $text;
 			$texts = qtranxf_split_blocks($blocks);
-			$text = qtranxf_join_c($texts);
+			//$text = qtranxf_join_c($texts);
+			$text = qtranxf_join_b($texts);//with closing tag
 			return $text;
 		default: return qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($text);
 	}

@@ -58,14 +58,17 @@ function qtranxf_migrate_plugin($plugin){
 	$var=$plugin.'-migration';
 	if(!isset($_POST[$var])) return;
 	if($_POST[$var]=='none') return;
-	qtranxf_loadConfig();
-	qtranxf_saveConfig();
+	if($_POST[$var]=='export')
+		qtranxf_saveConfig();
 	$f='qtranxf_migrate_'.$_POST[$var].'_'.str_replace('-','_',$plugin);
 	$f();
+	if($_POST[$var]=='import')
+		qtranxf_loadConfig();
 }
 
 function qtranxf_migrate_plugins()
 {
+	if(!current_user_can('manage_options')) return;
 	qtranxf_migrate_plugin('mqtranslate');
 	qtranxf_migrate_plugin('qtranslate-xp');
 	//qtranxf_migrate_plugin('ztranslate');//ok same db
@@ -83,11 +86,11 @@ function qtranxf_add_row_migrate($nm,$plugin) {
 		_e('There is no need to migrate any setting, the database schema is compatible with this plugin.', 'qtranslate');
 	}else{
 ?>
-		<label for="qtranslate_no_migration"><input type="radio" name="<?php echo $plugin; ?>-migration" id="<?php echo $plugin; ?>_no_migration" value="none" checked /> <?php _e('Do not migrate any setting', 'qtranslate'); ?></label>
+		<label for="<?php echo $plugin; ?>_no_migration"><input type="radio" name="<?php echo $plugin; ?>-migration" id="<?php echo $plugin; ?>_no_migration" value="none" checked /> <?php _e('Do not migrate any setting', 'qtranslate'); ?></label>
 		<br/>
-		<label for="qtranslate_import_migration"><input type="radio" name="<?php echo $plugin; ?>-migration" id="qtranslate_import_migration" value="import" /> <?php echo __('Import settings from ', 'qtranslate').$nm; ?></label>
+		<label for="<?php echo $plugin; ?>_import_migration"><input type="radio" name="<?php echo $plugin; ?>-migration" id="<?php echo $plugin; ?>_import_migration" value="import" /> <?php echo __('Import settings from ', 'qtranslate').$nm; ?></label>
 		<br/>
-		<label for="qtranslate_export_migration"><input type="radio" name="<?php echo $plugin; ?>-migration" id="qtranslate_export_migration" value="export" /> <?php echo __('Export settings to ', 'qtranslate').$nm; ?></label>
+		<label for="<?php echo $plugin; ?>_export_migration"><input type="radio" name="<?php echo $plugin; ?>-migration" id="<?php echo $plugin; ?>_export_migration" value="export" /> <?php echo __('Export settings to ', 'qtranslate').$nm; ?></label>
 <?php } ?>
 	</td>
 </tr>
@@ -105,7 +108,12 @@ function qtranxf_admin_section_import_export($request_uri)
 			<td>
 				<?php printf(__('If you are updating from qTranslate 1.x or Polyglot, <a href="%s">click here</a> to convert posts to the new language tag format.', 'qtranslate'), $request_uri.'&convert=true'); ?>
 				<?php printf(__('If you have installed qTranslate for the first time on a Wordpress with existing posts, you can either go through all your posts manually and save them in the correct language or <a href="%s">click here</a> to mark all existing posts as written in the default language.', 'qtranslate'), $request_uri.'&markdefault=true'); ?>
-				<?php _e('Both processes are <b>irreversible</b>! Be sure to make a full database backup before clicking one of the links.', 'qtranslate'); ?>
+				<?php _e('Both processes are <b>irreversible</b>! Be sure to make a full database backup before clicking one of the links.', 'qtranslate'); ?><br/><br/>
+				<label for="qtranxs_convert_database_none"><input type="radio" name="convert_database" id="qtranxs_convert_database_none" value="none" checked />&nbsp;<?php _e('Do not convert database', 'qtranslate'); ?></label><br/><br/>
+				<label for="qtranxs_convert_database_to_b_only"><input type="radio" name="convert_database" id="qtranxs_convert_database_to_b_only" value="b_only" />&nbsp;<?php echo __('Convert database to the "square bracket only" style.', 'qtranslate'); ?></label><br/>
+				<small><?php printf(__('The square bracket language tag %s only will be used as opposite to dual-tag %s legacy database format. All string options and standard post and page fields will be uniformly encoded like %s.','qtranslate'),'[:]',esc_html('(<!--:--> and [:]) qTranslate'),'"[:en]English[:de]Deutsch[:]"'); ?></small><br/><br/>
+				<label for="qtranxs_convert_database_to_c_dual"><input type="radio" name="convert_database" id="qtranxs_convert_database_to_c_dual" value="c_dual" />&nbsp;<?php echo __('Convert database back to the legacy "dual language tag" style.', 'qtranslate'); ?></label><br/>
+				<small><?php _e('Note, that only string options and standard post and page fields are affected.','qtranslate'); ?></small>
 			</td>
 		</tr>
 		<?php qtranxf_add_row_migrate('qTranslate','qtranslate'); ?>

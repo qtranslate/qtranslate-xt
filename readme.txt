@@ -51,6 +51,10 @@ We organized an anonymous entity [qTranslate Team](https://github.com/qTranslate
 
 GitHub repository is available: https://github.com/qTranslate-Team/qtranslate-x.git
 
+We thank our sponsors for persistent help and support:
+* [pictibe Werbeagentur](http://www.pictibe.de "pictibe Werbeagentur Köln Webdesign")
+* [Gunu](href="https://profiles.wordpress.org/grafcom" "Gunu (Marius Siroen)") (Marius Siroen)
+
 == Installation ==
 
 Installation of this plugin is no different from any other plugin:
@@ -214,6 +218,14 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 
 == Changelog ==
 
+= 3.1-b1 =
+* Feature: closing tag `[:]` for square bracket language encoding mod is introduced.
+* Feature: options to convert database to/from square bracket only mode.
+* Feature: new language encoding mode 'byline'.
+* Improvement: altered the response of filter 'esc_html' to return a translation to current language instead of the default language.
+* Feature: more on framework for integration with other plugins and themes.
+* Fix: import from [mqTranslate](https://wordpress.org/support/plugin/mqtranslate) (thanks to [Christophe](https://github.com/xhaleera)).
+
 = 3.0 stable =
 * Includes all changes after version 2.9.6.
 * Please, do not forget to respond to [survey on 'Translate Service' feature](http://www.marius-siroen.com/qTranslate-X/TranslateServices/) by courtesy of [Gunu (Marius Siroen)](https://profiles.wordpress.org/grafcom), whose continuous help is much appreciated.
@@ -371,7 +383,7 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 == Known Issues ==
 
 * Turn on option "Compatibility Functions", if you use [WooCommerce](https://wordpress.org/plugins/woocommerce/) framework plugins, like [IM8 qTranslate WooCommerce](https://wordpress.org/plugins/im8-qtranslate-woocommerce/), [qTranslate support for WooCommerce](https://wordpress.org/plugins/qtranslate-support-for-woocommerce/), [WooCommerce-qTML](https://wordpress.org/plugins/woocommerce-qtml/), for example. Also it is needed for any theme, which claims its compatibility with former qTranslate.
-* If other plugin installs a custom TinyMCE editor on a translatable field served by qTranslate-X, then all kind of problems start to happen. Examples of 'offending' plugins are: [Crayon Syntax Highlighter](https://wordpress.org/plugins/crayon-syntax-highlighter/), [Fusion Page Builder](http://www.theme-fusion.com/), [Page Builder by SiteOrigin](https://wordpress.org/plugins/siteorigin-panels/), [Revolution Slider](http://revolution.themepunch.com/), [Rich Text Tags](https://wordpress.org/plugins/rich-text-tags/), [Visual Composer](http://vc.wpbakery.com/), [WP Editor](https://wordpress.org/plugins/wp-editor/). We are looking into possibilities to enable integration with those plugins.
+* If other plugin installs a custom TinyMCE editor on a translatable field served by qTranslate-X, then all kind of problems start to happen. Examples of 'offending' plugins are: [Crayon Syntax Highlighter](https://wordpress.org/plugins/crayon-syntax-highlighter/), [Fusion Page Builder](http://www.theme-fusion.com/), [Page Builder by SiteOrigin](https://wordpress.org/plugins/siteorigin-panels/), [Revolution Slider](http://revolution.themepunch.com/), [Rich Text Tags](https://wordpress.org/plugins/rich-text-tags/), [Visual Composer](http://vc.wpbakery.com/), [WP Editor](https://wordpress.org/plugins/wp-editor/), [WR PageBuilder](https://wordpress.org/plugins/wr-pagebuilder). We are looking into possibilities to enable integration with those plugins.
 * Title of the site on admin pages is not displaying correctly [WP topic](https://wordpress.org/support/topic/title-dont-show-the-right-text-in-admin).
 * When [Jetpack by WordPress.com](https://wordpress.org/plugins/jetpack/) is enabled, pressing 'Save Changes' at Settings/General (/wp-admin/options-general.php) page, causes fields "Site Title" and "Tagline" to be emptied, if they had multilingual values. It only happens when Jetpack is connected to WordPress. For now, when you need to edit those values, deactivate Jetpack, make your edits, then re-activate JetPack again. Fortunately, that general setting page need not to be changed frequently. [WP topic](https://wordpress.org/support/topic/site-titletagline-disappear-on-general-settings-update)
 * There are reports about conflict with JetPack galleries. Workaround exists: [WP topic](https://wordpress.org/support/topic/site-titletagline-disappear-on-general-settings-update).

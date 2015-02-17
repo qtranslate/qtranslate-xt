@@ -173,7 +173,6 @@ function qtranxf_get_custom_admin_js ($pages) {
 function qtranxf_select_admin_js ($enqueue_script=false) {
 	global $pagenow;
 	global $q_config;
-	if($q_config['editor_mode']) return false;
 	if(!isset($_SERVER['SCRIPT_NAME'])) return false;
 	$script_name=$_SERVER['SCRIPT_NAME'];
 	if(!preg_match('#/wp-admin/([^/]+)\.php#',$script_name,$matches)) return false;
@@ -274,7 +273,7 @@ function qtranxf_load_admin_page_config() {
 
 function qtranxf_add_admin_footer_js ( $enqueue_script=false ) {
 	global $q_config;
-
+	if($q_config['editor_mode']) return false;
 	$script_file = qtranxf_select_admin_js($enqueue_script);
 	$page_config = qtranxf_load_admin_page_config();
 	if(!$script_file && empty($page_config))
@@ -672,11 +671,11 @@ function qtranxf_conf() {
 	$language_default = '';
 	$altered_table = false;
 
-	$message = apply_filters('qtranslate_configuration_pre','');
+	$message = apply_filters('qtranslate_configuration_pre',array());
 
 	// check for action
 	if(isset($_POST['qtranslate_reset']) && isset($_POST['qtranslate_reset2'])) {
-		$message = __('qTranslate has been reset.', 'qtranslate');
+		$message[] = __('qTranslate has been reset.', 'qtranslate');
 	} elseif(isset($_POST['default_language'])) {
 		// save settings
 		qtranxf_updateSetting('default_language', QTX_LANGUAGE);
@@ -713,8 +712,14 @@ function qtranxf_conf() {
 		qtranxf_updateSetting('custom_field_classes', QTX_ARRAY);
 		qtranxf_updateSetting('text_field_filters', QTX_ARRAY);
 		qtranxf_updateSetting('custom_pages', QTX_ARRAY);
+
 		if(isset($_POST['update_mo_now']) && $_POST['update_mo_now']=='1' && qtranxf_updateGettextDatabases(true))
-			$message = __('Gettext databases updated.', 'qtranslate');
+			$message[] = __('Gettext databases updated.', 'qtranslate');
+
+		if(isset($_POST['convert_database'])){
+			$msg = qtranxf_convert_database($_POST['convert_database']);
+			if($msg) $message[] = $msg;
+		}
 	}
 	
 	if(isset($_POST['original_lang'])) {
@@ -789,7 +794,7 @@ function qtranxf_conf() {
 			$wpdb->query('UPDATE '.$wpdb->posts.' set post_content = REPLACE(post_content, "[lang_'.$lang.']","<!--:'.$lang.'-->")');
 			$wpdb->query('UPDATE '.$wpdb->posts.' set post_content = REPLACE(post_content, "[/lang_'.$lang.']","<!--:-->")');
 		}
-		$message = "Database Update successful!";
+		$message[] = "Database Update successful!";
 	} elseif(isset($_GET['markdefault'])){
 		// update language tags
 		global $wpdb;
@@ -798,23 +803,11 @@ function qtranxf_conf() {
 		foreach($result as $post) {
 			$title=qtranxf_mark_default($post->post_title);
 			$content=qtranxf_mark_default($post->post_content);
-/*
-			$content = qtranxf_split($post->post_content);
-			$title = qtranxf_split($post->post_title);
-			foreach($q_config['enabled_languages'] as $language) {
-				if($language != $q_config['default_language']) {
-					$content[$language] = '';
-					$title[$language] = '';
-				}
-			}
-			$content = qtranxf_join_c($content);
-			$title = qtranxf_join_c($title);
-*/
 			if( $title==$post->post_title && $content==$post->post_content ) continue;
 			//qtranxf_dbg_echo("markdefault:<br>\ntitle old: '".$post->post_title."'<br>\ntitle new: '".$title."'<br>\ncontent old: '".$post->post_content."'<br>\ncontent new: '".$content."'"); continue;
 			$wpdb->query('UPDATE '.$wpdb->posts.' set post_content = "'.mysql_real_escape_string($content).'", post_title = "'.mysql_real_escape_string($title).'" WHERE ID='.$post->ID);
 		}
-		$message = "All Posts marked as default language!";
+		$message[] = "All Posts marked as default language!";
 	} elseif(isset($_GET['edit'])){
 		$original_lang = $_GET['edit'];
 		$language_code = $_GET['edit'];
@@ -858,33 +851,33 @@ function qtranxf_conf() {
 		}
 	} elseif(isset($_GET['moveup'])) {
 		$languages = qtranxf_getSortedLanguages();
-		$message = __('No such language!', 'qtranslate');
+		$message[] = __('No such language!', 'qtranslate');
 		foreach($languages as $key => $language) {
 			if($language==$_GET['moveup']) {
 				if($key==0) {
-					$message = __('Language is already first!', 'qtranslate');
+					$message[] = __('Language is already first!', 'qtranslate');
 					break;
 				}
 				$languages[$key] = $languages[$key-1];
 				$languages[$key-1] = $language;
 				$q_config['enabled_languages'] = $languages;
-				$message = __('New order saved.', 'qtranslate');
+				$message[] = __('New order saved.', 'qtranslate');
 				break;
 			}
 		}
 	} elseif(isset($_GET['movedown'])) {
 		$languages = qtranxf_getSortedLanguages();
-		$message = __('No such language!', 'qtranslate');
+		$message[] = __('No such language!', 'qtranslate');
 		foreach($languages as $key => $language) {
 			if($language==$_GET['movedown']) {
 				if($key==sizeof($languages)-1) {
-					$message = __('Language is already last!', 'qtranslate');
+					$message[] = __('Language is already last!', 'qtranslate');
 					break;
 				}
 				$languages[$key] = $languages[$key+1];
 				$languages[$key+1] = $language;
 				$q_config['enabled_languages'] = $languages;
-				$message = __('New order saved.', 'qtranslate');
+				$message[] = __('New order saved.', 'qtranslate');
 				break;
 			}
 		}
@@ -895,7 +888,7 @@ function qtranxf_conf() {
 		// settings might have changed, so save
 		qtranxf_saveConfig();
 		if(empty($message)) {
-			$message = __('Options saved.', 'qtranslate');
+			$message[] = __('Options saved.', 'qtranslate');
 		}
 	}
 	if($q_config['auto_update_mo']) {
@@ -914,9 +907,12 @@ function qtranxf_conf() {
 	$plugindir = dirname(plugin_basename( __FILE__ ));
 	$pluginurl=WP_PLUGIN_URL.'/'.$plugindir;
 ?>
-<?php if ($message) : ?>
-<div id="message" class="updated fade"><p><strong><?php echo $message; ?></strong></p></div>
-<?php endif; ?>
+<?php
+	if (!empty($message)) :
+		foreach($message as $msg){
+?>
+<div id="message" class="updated fade"><p><strong><?php echo $msg; ?></strong></p></div>
+<?php } endif; ?>
 <?php if ($error!='') : ?>
 <div id="message" class="error fade"><p><strong><?php echo $error; ?></strong></p></div>
 <?php endif; ?>
