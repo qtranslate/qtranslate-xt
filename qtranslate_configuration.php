@@ -1240,7 +1240,7 @@ function qtranxf_add_nav_menu_metabox()
 	add_meta_box( 'add-qtranxs-language-switcher', __( 'Language Switcher', 'qtranslate'), 'qtranxf_nav_menu_metabox', 'nav-menus', 'side', 'default' );
 }
 
-function qtranxf_add_language_menu( $wp_admin_bar ) 
+function qtranxf_add_language_menu( $wp_admin_bar )
 {
 	global $q_config;
 	if ( !is_admin() || !is_admin_bar_showing() )

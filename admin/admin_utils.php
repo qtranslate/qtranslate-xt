@@ -148,6 +148,7 @@ function qtranxf_useAdminTermLibJoin($obj, $taxonomies=null, $args=null) {
 	switch($pagenow){
 		case 'nav-menus.php':
 		case 'edit-tags.php':
+		case 'edit.php':
 			return qtranxf_get_terms_joined($obj);
 		default: return qtranxf_useTermLib($obj);
 	}

@@ -218,6 +218,9 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 
 == Changelog ==
 
+= 3.1-b2 =
+* Feature: more on framework for integration with other plugins and themes.
+
 = 3.1-b1 =
 * Feature: closing tag `[:]` for square bracket language encoding mod is introduced.
 * Feature: options to convert database to/from square bracket only mode.

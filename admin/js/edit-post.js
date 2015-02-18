@@ -21,7 +21,7 @@ qTranslateConfig.js={
 		qtx.addContentHookByIdC('attachment_caption',form);
 		qtx.addContentHookByIdB('attachment_alt',form);
 
-		qtx.addContentHooks(form);
+		qtx.addCustomContentHooks(form);
 
 		// Slug
 		function convertURL(url,lang)

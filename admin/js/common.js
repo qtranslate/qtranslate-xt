@@ -3,7 +3,7 @@
 var cc=0;
 function c(v){ ++cc; console.log('== '+cc+': '+v); }
 function ct(v){ c(v); console.trace(); }
-function co(t,o){ ++cc; console.log('== '+cc+': '+t+': %o',o); }
+function co(t,o){ ++cc; console.log('== '+cc+': '+t+'%o',o); }
 */
 
 /**
@@ -346,6 +346,13 @@ var qTranslateX=function(pg)
 		//c('addDisplayHook: content='+content);
 		h.contents=qtranxj_split(content);
 		elem.innerHTML=h.contents[qTranslateConfig.activeLanguage];
+		if(elem.value){
+			var value = elem.value.replace(/&lt;!--:([a-z]{2}|)--&gt;/gi,'<!--:$1-->');//un-escape language HTML
+			if(value != ''){
+				h.values=qtranxj_split(value);
+				elem.value=h.values[qTranslateConfig.activeLanguage];
+			}
+		}
 		displayHooks.push(h);
 		return true;
 	}
@@ -371,6 +378,8 @@ var qTranslateX=function(pg)
 		for(var i=0; i<displayHooks.length; ++i){
 			var h=displayHooks[i];
 			h.elem.innerHTML=h.contents[this.lang];
+			if(h.values)
+				h.elem.value=h.values[this.lang];
 		}
 		for(var key in contentHooks){
 			var h=contentHooks[key];
@@ -410,7 +419,10 @@ var qTranslateX=function(pg)
 
 	this.addDisplayHooksByClass=function(nm,container)
 	{
+		//co('addDisplayHooksByClass: container:',container);
 		var elems=container.getElementsByClassName(nm);
+		//co('addDisplayHooksByClass: elems('+nm+'):',elems);
+		//co('addDisplayHooksByClass: elems.length=',elems.length);
 		addDisplayHooks(elems);
 	}
 
@@ -425,16 +437,24 @@ var qTranslateX=function(pg)
 		}
 	}
 
-	addContentHooksByClassName=function(nm,form,container,sep)
+	/**
+	 * Since 3.1-b2
+	*/
+	addContentFieldHooks=function(fields,form,sep)
 	{
-		if(!container) container=form;
-		var fields=container.getElementsByClassName(nm);
-		//if(sep=='[') //c('addContentHooksByClass: fields.length='+fields.length);
 		for(var i=0; i<fields.length; ++i){
 			var f=fields[i];
 			//if(sep=='[') //co('addContentHooksByClass: f: ',f);
 			addContentHook(f,form,sep);
 		}
+	}
+
+	addContentHooksByClassName=function(nm,form,container,sep)
+	{
+		if(!container) container=form;
+		var fields=container.getElementsByClassName(nm);
+		//if(sep=='[') //c('addContentHooksByClass: fields.length='+fields.length);
+		addContentFieldHooks(fields,form,sep);
 	}
 
 	this.addContentHooksByClass=function(nm,form,container)
@@ -447,8 +467,12 @@ var qTranslateX=function(pg)
 		addContentHooksByClassName(nm,form,container,sep);
 	}
 
-	// adds custom hooks from configuration
-	this.addContentHooks=function(form)
+	/**
+	 * adds custom hooks from configuration
+	 * Since 3.1-b2 - renamed to addCustomContentHooks, since addContentHooks used in qTranslateConfig.js
+	 * Since 3.0 - addContentHooks
+	*/
+	this.addCustomContentHooks=function(form)
 	{
 		//c('qTranslateConfig.custom_fields.length='+qTranslateConfig.custom_fields.length);
 		for(var i=0; i<qTranslateConfig.custom_fields.length; ++i){
@@ -461,26 +485,56 @@ var qTranslateX=function(pg)
 		}
 	}
 
+	/**
+	 * Parses custom page configuration, loaded in qtranxf_load_admin_page_config.
+	 * Since 3.1-b2
+	*/
 	this.addPageHooks=function(page_config)
 	{
-		for(var i=0; i < page_config.forms.length; ++i){
-			var frm = page_config.forms[i];
-			var form = document.getElementById(frm.form.id);
+		for(var p=0; p < page_config.forms.length; ++p){
+			var frm = page_config.forms[p];
+			var form;
+			if(frm.form){
+				form = document.getElementById(frm.form.id);
+			}else{
+				form = this.getWrapForm();
+			}
 			//co('form=',form);
-			if(!form) continue;
-			for(var k=0; k < frm.fields.length; ++k){
-				var fld = frm.fields[k];
+			for(var f=0; f < frm.fields.length; ++f){
+				var fld = frm.fields[f];
 				//co('fld=',fld);
 				//c('encode='+fld.encode);
 				//c('id='+fld.id);
 				//c('class='+fld.class);
+				var containers=[];
+				if(fld.container_id){
+					var container = document.getElementById(fld.container_id);
+					if(container) containers.push(container);
+				}else if(fld.container_class){
+					containers = document.getElementsByClassName(fld.container_class);
+				}else if(form){
+					containers.push(form);
+				}
 				var sep = fld.encode;
 				switch( sep ){
 					case 'display':
-						if(fld.id) this.addDisplayHook(document.getElementById(fld.id));
-						else if(fld.class) this.addDisplayHooksByClass(fld.class,form);
-						else{
-							//todo tag, name
+						if(fld.id) addDisplayHook(document.getElementById(fld.id));
+						else if(fld.class){
+							//c('class='+fld.class+'; containers.length='+containers.length);
+							for(var i=0; i < containers.length; ++i){
+								var container = containers[i];
+								this.addDisplayHooksByClass(fld.class,container);
+							}
+						}else if(fld.tag){
+							//c('tag='+fld.tag+'; containers.length='+containers.length);
+							for(var i=0; i < containers.length; ++i){
+								var container = containers[i];
+								//co('container=',container);
+								var elems=container.getElementsByTagName(fld.tag);
+								//co('elems=',elems);
+								addDisplayHooks(elems);
+							}
+						}else{
 							continue;
 						}
 						break;
@@ -488,10 +542,24 @@ var qTranslateX=function(pg)
 					case '<':
 					case 'byline':
 					default:
+						if(!form) continue;
 						if(fld.id) this.addContentHookById(fld.id,form,sep);
-						else if(fld.class) addContentHooksByClassName(fld.class,form,form,sep);
-						else{
-							//todo tag, name
+						else if(fld.class){
+							for(var i=0; i < containers.length; ++i){
+								var container = containers[i];
+								addContentHooksByClassName(fld.class,form,container,sep);
+							}
+						}else if(fld.tag){
+							for(var i=0; i < containers.length; ++i){
+								var container = containers[i];
+								var fields=container.getElementsByTagName(fld.tag);
+								for(var j=0; j<fields.length; ++j){
+									var field=fields[j];
+									if(fld.name && (!field.name || fld.name != field.name)) continue;
+									addContentHook(field,form,sep);
+								}
+							}
+						}else{
 							continue;
 						}
 						break;
@@ -557,6 +625,8 @@ var qTranslateX=function(pg)
 			if(forms.length) return forms[0];
 		}
 		var forms = document.getElementsByTagName('form');
+		if(forms.length === 1)
+			return forms[0];
 		for(var i=0; i < forms.length; ++i){
 			var f = forms[i];
 			wraps = f.getElementsByClassName('wrap');

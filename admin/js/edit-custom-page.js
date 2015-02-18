@@ -6,7 +6,7 @@ qTranslateConfig.js={
 	{
 		var form = qtx.getWrapForm();
 		if(!form) return false;
-		qtx.addContentHooks(form);
+		qtx.addCustomContentHooks(form);
 		this.langSwitchWrapAnchor=form;
 		return true;
 	}
