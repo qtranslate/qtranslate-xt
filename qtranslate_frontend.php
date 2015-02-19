@@ -339,8 +339,13 @@ function qtranxf_excludeUntranslatedPosts($where,&$query) {//WP_Query
 		//}
 	}
 	if(!$single_post_query){
-		//$where .= " AND ($wpdb->posts.post_content LIKE '%<!--:".qtranxf_getLanguage()."-->%' OR $wpdb->posts.post_content='')";
-		$where .= " AND ($wpdb->posts.post_content LIKE '%<!--:".qtranxf_getLanguage()."-->%')";
+		$lang = qtranxf_getLanguage();
+		/**
+		 * since 3.1-b3 new query to pass empty content and content without closing tags (sliders, galleries and other special kind of posts that never get translated)
+		 * the query must be the same as in qtranxf_excludeUntranslatedPostComments
+		 */
+		$where .= " AND ($wpdb->posts.post_content='' OR $wpdb->posts.post_content LIKE '%![:".$lang."!]%' ESCAPE '!' OR $wpdb->posts.post_content LIKE '%<!--:".$lang."-->%' OR ($wpdb->posts.post_content NOT LIKE '%![:!]%' ESCAPE '!' AND $wpdb->posts.post_content NOT LIKE '%<!--:-->%'))";
+		//$where .= " AND ($wpdb->posts.post_content LIKE '%<!--:".qtranxf_getLanguage()."-->%')";
 	}
 	return $where;
 }
@@ -365,7 +370,12 @@ function qtranxf_excludeUntranslatedPostComments($clauses, &$q/*WP_Comment_Query
 		$single_post_query = preg_match('/comment_post_ID\s*=\s*[\'"]*(\d+)[\'"]*/i',$clauses['where'])==1;
 	}
 	if(!$single_post_query){
-		$clauses['where'] .= " AND $wpdb->posts.post_content LIKE '%<!--:".qtranxf_getLanguage()."-->%'";
+		$lang = qtranxf_getLanguage();
+		/**
+		 * since 3.1-b3 new query to pass empty content and content without closing tags (sliders, galleries and other special kind of posts that never get translated)
+		 * the query must be the same as in qtranxf_excludeUntranslatedPosts
+		 */
+		$clauses['where'] .= " AND ($wpdb->posts.post_content='' OR $wpdb->posts.post_content LIKE '%![:".$lang."!]%' ESCAPE '!' OR $wpdb->posts.post_content LIKE '%<!--:".$lang."-->%' OR ($wpdb->posts.post_content NOT LIKE '%![:!]%' ESCAPE '!' AND $wpdb->posts.post_content NOT LIKE '%<!--:-->%'))";
 	}
 	return $clauses;
 }

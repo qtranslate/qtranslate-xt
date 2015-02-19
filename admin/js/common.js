@@ -277,14 +277,14 @@ var qTranslateX=function(pg)
 
 	addContentHook=function(inpField,form,separator)
 	{
-		//co('inpField:',inpField);
+		//co('addContentHook: inpField:',inpField);
 		if( !inpField ) return false;
 		//if( typeof inpField.value !== 'string' ) return false;
 		if(contentHooks[inpField.id]) return true;
 		var h=contentHooks[inpField.id]={};
 		//h.id=inpField.id;
 		h.contentField=inpField;
-		//c('addContentHook:inpField.value='+inpField.value);
+		//c('addContentHook: inpField.value='+inpField.value);
 		h.contents=qtranxj_split(inpField.value);//keep neutral text from older times, just in case.
 		                        //inpField.tagName
 		h.mlContentField=qtranxj_ce('input', {name: inpField.name, type: 'hidden', className: 'hidden', value: inpField.value}, form, true);
@@ -292,7 +292,7 @@ var qTranslateX=function(pg)
 			if(inpField.tagName==='TEXTAREA')
 				separator='<';
 			else
-				separator='[';
+				separator='[';//since 3.1 we get rid of <:> encoding
 		}
 		h.separator=separator;
 		inpField.name='edit-'+inpField.name;
@@ -338,6 +338,7 @@ var qTranslateX=function(pg)
 
 	addDisplayHook=function(elem)
 	{
+		//co('addDisplayHook: elem=',elem);
 		if(!elem) return false;
 		var h={};
 		h.elem=elem;
@@ -500,6 +501,7 @@ var qTranslateX=function(pg)
 				form = this.getWrapForm();
 			}
 			//co('form=',form);
+			//c('frm.fields.length='+frm.fields.length);
 			for(var f=0; f < frm.fields.length; ++f){
 				var fld = frm.fields[f];
 				//co('fld=',fld);

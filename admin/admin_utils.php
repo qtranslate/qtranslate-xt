@@ -25,6 +25,11 @@ function qtranxf_convert_to_b($text) {
 	global $q_config;
 	$blocks = qtranxf_get_language_blocks($text);
 	if( count($blocks) > 1 ){
+		foreach($blocks as $key => $b){
+			if(empty($b)) unset($blocks[$key]);
+		}
+	}
+	if( count($blocks) > 1 ){
 		$texts = qtranxf_split_blocks($blocks);
 		$text = qtranxf_join_b($texts);
 	}
@@ -35,6 +40,11 @@ function qtranxf_convert_to_b_no_closing($text) {
 	global $q_config;
 	$blocks = qtranxf_get_language_blocks($text);
 	if( count($blocks) > 1 ){
+		foreach($blocks as $key => $b){
+			if(empty($b)) unset($blocks[$key]);
+		}
+	}
+	if( count($blocks) > 1 ){
 		$texts = qtranxf_split_blocks($blocks);
 		$text = qtranxf_join_b_no_closing($texts);
 	}
@@ -44,6 +54,11 @@ function qtranxf_convert_to_b_no_closing($text) {
 function qtranxf_convert_to_c($text) {
 	global $q_config;
 	$blocks = qtranxf_get_language_blocks($text);
+	if( count($blocks) > 1 ){
+		foreach($blocks as $key => $b){
+			if(empty($b)) unset($blocks[$key]);
+		}
+	}
 	if( count($blocks) > 1 ){
 		$texts = qtranxf_split_blocks($blocks);
 		$text = qtranxf_join_c($texts);
@@ -70,7 +85,7 @@ function qtranxf_convert_database($action){
 				if(!is_string($value)) continue;
 				$text=qtranxf_convert_to_b($value);
 				if($text === $value) continue;
-				update_option($option,$value);
+				update_option($option,$text);
 			}
 			return __('Database has been converted to square bracket format.', 'qtranslate').'<br/>'.__('Note: custom entries are not touched.', 'qtranslate');;
 		case 'c_dual':

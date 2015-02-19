@@ -218,6 +218,9 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 
 == Changelog ==
 
+= 3.1-b3 =
+* Fix: query to implement option 'Hide Content which is not available for the selected language'
+
 = 3.1-b2 =
 * Feature: more on framework for integration with other plugins and themes.
 
