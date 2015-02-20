@@ -210,8 +210,8 @@ msgid "Message to display if post is not available in the requested language. (E
 msgstr "Seçilən bölməyə aid tərcümə yox isə görünən mesaj. (Nümunə: Bağışlayın, bu bölmə sadəcə %LANG:, :% dillərində mövcuddur.)"
 
 #: qtranslate_configuration.php:471
-msgid "%LANG:&lt;normal_seperator&gt;:&lt;last_seperator&gt;% generates a list of languages seperated by &lt;normal_seperator&gt; except for the last one, where &lt;last_seperator&gt; will be used instead."
-msgstr "%LANG:&lt;normal_seperator&gt;:&lt;last_seperator&gt;% ilə ayrılmış dil siyahısı yaradır. Normalda ayıran olaraq &lt;normal_seperator&gt; istifadə edilir. Son ayıran olaraq &lt;last_seperator&gt; istifadə edilir."
+msgid "%LANG:&lt;normal_separator&gt;:&lt;last_separator&gt;% generates a list of languages seperated by &lt;normal_separator&gt; except for the last one, where &lt;last_separator&gt; will be used instead."
+msgstr "%LANG:&lt;normal_separator&gt;:&lt;last_separator&gt;% ilə ayrılmış dil siyahısı yaradır. Normalda ayıran olaraq &lt;normal_separator&gt; istifadə edilir. Son ayıran olaraq &lt;last_separator&gt; istifadə edilir."
 
 #: qtranslate_configuration.php:576
 msgid "Hide"

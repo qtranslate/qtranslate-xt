@@ -209,8 +209,8 @@ msgid "Message to display if post is not available in the requested language. (E
 msgstr "Ez az üzenet jelenik meg, ha egy bejegyzés nem érhető el a kért nyelven. (Példa: Bocsi, ez a bejegyzés csak %LANG:, : és % nyelv(ek)en érhető el.)"
 
 #: qtranslate_configuration.php:471
-msgid "%LANG:&lt;normal_seperator&gt;:&lt;last_seperator&gt;% generates a list of languages seperated by &lt;normal_seperator&gt; except for the last one, where &lt;last_seperator&gt; will be used instead."
-msgstr "%LANG:&lt;normal_seperator&gt;:&lt;last_seperator&gt;% létrehoz egy listát nyelvekből, ahol az elválasztójel:  &lt;normal_seperator&gt; az utolsó elválasztó pedig: &lt;last_seperator&gt;."
+msgid "%LANG:&lt;normal_separator&gt;:&lt;last_separator&gt;% generates a list of languages seperated by &lt;normal_separator&gt; except for the last one, where &lt;last_separator&gt; will be used instead."
+msgstr "%LANG:&lt;normal_separator&gt;:&lt;last_separator&gt;% létrehoz egy listát nyelvekből, ahol az elválasztójel:  &lt;normal_separator&gt; az utolsó elválasztó pedig: &lt;last_separator&gt;."
 
 #: qtranslate_configuration.php:576
 msgid "Hide"

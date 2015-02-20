@@ -1265,13 +1265,13 @@ function qtranxf_use_block($lang, $blocks, $show_available=false, $show_empty=fa
 	$available_languages = array_unique($available_languages);
 	$language_list = "";
 	if(preg_match('/%LANG:([^:]*):([^%]*)%/',$q_config['not_available'][$lang],$match)) {
-		$normal_seperator = $match[1];
-		$end_seperator = $match[2];
+		$normal_separator = $match[1];
+		$end_separator = $match[2];
 		// build available languages string backward
 		$i = 0;
 		foreach($available_languages as $language) {
-			if($i==1) $language_list  = $end_seperator.$language_list;
-			if($i>1) $language_list  = $normal_seperator.$language_list;
+			if($i==1) $language_list  = $end_separator.$language_list;
+			if($i>1) $language_list  = $normal_separator.$language_list;
 			$language_list = '<a href="'.qtranxf_convertURL('', $language, false, true).'">'.$q_config['language_name'][$language].'</a>'.$language_list;
 			$i++;
 		}

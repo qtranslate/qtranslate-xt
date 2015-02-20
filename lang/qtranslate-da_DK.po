@@ -212,8 +212,8 @@ msgid "Message to display if post is not available in the requested language. (E
 msgstr "Besked der skal vises hvis indlægget ikke findes for det valgte sprog. (Eksempel: Beklager, indlægget findes kun på %LANG:, : og %.)"
 
 #: qtranslate_configuration.php:471
-msgid "%LANG:&lt;normal_seperator&gt;:&lt;last_seperator&gt;% generates a list of languages seperated by &lt;normal_seperator&gt; except for the last one, where &lt;last_seperator&gt; will be used instead."
-msgstr "%LANG:&lt;normal_seperator&gt;:&lt;last_seperator&gt;% genererer en liste af sprog adskildt med &lt;normal_seperator&gt; undtagen for den sidste, hvor &lt;last_seperator&gt; vil være anvendt."
+msgid "%LANG:&lt;normal_separator&gt;:&lt;last_separator&gt;% generates a list of languages seperated by &lt;normal_separator&gt; except for the last one, where &lt;last_separator&gt; will be used instead."
+msgstr "%LANG:&lt;normal_separator&gt;:&lt;last_separator&gt;% genererer en liste af sprog adskildt med &lt;normal_separator&gt; undtagen for den sidste, hvor &lt;last_separator&gt; vil være anvendt."
 
 #: qtranslate_configuration.php:576
 msgid "Hide"
