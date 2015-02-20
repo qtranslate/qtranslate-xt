@@ -42,6 +42,8 @@ Below is the list of plugins recently made compatible, as reported by users:
 - [Multiple content blocks](https://wordpress.org/plugins/multiple-content-blocks/)
 - [Qtranslate Slug](https://wordpress.org/plugins/qtranslate-slug/)
 - [WP Photo Album Plus](https://wordpress.org/plugins/wp-photo-album-plus/)
+- [qTranslate support for GravityForms](https://wordpress.org/support/plugin/qtranslate-support-for-gravityforms)
+- [qTranslate support for WooCommerce](https://wordpress.org/support/plugin/qtranslate-support-for-woocommerce)
 
 If you encounter a conflicting a plugin, please let us know, and meanwhile try to use other plugin of similar functionality, if possible.
 
