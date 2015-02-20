@@ -3,7 +3,7 @@
 Plugin Name: qTranslate-X
 Plugin URI: http://wordpress.org/plugins/qtranslate-x/
 Description: Adds user-friendly and database-friendly multilingual content support into WordPress.
-Version: 3.1-b3
+Version: 3.1-b4
 Author: qTranslate Team
 Author URI: http://qtranslatexteam.wordpress.com/about
 Tags: multilingual, multi, language, admin, tinymce, Polyglot, bilingual, widget, switcher, professional, human, translation, service, qTranslate, zTranslate, mqTranslate, qTranslate Plus, WPML
@@ -103,7 +103,7 @@ if ( ! defined( 'QTRANSLATE_FILE' ) ) {
 	define( 'QTRANSLATE_FILE', __FILE__ );
 }
 
-define('QTX_VERSION','3.1-b3');
+define('QTX_VERSION','3.1-b4');
 
 /* DEFAULT CONFIGURATION PART BEGINS HERE */
 
@@ -211,6 +211,7 @@ $q_config['language_name']['pl'] = "Polski";
 $q_config['language_name']['gl'] = "galego";
 $q_config['language_name']['tr'] = "Turkish";
 $q_config['language_name']['et'] = "Eesti";
+$q_config['language_name']['hr'] = "Croatian";
 
 // Locales for languages
 // see locale -a for available locales
@@ -234,6 +235,7 @@ $q_config['locale']['pl'] = "pl_PL";
 $q_config['locale']['gl'] = "gl_ES";
 $q_config['locale']['tr'] = "tr_TR";
 $q_config['locale']['et'] = "et_ET";
+$q_config['locale']['hr'] = "hr_HR";
 
 // Language not available messages
 // %LANG:<normal_seperator>:<last_seperator>% generates a list of languages seperated by <normal_seperator> except for the last one, where <last_seperator> will be used instead.
@@ -257,6 +259,7 @@ $q_config['not_available']['pl'] = "Przepraszamy, ten wpis jest dostępny tylko 
 $q_config['not_available']['gl'] = "Sentímolo moito, ista entrada atopase unicamente en %LANG;,: e %.";
 $q_config['not_available']['tr'] = "Sorry, this entry is only available in %LANG:, : and %.";
 $q_config['not_available']['et'] = "Vabandame, see kanne on saadaval ainult % LANG : ja %.";
+$q_config['not_available']['hr'] = "Sorry, this entry is only available in %LANG:, : and %.";
 
 // strftime usage (backward compability)
 $q_config['use_strftime'] = QTX_DATE;
@@ -282,6 +285,7 @@ $q_config['date_format']['pl'] = '%d/%m/%y';
 $q_config['date_format']['gl'] = '%d de %B de %Y';
 $q_config['date_format']['tr'] = '%A %B %e%q, %Y';
 $q_config['date_format']['et'] = '%A %B %e%q, %Y';
+$q_config['date_format']['hr'] = '%A %B %e%q, %Y';
 
 $q_config['time_format']['en'] = '%I:%M %p';
 $q_config['time_format']['de'] = '%H:%M';
@@ -303,6 +307,7 @@ $q_config['time_format']['pl'] = '%H:%M';
 $q_config['time_format']['gl'] = '%H:%M hrs.';
 $q_config['time_format']['tr'] = '%H:%M';
 $q_config['time_format']['et'] = '%H:%M';
+$q_config['time_format']['hr'] = '%H:%M';
 
 // Flag images configuration
 // Look in /flags/ directory for a huge list of flags for usage
@@ -326,6 +331,7 @@ $q_config['flag']['pl'] = 'pl.png';
 $q_config['flag']['gl'] = 'galego.png';
 $q_config['flag']['tr'] = 'tr.png';
 $q_config['flag']['et'] = 'ee.png';
+$q_config['flag']['hr'] = 'hr.png';
 
 // Location of flags (needs trailing slash!)
 //$q_config['flag_location'] = 'plugins/qtranslate-x/flags/';

@@ -76,8 +76,10 @@ class qTranslateXWidget extends WP_Widget {
 
 	function update($new_instance, $old_instance) {
 		$instance = $old_instance;
+		//qtranxf_dbg_log('update: $new_instance: ',$new_instance);
 		$instance['title'] = $new_instance['title'];
-		if(isset($new_instance['hide-title'])) $instance['hide-title'] = $new_instance['hide-title'];
+		if(isset($new_instance['hide-title'])) $instance['hide-title'] = 'on';
+		else unset($instance['hide-title']);
 		$instance['type'] = $new_instance['type'];
 		$instance['widget-css'] = $new_instance['widget-css'];
 		return $instance;
@@ -92,14 +94,17 @@ class qTranslateXWidget extends WP_Widget {
 		if(empty($widget_css)) $widget_css=QTX_WIDGET_CSS;
 ?>
 <p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:', 'qtranslate'); ?> <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($title); ?>" /></label></p>
-<p><label for="<?php echo $this->get_field_id('hide-title'); ?>"><?php _e('Hide Title:', 'qtranslate'); ?> <input type="checkbox" id="<?php echo $this->get_field_id('hide-title'); ?>" name="<?php echo $this->get_field_name('hide-title'); ?>" <?php echo ($hide_title=='on')?'checked="checked"':''; ?>/></label></p>
+<p><label for="<?php echo $this->get_field_id('hide-title'); ?>"><?php _e('Hide Title:', 'qtranslate'); ?> <input type="checkbox" id="<?php echo $this->get_field_id('hide-title'); ?>" name="<?php echo $this->get_field_name('hide-title'); ?>" <?php checked($hide_title, 'on'); ?>/></label></p>
 <p><?php _e('Display:', 'qtranslate'); ?></p>
 <p><label for="<?php echo $this->get_field_id('type'); ?>1"><input type="radio" name="<?php echo $this->get_field_name('type'); ?>" id="<?php echo $this->get_field_id('type'); ?>1" value="text"<?php echo ($type=='text')?' checked="checked"':'' ?>/> <?php _e('Text only', 'qtranslate'); ?></label></p>
 <p><label for="<?php echo $this->get_field_id('type'); ?>2"><input type="radio" name="<?php echo $this->get_field_name('type'); ?>" id="<?php echo $this->get_field_id('type'); ?>2" value="image"<?php echo ($type=='image')?' checked="checked"':'' ?>/> <?php _e('Image only', 'qtranslate'); ?></label></p>
 <p><label for="<?php echo $this->get_field_id('type'); ?>3"><input type="radio" name="<?php echo $this->get_field_name('type'); ?>" id="<?php echo $this->get_field_id('type'); ?>3" value="both"<?php echo ($type=='both')?' checked="checked"':'' ?>/> <?php _e('Text and Image', 'qtranslate'); ?></label></p>
 <p><label for="<?php echo $this->get_field_id('type'); ?>4"><input type="radio" name="<?php echo $this->get_field_name('type'); ?>" id="<?php echo $this->get_field_id('type'); ?>4" value="dropdown"<?php echo ($type=='dropdown')?' checked="checked"':'' ?>/> <?php _e('Dropdown Box', 'qtranslate'); ?></label></p>
-<p><label for="<?php echo $this->get_field_id('widget-css'); ?>"><?php echo __('Widget', 'qtranslate').' CSS:'; ?></label><br><textarea class="widefat" rows="6" name="<?php echo $this->get_field_name('widget-css'); ?>" id="<?php echo $this->get_field_id('widget-css'); ?>" /><?php echo esc_attr($widget_css); ?></textarea><br><small><?php _e('To reset to default, clear the text.','qtranslate'); ?></small></p>
+<p><label for="<?php echo $this->get_field_id('widget-css'); ?>"><?php echo __('Widget', 'qtranslate').' CSS:'; ?></label><br><textarea class="widefat" rows="6" name="<?php echo $this->get_field_name('widget-css'); ?>" id="<?php echo $this->get_field_id('widget-css'); ?>" value="" /><?php echo esc_attr($widget_css); ?></textarea><br><small><?php _e('To reset to default, clear the text.','qtranslate'); ?></small></p>
 <?php
+/*
+
+*/
 	}
 }
 

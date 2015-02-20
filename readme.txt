@@ -218,6 +218,10 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 
 == Changelog ==
 
+= 3.1-b4 =
+* Fix: 'Hide Title' in the widget. [WP topic](https://wordpress.org/support/topic/widget-cannot-save-titlecannot-uncheck-hide-title)
+* Fix: corrected redirection in some peculiar cases.
+
 = 3.1-b3 =
 * Fix: query to implement option 'Hide Content which is not available for the selected language'
 

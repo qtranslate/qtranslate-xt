@@ -98,7 +98,7 @@ function qtranxf_wp_get_nav_menu_items( $items, $menu, $args )
 	$menu_order=0;
   $qtransmenu=null;
 	$altlang=null;
-	$url='';//it will keep the same page
+	$url = '';//esc_url($q_config['url_info']['url']);
 	//options
 	$type='LM';//[LM|AL]
 	$title='Language';//[none|Language|Current]

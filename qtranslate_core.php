@@ -50,6 +50,9 @@ function qtranxf_init_language() {
 
 	$url_info['language'] = qtranxf_detect_language($url_info);
 	$q_config['url_info'] = $url_info;
+	//qtranxf_dbg_log('qtranxf_init_language: url_info: ',$url_info);
+
+	$q_config['language'] = apply_filters('qtranslate_language', $url_info['language'], $url_info);
 
 	if(isset($url_info['doredirect'])){
 		if(!defined('WP_ADMIN') && !defined('DOING_AJAX') && !defined('DOING_CRON') && empty($_POST)){
@@ -72,9 +75,7 @@ function qtranxf_init_language() {
 		}
 	}
 
-	$q_config['language'] = apply_filters('qtranslate_language', $url_info['language'], $url_info);
-
-	// fix url to prevent xss
+	// fix url to prevent xss - how does this prevents xss?
 	$q_config['url_info']['url'] = qtranxf_convertURL(add_query_arg('lang',$q_config['default_language'],$q_config['url_info']['url']));
 
 	// Filter all options for language tags
@@ -122,7 +123,10 @@ function qtranxf_detect_language(&$url_info) {
 
 	$lang = qtranxf_parse_language_info($url_info);
 
-	if( (!$lang || !isset($url_info['doing_front_end'])) && defined('DOING_AJAX') && isset($_SERVER['HTTP_REFERER'])){
+	if( (!$lang || !isset($url_info['doing_front_end']))
+		&& (defined('DOING_AJAX') || !$q_config['cookie_enabled'])
+		&& isset($_SERVER['HTTP_REFERER'])
+	){
 		//assert(WP_ADMIN);
 		//get language from HTTP_REFERER, if needed, and detect front- vs back-end
 		$http_referer = $_SERVER['HTTP_REFERER'];
@@ -341,7 +345,7 @@ function qtranxf_parse_language_info(&$url_info, $link=false) {
 	if(!$link){
 		if(isset($_GET['lang'])){
 			$lang = qtranxf_resolveLangCase($_GET['lang'],$doredirect);
-			if($lang) $url_info['lang_query_get'] = $lang;//todo excessive?
+			if($lang) $url_info['lang_query_get'] = $lang;
 		}else if(isset($_POST['lang'])){
 			$lang = qtranxf_resolveLangCase($_POST['lang'],$doredirect);
 			if($lang) $url_info['lang_query_post'] = $lang;//todo excessive?
@@ -806,8 +810,8 @@ function qtranxf_get_url_for_language($url, $lang, $showLanguage) {
 	// check if it's an external link
 	$urlinfo = qtranxf_parseURL($url);
 	$home = rtrim(get_option('home'),'/');
-	//qtranxf_dbg_log('qtranxf_convertURL: $home: ',$home);
-	//qtranxf_dbg_log('qtranxf_convertURL: $urlinfo: ',$urlinfo);
+	//qtranxf_dbg_log('qtranxf_get_url_for_language: $home: ',$home);
+	//qtranxf_dbg_log('qtranxf_get_url_for_language: $urlinfo: ',$urlinfo);
 	//if($urlinfo['host']!='') {
 	if(!empty($urlinfo['host'])){
 		// check for already existing pre-domain language information
@@ -895,14 +899,14 @@ function qtranxf_get_url_for_language($url, $lang, $showLanguage) {
 	}
 
 	// see if cookies are activated
-	//if($q_config['hide_default_language'] && !$showDefaultLanguage) &&
-	//if(!$showDefaultLanguage && $lang == $q_config['default_language'] &&
-	//if(!($showDefaultLanguage || $lang != $q_config['default_language']) &&
-	if( !$showLanguage
-		//&& !$q_config['cookie_enabled']
-		//&& !isset($q_config['url_info']['internal_referer'])
-		&& $urlinfo['path'] == ''
-		&& $q_config['language'] != $q_config['default_language']) {
+	if( !$showLanguage//there still no language information in the converted URL
+		&& !$q_config['cookie_enabled']// there will be no way to take language from the cookie
+		//&& empty($urlinfo['path']) //why this was here?
+		//&& !isset($q_config['url_info']['internal_referer'])//three below replace this one?
+		&& $q_config['language'] != $q_config['default_language']//we need to be able to get language other than default
+		&& empty($q_config['url_info']['lang_url'])//we will not be able to get language from referrer path
+		&& empty($q_config['url_info']['lang_query_get'])//we will not be able to get language from referrer query
+		) {
 		// :( now we have to make unpretty URLs
 		//$url=add_query_arg('lang',$lang,$url);//it is doing much more than needed here
 		//$url = preg_replace("#(&|\?)lang=".$match[2]."&?#i","$1",$url);//already removed above
@@ -932,7 +936,7 @@ function qtranxf_convertURL($url='', $lang='', $forceadmin = false, $showDefault
 
 	if($lang=='') $lang = $q_config['language'];
 	if(empty($url)){
-		if( !defined('WP_ADMIN') && defined('QTS_VERSION') ){
+		if( $q_config['url_info']['doing_front_end'] && defined('QTS_VERSION') && $q_config['url_mode'] != QTX_URL_QUERY){
 			//quick workaround, but need a permanent solution
 			$url = qts_get_url($lang);
 			//qtranxf_dbg_echo('qtranxf_convertURL: url=',$url);
@@ -944,7 +948,7 @@ function qtranxf_convertURL($url='', $lang='', $forceadmin = false, $showDefault
 		}
 		$url = esc_url($q_config['url_info']['url']);
 	}
-	if(defined('WP_ADMIN')&&!$forceadmin) return $url;
+	if( !$q_config['url_info']['doing_front_end'] && !$forceadmin ) return $url;
 	if(!qtranxf_isEnabled($lang)) return '';
 
 	// & workaround
