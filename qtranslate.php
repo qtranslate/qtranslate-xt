@@ -556,4 +556,3 @@ if(file_exists(WP_PLUGIN_DIR.'/mqtranslate/mqtranslate.php')
 	}
 }
 */
-?>

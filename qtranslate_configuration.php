@@ -1195,7 +1195,7 @@ function qtranxf_nav_menu_metabox( $object )
 		$elems_obj[$title]->url			= esc_attr( $value );
 	}
 
-	$walker = new Walker_Nav_Menu_Checklist( array() );
+	$walker = new Walker_Nav_Menu_Checklist( true );
 /* Language menu items
 .qtranxs-lang-menu
 {

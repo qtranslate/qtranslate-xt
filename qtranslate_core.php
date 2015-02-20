@@ -106,13 +106,12 @@ function qtranxf_init_language() {
 
 if(!function_exists('qtranxf_detect_language')){
 function qtranxf_detect_language(&$url_info) {
-	global $q_config, $pagenow;
+	global $q_config;
 
 	$home_info = qtranxf_parseURL( get_option('home') );
 	$home_info['path'] = isset($home_info['path']) ? trailingslashit($home_info['path']) : '/';
 	$url_info['home'] = $home_info['path'];
 
-	$site_info;
 	if(defined('WP_ADMIN')){
 		$site_info = qtranxf_parseURL( get_option('siteurl') );
 		$site_info['path'] = isset($site_info['path']) ? trailingslashit($site_info['path']) : '/';
@@ -1321,4 +1320,3 @@ function qtranxf_optionFilter($do='enable') {//do we need it?
 			remove_filter($option, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
 	}
 }
-?>
