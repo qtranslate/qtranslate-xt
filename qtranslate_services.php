@@ -260,7 +260,7 @@ function qts_save() {
 }
 
 function qts_cleanup($var, $action) {
-	if( !is_array($var) ) $var = [];
+	if( !is_array($var) ) $var = array();
 	switch($action) {
 		case QTS_GET_SERVICES:
 			foreach($var as $service_id => $service) {

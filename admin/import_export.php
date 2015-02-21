@@ -62,8 +62,11 @@ function qtranxf_migrate_plugin($plugin){
 		qtranxf_saveConfig();
 	$f='qtranxf_migrate_'.$_POST[$var].'_'.str_replace('-','_',$plugin);
 	$f();
-	if($_POST[$var]=='import')
+	if($_POST[$var]=='import') {
+		if ($plugin == 'mqtranslate')
+			update_option('qtranslate_qtrans_compatibility', 1);
 		qtranxf_loadConfig();
+	}
 }
 
 function qtranxf_migrate_plugins()
