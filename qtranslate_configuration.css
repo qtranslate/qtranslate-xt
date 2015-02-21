@@ -54,12 +54,44 @@
 	border-right: 1px solid #F7F7F7;
 	padding:6px 4px 8px 4px;
 }
+#qtranxs_custom_fields { width:100%; }
 */
 
-#qtranxs_custom_fields { width:100%; }
+/* Language Switching Buttons as horizontal block */
 
-/*
-//Language Switching Buttons as tabs
+.qtranxs-lang-switch-wrap
+{
+	//margin: 10px 0;
+	margin: 0;
+}
+
+.qtranxs-lang-switch
+{
+	border: 1px solid  #ccc;
+	background-image: linear-gradient(to top,#e5e5e5,#f4f4f4);
+	//margin-top: 2px;
+	//padding: 8px;
+	padding: 0 0 2px 4px;
+	margin: 0 4px 0 0;
+	cursor: default;
+	display: inline-block;
+}
+
+.qtranxs-lang-switch.active
+{
+	border-color: #888;
+	background-image: none;
+	background-color: #bbb;
+	color: #555;
+}
+
+.qtranxs-lang-switch>*
+{
+	vertical-align: middle;
+	margin-right: 4px;
+}
+
+/* Language Switching Buttons as tabs *
 
 .qtranxs-lang-switch-wrap {
   margin: 15px 0 10px;

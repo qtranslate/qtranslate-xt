@@ -1283,7 +1283,7 @@ function qtranxf_use_block($lang, $blocks, $show_available=false, $show_empty=fa
 }
 }
 
-function qtranxf_showAllSeperated($text) {
+function qtranxf_showAllSeparated($text) {
 	if(empty($text)) return $text;
 	global $q_config;
 	$result = '';

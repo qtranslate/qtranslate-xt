@@ -180,4 +180,3 @@ function qtranxf_widget_init() {
 	register_widget('qTranslateXWidget');
 	do_action('qtranslate_widget_init');
 }
-?>

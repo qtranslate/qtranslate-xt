@@ -3,7 +3,7 @@
 Plugin Name: qTranslate-X
 Plugin URI: http://wordpress.org/plugins/qtranslate-x/
 Description: Adds user-friendly and database-friendly multilingual content support into WordPress.
-Version: 3.1-b4
+Version: 3.1-b5
 Author: qTranslate Team
 Author URI: http://qtranslatexteam.wordpress.com/about
 Tags: multilingual, multi, language, admin, tinymce, Polyglot, bilingual, widget, switcher, professional, human, translation, service, qTranslate, zTranslate, mqTranslate, qTranslate Plus, WPML
@@ -103,7 +103,7 @@ if ( ! defined( 'QTRANSLATE_FILE' ) ) {
 	define( 'QTRANSLATE_FILE', __FILE__ );
 }
 
-define('QTX_VERSION','3.1-b4');
+define('QTX_VERSION','3.1-b5');
 
 /* DEFAULT CONFIGURATION PART BEGINS HERE */
 
@@ -238,7 +238,7 @@ $q_config['locale']['et'] = "et_ET";
 $q_config['locale']['hr'] = "hr_HR";
 
 // Language not available messages
-// %LANG:<normal_separator>:<last_separator>% generates a list of languages seperated by <normal_separator> except for the last one, where <last_separator> will be used instead.
+// %LANG:<normal_separator>:<last_separator>% generates a list of languages separated by <normal_separator> except for the last one, where <last_separator> will be used instead.
 $q_config['not_available']['de'] = "Leider ist der Eintrag nur auf %LANG:, : und % verfügbar.";
 $q_config['not_available']['en'] = "Sorry, this entry is only available in %LANG:, : and %.";
 $q_config['not_available']['zh'] = "对不起，此内容只适用于%LANG:，:和%。";

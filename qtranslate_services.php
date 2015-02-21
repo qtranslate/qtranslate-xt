@@ -946,4 +946,3 @@ function qts_editor_js($content) {
 		";
 	return $content;
 }
-?>

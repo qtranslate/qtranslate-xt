@@ -525,7 +525,7 @@ function qtranxf_language_form($lang = '', $language_code = '', $language_name =
 	<input name="language_na_message" id="language_na_message" type="text" value="<?php echo $language_na_message; ?>"/>
 	<p>
 	<?php _e('Message to display if post is not available in the requested language. (Example: Sorry, this entry is only available in %LANG:, : and %.)', 'qtranslate'); ?><br/>
-	<?php _e('%LANG:&lt;normal_separator&gt;:&lt;last_separator&gt;% generates a list of languages seperated by &lt;normal_separator&gt; except for the last one, where &lt;last_separator&gt; will be used instead.', 'qtranslate'); ?><br/>
+	<?php _e('%LANG:&lt;normal_separator&gt;:&lt;last_separator&gt;% generates a list of languages separated by &lt;normal_separator&gt; except for the last one, where &lt;last_separator&gt; will be used instead.', 'qtranslate'); ?><br/>
 	</p>
 </div>
 <?php
@@ -1285,4 +1285,3 @@ add_action('admin_head-nav-menus.php', 'qtranxf_add_nav_menu_metabox');
 add_action('admin_menu', 'qtranxf_adminMenu');
 add_action('admin_bar_menu', 'qtranxf_add_language_menu', 999);
 add_action('wp_before_admin_bar_render', 'qtranxf_fixAdminBar');
-?>

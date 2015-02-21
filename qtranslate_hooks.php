@@ -226,9 +226,9 @@ add_filter('the_author', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage
 
 add_filter('pre_option_rss_language', 'qtranxf_getLanguage',0);
 
-add_filter('_wp_post_revision_field_post_title', 'qtranxf_showAllSeperated', 0);
-add_filter('_wp_post_revision_field_post_content', 'qtranxf_showAllSeperated', 0);
-add_filter('_wp_post_revision_field_post_excerpt', 'qtranxf_showAllSeperated', 0);
+add_filter('_wp_post_revision_field_post_title', 'qtranxf_showAllSeparated', 0);
+add_filter('_wp_post_revision_field_post_content', 'qtranxf_showAllSeparated', 0);
+add_filter('_wp_post_revision_field_post_excerpt', 'qtranxf_showAllSeparated', 0);
 
 // // Hooks (execution time non-critical filters) 
 add_filter('author_feed_link', 'qtranxf_convertURL');

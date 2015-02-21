@@ -31,7 +31,7 @@ msgstr ""
 
 #: admin/activation_hook.php:134
 #, php-format
-msgid "plugin %s cannot run concurrently with plugin %s. You may import and export compatible settings between %s and %s on Settings/<a href=\"%s\">Languages</a> configuration page. Then you have to deactivate one of the plugins to continue."
+msgid "%sError:%s plugin %s cannot run concurrently with plugin %s. You may import and export compatible settings between %s and %s on Settings/<a href=\"%s\">Languages</a> configuration page. Then you have to deactivate one of the plugins to continue."
 msgstr ""
 
 #: admin/activation_hook.php:136 admin/activation_hook.php:138
@@ -209,7 +209,7 @@ msgid "Message to display if post is not available in the requested language. (E
 msgstr "Mesajul care va fi afişat dacă articolul nu este disponibil în limba cerută. (Exemplu: Ne pare rău, acest articol este disponibil numai în  %LANG:, : şi  %.)"
 
 #: qtranslate_configuration.php:471
-msgid "%LANG:&lt;normal_separator&gt;:&lt;last_separator&gt;% generates a list of languages seperated by &lt;normal_separator&gt; except for the last one, where &lt;last_separator&gt; will be used instead."
+msgid "%LANG:&lt;normal_separator&gt;:&lt;last_separator&gt;% generates a list of languages separated by &lt;normal_separator&gt; except for the last one, where &lt;last_separator&gt; will be used instead."
 msgstr "%LANG:&lt;normal_separator&gt;:&lt;last_separator&gt;% generază o listă de limbi separate de  &lt;normal_separator&gt; cu excepţia ultimei, unde &lt;last_separator&gt; fa fi folosit în loc."
 
 #: qtranslate_configuration.php:576

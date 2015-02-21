@@ -42,7 +42,7 @@ msgstr ""
 
 #: admin/activation_hook.php:134
 #, php-format
-msgid "plugin %s cannot run concurrently with plugin %s. You may import and export compatible settings between %s and %s on Settings/<a href=\"%s\">Languages</a> configuration page. Then you have to deactivate one of the plugins to continue."
+msgid "%sError:%s plugin %s cannot run concurrently with plugin %s. You may import and export compatible settings between %s and %s on Settings/<a href=\"%s\">Languages</a> configuration page. Then you have to deactivate one of the plugins to continue."
 msgstr ""
 
 #: admin/activation_hook.php:136 admin/activation_hook.php:138
@@ -217,7 +217,7 @@ msgid "Message to display if post is not available in the requested language. (E
 msgstr "Zpráva, která se zobrazí pokud příspěvek není dostupný v daném jazyce. (Příklad: Omlouváme se, tato položka je k dispozici pouze v %LANG:, : a %.)"
 
 #: qtranslate_configuration.php:471
-msgid "%LANG:&lt;normal_separator&gt;:&lt;last_separator&gt;% generates a list of languages seperated by &lt;normal_separator&gt; except for the last one, where &lt;last_separator&gt; will be used instead."
+msgid "%LANG:&lt;normal_separator&gt;:&lt;last_separator&gt;% generates a list of languages separated by &lt;normal_separator&gt; except for the last one, where &lt;last_separator&gt; will be used instead."
 msgstr "%LANG:, : a % vytváří seznam jazyků oddělených čárkou kromě posledního, který je použit."
 
 #: qtranslate_configuration.php:576

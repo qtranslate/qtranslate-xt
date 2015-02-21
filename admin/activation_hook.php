@@ -131,7 +131,7 @@ function qtranxf_admin_notice_plugin_conflict($title,$plugin)
 	$me='<a href="https://wordpress.org/plugins/qtranslate-x/" style="color:blue" target="_blank">qTranslate&#8209;X</a>';
 	$link='<a href="https://wordpress.org/plugins/'.dirname($plugin).'/" style="color:magenta" target="_blank">'.$title.'</a>';
 	echo '<div class="error"><p style="font-size: larger">';
-	echo '<span style="color:red"><strong>'.__('Error', 'qtranslate').':</strong></span> '.sprintf(__('plugin %s cannot run concurrently with plugin %s. You may import and export compatible settings between %s and %s on Settings/<a href="%s">Languages</a> configuration page. Then you have to deactivate one of the plugins to continue.','qtranslate'),$me,$link,'qTranslate&#8209;X',$title,admin_url('options-general.php?page=qtranslate-x'), 'qtranslate');
+	printf(__('%sError:%s plugin %s cannot run concurrently with plugin %s. You may import and export compatible settings between %s and %s on Settings/<a href="%s">Languages</a> configuration page. Then you have to deactivate one of the plugins to continue.','qtranslate'),'<span style="color:red"><strong>','</strong></span>',$me,$link,'qTranslate&#8209;X',$title,admin_url('options-general.php?page=qtranslate-x'), 'qtranslate');
 	$nonce=wp_create_nonce('deactivate-plugin_'.$plugin);
 	echo '</p><p> &nbsp; &nbsp; &nbsp; &nbsp;<a class="button" href="'.admin_url('plugins.php?action=deactivate&plugin='.urlencode($plugin).'&plugin_status=all&paged=1&s&_wpnonce='.$nonce).'"><strong>'.sprintf(__('Deactivate %s', 'qtranslate'), '<span style="color:magenta">'.$title.'</span>').'</strong></a>';
 	$nonce=wp_create_nonce('deactivate-plugin_qtranslate-x/qtranslate.php');
@@ -183,4 +183,3 @@ function qtranxf_ajax_qtranslate_admin_notice()
 	//echo "jQuery('#qtranxs_+$id').css('display','none');"; die();
 }
 add_action('wp_ajax_qtranslate_admin_notice', 'qtranxf_ajax_qtranslate_admin_notice');
-?>

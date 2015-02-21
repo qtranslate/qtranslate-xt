@@ -35,7 +35,7 @@ msgstr ""
 
 #: admin/activation_hook.php:134
 #, php-format
-msgid "plugin %s cannot run concurrently with plugin %s. You may import and export compatible settings between %s and %s on Settings/<a href=\"%s\">Languages</a> configuration page. Then you have to deactivate one of the plugins to continue."
+msgid "%sError:%s plugin %s cannot run concurrently with plugin %s. You may import and export compatible settings between %s and %s on Settings/<a href=\"%s\">Languages</a> configuration page. Then you have to deactivate one of the plugins to continue."
 msgstr ""
 
 #: admin/activation_hook.php:136 admin/activation_hook.php:138
@@ -213,7 +213,7 @@ msgid "Message to display if post is not available in the requested language. (E
 msgstr "文章未在所请求的语言下翻译的提示信息。(例：抱歉，该内容仅提供了 %LANG:、:以及% 版本。)"
 
 #: qtranslate_configuration.php:471
-msgid "%LANG:&lt;normal_separator&gt;:&lt;last_separator&gt;% generates a list of languages seperated by &lt;normal_separator&gt; except for the last one, where &lt;last_separator&gt; will be used instead."
+msgid "%LANG:&lt;normal_separator&gt;:&lt;last_separator&gt;% generates a list of languages separated by &lt;normal_separator&gt; except for the last one, where &lt;last_separator&gt; will be used instead."
 msgstr "%LANG:&lt;普通分隔符&gt;:&lt;末尾分隔符&gt;% 将生成以&lt;普通分隔符&gt;为分隔的语言列表，最后一个语言前则以&lt;末尾分隔符&gt;替代。"
 
 #: qtranslate_configuration.php:576
