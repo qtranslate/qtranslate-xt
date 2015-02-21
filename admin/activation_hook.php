@@ -34,11 +34,11 @@ function qtranxf_admin_notice_deactivate_plugin($nm,$plugin)
 			$imported=true;
 		}
 	}
-	$msg=sprintf(__('Activation of plugin %s deactivated plugin %s since they cannot run simultaneously.','qtranslate'),$qtxlink,$link).' ';
+	$msg=sprintf(__('Activation of plugin %s deactivated plugin %s since they cannot run simultaneously.', 'qtranslate'), $qtxlink, $link).' ';
 	if($imported){
-		$msg.=sprintf(__('The compatible settings from %s have been imported to %s. Further tuning, import, export and reset of options can be done at Settings/Languages configuration page, once %s is running.%sContinue%s','qtranslate'),$nm,$qtxnm,$qtxnm,'</p><p><a  class="button" href="">','</a>');
+		$msg.=sprintf(__('The compatible settings from %s have been imported to %s. Further tuning, import, export and reset of options can be done at Settings/Languages configuration page, once %s is running.%sContinue%s', 'qtranslate'), $nm, $qtxnm, $qtxnm, '</p><p><a class="button" href="">', '</a>');
 	}else{
-		$msg.=sprintf(__('You may import/export compatible settings from %s to %s on Settings/Languages configuration page, once %s is running.%sContinue%s','qtranslate'),$nm,$qtxnm,$qtxnm,'</p><p><a  class="button" href="">','</a>');
+		$msg.=sprintf(__('You may import/export compatible settings from %s to %s on Settings/Languages configuration page, once %s is running.%sContinue%s', 'qtranslate'), $nm, $qtxnm, $qtxnm, '</p><p><a  class="button" href="">','</a>');
 	}
 	//$nonce=wp_create_nonce('deactivate-plugin_'.$plugin);
 	//$msg=sprintf(__('Plugin %s cannot run concurrently with %s, please %sdeactivate %s%s. You may import compatible settings from %s to %s on Settings/Languages configuration page, once %s is running.','qtranslate'),$qtxlink,$link,'<a href="'.admin_url('plugins.php?action=deactivate&plugin='.encode($plugin).'&plugin_status=all&paged=1&s&_wpnonce='.$nonce.'">',$nm,'</a>',$nm,$qtxnm,$qtxnm);
@@ -131,11 +131,11 @@ function qtranxf_admin_notice_plugin_conflict($title,$plugin)
 	$me='<a href="https://wordpress.org/plugins/qtranslate-x/" style="color:blue" target="_blank">qTranslate&#8209;X</a>';
 	$link='<a href="https://wordpress.org/plugins/'.dirname($plugin).'/" style="color:magenta" target="_blank">'.$title.'</a>';
 	echo '<div class="error"><p style="font-size: larger">';
-	echo '<span style="color:red"><strong>'.__('Error').':</strong></span> '.sprintf(__('plugin %s cannot run concurrently with plugin %s. You may import and export compatible settings between %s and %s on Settings/<a href="%s">Languages</a> configuration page. Then you have to deactivate one of the plugins to continue.','qtranslate'),$me,$link,'qTranslate&#8209;X',$title,admin_url('options-general.php?page=qtranslate-x'));
+	echo '<span style="color:red"><strong>'.__('Error', 'qtranslate').':</strong></span> '.sprintf(__('plugin %s cannot run concurrently with plugin %s. You may import and export compatible settings between %s and %s on Settings/<a href="%s">Languages</a> configuration page. Then you have to deactivate one of the plugins to continue.','qtranslate'),$me,$link,'qTranslate&#8209;X',$title,admin_url('options-general.php?page=qtranslate-x'), 'qtranslate');
 	$nonce=wp_create_nonce('deactivate-plugin_'.$plugin);
-	echo '</p><p> &nbsp; &nbsp; &nbsp; &nbsp;<a class="button" href="'.admin_url('plugins.php?action=deactivate&plugin='.urlencode($plugin).'&plugin_status=all&paged=1&s&_wpnonce='.$nonce).'"><strong>'.__('Deactivate ').'<span style="color:magenta">'.$title.'</span></strong></a>';
+	echo '</p><p> &nbsp; &nbsp; &nbsp; &nbsp;<a class="button" href="'.admin_url('plugins.php?action=deactivate&plugin='.urlencode($plugin).'&plugin_status=all&paged=1&s&_wpnonce='.$nonce).'"><strong>'.sprintf(__('Deactivate %s', 'qtranslate'), '<span style="color:magenta">'.$title.'</span>').'</strong></a>';
 	$nonce=wp_create_nonce('deactivate-plugin_qtranslate-x/qtranslate.php');
-	echo ' &nbsp; &nbsp; &nbsp; &nbsp;<a class="button" href="'.admin_url('plugins.php?action=deactivate&plugin='.urlencode('qtranslate-x/qtranslate.php').'&plugin_status=all&paged=1&s&_wpnonce='.$nonce).'"><strong>'.__('Deactivate ').'<span style="color:blue">qTranslate&#8209;X</span></strong></a>';
+	echo ' &nbsp; &nbsp; &nbsp; &nbsp;<a class="button" href="'.admin_url('plugins.php?action=deactivate&plugin='.urlencode('qtranslate-x/qtranslate.php').'&plugin_status=all&paged=1&s&_wpnonce='.$nonce).'"><strong>'.sprintf(__('Deactivate %s', 'qtranslate'), '<span style="color:blue">qTranslate&#8209;X</span>').'</strong></a>';
 	echo '</p></div>';
 }
 
@@ -163,11 +163,11 @@ function qtranxf_admin_notices_survey_request()
 </script>
 <?php
 	echo '<div class="updated" id="qtranxs_survey-translation-service"><p style="font-size: larger;">';// text-align: center;
-	printf(__('Thank you for using %s plugin!','qtranslate'), '<a href="https://wordpress.org/plugins/qtranslate-x/" style="color:blue" target="_blank">qTranslate&#8209;X</a>');
+	printf(__('Thank you for using %s plugin!', 'qtranslate'), '<a href="https://wordpress.org/plugins/qtranslate-x/" style="color:blue" target="_blank">qTranslate&#8209;X</a>');
 	echo '<br>';
-	printf(__('Please, help us to make decision on "%s" feature, press the button below.','qtranslate'),__('Translation Service', 'qtranslate'));
+	printf(__('Please, help us to make a decision on "%s" feature, press the button below.', 'qtranslate'), _('Translation Service', 'qtranslate'));
 	echo '</p><p><a class="button" href="http://www.marius-siroen.com/qTranslate-X/TranslateServices/" target="_blank">';
-	printf(__('Survey on "%s" feature','qtranslate'),__('Translation Service', 'qtranslate'));
+	printf(__('Survey on "%s" feature', 'qtranslate'), __('Translation Service', 'qtranslate'));
 	echo '</a>&nbsp;&nbsp;&nbsp;<a class="button" href="javascript:qtranxj_dismiss_admin_notice(\'survey-translation-service\');">'.__('I have already done it, dismiss this message.', 'qtranslate');
 	echo '</a></p></div>';
 }
