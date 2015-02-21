@@ -330,7 +330,7 @@ function qtranxf_excludeUntranslatedPosts($where,&$query) {//WP_Query
 	//qtranxf_dbg_echo('qtranxf_excludeUntranslatedPosts: post_type is empty: $query: ',$query, true);
 	//qtranxf_dbg_echo('qtranxf_excludeUntranslatedPosts: $where: ',$where);
 	//qtranxf_dbg_echo('qtranxf_excludeUntranslatedPosts: is_singular(): ',is_singular());
-	$single_post_query=is_singular();
+	$single_post_query=$query->is_singular();
 	if($single_post_query){
 		$single_post_query = preg_match('/ID\s*=\s*[\'"]*(\d+)[\'"]*/i',$where,$matches)==1;
 		//qtranxf_dbg_echo('qtranxf_excludeUntranslatedPosts: $single_post_query: ',$single_post_query);
