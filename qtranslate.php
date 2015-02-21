@@ -211,7 +211,7 @@ $q_config['language_name']['pl'] = "Polski";
 $q_config['language_name']['gl'] = "galego";
 $q_config['language_name']['tr'] = "Turkish";
 $q_config['language_name']['et'] = "Eesti";
-$q_config['language_name']['hr'] = "Croatian";
+$q_config['language_name']['hr'] = "Hrvatski";
 
 // Locales for languages
 // see locale -a for available locales
@@ -258,8 +258,8 @@ $q_config['not_available']['pt'] = "Desculpe-nos, mas este texto esta apenas dis
 $q_config['not_available']['pl'] = "Przepraszamy, ten wpis jest dostępny tylko w języku %LANG:, : i %.";
 $q_config['not_available']['gl'] = "Sentímolo moito, ista entrada atopase unicamente en %LANG;,: e %.";
 $q_config['not_available']['tr'] = "Sorry, this entry is only available in %LANG:, : and %.";
-$q_config['not_available']['et'] = "Vabandame, see kanne on saadaval ainult % LANG : ja %.";
-$q_config['not_available']['hr'] = "Sorry, this entry is only available in %LANG:, : and %.";
+$q_config['not_available']['et'] = "Vabandame, see kanne on saadaval ainult %LANG : ja %.";
+$q_config['not_available']['hr'] = "Žao nam je, ne postoji prijevod na raspolaganju za ovaj proizvod još %LANG:, : and %.";
 
 // strftime usage (backward compability)
 $q_config['use_strftime'] = QTX_DATE;

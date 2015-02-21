@@ -249,7 +249,7 @@ function qtranxf_convertDateFormat($format) {
 	} else {
 		$default_format = '';
 	}
-				return qtranxf_convertFormat($format, $default_format);
+	return qtranxf_convertFormat($format, $default_format);
 }
 
 function qtranxf_convertTimeFormat($format) {
@@ -261,7 +261,7 @@ function qtranxf_convertTimeFormat($format) {
 	} else {
 		$default_format = '';
 	}
-				return qtranxf_convertFormat($format, $default_format);
+	return qtranxf_convertFormat($format, $default_format);
 }
 
 function qtranxf_formatCommentDateTime($format) {
