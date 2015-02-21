@@ -106,13 +106,12 @@ function qtranxf_init_language() {
 
 if(!function_exists('qtranxf_detect_language')){
 function qtranxf_detect_language(&$url_info) {
-	global $q_config, $pagenow;
+	global $q_config;
 
 	$home_info = qtranxf_parseURL( get_option('home') );
 	$home_info['path'] = isset($home_info['path']) ? trailingslashit($home_info['path']) : '/';
 	$url_info['home'] = $home_info['path'];
 
-	$site_info;
 	if(defined('WP_ADMIN')){
 		$site_info = qtranxf_parseURL( get_option('siteurl') );
 		$site_info['path'] = isset($site_info['path']) ? trailingslashit($site_info['path']) : '/';
@@ -1265,13 +1264,13 @@ function qtranxf_use_block($lang, $blocks, $show_available=false, $show_empty=fa
 	$available_languages = array_unique($available_languages);
 	$language_list = "";
 	if(preg_match('/%LANG:([^:]*):([^%]*)%/',$q_config['not_available'][$lang],$match)) {
-		$normal_seperator = $match[1];
-		$end_seperator = $match[2];
+		$normal_separator = $match[1];
+		$end_separator = $match[2];
 		// build available languages string backward
 		$i = 0;
 		foreach($available_languages as $language) {
-			if($i==1) $language_list  = $end_seperator.$language_list;
-			if($i>1) $language_list  = $normal_seperator.$language_list;
+			if($i==1) $language_list  = $end_separator.$language_list;
+			if($i>1) $language_list  = $normal_separator.$language_list;
 			$language_list = '<a href="'.qtranxf_convertURL('', $language, false, true).'">'.$q_config['language_name'][$language].'</a>'.$language_list;
 			$i++;
 		}
@@ -1321,4 +1320,3 @@ function qtranxf_optionFilter($do='enable') {//do we need it?
 			remove_filter($option, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
 	}
 }
-?>

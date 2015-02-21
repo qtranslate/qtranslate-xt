@@ -218,8 +218,8 @@ msgid "Message to display if post is not available in the requested language. (E
 msgstr "Сообщение, отображаемое в случае отсутствия статьи на выбранном языке (Например: Извините, но эта статья доступна только на %LANG:, : и %.)"
 
 #: qtranslate_configuration.php:471
-msgid "%LANG:&lt;normal_seperator&gt;:&lt;last_seperator&gt;% generates a list of languages seperated by &lt;normal_seperator&gt; except for the last one, where &lt;last_seperator&gt; will be used instead."
-msgstr "%LANG:&lt;normal_seperator&gt;:&lt;last_seperator&gt;% генерирует список языков, разделенных &lt;normal_seperator&gt; за исключением последнего, где &lt;last_seperator&gt; будет использоваться вместо используемого."
+msgid "%LANG:&lt;normal_separator&gt;:&lt;last_separator&gt;% generates a list of languages seperated by &lt;normal_separator&gt; except for the last one, where &lt;last_separator&gt; will be used instead."
+msgstr "%LANG:&lt;normal_separator&gt;:&lt;last_separator&gt;% генерирует список языков, разделенных &lt;normal_separator&gt; за исключением последнего, где &lt;last_separator&gt; будет использоваться вместо используемого."
 
 #: qtranslate_configuration.php:576
 msgid "Hide"

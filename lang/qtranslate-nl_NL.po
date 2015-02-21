@@ -294,13 +294,13 @@ msgstr ""
 
 #: qtranslate_configuration.php:471
 msgid ""
-"%LANG:&lt;normal_seperator&gt;:&lt;last_seperator&gt;% generates a list of "
-"languages seperated by &lt;normal_seperator&gt; except for the last one, "
-"where &lt;last_seperator&gt; will be used instead."
+"%LANG:&lt;normal_separator&gt;:&lt;last_separator&gt;% generates a list of "
+"languages seperated by &lt;normal_separator&gt; except for the last one, "
+"where &lt;last_separator&gt; will be used instead."
 msgstr ""
-"%LANG:&lt;normal_seperator&gt;:&lt;last_seperator&gt;% genereert een lijst "
-"van talen gescheiden door &lt;normal_seperator&gt; behalve de laatste, waar "
-"&lt;last_seperator&gt; gebruikt zal worden."
+"%LANG:&lt;normal_separator&gt;:&lt;last_separator&gt;% genereert een lijst "
+"van talen gescheiden door &lt;normal_separator&gt; behalve de laatste, waar "
+"&lt;last_separator&gt; gebruikt zal worden."
 
 #: qtranslate_configuration.php:576
 msgid "Hide"

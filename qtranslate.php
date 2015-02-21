@@ -238,7 +238,7 @@ $q_config['locale']['et'] = "et_ET";
 $q_config['locale']['hr'] = "hr_HR";
 
 // Language not available messages
-// %LANG:<normal_seperator>:<last_seperator>% generates a list of languages seperated by <normal_seperator> except for the last one, where <last_seperator> will be used instead.
+// %LANG:<normal_separator>:<last_separator>% generates a list of languages seperated by <normal_separator> except for the last one, where <last_separator> will be used instead.
 $q_config['not_available']['de'] = "Leider ist der Eintrag nur auf %LANG:, : und % verfügbar.";
 $q_config['not_available']['en'] = "Sorry, this entry is only available in %LANG:, : and %.";
 $q_config['not_available']['zh'] = "对不起，此内容只适用于%LANG:，:和%。";
@@ -556,4 +556,3 @@ if(file_exists(WP_PLUGIN_DIR.'/mqtranslate/mqtranslate.php')
 	}
 }
 */
-?>

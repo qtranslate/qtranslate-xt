@@ -38,4 +38,3 @@ if(!function_exists('qtrans_getSortedLanguages')){
 if(!function_exists('qtrans_generateLanguageSelectCode')){
 	function qtrans_generateLanguageSelectCode($style='', $id=''){ return qtranxf_generateLanguageSelectCode($style,$id); }
 }
-?>
