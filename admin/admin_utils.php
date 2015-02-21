@@ -87,7 +87,7 @@ function qtranxf_convert_database($action){
 				if($text === $value) continue;
 				update_option($option,$text);
 			}
-			return __('Database has been converted to square bracket format.', 'qtranslate').'<br/>'.__('Note: custom entries are not touched.', 'qtranslate');;
+			return __('Database has been converted to square bracket format.', 'qtranslate').'<br/>'.__('Note: custom entries are not touched.', 'qtranslate');
 		case 'c_dual':
 			foreach($result as $post) {
 				$title=qtranxf_convert_to_c($post->post_title);
@@ -267,7 +267,7 @@ function qtranxf_languageColumnHeader($columns){
 	if(isset($columns['categories'])) $new_columns['categories'] = '';
 	if(isset($columns['tags'])) $new_columns['tags'] = '';
 	$new_columns['language'] = __('Languages', 'qtranslate');
-	return array_merge($new_columns, $columns);;
+	return array_merge($new_columns, $columns);
 }
 
 function qtranxf_languageColumn($column) {
@@ -276,7 +276,6 @@ function qtranxf_languageColumn($column) {
 		$available_languages = qtranxf_getAvailableLanguages($post->post_content);
 		$missing_languages = array_diff($q_config['enabled_languages'], $available_languages);
 		$available_languages_name = array();
-		$missing_languages_name = array();
 		foreach($available_languages as $language) {
 			$available_languages_name[] = $q_config['language_name'][$language];
 		}
@@ -387,4 +386,3 @@ add_filter('manage_posts_columns', 'qtranxf_languageColumnHeader');
 add_filter('manage_posts_custom_column', 'qtranxf_languageColumn');
 add_filter('manage_pages_columns', 'qtranxf_languageColumnHeader');
 add_filter('manage_pages_custom_column', 'qtranxf_languageColumn');
-?>

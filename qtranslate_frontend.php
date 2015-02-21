@@ -96,7 +96,7 @@ function qtranxf_wp_get_nav_menu_items( $items, $menu, $args )
 	$flag_location=qtranxf_flag_location();
 	$itemid=0;
 	$menu_order=0;
-  $qtransmenu=null;
+	$qtransmenu=null;
 	$altlang=null;
 	$url = '';//esc_url($q_config['url_info']['url']);
 	//options
@@ -500,4 +500,3 @@ add_filter('the_category', 'qtranxf_useTermLib',0);
 add_filter('get_term', 'qtranxf_useTermLib',0);
 add_filter('get_terms', 'qtranxf_useTermLib',0);
 add_filter('get_category', 'qtranxf_useTermLib',0);
-?>

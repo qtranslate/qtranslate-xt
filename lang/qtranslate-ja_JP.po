@@ -212,7 +212,7 @@ msgid "Message to display if post is not available in the requested language. (E
 msgstr "投稿が、ご要望の言語で利用できない場合に表示するメッセージ （例: 申し訳ありません、このコンテンツはただ今　%LANG: 、 : と %のみです。）"
 
 #: qtranslate_configuration.php:471
-msgid "%LANG:&lt;normal_seperator&gt;:&lt;last_seperator&gt;% generates a list of languages seperated by &lt;normal_seperator&gt; except for the last one, where &lt;last_seperator&gt; will be used instead."
+msgid "%LANG:&lt;normal_separator&gt;:&lt;last_separator&gt;% generates a list of languages seperated by &lt;normal_separator&gt; except for the last one, where &lt;last_separator&gt; will be used instead."
 msgstr "%LANG:&lt;通常区切り&gt;:&lt;最後区切り&gt;%が、最後の言語以外に、&lt;通常区切り&gt; で区切った言語のリストを生成します。最後の言語には &lt;最後区切り&gt; が使用されます。"
 
 #: qtranslate_configuration.php:576

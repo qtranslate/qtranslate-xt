@@ -33,5 +33,3 @@ function qtranxf_updateGettextDatabases($force = false, $only_for_language = '')
 	}
 	return true;
 }
-
-?>

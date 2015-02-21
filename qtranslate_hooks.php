@@ -263,4 +263,3 @@ add_filter('bloginfo_url', 'qtranxf_convertBlogInfoURL',10,2);
 add_filter('core_version_check_locale', 'qtranxf_versionLocale');
 
 add_filter('redirect_canonical', 'qtranxf_checkCanonical', 10, 2);
-?>
