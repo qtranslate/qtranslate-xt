@@ -4,7 +4,7 @@ Contributors: johnclause, chineseleper, Vavooon
 Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, translation
 Requires at least: 3.9
 Tested up to: 4.1.1
-Stable tag: 3.1
+Stable tag: 3.0
 License: GPLv3 or later
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QEXEK3HX8AR6U
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -35,10 +35,10 @@ qTranslate-X makes creation of multilingual content as easy as working with a si
 
 The following plugins provide integration for other popular plugins with qTranslate-X:
 
-- [Events Made Easy & qTranslate-X](https://wordpress.org/plugins/events-made-easy-qtranslate-x/) for [Events Made Easy](https://wordpress.org/plugins/events-made-easy/). [GitHub](https://github.com/qTranslate-Team/events-made-easy-qtranslate-x).
-- [qTranslate support for GravityForms](https://wordpress.org/support/plugin/qtranslate-support-for-gravityforms) for [Gravity Forms Directory](https://wordpress.org/plugins/gravity-forms-addons/). [GitHub](https://github.com/mweimerskirch/wordpress-qtranslate-support-for-gravityforms)
-- [WooCommerce & qTranslate-X](https://wordpress.org/plugins/woocommerce-qtranslate-x/) for [WooCommerce - excelling eCommerce](https://wordpress.org/plugins/woocommerce/). Have to use [the latest Woocommerce](https://github.com/woothemes/woocommerce). [GitHub](https://github.com/qTranslate-Team/woocommerce-qtranslate-x)
-- [Wordpress SEO & qTranslate-X](https://wordpress.org/plugins/wp-seo-qtranslate-x/) for [WordPress SEO by Yoast](https://wordpress.org/plugins/wordpress-seo/). [GitHub](https://github.com/qTranslate-Team/wp-seo-qtranslate-x)
+- [Events Made Easy & qTranslate-X](https://wordpress.org/plugins/events-made-easy-qtranslate-x/) for [Events Made Easy](https://wordpress.org/plugins/events-made-easy/). [[GitHub](https://github.com/qTranslate-Team/events-made-easy-qtranslate-x)]
+- [qTranslate support for GravityForms](https://wordpress.org/plugins/qtranslate-support-for-gravityforms) for [Gravity Forms Directory](https://wordpress.org/plugins/gravity-forms-addons/). [[GitHub](https://github.com/mweimerskirch/wordpress-qtranslate-support-for-gravityforms)]
+- [WooCommerce & qTranslate-X](https://wordpress.org/plugins/woocommerce-qtranslate-x/) for [WooCommerce - excelling eCommerce](https://wordpress.org/plugins/woocommerce/). [[GitHub](https://github.com/qTranslate-Team/woocommerce-qtranslate-x)]
+- [Wordpress SEO & qTranslate-X](https://wordpress.org/plugins/wp-seo-qtranslate-x/) for [WordPress SEO by Yoast](https://wordpress.org/plugins/wordpress-seo/). [[GitHub](https://github.com/qTranslate-Team/wp-seo-qtranslate-x)]
 
 Below is the list of plugins recently made compatible, as reported by users:
 
@@ -227,9 +227,14 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 
 = 3.1 stable =
 * Includes all changes after version 3.0.
+
+= 3.1-a1 =
 * Improvement: up to date code for `updateGettextDatabases` and cleaning up of a lot of code. Thanks to [Michel Weimerskirch](https://github.com/mweimerskirch).
 * Translations: Croatian po/mo - thanks to Sheldon Miles.
+* Translations: po/mo adjusted for a typo fixed. Thanks to [Michel Weimerskirch](https://github.com/mweimerskirch).
+* Translations: default time format for Sweden changed - thanks to Tor-Björn.
 * Fix: import/export from other qTranslate-ish forks.
+* Fix: problem with menu editor under some configurations.
 
 = 3.1-b4 =
 * Fix: 'Hide Title' in the widget. [WP topic](https://wordpress.org/support/topic/widget-cannot-save-titlecannot-uncheck-hide-title)
