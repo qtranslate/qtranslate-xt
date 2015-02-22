@@ -190,6 +190,7 @@ add_filter('sanitize_title', 'qtranxf_useRawTitle',0, 3);
 add_filter('comment_moderation_subject', 'qtranxf_useDefaultLanguage',0);
 add_filter('comment_moderation_text', 'qtranxf_useDefaultLanguage',0);
 
+add_filter('the_content', 'qtranxf_useCurrentLanguageIfNotFoundShowAvailable', 0);
 add_filter('the_content', 'qtranxf_useCurrentLanguageIfNotFoundShowAvailable', 100);// since 3.1 changed priority from 0 to 100, since other plugins, like https://wordpress.org/plugins/siteorigin-panels generate additional content, which also needs to be translated.
 add_filter('the_excerpt', 'qtranxf_useCurrentLanguageIfNotFoundShowAvailable', 0);
 add_filter('the_excerpt_rss', 'qtranxf_useCurrentLanguageIfNotFoundShowAvailable', 0);

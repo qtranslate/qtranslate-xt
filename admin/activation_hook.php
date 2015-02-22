@@ -155,17 +155,17 @@ function qtranxf_admin_notices_survey_request()
 ?>
 <script type="text/javascript">
 	function qtranxj_dismiss_admin_notice(id) {
-		jQuery('#qtranxs_'+id).css('display','none');
+		jQuery('#qtranxs-'+id).css('display','none');
 		jQuery.post(ajaxurl, { action: 'qtranslate_admin_notice', notice_id: id }
 		//,function(response) { eval(response); }
 		);
 	}
 </script>
 <?php
-	echo '<div class="updated" id="qtranxs_survey-translation-service"><p style="font-size: larger;">';// text-align: center;
+	echo '<div class="updated" id="qtranxs-survey-translation-service"><p style="font-size: larger;">';// text-align: center;
 	printf(__('Thank you for using %s plugin!', 'qtranslate'), '<a href="https://wordpress.org/plugins/qtranslate-x/" style="color:blue" target="_blank">qTranslate&#8209;X</a>');
 	echo '<br>';
-	printf(__('Please, help us to make a decision on "%s" feature, press the button below.', 'qtranslate'), _('Translation Service', 'qtranslate'));
+	printf(__('Please, help us to make a decision on "%s" feature, press the button below.', 'qtranslate'), __('Translation Service', 'qtranslate'));
 	echo '</p><p><a class="button" href="http://www.marius-siroen.com/qTranslate-X/TranslateServices/" target="_blank">';
 	printf(__('Survey on "%s" feature', 'qtranslate'), __('Translation Service', 'qtranslate'));
 	echo '</a>&nbsp;&nbsp;&nbsp;<a class="button" href="javascript:qtranxj_dismiss_admin_notice(\'survey-translation-service\');">'.__('I have already done it, dismiss this message.', 'qtranslate');

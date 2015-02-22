@@ -37,29 +37,13 @@ function qtranxf_add_lang_icons_css ()
 function qtranxf_head(){
 	global $q_config;
 	$lang=$q_config['language'];
-	//echo "\n<meta http-equiv=\"Content-Language\" content=\"".str_replace('_','-',$q_config['locale'][$lang])."\" />\n";
+	//echo "\n<meta http-equiv=\"Content-Language\" content=\"".str_replace('_','-',$q_config['locale'][$lang])."\" />\n"; //obsolete way 
 	qtranxf_add_lang_icons_css();
-/*
-	$css = "<style type=\"text/css\" media=\"screen\">\n";
-	$css .=".qtranxs_flag span { display:none }\n";
-	$css .=".qtranxs_flag { height:12px; width:18px; display:block }\n";
-	$css .=".qtranxs_flag_and_text { padding-left:20px }\n";
-	$baseurl = WP_CONTENT_URL;
-	if(isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == '1' || $_SERVER['HTTPS'] == 'on')) {
-		$baseurl = preg_replace('#^http://#','https://', $baseurl);
-	}
-	foreach($q_config['enabled_languages'] as $language) {
-		$css .=".qtranxs_flag_".$language." { background:url(".$baseurl.'/'.$q_config['flag_location'].$q_config['flag'][$language].") no-repeat }\n";
-	}
-	//$css .= get_option('qtranslate_widget_css',QTX_WIDGET_CSS);
-	$css .="</style>\n";
-	echo apply_filters('qtranslate_header_css',$css);
-*/
 	// skip the rest if 404 //what if the menu is still shown through 404.php?
 	//if(is_404()) return;
 	// set links to translations of current page
 	foreach($q_config['enabled_languages'] as $language) {
-		//if($language != qtranxf_getLanguage())
+		//if($language != qtranxf_getLanguage())//standard requires them all
 		echo '<link hreflang="'.$language.'" href="'.qtranxf_convertURL('',$language,false,true).'" rel="alternate" />'.PHP_EOL;
 	}
 	qtranxf_add_css();
@@ -330,7 +314,7 @@ function qtranxf_excludeUntranslatedPosts($where,&$query) {//WP_Query
 	//qtranxf_dbg_echo('qtranxf_excludeUntranslatedPosts: post_type is empty: $query: ',$query, true);
 	//qtranxf_dbg_echo('qtranxf_excludeUntranslatedPosts: $where: ',$where);
 	//qtranxf_dbg_echo('qtranxf_excludeUntranslatedPosts: is_singular(): ',is_singular());
-	$single_post_query=$query->is_singular();
+	$single_post_query=$query->is_singular();//since 3.1 instead of top is_singular()
 	if($single_post_query){
 		$single_post_query = preg_match('/ID\s*=\s*[\'"]*(\d+)[\'"]*/i',$where,$matches)==1;
 		//qtranxf_dbg_echo('qtranxf_excludeUntranslatedPosts: $single_post_query: ',$single_post_query);

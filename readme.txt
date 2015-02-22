@@ -3,8 +3,8 @@ Developed by: qTranslate Team based on original code by Qian Qin
 Contributors: johnclause, chineseleper, Vavooon
 Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, translation
 Requires at least: 3.9
-Tested up to: 4.1
-Stable tag: 3.0
+Tested up to: 4.1.1
+Stable tag: 3.1
 License: GPLv3 or later
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QEXEK3HX8AR6U
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -225,9 +225,11 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 
 == Changelog ==
 
-= 3.1-b5 =
+= 3.1 stable =
+* Includes all changes after version 3.0.
 * Improvement: up to date code for `updateGettextDatabases` and cleaning up of a lot of code. Thanks to [Michel Weimerskirch](https://github.com/mweimerskirch).
 * Translations: Croatian po/mo - thanks to Sheldon Miles.
+* Fix: import/export from other qTranslate-ish forks.
 
 = 3.1-b4 =
 * Fix: 'Hide Title' in the widget. [WP topic](https://wordpress.org/support/topic/widget-cannot-save-titlecannot-uncheck-hide-title)
@@ -242,7 +244,7 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 = 3.1-b1 =
 * Feature: closing tag `[:]` for square bracket language encoding mod is introduced.
 * Feature: options to convert database to/from square bracket only mode.
-* Feature: new language encoding mode 'byline'.
+* Feature: new language encoding mode 'byline', particularly needed for Woocoomerce integration.
 * Improvement: altered the response of filter 'esc_html' to return a translation to current language instead of the default language.
 * Feature: more on framework for integration with other plugins and themes.
 * Fix: import from [mqTranslate](https://wordpress.org/support/plugin/mqtranslate) (thanks to [Christophe](https://github.com/xhaleera)).

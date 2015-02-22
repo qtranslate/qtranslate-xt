@@ -381,6 +381,38 @@ function qtranxf_the_editor($editor_div)
 //applied in /wp-includes/class-wp-editor.php
 add_filter('the_editor', 'qtranxf_the_editor');
 
+function qtranxf_filter_options_general($value)
+{
+	global $q_config;
+	global $pagenow;
+	switch($pagenow){
+		case 'options-general.php':
+		case 'customize.php'://there is more work to do for this case
+			return $value;
+		default: break;
+	}
+	$lang = $q_config['language'];
+	return qtranxf_use_language($lang,$value,false,false);
+}
+add_filter('option_blogname', 'qtranxf_filter_options_general');
+add_filter('option_blogdescription', 'qtranxf_filter_options_general');
+
+/* this did not work, need more investigation
+function qtranxf_enable_blog_title_filters($name)
+{
+	add_filter('option_blogname', 'qtranxf_filter_options_general');
+	add_filter('option_blogdescription', 'qtranxf_filter_options_general');
+}
+add_action( 'get_header', 'qtranxf_enable_blog_title_filters' );
+
+function qtranxf_disable_blog_title_filters($name)
+{
+	remove_filter('option_blogname', 'qtranxf_filter_options_general');
+	remove_filter('option_blogdescription', 'qtranxf_filter_options_general');
+}
+add_action( 'wp_head', 'qtranxf_disable_blog_title_filters' );
+*/
+
 add_filter('manage_language_columns', 'qtranxf_language_columns');
 add_filter('manage_posts_columns', 'qtranxf_languageColumnHeader');
 add_filter('manage_posts_custom_column', 'qtranxf_languageColumn');

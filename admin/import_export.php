@@ -17,6 +17,19 @@
 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 */
 
+function qtranxf_get_plugin_name($slug)
+{
+	//there must be a better way to take it from file?
+	switch($slug) {
+		case 'qtranslate': return 'qTranslate';
+		case 'mqtranslate': return 'mqTranslate';
+		case 'qtranslate-xp': return 'qTranslate Plus';
+		case 'ztranslate': return 'zTranslate';
+		case 'sitepress-multilingual-cms': return 'WPML';
+		default: return '';
+	}
+}
+
 function qtranxf_migrate_options_update($nm_to,$nm_from)
 {
 	global $wpdb;
@@ -37,8 +50,20 @@ function qtranxf_migrate_options_copy($nm_to,$nm_from)
 	$options = $wpdb->get_results("SELECT option_name, option_value FROM {$wpdb->options} WHERE `option_name` LIKE '$nm_from\_%'");
 	foreach ($options as $option)
 	{
-		$name=$option->option_name;
-		$value=$option->option_value;
+		$name = $option->option_name;
+		//skip new qTranslate-X specific options
+		switch($name){
+			case 'qtranslate_admin_notices':
+			case 'qtranslate_domains':
+			case 'qtranslate_editor_mode':
+			case 'qtranslate_custom_fields':
+			case 'qtranslate_custom_field_classes':
+			case 'qtranslate_text_field_filters':
+			case 'qtranslate_qtrans_compatibility':
+				continue;
+			default: break;
+		}
+		$value = maybe_unserialize($option->option_value);
 		if(strpos($name,'_flag_location')>0) continue;
 		$nm = str_replace($nm_from,$nm_to,$name);
 		update_option($nm,$value);
@@ -57,16 +82,14 @@ function qtranxf_migrate_export_qtranslate_xp(){ qtranxf_migrate_options_copy('p
 function qtranxf_migrate_plugin($plugin){
 	$var=$plugin.'-migration';
 	if(!isset($_POST[$var])) return;
-	if($_POST[$var]=='none') return;
-	if($_POST[$var]=='export')
-		qtranxf_saveConfig();
+	$action = $_POST[$var];
+	if($action=='none') return;
 	$f='qtranxf_migrate_'.$_POST[$var].'_'.str_replace('-','_',$plugin);
 	$f();
-	if($_POST[$var]=='import') {
-		if ($plugin == 'mqtranslate')
-			update_option('qtranslate_qtrans_compatibility', 1);
-		qtranxf_loadConfig();
-	}
+	if( $action == 'export' ) return;
+	if( $plugin == 'mqtranslate' )
+		update_option('qtranslate_qtrans_compatibility', '1');
+	qtranxf_reloadConfig();
 }
 
 function qtranxf_migrate_plugins()
@@ -76,7 +99,8 @@ function qtranxf_migrate_plugins()
 	qtranxf_migrate_plugin('qtranslate-xp');
 	//qtranxf_migrate_plugin('ztranslate');//ok same db
 }
-add_action('qtranslate_init_begin','qtranxf_migrate_plugins',11);
+add_action('qtranslate_saveConfig','qtranxf_migrate_plugins',30);
+//add_action('qtranslate_init_begin','qtranxf_migrate_plugins',11);
 
 function qtranxf_add_row_migrate($nm,$plugin) {
 	if(!file_exists(WP_CONTENT_DIR.'/plugins/'.$plugin)) return;
@@ -140,4 +164,3 @@ function qtranxf_admin_section_import_export($request_uri)
 	qtranxf_admin_section_end('import');
 }
 add_action('qtranslate_configuration', 'qtranxf_admin_section_import_export', 9);
-?>

@@ -34,6 +34,7 @@ function qtranxf_reset_config()
 
 	if( !isset($_POST['qtranslate_reset']) || !isset($_POST['qtranslate_reset2']) ) return;
 	// reset all settings
+	delete_option('qtranslate_admin_notices');
 	delete_option('qtranslate_language_names');
 	delete_option('qtranslate_enabled_languages');
 	delete_option('qtranslate_default_language');
@@ -56,17 +57,17 @@ function qtranxf_reset_config()
 	delete_option('qtranslate_qtrans_compatibility');
 	delete_option('qtranslate_editor_mode');
 	delete_option('qtranslate_custom_fields');
+	delete_option('qtranslate_widget_css'); // obsolete option
 	if(isset($_POST['qtranslate_reset3'])) {
 		delete_option('qtranslate_term_name');
-		delete_option('qtranslate_widget_css');
 	}
-	qtranxf_loadConfig();
+	qtranxf_reloadConfig();
 }
+add_action('qtranslate_saveConfig','qtranxf_reset_config',20);
 
 function qtranxf_init_admin()
 {
 	global $q_config;
-	qtranxf_reset_config();
 
 	// update Gettext Databases if on back-end
 	if($q_config['auto_update_mo']){
@@ -111,7 +112,7 @@ function qtranxf_saveConfig() {
 	qtranxf_update_option('domains');
 
 	update_option('qtranslate_default_language', $q_config['default_language']);
-	//update_option('qtranslate_flag_location', $q_config['flag_location']);
+	qtranxf_update_option('flag_location',qtranxf_flag_location_default());
 	update_option('qtranslate_flags', $q_config['flag']);
 	update_option('qtranslate_locales', $q_config['locale']);
 	update_option('qtranslate_na_messages', $q_config['not_available']);
@@ -121,8 +122,6 @@ function qtranxf_saveConfig() {
 	update_option('qtranslate_url_mode', $q_config['url_mode']);
 	update_option('qtranslate_term_name', $q_config['term_name']);
 	update_option('qtranslate_use_strftime', $q_config['use_strftime']);
-
-	qtranxf_update_option('flag_location',qtranxf_flag_location_default());
 
 	qtranxf_update_option_bool('editor_mode');//will be integer later
 
@@ -716,12 +715,29 @@ function qtranxf_conf() {
 		if(isset($_POST['update_mo_now']) && $_POST['update_mo_now']=='1' && qtranxf_updateGettextDatabases(true))
 			$message[] = __('Gettext databases updated.', 'qtranslate');
 
+		$import_migration = preg_grep( '/import/', $_POST );
+		foreach($import_migration as $key => $value){
+			$plugin = substr($key,0,-strlen('-migration'));
+			$nm = '<span style="color:blue"><strong>'.qtranxf_get_plugin_name($plugin).'</strong></span>';
+			$message[] = sprintf(__('Applicable options and taxonomy names from plugin %s have been imported. Note that the multilingual content of posts, pages and other objects has not been altered during this operation. There is no additional operation needed to import content, since its format is compatible with %s', 'qtranslate'), $nm, 'qTranslate&#8209;X');
+			if ($plugin == 'mqtranslate'){
+				$message[] = sprintf(__('Option "%s" has also been turned on, as the most common case for importing configuration from %s. You may turn it off manually if your setup does not require it. Refer to %sFAQ%s for more information.', 'qtranslate'),'<span style="color:magenta">'.__('Compatibility Functions', 'qtranslate').'</span>', $nm, '<a href="https://wordpress.org/plugins/qtranslate-x/faq/" target="_blank">', '</a>');
+			}
+		}
+
+		$export_migration = preg_grep( '/export/', $_POST );
+		foreach($export_migration as $key => $value){
+			$plugin = substr($key,0,-strlen('-migration'));
+			$nm = '<span style="color:blue"><strong>'.qtranxf_get_plugin_name($plugin).'</strong></span>';
+			$message[] = sprintf(__('Applicable options have been exported to plugin %s. If you have done some post or page updates after migrating from %s, then "%s" operation is also required to convert the content to "dual language tag" style in order for plugin %s to function.', 'qtranslate'), $nm, $nm,'<span style="color:magenta">'.__('Convert Database', 'qtranslate').'</span>', $nm);
+		}
+
 		if(isset($_POST['convert_database'])){
 			$msg = qtranxf_convert_database($_POST['convert_database']);
 			if($msg) $message[] = $msg;
 		}
 	}
-	
+
 	if(isset($_POST['original_lang'])) {
 		// validate form input
 		if($_POST['language_na_message']=='')		$error = __('The Language must have a Not-Available Message!', 'qtranslate');

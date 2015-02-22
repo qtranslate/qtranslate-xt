@@ -94,14 +94,19 @@ function qtranxf_init_language() {
 			require_once(dirname(__FILE__).'/qtranslate_services.php');
 	}
 
-	$q_config['qtrans_compatibility'] = apply_filters('qtranslate_compatibility', $q_config['qtrans_compatibility']);
-	if(isset($q_config['qtrans_compatibility']) && $q_config['qtrans_compatibility']){
-		require_once(dirname(__FILE__).'/qtranslate_compatibility.php');
-	}
+	qtranxf_load_option_qtrans_compatibility();
 
 	//allow other plugins to initialize whatever they need for language
 	do_action('qtranslate_init_language',$url_info);
 	//qtranxf_dbg_log('qtranxf_init_language: url_info: ',$url_info);
+}
+
+function qtranxf_load_option_qtrans_compatibility(){
+	global $q_config;
+	qtranxf_load_option_bool('qtrans_compatibility');
+	$q_config['qtrans_compatibility'] = apply_filters('qtranslate_compatibility', $q_config['qtrans_compatibility']);
+	if( !isset($q_config['qtrans_compatibility']) || !$q_config['qtrans_compatibility'] ) return;
+	require_once(dirname(__FILE__).'/qtranslate_compatibility.php');
 }
 
 if(!function_exists('qtranxf_detect_language')){
@@ -618,7 +623,6 @@ function qtranxf_loadConfig() {
 	qtranxf_load_option_bool('show_displayed_language_prefix');
 	qtranxf_load_option_bool('auto_update_mo');
 	qtranxf_load_option_bool('hide_default_language');
-	qtranxf_load_option_bool('qtrans_compatibility');
 
 	// check for invalid permalink/url mode combinations
 	$permalink_structure = get_option('permalink_structure');
@@ -652,6 +656,16 @@ function qtranxf_loadConfig() {
 	$q_config['term_name'] = $term_name;
 
 	do_action('qtranslate_loadConfig');
+}
+
+function qtranxf_reloadConfig() {
+	global $q_config;
+	qtranxf_set_config_default();
+	qtranxf_loadConfig();
+	if(isset($q_config['url_info']['language']))
+		$q_config['language'] = $q_config['url_info']['language'];
+	qtranxf_load_option_qtrans_compatibility();
+	//qtranxf_dbg_echo('qtranxf_reloadConfig: $q_config[url_info]: ',$q_config['url_info']);
 }
 
 /* BEGIN DATE TIME FUNCTIONS */
