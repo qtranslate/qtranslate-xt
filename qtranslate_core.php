@@ -90,8 +90,8 @@ function qtranxf_init_language() {
 		require_once(dirname(__FILE__).'/admin/admin_utils.php');
 
 		// load qTranslate Services if available
-		if(file_exists(dirname(__FILE__).'/qtranslate_services.php'))
-			require_once(dirname(__FILE__).'/qtranslate_services.php');
+		//if(file_exists(dirname(__FILE__).'/qtranslate_services.php'))
+		//	require_once(dirname(__FILE__).'/qtranslate_services.php');
 	}
 
 	qtranxf_load_option_qtrans_compatibility();

@@ -3,7 +3,7 @@
 Plugin Name: qTranslate-X
 Plugin URI: http://wordpress.org/plugins/qtranslate-x/
 Description: Adds user-friendly and database-friendly multilingual content support into WordPress.
-Version: 3.1-a1
+Version: 3.1
 Author: qTranslate Team
 Author URI: http://qtranslatexteam.wordpress.com/about
 Tags: multilingual, multi, language, admin, tinymce, Polyglot, bilingual, widget, switcher, professional, human, translation, service, qTranslate, zTranslate, mqTranslate, qTranslate Plus, WPML
@@ -103,7 +103,7 @@ if ( ! defined( 'QTRANSLATE_FILE' ) ) {
 	define( 'QTRANSLATE_FILE', __FILE__ );
 }
 
-define('QTX_VERSION','3.1-a1');
+define('QTX_VERSION','3.1');
 
 /* DEFAULT CONFIGURATION PART BEGINS HERE */
 
@@ -528,8 +528,6 @@ function qtranxf_set_config_default()
 }
 qtranxf_set_config_default();
 
-// Load qTranslate-X
-
 require_once(dirname(__FILE__)."/qtranslate_utils.php");
 require_once(dirname(__FILE__)."/qtranslate_core.php");
 require_once(dirname(__FILE__)."/qtranslate_widget.php");
@@ -538,35 +536,5 @@ if(is_admin()){
 	require_once(dirname(__FILE__).'/admin/activation_hook.php');
 	register_activation_hook(__FILE__, 'qtranxf_activation_hook');//does not work if inside qtranslate_configuration.php
 }
-/*
-if(is_admin()){
 
-	require_once(dirname(__FILE__)."/qtranslate_configuration.php");
-	require_once(dirname(__FILE__)."/admin/admin_utils.php");
-
-	// load qTranslate Services if available
-	if(file_exists(dirname(__FILE__)."/qtranslate_services.php"))
-		require_once(dirname(__FILE__)."/qtranslate_services.php");
-
-}else{
-	require_once(dirname(__FILE__)."/qtranslate_frontend.php");
-}
-*/
-
-// set hooks at the end
 require_once(dirname(__FILE__)."/qtranslate_hooks.php");
-
-/* not working this way
-if(file_exists(WP_PLUGIN_DIR.'/mqtranslate/mqtranslate.php')
- ||file_exists(WP_PLUGIN_DIR.'/qtranslate/qtranslate.php')
- //||file_exists(WP_PLUGIN_DIR.'/qtranslate-xp/ppqtranslate.php')
- //||file_exists(WP_PLUGIN_DIR.'/ztranslate/ztranslate.php')
-){
-	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-	if(!is_plugin_active( 'mqtranslate/mqtranslate.php' )
-	&& !is_plugin_active( 'qtranslate/qtranslate.php' )
-	){
-		require_once(dirname(__FILE__)."/qtranslate_compatibility.php");
-	}
-}
-*/
