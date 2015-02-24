@@ -238,7 +238,11 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 == Changelog ==
 
 = 3.2-b1 =
-* Translation: Dutch po/mo updated, thanks to Marius Siroen.
+* Translation: Dutch po/mo updated, thanks to Marius Siroen, 
+* Translation: German po/mo updated, thanks to Maurizio Omissoni.
+* Improvement: updated activation/migration messages with a link to [Migration from other multilingual plugins](https://qtranslatexteam.wordpress.com/2015/02/24/migration-from-other-multilingual-plugins/) publication.
+* Improvement: updated "Compatibility Functions" option with `qtrans_split`.
+* Fix: dealing with https and port 443.
 
 = 3.1 stable =
 * Includes all changes after version 3.0.

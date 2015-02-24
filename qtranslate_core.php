@@ -28,8 +28,10 @@ function qtranxf_init_language() {
 
 	$q_config['cookie_enabled'] = isset($_COOKIE[QTX_COOKIE_NAME_FRONT]) || isset($_COOKIE[QTX_COOKIE_NAME_ADMIN]);
 
+	$https = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']!='off';
 	$host=$_SERVER['HTTP_HOST'];
-	if(isset($_SERVER['SERVER_PORT']) && !empty($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT']!='80'){
+	if(isset($_SERVER['SERVER_PORT']) && !empty($_SERVER['SERVER_PORT'])
+		&& ( (!$https && $_SERVER['SERVER_PORT']!='80') || ($https && $_SERVER['SERVER_PORT']!='443') ) ){
 		$host.=':'.$_SERVER['SERVER_PORT'];
 	}
 
@@ -57,7 +59,7 @@ function qtranxf_init_language() {
 	if(isset($url_info['doredirect'])){
 		if(!defined('WP_ADMIN') && !defined('DOING_AJAX') && !defined('DOING_CRON') && empty($_POST)){
 			$lang = $url_info['language'];
-			$scheme = isset($_SERVER['HTTPS'])?'https://':'http://';
+			$scheme = $https ? 'https://' : 'http://';
 			$urlorg = $scheme.$host.$url;
 			$urlstd = $scheme.$url_info['host'].$url_info['url'];
 			$urlnew = qtranxf_convertURL($urlstd,$lang);

@@ -38,3 +38,6 @@ if(!function_exists('qtrans_getSortedLanguages')){
 if(!function_exists('qtrans_generateLanguageSelectCode')){
 	function qtrans_generateLanguageSelectCode($style='', $id=''){ return qtranxf_generateLanguageSelectCode($style,$id); }
 }
+if(!function_exists('qtrans_split')){
+	function qtrans_split($text, $quicktags = true){ return qtranxf_split($text,$quicktags); }
+}

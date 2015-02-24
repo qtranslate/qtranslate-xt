@@ -166,7 +166,7 @@ function qtranxf_wp_get_nav_menu_items( $items, $menu, $args )
 		}
 		if($topflag){
 			if(!empty($item->title)) $item->title.=':&nbsp;';
-			$item->title.='<img src="'.$flag_location.$q_config['flag'][$toplang].'">';
+			$item->title.='<img src="'.$flag_location.$q_config['flag'][$toplang].'" alt="'.$q_config['language_name'][$toplang].' '.__('Flag', 'qtranslate').'" />';
 		}
 		//$item->classes[] = 'qtranxs_flag_'.$language;
 		$item->classes[] = 'qtranxs-lang-menu';
@@ -193,7 +193,7 @@ function qtranxf_wp_get_nav_menu_items( $items, $menu, $args )
 		$item->type_label='Custom';
 		$item->title=$q_config['language_name'][$lang];
 		if($flags){
-			$item->title='<img src="'.$flag_location.$q_config['flag'][$lang].'">&nbsp;'.$item->title;
+			$item->title='<img src="'.$flag_location.$q_config['flag'][$lang].'" alt="'.$q_config['language_name'][$lang].' '.__('Flag', 'qtranslate').'" />&nbsp;'.$item->title;
 		}
 		$item->post_title=$item->title;
 		$item->post_name='language-menuitem-'.$lang;
