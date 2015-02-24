@@ -60,9 +60,11 @@ We organized an anonymous entity [qTranslate Team](https://github.com/qTranslate
 GitHub repository is available: https://github.com/qTranslate-Team/qtranslate-x.git
 
 We thank our sponsors for persistent help and support:
-* [pictibe Werbeagentur](http://www.pictibe.de "pictibe Werbeagentur Köln Webdesign")
-* [Gunu](https://profiles.wordpress.org/grafcom "Gunu (Marius Siroen)") (Marius Siroen)
+
 * [Citizens Law Group](http://www.citizenslawgroup.com "Chicago Bankruptcy Attorney - Citizens Law Group")
+* [Gunu](https://profiles.wordpress.org/grafcom "Gunu (Marius Siroen)") (Marius Siroen)
+* [OptimWise](http://optimwise.com "OptimWise web design")
+* [pictibe Werbeagentur](http://www.pictibe.de "pictibe Werbeagentur Köln Webdesign")
 
 == Installation ==
 
@@ -234,6 +236,9 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 2. Language Management Interface
 
 == Changelog ==
+
+= 3.2-b1 =
+* Translation: Dutch po/mo updated, thanks to Marius Siroen.
 
 = 3.1 stable =
 * Includes all changes after version 3.0.

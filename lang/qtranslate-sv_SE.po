@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: qTranslate-X 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-22 15:58-0700\n"
+"POT-Creation-Date: 2015-02-23 18:35-0700\n"
 "PO-Revision-Date: 2011-12-15 05:29+0300\n"
 "Last-Translator: Tor-Bjorn Fjellner <poedit@fjellner.com>\n"
 "Language-Team: T-B <poedit@fjellner.com>\n"
@@ -153,7 +153,7 @@ msgstr ""
 
 #: admin/import_export.php:141
 #, php-format
-msgid "The square bracket language tag %s only will be used as opposite to dual-tag %s legacy database format. All string options and standard post and page fields will be uniformly encoded like %s."
+msgid "The square bracket language tag %s only will be used as opposite to dual-tag (%s and %s) %s legacy database format. All string options and standard post and page fields will be uniformly encoded like %s."
 msgstr ""
 
 #: admin/import_export.php:142
