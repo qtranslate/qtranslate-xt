@@ -34,11 +34,12 @@ function qtranxf_admin_notice_deactivate_plugin($nm,$plugin)
 			$imported=true;
 		}
 	}
+	$s = '</p><p>'.sprintf(__('It might be a good idea to review %smigration instructions%s, if you have not yet done so.', 'qtranslate'),'<a href="https://qtranslatexteam.wordpress.com/2015/02/24/migration-from-other-multilingual-plugins/" target="_blank">','</a>').'</p><p><a class="button" href="">';
 	$msg=sprintf(__('Activation of plugin %s deactivated plugin %s since they cannot run simultaneously.', 'qtranslate'), $qtxlink, $link).' ';
 	if($imported){
-		$msg.=sprintf(__('The compatible settings from %s have been imported to %s. Further tuning, import, export and reset of options can be done at Settings/Languages configuration page, once %s is running.%sContinue%s', 'qtranslate'), $nm, $qtxnm, $qtxnm, '</p><p><a class="button" href="">', '</a>');
+		$msg.=sprintf(__('The compatible settings from %s have been imported to %s. Further tuning, import, export and reset of options can be done at Settings/Languages configuration page, once %s is running.%sContinue%s', 'qtranslate'), $nm, $qtxnm, $qtxnm, $s, '</a>');
 	}else{
-		$msg.=sprintf(__('You may import/export compatible settings from %s to %s on Settings/Languages configuration page, once %s is running.%sContinue%s', 'qtranslate'), $nm, $qtxnm, $qtxnm, '</p><p><a  class="button" href="">','</a>');
+		$msg.=sprintf(__('You may import/export compatible settings from %s to %s on Settings/Languages configuration page, once %s is running.%sContinue%s', 'qtranslate'), $nm, $qtxnm, $qtxnm, $s, '</a>');
 	}
 	//$nonce=wp_create_nonce('deactivate-plugin_'.$plugin);
 	//$msg=sprintf(__('Plugin %s cannot run concurrently with %s, please %sdeactivate %s%s. You may import compatible settings from %s to %s on Settings/Languages configuration page, once %s is running.','qtranslate'),$qtxlink,$link,'<a href="'.admin_url('plugins.php?action=deactivate&plugin='.encode($plugin).'&plugin_status=all&paged=1&s&_wpnonce='.$nonce.'">',$nm,'</a>',$nm,$qtxnm,$qtxnm);
@@ -132,6 +133,9 @@ function qtranxf_admin_notice_plugin_conflict($title,$plugin)
 	$link='<a href="https://wordpress.org/plugins/'.dirname($plugin).'/" style="color:magenta" target="_blank">'.$title.'</a>';
 	echo '<div class="error"><p style="font-size: larger">';
 	printf(__('%sError:%s plugin %s cannot run concurrently with plugin %s. You may import and export compatible settings between %s and %s on Settings/<a href="%s">Languages</a> configuration page. Then you have to deactivate one of the plugins to continue.','qtranslate'),'<span style="color:red"><strong>','</strong></span>',$me,$link,'qTranslate&#8209;X',$title,admin_url('options-general.php?page=qtranslate-x'), 'qtranslate');
+	echo ' ';
+	printf(__('It might be a good idea to review %smigration instructions%s, if you have not yet done so.', 'qtranslate'),'<a href="https://qtranslatexteam.wordpress.com/2015/02/24/migration-from-other-multilingual-plugins/" target="_blank">','</a>');
+
 	$nonce=wp_create_nonce('deactivate-plugin_'.$plugin);
 	echo '</p><p> &nbsp; &nbsp; &nbsp; &nbsp;<a class="button" href="'.admin_url('plugins.php?action=deactivate&plugin='.urlencode($plugin).'&plugin_status=all&paged=1&s&_wpnonce='.$nonce).'"><strong>'.sprintf(__('Deactivate %s', 'qtranslate'), '<span style="color:magenta">'.$title.'</span>').'</strong></a>';
 	$nonce=wp_create_nonce('deactivate-plugin_qtranslate-x/qtranslate.php');

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: qTranslate-X 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-23 18:35-0700\n"
+"POT-Creation-Date: 2015-02-23 23:33-0700\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Marius Siroen <marius@marius-siroen.com>\n"
 "Language-Team: \n"
@@ -12,52 +12,58 @@ msgstr ""
 "Language: nl_NL\n"
 "X-Generator: Poedit 1.7.4\n"
 
-#: admin/activation_hook.php:37
+#: admin/activation_hook.php:37 admin/activation_hook.php:137
+#: qtranslate_configuration.php:722
+#, php-format
+msgid "It might be a good idea to review %smigration instructions%s, if you have not yet done so."
+msgstr ""
+
+#: admin/activation_hook.php:38
 #, php-format
 msgid "Activation of plugin %s deactivated plugin %s since they cannot run simultaneously."
 msgstr "Activering van plugin %s heeft plugin %s gedeactiveerd aangezien zij niet gelijktijdig kunnen worden uitgevoerd."
 
-#: admin/activation_hook.php:39
+#: admin/activation_hook.php:40
 #, php-format
 msgid "The compatible settings from %s have been imported to %s. Further tuning, import, export and reset of options can be done at Settings/Languages configuration page, once %s is running.%sContinue%s"
 msgstr "De compatibele instellingen van %s zijn geïmporteerd naar %s. Verdere instellingen, import, export en reset van opties kan worden gedaan op Instellingen/Talen configuratiepagina, zodra %s wordt uitgevoerd.%sDoorgaan%s"
 
-#: admin/activation_hook.php:41
+#: admin/activation_hook.php:42
 #, php-format
 msgid "You may import/export compatible settings from %s to %s on Settings/Languages configuration page, once %s is running.%sContinue%s"
 msgstr "Je kunt compatibele instellingen importeren/exporteren van %s naar %s op Instellingen/talen configuratiepagina, zodra %s wordt uitgevoerd. %sDoorgaan%s"
 
-#: admin/activation_hook.php:134
+#: admin/activation_hook.php:135
 #, php-format
 msgid "%sError:%s plugin %s cannot run concurrently with plugin %s. You may import and export compatible settings between %s and %s on Settings/<a href=\"%s\">Languages</a> configuration page. Then you have to deactivate one of the plugins to continue."
 msgstr "%sFout:%s plugin %s kan niet gelijktijdig worden uitgevoerd met plugin %s. Je kunt compatibele instellingen importeren en exporteren tussen %s en %s bij instellingen/<a href=\"%s\">Talen</a> configuratiepagina. Dan moet je een van de plugins uitschakelen om verder te gaan."
 
-#: admin/activation_hook.php:136 admin/activation_hook.php:138
+#: admin/activation_hook.php:140 admin/activation_hook.php:142
 #, php-format
 msgid "Deactivate %s"
 msgstr "Deactiveer %s"
 
-#: admin/activation_hook.php:166
+#: admin/activation_hook.php:170
 #, php-format
 msgid "Thank you for using %s plugin!"
 msgstr "Dank voor het gebruik van de %s plugin"
 
-#: admin/activation_hook.php:168
+#: admin/activation_hook.php:172
 #, php-format
 msgid "Please, help us to make a decision on \"%s\" feature, press the button below."
 msgstr "Alstublieft, help ons om te beslissen over de \"%s\" functie, klik op de knop."
 
-#: admin/activation_hook.php:168 admin/activation_hook.php:170
+#: admin/activation_hook.php:172 admin/activation_hook.php:174
 #: qtranslate_services.php:787
 msgid "Translation Service"
 msgstr "Vertaal Services"
 
-#: admin/activation_hook.php:170
+#: admin/activation_hook.php:174
 #, php-format
 msgid "Survey on \"%s\" feature"
 msgstr "Enquête over de  \"%s\" functie"
 
-#: admin/activation_hook.php:171
+#: admin/activation_hook.php:175
 msgid "I have already done it, dismiss this message."
 msgstr "Ik heb het al gedaan, verberg deze boodschap."
 

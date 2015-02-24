@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: qTranslate-X 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-23 18:35-0700\n"
-"PO-Revision-Date: 2015-02-09 22:47+0200\n"
+"POT-Creation-Date: 2015-02-23 23:33-0700\n"
+"PO-Revision-Date: 2015-02-23 22:28-0800\n"
 "Last-Translator: \n"
 "Language-Team: qTranslate Team Translators\n"
 "MIME-Version: 1.0\n"
@@ -22,52 +22,58 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: admin/activation_hook.php:37
+#: admin/activation_hook.php:37 admin/activation_hook.php:137
+#: qtranslate_configuration.php:722
+#, php-format
+msgid "It might be a good idea to review %smigration instructions%s, if you have not yet done so."
+msgstr ""
+
+#: admin/activation_hook.php:38
 #, php-format
 msgid "Activation of plugin %s deactivated plugin %s since they cannot run simultaneously."
 msgstr "Активация плагина %s деактивирует плагин %s, так как они не могут работать одновременно."
 
-#: admin/activation_hook.php:39
+#: admin/activation_hook.php:40
 #, php-format
 msgid "The compatible settings from %s have been imported to %s. Further tuning, import, export and reset of options can be done at Settings/Languages configuration page, once %s is running.%sContinue%s"
 msgstr "Совместимые настройки были импортированы из %s в %s. Дальнейшие настройки, импортирование, экспортирование и сброс настроек можно будет сделать на странице конфигурации Настройки/Языки, как только %s будет запущен.%sContinue%s"
 
-#: admin/activation_hook.php:41
+#: admin/activation_hook.php:42
 #, php-format
 msgid "You may import/export compatible settings from %s to %s on Settings/Languages configuration page, once %s is running.%sContinue%s"
 msgstr "Вы можете импортировать и экспортировать совместимые параметры от %s для %s на странице Настройки/Языки, после того как %s будет запущен. %sContinue%s"
 
-#: admin/activation_hook.php:134
+#: admin/activation_hook.php:135
 #, php-format
 msgid "%sError:%s plugin %s cannot run concurrently with plugin %s. You may import and export compatible settings between %s and %s on Settings/<a href=\"%s\">Languages</a> configuration page. Then you have to deactivate one of the plugins to continue."
-msgstr "%Ошибка:%s Плагин %s не может выполняться одновременно с плагин %s. Вы может импортировать и экспортировать совместимые параметры между %s и %s на настройки /<a href=\"%s\">языки</a> конфигурации страницы. Тогда вам придется отключить один из плагинов для продолжения."
+msgstr "%sОшибка:%s Плагин %s не может выполняться одновременно с плагин %s. Вы может импортировать и экспортировать совместимые параметры между %s и %s на настройки /<a href=\"%s\">языки</a> конфигурации страницы. Тогда вам придется отключить один из плагинов для продолжения."
 
-#: admin/activation_hook.php:136 admin/activation_hook.php:138
-#, fuzzy, php-format
+#: admin/activation_hook.php:140 admin/activation_hook.php:142
+#, php-format
 msgid "Deactivate %s"
-msgstr "Деактивировать"
+msgstr "Деактивировать %s"
 
-#: admin/activation_hook.php:166
+#: admin/activation_hook.php:170
 #, php-format
 msgid "Thank you for using %s plugin!"
 msgstr ""
 
-#: admin/activation_hook.php:168
+#: admin/activation_hook.php:172
 #, php-format
 msgid "Please, help us to make a decision on \"%s\" feature, press the button below."
 msgstr ""
 
-#: admin/activation_hook.php:168 admin/activation_hook.php:170
+#: admin/activation_hook.php:172 admin/activation_hook.php:174
 #: qtranslate_services.php:787
 msgid "Translation Service"
 msgstr "Услуги по переводу"
 
-#: admin/activation_hook.php:170
+#: admin/activation_hook.php:174
 #, php-format
 msgid "Survey on \"%s\" feature"
 msgstr ""
 
-#: admin/activation_hook.php:171
+#: admin/activation_hook.php:175
 msgid "I have already done it, dismiss this message."
 msgstr ""
 
@@ -148,9 +154,8 @@ msgid "Both processes are <b>irreversible</b>! Be sure to make a full database b
 msgstr "Оба процесса являются <b>необратимыми!</b> Сделайте полную резервную копию базы данных, прежде чем нажать на одну из ссылок."
 
 #: admin/import_export.php:139
-#, fuzzy
 msgid "Do not convert database"
-msgstr "Преобразование базы данных"
+msgstr "Ничего не делать"
 
 #: admin/import_export.php:140
 msgid "Convert database to the \"square bracket only\" style."
