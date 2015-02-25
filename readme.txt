@@ -114,7 +114,11 @@ The following fields are pre-configured to be translatable by default:
 - all input fields of class "wp-editor-area", which normally include all TinyMCE visual editors.
 - fields with the following id: "title", "excerpt", "attachment_caption", "attachment_alt".
 
-This applies to post, pages and media editors (/wp-admin/post*). 
+This applies to post, pages and media editors (/wp-admin/post*).
+
+If you are a plugin or theme author, you can use the filters "qtranslate_custom_fields" and "qtranslate_custom_field_classes" to integrate qTranslate-X into your custom post types. E.g.:
+
+`add_filter('qtranslate_custom_fields', function($fields){ $fields[] = 'my_custom_field'; return $fields; });`
 
 ### How do I translate custom configuration fields, which are not handled by language switch buttons? ###
 
