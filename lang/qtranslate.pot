@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: qTranslate-X 3.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-23 23:33-0700\n"
+"POT-Creation-Date: 2015-02-24 19:26-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: qTranslate Team Translators\n"
@@ -84,6 +84,7 @@ msgid "Database has been converted to legacy dual-tag format."
 msgstr ""
 
 #: admin/admin_utils.php:254 qtranslate_configuration.php:460
+#: qtranslate_frontend.php:169 qtranslate_frontend.php:196
 msgid "Flag"
 msgstr ""
 

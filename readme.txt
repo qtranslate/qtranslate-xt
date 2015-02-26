@@ -15,7 +15,7 @@ Adds user-friendly multilingual content management and translation support. It i
 
 This plugin is a descendant of [qTranslate](https://wordpress.org/plugins/qtranslate/ "Original qTranslate plugin"), which has apparently been abandoned by the original author, [Qian Qin](http://www.qianqin.de/qtranslate/ "the original author of qTranslate"). 
 
-While the back-end database framework is left almost intact and fully compatible with former qTranslate, the design of editors is drastically changed and improved to be much less vulnerable to WP updates. Instead of seeing multiple lines per each language for title, qTranslate-X provides language switching buttons, which, once pressed, make all the text fields to be filled with the language chosen. The instant language change happens locally in your browser without sending an additional request to the server.
+While the back-end database framework is left almost intact, the design of editors is drastically changed and improved to be much less vulnerable to WP updates. Instead of seeing multiple lines per each language for title, qTranslate-X provides language switching buttons, which, once pressed, make all the text fields to be filled with the language chosen. The instant language change happens locally in your browser without sending an additional request to the server.
 
 qTranslate-X makes creation of multilingual content as easy as working with a single language. Here are some features:
 
@@ -237,9 +237,19 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 
 == Changelog ==
 
+= 3.2 stable =
+* Includes all changes after version 3.1.
+
+= 3.2-b2 =
+* Translation: Hungarian (hu_HU) po/mo updated, thanks to Németh Balázs.
+* Translation: German (de_DE) po/mo updated, thanks to Maurizio Omissoni.
+* Improvement: Basque language added to the pre-set list of languages, thanks to Xabier Arrabal.
+* Improvement: 'Convert Database' options now also convert `postmeta.meta_value` database field.
+* Fix: 'Convert Database' options would not work correctly for some options.
+* Fix: `qtranxf_http_negotiate_language` used to return `en_US` when PHP supports function `http_negotiate_language`.
+
 = 3.2-b1 =
-* Translation: Dutch po/mo updated, thanks to Marius Siroen, 
-* Translation: German po/mo updated, thanks to Maurizio Omissoni.
+* Translation: Dutch (nl_NL) po/mo updated, thanks to Marius Siroen, 
 * Improvement: updated activation/migration messages with a link to [Migration from other multilingual plugins](https://qtranslatexteam.wordpress.com/2015/02/24/migration-from-other-multilingual-plugins/) publication.
 * Improvement: updated "Compatibility Functions" option with `qtrans_split`.
 * Fix: dealing with https and port 443.

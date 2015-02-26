@@ -53,6 +53,7 @@ function qtranxf_migrate_options_copy($nm_to,$nm_from)
 		$name = $option->option_name;
 		//skip new qTranslate-X specific options
 		switch($name){
+			case 'qtranslate_flag_location':
 			case 'qtranslate_admin_notices':
 			case 'qtranslate_domains':
 			case 'qtranslate_editor_mode':
@@ -63,6 +64,7 @@ function qtranxf_migrate_options_copy($nm_to,$nm_from)
 				continue;
 			default: break;
 		}
+		//if(strpos($name,'_flag_location')>0) continue;
 		$value = maybe_unserialize($option->option_value);
 		if(strpos($name,'_flag_location')>0) continue;
 		$nm = str_replace($nm_from,$nm_to,$name);
@@ -70,7 +72,10 @@ function qtranxf_migrate_options_copy($nm_to,$nm_from)
 	}
 }
 
-function qtranxf_migrate_import_mqtranslate(){ qtranxf_migrate_options_update('qtranslate','mqtranslate'); }
+function qtranxf_migrate_import_mqtranslate(){
+	qtranxf_migrate_options_update('qtranslate','mqtranslate');
+	update_option('qtranslate_qtrans_compatibility', '1');//since 3.1
+}
 function qtranxf_migrate_export_mqtranslate(){ qtranxf_migrate_options_copy('mqtranslate','qtranslate'); }
 
 function qtranxf_migrate_import_qtranslate_xp(){ qtranxf_migrate_options_update('qtranslate','ppqtranslate'); }
@@ -87,8 +92,8 @@ function qtranxf_migrate_plugin($plugin){
 	$f='qtranxf_migrate_'.$_POST[$var].'_'.str_replace('-','_',$plugin);
 	$f();
 	if( $action == 'export' ) return;
-	if( $plugin == 'mqtranslate' )
-		update_option('qtranslate_qtrans_compatibility', '1');
+	//if( $plugin == 'mqtranslate' )//since 3.2-b2: moved to qtranxf_migrate_import_mqtranslate
+	//	update_option('qtranslate_qtrans_compatibility', '1');
 	qtranxf_reloadConfig();
 }
 

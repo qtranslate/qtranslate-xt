@@ -91,7 +91,7 @@ function qtranxf_init_language() {
 		require_once(dirname(__FILE__).'/qtranslate_configuration.php');
 		require_once(dirname(__FILE__).'/admin/admin_utils.php');
 
-		// load qTranslate Services if available
+		// load qTranslate Services if available // disabled since 3.1
 		//if(file_exists(dirname(__FILE__).'/qtranslate_services.php'))
 		//	require_once(dirname(__FILE__).'/qtranslate_services.php');
 	}
@@ -446,11 +446,12 @@ function qtranxf_http_negotiate_language(){
 	global $q_config;
 	if(function_exists('http_negotiate_language')){
 		$supported=array();
-		$supported[]=str_replace('_','-',$q_config['locale'][$q_config['default_language']]);
+		//$supported[]=str_replace('_','-',$q_config['locale'][$q_config['default_language']]);
 		foreach($q_config['enabled_languages'] as $lang){
 			$supported[]=str_replace('_','-',$q_config['locale'][$lang]);
 		}
-		$lang = http_negotiate_language($supported);
+		$lang = substr(http_negotiate_language($supported),0,2);
+		if(!qtranxf_isEnabled($lang)) return null;
 		//qtranxf_dbg_log('qtranxf_http_negotiate_language:http_negotiate_language: lang=',$lang);
 	}else{
 		$lang = qtranxf_get_browser_language();
@@ -1001,14 +1002,14 @@ function qtranxf_get_language_blocks($text) {
 //}
 
 if (!function_exists('qtranxf_split')){
-function qtranxf_split($text, $quicktags = true) {
+function qtranxf_split($text) {
 	$blocks = qtranxf_get_language_blocks($text);
-	return qtranxf_split_blocks($blocks,$quicktags);
+	return qtranxf_split_blocks($blocks);
 }
 }
 
 if (!function_exists('qtranxf_split_blocks')){
-function qtranxf_split_blocks($blocks, $quicktags = true) {
+function qtranxf_split_blocks($blocks) {
 	global $q_config;
 	$result = array();
 	foreach($q_config['enabled_languages'] as $language) {
@@ -1016,31 +1017,32 @@ function qtranxf_split_blocks($blocks, $quicktags = true) {
 	}
 	$current_language = false;
 	foreach($blocks as $block) {
-		# detect language tags
+		// detect c-tags
 		if(preg_match("#^<!--:([a-z]{2})-->$#ism", $block, $matches)) {
 			$current_language = $matches[1];
-			//if(!qtranxf_isEnabled($current_language)) $current_language = false;//still need it
 			continue;
-		// detect quicktags
-		} elseif($quicktags && preg_match("#^\[:([a-z]{2})\]$#ism", $block, $matches)) {
+		// detect b-tags
+		}elseif(preg_match("#^\[:([a-z]{2})\]$#ism", $block, $matches)) {
 			$current_language = $matches[1];
-			//if(!qtranxf_isEnabled($current_language)) $current_language = false;//still need it
-			continue;
-		// detect ending tags
-		//} elseif(preg_match("#^<!--:-->$#ism", $block, $matches) || preg_match("#^\[:\]$#ism", $block, $matches)) {
-		} elseif($block === '<!--:-->' || $block === '[:]') {
-			$current_language = false;
 			continue;
 		}
-		// correctly categorize text block
-		if($current_language){
-			if(!isset($result[$current_language])) $result[$current_language]='';
-			$result[$current_language] .= $block;
-			$current_language = false;
-		}else{
-			foreach($q_config['enabled_languages'] as $language) {
-				$result[$language] .= $block;
-			}
+		switch($block){
+			case '[:]':
+			case '<!--:-->':
+				$current_language = false;
+				break;
+			default:
+				// correctly categorize text block
+				if($current_language){
+					if(!isset($result[$current_language])) $result[$current_language]='';
+					$result[$current_language] .= $block;
+					$current_language = false;
+				}else{
+					foreach($q_config['enabled_languages'] as $language) {
+						$result[$language] .= $block;
+					}
+				}
+			break;
 		}
 	}
 	//it gets trimmed later in qtranxf_use() anyway, better to do it here
@@ -1111,7 +1113,7 @@ function qtranxf_split($text, $quicktags = true) {
 
 // not in use?
 //function qtranxf_join($texts) {
-//	if(!is_array($texts)) $texts = qtranxf_split($texts, false);
+//	if(!is_array($texts)) $texts = qtranxf_split($texts);
 //	qtranxf_join_c($texts);
 //}
 
@@ -1198,7 +1200,7 @@ function qtranxf_use($lang, $text, $show_available=false, $show_empty=false) {
 		return $text;
 	}
 
-	if(is_object($text)||@get_class($text) == '__PHP_Incomplete_Class') {
+	if( is_object($text) || $text instanceof __PHP_Incomplete_Class ) {//since 3.2-b1 instead of @get_class($text) == '__PHP_Incomplete_Class'
 		foreach(get_object_vars($text) as $key => $t) {
 			$text->$key = qtranxf_use($lang,$text->$key,$show_available,$show_empty);
 		}

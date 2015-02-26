@@ -460,7 +460,8 @@ function qtranxf_language_form($lang = '', $language_code = '', $language_name =
 	<label for="language_flag"><?php _e('Flag', 'qtranslate') ?></label>
 	<?php 
 	$files = array();
-	if($dir_handle = @opendir(trailingslashit(WP_CONTENT_DIR).$q_config['flag_location'])) {
+	$flag_dir = trailingslashit(WP_CONTENT_DIR).$q_config['flag_location'];
+	if($dir_handle = @opendir($flag_dir)) {
 		while (false !== ($file = readdir($dir_handle))) {
 			if(preg_match("/\.(jpeg|jpg|gif|png)$/i",$file)) {
 				$files[] = $file;
@@ -608,10 +609,12 @@ function qtranxf_updateSettingIgnoreFileTypes($nm) {
 	if(!isset($_POST[$nm])) return false;
 	$posted=preg_split('/[\s,]+/',strtolower($_POST[$nm]),null,PREG_SPLIT_NO_EMPTY);
 	$val=explode(',',QTX_IGNORE_FILE_TYPES);
-	foreach($posted as $v){
-		if(empty($v)) continue;
-		if(in_array($v,$val)) continue;
-		$val[]=$v;
+	if(is_array($posted)){
+		foreach($posted as $v){
+			if(empty($v)) continue;
+			if(in_array($v,$val)) continue;
+			$val[]=$v;
+		}
 	}
 	if( qtranxf_array_compare($q_config[$nm],$val) ) return false;
 	$q_config[$nm] = $val;
@@ -954,13 +957,14 @@ function qtranxf_conf() {
 				<td>
 					<fieldset id="qtranxs-languages-menu"><legend class="hidden"><?php _e('Default Language', 'qtranslate') ?></legend>
 				<?php
+					$flag_location = qtranxf_flag_location();
 					foreach ( qtranxf_getSortedLanguages() as $key => $language ) {
 						echo '<label title="' . $q_config['language_name'][$language] . '"><input type="radio" name="default_language" value="' . $language . '"';
 						checked($language,$q_config['default_language']);
 						echo ' />';
 						echo ' <a href="'.add_query_arg('moveup', $language, $clean_uri).'"><img src="'.$pluginurl.'/arrowup.png" alt="up" /></a>';
 						echo ' <a href="'.add_query_arg('movedown', $language, $clean_uri).'"><img src="'.$pluginurl.'/arrowdown.png" alt="down" /></a>';
-						echo ' <img src="' . trailingslashit(WP_CONTENT_URL) .$q_config['flag_location'].$q_config['flag'][$language] . '" alt="' . $q_config['language_name'][$language] . '" /> ';
+						echo ' <img src="' . $flag_location.$q_config['flag'][$language] . '" alt="' . $q_config['language_name'][$language] . '" /> ';
 						echo ' '.$q_config['language_name'][$language] . '</label><br/>'.PHP_EOL;
 					}
 				?>
@@ -989,20 +993,33 @@ function qtranxf_conf() {
 			</tr>
 		</table>
 	<?php qtranxf_admin_section_end('general'); ?>
-	<?php qtranxf_admin_section_start(__('Advanced Settings', 'qtranslate'),'advanced'); //id="qtranslate-admin-advanced" ?>
+	<?php qtranxf_admin_section_start(__('Advanced Settings', 'qtranslate'),'advanced'); //id="qtranslate-admin-advanced"
+		$permalink_structure = get_option('permalink_structure');
+	?>
 		<table class="form-table">
 			<tr>
 				<th scope="row"><?php _e('URL Modification Mode', 'qtranslate') ?></th>
 				<td>
 					<fieldset><legend class="hidden"><?php _e('URL Modification Mode', 'qtranslate') ?></legend>
 						<label title="Query Mode"><input type="radio" name="url_mode" value="<?php echo QTX_URL_QUERY; ?>" <?php checked($q_config['url_mode'],QTX_URL_QUERY); ?> /> <?php echo __('Use Query Mode (?lang=en)', 'qtranslate').'. '.__('Most SEO unfriendly, not recommended.', 'qtranslate'); ?></label><br/>
-						<label title="Pre-Path Mode"><input type="radio" name="url_mode" value="<?php echo QTX_URL_PATH; ?>" <?php checked($q_config['url_mode'],QTX_URL_PATH); ?> /> <?php echo __('Use Pre-Path Mode (Default, puts /en/ in front of URL)', 'qtranslate').'. '.__('SEO friendly.', 'qtranslate'); ?></label><br/>
-						<label title="Pre-Domain Mode"><input type="radio" name="url_mode" value="<?php echo QTX_URL_DOMAIN; ?>" <?php checked($q_config['url_mode'],QTX_URL_DOMAIN); ?> /> <?php echo __('Use Pre-Domain Mode (uses http://en.yoursite.com)', 'qtranslate').'. '.__('You will need to configure DNS sub-domains on your site.', 'qtranslate'); ?></label><br/>
+					<?php
+							if(empty($permalink_structure)) {
+								echo '<br/>'.PHP_EOL;
+								printf(__('No other URL Modification Modes are available if permalink structure is set to "Default" on configuration page %sPermalink Setting%s. It is SEO advantageous to use some other permalink mode, which will enable more URL Modification Modes here as well.', 'qtranslate'),'<a href="'.admin_url('options-permalink.php').'">', '</a>');
+								echo PHP_EOL.'<br/><br/>'.PHP_EOL;
+							}else{ ?>
+						<label title="Pre-Path Mode"><input type="radio" name="url_mode" value="<?php echo QTX_URL_PATH; ?>" <?php checked($q_config['url_mode'],QTX_URL_PATH); if(empty($permalink_structure)) echo ' disabled'; ?> /> <?php echo __('Use Pre-Path Mode (Default, puts /en/ in front of URL)', 'qtranslate').'. '.__('SEO friendly.', 'qtranslate'); ?></label><br/>
+						<label title="Pre-Domain Mode"><input type="radio" name="url_mode" value="<?php echo QTX_URL_DOMAIN; ?>" <?php checked($q_config['url_mode'],QTX_URL_DOMAIN); if(empty($permalink_structure)) echo ' disabled'; ?> /> <?php echo __('Use Pre-Domain Mode (uses http://en.yoursite.com)', 'qtranslate').'. '.__('You will need to configure DNS sub-domains on your site.', 'qtranslate'); ?></label><br/>
 						<small><?php _e('Pre-Path and Pre-Domain mode will only work with mod_rewrite/pretty permalinks. Additional Configuration is needed for Pre-Domain mode or Per-Domain mode.', 'qtranslate'); ?></small><br/><br/>
+					<?php } ?>
 						<label for="hide_default_language"><input type="checkbox" name="hide_default_language" id="hide_default_language" value="1"<?php checked($q_config['hide_default_language']); ?>/> <?php _e('Hide URL language information for default language.', 'qtranslate'); ?></label><br/>
 						<small><?php _e('This is only applicable to Pre-Path and Pre-Domain mode.', 'qtranslate'); ?></small><br/><br/>
-						<?php do_action('qtranslate_url_mode_choices'); ?>
+					<?php
+						if(!empty($permalink_structure)) {
+							do_action('qtranslate_url_mode_choices');
+					?>
 						<label title="Per-Domain Mode"><input type="radio" name="url_mode" value="<?php echo QTX_URL_DOMAINS; ?>" <?php checked($q_config['url_mode'],QTX_URL_DOMAINS); ?> /> <?php echo __('Use Per-Domain mode: specify separate user-defined domain for each language.', 'qtranslate'); ?></label>
+					<?php } ?>
 					</fieldset>
 				</td>
 			</tr>
@@ -1095,7 +1112,7 @@ function qtranxf_conf() {
 			<tr valign="top">
 				<th scope="row"><?php _e('Compatibility Functions', 'qtranslate');?></th>
 				<td>
-					<label for="qtranxs_qtrans_compatibility"><input type="checkbox" name="qtrans_compatibility" id="qtranxs_qtrans_compatibility" value="1"<?php checked($q_config['qtrans_compatibility']); ?>/>&nbsp;<?php printf(__('Enable function name compatibility (%s).', 'qtranslate'), 'qtrans_getLanguage, qtrans_convertURL, qtrans_use, qtrans_useDefaultLanguage, qtrans_useCurrentLanguageIfNotFoundShowAvailable, qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage, qtrans_useTermLib, qtrans_getSortedLanguages, qtrans_generateLanguageSelectCode'); ?></label><br/>
+					<label for="qtranxs_qtrans_compatibility"><input type="checkbox" name="qtrans_compatibility" id="qtranxs_qtrans_compatibility" value="1"<?php checked($q_config['qtrans_compatibility']); ?>/>&nbsp;<?php printf(__('Enable function name compatibility (%s).', 'qtranslate'), 'qtrans_convertURL, qtrans_generateLanguageSelectCode, qtrans_getLanguage, qtrans_getSortedLanguages, qtrans_split, qtrans_use, qtrans_useCurrentLanguageIfNotFoundShowAvailable, qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage, qtrans_useDefaultLanguage, qtrans_useTermLib'); ?></label><br/>
 					<small><?php printf(__('Some plugins and themes use direct calls to the functions listed, which are defined in former %s plugin and some of its forks. Turning this flag on will enable those function to exists, which will make the dependent plugins and themes to work. WordPress policy prohibits to define functions with the same names as in other plugins, since it generates user-unfriendly fatal errors, when two conflicting plugins are activated simultaneously. Before turning this option on, you have to make sure that there are no other plugins active, which define those functions.', 'qtranslate'), '<a href="https://wordpress.org/plugins/qtranslate/" target="_blank">qTranslate</a>'); ?></small>
 				</td>
 			</tr>

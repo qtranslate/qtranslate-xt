@@ -65,9 +65,24 @@ if(defined('WP_DEBUG')&&WP_DEBUG){
 
 function qtranxf_parseURL($url) {
 	//this is not the same as native parse_url and so it is in use
+	//it should also work quicker than native parse_url, so we should keep it?
 	$r  = '!(?:(\w+)://)?(?:(\w+)\:(\w+)@)?([^/:]+)?';
 	$r .= '(?:\:(\d*))?([^#?]+)?(?:\?([^#]+))?(?:#(.+$))?!i';
 	preg_match ( $r, $url, $out );
+	//qtranxf_dbg_log('qtranxf_parseURL('.$url.'): out:',$out);
+	//new code since 3.2-b2, older version produces warnings in the debugger
+	$result = @array(
+		'scheme' => isset($out[1]) ? $out[1] : '',
+		'user' => isset($out[2]) ? $out[2] : '',
+		'pass' => isset($out[3]) ? $out[3] : '',
+		'host' => isset($out[4]) ? $out[4] : '',
+		'path' => isset($out[6]) ? $out[6] : '',
+		'query' => isset($out[7]) ? $out[7] : '',
+		'fragment' => isset($out[8]) ? $out[8] : ''
+		);
+	if(!empty($out[5])) $result['host'] .= ':'.$out[5];
+/*
+	//this older version produce warnings in the debugger
 	$result = @array(
 		"scheme" => $out[1],
 		"host" => $out[4].(($out[5]=='')?'':':'.$out[5]),
@@ -77,7 +92,7 @@ function qtranxf_parseURL($url) {
 		"query" => $out[7],
 		"fragment" => $out[8]
 		);
-//	}
+*/
 /*
 	$result = parse_url($url) + array(
 		'scheme' => '',

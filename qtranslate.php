@@ -3,7 +3,7 @@
 Plugin Name: qTranslate-X
 Plugin URI: http://wordpress.org/plugins/qtranslate-x/
 Description: Adds user-friendly and database-friendly multilingual content support into WordPress.
-Version: 3.2-b1
+Version: 3.2-b2
 Author: qTranslate Team
 Author URI: http://qtranslatexteam.wordpress.com/about
 Tags: multilingual, multi, language, admin, tinymce, Polyglot, bilingual, widget, switcher, professional, human, translation, service, qTranslate, zTranslate, mqTranslate, qTranslate Plus, WPML
@@ -103,7 +103,7 @@ if ( ! defined( 'QTRANSLATE_FILE' ) ) {
 	define( 'QTRANSLATE_FILE', __FILE__ );
 }
 
-define('QTX_VERSION','3.2-b1');
+define('QTX_VERSION','3.2-b2');
 
 /* DEFAULT CONFIGURATION PART BEGINS HERE */
 
@@ -217,6 +217,7 @@ function qtranxf_set_config_default()
 	$q_config['language_name']['tr'] = "Turkish";
 	$q_config['language_name']['et'] = "Eesti";
 	$q_config['language_name']['hr'] = "Hrvatski";
+	$q_config['language_name']['eu'] = "Euskera";
 
 	// Locales for languages
 	// see locale -a for available locales
@@ -242,6 +243,7 @@ function qtranxf_set_config_default()
 	$q_config['locale']['tr'] = "tr_TR";
 	$q_config['locale']['et'] = "et_ET";
 	$q_config['locale']['hr'] = "hr_HR";
+	$q_config['locale']['eu'] = "eu_ES";
 
 	// Language not available messages
 	// %LANG:<normal_separator>:<last_separator>% generates a list of languages separated by <normal_separator> except for the last one, where <last_separator> will be used instead.
@@ -266,7 +268,8 @@ function qtranxf_set_config_default()
 	$q_config['not_available']['gl'] = "Sentímolo moito, ista entrada atopase unicamente en %LANG;,: e %.";
 	$q_config['not_available']['tr'] = "Sorry, this entry is only available in %LANG:, : and %.";
 	$q_config['not_available']['et'] = "Vabandame, see kanne on saadaval ainult %LANG : ja %.";
-	$q_config['not_available']['hr'] = "Žao nam je, ne postoji prijevod na raspolaganju za ovaj proizvod još %LANG:, : and %.";
+	$q_config['not_available']['hr'] = "Žao nam je, ne postoji prijevod na raspolaganju za ovaj proizvod još %LANG:, : i %.";
+	$q_config['not_available']['eu'] = "Sentitzen dugu, baina sarrera hau %LANG-z:, : eta % bakarrik dago.";
 
 	// strftime usage (backward compability)
 	$q_config['use_strftime'] = QTX_DATE;
@@ -293,7 +296,8 @@ function qtranxf_set_config_default()
 	$q_config['date_format']['gl'] = '%d de %B de %Y';
 	$q_config['date_format']['tr'] = '%A %B %e%q, %Y';
 	$q_config['date_format']['et'] = '%A %B %e%q, %Y';
-	$q_config['date_format']['hr'] = '%A %B %e%q, %Y';
+	$q_config['date_format']['hr'] = '%d/%m/%Y';
+	$q_config['date_format']['eu'] = '%Y %B %e, %A';
 
 	$q_config['time_format'] = array();
 	$q_config['time_format']['en'] = '%I:%M %p';
@@ -317,6 +321,7 @@ function qtranxf_set_config_default()
 	$q_config['time_format']['tr'] = '%H:%M';
 	$q_config['time_format']['et'] = '%H:%M';
 	$q_config['time_format']['hr'] = '%H:%M';
+	$q_config['time_format']['eu'] = '%H:%M';
 
 	// Flag images configuration
 	// Look in /flags/ directory for a huge list of flags for usage
@@ -342,6 +347,7 @@ function qtranxf_set_config_default()
 	$q_config['flag']['tr'] = 'tr.png';
 	$q_config['flag']['et'] = 'ee.png';
 	$q_config['flag']['hr'] = 'hr.png';
+	$q_config['flag']['eu'] = 'eu_ES.png';
 
 	// Location of flags (needs trailing slash!)
 	//$q_config['flag_location'] = 'plugins/qtranslate-x/flags/';
