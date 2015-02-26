@@ -138,3 +138,9 @@
   opacity: 1;
 }
 */
+
+input.qtranxs-translatable,
+textarea.qtranxs-translatable,
+div.qtranxs-translatable {
+    box-shadow: -3px 0 #333;
+}

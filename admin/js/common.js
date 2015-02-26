@@ -309,6 +309,8 @@ var qTranslateX=function(pg)
 			}
 		}
 */
+        inpField.className += ' qtranxs-translatable';
+
 		if(window.tinyMCE){//never fired yet
 			for(var i=0; i<tinyMCE.editors.length; ++i){
 				var ed=tinyMCE.editors[i];
@@ -370,6 +372,7 @@ var qTranslateX=function(pg)
 			//c('updateTinyMCE:wpautop:'+text);
 		}
 		ed.setContent(text,{format: 'html'});
+        ed.getContainer().className += ' qtranxs-translatable';
 		//ed.load({initial: false, format: 'html'});
 	}
 
