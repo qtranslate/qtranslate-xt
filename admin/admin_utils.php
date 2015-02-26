@@ -162,7 +162,7 @@ function qtranxf_convert_database_options($action){
 				$value_serialized = maybe_serialize($value_converted);
 				if($value_serialized === $row->option_value) continue;
 				//Changed: Replaced mysql_real_escape_string with $wpdb->prepare
-				$wpdb->query($wpdb->prepare('UPDATE '.$wpdb->posts.' set post_content = %s, post_title=%s, post_excerpt=%s  WHERE ID=%d',$content, $title, $excerpt, $post->ID));
+				$wpdb->query($wpdb->prepare('UPDATE '.$wpdb->options.' set option_value = %s WHERE option_id=%d',$value_serialized, $row->option_id));
 				//Old Line:
 				//$wpdb->query('UPDATE '.$wpdb->options.' set option_value = "'.mysql_real_escape_string($value_serialized).'" WHERE option_id='.$row->option_id);
 				//End Changes
@@ -176,7 +176,7 @@ function qtranxf_convert_database_options($action){
 				$value_serialized = maybe_serialize($value_converted);
 				if($value_serialized === $row->option_value) continue;
 				//Changed: Replaced mysql_real_escape_string with $wpdb->prepare
-				$wpdb->query($wpdb->prepare('UPDATE '.$wpdb->posts.' set post_content = %s, post_title=%s, post_excerpt=%s  WHERE ID=%d',$content, $title, $excerpt, $post->ID));
+				$wpdb->query($wpdb->prepare('UPDATE '.$wpdb->options.' set option_value = %s WHERE option_id=%d',$value_serialized, $row->option_id));
 				//Old Line:
 				//$wpdb->query('UPDATE '.$wpdb->options.' set option_value = "'.mysql_real_escape_string($value_serialized).'" WHERE option_id='.$row->option_id);
 				//End Changes
@@ -197,7 +197,9 @@ function qtranxf_convert_database_posts($action){
 				$content=qtranxf_convert_to_b($row->post_content);
 				$excerpt=qtranxf_convert_to_b($row->post_excerpt);
 				if( $title==$row->post_title && $content==$row->post_content && $excerpt==$row->post_excerpt ) continue;
-				$wpdb->query('UPDATE '.$wpdb->posts.' set post_content = "'.mysql_real_escape_string($content).'", post_title = "'.mysql_real_escape_string($title).'", post_excerpt = "'.mysql_real_escape_string($excerpt).'" WHERE ID='.$row->ID);
+				//Also Changed
+				$wpdb->query($wpdb->prepare('UPDATE '.$wpdb->posts.' set post_content = %s, post_title=%s, post_excerpt=%s  WHERE ID=%d',$content, $title, $excerpt, $post->ID));
+				//$wpdb->query('UPDATE '.$wpdb->posts.' set post_content = "'.mysql_real_escape_string($content).'", post_title = "'.mysql_real_escape_string($title).'", post_excerpt = "'.mysql_real_escape_string($excerpt).'" WHERE ID='.$row->ID);
 			}
 			break;
 		case 'c_dual':
@@ -206,7 +208,9 @@ function qtranxf_convert_database_posts($action){
 				$content=qtranxf_convert_to_c($row->post_content);
 				$excerpt=qtranxf_convert_to_c($row->post_excerpt);
 				if( $title==$row->post_title && $content==$row->post_content && $excerpt==$row->post_excerpt ) continue;
-				$wpdb->query('UPDATE '.$wpdb->posts.' set post_content = "'.mysql_real_escape_string($content).'", post_title = "'.mysql_real_escape_string($title).'", post_excerpt = "'.mysql_real_escape_string($excerpt).'" WHERE ID='.$row->ID);
+				//Also Changed
+				$wpdb->query($wpdb->prepare('UPDATE '.$wpdb->posts.' set post_content = %s, post_title=%s, post_excerpt=%s  WHERE ID=%d',$content, $title, $excerpt, $post->ID));
+				//$wpdb->query('UPDATE '.$wpdb->posts.' set post_content = "'.mysql_real_escape_string($content).'", post_title = "'.mysql_real_escape_string($title).'", post_excerpt = "'.mysql_real_escape_string($excerpt).'" WHERE ID='.$row->ID);
 			}
 			break;
 		default: break;
@@ -225,7 +229,8 @@ function qtranxf_convert_database_postmeta($action){
 				$value_converted=qtranxf_convert_to_b_deep($value);
 				$value_serialized = maybe_serialize($value_converted);
 				if($value_serialized === $row->meta_value) continue;
-				$wpdb->query('UPDATE '.$wpdb->postmeta.' set meta_value = "'.mysql_real_escape_string($value_serialized).'" WHERE meta_id='.$row->meta_id);
+				$wpdb->query($wpdb->prepare('UPDATE '.$wpdb->postmeta.' set meta_value = %s WHERE meta_id=%d',$value_serialized,$row->meta_id);
+				//$wpdb->query('UPDATE '.$wpdb->postmeta.' set meta_value = "'.mysql_real_escape_string($value_serialized).'" WHERE meta_id='.$row->meta_id);
 			}
 			break;
 		case 'c_dual':
@@ -235,7 +240,8 @@ function qtranxf_convert_database_postmeta($action){
 				$value_converted=qtranxf_convert_to_b_no_closing_deep($value);
 				$value_serialized = maybe_serialize($value_converted);
 				if($value_serialized === $row->meta_value) continue;
-				$wpdb->query('UPDATE '.$wpdb->postmeta.' set meta_value = "'.mysql_real_escape_string($value_serialized).'" WHERE meta_id='.$row->meta_id);
+				$wpdb->query($wpdb->prepare('UPDATE '.$wpdb->postmeta.' set meta_value = %s WHERE meta_id=%d',$value_serialized,$row->meta_id);
+				//$wpdb->query('UPDATE '.$wpdb->postmeta.' set meta_value = "'.mysql_real_escape_string($value_serialized).'" WHERE meta_id='.$row->meta_id);
 			}
 			break;
 		default: break;
