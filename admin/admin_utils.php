@@ -161,7 +161,11 @@ function qtranxf_convert_database_options($action){
 				$value_converted=qtranxf_convert_to_b_deep($value);
 				$value_serialized = maybe_serialize($value_converted);
 				if($value_serialized === $row->option_value) continue;
-				$wpdb->query('UPDATE '.$wpdb->options.' set option_value = "'.mysql_real_escape_string($value_serialized).'" WHERE option_id='.$row->option_id);
+				//Changed: Replaced mysql_real_escape_string with $wpdb->prepare
+				$wpdb->query($wpdb->prepare('UPDATE '.$wpdb->posts.' set post_content = %s, post_title=%s, post_excerpt=%s  WHERE ID=%d',$content, $title, $excerpt, $post->ID));
+				//Old Line:
+				//$wpdb->query('UPDATE '.$wpdb->options.' set option_value = "'.mysql_real_escape_string($value_serialized).'" WHERE option_id='.$row->option_id);
+				//End Changes
 			}
 			break;
 		case 'c_dual':
@@ -171,7 +175,11 @@ function qtranxf_convert_database_options($action){
 				$value_converted=qtranxf_convert_to_b_no_closing_deep($value);
 				$value_serialized = maybe_serialize($value_converted);
 				if($value_serialized === $row->option_value) continue;
-				$wpdb->query('UPDATE '.$wpdb->options.' set option_value = "'.mysql_real_escape_string($value_serialized).'" WHERE option_id='.$row->option_id);
+				//Changed: Replaced mysql_real_escape_string with $wpdb->prepare
+				$wpdb->query($wpdb->prepare('UPDATE '.$wpdb->posts.' set post_content = %s, post_title=%s, post_excerpt=%s  WHERE ID=%d',$content, $title, $excerpt, $post->ID));
+				//Old Line:
+				//$wpdb->query('UPDATE '.$wpdb->options.' set option_value = "'.mysql_real_escape_string($value_serialized).'" WHERE option_id='.$row->option_id);
+				//End Changes
 			}
 			break;
 		default: break;
