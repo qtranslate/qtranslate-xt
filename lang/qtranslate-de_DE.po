@@ -142,7 +142,7 @@ msgstr "Wenn ein Update von qTranslate 1.x oder Polyglot erfolgt ist, bitte <a h
 #: admin/import_export.php:137
 #, php-format
 msgid "If you have installed qTranslate for the first time on a Wordpress with existing posts, you can either go through all your posts manually and save them in the correct language or <a href=\"%s\">click here</a> to mark all existing posts as written in the default language."
-msgstr "Wenn qTranslate zum ersten Mal auf einem Wordpress System installiert wurde, dass bereits Einträge hat, kann man entweder alle Einträge manuell öffnen und sie zu einer Sprache zuweisen oder <a href=\"%s\">hier klicken</a> um alle Einträge der aktuellen Standardsprache zuzuweisen."
+msgstr "Wenn qTranslate zum ersten Mal auf einem Wordpress System installiert wurde, das bereits Einträge hat, kann man entweder alle Einträge manuell öffnen und sie zu einer Sprache zuweisen oder <a href=\"%s\">hier klicken</a> um alle Einträge der aktuellen Standardsprache zuzuweisen."
 
 #: admin/import_export.php:138
 msgid "Both processes are <b>irreversible</b>! Be sure to make a full database backup before clicking one of the links."
@@ -188,7 +188,7 @@ msgstr "Lösche außerdem alle Überetzungen für Kategorien/Tags/Link Kategorie
 
 #: admin/import_export.php:159
 msgid "If something isn't working correctly, you can always try to reset all qTranslate settings. A Reset won't delete any posts but will remove all settings (including all languages added)."
-msgstr "Wenn etwas nicht korrekt funktioniert, kann man versuchen qTranslate zurückzusetzen. Der Vorgang löscht keine Post, wird aber alle Einstellungen löschen und zurücksetzen (inklusive neu hinzugefügter Sprachen)."
+msgstr "Wenn etwas nicht korrekt funktioniert, kann man versuchen qTranslate zurückzusetzen. Der Vorgang löscht keine Beiträge, wird aber alle Einstellungen löschen und zurücksetzen (inklusive neu hinzugefügter Sprachen)."
 
 #: qtranslate_configuration.php:447
 msgid "Language Management"
@@ -200,7 +200,7 @@ msgstr "Sprachcode"
 
 #: qtranslate_configuration.php:457
 msgid "2-Letter <a href=\"http://www.w3.org/WAI/ER/IG/ert/iso639.htm#2letter\">ISO Language Code</a> for the Language you want to insert. (Example: en)"
-msgstr "2-Zeichen <a href=\"http://www.w3.org/WAI/ER/IG/ert/iso639.htm#2letter\">ISO Sprachcode</a> für die Sprache. (Beispiel: de)"
+msgstr "2-Zeichen <a href=\"http://www.w3.org/WAI/ER/IG/ert/iso639.htm#2letter\">ISO-Sprachcode</a> für die Sprache. (Beispiel: de)"
 
 #: qtranslate_configuration.php:485
 msgid "Incorrect Flag Image Path! Please correct it!"
@@ -212,7 +212,7 @@ msgstr "Wähle die Landesflagge für deine Sprache. (Beispiel: de.png)"
 
 #: qtranslate_configuration.php:502
 msgid "The Name of the language, which will be displayed on the site. (Example: English)"
-msgstr "Der Name der"
+msgstr "Der Name der Sprache, der auf der Seite angezeigt wird. (Beispiel: Deutsch)"
 
 #: qtranslate_configuration.php:505
 msgid "Locale"
@@ -220,7 +220,7 @@ msgstr "Locale"
 
 #: qtranslate_configuration.php:508
 msgid "PHP and Wordpress Locale for the language. (Example: en_US)"
-msgstr "PHP/Wordpress Locale für die Sprache. (Beispiel: de_DE)"
+msgstr "PHP/Wordpress-Locale für die Sprache. (Beispiel: de_DE)"
 
 #: qtranslate_configuration.php:509
 msgid "You will need to install the .mo file for this language."
@@ -281,7 +281,7 @@ msgstr "qTranslate wurde in den Ausgangszustand zurückgesetzt."
 
 #: qtranslate_configuration.php:716
 msgid "Gettext databases updated."
-msgstr "Gettext Datenbanken wurden aktualisiert."
+msgstr "Gettext-Datenbanken wurden aktualisiert."
 
 #: qtranslate_configuration.php:722
 #, php-format
@@ -354,7 +354,7 @@ msgstr "Die Sprache ist bereits an erster Stelle!"
 
 #: qtranslate_configuration.php:881 qtranslate_configuration.php:897
 msgid "New order saved."
-msgstr "Neuer Auftrag gepspeichert."
+msgstr "Neuer Auftrag gespeichert."
 
 #: qtranslate_configuration.php:891
 msgid "Language is already last!"
@@ -379,7 +379,7 @@ msgstr "Einstellungen speichern &raquo;"
 
 #: qtranslate_configuration.php:947
 msgid "Language Management (qTranslate Configuration)"
-msgstr "Sprachverwaltung (qTranslate Einstellungen)"
+msgstr "Sprachverwaltung (qTranslate-Einstellungen)"
 
 #: qtranslate_configuration.php:948
 #, php-format
@@ -427,7 +427,7 @@ msgstr "Verstecke Inhalt, der nicht für die gewählte Sprache verfügbar ist."
 
 #: qtranslate_configuration.php:983
 msgid "Detect Browser Language"
-msgstr "Browser Spracherkennung"
+msgstr "Browser-Sprache erkennen"
 
 #: qtranslate_configuration.php:985
 msgid "Detect the language of the browser and redirect accordingly."
@@ -447,7 +447,7 @@ msgstr "URL Veränderungsmodus"
 
 #: qtranslate_configuration.php:998
 msgid "Most SEO unfriendly, not recommended."
-msgstr ""
+msgstr "Überhaupt nicht suchmaschinenfreundlich. Nicht empfohlen."
 
 #: qtranslate_configuration.php:998
 msgid "Use Query Mode (?lang=en)"
@@ -455,7 +455,7 @@ msgstr "Query-Modus (?lang=de)"
 
 #: qtranslate_configuration.php:999
 msgid "SEO friendly."
-msgstr ""
+msgstr "Suchmaschinenfreundlich"
 
 #: qtranslate_configuration.php:999
 msgid "Use Pre-Path Mode (Default, puts /en/ in front of URL)"
@@ -483,9 +483,8 @@ msgid "This is only applicable to Pre-Path and Pre-Domain mode."
 msgstr ""
 
 #: qtranslate_configuration.php:1005
-#, fuzzy
 msgid "Use Per-Domain mode: specify separate user-defined domain for each language."
-msgstr "Benutze emulierte Date Funktion und ersetze alle Formate mit den vordefinierten aus jeder Sprache."
+msgstr ""
 
 #: qtranslate_configuration.php:1022
 msgid "Domain for"
@@ -496,22 +495,20 @@ msgid "Flag Image Path"
 msgstr "Pfad für Flaggenbilder"
 
 #: qtranslate_configuration.php:1031
-#, fuzzy, php-format
 msgid "Path to the flag images under wp-content, with trailing slash. (Default: %s, clear the value above to reset it to the default)"
-msgstr "Pfad für die Flaggenbilder unter wp-content, mit Slash am Ende. (Standard: plugins/qtranslate/flags/)"
+msgstr "Pfad für die Flaggenbilder unter wp-content, mit Slash am Ende. (Standard: %s. Wert löschen, um ihn zurückzusetzen)"
 
 #: qtranslate_configuration.php:1035
 msgid "Ignore Links"
 msgstr "Ignoriere Links"
 
 #: qtranslate_configuration.php:1039
-#, fuzzy, php-format
 msgid "Don't convert links to files of the given file types. (Always included: %s)"
-msgstr "Konvertiere keine Links zu den gegebenen Dateitypen. (Standard: gif,jpg,jpeg,png,pdf,swf,tif,rar,zip,7z,mpg,divx,mpeg,avi,css,js)"
+msgstr "Konvertiere keine Links zu den gegebenen Dateitypen. (Immer eingeschlossen: gif,jpg,jpeg,png,pdf,swf,tif,rar,zip,7z,mpg,divx,mpeg,avi,css,js)"
 
 #: qtranslate_configuration.php:1043
 msgid "Update Gettext Databases"
-msgstr "Aktualisiere Gettext Datenbanken"
+msgstr "Aktualisiere Gettext-Datenbanken"
 
 #: qtranslate_configuration.php:1045
 msgid "Automatically check for .mo-Database Updates of installed languages."
@@ -535,7 +532,7 @@ msgstr "Benutze emulierte date Funktion."
 
 #: qtranslate_configuration.php:1056
 msgid "Use emulated date function and replace formats with the predefined formats for each language."
-msgstr "Benutze emulierte Date Funktion und ersetze alle Formate mit den vordefinierten aus jeder Sprache."
+msgstr "Benutze emulierte Date-Funktion und ersetze alle Formate mit den vordefinierten aus jeder Sprache."
 
 #: qtranslate_configuration.php:1057
 msgid "Use strftime instead of date."
