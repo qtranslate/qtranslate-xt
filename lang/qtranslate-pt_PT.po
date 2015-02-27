@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qTranslate-X 3.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-02-24 19:26-0700\n"
-"PO-Revision-Date: 2015-02-26 21:22-0000\n"
+"PO-Revision-Date: 2015-02-27 16:03-0000\n"
 "Last-Translator: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "Language-Team: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "Language: pt_PT\n"
@@ -237,7 +237,7 @@ msgstr "Formato da Data"
 
 #: qtranslate_configuration.php:515
 msgid "Depending on your Date / Time Conversion Mode, you can either enter a <a href=\"http://www.php.net/manual/function.strftime.php\">strftime</a> (use %q for day suffix (st,nd,rd,th)) or <a href=\"http://www.php.net/manual/function.date.php\">date</a> format. This field is optional. (Example: %A %B %e%q, %Y)"
-msgstr "Dependendo do seu modo de conversão de data e hora, pode usar um formato <a href=\"http://www.php.net/manual/function.strftime.php\">strftime</a> ou <a href=\"http://www.php.net/manual/function.date.php\">data</a>t. Este campo é opcional. (Exemplo: %A,%e de %B  de %Y)"
+msgstr "Dependendo do seu modo de conversão de data e hora, pode usar um formato <a href=\"http://www.php.net/manual/function.strftime.php\">strftime</a> ou <a href=\"http://www.php.net/manual/function.date.php\">data</a>. Este campo é opcional. (Exemplo: %A,%e de %B  de %Y)"
 
 #: qtranslate_configuration.php:518
 msgid "Time Format"
