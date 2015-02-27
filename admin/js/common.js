@@ -369,12 +369,6 @@ var qTranslateX=function(pg)
 			//c('updateTinyMCE:wpautop:'+text);
 		}
 		ed.setContent(text,{format: 'html'});
-
-		/**
-		 * Highlighting the translatable fields
-		 * Since 3.2-b3
-		*/
-		ed.getContainer().className += ' qtranxs-translatable';
 	}
 
 	onTabSwitch=function()
@@ -595,6 +589,14 @@ var qTranslateX=function(pg)
 					h.contents[h.lang] = h.contentField.value;
 					updateFusedValueHooked(h);
 				});
+
+            /**
+             * Highlighting the translatable fields
+             * Since 3.2-b3
+            */
+            ed.getContainer().className += ' qtranxs-translatable';
+            ed.getElement().className += ' qtranxs-translatable';
+
 			return h;
 		}
 
