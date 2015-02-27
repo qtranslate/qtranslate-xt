@@ -139,8 +139,11 @@
 }
 */
 
+/* Highlighting the translatable fields */
+/*
 input.qtranxs-translatable,
 textarea.qtranxs-translatable,
 div.qtranxs-translatable {
-    box-shadow: -3px 0 #333;
+	box-shadow: -3px 0 #333;
 }
+*/

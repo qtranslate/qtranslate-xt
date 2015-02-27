@@ -301,15 +301,12 @@ var qTranslateX=function(pg)
 		inpField.value=text;
 		//c('addContentHook['+inpField.id+']['+h.lang+']: inpField.value='+inpField.value);
 		inpField.onblur=function(){ updateFusedValueH(this.id,this.value); }
-/*
-		if(inpField.tagName==='TEXTAREA'){
-			//c('addContentHook:inpField.value='+inpField.value);
-			for(var lang in h.contents){
-				//c('addContentHook:h.contents['+lang+']:'+h.contents[lang]);
-			}
-		}
-*/
-        inpField.className += ' qtranxs-translatable';
+
+		/**
+		 * Highlighting the translatable fields
+		 * Since 3.2-b3
+		*/
+		inpField.className += ' qtranxs-translatable';
 
 		if(window.tinyMCE){//never fired yet
 			for(var i=0; i<tinyMCE.editors.length; ++i){
@@ -372,8 +369,12 @@ var qTranslateX=function(pg)
 			//c('updateTinyMCE:wpautop:'+text);
 		}
 		ed.setContent(text,{format: 'html'});
-        ed.getContainer().className += ' qtranxs-translatable';
-		//ed.load({initial: false, format: 'html'});
+
+		/**
+		 * Highlighting the translatable fields
+		 * Since 3.2-b3
+		*/
+		ed.getContainer().className += ' qtranxs-translatable';
 	}
 
 	onTabSwitch=function()

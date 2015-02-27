@@ -80,6 +80,10 @@ function qtranxf_init_language() {
 	// fix url to prevent xss - how does this prevents xss?
 	$q_config['url_info']['url'] = qtranxf_convertURL(add_query_arg('lang',$q_config['default_language'],$q_config['url_info']['url']));
 
+	// load plugin translations
+	// since 3.2-b3 moved it here as https://codex.wordpress.org/Function_Reference/load_plugin_textdomain seem to recommend to run load_plugin_textdomain in 'plugins_loaded' action, which is this function respond to
+	load_plugin_textdomain('qtranslate', false, dirname(plugin_basename( __FILE__ )).'/lang');
+
 	// Filter all options for language tags
 	if($q_config['url_info']['doing_front_end']) {
 		$alloptions = wp_load_alloptions();
@@ -440,24 +444,29 @@ function qtranxf_get_browser_language(){
 		if(qtranxf_isEnabled($language))
 			return $language;
 	}
+	return null;
 }
 
 function qtranxf_http_negotiate_language(){
 	global $q_config;
 	if(function_exists('http_negotiate_language')){
 		$supported=array();
-		//$supported[]=str_replace('_','-',$q_config['locale'][$q_config['default_language']]);
+		$supported[]=str_replace('_','-',$q_config['locale'][$q_config['default_language']]);//needs to be the first
 		foreach($q_config['enabled_languages'] as $lang){
+			if($lang == $q_config['default_language']) continue;
 			$supported[]=str_replace('_','-',$q_config['locale'][$lang]);
 		}
-		$lang = substr(http_negotiate_language($supported),0,2);
-		if(!qtranxf_isEnabled($lang)) return null;
-		//qtranxf_dbg_log('qtranxf_http_negotiate_language:http_negotiate_language: lang=',$lang);
+		$locale_negotiated = http_negotiate_language($supported);
+		//since 3.2-b3 added search, since locale may be different from two-letter code and not even started with language code.
+		foreach($q_config['enabled_languages'] as $lang){
+			$locale = str_replace('_','-',$q_config['locale'][$lang]);
+			if($locale == $locale_negotiated)
+				return $lang;
+		}
 	}else{
-		$lang = qtranxf_get_browser_language();
-		//qtranxf_dbg_log('qtranxf_http_negotiate_language:qtranxf_get_browser_language: lang=',$lang);
+		return qtranxf_get_browser_language();
 	}
-	return $lang;
+	return null;
 }
 
 function qtranxf_resolveLangCase($lang,&$caseredirect)
@@ -491,7 +500,8 @@ function qtranxf_init() {
 */
 
 	// load plugin translations
-	load_plugin_textdomain('qtranslate', false, dirname(plugin_basename( __FILE__ )).'/lang');
+	// since 3.2-b3 moved to qtranxf_init_language
+	//load_plugin_textdomain('qtranslate', false, dirname(plugin_basename( __FILE__ )).'/lang');
 
 	if($q_config['url_info']['doing_front_end']){
 		// don't filter untranslated posts in admin

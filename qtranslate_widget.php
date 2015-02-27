@@ -45,10 +45,8 @@ transition: 1s ease opacity;
 /* qTranslate-X Widget */
 
 class qTranslateXWidget extends WP_Widget {
+
 	function qTranslateXWidget() {
-		// load plugin translations manually here, because otherwise the translations are not available inside the constructor
-		load_plugin_textdomain('qtranslate', false, dirname(plugin_basename( __FILE__ )).'/lang');
- 
 		$widget_ops = array('classname' => 'qtranxs_widget', 'description' => __('Allows your visitors to choose a Language.', 'qtranslate') );
 		$this->WP_Widget('qtranslate', __('qTranslate Language Chooser', 'qtranslate'), $widget_ops);
 		//add_action('qtranslate_head_add_css',array($this,'head_add_css'));

@@ -240,6 +240,11 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 = 3.2 stable =
 * Includes all changes after version 3.1.
 
+= 3.2-b3 =
+* Improvement: introduce qtranxs-translatable class to distinct all translatable fields. Thanks to [Michel Weimerskirch](https://github.com/mweimerskirch).
+* Improvement: `QTRANS_INIT` constant is now defined when "Compatibility Functions" is on. [[WP issue](https://wordpress.org/support/topic/urgent-problem-with-dynamic-widgets-plugin).]
+* Improvement: various code improvements, search for '3.2-b3' tag to look them them up.
+
 = 3.2-b2 =
 * Translation: Hungarian (hu_HU) po/mo updated, thanks to Németh Balázs.
 * Translation: German (de_DE) po/mo updated, thanks to Maurizio Omissoni.
@@ -441,7 +446,7 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 == Known Issues ==
 
 * Turn on option "Compatibility Functions", if you use [WooCommerce](https://wordpress.org/plugins/woocommerce/) framework plugins, like [IM8 qTranslate WooCommerce](https://wordpress.org/plugins/im8-qtranslate-woocommerce/), [qTranslate support for WooCommerce](https://wordpress.org/plugins/qtranslate-support-for-woocommerce/), [WooCommerce-qTML](https://wordpress.org/plugins/woocommerce-qtml/), for example. Also it is needed for any theme, which claims its compatibility with former qTranslate.
-* If other plugin installs a custom TinyMCE editor on a translatable field served by qTranslate-X, then all kind of problems start to happen. Examples of 'offending' plugins are: [Crayon Syntax Highlighter](https://wordpress.org/plugins/crayon-syntax-highlighter/), [Fusion Page Builder](http://www.theme-fusion.com/), [Page Builder by SiteOrigin](https://wordpress.org/plugins/siteorigin-panels/), [Revolution Slider](http://revolution.themepunch.com/), [Rich Text Tags](https://wordpress.org/plugins/rich-text-tags/), [Visual Composer](http://vc.wpbakery.com/), [WP Editor](https://wordpress.org/plugins/wp-editor/), [WR PageBuilder](https://wordpress.org/plugins/wr-pagebuilder). We are looking into possibilities to enable integration with those plugins.
+* If other plugin installs a custom TinyMCE editor on a translatable field served by qTranslate-X, then all kind of problems start to happen. Examples of 'offending' plugins are: [Crayon Syntax Highlighter](https://wordpress.org/plugins/crayon-syntax-highlighter/), [Fusion Page Builder](http://www.theme-fusion.com/), [Page Builder by SiteOrigin](https://wordpress.org/plugins/siteorigin-panels/), [Revolution Slider](http://revolution.themepunch.com/), [Rich Text Tags](https://wordpress.org/plugins/rich-text-tags/), [Visual Composer](http://vc.wpbakery.com/), [WP Editor](https://wordpress.org/plugins/wp-editor/), [WR PageBuilder](https://wordpress.org/plugins/wr-pagebuilder). We are looking into possibilities to enable integration with those plugins, meanwhile [Tiny MCE Advanced](https://wordpress.org/plugins/tinymce-advanced/) seems to be compatible as reported by some users.
 * Title of the site on admin pages is not displaying correctly [WP topic](https://wordpress.org/support/topic/title-dont-show-the-right-text-in-admin).
 * When [Jetpack by WordPress.com](https://wordpress.org/plugins/jetpack/) is enabled, pressing 'Save Changes' at Settings/General (/wp-admin/options-general.php) page, causes fields "Site Title" and "Tagline" to be emptied, if they had multilingual values. It only happens when Jetpack is connected to WordPress. For now, when you need to edit those values, deactivate Jetpack, make your edits, then re-activate JetPack again. Fortunately, that general setting page need not to be changed frequently. [WP topic](https://wordpress.org/support/topic/site-titletagline-disappear-on-general-settings-update)
 * There are reports about conflict with JetPack galleries. Workaround exists: [WP topic](https://wordpress.org/support/topic/site-titletagline-disappear-on-general-settings-update).

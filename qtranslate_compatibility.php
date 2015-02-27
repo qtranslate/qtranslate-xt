@@ -1,4 +1,7 @@
 <?php
+if(!defined('QTRANS_INIT')){
+	define('QTRANS_INIT',true);
+}
 if(!function_exists('qtrans_convertURL')){
 	function qtrans_convertURL($url='', $lang='', $forceadmin = false, $showDefaultLanguage = false){
 		return qtranxf_convertURL($url, $lang, $forceadmin, $showDefaultLanguage);
