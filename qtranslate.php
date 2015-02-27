@@ -237,7 +237,7 @@ function qtranxf_set_config_default()
 	$q_config['locale']['es'] = "es_ES";
 	$q_config['locale']['vi'] = "vi";
 	$q_config['locale']['ar'] = "ar";
-	$q_config['locale']['pt'] = "pt_BR";
+	$q_config['locale']['pt'] = "pt_PT";
 	$q_config['locale']['pl'] = "pl_PL";
 	$q_config['locale']['gl'] = "gl_ES";
 	$q_config['locale']['tr'] = "tr_TR";
@@ -263,7 +263,7 @@ function qtranxf_set_config_default()
 	$q_config['not_available']['es'] = "Disculpa, pero esta entrada está disponible sólo en %LANG:, : y %.";
 	$q_config['not_available']['vi'] = "Rất tiếc, mục này chỉ tồn tại ở %LANG:, : và %.";
 	$q_config['not_available']['ar'] = "عفوا، هذه المدخلة موجودة فقط في %LANG:, : و %.";
-	$q_config['not_available']['pt'] = "Desculpe-nos, mas este texto esta apenas disponível em %LANG:, : y %.";
+	$q_config['not_available']['pt'] = "Desculpe, este conteúdo só está disponível em %LANG:, : e %.";
 	$q_config['not_available']['pl'] = "Przepraszamy, ten wpis jest dostępny tylko w języku %LANG:, : i %.";
 	$q_config['not_available']['gl'] = "Sentímolo moito, ista entrada atopase unicamente en %LANG;,: e %.";
 	$q_config['not_available']['tr'] = "Sorry, this entry is only available in %LANG:, : and %.";
@@ -291,7 +291,7 @@ function qtranxf_set_config_default()
 	$q_config['date_format']['es'] = '%d de %B de %Y';
 	$q_config['date_format']['vi'] = '%d/%m/%Y';
 	$q_config['date_format']['ar'] = '%d/%m/%Y';
-	$q_config['date_format']['pt'] = '%d de %B de %Y';
+	$q_config['date_format']['pt'] = '%A,%e de %B de %Y';
 	$q_config['date_format']['pl'] = '%d/%m/%y';
 	$q_config['date_format']['gl'] = '%d de %B de %Y';
 	$q_config['date_format']['tr'] = '%A %B %e%q, %Y';
@@ -315,7 +315,7 @@ function qtranxf_set_config_default()
 	$q_config['time_format']['es'] = '%H:%M hrs.';
 	$q_config['time_format']['vi'] = '%H:%M';
 	$q_config['time_format']['ar'] = '%H:%M';
-	$q_config['time_format']['pt'] = '%H:%M hrs.';
+	$q_config['time_format']['pt'] = '%H:%M';
 	$q_config['time_format']['pl'] = '%H:%M';
 	$q_config['time_format']['gl'] = '%H:%M hrs.';
 	$q_config['time_format']['tr'] = '%H:%M';
@@ -341,7 +341,7 @@ function qtranxf_set_config_default()
 	$q_config['flag']['es'] = 'es.png';
 	$q_config['flag']['vi'] = 'vn.png';
 	$q_config['flag']['ar'] = 'arle.png';
-	$q_config['flag']['pt'] = 'br.png';
+	$q_config['flag']['pt'] = 'pt.png';
 	$q_config['flag']['pl'] = 'pl.png';
 	$q_config['flag']['gl'] = 'galego.png';
 	$q_config['flag']['tr'] = 'tr.png';
