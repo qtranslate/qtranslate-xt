@@ -80,6 +80,7 @@ Original Author: Qian Qin (http://www.qianqin.de mail@qianqin.de)
 	zh_CN by silverfox
 	eo by Chuck Smith
 	pt_BR by Marcelo Paoli
+	pt_PT by Pedro Mendonça
 	ru by viaestvita
 	ro by ipuiu
 	sv by tobi
