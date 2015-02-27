@@ -80,6 +80,7 @@ Original Author: Qian Qin (http://www.qianqin.de mail@qianqin.de)
 	zh_CN by silverfox
 	eo by Chuck Smith
 	pt_BR by Marcelo Paoli
+	pt_PT by Pedro Mendonça
 	ru by viaestvita
 	ro by ipuiu
 	sv by tobi
@@ -189,6 +190,7 @@ function qtranxf_set_config_default()
 	$q_config['pre_domain']['vi'] = "vi";
 	$q_config['pre_domain']['ar'] = "ar";
 	$q_config['pre_domain']['pt'] = "pt";
+	$q_config['pre_domain']['pt-br'] = "pt-br";
 	$q_config['pre_domain']['pl'] = "pl";
 	$q_config['pre_domain']['gl'] = "gl";
 	$q_config['pre_domain']['tr'] = "tr";
@@ -212,6 +214,7 @@ function qtranxf_set_config_default()
 	$q_config['language_name']['vi'] = "Tiếng Việt";
 	$q_config['language_name']['ar'] = "العربية";
 	$q_config['language_name']['pt'] = "Português";
+	$q_config['language_name']['pt-br'] = "Português do Brasil";
 	$q_config['language_name']['pl'] = "Polski";
 	$q_config['language_name']['gl'] = "galego";
 	$q_config['language_name']['tr'] = "Turkish";
@@ -237,7 +240,8 @@ function qtranxf_set_config_default()
 	$q_config['locale']['es'] = "es_ES";
 	$q_config['locale']['vi'] = "vi";
 	$q_config['locale']['ar'] = "ar";
-	$q_config['locale']['pt'] = "pt_BR";
+	$q_config['locale']['pt'] = "pt_PT";
+	$q_config['locale']['pt-br'] = "pt_BR";
 	$q_config['locale']['pl'] = "pl_PL";
 	$q_config['locale']['gl'] = "gl_ES";
 	$q_config['locale']['tr'] = "tr_TR";
@@ -263,7 +267,8 @@ function qtranxf_set_config_default()
 	$q_config['not_available']['es'] = "Disculpa, pero esta entrada está disponible sólo en %LANG:, : y %.";
 	$q_config['not_available']['vi'] = "Rất tiếc, mục này chỉ tồn tại ở %LANG:, : và %.";
 	$q_config['not_available']['ar'] = "عفوا، هذه المدخلة موجودة فقط في %LANG:, : و %.";
-	$q_config['not_available']['pt'] = "Desculpe-nos, mas este texto esta apenas disponível em %LANG:, : y %.";
+	$q_config['not_available']['pt'] = "Desculpe, este conteúdo só está disponível em %LANG:, : e %.";
+	$q_config['not_available']['pt-br'] = "Desculpe-nos, mas este texto esta apenas disponível em %LANG:, : y %.";
 	$q_config['not_available']['pl'] = "Przepraszamy, ten wpis jest dostępny tylko w języku %LANG:, : i %.";
 	$q_config['not_available']['gl'] = "Sentímolo moito, ista entrada atopase unicamente en %LANG;,: e %.";
 	$q_config['not_available']['tr'] = "Sorry, this entry is only available in %LANG:, : and %.";
@@ -291,7 +296,8 @@ function qtranxf_set_config_default()
 	$q_config['date_format']['es'] = '%d de %B de %Y';
 	$q_config['date_format']['vi'] = '%d/%m/%Y';
 	$q_config['date_format']['ar'] = '%d/%m/%Y';
-	$q_config['date_format']['pt'] = '%d de %B de %Y';
+	$q_config['date_format']['pt'] = '%A,%e de %B de %Y';
+	$q_config['date_format']['pt-br'] = '%d de %B de %Y';
 	$q_config['date_format']['pl'] = '%d/%m/%y';
 	$q_config['date_format']['gl'] = '%d de %B de %Y';
 	$q_config['date_format']['tr'] = '%A %B %e%q, %Y';
@@ -315,7 +321,8 @@ function qtranxf_set_config_default()
 	$q_config['time_format']['es'] = '%H:%M hrs.';
 	$q_config['time_format']['vi'] = '%H:%M';
 	$q_config['time_format']['ar'] = '%H:%M';
-	$q_config['time_format']['pt'] = '%H:%M hrs.';
+	$q_config['time_format']['pt'] = '%H:%M';
+	$q_config['time_format']['pt-br'] = '%H:%M hrs.';
 	$q_config['time_format']['pl'] = '%H:%M';
 	$q_config['time_format']['gl'] = '%H:%M hrs.';
 	$q_config['time_format']['tr'] = '%H:%M';
@@ -341,7 +348,8 @@ function qtranxf_set_config_default()
 	$q_config['flag']['es'] = 'es.png';
 	$q_config['flag']['vi'] = 'vn.png';
 	$q_config['flag']['ar'] = 'arle.png';
-	$q_config['flag']['pt'] = 'br.png';
+	$q_config['flag']['pt'] = 'pt.png';
+	$q_config['flag']['pt-br'] = 'br.png';
 	$q_config['flag']['pl'] = 'pl.png';
 	$q_config['flag']['gl'] = 'galego.png';
 	$q_config['flag']['tr'] = 'tr.png';
@@ -479,6 +487,7 @@ function qtranxf_set_config_default()
 	$q_config['windows_locale']['pl'] = "Polish";
 	$q_config['windows_locale']['ps'] = "Pushto";
 	$q_config['windows_locale']['pt'] = "Portuguese";
+	$q_config['windows_locale']['pt-br'] = "Brazilian Portuguese";
 	$q_config['windows_locale']['qu'] = "Quechua";
 	$q_config['windows_locale']['rm'] = "Rhaeto-Romance";
 	$q_config['windows_locale']['rn'] = "Rundi";
