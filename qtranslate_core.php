@@ -57,7 +57,7 @@ function qtranxf_init_language() {
 	$q_config['language'] = apply_filters('qtranslate_language', $url_info['language'], $url_info);
 
 	if(isset($url_info['doredirect'])){
-		if(!defined('WP_ADMIN') && !defined('DOING_AJAX') && !defined('DOING_CRON') && empty($_POST)){
+		if(!defined('WP_ADMIN') && !defined('DOING_AJAX') && !defined('WP_CLI') && !defined('DOING_CRON') && empty($_POST)){
 			$lang = $url_info['language'];
 			$scheme = $https ? 'https://' : 'http://';
 			$urlorg = $scheme.$host.$url;
