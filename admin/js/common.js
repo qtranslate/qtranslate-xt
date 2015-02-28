@@ -590,12 +590,12 @@ var qTranslateX=function(pg)
 					updateFusedValueHooked(h);
 				});
 
-            /**
-             * Highlighting the translatable fields
-             * Since 3.2-b3
-            */
-            ed.getContainer().className += ' qtranxs-translatable';
-            ed.getElement().className += ' qtranxs-translatable';
+			/**
+			 * Highlighting the translatable fields
+			 * Since 3.2-b3
+			*/
+			ed.getContainer().className += ' qtranxs-translatable';
+			ed.getElement().className += ' qtranxs-translatable';
 
 			return h;
 		}

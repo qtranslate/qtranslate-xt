@@ -28,7 +28,7 @@ function qtranxf_init_language() {
 
 	$q_config['cookie_enabled'] = isset($_COOKIE[QTX_COOKIE_NAME_FRONT]) || isset($_COOKIE[QTX_COOKIE_NAME_ADMIN]);
 
-	$https = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']!='off';
+	$https = is_ssl();//isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']!='off';
 	$host=$_SERVER['HTTP_HOST'];
 	if(isset($_SERVER['SERVER_PORT']) && !empty($_SERVER['SERVER_PORT'])
 		&& ( (!$https && $_SERVER['SERVER_PORT']!='80') || ($https && $_SERVER['SERVER_PORT']!='443') ) ){

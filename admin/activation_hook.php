@@ -152,7 +152,7 @@ function qtranxf_admin_notices_plugin_conflicts()
 }
 add_action('admin_notices', 'qtranxf_admin_notices_plugin_conflicts');
 
-/* since 3.1-b2 finished, keep the code for possible other surveys in the future.
+
 function qtranxf_admin_notices_survey_request()
 {
 	$messages = get_option('qtranslate_admin_notices');
@@ -177,7 +177,7 @@ function qtranxf_admin_notices_survey_request()
 	echo '</a></p></div>';
 }
 add_action('admin_notices', 'qtranxf_admin_notices_survey_request');
-*/
+
 
 function qtranxf_ajax_qtranslate_admin_notice()
 {

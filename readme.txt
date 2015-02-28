@@ -4,7 +4,7 @@ Contributors: johnclause, chineseleper, Vavooon
 Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, translation
 Requires at least: 3.9
 Tested up to: 4.1.1
-Stable tag: 3.1
+Stable tag: 3.2
 License: GPLv3 or later
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QEXEK3HX8AR6U
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -36,6 +36,7 @@ qTranslate-X makes creation of multilingual content as easy as working with a si
 
 The following plugins provide integration for other popular plugins with qTranslate-X:
 
+- [ACF qTranslate](https://wordpress.org/plugins/acf-qtranslate/) for [Advanced Custom Fields](https://wordpress.org/plugins/advanced-custom-fields/). [[GitHub](https://github.com/funkjedi/acf-qtranslate/issues)]
 - [Events Made Easy & qTranslate-X](https://wordpress.org/plugins/events-made-easy-qtranslate-x/) for [Events Made Easy](https://wordpress.org/plugins/events-made-easy/). [[GitHub](https://github.com/qTranslate-Team/events-made-easy-qtranslate-x)]
 - [qTranslate support for GravityForms](https://wordpress.org/plugins/qtranslate-support-for-gravityforms) for [Gravity Forms Directory](https://wordpress.org/plugins/gravity-forms-addons/). [[GitHub](https://github.com/mweimerskirch/wordpress-qtranslate-support-for-gravityforms)]
 - [WooCommerce & qTranslate-X](https://wordpress.org/plugins/woocommerce-qtranslate-x/) for [WooCommerce - excelling eCommerce](https://wordpress.org/plugins/woocommerce/). [[GitHub](https://github.com/qTranslate-Team/woocommerce-qtranslate-x)]
@@ -239,9 +240,11 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 
 = 3.2 stable =
 * Includes all changes after version 3.1.
+* Translation: Dutch (nl_NL) po/mo updated, thanks to Marius Siroen.
+* Improvement: `add_filter('term_description')` at front-end. Thanks to [josk79](https://github.com/qTranslate-Team/qtranslate-x/pull/39).
 
 = 3.2-b3 =
-* Improvement: introduce qtranxs-translatable class to distinct all translatable fields. Thanks to [Michel Weimerskirch](https://github.com/mweimerskirch).
+* Improvement: class `qtranxs-translatable` is introduced to distinct all translatable fields. Thanks to [Michel Weimerskirch](https://github.com/mweimerskirch).
 * Improvement: `QTRANS_INIT` constant is now defined when "Compatibility Functions" is on. [[WP issue](https://wordpress.org/support/topic/urgent-problem-with-dynamic-widgets-plugin).]
 * Improvement: various code improvements, search for '3.2-b3' tag to look them them up.
 
@@ -254,7 +257,7 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 * Fix: `qtranxf_http_negotiate_language` used to return `en_US` when PHP supports function `http_negotiate_language`.
 
 = 3.2-b1 =
-* Translation: Dutch (nl_NL) po/mo updated, thanks to Marius Siroen, 
+* Translation: Dutch (nl_NL) po/mo updated, thanks to Marius Siroen.
 * Improvement: updated activation/migration messages with a link to [Migration from other multilingual plugins](https://qtranslatexteam.wordpress.com/2015/02/24/migration-from-other-multilingual-plugins/) publication.
 * Improvement: updated "Compatibility Functions" option with `qtrans_split`.
 * Fix: dealing with https and port 443.

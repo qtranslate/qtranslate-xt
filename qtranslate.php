@@ -3,7 +3,7 @@
 Plugin Name: qTranslate-X
 Plugin URI: http://wordpress.org/plugins/qtranslate-x/
 Description: Adds user-friendly and database-friendly multilingual content support into WordPress.
-Version: 3.2-b3
+Version: 3.2
 Author: qTranslate Team
 Author URI: http://qtranslatexteam.wordpress.com/about
 Tags: multilingual, multi, language, admin, tinymce, Polyglot, bilingual, widget, switcher, professional, human, translation, service, qTranslate, zTranslate, mqTranslate, qTranslate Plus, WPML
@@ -43,48 +43,52 @@ Original Author: Qian Qin (http://www.qianqin.de mail@qianqin.de)
 /*
 	Default Language Contributers
 	=============================
-	en, de by Qian Qin
-	zh by Junyan Chen
+	ar by Mohamed Magdy
+	de by Qian Qin
+	es by June
+	eu by Xabier Arrabal
 	fi by Tatu Siltanen
 	fr by Damien Choizit
-	nl by RobV
-	sv by bear3556, johdah 
-	it by Lorenzo De Tomasi
-	ro, hu by Jani Monoses
-	ja by Brian Parker
-	es by June
-	vi by hathhai
-	ar by Mohamed Magdy
-	pt by netolazaro
 	gl by Andrés Bott
-	
-	Plugin Translation Contributers
+	it by Lorenzo De Tomasi
+	ja by Brian Parker
+	nl by RobV
+	pt by netolazaro
+	pt-br by Pedro Mendonça
+	ro, hu by Jani Monoses
+	sv by bear3556, johdah 
+	vi by hathhai
+	zh by Junyan Chen
+
+	Plugin Translation Contributors
 	===============================
-	en, de by Qian Qin
+	az_AZ by evlenirikbiz, Rashad Aliyev
+	bg_BG by Dimitar Mitev
+	cz by by bengo
+	da_DK by meviper, Jan Christensen
+	de_DE by Qian Qin, Michel Weimerskirch, Maurizio Omissoni
+	eo    by Chuck Smith
+	es_CA by Carlos Sanz
 	es_ES by Alejandro Urrutia
-	fr by eriath
-	tr by freeuser
-	it by shecky
-	nl by BlackDex
-	id by Masino Sinaga
-	pt by claudiotereso
-	az by evlenirikbiz
-	bg by Dimitar Mitev
-	da by meviper
-	mk by Pavle Boskoski
-	cz by bengo
-	ja by dapperdanman1400
-	ms by webgrrrl
-	es_CA by CarlosSanz
-	hu by nb000
-	zh_CN by silverfox
-	eo by Chuck Smith
+	fr_FR by eriath, Florent
+	hu_HU by Németh Balázs
+	id_ID by Masino Sinaga
+	it_IT by shecky
+	ja_JP by dapperdanman1400
+	mk_MK by Pavle Boskoski
+	ms_MY by webgrrrl, Lorna Timbah
+	nl_NL by BlackDex, Marius Siroen
+	pl_PL by Bronislaw Gracz
+	pt_PT by claudiotereso
 	pt_BR by Marcelo Paoli
 	pt_PT by Pedro Mendonça
-	ru by viaestvita
-	ro by ipuiu
-	sv by tobi
-	
+	ro_RO by ipuiu, Puiu Ionut
+	ru_RU by viaestvita, Dimitri Don
+	sr_RS by Borisa Djuraskovic
+	sv_SE by tobi, Tor-Bjorn Fjellner
+	tr_TR by freeuser, ali
+	zh_CN by silverfox
+
 	Sponsored Features
 	==================
 	Excerpt Translation by bastiaan van rooden (www.nothing.ch)
@@ -104,7 +108,7 @@ if ( ! defined( 'QTRANSLATE_FILE' ) ) {
 	define( 'QTRANSLATE_FILE', __FILE__ );
 }
 
-define('QTX_VERSION','3.2-b3');
+define('QTX_VERSION','3.2');
 
 /* DEFAULT CONFIGURATION PART BEGINS HERE */
 

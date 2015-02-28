@@ -484,3 +484,16 @@ add_filter('the_category', 'qtranxf_useTermLib',0);
 add_filter('get_term', 'qtranxf_useTermLib',0);
 add_filter('get_terms', 'qtranxf_useTermLib',0);
 add_filter('get_category', 'qtranxf_useTermLib',0);
+
+/**
+ * Since 3.2
+ * wp-includes\category-template.php:1230 calls:
+ * $description = get_term_field( 'description', $term, $taxonomy );
+ *
+ * which calls wp-includes\taxonomy.php:1503
+ * return sanitize_term_field($field, $term->$field, $term->term_id, $taxonomy, $context);
+ *
+ * which calls wp-includes\taxonomy.php:2276:
+ * apply_filters( "term_{$field}", $value, $term_id, $taxonomy, $context );
+*/
+add_filter('term_description', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
