@@ -1,5 +1,5 @@
 /*
-//debuging tools, do not check in
+// debugging tools, do not check in
 var cc=0;
 function c(v){ ++cc; console.log('== '+cc+': '+v); }
 function ct(v){ c(v); console.trace(); }
@@ -397,13 +397,12 @@ var qTranslateX=function(pg)
 		}
 	}
 
-	var qtx=this;
+	qTranslateConfig.qtx = this;
 	onTabSwitchCustom=function()
 	{
 		//co('onTabSwitch: this',this);
-		//co('onTabSwitch: pg',pg);
-		//co('onTabSwitch: qtx',qtx);
-		pg.onTabSwitch(this.lang,qtx);
+		//co('onTabSwitch: qtx',qTranslateConfig.qtx);
+		pg.onTabSwitch(this.lang,qTranslateConfig.qtx);
 	}
 
 	addDisplayHooks=function(elems)
@@ -412,7 +411,12 @@ var qTranslateX=function(pg)
 		for(var i=0; i<elems.length; ++i){
 			var e=elems[i];
 			//co('addDisplayHooks: e=',e);
-			addDisplayHook(e);
+			//co('addDisplayHooks: e.tagName=',e.tagName);
+			switch(e.tagName){
+				case 'TEXTAREA':
+				case 'INPUT': break;
+				default: addDisplayHook(e); break;
+			}
 		}
 	}
 
@@ -748,4 +752,8 @@ function qtranxj_LanguageSwitch(target)
 	}
 }
 
+/**
+ * qTranslateX instance is saved in global variable qTranslateConfig.qtx,
+ * which can be used by theme or plugins to dynamically change content hooks.
+ */
 jQuery(document).ready(function($){ new qTranslateX(qTranslateConfig.js); });

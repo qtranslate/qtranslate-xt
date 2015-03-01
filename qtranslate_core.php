@@ -73,7 +73,7 @@ function qtranxf_init_language() {
 				$url_info['doredirect'] .= ' - cancelled, because it goes to the same target.';
 			}
 		}else{
-			$url_info['doredirect'] .= ' - cancelled by WP_ADMIN or DOING_AJAX or DOING_CRON or not empty POST';
+			$url_info['doredirect'] .= ' - cancelled by WP_ADMIN or DOING_AJAX or WP_CLI or DOING_CRON or not empty POST';
 		}
 	}
 

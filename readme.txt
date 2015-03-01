@@ -238,13 +238,18 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 
 == Changelog ==
 
+= 3.2.1 stable =
+* Feature: added option "Hide Title Colon" for widget "qTanslate Language Chooser". [[Ticket](https://wordpress.org/support/topic/semicolon-is-being-added-to-the-widget-title)]
+* Improvement: disabled browser redirection for WP_CLI. [[Ticket](https://github.com/qTranslate-Team/qtranslate-x/pull/57)]
+* Fix: wp-admin/nav-menus.php: new menu items for pages get added with title already translated.
+
 = 3.2 stable =
 * Includes all changes after version 3.1.
 * Translation: Dutch (nl_NL) po/mo updated, thanks to Marius Siroen.
 * Improvement: `add_filter('term_description')` at front-end. Thanks to [josk79](https://github.com/qTranslate-Team/qtranslate-x/pull/39).
 
 = 3.2-b3 =
-* Improvement: class `qtranxs-translatable` is introduced to distinct all translatable fields. Thanks to [Michel Weimerskirch](https://github.com/mweimerskirch).
+* Feature: class `qtranxs-translatable` is introduced to distinct all translatable fields. Thanks to [Michel Weimerskirch](https://github.com/mweimerskirch).
 * Improvement: `QTRANS_INIT` constant is now defined when "Compatibility Functions" is on. [[WP issue](https://wordpress.org/support/topic/urgent-problem-with-dynamic-widgets-plugin).]
 * Improvement: various code improvements, search for '3.2-b3' tag to look them them up.
 
@@ -448,7 +453,7 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 
 == Known Issues ==
 
-* Turn on option "Compatibility Functions", if you use [WooCommerce](https://wordpress.org/plugins/woocommerce/) framework plugins, like [IM8 qTranslate WooCommerce](https://wordpress.org/plugins/im8-qtranslate-woocommerce/), [qTranslate support for WooCommerce](https://wordpress.org/plugins/qtranslate-support-for-woocommerce/), [WooCommerce-qTML](https://wordpress.org/plugins/woocommerce-qtml/), for example. Also it is needed for any theme, which claims its compatibility with former qTranslate.
+* Turn on option "Compatibility Functions", for any theme or plugin, which claims its compatibility with former qTranslate.
 * If other plugin installs a custom TinyMCE editor on a translatable field served by qTranslate-X, then all kind of problems start to happen. Examples of 'offending' plugins are: [Crayon Syntax Highlighter](https://wordpress.org/plugins/crayon-syntax-highlighter/), [Fusion Page Builder](http://www.theme-fusion.com/), [Page Builder by SiteOrigin](https://wordpress.org/plugins/siteorigin-panels/), [Revolution Slider](http://revolution.themepunch.com/), [Rich Text Tags](https://wordpress.org/plugins/rich-text-tags/), [Visual Composer](http://vc.wpbakery.com/), [WP Editor](https://wordpress.org/plugins/wp-editor/), [WR PageBuilder](https://wordpress.org/plugins/wr-pagebuilder). We are looking into possibilities to enable integration with those plugins, meanwhile [Tiny MCE Advanced](https://wordpress.org/plugins/tinymce-advanced/) seems to be compatible as reported by some users.
 * Title of the site on admin pages is not displaying correctly [WP topic](https://wordpress.org/support/topic/title-dont-show-the-right-text-in-admin).
 * When [Jetpack by WordPress.com](https://wordpress.org/plugins/jetpack/) is enabled, pressing 'Save Changes' at Settings/General (/wp-admin/options-general.php) page, causes fields "Site Title" and "Tagline" to be emptied, if they had multilingual values. It only happens when Jetpack is connected to WordPress. For now, when you need to edit those values, deactivate Jetpack, make your edits, then re-activate JetPack again. Fortunately, that general setting page need not to be changed frequently. [WP topic](https://wordpress.org/support/topic/site-titletagline-disappear-on-general-settings-update)
@@ -459,9 +464,6 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 * Page `/wp-admin/edit-tags.php?taxonomy=category`: if default language name of new category/tag is empty, nothing gets added.
 * Widget 'qTranslate Language Chooser', page `/wp-admin/widgets.php`: after saving its options, the content of 'Widget CSS' text area gets displayed outside of the text area. However, all options are saved ok, as a workaround, you need to refresh the whole page before doing the next editing action.
 * Title field is overlaid with the prompt "Enter title here", after switching the language from another language with empty value of title. [Watch Video](http://youtu.be/o3HH65bEZ4s) reported by [fotkin](https://wordpress.org/support/profile/fotkin).
-* [resolved] Editing of menu item description does not work properly on page `/wp-admin/nav-menus.php`.
-* [resolved] Sometimes after a new plugin update is released, the language switching buttons disappear on the first editor page load. Refresh the page to bring them back. Apparently, it has something to do with browse caching mechanism.
-
 
 == Credentials ==
 
@@ -474,3 +476,11 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 * "Quick Edit" action in category or tag list pages will update the default language only.
 * If a language was switched on a page or post, but no edits were done, browser sometimes still complains about page changes, when leaving page.
 * Full screen editor mode does not have language switch buttons (not applicable in WP 4.1 any more).
+
+== Former "Known Issues" now Resolved ==
+
+* [Resolved by new plugin [WooCommerce & qTranslate-X](https://wordpress.org/plugins/woocommerce-qtranslate-x/) for [WooCommerce - excelling eCommerce](https://wordpress.org/plugins/woocommerce/)] Turn on option "Compatibility Functions", if you use [WooCommerce](https://wordpress.org/plugins/woocommerce/) framework plugins, like [IM8 qTranslate WooCommerce](https://wordpress.org/plugins/im8-qtranslate-woocommerce/), [qTranslate support for WooCommerce](https://wordpress.org/plugins/qtranslate-support-for-woocommerce/), [WooCommerce-qTML](https://wordpress.org/plugins/woocommerce-qtml/), for example.
+* Editing of menu item description does not work properly on page `/wp-admin/nav-menus.php`.
+* Sometimes after a new plugin update is released, the language switching buttons disappear on the first editor page load. Refresh the page to bring them back. Apparently, it has something to do with browse caching mechanism.
+
+

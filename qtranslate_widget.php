@@ -54,17 +54,19 @@ class qTranslateXWidget extends WP_Widget {
 
 	function widget($args, $instance) {
 		extract($args);
+		//qtranxf_dbg_log('widget: $this: ',$this);
+		//qtranxf_dbg_log('widget: $instance: ',$instance);
 		echo '<style type="text/css">'.PHP_EOL;
 		echo empty($instance['widget-css']) ? QTX_WIDGET_CSS : $instance['widget-css'];
 		echo '</style>'.PHP_EOL;
 		echo $before_widget;
-		//$title = empty($instance['title']) ? __('Language', 'qtranslate') : apply_filters('widget_title', $instance['title']);
-		//$hide_title = empty($instance['hide-title']) ? false : 'on';
 		if(empty($instance['hide-title'])) {
 			$title = $instance['title'];
 			if(empty($title))
 				$title=__('Language', 'qtranslate');
-			$title=apply_filters('qtranslate_widget_title',$title.':');
+			if(empty($instance['hide-title-colon']))
+				$title .= ':';
+			$title=apply_filters('qtranslate_widget_title',$title,$this);
 			echo $before_title . $title . $after_title;
 		}
 		$type = $instance['type'];
@@ -78,24 +80,32 @@ class qTranslateXWidget extends WP_Widget {
 	function update($new_instance, $old_instance) {
 		$instance = $old_instance;
 		//qtranxf_dbg_log('update: $new_instance: ',$new_instance);
+		//qtranxf_dbg_log('update: $old_instance: ',$old_instance);
 		$instance['title'] = $new_instance['title'];
-		if(isset($new_instance['hide-title'])) $instance['hide-title'] = 'on';
+
+		if(isset($new_instance['hide-title'])) $instance['hide-title'] = true;
 		else unset($instance['hide-title']);
+
+		if(isset($new_instance['hide-title-colon'])) $instance['hide-title-colon'] = true;
+		else unset($instance['hide-title-colon']);
+
 		$instance['type'] = $new_instance['type'];
 		$instance['widget-css'] = $new_instance['widget-css'];
 		return $instance;
 	}
 
 	function form($instance) {
-		$instance = wp_parse_args( (array) $instance, array( 'title' => '', 'hide-title' => false, 'type' => 'text', 'widget-css' => QTX_WIDGET_CSS ) );
+		$instance = wp_parse_args( (array) $instance, array( 'title' => '', 'type' => 'text', 'widget-css' => QTX_WIDGET_CSS ) );
 		$title = $instance['title'];
-		$hide_title = $instance['hide-title'];
+		$hide_title = isset($instance['hide-title']) && $instance['hide-title'] !== false;
+		$hide_title_colon = isset($instance['hide-title-colon']);
 		$type = $instance['type'];
 		$widget_css = $instance['widget-css'];
 		if(empty($widget_css)) $widget_css=QTX_WIDGET_CSS;
 ?>
 <p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:', 'qtranslate'); ?> <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($title); ?>" /></label></p>
-<p><label for="<?php echo $this->get_field_id('hide-title'); ?>"><?php _e('Hide Title:', 'qtranslate'); ?> <input type="checkbox" id="<?php echo $this->get_field_id('hide-title'); ?>" name="<?php echo $this->get_field_name('hide-title'); ?>" <?php checked($hide_title, 'on'); ?>/></label></p>
+<p><label for="<?php echo $this->get_field_id('hide-title'); ?>"><?php _e('Hide Title:', 'qtranslate'); ?> <input type="checkbox" id="<?php echo $this->get_field_id('hide-title'); ?>" name="<?php echo $this->get_field_name('hide-title'); ?>" <?php checked($hide_title); ?>/></label></p>
+<p><label for="<?php echo $this->get_field_id('hide-title-colon'); ?>"><?php _e('Hide Title Colon:', 'qtranslate'); ?> <input type="checkbox" id="<?php echo $this->get_field_id('hide-title-colon'); ?>" name="<?php echo $this->get_field_name('hide-title-colon'); ?>" <?php checked($hide_title_colon); ?>/></label></p>
 <p><?php _e('Display:', 'qtranslate'); ?></p>
 <p><label for="<?php echo $this->get_field_id('type'); ?>1"><input type="radio" name="<?php echo $this->get_field_name('type'); ?>" id="<?php echo $this->get_field_id('type'); ?>1" value="text"<?php echo ($type=='text')?' checked="checked"':'' ?>/> <?php _e('Text only', 'qtranslate'); ?></label></p>
 <p><label for="<?php echo $this->get_field_id('type'); ?>2"><input type="radio" name="<?php echo $this->get_field_name('type'); ?>" id="<?php echo $this->get_field_id('type'); ?>2" value="image"<?php echo ($type=='image')?' checked="checked"':'' ?>/> <?php _e('Image only', 'qtranslate'); ?></label></p>
