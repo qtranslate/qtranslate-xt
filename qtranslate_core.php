@@ -30,11 +30,7 @@ function qtranxf_init_language() {
 
 	$https = is_ssl();//isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']!='off';
 	$host=$_SERVER['HTTP_HOST'];
-	if(isset($_SERVER['SERVER_PORT']) && !empty($_SERVER['SERVER_PORT'])
-		&& ( (!$https && $_SERVER['SERVER_PORT']!='80') || ($https && $_SERVER['SERVER_PORT']!='443') ) ){
-		$host.=':'.$_SERVER['SERVER_PORT'];
-	}
-
+	
 	$url = $_SERVER['REQUEST_URI'];
 
 	$url_info = array();
