@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qTranslate-X 3.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-03-01 01:42-0700\n"
-"PO-Revision-Date: 2015-02-27 16:03-0000\n"
+"PO-Revision-Date: 2015-03-02 11:36-0000\n"
 "Last-Translator: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "Language-Team: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -460,7 +460,7 @@ msgstr "Utilizar modo de Query (?lang=en)"
 #: qtranslate_configuration.php:1008
 #, php-format
 msgid "No other URL Modification Modes are available if permalink structure is set to \"Default\" on configuration page %sPermalink Setting%s. It is SEO advantageous to use some other permalink mode, which will enable more URL Modification Modes here as well."
-msgstr ""
+msgstr "Não estão disponíveis quaisquer modos de modificação do URL enquanto a estrutura das ligações permanentes estiver definida como \"Predefinição\" na página %sLigações permanentes%s. Para optimizar o site para motores de busca (SEO) é mais vantajoso utilizar outro modo de ligações permanentes, o que também permitirá que aqui sejam disponibilizados mais modos de modificação do URL."
 
 #: qtranslate_configuration.php:1011
 msgid "SEO friendly."
@@ -978,9 +978,8 @@ msgid "Hide Title:"
 msgstr "Esconder título:"
 
 #: qtranslate_widget.php:108
-#, fuzzy
 msgid "Hide Title Colon:"
-msgstr "Esconder título:"
+msgstr "Esconder dois pontos:"
 
 #: qtranslate_widget.php:109
 msgid "Display:"
