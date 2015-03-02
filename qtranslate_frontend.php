@@ -23,6 +23,10 @@ if ( !defined( 'ABSPATH' ) ) exit;
 function qtranxf_add_lang_icons_css ()
 {
 	global $q_config;
+	
+	if (!is_admin() && $q_config['disable_header_css'])
+		return;
+	
 	$flag_location=qtranxf_flag_location();
 	echo '<style type="text/css">'.PHP_EOL;
 	foreach($q_config['enabled_languages'] as $lang) 
