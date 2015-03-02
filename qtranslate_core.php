@@ -28,9 +28,8 @@ function qtranxf_init_language() {
 
 	$q_config['cookie_enabled'] = isset($_COOKIE[QTX_COOKIE_NAME_FRONT]) || isset($_COOKIE[QTX_COOKIE_NAME_ADMIN]);
 
-	$https = is_ssl();//isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']!='off';
-	$host=$_SERVER['HTTP_HOST'];
-	
+	$https = is_ssl();
+	$host = $_SERVER['HTTP_HOST'];
 	$url = $_SERVER['REQUEST_URI'];
 
 	$url_info = array();
@@ -42,6 +41,7 @@ function qtranxf_init_language() {
 		if(defined('DOING_CRON')) $url_info['DOING_CRON_POST'] = $_POST;
 	}
 
+	$url_info['https'] = $https;//not in use so far, but might come handy?
 	$url_info['host'] = $host;
 	$url_info['url'] = $url;
 	$url_info['original_url'] = $url;//move below for debugging purpose only

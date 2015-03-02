@@ -286,6 +286,10 @@ function qtranxf_add_admin_footer_js ( $enqueue_script=false ) {
 		//wp_enqueue_script( 'qtranslate-admin-utils' );
 		$deps = array();
 		if($script_file) $deps[] = 'qtranslate-admin-edit';
+		if(isset($page_config['scripts'])){
+			foreach($page_config['scripts'] as $js){
+			}
+		}
 		wp_register_script( 'qtranslate-admin-common', plugins_url( '/admin/js/common.min.js', __FILE__ ), $deps, QTX_VERSION );
 		wp_enqueue_script( 'qtranslate-admin-common' );
 	}
@@ -318,6 +322,10 @@ function qtranxf_add_admin_footer_js ( $enqueue_script=false ) {
 		if($script_file) readfile($script_file);
 		$plugin_dir_path=plugin_dir_path(__FILE__);
 		readfile($plugin_dir_path.'admin/js/common.min.js');
+		if(isset($page_config['scripts'])){
+			foreach($page_config['scripts'] as $js){
+			}
+		}
 	}
 	if($q_config['qtrans_compatibility']){
 		echo 'qtrans_use = function(lang, text) { var result = qtranxj_split(text); return result[lang]; }'.PHP_EOL;

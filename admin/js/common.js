@@ -279,7 +279,18 @@ var qTranslateX=function(pg)
 	{
 		//co('addContentHook: inpField:',inpField);
 		if( !inpField ) return false;
+		if( !inpField.name ) return false;
 		//if( typeof inpField.value !== 'string' ) return false;
+		switch(inpField.tagName){
+			case 'TEXTAREA':
+			case 'INPUT': break;
+			default: return false;
+		}
+		if(!inpField.id){
+			inpField.id = inpField.tagName;
+			if(form.id) inpField.id += form.id;
+			if(inpField.name) inpField.id += inpField.name;
+		}
 		if(contentHooks[inpField.id]) return true;
 		var h=contentHooks[inpField.id]={};
 		//h.id=inpField.id;

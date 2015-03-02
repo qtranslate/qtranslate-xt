@@ -4,7 +4,7 @@ Contributors: johnclause, chineseleper, Vavooon
 Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, translation
 Requires at least: 3.9
 Tested up to: 4.1.1
-Stable tag: 3.2.1
+Stable tag: 3.2.2
 License: GPLv3 or later
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QEXEK3HX8AR6U
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -34,9 +34,10 @@ qTranslate-X makes creation of multilingual content as easy as working with a si
 - Use [Google XML Sitemaps v3 for qTranslate](https://wordpress.org/plugins/google-xml-sitemaps-v3-for-qtranslate/) plugin to rebuild your XML sitemap for better SEO support.
 - Use plugin [Qtranslate Slug](https://wordpress.org/plugins/qtranslate-slug/) if you need to translate slugs.
 
-The following plugins provide integration for other popular plugins with qTranslate-X:
+The following plugins provide integration of qTranslate-X with other popular plugins:
 
-- [ACF qTranslate](https://wordpress.org/plugins/acf-qtranslate/) for [Advanced Custom Fields](https://wordpress.org/plugins/advanced-custom-fields/). [[GitHub](https://github.com/funkjedi/acf-qtranslate/issues)]
+- [ACF qTranslate](https://wordpress.org/plugins/acf-qtranslate/) for [Advanced Custom Fields](https://wordpress.org/plugins/advanced-custom-fields/). [[GitHub](https://github.com/funkjedi/acf-qtranslate)]
+- [All in One SEO Pack & qTranslate-X](https://wordpress.org/plugins/all-in-one-seo-pack-qtranslate-x/) for [All in One SEO Pack](https://wordpress.org/plugins/all-in-one-seo-pack). [[GitHub](https://github.com/qTranslate-Team/all-in-one-seo-pack-qtranslate-x)]
 - [Events Made Easy & qTranslate-X](https://wordpress.org/plugins/events-made-easy-qtranslate-x/) for [Events Made Easy](https://wordpress.org/plugins/events-made-easy/). [[GitHub](https://github.com/qTranslate-Team/events-made-easy-qtranslate-x)]
 - [qTranslate support for GravityForms](https://wordpress.org/plugins/qtranslate-support-for-gravityforms) for [Gravity Forms Directory](https://wordpress.org/plugins/gravity-forms-addons/). [[GitHub](https://github.com/mweimerskirch/wordpress-qtranslate-support-for-gravityforms)]
 - [WooCommerce & qTranslate-X](https://wordpress.org/plugins/woocommerce-qtranslate-x/) for [WooCommerce - excelling eCommerce](https://wordpress.org/plugins/woocommerce/). [[GitHub](https://github.com/qTranslate-Team/woocommerce-qtranslate-x)]
@@ -237,6 +238,11 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 2. Language Management Interface
 
 == Changelog ==
+
+= 3.2.2 stable =
+* Translation: Dutch (nl_NL) po/mo updated, thanks to Marius Siroen.
+* Improvement: common.js modifications needed for plugin [All in One SEO Pack & qTranslate-X](https://wordpress.org/plugins/all-in-one-seo-pack-qtranslate-x/).
+* Fix: non-standard host port handling. Thanks to Christophe. [[Ticket](https://github.com/qTranslate-Team/qtranslate-x/pull/59)]
 
 = 3.2.1 stable =
 * Feature: added option "Hide Title Colon" for widget "qTanslate Language Chooser". [[Ticket](https://wordpress.org/support/topic/semicolon-is-being-added-to-the-widget-title)]
