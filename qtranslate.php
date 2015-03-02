@@ -54,7 +54,7 @@ Original Author: Qian Qin (http://www.qianqin.de mail@qianqin.de)
 	ja by Brian Parker
 	nl by RobV
 	pt by netolazaro
-	pt-br by Pedro Mendonça
+	pt-pt by Pedro Mendonça
 	ro, hu by Jani Monoses
 	sv by bear3556, johdah 
 	vi by hathhai
