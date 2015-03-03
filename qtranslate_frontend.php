@@ -92,6 +92,7 @@ function qtranxf_wp_get_nav_menu_items( $items, $menu, $args )
 	$itemsmodified=false;
 	foreach($items as $key => $item)
 	{
+		//qtranxf_dbg_echo('qtranxf_wp_get_nav_menu_items: $item->url: ',$item->url);
 		//qtranxf_dbg_echo('qtranxf_wp_get_nav_menu_items: $item: ',$item);
 		//qtranxf_dbg_echo('qtranxf_wp_get_nav_menu_items: item: '.$item->title.'; p='.$item->menu_item_parent.'; ID='.$item->ID);
 		$qtransLangSw = isset( $item->url ) && stristr( $item->url, 'qtransLangSw' ) !== FALSE;
@@ -448,6 +449,54 @@ function qtranxf_trim_words( $text, $num_words, $more, $original_text ) {
 	$text = qtranxf_use_block($lang, $blocks, true, false);
 	return wp_trim_words($text, $num_words, $more);
 }
+
+function qtranxf_filter_postmeta($original_value, $object_id, $meta_key = '', $single = false){
+	global $q_config;
+	if(!isset($q_config['url_info'])){
+		//qtranxf_dbg_log('qtranxf_filter_postmeta: too early: $object_id='.$object_id.'; $meta_key',$meta_key,true);
+		return $original_value;
+	}
+
+	$meta_type = 'post';
+	$lang = $q_config['language'];
+	$cache_key = $meta_type . '_meta';
+	$cache_key_lang = $cache_key . $lang;
+	$meta_cache = wp_cache_get( $object_id, $cache_key_lang );
+	if( !$meta_cache ){
+		$meta_cache = wp_cache_get($object_id, $cache_key);
+		if ( !$meta_cache ) {
+			$meta_cache = update_meta_cache( $meta_type, array( $object_id ) );
+			$meta_cache = $meta_cache[$object_id];
+		}
+
+		//qtranxf_dbg_log('qtranxf_filter_postmeta: $object_id='.$object_id.'; $meta_cache before:',$meta_cache);
+		foreach($meta_cache as $mkey => $mval){
+			$mval = array_map('maybe_unserialize', $mval);
+			if(strpos($mkey,'_url') !== false){
+				//qtranxf_dbg_log('qtranxf_filter_postmeta: $object_id='.$object_id.'; $meta_cache['.$mkey.'] url before:',$mval);
+				$meta_cache[$mkey] = qtranxf_convertURLs($mval,$lang);
+				//qtranxf_dbg_log('qtranxf_filter_postmeta: $object_id='.$object_id.'; $meta_cache['.$mkey.'] url  after:',$meta_cache[$mkey]);
+			}else{
+				$meta_cache[$mkey] = qtranxf_use($lang, $mval, false, false);
+			}
+		}
+		//qtranxf_dbg_log('qtranxf_filter_postmeta: $object_id='.$object_id.'; $meta_cache  after:',$meta_cache);
+
+		wp_cache_add( $object_id, $meta_cache, $cache_key_lang );
+	}
+
+	if(!$meta_key)
+		return $meta_cache;
+
+	if(isset($meta_cache[$meta_key]))
+		return $meta_cache[$meta_key];
+
+	if ($single)
+		return '';
+	else
+		return array();
+}
+add_filter('get_post_metadata', 'qtranxf_filter_postmeta', 5, 4);
 
 /*
 function qtranxf_translate($text){

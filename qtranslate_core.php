@@ -999,6 +999,20 @@ function qtranxf_convertURL($url='', $lang='', $forceadmin = false, $showDefault
 }
 }
 
+function qtranxf_convertURLs($url, $lang='', $forceadmin = false, $showDefaultLanguage = false) {
+	global $q_config;
+	if(empty($lang)) $lang = $q_config['language'];
+	if(is_array($url)){
+		foreach($url as $k => $v){
+			$url[$k] = qtranxf_convertURLs($v, $lang, $forceadmin, $showDefaultLanguage);
+		}
+		return $url;
+	}else if(is_string($url) && !empty($url)){
+		return qtranxf_convertURL($url, $lang, $forceadmin, $showDefaultLanguage);
+	}
+	return $url;
+}
+
 //if (!function_exists('qtranxf_get_split_blocks')){
 // split text at all language comments and quick tags
 function qtranxf_get_language_blocks($text) {

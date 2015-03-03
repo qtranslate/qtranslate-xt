@@ -41,7 +41,7 @@ Original Author: Qian Qin (http://www.qianqin.de mail@qianqin.de)
 	(http://www.crwflags.com/FOTW/FLAGS/wflags.html)
 */
 /*
-	Default Language Contributers
+	Default Language Contributors
 	=============================
 	ar by Mohamed Magdy
 	de by Qian Qin
@@ -54,7 +54,7 @@ Original Author: Qian Qin (http://www.qianqin.de mail@qianqin.de)
 	ja by Brian Parker
 	nl by RobV
 	pt by netolazaro
-	pt-pt by Pedro Mendonça
+	pt-br by Pedro Mendonça
 	ro, hu by Jani Monoses
 	sv by bear3556, johdah 
 	vi by hathhai
@@ -62,11 +62,11 @@ Original Author: Qian Qin (http://www.qianqin.de mail@qianqin.de)
 
 	Plugin Translation Contributors
 	===============================
-	az_AZ by evlenirikbiz, Rashad Aliyev
+	az_AZ by Rashad Aliyev, evlenirikbiz
 	bg_BG by Dimitar Mitev
 	cz by by bengo
-	da_DK by meviper, Jan Christensen
-	de_DE by Qian Qin, Michel Weimerskirch, Maurizio Omissoni
+	da_DK by Jan Christensen, meviper
+	de_DE by Michel Weimerskirch, Maurizio Omissoni, Qian Qin
 	eo    by Chuck Smith
 	es_CA by Carlos Sanz
 	es_ES by Alejandro Urrutia
@@ -76,17 +76,16 @@ Original Author: Qian Qin (http://www.qianqin.de mail@qianqin.de)
 	it_IT by shecky
 	ja_JP by dapperdanman1400
 	mk_MK by Pavle Boskoski
-	ms_MY by webgrrrl, Lorna Timbah
-	nl_NL by BlackDex, Marius Siroen
+	ms_MY by Lorna Timbah, webgrrrl
+	nl_NL by Marius Siroen, BlackDex
 	pl_PL by Bronislaw Gracz
-	pt_PT by claudiotereso
 	pt_BR by Marcelo Paoli
-	pt_PT by Pedro Mendonça
-	ro_RO by ipuiu, Puiu Ionut
-	ru_RU by viaestvita, Dimitri Don
+	pt_PT by Pedro Mendonça, claudiotereso
+	ro_RO by Puiu Ionut, ipuiu
+	ru_RU by Dimitri Don, viaestvita
 	sr_RS by Borisa Djuraskovic
-	sv_SE by tobi, Tor-Bjorn Fjellner
-	tr_TR by freeuser, ali
+	sv_SE by Tor-Bjorn Fjellner, tobi
+	tr_TR by ali, freeuser
 	zh_CN by silverfox
 
 	Sponsored Features
