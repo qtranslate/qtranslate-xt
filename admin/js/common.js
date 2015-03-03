@@ -708,18 +708,29 @@ var qTranslateX=function(pg)
 			//header.parentNode.insertBefore(langSwitchWrap, header.nextElementSibling);
 			anchor.parentNode.insertBefore( langSwitchWrap, anchor );
 			var languageSwitch = new qtranxj_LanguageSwitch(langSwitchWrap);
-			languageSwitch.onSwitch(onTabSwitch);
-			if(pg.onTabSwitch)
-				languageSwitch.onSwitch(onTabSwitchCustom);
+			//languageSwitch.onSwitch(onTabSwitch);
+			//if(pg.onTabSwitch)
+			//	languageSwitch.onSwitch(onTabSwitchCustom);
 		}
+		/**
+		 * Since 3.2.4 Synchronization of multiple sets of Language Switching Buttons
+		 */
+		qTranslateConfig.onTabSwitchFunctions=[];
+		qTranslateConfig.onTabSwitchFunctions.push(onTabSwitch);
+		if(pg.onTabSwitch)
+			qTranslateConfig.onTabSwitchFunctions.push(onTabSwitchCustom);
 	}
 }
 
-function qtranxj_LanguageSwitch(target)
+/**
+ * Since 3.2.4 Multiple sets of Language Switching Buttons
+ */
+function qtranxj_LanguageSwitch(langSwitchWrap)
 {
 	var langs=qTranslateConfig.enabled_languages, langNames=qTranslateConfig.language_name;
-	var tabSwitches={};
-	var onTabSwitchFunctions=[];
+	//var tabSwitches={};
+	if(!qTranslateConfig.tabSwitches) qTranslateConfig.tabSwitches={};
+	//var onTabSwitchFunctions=[];
 	function switchTab()
 	{
 		var tabSwitch=this;
@@ -732,10 +743,21 @@ function qtranxj_LanguageSwitch(target)
 		}
 		if (qTranslateConfig.activeLanguage)
 		{
-			tabSwitches[qTranslateConfig.activeLanguage].classList.remove('active');
+			var tabSwitches = qTranslateConfig.tabSwitches[qTranslateConfig.activeLanguage];
+			for(var i=0; i < tabSwitches.length; ++i){
+				tabSwitches[i].classList.remove('active');
+			}
+			//tabSwitches[qTranslateConfig.activeLanguage].classList.remove('active');
 		}
 		qTranslateConfig.activeLanguage=tabSwitch.lang;
-		tabSwitch.classList.add('active');
+		{
+			var tabSwitches = qTranslateConfig.tabSwitches[qTranslateConfig.activeLanguage];
+			for(var i=0; i < tabSwitches.length; ++i){
+				tabSwitches[i].classList.add('active');
+			}
+			//tabSwitch.classList.add('active');
+		}
+		var onTabSwitchFunctions = qTranslateConfig.onTabSwitchFunctions;
 		for(var i=0; i<onTabSwitchFunctions.length; ++i)
 		{
 			onTabSwitchFunctions[i].call(this);
@@ -747,20 +769,22 @@ function qtranxj_LanguageSwitch(target)
 		//var flags_location=qTranslateConfig.WP_CONTENT_URL+qTranslateConfig.flag_location;
 		var flag_location=qTranslateConfig.flag_location;
 		var lang=langs[i];
-		var tabSwitch=qtranxj_ce ('li', {lang: lang, className: 'qtranxs-lang-switch', onclick: switchTab }, target );
+		var tabSwitch=qtranxj_ce ('li', {lang: lang, className: 'qtranxs-lang-switch', onclick: switchTab }, langSwitchWrap );
 		qtranxj_ce('img', {src: flag_location+qTranslateConfig.flag[lang]}, tabSwitch);
 		qtranxj_ce('span', {innerHTML: langNames[lang]}, tabSwitch);
-		tabSwitches[lang]=tabSwitch;
 		if ( qTranslateConfig.activeLanguage == lang )
 			tabSwitch.classList.add('active');
+		if(!qTranslateConfig.tabSwitches[lang]) qTranslateConfig.tabSwitches[lang] = [];
+		qTranslateConfig.tabSwitches[lang].push(tabSwitch);
+		//tabSwitches[lang]=tabSwitch;
 	}
-	this.onSwitch=function(callback)
-	{
-		if (typeof callback==='function')
-		{
-			onTabSwitchFunctions.push(callback);
-		}
-	}
+	//this.onSwitch=function(callback)
+	//{
+	//	if (typeof callback==='function')
+	//	{
+	//		onTabSwitchFunctions.push(callback);
+	//	}
+	//}
 }
 
 /**

@@ -94,6 +94,13 @@ qTranslateConfig.js={
 
 		qtx.addContentHooksTinyMCE();
 
+		/**
+		 * Since 3.2.4 Multiple sets of Language Switching Buttons
+		 */
+		if( !qTranslateConfig.page_config ) qTranslateConfig.page_config={};
+		if( !qTranslateConfig.page_config.anchors)
+			qTranslateConfig.page_config.anchors = ['post','postexcerpt'];//,'slugdiv'
+
 		return true;
 	}
 ,

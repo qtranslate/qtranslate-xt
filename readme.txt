@@ -239,6 +239,9 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 
 == Changelog ==
 
+= 3.2.4 =
+* Feature: multiple sets of Language Switching Buttons per page. Enabled by default above metabox 'Excerpt'. Will be customizable later.
+
 = 3.2.3 =
 * Improvement: auto-translation of metadata at front-end, filter `qtranxf_filter_postmeta`. [[Ticket](https://wordpress.org/support/topic/qtranslate-x-hero-header)]
 
