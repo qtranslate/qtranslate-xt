@@ -450,6 +450,9 @@ function qtranxf_trim_words( $text, $num_words, $more, $original_text ) {
 	return wp_trim_words($text, $num_words, $more);
 }
 
+/**
+ * Since 3.2.3 translation of postmeta
+ */
 function qtranxf_filter_postmeta($original_value, $object_id, $meta_key = '', $single = false){
 	global $q_config;
 	if(!isset($q_config['url_info'])){
@@ -471,14 +474,21 @@ function qtranxf_filter_postmeta($original_value, $object_id, $meta_key = '', $s
 
 		//qtranxf_dbg_log('qtranxf_filter_postmeta: $object_id='.$object_id.'; $meta_cache before:',$meta_cache);
 		foreach($meta_cache as $mkey => $mval){
-			$mval = array_map('maybe_unserialize', $mval);
 			if(strpos($mkey,'_url') !== false){
-				//qtranxf_dbg_log('qtranxf_filter_postmeta: $object_id='.$object_id.'; $meta_cache['.$mkey.'] url before:',$mval);
-				$meta_cache[$mkey] = qtranxf_convertURLs($mval,$lang);
-				//qtranxf_dbg_log('qtranxf_filter_postmeta: $object_id='.$object_id.'; $meta_cache['.$mkey.'] url  after:',$meta_cache[$mkey]);
+				//qtranxf_dbg_log('qtranxf_filter_postmeta: $object_id='.$object_id.'; $meta_cache['.$mkey.'] url before:',$val);
+				$val = array_map('maybe_unserialize', $mval);
+				$val = qtranxf_convertURLs($val,$lang);
+				//qtranxf_dbg_log('qtranxf_filter_postmeta: $object_id='.$object_id.'; $meta_cache['.$mkey.'] url  after:',$val);
 			}else{
-				$meta_cache[$mkey] = qtranxf_use($lang, $mval, false, false);
+				$val = array();
+				foreach($mval as $k => $v){
+					$ml = qtranxf_isMultilingual($v);
+					$v = maybe_unserialize($v);
+					if($ml) $v = qtranxf_use($lang, $v, false, false);
+					$val[$k] = $v;
+				}
 			}
+			$meta_cache[$mkey] = $val;
 		}
 		//qtranxf_dbg_log('qtranxf_filter_postmeta: $object_id='.$object_id.'; $meta_cache  after:',$meta_cache);
 

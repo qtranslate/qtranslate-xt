@@ -156,7 +156,8 @@ function qtranxf_convert_database_options($action){
 	switch($action){
 		case 'b_only':
 			foreach($result as $row) {
-				if(!preg_match('/(<!--:[a-z]{2}-->|\[:[a-z]{2}\])/im',$row->option_value)) continue;
+				if(!qtranxf_isMultilingual($row->option_value)) continue;
+				//if(!preg_match('/(<!--:[a-z]{2}-->|\[:[a-z]{2}\])/im',$row->option_value)) continue;
 				$value = maybe_unserialize($row->option_value);
 				$value_converted=qtranxf_convert_to_b_deep($value);
 				$value_serialized = maybe_serialize($value_converted);
@@ -170,7 +171,8 @@ function qtranxf_convert_database_options($action){
 			break;
 		case 'c_dual':
 			foreach($result as $row) {
-				if(!preg_match('/(<!--:[a-z]{2}-->|\[:[a-z]{2}\])/im',$row->option_value)) continue;
+				if(!qtranxf_isMultilingual($row->option_value)) continue;
+				//if(!preg_match('/(<!--:[a-z]{2}-->|\[:[a-z]{2}\])/im',$row->option_value)) continue;
 				$value = maybe_unserialize($row->option_value);
 				$value_converted=qtranxf_convert_to_b_no_closing_deep($value);
 				$value_serialized = maybe_serialize($value_converted);
@@ -224,7 +226,8 @@ function qtranxf_convert_database_postmeta($action){
 	switch($action){
 		case 'b_only':
 			foreach($result as $row) {
-				if(!preg_match('/(<!--:[a-z]{2}-->|\[:[a-z]{2}\])/im',$row->meta_value)) continue;
+				if(!qtranxf_isMultilingual($row->meta_value)) continue;
+				//if(!preg_match('/(<!--:[a-z]{2}-->|\[:[a-z]{2}\])/im',$row->meta_value)) continue;
 				$value = maybe_unserialize($row->meta_value);
 				$value_converted=qtranxf_convert_to_b_deep($value);
 				$value_serialized = maybe_serialize($value_converted);
@@ -235,7 +238,8 @@ function qtranxf_convert_database_postmeta($action){
 			break;
 		case 'c_dual':
 			foreach($result as $row) {
-				if(!preg_match('/(<!--:[a-z]{2}-->|\[:[a-z]{2}\])/im',$row->meta_value)) continue;
+				if(!qtranxf_isMultilingual($row->meta_value)) continue;
+				//if(!preg_match('/(<!--:[a-z]{2}-->|\[:[a-z]{2}\])/im',$row->meta_value)) continue;
 				$value = maybe_unserialize($row->meta_value);
 				$value_converted=qtranxf_convert_to_b_no_closing_deep($value);
 				$value_serialized = maybe_serialize($value_converted);
