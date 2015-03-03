@@ -82,9 +82,11 @@ function qtranxf_init_language() {
 
 	// Filter all options for language tags
 	if($q_config['url_info']['doing_front_end']) {
-		$alloptions = wp_load_alloptions();
-		foreach($alloptions as $option => $value) {
-			add_filter('option_'.$option, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
+		if ($q_config['filter_all_options']) {
+			$alloptions = wp_load_alloptions();
+			foreach($alloptions as $option => $value) {
+				add_filter('option_'.$option, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
+			}
 		}
 		require_once(dirname(__FILE__)."/qtranslate_frontend.php");
 	}else{
@@ -402,19 +404,21 @@ function qtranxf_parse_language_info(&$url_info, $link=false) {
 }
 }
 
-function qtranxf_setcookie_language($lang, $cookie_name, $cookie_path)
+function qtranxf_setcookie_language($lang, $cookie_name, $cookie_path, $cookie_domain = NULL, $secure = false)
 {
 	//qtranxf_dbg_log('qtranxf_setcookie_language: lang='.$lang.'; cookie_name='.$cookie_name.'; cookie_path='.$cookie_path);
-	setcookie($cookie_name, $lang, time()+31536000, $cookie_path);//one year
+	setcookie($cookie_name, $lang, time()+31536000, $cookie_path, $cookie_domain, $secure);//one year
 	//two weeks 1209600
 }
 
 function qtranxf_set_language_cookie($lang)
 {
+	global $q_config;
 	if(defined('WP_ADMIN')){
 		qtranxf_setcookie_language( $lang, QTX_COOKIE_NAME_ADMIN, ADMIN_COOKIE_PATH );
 	}else{
-		qtranxf_setcookie_language( $lang, QTX_COOKIE_NAME_FRONT, COOKIEPATH );
+		if (!$q_config['disable_client_cookies'])
+			qtranxf_setcookie_language( $lang, QTX_COOKIE_NAME_FRONT, COOKIEPATH, NULL, $q_config['use_secure_cookie'] );
 	}
 }
 
@@ -632,6 +636,10 @@ function qtranxf_loadConfig() {
 	qtranxf_load_option_bool('show_displayed_language_prefix');
 	qtranxf_load_option_bool('auto_update_mo');
 	qtranxf_load_option_bool('hide_default_language');
+	qtranxf_load_option_bool('disable_header_css');
+	qtranxf_load_option_bool('use_secure_cookie');
+	qtranxf_load_option_bool('disable_client_cookies');
+	qtranxf_load_option_bool('filter_all_options');
 
 	// check for invalid permalink/url mode combinations
 	$permalink_structure = get_option('permalink_structure');
@@ -1333,8 +1341,12 @@ function qtranxf_showAllSeparated($text) {
 
 function qtranxf_add_css ()
 {
-	wp_register_style( 'qtranslate-style', plugins_url('qtranslate.css', __FILE__), array(), QTX_VERSION );
-	wp_enqueue_style( 'qtranslate-style' );
+	global $q_config;
+	if (is_admin() || !$q_config['disable_header_css'])
+	{
+		wp_register_style( 'qtranslate-style', plugins_url('qtranslate.css', __FILE__), array(), QTX_VERSION );
+		wp_enqueue_style( 'qtranslate-style' );
+	}
 }
 
 function qtranxf_optionFilter($do='enable') {//do we need it?

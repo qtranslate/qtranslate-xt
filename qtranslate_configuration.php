@@ -58,6 +58,10 @@ function qtranxf_reset_config()
 	delete_option('qtranslate_editor_mode');
 	delete_option('qtranslate_custom_fields');
 	delete_option('qtranslate_widget_css'); // obsolete option
+	delete_option('qtranslate_disable_header_css');
+	delete_option('qtranslate_use_secure_cookie');
+	delete_option('qtranslate_disable_client_cookies');
+	delete_option('qtranslate_filter_all_options');
 	if(isset($_POST['qtranslate_reset3'])) {
 		delete_option('qtranslate_term_name');
 	}
@@ -136,6 +140,10 @@ function qtranxf_saveConfig() {
 	qtranxf_update_option_bool('auto_update_mo');
 	qtranxf_update_option_bool('hide_default_language');
 	qtranxf_update_option_bool('qtrans_compatibility');
+	qtranxf_update_option_bool('disable_header_css');
+	qtranxf_update_option_bool('use_secure_cookie');
+	qtranxf_update_option_bool('disable_client_cookies');
+	qtranxf_update_option_bool('filter_all_options');
 
 	do_action('qtranslate_saveConfig');
 }
@@ -722,6 +730,10 @@ function qtranxf_conf() {
 		qtranxf_updateSetting('custom_field_classes', QTX_ARRAY);
 		qtranxf_updateSetting('text_field_filters', QTX_ARRAY);
 		qtranxf_updateSetting('custom_pages', QTX_ARRAY);
+		qtranxf_updateSetting('disable_header_css', QTX_BOOLEAN);
+		qtranxf_updateSetting('use_secure_cookie', QTX_BOOLEAN);
+		qtranxf_updateSetting('disable_client_cookies', QTX_BOOLEAN);
+		qtranxf_updateSetting('filter_all_options', QTX_BOOLEAN);
 
 		if(isset($_POST['update_mo_now']) && $_POST['update_mo_now']=='1' && qtranxf_updateGettextDatabases(true))
 			$message[] = __('Gettext databases updated.', 'qtranslate');
@@ -1065,6 +1077,29 @@ function qtranxf_conf() {
 				</td>
 			</tr>
 			<tr valign="top">
+				<th scope="row"><?php _e('Remove plugin CSS from head', 'qtranslate'); ?></th>
+				<td>
+					<label for="disable_header_css"><input type="checkbox" name="disable_header_css" id="disable_header_css" value="1"<?php echo empty($q_config['disable_header_css']) ? '' : ' checked="checked"' ?> /> <?php _e('Remove inline CSS code added by plugin from the head', 'qtranslate'); ?></label>
+					<br />
+					<small><?php _e('This will remove default styles applyied to qTranslate Language Chooser', 'qtranslate') ?></small>
+				</td>
+			</tr>
+			<tr valign="top">
+				<th scope="row"><?php _e('Cookie Settings', 'qtranslate'); ?></th>
+				<td>
+					<label for="disable_client_cookies"><input type="checkbox" name="disable_client_cookies" id="disable_client_cookies" value="1"<?php echo empty($q_config['disable_client_cookies']) ? '' : ' checked="checked"' ?> /> <?php _e('Disable all client cookies', 'qtranslate'); ?> </label>
+					<!-- 
+					<br />
+					<small><?php _e("If checked, language will not be saved for visitors between sessions.", 'qtranslate') ?></small>
+					-->
+					<br /><br />
+					
+					<label for="use_secure_cookie"><input type="checkbox" name="use_secure_cookie" id="use_secure_cookie" value="1"<?php echo empty($q_config['use_secure_cookie']) ? '' : ' checked="checked"' ?> /> <?php _e('Make qTranslate cookies available only through HTTPS connections', 'qtranslate'); ?> </label>
+					<br />
+					<small><?php _e("Don't check this if you don't know what you're doing!", 'qtranslate') ?></small>
+				</td>
+			</tr>
+			<tr valign="top">
 				<th scope="row"><?php _e('Update Gettext Databases', 'qtranslate');?></th>
 				<td>
 					<label for="auto_update_mo"><input type="checkbox" name="auto_update_mo" id="auto_update_mo" value="1"<?php checked($q_config['auto_update_mo']); ?>/> <?php _e('Automatically check for .mo-Database Updates of installed languages.', 'qtranslate'); ?></label>
@@ -1082,6 +1117,14 @@ function qtranxf_conf() {
 					<label><input type="radio" name="use_strftime" value="<?php echo QTX_STRFTIME; ?>" <?php checked($q_config['use_strftime'],QTX_STRFTIME); ?>/> <?php _e('Use strftime instead of date.', 'qtranslate'); ?></label><br/>
 					<label><input type="radio" name="use_strftime" value="<?php echo QTX_STRFTIME_OVERRIDE; ?>" <?php checked($q_config['use_strftime'],QTX_STRFTIME_OVERRIDE); ?>/> <?php _e('Use strftime instead of date and replace formats with the predefined formats for each language.', 'qtranslate'); ?></label><br/>
 					<small><?php _e('Depending on the mode selected, additional customizations of the theme may be needed.', 'qtranslate'); ?></small>
+				</td>
+			</tr>
+			<tr valign="top">
+				<th scope="row"><?php _e('Optimization Settings', 'qtranslate'); ?></th>
+				<td>
+					<label for="filter_all_options"><input type="checkbox" name="filter_all_options" id="filter_all_options" value="1"<?php echo empty($q_config['filter_all_options']) ? '' : ' checked="checked"' ?> /> <?php _e('Filter all WordPress options', 'qtranslate'); ?> </label>
+					<br />
+					<small><?php _e("If unchecked, some texts may not be translated anymore. However, disabling this feature may greatly improve loading times.", 'qtranslate') ?></small>
 				</td>
 			</tr>
 			<tr valign="top">
