@@ -496,7 +496,7 @@ function qtranxf_language_form($lang = '', $language_code = '', $language_name =
 		}
 	?>
 	</select>
-	<img src="" alt="Flag" id="preview_flag" style="vertical-align:middle; display:none"/>
+	<img src="" alt="<?php _e('Flag', 'qtranslate'); ?>" id="preview_flag" style="vertical-align:middle; display:none"/>
 	<?php
 	} else {
 		_e('Incorrect Flag Image Path! Please correct it!', 'qtranslate');
@@ -1222,7 +1222,7 @@ function qtranxf_conf() {
 	<tbody id="the-list" class="qtranxs-language-list" class="list:cat">
 <?php foreach($q_config['language_name'] as $lang => $language){ if($lang!='code') { ?>
 	<tr>
-		<td><img src="<?php echo qtranxf_flag_location().$q_config['flag'][$lang]; ?>" alt="<?php echo $language; ?> Flag"></td>
+		<td><img src="<?php echo qtranxf_flag_location().$q_config['flag'][$lang]; ?>" alt="<?php echo sprintf(__('%s Flag', 'qtranslate'), $language) ?>"></td>
 		<td><?php echo $language; ?></td>
 		<td><?php if(in_array($lang,$q_config['enabled_languages'])) { ?><a class="edit" href="<?php echo $clean_uri; ?>&disable=<?php echo $lang; ?>"><?php _e('Disable', 'qtranslate'); ?></a><?php  } else { ?><a class="edit" href="<?php echo $clean_uri; ?>&enable=<?php echo $lang; ?>"><?php _e('Enable', 'qtranslate'); ?></a><?php } ?></td>
 		<td><a class="edit" href="<?php echo $clean_uri; ?>&edit=<?php echo $lang; ?>"><?php _e('Edit', 'qtranslate'); ?></a></td>
