@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: qTranslate-X 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-04 18:16-0700\n"
+"POT-Creation-Date: 2015-03-04 19:57-0700\n"
 "PO-Revision-Date: 2011-01-20 16:09+0100\n"
 "Last-Translator: felix.zesch <felix.zesch@gmail.com>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -80,7 +80,8 @@ msgid "Database has been converted to legacy dual-tag format."
 msgstr ""
 
 #: admin/admin_utils.php:397 qtranslate_configuration.php:480
-#: qtranslate_frontend.php:171 qtranslate_frontend.php:198
+#: qtranslate_configuration.php:503 qtranslate_frontend.php:171
+#: qtranslate_frontend.php:198
 msgid "Flag"
 msgstr ""
 
@@ -665,6 +666,11 @@ msgstr ""
 
 #: qtranslate_configuration.php:1192
 msgid "Some people prefer to edit the raw entries containing all languages together separated by language defining tags, as they are stored in database."
+msgstr ""
+
+#: qtranslate_configuration.php:1243
+#, php-format
+msgid "%s Flag"
 msgstr ""
 
 #: qtranslate_configuration.php:1245

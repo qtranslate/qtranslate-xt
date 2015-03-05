@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: qTranslate-X 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-04 18:16-0700\n"
+"POT-Creation-Date: 2015-03-04 19:57-0700\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Marius Siroen <marius@marius-siroen.com>\n"
 "Language-Team: \n"
@@ -80,7 +80,8 @@ msgid "Database has been converted to legacy dual-tag format."
 msgstr "Database is geconverteerd naar de oudere dubbele-label indeling."
 
 #: admin/admin_utils.php:397 qtranslate_configuration.php:480
-#: qtranslate_frontend.php:171 qtranslate_frontend.php:198
+#: qtranslate_configuration.php:503 qtranslate_frontend.php:171
+#: qtranslate_frontend.php:198
 msgid "Flag"
 msgstr "Vlag"
 
@@ -663,6 +664,11 @@ msgstr "Gebruik geen knoppen voor het wisselen van taal om meertalige teksten te
 #: qtranslate_configuration.php:1192
 msgid "Some people prefer to edit the raw entries containing all languages together separated by language defining tags, as they are stored in database."
 msgstr "Sommige mensen vinden het handiger om te werken in de ruwe tekst modus met alle teksten van de talen samen gescheiden door taal labels, zoals ze zijn opgeslagen in database."
+
+#: qtranslate_configuration.php:1243
+#, fuzzy, php-format
+msgid "%s Flag"
+msgstr "Vlag"
 
 #: qtranslate_configuration.php:1245
 msgid "Disable"
