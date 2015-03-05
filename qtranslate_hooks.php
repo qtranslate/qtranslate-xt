@@ -89,13 +89,6 @@ function qtranxf_useRawTitle($title, $raw_title = '', $context = 'save') {
 	return $title;
 }
 
-function qtranxf_checkCanonical($redirect_url, $requested_url) {
-	// fix canonical conflicts with language urls
-	if(qtranxf_convertURL($redirect_url)==qtranxf_convertURL($requested_url))
-		return false;
-	return $redirect_url;
-}
-
 /*
 //no longer needed since we adjusted home_url()
 function qtranxf_fixSearchForm($form) {
@@ -262,5 +255,3 @@ add_filter('comment_notification_subject', 'qtranxf_useCurrentLanguageIfNotFound
 //add_filter('admin_footer', 'qtranxf_modifyExcerpt');
 add_filter('bloginfo_url', 'qtranxf_convertBlogInfoURL',10,2);
 add_filter('core_version_check_locale', 'qtranxf_versionLocale');
-
-add_filter('redirect_canonical', 'qtranxf_checkCanonical', 10, 2);

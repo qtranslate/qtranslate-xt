@@ -503,10 +503,10 @@ var qTranslateX=function(pg)
 	 * Parses custom page configuration, loaded in qtranxf_load_admin_page_config.
 	 * Since 3.1-b2
 	*/
-	this.addPageHooks=function(page_config)
+	this.addPageHooks=function(page_config_forms)
 	{
-		for(var p=0; p < page_config.forms.length; ++p){
-			var frm = page_config.forms[p];
+		for(var p=0; p < page_config_forms.length; ++p){
+			var frm = page_config_forms[p];
 			var form;
 			if(frm.form){
 				form = document.getElementById(frm.form.id);
@@ -581,7 +581,6 @@ var qTranslateX=function(pg)
 				}
 			}
 		}
-		return true;
 	}
 
 	this.addContentHooksTinyMCE=function()
@@ -674,11 +673,18 @@ var qTranslateX=function(pg)
 		return null;
 	}
 
-	if( typeof(pg.addContentHooks) == "function" && !pg.addContentHooks(this) )
-		return;
+	if( typeof(pg.addContentHooks) == "function")
+		pg.addContentHooks(this);
 
-	if( qTranslateConfig.page_config && !this.addPageHooks(qTranslateConfig.page_config) )
-		return;
+	if( qTranslateConfig.page_config && qTranslateConfig.page_config.forms)
+		this.addPageHooks(qTranslateConfig.page_config.forms);
+
+	if(!displayHooks.length){
+		var ok = false;
+		for(var key in contentHooks){ ok = true; break; }
+		if(!ok)
+			return;
+	}
 
 	{
 		var anchors=[];

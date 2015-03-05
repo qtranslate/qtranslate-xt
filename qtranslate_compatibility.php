@@ -15,6 +15,11 @@ if(!function_exists('qtrans_getLanguage')){
 		return qtranxf_getLanguage();
 	}
 }
+if(!function_exists('qtrans_getLanguageName')){
+	function qtrans_getLanguageName($lang = ''){
+		return qtranxf_getLanguageName($lang);
+	}
+}
 if(!function_exists('qtrans_getSortedLanguages')){
 	function qtrans_getSortedLanguages($reverse = false){ return qtranxf_getSortedLanguages($reverse); }
 }

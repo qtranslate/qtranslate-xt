@@ -317,3 +317,7 @@ function qtranxf_getSortedLanguages($reverse = false) {
 	if($reverse) krsort($clean_languages);
 	return $clean_languages;
 }
+
+function qtranxf_can_redirect() {
+	return !defined('WP_ADMIN') && !defined('DOING_AJAX') && !defined('WP_CLI') && !defined('DOING_CRON') && empty($_POST);
+}

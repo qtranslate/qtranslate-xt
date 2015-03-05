@@ -239,6 +239,11 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 
 == Changelog ==
 
+= 3.2.5 =
+* Feature: options of similar functionality of mqTranslate: 'Remove plugin CSS', 'Cookie Settings' and 'Translation of options table'. Thanks to [Christophe](https://github.com/xhaleera)) for the initial [pull](https://github.com/qTranslate-Team/qtranslate-x/pull/63).
+* Improvement: `qtrans_getLanguageName` added to option 'Compatibility Functions'.
+* Fix: url like `site.com/en?arg=123` without slash before question mark now works correctly.
+
 = 3.2.4 =
 * Feature: multiple sets of Language Switching Buttons per page. Enabled by default above metabox 'Excerpt'. Will be customizable later.
 

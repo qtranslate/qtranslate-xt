@@ -57,6 +57,33 @@
 #qtranxs_custom_fields { width:100%; }
 */
 
+/* Admin bar language menu */
+
+#wpadminbar #wp-admin-bar-language>div.ab-item
+{
+	padding-right: 30px;
+	cursor: default;
+}
+#wpadminbar #wp-admin-bar-language>div.ab-item,
+#wpadminbar #wp-admin-bar-language ul li
+{
+	background-repeat: no-repeat;
+	background-position: right; 
+	background-size: 22px;
+}
+
+
+/* qTranslate-X config page */
+
+#qtranxs-languages-menu img {
+	vertical-align: middle;
+}
+.qtranxs-language-list td
+{
+	vertical-align: middle;
+}
+
+
 /* Language Switching Buttons as horizontal block */
 
 .qtranxs-lang-switch-wrap

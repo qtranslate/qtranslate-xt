@@ -3,7 +3,7 @@
 Plugin Name: qTranslate-X
 Plugin URI: http://wordpress.org/plugins/qtranslate-x/
 Description: Adds user-friendly and database-friendly multilingual content support into WordPress.
-Version: 3.2.4
+Version: 3.2.5
 Author: qTranslate Team
 Author URI: http://qtranslatexteam.wordpress.com/about
 Tags: multilingual, multi, language, admin, tinymce, Polyglot, bilingual, widget, switcher, professional, human, translation, service, qTranslate, zTranslate, mqTranslate, qTranslate Plus, WPML
@@ -14,8 +14,6 @@ Author e-mail: qTranslateTeam@gmail.com
 Original Author: Qian Qin (http://www.qianqin.de mail@qianqin.de)
 */
 /* Unused keywords (as described in http://codex.wordpress.org/Writing_a_Plugin):
- * Text Domain: Optional. Plugin's text domain for localization. Example: mytextdomain
- * Domain Path: Optional. Plugin's relative directory path to .mo files. Example: /locale/
  * Network: Optional. Whether the plugin can only be activated network wide. Example: true
  */
 /*
@@ -107,7 +105,7 @@ if ( ! defined( 'QTRANSLATE_FILE' ) ) {
 	define( 'QTRANSLATE_FILE', __FILE__ );
 }
 
-define('QTX_VERSION','3.2.4');
+define('QTX_VERSION','3.2.5');
 
 /* DEFAULT CONFIGURATION PART BEGINS HERE */
 
@@ -130,6 +128,10 @@ define('QTX_STRFTIME_OVERRIDE',	1);
 define('QTX_DATE_OVERRIDE',	2);
 define('QTX_DATE',	3);
 define('QTX_STRFTIME',	4);
+
+define('QTX_FILTER_OPTIONS_ALL', 0);
+define('QTX_FILTER_OPTIONS_LIST', 1);
+define('QTX_FILTER_OPTIONS_DEFAULT','blogname blogdescription widget_%');
 
 define('QTX_COOKIE_NAME_FRONT','qtrans_front_language');
 define('QTX_COOKIE_NAME_ADMIN','qtrans_admin_language');
@@ -543,12 +545,8 @@ function qtranxf_set_config_default()
 	$q_config['windows_locale']['zu'] = "Zulu";
 
 	$q_config['disable_header_css'] = false;
-	
 	$q_config['use_secure_cookie'] = false;
-	$q_config['disable_client_cookies'] = false;
-	
-	$q_config['filter_all_options'] = true;
-	
+
 	$q_config = apply_filters('qtranslate_config_default', $q_config);
 }
 qtranxf_set_config_default();

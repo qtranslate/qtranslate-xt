@@ -23,10 +23,8 @@ if ( !defined( 'ABSPATH' ) ) exit;
 function qtranxf_add_lang_icons_css ()
 {
 	global $q_config;
-	
-	if (!is_admin() && $q_config['disable_header_css'])
+	if( $q_config['disable_header_css'] )
 		return;
-	
 	$flag_location=qtranxf_flag_location();
 	echo '<style type="text/css">'.PHP_EOL;
 	foreach($q_config['enabled_languages'] as $lang) 
@@ -36,7 +34,6 @@ function qtranxf_add_lang_icons_css ()
 	do_action('qtranslate_head_add_css');
 	echo '</style>'.PHP_EOL;
 }
-//add_filter('wp_head', 'qtranxf_add_lang_icons_css');
 
 function qtranxf_head(){
 	global $q_config;
@@ -50,7 +47,7 @@ function qtranxf_head(){
 		//if($language != qtranxf_getLanguage())//standard requires them all
 		echo '<link hreflang="'.$language.'" href="'.qtranxf_convertURL('',$language,false,true).'" rel="alternate" />'.PHP_EOL;
 	}
-	qtranxf_add_css();
+	//qtranxf_add_css();// Since 3.2.5 no longer needed
 }
 add_action('wp_head', 'qtranxf_head');
 
@@ -511,6 +508,20 @@ function qtranxf_filter_postmeta($original_value, $object_id, $meta_key = '', $s
 		return array();
 }
 add_filter('get_post_metadata', 'qtranxf_filter_postmeta', 5, 4);
+
+function qtranxf_checkCanonical($redirect_url, $requested_url) {
+	global $q_config;
+	//if(!qtranxf_can_redirect()) return $redirect_url;// WP already check this
+	$lang = $q_config['language'];
+	// fix canonical conflicts with language urls
+	$redirect_url_lang = qtranxf_convertURL($redirect_url,$lang);
+	//$requested_url_lang = qtranxf_convertURL($requested_url,$lang);
+	//qtranxf_dbg_log('qtranxf_checkCanonical: redirect vs requested:' . PHP_EOL . $redirect_url . PHP_EOL . $requested_url. PHP_EOL . 'redirect_lang vs requested_lang:' . PHP_EOL . $redirect_url_lang . PHP_EOL . $requested_url_lang, 'novar');//. PHP_EOL . '$q_config[url_info]: ', $q_config['url_info']);
+	//if(qtranxf_convertURL($redirect_url)==qtranxf_convertURL($requested_url))
+	//if($redirect_url_lang==$requested_url_lang) return false; //WP calls this only if $redirect_url != $requested_url, we only need to make sure to return language encoded url
+	return $redirect_url_lang;
+}
+add_filter('redirect_canonical', 'qtranxf_checkCanonical', 10, 2);
 
 /*
 function qtranxf_translate($text){
