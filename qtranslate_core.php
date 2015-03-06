@@ -313,7 +313,7 @@ function qtranxf_parse_language_info(&$url_info, $link=false) {
 		$lang = null;
 		switch($q_config['url_mode']) {
 			case QTX_URL_PATH: // pre path
-				if(preg_match('!^([a-z]{2})[/\?#&$]!i',$url_info['wp-path'],$match)) {
+				if(preg_match('!^([a-z]{2})([/\?#&]|$)!i',$url_info['wp-path'],$match)) {
 					$lang = qtranxf_resolveLangCase($match[1],$doredirect);
 					if($lang){
 						$url_info['lang_url'] = $lang;
@@ -957,7 +957,7 @@ function qtranxf_get_url_for_language($url, $lang, $showLanguage) {
 		case QTX_URL_PATH: // pre path
 			// might already have language information
 			//qtranxf_dbg_echo('qtranxf_convertURL:url='.$url);
-			if(preg_match('!^([a-z]{2})[/\?#&$]!i',$url,$match)) {
+			if(preg_match('!^([a-z]{2})([/\?#&]|$)!i',$url,$match)) {
 				if(qtranxf_isEnabled($match[1])) {
 					// found language information, remove it
 					$url = ltrim(substr($url, 2),'/');
