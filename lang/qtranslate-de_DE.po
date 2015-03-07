@@ -32,7 +32,7 @@ msgstr "Die kompatible Einstellungen von %s sind in %s importiert worden. Weiter
 #: admin/activation_hook.php:42
 #, php-format
 msgid "You may import/export compatible settings from %s to %s on Settings/Languages configuration page, once %s is running.%sContinue%s"
-msgstr ""
+msgstr "Sie können kompatible Einstellungen von %s zu %s in der Einstellungen/Sprachen Konfigurantionsseite importieren/exportieren, sobald %s läuft. %sWeiter%s"
 
 #: admin/activation_hook.php:135
 #, php-format
