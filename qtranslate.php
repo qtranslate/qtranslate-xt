@@ -544,8 +544,8 @@ function qtranxf_set_config_default()
 	$q_config['windows_locale']['zh'] = "Chinese";
 	$q_config['windows_locale']['zu'] = "Zulu";
 
-	$q_config['disable_header_css'] = false;
 	$q_config['use_secure_cookie'] = false;
+	$q_config['header_css_on'] = true;
 
 	$q_config = apply_filters('qtranslate_config_default', $q_config);
 }

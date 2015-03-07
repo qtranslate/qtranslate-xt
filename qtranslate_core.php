@@ -88,7 +88,7 @@ function qtranxf_init_language() {
 
 	// Filter all options for language tags
 	if($q_config['url_info']['doing_front_end']) {
-		switch($q_config['filter_option_mode']){
+		switch($q_config['filter_options_mode']){
 			case QTX_FILTER_OPTIONS_ALL:
 				$alloptions = wp_load_alloptions();
 				foreach($alloptions as $option => $value) {
@@ -540,6 +540,25 @@ function qtranxf_init() {
 	do_action('qtranslate_init');
 }
 
+function qtranxf_front_header_css() {
+	global $q_config;
+	if( isset($q_config['header_css']) && !empty($q_config['header_css']) )
+		return $q_config['header_css'];
+	return qtranxf_front_header_css_default();
+}
+
+function qtranxf_front_header_css_default()
+{
+	global $q_config;
+	$flag_location=qtranxf_flag_location();
+	$css = '';
+	foreach($q_config['enabled_languages'] as $lang) 
+	{
+		$css .= '.qtranxs_flag_'.$lang.' {background-image: url('.$flag_location.$q_config['flag'][$lang].'); background-repeat: no-repeat;}'.PHP_EOL;
+	}
+	return $css;
+}
+
 function qtranxf_flag_location() {
 	global $q_config;
 	return trailingslashit(WP_CONTENT_URL).$q_config['flag_location'];
@@ -569,27 +588,27 @@ function qtranxf_load_option_flag_location($nm) {
 	}
 }
 
-function qtranxf_validateBool($var, $default) {
-	if($var==='0') return false; elseif($var==='1') return true; else return $default;
+function qtranxf_validateBool($var, $default_value) {
+	if($var==='0') return false; elseif($var==='1') return true; else return $default_value;
 }
 
-function qtranxf_load_option($nm, $default=null) {
+function qtranxf_load_option($nm, $default_value=null) {
 	global $q_config;
 	$val = get_option('qtranslate_'.$nm);
 	if($val===FALSE){
-		if(is_null($default)) return;
-		$val = $default;
+		if(is_null($default_value)) return;
+		$val = $default_value;
 	}
 	$q_config[$nm]=$val;
 }
 
-function qtranxf_load_option_array($nm, $default=null) {
+function qtranxf_load_option_array($nm, $default_value=null) {
 	global $q_config;
 	$vals = get_option('qtranslate_'.$nm);
 	if($vals === FALSE){
-		if(is_null($default)) return;
-		if(is_string($default)) $vals = preg_split('/[\s,]+/',$default,null,PREG_SPLIT_NO_EMPTY);
-		else if(is_array($default)) $vals = $default;
+		if(is_null($default_value)) return;
+		if(is_string($default_value)) $vals = preg_split('/[\s,]+/',$default_value,null,PREG_SPLIT_NO_EMPTY);
+		else if(is_array($default_value)) $vals = $default_value;
 	}
 	if(!is_array($vals)) return;
 
@@ -604,10 +623,10 @@ function qtranxf_load_option_array($nm, $default=null) {
 	$q_config[$nm]=$vals;
 }
 
-function qtranxf_load_option_bool( $nm, $default=null ) {
+function qtranxf_load_option_bool( $nm, $default_value=null ) {
 	global $q_config;
 	$val = get_option('qtranslate_'.$nm);
-	if($val===FALSE){ if(!is_null($default)) $q_config[$nm] = $default; }
+	if($val===FALSE){ if(!is_null($default_value)) $q_config[$nm] = $default_value; }
 	elseif($val==='0') $q_config[$nm] = false;
 	elseif($val==='1') $q_config[$nm] = true;
 }
@@ -668,11 +687,13 @@ function qtranxf_loadConfig() {
 	qtranxf_load_option_bool('show_displayed_language_prefix');
 	qtranxf_load_option_bool('auto_update_mo');
 	qtranxf_load_option_bool('hide_default_language');
-	qtranxf_load_option_bool('disable_header_css');
+	qtranxf_load_option_bool('header_css_on');
 	qtranxf_load_option_bool('use_secure_cookie');
 
-	qtranxf_load_option('filter_option_mode',QTX_FILTER_OPTIONS_ALL);
-	if($q_config['filter_option_mode'] == QTX_FILTER_OPTIONS_LIST){
+	qtranxf_load_option('header_css');
+
+	qtranxf_load_option('filter_options_mode',QTX_FILTER_OPTIONS_ALL);
+	if($q_config['filter_options_mode'] == QTX_FILTER_OPTIONS_LIST){
 		qtranxf_load_option_array('filter_options',QTX_FILTER_OPTIONS_DEFAULT);
 	}
 
@@ -1401,7 +1422,7 @@ function qtranxf_showAllSeparated($text) {
 function qtranxf_add_css ()
 {
 	global $q_config;
-	if (is_admin() || !$q_config['disable_header_css'])
+	if (is_admin() || $q_config['header_css_on'])
 	{
 		wp_register_style( 'qtranslate-style', plugins_url('qtranslate.css', __FILE__), array(), QTX_VERSION );
 		wp_enqueue_style( 'qtranslate-style' );

@@ -240,10 +240,11 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 == Changelog ==
 
 = 3.2.6 =
+* Feature: replaced option 'Remove plugin CSS' with 'Head inline CSS'.
 * Fix: problem with url like `site.com/en` without slash.
 
 = 3.2.5 =
-* Feature: options of similar functionality of mqTranslate: 'Remove plugin CSS', 'Cookie Settings' and 'Translation of options table'. Thanks to [Christophe](https://github.com/xhaleera)) for the initial [pull](https://github.com/qTranslate-Team/qtranslate-x/pull/63).
+* Feature: options of similar functionality of mqTranslate: 'Remove plugin CSS', 'Cookie Settings' and 'Translation of options'. Thanks to [Christophe](https://github.com/xhaleera)) for the initial [pull](https://github.com/qTranslate-Team/qtranslate-x/pull/63).
 * Improvement: `qtrans_getLanguageName` added to option 'Compatibility Functions'.
 * Fix: url like `site.com/en?arg=123` without slash before question mark now works correctly.
 

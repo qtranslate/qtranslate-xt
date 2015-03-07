@@ -298,7 +298,7 @@ var qTranslateX=function(pg)
 		//c('addContentHook: inpField.value='+inpField.value);
 		h.contents=qtranxj_split(inpField.value);//keep neutral text from older times, just in case.
 		                        //inpField.tagName
-		h.mlContentField=qtranxj_ce('input', {name: inpField.name, type: 'hidden', className: 'hidden', value: inpField.value}, form, true);
+		h.mlContentField=qtranxj_ce('input', {name: inpField.name, type: 'hidden', className: 'hidden', value: inpField.value}, form);
 		if(!separator){
 			if(inpField.tagName==='TEXTAREA')
 				separator='<';

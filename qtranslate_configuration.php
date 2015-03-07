@@ -58,11 +58,12 @@ function qtranxf_reset_config()
 	delete_option('qtranslate_editor_mode');
 	delete_option('qtranslate_custom_fields');
 	delete_option('qtranslate_widget_css'); // obsolete option
-	delete_option('qtranslate_disable_header_css');
 	delete_option('qtranslate_use_secure_cookie');
 	delete_option('qtranslate_disable_client_cookies');
-	delete_option('qtranslate_filter_option_mode');
+	delete_option('qtranslate_filter_options_mode');
 	delete_option('qtranslate_filter_options');
+	delete_option('qtranslate_header_css_on');
+	delete_option('qtranslate_header_css');
 	if(isset($_POST['qtranslate_reset3'])) {
 		delete_option('qtranslate_term_name');
 	}
@@ -90,7 +91,7 @@ add_action('qtranslate_init_begin','qtranxf_init_admin');
 
 function qtranxf_update_option( $nm, $default_value=null ) {
 	global $q_config;
-	if( !isset($q_config[$nm]) || empty($q_config[$nm]) || ($default_value && $default_value==$q_config[$nm]) ){
+	if( !isset($q_config[$nm]) || empty($q_config[$nm]) || (!is_null($default_value) && $default_value===$q_config[$nm]) ){
 		delete_option('qtranslate_'.$nm);
 	}else{
 		update_option('qtranslate_'.$nm, $q_config[$nm]);
@@ -135,8 +136,8 @@ function qtranxf_saveConfig() {
 	qtranxf_update_option('text_field_filters');
 	qtranxf_update_option('custom_pages');
 
-	qtranxf_update_option('filter_option_mode',QTX_FILTER_OPTIONS_ALL);
-	//if($q_config['filter_option_mode'] == QTX_FILTER_OPTIONS_LIST)
+	qtranxf_update_option('filter_options_mode',QTX_FILTER_OPTIONS_ALL);
+	//if($q_config['filter_options_mode'] == QTX_FILTER_OPTIONS_LIST)
 	qtranxf_update_option('filter_options',explode(' ',QTX_FILTER_OPTIONS_DEFAULT));
 
 	qtranxf_update_option_bool('detect_browser_language');
@@ -145,9 +146,11 @@ function qtranxf_saveConfig() {
 	qtranxf_update_option_bool('auto_update_mo');
 	qtranxf_update_option_bool('hide_default_language');
 	qtranxf_update_option_bool('qtrans_compatibility');
-	qtranxf_update_option_bool('disable_header_css');
 	qtranxf_update_option_bool('use_secure_cookie');
 	qtranxf_update_option_bool('disable_client_cookies');
+
+	qtranxf_update_option_bool('header_css_on');
+	qtranxf_update_option('header_css', qtranxf_front_header_css_default());
 
 	do_action('qtranslate_saveConfig');
 }
@@ -559,11 +562,20 @@ function qtranxf_updateSetting($var, $type = QTX_STRING, $def = null) {
 		case QTX_LANGUAGE:
 		case QTX_STRING:
 			if(!isset($_POST[$var])) return false;
-			if($type == QTX_URL) $_POST[$var] = trailingslashit($_POST[$var]);
-			else if($type == QTX_LANGUAGE && !qtranxf_isEnabled($_POST[$var])) return false;
-			if(isset($q_config[$var]) && $q_config[$var] == $_POST[$var]) return false;
-			$q_config[$var] = $_POST[$var];
-			update_option('qtranslate_'.$var, $q_config[$var]);
+			$val=$_POST[$var];
+			if($type == QTX_URL) $val = trailingslashit($val);
+			else if($type == QTX_LANGUAGE && !qtranxf_isEnabled($val)) return false;
+			//standardize multi-line string
+			$lns = preg_split('/\r?\n\r?/',$val);
+			$val = implode(PHP_EOL,$lns);
+			if(isset($q_config[$var])){
+				if($q_config[$var] === $val) return false;
+			}elseif(!is_null($def)){
+				if(empty($val) || $def === $val) return false;
+			}
+			if(empty($val) && $def) $val = $def;
+			$q_config[$var] = $val;
+			qtranxf_update_option($var, $def);
 			return true;
 		case QTX_ARRAY:
 			if(!isset($_POST[$var])) return false;
@@ -742,10 +754,12 @@ function qtranxf_conf() {
 		qtranxf_updateSetting('custom_field_classes', QTX_ARRAY);
 		qtranxf_updateSetting('text_field_filters', QTX_ARRAY);
 		qtranxf_updateSetting('custom_pages', QTX_ARRAY);
-		qtranxf_updateSetting('disable_header_css', QTX_BOOLEAN);
 		qtranxf_updateSetting('use_secure_cookie', QTX_BOOLEAN);
-		qtranxf_updateSetting('filter_option_mode', QTX_INTEGER);
+		qtranxf_updateSetting('filter_options_mode', QTX_INTEGER);
 		qtranxf_updateSetting('filter_options', QTX_ARRAY);
+
+		qtranxf_updateSetting('header_css_on', QTX_BOOLEAN);
+		qtranxf_updateSetting('header_css', QTX_STRING, qtranxf_front_header_css_default());
 
 		if(isset($_POST['update_mo_now']) && $_POST['update_mo_now']=='1' && qtranxf_updateGettextDatabases(true))
 			$message[] = __('Gettext databases updated.', 'qtranslate');
@@ -1095,11 +1109,13 @@ function qtranxf_conf() {
 				</td>
 			</tr>
 			<tr valign="top">
-				<th scope="row"><?php _e('Remove plugin CSS', 'qtranslate'); ?></th>
+				<th scope="row"><?php _e('Head inline CSS', 'qtranslate'); ?></th>
 				<td>
-					<label for="disable_header_css"><input type="checkbox" name="disable_header_css" id="disable_header_css" value="1"<?php checked($q_config['disable_header_css']); ?> /> <?php _e('Remove inline CSS code added by plugin from the head of front-end pages.', 'qtranslate'); ?></label>
+					<label for="header_css_on"><input type="checkbox" name="header_css_on" id="header_css_on" value="1"<?php checked($q_config['header_css_on']); ?> />&nbsp;<?php _e('CSS code added by plugin in the head of front-end pages:', 'qtranslate'); ?></label>
 					<br />
-					<small><?php printf(__('This will also remove the default common part of style applied for all widgets "%s", which can be then further customized either via widget options, or through one of the custom styles.', 'qtranslate'),__('qTranslate Language Chooser', 'qtranslate')); ?></small>
+					<textarea id="header_css" name="header_css" style="width:100%"><?php echo esc_attr(qtranxf_front_header_css()); ?></textarea>
+					<br />
+					<small><?php echo __('To reset to default, clear the text.', 'qtranslate').' '.__('To disable this inline CSS, clear the check box.', 'qtranslate'); ?></small>
 				</td>
 			</tr>
 			<tr valign="top">
@@ -1135,11 +1151,11 @@ function qtranxf_conf() {
 				</td>
 			</tr>
 			<tr valign="top">
-				<th scope="row"><?php _e('Translation of options table', 'qtranslate'); ?></th>
+				<th scope="row"><?php _e('Translation of options', 'qtranslate'); ?></th>
 				<td>
-					<label for="filter_option_mode_all"><input type="radio" name="filter_option_mode" id="filter_option_mode_all" value=<?php echo '"'.QTX_FILTER_OPTIONS_ALL.'"'; checked($q_config['filter_option_mode'],QTX_FILTER_OPTIONS_ALL); ?> /> <?php _e('Filter all WordPress options for translation at front-end. It may hurt performance of the site, but ensures that all options are translated.', 'qtranslate'); ?> </label>
+					<label for="filter_options_mode_all"><input type="radio" name="filter_options_mode" id="filter_options_mode_all" value=<?php echo '"'.QTX_FILTER_OPTIONS_ALL.'"'; checked($q_config['filter_options_mode'],QTX_FILTER_OPTIONS_ALL); ?> /> <?php _e('Filter all WordPress options for translation at front-end. It may hurt performance of the site, but ensures that all options are translated.', 'qtranslate'); ?> </label>
 					<br />
-					<label for="filter_option_mode_list"><input type="radio" name="filter_option_mode" id="filter_option_mode_list" value=<?php echo '"'.QTX_FILTER_OPTIONS_LIST.'"'; checked($q_config['filter_option_mode'],QTX_FILTER_OPTIONS_LIST); ?> /> <?php _e('Translate only options listed below (for experts only):', 'qtranslate'); ?> </label>
+					<label for="filter_options_mode_list"><input type="radio" name="filter_options_mode" id="filter_options_mode_list" value=<?php echo '"'.QTX_FILTER_OPTIONS_LIST.'"'; checked($q_config['filter_options_mode'],QTX_FILTER_OPTIONS_LIST); ?> /> <?php _e('Translate only options listed below (for experts only):', 'qtranslate'); ?> </label>
 					<br />
 					<input type="text" name="filter_options" id="qtranxs_filter_options" value="<?php echo isset($q_config['filter_options']) ? implode(' ',$q_config['filter_options']) : QTX_FILTER_OPTIONS_DEFAULT; ?>" style="width:100%"><br/>
 					<small><?php printf(__('By default, all options are filtered to be translated at front-end for the sake of simplicity of configuration. However, for a developed site, this may cause a considerable performance degradation. Normally, there are very few options, which actually need a translation. You may simply list them above to minimize the performance impact, while still getting translations needed. Options names must match the field "%s" of table "%s" of WordPress database. A minimum common set of option, normally needed a translation, is already entered in the list above as a default example. Option names in the list may contain wildcard with symbol "%s".', 'qtranslate'), 'option_name', 'options', '%'); ?></small>

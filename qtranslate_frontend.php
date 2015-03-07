@@ -20,29 +20,23 @@
 // Exit if accessed directly
 if ( !defined( 'ABSPATH' ) ) exit;
 
-function qtranxf_add_lang_icons_css ()
-{
-	global $q_config;
-	if( $q_config['disable_header_css'] )
-		return;
-	$flag_location=qtranxf_flag_location();
-	echo '<style type="text/css">'.PHP_EOL;
-	foreach($q_config['enabled_languages'] as $lang) 
-	{
-		echo '.qtranxs_flag_'.$lang.' {background-image: url('.$flag_location.$q_config['flag'][$lang].'); background-repeat: no-repeat;}'.PHP_EOL;
-	}
-	do_action('qtranslate_head_add_css');
-	echo '</style>'.PHP_EOL;
-}
-
 function qtranxf_head(){
 	global $q_config;
-	$lang=$q_config['language'];
-	//echo "\n<meta http-equiv=\"Content-Language\" content=\"".str_replace('_','-',$q_config['locale'][$lang])."\" />\n"; //obsolete way 
-	qtranxf_add_lang_icons_css();
-	// skip the rest if 404 //what if the menu is still shown through 404.php?
-	//if(is_404()) return;
+
+	if( $q_config['header_css_on'] ){
+		$header_css = qtranxf_front_header_css();
+		echo '<style type="text/css">'.PHP_EOL;
+		echo $header_css;
+		echo '</style>'.PHP_EOL;
+	}
+	do_action('qtranslate_head_add_css');//not really needed?
+
+	// skip the rest if 404
+	if(is_404()) return;
+
 	// set links to translations of current page
+	//$lang=$q_config['language'];
+	//echo "\n<meta http-equiv=\"Content-Language\" content=\"".str_replace('_','-',$q_config['locale'][$lang])."\" />\n"; //obsolete way 
 	foreach($q_config['enabled_languages'] as $language) {
 		//if($language != qtranxf_getLanguage())//standard requires them all
 		echo '<link hreflang="'.$language.'" href="'.qtranxf_convertURL('',$language,false,true).'" rel="alternate" />'.PHP_EOL;
