@@ -363,7 +363,7 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 
 ### 2.9.8.1 alpha ###
 * URL of a custom menu item gets converted to active language, unless query argument 'setlang=no' is added.
-* filter 'get_search_form' is no longer need, since we adjusted home_url() [issue ###8](https://github.com/qTranslate-Team/qtranslate-x/issues/8)
+* filter 'get_search_form' is no longer need, since we adjusted home_url() [issue #8](https://github.com/qTranslate-Team/qtranslate-x/issues/8)
 
 ### 2.9.8.0 alpha ###
 * [plugin integration design](https://wordpress.org/support/topic/plugin-integration-1)
