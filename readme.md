@@ -1,4 +1,4 @@
-=== qTranslate X ===
+### qTranslate X ###
 Developed by: qTranslate Team based on original code by Qian Qin
 Contributors: johnclause, chineseleper, Vavooon
 Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, translation
@@ -11,7 +11,7 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 Adds user-friendly multilingual content management and translation support. It is an up-to-date fork of qTranslate with many additional features.
 
-== Description ==
+## Description ##
 
 This plugin is a descendant of [qTranslate](https://wordpress.org/plugins/qtranslate/ "Original qTranslate plugin"), which has apparently been abandoned by the original author, [Qian Qin](http://www.qianqin.de/qtranslate/ "the original author of qTranslate"). 
 
@@ -68,7 +68,7 @@ We thank our sponsors for persistent help and support:
 * [OptimWise](http://optimwise.com "OptimWise web design")
 * [pictibe Werbeagentur](http://www.pictibe.de "pictibe Werbeagentur Köln Webdesign")
 
-== Installation ==
+## Installation ##
 
 Installation of this plugin is no different from any other plugin:
 
@@ -83,7 +83,7 @@ Installation of this plugin is no different from any other plugin:
 1. Configure theme custom fields to be translatable if needed (Settings -> Languages: "Custom Fields").
 1. Upgrading from [qTranslate](https://wordpress.org/plugins/qtranslate/ "qTranslate original plugin") required no additional actions, qTranslate-X will continue to work from the database entries of qTranslate. One may also go back to qTranslate at any time. Upgrading from other qTranslate forks may require re-configuration of the languages and taxonomies names, unless you rename corresponding database entries directly.
 
-== Frequently Asked Questions ==
+## Frequently Asked Questions ##
 
 = Is my language supported or included? =
 
@@ -225,19 +225,19 @@ The correct strict answer would be 'No', although some sites may never notice it
 One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qtranslate/faq) and support forum [here](https://wordpress.org/support/plugin/qtranslate).
 
 
-== Upgrade Notice ==
+## Upgrade Notice ##
 
 * Upgrading from [qTranslate](https://wordpress.org/plugins/qtranslate/ "qTranslate original plugin") and [zTranslate](https://wordpress.org/plugins/ztranslate/ "zTranslate plugin") requires no additional actions, qTranslate-X will continue to work from the database entries of qTranslate. One may also go back to qTranslate at any time.
 * Upgrading from other qTranslate forks also painless with an additional step of configuration import. One may also go back at any time using configuration export.
 * Former page and post translations are untouched and preserved in any case.
 * Upgrading from other multilingual frameworks will require custom re-configuration. We suggest to search for a plugin, which may be already implemented to transfer the translations to qTranslate or to qTranslate-X. If a plugin works for one, it should work for other too, since qTranslate-X and qTranslate share the same database structures.
 
-== Screenshots ==
+## Screenshots ##
 
 1. Editing screen showing the buttons to switch the languages. Pressing a button does not make a call to the server, the editing happens locally, until "Update" button is pressed, the same way as it is for one language.
 2. Language Management Interface
 
-== Changelog ==
+## Changelog ##
 
 = 3.2.7 =
 * Translation: Dutch (nl_NL) po/mo updated, thanks to Marius Siroen.
@@ -476,7 +476,7 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 * added 'post_title' filter to translate all titles fetched for display purpose
 * fixed problem with comment date display in some themes
 
-== Known Issues ==
+## Known Issues ##
 
 * Turn on option "Compatibility Functions", for any theme or plugin, which claims its compatibility with former qTranslate.
 * If other plugin installs a custom TinyMCE editor on a translatable field served by qTranslate-X, then all kind of problems start to happen. Examples of 'offending' plugins are: [Crayon Syntax Highlighter](https://wordpress.org/plugins/crayon-syntax-highlighter/), [Fusion Page Builder](http://www.theme-fusion.com/), [Page Builder by SiteOrigin](https://wordpress.org/plugins/siteorigin-panels/), [Revolution Slider](http://revolution.themepunch.com/), [Rich Text Tags](https://wordpress.org/plugins/rich-text-tags/), [Visual Composer](http://vc.wpbakery.com/), [WP Editor](https://wordpress.org/plugins/wp-editor/), [WR PageBuilder](https://wordpress.org/plugins/wr-pagebuilder). We are looking into possibilities to enable integration with those plugins, meanwhile [Tiny MCE Advanced](https://wordpress.org/plugins/tinymce-advanced/) seems to be compatible as reported by some users.
@@ -490,19 +490,19 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 * Widget 'qTranslate Language Chooser', page `/wp-admin/widgets.php`: after saving its options, the content of 'Widget CSS' text area gets displayed outside of the text area. However, all options are saved ok, as a workaround, you need to refresh the whole page before doing the next editing action.
 * Title field is overlaid with the prompt "Enter title here", after switching the language from another language with empty value of title. [Watch Video](http://youtu.be/o3HH65bEZ4s) reported by [fotkin](https://wordpress.org/support/profile/fotkin).
 
-== Credentials ==
+## Credentials ##
 
 * The code of this plugin mostly originally based on [qTranslate](https://wordpress.org/plugins/qtranslate/ "qTranslate original plugin") and [zTranslate](https://wordpress.org/plugins/ztranslate/ "zTranslate fork").
 * Most flags in flags directory are made by Luc Balemans and downloaded from [FOTW Flags Of The World website](http://flagspot.net/flags/ "FOTW Flags Of The World website")
 
-== Desirable Unimplemented Features ==
+## Desirable Unimplemented Features ##
 
 * Add ability to put Language Switching buttons on other editors besides, post, pages and taxonomies.
 * "Quick Edit" action in category or tag list pages will update the default language only.
 * If a language was switched on a page or post, but no edits were done, browser sometimes still complains about page changes, when leaving page.
 * Full screen editor mode does not have language switch buttons (not applicable in WP 4.1 any more).
 
-== Former "Known Issues" now Resolved ==
+## Former "Known Issues" now Resolved ##
 
 * [Resolved by new plugin [WooCommerce & qTranslate-X](https://wordpress.org/plugins/woocommerce-qtranslate-x/) for [WooCommerce - excelling eCommerce](https://wordpress.org/plugins/woocommerce/)] Turn on option "Compatibility Functions", if you use [WooCommerce](https://wordpress.org/plugins/woocommerce/) framework plugins, like [IM8 qTranslate WooCommerce](https://wordpress.org/plugins/im8-qtranslate-woocommerce/), [qTranslate support for WooCommerce](https://wordpress.org/plugins/qtranslate-support-for-woocommerce/), [WooCommerce-qTML](https://wordpress.org/plugins/woocommerce-qtml/), for example.
 * Editing of menu item description does not work properly on page `/wp-admin/nav-menus.php`.
