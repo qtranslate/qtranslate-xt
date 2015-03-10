@@ -1410,7 +1410,7 @@ function qtranxf_add_css ()
 	}
 }
 */
-
+/* since 3.2.7 - removed
 function qtranxf_optionFilter($do='enable') {//do we need it?
 	//qtranxf_dbg_echo('qtranxf_optionFilter: do='.$do);
 	$options = array(	'option_widget_pages',
@@ -1432,3 +1432,4 @@ function qtranxf_optionFilter($do='enable') {//do we need it?
 			remove_filter($option, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
 	}
 }
+*/

@@ -453,7 +453,7 @@ function qtranxf_admin_head() {
 	//qtranxf_add_css();// Since 3.2.5 no longer needed
 	qtranxf_add_admin_css();
 	qtranxf_add_admin_head_js();
-	qtranxf_optionFilter('disable');//why this is here?
+	//since 3.2.7 qtranxf_optionFilter('disable');//why this is here?
 }
 add_action('admin_head', 'qtranxf_admin_head');
 
@@ -1153,7 +1153,7 @@ function qtranxf_conf() {
 			<tr valign="top">
 				<th scope="row"><?php _e('Translation of options', 'qtranslate'); ?></th>
 				<td>
-					<label for="filter_options_mode_all"><input type="radio" name="filter_options_mode" id="filter_options_mode_all" value=<?php echo '"'.QTX_FILTER_OPTIONS_ALL.'"'; checked($q_config['filter_options_mode'],QTX_FILTER_OPTIONS_ALL); ?> /> <?php _e('Filter all WordPress options for translation at front-end. It may hurt performance of the site, but ensures that all options are translated.', 'qtranslate'); ?> </label>
+					<label for="filter_options_mode_all"><input type="radio" name="filter_options_mode" id="filter_options_mode_all" value=<?php echo '"'.QTX_FILTER_OPTIONS_ALL.'"'; checked($q_config['filter_options_mode'],QTX_FILTER_OPTIONS_ALL); ?> /> <?php _e('Filter all WordPress options for translation at front-end. It may hurt performance of the site, but ensures that all options are translated.', 'qtranslate'); ?> <?php _e('Starting from version 3.2.5, only options with multilingual content get filtered, which should help on performance issues.', 'qtranslate'); ?></label>
 					<br />
 					<label for="filter_options_mode_list"><input type="radio" name="filter_options_mode" id="filter_options_mode_list" value=<?php echo '"'.QTX_FILTER_OPTIONS_LIST.'"'; checked($q_config['filter_options_mode'],QTX_FILTER_OPTIONS_LIST); ?> /> <?php _e('Translate only options listed below (for experts only):', 'qtranslate'); ?> </label>
 					<br />

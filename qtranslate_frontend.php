@@ -389,12 +389,19 @@ function qtranxf_excludeUntranslatedPostComments($clauses, &$q/*WP_Comment_Query
 	return $clauses;
 }
 
-//this does not help, since they cut additional query_vars before generating cache key
-//function qtranxf_pre_get_comments(&$query) //WP_Comment_Query &$this
-//{
-//	$query->query_vars[QTX_COOKIE_NAME_FRONT] = qtranxf_getLanguage();
-//}
-//add_action( 'pre_get_comments', 'qtranxf_pre_get_comments' );
+/*
+//todo in response to https://github.com/qTranslate-Team/qtranslate-x/issues/17
+function qtranxf_add_query_language(&$query) //WP_Comment_Query &$this
+{
+	global $q_config;
+	//$query->query_vars[QTX_COOKIE_NAME_FRONT] = qtranxf_getLanguage();//this does not help, since they cut additional query_vars before generating cache key
+	$lang = $q_config['language'];//qtranxf_getLanguage();
+	//$query->query_vars['meta_query'] = array( 'key' => 'qtranxf_language_' . $lang, 'compare' => 'NOT EXISTS' );//this cannot be right?
+}
+if($q_config['hide_untranslated']){
+	add_action( 'pre_get_comments', 'qtranxf_add_query_language' );
+}
+*/
 
 //function qtranxf_get_attachment_image_attributes($attr, $attachment, $size)
 function qtranxf_get_attachment_image_attributes($attr, $attachment=null, $size=null)
@@ -555,7 +562,7 @@ function qtranxf_translate($text){
 */
 
 
-qtranxf_optionFilter();
+//qtranxf_optionFilter();
 
 //add_filter('wp_head', 'qtranxf_add_css');
 
