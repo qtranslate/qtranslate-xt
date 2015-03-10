@@ -43,10 +43,11 @@ The following plugins provide integration of qTranslate-X with other popular plu
 - [WooCommerce & qTranslate-X](https://wordpress.org/plugins/woocommerce-qtranslate-x/) for [WooCommerce - excelling eCommerce](https://wordpress.org/plugins/woocommerce/). [[GitHub](https://github.com/qTranslate-Team/woocommerce-qtranslate-x)]
 - [Wordpress SEO & qTranslate-X](https://wordpress.org/plugins/wp-seo-qtranslate-x/) for [WordPress SEO by Yoast](https://wordpress.org/plugins/wordpress-seo/). [[GitHub](https://github.com/qTranslate-Team/wp-seo-qtranslate-x)]
 
-Below is the list of plugins recently made compatible, as reported by users:
+Below is the list of plugins recently made compatible with qTranslate-X without an additional integrating plugin, as reported by users:
 
 - [ALO EasyMail Newsletter](https://wordpress.org/support/plugin/alo-easymail)
 - [BuddyPress](https://wordpress.org/plugins/buddypress/) and its satellites.
+- [Cookie Law Info](https://wordpress.org/plugins/cookie-law-info/)
 - [Google XML Sitemaps v3 for qTranslate](https://wordpress.org/plugins/google-xml-sitemaps-v3-for-qtranslate/)
 - [Groups](https://wordpress.org/plugins/groups/)
 - [Multiple content blocks](https://wordpress.org/plugins/multiple-content-blocks/)
