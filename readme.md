@@ -331,7 +331,7 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 ### 2.9.8.9 alpha ###
 * Feature: editing of menu item description on page /wp-admin/nav-menus.php.
 * Feature: hooks for integration with other plugins
-* Improvement: safer comment query with cache support when 'Hide Untranslated Content' is on. [issue ###17](https://github.com/qTranslate-Team/qtranslate-x/issues/17)
+* Improvement: safer comment query with cache support when 'Hide Untranslated Content' is on. [issue #17](https://github.com/qTranslate-Team/qtranslate-x/issues/17)
 * Compatibility: [PS Disable Auto Formatting](https://wordpress.org/plugins/ps-disable-auto-formatting/). [WP issue](https://wordpress.org/support/topic/incompatibility-with-ps-disable-auto-formatting)
 * Maintenance: .pot and .po files updated with new untranslated strings.
 
@@ -370,7 +370,7 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 * po/mo files are updated. Translators needed.
 
 ### 2.9.7.9 beta ###
-* more fixes for [issue ###5](https://github.com/qTranslate-Team/qtranslate-x/issues/5).
+* more fixes for [issue #5](https://github.com/qTranslate-Team/qtranslate-x/issues/5).
 
 ### 2.9.7.8 beta ###
 * fix for wrong language on [AJAX requests](https://wordpress.org/support/topic/qtranslate-x-im8-qtranslate-woocommerce-bug)
