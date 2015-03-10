@@ -3,7 +3,7 @@
 Plugin Name: qTranslate-X
 Plugin URI: http://wordpress.org/plugins/qtranslate-x/
 Description: Adds user-friendly and database-friendly multilingual content support into WordPress.
-Version: 3.2.6
+Version: 3.2.7
 Author: qTranslate Team
 Author URI: http://qtranslatexteam.wordpress.com/about
 Tags: multilingual, multi, language, admin, tinymce, Polyglot, bilingual, widget, switcher, professional, human, translation, service, qTranslate, zTranslate, mqTranslate, qTranslate Plus, WPML
@@ -105,7 +105,7 @@ if ( ! defined( 'QTRANSLATE_FILE' ) ) {
 	define( 'QTRANSLATE_FILE', __FILE__ );
 }
 
-define('QTX_VERSION','3.2.6');
+define('QTX_VERSION','3.2.7');
 
 /* DEFAULT CONFIGURATION PART BEGINS HERE */
 
@@ -132,6 +132,10 @@ define('QTX_STRFTIME',	4);
 define('QTX_FILTER_OPTIONS_ALL', 0);
 define('QTX_FILTER_OPTIONS_LIST', 1);
 define('QTX_FILTER_OPTIONS_DEFAULT','blogname blogdescription widget_%');
+
+define('QTX_EDITOR_MODE_LSB', 0);//Language Switching Buttons
+define('QTX_EDITOR_MODE_RAW', 1);
+define('QTX_EDITOR_MODE_SINGLGE', 2);
 
 define('QTX_COOKIE_NAME_FRONT','qtrans_front_language');
 define('QTX_COOKIE_NAME_ADMIN','qtrans_admin_language');
@@ -174,7 +178,7 @@ function qtranxf_set_config_default()
 	// sets default url mode 
 	$q_config['url_mode'] = QTX_URL_PATH;
 
-	$q_config['editor_mode'] = false;//Language Switching Buttons on/off etc., will be integer later
+	$q_config['editor_mode'] = QTX_EDITOR_MODE_LSB;
 
 	/*
 	// pre-Domain Endings - for future use

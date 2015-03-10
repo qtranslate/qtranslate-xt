@@ -225,6 +225,35 @@ function qtranxf_wp_setup_nav_menu_item($menu_item) {
 add_filter('wp_setup_nav_menu_item', 'qtranxf_wp_setup_nav_menu_item');
 */
 
+function qtranxf_filter_options(){
+	global $q_config, $wpdb;
+	$where;
+	switch($q_config['filter_options_mode']){
+		case QTX_FILTER_OPTIONS_ALL:
+			$where=' WHERE autoload=\'yes\' AND (option_value LIKE \'%![:__!]%\' ESCAPE \'!\' OR option_value LIKE \'%<!--:__-->%\')';
+			//$alloptions = wp_load_alloptions();
+			//foreach($alloptions as $option => $value) {
+			//	add_filter('option_'.$option, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
+			//} return;
+			break;
+		case QTX_FILTER_OPTIONS_LIST:
+			if(empty($q_config['filter_options'])) return;
+			$where = ' WHERE FALSE';
+			foreach($q_config['filter_options'] as $nm){
+				$where .= ' OR option_name LIKE "'.$nm.'"';
+			}
+			break;
+		default: return;
+	}
+	$result = $wpdb->get_results('SELECT option_name FROM '.$wpdb->options.$where);
+	if(!$result) return;
+	foreach($result as $row) {
+		//qtranxf_dbg_log('add_filter: option_'.$row->option_name);
+		add_filter('option_'.$row->option_name, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
+	}
+}
+qtranxf_filter_options();
+
 function qtranxf_postsFilter($posts,&$query) {//WP_Query
 	global $q_config;
 	//$post->post_content = qtranxf_useCurrentLanguageIfNotFoundShowAvailable($post->post_content);

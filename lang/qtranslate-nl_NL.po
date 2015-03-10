@@ -1,19 +1,25 @@
+# qTranslate-X Translation Template.
+# Copyright (C) 2015 qTranslate Team
+# This file is distributed under the same license as the qTranslate-X package.
+#
+# Translators:
+# Marius <marius@marius-siroen.com>, 2015
 msgid ""
 msgstr ""
-"Project-Id-Version: qTranslate-X 3.0\n"
+"Project-Id-Version: qtranslate-x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-06 20:10-0700\n"
-"PO-Revision-Date: \n"
-"Last-Translator: Marius Siroen <marius@marius-siroen.com>\n"
-"Language-Team: \n"
+"POT-Creation-Date: 2015-03-06 21:21-0700\n"
+"PO-Revision-Date: 2015-03-08 14:05-0800\n"
+"Last-Translator: Marius <marius@marius-siroen.com>\n"
+"Language-Team: Dutch (Netherlands) (http://www.transifex.com/projects/p/qtranslate-x/language/nl_NL/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: nl_NL\n"
-"X-Generator: Poedit 1.6.9\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.7.4\n"
 
-#: admin/activation_hook.php:37 admin/activation_hook.php:137
-#: qtranslate_configuration.php:771
+#: admin/activation_hook.php:37 admin/activation_hook.php:137 qtranslate_configuration.php:771
 #, php-format
 msgid "It might be a good idea to review %smigration instructions%s, if you have not yet done so."
 msgstr "Het is misschien een goed idee om de %smigratie instructies%s te lezen, als je dat nog niet hebt gedaan."
@@ -53,8 +59,7 @@ msgstr "Dank voor het gebruik van de %s plugin"
 msgid "Please, help us to make a decision on \"%s\" feature, press the button below."
 msgstr "Alstublieft, help ons om te beslissen over de \"%s\" functie, klik op de knop."
 
-#: admin/activation_hook.php:173 admin/activation_hook.php:175
-#: qtranslate_services.php:787
+#: admin/activation_hook.php:173 admin/activation_hook.php:175 qtranslate_services.php:787
 msgid "Translation Service"
 msgstr "Vertaal Services"
 
@@ -79,9 +84,7 @@ msgstr "Opmerking: ingevoerde aangepassingen zijn niet aangeraakt."
 msgid "Database has been converted to legacy dual-tag format."
 msgstr "Database is geconverteerd naar de oudere dubbele-label indeling."
 
-#: admin/admin_utils.php:397 qtranslate_configuration.php:483
-#: qtranslate_configuration.php:506 qtranslate_frontend.php:165
-#: qtranslate_frontend.php:192
+#: admin/admin_utils.php:397 qtranslate_configuration.php:483 qtranslate_configuration.php:506 qtranslate_frontend.php:165 qtranslate_frontend.php:192
 msgid "Flag"
 msgstr "Vlag"
 
@@ -93,8 +96,7 @@ msgstr "Naam"
 msgid "Action"
 msgstr "Aktie"
 
-#: admin/admin_utils.php:412 qtranslate_configuration.php:470
-#: qtranslate_configuration.php:1237
+#: admin/admin_utils.php:412 qtranslate_configuration.php:470 qtranslate_configuration.php:1237
 msgid "Languages"
 msgstr "Talen"
 
@@ -126,8 +128,7 @@ msgstr "Exporteer"
 msgid "Import"
 msgstr "Importeer"
 
-#: admin/import_export.php:139 qtranslate_configuration.php:772
-#: qtranslate_configuration.php:782 qtranslate_configuration.php:1029
+#: admin/import_export.php:139 qtranslate_configuration.php:772 qtranslate_configuration.php:782 qtranslate_configuration.php:1029
 msgid "Convert Database"
 msgstr "Database Omzetten"
 
@@ -327,8 +328,7 @@ msgstr "De Taal Code moet 2 tekens lang zijn!"
 msgid "There is already a language with the same Language Code!"
 msgstr "Er bestaat al een taal met dezelfde Taal Code!"
 
-#: qtranslate_configuration.php:891 qtranslate_configuration.php:913
-#: qtranslate_configuration.php:920 qtranslate_configuration.php:937
+#: qtranslate_configuration.php:891 qtranslate_configuration.php:913 qtranslate_configuration.php:920 qtranslate_configuration.php:937
 msgid "No such language!"
 msgstr "Geen bekende taal!"
 
@@ -436,8 +436,7 @@ msgstr "Wanneer de hoofd pagina wordt bezocht via favorieten/externe link/ingety
 msgid "Advanced Settings"
 msgstr "Geavanceerde Instellingen"
 
-#: qtranslate_configuration.php:1051 qtranslate_configuration.php:1053
-#: qtranslate_configuration.php:1126
+#: qtranslate_configuration.php:1051 qtranslate_configuration.php:1053 qtranslate_configuration.php:1126
 msgid "URL Modification Mode"
 msgstr "URL instellingen"
 
@@ -501,12 +500,11 @@ msgstr "Laat koppelingen niet omzetten naar bestanden van bepaalde bestandstypen
 
 #: qtranslate_configuration.php:1112 qtranslate_widget.php:119
 msgid "Head inline CSS"
-msgstr ""
+msgstr "Kop inline CSS"
 
 #: qtranslate_configuration.php:1114
-#, fuzzy
 msgid "CSS code added by plugin in the head of front-end pages:"
-msgstr "Verwijder de door de plugin toegevoegde inline CSS-code uit de kop van de website pagina's."
+msgstr "CSS-code toegevoegd door de plugin in de kop van de website pagina's:"
 
 #: qtranslate_configuration.php:1118 qtranslate_widget.php:119
 msgid "To disable this inline CSS, clear the check box."
@@ -585,9 +583,8 @@ msgid "Depending on the mode selected, additional customizations of the theme ma
 msgstr "Afhankelijk van de geselecteerde modus, kan het noodzakelijk zijn om aanvullende aanpassingen aan de thema's te brengen."
 
 #: qtranslate_configuration.php:1154
-#, fuzzy
 msgid "Translation of options"
-msgstr "Vertaling van opties tabel"
+msgstr "Vertaling van opties"
 
 #: qtranslate_configuration.php:1156
 msgid "Filter all WordPress options for translation at front-end. It may hurt performance of the site, but ensures that all options are translated."
@@ -800,8 +797,7 @@ msgstr "Doel Taal"
 msgid "qTranslate Services Settings"
 msgstr "qTranslate Services Instellingen"
 
-#: qtranslate_services.php:394 qtranslate_services.php:675
-#: qtranslate_services.php:685 qtranslate_services.php:709
+#: qtranslate_services.php:394 qtranslate_services.php:675 qtranslate_services.php:685 qtranslate_services.php:709
 msgid "qTranslate Services"
 msgstr "qTranslate Services"
 
@@ -827,8 +823,7 @@ msgstr "Openstaande Bestellingen"
 msgid "Edit %s"
 msgstr "Wijzig %s"
 
-#: qtranslate_services.php:432 qtranslate_services.php:479
-#: qtranslate_services.php:815 qtranslate_services.php:822
+#: qtranslate_services.php:432 qtranslate_services.php:479 qtranslate_services.php:815 qtranslate_services.php:822
 msgid "Website"
 msgstr "Website"
 
@@ -1053,107 +1048,10 @@ msgid "Dropdown Box"
 msgstr "Dropdown Box"
 
 #: qtranslate_widget.php:119
-#, fuzzy, php-format
+#, php-format
 msgid "Other common CSS block for flag classes \"%s\" is loaded in the head of HTML and can be controlled with option \"%s\"."
-msgstr "Andere gemeenschappelijke CSS blokkeren voor vlag klassen \"%s\", standaard in de HTML kop op de website geladen, kan worden uitgeschakeld met optie  \"%s\", en worden aangepast, ofwel hier per elke widget, of in een van de aangepaste CSS-bestanden, zoals gewenst."
+msgstr "Andere gemeenschappelijke CSS blokken voor vlag klassen \"%s\" is in de kop van HTML geladen en kan worden gecontroleerd met optie \"%s\"."
 
 #: qtranslate_widget.php:119
 msgid "Widget"
 msgstr "Widget"
-
-#~ msgid "Remove plugin CSS"
-#~ msgstr "Verwijder plugin CSS"
-
-#~ msgid "This will also remove the default common part of style applied for all widgets \"%s\", which can be then further customized either via widget options, or through one of the custom styles."
-#~ msgstr "Dit zal ook het standaard gemeenschappelijke deel van een stijl, toegepast voor alle widgets, zoals  \"%s\" verwijderen, die dan verder kunnen worden aangepast, hetzij via de widget opties, of door een van de aangepaste stijlen."
-
-#~ msgid "No other URL Modification Modes are available if permalink structure is set to \"Default\" on configuration page %sPermalink Setting%s. It is SEO advantageous to use some other permalink mode, which will enable more URL Modification Modes here as well."
-#~ msgstr "Geen andere URL instellingen zijn beschikbaar als de permalink structuur is ingesteld op \"Standaard\" in de configuratie pagina %sPermalink instellingen%s. Het is voor SEO doeleinden beter om een andere permalink instelling te gebruiken, hier zijn dan ook meer instellingen mogelijk."
-
-#~ msgid "Pre-Path and Pre-Domain mode will only work with mod_rewrite/pretty permalinks. Additional Configuration is needed for Pre-Domain mode or Per-Domain mode."
-#~ msgstr "Pre-Pad en Pre-Domein modus zal alleen werken met mod_rewrite/pretty permalinks. Aanvullende instellingen zijn nodig voor Pre-Domein of Per-domein modus."
-
-#~ msgid "Error"
-#~ msgstr "Fout"
-
-#~ msgid "Adds userfriendly multilingual content support into Wordpress. For Problems visit the <a href=\"http://www.qianqin.de/qtranslate/forum/\">Support Forum</a>."
-#~ msgstr "Voegt een gebruikersvriendelijke meertalig berichten service toe aan Wordpress. Voor problemen ga naar het <a href=\"http://www.qianqin.de/qtranslate/forum/\">Support Forum</a>."
-
-#~ msgid "Category Name"
-#~ msgstr "Categorie Naam"
-
-#~ msgid "Debugging Information"
-#~ msgstr "Debug Informatie"
-
-#~ msgid "If you encounter any problems and you are unable to solve them yourself, you can visit the <a href=\"%s\">Support Forum</a>. Posting the following Content will help other detect any misconfigurations."
-#~ msgstr "Als je problemen tegen komt welke je zelf niet opgelost krijgt, bezoek dan het <a href=\"%s\">Support Forum</a>. Het plaatsen van onderstaande tekst kan helpen bij het detecteren van foutieve instellingen."
-
-#, fuzzy
-#~ msgid "Master language"
-#~ msgstr "Doel Taal"
-
-#, fuzzy
-#~ msgid "No language available"
-#~ msgstr "Taal is al uitgeschakeld!"
-
-#, fuzzy
-#~ msgid "No language selected"
-#~ msgstr "Taal is al uitgeschakeld!"
-
-#~ msgid "Please review your article and <a href=\"%s\">edit</a> it if needed."
-#~ msgstr "Bekijk dit artikel en <a href=\"%s\">pas aan</a> wanneer nodig."
-
-#~ msgid "Qian Qin"
-#~ msgstr "Qian Qin"
-
-#, fuzzy
-#~ msgid "Read only"
-#~ msgstr "Alleen tekst"
-
-#~ msgid "Save after enabling to see more Configuration options."
-#~ msgstr "Sla-op na het aanvinken voor meer instellingen."
-
-#, fuzzy
-#~ msgid "Settings Migration"
-#~ msgstr "Service Instellingen"
-
-#~ msgid "Tag Name"
-#~ msgstr "Tag Naam"
-
-#~ msgid "This version of qTranslate has not been tested with your Wordpress version. To prevent Wordpress from malfunctioning, the qTranslate Editor has been disabled. You can reenable it by <a href=\"javascript:qtrans_editorInit();\" title=\"Activate qTranslate\" id=\"qtrans_imsg_link\">clicking here</a> (may cause <b>data loss</b>!). To remove this message, please update qTranslate to the <a href=\"http://www.qianqin.de/qtranslate/download/\">corresponding version</a>."
-#~ msgstr "Deze versie van qTranslate is nog niet getest met deze versie van Wordpress. Om te voorkomen dat Wordpress niet meer werkt, is de qTranslate editor uitgeschakeld. Je kan deze weer activeren door <a href=\"javascript:qtrans_editorInit();\" title=\"Activate qTranslate\" id=\"qtrans_imsg_link\">Hier</a> te klikken. (<b>Kan data verlies veroorzaken</b>!) Om dit bericht te verwijderen moet je qTranslate <a href=\"http://www.qianqin.de/qtranslate/download/\">bijwerken</a> naar de laatste versie."
-
-#~ msgid "Title"
-#~ msgstr "Titel"
-
-#~ msgid "Use the following Translation Service:"
-#~ msgstr "Gebruik de volgende vertaal service:"
-
-#~ msgid "http://www.qianqin.de"
-#~ msgstr "http://www.qianqin.de"
-
-#~ msgid "http://www.qianqin.de/qtranslate/"
-#~ msgstr "http://www.qianqin.de/qtranslate/"
-
-#~ msgid "language_name"
-#~ msgstr "taal_naam"
-
-#~ msgid "multilingual, multi, language, admin, tinymce, qTranslate, Polyglot, bilingual, widget, switcher"
-#~ msgstr "meertalig, multi, taal, admin, tinymce, qTranslate, Polyglot, bilingual, widget, schakelen"
-
-#~ msgid "qTranslate"
-#~ msgstr "qTranslate"
-
-#, fuzzy
-#~ msgid "qTranslate Team Settings"
-#~ msgstr "qTranslate Service's Instellingen"
-
-#, fuzzy
-#~ msgid "qTranslate User Language Settings"
-#~ msgstr "qTranslate Service's Instellingen"
-
-#~ msgid "service_description"
-#~ msgstr "service_beschrijving"
-
-#~ msgid "service_name"
-#~ msgstr "service_name"

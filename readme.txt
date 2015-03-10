@@ -239,6 +239,10 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 
 == Changelog ==
 
+= 3.2.7 =
+* Translation: Dutch (nl_NL) po/mo updated, thanks to Marius Siroen.
+* Improvement: use of `nodeValue` instead of `innerHTML` in `addDisplayHook` of `admin/js/common.js`.
+
 = 3.2.6 =
 * Feature: replaced option 'Remove plugin CSS' with 'Head inline CSS'.
 * Fix: problem with url like `site.com/en` without slash.

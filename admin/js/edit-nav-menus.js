@@ -14,10 +14,11 @@ qTranslateConfig.js={
 			qtx.addContentHooksByClass('[edit-menu-item-description',form,li);//must use '[:]' separator style
 
 			qtx.addDisplayHooksByClass('menu-item-title',li);
+			qtx.addDisplayHooksByClass('item-title',li);
 			qtx.addDisplayHooksByTagInClass('link-to-original','A',li);
 		}
 
-		function addPageHooks(qtx,form)
+		function addMenuPageHooks(qtx,form)
 		{
 			var items=document.getElementsByClassName('menu-item');
 			for(var i=0; i<items.length; ++i)
@@ -28,7 +29,7 @@ qTranslateConfig.js={
 			var sst = document.getElementById('side-sortables');
 			if(sst) qtx.addDisplayHooksByClass('menu-item-title',sst);
 		}
-		addPageHooks(qtx,form);
+		addMenuPageHooks(qtx,form);
 
 		if(wpNavMenu){
 			var wp_addMenuItemToBottom = wpNavMenu.addMenuItemToBottom;

@@ -129,7 +129,7 @@ function qtranxf_saveConfig() {
 	update_option('qtranslate_term_name', $q_config['term_name']);
 	update_option('qtranslate_use_strftime', $q_config['use_strftime']);
 
-	qtranxf_update_option_bool('editor_mode');//will be integer later
+	qtranxf_update_option('editor_mode', QTX_EDITOR_MODE_LSB);
 
 	qtranxf_update_option('custom_fields');
 	qtranxf_update_option('custom_field_classes');
@@ -287,7 +287,7 @@ function qtranxf_load_admin_page_config() {
 
 function qtranxf_add_admin_footer_js ( $enqueue_script=false ) {
 	global $q_config;
-	if($q_config['editor_mode']) return false;
+	if( $q_config['editor_mode'] == QTX_EDITOR_MODE_RAW) return;
 	$script_file = qtranxf_select_admin_js($enqueue_script);
 	$page_config = qtranxf_load_admin_page_config();
 	if(!$script_file && empty($page_config))
@@ -746,7 +746,7 @@ function qtranxf_conf() {
 		qtranxf_updateSetting('hide_untranslated', QTX_BOOLEAN);
 		qtranxf_updateSetting('show_displayed_language_prefix', QTX_BOOLEAN);
 		qtranxf_updateSetting('use_strftime', QTX_INTEGER);
-		qtranxf_updateSetting('editor_mode', QTX_BOOLEAN);
+		qtranxf_updateSetting('editor_mode', QTX_INTEGER);
 		qtranxf_updateSetting('auto_update_mo', QTX_BOOLEAN);
 		qtranxf_updateSetting('hide_default_language', QTX_BOOLEAN);
 		qtranxf_updateSetting('qtrans_compatibility', QTX_BOOLEAN);
@@ -1202,9 +1202,11 @@ function qtranxf_conf() {
 				</td>
 			</tr>
 			<tr valign="top">
-				<th scope="row"><?php _e('Editor Raw Mode', 'qtranslate');?></th>
+				<th scope="row"><?php _e('Editor Mode', 'qtranslate'); ?></th>
 				<td>
-					<label for="qtranxs_editor_mode"><input type="checkbox" name="editor_mode" id="qtranxs_editor_mode" value="1"<?php checked($q_config['editor_mode']); ?>/>&nbsp;<?php _e('Do not use Language Switching Buttons to edit multi-language text entries.', 'qtranslate'); ?></label><br/>
+					<label for="qtranxs_editor_mode_lsb"><input type="radio" name="editor_mode" id="qtranxs_editor_mode_lsb" value="<?php echo QTX_EDITOR_MODE_LSB; ?>"<?php checked($q_config['editor_mode'], QTX_EDITOR_MODE_LSB); ?>/>&nbsp;<?php _e('Use Language Switching Buttons (LSB).', 'qtranslate'); ?></label><br/>
+					<small><?php _e('This is the default mode.', 'qtranslate'); ?></small><br/>
+					<label for="qtranxs_editor_mode_raw"><input type="radio" name="editor_mode" id="qtranxs_editor_mode_raw" value="<?php echo QTX_EDITOR_MODE_RAW; ?>"<?php checked($q_config['editor_mode'], QTX_EDITOR_MODE_RAW); ?>/>&nbsp;<?php _e('Editor Raw Mode', 'qtranslate'); ?>. <?php _e('Do not use Language Switching Buttons to edit multi-language text entries.', 'qtranslate'); ?></label><br/>
 					<small><?php _e('Some people prefer to edit the raw entries containing all languages together separated by language defining tags, as they are stored in database.', 'qtranslate'); ?></small>
 				</td>
 			</tr>

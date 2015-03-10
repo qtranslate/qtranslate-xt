@@ -88,29 +88,6 @@ function qtranxf_init_language() {
 
 	// Filter all options for language tags
 	if($q_config['url_info']['doing_front_end']) {
-		switch($q_config['filter_options_mode']){
-			case QTX_FILTER_OPTIONS_ALL:
-				$alloptions = wp_load_alloptions();
-				foreach($alloptions as $option => $value) {
-					add_filter('option_'.$option, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
-				}
-				break;
-			case QTX_FILTER_OPTIONS_LIST:
-				global $wpdb;
-				if(!empty($q_config['filter_options'])){
-					$where = ' WHERE FALSE';
-					foreach($q_config['filter_options'] as $nm){
-						$where .= ' OR option_name LIKE "'.$nm.'"';
-					}
-					$result = $wpdb->get_results('SELECT option_name FROM '.$wpdb->options.$where);
-					foreach($result as $row) {
-						//qtranxf_dbg_log('add_filter: option_'.$row->option_name);
-						add_filter('option_'.$row->option_name, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
-					}
-				}
-				break;
-			default: break;
-		}
 		require_once(dirname(__FILE__)."/qtranslate_frontend.php");
 	}else{
 		require_once(dirname(__FILE__).'/qtranslate_configuration.php');
@@ -164,7 +141,7 @@ function qtranxf_detect_language(&$url_info) {
 		$url_info['http_referer'] = $http_referer;
 		if(strpos($http_referer,'/wp-admin')!==FALSE){
 			$url_info['referer_admin'] = true;
-			$url_info['doing_front_end'] = false;
+			if(!isset($url_info['doing_front_end'])) $url_info['doing_front_end'] = false;
 		}else{
 			$ref_info = qtranxf_parseURL($http_referer);
 			if( $ref_info['host']==$url_info['host'] ) {
@@ -308,6 +285,10 @@ function qtranxf_parse_language_info(&$url_info, $link=false) {
 	$url_info['wp-path'] = $wp_path ? $wp_path : '';
 
 	$doredirect=false;
+
+	if( !isset($url_info['doing_front_end']) && !defined('WP_ADMIN') ){
+		$url_info['doing_front_end'] = true;
+	}
 
 	if( !defined('WP_ADMIN') || $link ){
 		$lang = null;
@@ -661,7 +642,7 @@ function qtranxf_loadConfig() {
 
 	qtranxf_load_option_flag_location('flag_location');
 
-	qtranxf_load_option_bool('editor_mode');//will be integer later
+	qtranxf_load_option('editor_mode');
 
 	qtranxf_load_option_array('custom_fields');
 	qtranxf_load_option_array('custom_field_classes');

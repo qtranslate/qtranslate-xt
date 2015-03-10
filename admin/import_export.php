@@ -61,6 +61,10 @@ function qtranxf_migrate_options_copy($nm_to,$nm_from)
 			case 'qtranslate_custom_field_classes':
 			case 'qtranslate_text_field_filters':
 			case 'qtranslate_qtrans_compatibility':
+			case 'qtranslate_header_css_on':
+			case 'qtranslate_header_css':
+			case 'qtranslate_filter_options_mode':
+			case 'qtranslate_filter_options':
 				continue;
 			default: break;
 		}
