@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: qTranslate-X 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-06 20:10-0700\n"
+"POT-Creation-Date: 2015-03-10 19:11-0600\n"
 "PO-Revision-Date: 2009-01-24 23:10+0100\n"
 "Last-Translator: Florent <info@eqwalys.fr>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -78,113 +78,113 @@ msgstr ""
 msgid "Database has been converted to legacy dual-tag format."
 msgstr ""
 
-#: admin/admin_utils.php:397 qtranslate_configuration.php:483
+#: admin/admin_utils.php:405 qtranslate_configuration.php:483
 #: qtranslate_configuration.php:506 qtranslate_frontend.php:165
 #: qtranslate_frontend.php:192
 msgid "Flag"
 msgstr "Drapeau"
 
-#: admin/admin_utils.php:398 qtranslate_configuration.php:524
+#: admin/admin_utils.php:406 qtranslate_configuration.php:524
 msgid "Name"
 msgstr "Nom"
 
-#: admin/admin_utils.php:399 qtranslate_services.php:383
+#: admin/admin_utils.php:407 qtranslate_services.php:383
 msgid "Action"
 msgstr "Action"
 
-#: admin/admin_utils.php:412 qtranslate_configuration.php:470
-#: qtranslate_configuration.php:1237
+#: admin/admin_utils.php:420 qtranslate_configuration.php:470
+#: qtranslate_configuration.php:1239
 msgid "Languages"
 msgstr "Langues"
 
-#: admin/import_export.php:114
+#: admin/import_export.php:118
 msgid "Plugin"
 msgstr ""
 
-#: admin/import_export.php:118
+#: admin/import_export.php:122
 msgid "There is no need to migrate any setting, the database schema is compatible with this plugin."
 msgstr ""
 
-#: admin/import_export.php:121
+#: admin/import_export.php:125
 msgid "Do not migrate any setting"
 msgstr "Ne migrer aucun paramètre"
 
-#: admin/import_export.php:123
+#: admin/import_export.php:127
 #, fuzzy
 msgid "Import settings from "
 msgstr "Importer les paramètres depuis qTranslate"
 
-#: admin/import_export.php:125
+#: admin/import_export.php:129
 #, fuzzy
 msgid "Export settings to "
 msgstr "Supprimer qTranslate"
 
-#: admin/import_export.php:134 qtranslate_configuration.php:1029
+#: admin/import_export.php:138 qtranslate_configuration.php:1029
 msgid "Export"
 msgstr ""
 
-#: admin/import_export.php:134 qtranslate_configuration.php:1029
+#: admin/import_export.php:138 qtranslate_configuration.php:1029
 msgid "Import"
 msgstr ""
 
-#: admin/import_export.php:139 qtranslate_configuration.php:772
+#: admin/import_export.php:143 qtranslate_configuration.php:772
 #: qtranslate_configuration.php:782 qtranslate_configuration.php:1029
 msgid "Convert Database"
 msgstr "Convertir la base de données"
 
-#: admin/import_export.php:141
+#: admin/import_export.php:145
 #, php-format
 msgid "If you are updating from qTranslate 1.x or Polyglot, <a href=\"%s\">click here</a> to convert posts to the new language tag format."
 msgstr "Si vous mettez à jour depuis qTranslate 1.x ou Polyglot, <a href=\"%s\">cliquez ici</a> pour convertir les articles dans le nouveau format de langue."
 
-#: admin/import_export.php:142
+#: admin/import_export.php:146
 #, php-format
 msgid "If you have installed qTranslate for the first time on a Wordpress with existing posts, you can either go through all your posts manually and save them in the correct language or <a href=\"%s\">click here</a> to mark all existing posts as written in the default language."
 msgstr "Si vous installez qTranslate pour la première fois sur un blog Wordpress ayant des articles existants, vous pouvez soit éditer tous vos articles manuellement et les enregistrer dans la bonne langue ou <a href=\"%s\">cliquez ici</a> pour marquer tous les articles existants comme écrits dans la langue par défaut."
 
-#: admin/import_export.php:143
+#: admin/import_export.php:147
 msgid "Both processes are <b>irreversible</b>! Be sure to make a full database backup before clicking one of the links."
 msgstr "Ces deux processus sont <b>irréversibles</b> ! Assurez vous de faire une sauvegarde complète de votre base de données avant de cliquer sur un de ses liens."
 
-#: admin/import_export.php:144
+#: admin/import_export.php:148
 #, fuzzy
 msgid "Do not convert database"
 msgstr "Convertir la base de données"
 
-#: admin/import_export.php:145
+#: admin/import_export.php:149
 msgid "Convert database to the \"square bracket only\" style."
 msgstr ""
 
-#: admin/import_export.php:146
+#: admin/import_export.php:150
 #, php-format
 msgid "The square bracket language tag %s only will be used as opposite to dual-tag (%s and %s) %s legacy database format. All string options and standard post and page fields will be uniformly encoded like %s."
 msgstr ""
 
-#: admin/import_export.php:147
+#: admin/import_export.php:151
 msgid "Convert database back to the legacy \"dual language tag\" style."
 msgstr ""
 
-#: admin/import_export.php:148
+#: admin/import_export.php:152
 msgid "Note, that only string options and standard post and page fields are affected."
 msgstr ""
 
-#: admin/import_export.php:156
+#: admin/import_export.php:160
 msgid "Reset qTranslate"
 msgstr "Supprimer qTranslate"
 
-#: admin/import_export.php:158
+#: admin/import_export.php:162
 msgid "Check this box and click Save Changes to reset all qTranslate settings."
 msgstr "Cochez cette case puis cliquez sur Enregistrer les modifications pour supprimer tous les paramètres de qTranslate."
 
-#: admin/import_export.php:160
+#: admin/import_export.php:164
 msgid "Yes, I really want to reset qTranslate."
 msgstr "Oui, je veux supprimer qTranslate."
 
-#: admin/import_export.php:162
+#: admin/import_export.php:166
 msgid "Also delete Translations for Categories/Tags/Link Categories."
 msgstr "Supprimer également les traductions pour Catégories/Tags/Liens de catégories."
 
-#: admin/import_export.php:164
+#: admin/import_export.php:168
 msgid "If something isn't working correctly, you can always try to reset all qTranslate settings. A Reset won't delete any posts but will remove all settings (including all languages added)."
 msgstr "Si quelque chose ne fonctionne pas correctement, vous pouvez toujours essayer de supprimer tous les paramètres de qTranslate. Cette action ne supprimera pas les articles, mais effacera tous les paramètres (et toutes les langues ajoutées)."
 
@@ -603,6 +603,10 @@ msgstr "qTranslate"
 msgid "Filter all WordPress options for translation at front-end. It may hurt performance of the site, but ensures that all options are translated."
 msgstr ""
 
+#: qtranslate_configuration.php:1156
+msgid "Starting from version 3.2.5, only options with multilingual content get filtered, which should help on performance issues."
+msgstr ""
+
 #: qtranslate_configuration.php:1158
 msgid "Translate only options listed below (for experts only):"
 msgstr ""
@@ -664,78 +668,90 @@ msgid "Some plugins and themes use direct calls to the functions listed, which a
 msgstr ""
 
 #: qtranslate_configuration.php:1205
-msgid "Editor Raw Mode"
+msgid "Editor Mode"
 msgstr ""
 
 #: qtranslate_configuration.php:1207
-msgid "Do not use Language Switching Buttons to edit multi-language text entries."
+msgid "Use Language Switching Buttons (LSB)."
 msgstr ""
 
 #: qtranslate_configuration.php:1208
+msgid "This is the default mode."
+msgstr ""
+
+#: qtranslate_configuration.php:1209
+msgid "Do not use Language Switching Buttons to edit multi-language text entries."
+msgstr ""
+
+#: qtranslate_configuration.php:1209
+msgid "Editor Raw Mode"
+msgstr ""
+
+#: qtranslate_configuration.php:1210
 msgid "Some people prefer to edit the raw entries containing all languages together separated by language defining tags, as they are stored in database."
 msgstr ""
 
-#: qtranslate_configuration.php:1259
+#: qtranslate_configuration.php:1261
 #, fuzzy, php-format
 msgid "%s Flag"
 msgstr "Drapeau"
 
-#: qtranslate_configuration.php:1261
+#: qtranslate_configuration.php:1263
 msgid "Disable"
 msgstr "Désactiver"
 
-#: qtranslate_configuration.php:1261
+#: qtranslate_configuration.php:1263
 msgid "Enable"
 msgstr "Activer"
 
-#: qtranslate_configuration.php:1262
+#: qtranslate_configuration.php:1264
 msgid "Edit"
 msgstr "Editer"
 
-#: qtranslate_configuration.php:1263
+#: qtranslate_configuration.php:1265
 msgid "Default"
 msgstr "Défaut"
 
-#: qtranslate_configuration.php:1263
+#: qtranslate_configuration.php:1265
 msgid "Delete"
 msgstr "Supprimer"
 
-#: qtranslate_configuration.php:1268
+#: qtranslate_configuration.php:1270
 msgid "Enabling a language will cause qTranslate to update the Gettext-Database for the language, which can take a while depending on your server's connection speed."
 msgstr "Activer une langue va demander à qTranslate de mettre à jour la base de données Gettext pour cette langue, ce qui peut prendre un moment en fonction de la vitesse de connexion de votre serveur."
 
-#: qtranslate_configuration.php:1275
+#: qtranslate_configuration.php:1277
 msgid "Add Language"
 msgstr "Ajouter une langue"
 
-#: qtranslate_configuration.php:1278
+#: qtranslate_configuration.php:1280
 msgid "Add Language &raquo;"
 msgstr "Ajouter la langue &raquo;"
 
-#: qtranslate_configuration.php:1293
+#: qtranslate_configuration.php:1295
 #, fuzzy
 msgid "Language Menu"
 msgstr "Code de la langue"
 
-#: qtranslate_configuration.php:1342
+#: qtranslate_configuration.php:1344
 msgid "Help"
 msgstr ""
 
-#: qtranslate_configuration.php:1344
+#: qtranslate_configuration.php:1346
 #, php-format
 msgid "Menu item added is replaced with a sub-menu of available languages when menu is rendered. Depending on how your theme renders menu you may need to override and customize css entries %s and %s, originally defined in %s. The field \"URL\" of inserted menu item allows additional configuration described in %sFAQ%s."
 msgstr ""
 
-#: qtranslate_configuration.php:1349
+#: qtranslate_configuration.php:1351
 msgid "Add to Menu"
 msgstr ""
 
-#: qtranslate_configuration.php:1359
+#: qtranslate_configuration.php:1361
 #, fuzzy
 msgid "Language Switcher"
 msgstr "Code de la langue"
 
-#: qtranslate_configuration.php:1396
+#: qtranslate_configuration.php:1398
 msgid "Settings"
 msgstr "Configurations"
 
