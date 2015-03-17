@@ -131,7 +131,7 @@ function qtranxf_add_row_migrate($nm,$plugin) {
 			_e('There is no need to migrate any setting, the database schema is compatible with this plugin.', 'qtranslate');
 		break;
 		case 'sitepress-multilingual-cms':
-			printf(__('Use plugin "%s%s%s" to import data.', 'qtranslate'),'<a href="https://wordpress.org/plugins/w2q-wpml-to-qtranslate/" target="_blank">','W2Q: WPML to qTranslate','</a>');
+			printf(__('Use plugin %s to import data.', 'qtranslate'),'<a href="https://wordpress.org/plugins/w2q-wpml-to-qtranslate/" target="_blank">W2Q: WPML to qTranslate</a>');
 		break;
 	default:
 ?>
