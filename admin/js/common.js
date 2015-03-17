@@ -360,7 +360,7 @@ var qTranslateX=function(pg)
 
 		/**
 		 * Highlighting the translatable fields
-		 * Since 3.2-b3
+		 * @since 3.2-b3
 		*/
 		inpField.className += ' qtranxs-translatable';
 
@@ -407,7 +407,7 @@ var qTranslateX=function(pg)
 	};
 
 	/**
-	 * Since 3.2.7
+	 * @since 3.2.7
 	 */
 	var displayHookNodes=[];
 	addDisplayHookNode=function(nd)
@@ -427,7 +427,7 @@ var qTranslateX=function(pg)
 	}
 
 	/**
-	 * Since 3.2.7 switched to use of nodeValue instead of innerHTML.
+	 * @since 3.2.7 switched to use of nodeValue instead of innerHTML.
 	 */
 	addDisplayHook=function(elem)
 	{
@@ -600,7 +600,7 @@ var qTranslateX=function(pg)
 	}
 
 	/**
-	 * Since 3.1-b2
+	 * @since 3.1-b2
 	*/
 	addContentFieldHooks=function(fields,form,sep)
 	{
@@ -631,8 +631,8 @@ var qTranslateX=function(pg)
 
 	/**
 	 * adds custom hooks from configuration
-	 * Since 3.1-b2 - renamed to addCustomContentHooks, since addContentHooks used in qTranslateConfig.js
-	 * Since 3.0 - addContentHooks
+	 * @since 3.1-b2 - renamed to addCustomContentHooks, since addContentHooks used in qTranslateConfig.js
+	 * @since 3.0 - addContentHooks
 	*/
 	this.addCustomContentHooks=function(form)
 	{
@@ -649,7 +649,7 @@ var qTranslateX=function(pg)
 
 	/**
 	 * Parses custom page configuration, loaded in qtranxf_load_admin_page_config.
-	 * Since 3.1-b2
+	 * @since 3.1-b2
 	*/
 	this.addPageHooks=function(page_config_forms)
 	{
@@ -769,7 +769,7 @@ var qTranslateX=function(pg)
 
 			/**
 			 * Highlighting the translatable fields
-			 * Since 3.2-b3
+			 * @since 3.2-b3
 			*/
 			ed.getContainer().className += ' qtranxs-translatable';
 			ed.getElement().className += ' qtranxs-translatable';
@@ -883,7 +883,7 @@ var qTranslateX=function(pg)
 			//	languageSwitch.onSwitch(onTabSwitchCustom);
 		}
 		/**
-		 * Since 3.2.4 Synchronization of multiple sets of Language Switching Buttons
+		 * @since 3.2.4 Synchronization of multiple sets of Language Switching Buttons
 		 */
 		qTranslateConfig.onTabSwitchFunctions=[];
 		qTranslateConfig.onTabSwitchFunctions.push(onTabSwitch);
@@ -893,7 +893,7 @@ var qTranslateX=function(pg)
 }
 
 /**
- * Since 3.2.4 Multiple sets of Language Switching Buttons
+ * @since 3.2.4 Multiple sets of Language Switching Buttons
  */
 function qtranxj_LanguageSwitch(langSwitchWrap)
 {

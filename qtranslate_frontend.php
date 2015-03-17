@@ -41,7 +41,10 @@ function qtranxf_head(){
 		//if($language != qtranxf_getLanguage())//standard requires them all
 		echo '<link hreflang="'.$language.'" href="'.qtranxf_convertURL('',$language,false,true).'" rel="alternate" />'.PHP_EOL;
 	}
-	//qtranxf_add_css();// Since 3.2.5 no longer needed
+	//https://support.google.com/webmasters/answer/189077
+	echo '<link hreflang="x-default" href="'.qtranxf_convertURL('',$q_config['default_language']).'" rel="alternate" />'.PHP_EOL;
+
+	//qtranxf_add_css();// since 3.2.5 no longer needed
 }
 add_action('wp_head', 'qtranxf_head');
 
@@ -77,7 +80,7 @@ function qtranxf_wp_get_nav_menu_items( $items, $menu, $args )
 	$menu_order=0;
 	$qtransmenu=null;
 	$altlang=null;
-	$url = '';//esc_url($q_config['url_info']['url']);
+	$url = '';
 	//options
 	$type='LM';//[LM|AL]
 	$title='Language';//[none|Language|Current]
@@ -193,8 +196,10 @@ function qtranxf_wp_get_nav_menu_items( $items, $menu, $args )
 		}
 		$item->post_title=$item->title;
 		$item->post_name='language-menuitem-'.$lang;
-		if($lang!=$language)
+		if($lang!=$language){
 			$item->url=qtranxf_convertURL($url, $lang, false, true);
+			$item->url=esc_url($item->url);//not sure if this is needed
+		}
 		$item->classes=array();
 		//$item->classes[] = 'qtranxs_flag_'.$lang;
 		$item->classes[] = 'qtranxs-lang-menu-item';
@@ -225,6 +230,9 @@ function qtranxf_wp_setup_nav_menu_item($menu_item) {
 add_filter('wp_setup_nav_menu_item', 'qtranxf_wp_setup_nav_menu_item');
 */
 
+/**
+ * Filter all options for language tags
+ */
 function qtranxf_filter_options(){
 	global $q_config, $wpdb;
 	$where;
@@ -322,6 +330,31 @@ function qtranxf_pre_get_posts( &$query ) {//WP_Query
 }
 add_action( 'pre_get_posts', 'qtranxf_pre_get_posts', 99 );
 
+/**
+ * since 3.1-b3 new query to pass empty content and content without closing tags (sliders, galleries and other special kind of posts that never get translated)
+ */
+function qtranxf_where_clause_translated_posts($lang) {
+	global $wpdb;
+	return  "($wpdb->posts.post_content='' OR $wpdb->posts.post_content LIKE '%![:".$lang."!]%' ESCAPE '!' OR $wpdb->posts.post_content LIKE '%<!--:".$lang."-->%' OR ($wpdb->posts.post_content NOT LIKE '%![:!]%' ESCAPE '!' AND $wpdb->posts.post_content NOT LIKE '%<!--:-->%'))";
+}
+
+function qtranxf_excludePages($pages) {
+	global $wpdb;
+	static $exclude = 0;
+	if(!is_array($exclude)){
+		$lang = qtranxf_getLanguage();
+		$where = qtranxf_where_clause_translated_posts($lang);
+		//$query = "SELECT ID FROM $wpdb->posts WHERE post_type = 'page' AND post_status = 'publish' AND NOT ($wpdb->posts.post_content LIKE '%<!--:".$lang."-->%')";
+		$query = "SELECT ID FROM $wpdb->posts WHERE post_type = 'page' AND post_status = 'publish' AND NOT ".$where;
+		$hide_pages = $wpdb->get_results($query);
+		$exclude = array();
+		foreach($hide_pages as $page) {
+			$exclude[] = $page->ID;
+		}
+	}
+	return array_merge($exclude, $pages);
+}
+
 function qtranxf_excludeUntranslatedPosts($where,&$query) {//WP_Query
 	global $wpdb;
 	//qtranxf_dbg_echo('qtranxf_excludeUntranslatedPosts: post_type: ',$query->query_vars['post_type']);
@@ -349,11 +382,8 @@ function qtranxf_excludeUntranslatedPosts($where,&$query) {//WP_Query
 	}
 	if(!$single_post_query){
 		$lang = qtranxf_getLanguage();
-		/**
-		 * since 3.1-b3 new query to pass empty content and content without closing tags (sliders, galleries and other special kind of posts that never get translated)
-		 * the query must be the same as in qtranxf_excludeUntranslatedPostComments
-		 */
-		$where .= " AND ($wpdb->posts.post_content='' OR $wpdb->posts.post_content LIKE '%![:".$lang."!]%' ESCAPE '!' OR $wpdb->posts.post_content LIKE '%<!--:".$lang."-->%' OR ($wpdb->posts.post_content NOT LIKE '%![:!]%' ESCAPE '!' AND $wpdb->posts.post_content NOT LIKE '%<!--:-->%'))";
+		$where .= ' AND '.qtranxf_where_clause_translated_posts($lang);
+		//$where .= " AND ($wpdb->posts.post_content='' OR $wpdb->posts.post_content LIKE '%![:".$lang."!]%' ESCAPE '!' OR $wpdb->posts.post_content LIKE '%<!--:".$lang."-->%' OR ($wpdb->posts.post_content NOT LIKE '%![:!]%' ESCAPE '!' AND $wpdb->posts.post_content NOT LIKE '%<!--:-->%'))";
 		//$where .= " AND ($wpdb->posts.post_content LIKE '%<!--:".qtranxf_getLanguage()."-->%')";
 	}
 	return $where;
@@ -380,11 +410,8 @@ function qtranxf_excludeUntranslatedPostComments($clauses, &$q/*WP_Comment_Query
 	}
 	if(!$single_post_query){
 		$lang = qtranxf_getLanguage();
-		/**
-		 * since 3.1-b3 new query to pass empty content and content without closing tags (sliders, galleries and other special kind of posts that never get translated)
-		 * the query must be the same as in qtranxf_excludeUntranslatedPosts
-		 */
-		$clauses['where'] .= " AND ($wpdb->posts.post_content='' OR $wpdb->posts.post_content LIKE '%![:".$lang."!]%' ESCAPE '!' OR $wpdb->posts.post_content LIKE '%<!--:".$lang."-->%' OR ($wpdb->posts.post_content NOT LIKE '%![:!]%' ESCAPE '!' AND $wpdb->posts.post_content NOT LIKE '%<!--:-->%'))";
+		$clauses['where'] .= ' AND '.qtranxf_where_clause_translated_posts($lang);
+		//$clauses['where'] .= " AND ($wpdb->posts.post_content='' OR $wpdb->posts.post_content LIKE '%![:".$lang."!]%' ESCAPE '!' OR $wpdb->posts.post_content LIKE '%<!--:".$lang."-->%' OR ($wpdb->posts.post_content NOT LIKE '%![:!]%' ESCAPE '!' AND $wpdb->posts.post_content NOT LIKE '%<!--:-->%'))";
 	}
 	return $clauses;
 }
@@ -439,8 +466,6 @@ function qtranxf_home_url($url, $path, $orig_scheme, $blog_id)
 	//qtranxf_dbg_log('qtranxf_home_url: url='.$url.'; path='.$path.'; orig_scheme='.$orig_scheme);
 	$url = qtranxf_get_url_for_language($url, $lang, !$q_config['hide_default_language'] || $lang != $q_config['default_language']);
 	//qtranxf_dbg_log('qtranxf_home_url: url='.$url.'; lang='.$lang);
-	//$url=qtranxf_convertURL($url,$lang,false,!$q_config['hide_default_language']);
-	//qtranxf_dbg_log('qtranxf_home_url: new='.$url,wp_debug_backtrace_summary(null,0,false));
 	return $url;
 }
 /*
@@ -482,7 +507,7 @@ function qtranxf_trim_words( $text, $num_words, $more, $original_text ) {
 }
 
 /**
- * Since 3.2.3 translation of postmeta
+ * @since 3.2.3 translation of postmeta
  */
 function qtranxf_filter_postmeta($original_value, $object_id, $meta_key = '', $single = false){
 	global $q_config;
@@ -546,6 +571,7 @@ function qtranxf_checkCanonical($redirect_url, $requested_url) {
 	// fix canonical conflicts with language urls
 	$redirect_url_lang = qtranxf_convertURL($redirect_url,$lang);
 	//$requested_url_lang = qtranxf_convertURL($requested_url,$lang);
+	//qtranxf_dbg_log('qtranxf_checkCanonical: requested vs redirect vs redirect_lang:' . PHP_EOL . $requested_url . PHP_EOL . $redirect_url. PHP_EOL . $redirect_url_lang);
 	//qtranxf_dbg_log('qtranxf_checkCanonical: redirect vs requested:' . PHP_EOL . $redirect_url . PHP_EOL . $requested_url. PHP_EOL . 'redirect_lang vs requested_lang:' . PHP_EOL . $redirect_url_lang . PHP_EOL . $requested_url_lang, 'novar');//. PHP_EOL . '$q_config[url_info]: ', $q_config['url_info']);
 	//if(qtranxf_convertURL($redirect_url)==qtranxf_convertURL($requested_url))
 	//if($redirect_url_lang==$requested_url_lang) return false; //WP calls this only if $redirect_url != $requested_url, we only need to make sure to return language encoded url
@@ -553,17 +579,22 @@ function qtranxf_checkCanonical($redirect_url, $requested_url) {
 }
 add_filter('redirect_canonical', 'qtranxf_checkCanonical', 10, 2);
 
-/*
-function qtranxf_translate($text){
-	$lang=qtranxf_getLanguage();
-	return qtranxf_use($lang,$text);
+/**
+ * @since 3.2.8 moved here from _hooks.php
+ */
+function qtranxf_convertBlogInfoURL($url, $what) {
+	switch($what){
+		case 'stylesheet_url':
+		case 'template_url':
+		case 'template_directory':
+		case 'stylesheet_directory':
+			return $url;
+		default: return qtranxf_convertURL($url);
+	}
 }
-//add_filter('wpseo_title', 'qtranxf_translate', 0);
-*/
-
+add_filter('bloginfo_url', 'qtranxf_convertBlogInfoURL',10,2);
 
 //qtranxf_optionFilter();
-
 //add_filter('wp_head', 'qtranxf_add_css');
 
 // Compability with Default Widgets
@@ -590,7 +621,7 @@ add_filter('get_terms', 'qtranxf_useTermLib',0);
 add_filter('get_category', 'qtranxf_useTermLib',0);
 
 /**
- * Since 3.2
+ * @since 3.2
  * wp-includes\category-template.php:1230 calls:
  * $description = get_term_field( 'description', $term, $taxonomy );
  *

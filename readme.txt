@@ -4,7 +4,7 @@ Contributors: johnclause, chineseleper, Vavooon
 Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, translation
 Requires at least: 3.9
 Tested up to: 4.1.1
-Stable tag: 3.2.2
+Stable tag: 3.2.7
 License: GPLv3 or later
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QEXEK3HX8AR6U
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -65,6 +65,7 @@ We thank our sponsors for persistent help and support:
 * [Citizens Law Group](http://www.citizenslawgroup.com "Chicago Bankruptcy Attorney - Citizens Law Group")
 * [Gunu](https://profiles.wordpress.org/grafcom "Gunu (Marius Siroen)") (Marius Siroen)
 * [OptimWise](http://optimwise.com "OptimWise web design")
+* [Pedro Mendonça](https://github.com/pedro-mendonca)
 * [pictibe Werbeagentur](http://www.pictibe.de "pictibe Werbeagentur Köln Webdesign")
 
 ## Installation ##
@@ -227,9 +228,10 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 ## Upgrade Notice ##
 
 * Upgrading from [qTranslate](https://wordpress.org/plugins/qtranslate/ "qTranslate original plugin") and [zTranslate](https://wordpress.org/plugins/ztranslate/ "zTranslate plugin") requires no additional actions, qTranslate-X will continue to work from the database entries of qTranslate. One may also go back to qTranslate at any time.
-* Upgrading from other qTranslate forks also painless with an additional step of configuration import. One may also go back at any time using configuration export.
-* Former page and post translations are untouched and preserved in any case.
+* Upgrading from other qTranslate forks also painless with an additional steps of configuration import and using 'Convert Database' option. One may also go back at any time using configuration export and 'Convert Database' option.
+* Former page and post translations are untouched and preserved in any case, except when using 'Convert Database' option.
 * Upgrading from other multilingual frameworks will require custom re-configuration. We suggest to search for a plugin, which may be already implemented to transfer the translations to qTranslate or to qTranslate-X. If a plugin works for one, it should work for other too, since qTranslate-X and qTranslate share the same database structures.
+* Additional information is available on [migration notes](https://qtranslatexteam.wordpress.com/2015/02/24/migration-from-other-multilingual-plugins/).
 
 ## Screenshots ##
 
@@ -237,6 +239,16 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 2. Language Management Interface
 
 ## Changelog ##
+
+### 3.2.8 ###
+* Improvement: function `convertURL` has been re-designed to take into account scheme, user, password and fragment correctly.
+* Improvement: added "x-default" link `<link hreflang="x-default" rel="alternate" />` as suggested by [Google](https://support.google.com/webmasters/answer/189077).
+* Performance: function `convertURL` now uses cached values of previously converted urls.
+* Performance: a few other little performance improvements.
+* Translation: fr_FR files updated. Thanks to Sophie.
+* Fix: Query in `qtranxf_excludePages`. [[WP Topic](https://wordpress.org/support/topic/bug-in-qtranxf_excludepages)]
+* Fix: Warning 'Undefined index: doing_front_end' reported in [WP Topic](https://wordpress.org/support/topic/notice-undefined-index-doing_front_end).
+* Fix: time functions adjusted. [[WP Topic](https://wordpress.org/support/topic/old-get_the_date-bug-is-back)]
 
 ### 3.2.7 stable ###
 * Includes all changes after version 3.2.2.
@@ -317,9 +329,9 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 * Feature: more on framework for integration with other plugins and themes.
 
 ### 3.1-b1 ###
-* Feature: closing tag `[:]` for square bracket language encoding mod is introduced.
+* Feature: closing tag `[:]` for square bracket language encoding mode is introduced.
 * Feature: options to convert database to/from square bracket only mode.
-* Feature: new language encoding mode 'byline', particularly needed for Woocoomerce integration.
+* Feature: new language encoding mode 'byline', particularly needed for Woocommerce integration.
 * Improvement: altered the response of filter 'esc_html' to return a translation to current language instead of the default language.
 * Feature: more on framework for integration with other plugins and themes.
 * Fix: import from [mqTranslate](https://wordpress.org/support/plugin/mqtranslate) (thanks to [Christophe](https://github.com/xhaleera)).
@@ -480,32 +492,12 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 
 ## Known Issues ##
 
-* Turn on option "Compatibility Functions", for any theme or plugin, which claims its compatibility with former qTranslate.
-* If other plugin installs a custom TinyMCE editor on a translatable field served by qTranslate-X, then all kind of problems start to happen. Examples of 'offending' plugins are: [Crayon Syntax Highlighter](https://wordpress.org/plugins/crayon-syntax-highlighter/), [Fusion Page Builder](http://www.theme-fusion.com/), [Page Builder by SiteOrigin](https://wordpress.org/plugins/siteorigin-panels/), [Revolution Slider](http://revolution.themepunch.com/), [Rich Text Tags](https://wordpress.org/plugins/rich-text-tags/), [Visual Composer](http://vc.wpbakery.com/), [WP Editor](https://wordpress.org/plugins/wp-editor/), [WR PageBuilder](https://wordpress.org/plugins/wr-pagebuilder). We are looking into possibilities to enable integration with those plugins, meanwhile [Tiny MCE Advanced](https://wordpress.org/plugins/tinymce-advanced/) seems to be compatible as reported by some users.
-* Title of the site on admin pages is not displaying correctly [WP topic](https://wordpress.org/support/topic/title-dont-show-the-right-text-in-admin).
-* When [Jetpack by WordPress.com](https://wordpress.org/plugins/jetpack/) is enabled, pressing 'Save Changes' at Settings/General (/wp-admin/options-general.php) page, causes fields "Site Title" and "Tagline" to be emptied, if they had multilingual values. It only happens when Jetpack is connected to WordPress. For now, when you need to edit those values, deactivate Jetpack, make your edits, then re-activate JetPack again. Fortunately, that general setting page need not to be changed frequently. [WP topic](https://wordpress.org/support/topic/site-titletagline-disappear-on-general-settings-update)
-* There are reports about conflict with JetPack galleries. Workaround exists: [WP topic](https://wordpress.org/support/topic/site-titletagline-disappear-on-general-settings-update).
-* Message "The backup of this post in your browser is different from the version below" appears sometimes in the post editor. Clicking on "Restore the backup" may produce unexpected result, since backup has one language only, the one which was active at the time of the last pressing of button "Update". The code which causes this is in /wp-includes/js/autosave.js. Autosave script is currently turned off to avoid this confusion.
-* Search in Category/Tags editor works in default language only.
-* If field "Alternative Text" on page "Edit Media" is left empty, then caption or title will be used untranslated in 'alt' attribute of image display. There is no WP hook provided to enable translation in such a case (see code of 'function wp_get_attachment_image'). However, if "Alternative Text" is filled with non-empty value, then it is shown translated and correctly. We could only re-implement the WP algorithm to be run for the second time under filter 'wp_get_attachment_image_attributes' with translation, which would hurt performance a little bit. If this is a real problem for you, let us know, we can put it in as an option, or submit pull request with your version of implementation. [WP topic](https://wordpress.org/support/topic/odd-behavior-with-photos-and-photo-galleries)
-* Page `/wp-admin/edit-tags.php?taxonomy=category`: if default language name of new category/tag is empty, nothing gets added.
-* Widget 'qTranslate Language Chooser', page `/wp-admin/widgets.php`: after saving its options, the content of 'Widget CSS' text area gets displayed outside of the text area. However, all options are saved ok, as a workaround, you need to refresh the whole page before doing the next editing action.
-* Title field is overlaid with the prompt "Enter title here", after switching the language from another language with empty value of title. [Watch Video](http://youtu.be/o3HH65bEZ4s) reported by [fotkin](https://wordpress.org/support/profile/fotkin).
+It is important to review the list of [Known Issues](https://qtranslatexteam.wordpress.com/known-issues/) before starting using the plugin.
 
 ## Credentials ##
 
-* The code of this plugin mostly originally based on [qTranslate](https://wordpress.org/plugins/qtranslate/ "qTranslate original plugin") and [zTranslate](https://wordpress.org/plugins/ztranslate/ "zTranslate fork").
-* Most flags in flags directory are made by Luc Balemans and downloaded from [FOTW Flags Of The World website](http://flagspot.net/flags/ "FOTW Flags Of The World website")
+Please, review the [credentials page](https://qtranslatexteam.wordpress.com/credentials/) at [qTranslate-X explained](https://qtranslatexteam.wordpress.com/about/) website.
 
 ## Desirable Unimplemented Features ##
 
-* Add ability to put Language Switching buttons on other editors besides, post, pages and taxonomies.
-* "Quick Edit" action in category or tag list pages will update the default language only.
-* If a language was switched on a page or post, but no edits were done, browser sometimes still complains about page changes, when leaving page.
-* Full screen editor mode does not have language switch buttons (not applicable in WP 4.1 any more).
-
-## Former "Known Issues" now Resolved ##
-
-* [Resolved by new plugin [WooCommerce & qTranslate-X](https://wordpress.org/plugins/woocommerce-qtranslate-x/) for [WooCommerce - excelling eCommerce](https://wordpress.org/plugins/woocommerce/)] Turn on option "Compatibility Functions", if you use [WooCommerce](https://wordpress.org/plugins/woocommerce/) framework plugins, like [IM8 qTranslate WooCommerce](https://wordpress.org/plugins/im8-qtranslate-woocommerce/), [qTranslate support for WooCommerce](https://wordpress.org/plugins/qtranslate-support-for-woocommerce/), [WooCommerce-qTML](https://wordpress.org/plugins/woocommerce-qtml/), for example.
-* Editing of menu item description does not work properly on page `/wp-admin/nav-menus.php`.
-* Sometimes after a new plugin update is released, the language switching buttons disappear on the first editor page load. Refresh the page to bring them back. Apparently, it has something to do with browse caching mechanism.
+A list of [desirable features](https://qtranslatexteam.wordpress.com/desirable/) is maintained at [qTranslate-X explained](https://qtranslatexteam.wordpress.com/about/) website.

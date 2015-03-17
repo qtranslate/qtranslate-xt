@@ -62,20 +62,6 @@ function qtranxf_useDefaultLanguage($content) {
 	return qtranxf_use($q_config['default_language'], $content, false, false);
 }
 
-function qtranxf_excludePages($pages) {
-	global $wpdb, $q_config;
-	static $exclude = 0;
-	if(!$q_config['hide_untranslated']) return $pages;
-	if(is_array($exclude)) return array_merge($exclude, $pages);
-		$query = "SELECT id FROM $wpdb->posts WHERE post_type = 'page' AND post_status = 'publish' AND NOT ($wpdb->posts.post_content LIKE '%<!--:".qtranxf_getLanguage()."-->%')" ;
-	$hide_pages = $wpdb->get_results($query);
-	$exclude = array();
-	foreach($hide_pages as $page) {
-		$exclude[] = $page->id;
-	}
-	return array_merge($exclude, $pages);
-}
-
 function qtranxf_versionLocale() {
 	return 'en_US';
 }
@@ -187,11 +173,14 @@ add_filter('comment_moderation_text', 'qtranxf_useDefaultLanguage',0);
 add_filter('the_content', 'qtranxf_useCurrentLanguageIfNotFoundShowAvailable', 100);// since 3.1 changed priority from 0 to 100, since other plugins, like https://wordpress.org/plugins/siteorigin-panels generate additional content, which also needs to be translated.
 add_filter('the_excerpt', 'qtranxf_useCurrentLanguageIfNotFoundShowAvailable', 0);
 add_filter('the_excerpt_rss', 'qtranxf_useCurrentLanguageIfNotFoundShowAvailable', 0);
-add_filter('get_comment_date', 'qtranxf_dateFromCommentForCurrentLanguage',0,2);
-add_filter('get_comment_time', 'qtranxf_timeFromCommentForCurrentLanguage',0,4);
+
+add_filter('get_comment_date', 'qtranxf_dateFromCommentForCurrentLanguage',0,3);
+add_filter('get_comment_time', 'qtranxf_timeFromCommentForCurrentLanguage',0,5);
 add_filter('get_post_modified_time', 'qtranxf_timeModifiedFromPostForCurrentLanguage',0,3);
 add_filter('get_the_time', 'qtranxf_timeFromPostForCurrentLanguage',0,3);
-add_filter('get_the_date', 'qtranxf_dateFromPostForCurrentLanguage',0,2);
+add_filter('get_the_date', 'qtranxf_dateFromPostForCurrentLanguage',0,3);
+add_filter('get_the_modified_date', 'qtranxf_dateModifiedFromPostForCurrentLanguage',0,2);
+
 add_filter('locale', 'qtranxf_localeForCurrentLanguage',99);
 //add_filter('the_title', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', 0);//WP: fires for display purposes only
 add_filter('post_title', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', 0);
@@ -245,7 +234,6 @@ add_filter('tag_feed_link', 'qtranxf_convertURL');
 add_filter('get_pagenum_link', 'qtranxf_convertURL');
 
 //add_filter('get_search_form', 'qtranxf_fixSearchForm', 10, 1);//no longer needed since we adjusted home_url()
-add_filter('wp_list_pages_excludes', 'qtranxf_excludePages');
 
 add_filter('comment_notification_text', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage');
 add_filter('comment_notification_headers', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage');
@@ -253,5 +241,5 @@ add_filter('comment_notification_subject', 'qtranxf_useCurrentLanguageIfNotFound
 
 // add_filter('the_editor', 'qtranxf_modifyRichEditor');
 //add_filter('admin_footer', 'qtranxf_modifyExcerpt');
-add_filter('bloginfo_url', 'qtranxf_convertBlogInfoURL',10,2);
+//add_filter('bloginfo_url', 'qtranxf_convertBlogInfoURL',10,2);
 add_filter('core_version_check_locale', 'qtranxf_versionLocale');

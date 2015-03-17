@@ -317,7 +317,7 @@ function qtranxf_add_admin_footer_js ( $enqueue_script=false ) {
 	if($q_config['url_mode']==QTX_URL_DOMAINS){
 		$config['domains']=$q_config['domains'];
 	}
-	$config['url_info_home']=$q_config['url_info']['home'];
+	$config['url_info_home']=trailingslashit(qtranxf_get_home_info()['path']);//$q_config['url_info']['home'];
 	$config['flag_location']=qtranxf_flag_location();
 	$config['js']=array();
 	$config['flag']=array();
@@ -450,10 +450,10 @@ function qtranxf_add_admin_css () {
 }
 
 function qtranxf_admin_head() {
-	//qtranxf_add_css();// Since 3.2.5 no longer needed
+	//qtranxf_add_css();//Since 3.2.5 no longer needed
 	qtranxf_add_admin_css();
 	qtranxf_add_admin_head_js();
-	//since 3.2.7 qtranxf_optionFilter('disable');//why this is here?
+	//Since 3.2.7 qtranxf_optionFilter('disable');//why this is here?
 }
 add_action('admin_head', 'qtranxf_admin_head');
 
