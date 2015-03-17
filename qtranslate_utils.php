@@ -368,7 +368,8 @@ function qtranxf_external_host_ex($host,$homeinfo){
 }
 
 function qtranxf_external_host($host){
-	return  qtranxf_external_host_ex($host,qtranxf_get_home_info());
+	$homeinfo=qtranxf_get_home_info();
+	return qtranxf_external_host_ex($host,$homeinfo);
 }
 
 function qtranxf_isMultilingual($str){

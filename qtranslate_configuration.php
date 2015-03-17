@@ -317,7 +317,8 @@ function qtranxf_add_admin_footer_js ( $enqueue_script=false ) {
 	if($q_config['url_mode']==QTX_URL_DOMAINS){
 		$config['domains']=$q_config['domains'];
 	}
-	$config['url_info_home']=trailingslashit(qtranxf_get_home_info()['path']);//$q_config['url_info']['home'];
+	$homeinfo=qtranxf_get_home_info();
+	$config['url_info_home']=trailingslashit($homeinfo['path']);//$q_config['url_info']['home'];
 	$config['flag_location']=qtranxf_flag_location();
 	$config['js']=array();
 	$config['flag']=array();

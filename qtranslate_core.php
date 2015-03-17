@@ -930,7 +930,8 @@ function qtranxf_url_del_language(&$urlinfo) {
 			break;
 		case QTX_URL_DOMAIN: // pre-domain
 			// remove language information
-			$urlinfo['host'] = qtranxf_get_home_info()['host'];
+			$homeinfo=qtranxf_get_home_info();
+			$urlinfo['host'] = $homeinfo['host'];
 			break;
 		case QTX_URL_DOMAINS: // per-domain
 			$urlinfo['host'] = $q_config['domains'][$q_config['default_language']];
