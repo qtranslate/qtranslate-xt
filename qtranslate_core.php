@@ -185,17 +185,15 @@ function qtranxf_detect_language(&$url_info) {
 	}
 
 	$url_info['language'] = $lang;
+	$url_info['set_cookie'] = !defined('DOING_AJAX');
+
 	/**
 	 * Hook for possible other methods
 	 * Set $url_info['language'] with the result
 	*/
 	$url_info = apply_filters('qtranslate_detect_language', $url_info);
 	$lang = $url_info['language'];
-	if(!defined('DOING_AJAX')){
-		$set_cookie = apply_filters('qtranslate_set_language_cookie', true, $url_info);
-		if($set_cookie)
-			qtranxf_set_language_cookie($lang);
-	}
+	if($url_info['set_cookie']) qtranxf_set_language_cookie($lang);
 	return $lang;
 }
 
