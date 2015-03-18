@@ -12,6 +12,8 @@ Domain Path: /lang/
 License: GPL2
 Author e-mail: qTranslateTeam@gmail.com
 Original Author: Qian Qin (http://www.qianqin.de mail@qianqin.de)
+GitHub Plugin URI: https://github.com/qTranslate-Team/qtranslate-x
+GitHub Branch: master
 */
 /* Unused keywords (as described in http://codex.wordpress.org/Writing_a_Plugin):
  * Network: Optional. Whether the plugin can only be activated network wide. Example: true
