@@ -119,7 +119,6 @@ function qtranxf_init_language() {
 	//qtranxf_dbg_log('done: qtranxf_init_language: url_info: ',$url_info);
 }
 
-//if(!function_exists('qtranxf_detect_language')){
 function qtranxf_detect_language(&$url_info) {
 	global $q_config;
 
@@ -192,10 +191,13 @@ function qtranxf_detect_language(&$url_info) {
 	*/
 	$url_info = apply_filters('qtranslate_detect_language', $url_info);
 	$lang = $url_info['language'];
-	if(!defined('DOING_AJAX')) qtranxf_set_language_cookie($lang);
+	if(!defined('DOING_AJAX')){
+		$set_cookie = apply_filters('qtranslate_set_language_cookie', true, $url_info);
+		if($set_cookie)
+			qtranxf_set_language_cookie($lang);
+	}
 	return $lang;
 }
-//}
 
 /**
  * Expects to be set before call:
@@ -205,7 +207,6 @@ function qtranxf_detect_language(&$url_info) {
  * - $url_info['path-base']
  * - $url_info['path-base-length']
 */
-//if(!function_exists('qtranxf_parse_language_info')){
 function qtranxf_parse_language_info(&$url_info, $link=false) {
 	global $q_config;
 
@@ -328,17 +329,13 @@ function qtranxf_parse_language_info(&$url_info, $link=false) {
 	if(isset($url_info['language'])) $lang = $url_info['language'];
 	return $lang;
 }
-//}
 
-//if(!function_exists('qtranxf_detect_language_admin')){
 function qtranxf_detect_language_admin(&$url_info) {
 	require_once(dirname(__FILE__).'/admin/admin_utils.php');
 	$url_info = apply_filters('qtranslate_detect_admin_language',$url_info);
 	return $url_info['lang_admin'];
 }
-//}
 
-//if(!function_exists('qtranxf_detect_language_front')){
 function qtranxf_detect_language_front(&$url_info) {
 	global $q_config;
 	//assert($url_info['doing_front_end']);
@@ -370,7 +367,6 @@ function qtranxf_detect_language_front(&$url_info) {
 	}
 	return $lang;
 }
-//}
 
 function qtranxf_setcookie_language($lang, $cookie_name, $cookie_path, $cookie_domain = NULL, $secure = false)
 {

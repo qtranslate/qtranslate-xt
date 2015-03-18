@@ -66,7 +66,7 @@ if(WP_DEBUG){
 		if(file_exists(dirname(__FILE__).'/dev/qtx-tests.php'))
 			require_once(dirname(__FILE__).'/dev/qtx-tests.php');
 	}
-	//add_action('qtranslate_init_language','qtranxf_do_tests');
+	add_action('qtranslate_init_language','qtranxf_do_tests');
 
 }else{
 	if(!function_exists('qtranxf_dbg_log')){ function qtranxf_dbg_log($msg,$var=null,$bt=false,$exit=false){} }
