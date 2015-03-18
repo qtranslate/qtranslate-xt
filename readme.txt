@@ -248,6 +248,7 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 * Improvement: function `convertURL` has been re-designed to take into account scheme, user, password and fragment correctly.
 * Improvement: added "x-default" link `<link hreflang="x-default" rel="alternate" />` as suggested by [Google](https://support.google.com/webmasters/answer/189077).
 * Feature: variable `$url_info['set_cookie']` can be overridden via `qtranslate_detect_language` filter. [[WP Topic](https://wordpress.org/support/topic/do-not-switch-admin-language-when-changing-language-on-frontend)]
+* Maintenance: GitHub repository information in the header of qtranslate.php
 * Performance: function `convertURL` now uses cached values of previously converted urls.
 * Performance: a few other little performance improvements.
 * Translation: Dutch (nl_NL) po/mo files updated. Thanks to Marius Siroen.
