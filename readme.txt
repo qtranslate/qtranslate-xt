@@ -163,7 +163,11 @@ We understand that this is not a very user-friendly way to adjust the options, b
 
 ### How can I prevent URL of a custom menu item from being converted ###
 
-URL of a custom menu item gets converted to a URL for active language according to option "URL Modification Mode", unless query argument 'setlang=no' is added to the URL typed in. Such a query argument is removed when the item gets rendered.
+URL of a custom menu item gets converted to a URL for active language according to option "URL Modification Mode", unless query argument 'setlang=no' is added to the URL typed in. For example, if URL of a menu item is "http://example.com" change it to "http://example.com?setlang=no", or if it already has some query like this "http://example.com?arg=value", then change it to "http://example.com?arg=value&setlang=no". The additional query 'setlang=no' is always removed when the item gets rendered on a web page, for example,
+
+* "http://example.com" is rendered language-encoded, like "http://example.com/en".
+* "http://example.com?setlang=no" is rendered as "http://example.com" without language encoding and argument 'setlang=no' removed.
+* "http://example.com?arg=value&setlang=no" is rendered as "http://example.com?arg=value" without language encoding and argument 'setlang=no' removed.
 
 ### Can I enable Language Switching Buttons on my plugin custom page? ###
 
@@ -245,10 +249,12 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 * Improvement: added "x-default" link `<link hreflang="x-default" rel="alternate" />` as suggested by [Google](https://support.google.com/webmasters/answer/189077).
 * Performance: function `convertURL` now uses cached values of previously converted urls.
 * Performance: a few other little performance improvements.
-* Translation: fr_FR files updated. Thanks to Sophie.
+* Translation: Dutch (nl_NL) po/mo files updated. Thanks to Marius Siroen.
+* Translation: French (fr_FR) po/mo files updated. Thanks to Sophie.
 * Fix: Query in `qtranxf_excludePages`. [[WP Topic](https://wordpress.org/support/topic/bug-in-qtranxf_excludepages)]
 * Fix: Warning 'Undefined index: doing_front_end' reported in [WP Topic](https://wordpress.org/support/topic/notice-undefined-index-doing_front_end).
 * Fix: time functions adjusted. [[WP Topic](https://wordpress.org/support/topic/old-get_the_date-bug-is-back)]
+* Fix: custom menu item query 'setlang=no': [[Issue](https://github.com/qTranslate-Team/qtranslate-x/issues/80)]
 
 ### 3.2.7 stable ###
 * Includes all changes after version 3.2.2.

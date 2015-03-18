@@ -531,10 +531,15 @@ function qtranxf_filter_postmeta($original_value, $object_id, $meta_key = '', $s
 		//qtranxf_dbg_log('qtranxf_filter_postmeta: $object_id='.$object_id.'; $meta_cache before:',$meta_cache);
 		foreach($meta_cache as $mkey => $mval){
 			if(strpos($mkey,'_url') !== false){
-				//qtranxf_dbg_log('qtranxf_filter_postmeta: $object_id='.$object_id.'; $meta_cache['.$mkey.'] url before:',$val);
 				$val = array_map('maybe_unserialize', $mval);
-				$val = qtranxf_convertURLs($val,$lang);
-				//qtranxf_dbg_log('qtranxf_filter_postmeta: $object_id='.$object_id.'; $meta_cache['.$mkey.'] url  after:',$val);
+				switch($mkey){
+					case '_menu_item_url': break; // function qtranxf_wp_get_nav_menu_items takes care of this later
+					default:
+						//qtranxf_dbg_log('qtranxf_filter_postmeta: $object_id='.$object_id.'; $meta_cache['.$mkey.'] url before:',$val);
+						$val = qtranxf_convertURLs($val,$lang);
+						//qtranxf_dbg_log('qtranxf_filter_postmeta: $object_id='.$object_id.'; $meta_cache['.$mkey.'] url  after:',$val);
+					break;
+				}
 			}else{
 				$val = array();
 				foreach($mval as $k => $v){

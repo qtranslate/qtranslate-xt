@@ -289,7 +289,7 @@ function qtranxf_add_query_arg(&$query, $key_value){
 function qtranxf_del_query_arg(&$query, $key){
 	//$key_value;
 	$match;
-	while(preg_match('/(&|&amp;|&#038;|)('.$key.'=[^&]+)(&|&amp;|&#038;|)/i',$query,$match)){
+	while(preg_match('/(&|&amp;|&#038;|^)('.$key.'=[^&]+)(&|&amp;|&#038;|$)/i',$query,$match)){
 		//$key_value = $match[2];
 		$p = strpos($query,$match[2]);
 		$n = strlen($match[2]);
