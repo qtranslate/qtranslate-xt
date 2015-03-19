@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: qTranslate-X 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-18 20:22-0600\n"
+"POT-Creation-Date: 2015-03-19 14:09-0600\n"
 "PO-Revision-Date: 2015-02-04 14:41-0000\n"
 "Language-Team: qTranslate Team Translators\n"
 "MIME-Version: 1.0\n"
@@ -126,7 +126,7 @@ msgid "Action"
 msgstr "Stav"
 
 #: admin/admin_utils.php:420 qtranslate_configuration.php:471
-#: qtranslate_configuration.php:1240
+#: qtranslate_configuration.php:1245
 msgid "Languages"
 msgstr "Jazyky"
 
@@ -331,7 +331,7 @@ msgstr ""
 msgid "This is a one-time message, which you will not see again, unless the same import is repeated."
 msgstr ""
 
-#: qtranslate_configuration.php:775 qtranslate_configuration.php:1199
+#: qtranslate_configuration.php:775 qtranslate_configuration.php:1204
 msgid "Compatibility Functions"
 msgstr ""
 
@@ -622,162 +622,162 @@ msgstr "Použít strftime místo data a nahradit formáty s předdefinovaným fo
 msgid "Depending on the mode selected, additional customizations of the theme may be needed."
 msgstr "V závislosti na zvoleném režimu, další úpravy témy můžou být zapotřebí."
 
-#: qtranslate_configuration.php:1155
+#: qtranslate_configuration.php:1160
 #, fuzzy
 msgid "Translation of options"
 msgstr "Přeložit do"
 
-#: qtranslate_configuration.php:1157
+#: qtranslate_configuration.php:1162
 msgid "Filter all WordPress options for translation at front-end. It may hurt performance of the site, but ensures that all options are translated."
 msgstr ""
 
-#: qtranslate_configuration.php:1157
+#: qtranslate_configuration.php:1162
 msgid "Starting from version 3.2.5, only options with multilingual content get filtered, which should help on performance issues."
 msgstr ""
 
-#: qtranslate_configuration.php:1159
+#: qtranslate_configuration.php:1164
 msgid "Translate only options listed below (for experts only):"
 msgstr ""
 
-#: qtranslate_configuration.php:1162
+#: qtranslate_configuration.php:1167
 #, php-format
 msgid "By default, all options are filtered to be translated at front-end for the sake of simplicity of configuration. However, for a developed site, this may cause a considerable performance degradation. Normally, there are very few options, which actually need a translation. You may simply list them above to minimize the performance impact, while still getting translations needed. Options names must match the field \"%s\" of table \"%s\" of WordPress database. A minimum common set of option, normally needed a translation, is already entered in the list above as a default example. Option names in the list may contain wildcard with symbol \"%s\"."
 msgstr ""
 
-#: qtranslate_configuration.php:1166
+#: qtranslate_configuration.php:1171
 msgid "Custom Fields"
 msgstr ""
 
-#: qtranslate_configuration.php:1168
+#: qtranslate_configuration.php:1173
 #, php-format
 msgid "Enter \"%s\" or \"%s\" attribute of text fields from your theme, which you wish to translate. This applies to post, page and media editors (%s). To lookup \"%s\" or \"%s\", right-click on the field in the post or the page editor and choose \"%s\". Look for an attribute of the field named \"%s\" or \"%s\". Enter it below, as many as you need, space- or comma-separated. After saving configuration, these fields will start responding to the language switching buttons, and you can enter different text for each language. The input fields of type %s will be parsed using %s syntax, while single line text fields will use %s syntax. If you need to override this behaviour, prepend prefix %s or %s to the name of the field to specify which syntax to use. For more information, read %sFAQ%s."
 msgstr ""
 
-#: qtranslate_configuration.php:1168
+#: qtranslate_configuration.php:1173
 msgctxt "browser option"
 msgid "Inspect Element"
 msgstr ""
 
-#: qtranslate_configuration.php:1175
+#: qtranslate_configuration.php:1180
 msgid "The value of \"id\" attribute is normally unique within one page, otherwise the first field found, having an id specified, is picked up."
 msgstr ""
 
-#: qtranslate_configuration.php:1182
+#: qtranslate_configuration.php:1187
 #, php-format
 msgid "All the fields of specified classes will respond to Language Switching Buttons. Be careful not to include a class, which would affect language-neutral fields. If you cannot uniquely identify a field needed neither by %s, nor by %s attribute, report the issue on %sSupport Forum%s"
 msgstr ""
 
-#: qtranslate_configuration.php:1186
+#: qtranslate_configuration.php:1191
 msgid "Custom Filters"
 msgstr ""
 
-#: qtranslate_configuration.php:1189
+#: qtranslate_configuration.php:1194
 #, php-format
 msgid "Names of filters (which are enabled on theme or other plugins via %s function) to add translation to. For more information, read %sFAQ%s."
 msgstr ""
 
-#: qtranslate_configuration.php:1193
+#: qtranslate_configuration.php:1198
 msgid "Custom Admin Pages"
 msgstr ""
 
-#: qtranslate_configuration.php:1195
+#: qtranslate_configuration.php:1200
 #, php-format
 msgid "List the custom admin page paths for which you wish Language Switching Buttons to show up. The Buttons will then control fields configured in \"Custom Fields\" section. You may only include part of the full URL after %s, including a distinctive query string if needed. As many as desired pages can be listed space/comma separated. For more information, read %sFAQ%s."
 msgstr ""
 
-#: qtranslate_configuration.php:1201
+#: qtranslate_configuration.php:1206
 #, php-format
 msgid "Enable function name compatibility (%s)."
 msgstr ""
 
-#: qtranslate_configuration.php:1202
+#: qtranslate_configuration.php:1207
 #, php-format
 msgid "Some plugins and themes use direct calls to the functions listed, which are defined in former %s plugin and some of its forks. Turning this flag on will enable those function to exists, which will make the dependent plugins and themes to work. WordPress policy prohibits to define functions with the same names as in other plugins, since it generates user-unfriendly fatal errors, when two conflicting plugins are activated simultaneously. Before turning this option on, you have to make sure that there are no other plugins active, which define those functions."
 msgstr ""
 
-#: qtranslate_configuration.php:1206
+#: qtranslate_configuration.php:1211
 msgid "Editor Mode"
 msgstr ""
 
-#: qtranslate_configuration.php:1208
+#: qtranslate_configuration.php:1213
 msgid "Use Language Switching Buttons (LSB)."
 msgstr ""
 
-#: qtranslate_configuration.php:1209
+#: qtranslate_configuration.php:1214
 msgid "This is the default mode."
 msgstr ""
 
-#: qtranslate_configuration.php:1210
+#: qtranslate_configuration.php:1215
 msgid "Do not use Language Switching Buttons to edit multi-language text entries."
 msgstr ""
 
-#: qtranslate_configuration.php:1210
+#: qtranslate_configuration.php:1215
 msgid "Editor Raw Mode"
 msgstr ""
 
-#: qtranslate_configuration.php:1211
+#: qtranslate_configuration.php:1216
 msgid "Some people prefer to edit the raw entries containing all languages together separated by language defining tags, as they are stored in database."
 msgstr ""
 
-#: qtranslate_configuration.php:1262
+#: qtranslate_configuration.php:1267
 #, fuzzy, php-format
 msgid "%s Flag"
 msgstr "Vlajka"
 
-#: qtranslate_configuration.php:1264
+#: qtranslate_configuration.php:1269
 msgid "Disable"
 msgstr "Zakázat"
 
-#: qtranslate_configuration.php:1264
+#: qtranslate_configuration.php:1269
 msgid "Enable"
 msgstr "Povolit"
 
-#: qtranslate_configuration.php:1265
+#: qtranslate_configuration.php:1270
 msgid "Edit"
 msgstr "Upravit"
 
-#: qtranslate_configuration.php:1266
+#: qtranslate_configuration.php:1271
 msgid "Default"
 msgstr "Výchozí"
 
-#: qtranslate_configuration.php:1266
+#: qtranslate_configuration.php:1271
 msgid "Delete"
 msgstr "Odstranit"
 
-#: qtranslate_configuration.php:1271
+#: qtranslate_configuration.php:1276
 msgid "Enabling a language will cause qTranslate to update the Gettext-Database for the language, which can take a while depending on your server's connection speed."
 msgstr "Povolení jazyku způsobí, že qTranslate aktualizuje Gettext-databázi pro jazyk, což může chvíli trvat v závislosti na vašem serveru a na rychlosti připojení."
 
-#: qtranslate_configuration.php:1278
+#: qtranslate_configuration.php:1283
 msgid "Add Language"
 msgstr "Přidat Jazyk"
 
-#: qtranslate_configuration.php:1281
+#: qtranslate_configuration.php:1286
 msgid "Add Language &raquo;"
 msgstr "Přidat jazyk &raquo;"
 
-#: qtranslate_configuration.php:1296
+#: qtranslate_configuration.php:1301
 msgid "Language Menu"
 msgstr ""
 
-#: qtranslate_configuration.php:1345
+#: qtranslate_configuration.php:1350
 msgid "Help"
 msgstr ""
 
-#: qtranslate_configuration.php:1347
+#: qtranslate_configuration.php:1352
 #, php-format
 msgid "Menu item added is replaced with a sub-menu of available languages when menu is rendered. Depending on how your theme renders menu you may need to override and customize css entries %s and %s, originally defined in %s. The field \"URL\" of inserted menu item allows additional configuration described in %sFAQ%s."
 msgstr ""
 
-#: qtranslate_configuration.php:1352
+#: qtranslate_configuration.php:1357
 msgid "Add to Menu"
 msgstr ""
 
-#: qtranslate_configuration.php:1362
+#: qtranslate_configuration.php:1367
 msgid "Language Switcher"
 msgstr ""
 
-#: qtranslate_configuration.php:1399
+#: qtranslate_configuration.php:1404
 msgid "Settings"
 msgstr "Nastavení"
 
@@ -1114,6 +1114,10 @@ msgstr ""
 
 #: qtranslate_widget.php:119
 msgid "Widget CSS:"
+msgstr ""
+
+#: qtranslate.php:5
+msgid "Adds user-friendly and database-friendly multilingual content support."
 msgstr ""
 
 #~ msgid "Debugging Information"
