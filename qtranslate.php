@@ -2,7 +2,7 @@
 /**
 Plugin Name: qTranslate-X
 Plugin URI: http://wordpress.org/plugins/qtranslate-x/
-Description: Adds user-friendly and database-friendly multilingual content support into WordPress.
+Description: Adds user-friendly and database-friendly multilingual content support.
 Version: 3.2.8
 Author: qTranslate Team
 Author URI: http://qtranslatexteam.wordpress.com/about
@@ -134,6 +134,8 @@ define('QTX_STRFTIME',	4);
 define('QTX_FILTER_OPTIONS_ALL', 0);
 define('QTX_FILTER_OPTIONS_LIST', 1);
 define('QTX_FILTER_OPTIONS_DEFAULT','blogname blogdescription widget_%');
+
+define('QTX_EX_DATE_FORMATS_DEFAULT','\'U\'');
 
 define('QTX_EDITOR_MODE_LSB', 0);//Language Switching Buttons
 define('QTX_EDITOR_MODE_RAW', 1);

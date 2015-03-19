@@ -503,8 +503,15 @@ function qtranxf_convertDateFormatToStrftimeFormat($format) {
 
 function qtranxf_convertFormat($format, $default_format) {
 	global $q_config;
-	// if timestamp is requested, don't replace it 
-	if('U'==$format) return qtranxf_convertDateFormatToStrftimeFormat($format); 
+	// if one of special language-neutral formats are requested, don't replace it
+	switch($format){
+		case 'Z':
+		case 'c':
+		case 'r':
+		case 'U':
+			return qtranxf_convertDateFormatToStrftimeFormat($format); 
+		default: break;
+	}
 	// check for multilang formats
 	$format = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($format);
 	$default_format = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($default_format);
