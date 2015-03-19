@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: qTranslate-X 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-17 22:20-0600\n"
+"POT-Creation-Date: 2015-03-18 20:22-0600\n"
 "PO-Revision-Date: 2015-03-11 11:33+0100\n"
 "Last-Translator: Sophie <soph@sophie-g.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,27 +42,51 @@ msgstr "%sError:%s l’extension %s ne peut pas fonctionner simultanémant avec 
 msgid "Deactivate %s"
 msgstr "Désactiver %s"
 
-#: admin/activation_hook.php:171
+#: admin/activation_hook.php:176
+#, php-format
+msgid "Plugin %s may be integrated with multilingual plugin %s with a help of plugin %s."
+msgstr ""
+
+#: admin/activation_hook.php:178
+msgid "Please, press an appropriate button below."
+msgstr ""
+
+#: admin/activation_hook.php:182
+#, fuzzy, php-format
+msgid "Activate plugin %s"
+msgstr "Désactiver %s"
+
+#: admin/activation_hook.php:184
+#, php-format
+msgid "Install plugin %s"
+msgstr ""
+
+#: admin/activation_hook.php:186
+#, fuzzy
+msgid "I am aware of that, dismiss this message."
+msgstr "Je l’ai déjà fait, masquez ce message."
+
+#: admin/activation_hook.php:240
 #, php-format
 msgid "Thank you for using %s plugin!"
 msgstr "Merci d’utiliser l’extension %s !"
 
-#: admin/activation_hook.php:173
+#: admin/activation_hook.php:242
 #, php-format
 msgid "Please, help us to make a decision on \"%s\" feature, press the button below."
 msgstr "S’il vous plait, aidez-nous à prendre une décision sur la fonctionnalité \"%s\", cliquez sur le bouton ci-dessous."
 
-#: admin/activation_hook.php:173 admin/activation_hook.php:175
+#: admin/activation_hook.php:242 admin/activation_hook.php:244
 #: qtranslate_services.php:787
 msgid "Translation Service"
 msgstr "Service de traduction"
 
-#: admin/activation_hook.php:175
+#: admin/activation_hook.php:244
 #, php-format
 msgid "Survey on \"%s\" feature"
 msgstr "Sondage sur la fonctionnalité \"%s\""
 
-#: admin/activation_hook.php:176
+#: admin/activation_hook.php:245
 msgid "I have already done it, dismiss this message."
 msgstr "Je l’ai déjà fait, masquez ce message."
 

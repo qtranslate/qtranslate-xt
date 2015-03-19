@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: qTranslate-X 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-17 22:20-0600\n"
+"POT-Creation-Date: 2015-03-18 20:22-0600\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Maurizio Omissoni <maurizio@omissoni.ch>\n"
 "Language-Team: qTranslate Team Translators\n"
@@ -44,28 +44,52 @@ msgstr "%sFehler:%s Das Plugin %s kann nicht gleichzeitig mit dem Plugin %s lauf
 msgid "Deactivate %s"
 msgstr "Deaktiviert %s"
 
-#: admin/activation_hook.php:171
+#: admin/activation_hook.php:176
+#, php-format
+msgid "Plugin %s may be integrated with multilingual plugin %s with a help of plugin %s."
+msgstr ""
+
+#: admin/activation_hook.php:178
+msgid "Please, press an appropriate button below."
+msgstr ""
+
+#: admin/activation_hook.php:182
+#, fuzzy, php-format
+msgid "Activate plugin %s"
+msgstr "Deaktiviert %s"
+
+#: admin/activation_hook.php:184
+#, php-format
+msgid "Install plugin %s"
+msgstr ""
+
+#: admin/activation_hook.php:186
+#, fuzzy
+msgid "I am aware of that, dismiss this message."
+msgstr "Bereits gemacht, Nachricht ignorieren"
+
+#: admin/activation_hook.php:240
 #, php-format
 msgid "Thank you for using %s plugin!"
 msgstr "Danke für die Anwendung des %s Plugin!"
 
-#: admin/activation_hook.php:173
+#: admin/activation_hook.php:242
 #, php-format
 msgid "Please, help us to make a decision on \"%s\" feature, press the button below."
 msgstr "Bitte helfen sie uns, über das \"%s\" feature zu entscheiden, drücken sie den Knopf da unten."
 
-#: admin/activation_hook.php:173 admin/activation_hook.php:175
+#: admin/activation_hook.php:242 admin/activation_hook.php:244
 #: qtranslate_services.php:787
 #, fuzzy
 msgid "Translation Service"
 msgstr "qTranslate Services"
 
-#: admin/activation_hook.php:175
+#: admin/activation_hook.php:244
 #, php-format
 msgid "Survey on \"%s\" feature"
 msgstr "Umfrage über die  \"%s\" Funktion"
 
-#: admin/activation_hook.php:176
+#: admin/activation_hook.php:245
 msgid "I have already done it, dismiss this message."
 msgstr "Bereits gemacht, Nachricht ignorieren"
 

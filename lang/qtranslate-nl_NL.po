@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: qtranslate-x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-17 22:20-0600\n"
+"POT-Creation-Date: 2015-03-18 20:22-0600\n"
 "PO-Revision-Date: 2015-03-17 15:17+0100\n"
 "Last-Translator: Marius Siroen <marius@marius-siroen.com>\n"
 "Language-Team: Dutch (Netherlands) (http://www.transifex.com/projects/p/qtranslate-x/language/nl_NL/)\n"
@@ -50,27 +50,51 @@ msgstr "%sFout:%s plugin %s kan niet gelijktijdig worden uitgevoerd met plugin %
 msgid "Deactivate %s"
 msgstr "Deactiveer %s"
 
-#: admin/activation_hook.php:171
+#: admin/activation_hook.php:176
+#, php-format
+msgid "Plugin %s may be integrated with multilingual plugin %s with a help of plugin %s."
+msgstr ""
+
+#: admin/activation_hook.php:178
+msgid "Please, press an appropriate button below."
+msgstr ""
+
+#: admin/activation_hook.php:182
+#, fuzzy, php-format
+msgid "Activate plugin %s"
+msgstr "Deactiveer %s"
+
+#: admin/activation_hook.php:184
+#, php-format
+msgid "Install plugin %s"
+msgstr ""
+
+#: admin/activation_hook.php:186
+#, fuzzy
+msgid "I am aware of that, dismiss this message."
+msgstr "Ik heb het al gedaan, verberg deze boodschap."
+
+#: admin/activation_hook.php:240
 #, php-format
 msgid "Thank you for using %s plugin!"
 msgstr "Dank voor het gebruik van de %s plugin"
 
-#: admin/activation_hook.php:173
+#: admin/activation_hook.php:242
 #, php-format
 msgid "Please, help us to make a decision on \"%s\" feature, press the button below."
 msgstr "Alstublieft, help ons om te beslissen over de \"%s\" functie, klik op de knop."
 
-#: admin/activation_hook.php:173 admin/activation_hook.php:175
+#: admin/activation_hook.php:242 admin/activation_hook.php:244
 #: qtranslate_services.php:787
 msgid "Translation Service"
 msgstr "Vertaal Services"
 
-#: admin/activation_hook.php:175
+#: admin/activation_hook.php:244
 #, php-format
 msgid "Survey on \"%s\" feature"
 msgstr "Enquête over de  \"%s\" functie"
 
-#: admin/activation_hook.php:176
+#: admin/activation_hook.php:245
 msgid "I have already done it, dismiss this message."
 msgstr "Ik heb het al gedaan, verberg deze boodschap."
 

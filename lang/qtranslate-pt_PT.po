@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: qTranslate-X 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-17 22:20-0600\n"
+"POT-Creation-Date: 2015-03-18 20:22-0600\n"
 "PO-Revision-Date: 2015-03-18 10:57-0000\n"
 "Last-Translator: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "Language-Team: Pedro Mendonça <ped.gaspar@gmail.com>\n"
-"Language: pt_PT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: pt_PT\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Generator: Poedit 1.7.5\n"
@@ -53,27 +53,51 @@ msgstr "%sErro:%s o plugin %s não pode funcionar simultaneamente com o plugin %
 msgid "Deactivate %s"
 msgstr "Desactivar %s"
 
-#: admin/activation_hook.php:171
+#: admin/activation_hook.php:176
+#, php-format
+msgid "Plugin %s may be integrated with multilingual plugin %s with a help of plugin %s."
+msgstr ""
+
+#: admin/activation_hook.php:178
+msgid "Please, press an appropriate button below."
+msgstr ""
+
+#: admin/activation_hook.php:182
+#, fuzzy, php-format
+msgid "Activate plugin %s"
+msgstr "Desactivar %s"
+
+#: admin/activation_hook.php:184
+#, php-format
+msgid "Install plugin %s"
+msgstr ""
+
+#: admin/activation_hook.php:186
+#, fuzzy
+msgid "I am aware of that, dismiss this message."
+msgstr "Já fiz isto, descartar esta mensagem."
+
+#: admin/activation_hook.php:240
 #, php-format
 msgid "Thank you for using %s plugin!"
 msgstr "Obrigado por utilizar o plugin %s!"
 
-#: admin/activation_hook.php:173
+#: admin/activation_hook.php:242
 #, php-format
 msgid "Please, help us to make a decision on \"%s\" feature, press the button below."
 msgstr "Por favor, ajude-nos a decidir sobre o recurso de \"%s\", clique no botão abaixo."
 
-#: admin/activation_hook.php:173 admin/activation_hook.php:175
+#: admin/activation_hook.php:242 admin/activation_hook.php:244
 #: qtranslate_services.php:787
 msgid "Translation Service"
 msgstr "Serviço de Tradução"
 
-#: admin/activation_hook.php:175
+#: admin/activation_hook.php:244
 #, php-format
 msgid "Survey on \"%s\" feature"
 msgstr "Questionário sobre o recurso \"%s\""
 
-#: admin/activation_hook.php:176
+#: admin/activation_hook.php:245
 msgid "I have already done it, dismiss this message."
 msgstr "Já fiz isto, descartar esta mensagem."
 
