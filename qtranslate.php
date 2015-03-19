@@ -139,6 +139,11 @@ define('QTX_EDITOR_MODE_LSB', 0);//Language Switching Buttons
 define('QTX_EDITOR_MODE_RAW', 1);
 define('QTX_EDITOR_MODE_SINGLGE', 2);
 
+define('QTX_HIGHLIGHT_MODE_NONE', 0);
+define('QTX_HIGHLIGHT_MODE_LEFT_BORDER', 1);
+define('QTX_HIGHLIGHT_MODE_BORDER', 2);
+define('QTX_HIGHLIGHT_MODE_CUSTOM_CSS', 9);
+
 define('QTX_COOKIE_NAME_FRONT','qtrans_front_language');
 define('QTX_COOKIE_NAME_ADMIN','qtrans_admin_language');
 
@@ -553,6 +558,8 @@ function qtranxf_set_config_default()
 	$q_config['use_secure_cookie'] = false;
 	$q_config['header_css_on'] = true;
 
+	$q_config['highlight_mode'] = QTX_HIGHLIGHT_MODE_LEFT_BORDER;
+
 	$q_config = apply_filters('qtranslate_config_default', $q_config);
 }
 qtranxf_set_config_default();
@@ -560,6 +567,7 @@ qtranxf_set_config_default();
 require_once(dirname(__FILE__)."/qtranslate_utils.php");
 require_once(dirname(__FILE__)."/qtranslate_core.php");
 require_once(dirname(__FILE__)."/qtranslate_widget.php");
+require_once(dirname(__FILE__)."/qtranslate_user_options.php");
 
 if(is_admin()){
 	require_once(dirname(__FILE__).'/admin/activation_hook.php');

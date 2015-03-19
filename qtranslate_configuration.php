@@ -56,6 +56,8 @@ function qtranxf_reset_config()
 	delete_option('qtranslate_hide_default_language');
 	delete_option('qtranslate_qtrans_compatibility');
 	delete_option('qtranslate_editor_mode');
+	delete_option('qtranslate_highlight_mode');
+	delete_option('qtranslate_highlight_mode_custom_css');
 	delete_option('qtranslate_custom_fields');
 	delete_option('qtranslate_widget_css'); // obsolete option
 	delete_option('qtranslate_use_secure_cookie');
@@ -426,10 +428,51 @@ function qtranxf_add_admin_lang_icons ()
 	echo '</style>'.PHP_EOL;
 }
 
+/**
+ * Add CSS code to highlight the translatable fields */
+function qtranxf_add_admin_highlight_css() {
+	global $q_config;
+	if ( $q_config['highlight_mode'] == QTX_HIGHLIGHT_MODE_NONE || get_the_author_meta( 'qtranslate_highlight_disabled', get_current_user_id() )) {
+		return;
+	}
+	echo '<style type="text/css">' . PHP_EOL;
+	switch ( $q_config['highlight_mode'] ) {
+		case QTX_HIGHLIGHT_MODE_CUSTOM_CSS:
+			echo $q_config['highlight_mode_custom_css'];
+			break;
+		default:
+			echo qtranxf_get_admin_highlight_css();
+	}
+	echo '</style>' . PHP_EOL;
+}
+
+function qtranxf_get_admin_highlight_css() {
+	global $q_config;
+	$current_color_scheme = qtranxf_get_user_admin_color();
+	$css = '';
+	switch ( $q_config['highlight_mode'] ) {
+		case QTX_HIGHLIGHT_MODE_LEFT_BORDER:
+			$css .= 'input.qtranxs-translatable, textarea.qtranxs-translatable, div.qtranxs-translatable {' . PHP_EOL;
+			$css .= 'box-shadow: -3px 0 ' . $current_color_scheme[2] . ' !important;' . PHP_EOL;
+			$css .= '}' . PHP_EOL;
+			break;
+		case QTX_HIGHLIGHT_MODE_BORDER:
+			$css .= 'input.qtranxs-translatable, textarea.qtranxs-translatable, div.qtranxs-translatable {' . PHP_EOL;
+			$css .= 'outline: 2px solid ' . $current_color_scheme[2] . ' !important;' . PHP_EOL;
+			$css .= '}' . PHP_EOL;
+			$css .= 'div.qtranxs-translatable div.mce-panel {' . PHP_EOL;
+			$css .= 'margin-top: 2px' . PHP_EOL;
+			$css .= '}' . PHP_EOL;
+			break;
+	}
+	return $css;
+}
+
 function qtranxf_add_admin_css () {
 	wp_register_style( 'qtranslate-admin-style', plugins_url('qtranslate_configuration.css', __FILE__), array(), QTX_VERSION );
 	wp_enqueue_style( 'qtranslate-admin-style' );
 	qtranxf_add_admin_lang_icons();
+	qtranxf_add_admin_highlight_css();
 	echo '<style type="text/css" media="screen">'.PHP_EOL;
 /*
 	echo ".qtranxs_title_input { border:0pt none; font-size:1.7em; outline-color:invert; outline-style:none; outline-width:medium; padding:0pt; width:100%; }\n";
@@ -748,6 +791,8 @@ function qtranxf_conf() {
 		qtranxf_updateSetting('show_displayed_language_prefix', QTX_BOOLEAN);
 		qtranxf_updateSetting('use_strftime', QTX_INTEGER);
 		qtranxf_updateSetting('editor_mode', QTX_INTEGER);
+		qtranxf_updateSetting('highlight_mode', QTX_INTEGER);
+		qtranxf_updateSetting('highlight_mode_custom_css', QTX_STRING);
 		qtranxf_updateSetting('auto_update_mo', QTX_BOOLEAN);
 		qtranxf_updateSetting('hide_default_language', QTX_BOOLEAN);
 		qtranxf_updateSetting('qtrans_compatibility', QTX_BOOLEAN);
@@ -1209,6 +1254,42 @@ function qtranxf_conf() {
 					<small><?php _e('This is the default mode.', 'qtranslate'); ?></small><br/>
 					<label for="qtranxs_editor_mode_raw"><input type="radio" name="editor_mode" id="qtranxs_editor_mode_raw" value="<?php echo QTX_EDITOR_MODE_RAW; ?>"<?php checked($q_config['editor_mode'], QTX_EDITOR_MODE_RAW); ?>/>&nbsp;<?php _e('Editor Raw Mode', 'qtranslate'); ?>. <?php _e('Do not use Language Switching Buttons to edit multi-language text entries.', 'qtranslate'); ?></label><br/>
 					<small><?php _e('Some people prefer to edit the raw entries containing all languages together separated by language defining tags, as they are stored in database.', 'qtranslate'); ?></small>
+				</td>
+			</tr>
+			<tr valign="top">
+				<?php
+				$highlight_mode = $q_config['highlight_mode'];
+				// reset default custom CSS when the field is empty, or when the "custom" option is not checked
+				if(!$q_config['highlight_mode_custom_css'] || $highlight_mode != QTX_HIGHLIGHT_MODE_CUSTOM_CSS) {
+					$highlight_mode_custom_css = qtranxf_get_admin_highlight_css();
+				} else {
+					$highlight_mode_custom_css = $q_config['highlight_mode_custom_css'];
+				}
+				?>
+				<th scope="row"><?php _e('Highlight Mode', 'qtranslate'); ?></th>
+				<td>
+					<fieldset>
+						<legend class="hidden"><?php _e('Highlight Mode', 'qtranslate') ?></legend>
+						<label title="<?php _e('Do not highlight the translatable fields', 'qtranslate') ?>">
+							<input type="radio" name="highlight_mode" value="<?php echo QTX_HIGHLIGHT_MODE_NONE; ?>" <?php checked($highlight_mode, QTX_HIGHLIGHT_MODE_NONE); ?> />
+							<?php _e('Do not highlight the translatable fields', 'qtranslate') ?>
+						</label><br/>
+						<label title="<?php _e('Show a line on the left border of translatable fields', 'qtranslate') ?>">
+							<input type="radio" name="highlight_mode" value="<?php echo QTX_HIGHLIGHT_MODE_LEFT_BORDER; ?>" <?php checked($highlight_mode, QTX_HIGHLIGHT_MODE_LEFT_BORDER); ?> />
+							<?php _e('Show a line on the left border of translatable fields', 'qtranslate') ?>
+						</label><br/>
+						<label title="<?php _e('Draw a border around translatable fields', 'qtranslate') ?>">
+							<input type="radio" name="highlight_mode" value="<?php echo QTX_HIGHLIGHT_MODE_BORDER; ?>" <?php checked($highlight_mode, QTX_HIGHLIGHT_MODE_BORDER); ?> />
+							<?php _e('Draw a border around translatable fields', 'qtranslate') ?>
+						</label><br/>
+						<label title="<?php _e('Use custom CSS', 'qtranslate') ?>">
+							<input type="radio" name="highlight_mode" value="<?php echo QTX_HIGHLIGHT_MODE_CUSTOM_CSS; ?>" <?php checked($highlight_mode, QTX_HIGHLIGHT_MODE_CUSTOM_CSS); ?>/>
+							<?php _e('Use custom CSS', 'qtranslate') ?>
+						</label><br/>
+					</fieldset><br />
+					<textarea id="highlight_mode_custom_css" name="highlight_mode_custom_css" style="width:100%"><?php echo esc_attr($highlight_mode_custom_css); ?></textarea>
+					<br />
+					<small><?php echo __('To reset to default, clear the text.', 'qtranslate') ?></small>
 				</td>
 			</tr>
 <?php /*

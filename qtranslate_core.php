@@ -610,6 +610,8 @@ function qtranxf_loadConfig() {
 	qtranxf_load_option_flag_location('flag_location');
 
 	qtranxf_load_option('editor_mode');
+	qtranxf_load_option('highlight_mode');
+	qtranxf_load_option('highlight_mode_custom_css');
 
 	qtranxf_load_option_array('custom_fields');
 	qtranxf_load_option_array('custom_field_classes');
