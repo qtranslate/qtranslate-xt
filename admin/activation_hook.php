@@ -152,6 +152,75 @@ function qtranxf_admin_notices_plugin_conflicts()
 }
 add_action('admin_notices', 'qtranxf_admin_notices_plugin_conflicts');
 
+function qtranxf_admin_notice_plugin_integration($plugin,$integr_title,$integr_plugin)
+{
+	if(!is_plugin_active($plugin)) return 0;
+	if(is_plugin_active($integr_plugin)) return 0;
+
+	$integr_slug = dirname($integr_plugin);
+	$messages = get_option('qtranslate_admin_notices');
+	if(isset($messages['integration-'.$integr_slug])) return 0;
+
+	//$plugin_file = WP_PLUGIN_DIR.'/'.$plugin;
+	$plugin_file = WP_CONTENT_DIR.'/plugins/'.$plugin;
+	if(!file_exists($plugin_file)) return 0;
+	$pd = get_plugin_data( $plugin_file, false, true );
+	$pluginName = $pd['Name'];
+	$pluginURI = $pd['PluginURI'];
+
+	$me='<a href="https://wordpress.org/plugins/qtranslate-x/" style="color:blue" target="_blank">qTranslate&#8209;X</a>';
+	$plugin_link='<a href="'.$pluginURI.'/" style="color:blue" target="_blank">'.$pluginName.'</a>';
+	$integr_link='<a href="https://wordpress.org/plugins/'.$integr_slug.'/" style="color:magenta" target="_blank">'.$integr_title.'</a>';
+
+	echo '<div class="update-nag" id="qtranxs-integration-'.$integr_slug.'"><p style="font-size: larger">';
+	printf(__('Plugin %s may be integrated with multilingual plugin %s with a help of plugin %s.','qtranslate'),$plugin_link,$me,$integr_link);
+	echo ' ';
+	echo __('Please, press an appropriate button below.','qtranslate');
+
+	$integr_file = WP_CONTENT_DIR.'/plugins/'.$integr_plugin;
+	if(file_exists($integr_file)){
+		echo '</p><p> &nbsp; &nbsp; &nbsp; &nbsp;<a class="button" href="'.esc_url( wp_nonce_url( admin_url('plugins.php?action=activate&plugin='.urlencode($integr_plugin)), 'activate-plugin_'.$integr_plugin)).'"><strong>'.sprintf(__('Activate plugin %s', 'qtranslate'), '<span style="color:magenta">'.$integr_title.'</span>').'</strong></a>';
+	}else{
+		echo '</p><p> &nbsp; &nbsp; &nbsp; &nbsp;<a class="button" href="'.esc_url( wp_nonce_url( admin_url('update.php?action=install-plugin&plugin='.urlencode($integr_slug)), 'install-plugin_'.$integr_slug)).'"><strong>'.sprintf(__('Install plugin %s', 'qtranslate'), '<span style="color:magenta">'.$integr_title.'</span>').'</strong></a>';
+	}
+	echo '&nbsp;&nbsp;&nbsp;<a class="button" href="javascript:qtranxj_dismiss_admin_notice(\'integration-'.$integr_slug.'\');">'.__('I am aware of that, dismiss this message.', 'qtranslate');
+	echo '</a></p></div>';
+	return 1;
+}
+
+function qtranxf_admin_notices_plugin_integration()
+{
+	global $pagenow;
+	if($pagenow == 'update.php') return;
+	$cnt = 0;
+
+	$cnt += qtranxf_admin_notice_plugin_integration('advanced-custom-fields/acf.php', 'ACF qTranslate', 'acf-qtranslate/acf-qtranslate.php');
+
+	$cnt += qtranxf_admin_notice_plugin_integration('all-in-one-seo-pack/all_in_one_seo_pack.php', 'All in One SEO Pack & qTranslate&#8209;X', 'all-in-one-seo-pack-qtranslate-x/qaioseop.php');
+
+	$cnt += qtranxf_admin_notice_plugin_integration('events-made-easy/events-manager.php', 'Events Made Easy & qTranslate&#8209;X', 'events-made-easy-qtranslate-x/events-made-easy-qtranslate-x.php');
+
+	$cnt += qtranxf_admin_notice_plugin_integration('gravity-forms-addons/gravity-forms-addons.php', 'qTranslate support for GravityForms', 'qtranslate-support-for-gravityforms/qtranslate-support-for-gravityforms.php');
+
+	$cnt += qtranxf_admin_notice_plugin_integration('woocommerce/woocommerce.php', 'WooCommerce & qTranslate&#8209;X', 'woocommerce-qtranslate-x/woocommerce-qtranslate-x.php');
+
+	$cnt += qtranxf_admin_notice_plugin_integration('wordpress-seo/wp-seo.php', 'Wordpress SEO & qTranslate&#8209;X', 'wp-seo-qtranslate-x/wordpress-seo-qtranslate-x.php');
+
+	if($cnt>0){
+?>
+<script type="text/javascript">
+	function qtranxj_dismiss_admin_notice(id) {
+		jQuery('#qtranxs-'+id).css('display','none');
+		jQuery.post(ajaxurl, { action: 'qtranslate_admin_notice', notice_id: id }
+		//,function(response) { eval(response); }
+		);
+	}
+</script>
+<?php
+	}
+}
+add_action('admin_notices', 'qtranxf_admin_notices_plugin_integration');
+
 
 function qtranxf_admin_notices_survey_request()
 {
