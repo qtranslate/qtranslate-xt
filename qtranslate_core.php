@@ -879,7 +879,7 @@ function qtranxf_language_neutral_path($path) {
 		//qtranxf_dbg_log('qtranxf_language_neutral_path: cached='.$language_neutral_path_cache[$path].': path='.$path);
 		return $language_neutral_path_cache[$path];
 	}
-	if(preg_match('#^/(wp-.*\.php|wp-admin/|xmlrpc.php|.*sitemap.*|robots.txt)#', $path)){
+	if(preg_match('#^/(wp-.*\.php|wp-admin/|xmlrpc.php|.*sitemap.*|robots.txt|oauth/)#', $path)){
 		$language_neutral_path_cache[$path] = true;
 		//qtranxf_dbg_log('qtranxf_language_neutral_path: preg_match: path='.$path);
 		return true;

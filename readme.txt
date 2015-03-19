@@ -249,6 +249,7 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 * Improvement: added "x-default" link `<link hreflang="x-default" rel="alternate" />` as suggested by [Google](https://support.google.com/webmasters/answer/189077).
 * Feature: variable `$url_info['set_cookie']` can be overridden via `qtranslate_detect_language` filter. [[WP Topic](https://wordpress.org/support/topic/do-not-switch-admin-language-when-changing-language-on-frontend)]
 * Feature: admin notices for integrating plugins 'ACF qTranslate', 'All in One SEO Pack & qTranslate&#8209;X', 'Events Made Easy & qTranslate&#8209;X', 'qTranslate support for GravityForms', 'WooCommerce & qTranslate&#8209;X' and 'Wordpress SEO & qTranslate&#8209;X'.
+* Feature: added URL folder `/oauth/` to the list of language-neutral URLs. [[Issue #81](https://github.com/qTranslate-Team/qtranslate-x/issues/81)]
 * Maintenance: GitHub repository information in the header of qtranslate.php
 * Performance: function `convertURL` now uses cached values of previously converted urls.
 * Performance: a few other little performance improvements.
@@ -258,11 +259,12 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 * Fix: Query in `qtranxf_excludePages`. [[WP Topic](https://wordpress.org/support/topic/bug-in-qtranxf_excludepages)]
 * Fix: Warning 'Undefined index: doing_front_end' reported in [WP Topic](https://wordpress.org/support/topic/notice-undefined-index-doing_front_end).
 * Fix: time functions adjusted. [[WP Topic](https://wordpress.org/support/topic/old-get_the_date-bug-is-back)]
-* Fix: custom menu item query 'setlang=no': [[Issue](https://github.com/qTranslate-Team/qtranslate-x/issues/80)]
+* Fix: custom menu item query 'setlang=no': [[Issue #80](https://github.com/qTranslate-Team/qtranslate-x/issues/80)]
+
 
 ### 3.2.7 stable ###
 * Includes all changes after version 3.2.2.
-* Improvement: added `removeContentHook` in `admin/js/common.js`. Thanks to [Tim Robertson](https://github.com/funkjedi): [[GitHub Issue](https://github.com/qTranslate-Team/qtranslate-x/pull/69)]
+* Improvement: added `removeContentHook` in `admin/js/common.js`. Thanks to [Tim Robertson](https://github.com/funkjedi): [[GitHub Issue #69](https://github.com/qTranslate-Team/qtranslate-x/pull/69)]
 * Improvement: use of `nodeValue` instead of `innerHTML` in `addDisplayHook` of `admin/js/common.js`.
 * Translation: Dutch (nl_NL) po/mo updated, thanks to Marius Siroen.
 * Translation: pot/po files updated
