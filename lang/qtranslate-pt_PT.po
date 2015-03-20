@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qTranslate-X 3.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-03-19 14:09-0600\n"
-"PO-Revision-Date: 2015-03-20 14:42-0000\n"
+"PO-Revision-Date: 2015-03-20 14:44-0000\n"
 "Last-Translator: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "Language-Team: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -727,7 +727,7 @@ msgstr "Não realçar os campos que podem ser traduzidos"
 
 #: qtranslate_configuration.php:1285 qtranslate_configuration.php:1287
 msgid "Show a line on the left border of translatable fields"
-msgstr "Mostrar uma linha no bordo esquerdo dos campos que podem ser traduzidos"
+msgstr "Mostrar uma linha na borda esquerda dos campos que podem ser traduzidos"
 
 #: qtranslate_configuration.php:1289 qtranslate_configuration.php:1291
 msgid "Draw a border around translatable fields"
