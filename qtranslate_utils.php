@@ -590,3 +590,13 @@ function qtranxf_getSortedLanguages($reverse = false) {
 function qtranxf_can_redirect() {
 	return !defined('WP_ADMIN') && !defined('DOING_AJAX') && !defined('WP_CLI') && !defined('DOING_CRON') && empty($_POST);
 }
+
+/**
+ * Get the currently selected admin color scheme (to be used for generated CSS)
+ * @return array
+ */
+function qtranxf_get_user_admin_color() {
+	global $_wp_admin_css_colors;
+	$user_admin_color = get_user_meta( get_current_user_id(), 'admin_color', true );
+	return $_wp_admin_css_colors[$user_admin_color]->colors;
+}
