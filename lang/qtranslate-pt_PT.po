@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qTranslate-X 3.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-03-19 14:09-0600\n"
-"PO-Revision-Date: 2015-03-19 16:13-0000\n"
+"PO-Revision-Date: 2015-03-20 14:44-0000\n"
 "Last-Translator: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "Language-Team: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -717,7 +717,27 @@ msgstr "Editor em modo de texto"
 msgid "Some people prefer to edit the raw entries containing all languages together separated by language defining tags, as they are stored in database."
 msgstr "Algumas pessoas preferem editar as entradas em modo de texto, contendo todos os idomas separados pelas etiquetas de idioma, tal como serão guardadas na base de dados."
 
-#: qtranslate_configuration.php:1267
+#: qtranslate_configuration.php:1277 qtranslate_configuration.php:1280
+msgid "Highlight Mode"
+msgstr "Modo de realce"
+
+#: qtranslate_configuration.php:1281 qtranslate_configuration.php:1283
+msgid "Do not highlight the translatable fields"
+msgstr "Não realçar os campos que podem ser traduzidos"
+
+#: qtranslate_configuration.php:1285 qtranslate_configuration.php:1287
+msgid "Show a line on the left border of translatable fields"
+msgstr "Mostrar uma linha na borda esquerda dos campos que podem ser traduzidos"
+
+#: qtranslate_configuration.php:1289 qtranslate_configuration.php:1291
+msgid "Draw a border around translatable fields"
+msgstr "Desenhar um borda à volta de campos que podem ser traduzidos"
+
+#: qtranslate_configuration.php:1293 qtranslate_configuration.php:1295
+msgid "Use custom CSS"
+msgstr "Utilizar CSS personalizado"
+
+#: qtranslate_configuration.php:1351
 #, php-format
 msgid "%s Flag"
 msgstr "Bandeira de %s"
@@ -1064,6 +1084,18 @@ msgstr "Ocorreu um erro!"
 msgid "Translate"
 msgstr "Traduzir"
 
+#: qtranslate_user_options.php:9
+msgid "Translation options"
+msgstr "Opções de tradução"
+
+#: qtranslate_user_options.php:14
+msgid "Do not highlight fields"
+msgstr "Não realçar campos"
+
+#: qtranslate_user_options.php:18
+msgid "If you do not like that the translatable fields are highlighted, you can disable that option here"
+msgstr "Se não gostar de realçar os campos que podem ser traduzidos, pode desactivar esta opção aqui"
+
 #: qtranslate_widget.php:50
 msgid "Allows your visitors to choose a Language."
 msgstr "Permitir aos visitantes escolher um idioma."
@@ -1115,7 +1147,7 @@ msgstr "CSS do widget:"
 
 #: qtranslate.php:5
 msgid "Adds user-friendly and database-friendly multilingual content support."
-msgstr ""
+msgstr "Adiciona suporte para conteúdo multilingue de modo amigável para o utilizador e para a base de dados."
 
 #, fuzzy
 #~ msgid "Remove plugin CSS"
