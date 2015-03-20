@@ -569,7 +569,6 @@ qtranxf_set_config_default();
 require_once(dirname(__FILE__)."/qtranslate_utils.php");
 require_once(dirname(__FILE__)."/qtranslate_core.php");
 require_once(dirname(__FILE__)."/qtranslate_widget.php");
-require_once(dirname(__FILE__)."/qtranslate_user_options.php");
 
 if(is_admin()){
 	require_once(dirname(__FILE__).'/admin/activation_hook.php');

@@ -35,6 +35,6 @@ function qtranxf_save_extra_profile_fields( $user_id ) {
 	}
 
 	if ( $q_config['highlight_mode'] != QTX_HIGHLIGHT_MODE_NONE ) {
-		update_user_meta( $user_id, 'qtranslate_highlight_disabled', $_POST['qtranslate_highlight_disabled'] );
+		update_user_meta( $user_id, 'qtranslate_highlight_disabled', isset($_POST['qtranslate_highlight_disabled']) );
 	}
 }

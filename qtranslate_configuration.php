@@ -21,6 +21,7 @@
 if ( !defined( 'WP_ADMIN' ) ) exit;
 
 require_once(dirname(__FILE__).'/admin/import_export.php');
+require_once(dirname(__FILE__).'/qtranslate_user_options.php');
 
 function qtranxf_reset_config()
 {
@@ -812,6 +813,7 @@ function qtranxf_conf() {
 
 		$import_migration = preg_grep( '/import/', $_POST );
 		foreach($import_migration as $key => $value){
+			if(!qtranxf_endsWith($key,'-migration')) continue;
 			$plugin = substr($key,0,-strlen('-migration'));
 			$nm = '<span style="color:blue"><strong>'.qtranxf_get_plugin_name($plugin).'</strong></span>';
 			$message[] = sprintf(__('Applicable options and taxonomy names from plugin %s have been imported. Note that the multilingual content of posts, pages and other objects has not been altered during this operation. There is no additional operation needed to import content, since its format is compatible with %s.', 'qtranslate'), $nm, 'qTranslate&#8209;X').' '.sprintf(__('It might be a good idea to review %smigration instructions%s, if you have not yet done so.', 'qtranslate'),'<a href="https://qtranslatexteam.wordpress.com/2015/02/24/migration-from-other-multilingual-plugins/" target="_blank">','</a>');
@@ -823,6 +825,7 @@ function qtranxf_conf() {
 
 		$export_migration = preg_grep( '/export/', $_POST );
 		foreach($export_migration as $key => $value){
+			if(!qtranxf_endsWith($key,'-migration')) continue;
 			$plugin = substr($key,0,-strlen('-migration'));
 			$nm = '<span style="color:blue"><strong>'.qtranxf_get_plugin_name($plugin).'</strong></span>';
 			$message[] = sprintf(__('Applicable options have been exported to plugin %s. If you have done some post or page updates after migrating from %s, then "%s" operation is also required to convert the content to "dual language tag" style in order for plugin %s to function.', 'qtranslate'), $nm, $nm, '<span style="color:magenta">'.__('Convert Database', 'qtranslate').'</span>', $nm);
@@ -1265,7 +1268,7 @@ function qtranxf_conf() {
 				<?php
 				$highlight_mode = $q_config['highlight_mode'];
 				// reset default custom CSS when the field is empty, or when the "custom" option is not checked
-				if(!$q_config['highlight_mode_custom_css'] || $highlight_mode != QTX_HIGHLIGHT_MODE_CUSTOM_CSS) {
+				if(empty($q_config['highlight_mode_custom_css']) || $highlight_mode != QTX_HIGHLIGHT_MODE_CUSTOM_CSS) {
 					$highlight_mode_custom_css = qtranxf_get_admin_highlight_css();
 				} else {
 					$highlight_mode_custom_css = $q_config['highlight_mode_custom_css'];
