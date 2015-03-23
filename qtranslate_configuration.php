@@ -897,7 +897,7 @@ function qtranxf_conf() {
 			$language_time_format = $_POST['language_time_format'];
 			$language_na_message = $_POST['language_na_message'];
 			$language_flag = $_POST['language_flag'];
-			$language_default = $_POST['language_default'];
+			$language_default = isset($_POST['language_default']) ? $_POST['language_default']: $q_config['default_language'];
 		}
 	} elseif(isset($_GET['convert'])){
 		// update language tags
@@ -1133,10 +1133,11 @@ function qtranxf_conf() {
 			</tr>
 */
 		if($url_mode==QTX_URL_DOMAINS){
-			$home_url=parse_url(get_option('home'),PHP_URL_HOST);
+			$homeinfo = qtranxf_get_home_info();
+			$home_host = $homeinfo['host']; //parse_url(get_option('home'),PHP_URL_HOST);
 			foreach($q_config['enabled_languages'] as $lang){
 				$id='language_domain_'.$lang;
-				$domain = isset($q_config['domains'][$lang]) ? $q_config['domains'][$lang] : $lang.'.'.$home_url;
+				$domain = isset($q_config['domains'][$lang]) ? $q_config['domains'][$lang] : $lang.'.'.$home_host;
 				echo '<tr><td style="text-align: right">'.__('Domain for', 'qtranslate').' <a href="'.$clean_uri.'&edit='.$lang.'">'.$q_config['language_name'][$lang].'</a>&nbsp;('.$lang.'):</td><td><input type="text" name="'.$id.'" id="'.$id.'" value="'.$domain.'" style="width:100%"/></td></tr>'.PHP_EOL;
 			}
 		}
@@ -1366,7 +1367,7 @@ function qtranxf_conf() {
 <div class="form-wrap">
 <h3><?php _e('Add Language', 'qtranslate'); ?></h3>
 <form name="addcat" id="addcat" method="post" class="add:the-list: validate">
-<?php qtranxf_language_form($language_code, $language_code, $language_name, $language_locale, $language_date_format, $language_time_format, $language_flag, $language_default, $language_na_message); ?>
+<?php qtranxf_language_form($language_code, $language_code, $language_name, $language_locale, $language_date_format, $language_time_format, $language_flag, $language_na_message, $language_default); ?>
 <p class="submit"><input type="submit" name="submit" value="<?php _e('Add Language &raquo;', 'qtranslate'); ?>" /></p>
 </form></div>
 </div>
@@ -1457,11 +1458,18 @@ function qtranxf_add_language_menu( $wp_admin_bar )
 	if ( !is_admin() || !is_admin_bar_showing() )
 		return;
 
+	if(wp_is_mobile()){
+		$title = '';
+	}else{
+		$title = $q_config['language_name'][$q_config['language']];
+	}
+	
 	$wp_admin_bar->add_menu( array(
 			'id'   => 'language',
 			'parent' => 'top-secondary',
+			//'href' => 'http://example.com',
 			//'meta' => array('class'),
-			'title' => $q_config['language_name'][$q_config['language']]
+			'title' => $title
 		)
 	);
 

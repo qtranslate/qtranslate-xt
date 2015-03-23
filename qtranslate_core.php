@@ -661,6 +661,12 @@ function qtranxf_loadConfig() {
 		case QTX_URL_DOMAINS:
 			$q_config['domains']=array();
 			qtranxf_load_option_array('domains');
+			//qtranxf_dbg_echo('domains loaded: ',$q_config['domains']);
+			foreach( $q_config['enabled_languages'] as $lang ){
+				if(isset($q_config['domains'][$lang])) continue;
+				$homeinfo = qtranxf_get_home_info();
+				$q_config['domains'][$lang] = $lang.'.'.$homeinfo['host'];
+			}
 			$q_config['disable_client_cookies'] = true;
 			$q_config['hide_default_language'] = false;
 			break;
@@ -987,7 +993,6 @@ function qtranxf_url_set_language($urlinfo,$lang,$showLanguage) {
 	return $urlinfo;
 }
 
-//if (!function_exists('qtranxf_get_url_for_language')){
 function qtranxf_get_url_for_language($url, $lang, $showLanguage) {
 	global $q_config;
 	static $url_cache=array();
@@ -1019,7 +1024,7 @@ function qtranxf_get_url_for_language($url, $lang, $showLanguage) {
 		if(empty($url)){
 			$urlinfo = qtranxf_copy_url_info($q_config['url_info']);
 
-			if(qtranxf_language_neutral_path($urlinfo['wp-path'])){
+			if( isset($urlinfo['wp-path']) && qtranxf_language_neutral_path($urlinfo['wp-path']) ){
 				//qtranxf_dbg_log('qtranxf_get_url_for_language: language_neutral: wp-path: url='.$url.':',$urlinfo);
 				$complete = qtranxf_buildURL($urlinfo,$homeinfo);
 				if(!isset($url_cache[$complete])) $url_cache[$complete] = $urlinfo;
@@ -1037,15 +1042,33 @@ function qtranxf_get_url_for_language($url, $lang, $showLanguage) {
 				return $url;
 			}
 
-			if(!empty($urlinfo['host']) && qtranxf_external_host_ex($urlinfo['host'],$homeinfo)){
+			if(empty($urlinfo['host'])){
+				if(empty($urlinfo['wp-path'])){
+					if(empty($urlinfo['query']) ){
+						$urlinfo['language_neutral'] = $url;
+						//qtranxf_dbg_log('qtranxf_get_url_for_language: language_neutral: relative path: ',$urlinfo);
+						return $url;
+					}
+				}else{
+					switch($urlinfo['wp-path'][0]){
+						case '/': break;
+						case '#': {
+							$urlinfo['language_neutral'] = $url;
+							//qtranxf_dbg_log('qtranxf_get_url_for_language: language_neutral: relative hash: ',$urlinfo);
+							return $url;
+						}
+						default: $urlinfo['wp-path'] = trailingslashit($q_config['url_info']['wp-path']).$urlinfo['wp-path']; break;
+					}
+				}
+			}elseif(qtranxf_external_host_ex($urlinfo['host'],$homeinfo)){
 				$urlinfo['language_neutral'] = $url;
 				//qtranxf_dbg_log('qtranxf_get_url_for_language: language_neutral: external host: ',$urlinfo);
 				return $url;
 			}
 
 			if(qtranxf_language_neutral_path($urlinfo['wp-path'])){
-				//qtranxf_dbg_log('qtranxf_get_url_for_language: language_neutral: wp-path: url='.$url.': ',$urlinfo);
 				$urlinfo['language_neutral'] = $url;
+				//qtranxf_dbg_log('qtranxf_get_url_for_language: language_neutral: wp-path: ',$urlinfo);
 				return $url;
 			}
 
@@ -1066,136 +1089,6 @@ function qtranxf_get_url_for_language($url, $lang, $showLanguage) {
 	//qtranxf_dbg_log('done: qtranxf_get_url_for_language('.$lang.($showLanguage?', true':', false').'): $urlinfo=',$urlinfo,false);
 	return $complete;
 }
-/*
-function qtranxf_get_url_for_language($url, $lang, $showLanguage) {
-	global $q_config;
-
-	// check for trailing slash
-	$nottrailing = (strpos($url,'?')===false && strpos($url,'#')===false && substr($url,-1,1)!='/');
-
-	// check if it's an external link
-	$home = rtrim(get_option('home'),'/');
-	if(!empty($urlinfo['host'])){
-		// check for already existing pre-domain language information
-		if($q_config['url_mode'] == QTX_URL_DOMAIN && preg_match('#^([a-z]{2})\.#i',$urlinfo['host'],$match)) {
-			if(qtranxf_isEnabled($match[1])) {
-				// found language information, remove it
-				$url = preg_replace('/'.$match[1].'\./i','',$url, 1);
-				// reparse url
-				$urlinfo = qtranxf_parseURL($url);
-			}
-		}
-		if(substr($url,0,strlen($home))!=$home) return $url;
-		$site = rtrim(get_option('siteurl'),'/');
-		if($site != $home && qtranxf_startsWith($url,$site)) return $url;
-		// strip home path
-		$url = substr($url,strlen($home));
-	} else {
-		// relative url, strip home path
-		$homeinfo = qtranxf_parseURL($home);
-		if($homeinfo['path']==substr($url,0,strlen($homeinfo['path']))) {
-			$url = substr($url,strlen($homeinfo['path']));
-		}
-	}
-
-	// check for query language information and remove if found
-	if(preg_match('/(&|\?)(lang=[^&#]+)(&|#|)/i',$url,$match)){
-		$p = strpos($url,$match[2]);
-		$n = strlen($match[2]) + 1;
-		if($match[1] == '&' || $match[3] != '&') --$p;
-		//qtranxf_dbg_log('qtranxf_convertURL('.$url.') p='.$p.'; n=',$n);
-		$url = substr_replace($url,'',$p,$n);
-		//qtranxf_dbg_log('qtranxf_convertURL: $url:',$url);
-	}
-
-	// remove any slashes out front
-	$url = ltrim($url,'/');
-
-	// remove any useless trailing characters
-	$url = rtrim($url,'?&');
-
-	// re-parse url without home path
-	//$urlinfo = qtranxf_parseURL($url);
-	// check if its a link to an ignored file type
-	//$ignore_file_types = preg_split('/\s*,\s*/ /*', strtolower($q_config['ignore_file_types']));
-	//$pathinfo = pathinfo($urlinfo['path']);
-	//if(isset($pathinfo['extension']) && in_array(strtolower($pathinfo['extension']), $ignore_file_types)) {
-	//if(qtranxf_ignored_file_type($urlinfo['path'])){
-	//	return $home.'/'.$url;
-	//}
-
-	// ignore wp internal links
-	//if(preg_match("#^(wp-login.php|wp-signup.php|wp-register.php|wp-admin/)#", $url)) {
-	if(qtranxf_language_neutral_path($url)) {
-		return $home.'/'.$url;
-	}
-
-	$url_mode = $q_config['url_mode'];
-	switch($url_mode) {
-		case QTX_URL_PATH: // pre path
-			// might already have language information
-			//qtranxf_dbg_echo('qtranxf_convertURL:url='.$url);
-			if(preg_match('!^([a-z]{2})([/\?#&]|$)!i',$url,$match)) {
-				if(qtranxf_isEnabled($match[1])) {
-					// found language information, remove it
-					$url = ltrim(substr($url, 2),'/');
-				}
-			}
-			if($showLanguage) $url = $lang.'/'.$url;
-			break;
-		case QTX_URL_DOMAIN: // pre domain
-			if($showLanguage) $home = preg_replace("#//#","//".$lang.".",$home,1);
-			break;
-		case QTX_URL_DOMAINS: // domain per language
-			return $q_config['domains'][$lang].'/'.$url;
-		case QTX_URL_QUERY: // query
-			if($showLanguage){
-				//$url=add_query_arg('lang',$lang,$url);//it is doing much more than needed here
-				if(strpos($url,'?')===false) {
-					$url .= '?';
-				} else {
-					$url .= '&';
-				}
-				$url .= 'lang='.$lang;
-			}
-			break;
-		default:
-			$url = apply_filters('qtranslate_get_url_for_language_url_mode',$url,$lang,$showLanguage,$url_mode,$urlinfo);
-			break;
-	}
-
-	// see if cookies are activated
-	if( !$showLanguage//there still no language information in the converted URL
-		&& !$q_config['cookie_enabled']// there will be no way to take language from the cookie
-		//&& empty($urlinfo['path']) //why this was here?
-		//&& !isset($q_config['url_info']['internal_referer'])//three below replace this one?
-		&& $q_config['language'] != $q_config['default_language']//we need to be able to get language other than default
-		&& empty($q_config['url_info']['lang_url'])//we will not be able to get language from referrer path
-		&& empty($q_config['url_info']['lang_query_get'])//we will not be able to get language from referrer query
-		) {
-		// :( now we have to make unpretty URLs
-		//$url=add_query_arg('lang',$lang,$url);//it is doing much more than needed here
-		//$url = preg_replace("#(&|\?)lang=".$match[2]."&?#i","$1",$url);//already removed above
-		if(strpos($url,'?')===false) {
-			$url .= '?';
-		} else {
-			$url .= '&';
-		}
-		$url .= "lang=".$lang;
-	}
-
-	$complete = $home.'/'.$url;
-
-	// remove trailing slash if there wasn't one to begin with
-	if($nottrailing && strpos($complete,'?')===false && strpos($complete,'#')===false && substr($complete,-1,1)=='/')
-		$complete = substr($complete,0,-1);
-
-	$complete = apply_filters('qtranslate_get_url_for_language',$complete,$lang);
-
-	return $complete;
-}
-*/
-//}
 
 //if (!function_exists('qtranxf_convertURL')){
 function qtranxf_convertURL($url='', $lang='', $forceadmin = false, $showDefaultLanguage = false) {
