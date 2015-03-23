@@ -607,7 +607,7 @@ function qtranxf_updateSetting($var, $type = QTX_STRING, $def = null) {
 		case QTX_LANGUAGE:
 		case QTX_STRING:
 			if(!isset($_POST[$var])) return false;
-			$val=$_POST[$var];
+			$val=sanitize_text_field($_POST[$var]);
 			if($type == QTX_URL) $val = trailingslashit($val);
 			else if($type == QTX_LANGUAGE && !qtranxf_isEnabled($val)) return false;
 			//standardize multi-line string
@@ -624,7 +624,7 @@ function qtranxf_updateSetting($var, $type = QTX_STRING, $def = null) {
 			return true;
 		case QTX_ARRAY:
 			if(!isset($_POST[$var])) return false;
-			$val=preg_split('/[\s,]+/',$_POST[$var],null,PREG_SPLIT_NO_EMPTY);
+			$val=preg_split('/[\s,]+/',sanitize_text_field($_POST[$var]),null,PREG_SPLIT_NO_EMPTY);
 			if( isset($q_config[$var]) && qtranxf_array_compare($q_config[$var],$val) ) return false;
 			$q_config[$var] = $val;
 			qtranxf_update_option($var, $def);
@@ -665,7 +665,7 @@ function qtranxf_updateSettingFlagLocation($nm) {
 	global $q_config;
 	if(!isset($_POST['submit'])) return false;
 	if(!isset($_POST[$nm])) return false;
-	$flag_location=untrailingslashit($_POST[$nm]);
+	$flag_location=untrailingslashit(sanitize_text_field($_POST[$nm]));
 	if(empty($flag_location)) $flag_location = qtranxf_flag_location_default();
 	$flag_location = trailingslashit($flag_location);
 	if(!file_exists(trailingslashit(WP_CONTENT_DIR).$flag_location))
@@ -684,7 +684,7 @@ function qtranxf_updateSettingIgnoreFileTypes($nm) {
 	global $q_config;
 	if(!isset($_POST['submit'])) return false;
 	if(!isset($_POST[$nm])) return false;
-	$posted=preg_split('/[\s,]+/',strtolower($_POST[$nm]),null,PREG_SPLIT_NO_EMPTY);
+	$posted=preg_split('/[\s,]+/',strtolower(sanitize_text_field($_POST[$nm])),null,PREG_SPLIT_NO_EMPTY);
 	$val=explode(',',QTX_IGNORE_FILE_TYPES);
 	if(is_array($posted)){
 		foreach($posted as $v){
@@ -880,24 +880,25 @@ function qtranxf_conf() {
 		}
 		if($error=='') {
 			// everything is fine, insert language
-			$q_config['language_name'][$_POST['language_code']] = $_POST['language_name'];
-			$q_config['flag'][$_POST['language_code']] = $_POST['language_flag'];
-			$q_config['locale'][$_POST['language_code']] = $_POST['language_locale'];
-			$q_config['date_format'][$_POST['language_code']] = $_POST['language_date_format'];
-			$q_config['time_format'][$_POST['language_code']] = $_POST['language_time_format'];
-			$q_config['not_available'][$_POST['language_code']] = $_POST['language_na_message'];
+			$q_config['language_name'][$_POST['language_code']] = sanitize_text_field($_POST['language_name']);
+			$q_config['flag'][$_POST['language_code']] = sanitize_text_field($_POST['language_flag']);
+			$q_config['locale'][$_POST['language_code']] = sanitize_text_field($_POST['language_locale']);
+			$q_config['date_format'][$_POST['language_code']] = sanitize_text_field($_POST['language_date_format']);
+			$q_config['time_format'][$_POST['language_code']] = sanitize_text_field($_POST['language_time_format']);
+			$q_config['not_available'][$_POST['language_code']] = wp_kses_data($_POST['language_na_message']);
 		}
 		if($error!=''||isset($_GET['edit'])) {
 			// get old values in the form
-			$original_lang = $_POST['original_lang'];
-			$language_code = $_POST['language_code'];
-			$language_name = $_POST['language_name'];
-			$language_locale = $_POST['language_locale'];
-			$language_date_format = $_POST['language_date_format'];
-			$language_time_format = $_POST['language_time_format'];
-			$language_na_message = $_POST['language_na_message'];
-			$language_flag = $_POST['language_flag'];
-			$language_default = isset($_POST['language_default']) ? $_POST['language_default']: $q_config['default_language'];
+			$original_lang = sanitize_text_field($_POST['original_lang']);
+			$language_code = sanitize_text_field($_POST['language_code']);
+			$language_name = sanitize_text_field($_POST['language_name']);
+			$language_locale = sanitize_text_field($_POST['language_locale']);
+			$language_date_format = sanitize_text_field($_POST['language_date_format']);
+			$language_time_format = sanitize_text_field($_POST['language_time_format']);
+			$language_na_message = wp_kses_data($_POST['language_na_message']);
+			$language_flag = sanitize_text_field($_POST['language_flag']);
+			$language_default = sanitize_text_field($_POST['language_default']);
+			$language_default = isset($_POST['language_default']) ? sanitize_text_field($_POST['language_default']) : $q_config['default_language'];
 		}
 	} elseif(isset($_GET['convert'])){
 		// update language tags
