@@ -72,8 +72,10 @@
 	background-size: 22px;
 }
 
+#wpadminbar li#wp-admin-bar-language { display: block; }
 
-/* qTranslate-X config page */
+
+/* qTranslate-X configuration page */
 
 #qtranxs-languages-menu img {
 	vertical-align: middle;

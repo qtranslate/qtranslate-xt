@@ -64,6 +64,7 @@ We thank our sponsors for persistent help and support:
 
 * [Citizens Law Group](http://www.citizenslawgroup.com "Chicago Bankruptcy Attorney - Citizens Law Group")
 * [Gunu](https://profiles.wordpress.org/grafcom "Gunu (Marius Siroen)") (Marius Siroen)
+* [Lightbulb Web Agency](http://lightbulb.lu/)
 * [OptimWise](http://optimwise.com "OptimWise web design")
 * [Pedro Mendonça](https://github.com/pedro-mendonca)
 * [pictibe Werbeagentur](http://www.pictibe.de "pictibe Werbeagentur Köln Webdesign")
@@ -243,6 +244,13 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 2. Language Management Interface
 
 ## Changelog ##
+
+### 3.2.9.1 ###
+* Fix: handling of relative urls in qtranxf_convertURL.
+* Fix: default locale for Estonian is 'et_EE'.
+* Improvement: more on 'URL Modification Mode' option Per-Domain.
+* Translation: Arabic (ar) po/mo files updated. Thanks to Nedal Elghamry.
+* Translation: Dutch (nl_NL) po/mo files updated. Thanks to Marius Siroen.
 
 ### 3.2.9 stable ###
 * Improvement: function `convertURL` has been re-designed to take into account scheme, user, password and fragment correctly.

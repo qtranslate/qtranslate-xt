@@ -66,7 +66,7 @@ if(WP_DEBUG){
 		if(file_exists(dirname(__FILE__).'/dev/qtx-tests.php'))
 			require_once(dirname(__FILE__).'/dev/qtx-tests.php');
 	}
-	//add_action('qtranslate_init_language','qtranxf_do_tests');
+	/*qtranxf_dbg */ //add_action('qtranslate_init_language','qtranxf_do_tests');
 
 }else{
 	if(!function_exists('qtranxf_dbg_log')){ function qtranxf_dbg_log($msg,$var=null,$bt=false,$exit=false){} }
@@ -175,8 +175,8 @@ function qtranxf_copy_url_info($urlinfo) {
 	return $r;
 }
 
-function qtranxf_get_address_info($option_name) {
-	$info = qtranxf_parseURL( get_option($option_name) );
+function qtranxf_get_address_info($url) {
+	$info = qtranxf_parseURL( $url );
 	if(isset($info['path'])){
 		$info['path-length'] = strlen($info['path']);
 	}else{
@@ -188,13 +188,19 @@ function qtranxf_get_address_info($option_name) {
 
 function qtranxf_get_home_info() {
 	static $home_info;
-	if(!$home_info) $home_info = qtranxf_get_address_info('home');
+	if(!$home_info){
+		$url = defined('WP_HOME') ? WP_HOME : get_option('home');
+		$home_info = qtranxf_get_address_info($url);
+	}
 	return $home_info;
 }
 
 function qtranxf_get_site_info() {
 	static $site_info;
-	if(!$site_info) $site_info = qtranxf_get_address_info('siteurl');
+	if(!$site_info){
+		$url = defined('WP_SITEURL') ? WP_SITEURL : get_option('siteurl');
+		$site_info = qtranxf_get_address_info($url);
+	}
 	return $site_info;
 }
 
