@@ -1370,7 +1370,7 @@ function qtranxf_conf() {
 				?>
 				<th scope="row"><?php _e('Highlight Style', 'qtranslate'); ?></th>
 				<td>
-					<p><?php _e('When there are many integrated or customized translatable fields, it may become confusing to know which field has multilingual value. The highlighting of translatable fields may come handy then:'); ?></p>
+					<p><?php _e('When there are many integrated or customized translatable fields, it may become confusing to know which field has multilingual value. The highlighting of translatable fields may come handy then:', 'qtranslate'); ?></p>
 					<fieldset>
 						<legend class="hidden"><?php _e('Highlight Style', 'qtranslate') ?></legend>
 						<label title="<?php _e('Do not highlight the translatable fields.', 'qtranslate') ?>">
