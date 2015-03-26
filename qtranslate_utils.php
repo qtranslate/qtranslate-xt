@@ -168,6 +168,7 @@ function qtranxf_copy_url_info($urlinfo) {
 	if(isset($urlinfo['pass'])) $r['pass'] = $urlinfo['pass'];
 	if(isset($urlinfo['host'])) $r['host'] = $urlinfo['host'];
 	if(isset($urlinfo['path-base'])) $r['path-base'] = $urlinfo['path-base'];
+	if(isset($urlinfo['path-base-length'])) $r['path-base-length'] = $urlinfo['path-base-length'];
 	if(isset($urlinfo['wp-path'])) $r['wp-path'] = $urlinfo['wp-path'];
 	if(isset($urlinfo['query'])) $r['query'] = $urlinfo['query'];
 	if(isset($urlinfo['fragment'])) $r['fragment'] = $urlinfo['fragment'];

@@ -245,7 +245,14 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 
 ## Changelog ##
 
+### 3.2.9.2 ###
+* Feature: option "LSB Style" to customize Language Switching Buttons style.
+* Feature: after the first activation, the current WordPress active language becomes the default one for qTranslate-X, instead of English. No other languages are added anymore.
+* Improvement: option load and save algorithm re-designed.
+* Fix: special cases for function `convertURL`.
+
 ### 3.2.9.1 ###
+* Feature: Option "Highlight Style". Thanks to [Michel Weimerskirch](https://github.com/mweimerskirch).
 * Fix: handling of relative urls in qtranxf_convertURL.
 * Fix: default locale for Estonian is 'et_EE'.
 * Improvement: more on 'URL Modification Mode' option Per-Domain.
