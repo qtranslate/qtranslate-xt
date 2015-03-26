@@ -1392,7 +1392,7 @@ function qtranxf_conf() {
 					</fieldset><br />
 					<textarea id="highlight_mode_custom_css" name="highlight_mode_custom_css" style="width:100%"><?php echo esc_attr($highlight_mode_custom_css); ?></textarea>
 					<br />
-					<small><?php echo __('To reset to default, clear the text.', 'qtranslate').' '; printf(__('The color in use is taken from your profile option %s, the third color.', 'qtranslate'), '"<a href="'.admin_url('/profile.php').'">'.__('Admin Color Scheme').'</a>"') ?></small>
+					<small><?php echo __('To reset to default, clear the text.', 'qtranslate').' '; printf(__('The color in use is taken from your profile option %s, the third color.', 'qtranslate'), '"<a href="'.admin_url('/profile.php').'">'.__('Admin Color Scheme', 'qtranslate').'</a>"') ?></small>
 				</td>
 			</tr>
 <?php /*
