@@ -26,6 +26,8 @@ require_once(dirname(__FILE__).'/qtx_user_options.php');
 
 function qtranxf_reset_config()
 {
+	global $qtranslate_options;
+
 	if(!current_user_can('manage_options')) return;
 
 	$next_thanks = get_option('qtranslate_next_thanks');
@@ -37,6 +39,7 @@ function qtranxf_reset_config()
 	if( !isset($_POST['qtranslate_reset']) || !isset($_POST['qtranslate_reset2']) ) return;
 	// reset all settings
 	foreach($qtranslate_options['int'] as $nm => $def){ delete_option('qtranslate_'.$nm); }
+	foreach($qtranslate_options['bool'] as $nm => $def){ delete_option('qtranslate_'.$nm); }
 	foreach($qtranslate_options['str'] as $nm => $def){ delete_option('qtranslate_'.$nm); }
 	foreach($qtranslate_options['array'] as $nm => $def){ delete_option('qtranslate_'.$nm); }
 	foreach($qtranslate_options['default_value'] as $nm => $def){ delete_option('qtranslate_'.$nm); }
@@ -46,33 +49,16 @@ function qtranxf_reset_config()
 	delete_option('qtranslate_admin_notices');
 	delete_option('qtranslate_next_thanks');
 	delete_option('qtranslate_next_update_mo');
-	delete_option('qtranslate_widget_css'); // obsolete option
-/*
-	delete_option('qtranslate_language_names');
-	delete_option('qtranslate_enabled_languages');
-	delete_option('qtranslate_default_language');
-	delete_option('qtranslate_flag_location');
-	delete_option('qtranslate_flags');
-	delete_option('qtranslate_locales');
-	delete_option('qtranslate_na_messages');
-	delete_option('qtranslate_date_formats');
-	delete_option('qtranslate_time_formats');
-	delete_option('qtranslate_ignore_file_types');
-	delete_option('qtranslate_detect_browser_language');
-	delete_option('qtranslate_hide_untranslated');
-	delete_option('qtranslate_show_displayed_language_prefix');
-	delete_option('qtranslate_auto_update_mo');
-	delete_option('qtranslate_hide_default_language');
-	delete_option('qtranslate_qtrans_compatibility');
-	delete_option('qtranslate_custom_fields');
-	delete_option('qtranslate_use_secure_cookie');
-	delete_option('qtranslate_disable_client_cookies');
-	delete_option('qtranslate_filter_options');
-	delete_option('qtranslate_header_css_on');
-	delete_option('qtranslate_header_css');
-*/
+	delete_option('qtranslate_version');
+	// obsolete options
+	delete_option('qtranslate_widget_css');
+	delete_option('qtranslate_disable_header_css');
 	if(isset($_POST['qtranslate_reset3'])) {
 		delete_option('qtranslate_term_name');
+		if(isset($_POST['qtranslate_reset4'])){//not implemented yet
+			delete_option('qtranslate_version_previous');
+			//and delete translations in posts
+		}
 	}
 	qtranxf_reloadConfig();
 }
@@ -115,8 +101,19 @@ function qtranxf_update_option( $nm, $default_value=null ) {
 }
 
 function qtranxf_update_option_bool( $nm, $default_value=null ) {
-	global $q_config;
-	if( !isset($q_config[$nm]) || ($default_value !== null && $default_value === $q_config[$nm]) ){
+	global $q_config, $qtranslate_options;
+	if( !isset($q_config[$nm]) ){
+		delete_option('qtranslate_'.$nm);
+		return;
+	}
+	if(is_null($default_value)){
+		if(isset($qtranslate_options['default_value'][$nm])){
+			$default_value = $qtranslate_options['default_value'][$nm];
+		}elseif(isset($qtranslate_options['bool'][$nm])){
+			$default_value = $qtranslate_options['bool'][$nm];
+		}
+	}
+	if( !is_null($default_value) && $default_value === $q_config[$nm] ){
 		delete_option('qtranslate_'.$nm);
 	}else{
 		update_option('qtranslate_'.$nm, $q_config[$nm]?'1':'0');
@@ -134,8 +131,8 @@ function qtranxf_saveConfig() {
 		qtranxf_update_option($nm,$def);
 	}
 
-	foreach($qtranslate_options['bool'] as $nm){
-		qtranxf_update_option_bool($nm);
+	foreach($qtranslate_options['bool'] as $nm => $def){
+		qtranxf_update_option_bool($nm,$def);
 	}
 	qtranxf_update_option_bool('qtrans_compatibility');
 	qtranxf_update_option_bool('disable_client_cookies');
@@ -1293,7 +1290,7 @@ function qtranxf_conf() {
 			<tr valign="top">
 				<th scope="row"><?php _e('Compatibility Functions', 'qtranslate');?></th>
 				<td>
-					<label for="qtranxs_qtrans_compatibility"><input type="checkbox" name="qtrans_compatibility" id="qtranxs_qtrans_compatibility" value="1"<?php checked($q_config['qtrans_compatibility']); ?>/>&nbsp;<?php printf(__('Enable function name compatibility (%s).', 'qtranslate'), 'qtrans_convertURL, qtrans_generateLanguageSelectCode, qtrans_getLanguage, qtrans_getLanguageName, qtrans_getSortedLanguages, qtrans_split, qtrans_use, qtrans_useCurrentLanguageIfNotFoundShowAvailable, qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage, qtrans_useDefaultLanguage, qtrans_useTermLib'); ?></label><br/>
+					<label for="qtranxs_qtrans_compatibility"><input type="checkbox" name="qtrans_compatibility" id="qtranxs_qtrans_compatibility" value="1"<?php checked($q_config['qtrans_compatibility']); ?>/>&nbsp;<?php printf(__('Enable function name compatibility (%s).', 'qtranslate'), 'qtrans_convertURL, qtrans_generateLanguageSelectCode, qtrans_getLanguage, qtrans_getLanguageName, qtrans_getSortedLanguages, qtrans_join, qtrans_split, qtrans_use, qtrans_useCurrentLanguageIfNotFoundShowAvailable, qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage, qtrans_useDefaultLanguage, qtrans_useTermLib'); ?></label><br/>
 					<small><?php printf(__('Some plugins and themes use direct calls to the functions listed, which are defined in former %s plugin and some of its forks. Turning this flag on will enable those function to exists, which will make the dependent plugins and themes to work. WordPress policy prohibits to define functions with the same names as in other plugins, since it generates user-unfriendly fatal errors, when two conflicting plugins are activated simultaneously. Before turning this option on, you have to make sure that there are no other plugins active, which define those functions.', 'qtranslate'), '<a href="https://wordpress.org/plugins/qtranslate/" target="_blank">qTranslate</a>'); ?></small>
 				</td>
 			</tr>
@@ -1366,7 +1363,7 @@ function qtranxf_conf() {
 					</fieldset><br />
 					<textarea id="highlight_mode_custom_css" name="highlight_mode_custom_css" style="width:100%"><?php echo esc_attr($highlight_mode_custom_css); ?></textarea>
 					<br />
-					<small><?php echo __('To reset to default, clear the text.', 'qtranslate').' '; printf(__('The color in use is taken from your profile option %s, the third color.', 'qtranslate'), '"<a href="'.admin_url('/profile.php').'">'.__('Admin Color Scheme', 'qtranslate').'</a>"') ?></small>
+					<small><?php echo __('To reset to default, clear the text.', 'qtranslate').' '; printf(__('The color in use is taken from your profile option %s, the third color.', 'qtranslate'), '"<a href="'.admin_url('/profile.php').'">'.__('Admin Color Scheme').'</a>"') ?></small>
 				</td>
 			</tr>
 <?php /*

@@ -97,11 +97,13 @@ function qtranxf_init_language() {
 	// fix url to prevent xss - how does this prevents xss?
 	//$q_config['url_info']['url'] = qtranxf_convertURL(add_query_arg('lang',$q_config['default_language'],$q_config['url_info']['url']));
 
+	//qtranslate_hooks.php has to go before load_plugin_textdomain()
+	require_once(dirname(__FILE__).'/qtranslate_hooks.php');//common hooks moved here from qtranslate.php since 3.2.9.2, because they all need language already detected
+
 	// load plugin translations
 	// since 3.2-b3 moved it here as https://codex.wordpress.org/Function_Reference/load_plugin_textdomain seem to recommend to run load_plugin_textdomain in 'plugins_loaded' action, which is this function respond to
-	load_plugin_textdomain('qtranslate', false, dirname(plugin_basename( __FILE__ )).'/lang');
-
-	require_once(dirname(__FILE__).'/qtranslate_hooks.php');//common hooks moved here from qtranslate.php since 3.2.9.2, because they all need language already detected
+	$lang_dir = dirname(plugin_basename( __FILE__ )).'/lang';
+	load_plugin_textdomain('qtranslate', false, $lang_dir);
 
 	if($q_config['url_info']['doing_front_end']) {
 		require_once(dirname(__FILE__)."/qtranslate_frontend.php");
@@ -454,7 +456,7 @@ function qtranxf_resolveLangCase($lang,&$caseredirect)
 
 function qtranxf_load_option_qtrans_compatibility(){
 	global $q_config;
-	qtranxf_load_option_bool('qtrans_compatibility');
+	qtranxf_load_option_bool('qtrans_compatibility',false);
 	$q_config['qtrans_compatibility'] = apply_filters('qtranslate_compatibility', $q_config['qtrans_compatibility']);
 	if( !isset($q_config['qtrans_compatibility']) || !$q_config['qtrans_compatibility'] ) return;
 	require_once(dirname(__FILE__).'/qtranslate_compatibility.php');
@@ -1270,7 +1272,7 @@ function qtranxf_split($text, $quicktags = true) {
 }// */
 }
 
-// not in use?
+// not in use? QTranslate META calls 'qtrans_join' - added to compatibility
 //function qtranxf_join($texts) {
 //	if(!is_array($texts)) $texts = qtranxf_split($texts);
 //	qtranxf_join_c($texts);

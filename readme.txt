@@ -245,6 +245,15 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 
 ## Changelog ##
 
+### 3.3 stable ###
+* Includes all changes after version 3.2.9.
+
+### 3.2.9.3 ###
+* Feature: `qtrans_join` added to option 'Compatibility Functions'. [[Issue #106](https://github.com/qTranslate-Team/qtranslate-x/issues/106)]
+* Translation: Portuguese (pt_PT) po/mo files updated. Thanks to Pedro Mendonça.
+* Fix: various problems with new option save/load methods.
+* Fix: CSS syntax. Thanks to [Michel Weimerskirch](https://github.com/mweimerskirch): [Issue](https://github.com/qTranslate-Team/qtranslate-x/commit/83b4a9b513e623df3e9800888c742683c51eed6a#commitcomment-10435679).
+
 ### 3.2.9.2 ###
 * Feature: option "LSB Style" to customize Language Switching Buttons style.
 * Feature: after the first activation, the current WordPress active language becomes the default one for qTranslate-X, instead of English. No other languages are added anymore.

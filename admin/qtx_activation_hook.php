@@ -24,6 +24,7 @@ function qtranxf_default_enabled_languages()
 {
 	//$locale = defined('WPLANG') ? WPLANG : get_option('WPLANG','en_US');
 	$locale = get_locale();
+	if(!$locale) $locale = 'en_US';
 	$lang = null;
 	$locales = qtranxf_default_locale();
 	foreach($locales as $ln => $lo){
@@ -42,6 +43,7 @@ function qtranxf_default_enabled_languages()
 		$langs['not_available'][$lang] = 'Sorry, this entry is only available in %LANG:, : and %.';
 		qtranxf_save_languages($langs);
 	}
+	//qtranxf_dbg_log('qtranxf_default_enabled_languages: $lang='.$lang.' $locale:',$locale);
 	return array($lang);
 	//return array( 'de', 'en', 'zh' );
 }
@@ -118,17 +120,34 @@ function qtranxf_activation_hook()
 
 function qtranxf_admin_notices_version()
 {
-	$ver = get_option('qtranslate_version');
-	//qtranxf_dbg_log('qtranxf_admin_notices_version: ver:',$ver);
-	if($ver != QTX_VERSION){
-		update_option('qtranslate_version',QTX_VERSION);
+	$ver_prv = get_option('qtranslate_version');
+	$ver_cur = str_replace('.','',QTX_VERSION);
+	while(strlen($ver_cur) < 5) $ver_cur.='0';
+	$ver_cur = intval($ver_cur);
+	if($ver_cur != $ver_prv){
+		update_option('qtranslate_version',$ver_cur);
+		if($ver_prv === false){
+			$ver_prv = get_option('qtranslate_version_previous');
+			if($ver_prv===false){
+				update_option('qtranslate_version_previous', $ver_cur);
+				return;
+			}
+		}else{
+			update_option('qtranslate_version_previous', intval($ver_prv));
+		}
+	}else{
+		$ver_prv = get_option('qtranslate_version_previous');
 	}
-	switch(QTX_VERSION){
-		case '3.2.9.2':
-		case '3.3':
-			qtranxf_admin_notices_new_options(array('Highlight Style','LSB Style'),QTX_VERSION);
-		break;
-		default: break;
+	if(!$ver_prv) return;//first time installation
+	if($ver_cur == $ver_prv) return;//never updated
+	$ver_prv = get_option('qtranslate_version_previous');
+	if(!$ver_prv){
+		$firsttime = get_option('qtranslate_next_thanks') === false;
+		if($firsttime) return;
+		$ver_prv = 32920;
+	}
+	if($ver_prv >= 32920 && $ver_cur <= 33000){
+		qtranxf_admin_notices_new_options(array('Highlight Style','LSB Style'),QTX_VERSION);
 	}
 }
 add_action('admin_notices', 'qtranxf_admin_notices_version');

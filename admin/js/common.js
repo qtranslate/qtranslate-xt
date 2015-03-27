@@ -850,7 +850,8 @@ var qTranslateX=function(pg)
 			return;
 	}
 
-	{
+	//create sets of LSB
+	if(qTranslateConfig.enabled_languages.length > 1){
 		var anchors=[];
 		if(qTranslateConfig.page_config && qTranslateConfig.page_config.anchors){
 			for(var i=0; i < qTranslateConfig.page_config.anchors.length; ++i){
