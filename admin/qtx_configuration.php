@@ -127,7 +127,6 @@ function qtranxf_update_option_bool( $nm, $default_value=null ) {
 function qtranxf_saveConfig() {
 	global $q_config, $qtranslate_options;
 
-	//update_option('qtranslate_default_language', $q_config['default_language']);
 	qtranxf_update_option('default_language');
 	qtranxf_update_option('enabled_languages');
 
@@ -150,16 +149,6 @@ function qtranxf_saveConfig() {
 	}
 	qtranxf_update_option('domains');
 
-	//update_option('qtranslate_language_names', $q_config['language_name']);// language_names != language_name
-	//update_option('qtranslate_flags', $q_config['flag']);
-	//update_option('qtranslate_locales', $q_config['locale']);
-	//update_option('qtranslate_na_messages', $q_config['not_available']);
-	//update_option('qtranslate_date_formats', $q_config['date_format']);
-	//update_option('qtranslate_time_formats', $q_config['time_format']);
-	//foreach($qtranslate_options['languages'] as $nm => $opn){
-	//	update_option($opn, $q_config[$nm]);
-	//}
-
 	update_option('qtranslate_ignore_file_types', implode(',',$q_config['ignore_file_types']));
 
 	qtranxf_update_option('flag_location',qtranxf_flag_location_default());
@@ -169,8 +158,9 @@ function qtranxf_saveConfig() {
 
 	qtranxf_update_option('header_css', qtranxf_front_header_css_default());
 
-	qtranxf_update_option('term_name');
-	//update_option('qtranslate_term_name', $q_config['term_name']);
+	//$qtranslate_options['languages'] are updated in a special way, not here: look for _GET['edit'], $_GET['delete'], $_GET['enable'], $_GET['disable']
+
+	qtranxf_update_option('term_name');//uniquely special case
 
 	do_action('qtranslate_saveConfig');
 }
@@ -809,40 +799,24 @@ function qtranxf_conf() {
 		}
 
 		qtranxf_updateSetting('default_language', QTX_LANGUAGE);
+		//enabled_languages are not changed at this place
 
 		qtranxf_updateSettingFlagLocation('flag_location');
 		qtranxf_updateSettingIgnoreFileTypes('ignore_file_types');
 
-		//qtranxf_updateSetting('url_mode', QTX_INTEGER);
-		//qtranxf_updateSetting('use_strftime', QTX_INTEGER);
-		//qtranxf_updateSetting('filter_options_mode', QTX_INTEGER);
-		//qtranxf_updateSetting('editor_mode', QTX_INTEGER);
-		//qtranxf_updateSetting('highlight_mode', QTX_INTEGER);
 		foreach($qtranslate_options['int'] as $nm => $def){
 			qtranxf_updateSetting($nm, QTX_INTEGER, $def);
 		}
 
-		//qtranxf_updateSetting('detect_browser_language', QTX_BOOLEAN);
-		//qtranxf_updateSetting('hide_untranslated', QTX_BOOLEAN);
-		//qtranxf_updateSetting('show_displayed_language_prefix', QTX_BOOLEAN);
-		//qtranxf_updateSetting('auto_update_mo', QTX_BOOLEAN);
-		//qtranxf_updateSetting('hide_default_language', QTX_BOOLEAN);
-		//qtranxf_updateSetting('use_secure_cookie', QTX_BOOLEAN);
-		//qtranxf_updateSetting('header_css_on', QTX_BOOLEAN);
-		//qtranxf_updateSetting('qtrans_compatibility', QTX_BOOLEAN);
 		foreach($qtranslate_options['bool'] as $nm => $def){
 			qtranxf_updateSetting($nm, QTX_BOOLEAN, $def);
 		}
+		qtranxf_updateSetting('qtrans_compatibility', QTX_BOOLEAN);
 
-		//qtranxf_updateSetting('highlight_mode_custom_css', QTX_STRING);
 		foreach($qtranslate_options['str'] as $nm => $def){
 			qtranxf_updateSetting($nm, QTX_STRING, $def);
 		}
 
-		//qtranxf_updateSetting('custom_fields', QTX_ARRAY);
-		//qtranxf_updateSetting('custom_field_classes', QTX_ARRAY);
-		//qtranxf_updateSetting('text_field_filters', QTX_ARRAY);
-		//qtranxf_updateSetting('custom_pages', QTX_ARRAY);
 		foreach($qtranslate_options['array'] as $nm => $def){
 			qtranxf_updateSetting($nm, QTX_ARRAY, $def);
 		}

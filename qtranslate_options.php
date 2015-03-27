@@ -79,6 +79,7 @@ function qtranxf_set_default_options(&$ops)
 	);
 
 	$ops['array']=array(
+		//'term_name'// uniquely special treatment
 		'custom_fields' => array(),
 		'custom_field_classes' => array(),
 		'text_field_filters' => array(),
