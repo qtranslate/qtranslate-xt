@@ -1370,7 +1370,7 @@ function qtranxf_conf() {
 				?>
 				<th scope="row"><?php _e('Highlight Style', 'qtranslate'); ?></th>
 				<td>
-					<p><?php _e('When there are many integrated or customized translatable fields, it may become confusing to know which field has multilingual value. The highlighting of translatable fields may come handy then:'); ?></p>
+					<p><?php _e('When there are many integrated or customized translatable fields, it may become confusing to know which field has multilingual value. The highlighting of translatable fields may come handy then:', 'qtranslate'); ?></p>
 					<fieldset>
 						<legend class="hidden"><?php _e('Highlight Style', 'qtranslate') ?></legend>
 						<label title="<?php _e('Do not highlight the translatable fields.', 'qtranslate') ?>">
@@ -1392,7 +1392,7 @@ function qtranxf_conf() {
 					</fieldset><br />
 					<textarea id="highlight_mode_custom_css" name="highlight_mode_custom_css" style="width:100%"><?php echo esc_attr($highlight_mode_custom_css); ?></textarea>
 					<br />
-					<small><?php echo __('To reset to default, clear the text.', 'qtranslate').' '; printf(__('The color in use is taken from your profile option %s, the third color.', 'qtranslate'), '"<a href="'.admin_url('/profile.php').'">'.__('Admin Color Scheme').'</a>"') ?></small>
+					<small><?php echo __('To reset to default, clear the text.', 'qtranslate').' '; printf(__('The color in use is taken from your profile option %s, the third color.', 'qtranslate'), '"<a href="'.admin_url('/profile.php').'">'.__('Admin Color Scheme', 'qtranslate').'</a>"') ?></small>
 				</td>
 			</tr>
 <?php /*
