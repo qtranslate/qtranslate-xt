@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qTranslate-X 3.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-03-25 22:22-0600\n"
-"PO-Revision-Date: 2015-03-20 14:44-0000\n"
+"PO-Revision-Date: 2015-03-26 14:42-0000\n"
 "Last-Translator: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "Language-Team: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -103,7 +103,7 @@ msgstr "Já fiz isto, descartar esta mensagem."
 #: admin/qtx_activation_hook.php:346
 #, php-format
 msgid "The latest version of plugin %s has a number of new options, for example, %s, which may change the look of some pages. Please, review the help text of new options on %sconfiguration page%s."
-msgstr ""
+msgstr "A última versão do plugin %s tem algumas opções novas, como por exemplo, %s, o que pode alterar o aspecto de algumas páginas. Por favor leia o texto de ajuda das novas opções na %spágina de configuração%s."
 
 #: admin/qtx_admin_utils.php:146
 msgid "Database has been converted to square bracket format."
@@ -138,7 +138,7 @@ msgstr "Editar"
 
 #: admin/qtx_admin_utils.php:410
 msgid "Stored"
-msgstr ""
+msgstr "Armazenado"
 
 #: admin/qtx_admin_utils.php:421 admin/qtx_configuration.php:552
 #: admin/qtx_configuration.php:1424
@@ -339,7 +339,7 @@ msgstr "Guardar alterações &raquo;"
 
 #: admin/qtx_configuration.php:1110
 msgid "back to configuration page"
-msgstr ""
+msgstr "voltar à página de configuração"
 
 #: admin/qtx_configuration.php:1114
 msgid "Language Management (qTranslate Configuration)"
@@ -658,28 +658,28 @@ msgstr "Algumas pessoas preferem editar as entradas em modo de texto, contendo t
 
 #: admin/qtx_configuration.php:1340 admin/qtx_configuration.php:1343
 msgid "LSB Style"
-msgstr ""
+msgstr "Estilo de BSI"
 
 #: admin/qtx_configuration.php:1344
 msgid "Choose CSS style for how Language Switching Buttons are rendered:"
-msgstr ""
+msgstr "Escolha o estilo CSS para mostrar os Botões de Selecção de Idioma"
 
 #: admin/qtx_configuration.php:1345
 #, php-format
 msgid "LSB %s-wrap classes:"
-msgstr ""
+msgstr "Classes de %s dos BSI"
 
 #: admin/qtx_configuration.php:1346
 msgid "Active button class:"
-msgstr ""
+msgstr "Classe do botão activo:"
 
 #: admin/qtx_configuration.php:1347
 msgid "The above is reset to an appropriate default, if the below is changed."
-msgstr ""
+msgstr "Os valores acima serão repostos para as predefinições apropriadas, se as definições abaixo forem modificadas."
 
 #: admin/qtx_configuration.php:1348
 msgid "CSS set:"
-msgstr ""
+msgstr "Modelo de CSS:"
 
 #: admin/qtx_configuration.php:1352 admin/qtx_configuration.php:1354
 #: admin/qtx_configuration.php:1388 admin/qtx_configuration.php:1390
@@ -689,59 +689,54 @@ msgstr "Utilizar CSS personalizado"
 #: admin/qtx_configuration.php:1354
 #, php-format
 msgid "Choice \"%s\" disables this option and allows one to use its own custom CSS provided by other means."
-msgstr ""
+msgstr "Escolher \"%s\" desactiva esta opção e permite utilizar o seu próprio CSS personalizado introduzido por outro meio."
 
 #: admin/qtx_configuration.php:1371 admin/qtx_configuration.php:1375
 #: admin/qtx_user_options.php:18
-#, fuzzy
 msgid "Highlight Style"
-msgstr "Modo de realce"
+msgstr "Estilo de realce"
 
 #: admin/qtx_configuration.php:1373
 msgid "When there are many integrated or customized translatable fields, it may become confusing to know which field has multilingual value. The highlighting of translatable fields may come handy then:"
-msgstr ""
+msgstr "Quando existem muitos campos integrados ou personalizados que podem ser traduzidos, pode tornar-se confuso perceber que campos têm valores multilingues. O realce destes campos pode ser uma boa ajuda:"
 
 #: admin/qtx_configuration.php:1376 admin/qtx_configuration.php:1378
-#, fuzzy
 msgid "Do not highlight the translatable fields."
-msgstr "Não realçar os campos que podem ser traduzidos"
+msgstr "Não realçar os campos que podem ser traduzidos."
 
 #: admin/qtx_configuration.php:1380 admin/qtx_configuration.php:1382
-#, fuzzy
 msgid "Show a line on the left border of translatable fields."
-msgstr "Mostrar uma linha na borda esquerda dos campos que podem ser traduzidos"
+msgstr "Mostrar uma linha na borda esquerda dos campos que podem ser traduzidos."
 
 #: admin/qtx_configuration.php:1384 admin/qtx_configuration.php:1386
-#, fuzzy
 msgid "Draw a border around translatable fields."
-msgstr "Desenhar um borda à volta de campos que podem ser traduzidos"
+msgstr "Desenhar um borda à volta de campos que podem ser traduzidos."
 
 #: admin/qtx_configuration.php:1395
 msgid "Admin Color Scheme"
-msgstr ""
+msgstr "Palette de cores do painel"
 
 #: admin/qtx_configuration.php:1395
 #, php-format
 msgid "The color in use is taken from your profile option %s, the third color."
-msgstr ""
+msgstr "A cor utilizada foi obtida da opção %s do seu perfil, a terceira cor."
 
 #: admin/qtx_configuration.php:1433
-#, fuzzy
 msgid "List of Configured Languages"
-msgstr "Idioma de origem"
+msgstr "Lista de idiomas configurados"
 
 #: admin/qtx_configuration.php:1438
 #, php-format
 msgid "Only enabled languages are loaded at front-end, while all %d configured languages are listed here."
-msgstr ""
+msgstr "Apenas os idiomas activos serão carregados na frente do site, ao passo que todos os %d idiomas configurados estão listados aqui."
 
 #: admin/qtx_configuration.php:1439
 msgid "The table below contains both pre-defined and manually added or modified languages."
-msgstr ""
+msgstr "A tabela abaixo contém os idiomas pré-definidos, bem como os modificados ou adicionados manualmente."
 
 #: admin/qtx_configuration.php:1440 admin/qtx_configuration.php:1467
 msgid "Delete"
-msgstr "Apagar"
+msgstr "Eliminar"
 
 #: admin/qtx_configuration.php:1440 admin/qtx_configuration.php:1465
 msgid "Disable"
@@ -753,17 +748,17 @@ msgstr "Activar"
 
 #: admin/qtx_configuration.php:1440 admin/qtx_configuration.php:1467
 msgid "Reset"
-msgstr ""
+msgstr "Repor"
 
 #: admin/qtx_configuration.php:1440
 #, php-format
 msgid "You may %s or %s a language, or %s manually added language, or %s previous modifications of a pre-defined language."
-msgstr ""
+msgstr "Pode %s ou %s um idioma, ou %s um idioma adicionado manualmente, ou %s modificações prévias a um idioma pré-definido."
 
 #: admin/qtx_configuration.php:1441
 #, php-format
 msgid "Click %s to modify language properties."
-msgstr ""
+msgstr "Clique em %s para modificar as propriedades do idioma."
 
 #: admin/qtx_configuration.php:1463
 #, php-format
@@ -776,7 +771,7 @@ msgstr "Por omissão"
 
 #: admin/qtx_configuration.php:1467
 msgid "Pre-Defined"
-msgstr ""
+msgstr "Pré-definido"
 
 #: admin/qtx_configuration.php:1476
 msgid "Enabling a language will cause qTranslate to update the Gettext-Database for the language, which can take a while depending on your server's connection speed."
@@ -889,30 +884,28 @@ msgstr "Sim, eu quero repor o qTranslate."
 
 #: admin/qtx_import_export.php:180
 msgid "Also delete Translations for Categories/Tags/Link Categories."
-msgstr "Apagar também traduções de Categorias/Etiquetas/Categorias de Ligações."
+msgstr "Eliminar também traduções de categorias/etiquetas/categorias de ligações."
 
 #: admin/qtx_import_export.php:182
 msgid "If something isn't working correctly, you can always try to reset all qTranslate settings. A Reset won't delete any posts but will remove all settings (including all languages added)."
-msgstr "Se algo não funcionar correctamente, pode sempre repor todas as definições do qTranslate. Repor não irá apagar nenhum artigo mas apaga todas as opções (incluindo todos os idiomas adicionados)."
+msgstr "Se algo não funcionar correctamente, pode sempre repor todas as definições do qTranslate. Repor não irá eliminar nenhum artigo mas elimina todas as opções (incluindo todos os idiomas adicionados)."
 
 #: admin/qtx_languages.php:93
-#, fuzzy
 msgid "Cannot delete Default Language!"
-msgstr "Não é possível desactivar o idioma por omissão!"
+msgstr "Não é possível eliminar o idioma por omissão!"
 
 #: admin/qtx_user_options.php:9
 msgid "Translation options"
 msgstr "Opções de tradução"
 
 #: admin/qtx_user_options.php:14
-#, fuzzy
 msgid "Highlight Translatable Fields"
-msgstr "Não realçar os campos que podem ser traduzidos"
+msgstr "Realçar campos que podem ser traduzidos"
 
 #: admin/qtx_user_options.php:18
-#, fuzzy, php-format
+#, php-format
 msgid "The way the translatable fields are highlighted is configured with global option %s."
-msgstr "Se não gostar de realçar os campos que podem ser traduzidos, pode desactivar esta opção aqui"
+msgstr "O modo como os campos que podem ser traduzidos são realçados é configurado com a opção global %s."
 
 #: qtranslate_frontend.php:162 qtranslate_widget.php:67
 msgid "Language"
@@ -957,7 +950,7 @@ msgstr "Traduzir para"
 
 #: qtranslate_services.php:327
 msgid "Order deleted."
-msgstr "Pedido apagado."
+msgstr "Pedido eliminado."
 
 #: qtranslate_services.php:331
 msgid "Status updated for all open orders."
