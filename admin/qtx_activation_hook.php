@@ -147,7 +147,7 @@ function qtranxf_admin_notices_version()
 		$ver_prv = 32920;
 	}
 	if($ver_prv >= 32920 && $ver_cur <= 33000){
-		qtranxf_admin_notices_new_options(array('Highlight Style','LSB Style'),QTX_VERSION);
+		qtranxf_admin_notices_new_options(array('Highlight Style','LSB Style'),'3.3');
 	}
 }
 add_action('admin_notices', 'qtranxf_admin_notices_version');
