@@ -403,6 +403,7 @@ add_action('edit_terms','qtranxf_edit_terms');
 
 function qtranxf_language_columns($columns) {
 	return array(
+		'code' => _x('Code', 'Language Code', 'qtranslate'),
 		'flag' => __('Flag', 'qtranslate'),
 		'name' => __('Name', 'qtranslate'),
 		'status' => __('Action', 'qtranslate'),

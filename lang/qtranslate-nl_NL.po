@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: qtranslate-x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-27 21:19-0600\n"
+"POT-Creation-Date: 2015-03-27 21:44-0600\n"
 "PO-Revision-Date: 2015-03-20 15:54+0100\n"
 "Last-Translator: Marius Siroen <marius@marius-siroen.com>\n"
 "Language-Team: Dutch (Netherlands) (http://www.transifex.com/projects/p/qtranslate-x/language/nl_NL/)\n"
@@ -114,30 +114,34 @@ msgstr "Opmerking: ingevoerde aangepassingen zijn niet aangeraakt."
 msgid "Database has been converted to legacy dual-tag format."
 msgstr "Database is geconverteerd naar de oudere dubbele-label indeling."
 
-#: admin/qtx_admin_utils.php:406 admin/qtx_configuration.php:552
+#: admin/qtx_admin_utils.php:406
+msgid "Code"
+msgstr ""
+
+#: admin/qtx_admin_utils.php:407 admin/qtx_configuration.php:552
 #: admin/qtx_configuration.php:575 qtranslate_frontend.php:168
 #: qtranslate_frontend.php:195
 msgid "Flag"
 msgstr "Vlag"
 
-#: admin/qtx_admin_utils.php:407 admin/qtx_configuration.php:593
+#: admin/qtx_admin_utils.php:408 admin/qtx_configuration.php:593
 msgid "Name"
 msgstr "Naam"
 
-#: admin/qtx_admin_utils.php:408 qtranslate_services.php:383
+#: admin/qtx_admin_utils.php:409 qtranslate_services.php:383
 msgid "Action"
 msgstr "Aktie"
 
-#: admin/qtx_admin_utils.php:409 admin/qtx_configuration.php:1414
-#: admin/qtx_configuration.php:1439
+#: admin/qtx_admin_utils.php:410 admin/qtx_configuration.php:1414
+#: admin/qtx_configuration.php:1440
 msgid "Edit"
 msgstr "Aanpassen"
 
-#: admin/qtx_admin_utils.php:410
+#: admin/qtx_admin_utils.php:411
 msgid "Stored"
 msgstr ""
 
-#: admin/qtx_admin_utils.php:421 admin/qtx_configuration.php:539
+#: admin/qtx_admin_utils.php:422 admin/qtx_configuration.php:539
 #: admin/qtx_configuration.php:1397
 msgid "Languages"
 msgstr "Talen"
@@ -728,19 +732,19 @@ msgstr ""
 msgid "The table below contains both pre-defined and manually added or modified languages."
 msgstr ""
 
-#: admin/qtx_configuration.php:1413 admin/qtx_configuration.php:1440
+#: admin/qtx_configuration.php:1413 admin/qtx_configuration.php:1441
 msgid "Delete"
 msgstr "Verwijder"
 
-#: admin/qtx_configuration.php:1413 admin/qtx_configuration.php:1438
+#: admin/qtx_configuration.php:1413 admin/qtx_configuration.php:1439
 msgid "Disable"
 msgstr "Uitschakelen"
 
-#: admin/qtx_configuration.php:1413 admin/qtx_configuration.php:1438
+#: admin/qtx_configuration.php:1413 admin/qtx_configuration.php:1439
 msgid "Enable"
 msgstr "Inschakelen"
 
-#: admin/qtx_configuration.php:1413 admin/qtx_configuration.php:1440
+#: admin/qtx_configuration.php:1413 admin/qtx_configuration.php:1441
 msgid "Reset"
 msgstr ""
 
@@ -754,53 +758,53 @@ msgstr ""
 msgid "Click %s to modify language properties."
 msgstr ""
 
-#: admin/qtx_configuration.php:1436
+#: admin/qtx_configuration.php:1437
 #, php-format
 msgid "%s Flag"
 msgstr "%s Vlag"
 
-#: admin/qtx_configuration.php:1438
+#: admin/qtx_configuration.php:1439
 msgid "Default"
 msgstr "Standaard"
 
-#: admin/qtx_configuration.php:1440
+#: admin/qtx_configuration.php:1441
 msgid "Pre-Defined"
 msgstr ""
 
-#: admin/qtx_configuration.php:1449
+#: admin/qtx_configuration.php:1450
 msgid "Enabling a language will cause qTranslate to update the Gettext-Database for the language, which can take a while depending on your server's connection speed."
 msgstr "Het activeren van een taal zorgt er voor dat qTranslate de Gettext-Database probeert bij te werken voor de desbetreffende taal. Dit kan even duren afhankelijk van de snelheid van de verbinding van de server."
 
-#: admin/qtx_configuration.php:1456
+#: admin/qtx_configuration.php:1457
 msgid "Add Language"
 msgstr "Taal Toevoegen"
 
-#: admin/qtx_configuration.php:1459
+#: admin/qtx_configuration.php:1460
 msgid "Add Language &raquo;"
 msgstr "Taal Toevoegen &raquo;"
 
-#: admin/qtx_configuration.php:1481
+#: admin/qtx_configuration.php:1482
 msgid "Language Menu"
 msgstr "Taal menu"
 
-#: admin/qtx_configuration.php:1530
+#: admin/qtx_configuration.php:1531
 msgid "Help"
 msgstr "Help"
 
-#: admin/qtx_configuration.php:1532
+#: admin/qtx_configuration.php:1533
 #, php-format
 msgid "Menu item added is replaced with a sub-menu of available languages when menu is rendered. Depending on how your theme renders menu you may need to override and customize css entries %s and %s, originally defined in %s. The field \"URL\" of inserted menu item allows additional configuration described in %sFAQ%s."
 msgstr "Een menu-item toegevoegen wordt vervangen door een sub-menu met beschikbare talen wanneer het menu wordt weergegeven. Afhankelijk van hoe je thema het menu maakt moet je wellicht css fragmenten overschrijven en aanpassen %s en %s, oorspronkelijk gedefinieerd in %s. Het veld \"URL\" van ingevoegde menu items vraagt mogelijk aanvullende configuratie, beschreven in %sFAQ%s."
 
-#: admin/qtx_configuration.php:1537
+#: admin/qtx_configuration.php:1538
 msgid "Add to Menu"
 msgstr "Aan menu toevoegen"
 
-#: admin/qtx_configuration.php:1547
+#: admin/qtx_configuration.php:1548
 msgid "Language Switcher"
 msgstr "Taal wisselen"
 
-#: admin/qtx_configuration.php:1592
+#: admin/qtx_configuration.php:1593
 msgid "Settings"
 msgstr "Instellingen"
 

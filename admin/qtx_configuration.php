@@ -1433,6 +1433,7 @@ function qtranxf_conf() {
 	foreach($language_names as $lang => $language){ if($lang=='code') continue;
 ?>
 	<tr>
+		<td><?php echo $lang; ?></td>
 		<td><img src="<?php echo qtranxf_flag_location().$flags[$lang]; ?>" alt="<?php echo sprintf(__('%s Flag', 'qtranslate'), $language) ?>"></td>
 		<td><?php echo $language; ?></td>
 		<td><?php if(in_array($lang,$q_config['enabled_languages'])) { if($q_config['default_language']==$lang){ _e('Default', 'qtranslate'); } else{ ?><a class="edit" href="<?php echo $clean_uri; ?>&disable=<?php echo $lang; ?>"><?php _e('Disable', 'qtranslate'); ?></a><?php } } else { ?><a class="edit" href="<?php echo $clean_uri; ?>&enable=<?php echo $lang; ?>"><?php _e('Enable', 'qtranslate'); ?></a><?php } ?></td>

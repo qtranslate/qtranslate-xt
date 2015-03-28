@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: qTranslate-X 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-27 21:19-0600\n"
+"POT-Creation-Date: 2015-03-27 21:44-0600\n"
 "PO-Revision-Date: 2009-09-10 12:00+0400\n"
 "Last-Translator: Rashad Aliyev <rashadaliyev@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -106,30 +106,34 @@ msgstr ""
 msgid "Database has been converted to legacy dual-tag format."
 msgstr ""
 
-#: admin/qtx_admin_utils.php:406 admin/qtx_configuration.php:552
+#: admin/qtx_admin_utils.php:406
+msgid "Code"
+msgstr ""
+
+#: admin/qtx_admin_utils.php:407 admin/qtx_configuration.php:552
 #: admin/qtx_configuration.php:575 qtranslate_frontend.php:168
 #: qtranslate_frontend.php:195
 msgid "Flag"
 msgstr "Bayraq"
 
-#: admin/qtx_admin_utils.php:407 admin/qtx_configuration.php:593
+#: admin/qtx_admin_utils.php:408 admin/qtx_configuration.php:593
 msgid "Name"
 msgstr "İsim"
 
-#: admin/qtx_admin_utils.php:408 qtranslate_services.php:383
+#: admin/qtx_admin_utils.php:409 qtranslate_services.php:383
 msgid "Action"
 msgstr "Fəaliyyət"
 
-#: admin/qtx_admin_utils.php:409 admin/qtx_configuration.php:1414
-#: admin/qtx_configuration.php:1439
+#: admin/qtx_admin_utils.php:410 admin/qtx_configuration.php:1414
+#: admin/qtx_configuration.php:1440
 msgid "Edit"
 msgstr "Düzəliş"
 
-#: admin/qtx_admin_utils.php:410
+#: admin/qtx_admin_utils.php:411
 msgid "Stored"
 msgstr ""
 
-#: admin/qtx_admin_utils.php:421 admin/qtx_configuration.php:539
+#: admin/qtx_admin_utils.php:422 admin/qtx_configuration.php:539
 #: admin/qtx_configuration.php:1397
 msgid "Languages"
 msgstr "Dillər"
@@ -729,19 +733,19 @@ msgstr ""
 msgid "The table below contains both pre-defined and manually added or modified languages."
 msgstr ""
 
-#: admin/qtx_configuration.php:1413 admin/qtx_configuration.php:1440
+#: admin/qtx_configuration.php:1413 admin/qtx_configuration.php:1441
 msgid "Delete"
 msgstr "Sil"
 
-#: admin/qtx_configuration.php:1413 admin/qtx_configuration.php:1438
+#: admin/qtx_configuration.php:1413 admin/qtx_configuration.php:1439
 msgid "Disable"
 msgstr "Məhrum etmək"
 
-#: admin/qtx_configuration.php:1413 admin/qtx_configuration.php:1438
+#: admin/qtx_configuration.php:1413 admin/qtx_configuration.php:1439
 msgid "Enable"
 msgstr "Aktivləşdir"
 
-#: admin/qtx_configuration.php:1413 admin/qtx_configuration.php:1440
+#: admin/qtx_configuration.php:1413 admin/qtx_configuration.php:1441
 msgid "Reset"
 msgstr ""
 
@@ -755,55 +759,55 @@ msgstr ""
 msgid "Click %s to modify language properties."
 msgstr ""
 
-#: admin/qtx_configuration.php:1436
+#: admin/qtx_configuration.php:1437
 #, fuzzy, php-format
 msgid "%s Flag"
 msgstr "Bayraq"
 
-#: admin/qtx_configuration.php:1438
+#: admin/qtx_configuration.php:1439
 msgid "Default"
 msgstr "Təməl"
 
-#: admin/qtx_configuration.php:1440
+#: admin/qtx_configuration.php:1441
 msgid "Pre-Defined"
 msgstr ""
 
-#: admin/qtx_configuration.php:1449
+#: admin/qtx_configuration.php:1450
 msgid "Enabling a language will cause qTranslate to update the Gettext-Database for the language, which can take a while depending on your server's connection speed."
 msgstr ""
 
-#: admin/qtx_configuration.php:1456
+#: admin/qtx_configuration.php:1457
 msgid "Add Language"
 msgstr "Dil Əlavə et"
 
-#: admin/qtx_configuration.php:1459
+#: admin/qtx_configuration.php:1460
 msgid "Add Language &raquo;"
 msgstr "Dil Əlavə et &raquo;"
 
-#: admin/qtx_configuration.php:1481
+#: admin/qtx_configuration.php:1482
 #, fuzzy
 msgid "Language Menu"
 msgstr "Dil Kodu"
 
-#: admin/qtx_configuration.php:1530
+#: admin/qtx_configuration.php:1531
 msgid "Help"
 msgstr ""
 
-#: admin/qtx_configuration.php:1532
+#: admin/qtx_configuration.php:1533
 #, php-format
 msgid "Menu item added is replaced with a sub-menu of available languages when menu is rendered. Depending on how your theme renders menu you may need to override and customize css entries %s and %s, originally defined in %s. The field \"URL\" of inserted menu item allows additional configuration described in %sFAQ%s."
 msgstr ""
 
-#: admin/qtx_configuration.php:1537
+#: admin/qtx_configuration.php:1538
 msgid "Add to Menu"
 msgstr ""
 
-#: admin/qtx_configuration.php:1547
+#: admin/qtx_configuration.php:1548
 #, fuzzy
 msgid "Language Switcher"
 msgstr "Dil Kodu"
 
-#: admin/qtx_configuration.php:1592
+#: admin/qtx_configuration.php:1593
 msgid "Settings"
 msgstr "Xüsusiyyətlər"
 

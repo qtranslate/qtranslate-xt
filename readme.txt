@@ -248,6 +248,9 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 ### 3.3 stable ###
 * Includes all changes after version 3.2.9.
 
+### 3.2.9.5 ###
+* Improvement: 'Code' column in the list of languages. Thanks to Pedro Mendonça for the [discussion](https://github.com/qTranslate-Team/qtranslate-x/issues/102).
+
 ### 3.2.9.4 ###
 * Translation: po files updated. Thanks to Pedro Mendonça for a [discussion](https://github.com/qTranslate-Team/qtranslate-x/pull/100).
 * Fix: languages management problems: [Issue #102](https://github.com/qTranslate-Team/qtranslate-x/issues/102).
