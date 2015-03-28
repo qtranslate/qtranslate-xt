@@ -760,7 +760,7 @@ function qtranxf_admin_section_end($nm) {
 
 function qtranxf_conf() {
 	global $qtranslate_options, $q_config, $wpdb;
-	//qtranxf_dbg_echo('qtranxf_conf: POST: ',$_POST);
+	//qtranxf_dbg_log('qtranxf_conf: POST: ',$_POST);
 
 	// do redirection for dashboard
 	if(isset($_GET['godashboard'])) {
@@ -911,10 +911,29 @@ function qtranxf_conf() {
 				}
 			}
 		}
-		if(get_magic_quotes_gpc()) {
+
+		/**
+			@since 3.2.9.5
+			In earlier versions the 'if' below used to work correctly, but magic_quotes has been removed from PHP for a while, and 'if(get_magic_quotes_gpc())' is now always 'false'.
+			However, WP adds magic quotes anyway via call to add_magic_quotes() in
+			./wp-includes/load.php:function wp_magic_quotes()
+			called from
+			./wp-settings.php: wp_magic_quotes()
+			Then it looks like we have to always 'stripslashes' now, although it is dangerous, since applying 'stripslashes' twice messes it up.
+			This problem reveals when, for example, '\a' format is in use.
+			Possible test for '\' character, instead of 'get_magic_quotes_gpc()' can be 'strpos($_POST['language_date_format'],'\\\\')' for this particular case.
+			If Wordpress ever decides to remove calls to wp_magic_quotes, then this place will be in trouble again.
+			Discussions:
+			http://wordpress.stackexchange.com/questions/21693/wordpress-and-magic-quotes
+		*/
+		//if(get_magic_quotes_gpc()) {
+			//qtranxf_dbg_log('get_magic_quotes_gpc: before language_date_format=',$_POST['language_date_format']);
+			//qtranxf_dbg_log('pos=',strpos($_POST['language_date_format'],'\\\\'));//shows a number
 			if(isset($_POST['language_date_format'])) $_POST['language_date_format'] = stripslashes($_POST['language_date_format']);
 			if(isset($_POST['language_time_format'])) $_POST['language_time_format'] = stripslashes($_POST['language_time_format']);
-		}
+			//qtranxf_dbg_log('pos=',strpos($_POST['language_date_format'],'\\\\'));//shows false
+			//qtranxf_dbg_log('get_magic_quotes_gpc: after language_date_format=',$_POST['language_date_format']);
+		//}
 		if($error=='') {
 			// everything is fine, insert language
 			$q_config['language_name'][$lang] = sanitize_text_field($_POST['language_name']);

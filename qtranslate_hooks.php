@@ -24,7 +24,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 function qtranxf_localeForCurrentLanguage($locale){
 	global $q_config;
-	if( !isset($q_config['language']) ) return $locale;
+	//if( !isset($q_config['language']) ) return $locale;
 	// try to figure out the correct locale
 	$windows_locale = qtranxf_default_windows_locale(); //$q_config['windows_locale'];
 	$lang = $q_config['language'];
@@ -88,10 +88,10 @@ function qtranxf_fixSearchForm($form) {
 function qtranxf_gettext($translated_text) {
 	//same as qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage
 	global $q_config;
-	if(!isset($q_config['language'])){
-		//qtranxf_dbg_log('$q_config[language] is not set:',debug_backtrace());
-		return $translated_text;
-	}
+	//if(!isset($q_config['language'])){
+	//	//qtranxf_dbg_log('$q_config[language] is not set:',debug_backtrace());
+	//	return $translated_text;
+	//}
 	return qtranxf_use($q_config['language'], $translated_text, false);
 }
 
@@ -99,10 +99,10 @@ function qtranxf_gettext($translated_text) {
 function qtranxf_gettext_with_context($translated_text) {
 	//same as qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage
 	global $q_config;
-	if(!isset($q_config['language'])){
-		//qtranxf_dbg_log('$q_config[language] is not set:',debug_backtrace());
-		return $translated_text;
-	}
+	//if(!isset($q_config['language'])){
+	//	//qtranxf_dbg_log('$q_config[language] is not set:',debug_backtrace());
+	//	return $translated_text;
+	//}
 	return qtranxf_use($q_config['language'], $translated_text, false);
 }
 

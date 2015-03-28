@@ -113,6 +113,7 @@ define('QTX_VERSION','3.2.9.5');
 require_once(dirname(__FILE__).'/qtranslate_options.php');
 require_once(dirname(__FILE__).'/qtranslate_utils.php');
 require_once(dirname(__FILE__).'/qtranslate_core.php');
+
 require_once(dirname(__FILE__).'/qtranslate_widget.php');
 
 if(is_admin()){

@@ -250,6 +250,7 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 
 ### 3.2.9.5 ###
 * Improvement: 'Code' column in the list of languages. Thanks to Pedro Mendonça for the [discussion](https://github.com/qTranslate-Team/qtranslate-x/issues/102).
+* Fix: date/time formats containing backslashes: [Issue #99](https://github.com/qTranslate-Team/qtranslate-x/issues/99).
 
 ### 3.2.9.4 ###
 * Translation: po files updated. Thanks to Pedro Mendonça for a [discussion](https://github.com/qTranslate-Team/qtranslate-x/pull/100).
