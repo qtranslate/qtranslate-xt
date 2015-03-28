@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: qTranslate-X 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-27 21:44-0600\n"
+"POT-Creation-Date: 2015-03-27 21:59-0600\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Bronislaw Gracz <bron@gracz.pro>\n"
 "Language-Team: \n"
@@ -109,6 +109,7 @@ msgid "Database has been converted to legacy dual-tag format."
 msgstr ""
 
 #: admin/qtx_admin_utils.php:406
+msgctxt "Language Code"
 msgid "Code"
 msgstr ""
 
@@ -715,6 +716,10 @@ msgstr ""
 #: admin/qtx_configuration.php:1366
 #, php-format
 msgid "The color in use is taken from your profile option %s, the third color."
+msgstr ""
+
+#: admin/qtx_configuration.php:1368
+msgid "Admin Color Scheme"
 msgstr ""
 
 #: admin/qtx_configuration.php:1406

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: qtranslate-x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-27 21:44-0600\n"
+"POT-Creation-Date: 2015-03-27 21:59-0600\n"
 "PO-Revision-Date: 2015-03-20 15:54+0100\n"
 "Last-Translator: Marius Siroen <marius@marius-siroen.com>\n"
 "Language-Team: Dutch (Netherlands) (http://www.transifex.com/projects/p/qtranslate-x/language/nl_NL/)\n"
@@ -115,6 +115,7 @@ msgid "Database has been converted to legacy dual-tag format."
 msgstr "Database is geconverteerd naar de oudere dubbele-label indeling."
 
 #: admin/qtx_admin_utils.php:406
+msgctxt "Language Code"
 msgid "Code"
 msgstr ""
 
@@ -716,6 +717,10 @@ msgstr ""
 #: admin/qtx_configuration.php:1366
 #, php-format
 msgid "The color in use is taken from your profile option %s, the third color."
+msgstr ""
+
+#: admin/qtx_configuration.php:1368
+msgid "Admin Color Scheme"
 msgstr ""
 
 #: admin/qtx_configuration.php:1406

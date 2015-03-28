@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: qTranslate-X 3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-27 21:44-0600\n"
+"POT-Creation-Date: 2015-03-27 21:59-0600\n"
 "PO-Revision-Date: 2015-03-26 14:42-0000\n"
 "Last-Translator: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "Language-Team: Pedro Mendonça <ped.gaspar@gmail.com>\n"
@@ -118,6 +118,7 @@ msgid "Database has been converted to legacy dual-tag format."
 msgstr "A base de dados foi convertida para o antigo formato de dupla etiquetagem."
 
 #: admin/qtx_admin_utils.php:406
+msgctxt "Language Code"
 msgid "Code"
 msgstr ""
 
@@ -721,6 +722,10 @@ msgstr "Desenhar um borda à volta de campos que podem ser traduzidos."
 msgid "The color in use is taken from your profile option %s, the third color."
 msgstr "A cor utilizada foi obtida da opção %s do seu perfil, a terceira cor."
 
+#: admin/qtx_configuration.php:1368
+msgid "Admin Color Scheme"
+msgstr "Palette de cores do painel"
+
 #: admin/qtx_configuration.php:1406
 msgid "List of Configured Languages"
 msgstr "Lista de idiomas configurados"
@@ -1244,9 +1249,6 @@ msgstr "CSS do widget:"
 #: qtranslate.php:5
 msgid "Adds user-friendly and database-friendly multilingual content support."
 msgstr "Adiciona suporte para conteúdo multilingue de modo amigável para o utilizador e para a base de dados."
-
-#~ msgid "Admin Color Scheme"
-#~ msgstr "Palette de cores do painel"
 
 #~ msgid "Do not highlight fields"
 #~ msgstr "Não realçar campos"
