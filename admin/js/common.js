@@ -360,7 +360,7 @@ var qTranslateX=function(pg)
 
 		/**
 		 * Highlighting the translatable fields
-		 * Since 3.2-b3
+		 * @since 3.2-b3
 		*/
 		inpField.className += ' qtranxs-translatable';
 
@@ -407,7 +407,7 @@ var qTranslateX=function(pg)
 	};
 
 	/**
-	 * Since 3.2.7
+	 * @since 3.2.7
 	 */
 	var displayHookNodes=[];
 	addDisplayHookNode=function(nd)
@@ -427,7 +427,7 @@ var qTranslateX=function(pg)
 	}
 
 	/**
-	 * Since 3.2.7 switched to use of nodeValue instead of innerHTML.
+	 * @since 3.2.7 switched to use of nodeValue instead of innerHTML.
 	 */
 	addDisplayHook=function(elem)
 	{
@@ -600,7 +600,7 @@ var qTranslateX=function(pg)
 	}
 
 	/**
-	 * Since 3.1-b2
+	 * @since 3.1-b2
 	*/
 	addContentFieldHooks=function(fields,form,sep)
 	{
@@ -631,8 +631,8 @@ var qTranslateX=function(pg)
 
 	/**
 	 * adds custom hooks from configuration
-	 * Since 3.1-b2 - renamed to addCustomContentHooks, since addContentHooks used in qTranslateConfig.js
-	 * Since 3.0 - addContentHooks
+	 * @since 3.1-b2 - renamed to addCustomContentHooks, since addContentHooks used in qTranslateConfig.js
+	 * @since 3.0 - addContentHooks
 	*/
 	this.addCustomContentHooks=function(form)
 	{
@@ -649,7 +649,7 @@ var qTranslateX=function(pg)
 
 	/**
 	 * Parses custom page configuration, loaded in qtranxf_load_admin_page_config.
-	 * Since 3.1-b2
+	 * @since 3.1-b2
 	*/
 	this.addPageHooks=function(page_config_forms)
 	{
@@ -769,7 +769,7 @@ var qTranslateX=function(pg)
 
 			/**
 			 * Highlighting the translatable fields
-			 * Since 3.2-b3
+			 * @since 3.2-b3
 			*/
 			ed.getContainer().className += ' qtranxs-translatable';
 			ed.getElement().className += ' qtranxs-translatable';
@@ -850,7 +850,8 @@ var qTranslateX=function(pg)
 			return;
 	}
 
-	{
+	//create sets of LSB
+	if(qTranslateConfig.enabled_languages.length > 1){
 		var anchors=[];
 		if(qTranslateConfig.page_config && qTranslateConfig.page_config.anchors){
 			for(var i=0; i < qTranslateConfig.page_config.anchors.length; ++i){
@@ -873,7 +874,8 @@ var qTranslateX=function(pg)
 		}
 		for(var i=0; i < anchors.length; ++i){
 			var anchor = anchors[i];
-			var langSwitchWrap=qtranxj_ce('ul', {className: 'qtranxs-lang-switch-wrap'});
+			var langSwitchWrap=qtranxj_ce('ul', {className: qTranslateConfig.lsb_style_wrap_class});
+			//var langSwitchWrap=qtranxj_ce('ul', {className: 'qtranxs-lang-switch-wrap wp-ui-primary'});
 			//var header=w.getElementsByTagName('h2')[0];
 			//header.parentNode.insertBefore(langSwitchWrap, header.nextElementSibling);
 			anchor.parentNode.insertBefore( langSwitchWrap, anchor );
@@ -883,7 +885,7 @@ var qTranslateX=function(pg)
 			//	languageSwitch.onSwitch(onTabSwitchCustom);
 		}
 		/**
-		 * Since 3.2.4 Synchronization of multiple sets of Language Switching Buttons
+		 * @since 3.2.4 Synchronization of multiple sets of Language Switching Buttons
 		 */
 		qTranslateConfig.onTabSwitchFunctions=[];
 		qTranslateConfig.onTabSwitchFunctions.push(onTabSwitch);
@@ -893,7 +895,7 @@ var qTranslateX=function(pg)
 }
 
 /**
- * Since 3.2.4 Multiple sets of Language Switching Buttons
+ * @since 3.2.4 Multiple sets of Language Switching Buttons
  */
 function qtranxj_LanguageSwitch(langSwitchWrap)
 {
@@ -915,7 +917,9 @@ function qtranxj_LanguageSwitch(langSwitchWrap)
 		{
 			var tabSwitches = qTranslateConfig.tabSwitches[qTranslateConfig.activeLanguage];
 			for(var i=0; i < tabSwitches.length; ++i){
-				tabSwitches[i].classList.remove('active');
+				tabSwitches[i].classList.remove(qTranslateConfig.lsb_style_active_class);
+				//tabSwitches[i].classList.remove('active');
+				//tabSwitches[i].classList.remove('wp-ui-highlight');
 			}
 			//tabSwitches[qTranslateConfig.activeLanguage].classList.remove('active');
 		}
@@ -923,7 +927,9 @@ function qtranxj_LanguageSwitch(langSwitchWrap)
 		{
 			var tabSwitches = qTranslateConfig.tabSwitches[qTranslateConfig.activeLanguage];
 			for(var i=0; i < tabSwitches.length; ++i){
-				tabSwitches[i].classList.add('active');
+				tabSwitches[i].classList.add(qTranslateConfig.lsb_style_active_class);
+				//tabSwitches[i].classList.add('active');
+				//tabSwitches[i].classList.add('wp-ui-highlight');
 			}
 			//tabSwitch.classList.add('active');
 		}
@@ -943,7 +949,7 @@ function qtranxj_LanguageSwitch(langSwitchWrap)
 		qtranxj_ce('img', {src: flag_location+qTranslateConfig.flag[lang]}, tabSwitch);
 		qtranxj_ce('span', {innerHTML: langNames[lang]}, tabSwitch);
 		if ( qTranslateConfig.activeLanguage == lang )
-			tabSwitch.classList.add('active');
+			tabSwitch.classList.add(qTranslateConfig.lsb_style_active_class);
 		if(!qTranslateConfig.tabSwitches[lang]) qTranslateConfig.tabSwitches[lang] = [];
 		qTranslateConfig.tabSwitches[lang].push(tabSwitch);
 		//tabSwitches[lang]=tabSwitch;

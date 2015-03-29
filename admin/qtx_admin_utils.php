@@ -9,11 +9,12 @@ function qtranxf_detect_admin_language($url_info) {
 		$url_info['lang_cookie_admin'] = $lang;
 	}
 	if(!$lang){
-		$locale = get_locale();
-		$url_info['locale'] = $locale;
-		$lang = qtranxf_resolveLangCase(substr($locale,0,2),$cs);
-		$url_info['lang_locale'] = $lang;
-		if(!$lang) $lang = $q_config['default_language'];
+		//$locale = get_locale();
+		//$url_info['locale'] = $locale;
+		//$lang = qtranxf_resolveLangCase(substr($locale,0,2),$cs);
+		//$url_info['lang_locale'] = $lang;
+		//if(!$lang)
+		$lang = $q_config['default_language'];
 	}
 	$url_info['doing_front_end'] = false;
 	$url_info['lang_admin'] = $lang;
@@ -402,12 +403,13 @@ add_action('edit_terms','qtranxf_edit_terms');
 
 function qtranxf_language_columns($columns) {
 	return array(
+		'code' => _x('Code', 'Language Code', 'qtranslate'),
 		'flag' => __('Flag', 'qtranslate'),
 		'name' => __('Name', 'qtranslate'),
 		'status' => __('Action', 'qtranslate'),
-		'status2' => '',
-		'status3' => ''
-		);
+		'status2' => __('Edit', 'qtranslate'),
+		'status3' => __('Stored', 'qtranslate')
+	);
 }
 
 function qtranxf_languageColumnHeader($columns){
@@ -436,6 +438,39 @@ function qtranxf_languageColumn($column) {
 		do_action('qtranslate_languageColumn', $available_languages, $missing_languages);
 	}
 	return $column;
+}
+
+function qtranxf_fetch_file_selection($dir,$suffix='.css'){
+	//qtranxf_dbg_log('qtranxf_fetch_file_selection: dir:',$dir);
+	$files = array();
+	$dir_handle = @opendir($dir);
+	if(!$dir_handle) return false;
+	while (false !== ($file = readdir($dir_handle))) {
+		if(!qtranxf_endsWith($file,$suffix)) continue;
+		$nm = basename($file, $suffix);
+		if(!$nm) continue;
+		$nm = str_replace('_',' ',$nm);
+		if(qtranxf_endsWith($nm,'.min')){
+			$nm = substr($nm,-4);
+			$files[$nm] = $file;
+		}elseif(!isset($files[$nm])){
+			$files[$nm] = $file;
+		}
+	}
+	ksort($files);
+	//qtranxf_dbg_log('qtranxf_fetch_file_selection: files:',$files);
+	return $files;
+}
+
+function qtranxf_fixAdminBar($wp_admin_bar) {
+	global $wp_admin_bar;
+	if(!isset($wp_admin_bar)) return;
+	$nodes=$wp_admin_bar->get_nodes();
+	//qtranxf_dbg_echo('$nodes:',$nodes);
+	if(!isset($nodes)) return;//sometimes $nodes is NULL
+	foreach($nodes as $node) {
+		$wp_admin_bar->add_node(qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($node));
+	}
 }
 
 function qtranxf_admin_list_cats($text) {

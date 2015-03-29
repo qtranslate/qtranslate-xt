@@ -72,8 +72,10 @@
 	background-size: 22px;
 }
 
+#wpadminbar li#wp-admin-bar-language { display: block; }
 
-/* qTranslate-X config page */
+
+/* qTranslate-X configuration page */
 
 #qtranxs-languages-menu img {
 	vertical-align: middle;
@@ -84,7 +86,7 @@
 }
 
 
-/* Language Switching Buttons as horizontal block */
+/* Language Switching Buttons as horizontal block
 
 .qtranxs-lang-switch-wrap
 {
@@ -117,6 +119,7 @@
 	vertical-align: middle;
 	margin-right: 4px;
 }
+*/
 
 /* Language Switching Buttons as tabs *
 
@@ -163,14 +166,5 @@
   border: 1px solid #ccc;
   border-bottom-color: transparent;
   opacity: 1;
-}
-*/
-
-/* Highlighting the translatable fields */
-/*
-input.qtranxs-translatable,
-textarea.qtranxs-translatable,
-div.qtranxs-translatable {
-	box-shadow: -3px 0 #333;
 }
 */
