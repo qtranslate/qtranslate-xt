@@ -1553,11 +1553,7 @@ function qtranxf_conf() {
 </div>
 <div class="wrap">
 
-<?php qtranxf_admin_section_start(__('Languages', 'qtranslate'),'languages'); //id="qtranslate-admin-languages"
-/*
-<h2><?php _e('Languages', 'qtranslate') ?></h2>
-*/
-?>
+<?php qtranxf_admin_section_start(__('Languages', 'qtranslate'),'languages'); //id="qtranslate-admin-languages" ?>
 <div id="col-container">
 
 <div id="col-right">
