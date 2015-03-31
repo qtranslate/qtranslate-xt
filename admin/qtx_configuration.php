@@ -79,7 +79,6 @@ function qtranxf_admin_loadConfig()
 
 	foreach($qtranslate_options['admin']['text'] as $nm => $def){
 		qtranxf_load_option($nm, $def);
-		qtranxf_dbg_log('qtranxf_admin_loadConfig:text: $q_config['.$nm.']=',$q_config[$nm]);
 	}
 
 	foreach($qtranslate_options['admin']['array'] as $nm => $def){

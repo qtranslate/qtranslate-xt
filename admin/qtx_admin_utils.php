@@ -642,10 +642,7 @@ function qtranxf_del_admin_filters(){
 function qtranxf_get_user_admin_color() {
 	global $_wp_admin_css_colors;
 	$user_id = get_current_user_id();
-	qtranxf_dbg_log('qtranxf_get_user_admin_color: $user_id: ',$user_id);
 	$user_admin_color = get_user_meta( $user_id, 'admin_color', true );
-	qtranxf_dbg_log('qtranxf_get_user_admin_color: $user_admin_color: ',$user_admin_color);
-	qtranxf_dbg_log('qtranxf_get_user_admin_color: $_wp_admin_css_colors: ',$_wp_admin_css_colors);
 	return $_wp_admin_css_colors[$user_admin_color]->colors;
 }
 
