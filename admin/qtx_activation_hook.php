@@ -17,6 +17,12 @@
 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 */
 
+function qtranxf_version_int() {
+	$ver = str_replace('.','',QTX_VERSION);
+	while(strlen($ver) < 5) $ver.='0';
+	return intval($ver);
+}
+
 /**
  * since 3.2.9.2
  */
@@ -36,15 +42,15 @@ function qtranxf_default_enabled_languages()
 	if(!qtranxf_language_predefined($lang)){
 		$langs = array();
 		$langs['language_name'][$lang] = 'Unknown';
-		$langs['flag'][$lang] = 'eu.png';
+		$langs['flag'][$lang] = 'us.png';
 		$langs['locale'][$lang] = $locale;
-		$langs['date_format'][$lang] = '%d/%m/%y';
-		$langs['time_format'][$lang] = '%H:%M';
+		$langs['date_format'][$lang] = '%A %B %e%q, %Y';
+		$langs['time_format'][$lang] = '%I:%M %p';
 		$langs['not_available'][$lang] = 'Sorry, this entry is only available in %LANG:, : and %.';
 		qtranxf_save_languages($langs);
 	}
 	//qtranxf_dbg_log('qtranxf_default_enabled_languages: $lang='.$lang.' $locale:',$locale);
-	return array($lang);
+	return array($lang, $lang != 'en' ? 'en' : 'de');
 	//return array( 'de', 'en', 'zh' );
 }
 
@@ -58,6 +64,10 @@ function qtranxf_default_default_language()
 	update_option('qtranslate_enabled_languages',$enabled_languages);
 	update_option('qtranslate_default_language',$default_language);
 	return $default_language;
+}
+
+function qtranxf_admin_notice_first_install(){
+
 }
 
 function qtranxf_admin_notice_deactivate_plugin($nm,$plugin)
@@ -115,40 +125,21 @@ function qtranxf_activation_hook()
 	$first_install = $default_language===false;
 	if($first_install){
 		qtranxf_default_default_language();
+		$ver = qtranxf_version_int();
+		update_option('qtranslate_version_previous', $ver);
+		add_action('admin_notices', 'qtranxf_admin_notice_first_install');
+	}else{
+		$ver = get_option('qtranslate_version_previous');
+		if(!$ver) update_option('qtranslate_version_previous', 29000);
 	}
 }
 
 function qtranxf_admin_notices_version()
 {
-	$ver_prv = get_option('qtranslate_version');
-	$ver_cur = str_replace('.','',QTX_VERSION);
-	while(strlen($ver_cur) < 5) $ver_cur.='0';
-	$ver_cur = intval($ver_cur);
-	if($ver_cur != $ver_prv){
-		update_option('qtranslate_version',$ver_cur);
-		if($ver_prv === false){
-			$ver_prv = get_option('qtranslate_version_previous');
-			if($ver_prv===false){
-				update_option('qtranslate_version_previous', $ver_cur);
-				return;
-			}
-		}else{
-			update_option('qtranslate_version_previous', intval($ver_prv));
-		}
-	}else{
-		$ver_prv = get_option('qtranslate_version_previous');
-	}
-	if(!$ver_prv) return;//first time installation
-	if($ver_cur == $ver_prv) return;//never updated
-	$ver_prv = get_option('qtranslate_version_previous');
-	if(!$ver_prv){
-		$firsttime = get_option('qtranslate_next_thanks') === false;
-		if($firsttime) return;
-		$ver_prv = 32920;
-	}
-	if($ver_prv >= 32920 && $ver_cur <= 33000){
-		qtranxf_admin_notices_new_options(array('Highlight Style','LSB Style'),'3.3');
-	}
+	$ver_cur = qtranxf_version_int();
+	$ver_prv = get_option('qtranslate_version_previous',$ver_cur);
+	if($ver_cur == $ver_prv) return;
+	if($ver_prv < 33000 && $ver_cur >= 33000) qtranxf_admin_notices_new_options(array('Highlight Style','LSB Style'),'3.3','https://qtranslatexteam.wordpress.com/2015/03/30/release-notes-3-3');
 }
 add_action('admin_notices', 'qtranxf_admin_notices_version');
 

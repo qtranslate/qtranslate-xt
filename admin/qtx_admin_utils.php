@@ -1,5 +1,25 @@
 <?php
 
+function qtranxf_reloadConfig() {
+	global $q_config;
+	$url_info = isset($q_config['url_info']) ? $q_config['url_info'] : null;
+	//qtranxf_dbg_log('qtranxf_reloadConfig: $url_info: ',$url_info);
+	qtranxf_del_admin_filters();
+	qtranxf_loadConfig();
+	qtranxf_admin_loadConfig();
+	if($url_info){
+		$q_config['url_info'] = $url_info;
+		if(isset($q_config['url_info']['language'])){
+			$q_config['language'] = $q_config['url_info']['language'];
+		}
+		if(!qtranxf_isEnabled($q_config['language'])){
+			$q_config['language'] = $q_config['default_language'];
+		}
+		//qtranxf_dbg_log('qtranxf_reloadConfig: $q_config[language]: ',$q_config['language']);
+	}
+	qtranxf_load_option_qtrans_compatibility();
+}
+
 function qtranxf_detect_admin_language($url_info) {
 	global $q_config;
 	$cs=null;
@@ -609,7 +629,25 @@ function qtranxf_add_admin_filters(){
 		break;
 	}
 }
-qtranxf_add_admin_filters();
+
+function qtranxf_del_admin_filters(){
+	global $q_config;
+	remove_filter('the_editor', 'qtranxf_the_editor');
+}
+
+/**
+ * Get the currently selected admin color scheme (to be used for generated CSS)
+ * @return array
+ */
+function qtranxf_get_user_admin_color() {
+	global $_wp_admin_css_colors;
+	$user_id = get_current_user_id();
+	qtranxf_dbg_log('qtranxf_get_user_admin_color: $user_id: ',$user_id);
+	$user_admin_color = get_user_meta( $user_id, 'admin_color', true );
+	qtranxf_dbg_log('qtranxf_get_user_admin_color: $user_admin_color: ',$user_admin_color);
+	qtranxf_dbg_log('qtranxf_get_user_admin_color: $_wp_admin_css_colors: ',$_wp_admin_css_colors);
+	return $_wp_admin_css_colors[$user_admin_color]->colors;
+}
 
 add_filter('manage_language_columns', 'qtranxf_language_columns');
 add_filter('manage_posts_columns', 'qtranxf_languageColumnHeader');

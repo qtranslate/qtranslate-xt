@@ -24,10 +24,7 @@ function qtranxf_head(){
 	global $q_config;
 
 	if( $q_config['header_css_on'] ){
-		$header_css = qtranxf_front_header_css();
-		echo '<style type="text/css">'.PHP_EOL;
-		echo $header_css;
-		echo '</style>'.PHP_EOL;
+		echo '<style type="text/css">' . PHP_EOL .$q_config['header_css'].'</style>'. PHP_EOL;
 	}
 	do_action('qtranslate_head_add_css');//not really needed?
 

@@ -248,6 +248,12 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 ### 3.3 stable ###
 * Includes all changes after version 3.2.9.
 
+### 3.2.9.6 alpha ###
+* Translation: Dutch (nl_NL) po/mo files updated. Thanks to Marius Siroen.
+* Feature: framework for handling admin notices on new releases.
+* Improvement: design of option handling: optimization and simplification in the code. 
+* Fix: replaced pre-defined language code 'pt-br' with 'pb': [Issue #104](https://github.com/qTranslate-Team/qtranslate-x/issues/104).
+
 ### 3.2.9.5 ###
 * Improvement: 'Code' column in the list of languages. Thanks to Pedro Mendonça for the [discussion](https://github.com/qTranslate-Team/qtranslate-x/issues/102).
 * Fix: date/time formats containing backslashes: [Issue #99](https://github.com/qTranslate-Team/qtranslate-x/issues/99).

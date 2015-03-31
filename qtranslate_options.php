@@ -7,7 +7,7 @@ define('QTX_URL',	4);
 define('QTX_LANGUAGE',	5);
 define('QTX_ARRAY',	6);
 define('QTX_BOOLEAN_SET',	7);
-//define('QTX_ARRAY_STRING',	8);
+define('QTX_TEXT',	8);//multi-line string
 
 define('QTX_URL_QUERY'  , 1);// query: domain.com?lang=en
 define('QTX_URL_PATH'   , 2);// pre path: domain.com/en
@@ -53,38 +53,39 @@ function qtranxf_set_default_options(&$ops)
 {
 	$ops = array();
 
-	$ops['int']=array(
+	//options processed in a standardized way
+	$ops['front'] = array();
+
+	$ops['front']['int']=array(
 		'url_mode' => QTX_URL_PATH,// sets default url mode
 		'use_strftime' => QTX_DATE,// strftime usage (backward compability)
 		'filter_options_mode' => QTX_FILTER_OPTIONS_ALL,
-		'editor_mode' => QTX_EDITOR_MODE_LSB,
-		'highlight_mode' => QTX_HIGHLIGHT_MODE_LEFT_BORDER,
 	);
 
-	$ops['bool']=array(
+	$ops['front']['bool']=array(
 		'detect_browser_language' => true,// enables browser language detection
 		'hide_untranslated' => false,// hide pages without content
 		'show_displayed_language_prefix' => true,
-		'auto_update_mo' => true,// automatically update .mo files
 		'hide_default_language' => true,// hide language tag for default language
 		'use_secure_cookie' => false,
 		'header_css_on' => true,
 	);
 
-	$ops['str']=array(
-		'highlight_mode_custom_css' => null,
-		'lsb_style' => 'Simple_Buttons.css',
-		'lsb_style_wrap_class' => 'qtranxf_default_lsb_style_wrap_class',
-		'lsb_style_active_class' => 'qtranxf_default_lsb_style_active_class',
+	//single line options
+	$ops['front']['str']=array(
 	);
 
-	$ops['array']=array(
-		//'term_name'// uniquely special treatment
-		'custom_fields' => array(),
-		'custom_field_classes' => array(),
-		'text_field_filters' => array(),
-		'custom_pages' => array(),
+	//multi-line options
+	$ops['front']['text']=array(
+		'header_css' => 'qtranxf_front_header_css_default',
 	);
+
+	$ops['front']['array']=array(
+		//'term_name'// uniquely special treatment
+		'text_field_filters' => array(),
+	);
+
+	//options processed in a special way
 
 	// store other default values of specially handled options
 	$ops['default_value']=array(
@@ -95,7 +96,6 @@ function qtranxf_set_default_options(&$ops)
 		'flag_location' => null,//string
 		'filter_options' => QTX_FILTER_OPTIONS_DEFAULT,//array
 		'ignore_file_types' => QTX_IGNORE_FILE_TYPES,//array
-		'header_css' => null,//string
 		'domains' => null,//array
 	);
 
@@ -115,26 +115,26 @@ function qtranxf_set_default_options(&$ops)
 
 /* pre-Domain Endings - for future use
 	$cfg['pre_domain'] = array();
-	$cfg['pre_domain']['de'] = "de";
-	$cfg['pre_domain']['en'] = "en";
-	$cfg['pre_domain']['zh'] = "zh";
-	$cfg['pre_domain']['ru'] = "ru";
-	$cfg['pre_domain']['fi'] = "fs";
-	$cfg['pre_domain']['fr'] = "fr";
-	$cfg['pre_domain']['nl'] = "nl";
-	$cfg['pre_domain']['sv'] = "sv";
-	$cfg['pre_domain']['it'] = "it";
-	$cfg['pre_domain']['ro'] = "ro";
-	$cfg['pre_domain']['hu'] = "hu";
-	$cfg['pre_domain']['ja'] = "ja";
-	$cfg['pre_domain']['es'] = "es";
-	$cfg['pre_domain']['vi'] = "vi";
-	$cfg['pre_domain']['ar'] = "ar";
-	$cfg['pre_domain']['pt'] = "pt";
-	$cfg['pre_domain']['pt-br'] = "pt-br";
-	$cfg['pre_domain']['pl'] = "pl";
-	$cfg['pre_domain']['gl'] = "gl";
-	$cfg['pre_domain']['tr'] = "tr";
+	$cfg['pre_domain']['de'] = 'de';
+	$cfg['pre_domain']['en'] = 'en';
+	$cfg['pre_domain']['zh'] = 'zh';
+	$cfg['pre_domain']['ru'] = 'ru';
+	$cfg['pre_domain']['fi'] = 'fs';
+	$cfg['pre_domain']['fr'] = 'fr';
+	$cfg['pre_domain']['nl'] = 'nl';
+	$cfg['pre_domain']['sv'] = 'sv';
+	$cfg['pre_domain']['it'] = 'it';
+	$cfg['pre_domain']['ro'] = 'ro';
+	$cfg['pre_domain']['hu'] = 'hu';
+	$cfg['pre_domain']['ja'] = 'ja';
+	$cfg['pre_domain']['es'] = 'es';
+	$cfg['pre_domain']['vi'] = 'vi';
+	$cfg['pre_domain']['ar'] = 'ar';
+	$cfg['pre_domain']['pt'] = 'pt';
+	$cfg['pre_domain']['pb'] = 'pb';
+	$cfg['pre_domain']['pl'] = 'pl';
+	$cfg['pre_domain']['gl'] = 'gl';
+	$cfg['pre_domain']['tr'] = 'tr';
 */
 
 /**
@@ -160,7 +160,7 @@ function qtranxf_default_language_name()
 	$cfg['vi'] = 'Tiếng Việt';
 	$cfg['ar'] = 'العربية';
 	$cfg['pt'] = 'Português';
-	$cfg['pt-br'] = 'Português do Brasil';
+	$cfg['pb'] = 'Português do Brasil';
 	$cfg['pl'] = 'Polski';
 	$cfg['gl'] = 'galego';
 	$cfg['tr'] = 'Turkish';
@@ -195,7 +195,7 @@ function qtranxf_default_locale()
 	$cfg['vi'] = 'vi';
 	$cfg['ar'] = 'ar';
 	$cfg['pt'] = 'pt_PT';
-	$cfg['pt-br'] = 'pt_BR';
+	$cfg['pb'] = 'pt_BR';
 	$cfg['pl'] = 'pl_PL';
 	$cfg['gl'] = 'gl_ES';
 	$cfg['tr'] = 'tr_TR';
@@ -230,7 +230,7 @@ function qtranxf_default_not_available()
 	$cfg['vi'] = 'Rất tiếc, mục này chỉ tồn tại ở %LANG:, : và %.';
 	$cfg['ar'] = 'عفوا، هذه المدخلة موجودة فقط في %LANG:, : و %.';
 	$cfg['pt'] = 'Desculpe, este conteúdo só está disponível em %LANG:, : e %.';
-	$cfg['pt-br'] = 'Desculpe-nos, mas este texto esta apenas disponível em %LANG:, : y %.';
+	$cfg['pb'] = 'Desculpe-nos, mas este texto esta apenas disponível em %LANG:, : y %.';
 	$cfg['pl'] = 'Przepraszamy, ten wpis jest dostępny tylko w języku %LANG:, : i %.';
 	$cfg['gl'] = 'Sentímolo moito, ista entrada atopase unicamente en %LANG;,: e %.';
 	$cfg['tr'] = 'Sorry, this entry is only available in %LANG:, : and %.';
@@ -264,7 +264,7 @@ function qtranxf_default_date_format()
 	$cfg['vi'] = '%d/%m/%Y';
 	$cfg['ar'] = '%d/%m/%Y';
 	$cfg['pt'] = '%A,%e de %B de %Y';
-	$cfg['pt-br'] = '%d de %B de %Y';
+	$cfg['pb'] = '%d de %B de %Y';
 	$cfg['pl'] = '%d/%m/%y';
 	$cfg['gl'] = '%d de %B de %Y';
 	$cfg['tr'] = '%A %B %e%q, %Y';
@@ -298,7 +298,7 @@ function qtranxf_default_time_format()
 	$cfg['vi'] = '%H:%M';
 	$cfg['ar'] = '%H:%M';
 	$cfg['pt'] = '%H:%M';
-	$cfg['pt-br'] = '%H:%M hrs.';
+	$cfg['pb'] = '%H:%M hrs.';
 	$cfg['pl'] = '%H:%M';
 	$cfg['gl'] = '%H:%M hrs.';
 	$cfg['tr'] = '%H:%M';
@@ -333,7 +333,7 @@ function qtranxf_default_flag()
 	$cfg['vi'] = 'vn.png';
 	$cfg['ar'] = 'arle.png';
 	$cfg['pt'] = 'pt.png';
-	$cfg['pt-br'] = 'br.png';
+	$cfg['pb'] = 'br.png';
 	$cfg['pl'] = 'pl.png';
 	$cfg['gl'] = 'galego.png';
 	$cfg['tr'] = 'tr.png';
@@ -465,7 +465,7 @@ function qtranxf_default_windows_locale()
 	$cfg['pl'] = "Polish";
 	$cfg['ps'] = "Pushto";
 	$cfg['pt'] = "Portuguese";
-	$cfg['pt-br'] = "Brazilian Portuguese";
+	$cfg['pb'] = "Brazilian Portuguese";
 	$cfg['qu'] = "Quechua";
 	$cfg['rm'] = "Rhaeto-Romance";
 	$cfg['rn'] = "Rundi";

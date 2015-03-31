@@ -78,6 +78,12 @@ if(WP_DEBUG){
 	//assert_options(ASSERT_QUIET_EVAL,true);
 }// */
 
+/**
+ * Default domain translation for strings already translated by WordPress.
+ * Use of this function prevents xgettext, poedit and other translating parsers from including the string that does not need translation.
+ */
+function qtranxf_translate_wp($s) { __($s); }
+
 function qtranxf_parseURL($url) {
 	//this is not the same as native parse_url and so it is in use
 	//it should also work quicker than native parse_url, so we should keep it?
@@ -596,14 +602,4 @@ function qtranxf_getSortedLanguages($reverse = false) {
 
 function qtranxf_can_redirect() {
 	return !defined('WP_ADMIN') && !defined('DOING_AJAX') && !defined('WP_CLI') && !defined('DOING_CRON') && empty($_POST);
-}
-
-/**
- * Get the currently selected admin color scheme (to be used for generated CSS)
- * @return array
- */
-function qtranxf_get_user_admin_color() {
-	global $_wp_admin_css_colors;
-	$user_admin_color = get_user_meta( get_current_user_id(), 'admin_color', true );
-	return $_wp_admin_css_colors[$user_admin_color]->colors;
 }

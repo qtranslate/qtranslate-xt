@@ -109,8 +109,6 @@ function qtranxf_init_language() {
 		require_once(dirname(__FILE__)."/qtranslate_frontend.php");
 	}else{
 		require_once(dirname(__FILE__).'/admin/qtx_configuration.php');
-		require_once(dirname(__FILE__).'/admin/qtx_admin_utils.php');
-
 		// load qTranslate Services if available // disabled since 3.1
 		//if(file_exists(dirname(__FILE__).'/qtranslate_services.php'))
 		//	require_once(dirname(__FILE__).'/qtranslate_services.php');
@@ -496,13 +494,6 @@ function qtranxf_init() {
 	do_action('qtranslate_init');
 }
 
-function qtranxf_front_header_css() {
-	global $q_config;
-	if( isset($q_config['header_css']) && !empty($q_config['header_css']) )
-		return $q_config['header_css'];
-	return qtranxf_front_header_css_default();
-}
-
 function qtranxf_front_header_css_default()
 {
 	global $q_config;
@@ -556,7 +547,7 @@ function qtranxf_load_option($nm, $default_value=null) {
 			if(!isset($qtranslate_options['default_value'][$nm])) return;
 			$default_value = $qtranslate_options['default_value'][$nm];
 		}
-		if(function_exists($default_value)){
+		if(is_string($default_value) && function_exists($default_value)){
 			$val = call_user_func($default_value);
 		}else{
 			$val = $default_value;
@@ -610,63 +601,38 @@ function qtranxf_is_permalink_structure_query(){
 	return empty($permalink_structure)||strpos($permalink_structure, '?')!==false||strpos($permalink_structure, 'index.php')!==false;
 }
 
-// loads config via get_option and defaults to values set on top
 function qtranxf_loadConfig() {
 	global $qtranslate_options, $q_config;
 	qtranxf_set_default_options($qtranslate_options);
 
-	// Load everything
 	$q_config = array();
 
-	//for other plugins and jave scripts to be able to fork by version
-	//$q_config['version'] = get_plugin_data( plugins_url( 'qtranslate.php', __FILE__ ), false, false )['Version'];
-
-	//$default_language = get_option('qtranslate_default_language');
 	qtranxf_load_option_func('default_language');
 	qtranxf_load_option_array('enabled_languages');
+	qtranxf_load_languages_enabled();
 
-	foreach($qtranslate_options['int'] as $nm => $def){
+	qtranxf_load_option_flag_location('flag_location');
+
+	foreach($qtranslate_options['front']['int'] as $nm => $def){
 		qtranxf_load_option($nm, $def);
 	}
 
-	foreach($qtranslate_options['bool'] as $nm => $def){
+	foreach($qtranslate_options['front']['bool'] as $nm => $def){
 		qtranxf_load_option_bool($nm,$def);
 	}
 
-	foreach($qtranslate_options['str'] as $nm => $def){
+	foreach($qtranslate_options['front']['str'] as $nm => $def){
 		qtranxf_load_option($nm, $def);
 	}
 
-	foreach($qtranslate_options['array'] as $nm => $def){
+	foreach($qtranslate_options['front']['text'] as $nm => $def){
+		qtranxf_load_option($nm, $def);
+	}
+
+	foreach($qtranslate_options['front']['array'] as $nm => $def){
 		qtranxf_load_option_array($nm,$def);
 	}
 
-	qtranxf_load_languages_enabled();
-
-/*
-	$language_names = get_option('qtranslate_language_names');
-	$flags = get_option('qtranslate_flags');
-	$locales = get_option('qtranslate_locales');
-	$na_messages = get_option('qtranslate_na_messages');
-	$date_formats = get_option('qtranslate_date_formats');
-	$time_formats = get_option('qtranslate_time_formats');
-	// default if not set
-	if(!is_array($date_formats)) $date_formats = $q_config['date_format'];
-	if(!is_array($time_formats)) $time_formats = $q_config['time_format'];
-	if(!is_array($na_messages)) $na_messages = $q_config['not_available'];
-	if(!is_array($locales)) $locales = $q_config['locale'];
-	if(!is_array($flags)) $flags = $q_config['flag'];
-	if(!is_array($language_names)) $language_names = $q_config['language_name'];
-	$q_config['date_format'] = $date_formats;
-	$q_config['time_format'] = $time_formats;
-	$q_config['not_available'] = $na_messages;
-	$q_config['locale'] = $locales;
-	$q_config['flag'] = $flags;
-	$q_config['language_name'] = $language_names;
-*/
-	qtranxf_load_option_flag_location('flag_location');
-
-	qtranxf_load_option('header_css');
 	qtranxf_load_option_array('term_name', array());
 
 	if($q_config['filter_options_mode'] == QTX_FILTER_OPTIONS_LIST){
@@ -708,9 +674,6 @@ function qtranxf_loadConfig() {
 			break;
 	}
 
-	// overwrite default values with loaded values
-	//$q_config['use_strftime'] = $use_strftime;
-
 	$ignore_file_types = get_option('qtranslate_ignore_file_types');
 	$val=explode(',',QTX_IGNORE_FILE_TYPES);
 	if(!empty($ignore_file_types)){
@@ -724,20 +687,6 @@ function qtranxf_loadConfig() {
 	$q_config['ignore_file_types'] = $val;
 
 	do_action('qtranslate_loadConfig');
-}
-
-function qtranxf_reloadConfig() {
-	global $q_config;
-	$url_info = isset($q_config['url_info']) ? $q_config['url_info'] : null;
-	qtranxf_loadConfig();
-	if($url_info){
-		$q_config['url_info'] = $url_info;
-		if(isset($q_config['url_info']['language'])){
-			$q_config['language'] = $q_config['url_info']['language'];
-		}
-	}
-	qtranxf_load_option_qtrans_compatibility();
-	//qtranxf_dbg_echo('qtranxf_reloadConfig: $q_config[url_info]: ',$q_config['url_info']);
 }
 
 /* BEGIN DATE TIME FUNCTIONS */
