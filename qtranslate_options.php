@@ -230,7 +230,7 @@ function qtranxf_default_not_available()
 	$cfg['vi'] = 'Rất tiếc, mục này chỉ tồn tại ở %LANG:, : và %.';
 	$cfg['ar'] = 'عفوا، هذه المدخلة موجودة فقط في %LANG:, : و %.';
 	$cfg['pt'] = 'Desculpe, este conteúdo só está disponível em %LANG:, : e %.';
-	$cfg['pb'] = 'Desculpe-nos, mas este texto esta apenas disponível em %LANG:, : y %.';
+	$cfg['pb'] = 'Desculpe-nos, mas este texto está apenas disponível em %LANG:, : y %.';
 	$cfg['pl'] = 'Przepraszamy, ten wpis jest dostępny tylko w języku %LANG:, : i %.';
 	$cfg['gl'] = 'Sentímolo moito, ista entrada atopase unicamente en %LANG;,: e %.';
 	$cfg['tr'] = 'Sorry, this entry is only available in %LANG:, : and %.';
@@ -249,7 +249,7 @@ function qtranxf_default_date_format()
 {
 	$cfg = array();
 	$cfg['en'] = '%A %B %e%q, %Y';
-	$cfg['de'] = '%A, der %e. %B %Y';
+	$cfg['de'] = '%A, \d\e\r %e. %B %Y';
 	$cfg['zh'] = '%x %A';
 	$cfg['ru'] = '%A %B %e%q, %Y';
 	$cfg['fi'] = '%e.&m.%C';
@@ -260,13 +260,13 @@ function qtranxf_default_date_format()
 	$cfg['ro'] = '%A, %e %B %Y';
 	$cfg['hu'] = '%Y %B %e, %A';
 	$cfg['ja'] = '%Y年%m月%d日';
-	$cfg['es'] = '%d de %B de %Y';
+	$cfg['es'] = '%d \d\e %B \d\e %Y';
 	$cfg['vi'] = '%d/%m/%Y';
 	$cfg['ar'] = '%d/%m/%Y';
-	$cfg['pt'] = '%A,%e de %B de %Y';
-	$cfg['pb'] = '%d de %B de %Y';
+	$cfg['pt'] = '%A, %e \d\e %B \d\e %Y';
+	$cfg['pb'] = '%d \d\e %B \d\e %Y';
 	$cfg['pl'] = '%d/%m/%y';
-	$cfg['gl'] = '%d de %B de %Y';
+	$cfg['gl'] = '%d \d\e %B \d\e %Y';
 	$cfg['tr'] = '%A %B %e%q, %Y';
 	$cfg['et'] = '%A %B %e%q, %Y';
 	$cfg['hr'] = '%d/%m/%Y';

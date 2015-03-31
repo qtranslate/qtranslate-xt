@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qTranslate-X 3.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-03-27 21:59-0600\n"
-"PO-Revision-Date: 2015-03-26 14:42-0000\n"
+"PO-Revision-Date: 2015-03-30 13:41-0000\n"
 "Last-Translator: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "Language-Team: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -120,7 +120,7 @@ msgstr "A base de dados foi convertida para o antigo formato de dupla etiquetage
 #: admin/qtx_admin_utils.php:406
 msgctxt "Language Code"
 msgid "Code"
-msgstr ""
+msgstr "Código"
 
 #: admin/qtx_admin_utils.php:407 admin/qtx_configuration.php:552
 #: admin/qtx_configuration.php:575 qtranslate_frontend.php:168
@@ -635,7 +635,7 @@ msgstr "Activa compatibilidade de nomes de funções (%s)."
 #: admin/qtx_configuration.php:1294
 #, php-format
 msgid "Some plugins and themes use direct calls to the functions listed, which are defined in former %s plugin and some of its forks. Turning this flag on will enable those function to exists, which will make the dependent plugins and themes to work. WordPress policy prohibits to define functions with the same names as in other plugins, since it generates user-unfriendly fatal errors, when two conflicting plugins are activated simultaneously. Before turning this option on, you have to make sure that there are no other plugins active, which define those functions."
-msgstr "Alguns plugins e temas utilizam directamente as funções listadas, que estão definidas no antigo plugin %s e em algumas bifurcações baseadas no original. Activar esta opção permitirá a execução destas funções, bem como o funcionamento de plugins e temas dependentes das respectivas funções. A política do WordPress proíbe a definição de funções com os mesmos nomes que em outros plugins, porque a activação simultanea de dois plugins em conflito gera erros fatais. Antes de activar esta opção, verifique que não tem activos quaisquer plugins que definam as mesmas funções."
+msgstr "Alguns plugins e temas utilizam directamente as funções listadas, que estão definidas no antigo plugin %s e em algumas bifurcações baseadas no original. Activar esta opção permitirá a execução destas funções, bem como o funcionamento de plugins e temas dependentes das respectivas funções. A política do WordPress proíbe a definição de funções com os mesmos nomes que em outros plugins, porque a activação simultânea de dois plugins em conflito gera erros fatais. Antes de activar esta opção, verifique que não tem activos quaisquer plugins que definam as mesmas funções."
 
 #: admin/qtx_configuration.php:1298
 msgid "Editor Mode"

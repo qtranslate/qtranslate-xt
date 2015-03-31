@@ -1237,7 +1237,7 @@ function qtranxf_conf() {
 <?php qtranxf_language_form($language_code, $language_code, $language_name, $language_locale, $language_date_format, $language_time_format, $language_flag, $language_na_message, $language_default, $original_lang); ?>
 <p class="submit"><input type="submit" name="submit" value="<?php _e('Save Changes &raquo;', 'qtranslate'); ?>" /></p>
 </form>
-<p><small><a href="<?php echo admin_url('options-general.php?page=qtranslate-x'); ?>"><?php _e('back to configuration page'); ?></a></small></p>
+<p><small><a href="<?php echo admin_url('options-general.php?page=qtranslate-x'); ?>"><?php _e('back to configuration page', 'qtranslate'); ?></a></small></p>
 </div>
 <?php } else { ?>
 <div class="wrap">
