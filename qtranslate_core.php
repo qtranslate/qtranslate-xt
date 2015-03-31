@@ -609,9 +609,9 @@ function qtranxf_loadConfig() {
 
 	qtranxf_load_option_func('default_language');
 	qtranxf_load_option_array('enabled_languages');
-	qtranxf_load_languages_enabled();
 
 	qtranxf_load_option_flag_location('flag_location');
+	qtranxf_load_languages_enabled();
 
 	foreach($qtranslate_options['front']['int'] as $nm => $def){
 		qtranxf_load_option($nm, $def);
