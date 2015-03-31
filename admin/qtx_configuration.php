@@ -1589,11 +1589,21 @@ function qtranxf_conf() {
 <?php
 	$languages_stored = get_option('qtranslate_language_names',array());
 	$languages_predef = qtranxf_default_language_name();
+	$flag_location_url = qtranxf_flag_location();
+	$flag_location_dir = trailingslashit(WP_CONTENT_DIR).$q_config['flag_location'];
+	$flag_location_dir_def = dirname(QTRANSLATE_FILE).'/flags/';
+	$flag_location_url_def = trailingslashit(WP_CONTENT_URL).'/plugins/'.basename(dirname(QTRANSLATE_FILE)).'/flags/';
 	foreach($language_names as $lang => $language){ if($lang=='code') continue;
+		$flag = $flags[$lang];
+		if(file_exists($flag_location_dir.$flag)){
+			$flag_url = $flag_location_url.$flag;
+		}else{
+			$flag_url = $flag_location_url_def.$flag;
+		}
 ?>
 	<tr>
 		<td><?php echo $lang; ?></td>
-		<td><img src="<?php echo qtranxf_flag_location().$flags[$lang]; ?>" alt="<?php echo sprintf(__('%s Flag', 'qtranslate'), $language) ?>"></td>
+		<td><img src="<?php echo $flag_url; ?>" alt="<?php echo sprintf(__('%s Flag', 'qtranslate'), $language) ?>"></td>
 		<td><?php echo $language; ?></td>
 		<td><?php if(in_array($lang,$q_config['enabled_languages'])) { if($q_config['default_language']==$lang){ _e('Default', 'qtranslate'); } else{ ?><a class="edit" href="<?php echo $clean_uri; ?>&disable=<?php echo $lang; ?>"><?php _e('Disable', 'qtranslate'); ?></a><?php } } else { ?><a class="edit" href="<?php echo $clean_uri; ?>&enable=<?php echo $lang; ?>"><?php _e('Enable', 'qtranslate'); ?></a><?php } ?></td>
 		<td><a class="edit" href="<?php echo $clean_uri; ?>&edit=<?php echo $lang; ?>"><?php _e('Edit', 'qtranslate'); ?></a></td>
