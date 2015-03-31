@@ -343,7 +343,10 @@ var qTranslateX=function(pg)
 		//c('addContentHook: inpField.value='+inpField.value);
 		h.contents=qtranxj_split(inpField.value);//keep neutral text from older times, just in case.
 		                        //inpField.tagName
-		h.mlContentField=qtranxj_ce('input', {name: inpField.name, type: 'hidden', className: 'hidden', value: inpField.value}, form);
+		//h.mlContentField=qtranxj_ce('input', {name: inpField.name, type: 'hidden', className: 'hidden', value: inpField.value}, form);
+		h.mlContentField=qtranxj_ce('input', {name: inpField.name, type: 'hidden', className: 'hidden', value: inpField.value});
+		inpField.name='edit-'+inpField.name;
+		inpField.parentNode.insertBefore(h.mlContentField,inpField);
 		if(!separator){
 			if(inpField.tagName==='TEXTAREA')
 				separator='<';
@@ -351,7 +354,6 @@ var qTranslateX=function(pg)
 				separator='[';//since 3.1 we get rid of <:> encoding
 		}
 		h.separator=separator;
-		inpField.name='edit-'+inpField.name;
 		h.lang=qTranslateConfig.activeLanguage;
 		var text = h.contents[h.lang];
 		inpField.value=text;
@@ -458,58 +460,6 @@ var qTranslateX=function(pg)
 		return cnt;
 	}
 
-/*
-	var displayHooks=[];
-	addDisplayHook=function(elem)
-	{
-		//co('addDisplayHook: elem=',elem);
-		if(!elem || !elem.tagName) return 0;
-		switch(elem.tagName){
-			case 'TEXTAREA':
-			case 'INPUT': return 0;
-			default: break;
-		}
-		var cnt = 0;
-		if(elem.innerHTML){
-			var h={};
-			h.elem=elem;
-			var content = elem.innerHTML.replace(/&lt;!--:([a-z]{2}|)--&gt;/gi,'<!--:$1-->');//un-escape language HTML
-			var blocks = qtranxj_get_split_blocks(content);
-			if( blocks && blocks.length && blocks.length > 1 ){
-				//co('addDisplayHook: elem=',elem);
-				//c('addDisplayHook: innerHTML='+elem.innerHTML);
-				//c('addDisplayHook: outterHTML='+elem.outerHTML);
-				//c('addDisplayHook: textContent='+elem.textContent);
-				//c('addDisplayHook: nodeValue='+elem.nodeValue);
-				//c('addDisplayHook: content='+content);
-				h.contents = qtranxj_split_blocks(blocks);
-				//h.contents = qtranxj_split(content);
-				elem.innerHTML=h.contents[qTranslateConfig.activeLanguage];
-				if(elem.value){
-					var value = elem.value.replace(/&lt;!--:([a-z]{2}|)--&gt;/gi,'<!--:$1-->');//un-escape language HTML
-					if(value != ''){
-						//h.values=qtranxj_split(value);
-						var blocks = qtranxj_get_split_blocks(value);
-						if( blocks && blocks.length && blocks.length > 1){
-							h.values = qtranxj_split_blocks(blocks);
-							elem.value = h.values[qTranslateConfig.activeLanguage];
-						}
-					}
-				}
-				displayHooks.push(h);
-				cnt = 1;
-			}
-		}
-		if(elem.children && elem.children.length){
-			for(var i = 0; i < elem.children.length; ++i){
-				var nd = elem.children[i];
-				//c('addDisplayHook: nodeType='+nd.nodeType+'; nodeName='+nd.nodeName+'; nodeValue='+nd.nodeValue);
-				cnt += addDisplayHook(nd);//recursive call
-			}
-		}
-		return cnt;
-	}
-*/
 	this.addDisplayHookById=function(id) { return addDisplayHook(this.ge(id)); }
 
 	setLangCookie=function(lang) { document.cookie='qtrans_edit_language='+lang; }
