@@ -1391,7 +1391,7 @@ function qtranxf_use_block($lang, $blocks, $show_available=false, $show_empty=fa
 		
 		// echo which language is used
 		if ( count($available_languages) == '1' ) {
-			$altlanguagecontent = ' '.__('If you want to have a look:', 'qtranslate').'</p>'
+			$altlanguagecontent = ' '.__('If you want to have a look:', 'qtranslate').'</p>';
 		}
 		else {
 			$altlanguagecontent = ' '.__('Showing in', 'qtranslate').' '.$q_config['language_name'][$altlanguage].':</p>'.$altlanguagecontent;
