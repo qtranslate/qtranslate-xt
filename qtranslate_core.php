@@ -1382,7 +1382,7 @@ function qtranxf_use_block($lang, $blocks, $show_available=false, $show_empty=fa
 	//	//qtranxf_dbg_echo('$post='.$post);
 	//}
 
-	$altlanguagecontent = '.</p>';
+	$altlanguagecontent = '</p>';
 	if ( !empty($q_config['always_show_content']) && $q_config['always_show_content'] ) { // TEMPORARY UNTIL BOOLEAN AVAILABLE TO BE EDITED IN ADMIN
 		// determine the language	
 		$altlanguage = $q_config['default_language'];
