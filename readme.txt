@@ -250,6 +250,7 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 
 ### 3.2.9.7 alpha ###
 * Translation: German (de_DE) po/mo files updated, thanks to Maurizio Omissoni.
+* Feature: new front-end option 'Show content in an alternative language': [Issue #21](https://github.com/qTranslate-Team/qtranslate-x/issues/21).
 * Improvement: minor code clean up.
 
 ### 3.2.9.6 alpha ###
