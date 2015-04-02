@@ -413,10 +413,12 @@ function qtranxf_add_admin_footer_js ( $enqueue_script=false ) {
 	}
 
 	$config=array();
-	$keys=array('enabled_languages', 'default_language', 'language', 'custom_fields', 'custom_field_classes', 'url_mode','lsb_style_wrap_class', 'lsb_style_active_class');//,'term_name'
+	$keys=array('enabled_languages', 'default_language', 'language', 'url_mode','lsb_style_wrap_class', 'lsb_style_active_class');//,'term_name'
 	foreach($keys as $key){
 		$config[$key]=$q_config[$key];
 	}
+	$config['custom_fields'] = apply_filters('qtranslate_custom_fields', $q_config['custom_fields']);
+	$config['custom_field_classes'] = apply_filters('qtranslate_custom_field_classes', $q_config['custom_field_classes']);
 	if($q_config['url_mode']==QTX_URL_DOMAINS){
 		$config['domains']=$q_config['domains'];
 	}
