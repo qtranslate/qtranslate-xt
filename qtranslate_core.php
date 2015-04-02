@@ -1382,7 +1382,24 @@ function qtranxf_use_block($lang, $blocks, $show_available=false, $show_empty=fa
 	//if(isset($post)){
 	//	//qtranxf_dbg_echo('$post='.$post);
 	//}
-	return "<p>".preg_replace('/%LANG:([^:]*):([^%]*)%/', $language_list, $q_config['not_available'][$lang])."</p>";
+
+	$altlanguagecontent = '</p>';
+	if ( !empty($q_config['always_show_content']) && $q_config['always_show_content'] ) { // TEMPORARY UNTIL BOOLEAN AVAILABLE TO BE EDITED IN ADMIN
+		// determine the language	
+		$altlanguage = $q_config['default_language'];
+		if ( !in_array($altlanguage, $available_languages) ) { $altlanguage = $available_languages['0']; }
+		$altlanguagecontent = trim($content[$altlanguage]); 
+		
+		// echo which language is used
+		if ( count($available_languages) == '1' ) {
+			$altlanguagecontent = ' '.__('If you want to have a look:', 'qtranslate').'</p>';
+		}
+		else {
+			$altlanguagecontent = ' '.__('Showing in', 'qtranslate').' '.$q_config['language_name'][$altlanguage].':</p>'.$altlanguagecontent;
+		}
+	}
+	
+	return "<p>".preg_replace('/%LANG:([^:]*):([^%]*)%/', $language_list, $q_config['not_available'][$lang]).$altlanguagecontent;
 }
 }
 
