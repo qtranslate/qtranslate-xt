@@ -15,8 +15,11 @@ function qtranxf_updateGettextDatabases($force = false, $only_for_language = '')
 	require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
 	require_once ABSPATH . 'wp-admin/includes/file.php';
 	include( ABSPATH . WPINC . '/version.php' ); // include an unmodified $wp_version
+	$result = translations_api( 'core', array( 'version' => $wp_version ));
 
-	if ( ! is_wp_error( $result = translations_api( 'core', array( 'version' => $wp_version ) ) ) ) {
+	if ( is_wp_error( $result ) ) {
+		return $result;
+	} else {
 		foreach ( $result['translations'] as $translation ) {
 			$locale = substr($translation['language'], 0, 2);
 			if (
@@ -33,6 +36,4 @@ function qtranxf_updateGettextDatabases($force = false, $only_for_language = '')
 		}
 		return true;
 	}
-	else
-		return false;
 }

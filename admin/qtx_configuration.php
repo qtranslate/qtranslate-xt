@@ -871,8 +871,14 @@ function qtranxf_conf() {
 
 		qtranxf_updateSetting('header_css', QTX_STRING, qtranxf_front_header_css_default());
 
-		if(isset($_POST['update_mo_now']) && $_POST['update_mo_now']=='1' && qtranxf_updateGettextDatabases(true))
-			$message[] = __('Gettext databases updated.', 'qtranslate');
+		if ( isset( $_POST['update_mo_now'] ) && $_POST['update_mo_now'] == '1' ) {
+			$result = qtranxf_updateGettextDatabases( true );
+			if ( $result === true ) {
+				$message[] = __( 'Gettext databases updated.', 'qtranslate' );
+			} elseif ( is_wp_error( $result ) ) {
+				$message[] = __( 'Gettext databases <strong>not</strong> updated:', 'qtranslate' ) . ' ' . $result->get_error_message();
+			}
+		}
 
 		$import_migration = preg_grep( '/import/', $_POST );
 		foreach($import_migration as $key => $value){
