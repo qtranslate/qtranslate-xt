@@ -157,6 +157,7 @@ function qtranxf_convert_to_b_no_closing_deep($text) {
 
 function qtranxf_convert_database($action){
 	global $wpdb;
+	@set_time_limit(0);
 	$wpdb->show_errors();
 	qtranxf_convert_database_options($action);
 	qtranxf_convert_database_posts($action);
@@ -449,10 +450,18 @@ function qtranxf_languageColumn($column) {
 		$available_languages = qtranxf_getAvailableLanguages($post->post_content);
 		$missing_languages = array_diff($q_config['enabled_languages'], $available_languages);
 		$available_languages_name = array();
+		$language_names = null;
 		foreach($available_languages as $language) {
-			$available_languages_name[] = $q_config['language_name'][$language];
+			if(isset($q_config['language_name'][$language])){
+				$language_name = $q_config['language_name'][$language];
+			}else{
+				if(!$language_names) $language_names = qtranxf_default_language_name();
+				$language_name = isset($language_names[$language]) ? $language_names[$language] : __('Unknown Language', 'qtranslate');
+				$language_name .= ' ('.__('Not enabled','qtranslate').')';
+			}
+			$available_languages_name[] = $language_name;
 		}
-		$available_languages_names = join(", ", $available_languages_name);
+		$available_languages_names = join(', ', $available_languages_name);
 		
 		echo apply_filters('qtranslate_available_languages_names',$available_languages_names);
 		do_action('qtranslate_languageColumn', $available_languages, $missing_languages);

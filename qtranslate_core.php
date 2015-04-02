@@ -1329,6 +1329,7 @@ function qtranxf_use_block($lang, $blocks, $show_available=false, $show_empty=fa
 		//$lang_text = trim($lang_text);//do we need to trim? not really ... but better trim in qtranxf_split_blocks then
 		//$content[$language]=$lang_text;
 		if(!empty($lang_text)) $available_languages[] = $language;
+		if(!empty($lang_text) && qtranxf_isEnabled($language)) $available_languages[] = $language;
 	}
 
 	//// if no languages available show full text

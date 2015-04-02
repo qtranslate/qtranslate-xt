@@ -38,8 +38,7 @@ if(WP_DEBUG){
 			error_log($msg.PHP_EOL,3,$f);
 			if($exit) exit();
 		}
-	}
-	if(!function_exists('qtranxf_dbg_echo')){
+
 		function qtranxf_dbg_echo($msg,$var='novar',$bt=false,$exit=false){
 			if( $var !== 'novar' )
 				$msg .= var_export($var,true);
@@ -49,13 +48,11 @@ if(WP_DEBUG){
 			}
 			if($exit) exit();
 		}
-	}
-	if(!function_exists('qtranxf_dbg_log_if')){
+
 		function qtranxf_dbg_log_if($condition,$msg,$var='novar',$bt=false,$exit=false){
 			if($condition)qtranxf_dbg_log($msg,$var,$bt,$exit);
 		}
-	}
-	if(!function_exists('qtranxf_dbg_echo_if')){
+
 		function qtranxf_dbg_echo_if($condition,$msg,$var='novar',$bt=false,$exit=false){
 			if($condition)qtranxf_dbg_echo($msg,$var,$bt,$exit);
 		}
@@ -69,10 +66,12 @@ if(WP_DEBUG){
 	/*qtranxf_dbg */ //add_action('qtranslate_init_language','qtranxf_do_tests');
 
 }else{
-	if(!function_exists('qtranxf_dbg_log')){ function qtranxf_dbg_log($msg,$var=null,$bt=false,$exit=false){} }
-	if(!function_exists('qtranxf_dbg_echo')){ function qtranxf_dbg_echo($msg,$var=null,$bt=false,$exit=false){} }
-	if(!function_exists('qtranxf_dbg_log_if')){ function qtranxf_dbg_log_if($condition,$msg,$var=null,$bt=false,$exit=false){} }
-	if(!function_exists('qtranxf_dbg_echo_if')){ function qtranxf_dbg_echo_if($condition,$msg,$var=null,$bt=false,$exit=false){} }
+	if(!function_exists('qtranxf_dbg_log')){
+		function qtranxf_dbg_log($msg,$var=null,$bt=false,$exit=false){}
+		function qtranxf_dbg_echo($msg,$var=null,$bt=false,$exit=false){}
+		function qtranxf_dbg_log_if($condition,$msg,$var=null,$bt=false,$exit=false){}
+		function qtranxf_dbg_echo_if($condition,$msg,$var=null,$bt=false,$exit=false){}
+	}
 	//assert_options(ASSERT_ACTIVE,false);
 	//assert_options(ASSERT_WARNING,false);
 	//assert_options(ASSERT_QUIET_EVAL,true);
