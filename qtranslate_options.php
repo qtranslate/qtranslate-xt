@@ -66,7 +66,8 @@ function qtranxf_set_default_options(&$ops)
 		'detect_browser_language' => true,// enables browser language detection
 		'hide_untranslated' => false,// hide pages without content
 		'show_displayed_language_prefix' => true,
-		'hide_default_language' => true,// hide language tag for default language
+		'show_alternative_content' => false,
+		'hide_default_language' => true,// hide language tag for default language in urls
 		'use_secure_cookie' => false,
 		'header_css_on' => true,
 	);

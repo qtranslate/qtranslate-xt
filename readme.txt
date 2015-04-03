@@ -114,7 +114,11 @@ The following fields are pre-configured to be translatable by default:
 - all input fields of class "wp-editor-area", which normally include all TinyMCE visual editors.
 - fields with the following id: "title", "excerpt", "attachment_caption", "attachment_alt".
 
-This applies to post, pages and media editors (/wp-admin/post*). 
+This applies to post, pages and media editors (/wp-admin/post*).
+
+If you are a plugin or theme author, you can use the filters "qtranslate_custom_fields" and "qtranslate_custom_field_classes" to integrate qTranslate-X into your custom post types. E.g.:
+
+`add_filter('qtranslate_custom_fields', function($fields){ $fields[] = 'my_custom_field'; return $fields; });`
 
 ### How do I translate custom configuration fields, which are not handled by language switch buttons? ###
 
@@ -248,8 +252,14 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 ### 3.3 stable ###
 * Includes all changes after version 3.2.9.
 
+### 3.2.9.7 alpha ###
+* Translation: German (de_DE) po/mo files updated, thanks to Maurizio Omissoni.
+* Feature: new front-end option 'Show content in an alternative language': [Issue #21](https://github.com/qTranslate-Team/qtranslate-x/issues/21).
+* Improvement: minor code clean up.
+
 ### 3.2.9.6 alpha ###
 * Translation: Dutch (nl_NL) po/mo files updated. Thanks to Marius Siroen.
+* Translation: Portuguese (pt_PT) po/mo files updated. Thanks to Pedro Mendonça.
 * Feature: framework for handling admin notices on new releases.
 * Improvement: design of option handling: optimization and simplification in the code.
 * Fix: replaced pre-defined language code 'pt-br' with 'pb': [Issue #104](https://github.com/qTranslate-Team/qtranslate-x/issues/104).

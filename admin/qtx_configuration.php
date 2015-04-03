@@ -413,10 +413,12 @@ function qtranxf_add_admin_footer_js ( $enqueue_script=false ) {
 	}
 
 	$config=array();
-	$keys=array('enabled_languages', 'default_language', 'language', 'custom_fields', 'custom_field_classes', 'url_mode','lsb_style_wrap_class', 'lsb_style_active_class');//,'term_name'
+	$keys=array('enabled_languages', 'default_language', 'language', 'url_mode','lsb_style_wrap_class', 'lsb_style_active_class');//,'term_name'
 	foreach($keys as $key){
 		$config[$key]=$q_config[$key];
 	}
+	$config['custom_fields'] = apply_filters('qtranslate_custom_fields', $q_config['custom_fields']);
+	$config['custom_field_classes'] = apply_filters('qtranslate_custom_field_classes', $q_config['custom_field_classes']);
 	if($q_config['url_mode']==QTX_URL_DOMAINS){
 		$config['domains']=$q_config['domains'];
 	}
@@ -983,8 +985,14 @@ function qtranxf_conf() {
 
 		//execute actions
 
-		if(isset($_POST['update_mo_now']) && $_POST['update_mo_now']=='1' && qtranxf_updateGettextDatabases(true))
-			$message[] = __('Gettext databases updated.', 'qtranslate');
+		if ( isset( $_POST['update_mo_now'] ) && $_POST['update_mo_now'] == '1' ) {
+			$result = qtranxf_updateGettextDatabases( true );
+			if ( $result === true ) {
+				$message[] = __( 'Gettext databases updated.', 'qtranslate' );
+			} elseif ( is_wp_error( $result ) ) {
+				$message[] = __( 'Gettext databases <strong>not</strong> updated:', 'qtranslate' ) . ' ' . $result->get_error_message();
+			}
+		}
 
 		$import_migration = preg_grep( '/import/', $_POST );
 		foreach($import_migration as $key => $value){
@@ -1266,14 +1274,23 @@ function qtranxf_conf() {
 				</td>
 			</tr>
 			<tr valign="top">
-				<th scope="row"><?php _e('Hide Untranslated Content', 'qtranslate');?></th>
+				<th scope="row"><?php _e('Untranslated Content', 'qtranslate');?></th>
 				<td>
-					<label for="hide_untranslated"><input type="checkbox" name="hide_untranslated" id="hide_untranslated" value="1"<?php checked($q_config['hide_untranslated']); ?>/> <?php _e('Hide Content which is not available for the selected language.', 'qtranslate'); ?></label>
+					<p><?php printf(__('The choices below define how to handle untranslated content at front-end of the site. A content of a page or a post is considered untranslated if the main text (%s) is empty for a given language, regardless of other fields like title, excerpt, etc. All three options are independent of each other.', 'qtranslate'), 'post_content') ?></p>
+					<br/>
+					<label for="hide_untranslated"><input type="checkbox" name="hide_untranslated" id="hide_untranslated" value="1"<?php checked($q_config['hide_untranslated']); ?>/> <?php _e('Hide Content which is not available for the selected language.', 'qtranslate') ?></label>
 					<br/>
 					<small><?php _e('When checked, posts will be hidden if the content is not available for the selected language. If unchecked, a message will appear showing all the languages the content is available in.', 'qtranslate'); ?>
-					<?php printf(__('This function will not work correctly if you installed %s on a blog with existing entries. In this case you will need to take a look at option "%s" under "%s" section.', 'qtranslate'),'qTranslate',__('Convert Database','qtranslate'),__('Import','qtranslate').'/'.__('Export','qtranslate')); ?></small>
+					<?php _e('The message about available languages for the content of a post or a page may also appear if a single post display with an untranslated content if viewed directly.', 'qtranslate') ?>
+					<?php printf(__('This function will not work correctly if you installed %s on a blog with existing entries. In this case you will need to take a look at option "%s" under "%s" section.', 'qtranslate'), 'qTranslate', __('Convert Database','qtranslate'), __('Import', 'qtranslate').'/'.__('Export', 'qtranslate')); ?></small>
 					<br/><br/>
 					<label for="show_displayed_language_prefix"><input type="checkbox" name="show_displayed_language_prefix" id="show_displayed_language_prefix" value="1"<?php checked($q_config['show_displayed_language_prefix']); ?>/> <?php _e('Show displayed language prefix when content is not available for the selected language.', 'qtranslate'); ?></label>
+					<br/>
+					<small><?php _e('This is relevant to all fields other than the main content of posts and pages. Such untranslated fields are always shown in an alternative available language, and will be prefixed with the language name in parentheses, if this option is on.', 'qtranslate'); ?></small>
+					<br/><br/>
+					<label for="show_alternative_content"><input type="checkbox" name="show_alternative_content" id="show_alternative_content" value="1"<?php checked($q_config['show_alternative_content']); ?>/> <?php _e('Show content in an alternative language when translation is not available for the selected language.', 'qtranslate'); ?></label>
+					<br/>
+					<small><?php printf(__('When a page or a post with an untranslated content is viewed, a message with a list of other available languages is displayed, in which languages are ordered as defined by option "%s". If this option is on, then the content in default language will also be shown, instead of the expected language, for the sake of user convenience. If default language is not available for the content, then the content in the first available language is shown.', 'qtranslate'), __('Default Language / Order', 'qtranslate')); ?></small>
 				</td>
 			</tr>
 			<tr valign="top">
