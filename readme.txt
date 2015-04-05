@@ -253,7 +253,7 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 * Includes all changes after version 3.2.9.
 
 ### 3.2.9.8 alpha ###
-* Improvement: TinyMCE handling is re-designed once again. [[WP Topic](https://wordpress.org/support/topic/default-wordpress-photo-gallery] [[Issue #115](https://github.com/qTranslate-Team/qtranslate-x/issues/115)]
+* Improvement: TinyMCE handling is re-designed once again. [[WP Topic](https://wordpress.org/support/topic/default-wordpress-photo-gallery)] [[Issue #115](https://github.com/qTranslate-Team/qtranslate-x/issues/115)]
 * Feature: new type of hook, displayHookAttrs, in `admin/js/common.js` to translate submit button texts (used in Woocommerce, for example).
 
 ### 3.2.9.7 alpha ###
