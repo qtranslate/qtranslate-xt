@@ -86,6 +86,8 @@ function qtranxf_admin_loadConfig()
 	}
 
 	qtranxf_add_admin_filters();
+
+	do_action('qtranslate_admin_loadConfig');
 }
 //add_action('qtranslate_loadConfig','qtranxf_admin_loadConfig');
 
@@ -131,6 +133,48 @@ function qtranxf_reset_config()
 	add_filter('locale', 'qtranxf_localeForCurrentLanguage',99);
 }
 add_action('qtranslate_saveConfig','qtranxf_reset_config',20);
+
+function qtranxf_collect_translations( &$q_request, &$post, &$get, &$request, $edit_lang ) {
+	if(isset($q_request[$edit_lang])){
+		$texts = &$q_request;
+		$texts[$edit_lang] = $request;
+		if(isset($texts['sep'])){
+			$sep = $texts['sep'];
+			unset($texts['sep']);
+		}else{
+			$sep = '[';
+		}
+		$text = qtranxf_join_texts($texts,$sep);
+		$request = $text;
+		if(!is_null($post)) $post = $text;
+		if(!is_null($get)) $get = $text;
+	}else{
+		foreach($q_request as $f => $r){
+			$p = null; if(isset($post[$f])) $p = &$post[$f];
+			$g = null; if(isset($get[$f])) $g = &$get[$f];
+			qtranxf_collect_translations($q_request[$f],$p,$g,$request[$f],$edit_lang); // recursive call
+		}
+	}
+}
+
+function qtranxf_collect_translations_posted() {
+	if(!isset($_REQUEST['qtranslate-fields'])) return;
+	//qtranxf_dbg_log('qtranxf_collect_translations_posted: REQUEST: ',$_REQUEST);
+	$edit_lang = $_COOKIE['qtrans_edit_language'];
+	foreach($_REQUEST['qtranslate-fields'] as $nm => $r){
+		if(isset($_POST[$nm])) $p = &$_POST[$nm]; else $p = null;
+		if(isset($_GET[$nm])) $g = &$_GET[$nm]; else $g = null;
+		qtranxf_collect_translations($_REQUEST['qtranslate-fields'][$nm],$p,$g,$_REQUEST[$nm],$edit_lang);
+		//qtranxf_dbg_log('qtranxf_collect_translations_posted: $_REQUEST[qtranslate-fields]['.$nm.']: ',$r);
+		//qtranxf_dbg_log('qtranxf_collect_translations_posted: collected REQUEST['.$nm.']: ',$_REQUEST[$nm]);
+		//if(isset($_POST[$nm])) //qtranxf_dbg_log('qtranxf_collect_translations_posted: collected POST['.$nm.']: ',$_POST[$nm]);
+		//if(isset($_GET[$nm])) //qtranxf_dbg_log('qtranxf_collect_translations_posted: collected GET['.$nm.']: ',$_GET[$nm]);
+	}
+	unset($_REQUEST['qtranslate-fields']);
+	unset($_POST['qtranslate-fields']);
+	unset($_GET['qtranslate-fields']);
+}
+add_action('plugins_loaded', 'qtranxf_collect_translations_posted', 5);
 
 function qtranxf_init_admin()
 {
@@ -1659,9 +1703,10 @@ function qtranxf_conf() {
 /* Add a metabox in admin menu page */
 function qtranxf_nav_menu_metabox( $object )
 {
-	global $nav_menu_selected_id;
-
-	$elems = array( '#qtransLangSwLM#' => __('Language Menu', 'qtranslate') );
+	global $nav_menu_selected_id; 
+	$nm = __('Language Menu', 'qtranslate');
+	//$nm = qtranxf_multilingual('Language Menu', 'qtranslate');
+	$elems = array( '#qtransLangSwLM#' => $nm );
 
 	class qtranxcLangSwItems {
 		public $db_id = 0;
@@ -1680,9 +1725,9 @@ function qtranxf_nav_menu_metabox( $object )
 	$elems_obj = array();
 	foreach ( $elems as $value => $title ) {
 		$elems_obj[$title] = new qtranxcLangSwItems();
-		$elems_obj[$title]->object_id	= esc_attr( $value );
-		$elems_obj[$title]->title		= esc_attr( $title );
-		$elems_obj[$title]->url			= esc_attr( $value );
+		$elems_obj[$title]->object_id = esc_attr( $value );
+		$elems_obj[$title]->title = esc_attr( $title );
+		$elems_obj[$title]->url = esc_attr( $value );
 	}
 
 	$walker = new Walker_Nav_Menu_Checklist();

@@ -124,7 +124,6 @@ add_action('plugins_loaded', 'qtranxf_init_language', 2);//user is not authentic
 
 function qtranxf_detect_language(&$url_info) {
 	global $q_config;
-
 	//$url_info['home'] = $homeinfo['path'];//not in use any more
 
 	if(defined('WP_ADMIN')){
@@ -1227,7 +1226,25 @@ function qtranxf_split($text, $quicktags = true) {
 //	qtranxf_join_c($texts);
 //}
 
+function qtranxf_allthesame($texts) {
+	$text = null;
+	//take first not empty
+	foreach($texts as $lang => $t){
+		if ( !$t || $t=='' ) continue;
+		$text = $t;
+		break;
+	}
+	if ( empty($text) ) return '';
+	foreach($texts as $lang => $t){
+		if ( $t != $text )
+			return null;
+	}
+	return $text;
+}
+
 function qtranxf_join_c($texts) {
+	$text = qtranxf_allthesame($texts);
+	if(!is_null($text)) return $text;
 	$text = '';
 	foreach($texts as $lang => $lang_text) {
 		if(empty($lang_text)) continue;
@@ -1257,6 +1274,8 @@ function qtranxf_join_c($texts) {
 }
 
 function qtranxf_join_b_no_closing($texts) {
+	$text = qtranxf_allthesame($texts);
+	if(!is_null($text)) return $text;
 	$text = '';
 	foreach($texts as $lang => $lang_text) {
 		if(empty($lang_text)) continue;
@@ -1268,6 +1287,32 @@ function qtranxf_join_b_no_closing($texts) {
 function qtranxf_join_b($texts) {
 	$text = qtranxf_join_b_no_closing($texts);
 	if(!empty($text)) $text .= '[:]';
+	return $text;
+}
+
+function qtranxf_join_byline($texts) {
+	$text = qtranxf_allthesame($texts);
+	if(!is_null($text)) return $text;
+
+	$lines=array();
+	foreach($texts as $lang => $text){
+		$lines[$lang] = preg_split('/\r?\n\r?/',$text);
+	}
+
+	$text = '';
+	for($i=0; true; ++$i){
+		$done = true;
+		$ln = array();
+		foreach($lines as $lang => $txts){
+			if ( sizeof($txts) <= $i ) continue;
+			$done = false;
+			$t = $txts[$i];
+			if ( !$t || $t=='' ) continue;
+			$ln[$lang] = $t;
+		}
+		if( $done ) break;
+		$text .= qtranxf_join_b($ln).PHP_EOL;
+	}
 	return $text;
 }
 
@@ -1403,12 +1448,13 @@ function qtranxf_use_block($lang, $blocks, $show_available=false, $show_empty=fa
 				$msg = __('For the sake of viewer convenience, the content is shown below in this site default language.', 'qtranslate');
 			}else{
 				//$fmt = __('For the sake of viewer convenience, the content is shown below in an available alternative language %s.', 'qtranslate');
-				$msg = __('For the sake of viewer convenience, the content is shown below in an available alternative language.', 'qtranslate');
+				$msg = __('For the sake of viewer convenience, the content is shown below in one of the available alternative languages.', 'qtranslate');
 			}
 			//$msg = sprintf($fmt, '<a href="'.qtranxf_convertURL('', $language, false, true).'">'.$q_config['language_name'][$alt_lang].'</a>');
-			$msg .= ' '.__('You may click one of the links above to view the content in another available language.', 'qtranslate');
+			$msg .= ' '.__('You may click one of the links to switch site language to an another available language.', 'qtranslate');
 		}else{
 			$msg = __('For the sake of viewer convenience, the content is shown below in the alternative language.', 'qtranslate');
+			$msg .= ' '.__('You may click the link above to switch the currently active language.', 'qtranslate');
 		}
 		$altlanguagecontent = ' '.$msg.'</p>'.$alt_content;
 	}else{

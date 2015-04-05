@@ -228,7 +228,4 @@ add_filter('comment_notification_text', 'qtranxf_useCurrentLanguageIfNotFoundUse
 add_filter('comment_notification_headers', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage');
 add_filter('comment_notification_subject', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage');
 
-// add_filter('the_editor', 'qtranxf_modifyRichEditor');
-//add_filter('admin_footer', 'qtranxf_modifyExcerpt');
-//add_filter('bloginfo_url', 'qtranxf_convertBlogInfoURL',10,2);
 add_filter('core_version_check_locale', 'qtranxf_versionLocale');

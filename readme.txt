@@ -116,9 +116,9 @@ The following fields are pre-configured to be translatable by default:
 
 This applies to post, pages and media editors (/wp-admin/post*).
 
-If you are a plugin or theme author, you can use the filters "qtranslate_custom_fields" and "qtranslate_custom_field_classes" to integrate qTranslate-X into your custom post types. E.g.:
+### I am a developer, how can I alter global configuration of qTranslate-X for the specific purpose of my plugin? ###
 
-`add_filter('qtranslate_custom_fields', function($fields){ $fields[] = 'my_custom_field'; return $fields; });`
+You can use `add_action` for hooks `qtranslate_loadConfig` and `qtranslate_admin_loadConfig` to alter the configuration stored in global variable `$q_config`.
 
 ### How do I translate custom configuration fields, which are not handled by language switch buttons? ###
 
@@ -252,10 +252,15 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 ### 3.3 stable ###
 * Includes all changes after version 3.2.9.
 
+### 3.2.9.8 alpha ###
+* Improvement: TinyMCE handling is re-designed once again. [[WP Topic](https://wordpress.org/support/topic/default-wordpress-photo-gallery] [[Issue #115](https://github.com/qTranslate-Team/qtranslate-x/issues/115)]
+* Feature: new type of hook, displayHookAttrs, in `admin/js/common.js` to translate submit button texts (used in Woocommerce, for example).
+
 ### 3.2.9.7 alpha ###
 * Translation: German (de_DE) po/mo files updated, thanks to Maurizio Omissoni.
+* Translation: Italian (it_IT) po/mo files updated, thanks to Maurizio Omissoni.
 * Feature: new front-end option 'Show content in an alternative language': [Issue #21](https://github.com/qTranslate-Team/qtranslate-x/issues/21).
-* Improvement: minor code clean up.
+* Improvement: error handling for gettext updates [#105](https://github.com/qTranslate-Team/qtranslate-x/pull/105) and [#113](https://github.com/qTranslate-Team/qtranslate-x/pull/113), and other minor code clean up.
 
 ### 3.2.9.6 alpha ###
 * Translation: Dutch (nl_NL) po/mo files updated. Thanks to Marius Siroen.

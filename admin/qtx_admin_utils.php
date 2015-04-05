@@ -42,6 +42,14 @@ function qtranxf_detect_admin_language($url_info) {
 }
 add_filter('qtranslate_detect_admin_language','qtranxf_detect_admin_language');
 
+function qtranxf_join_texts($texts,$sep) {
+	switch($sep){
+		//case '<': return qtranxf_join_c($texts);//no longer in use
+		case 'byline': return qtranxf_join_byline($texts);
+		default: return qtranxf_join_b($texts);
+	}
+}
+
 function qtranxf_convert_to_b($text) {
 	$blocks = qtranxf_get_language_blocks($text);
 	if( count($blocks) > 1 ){
