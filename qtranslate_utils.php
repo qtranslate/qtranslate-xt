@@ -319,7 +319,7 @@ function qtranxf_del_query_arg(&$query, $key){
 */
 function qtranxf_sanitize_url($url)
 {
-	$url = preg_replace('|[^a-z0-9-~+_.?#=!&;,/:%@$\|*\'()\\x80-\\xff]|i', '', $url);
+	$url = preg_replace('|[^a-z0-9-~+_.?#=!&;,/:%@$\|*\'()\[\]\\x80-\\xff]|i', '', $url);
 	$strip = array('%0d', '%0a', '%0D', '%0A');
 	$count;
 	do{ $url = str_replace( $strip, '', $url, $count ); } while($count);
