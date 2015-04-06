@@ -1285,7 +1285,13 @@ function qtranxf_join_b_no_closing($texts) {
 }
 
 function qtranxf_join_b($texts) {
-	$text = qtranxf_join_b_no_closing($texts);
+	$text = qtranxf_allthesame($texts);
+	if(!is_null($text)) return $text;
+	$text = '';
+	foreach($texts as $lang => $lang_text) {
+		if(empty($lang_text)) continue;
+		$text .= '[:'.$lang.']'.$lang_text;
+	}
 	if(!empty($text)) $text .= '[:]';
 	return $text;
 }
