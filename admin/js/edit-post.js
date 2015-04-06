@@ -106,8 +106,8 @@ qTranslateConfig.js={
 		return true;
 	}
 ,
-	onTabSwitch: function(lang,qtx)
+	onTabSwitch: function(lang)
 	{
-		this.setSlugLanguage(lang);
+		qTranslateConfig.js.setSlugLanguage(lang);
 	}
 };

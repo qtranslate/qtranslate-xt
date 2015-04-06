@@ -156,7 +156,7 @@ function qtranxf_collect_translations( &$q_request, &$request, $edit_lang ) {
 function qtranxf_collect_translations_posted() {
 	//qtranxf_dbg_log('qtranxf_collect_translations_posted: REQUEST: ',$_REQUEST);
 	if(!isset($_REQUEST['qtranslate-fields'])) return;
-	$edit_lang = $_COOKIE['qtrans_edit_language'];
+	$edit_lang = isset($_COOKIE['qtrans_edit_language']) ? $_COOKIE['qtrans_edit_language'] : qtranxf_getLanguage();
 	foreach($_REQUEST['qtranslate-fields'] as $nm => $r){
 		qtranxf_collect_translations($_REQUEST['qtranslate-fields'][$nm],$_REQUEST[$nm],$edit_lang);
 		//qtranxf_dbg_log('qtranxf_collect_translations_posted: REQUEST[qtranslate-fields]['.$nm.']: ',$r);

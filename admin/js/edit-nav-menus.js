@@ -47,13 +47,14 @@ qTranslateConfig.js={
 			}
 		}
 
-		this.onTabSwitch(qtx.getActiveLanguage(),qtx);
+		//this.onTabSwitch(qtx.getActiveLanguage());
+		this.onTabSwitch();
 		this.langSwitchWrapAnchor=form;//causes buttons to be inserted in front of this form instead of the first form in div "wrap"
 
 		return true;
 	}
 ,
-	onTabSwitch: function(lang,qtx)
+	onTabSwitch: function()
 	{
 		if(wpNavMenu){
 			if( typeof wpNavMenu.refreshKeyboardAccessibility == 'function'){

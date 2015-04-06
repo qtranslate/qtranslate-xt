@@ -252,6 +252,10 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 ### 3.3 stable ###
 * Includes all changes after version 3.2.9.
 
+### 3.2.9.8.2 alpha ###
+* Feature: js function `addTabSwitchListener` is designed for other plugin integration, read [Integration](https://qtranslatexteam.wordpress.com/integration/) for more information.
+* Fix: handling of cookie `qtrans_edit_language`.
+
 ### 3.2.9.8.1 alpha ###
 * Fix: function `qtranxf_join_b`, test for `qtranxf_allthesame`.
 * PHP version compatibility: syntax changed in '`qtranxf_collect_translations*`'.
