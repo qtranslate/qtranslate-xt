@@ -291,8 +291,14 @@ var qTranslateX=function(pg)
 
 	setLangCookie=function(lang) { document.cookie='qtrans_edit_language='+lang; }
 
-	qTranslateConfig.activeLanguage = qtranxj_get_cookie('qtrans_edit_language');
-	if(!qTranslateConfig.activeLanguage || !isLanguageEnabled(qTranslateConfig.activeLanguage)){
+	qTranslateConfig.activeLanguage;
+	if(qTranslateConfig.LSB){
+		qTranslateConfig.activeLanguage = qtranxj_get_cookie('qtrans_edit_language');
+		if(!qTranslateConfig.activeLanguage || !isLanguageEnabled(qTranslateConfig.activeLanguage)){
+			qTranslateConfig.activeLanguage = qTranslateConfig.language;
+			setLangCookie(qTranslateConfig.activeLanguage);
+		}
+	}else{
 		qTranslateConfig.activeLanguage = qTranslateConfig.language;
 		setLangCookie(qTranslateConfig.activeLanguage);
 	}
@@ -907,7 +913,7 @@ var qTranslateX=function(pg)
 	}
 
 	//create sets of LSB
-	if(qTranslateConfig.enabled_languages.length > 1){
+	if(qTranslateConfig.LSB && qTranslateConfig.enabled_languages.length > 1){
 		var anchors=[];
 		if(qTranslateConfig.page_config && qTranslateConfig.page_config.anchors){
 			for(var i=0; i < qTranslateConfig.page_config.anchors.length; ++i){

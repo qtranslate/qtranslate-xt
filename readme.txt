@@ -250,7 +250,12 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 ## Changelog ##
 
 ### 3.3 stable ###
-* Includes all changes after version 3.2.9.
+* Includes all changes after version 3.2.9. Please, review [Release Notes](https://qtranslatexteam.wordpress.com/2015/03/30/release-notes-3-3).
+
+### 3.2.9.8.3 alpha ###
+* Feature: choice 'Single Language Mode' for option 'Editor Mode'.
+* Enhancement: New release handling framework.
+* Fix: function `qtranxf_sanitize_url`, thanks to [HAYASHI Ryo](https://github.com/ryo88c): [Issue #117](https://github.com/qTranslate-Team/qtranslate-x/pull/117).
 
 ### 3.2.9.8.2 alpha ###
 * Feature: js function `addTabSwitchListener` is designed for other plugin integration, read [Integration](https://qtranslatexteam.wordpress.com/integration/) for more information.

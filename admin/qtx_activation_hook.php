@@ -139,7 +139,7 @@ function qtranxf_admin_notices_version()
 	$ver_cur = qtranxf_version_int();
 	$ver_prv = get_option('qtranslate_version_previous',$ver_cur);
 	if($ver_cur == $ver_prv) return;
-	if($ver_prv < 33000 && $ver_cur >= 33000) qtranxf_admin_notices_new_options(array('Highlight Style','LSB Style'),'3.3','https://qtranslatexteam.wordpress.com/2015/03/30/release-notes-3-3');
+	if($ver_prv < 33000 && $ver_cur >= 32980) qtranxf_admin_notices_new_options(array('Highlight Style','LSB Style'),'3.3','https://qtranslatexteam.wordpress.com/2015/03/30/release-notes-3-3');
 }
 add_action('admin_notices', 'qtranxf_admin_notices_version');
 
@@ -338,23 +338,31 @@ function qtranxf_ajax_qtranslate_admin_notice()
 }
 add_action('wp_ajax_qtranslate_admin_notice', 'qtranxf_ajax_qtranslate_admin_notice');
 
-function qtranxf_admin_notices_new_options($nms,$ver)
+function qtranxf_admin_notices_new_options($nms,$ver,$url)
 {
 	$messages = get_option('qtranslate_admin_notices');
 	$id='new-options-ver-'.str_replace('.','',$ver);
 	if(isset($messages[$id])) return;
 	$me=qtranxf_get_plugin_link();
-	$opns = '';
-	for($i = 0; $i < sizeof($nms); ++$i){
-		$nm = $nms[$i];
-		if($i) $opns .= ', ';
-		$opns .= '"'.__($nm, 'qtranslate').'"';
-	}
 	qtranxf_admin_notice_dismiss_script();
-	echo '<div class="update-nag" id="qtranxs-'.$id.'"><p>';// style="font-size: larger"
+	echo '<div class="update-nag" id="qtranxs-'.$id.'">';// style="font-size: larger"
 	//echo __('One time message:', 'qtranslate'); echo ' ';
-	printf(__('The latest version of plugin %s has a number of new options, for example, %s, which may change the look of some pages. Please, review the help text of new options on %sconfiguration page%s.','qtranslate'), $me, $opns, '<a href="'.admin_url('options-general.php?page=qtranslate-x').'">','</a>');
-	//echo ' ';
-	echo '</p><p>&nbsp;&nbsp;&nbsp;<a class="button" href="javascript:qtranxj_dismiss_admin_notice(\''.$id.'\');">'.__('I have already done it, dismiss this message.', 'qtranslate');
+	if(!empty($nms)){
+		$opns = '';
+		for($i = 0; $i < sizeof($nms); ++$i){
+			$nm = $nms[$i];
+			if($i) $opns .= ', ';
+			$opns .= '"'.__($nm, 'qtranslate').'"';
+		}
+		echo '<p>';
+		printf(__('The latest version of plugin %s has a number of new options, for example, %s, which may change the look of some pages. Please, review the help text of new options on %sconfiguration page%s.','qtranslate'), $me, $opns, '<a href="'.admin_url('options-general.php?page=qtranslate-x').'">','</a>');
+		echo '</p>';
+	}
+	if(!empty($url)){
+		echo '<p>';
+		printf(__('It is recommended to review %sRelease Notes%s for this new version of %s before making any further changes.','qtranslate'), '<a href="'.$url.'" target="_blank">','</a>',$me);
+		echo '</p>';
+	}
+	echo '<p>&nbsp;&nbsp;&nbsp;<a class="button" href="javascript:qtranxj_dismiss_admin_notice(\''.$id.'\');">'.__('I have already done it, dismiss this message.', 'qtranslate');
 	echo '</a></p></div>';
 }

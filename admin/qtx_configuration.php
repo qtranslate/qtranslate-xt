@@ -48,7 +48,7 @@ function qtranxf_admin_set_default_options(&$ops)
 
 	//multi-line options
 	$ops['admin']['text']=array(
-		'highlight_mode_custom_css' => 'qtranxf_get_admin_highlight_css',
+		'highlight_mode_custom_css' => null, // qtranxf_get_admin_highlight_css
 	);
 
 	$ops['admin']['array']=array(
@@ -479,22 +479,7 @@ function qtranxf_add_admin_footer_js ( $enqueue_script=false ) {
 	}
 	if(!empty($page_config)) $config['page_config'] = $page_config;
 
-	//$config['lsb_style'] = array();
-	//$config['lsb_style']['wrap_class'] = $q_config['lsb_style_wrap_class'];
-	//$config['lsb_style']['active_class'] = $q_config['lsb_style_active_class'];
-	/*
-	switch($q_config['lsb_style']){
-		case 'Tabs_in_Block.css':
-			$config['lsb_style']['wrap_class'] = 'qtranxs-lang-switch-wrap wp-ui-primary';
-			//$config['lsb_style']['wrap_class'] = 'qtranxs-lang-switch-wrap wp-ui-secondary';
-			$config['lsb_style']['active_class'] = 'wp-ui-highlight';
-			break;
-		default:
-			$config['lsb_style']['wrap_class'] = 'qtranxs-lang-switch-wrap';
-			$config['lsb_style']['active_class'] = 'active';
-			break;
-	}
-	*/
+	$config['LSB'] = $q_config['editor_mode'] == QTX_EDITOR_MODE_LSB;
 ?>
 <script type="text/javascript">
 // <![CDATA[
@@ -600,21 +585,19 @@ function qtranxf_add_admin_highlight_css() {
 		return;
 	}
 	echo '<style type="text/css">' . PHP_EOL;
-	switch ( $q_config['highlight_mode'] ) {
-		case QTX_HIGHLIGHT_MODE_CUSTOM_CSS:
-			echo $q_config['highlight_mode_custom_css'];
-			break;
-		default:
-			echo qtranxf_get_admin_highlight_css();
+	$highlight_mode = $q_config['highlight_mode'];
+	switch ( $highlight_mode ) {
+		case QTX_HIGHLIGHT_MODE_CUSTOM_CSS: echo $q_config['highlight_mode_custom_css']; break;
+		default: echo qtranxf_get_admin_highlight_css($highlight_mode);
 	}
 	echo '</style>' . PHP_EOL;
 }
 
-function qtranxf_get_admin_highlight_css() {
+function qtranxf_get_admin_highlight_css($highlight_mode) {
 	global $q_config;
 	$current_color_scheme = qtranxf_get_user_admin_color();
 	$css = '';
-	switch ( $q_config['highlight_mode'] ) {
+	switch ( $highlight_mode ) {
 		case QTX_HIGHLIGHT_MODE_LEFT_BORDER:
 			$css .= 'input.qtranxs-translatable, textarea.qtranxs-translatable, div.qtranxs-translatable {' . PHP_EOL;
 			$css .= 'box-shadow: -3px 0 ' . $current_color_scheme[2] . ' !important;' . PHP_EOL;
@@ -943,8 +926,8 @@ function qtranxf_updateSettings()
 	// update admin settings
 
 	//special cases handling
-	if($_POST['highlight_mode'] != $q_config['highlight_mode']){
-		if(get_option('qtranslate_highlight_mode_custom_css')===false) $_POST['highlight_mode_custom_css'] = '';
+	if($_POST['highlight_mode'] != QTX_HIGHLIGHT_MODE_CUSTOM_CSS){
+		$_POST['highlight_mode_custom_css'] = '';
 	}
 	if($_POST['lsb_style'] != $q_config['lsb_style']){
 		$_POST['lsb_style_wrap_class'] = '';
@@ -969,10 +952,6 @@ function qtranxf_updateSettings()
 
 	foreach($qtranslate_options['admin']['array'] as $nm => $def){
 		qtranxf_updateSetting($nm, QTX_ARRAY, $def);
-	}
-
-	if(empty($_POST['highlight_mode_custom_css'])){
-		$q_config['highlight_mode_custom_css'] = qtranxf_get_admin_highlight_css();
 	}
 }
 
@@ -1517,9 +1496,11 @@ function qtranxf_conf() {
 				<th scope="row"><?php _e('Editor Mode', 'qtranslate'); ?></th>
 				<td>
 					<label for="qtranxs_editor_mode_lsb"><input type="radio" name="editor_mode" id="qtranxs_editor_mode_lsb" value="<?php echo QTX_EDITOR_MODE_LSB; ?>"<?php checked($q_config['editor_mode'], QTX_EDITOR_MODE_LSB); ?>/>&nbsp;<?php _e('Use Language Switching Buttons (LSB).', 'qtranslate'); ?></label><br/>
-					<small><?php _e('This is the default mode.', 'qtranslate'); ?></small><br/>
+					<small><?php echo __('This is the default mode.', 'qtranslate').' '.__('Pages with translatable fields have Language Switching Buttons, which control what language is being edited, while admin language stays the same.', 'qtranslate'); ?></small><br/><br/>
 					<label for="qtranxs_editor_mode_raw"><input type="radio" name="editor_mode" id="qtranxs_editor_mode_raw" value="<?php echo QTX_EDITOR_MODE_RAW; ?>"<?php checked($q_config['editor_mode'], QTX_EDITOR_MODE_RAW); ?>/>&nbsp;<?php _e('Editor Raw Mode', 'qtranslate'); ?>. <?php _e('Do not use Language Switching Buttons to edit multi-language text entries.', 'qtranslate'); ?></label><br/>
-					<small><?php _e('Some people prefer to edit the raw entries containing all languages together separated by language defining tags, as they are stored in database.', 'qtranslate'); ?></small>
+					<small><?php _e('Some people prefer to edit the raw entries containing all languages together separated by language defining tags, as they are stored in database.', 'qtranslate'); ?></small><br/><br/>
+					<label for="qtranxs_editor_mode_single"><input type="radio" name="editor_mode" id="qtranxs_editor_mode_single" value="<?php echo QTX_EDITOR_MODE_SINGLGE; ?>"<?php checked($q_config['editor_mode'], QTX_EDITOR_MODE_SINGLGE); ?>/>&nbsp;<?php echo __('Single Language Mode.', 'qtranslate').' '.__('The language edited is the same as admin language.', 'qtranslate'); ?></label><br/>
+					<small><?php echo __('Edit language cannot be switched without page re-loading. Try this mode, if some of the advanced translatable fields do not properly respond to the Language Switching Buttons due to incompatibility with a plugin, which severely alters the default WP behaviour. This mode is the most compatible with other themes and plugins.', 'qtranslate').' '.__('One may find convenient to use the default Editor Mode, while remembering not to switch edit languages on custom advanced translatable fields, where LSB do not work.', 'qtranslate'); ?></small>
 				</td>
 			</tr>
 			<?php
@@ -1551,15 +1532,12 @@ function qtranxf_conf() {
 			<tr valign="top" id="option_highlight_mode">
 				<?php
 				$highlight_mode = $q_config['highlight_mode'];
-				/*
 				// reset default custom CSS when the field is empty, or when the "custom" option is not checked
 				if(empty($q_config['highlight_mode_custom_css']) || $highlight_mode != QTX_HIGHLIGHT_MODE_CUSTOM_CSS) {
-					$highlight_mode_custom_css = qtranxf_get_admin_highlight_css();
+					$highlight_mode_custom_css = qtranxf_get_admin_highlight_css($highlight_mode);
 				} else {
 					$highlight_mode_custom_css = $q_config['highlight_mode_custom_css'];
 				}
-				*/
-				$highlight_mode_custom_css = $q_config['highlight_mode_custom_css'];
 				?>
 				<th scope="row"><?php _e('Highlight Style', 'qtranslate'); ?></th>
 				<td>

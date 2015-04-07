@@ -1457,10 +1457,10 @@ function qtranxf_use_block($lang, $blocks, $show_available=false, $show_empty=fa
 				$msg = __('For the sake of viewer convenience, the content is shown below in one of the available alternative languages.', 'qtranslate');
 			}
 			//$msg = sprintf($fmt, '<a href="'.qtranxf_convertURL('', $language, false, true).'">'.$q_config['language_name'][$alt_lang].'</a>');
-			$msg .= ' '.__('You may click one of the links to switch site language to an another available language.', 'qtranslate');
+			$msg .= ' '.__('You may click one of the links to switch the site language to another available language.', 'qtranslate');
 		}else{
 			$msg = __('For the sake of viewer convenience, the content is shown below in the alternative language.', 'qtranslate');
-			$msg .= ' '.__('You may click the link above to switch the currently active language.', 'qtranslate');
+			$msg .= ' '.__('You may click the link to switch the active language.', 'qtranslate');
 		}
 		$altlanguagecontent = ' '.$msg.'</p>'.$alt_content;
 	}else{
