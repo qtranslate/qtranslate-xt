@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qTranslate-X 3.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-04-07 01:00-0600\n"
-"PO-Revision-Date: 2015-03-30 13:41-0000\n"
+"PO-Revision-Date: 2015-04-07 09:15-0000\n"
 "Last-Translator: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "Language-Team: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -108,7 +108,7 @@ msgstr "A última versão do plugin %s tem algumas opções novas, como por exem
 #: admin/qtx_activation_hook.php:363
 #, php-format
 msgid "It is recommended to review %sRelease Notes%s for this new version of %s before making any further changes."
-msgstr ""
+msgstr "É recomendado rever as %snotas sobre esta actualização%s do %s antes de fazer quaisquer modificações."
 
 #: admin/qtx_admin_utils.php:175
 msgid "Database has been converted to square bracket format."
@@ -156,13 +156,12 @@ msgid "Languages"
 msgstr "Idiomas"
 
 #: admin/qtx_admin_utils.php:467
-#, fuzzy
 msgid "Unknown Language"
-msgstr "Idioma"
+msgstr "Idioma desconhecido"
 
 #: admin/qtx_admin_utils.php:468
 msgid "Not enabled"
-msgstr ""
+msgstr "Não activado"
 
 #: admin/qtx_configuration.php:664
 msgid "Language Management"
@@ -258,9 +257,8 @@ msgid "Gettext databases updated."
 msgstr "Base de dados Gettext actualizada."
 
 #: admin/qtx_configuration.php:1016
-#, fuzzy
 msgid "Gettext databases <strong>not</strong> updated:"
-msgstr "Base de dados Gettext actualizada."
+msgstr "Base de dados Gettext <strong>não</strong> actualizada:"
 
 #: admin/qtx_configuration.php:1025
 #, php-format
@@ -392,18 +390,17 @@ msgid "Choose the default language of your blog. This is the language which will
 msgstr "Escolha o idioma por omissão do seu blog. Este é o idioma que será usado em %s. Pode modificar a ordem dos idiomas clicando nas setas acima."
 
 #: admin/qtx_configuration.php:1300
-#, fuzzy
 msgid "Untranslated Content"
-msgstr "Esconder conteúdos não traduzidos"
+msgstr "Conteúdo não traduzido"
 
 #: admin/qtx_configuration.php:1302
 #, php-format
 msgid "The choices below define how to handle untranslated content at front-end of the site. A content of a page or a post is considered untranslated if the main text (%s) is empty for a given language, regardless of other fields like title, excerpt, etc. All three options are independent of each other."
-msgstr ""
+msgstr "As opções abaixo definem como lidar com conteúdos não traduzidos na frente do site. O conteúdo de uma página ou artigo é considerado não traduzido se o texto principal (%s) estiver vazio para um determinado idioma, independentemente de outros campos como título, excerto, etc. As três opções são independentes umas das outras."
 
 #: admin/qtx_configuration.php:1304
 msgid "Hide Content which is not available for the selected language."
-msgstr "Esconder conteúdos indisponíveis no idioma seleccionado."
+msgstr "Esconder conteúdos que não estejam disponíveis no idioma seleccionado."
 
 #: admin/qtx_configuration.php:1306
 msgid "When checked, posts will be hidden if the content is not available for the selected language. If unchecked, a message will appear showing all the languages the content is available in."
@@ -411,7 +408,7 @@ msgstr "Quando activado, os artigos serão escondidos se não estiverem disponí
 
 #: admin/qtx_configuration.php:1307
 msgid "The message about available languages for the content of a post or a page may also appear if a single post display with an untranslated content if viewed directly."
-msgstr ""
+msgstr "A mensagem sobre idiomas disponíveis para o conteúdo de um artigo ou página também poderá aparecer ao visualizar directamente um artigo único com conteúdo não traduzido."
 
 #: admin/qtx_configuration.php:1308 admin/qtx_import_export.php:161
 msgid "Export"
@@ -424,7 +421,7 @@ msgstr "Importar"
 #: admin/qtx_configuration.php:1308
 #, php-format
 msgid "This function will not work correctly if you installed %s on a blog with existing entries. In this case you will need to take a look at option \"%s\" under \"%s\" section."
-msgstr "Esta função não correrá perfeitamente se instalar o %s num blog que já tenha entradas. Neste caso deverá verificar a opção \"%s\" na secção \"%s\"."
+msgstr "Esta função não correrá perfeitamente se instalar o %s num blog que já tenha entradas. Neste caso deverá seleccionar a opção \"%s\" na secção \"%s\"."
 
 #: admin/qtx_configuration.php:1310
 msgid "Show displayed language prefix when content is not available for the selected language."
@@ -432,17 +429,16 @@ msgstr "Mostrar prefixo do idioma quando o conteúdo não está disponível no i
 
 #: admin/qtx_configuration.php:1312
 msgid "This is relevant to all fields other than the main content of posts and pages. Such untranslated fields are always shown in an alternative available language, and will be prefixed with the language name in parentheses, if this option is on."
-msgstr ""
+msgstr "Isto é relevante para todos os campos além do conteúdo principal dos artigos e páginas. Se esta opção estiver seleccionada, estes campos não traduzidos serão sempre mostrados num idioma alternativo disponível, com o prefixo do idioma entre parênteses."
 
 #: admin/qtx_configuration.php:1314
-#, fuzzy
 msgid "Show content in an alternative language when translation is not available for the selected language."
-msgstr "Mostrar prefixo do idioma quando o conteúdo não está disponível no idioma seleccionado."
+msgstr "Mostrar o conteúdo num idioma alternativo quando a tradução não estiver disponível no idioma seleccionado."
 
 #: admin/qtx_configuration.php:1316
 #, php-format
 msgid "When a page or a post with an untranslated content is viewed, a message with a list of other available languages is displayed, in which languages are ordered as defined by option \"%s\". If this option is on, then the content in default language will also be shown, instead of the expected language, for the sake of user convenience. If default language is not available for the content, then the content in the first available language is shown."
-msgstr ""
+msgstr "Quando é visualizada uma página ou artigo com conteúdo não traduzido, é mostrada uma mensagem com uma lista de outros idiomas disponíveis, onde os idiomas estão ordenados de acordo com o definido na opção \"%s\". Se esta opção estiver seleccionada, por uma questão de conveniência para o utilizador, o conteúdo será mostrado no idioma por omissão em vez do idioma esperado."
 
 #: admin/qtx_configuration.php:1320
 msgid "Detect Browser Language"
@@ -690,7 +686,7 @@ msgstr "Utilizar Botões de Selecção de Idioma (BSI)"
 
 #: admin/qtx_configuration.php:1499
 msgid "Pages with translatable fields have Language Switching Buttons, which control what language is being edited, while admin language stays the same."
-msgstr ""
+msgstr "As páginas com campos que podem ser traduzidos têm Botões de Selecção de Idioma para controlar que idioma é editado, enquanto o idioma da administração do site se mantém o mesmo."
 
 #: admin/qtx_configuration.php:1499
 msgid "This is the default mode."
@@ -709,22 +705,20 @@ msgid "Some people prefer to edit the raw entries containing all languages toget
 msgstr "Algumas pessoas preferem editar as entradas em modo de texto, contendo todos os idomas separados pelas etiquetas de idioma, tal como serão guardadas na base de dados."
 
 #: admin/qtx_configuration.php:1502
-#, fuzzy
 msgid "Single Language Mode."
-msgstr "Código de idioma"
+msgstr "Modo de idioma único."
 
 #: admin/qtx_configuration.php:1502
-#, fuzzy
 msgid "The language edited is the same as admin language."
-msgstr "Já existe um idioma com o mesmo código de idioma!"
+msgstr "O idioma editado é o mesmo da administração do site."
 
 #: admin/qtx_configuration.php:1503
 msgid "Edit language cannot be switched without page re-loading. Try this mode, if some of the advanced translatable fields do not properly respond to the Language Switching Buttons due to incompatibility with a plugin, which severely alters the default WP behaviour. This mode is the most compatible with other themes and plugins."
-msgstr ""
+msgstr "O idioma a editar não pode ser mudado sem recarregar a página. Experimente este modo caso alguns campos avançados que podem ser traduzidos não respondam correctamente aos Botões de Selecção de Idioma, devido a incompatibilidade com algum plugin, o que pode alterar gravemente o comportamento do WP. Este é o modo mais compatível com outros temas e plugins."
 
 #: admin/qtx_configuration.php:1503
 msgid "One may find convenient to use the default Editor Mode, while remembering not to switch edit languages on custom advanced translatable fields, where LSB do not work."
-msgstr ""
+msgstr "Poderá ser conveniente utilizar o modo de editor padrão, desde que se lembre de não mudar o idioma de edição em campos avançados que podem ser traduzidos, onde os BSI não funcionem."
 
 #: admin/qtx_configuration.php:1511 admin/qtx_configuration.php:1514
 msgid "LSB Style"
@@ -975,23 +969,23 @@ msgstr "O modo como os campos que podem ser traduzidos são realçados é config
 
 #: qtranslate_core.php:1454
 msgid "For the sake of viewer convenience, the content is shown below in this site default language."
-msgstr ""
+msgstr "Por uma questão de conveniência para o utilizador, o conteúdo é mostrado abaixo no idioma por omissão para este site."
 
 #: qtranslate_core.php:1457
 msgid "For the sake of viewer convenience, the content is shown below in one of the available alternative languages."
-msgstr ""
+msgstr "Por uma questão de conveniência para o utilizador, o conteúdo é mostrado abaixo num dos idiomas alternativos disponíveis."
 
 #: qtranslate_core.php:1460
 msgid "You may click one of the links to switch the site language to another available language."
-msgstr ""
+msgstr "Pode clicar numa das ligações para mudar o site para outro idioma disponível."
 
 #: qtranslate_core.php:1462
 msgid "For the sake of viewer convenience, the content is shown below in the alternative language."
-msgstr ""
+msgstr "Por uma questão de conveniência para o utilizador, o conteúdo é mostrado abaixo no idioma alternativo."
 
 #: qtranslate_core.php:1463
 msgid "You may click the link to switch the active language."
-msgstr ""
+msgstr "Pode clicar na ligação para alterar o idioma activo."
 
 #: qtranslate_frontend.php:160 qtranslate_widget.php:67
 msgid "Language"
