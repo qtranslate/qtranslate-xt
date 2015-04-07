@@ -669,5 +669,3 @@ function qtranxf_get_user_admin_color() {
 add_filter('manage_language_columns', 'qtranxf_language_columns');
 add_filter('manage_posts_columns', 'qtranxf_languageColumnHeader');
 add_filter('manage_posts_custom_column', 'qtranxf_languageColumn');
-add_filter('manage_pages_columns', 'qtranxf_languageColumnHeader');
-add_filter('manage_pages_custom_column', 'qtranxf_languageColumn');
