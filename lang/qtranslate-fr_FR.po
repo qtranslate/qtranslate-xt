@@ -1336,11 +1336,11 @@ msgstr "Ne migrer aucun paramètre"
 
 #: admin/qtx_import_export.php:150
 msgid "Import settings from "
-msgstr "Importer les paramètres depuis"
+msgstr "Importer les paramètres depuis "
 
 #: admin/qtx_import_export.php:152
 msgid "Export settings to "
-msgstr "Exporter les paramètres vers"
+msgstr "Exporter les paramètres vers "
 
 #: admin/qtx_import_export.php:168
 #, php-format
