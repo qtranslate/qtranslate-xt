@@ -191,7 +191,7 @@ function qtranxf_default_locale()
 	$cfg['it'] = 'it_IT';
 	$cfg['ro'] = 'ro_RO';
 	$cfg['hu'] = 'hu_HU';
-	$cfg['ja'] = 'ja';
+	$cfg['ja'] = 'ja_JP';
 	$cfg['es'] = 'es_ES';
 	$cfg['vi'] = 'vi';
 	$cfg['ar'] = 'ar';
@@ -203,6 +203,7 @@ function qtranxf_default_locale()
 	$cfg['et'] = 'et_EE';
 	$cfg['hr'] = 'hr_HR';
 	$cfg['eu'] = 'eu_ES';
+	$cfg['el'] = 'el_GR';
 	//$cfg['tw'] = 'zh_TW';
 	return $cfg;
 }
@@ -551,7 +552,6 @@ function qtranxf_language_configured($prop,$opn=null)
 function qtranxf_languages_configured(&$cfg)
 {
 	global $qtranslate_options;
-	//$cfg = array();
 	foreach($qtranslate_options['languages'] as $nm => $opn){
 		$cfg[$nm] = qtranxf_language_configured($nm,$opn);
 	}

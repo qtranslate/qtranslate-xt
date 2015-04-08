@@ -397,6 +397,16 @@ function qtranxf_updateTermLibrary() {
 	}
 }
 
+function qtranxf_stripSlashesIfNecessary($str) {
+	/**
+	 * @since 3.2.9.8.4 WordPress now always supplies slashed data
+	 */
+	//if(1==get_magic_quotes_gpc()) {
+		$str = stripslashes($str);
+	//}
+	return $str;
+}
+
 function qtranxf_updateTermLibraryJoin() {
 	global $q_config;
 	if(!isset($_POST['action'])) return;

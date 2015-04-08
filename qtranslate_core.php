@@ -961,7 +961,7 @@ function qtranxf_url_set_language($urlinfo,$lang,$showLanguage) {
 	return $urlinfo;
 }
 
-function qtranxf_get_url_for_language($url, $lang, $showLanguage) {
+function qtranxf_get_url_for_language($url, $lang, $showLanguage=true) {
 	global $q_config;
 	static $url_cache=array();
 	//qtranxf_dbg_log('called: qtranxf_get_url_for_language('.$lang.($showLanguage?', true':', false').'): url=',$url,false);

@@ -252,6 +252,11 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 ### 3.3 stable ###
 * Includes all changes after version 3.2.9. Please, review [Release Notes](https://qtranslatexteam.wordpress.com/2015/03/30/release-notes-3-3).
 
+### 3.2.9.8.4 alpha ###
+* Fix: taxonomy names with apostrophe and other special characters: [Issue #122](https://github.com/qTranslate-Team/qtranslate-x/issues/122).
+* Fix: locale 'ja' changed to 'ja_JP'. Thanks to Yusuke Noguchi.
+* Translation: thanks to all translators contributed.
+
 ### 3.2.9.8.3 alpha ###
 * Feature: choice 'Single Language Mode' for option 'Editor Mode'.
 * Enhancement: New release handling framework.

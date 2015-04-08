@@ -1099,12 +1099,14 @@ function qtranxf_conf() {
 			http://wordpress.stackexchange.com/questions/21693/wordpress-and-magic-quotes
 		*/
 		//if(get_magic_quotes_gpc()) {
-			//qtranxf_dbg_log('get_magic_quotes_gpc: before language_date_format=',$_POST['language_date_format']);
+			//qtranxf_dbg_log('get_magic_quotes_gpc: before REQUEST[language_date_format]=',$_REQUEST['language_date_format']);
+			//qtranxf_dbg_log('get_magic_quotes_gpc: before POST[language_date_format]=',$_POST['language_date_format']);
 			//qtranxf_dbg_log('pos=',strpos($_POST['language_date_format'],'\\\\'));//shows a number
 			if(isset($_POST['language_date_format'])) $_POST['language_date_format'] = stripslashes($_POST['language_date_format']);
 			if(isset($_POST['language_time_format'])) $_POST['language_time_format'] = stripslashes($_POST['language_time_format']);
 			//qtranxf_dbg_log('pos=',strpos($_POST['language_date_format'],'\\\\'));//shows false
-			//qtranxf_dbg_log('get_magic_quotes_gpc: after language_date_format=',$_POST['language_date_format']);
+			//qtranxf_dbg_log('get_magic_quotes_gpc: after REQUEST[language_date_format]=',$_REQUEST['language_date_format']);
+			//qtranxf_dbg_log('get_magic_quotes_gpc: after POST[language_date_format]=',$_POST['language_date_format']);
 		//}
 		if($error=='') {
 			// everything is fine, insert language
@@ -1159,12 +1161,12 @@ function qtranxf_conf() {
 		$language_code = $lang;
 		//$langs = $q_config;
 		$langs = array(); qtranxf_languages_configured($langs);
-		$language_name = $langs['language_name'][$lang];
-		$language_locale = $langs['locale'][$lang];
-		$language_date_format = $langs['date_format'][$lang];
-		$language_time_format = $langs['time_format'][$lang];
-		$language_na_message = $langs['not_available'][$lang];
-		$language_flag = $langs['flag'][$lang];
+		$language_name = isset($langs['language_name'][$lang])?$langs['language_name'][$lang]:'';
+		$language_locale = isset($langs['locale'][$lang])?$langs['locale'][$lang]:'';
+		$language_date_format = isset($langs['date_format'][$lang])?$langs['date_format'][$lang]:'';
+		$language_time_format = isset($langs['time_format'][$lang])?$langs['time_format'][$lang]:'';
+		$language_na_message = isset($langs['not_available'][$lang])?$langs['not_available'][$lang]:'';
+		$language_flag = isset($langs['flag'][$lang])?$langs['flag'][$lang]:'';
 	} elseif(isset($_GET['delete'])) {
 		$lang = $_GET['delete'];
 		// validate delete (protect code)

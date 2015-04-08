@@ -326,13 +326,6 @@ function qtranxf_sanitize_url($url)
 	return $url;
 }
 
-function qtranxf_stripSlashesIfNecessary($str) {
-	if(1==get_magic_quotes_gpc()) {
-		$str = stripslashes($str);
-	}
-	return $str;
-}
-
 function qtranxf_insertDropDownElement($language, $url, $id){
 	global $q_config;
 	$html ="
