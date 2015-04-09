@@ -97,16 +97,18 @@ function qtranxf_init_language() {
 	// fix url to prevent xss - how does this prevents xss?
 	//$q_config['url_info']['url'] = qtranxf_convertURL(add_query_arg('lang',$q_config['default_language'],$q_config['url_info']['url']));
 
+	//qtranslate_hooks.php has to go before load_plugin_textdomain()
+	require_once(dirname(__FILE__).'/qtranslate_hooks.php');//common hooks moved here from qtranslate.php since 3.2.9.2, because they all need language already detected
+
 	// load plugin translations
 	// since 3.2-b3 moved it here as https://codex.wordpress.org/Function_Reference/load_plugin_textdomain seem to recommend to run load_plugin_textdomain in 'plugins_loaded' action, which is this function respond to
-	load_plugin_textdomain('qtranslate', false, dirname(plugin_basename( __FILE__ )).'/lang');
+	$lang_dir = dirname(plugin_basename( __FILE__ )).'/lang';
+	load_plugin_textdomain('qtranslate', false, $lang_dir);
 
 	if($q_config['url_info']['doing_front_end']) {
 		require_once(dirname(__FILE__)."/qtranslate_frontend.php");
 	}else{
-		require_once(dirname(__FILE__).'/qtranslate_configuration.php');
-		require_once(dirname(__FILE__).'/admin/admin_utils.php');
-
+		require_once(dirname(__FILE__).'/admin/qtx_configuration.php');
 		// load qTranslate Services if available // disabled since 3.1
 		//if(file_exists(dirname(__FILE__).'/qtranslate_services.php'))
 		//	require_once(dirname(__FILE__).'/qtranslate_services.php');
@@ -118,10 +120,10 @@ function qtranxf_init_language() {
 	do_action('qtranslate_init_language',$url_info);
 	//qtranxf_dbg_log('done: qtranxf_init_language: url_info: ',$url_info);
 }
+add_action('plugins_loaded', 'qtranxf_init_language', 2);//user is not authenticated yet
 
 function qtranxf_detect_language(&$url_info) {
 	global $q_config;
-
 	//$url_info['home'] = $homeinfo['path'];//not in use any more
 
 	if(defined('WP_ADMIN')){
@@ -129,9 +131,10 @@ function qtranxf_detect_language(&$url_info) {
 		$url_info['path-base'] = $siteinfo['path'];
 		$url_info['path-base-length'] = $siteinfo['path-length'];
 	}else{
-		$homeinfo = qtranxf_get_home_info();
-		$url_info['path-base'] = $homeinfo['path'];
-		$url_info['path-base-length'] = $homeinfo['path-length'];
+		qtranxf_complete_url_info($url_info);
+		//$homeinfo = qtranxf_get_home_info();
+		//$url_info['path-base'] = $homeinfo['path'];
+		//$url_info['path-base-length'] = $homeinfo['path-length'];
 		$url_info['doing_front_end'] = true;
 	}
 
@@ -193,6 +196,7 @@ function qtranxf_detect_language(&$url_info) {
 	*/
 	$url_info = apply_filters('qtranslate_detect_language', $url_info);
 	$lang = $url_info['language'];
+	//qtranxf_dbg_log('qtranxf_detect_language: detected: url_info: ',$url_info);
 	if($url_info['set_cookie']) qtranxf_set_language_cookie($lang);
 	return $lang;
 }
@@ -329,7 +333,7 @@ function qtranxf_parse_language_info(&$url_info, $link=false) {
 }
 
 function qtranxf_detect_language_admin(&$url_info) {
-	require_once(dirname(__FILE__).'/admin/admin_utils.php');
+	require_once(dirname(__FILE__).'/admin/qtx_admin_utils.php');
 	$url_info = apply_filters('qtranslate_detect_admin_language',$url_info);
 	return $url_info['lang_admin'];
 }
@@ -377,6 +381,7 @@ function qtranxf_set_language_cookie($lang)
 {
 	global $q_config;
 	if(defined('WP_ADMIN')){
+		//qtranxf_dbg_log('qtranxf_set_language_cookie: QTX_COOKIE_NAME_ADMIN: lang=',$lang);
 		qtranxf_setcookie_language( $lang, QTX_COOKIE_NAME_ADMIN, ADMIN_COOKIE_PATH );
 	}elseif(!$q_config['disable_client_cookies']){
 		qtranxf_setcookie_language( $lang, QTX_COOKIE_NAME_FRONT, COOKIEPATH, NULL, $q_config['use_secure_cookie'] );
@@ -448,7 +453,7 @@ function qtranxf_resolveLangCase($lang,&$caseredirect)
 
 function qtranxf_load_option_qtrans_compatibility(){
 	global $q_config;
-	qtranxf_load_option_bool('qtrans_compatibility');
+	qtranxf_load_option_bool('qtrans_compatibility',false);
 	$q_config['qtrans_compatibility'] = apply_filters('qtranslate_compatibility', $q_config['qtrans_compatibility']);
 	if( !isset($q_config['qtrans_compatibility']) || !$q_config['qtrans_compatibility'] ) return;
 	require_once(dirname(__FILE__).'/qtranslate_compatibility.php');
@@ -486,13 +491,6 @@ function qtranxf_init() {
 
 	//allow other plugins to initialize whatever they need for qTranslate
 	do_action('qtranslate_init');
-}
-
-function qtranxf_front_header_css() {
-	global $q_config;
-	if( isset($q_config['header_css']) && !empty($q_config['header_css']) )
-		return $q_config['header_css'];
-	return qtranxf_front_header_css_default();
 }
 
 function qtranxf_front_header_css_default()
@@ -541,11 +539,18 @@ function qtranxf_validateBool($var, $default_value) {
 }
 
 function qtranxf_load_option($nm, $default_value=null) {
-	global $q_config;
+	global $q_config, $qtranslate_options;
 	$val = get_option('qtranslate_'.$nm);
 	if($val===FALSE){
-		if(is_null($default_value)) return;
-		$val = $default_value;
+		if(is_null($default_value)){
+			if(!isset($qtranslate_options['default_value'][$nm])) return;
+			$default_value = $qtranslate_options['default_value'][$nm];
+		}
+		if(is_string($default_value) && function_exists($default_value)){
+			$val = call_user_func($default_value);
+		}else{
+			$val = $default_value;
+		}
 	}
 	$q_config[$nm]=$val;
 }
@@ -579,81 +584,68 @@ function qtranxf_load_option_bool( $nm, $default_value=null ) {
 	elseif($val==='1') $q_config[$nm] = true;
 }
 
+function qtranxf_load_option_func($nm, $opn=null, $func=null) {
+	global $q_config, $qtranslate_options;
+	if(!$opn) $opn = 'qtranslate_'.$nm;
+	$val = get_option($opn);
+	if($val===FALSE){
+		if(!$func) $func = 'qtranxf_default_'.$nm;
+		$val = call_user_func($func);
+	}
+	$q_config[$nm]=$val;
+}
+
 function qtranxf_is_permalink_structure_query(){
 	$permalink_structure = get_option('permalink_structure');
 	return empty($permalink_structure)||strpos($permalink_structure, '?')!==false||strpos($permalink_structure, 'index.php')!==false;
 }
 
-// loads config via get_option and defaults to values set on top
 function qtranxf_loadConfig() {
-	global $q_config;
+	global $qtranslate_options, $q_config;
+	qtranxf_set_default_options($qtranslate_options);
 
-	//for other plugins and jave scripts to be able to fork by version
-	//$q_config['version'] = get_plugin_data( plugins_url( '/qtranslate.php', __FILE__ ), false, false )['Version'];
+	$q_config = array();
 
-	// Load everything
-	$language_names = get_option('qtranslate_language_names');
-	//$enabled_languages = get_option('qtranslate_enabled_languages');
+	qtranxf_load_option_func('default_language');
 	qtranxf_load_option_array('enabled_languages');
-	$default_language = get_option('qtranslate_default_language');
-	//$flag_location = get_option('qtranslate_flag_location');
-	$flags = get_option('qtranslate_flags');
-	$locales = get_option('qtranslate_locales');
-	$na_messages = get_option('qtranslate_na_messages');
-	$date_formats = get_option('qtranslate_date_formats');
-	$time_formats = get_option('qtranslate_time_formats');
-	$use_strftime = get_option('qtranslate_use_strftime');
-	$ignore_file_types = get_option('qtranslate_ignore_file_types');
-	$url_mode = get_option('qtranslate_url_mode');
-	$term_name = get_option('qtranslate_term_name');
 
 	qtranxf_load_option_flag_location('flag_location');
+	qtranxf_load_languages_enabled();
 
-	qtranxf_load_option('editor_mode');
-	qtranxf_load_option('highlight_mode');
-	qtranxf_load_option('highlight_mode_custom_css');
+	foreach($qtranslate_options['front']['int'] as $nm => $def){
+		qtranxf_load_option($nm, $def);
+	}
 
-	qtranxf_load_option_array('custom_fields');
-	qtranxf_load_option_array('custom_field_classes');
-	qtranxf_load_option_array('text_field_filters');
-	qtranxf_load_option_array('custom_pages');
+	foreach($qtranslate_options['front']['bool'] as $nm => $def){
+		qtranxf_load_option_bool($nm,$def);
+	}
 
-	// default if not set
-	if(!is_array($date_formats)) $date_formats = $q_config['date_format'];
-	if(!is_array($time_formats)) $time_formats = $q_config['time_format'];
-	if(!is_array($na_messages)) $na_messages = $q_config['not_available'];
-	if(!is_array($locales)) $locales = $q_config['locale'];
-	if(!is_array($flags)) $flags = $q_config['flag'];
-	if(!is_array($language_names)) $language_names = $q_config['language_name'];
-	//if(!is_array($enabled_languages)) $enabled_languages = $q_config['enabled_languages'];
-	if(!is_array($term_name)) $term_name = $q_config['term_name'];
-	if(empty($default_language)) $default_language = $q_config['default_language'];
-	if(empty($use_strftime)) $use_strftime = $q_config['use_strftime'];
-	if(empty($url_mode)) $url_mode = $q_config['url_mode'];
-	//if(!is_string($flag_location) || $flag_location==='') $flag_location = $q_config['flag_location'];
+	foreach($qtranslate_options['front']['str'] as $nm => $def){
+		qtranxf_load_option($nm, $def);
+	}
 
-	qtranxf_load_option_bool('detect_browser_language');
-	qtranxf_load_option_bool('hide_untranslated');
-	qtranxf_load_option_bool('show_displayed_language_prefix');
-	qtranxf_load_option_bool('auto_update_mo');
-	qtranxf_load_option_bool('hide_default_language');
-	qtranxf_load_option_bool('header_css_on');
-	qtranxf_load_option_bool('use_secure_cookie');
+	foreach($qtranslate_options['front']['text'] as $nm => $def){
+		qtranxf_load_option($nm, $def);
+	}
 
-	qtranxf_load_option('header_css');
+	foreach($qtranslate_options['front']['array'] as $nm => $def){
+		qtranxf_load_option_array($nm,$def);
+	}
 
-	qtranxf_load_option('filter_options_mode',QTX_FILTER_OPTIONS_ALL);
+	qtranxf_load_option_array('term_name', array());
+
 	if($q_config['filter_options_mode'] == QTX_FILTER_OPTIONS_LIST){
 		qtranxf_load_option_array('filter_options',QTX_FILTER_OPTIONS_DEFAULT);
 	}
 
+	$url_mode = $q_config['url_mode'];
 	// check for invalid permalink/url mode combinations
 	if(qtranxf_is_permalink_structure_query()){
 		switch($url_mode){
 			case QTX_URL_QUERY:
 			case QTX_URL_DOMAIN:
 			case QTX_URL_DOMAINS: break;
-			default: $url_mode = QTX_URL_QUERY; break;
+			default: $q_config['url_mode'] = $url_mode = QTX_URL_QUERY; break;
 		}
 	}
 
@@ -681,19 +673,7 @@ function qtranxf_loadConfig() {
 			break;
 	}
 
-	// overwrite default values with loaded values
-	$q_config['date_format'] = $date_formats;
-	$q_config['time_format'] = $time_formats;
-	$q_config['not_available'] = $na_messages;
-	$q_config['locale'] = $locales;
-	$q_config['flag'] = $flags;
-	$q_config['language_name'] = $language_names;
-	//$q_config['enabled_languages'] = $enabled_languages;
-	$q_config['default_language'] = $default_language;
-	//$q_config['flag_location'] = $flag_location;
-	$q_config['use_strftime'] = $use_strftime;
-
-	//$q_config['ignore_file_types'] = $ignore_file_types;
+	$ignore_file_types = get_option('qtranslate_ignore_file_types');
 	$val=explode(',',QTX_IGNORE_FILE_TYPES);
 	if(!empty($ignore_file_types)){
 		$vals=preg_split('/[\s,]+/', strtolower($ignore_file_types), null, PREG_SPLIT_NO_EMPTY);
@@ -705,20 +685,7 @@ function qtranxf_loadConfig() {
 	}
 	$q_config['ignore_file_types'] = $val;
 
-	$q_config['url_mode'] = $url_mode;
-	$q_config['term_name'] = $term_name;
-
 	do_action('qtranslate_loadConfig');
-}
-
-function qtranxf_reloadConfig() {
-	global $q_config;
-	qtranxf_set_config_default();
-	qtranxf_loadConfig();
-	if(isset($q_config['url_info']['language']))
-		$q_config['language'] = $q_config['url_info']['language'];
-	qtranxf_load_option_qtrans_compatibility();
-	//qtranxf_dbg_echo('qtranxf_reloadConfig: $q_config[url_info]: ',$q_config['url_info']);
 }
 
 /* BEGIN DATE TIME FUNCTIONS */
@@ -955,6 +922,7 @@ function qtranxf_url_set_language($urlinfo,$lang,$showLanguage) {
 		$url_mode = $q_config['url_mode'];
 		switch($url_mode) {
 			case QTX_URL_PATH: // pre-path
+				//qtranxf_dbg_log_if(!isset($urlinfo['wp-path']),'qtranxf_url_set_language: wp-path not set $urlinfo:',$urlinfo,true);
 				$urlinfo['wp-path'] = '/'.$lang.$urlinfo['wp-path'];
 				break;
 			case QTX_URL_DOMAIN: // pre-domain
@@ -993,7 +961,7 @@ function qtranxf_url_set_language($urlinfo,$lang,$showLanguage) {
 	return $urlinfo;
 }
 
-function qtranxf_get_url_for_language($url, $lang, $showLanguage) {
+function qtranxf_get_url_for_language($url, $lang, $showLanguage=true) {
 	global $q_config;
 	static $url_cache=array();
 	//qtranxf_dbg_log('called: qtranxf_get_url_for_language('.$lang.($showLanguage?', true':', false').'): url=',$url,false);
@@ -1252,13 +1220,31 @@ function qtranxf_split($text, $quicktags = true) {
 }// */
 }
 
-// not in use?
+// not in use? QTranslate META calls 'qtrans_join' - added to compatibility
 //function qtranxf_join($texts) {
 //	if(!is_array($texts)) $texts = qtranxf_split($texts);
 //	qtranxf_join_c($texts);
 //}
 
+function qtranxf_allthesame($texts) {
+	$text = null;
+	//take first not empty
+	foreach($texts as $lang => $t){
+		if ( !$t || $t=='' ) continue;
+		$text = $t;
+		break;
+	}
+	if ( empty($text) ) return '';
+	foreach($texts as $lang => $t){
+		if ( $t != $text )
+			return null;
+	}
+	return $text;
+}
+
 function qtranxf_join_c($texts) {
+	$text = qtranxf_allthesame($texts);
+	if(!is_null($text)) return $text;
 	$text = '';
 	foreach($texts as $lang => $lang_text) {
 		if(empty($lang_text)) continue;
@@ -1288,6 +1274,8 @@ function qtranxf_join_c($texts) {
 }
 
 function qtranxf_join_b_no_closing($texts) {
+	$text = qtranxf_allthesame($texts);
+	if(!is_null($text)) return $text;
 	$text = '';
 	foreach($texts as $lang => $lang_text) {
 		if(empty($lang_text)) continue;
@@ -1297,35 +1285,41 @@ function qtranxf_join_b_no_closing($texts) {
 }
 
 function qtranxf_join_b($texts) {
-	$text = qtranxf_join_b_no_closing($texts);
+	$text = qtranxf_allthesame($texts);
+	if(!is_null($text)) return $text;
+	$text = '';
+	foreach($texts as $lang => $lang_text) {
+		if(empty($lang_text)) continue;
+		$text .= '[:'.$lang.']'.$lang_text;
+	}
 	if(!empty($text)) $text .= '[:]';
 	return $text;
 }
 
-function qtranxf_disableLanguage($lang) {
-	global $q_config;
-	if(qtranxf_isEnabled($lang)) {
-		$new_enabled = array();
-		for($i = 0; $i < sizeof($q_config['enabled_languages']); $i++) {
-			if($q_config['enabled_languages'][$i] != $lang) {
-				$new_enabled[] = $q_config['enabled_languages'][$i];
-			}
-		}
-		$q_config['enabled_languages'] = $new_enabled;
-		return true;
-	}
-	return false;
-}
+function qtranxf_join_byline($texts) {
+	$text = qtranxf_allthesame($texts);
+	if(!is_null($text)) return $text;
 
-function qtranxf_enableLanguage($lang) {
-	global $q_config;
-	if(qtranxf_isEnabled($lang) || !isset($q_config['language_name'][$lang])) {
-		return false;
+	$lines=array();
+	foreach($texts as $lang => $text){
+		$lines[$lang] = preg_split('/\r?\n\r?/',$text);
 	}
-	$q_config['enabled_languages'][] = $lang;
-	// force update of .mo files
-	if ($q_config['auto_update_mo']) qtranxf_updateGettextDatabases(true, $lang);
-	return true;
+
+	$text = '';
+	for($i=0; true; ++$i){
+		$done = true;
+		$ln = array();
+		foreach($lines as $lang => $txts){
+			if ( sizeof($txts) <= $i ) continue;
+			$done = false;
+			$t = $txts[$i];
+			if ( !$t || $t=='' ) continue;
+			$ln[$lang] = $t;
+		}
+		if( $done ) break;
+		$text .= qtranxf_join_b($ln).PHP_EOL;
+	}
+	return $text;
 }
 
 if (!function_exists('qtranxf_use')){
@@ -1372,40 +1366,51 @@ function qtranxf_use_block($lang, $blocks, $show_available=false, $show_empty=fa
 	$content = qtranxf_split_blocks($blocks);
 
 	// if content is available show the content in the requested language
-	if(!empty($content[$lang])) {
-		return $content[$lang];
-	}elseif($show_empty){
-		return '';
+	if(!empty($content[$lang])) return $content[$lang];
+	elseif($show_empty) return '';
+
+	// content is not available in requested language (bad!!) what now?
+
+	// find available and alternative languages
+	if(empty($content[$q_config['default_language']])){
+		$alt_lang = null;
+		$alt_content = null;
+		$alt_lang_is_default = false;
+	}else{
+		$alt_lang = $q_config['default_language'];
+		$alt_content = $content[$alt_lang];
+		$alt_lang_is_default = true;
 	}
-
-	// content not available in requested language (bad!!) what now?
-
-	// find available languages
 	$available_languages = array();
 	foreach($content as $language => $lang_text) {
-		//$lang_text = trim($lang_text);//do we need to trim? not really ... but better trim in qtranxf_split_blocks then
-		//$content[$language]=$lang_text;
-		if(!empty($lang_text)) $available_languages[] = $language;
+		if(empty($lang_text)) continue;
+		if(!qtranxf_isEnabled($language)) continue;
+		$available_languages[] = $language;
+		if(empty($alt_lang)){
+			$alt_lang = $language;
+			$alt_content = $lang_text;
+		}
 	}
-
-	//// if no languages available show full text
-	//if(sizeof($available_languages)==0) return $text;//not is is not empty, since we called qtranxf_get_language_blocks
-	//// if content is available show the content in the requested language
-	//if(!empty($content[$lang])) {//already done above now
-	//	return $content[$lang];
-	//}
-	//// content not available in requested language (bad!!) what now?
+	if(!$alt_lang) return '';
 
 	if(!$show_available){
+		if ($q_config['show_displayed_language_prefix'])
+			return '('.$q_config['language_name'][$alt_lang].') '.$alt_content;
+		else
+			return $alt_content;
+	/*
 		// check if content is available in default language, if not return first language found. (prevent empty result)
+		$language = $q_config['default_language'];
+		if(!isset($available_languages[$language])){
+			
+		}
 		if($lang!=$q_config['default_language']){
 			$language = $q_config['default_language'];
-			//$lang_text = qtranxf_use($language, $text, $show_available);
 			$lang_text = $content[$language];
-			$lang_text = trim($lang_text);
+			//$lang_text = trim($lang_text);
 			if(!empty($lang_text)){
 				if ($q_config['show_displayed_language_prefix'])
-					return "(".$q_config['language_name'][$language].") ".$lang_text;
+					return '('.$q_config['language_name'][$language].') '.$lang_text;
 				else
 					return $lang_text;
 			}
@@ -1414,31 +1419,56 @@ function qtranxf_use_block($lang, $blocks, $show_available=false, $show_empty=fa
 			$lang_text = trim($lang_text);
 			if(empty($lang_text)) continue;
 			if ($q_config['show_displayed_language_prefix'])
-				return "(".$q_config['language_name'][$language].") ".$lang_text;
+				return '('.$q_config['language_name'][$language].') '.$lang_text;
 			else
 				return $lang_text;
 		}
+	*/
 	}
+
 	// display selection for available languages
-	$available_languages = array_unique($available_languages);
-	$language_list = "";
+	//$available_languages = array_unique($available_languages);
+	$language_list = '';
 	if(preg_match('/%LANG:([^:]*):([^%]*)%/',$q_config['not_available'][$lang],$match)) {
 		$normal_separator = $match[1];
 		$end_separator = $match[2];
 		// build available languages string backward
 		$i = 0;
 		foreach($available_languages as $language) {
-			if($i==1) $language_list  = $end_separator.$language_list;
-			if($i>1) $language_list  = $normal_separator.$language_list;
+			if($i==1) $language_list = $end_separator.$language_list;
+			if($i>1) $language_list = $normal_separator.$language_list;
 			$language_list = '<a href="'.qtranxf_convertURL('', $language, false, true).'">'.$q_config['language_name'][$language].'</a>'.$language_list;
-			$i++;
+			++$i;
 		}
 	}
 	//qtranxf_dbg_echo('$language_list=',$language_list,true);
 	//if(isset($post)){
 	//	//qtranxf_dbg_echo('$post='.$post);
 	//}
-	return "<p>".preg_replace('/%LANG:([^:]*):([^%]*)%/', $language_list, $q_config['not_available'][$lang])."</p>";
+
+	if ( !empty($q_config['show_alternative_content']) && $q_config['show_alternative_content'] ) {
+		// show content in  alternative language
+		if(sizeof($available_languages) > 1){
+			if($alt_lang_is_default){
+				//$fmt = __('For the sake of viewer convenience, the content is shown below in this site default language %s.', 'qtranslate');
+				$msg = __('For the sake of viewer convenience, the content is shown below in this site default language.', 'qtranslate');
+			}else{
+				//$fmt = __('For the sake of viewer convenience, the content is shown below in an available alternative language %s.', 'qtranslate');
+				$msg = __('For the sake of viewer convenience, the content is shown below in one of the available alternative languages.', 'qtranslate');
+			}
+			//$msg = sprintf($fmt, '<a href="'.qtranxf_convertURL('', $language, false, true).'">'.$q_config['language_name'][$alt_lang].'</a>');
+			$msg .= ' '.__('You may click one of the links to switch the site language to another available language.', 'qtranslate');
+		}else{
+			$msg = __('For the sake of viewer convenience, the content is shown below in the alternative language.', 'qtranslate');
+			$msg .= ' '.__('You may click the link to switch the active language.', 'qtranslate');
+		}
+		$altlanguagecontent = ' '.$msg.'</p>'.$alt_content;
+	}else{
+		//by default, do not show alternative content
+		$altlanguagecontent = '</p>';
+	}
+
+	return '<p>'.preg_replace('/%LANG:([^:]*):([^%]*)%/', $language_list, $q_config['not_available'][$lang]).$altlanguagecontent;
 }
 }
 

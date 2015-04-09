@@ -23,6 +23,10 @@ if(!function_exists('qtrans_getLanguageName')){
 if(!function_exists('qtrans_getSortedLanguages')){
 	function qtrans_getSortedLanguages($reverse = false){ return qtranxf_getSortedLanguages($reverse); }
 }
+function qtrans_join($texts) {
+	if(!is_array($texts)) $texts = qtranxf_split($texts);
+	qtranxf_join_b($texts);
+}
 if(!function_exists('qtrans_split')){
 	function qtrans_split($text, $quicktags = true){ return qtranxf_split($text); }
 }

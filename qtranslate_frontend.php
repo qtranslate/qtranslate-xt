@@ -24,10 +24,7 @@ function qtranxf_head(){
 	global $q_config;
 
 	if( $q_config['header_css_on'] ){
-		$header_css = qtranxf_front_header_css();
-		echo '<style type="text/css">'.PHP_EOL;
-		echo $header_css;
-		echo '</style>'.PHP_EOL;
+		echo '<style type="text/css">' . PHP_EOL .$q_config['header_css'].'</style>'. PHP_EOL;
 	}
 	do_action('qtranslate_head_add_css');//not really needed?
 
@@ -37,6 +34,7 @@ function qtranxf_head(){
 	// set links to translations of current page
 	//$lang=$q_config['language'];
 	//echo "\n<meta http-equiv=\"Content-Language\" content=\"".str_replace('_','-',$q_config['locale'][$lang])."\" />\n"; //obsolete way 
+	echo '<meta name="generator" content="qTranslate-X '.QTX_VERSION.'" />'.PHP_EOL;
 	foreach($q_config['enabled_languages'] as $language) {
 		//if($language != qtranxf_getLanguage())//standard requires them all
 		echo '<link hreflang="'.$language.'" href="'.qtranxf_convertURL('',$language,false,true).'" rel="alternate" />'.PHP_EOL;

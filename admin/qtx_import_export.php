@@ -65,6 +65,11 @@ function qtranxf_migrate_options_copy($nm_to,$nm_from)
 			case 'qtranslate_header_css':
 			case 'qtranslate_filter_options_mode':
 			case 'qtranslate_filter_options':
+			case 'qtranslate_highlight_mode':
+			case 'qtranslate_highlight_mode_custom_css':
+			case 'qtranslate_lsb_style':
+			case 'qtranslate_lsb_style_wrap_class':
+			case 'qtranslate_lsb_style_active_class':
 				continue;
 			default: break;
 		}
@@ -73,6 +78,12 @@ function qtranxf_migrate_options_copy($nm_to,$nm_from)
 		if(strpos($name,'_flag_location')>0) continue;
 		$nm = str_replace($nm_from,$nm_to,$name);
 		update_option($nm,$value);
+	}
+	//save enabled languages
+	global $q_config, $qtranslate_options;
+	foreach($qtranslate_options['languages'] as $nm => $opn){
+		$op = str_replace($nm_from,$nm_to,$opn);
+		update_option($op,$q_config[$nm]);
 	}
 }
 
@@ -109,7 +120,6 @@ function qtranxf_migrate_plugins()
 	//qtranxf_migrate_plugin('ztranslate');//ok same db
 }
 add_action('qtranslate_saveConfig','qtranxf_migrate_plugins',30);
-//add_action('qtranslate_init_begin','qtranxf_migrate_plugins',11);
 
 function qtranxf_add_row_migrate($nm,$plugin) {
 	$plugin_file = WP_CONTENT_DIR.'/plugins/'.$plugin;

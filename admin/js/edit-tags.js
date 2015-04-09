@@ -12,9 +12,10 @@ qTranslateConfig.js={
 
 		qtx.addContentHookByIdC('tag-description',form);
 
-		qtranxj_ce('input', {name: 'qtrans_term_field_name', type: 'hidden', className: 'hidden', value: h.mlContentField.name }, form, true);
+		qtranxj_ce('input', {name: 'qtrans_term_field_name', type: 'hidden', className: 'hidden', value: h.name }, form, true);
 
-		var default_name=h.contents[qTranslateConfig.default_language];
+		//var default_name=h.contents[qTranslateConfig.default_language];
+		var default_name=h.fields[qTranslateConfig.default_language].value;
 		qtranxj_ce('input', {name: 'qtrans_term_field_default_name', type: 'hidden', className: 'hidden', value: default_name }, form, true);
 
 		qtx.addDisplayHookById('parent');

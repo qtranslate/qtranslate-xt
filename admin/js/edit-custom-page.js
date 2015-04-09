@@ -12,8 +12,9 @@ qTranslateConfig.js={
 	}
 /*
 ,
-	onTabSwitch: function(lang,qtx)
+	onTabSwitch: function(lang)
 	{
+		var qtx = this;// object of qTranslateX
 		//implement additional actions on tab click, if applicable.
 	}
 */

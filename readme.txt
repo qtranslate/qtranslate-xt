@@ -114,7 +114,11 @@ The following fields are pre-configured to be translatable by default:
 - all input fields of class "wp-editor-area", which normally include all TinyMCE visual editors.
 - fields with the following id: "title", "excerpt", "attachment_caption", "attachment_alt".
 
-This applies to post, pages and media editors (/wp-admin/post*). 
+This applies to post, pages and media editors (/wp-admin/post*).
+
+### I am a developer, how can I alter global configuration of qTranslate-X for the specific purpose of my plugin? ###
+
+You can use `add_action` for hooks `qtranslate_loadConfig` and `qtranslate_admin_loadConfig` to alter the configuration stored in global variable `$q_config`.
 
 ### How do I translate custom configuration fields, which are not handled by language switch buttons? ###
 
@@ -245,7 +249,67 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 
 ## Changelog ##
 
+### 3.3 stable ###
+* Includes all changes after version 3.2.9. Please, review [Release Notes](https://qtranslatexteam.wordpress.com/2015/03/30/release-notes-3-3).
+
+### 3.2.9.8.4 alpha ###
+* Fix: taxonomy names with apostrophe and other special characters: [Issue #122](https://github.com/qTranslate-Team/qtranslate-x/issues/122).
+* Fix: locale 'ja' changed to 'ja_JP'. Thanks to Yusuke Noguchi.
+* Translation: thanks to all translators contributed.
+
+### 3.2.9.8.3 alpha ###
+* Feature: choice 'Single Language Mode' for option 'Editor Mode'.
+* Enhancement: New release handling framework.
+* Fix: function `qtranxf_sanitize_url`, thanks to [HAYASHI Ryo](https://github.com/ryo88c): [Issue #117](https://github.com/qTranslate-Team/qtranslate-x/pull/117).
+
+### 3.2.9.8.2 alpha ###
+* Feature: js function `addTabSwitchListener` is designed for other plugin integration, read [Integration](https://qtranslatexteam.wordpress.com/integration/) for more information.
+* Fix: handling of cookie `qtrans_edit_language`.
+
+### 3.2.9.8.1 alpha ###
+* Fix: function `qtranxf_join_b`, test for `qtranxf_allthesame`.
+* PHP version compatibility: syntax changed in '`qtranxf_collect_translations*`'.
+
+### 3.2.9.8 alpha ###
+* Improvement: TinyMCE handling is re-designed once again. [[WP Topic](https://wordpress.org/support/topic/default-wordpress-photo-gallery)] [[Issue #115](https://github.com/qTranslate-Team/qtranslate-x/issues/115)]
+* Feature: new type of hook, displayHookAttrs, in `admin/js/common.js` to translate submit button texts (used in Woocommerce, for example).
+
+### 3.2.9.7 alpha ###
+* Translation: German (de_DE) po/mo files updated, thanks to Maurizio Omissoni.
+* Translation: Italian (it_IT) po/mo files updated, thanks to Maurizio Omissoni.
+* Feature: new front-end option 'Show content in an alternative language': [Issue #21](https://github.com/qTranslate-Team/qtranslate-x/issues/21).
+* Improvement: error handling for gettext updates [#105](https://github.com/qTranslate-Team/qtranslate-x/pull/105) and [#113](https://github.com/qTranslate-Team/qtranslate-x/pull/113), and other minor code clean up.
+
+### 3.2.9.6 alpha ###
+* Translation: Dutch (nl_NL) po/mo files updated. Thanks to Marius Siroen.
+* Translation: Portuguese (pt_PT) po/mo files updated. Thanks to Pedro Mendonça.
+* Feature: framework for handling admin notices on new releases.
+* Improvement: design of option handling: optimization and simplification in the code.
+* Fix: replaced pre-defined language code 'pt-br' with 'pb': [Issue #104](https://github.com/qTranslate-Team/qtranslate-x/issues/104).
+* Fix: hidden multilingual input fields moved right before their single-lingual originals: [WP Topic](https://wordpress.org/support/topic/problems-with-exisiting-posts).
+
+### 3.2.9.5 ###
+* Improvement: 'Code' column in the list of languages. Thanks to Pedro Mendonça for the [discussion](https://github.com/qTranslate-Team/qtranslate-x/issues/102).
+* Fix: date/time formats containing backslashes: [Issue #99](https://github.com/qTranslate-Team/qtranslate-x/issues/99).
+
+### 3.2.9.4 ###
+* Translation: po files updated. Thanks to Pedro Mendonça for a [discussion](https://github.com/qTranslate-Team/qtranslate-x/pull/100).
+* Fix: languages management problems: [Issue #102](https://github.com/qTranslate-Team/qtranslate-x/issues/102).
+
+### 3.2.9.3 ###
+* Feature: `qtrans_join` added to option 'Compatibility Functions'. [[Issue #106](https://github.com/qTranslate-Team/qtranslate-x/issues/106)]
+* Translation: Portuguese (pt_PT) po/mo files updated. Thanks to Pedro Mendonça.
+* Fix: various problems with new option save/load methods.
+* Fix: CSS syntax. Thanks to [Michel Weimerskirch](https://github.com/mweimerskirch): [Issue](https://github.com/qTranslate-Team/qtranslate-x/commit/83b4a9b513e623df3e9800888c742683c51eed6a#commitcomment-10435679).
+
+### 3.2.9.2 ###
+* Feature: option "LSB Style" to customize Language Switching Buttons style.
+* Feature: after the first activation, the current WordPress active language becomes the default one for qTranslate-X, instead of English. No other languages are added anymore.
+* Improvement: option load and save algorithm re-designed.
+* Fix: special cases for function `convertURL`.
+
 ### 3.2.9.1 ###
+* Feature: Option "Highlight Style". Thanks to [Michel Weimerskirch](https://github.com/mweimerskirch).
 * Fix: handling of relative urls in qtranxf_convertURL.
 * Fix: default locale for Estonian is 'et_EE'.
 * Improvement: more on 'URL Modification Mode' option Per-Domain.

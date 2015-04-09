@@ -15,21 +15,25 @@ function qtranxf_updateGettextDatabases($force = false, $only_for_language = '')
 	require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
 	require_once ABSPATH . 'wp-admin/includes/file.php';
 	include( ABSPATH . WPINC . '/version.php' ); // include an unmodified $wp_version
-	$result = translations_api( 'core', array( 'version' => $wp_version ) );
+	$result = translations_api( 'core', array( 'version' => $wp_version ));
 
-	foreach ( $result['translations'] as $translation ) {
-		$locale = substr($translation['language'], 0, 2);
-		if (
-			isset( $q_config['locale'][$locale] )
-			&& $q_config['locale'][$locale] == $translation['language']
-			&& qtranxf_isEnabled($locale)
-		) {
-			$translation = (object) $translation;
-			$skin              = new Automatic_Upgrader_Skin;
-			$upgrader          = new Language_Pack_Upgrader( $skin );
-			$translation->type = 'core';
-			$result            = $upgrader->upgrade( $translation, array( 'clear_update_cache' => false ) );
+	if ( is_wp_error( $result ) ) {
+		return $result;
+	} else {
+		foreach ( $result['translations'] as $translation ) {
+			$locale = substr($translation['language'], 0, 2);
+			if (
+				isset( $q_config['locale'][$locale] )
+				&& $q_config['locale'][$locale] == $translation['language']
+				&& qtranxf_isEnabled($locale)
+			) {
+				$translation = (object) $translation;
+				$skin              = new Automatic_Upgrader_Skin;
+				$upgrader          = new Language_Pack_Upgrader( $skin );
+				$translation->type = 'core';
+				$result            = $upgrader->upgrade( $translation, array( 'clear_update_cache' => false ) );
+			}
 		}
+		return true;
 	}
-	return true;
 }

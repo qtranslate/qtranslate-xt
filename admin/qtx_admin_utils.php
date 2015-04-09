@@ -1,5 +1,25 @@
 <?php
 
+function qtranxf_reloadConfig() {
+	global $q_config;
+	$url_info = isset($q_config['url_info']) ? $q_config['url_info'] : null;
+	//qtranxf_dbg_log('qtranxf_reloadConfig: $url_info: ',$url_info);
+	qtranxf_del_admin_filters();
+	qtranxf_loadConfig();
+	qtranxf_admin_loadConfig();
+	if($url_info){
+		$q_config['url_info'] = $url_info;
+		if(isset($q_config['url_info']['language'])){
+			$q_config['language'] = $q_config['url_info']['language'];
+		}
+		if(!qtranxf_isEnabled($q_config['language'])){
+			$q_config['language'] = $q_config['default_language'];
+		}
+		//qtranxf_dbg_log('qtranxf_reloadConfig: $q_config[language]: ',$q_config['language']);
+	}
+	qtranxf_load_option_qtrans_compatibility();
+}
+
 function qtranxf_detect_admin_language($url_info) {
 	global $q_config;
 	$cs=null;
@@ -9,17 +29,26 @@ function qtranxf_detect_admin_language($url_info) {
 		$url_info['lang_cookie_admin'] = $lang;
 	}
 	if(!$lang){
-		$locale = get_locale();
-		$url_info['locale'] = $locale;
-		$lang = qtranxf_resolveLangCase(substr($locale,0,2),$cs);
-		$url_info['lang_locale'] = $lang;
-		if(!$lang) $lang = $q_config['default_language'];
+		//$locale = get_locale();
+		//$url_info['locale'] = $locale;
+		//$lang = qtranxf_resolveLangCase(substr($locale,0,2),$cs);
+		//$url_info['lang_locale'] = $lang;
+		//if(!$lang)
+		$lang = $q_config['default_language'];
 	}
 	$url_info['doing_front_end'] = false;
 	$url_info['lang_admin'] = $lang;
 	return $url_info;
 }
 add_filter('qtranslate_detect_admin_language','qtranxf_detect_admin_language');
+
+function qtranxf_join_texts($texts,$sep) {
+	switch($sep){
+		//case '<': return qtranxf_join_c($texts);//no longer in use
+		case 'byline': return qtranxf_join_byline($texts);
+		default: return qtranxf_join_b($texts);
+	}
+}
 
 function qtranxf_convert_to_b($text) {
 	$blocks = qtranxf_get_language_blocks($text);
@@ -136,6 +165,7 @@ function qtranxf_convert_to_b_no_closing_deep($text) {
 
 function qtranxf_convert_database($action){
 	global $wpdb;
+	@set_time_limit(0);
 	$wpdb->show_errors();
 	qtranxf_convert_database_options($action);
 	qtranxf_convert_database_posts($action);
@@ -367,6 +397,16 @@ function qtranxf_updateTermLibrary() {
 	}
 }
 
+function qtranxf_stripSlashesIfNecessary($str) {
+	/**
+	 * @since 3.2.9.8.4 WordPress now always supplies slashed data
+	 */
+	//if(1==get_magic_quotes_gpc()) {
+		$str = stripslashes($str);
+	//}
+	return $str;
+}
+
 function qtranxf_updateTermLibraryJoin() {
 	global $q_config;
 	if(!isset($_POST['action'])) return;
@@ -402,12 +442,13 @@ add_action('edit_terms','qtranxf_edit_terms');
 
 function qtranxf_language_columns($columns) {
 	return array(
+		'code' => _x('Code', 'Language Code', 'qtranslate'),
 		'flag' => __('Flag', 'qtranslate'),
 		'name' => __('Name', 'qtranslate'),
 		'status' => __('Action', 'qtranslate'),
-		'status2' => '',
-		'status3' => ''
-		);
+		'status2' => __('Edit', 'qtranslate'),
+		'status3' => __('Stored', 'qtranslate')
+	);
 }
 
 function qtranxf_languageColumnHeader($columns){
@@ -427,15 +468,56 @@ function qtranxf_languageColumn($column) {
 		$available_languages = qtranxf_getAvailableLanguages($post->post_content);
 		$missing_languages = array_diff($q_config['enabled_languages'], $available_languages);
 		$available_languages_name = array();
+		$language_names = null;
 		foreach($available_languages as $language) {
-			$available_languages_name[] = $q_config['language_name'][$language];
+			if(isset($q_config['language_name'][$language])){
+				$language_name = $q_config['language_name'][$language];
+			}else{
+				if(!$language_names) $language_names = qtranxf_default_language_name();
+				$language_name = isset($language_names[$language]) ? $language_names[$language] : __('Unknown Language', 'qtranslate');
+				$language_name .= ' ('.__('Not enabled','qtranslate').')';
+			}
+			$available_languages_name[] = $language_name;
 		}
-		$available_languages_names = join(", ", $available_languages_name);
+		$available_languages_names = join(', ', $available_languages_name);
 		
 		echo apply_filters('qtranslate_available_languages_names',$available_languages_names);
 		do_action('qtranslate_languageColumn', $available_languages, $missing_languages);
 	}
 	return $column;
+}
+
+function qtranxf_fetch_file_selection($dir,$suffix='.css'){
+	//qtranxf_dbg_log('qtranxf_fetch_file_selection: dir:',$dir);
+	$files = array();
+	$dir_handle = @opendir($dir);
+	if(!$dir_handle) return false;
+	while (false !== ($file = readdir($dir_handle))) {
+		if(!qtranxf_endsWith($file,$suffix)) continue;
+		$nm = basename($file, $suffix);
+		if(!$nm) continue;
+		$nm = str_replace('_',' ',$nm);
+		if(qtranxf_endsWith($nm,'.min')){
+			$nm = substr($nm,-4);
+			$files[$nm] = $file;
+		}elseif(!isset($files[$nm])){
+			$files[$nm] = $file;
+		}
+	}
+	ksort($files);
+	//qtranxf_dbg_log('qtranxf_fetch_file_selection: files:',$files);
+	return $files;
+}
+
+function qtranxf_fixAdminBar($wp_admin_bar) {
+	global $wp_admin_bar;
+	if(!isset($wp_admin_bar)) return;
+	$nodes=$wp_admin_bar->get_nodes();
+	//qtranxf_dbg_echo('$nodes:',$nodes);
+	if(!isset($nodes)) return;//sometimes $nodes is NULL
+	foreach($nodes as $node) {
+		$wp_admin_bar->add_node(qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($node));
+	}
 }
 
 function qtranxf_admin_list_cats($text) {
@@ -574,7 +656,25 @@ function qtranxf_add_admin_filters(){
 		break;
 	}
 }
-qtranxf_add_admin_filters();
+
+function qtranxf_del_admin_filters(){
+	global $q_config;
+	remove_filter('the_editor', 'qtranxf_the_editor');
+}
+
+/**
+ * Get the currently selected admin color scheme (to be used for generated CSS)
+ * @return array
+ */
+function qtranxf_get_user_admin_color() {
+	global $_wp_admin_css_colors;
+	$user_id = get_current_user_id();
+	$user_admin_color = get_user_meta( $user_id, 'admin_color', true );
+	if(!$user_admin_color){ //ajax calls do not have user authenticated?
+		$user_admin_color = 'fresh';
+	}
+	return $_wp_admin_css_colors[$user_admin_color]->colors;
+}
 
 add_filter('manage_language_columns', 'qtranxf_language_columns');
 add_filter('manage_posts_columns', 'qtranxf_languageColumnHeader');

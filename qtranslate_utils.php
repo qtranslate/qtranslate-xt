@@ -38,8 +38,7 @@ if(WP_DEBUG){
 			error_log($msg.PHP_EOL,3,$f);
 			if($exit) exit();
 		}
-	}
-	if(!function_exists('qtranxf_dbg_echo')){
+
 		function qtranxf_dbg_echo($msg,$var='novar',$bt=false,$exit=false){
 			if( $var !== 'novar' )
 				$msg .= var_export($var,true);
@@ -49,13 +48,11 @@ if(WP_DEBUG){
 			}
 			if($exit) exit();
 		}
-	}
-	if(!function_exists('qtranxf_dbg_log_if')){
+
 		function qtranxf_dbg_log_if($condition,$msg,$var='novar',$bt=false,$exit=false){
 			if($condition)qtranxf_dbg_log($msg,$var,$bt,$exit);
 		}
-	}
-	if(!function_exists('qtranxf_dbg_echo_if')){
+
 		function qtranxf_dbg_echo_if($condition,$msg,$var='novar',$bt=false,$exit=false){
 			if($condition)qtranxf_dbg_echo($msg,$var,$bt,$exit);
 		}
@@ -69,14 +66,22 @@ if(WP_DEBUG){
 	/*qtranxf_dbg */ //add_action('qtranslate_init_language','qtranxf_do_tests');
 
 }else{
-	if(!function_exists('qtranxf_dbg_log')){ function qtranxf_dbg_log($msg,$var=null,$bt=false,$exit=false){} }
-	if(!function_exists('qtranxf_dbg_echo')){ function qtranxf_dbg_echo($msg,$var=null,$bt=false,$exit=false){} }
-	if(!function_exists('qtranxf_dbg_log_if')){ function qtranxf_dbg_log_if($condition,$msg,$var=null,$bt=false,$exit=false){} }
-	if(!function_exists('qtranxf_dbg_echo_if')){ function qtranxf_dbg_echo_if($condition,$msg,$var=null,$bt=false,$exit=false){} }
+	if(!function_exists('qtranxf_dbg_log')){
+		function qtranxf_dbg_log($msg,$var=null,$bt=false,$exit=false){}
+		function qtranxf_dbg_echo($msg,$var=null,$bt=false,$exit=false){}
+		function qtranxf_dbg_log_if($condition,$msg,$var=null,$bt=false,$exit=false){}
+		function qtranxf_dbg_echo_if($condition,$msg,$var=null,$bt=false,$exit=false){}
+	}
 	//assert_options(ASSERT_ACTIVE,false);
 	//assert_options(ASSERT_WARNING,false);
 	//assert_options(ASSERT_QUIET_EVAL,true);
 }// */
+
+/**
+ * Default domain translation for strings already translated by WordPress.
+ * Use of this function prevents xgettext, poedit and other translating parsers from including the string that does not need translation.
+ */
+function qtranxf_translate_wp($s) { __($s); }
 
 function qtranxf_parseURL($url) {
 	//this is not the same as native parse_url and so it is in use
@@ -168,6 +173,7 @@ function qtranxf_copy_url_info($urlinfo) {
 	if(isset($urlinfo['pass'])) $r['pass'] = $urlinfo['pass'];
 	if(isset($urlinfo['host'])) $r['host'] = $urlinfo['host'];
 	if(isset($urlinfo['path-base'])) $r['path-base'] = $urlinfo['path-base'];
+	if(isset($urlinfo['path-base-length'])) $r['path-base-length'] = $urlinfo['path-base-length'];
 	if(isset($urlinfo['wp-path'])) $r['wp-path'] = $urlinfo['wp-path'];
 	if(isset($urlinfo['query'])) $r['query'] = $urlinfo['query'];
 	if(isset($urlinfo['fragment'])) $r['fragment'] = $urlinfo['fragment'];
@@ -313,18 +319,11 @@ function qtranxf_del_query_arg(&$query, $key){
 */
 function qtranxf_sanitize_url($url)
 {
-	$url = preg_replace('|[^a-z0-9-~+_.?#=!&;,/:%@$\|*\'()\\x80-\\xff]|i', '', $url);
+	$url = preg_replace('|[^a-z0-9-~+_.?#=!&;,/:%@$\|*\'()\[\]\\x80-\\xff]|i', '', $url);
 	$strip = array('%0d', '%0a', '%0D', '%0A');
 	$count;
 	do{ $url = str_replace( $strip, '', $url, $count ); } while($count);
 	return $url;
-}
-
-function qtranxf_stripSlashesIfNecessary($str) {
-	if(1==get_magic_quotes_gpc()) {
-		$str = stripslashes($str);
-	}
-	return $str;
 }
 
 function qtranxf_insertDropDownElement($language, $url, $id){
@@ -595,14 +594,4 @@ function qtranxf_getSortedLanguages($reverse = false) {
 
 function qtranxf_can_redirect() {
 	return !defined('WP_ADMIN') && !defined('DOING_AJAX') && !defined('WP_CLI') && !defined('DOING_CRON') && empty($_POST);
-}
-
-/**
- * Get the currently selected admin color scheme (to be used for generated CSS)
- * @return array
- */
-function qtranxf_get_user_admin_color() {
-	global $_wp_admin_css_colors;
-	$user_admin_color = get_user_meta( get_current_user_id(), 'admin_color', true );
-	return $_wp_admin_css_colors[$user_admin_color]->colors;
 }
