@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: qTranslate-X 3.2.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-09 19:13+0200\n"
-"PO-Revision-Date: 2015-04-09 19:33+0200\n"
-"Last-Translator: nedal@arabhosters.com\n"
+"POT-Creation-Date: 2015-04-10 22:36+0200\n"
+"PO-Revision-Date: 2015-04-10 22:37+0200\n"
+"Last-Translator: nedal <nedal@arabhosters.com>\n"
 "Language-Team: qTranslate Team Translators <nedal.elghamry@gmail.com>\n"
 "Language: Arabic\n"
 "MIME-Version: 1.0\n"
@@ -17,72 +17,32 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPath-1: ..\n"
 
-#: ../qtranslate_widget.php:50
-msgid "Allows your visitors to choose a Language."
-msgstr "السماح للزوار بتغيير اللغة"
-
-#: ../qtranslate_widget.php:51
-msgid "qTranslate Language Chooser"
-msgstr "اختيار اللغة"
-
-#: ../qtranslate_widget.php:67 ../qtranslate_frontend.php:160
-msgid "Language"
-msgstr "اللغة"
-
-#: ../qtranslate_widget.php:111
-msgid "Title:"
-msgstr "العنوان"
-
-#: ../qtranslate_widget.php:112
-msgid "Hide Title:"
-msgstr "اخفاء العنوان"
-
-#: ../qtranslate_widget.php:113
-msgid "Hide Title Colon:"
-msgstr ""
-
-#: ../qtranslate_widget.php:114
-msgid "Display:"
-msgstr "عرض"
-
-#: ../qtranslate_widget.php:115
-msgid "Text only"
-msgstr "اسم اللغة"
-
-#: ../qtranslate_widget.php:116
-msgid "Image only"
-msgstr "صورة"
-
-#: ../qtranslate_widget.php:117
-msgid "Text and Image"
-msgstr "اسم اللغة و صورة"
-
-#: ../qtranslate_widget.php:118
-msgid "Dropdown Box"
-msgstr "قائمة منسدلة"
-
-#: ../qtranslate_widget.php:119
-msgid "Widget CSS:"
-msgstr ""
-
-#: ../qtranslate_widget.php:119 ../admin/qtx_configuration.php:1406
-#: ../admin/qtx_configuration.php:1568
-msgid "To reset to default, clear the text."
-msgstr "لاعادة التعيين امسح المحتوي وقم بالحفظ"
-
-#: ../qtranslate_widget.php:119 ../admin/qtx_configuration.php:1406
-msgid "To disable this inline CSS, clear the check box."
-msgstr ""
-
-#: ../qtranslate_widget.php:119
-#, php-format
+#: ../qtranslate_core.php:1454
 msgid ""
-"Other common CSS block for flag classes \"%s\" is loaded in the head of HTML "
-"and can be controlled with option \"%s\"."
+"For the sake of viewer convenience, the content is shown below in this site "
+"default language."
 msgstr ""
 
-#: ../qtranslate_widget.php:119 ../admin/qtx_configuration.php:1400
-msgid "Head inline CSS"
+#: ../qtranslate_core.php:1457
+msgid ""
+"For the sake of viewer convenience, the content is shown below in one of the "
+"available alternative languages."
+msgstr ""
+
+#: ../qtranslate_core.php:1460
+msgid ""
+"You may click one of the links to switch the site language to another "
+"available language."
+msgstr ""
+
+#: ../qtranslate_core.php:1462
+msgid ""
+"For the sake of viewer convenience, the content is shown below in the "
+"alternative language."
+msgstr ""
+
+#: ../qtranslate_core.php:1463
+msgid "You may click the link to switch the active language."
 msgstr ""
 
 #: ../qtranslate_services.php:62
@@ -379,16 +339,16 @@ msgstr ""
 
 #: ../qtranslate_services.php:899 ../qtranslate_services.php:906
 msgid "unavailable"
-msgstr ""
+msgstr "غير متاح"
 
 #: ../qtranslate_services.php:904
 msgid "free"
-msgstr ""
+msgstr "مجاني"
 
 #: ../qtranslate_services.php:911
 #, php-format
 msgid "<p>Price: %1$s %2$s</p>"
-msgstr ""
+msgstr "<p>السعر: %1$s %2$s</p>"
 
 #: ../qtranslate_services.php:912
 #, php-format
@@ -403,77 +363,183 @@ msgstr ""
 msgid "Translate"
 msgstr "ترجمة"
 
-#: ../qtranslate_core.php:1454
-msgid ""
-"For the sake of viewer convenience, the content is shown below in this site "
-"default language."
-msgstr ""
-
-#: ../qtranslate_core.php:1457
-msgid ""
-"For the sake of viewer convenience, the content is shown below in one of the "
-"available alternative languages."
-msgstr ""
-
-#: ../qtranslate_core.php:1460
-msgid ""
-"You may click one of the links to switch the site language to another "
-"available language."
-msgstr ""
-
-#: ../qtranslate_core.php:1462
-msgid ""
-"For the sake of viewer convenience, the content is shown below in the "
-"alternative language."
-msgstr ""
-
-#: ../qtranslate_core.php:1463
-msgid "You may click the link to switch the active language."
-msgstr ""
+#: ../qtranslate_frontend.php:160 ../qtranslate_widget.php:67
+msgid "Language"
+msgstr "اللغة"
 
 #: ../qtranslate_frontend.php:166 ../qtranslate_frontend.php:193
-#: ../admin/qtx_admin_utils.php:446 ../admin/qtx_configuration.php:677
-#: ../admin/qtx_configuration.php:700
+#: ../admin/qtx_configuration.php:677 ../admin/qtx_configuration.php:700
+#: ../admin/qtx_admin_utils.php:446
 msgid "Flag"
 msgstr "العلم"
 
-#: ../admin/qtx_admin_utils.php:175
-msgid "Database has been converted to square bracket format."
+#: ../qtranslate_widget.php:50
+msgid "Allows your visitors to choose a Language."
+msgstr "السماح للزوار بتغيير اللغة"
+
+#: ../qtranslate_widget.php:51
+msgid "qTranslate Language Chooser"
+msgstr "اختيار اللغة"
+
+#: ../qtranslate_widget.php:111
+msgid "Title:"
+msgstr "العنوان"
+
+#: ../qtranslate_widget.php:112
+msgid "Hide Title:"
+msgstr "اخفاء العنوان"
+
+#: ../qtranslate_widget.php:113
+msgid "Hide Title Colon:"
 msgstr ""
 
-#: ../admin/qtx_admin_utils.php:175 ../admin/qtx_admin_utils.php:177
-msgid "Note: custom entries are not touched."
+#: ../qtranslate_widget.php:114
+msgid "Display:"
+msgstr "عرض"
+
+#: ../qtranslate_widget.php:115
+msgid "Text only"
+msgstr "اسم اللغة"
+
+#: ../qtranslate_widget.php:116
+msgid "Image only"
+msgstr "صورة"
+
+#: ../qtranslate_widget.php:117
+msgid "Text and Image"
+msgstr "اسم اللغة و صورة"
+
+#: ../qtranslate_widget.php:118
+msgid "Dropdown Box"
+msgstr "قائمة منسدلة"
+
+#: ../qtranslate_widget.php:119
+msgid "Widget CSS:"
 msgstr ""
 
-#: ../admin/qtx_admin_utils.php:177
-msgid "Database has been converted to legacy dual-tag format."
+#: ../qtranslate_widget.php:119 ../admin/qtx_configuration.php:1406
+#: ../admin/qtx_configuration.php:1568
+msgid "To reset to default, clear the text."
+msgstr "لاعادة التعيين امسح المحتوي وقم بالحفظ"
+
+#: ../qtranslate_widget.php:119 ../admin/qtx_configuration.php:1406
+msgid "To disable this inline CSS, clear the check box."
 msgstr ""
 
-#: ../admin/qtx_admin_utils.php:447 ../admin/qtx_configuration.php:718
-msgid "Name"
-msgstr "الاسم"
+#: ../qtranslate_widget.php:119
+#, php-format
+msgid ""
+"Other common CSS block for flag classes \"%s\" is loaded in the head of HTML "
+"and can be controlled with option \"%s\"."
+msgstr ""
 
-#: ../admin/qtx_admin_utils.php:449 ../admin/qtx_configuration.php:1610
-#: ../admin/qtx_configuration.php:1646
-msgid "Edit"
-msgstr "تعديل"
+#: ../qtranslate_widget.php:119 ../admin/qtx_configuration.php:1400
+msgid "Head inline CSS"
+msgstr ""
 
-#: ../admin/qtx_admin_utils.php:450
-msgid "Stored"
-msgstr "مخزنة"
+#: ../admin/qtx_activation_hook.php:92 ../admin/qtx_activation_hook.php:215
+#: ../admin/qtx_configuration.php:1025
+#, php-format
+msgid ""
+"It might be a good idea to review %smigration instructions%s, if you have "
+"not yet done so."
+msgstr ""
 
-#: ../admin/qtx_admin_utils.php:461 ../admin/qtx_configuration.php:664
-#: ../admin/qtx_configuration.php:1597
-msgid "Languages"
-msgstr "اللغات"
+#: ../admin/qtx_activation_hook.php:93
+#, php-format
+msgid ""
+"Activation of plugin %s deactivated plugin %s since they cannot run "
+"simultaneously."
+msgstr ""
 
-#: ../admin/qtx_admin_utils.php:477
-msgid "Unknown Language"
-msgstr "اللغة غير معروفة"
+#: ../admin/qtx_activation_hook.php:95
+#, php-format
+msgid ""
+"The compatible settings from %s have been imported to %s. Further tuning, "
+"import, export and reset of options can be done at Settings/Languages "
+"configuration page, once %s is running.%sContinue%s"
+msgstr ""
 
-#: ../admin/qtx_admin_utils.php:478
-msgid "Not enabled"
-msgstr "غير مفعلة"
+#: ../admin/qtx_activation_hook.php:97
+#, php-format
+msgid ""
+"You may import/export compatible settings from %s to %s on Settings/"
+"Languages configuration page, once %s is running.%sContinue%s"
+msgstr ""
+
+#: ../admin/qtx_activation_hook.php:213
+#, php-format
+msgid ""
+"%sError:%s plugin %s cannot run concurrently with plugin %s. You may import "
+"and export compatible settings between %s and %s on Settings/<a href=\"%s"
+"\">Languages</a> configuration page. Then you have to deactivate one of the "
+"plugins to continue."
+msgstr ""
+
+#: ../admin/qtx_activation_hook.php:218 ../admin/qtx_activation_hook.php:220
+#, php-format
+msgid "Deactivate %s"
+msgstr ""
+
+#: ../admin/qtx_activation_hook.php:259
+#, php-format
+msgid ""
+"Plugin %s may be integrated with multilingual plugin %s with a help of "
+"plugin %s."
+msgstr ""
+
+#: ../admin/qtx_activation_hook.php:261
+msgid "Please, press an appropriate button below."
+msgstr ""
+
+#: ../admin/qtx_activation_hook.php:265
+#, php-format
+msgid "Activate plugin %s"
+msgstr ""
+
+#: ../admin/qtx_activation_hook.php:267
+#, php-format
+msgid "Install plugin %s"
+msgstr ""
+
+#: ../admin/qtx_activation_hook.php:269
+msgid "I am aware of that, dismiss this message."
+msgstr ""
+
+#: ../admin/qtx_activation_hook.php:319
+#, php-format
+msgid "Thank you for using %s plugin!"
+msgstr ""
+
+#: ../admin/qtx_activation_hook.php:321
+#, php-format
+msgid ""
+"Please, help us to make a decision on \"%s\" feature, press the button below."
+msgstr ""
+
+#: ../admin/qtx_activation_hook.php:323
+#, php-format
+msgid "Survey on \"%s\" feature"
+msgstr ""
+
+#: ../admin/qtx_activation_hook.php:324 ../admin/qtx_activation_hook.php:366
+msgid "I have already done it, dismiss this message."
+msgstr ""
+
+#: ../admin/qtx_activation_hook.php:358
+#, php-format
+msgid ""
+"The latest version of plugin %s has a number of new options, for example, "
+"%s, which may change the look of some pages. Please, review the help text of "
+"new options on %sconfiguration page%s."
+msgstr ""
+
+#: ../admin/qtx_activation_hook.php:363
+#, php-format
+msgid ""
+"It is recommended to review %sRelease Notes%s for this new version of %s "
+"before making any further changes."
+msgstr ""
 
 #: ../admin/qtx_import_export.php:135
 msgid "Plugin"
@@ -589,117 +655,14 @@ msgstr ""
 "التعيين لن تقوم بمسح اي محتوي او موضوع فقط سيتم حذف الاعدادات (متضمنة اللغات "
 "التي تمت اضافتها)"
 
-#: ../admin/qtx_activation_hook.php:92 ../admin/qtx_activation_hook.php:215
-#: ../admin/qtx_configuration.php:1025
-#, php-format
-msgid ""
-"It might be a good idea to review %smigration instructions%s, if you have "
-"not yet done so."
-msgstr ""
-
-#: ../admin/qtx_activation_hook.php:93
-#, php-format
-msgid ""
-"Activation of plugin %s deactivated plugin %s since they cannot run "
-"simultaneously."
-msgstr ""
-
-#: ../admin/qtx_activation_hook.php:95
-#, php-format
-msgid ""
-"The compatible settings from %s have been imported to %s. Further tuning, "
-"import, export and reset of options can be done at Settings/Languages "
-"configuration page, once %s is running.%sContinue%s"
-msgstr ""
-
-#: ../admin/qtx_activation_hook.php:97
-#, php-format
-msgid ""
-"You may import/export compatible settings from %s to %s on Settings/"
-"Languages configuration page, once %s is running.%sContinue%s"
-msgstr ""
-
-#: ../admin/qtx_activation_hook.php:213
-#, php-format
-msgid ""
-"%sError:%s plugin %s cannot run concurrently with plugin %s. You may import "
-"and export compatible settings between %s and %s on Settings/<a href=\"%s"
-"\">Languages</a> configuration page. Then you have to deactivate one of the "
-"plugins to continue."
-msgstr ""
-
-#: ../admin/qtx_activation_hook.php:218 ../admin/qtx_activation_hook.php:220
-#, php-format
-msgid "Deactivate %s"
-msgstr ""
-
-#: ../admin/qtx_activation_hook.php:259
-#, php-format
-msgid ""
-"Plugin %s may be integrated with multilingual plugin %s with a help of "
-"plugin %s."
-msgstr ""
-
-#: ../admin/qtx_activation_hook.php:261
-msgid "Please, press an appropriate button below."
-msgstr ""
-
-#: ../admin/qtx_activation_hook.php:265
-#, php-format
-msgid "Activate plugin %s"
-msgstr ""
-
-#: ../admin/qtx_activation_hook.php:267
-#, php-format
-msgid "Install plugin %s"
-msgstr ""
-
-#: ../admin/qtx_activation_hook.php:269
-msgid "I am aware of that, dismiss this message."
-msgstr ""
-
-#: ../admin/qtx_activation_hook.php:319
-#, php-format
-msgid "Thank you for using %s plugin!"
-msgstr ""
-
-#: ../admin/qtx_activation_hook.php:321
-#, php-format
-msgid ""
-"Please, help us to make a decision on \"%s\" feature, press the button below."
-msgstr ""
-
-#: ../admin/qtx_activation_hook.php:323
-#, php-format
-msgid "Survey on \"%s\" feature"
-msgstr ""
-
-#: ../admin/qtx_activation_hook.php:324 ../admin/qtx_activation_hook.php:366
-msgid "I have already done it, dismiss this message."
-msgstr ""
-
-#: ../admin/qtx_activation_hook.php:358
-#, php-format
-msgid ""
-"The latest version of plugin %s has a number of new options, for example, "
-"%s, which may change the look of some pages. Please, review the help text of "
-"new options on %sconfiguration page%s."
-msgstr ""
-
-#: ../admin/qtx_activation_hook.php:363
-#, php-format
-msgid ""
-"It is recommended to review %sRelease Notes%s for this new version of %s "
-"before making any further changes."
-msgstr ""
-
-#: ../admin/qtx_languages.php:95
-msgid "Cannot delete Default Language!"
-msgstr "لا يمكن الغاء اللغة الاساسية"
-
 #: ../admin/qtx_configuration.php:664
 msgid "Language Management"
 msgstr "إدارة اللغة"
+
+#: ../admin/qtx_configuration.php:664 ../admin/qtx_configuration.php:1597
+#: ../admin/qtx_admin_utils.php:461
+msgid "Languages"
+msgstr "اللغات"
 
 #: ../admin/qtx_configuration.php:672
 msgid "Language Code"
@@ -720,6 +683,10 @@ msgstr ""
 #: ../admin/qtx_configuration.php:706
 msgid "Choose the corresponding country flag for language. (Example: gb.png)"
 msgstr "قم باختيار العلم المناسب للغة"
+
+#: ../admin/qtx_configuration.php:718 ../admin/qtx_admin_utils.php:447
+msgid "Name"
+msgstr "الاسم"
 
 #: ../admin/qtx_configuration.php:720
 msgid ""
@@ -1513,6 +1480,11 @@ msgstr "اعادة تهيئة"
 msgid "Click %s to modify language properties."
 msgstr "اضغط %s لتعديل خصائص اللغة"
 
+#: ../admin/qtx_configuration.php:1610 ../admin/qtx_configuration.php:1646
+#: ../admin/qtx_admin_utils.php:449
+msgid "Edit"
+msgstr "تعديل"
+
 #: ../admin/qtx_configuration.php:1643
 #, php-format
 msgid "%s Flag"
@@ -1569,6 +1541,30 @@ msgstr "تبديل اللغة"
 msgid "Settings"
 msgstr "الإعدادات"
 
+#: ../admin/qtx_admin_utils.php:175
+msgid "Database has been converted to square bracket format."
+msgstr ""
+
+#: ../admin/qtx_admin_utils.php:175 ../admin/qtx_admin_utils.php:177
+msgid "Note: custom entries are not touched."
+msgstr ""
+
+#: ../admin/qtx_admin_utils.php:177
+msgid "Database has been converted to legacy dual-tag format."
+msgstr ""
+
+#: ../admin/qtx_admin_utils.php:450
+msgid "Stored"
+msgstr "مخزنة"
+
+#: ../admin/qtx_admin_utils.php:477
+msgid "Unknown Language"
+msgstr "اللغة غير معروفة"
+
+#: ../admin/qtx_admin_utils.php:478
+msgid "Not enabled"
+msgstr "غير مفعلة"
+
 #: ../admin/qtx_user_options.php:9
 msgid "Translation options"
 msgstr "خيارات الترجمة"
@@ -1583,3 +1579,7 @@ msgid ""
 "The way the translatable fields are highlighted is configured with global "
 "option %s."
 msgstr ""
+
+#: ../admin/qtx_languages.php:95
+msgid "Cannot delete Default Language!"
+msgstr "لا يمكن الغاء اللغة الاساسية"
