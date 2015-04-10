@@ -77,6 +77,9 @@ function qtranxf_init_language() {
 		if(!isset($url_info['doredirect']) && $url_orig != $url_lang){
 			$url_info['doredirect'] = '$url_orig != $url_lang';
 		}
+		//if( isset($url_info['query']) && $url_info['query'] == ''){
+		//	unset($url_info['doredirect']);
+		//}
 		if(isset($url_info['doredirect'])){
 			$target = apply_filters('qtranslate_language_detect_redirect', $url_lang, $url_orig, $url_info);
 			//qtranxf_dbg_log('qtranxf_init_language: doredirect to '.$lang.PHP_EOL.'urlorg:'.$url_orig.PHP_EOL.'target:'.$target);

@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: qTranslate-X 3.2.8\n"
+"Project-Id-Version: qTranslate-X 3.2.9.8.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-04-10 22:36+0200\n"
 "PO-Revision-Date: 2015-04-10 22:37+0200\n"
@@ -17,10 +17,10 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPath-1: ..\n"
 
-#: ../qtranslate_core.php:1454
-msgid ""
-"For the sake of viewer convenience, the content is shown below in this site "
-"default language."
+#: admin/qtx_activation_hook.php:92 admin/qtx_activation_hook.php:215
+#: admin/qtx_configuration.php:1029
+#, php-format
+msgid "It might be a good idea to review %smigration instructions%s, if you have not yet done so."
 msgstr ""
 
 #: ../qtranslate_core.php:1457
@@ -445,88 +445,107 @@ msgid ""
 "not yet done so."
 msgstr ""
 
-#: ../admin/qtx_activation_hook.php:93
+#: admin/qtx_configuration.php:1326
+msgid "Detect Browser Language"
+msgstr "كشف لغة المتصفح"
+
+#: admin/qtx_configuration.php:1328
+msgid "Detect the language of the browser and redirect accordingly."
+msgstr "قم بتحويل اللغة بناء علي لغة المتصفح"
+
+#: admin/qtx_configuration.php:1330
+msgid "When the frontpage is visited via bookmark/external link/type-in, the visitor will be forwarded to the correct URL for the language specified by his browser."
+msgstr "اذا تم زيارة الصفحة سيتم التحويل اللغة تلقائيا الي اللغة المستخدمة في المتصفح."
+
+#: admin/qtx_configuration.php:1335
+msgid "Advanced Settings"
+msgstr "خيارات متقدمة"
+
+#: admin/qtx_configuration.php:1342 admin/qtx_configuration.php:1344
+#: admin/qtx_configuration.php:1418
+msgid "URL Modification Mode"
+msgstr "تعديل عرض الروابط"
+
+#: admin/qtx_configuration.php:1345
+msgid "Most SEO unfriendly, not recommended."
+msgstr ""
+
+#: admin/qtx_configuration.php:1345
+msgid "Use Query Mode (?lang=en)"
+msgstr ""
+
+#: admin/qtx_configuration.php:1352
+msgid "SEO friendly."
+msgstr ""
+
+#: admin/qtx_configuration.php:1352
+msgid "Use Pre-Path Mode (Default, puts /en/ in front of URL)"
+msgstr ""
+
+#: admin/qtx_configuration.php:1353
+msgid "Use Pre-Domain Mode (uses http://en.yoursite.com)"
+msgstr ""
+
+#: admin/qtx_configuration.php:1353
+msgid "You will need to configure DNS sub-domains on your site."
+msgstr ""
+
+#: admin/qtx_configuration.php:1358
+msgid "Hide URL language information for default language."
+msgstr ""
+
+#: admin/qtx_configuration.php:1359
+msgid "This is only applicable to Pre-Path and Pre-Domain mode."
+msgstr ""
+
+#: admin/qtx_configuration.php:1364
+msgid "Use Per-Domain mode: specify separate user-defined domain for each language."
+msgstr ""
+
+#: admin/qtx_configuration.php:1383
+msgid "Domain for"
+msgstr ""
+
+#: admin/qtx_configuration.php:1388
+msgid "Flag Image Path"
+msgstr "مسار صور الاعلام"
+
+#: admin/qtx_configuration.php:1392
 #, php-format
-msgid ""
-"Activation of plugin %s deactivated plugin %s since they cannot run "
-"simultaneously."
-msgstr ""
+msgid "Path to the flag images under wp-content, with trailing slash. (Default: %s, clear the value above to reset it to the default)"
+msgstr "مسار محتوي اعلام الدول داخل wp-content (الافتراضي هو  %s )"
 
-#: ../admin/qtx_activation_hook.php:95
+#: admin/qtx_configuration.php:1396
+msgid "Ignore Links"
+msgstr "تجاهل الروابط"
+
+#: admin/qtx_configuration.php:1400
 #, php-format
-msgid ""
-"The compatible settings from %s have been imported to %s. Further tuning, "
-"import, export and reset of options can be done at Settings/Languages "
-"configuration page, once %s is running.%sContinue%s"
+msgid "Don't convert links to files of the given file types. (Always included: %s)"
 msgstr ""
 
-#: ../admin/qtx_activation_hook.php:97
-#, php-format
-msgid ""
-"You may import/export compatible settings from %s to %s on Settings/"
-"Languages configuration page, once %s is running.%sContinue%s"
+#: admin/qtx_configuration.php:1404 qtranslate_widget.php:119
+msgid "Head inline CSS"
 msgstr ""
 
-#: ../admin/qtx_activation_hook.php:213
-#, php-format
-msgid ""
-"%sError:%s plugin %s cannot run concurrently with plugin %s. You may import "
-"and export compatible settings between %s and %s on Settings/<a href=\"%s"
-"\">Languages</a> configuration page. Then you have to deactivate one of the "
-"plugins to continue."
+#: admin/qtx_configuration.php:1406
+msgid "CSS code added by plugin in the head of front-end pages:"
 msgstr ""
 
-#: ../admin/qtx_activation_hook.php:218 ../admin/qtx_activation_hook.php:220
-#, php-format
-msgid "Deactivate %s"
+#: admin/qtx_configuration.php:1410 qtranslate_widget.php:119
+msgid "To disable this inline CSS, clear the check box."
 msgstr ""
 
-#: ../admin/qtx_activation_hook.php:259
-#, php-format
-msgid ""
-"Plugin %s may be integrated with multilingual plugin %s with a help of "
-"plugin %s."
-msgstr ""
+#: admin/qtx_configuration.php:1410 admin/qtx_configuration.php:1572
+#: qtranslate_widget.php:119
+msgid "To reset to default, clear the text."
+msgstr "لاعادة التعيين امسح المحتوي وقم بالحفظ"
 
-#: ../admin/qtx_activation_hook.php:261
-msgid "Please, press an appropriate button below."
-msgstr ""
+#: admin/qtx_configuration.php:1414
+msgid "Cookie Settings"
+msgstr "اعدادات Cookie"
 
-#: ../admin/qtx_activation_hook.php:265
-#, php-format
-msgid "Activate plugin %s"
-msgstr ""
-
-#: ../admin/qtx_activation_hook.php:267
-#, php-format
-msgid "Install plugin %s"
-msgstr ""
-
-#: ../admin/qtx_activation_hook.php:269
-msgid "I am aware of that, dismiss this message."
-msgstr ""
-
-#: ../admin/qtx_activation_hook.php:319
-#, php-format
-msgid "Thank you for using %s plugin!"
-msgstr ""
-
-#: ../admin/qtx_activation_hook.php:321
-#, php-format
-msgid ""
-"Please, help us to make a decision on \"%s\" feature, press the button below."
-msgstr ""
-
-#: ../admin/qtx_activation_hook.php:323
-#, php-format
-msgid "Survey on \"%s\" feature"
-msgstr ""
-
-#: ../admin/qtx_activation_hook.php:324 ../admin/qtx_activation_hook.php:366
-msgid "I have already done it, dismiss this message."
-msgstr ""
-
-#: ../admin/qtx_activation_hook.php:358
+#: admin/qtx_configuration.php:1416
 #, php-format
 msgid ""
 "The latest version of plugin %s has a number of new options, for example, "

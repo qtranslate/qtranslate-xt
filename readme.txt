@@ -42,7 +42,7 @@ The following plugins provide integration of qTranslate-X with other popular plu
 - [WooCommerce & qTranslate-X](https://wordpress.org/plugins/woocommerce-qtranslate-x/) for [WooCommerce - excelling eCommerce](https://wordpress.org/plugins/woocommerce/). [[GitHub](https://github.com/qTranslate-Team/woocommerce-qtranslate-x)]
 - [Wordpress SEO & qTranslate-X](https://wordpress.org/plugins/wp-seo-qtranslate-x/) for [WordPress SEO by Yoast](https://wordpress.org/plugins/wordpress-seo/). [[GitHub](https://github.com/qTranslate-Team/wp-seo-qtranslate-x)]
 
-Below is the list of plugins recently made compatible with qTranslate-X without an additional integrating plugin, as reported by users:
+Below is the list of some plugins reported to be compatible with qTranslate-X without an additional integrating plugin:
 
 - [ALO EasyMail Newsletter](https://wordpress.org/support/plugin/alo-easymail)
 - [BuddyPress](https://wordpress.org/plugins/buddypress/) and its satellites.
@@ -50,6 +50,7 @@ Below is the list of plugins recently made compatible with qTranslate-X without 
 - [Google XML Sitemaps v3 for qTranslate](https://wordpress.org/plugins/google-xml-sitemaps-v3-for-qtranslate/)
 - [Groups](https://wordpress.org/plugins/groups/)
 - [Multiple content blocks](https://wordpress.org/plugins/multiple-content-blocks/)
+- [TheCartPress eCommerce Shopping Cart](https://wordpress.org/plugins/thecartpress/)
 - [WP Photo Album Plus](https://wordpress.org/plugins/wp-photo-album-plus/)
 
 If you encounter a conflicting a plugin, please let us know, and meanwhile try to use other plugin of similar functionality, if possible.
@@ -252,6 +253,10 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 ### 3.3 stable ###
 * Includes all changes after version 3.2.9. Please, review [Release Notes](https://qtranslatexteam.wordpress.com/2015/03/30/release-notes-3-3).
 
+### 3.2.9.8.5 alpha ###
+* Fix: special cases for arrays in POST.
+* Translation: thanks to all translators contributed. po files updated with correct version number.
+
 ### 3.2.9.8.4 alpha ###
 * Fix: taxonomy names with apostrophe and other special characters: [Issue #122](https://github.com/qTranslate-Team/qtranslate-x/issues/122).
 * Fix: locale 'ja' changed to 'ja_JP'. Thanks to Yusuke Noguchi.
@@ -263,7 +268,7 @@ One can find the original qTranslate FAQ [here](https://wordpress.org/plugins/qt
 * Fix: function `qtranxf_sanitize_url`, thanks to [HAYASHI Ryo](https://github.com/ryo88c): [Issue #117](https://github.com/qTranslate-Team/qtranslate-x/pull/117).
 
 ### 3.2.9.8.2 alpha ###
-* Feature: js function `addTabSwitchListener` is designed for other plugin integration, read [Integration](https://qtranslatexteam.wordpress.com/integration/) for more information.
+* Feature: js function `addLanguageSwitchListener` is designed for other plugin integration, read [Integration](https://qtranslatexteam.wordpress.com/integration/) for more information.
 * Fix: handling of cookie `qtrans_edit_language`.
 
 ### 3.2.9.8.1 alpha ###
