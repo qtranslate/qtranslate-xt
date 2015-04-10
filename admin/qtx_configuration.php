@@ -134,23 +134,19 @@ function qtranxf_reset_config()
 }
 add_action('qtranslate_saveConfig','qtranxf_reset_config',20);
 
-function qtranxf_collect_translations( &$q_request, &$request, $edit_lang ) {
-	if(isset($q_request[$edit_lang])){
-		$texts = &$q_request;
-		$texts[$edit_lang] = $request;
-		if(isset($texts['sep'])){
-			$sep = $texts['sep'];
-			unset($texts['sep']);
-		}else{
-			$sep = '[';
+function qtranxf_collect_translations( $request, $sep ) {
+	$content = reset($request);
+	//qtranxf_dbg_log('qtranxf_collect_translations: $content: ',$content);
+	if(is_string($content)) return qtranxf_join_texts($request,$sep);
+	$result = array();
+	foreach($content as $f => $r){
+		$texts = array();
+		foreach($request as $lang => $vals){
+			$texts[$lang] = $vals[$f];
 		}
-		$text = qtranxf_join_texts($texts,$sep);
-		$request = $text;
-	}else{
-		foreach($q_request as $f => $r){
-			qtranxf_collect_translations($q_request[$f],$request[$f],$edit_lang); // recursive call
-		}
+		$result[$f] = qtranxf_collect_translations($texts,$sep); // recursive call
 	}
+	return $result;
 }
 
 function qtranxf_collect_translations_posted() {
@@ -158,7 +154,14 @@ function qtranxf_collect_translations_posted() {
 	if(!isset($_REQUEST['qtranslate-fields'])) return;
 	$edit_lang = isset($_COOKIE['qtrans_edit_language']) ? $_COOKIE['qtrans_edit_language'] : qtranxf_getLanguage();
 	foreach($_REQUEST['qtranslate-fields'] as $nm => $r){
-		qtranxf_collect_translations($_REQUEST['qtranslate-fields'][$nm],$_REQUEST[$nm],$edit_lang);
+		if(isset($_REQUEST['qtranslate-fields'][$nm]['sep'])){
+			$sep = $_REQUEST['qtranslate-fields'][$nm]['sep'];
+			unset($_REQUEST['qtranslate-fields'][$nm]['sep']);
+		}else{
+			$sep = '[';
+		}
+		$_REQUEST['qtranslate-fields'][$nm][$edit_lang] = $_REQUEST[$nm];
+		$_REQUEST[$nm] = qtranxf_collect_translations($_REQUEST['qtranslate-fields'][$nm],$sep);
 		//qtranxf_dbg_log('qtranxf_collect_translations_posted: REQUEST[qtranslate-fields]['.$nm.']: ',$r);
 		//qtranxf_dbg_log('qtranxf_collect_translations_posted: collected REQUEST['.$nm.']: ',$_REQUEST[$nm]);
 		if(isset($_POST[$nm])){
@@ -480,6 +483,7 @@ function qtranxf_add_admin_footer_js ( $enqueue_script=false ) {
 	if(!empty($page_config)) $config['page_config'] = $page_config;
 
 	$config['LSB'] = $q_config['editor_mode'] == QTX_EDITOR_MODE_LSB;
+	$config = apply_filters('qtranslate_admin_page_config', $config);
 ?>
 <script type="text/javascript">
 // <![CDATA[

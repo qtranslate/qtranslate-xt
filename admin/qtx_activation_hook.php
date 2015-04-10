@@ -332,6 +332,7 @@ function qtranxf_ajax_qtranslate_admin_notice()
 	if(!isset($_POST['notice_id'])) return;
 	$id = $_POST['notice_id'];
 	$messages = get_option('qtranslate_admin_notices',array());
+	if(!is_array($messages)) $messages = array();
 	$messages[$id] = time();
 	update_option('qtranslate_admin_notices',$messages);
 	//echo "jQuery('#qtranxs_+$id').css('display','none');"; die();
