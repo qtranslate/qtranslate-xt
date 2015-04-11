@@ -593,5 +593,5 @@ function qtranxf_getSortedLanguages($reverse = false) {
 }
 
 function qtranxf_can_redirect() {
-	return !defined('WP_ADMIN') && !defined('DOING_AJAX') && !defined('WP_CLI') && !defined('DOING_CRON') && empty($_POST);
+	return !defined('WP_ADMIN') && !defined('DOING_AJAX') && !defined('WP_CLI') && !defined('DOING_CRON') && empty($_POST) && !isset($_SERVER['REDIRECT_STATUS']);
 }

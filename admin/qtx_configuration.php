@@ -134,6 +134,58 @@ function qtranxf_reset_config()
 }
 add_action('qtranslate_saveConfig','qtranxf_reset_config',20);
 
+function qtranxf_collect_translations_deep( $qfields, $sep ) {
+	$content = reset($qfields);
+	//qtranxf_dbg_log('qtranxf_collect_translations_deep: $content: ',$content);
+	if(is_string($content)) return qtranxf_join_texts($qfields,$sep);
+	$result = array();
+	foreach($content as $f => $r){
+		$texts = array();
+		foreach($qfields as $lang => &$vals){
+			$texts[$lang] = $vals[$f];
+		}
+		$result[$f] = qtranxf_collect_translations_deep($texts,$sep); // recursive call
+	}
+	return $result;
+}
+
+function qtranxf_collect_translations( &$qfields, &$request, $edit_lang ) {
+	if(isset($qfields['qtranslate-separator'])){
+		$sep = $qfields['qtranslate-separator'];
+		unset($qfields['qtranslate-separator']);
+		$qfields[$edit_lang] = $request;
+		$request = qtranxf_collect_translations_deep($qfields,$sep);
+	}else{
+		foreach($qfields as $nm => &$vals){
+			qtranxf_collect_translations($vals,$request[$nm],$edit_lang); // recursive call
+		}
+	}
+}
+
+function qtranxf_collect_translations_posted() {
+	//qtranxf_dbg_log('qtranxf_collect_translations_posted: REQUEST: ',$_REQUEST);
+	if(!isset($_REQUEST['qtranslate-fields'])) return;
+	$edit_lang = isset($_COOKIE['qtrans_edit_language']) ? $_COOKIE['qtrans_edit_language'] : qtranxf_getLanguage();
+	foreach($_REQUEST['qtranslate-fields'] as $nm => &$qfields){
+		//qtranxf_dbg_log('qtranxf_collect_translations_posted: REQUEST[qtranslate-fields]['.$nm.']: ',$qfields);
+		qtranxf_collect_translations($qfields,$_REQUEST[$nm],$edit_lang);
+		//qtranxf_dbg_log('qtranxf_collect_translations_posted: collected REQUEST['.$nm.']: ',$_REQUEST[$nm]);
+		if(isset($_POST[$nm])){
+			//qtranxf_dbg_log('qtranxf_collect_translations_posted: POST['.$nm.']: ',$_POST[$nm]);
+			$_POST[$nm] = $_REQUEST[$nm];
+		}
+		if(isset($_GET[$nm])){
+			//qtranxf_dbg_log('qtranxf_collect_translations_posted: GET['.$nm.']: ',$_GET[$nm]);
+			$_GET[$nm] = $_REQUEST[$nm];
+		}
+	}
+	unset($_REQUEST['qtranslate-fields']);
+	unset($_POST['qtranslate-fields']);
+	unset($_GET['qtranslate-fields']);
+}
+add_action('plugins_loaded', 'qtranxf_collect_translations_posted', 5);
+
+/*
 function qtranxf_collect_translations( $request, $sep ) {
 	$content = reset($request);
 	//qtranxf_dbg_log('qtranxf_collect_translations: $content: ',$content);
@@ -177,7 +229,7 @@ function qtranxf_collect_translations_posted() {
 	unset($_POST['qtranslate-fields']);
 	unset($_GET['qtranslate-fields']);
 }
-add_action('plugins_loaded', 'qtranxf_collect_translations_posted', 5);
+*/
 
 function qtranxf_init_admin()
 {

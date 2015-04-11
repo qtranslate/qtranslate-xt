@@ -365,7 +365,13 @@ var qTranslateX=function(pg)
 			bfnm = 'qtranslate-fields['+h.name+']';
 		}else{
 			bfnm = 'qtranslate-fields['+h.name.substring(0,p)+']';
-			sfnm = h.name.substring(p);
+			if(h.name.lastIndexOf('[]') < 0){
+				bfnm += h.name.substring(p);
+			}else{
+				var len = h.name.length-p-2;
+				if(len > 0) bfnm += h.name.substring(p,len);
+				sfnm = '[]';
+			}
 		}
 		h.fields={};
 		for(var lang in contents){
@@ -390,13 +396,10 @@ var qTranslateX=function(pg)
 			//	separator='<';
 			//else
 				separator='[';//since 3.1 we get rid of <--:--> encoding
-		}else{
-			// since 3.2.9.8 - h.contents -> h.fields
-			if(separator!='['){
-				h.sepfield = qtranxj_ce('input', {name: bfnm+'[sep]', type: 'hidden', className: 'hidden', value: separator });
-				inpField.parentNode.insertBefore(h.sepfield,inpField);
-			}
 		}
+		// since 3.2.9.8 - h.contents -> h.fields
+		h.sepfield = qtranxj_ce('input', {name: bfnm+'[qtranslate-separator]', type: 'hidden', className: 'hidden', value: separator });
+		inpField.parentNode.insertBefore(h.sepfield,inpField);
 		h.separator=separator;
 
 		/**
@@ -872,17 +875,33 @@ var qTranslateX=function(pg)
 	if(!qTranslateConfig.onTabSwitchFunctionsSave) qTranslateConfig.onTabSwitchFunctionsSave=[];
 	if(!qTranslateConfig.onTabSwitchFunctionsLoad) qTranslateConfig.onTabSwitchFunctionsLoad=[];
 
+	this.addLanguageSwitchListener=function(func){ qTranslateConfig.onTabSwitchFunctions.push(func); }
+
 	/**
-	 * @since 3.2.9.8.2
+	 * @since 3.2.9.8.6
 	 * Designed as interface for other plugin integration. The documentation is available at
 	 * https://qtranslatexteam.wordpress.com/integration/
-	 * The function passed will be called when user presses one of the Language Switching Buttons.
-	 * One argument will be supplied, a two-letter language code to which the edit language is being switched.
+	 * The function passed will be called when user presses one of the Language Switching Buttons
+	 * before the content of all fields hooked is replaced with an appropriate language.
+	 * Two arguments are supplied:
+	 * - two-letter language code of currently active language from which the edit language is being switched.
+	 * - the language code to which the edit language is being switched.
 	 * The value of "this" is set to the only global instance of qTranslateX object.
 	 */
-	this.addLanguageSwitchListener=function(func){ qTranslateConfig.onTabSwitchFunctions.push(func); }
-	this.addLanguageSwitchSaveListener=function(func){ qTranslateConfig.onTabSwitchFunctionsSave.push(func); }
-	this.addLanguageSwitchLoadListener=function(func){ qTranslateConfig.onTabSwitchFunctionsLoad.push(func); }
+	this.addLanguageSwitchBeforeListener=function(func){ qTranslateConfig.onTabSwitchFunctionsSave.push(func); }
+
+	/**
+	 * @since 3.2.9.8.6
+	 * Designed as interface for other plugin integration. The documentation is available at
+	 * https://qtranslatexteam.wordpress.com/integration/
+	 * The function passed will be called when user presses one of the Language Switching Buttons
+	 * after the content of all fields hooked is replaced with an appropriate language.
+	 * Two arguments are supplied:
+	 * - two-letter language code of active language to which the edit language is already switched.
+	 * - the language code from which the edit language is being switched.
+	 * The value of "this" is set to the only global instance of qTranslateX object.
+	 */
+	this.addLanguageSwitchAfterListener=function(func){ qTranslateConfig.onTabSwitchFunctionsLoad.push(func); }
 
 	this.getWrapForm=function(){
 		var wraps = document.getElementsByClassName('wrap');
@@ -996,9 +1015,10 @@ function qtranxj_LanguageSwitch(langSwitchWrap)
 			var onTabSwitchFunctionsSave = qTranslateConfig.onTabSwitchFunctionsSave;
 			for(var i=0; i<onTabSwitchFunctionsSave.length; ++i)
 			{
-				onTabSwitchFunctionsSave[i].call(qTranslateConfig.qtx,qTranslateConfig.activeLanguage);
+				onTabSwitchFunctionsSave[i].call(qTranslateConfig.qtx,qTranslateConfig.activeLanguage,tabSwitch.lang);
 			}
 		}
+		var langFrom = qTranslateConfig.activeLanguage;
 		qTranslateConfig.activeLanguage=tabSwitch.lang;
 		{
 			var tabSwitches = qTranslateConfig.tabSwitches[qTranslateConfig.activeLanguage];
@@ -1012,12 +1032,12 @@ function qtranxj_LanguageSwitch(langSwitchWrap)
 		var onTabSwitchFunctions = qTranslateConfig.onTabSwitchFunctions;
 		for(var i=0; i<onTabSwitchFunctions.length; ++i)
 		{
-			onTabSwitchFunctions[i].call(qTranslateConfig.qtx,tabSwitch.lang);
+			onTabSwitchFunctions[i].call(qTranslateConfig.qtx,tabSwitch.lang,langFrom);
 		}
 		var onTabSwitchFunctionsLoad = qTranslateConfig.onTabSwitchFunctionsLoad;
 		for(var i=0; i<onTabSwitchFunctionsLoad.length; ++i)
 		{
-			onTabSwitchFunctionsLoad[i].call(qTranslateConfig.qtx,tabSwitch.lang);
+			onTabSwitchFunctionsLoad[i].call(qTranslateConfig.qtx,tabSwitch.lang,langFrom);
 		}
 	}
 	//location.pathname.indexOf();
