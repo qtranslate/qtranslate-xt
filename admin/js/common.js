@@ -368,8 +368,8 @@ var qTranslateX=function(pg)
 			if(h.name.lastIndexOf('[]') < 0){
 				bfnm += h.name.substring(p);
 			}else{
-				var len = h.name.length-p-2;
-				if(len > 0) bfnm += h.name.substring(p,len);
+				var len = h.name.length-2;
+				if(len > p) bfnm += h.name.substring(p,len);
 				sfnm = '[]';
 			}
 		}

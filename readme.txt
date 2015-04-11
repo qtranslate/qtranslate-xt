@@ -110,7 +110,7 @@ Developers: please drop new topics here, the text will be moved to [qTranslate-X
 * Includes all changes after version 3.2.9. Please, review [Release Notes](https://qtranslatexteam.wordpress.com/2015/03/30/release-notes-3-3).
 * Translation: thanks to all translators contributed.
 
-### 3.2.9.8.7 alpha ###
+### 3.2.9.8.8 alpha ###
 * Translation: Greek ('el_GR') predefined language added, thanks to [Marios Bekatoros](https://github.com/bekatoros).
 * Translation: Arabic (ar) po/mo files updated. Thanks to Nedal Elghamry.
 * Enhancement: added check `isset($_SERVER['REDIRECT_STATUS'])` in function `qtranxf_can_redirect` to prevent another redirection if `mod_rewrite` is already doing redirection. In particular, this should help to troubleshoot internal server error 500 as it was observed in [Issue #96](https://github.com/qTranslate-Team/qtranslate-x/issues/96).
