@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: qTranslate-X 3.2.9.8.5\n"
+"Project-Id-Version: qTranslate-X 3.2.9.9.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-10 03:09-0600\n"
+"POT-Creation-Date: 2015-04-13 14:26-0600\n"
 "PO-Revision-Date: 2015-04-07 13:38-0800\n"
 "Last-Translator: Németh Balázs <nb0000@gmail.com>\n"
 "Language-Team: \n"
@@ -18,7 +18,7 @@ msgstr ""
 "X-Poedit-SearchPath-0: ..\n"
 
 #: admin/qtx_activation_hook.php:92 admin/qtx_activation_hook.php:215
-#: admin/qtx_configuration.php:1029
+#: admin/qtx_configuration.php:633
 #, php-format
 msgid "It might be a good idea to review %smigration instructions%s, if you have not yet done so."
 msgstr "Hasznos lehet átnézni a %smigrációs utasításokat%s, ha még nem tette meg."
@@ -105,763 +105,808 @@ msgstr "A %s bővítmény legújabb verziójában számos új opció van, péld�
 msgid "It is recommended to review %sRelease Notes%s for this new version of %s before making any further changes."
 msgstr "Ajánlott átnézni a %skiadási jegyzeteit%s a %s új verziójának, mielőtt bármit módosítana."
 
-#: admin/qtx_admin_utils.php:175
+#: admin/qtx_admin_utils.php:164
 msgid "Database has been converted to square bracket format."
 msgstr "Adatbázis átalakítva a szögletes zárójeles formátumúra."
 
-#: admin/qtx_admin_utils.php:175 admin/qtx_admin_utils.php:177
+#: admin/qtx_admin_utils.php:164 admin/qtx_admin_utils.php:166
 msgid "Note: custom entries are not touched."
 msgstr "Megjegyzés: az egyedi bejegyzések nem módosultak."
 
-#: admin/qtx_admin_utils.php:177
+#: admin/qtx_admin_utils.php:166
 msgid "Database has been converted to legacy dual-tag format."
 msgstr "Adatbázis átalakítva a hagyományos dupla-elem formátumra."
 
-#: admin/qtx_admin_utils.php:445
-msgctxt "Language Code"
+#: admin/qtx_admin_utils.php:434
+#, fuzzy
+msgctxt "Two-letter Language Code meant."
 msgid "Code"
 msgstr "Kód"
 
-#: admin/qtx_admin_utils.php:446 admin/qtx_configuration.php:681
-#: admin/qtx_configuration.php:704 qtranslate_frontend.php:166
+#: admin/qtx_admin_utils.php:435 admin/qtx_configuration.php:491
+#: admin/qtx_configuration.php:514 qtranslate_frontend.php:166
 #: qtranslate_frontend.php:193
 msgid "Flag"
 msgstr "Zászló"
 
-#: admin/qtx_admin_utils.php:447 admin/qtx_configuration.php:722
+#: admin/qtx_admin_utils.php:436 admin/qtx_configuration.php:532
 msgid "Name"
 msgstr "Név"
 
-#: admin/qtx_admin_utils.php:448 qtranslate_services.php:383
+#: admin/qtx_admin_utils.php:437 qtranslate_services.php:383
 msgid "Action"
 msgstr "Művelet"
 
-#: admin/qtx_admin_utils.php:449 admin/qtx_configuration.php:1614
-#: admin/qtx_configuration.php:1650
+#: admin/qtx_admin_utils.php:438 admin/qtx_configuration.php:1249
+#: admin/qtx_configuration.php:1285
 msgid "Edit"
 msgstr "Szerkeszt"
 
-#: admin/qtx_admin_utils.php:450
+#: admin/qtx_admin_utils.php:439
 msgid "Stored"
 msgstr "Tárolva"
 
-#: admin/qtx_admin_utils.php:461 admin/qtx_configuration.php:668
-#: admin/qtx_configuration.php:1601
+#: admin/qtx_admin_utils.php:450 admin/qtx_configuration.php:478
+#: admin/qtx_configuration.php:1236
 msgid "Languages"
 msgstr "Nyelvek"
 
-#: admin/qtx_admin_utils.php:477
+#: admin/qtx_admin_utils.php:466
 msgid "Unknown Language"
 msgstr "Ismeretlen nyelv"
 
-#: admin/qtx_admin_utils.php:478
+#: admin/qtx_admin_utils.php:467
 msgid "Not enabled"
 msgstr "Nincs bekapcsolva"
 
-#: admin/qtx_configuration.php:668
+#: admin/qtx_configuration.php:478
 msgid "Language Management"
 msgstr "Nyelvek kezelése"
 
-#: admin/qtx_configuration.php:676
+#: admin/qtx_configuration.php:486
 msgid "Language Code"
 msgstr "Nyelv kódja"
 
-#: admin/qtx_configuration.php:678
+#: admin/qtx_configuration.php:488
 msgid "2-Letter <a href=\"http://www.w3.org/WAI/ER/IG/ert/iso639.htm#2letter\">ISO Language Code</a> for the Language you want to insert. (Example: en)"
 msgstr "2-betűs <a href=\"http://www.w3.org/WAI/ER/IG/ert/iso639.htm#2letter\">ISO nyelv kód</a> a beszúrandó nyelvhez. (Példa: en)"
 
-#: admin/qtx_configuration.php:707
+#: admin/qtx_configuration.php:517
 msgid "Incorrect Flag Image Path! Please correct it!"
 msgstr "Hibás zászló kép elérési út! Kérem javítsa!"
 
-#: admin/qtx_configuration.php:710
+#: admin/qtx_configuration.php:520
 msgid "Choose the corresponding country flag for language. (Example: gb.png)"
 msgstr "Válassza ki a megfelelő ország zászlót a nyelvhez. (Például: gb.png)"
 
-#: admin/qtx_configuration.php:724
+#: admin/qtx_configuration.php:534
 msgid "The Name of the language, which will be displayed on the site. (Example: English)"
 msgstr "A nyelv neve. Így fog a weboldalon megjelenni. (Például: Angol)"
 
-#: admin/qtx_configuration.php:727
+#: admin/qtx_configuration.php:537
 msgid "Locale"
 msgstr "Locale"
 
-#: admin/qtx_configuration.php:730
+#: admin/qtx_configuration.php:540
 msgid "PHP and Wordpress Locale for the language. (Example: en_US)"
 msgstr "PHP és WordPress Locale a nyelvhez. (Példa: en_US)"
 
-#: admin/qtx_configuration.php:731
+#: admin/qtx_configuration.php:541
 msgid "You will need to install the .mo file for this language."
 msgstr "Telepíteni kell a .mo fájlt ehhez a nyelvhez."
 
-#: admin/qtx_configuration.php:735
+#: admin/qtx_configuration.php:545
 msgid "Date Format"
 msgstr "Dátum formátum"
 
-#: admin/qtx_configuration.php:737
+#: admin/qtx_configuration.php:547
 msgid "Depending on your Date / Time Conversion Mode, you can either enter a <a href=\"http://www.php.net/manual/function.strftime.php\">strftime</a> (use %q for day suffix (st,nd,rd,th)) or <a href=\"http://www.php.net/manual/function.date.php\">date</a> format. This field is optional. (Example: %A %B %e%q, %Y)"
 msgstr "A dátum / idő átalakítás módjától függően, vagy <a href=\"http://www.php.net/manual/function.strftime.php\">strftime</a> vagy <a href=\"http://www.php.net/manual/function.date.php\">date</a> formátumot lehet használni. Ez a mező opcionális. (Példa: %A %B %e%q, %Y)"
 
-#: admin/qtx_configuration.php:740
+#: admin/qtx_configuration.php:550
 msgid "Time Format"
 msgstr "Idő formátum"
 
-#: admin/qtx_configuration.php:742
+#: admin/qtx_configuration.php:552
 msgid "Depending on your Date / Time Conversion Mode, you can either enter a <a href=\"http://www.php.net/manual/function.strftime.php\">strftime</a> or <a href=\"http://www.php.net/manual/function.date.php\">date</a> format. This field is optional. (Example: %I:%M %p)"
 msgstr "A dátum / idő átalakítás módjától függően, vagy <a href=\"http://www.php.net/manual/function.strftime.php\">strftime</a> vagy <a href=\"http://www.php.net/manual/function.date.php\">date</a> formátumot lehet használni. Ez a mező opcionális. (Példa: %I:%M %p)"
 
-#: admin/qtx_configuration.php:745
+#: admin/qtx_configuration.php:555
 msgid "Not Available Message"
 msgstr "Nem elérhető üzenet"
 
-#: admin/qtx_configuration.php:748
+#: admin/qtx_configuration.php:558
 msgid "Message to display if post is not available in the requested language. (Example: Sorry, this entry is only available in %LANG:, : and %.)"
 msgstr "Ez az üzenet jelenik meg, ha egy bejegyzés nem érhető el a kért nyelven. (Példa: Bocsi, ez a bejegyzés csak %LANG:, : és % nyelv(ek)en érhető el.)"
 
-#: admin/qtx_configuration.php:749
+#: admin/qtx_configuration.php:559
 msgid "%LANG:&lt;normal_separator&gt;:&lt;last_separator&gt;% generates a list of languages separated by &lt;normal_separator&gt; except for the last one, where &lt;last_separator&gt; will be used instead."
 msgstr "%LANG:&lt;normal_separator&gt;:&lt;last_separator&gt;% létrehoz egy listát nyelvekből, ahol az elválasztójel:  &lt;normal_separator&gt; az utolsó elválasztó pedig: &lt;last_separator&gt;."
 
-#: admin/qtx_configuration.php:963
+#: admin/qtx_configuration.php:566
 msgid "Hide"
 msgstr "elrejt"
 
-#: admin/qtx_configuration.php:963
+#: admin/qtx_configuration.php:566
 msgid "Show"
 msgstr "mutat"
 
-#: admin/qtx_configuration.php:970
+#: admin/qtx_configuration.php:573
 msgid "Save Changes"
 msgstr "Változások mentése"
 
-#: admin/qtx_configuration.php:987
+#: admin/qtx_configuration.php:590
 msgid "Switching Language"
 msgstr "Nyelv váltás"
 
-#: admin/qtx_configuration.php:987
+#: admin/qtx_configuration.php:590
 #, php-format
 msgid "Switching language to %1$s... If the Dashboard isn't loading, use this <a href=\"%2$s\" title=\"Dashboard\">link</a>."
 msgstr "Nyelv váltása erre: %1$s... Ha a Vezérlőpult nem tölt be, akkor használja <a href=\"%2$s\" title=\"Dashboard\">ezt a linket</a>!"
 
-#: admin/qtx_configuration.php:1008
+#: admin/qtx_configuration.php:611
 msgid "qTranslate has been reset."
 msgstr "A qTranslate alaphelyzetbe lett állítva."
 
-#: admin/qtx_configuration.php:1018
+#: admin/qtx_configuration.php:621
 msgid "Gettext databases updated."
 msgstr "Gettext adatbázis frissítve."
 
-#: admin/qtx_configuration.php:1020
+#: admin/qtx_configuration.php:623
 msgid "Gettext databases <strong>not</strong> updated:"
 msgstr "Gettext adatbázis <strong>nem lett</strong> frissítve:"
 
-#: admin/qtx_configuration.php:1029
+#: admin/qtx_configuration.php:633
 #, php-format
 msgid "Applicable options and taxonomy names from plugin %s have been imported. Note that the multilingual content of posts, pages and other objects has not been altered during this operation. There is no additional operation needed to import content, since its format is compatible with %s."
 msgstr "A használható opciók és taxonómia nevek át lettek véve a %s bővítményből. A művelet alatt a bejegyzések, oldalak és egyéb objektumok tartalma nem változott. Nincs szükség további lépésekre a tartalom importálásához, mert a formátum kompatibilis ezzel: %s."
 
-#: admin/qtx_configuration.php:1030
+#: admin/qtx_configuration.php:634
 #, php-format
 msgid "%sImportant%s: Before you start making edits to post and pages, please, make sure that both, your front site and admin back-end, work under this configuration. It may help to review \"%s\" and see if any of conflicting plugins mentioned there are used here. While the current content, coming from %s, is compatible with this plugin, the newly modified posts and pages will be saved with a new square-bracket-only encoding, which has a number of advantages comparing to former %s encoding. However, the new encoding is not straightforwardly compatible with %s and you will need an additional step available under \"%s\" option if you ever decide to go back to %s. Even with this additional conversion step, the 3rd-party plugins custom-stored data will not be auto-converted, but manual editing will still work. That is why it is advisable to create a test-copy of your site before making any further changes. In case you encounter a problem, please give us a chance to improve %s, send the login information to the test-copy of your site to %s along with a detailed step-by-step description of what is not working, and continue using your main site with %s meanwhile. It would also help, if you share a success story as well, either on %sthe forum%s, or via the same e-mail as mentioned above. Thank you very much for trying %s."
 msgstr "%sFontos%s: Mielőtt nekiáll módosítani a bejegyzéseket és oldalakat, győződjön meg róla, hogy a weboldal frontendje és az admin felülete is működik ezen beállítások mellett. Segíthet, ha áttekinti ezt: „%s” és megnézi, hogy használ-e ott említett gondot okozó bővítményt. Míg a jelenlegi tartalom, ami %s-től van kompatíbilis ezzel a bővítménnyel, az ezentúl módosított bejegyzések és oldalak az új, csak szögletes zárójeleket használó kódolással lesznek mentve, aminek sok előnye van a korábbi %s kódolással szemben. Viszont az új kódolás nem egyértelműen kompatíbilis ezzel: %s, és „%s” alatt elérhető műveletkre lesz szükség, ha vissza akkar térni ehhez: %s. M?ég ezzel az extra konverziós lépéssel se lesznek átalakítva az egyedi bővítmények által tárolt adatok. Ezért javasolt egy teszt-változat létrehozása az egész weboldalból, mielőtt bármi mást módosítana. Ha problémával találkozik, kérjük adjon esélyt a %s fejleszésére és küldje el nekünk a teszt oldal belépési adatait ide: %s, egy részletes lépésről-lépésre leírással arról, hogy mi nem működik, és addig használja a fő oldalát tovább ezzel: %s. Az is segít, ha megosztja a probléma megoldását a %sfórum%son, vagy a fenti emailben. Köszönkük, hogy kipróbálja a %s bővítményt."
 
-#: admin/qtx_configuration.php:1030 admin/qtx_configuration.php:1041
-#: admin/qtx_configuration.php:1314 admin/qtx_import_export.php:166
+#: admin/qtx_configuration.php:634 admin/qtx_configuration.php:640
+#: admin/qtx_configuration.php:914 admin/qtx_import_export.php:166
 msgid "Convert Database"
 msgstr "Adatbázis átalakítása"
 
-#: admin/qtx_configuration.php:1030
+#: admin/qtx_configuration.php:634
 msgid "This is a one-time message, which you will not see again, unless the same import is repeated."
 msgstr "Ez egy egyszeri üzenet, amit nem lát többet, hacsak nem hajtja végre újra ezt az importálást."
 
-#: admin/qtx_configuration.php:1032 admin/qtx_configuration.php:1495
+#: admin/qtx_configuration.php:636 admin/qtx_configuration.php:1208
 msgid "Compatibility Functions"
 msgstr "Kompatibilitási függvények"
 
-#: admin/qtx_configuration.php:1032
+#: admin/qtx_configuration.php:636
 #, php-format
 msgid "Option \"%s\" has also been turned on, as the most common case for importing configuration from %s. You may turn it off manually if your setup does not require it. Refer to %sFAQ%s for more information."
 msgstr "A „%s” opció is engedélyezve lett, mint a %s importálása során általában. Kézzel kikapcsolható szükség esetén. További információ a %sGYIK%sben."
 
-#: admin/qtx_configuration.php:1041
+#: admin/qtx_configuration.php:640
 #, php-format
 msgid "Applicable options have been exported to plugin %s. If you have done some post or page updates after migrating from %s, then \"%s\" operation is also required to convert the content to \"dual language tag\" style in order for plugin %s to function."
 msgstr "Az érvényesíthető opciók exportálva lettek a %s bővítményhez. Ha módosított a bejegyzéseken vagy az oldalakon a %s-ről való migráció után, akkor a „%s” műveletre is szükség lesz, hogy a tartalmat átalakítsuk a „dupla nyelvi jelölő” stílusra, hogy működjön a %s bővítmény."
 
-#: admin/qtx_configuration.php:1053
+#: admin/qtx_configuration.php:653
 msgid "The Language must have a Not-Available Message!"
 msgstr "A nyelvhez meg kell adni a nem elérhető üzenetet!"
 
-#: admin/qtx_configuration.php:1054
+#: admin/qtx_configuration.php:654
 msgid "The Language must have a Locale!"
 msgstr "A nyelvhez kell Locale!"
 
-#: admin/qtx_configuration.php:1055
+#: admin/qtx_configuration.php:655
 msgid "The Language must have a name!"
 msgstr "A nyelvnek meg kell adni a nevét!"
 
-#: admin/qtx_configuration.php:1056
+#: admin/qtx_configuration.php:656
 msgid "Language Code has to be 2 characters long!"
 msgstr "A nyelvi kódnak pontosan 2 betűből kell állnia!"
 
-#: admin/qtx_configuration.php:1063 admin/qtx_configuration.php:1069
+#: admin/qtx_configuration.php:663 admin/qtx_configuration.php:669
 msgid "There is already a language with the same Language Code!"
 msgstr "Már létezik nyelv ezzel a nyelvi kóddal!"
 
-#: admin/qtx_configuration.php:1187
+#: admin/qtx_configuration.php:787
 msgid "Language is already enabled or invalid!"
 msgstr "A nyelv már engedélyezve van vagy érvénytelen!"
 
-#: admin/qtx_configuration.php:1193
+#: admin/qtx_configuration.php:793
 msgid "Cannot disable Default Language!"
 msgstr "Az alap nyelvet nem lehet kikapcsolni!"
 
-#: admin/qtx_configuration.php:1196 admin/qtx_configuration.php:1203
-#: admin/qtx_configuration.php:1219
+#: admin/qtx_configuration.php:796 admin/qtx_configuration.php:803
+#: admin/qtx_configuration.php:819
 msgid "No such language!"
 msgstr "Nincs ilyen nyelv!"
 
-#: admin/qtx_configuration.php:1199
+#: admin/qtx_configuration.php:799
 msgid "Language is already disabled!"
 msgstr "A nyelv már ki van kapcsolva!"
 
-#: admin/qtx_configuration.php:1207
+#: admin/qtx_configuration.php:807
 msgid "Language is already first!"
 msgstr "A nyelv már az első!"
 
-#: admin/qtx_configuration.php:1213 admin/qtx_configuration.php:1229
+#: admin/qtx_configuration.php:813 admin/qtx_configuration.php:829
 msgid "New order saved."
 msgstr "Új sorrend elmentve."
 
-#: admin/qtx_configuration.php:1223
+#: admin/qtx_configuration.php:823
 msgid "Language is already last!"
 msgstr "A nyelv már az utolsó!"
 
-#: admin/qtx_configuration.php:1240
+#: admin/qtx_configuration.php:840
 msgid "Options saved."
 msgstr "Beállítások mentve."
 
-#: admin/qtx_configuration.php:1245
+#: admin/qtx_configuration.php:845
 #, php-format
 msgid "Could not write to \"%s\", Gettext Databases could not be downloaded!"
 msgstr "Nem sikerült írni \"%s\", a Gettext adatbázisokat nem sikerült letölteni!"
 
-#: admin/qtx_configuration.php:1271
+#: admin/qtx_configuration.php:871
 msgid "Edit Language"
 msgstr "Nyelv szerkesztése"
 
-#: admin/qtx_configuration.php:1274
+#: admin/qtx_configuration.php:874
 msgid "Save Changes &raquo;"
 msgstr "Változások mentése &raquo;"
 
-#: admin/qtx_configuration.php:1276
+#: admin/qtx_configuration.php:876
 msgid "back to configuration page"
 msgstr "vissza a beállítás oldalra"
 
-#: admin/qtx_configuration.php:1280
+#: admin/qtx_configuration.php:880
 msgid "Language Management (qTranslate Configuration)"
 msgstr "Nyelv kezelő (qTranslate beállítások)"
 
-#: admin/qtx_configuration.php:1281
+#: admin/qtx_configuration.php:881
 #, php-format
 msgid "For help on how to configure qTranslate correctly, take a look at the <a href=\"%1$s\">qTranslate FAQ</a> and the <a href=\"%2$s\">Support Forum</a>."
 msgstr "A qTranslate helyes beállításához, tekintse meg a <a href=\"%1$s\">qTranslate GyIK</a> és a <a href=\"%2$s\">Fórum</a> oldalakat."
 
-#: admin/qtx_configuration.php:1283
+#: admin/qtx_configuration.php:883
 msgid "General Settings"
 msgstr "Általános beállítások"
 
-#: admin/qtx_configuration.php:1286 admin/qtx_configuration.php:1322
+#: admin/qtx_configuration.php:886 admin/qtx_configuration.php:922
 msgid "Default Language / Order"
 msgstr "Alap nyelv / sorrend"
 
-#: admin/qtx_configuration.php:1288
+#: admin/qtx_configuration.php:888
 msgid "Default Language"
 msgstr "Alap nyelv"
 
-#: admin/qtx_configuration.php:1301
+#: admin/qtx_configuration.php:901
 #, php-format
 msgid "Choose the default language of your blog. This is the language which will be shown on %s. You can also change the order the languages by clicking on the arrows above."
 msgstr "Válassza ki az oldal alapértelmezett nyelvét. Ez az a nyelv, ami megjelenik itt: %s. A nyelvek sorrendje is megváltoztatható a nyilakra kattintva."
 
-#: admin/qtx_configuration.php:1306
+#: admin/qtx_configuration.php:906
 msgid "Untranslated Content"
 msgstr "Lefordítatlan tartalom"
 
-#: admin/qtx_configuration.php:1308
+#: admin/qtx_configuration.php:908
 #, php-format
 msgid "The choices below define how to handle untranslated content at front-end of the site. A content of a page or a post is considered untranslated if the main text (%s) is empty for a given language, regardless of other fields like title, excerpt, etc. All three options are independent of each other."
 msgstr "Az alábbiak megadják a lefordítatlan tartalmak kezelésének módját a weboldal front-endjén. Egy oldal vagy bejegyzés lefordítatlannak számít, ha a fő szövege (%s) üres egy adott nyelven, függetlenül a többi mezőtől (cím, kivonat, stb.). Mindhárom beállítás független a többitől."
 
-#: admin/qtx_configuration.php:1310
+#: admin/qtx_configuration.php:910
 msgid "Hide Content which is not available for the selected language."
 msgstr "Tartalom elrejtése, ami nem érhető el a kiválasztott nyelven."
 
-#: admin/qtx_configuration.php:1312
+#: admin/qtx_configuration.php:912
 msgid "When checked, posts will be hidden if the content is not available for the selected language. If unchecked, a message will appear showing all the languages the content is available in."
 msgstr "Ha be van jelölve, akkor azok a bejegyzések el lesznek rejtve, amik nem érhetők el a kiválasztott nyelven. Ha nincs bejelölve, akkor egy üzenet jelenik meg a bejegyzés elérhető nyelveinek listájával."
 
-#: admin/qtx_configuration.php:1313
+#: admin/qtx_configuration.php:913
 msgid "The message about available languages for the content of a post or a page may also appear if a single post display with an untranslated content if viewed directly."
 msgstr "Az üzenet egy bejegyzés vagy oldal elérhető nyelveiről megjelenhet a közvetlen megtekintésekor is."
 
-#: admin/qtx_configuration.php:1314 admin/qtx_import_export.php:161
+#: admin/qtx_configuration.php:914 admin/qtx_import_export.php:161
 msgid "Export"
 msgstr "Exportál"
 
-#: admin/qtx_configuration.php:1314 admin/qtx_import_export.php:161
+#: admin/qtx_configuration.php:914 admin/qtx_import_export.php:161
 msgid "Import"
 msgstr "Importál"
 
-#: admin/qtx_configuration.php:1314
+#: admin/qtx_configuration.php:914
 #, php-format
 msgid "This function will not work correctly if you installed %s on a blog with existing entries. In this case you will need to take a look at option \"%s\" under \"%s\" section."
 msgstr "Ez a funkció nem fog jól működni, ha a %s beépülőt a bejgyzések felvitele után telepítette. Ebben az esetben, tekintse meg az „%s” részt a „%s” között!"
 
-#: admin/qtx_configuration.php:1316
+#: admin/qtx_configuration.php:916
 msgid "Show displayed language prefix when content is not available for the selected language."
 msgstr "Megjelenítéshez használt nyelv nevének megjelenítése, ha a tartalom nem érhető el a kiválasztott nyelven."
 
-#: admin/qtx_configuration.php:1318
+#: admin/qtx_configuration.php:918
 msgid "This is relevant to all fields other than the main content of posts and pages. Such untranslated fields are always shown in an alternative available language, and will be prefixed with the language name in parentheses, if this option is on."
 msgstr "Ez vonatkozik a bejegyzések és oldalak fő szövegén kívül minden mezőre. Ilyen nem lefordított mezők mindig megjelennek egy másik elérhető nyelven, és előtte megjelenik a másik nyelv neve zárójelben, ha ez az opció engedélyezve van."
 
-#: admin/qtx_configuration.php:1320
+#: admin/qtx_configuration.php:920
 msgid "Show content in an alternative language when translation is not available for the selected language."
 msgstr "Tartalom megjelenítése másik nyelven, ha a tartalom nem érhető el a kiválasztott nyelven."
 
-#: admin/qtx_configuration.php:1322
+#: admin/qtx_configuration.php:922
 #, php-format
 msgid "When a page or a post with an untranslated content is viewed, a message with a list of other available languages is displayed, in which languages are ordered as defined by option \"%s\". If this option is on, then the content in default language will also be shown, instead of the expected language, for the sake of user convenience. If default language is not available for the content, then the content in the first available language is shown."
 msgstr "Ha egy nem lefordított tartalmú bejegyzést vagy oldalt megnéznek, akkor megjelenik egy üzenet az elérhető nyelveivel, melyben a nyelvek sorrendjét ez az opció adja meg: „%s”. Ha ez az opció engedélyezett, akkor az eredeti nyelvű tartalom is megjelenik, az elvárt nyelvű tartalom helyett. Ha az alap nyelven sem elérhető a bejegyzés, akkor a tartalom az első elérhető nyelven jelenik meg."
 
-#: admin/qtx_configuration.php:1326
+#: admin/qtx_configuration.php:926
 msgid "Detect Browser Language"
 msgstr "Böngésző nyelvének felismerése"
 
-#: admin/qtx_configuration.php:1328
+#: admin/qtx_configuration.php:928
 msgid "Detect the language of the browser and redirect accordingly."
 msgstr "Átirányítás a böngésző nyelvének megfelelő nyelvű oldalra."
 
-#: admin/qtx_configuration.php:1330
+#: admin/qtx_configuration.php:930
 msgid "When the frontpage is visited via bookmark/external link/type-in, the visitor will be forwarded to the correct URL for the language specified by his browser."
 msgstr "Ha a nyitó oldal könyvjelzővől, külső hivatkozásból vagy közvetlen címsorba írással lett megnyitva, akkor a látogató a böngésző nyelvének megfelelő URl-re lesz átirányítva."
 
-#: admin/qtx_configuration.php:1335
+#: admin/qtx_configuration.php:935
 msgid "Advanced Settings"
 msgstr "Haladó beállítások"
 
-#: admin/qtx_configuration.php:1342 admin/qtx_configuration.php:1344
-#: admin/qtx_configuration.php:1418
+#: admin/qtx_configuration.php:942 admin/qtx_configuration.php:944
+#: admin/qtx_configuration.php:1035
 msgid "URL Modification Mode"
 msgstr "URL módosítás módja"
 
-#: admin/qtx_configuration.php:1345
+#: admin/qtx_configuration.php:945
 msgid "Most SEO unfriendly, not recommended."
 msgstr "SEO számára legrosszabb, nem ajánlott."
 
-#: admin/qtx_configuration.php:1345
+#: admin/qtx_configuration.php:945
 msgid "Use Query Mode (?lang=en)"
 msgstr "Query mód (?lang=en)"
 
-#: admin/qtx_configuration.php:1352
+#: admin/qtx_configuration.php:952
 msgid "SEO friendly."
 msgstr "SEO barát."
 
-#: admin/qtx_configuration.php:1352
+#: admin/qtx_configuration.php:952
 msgid "Use Pre-Path Mode (Default, puts /en/ in front of URL)"
 msgstr "Előtag mód (alapértelmezett, /en/ az URL elejére)"
 
-#: admin/qtx_configuration.php:1353
+#: admin/qtx_configuration.php:953
 msgid "Use Pre-Domain Mode (uses http://en.yoursite.com)"
 msgstr "Aldomain mód (http://en.te-oldalad.hu)"
 
-#: admin/qtx_configuration.php:1353
+#: admin/qtx_configuration.php:953
 msgid "You will need to configure DNS sub-domains on your site."
 msgstr "Majd meg kell adni az aldomaineket a weboldalhoz a DNS rendszerben."
 
-#: admin/qtx_configuration.php:1358
+#: admin/qtx_configuration.php:958
 msgid "Hide URL language information for default language."
 msgstr "Nyelvi információ elrejtése az URL-ből alap nyelv esetén."
 
-#: admin/qtx_configuration.php:1359
+#: admin/qtx_configuration.php:959
 msgid "This is only applicable to Pre-Path and Pre-Domain mode."
 msgstr "Ez csak alkönyvtár és aldomain módban használható."
 
-#: admin/qtx_configuration.php:1364
+#: admin/qtx_configuration.php:964
 msgid "Use Per-Domain mode: specify separate user-defined domain for each language."
 msgstr "Külön-domain mód: minden nyelvhez külön domain megadása."
 
-#: admin/qtx_configuration.php:1383
+#: admin/qtx_configuration.php:983
 msgid "Domain for"
 msgstr "Domain ehhez:"
 
-#: admin/qtx_configuration.php:1388
+#: admin/qtx_configuration.php:988
+#, fuzzy
+msgid "Post Types"
+msgstr "Bejegyzés címe"
+
+#: admin/qtx_configuration.php:990
+msgid "Post types enabled for translation:"
+msgstr ""
+
+#: admin/qtx_configuration.php:1001
+msgid "If a post type unchecked, no fields in a post of that type are treated as translatable on editing pages. However, the manual raw multilingual entries with language tags may still get translated in a usual way at front-end."
+msgstr ""
+
+#: admin/qtx_configuration.php:1005
 msgid "Flag Image Path"
 msgstr "Zászló képek elérési útja"
 
-#: admin/qtx_configuration.php:1392
+#: admin/qtx_configuration.php:1009
 #, php-format
 msgid "Path to the flag images under wp-content, with trailing slash. (Default: %s, clear the value above to reset it to the default)"
 msgstr "Elérési út a zászló képekhez a wp-content mappán belül, lezáró per jellel. (Alapérték: %s, ürítse ki, ha alapra szeretné állítani)"
 
-#: admin/qtx_configuration.php:1396
+#: admin/qtx_configuration.php:1013
 msgid "Ignore Links"
 msgstr "Egynyelvű hivatkozások"
 
-#: admin/qtx_configuration.php:1400
+#: admin/qtx_configuration.php:1017
 #, php-format
 msgid "Don't convert links to files of the given file types. (Always included: %s)"
 msgstr "Az itt megadott típusú fájlokra mutató hivatkozások nem módosulnak. (Mindig benn van: %s)"
 
-#: admin/qtx_configuration.php:1404 qtranslate_widget.php:119
+#: admin/qtx_configuration.php:1021 qtranslate_widget.php:119
 msgid "Head inline CSS"
 msgstr "Fejlécbe ágyazott CSS"
 
-#: admin/qtx_configuration.php:1406
+#: admin/qtx_configuration.php:1023
 msgid "CSS code added by plugin in the head of front-end pages:"
 msgstr "CSS kód, amit a bővítmény a front-end oldalaiba tesz:"
 
-#: admin/qtx_configuration.php:1410 qtranslate_widget.php:119
+#: admin/qtx_configuration.php:1027 qtranslate_widget.php:119
 msgid "To disable this inline CSS, clear the check box."
 msgstr "E beágyazott CSS kód kikapcsolásához vegye ki a jelölőnégyzetből a pipát."
 
-#: admin/qtx_configuration.php:1410 admin/qtx_configuration.php:1572
+#: admin/qtx_configuration.php:1027 admin/qtx_configuration.php:1149
 #: qtranslate_widget.php:119
 msgid "To reset to default, clear the text."
 msgstr "Alaphelyzetre állításhoz, üritse ki a mezőt."
 
-#: admin/qtx_configuration.php:1414
+#: admin/qtx_configuration.php:1031
 msgid "Cookie Settings"
 msgstr "Süti beállítások"
 
-#: admin/qtx_configuration.php:1416
+#: admin/qtx_configuration.php:1033
 #, php-format
 msgid "Disable language client cookie \"%s\" (not recommended)."
 msgstr "Nyelvi süti „%s” kikapcsolása (nem ajánlott)."
 
-#: admin/qtx_configuration.php:1418
+#: admin/qtx_configuration.php:1035
 #, php-format
 msgid "Language cookie is auto-disabled for \"%s\" \"Pre-Domain\" and \"Per-Domain\", as language is always unambiguously defined by a url in those modes."
 msgstr "A nyelvi süti automatikusan ki van kapcsolva „%s”, „aldomain” és „külön domain” esetben, mert ilyenkor a nyelv egyértelműen eldönthető az URL-ből."
 
-#: admin/qtx_configuration.php:1418
+#: admin/qtx_configuration.php:1035
 #, php-format
 msgid "Otherwise, use this option with a caution, for simple enough sites only. If checked, the user choice of browsing language will not be saved between sessions and some AJAX calls may deliver unexpected language, as well as some undesired language switching during browsing may occur under certain themes (%sRead More%s)."
 msgstr "Egyébként bánjon óvatosan ezzel az opcióval, és csak egyszerű weboldalaknál használja! Ha bejelöli, a látogató nyelvválasztása nem lesz elmentve két látogatás között, és néhány AJAX hívás váratlan nyelvű tartalmat adhat vissza, és böngészés közben is előfordulhat nem várt nyelvváltás néhány sablon esetéban (%srészletek%s)."
 
-#: admin/qtx_configuration.php:1420
+#: admin/qtx_configuration.php:1037
 #, php-format
 msgid "Make %s cookies available only through HTTPS connections."
 msgstr "A %s sütik csak biztonságos (HTTPS) kapcsolatokhoz legyen elérhető."
 
-#: admin/qtx_configuration.php:1422
+#: admin/qtx_configuration.php:1039
 msgid "Don't check this if you don't know what you're doing!"
 msgstr "Ne jelölje be, ha nem tudja, hogy mit csinál!"
 
-#: admin/qtx_configuration.php:1426
+#: admin/qtx_configuration.php:1043
 msgid "Update Gettext Databases"
 msgstr "Gettext adatbázis frissítése"
 
-#: admin/qtx_configuration.php:1428
+#: admin/qtx_configuration.php:1045
 msgid "Automatically check for .mo-Database Updates of installed languages."
 msgstr "Automatikusan figyeli és letölti a telepített nyelvek .mo adatbázisát."
 
-#: admin/qtx_configuration.php:1430
+#: admin/qtx_configuration.php:1047
 msgid "Update Gettext databases now."
 msgstr "Gettext adatbázis frissítése most."
 
-#: admin/qtx_configuration.php:1432
+#: admin/qtx_configuration.php:1049
 msgid "qTranslate will query the Wordpress Localisation Repository every week and download the latest Gettext Databases (.mo Files)."
 msgstr "A qTranslate lekérdezi a WordPress fordítás tárat minden héten és letölti a legújabb gettext adatbázist (.mo fájlok)."
 
-#: admin/qtx_configuration.php:1436
+#: admin/qtx_configuration.php:1053
 msgid "Date / Time Conversion"
 msgstr "Dátum / idő átalakítás"
 
-#: admin/qtx_configuration.php:1438
+#: admin/qtx_configuration.php:1055
 msgid "Use emulated date function."
 msgstr "Emulált date függvény használata"
 
-#: admin/qtx_configuration.php:1439
+#: admin/qtx_configuration.php:1056
 msgid "Use emulated date function and replace formats with the predefined formats for each language."
 msgstr "Emulált date függvényt használ és a megadottakra cseréli a formátumokat minden nyelvnél."
 
-#: admin/qtx_configuration.php:1440
+#: admin/qtx_configuration.php:1057
 msgid "Use strftime instead of date."
 msgstr "strftime használata a date helyett"
 
-#: admin/qtx_configuration.php:1441
+#: admin/qtx_configuration.php:1058
 msgid "Use strftime instead of date and replace formats with the predefined formats for each language."
 msgstr "Az strftime függvényt használja és a megadottakra cseréli a formátumokat minden nyelvnél."
 
-#: admin/qtx_configuration.php:1442
+#: admin/qtx_configuration.php:1059
 msgid "Depending on the mode selected, additional customizations of the theme may be needed."
 msgstr "A választott mód függvényében az aktuális sablon testreszabására lehet szükség."
 
-#: admin/qtx_configuration.php:1451
+#: admin/qtx_configuration.php:1068
 msgid "Translation of options"
 msgstr "Beállítások fordítása"
 
-#: admin/qtx_configuration.php:1453
+#: admin/qtx_configuration.php:1070
 msgid "Filter all WordPress options for translation at front-end. It may hurt performance of the site, but ensures that all options are translated."
 msgstr "Minden WordPress opciót szűrőn át jelenít meg a front-enden. Rontja a weboldal teljesítményét, de így minden opció biztosan le lesz fordítva."
 
-#: admin/qtx_configuration.php:1453
+#: admin/qtx_configuration.php:1070
 msgid "Starting from version 3.2.5, only options with multilingual content get filtered, which should help on performance issues."
 msgstr "A 3.2.5 verziótól kezdvem csak a többnyelvű opciók lesznek lefordítva, így javul a teljesítmény."
 
-#: admin/qtx_configuration.php:1455
+#: admin/qtx_configuration.php:1072
 msgid "Translate only options listed below (for experts only):"
 msgstr "Csak az alábbi opciók legyenek lefordítva (csak szakértőknek):"
 
-#: admin/qtx_configuration.php:1458
+#: admin/qtx_configuration.php:1075
 #, php-format
 msgid "By default, all options are filtered to be translated at front-end for the sake of simplicity of configuration. However, for a developed site, this may cause a considerable performance degradation. Normally, there are very few options, which actually need a translation. You may simply list them above to minimize the performance impact, while still getting translations needed. Options names must match the field \"%s\" of table \"%s\" of WordPress database. A minimum common set of option, normally needed a translation, is already entered in the list above as a default example. Option names in the list may contain wildcard with symbol \"%s\"."
 msgstr "Alapértelmezésként minden WordPress opció átmegy a fordító szűrőn a beállítás egyszerűsége érdekében. Viszont egy nagyobb weboldal esetén ez jelentős visszaesést jelenthet a teljesítményben. Normális esetben valójában nagyon kevés opciót szükséges fordítani. Fennt fel lehet sorolni őket, így csökkentve a teljesítményre gyakorolt negatív hatást, a fordíthatóság megtartása mellett. Az opció nevek egyezzenek „%s” mező értékével a „%s” táblából. A fordításhoz minimlisan szükséges lista már előre meg van adva páldaként. Az opció nevekben lehet helykitöltő „%s” szinbólum segítségével."
 
-#: admin/qtx_configuration.php:1462
-msgid "Custom Fields"
-msgstr "Egyedi mezők"
-
-#: admin/qtx_configuration.php:1464
-#, php-format
-msgid "Enter \"%s\" or \"%s\" attribute of text fields from your theme, which you wish to translate. This applies to post, page and media editors (%s). To lookup \"%s\" or \"%s\", right-click on the field in the post or the page editor and choose \"%s\". Look for an attribute of the field named \"%s\" or \"%s\". Enter it below, as many as you need, space- or comma-separated. After saving configuration, these fields will start responding to the language switching buttons, and you can enter different text for each language. The input fields of type %s will be parsed using %s syntax, while single line text fields will use %s syntax. If you need to override this behaviour, prepend prefix %s or %s to the name of the field to specify which syntax to use. For more information, read %sFAQ%s."
-msgstr "Adja meg az „%s” vagy „%s” attribútumát azon beviteli mezőknek, amiket több nyelven szeretne használni. Ez a bejegyzés, oldal és média szerkesztő oldalaknál fog működni (%s). „%s” vagy „%s” felfedezéséhez, kattintson a jobb egérgombbal a kérdéses beviteli mezőre, és válassza a(z) „%s” opciót. Az elem attribútumai között keressen „%s” vagy „%s” értéket. Alább adja meg a megtalált értékeket. Többet is lehet szóközzel vagy vesszővel elválasztva. A beállítások mentése után ezekre a mezőkre vonatkozni fognak a nyelválasztó gombok, így több nyelven meg lehet adni értéküket. A %s típusú mezőknél %s szintaxis lesz használva, míg a sima szöveges mezőknél %s szintaxis. Ha szükséges e működés felülbíráslása, ez megtehető a %s vagy %s előtéttel a mező neve előtt. További információ a %sGYIK%sben."
-
-#: admin/qtx_configuration.php:1464
-msgctxt "browser option"
-msgid "Inspect Element"
-msgstr "Elem vizsgálata"
-
-#: admin/qtx_configuration.php:1471
-msgid "The value of \"id\" attribute is normally unique within one page, otherwise the first field found, having an id specified, is picked up."
-msgstr "Az „id” attribútum értéke általában egyedi egy oldalon belül, egyébként az első ilyen nevűt használjuk."
-
-#: admin/qtx_configuration.php:1478
-#, php-format
-msgid "All the fields of specified classes will respond to Language Switching Buttons. Be careful not to include a class, which would affect language-neutral fields. If you cannot uniquely identify a field needed neither by %s, nor by %s attribute, report the issue on %sSupport Forum%s"
-msgstr "Minden elem, aminek van az itt felsorolt class-ok közül legalább egy, az reagálni fog a nyelvválasztó gombokra. Fontos, hogy NE adjunk meg olyan class-t, ami nyelvfüggetlen mezőn is szerepel. Ha nem tudsz beazonosítani egy mező %s és %s alapján se, akkor kérlek jelentsd a %sTámogató fórum%son."
-
-#: admin/qtx_configuration.php:1482
-msgid "Custom Filters"
-msgstr "Egyedi szűrők"
-
-#: admin/qtx_configuration.php:1485
-#, php-format
-msgid "Names of filters (which are enabled on theme or other plugins via %s function) to add translation to. For more information, read %sFAQ%s."
-msgstr "WordPress szűrők nevei (%s hívások), amikre rá kell akasztani a többnyelvűsítést. További információ a %sGYIK%sben."
-
-#: admin/qtx_configuration.php:1489
-msgid "Custom Admin Pages"
-msgstr "Egyedi admin oldalak"
-
-#: admin/qtx_configuration.php:1491
-#, php-format
-msgid "List the custom admin page paths for which you wish Language Switching Buttons to show up. The Buttons will then control fields configured in \"Custom Fields\" section. You may only include part of the full URL after %s, including a distinctive query string if needed. As many as desired pages can be listed space/comma separated. For more information, read %sFAQ%s."
-msgstr "Adja meg azon admin oldalak elérési útjainak listáját, ahol szeretne nyelvválasztó gombokat. A gombok az „Egyedi mezők” résznél megadott mezőket irányítják majd. Az admin oldal URLjének csak a %s utáni részét kell megadni. Vesszővel vagy szóközzel elválasztva többet is meg lehet adni. További információ a %sGYIK%sben."
-
-#: admin/qtx_configuration.php:1497
-#, php-format
-msgid "Enable function name compatibility (%s)."
-msgstr "Függvény-név kompatibilitás bekapcsolása (%s)."
-
-#: admin/qtx_configuration.php:1498
-#, php-format
-msgid "Some plugins and themes use direct calls to the functions listed, which are defined in former %s plugin and some of its forks. Turning this flag on will enable those function to exists, which will make the dependent plugins and themes to work. WordPress policy prohibits to define functions with the same names as in other plugins, since it generates user-unfriendly fatal errors, when two conflicting plugins are activated simultaneously. Before turning this option on, you have to make sure that there are no other plugins active, which define those functions."
-msgstr "Néhány bővítmény és sablon közvetlenül meghívja a fent listázottak némelyikét, amiket a korábbi %s bővítmények vagy leszármazottaik definiáltak. Ha engedélyezi ezt az opciót, akkor újra elérhetők lesznek ezek a függvények, így működni fognak az ezekre épülő bővítmények és sablonok. A WordPress szabályzata megtiltja, hogy egy bővítmény olyan nevű függvényeket használjon, ami más bővítményben szerepel, mert ez végzetes php hibát okozna a két bővítmény együttes használatakor. Mielőtt engedélyezi ezt, győződjön meg róla, hogy nincs másik aktív bővímény, ami definiálja ezeken függvények valamelyikét."
-
-#: admin/qtx_configuration.php:1502
+#: admin/qtx_configuration.php:1079
 msgid "Editor Mode"
 msgstr "Szerkesztő mód"
 
-#: admin/qtx_configuration.php:1504
+#: admin/qtx_configuration.php:1081
 msgid "Use Language Switching Buttons (LSB)."
 msgstr "Nyelvválasztó gombok (LSB) használata."
 
-#: admin/qtx_configuration.php:1505
+#: admin/qtx_configuration.php:1082
 msgid "Pages with translatable fields have Language Switching Buttons, which control what language is being edited, while admin language stays the same."
 msgstr "A fordítható mezőket tartalmazó oldalakon lesznek nyelvválasztó gombok, amik vezérlik, hogy éppen melyik nyelvet fordítjuk, míg az admin felület nyelve nem változik."
 
-#: admin/qtx_configuration.php:1505
+#: admin/qtx_configuration.php:1082
 msgid "This is the default mode."
 msgstr "Ez az alap mód."
 
-#: admin/qtx_configuration.php:1506
+#: admin/qtx_configuration.php:1083
 msgid "Do not use Language Switching Buttons to edit multi-language text entries."
 msgstr "Ne legyenek nyelvválasztó gombok a több nyelvű szövegbeviteli mezők felett."
 
-#: admin/qtx_configuration.php:1506
+#: admin/qtx_configuration.php:1083
 msgid "Editor Raw Mode"
 msgstr "Nyers szerkesztés mód"
 
-#: admin/qtx_configuration.php:1507
+#: admin/qtx_configuration.php:1084
 msgid "Some people prefer to edit the raw entries containing all languages together separated by language defining tags, as they are stored in database."
 msgstr "Egyes emberek szeretik a nyers bejegyzést szerkeszteni, amiben az összes nyelv tartalma szerepel elválasztókkal, pont mint az adatbázisban."
 
-#: admin/qtx_configuration.php:1508
+#: admin/qtx_configuration.php:1085
 msgid "Single Language Mode."
 msgstr "Egy nyelv mód."
 
-#: admin/qtx_configuration.php:1508
+#: admin/qtx_configuration.php:1085
 msgid "The language edited is the same as admin language."
 msgstr "A szerkesztett nyelv megegyezik az admin nyelvvel."
 
-#: admin/qtx_configuration.php:1509
+#: admin/qtx_configuration.php:1086
 msgid "Edit language cannot be switched without page re-loading. Try this mode, if some of the advanced translatable fields do not properly respond to the Language Switching Buttons due to incompatibility with a plugin, which severely alters the default WP behaviour. This mode is the most compatible with other themes and plugins."
 msgstr "A szerkesztett nyelv nem módosítható oldal-újratöltés nélkül. Próbálja ki ezt a módot, ha a fejlett fordítható mezők egy része nem megfelelően reagál a nyelvválasztó gombokra egy nem-kompatíbilis bővítmény miatt, ami súlyosan módosítja az alap WP működést. Ez a mód a legkompatibilisabb a többi sablonnal és bővítménnyel."
 
-#: admin/qtx_configuration.php:1509
+#: admin/qtx_configuration.php:1086
 msgid "One may find convenient to use the default Editor Mode, while remembering not to switch edit languages on custom advanced translatable fields, where LSB do not work."
 msgstr "Egyesek kényelmesnek találhatják az alap szerkesztő módot, amíg emlékeznek rá, hogy ne váltsanak nyelvet az egyedi fejlett fordítható mezőknél, ahol az LSB nem működik."
 
-#: admin/qtx_configuration.php:1517 admin/qtx_configuration.php:1520
+#: admin/qtx_configuration.php:1094 admin/qtx_configuration.php:1097
 msgid "LSB Style"
 msgstr "LSB stílus"
 
-#: admin/qtx_configuration.php:1521
+#: admin/qtx_configuration.php:1098
 msgid "Choose CSS style for how Language Switching Buttons are rendered:"
 msgstr "Válassza ki a nyelvválasztó gombok megjelenését:"
 
-#: admin/qtx_configuration.php:1522
+#: admin/qtx_configuration.php:1099
 #, php-format
 msgid "LSB %s-wrap classes:"
 msgstr "LSB %s-befoglaló class-ok:"
 
-#: admin/qtx_configuration.php:1523
+#: admin/qtx_configuration.php:1100
 msgid "Active button class:"
 msgstr "Aktív gomb class:"
 
-#: admin/qtx_configuration.php:1524
+#: admin/qtx_configuration.php:1101
 msgid "The above is reset to an appropriate default, if the below is changed."
 msgstr "A fenti megfelelő alapértékre lesz állítva, ha az alábbi módosul."
 
-#: admin/qtx_configuration.php:1525
+#: admin/qtx_configuration.php:1102
 msgid "CSS set:"
 msgstr "CSS készlet:"
 
-#: admin/qtx_configuration.php:1529 admin/qtx_configuration.php:1531
-#: admin/qtx_configuration.php:1565 admin/qtx_configuration.php:1567
+#: admin/qtx_configuration.php:1106 admin/qtx_configuration.php:1108
+#: admin/qtx_configuration.php:1142 admin/qtx_configuration.php:1144
 msgid "Use custom CSS"
 msgstr "Egyedi CSS használata"
 
-#: admin/qtx_configuration.php:1531
+#: admin/qtx_configuration.php:1108
 #, php-format
 msgid "Choice \"%s\" disables this option and allows one to use its own custom CSS provided by other means."
 msgstr "„%s” kikapcsolja ezt az opciót, és engedi, hogy saját CSS kódot használjon tetszőleges más módon."
 
-#: admin/qtx_configuration.php:1548 admin/qtx_configuration.php:1552
+#: admin/qtx_configuration.php:1125 admin/qtx_configuration.php:1129
 #: admin/qtx_user_options.php:18
 msgid "Highlight Style"
 msgstr "Kiemelés stílus"
 
-#: admin/qtx_configuration.php:1550
+#: admin/qtx_configuration.php:1127
 msgid "When there are many integrated or customized translatable fields, it may become confusing to know which field has multilingual value. The highlighting of translatable fields may come handy then:"
 msgstr "Ha sok integrált vagy egyedi fordítható mező van, nehéz lehet követni, hogy melyik mező fordítható. Ilyenkor lehet hasznos a mezők kiemelése:"
 
-#: admin/qtx_configuration.php:1553 admin/qtx_configuration.php:1555
+#: admin/qtx_configuration.php:1130 admin/qtx_configuration.php:1132
 msgid "Do not highlight the translatable fields."
 msgstr "Ne emelje ki a fordítható mezőket."
 
-#: admin/qtx_configuration.php:1557 admin/qtx_configuration.php:1559
+#: admin/qtx_configuration.php:1134 admin/qtx_configuration.php:1136
 msgid "Show a line on the left border of translatable fields."
 msgstr "Legyen egy vonal a fordítható mezők bal oldalán."
 
-#: admin/qtx_configuration.php:1561 admin/qtx_configuration.php:1563
+#: admin/qtx_configuration.php:1138 admin/qtx_configuration.php:1140
 msgid "Draw a border around translatable fields."
 msgstr "Legyen körvonal a fordítható mezők körül."
 
-#: admin/qtx_configuration.php:1572
+#: admin/qtx_configuration.php:1149
 #, php-format
 msgid "The color in use is taken from your profile option %s, the third color."
 msgstr "A használt szín a %s profil opcióból a harmadik szín lesz."
 
-#: admin/qtx_configuration.php:1606
+#: admin/qtx_configuration.php:1172
+#, fuzzy
+msgid "Custom Integration"
+msgstr "Egyedi szűrők"
+
+#: admin/qtx_configuration.php:1175
+msgid "Custom Fields"
+msgstr "Egyedi mezők"
+
+#: admin/qtx_configuration.php:1177
+#, php-format
+msgid "Enter \"%s\" or \"%s\" attribute of text fields from your theme, which you wish to translate. This applies to post, page and media editors (%s). To lookup \"%s\" or \"%s\", right-click on the field in the post or the page editor and choose \"%s\". Look for an attribute of the field named \"%s\" or \"%s\". Enter it below, as many as you need, space- or comma-separated. After saving configuration, these fields will start responding to the language switching buttons, and you can enter different text for each language. The input fields of type %s will be parsed using %s syntax, while single line text fields will use %s syntax. If you need to override this behaviour, prepend prefix %s or %s to the name of the field to specify which syntax to use. For more information, read %sFAQ%s."
+msgstr "Adja meg az „%s” vagy „%s” attribútumát azon beviteli mezőknek, amiket több nyelven szeretne használni. Ez a bejegyzés, oldal és média szerkesztő oldalaknál fog működni (%s). „%s” vagy „%s” felfedezéséhez, kattintson a jobb egérgombbal a kérdéses beviteli mezőre, és válassza a(z) „%s” opciót. Az elem attribútumai között keressen „%s” vagy „%s” értéket. Alább adja meg a megtalált értékeket. Többet is lehet szóközzel vagy vesszővel elválasztva. A beállítások mentése után ezekre a mezőkre vonatkozni fognak a nyelválasztó gombok, így több nyelven meg lehet adni értéküket. A %s típusú mezőknél %s szintaxis lesz használva, míg a sima szöveges mezőknél %s szintaxis. Ha szükséges e működés felülbíráslása, ez megtehető a %s vagy %s előtéttel a mező neve előtt. További információ a %sGYIK%sben."
+
+#: admin/qtx_configuration.php:1177
+msgctxt "browser option"
+msgid "Inspect Element"
+msgstr "Elem vizsgálata"
+
+#: admin/qtx_configuration.php:1184
+msgid "The value of \"id\" attribute is normally unique within one page, otherwise the first field found, having an id specified, is picked up."
+msgstr "Az „id” attribútum értéke általában egyedi egy oldalon belül, egyébként az első ilyen nevűt használjuk."
+
+#: admin/qtx_configuration.php:1191
+#, php-format
+msgid "All the fields of specified classes will respond to Language Switching Buttons. Be careful not to include a class, which would affect language-neutral fields. If you cannot uniquely identify a field needed neither by %s, nor by %s attribute, report the issue on %sSupport Forum%s"
+msgstr "Minden elem, aminek van az itt felsorolt class-ok közül legalább egy, az reagálni fog a nyelvválasztó gombokra. Fontos, hogy NE adjunk meg olyan class-t, ami nyelvfüggetlen mezőn is szerepel. Ha nem tudsz beazonosítani egy mező %s és %s alapján se, akkor kérlek jelentsd a %sTámogató fórum%son."
+
+#: admin/qtx_configuration.php:1195
+msgid "Custom Filters"
+msgstr "Egyedi szűrők"
+
+#: admin/qtx_configuration.php:1198
+#, php-format
+msgid "Names of filters (which are enabled on theme or other plugins via %s function) to add translation to. For more information, read %sFAQ%s."
+msgstr "WordPress szűrők nevei (%s hívások), amikre rá kell akasztani a többnyelvűsítést. További információ a %sGYIK%sben."
+
+#: admin/qtx_configuration.php:1202
+msgid "Custom Admin Pages"
+msgstr "Egyedi admin oldalak"
+
+#: admin/qtx_configuration.php:1204
+#, php-format
+msgid "List the custom admin page paths for which you wish Language Switching Buttons to show up. The Buttons will then control fields configured in \"Custom Fields\" section. You may only include part of the full URL after %s, including a distinctive query string if needed. As many as desired pages can be listed space/comma separated. For more information, read %sFAQ%s."
+msgstr "Adja meg azon admin oldalak elérési útjainak listáját, ahol szeretne nyelvválasztó gombokat. A gombok az „Egyedi mezők” résznél megadott mezőket irányítják majd. Az admin oldal URLjének csak a %s utáni részét kell megadni. Vesszővel vagy szóközzel elválasztva többet is meg lehet adni. További információ a %sGYIK%sben."
+
+#: admin/qtx_configuration.php:1210
+#, php-format
+msgid "Enable function name compatibility (%s)."
+msgstr "Függvény-név kompatibilitás bekapcsolása (%s)."
+
+#: admin/qtx_configuration.php:1211
+#, php-format
+msgid "Some plugins and themes use direct calls to the functions listed, which are defined in former %s plugin and some of its forks. Turning this flag on will enable those function to exists, which will make the dependent plugins and themes to work. WordPress policy prohibits to define functions with the same names as in other plugins, since it generates user-unfriendly fatal errors, when two conflicting plugins are activated simultaneously. Before turning this option on, you have to make sure that there are no other plugins active, which define those functions."
+msgstr "Néhány bővítmény és sablon közvetlenül meghívja a fent listázottak némelyikét, amiket a korábbi %s bővítmények vagy leszármazottaik definiáltak. Ha engedélyezi ezt az opciót, akkor újra elérhetők lesznek ezek a függvények, így működni fognak az ezekre épülő bővítmények és sablonok. A WordPress szabályzata megtiltja, hogy egy bővítmény olyan nevű függvényeket használjon, ami más bővítményben szerepel, mert ez végzetes php hibát okozna a két bővítmény együttes használatakor. Mielőtt engedélyezi ezt, győződjön meg róla, hogy nincs másik aktív bővímény, ami definiálja ezeken függvények valamelyikét."
+
+#: admin/qtx_configuration.php:1216
+msgid "3rd-party plugins"
+msgstr ""
+
+#: admin/qtx_configuration.php:1217
+msgid "Below is a list of plugins which have a way to auto-integrate with qTranslate-X."
+msgstr ""
+
+#: admin/qtx_configuration.php:1221 admin/qtx_configuration.php:1223
+msgid "WPBakery Visual Composer"
+msgstr ""
+
+#: admin/qtx_configuration.php:1223
+#, php-format
+msgid "Enable built-in integration for \"%s\"."
+msgstr ""
+
+#: admin/qtx_configuration.php:1223
+msgid "Experimental feature."
+msgstr ""
+
+#: admin/qtx_configuration.php:1224
+msgctxt "WPBakery is a company, which sells Visual Composer"
+msgid "If WPBakery implements its own integration, this will need to be turned off."
+msgstr ""
+
+#: admin/qtx_configuration.php:1241
 msgid "List of Configured Languages"
 msgstr "Beállított nyelvek listája"
 
-#: admin/qtx_configuration.php:1611
+#: admin/qtx_configuration.php:1246
 #, php-format
 msgid "Only enabled languages are loaded at front-end, while all %d configured languages are listed here."
 msgstr "Csak az engedélyezett nyelvek lesznek betöltve a front-enden, míg itt mind a %d beállított nyelv fel van sorolva."
 
-#: admin/qtx_configuration.php:1612
+#: admin/qtx_configuration.php:1247
 msgid "The table below contains both pre-defined and manually added or modified languages."
 msgstr "Az alábbi táblázat tartalmazza az előre beállított és a kézzel hozzáadott vagy módosított nyelveket is."
 
-#: admin/qtx_configuration.php:1613 admin/qtx_configuration.php:1651
+#: admin/qtx_configuration.php:1248 admin/qtx_configuration.php:1286
 msgid "Delete"
 msgstr "Törlés"
 
-#: admin/qtx_configuration.php:1613 admin/qtx_configuration.php:1649
+#: admin/qtx_configuration.php:1248 admin/qtx_configuration.php:1284
 msgid "Disable"
 msgstr "Kikapcsol"
 
-#: admin/qtx_configuration.php:1613 admin/qtx_configuration.php:1649
+#: admin/qtx_configuration.php:1248 admin/qtx_configuration.php:1284
 msgid "Enable"
 msgstr "Bekapcsol"
 
-#: admin/qtx_configuration.php:1613 admin/qtx_configuration.php:1651
+#: admin/qtx_configuration.php:1248 admin/qtx_configuration.php:1286
 msgid "Reset"
 msgstr "Alapra"
 
-#: admin/qtx_configuration.php:1613
+#: admin/qtx_configuration.php:1248
 #, php-format
 msgid "You may %s or %s a language, or %s manually added language, or %s previous modifications of a pre-defined language."
 msgstr "Lehet %s vagy %s egy nyelvet, vagy %s kézzel hozzáadott nyelv, vagy %s előzőleg módosított előre beállított nyelv."
 
-#: admin/qtx_configuration.php:1614
+#: admin/qtx_configuration.php:1249
 #, php-format
 msgid "Click %s to modify language properties."
 msgstr "Kattintson %s a nyelvi tulajdonságok módosításához."
 
-#: admin/qtx_configuration.php:1647
+#: admin/qtx_configuration.php:1282
 #, php-format
 msgid "%s Flag"
 msgstr "%s zászló"
 
-#: admin/qtx_configuration.php:1649
+#: admin/qtx_configuration.php:1284
 msgid "Default"
 msgstr "Alap"
 
-#: admin/qtx_configuration.php:1651
+#: admin/qtx_configuration.php:1286
 msgid "Pre-Defined"
 msgstr "Előre-beállított"
 
-#: admin/qtx_configuration.php:1660
+#: admin/qtx_configuration.php:1295
 msgid "Enabling a language will cause qTranslate to update the Gettext-Database for the language, which can take a while depending on your server's connection speed."
 msgstr "Egy nyelv engedélyezésekor a qTranslate megpróbálja frissíteni a nyelv gettext adatbázisát. Ez az Internet sebességének függvényében eltarthat egy ideig."
 
-#: admin/qtx_configuration.php:1667
+#: admin/qtx_configuration.php:1302
 msgid "Add Language"
 msgstr "Nyelv hozzáadása"
 
-#: admin/qtx_configuration.php:1670
+#: admin/qtx_configuration.php:1305
 msgid "Add Language &raquo;"
 msgstr "Nyelv hozzáadása &raquo;"
 
-#: admin/qtx_configuration.php:1691
+#: admin/qtx_configuration.php:1326
 msgid "Language Menu"
 msgstr "Nyelvi menü"
 
-#: admin/qtx_configuration.php:1742
+#: admin/qtx_configuration.php:1377
 msgid "Help"
 msgstr "Súgó"
 
-#: admin/qtx_configuration.php:1744
+#: admin/qtx_configuration.php:1379
 #, php-format
 msgid "Menu item added is replaced with a sub-menu of available languages when menu is rendered. Depending on how your theme renders menu you may need to override and customize css entries %s and %s, originally defined in %s. The field \"URL\" of inserted menu item allows additional configuration described in %sFAQ%s."
 msgstr "A hozzáadott menüpont megjelenítéskor le lesz cserélve az elérhető nyelvek almenüjével. A sablon megjelenítésétől függően lehet, hogy módosítani kell a %s és %s css bejegyzéseket, ami eredetileg itt lett megadva: %s. A hozzáadott menü „URL” mezője további beállítást tesz lehetővé, amiről a %sGYIK%sben olvashat."
 
-#: admin/qtx_configuration.php:1749
+#: admin/qtx_configuration.php:1384
 msgid "Add to Menu"
 msgstr "Hozzáadás a menühöz"
 
-#: admin/qtx_configuration.php:1759
+#: admin/qtx_configuration.php:1394
 msgid "Language Switcher"
 msgstr "Nyelv váltó"
 
-#: admin/qtx_configuration.php:1804
+#: admin/qtx_configuration.php:1439
 msgid "Settings"
 msgstr "Beállítások"
 
@@ -962,23 +1007,23 @@ msgstr "Fordítható mezők kiemelése"
 msgid "The way the translatable fields are highlighted is configured with global option %s."
 msgstr "A fordítható mezők kiemelésének módját ez az opció határozza meg: %s."
 
-#: qtranslate_core.php:1457
+#: qtranslate_core.php:1458
 msgid "For the sake of viewer convenience, the content is shown below in this site default language."
 msgstr "A megtekintő kényelméért az alábbi tartalom a weboldal alapértelmezett nyelvén jelenik meg."
 
-#: qtranslate_core.php:1460
+#: qtranslate_core.php:1461
 msgid "For the sake of viewer convenience, the content is shown below in one of the available alternative languages."
 msgstr "A megtekintő kényelméért az alábbi tartalom az elérhető nyelvek egyikén jelenik meg."
 
-#: qtranslate_core.php:1463
+#: qtranslate_core.php:1464
 msgid "You may click one of the links to switch the site language to another available language."
 msgstr "Rákattinthat a linkek egyikére, hogy a weboldal nyelvét egy másik elérhető nyelvre váltsa."
 
-#: qtranslate_core.php:1465
+#: qtranslate_core.php:1466
 msgid "For the sake of viewer convenience, the content is shown below in the alternative language."
 msgstr "A megtekintő kényelméért az alábbi tartalom alternatív nyelven jelenik meg."
 
-#: qtranslate_core.php:1466
+#: qtranslate_core.php:1467
 msgid "You may click the link to switch the active language."
 msgstr "Rákattinthat a linkre az aktív nyelv módosításához."
 
