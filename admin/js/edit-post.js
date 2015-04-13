@@ -103,11 +103,28 @@ qTranslateConfig.js={
 		if( !qTranslateConfig.page_config.anchors)
 			qTranslateConfig.page_config.anchors = ['post','postexcerpt'];//,'slugdiv'
 
+		qtx.addLanguageSwitchAfterListener(this.setSlugLanguage);
+
+		//co('window.vc: ',window.vc);
+		if(window.vc && !qTranslateConfig.plugin_js_composer_off){//Visual Composer
+			qtx.addLanguageSwitchAfterListener(this.onTabSwitchVisualComposer);
+		}
+
 		return true;
 	}
+/*
 ,
 	onTabSwitch: function(lang)
 	{
 		qTranslateConfig.js.setSlugLanguage(lang);
+	}
+*/
+,
+	onTabSwitchVisualComposer: function(lang)
+	{
+		if(!window.vc) return;
+		if(!vc.app) return;
+		if (vc.app.status != 'shown') return;
+		vc.app.show();
 	}
 };

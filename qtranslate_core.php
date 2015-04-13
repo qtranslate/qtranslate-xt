@@ -65,8 +65,9 @@ function qtranxf_init_language() {
 	$url_info['original_url'] = $_SERVER['REQUEST_URI'];//is in use in -slug, here is for debugging purpose only
 
 	$url_info['language'] = qtranxf_detect_language($url_info);
+	qtranxf_dbg_log('qtranxf_init_language: SERVER: ',$_SERVER);
 	//qtranxf_dbg_log('qtranxf_init_language: REQUEST_TIME_FLOAT: ',$_SERVER['REQUEST_TIME_FLOAT']);
-	//qtranxf_dbg_log('qtranxf_init_language: detected: url_info: ',$url_info);
+	qtranxf_dbg_log('qtranxf_init_language: detected: url_info: ',$url_info);
 
 	$q_config['language'] = apply_filters('qtranslate_language', $url_info['language'], $url_info);
 
@@ -121,7 +122,7 @@ function qtranxf_init_language() {
 
 	//allow other plugins to initialize whatever they need for language
 	do_action('qtranslate_init_language',$url_info);
-	//qtranxf_dbg_log('done: qtranxf_init_language: url_info: ',$url_info);
+	qtranxf_dbg_log('done: qtranxf_init_language: url_info: ',$url_info);
 }
 add_action('plugins_loaded', 'qtranxf_init_language', 2);//user is not authenticated yet
 

@@ -1,25 +1,5 @@
 <?php
 
-function qtranxf_reloadConfig() {
-	global $q_config;
-	$url_info = isset($q_config['url_info']) ? $q_config['url_info'] : null;
-	//qtranxf_dbg_log('qtranxf_reloadConfig: $url_info: ',$url_info);
-	qtranxf_del_admin_filters();
-	qtranxf_loadConfig();
-	qtranxf_admin_loadConfig();
-	if($url_info){
-		$q_config['url_info'] = $url_info;
-		if(isset($q_config['url_info']['language'])){
-			$q_config['language'] = $q_config['url_info']['language'];
-		}
-		if(!qtranxf_isEnabled($q_config['language'])){
-			$q_config['language'] = $q_config['default_language'];
-		}
-		//qtranxf_dbg_log('qtranxf_reloadConfig: $q_config[language]: ',$q_config['language']);
-	}
-	qtranxf_load_option_qtrans_compatibility();
-}
-
 function qtranxf_detect_admin_language($url_info) {
 	global $q_config;
 	$cs=null;
@@ -41,6 +21,15 @@ function qtranxf_detect_admin_language($url_info) {
 	return $url_info;
 }
 add_filter('qtranslate_detect_admin_language','qtranxf_detect_admin_language');
+
+function qtranxf_array_compare($a,$b) {
+	if( !is_array($a) || !is_array($b) ) return false;
+	if(count($a)!=count($b)) return false;
+	//can be optimized
+	$diff_a=array_diff($a,$b);
+	$diff_b=array_diff($b,$a);
+	return empty($diff_a) && empty($diff_b);
+}
 
 function qtranxf_join_texts($texts,$sep) {
 	switch($sep){
@@ -442,7 +431,7 @@ add_action('edit_terms','qtranxf_edit_terms');
 
 function qtranxf_language_columns($columns) {
 	return array(
-		'code' => _x('Code', 'Language Code', 'qtranslate'),
+		'code' => _x('Code', 'Two-letter Language Code meant.', 'qtranslate'),
 		'flag' => __('Flag', 'qtranslate'),
 		'name' => __('Name', 'qtranslate'),
 		'status' => __('Action', 'qtranslate'),
@@ -674,6 +663,19 @@ function qtranxf_get_user_admin_color() {
 		$user_admin_color = 'fresh';
 	}
 	return $_wp_admin_css_colors[$user_admin_color]->colors;
+}
+
+/**
+ * @since 3.3
+ * @return true if post type is listed in option 'Post Types'.
+ */
+function qtranxf_post_type_optional($post_type) {
+	switch($post_type){
+		case 'revision':
+		case 'nav_menu_item':
+			return false; //no option for this type
+		default: return true;
+	}
 }
 
 add_filter('manage_language_columns', 'qtranxf_language_columns');

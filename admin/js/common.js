@@ -1,4 +1,21 @@
 /*
+	Copyright 2014  qTranslate Team  (email : qTranslateTeam@gmail.com )
+
+	This program is free software; you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation; either version 2 of the License, or
+	(at your option) any later version.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with this program; if not, write to the Free Software
+	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
+*/
+/*
 // debugging tools, do not check in
 var cc=0;
 function c(v){ ++cc; console.log('== '+cc+': '+v); }
@@ -303,7 +320,8 @@ var qTranslateX=function(pg)
 		setLangCookie(qTranslateConfig.activeLanguage);
 	}
 
-	this.getActiveLanguage=function() { return qTranslateConfig.activeLanguage; }
+	this.getActiveLanguage = function() { return qTranslateConfig.activeLanguage; }
+	this.getActiveLanguageName = function() { return qTranslateConfig.language_name[qTranslateConfig.activeLanguage]; }
 
 	var contentHooks={};
 	var contentHookId = 0;
@@ -902,6 +920,26 @@ var qTranslateX=function(pg)
 	 * The value of "this" is set to the only global instance of qTranslateX object.
 	 */
 	this.addLanguageSwitchAfterListener=function(func){ qTranslateConfig.onTabSwitchFunctionsLoad.push(func); }
+
+	/**
+	 * @since 3.2.9.8.9
+	 * Designed as interface for other plugin integration. The documentation is available at
+	 * https://qtranslatexteam.wordpress.com/integration/
+	 * 
+	 */
+	this.enableLanguageSwitchingButtons=function(on){
+		var display = on ? 'block' : 'none';
+		for(var lang in qTranslateConfig.tabSwitches){
+			var tabSwitches = qTranslateConfig.tabSwitches[lang];
+			for(var i=0; i < tabSwitches.length; ++i){
+				var tabSwitch = tabSwitches[i];
+				var tabSwitchParent = tabSwitches[i].parentElement;
+				tabSwitchParent.style.display = display;
+				break;
+			}
+			break;
+		}
+	}
 
 	this.getWrapForm=function(){
 		var wraps = document.getElementsByClassName('wrap');
