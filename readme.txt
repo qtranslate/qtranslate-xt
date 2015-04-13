@@ -110,6 +110,10 @@ Developers: please drop new topics here, the text will be moved to [qTranslate-X
 * Includes all changes after version 3.2.9. Please, review [Release Notes](https://qtranslatexteam.wordpress.com/2015/03/30/release-notes-3-3).
 * Translation: thanks to all translators contributed.
 
+### 3.2.9.9.0 alpha ###
+* Design: Java script interface for 3rd-party integration, functions: getLanguages, getFlagLocation, isLanguageEnabled, addLanguageSwitchBeforeListener, addLanguageSwitchAfterListener, enableLanguageSwitchingButtons.
+* Translation: pot and po files updated.
+
 ### 3.2.9.8.9 alpha ###
 * Feature: option 'Post Types' to exclude some post types from translation: [WP Topic](https://wordpress.org/support/topic/activate-translation-only-for-specific-post-types) and [WP Topic](https://wordpress.org/support/topic/disable-qtranslate-x-for-specific-custom-post).
 * Feature: Visual Composer compatibility (experimental).

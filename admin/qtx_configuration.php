@@ -264,7 +264,8 @@ function qtranxf_add_admin_footer_js ( $enqueue_script=false ) {
 	}
 
 	$config=array();
-	$keys=array('enabled_languages', 'default_language', 'language', 'url_mode', 'language_name', 'lsb_style_wrap_class', 'lsb_style_active_class', 'plugin_js_composer_off');//,'term_name'
+	// since 3.2.9.9.0 'enabled_languages' is replaced with 'language_config' structure
+	$keys=array('default_language', 'language', 'url_mode', 'lsb_style_wrap_class', 'lsb_style_active_class', 'plugin_js_composer_off');//,'term_name'
 	foreach($keys as $key){
 		$config[$key]=$q_config[$key];
 	}
@@ -277,12 +278,17 @@ function qtranxf_add_admin_footer_js ( $enqueue_script=false ) {
 	$config['url_info_home']=trailingslashit($homeinfo['path']);//$q_config['url_info']['home'];
 	$config['flag_location']=qtranxf_flag_location();
 	$config['js']=array();
-	$config['flag']=array();
-	$config['language_name']=array();
+	//$config['flag']=array();//deprecated since 3.2.9.9.0
+	//$config['language_name']=array();//deprecated since 3.2.9.9.0
+	$config['language_config']=array();
 	foreach($q_config['enabled_languages'] as $lang)
 	{
-		$config['flag'][$lang]=$q_config['flag'][$lang];
-		$config['language_name'][$lang]=$q_config['language_name'][$lang];
+		//$config['flag'][$lang]=$q_config['flag'][$lang];
+		//$config['language_name'][$lang]=$q_config['language_name'][$lang];
+		$config['language_config'][$lang]=array();
+		$config['language_config'][$lang]['flag'] = $q_config['flag'][$lang];
+		$config['language_config'][$lang]['name'] = $q_config['language_name'][$lang];
+		$config['language_config'][$lang]['locale'] = $q_config['locale'][$lang];
 	}
 	if(!empty($page_config)) $config['page_config'] = $page_config;
 

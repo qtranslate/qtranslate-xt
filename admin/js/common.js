@@ -15,6 +15,11 @@
 	along with this program; if not, write to the Free Software
 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 */
+/**
+ * Search for 'Designed as interface for other plugin integration' in comments to functions
+ * to find out which functions are safe to use in the 3rd-party integration.
+ * Avoid accessing internal variables directly, as they are subject to be re-designed at any time.
+*/
 /*
 // debugging tools, do not check in
 var cc=0;
@@ -48,9 +53,10 @@ qtranxj_split = function(text)
 qtranxj_split_blocks = function(blocks)
 {
 	var result = new Object;
-	for(var i=0; i<qTranslateConfig.enabled_languages.length; ++i)
+	//for(var i=0; i<qTranslateConfig.enabled_languages.length; ++i)
+	for(var lang in qTranslateConfig.language_config)
 	{
-		var lang=qTranslateConfig.enabled_languages[i];
+		//var lang=qTranslateConfig.enabled_languages[i];
 		result[lang] = '';
 	}
 	//if(!qtranxj_isArray(blocks))//since 3.2.7
@@ -58,8 +64,9 @@ qtranxj_split_blocks = function(blocks)
 		return result;
 	if(blocks.length==1){//no language separator found, enter it to all languages
 		var b=blocks[0];
-		for(var j=0; j<qTranslateConfig.enabled_languages.length; ++j){
-			var lang=qTranslateConfig.enabled_languages[j];
+		//for(var j=0; j<qTranslateConfig.enabled_languages.length; ++j){
+		for(var lang in qTranslateConfig.language_config){
+			//var lang=qTranslateConfig.enabled_languages[j];
 			result[lang] += b;
 		}
 		return result;
@@ -103,127 +110,6 @@ qtranxj_split_blocks = function(blocks)
 	}
 	return result;
 }
-
-/* since 3.2.9.8 - h.contents -> h.fields
- * all _join* functions are no longer needed
- * /
-qtranxj_allthesame = function(texts)
-{
-	if(qTranslateConfig.enabled_languages.length==0) return '';
-	var text = '';
-	//take first not empty
-	for(var i=0; i<qTranslateConfig.enabled_languages.length; ++i)
-	{
-		var lang=qTranslateConfig.enabled_languages[i];
-		var t = texts[lang];
-		if ( !t || t=='' ) continue;
-		text = t;
-		break;
-	}
-	if ( text=='' ) return text;
-	for(var i=0; i<qTranslateConfig.enabled_languages.length; ++i)
-	{
-		var lang=qTranslateConfig.enabled_languages[i];
-		var t = texts[lang];
-		if ( t == text ) continue;
-		return null;
-	}
-	return text;
-}
-
-/ **
- * "_c" stands for "comment"
- * since 3.1-b1 - no _c any more
- * /
-qtranxj_join_c = function(texts)
-{
-	return qtranxj_join_b(texts);
-/ *
-	var text = qtranxj_allthesame(texts);
-	if(text!=null) return text;
-	text='';
-	for(var i=0; i<qTranslateConfig.enabled_languages.length; ++i)
-	{
-		var lang=qTranslateConfig.enabled_languages[i];
-		var t = texts[lang];
-		if ( !t || t=='' ) continue;
-		text += '<!--:'+lang+'-->';
-		text += t;
-		text += '<!--:-->';
-	}
-	//c('qtranxj_join_c:text:'+text);
-	return text;
-* /
-}
-
-//"b" stands for "bracket"
-qtranxj_join_b = function(texts)
-{
-	var text = qtranxj_allthesame(texts);
-	if(text!=null) return text;
-	var text = '';
-	for(var i=0; i<qTranslateConfig.enabled_languages.length; ++i)
-	{
-		var lang=qTranslateConfig.enabled_languages[i];
-		var t = texts[lang];
-		if ( !t || t=='' ) continue;
-		text += '[:'+lang+']';
-		text += t;
-	}
-	if( text != '' ) text += '[:]';
-	return text;
-}
-
-/ **
- * since 3.1-b1
- * /
-qtranxj_join_byline = function(texts)
-{
-	var text = qtranxj_allthesame(texts);
-	if(text!=null) return text;
-	var lines;
-	for(var lang in texts){
-		texts[lang] = texts[lang].split('\n');
-	}
-	var text = '';
-	for(var i=0; true; ++i){
-		var ln;
-		for(var lang in texts){
-			if ( texts[lang].length() <= i ) continue;
-			var t = texts[lang][i];
-			if ( !t || t=='' ) continue;
-			ln[lang] = t;
-		}
-		if( !ln ) break;
-		text += qtranxj_join_b(ln);
-	}
-	return text;
-}
-*/
-
-/*
- * "s" stands for 'squiggly bracket'
- * Introduced, because some plugins, like [WordPress SEO](https://wordpress.org/plugins/wordpress-seo/),
- * remove '[:]' treating them as shortcodes.
- * since 3.2.7
- *
-qtranxj_join_s = function(texts)
-{
-	var text = qtranxj_allthesame(texts);
-	if(text!=null) return text;
-	var text = '';
-	for(var i=0; i<qTranslateConfig.enabled_languages.length; ++i)
-	{
-		var lang=qTranslateConfig.enabled_languages[i];
-		var t = texts[lang];
-		if ( !t || t=='' ) continue;
-		text += '{:'+lang+'}';
-		text += t;
-	}
-	if( text != '' ) text += '{:}';
-	return text;
-}
-*/
 
 function qtranxj_get_cookie(cname)
 {
@@ -298,22 +184,58 @@ var qTranslateX=function(pg)
 {
 	this.ge=function(id){ return document.getElementById(id); }
 
-	isLanguageEnabled=function(lang)
-	{
-		for(var i=0; i<qTranslateConfig.enabled_languages.length; ++i){
-			if(qTranslateConfig.enabled_languages[i]==lang) return true;
-		}
-		return false;
-	}
+	/**
+	 * Designed as interface for other plugin integration. The documentation is available at
+	 * https://qtranslatexteam.wordpress.com/integration/
+	 * return array keyed by two-letter language code. Example of usage:
+	 * var langs = getLanguages();
+	 * for(var lang_code in langs){
+	 *  var lang_conf = langs[lang_code];
+	 *  // variables available:
+	 *  //lang_conf.name
+	 *  //lang_conf.flag
+	 *  //lang_conf.locale
+	 *  // and may be more properties later
+	 * }
+	 */
+	this.getLanguages=function(){ return qTranslateConfig.language_config; }
+
+	/**
+	 * Designed as interface for other plugin integration. The documentation is available at
+	 * https://qtranslatexteam.wordpress.com/integration/
+	 * return URL to folder with flag images.
+	 */
+	this.getFlagLocation=function(){ return qTranslateConfig.flag_location; }
+
+	/**
+	 * Designed as interface for other plugin integration. The documentation is available at
+	 * https://qtranslatexteam.wordpress.com/integration/
+	 * return true if 'lang' is in the hash of enabled languages.
+	 * This function maybe needed, as function qtranxj_split may return languages,
+	 * which are not enabled, in case they were previously enabled and had some data.
+	 * Such data is preserved and re-saved until user deletes it manually.
+	 */
+	this.isLanguageEnabled=function(lang){ return !!qTranslateConfig.language_config[lang]; }
+	//this.isLanguageEnabled=function(lang)
+	//{
+	//	for(var i=0; i<qTranslateConfig.enabled_languages.length; ++i){
+	//		if(qTranslateConfig.enabled_languages[i]==lang) return true;
+	//	}
+	//	return false;
+	//}
 
 	setLangCookie=function(lang) { document.cookie='qtrans_edit_language='+lang; }
 
 	qTranslateConfig.activeLanguage;
 	if(qTranslateConfig.LSB){
 		qTranslateConfig.activeLanguage = qtranxj_get_cookie('qtrans_edit_language');
-		if(!qTranslateConfig.activeLanguage || !isLanguageEnabled(qTranslateConfig.activeLanguage)){
+		if(!qTranslateConfig.activeLanguage || !this.isLanguageEnabled(qTranslateConfig.activeLanguage)){
 			qTranslateConfig.activeLanguage = qTranslateConfig.language;
-			setLangCookie(qTranslateConfig.activeLanguage);
+			if(this.isLanguageEnabled(qTranslateConfig.activeLanguage)){
+				setLangCookie(qTranslateConfig.activeLanguage);
+			}else{//no languages are enabled
+				qTranslateConfig.LSB = false;
+			}
 		}
 	}else{
 		qTranslateConfig.activeLanguage = qTranslateConfig.language;
@@ -321,7 +243,8 @@ var qTranslateX=function(pg)
 	}
 
 	this.getActiveLanguage = function() { return qTranslateConfig.activeLanguage; }
-	this.getActiveLanguageName = function() { return qTranslateConfig.language_name[qTranslateConfig.activeLanguage]; }
+	//this.getActiveLanguageName = function() { return qTranslateConfig.language_name[qTranslateConfig.activeLanguage]; }
+	this.getLanguages = function() { return qTranslateConfig.language_config; }
 
 	var contentHooks={};
 	var contentHookId = 0;
@@ -989,7 +912,7 @@ var qTranslateX=function(pg)
 	}
 
 	//create sets of LSB
-	if(qTranslateConfig.LSB && qTranslateConfig.enabled_languages.length > 1){
+	if(qTranslateConfig.LSB){
 		var anchors=[];
 		if(qTranslateConfig.page_config && qTranslateConfig.page_config.anchors){
 			for(var i=0; i < qTranslateConfig.page_config.anchors.length; ++i){
@@ -1029,7 +952,8 @@ var qTranslateX=function(pg)
  */
 function qtranxj_LanguageSwitch(langSwitchWrap)
 {
-	var langs=qTranslateConfig.enabled_languages, langNames=qTranslateConfig.language_name;
+	//var langs=qTranslateConfig.enabled_languages, langNames=qTranslateConfig.language_name;
+	var langs=qTranslateConfig.language_config;
 	if(!qTranslateConfig.tabSwitches) qTranslateConfig.tabSwitches={};
 	function switchTab()
 	{
@@ -1079,13 +1003,18 @@ function qtranxj_LanguageSwitch(langSwitchWrap)
 		}
 	}
 	//location.pathname.indexOf();
-	for(var i=0; i<langs.length; ++i)
+	//for(var i=0; i<langs.length; ++i)
+	for(var lang in langs)
 	{
+		var lang_conf = langs[lang];
 		var flag_location=qTranslateConfig.flag_location;
-		var lang=langs[i];
+		//var lang=langs[i];
+		//var tabSwitch=qtranxj_ce ('li', {lang: lang, className: 'qtranxs-lang-switch', onclick: switchTab }, langSwitchWrap );
+		//qtranxj_ce('img', {src: flag_location+qTranslateConfig.flag[lang]}, tabSwitch);
+		//qtranxj_ce('span', {innerHTML: langNames[lang]}, tabSwitch);
 		var tabSwitch=qtranxj_ce ('li', {lang: lang, className: 'qtranxs-lang-switch', onclick: switchTab }, langSwitchWrap );
-		qtranxj_ce('img', {src: flag_location+qTranslateConfig.flag[lang]}, tabSwitch);
-		qtranxj_ce('span', {innerHTML: langNames[lang]}, tabSwitch);
+		qtranxj_ce('img', {src: flag_location+lang_conf.flag}, tabSwitch);
+		qtranxj_ce('span', {innerHTML: lang_conf.name}, tabSwitch);
 		if ( qTranslateConfig.activeLanguage == lang )
 			tabSwitch.classList.add(qTranslateConfig.lsb_style_active_class);
 		if(!qTranslateConfig.tabSwitches[lang]) qTranslateConfig.tabSwitches[lang] = [];
