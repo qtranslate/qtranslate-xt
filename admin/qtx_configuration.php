@@ -1218,10 +1218,10 @@ function qtranxf_conf() {
 				</td>
 			</tr>
 			<tr valign="top">
-				<th scope="row" style="text-align: right"><?php echo '<a href="http://vc.wpbakery.com/" target="_blank">'.__('WPBakery Visual Composer', 'qtranslate').'</a>'; ?></th>
+				<th scope="row" style="text-align: right"><a href="http://vc.wpbakery.com/" target="_blank">WPBakery Visual Composer</a></th>
 				<td>
-					<label for="plugin_js_composer"><input type="checkbox" name="plugin_js_composer" id="plugin_js_composer" value="1"<?php checked(!(isset($q_config['plugin_js_composer_off']) && $q_config['plugin_js_composer_off'])); ?>/>&nbsp;<?php printf(__('Enable built-in integration for "%s".', 'qtranslate'),__('WPBakery Visual Composer', 'qtranslate')); echo ' '.__('Experimental feature.', 'qtranslate'); ?></label>
-					<p><small><?php echo _x('If WPBakery implements its own integration, this will need to be turned off.', 'WPBakery is a company, which sells Visual Composer', 'qtranslate'); ?></small></p>
+					<label for="plugin_js_composer"><input type="checkbox" name="plugin_js_composer" id="plugin_js_composer" value="1"<?php checked(!(isset($q_config['plugin_js_composer_off']) && $q_config['plugin_js_composer_off'])); ?>/>&nbsp;<?php printf(__('Enable built-in integration for "%s".', 'qtranslate'), 'WPBakery Visual Composer'); echo ' '.__('Experimental feature.', 'qtranslate'); ?></label>
+					<p><small><?php printf(__('If %s implements its own integration, this will need to be turned off.', 'qtranslate'), 'WPBakery'); ?></small></p>
 				</td>
 			</tr>
 			<?php } ?>

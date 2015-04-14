@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: qTranslate-X 3.2.9.9.0\n"
+"Project-Id-Version: qTranslate-X 3.2.9.9.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-13 14:26-0600\n"
+"POT-Creation-Date: 2015-04-14 13:25-0600\n"
 "PO-Revision-Date: 2015-04-08 10:08+0100\n"
 "Last-Translator: Sophie <soph@sophie-g.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.5.4\n"
 
-#: admin/qtx_activation_hook.php:92 admin/qtx_activation_hook.php:215
+#: admin/qtx_activation_hook.php:92 admin/qtx_activation_hook.php:218
 #: admin/qtx_configuration.php:633
 #, php-format
 msgid "It might be a good idea to review %smigration instructions%s, if you have not yet done so."
@@ -32,69 +32,69 @@ msgstr "Les réglages compatibles de %s ont été importés vers %s. Plus de ré
 msgid "You may import/export compatible settings from %s to %s on Settings/Languages configuration page, once %s is running.%sContinue%s"
 msgstr "Vous pouvez importer/exporter les réglages compatibles de %s vers %s sur la page de configuration Paramètres/Langues, une fois que %s sera en fonction. %sContinue%s"
 
-#: admin/qtx_activation_hook.php:213
+#: admin/qtx_activation_hook.php:216
 #, php-format
 msgid "%sError:%s plugin %s cannot run concurrently with plugin %s. You may import and export compatible settings between %s and %s on Settings/<a href=\"%s\">Languages</a> configuration page. Then you have to deactivate one of the plugins to continue."
 msgstr "%sError:%s l’extension %s ne peut pas fonctionner simultanémant avec l’extension %s. Vous pouvez importer et exporter les réglages compatibles entre %s et %s sur la page de configuration Réglages/<a href=\"%s\">Langues</a>. Puis vous devrez désactiver l’une des extensions pour continuer."
 
-#: admin/qtx_activation_hook.php:218 admin/qtx_activation_hook.php:220
+#: admin/qtx_activation_hook.php:221 admin/qtx_activation_hook.php:223
 #, php-format
 msgid "Deactivate %s"
 msgstr "Désactiver %s"
 
-#: admin/qtx_activation_hook.php:259
+#: admin/qtx_activation_hook.php:262
 #, php-format
 msgid "Plugin %s may be integrated with multilingual plugin %s with a help of plugin %s."
 msgstr "L’extension %s peut être intégrée à l’extension multilingue %s avec l’aide de l’extension %s."
 
-#: admin/qtx_activation_hook.php:261
+#: admin/qtx_activation_hook.php:264
 msgid "Please, press an appropriate button below."
 msgstr "Veuillez cliquer sur le bouton approprié ci-dessous."
 
-#: admin/qtx_activation_hook.php:265
+#: admin/qtx_activation_hook.php:268
 #, php-format
 msgid "Activate plugin %s"
 msgstr "Activer l’extension %s"
 
-#: admin/qtx_activation_hook.php:267
+#: admin/qtx_activation_hook.php:270
 #, php-format
 msgid "Install plugin %s"
 msgstr "Installer l’extension %s"
 
-#: admin/qtx_activation_hook.php:269
+#: admin/qtx_activation_hook.php:272
 msgid "I am aware of that, dismiss this message."
 msgstr "Je suis au courant, masquez ce message."
 
-#: admin/qtx_activation_hook.php:319
+#: admin/qtx_activation_hook.php:322
 #, php-format
 msgid "Thank you for using %s plugin!"
 msgstr "Merci d’utiliser l’extension %s !"
 
-#: admin/qtx_activation_hook.php:321
+#: admin/qtx_activation_hook.php:324
 #, php-format
 msgid "Please, help us to make a decision on \"%s\" feature, press the button below."
 msgstr "S’il vous plait, aidez-nous à prendre une décision sur la fonctionnalité \"%s\", cliquez sur le bouton ci-dessous."
 
-#: admin/qtx_activation_hook.php:321 admin/qtx_activation_hook.php:323
+#: admin/qtx_activation_hook.php:324 admin/qtx_activation_hook.php:326
 #: qtranslate_services.php:787
 msgid "Translation Service"
 msgstr "Service de traduction"
 
-#: admin/qtx_activation_hook.php:323
+#: admin/qtx_activation_hook.php:326
 #, php-format
 msgid "Survey on \"%s\" feature"
 msgstr "Sondage sur la fonctionnalité \"%s\""
 
-#: admin/qtx_activation_hook.php:324 admin/qtx_activation_hook.php:367
+#: admin/qtx_activation_hook.php:327 admin/qtx_activation_hook.php:370
 msgid "I have already done it, dismiss this message."
 msgstr "Je l’ai déjà fait, masquez ce message."
 
-#: admin/qtx_activation_hook.php:359
+#: admin/qtx_activation_hook.php:362
 #, php-format
 msgid "The latest version of plugin %s has a number of new options, for example, %s, which may change the look of some pages. Please, review the help text of new options on %sconfiguration page%s."
 msgstr "La dernière version de l’extension %s a un certain nombre de nouvelles options, par exemple, %s, qui peuvent modifier l’apparence de certaines pages. Veuillez consulter le texte d’aides des nouvelles options sur la %sconfiguration page%s."
 
-#: admin/qtx_activation_hook.php:364
+#: admin/qtx_activation_hook.php:367
 #, php-format
 msgid "It is recommended to review %sRelease Notes%s for this new version of %s before making any further changes."
 msgstr "Il est recommandé de consulter les %sRelease Notes%s pour cette nouvelle version de %s avant de faire d’autres modifications."
@@ -118,8 +118,7 @@ msgid "Code"
 msgstr "Code"
 
 #: admin/qtx_admin_utils.php:435 admin/qtx_configuration.php:491
-#: admin/qtx_configuration.php:514 qtranslate_frontend.php:166
-#: qtranslate_frontend.php:193
+#: admin/qtx_configuration.php:514
 msgid "Flag"
 msgstr "Drapeau"
 
@@ -797,10 +796,6 @@ msgstr ""
 msgid "Below is a list of plugins which have a way to auto-integrate with qTranslate-X."
 msgstr ""
 
-#: admin/qtx_configuration.php:1221 admin/qtx_configuration.php:1223
-msgid "WPBakery Visual Composer"
-msgstr ""
-
 #: admin/qtx_configuration.php:1223
 #, php-format
 msgid "Enable built-in integration for \"%s\"."
@@ -811,8 +806,8 @@ msgid "Experimental feature."
 msgstr ""
 
 #: admin/qtx_configuration.php:1224
-msgctxt "WPBakery is a company, which sells Visual Composer"
-msgid "If WPBakery implements its own integration, this will need to be turned off."
+#, php-format
+msgid "If %s implements its own integration, this will need to be turned off."
 msgstr ""
 
 #: admin/qtx_configuration.php:1241
