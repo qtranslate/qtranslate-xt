@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qTranslate-X 3.2.9.9.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-04-13 14:26-0600\n"
-"PO-Revision-Date: 2015-04-07 09:15-0000\n"
+"PO-Revision-Date: 2015-04-13 23:37-0000\n"
 "Last-Translator: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "Language-Team: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -123,7 +123,6 @@ msgid "Database has been converted to legacy dual-tag format."
 msgstr "A base de dados foi convertida para o antigo formato de dupla etiquetagem."
 
 #: admin/qtx_admin_utils.php:434
-#, fuzzy
 msgctxt "Two-letter Language Code meant."
 msgid "Code"
 msgstr "Código"
@@ -503,17 +502,16 @@ msgid "Domain for"
 msgstr "Domínio para"
 
 #: admin/qtx_configuration.php:988
-#, fuzzy
 msgid "Post Types"
-msgstr "Título do artigo"
+msgstr "Tipos de artigo"
 
 #: admin/qtx_configuration.php:990
 msgid "Post types enabled for translation:"
-msgstr ""
+msgstr "Tipos de artigo permitidos para tradução:"
 
 #: admin/qtx_configuration.php:1001
 msgid "If a post type unchecked, no fields in a post of that type are treated as translatable on editing pages. However, the manual raw multilingual entries with language tags may still get translated in a usual way at front-end."
-msgstr ""
+msgstr "Se um tipo de artigo não for seleccionado, nenhum dos seus campos será tratado nas páginas de edição como sendo para traduzir. No entanto, os conteúdos multilingues que sejam introduzidos manualmente em modo de texto com etiquetas de idiomas continuarão a ser traduzidos normalmente na frente do site."
 
 #: admin/qtx_configuration.php:1005
 msgid "Flag Image Path"
@@ -628,7 +626,7 @@ msgstr "Filtrar todas as opções do WordPress para tradução na frente do site
 
 #: admin/qtx_configuration.php:1070
 msgid "Starting from version 3.2.5, only options with multilingual content get filtered, which should help on performance issues."
-msgstr "A partir da versão 3.2.5, apenas opções com conteúdo em múltiplos idiomas serão filtradas, o que deverá melhorar a performance."
+msgstr "A partir da versão 3.2.5, apenas opções com conteúdo multiligue serão filtradas, o que deverá melhorar a performance."
 
 #: admin/qtx_configuration.php:1072
 msgid "Translate only options listed below (for experts only):"
@@ -745,9 +743,8 @@ msgid "The color in use is taken from your profile option %s, the third color."
 msgstr "A cor utilizada foi obtida da opção %s do seu perfil, a terceira cor."
 
 #: admin/qtx_configuration.php:1172
-#, fuzzy
 msgid "Custom Integration"
-msgstr "﻿Filtros personalizados"
+msgstr "Integração personalizada"
 
 #: admin/qtx_configuration.php:1175
 msgid "Custom Fields"
@@ -802,29 +799,29 @@ msgstr "Alguns plugins e temas utilizam directamente as funções listadas, que 
 
 #: admin/qtx_configuration.php:1216
 msgid "3rd-party plugins"
-msgstr ""
+msgstr "Plugins de terceiros"
 
 #: admin/qtx_configuration.php:1217
 msgid "Below is a list of plugins which have a way to auto-integrate with qTranslate-X."
-msgstr ""
+msgstr "Abaixo está uma lista de plugins que têm um modo de se integrarem automaticamente com o qTranslate-X."
 
 #: admin/qtx_configuration.php:1221 admin/qtx_configuration.php:1223
 msgid "WPBakery Visual Composer"
-msgstr ""
+msgstr "WPBakery Visual Composer"
 
 #: admin/qtx_configuration.php:1223
 #, php-format
 msgid "Enable built-in integration for \"%s\"."
-msgstr ""
+msgstr "Activar a integração incorporada para \"%s\"."
 
 #: admin/qtx_configuration.php:1223
 msgid "Experimental feature."
-msgstr ""
+msgstr "Recurso experimental."
 
 #: admin/qtx_configuration.php:1224
 msgctxt "WPBakery is a company, which sells Visual Composer"
 msgid "If WPBakery implements its own integration, this will need to be turned off."
-msgstr ""
+msgstr "Se a WPBakery implementar a sua própria integração, isto terá que ser desactivado."
 
 #: admin/qtx_configuration.php:1241
 msgid "List of Configured Languages"
