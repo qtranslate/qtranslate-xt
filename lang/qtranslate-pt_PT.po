@@ -814,7 +814,7 @@ msgid "Experimental feature."
 msgstr "Recurso experimental."
 
 #: admin/qtx_configuration.php:1224
-#, fuzzy, php-format
+#, php-format
 msgid "If %s implements its own integration, this will need to be turned off."
 msgstr "Se a %s implementar a sua própria integração, isto terá que ser desactivado."
 
