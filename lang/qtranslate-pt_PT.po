@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: qTranslate-X 3.2.9.9.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-14 13:25-0600\n"
+"POT-Creation-Date: 2015-04-16 14:47-0600\n"
 "PO-Revision-Date: 2015-04-15 15:03-0000\n"
 "Last-Translator: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "Language-Team: Pedro Mendonça <ped.gaspar@gmail.com>\n"
@@ -886,24 +886,33 @@ msgstr "Adicionar idioma &raquo;"
 msgid "Language Menu"
 msgstr "Menu de idioma"
 
-#: admin/qtx_configuration.php:1377
+#: admin/qtx_configuration.php:1378
 msgid "Help"
 msgstr "﻿Ajuda"
 
-#: admin/qtx_configuration.php:1379
-#, php-format
-msgid "Menu item added is replaced with a sub-menu of available languages when menu is rendered. Depending on how your theme renders menu you may need to override and customize css entries %s and %s, originally defined in %s. The field \"URL\" of inserted menu item allows additional configuration described in %sFAQ%s."
-msgstr "O item de menu adicionado é substituído por um submenu com os idiomas disponíveis quando o menu é apresentado. Dependendo como o seu tema apresenta o menu, pode necessitar de sobrepor e personalizar as entradas css %s e %s, definidas originalmente em %s. O campo \"URL\" do item de menu inserido permite configurações adicionais descritas nas %sFAQ%s."
+#: admin/qtx_configuration.php:1381
+msgid "Menu item added is replaced with a drop-down menu of available languages, when menu is rendered."
+msgstr ""
 
-#: admin/qtx_configuration.php:1384
+#: admin/qtx_configuration.php:1383
+#, php-format
+msgid "The rendered menu items have CSS classes %s and %s (\"%s\" is a language code), which can be defined in theme style, if desired. The label of language menu can also be customized via field \"%s\" in the menu configuration."
+msgstr ""
+
+#: admin/qtx_configuration.php:1385
+#, php-format
+msgid "The field \"%s\" of inserted menu item allows additional configuration described in %sFAQ%s."
+msgstr ""
+
+#: admin/qtx_configuration.php:1390
 msgid "Add to Menu"
 msgstr "Adicionar ao menu"
 
-#: admin/qtx_configuration.php:1394
+#: admin/qtx_configuration.php:1400
 msgid "Language Switcher"
 msgstr "Selector de idioma"
 
-#: admin/qtx_configuration.php:1439
+#: admin/qtx_configuration.php:1445
 msgid "Settings"
 msgstr "Definições"
 
@@ -1004,27 +1013,27 @@ msgstr "Realçar campos que podem ser traduzidos"
 msgid "The way the translatable fields are highlighted is configured with global option %s."
 msgstr "O modo como os campos que podem ser traduzidos são realçados é configurado com a opção global %s."
 
-#: qtranslate_core.php:1458
+#: qtranslate_core.php:1454
 msgid "For the sake of viewer convenience, the content is shown below in this site default language."
 msgstr "Por uma questão de conveniência para o utilizador, o conteúdo é mostrado abaixo no idioma por omissão para este site."
 
-#: qtranslate_core.php:1461
+#: qtranslate_core.php:1457
 msgid "For the sake of viewer convenience, the content is shown below in one of the available alternative languages."
 msgstr "Por uma questão de conveniência para o utilizador, o conteúdo é mostrado abaixo num dos idiomas alternativos disponíveis."
 
-#: qtranslate_core.php:1464
+#: qtranslate_core.php:1460
 msgid "You may click one of the links to switch the site language to another available language."
 msgstr "Pode clicar numa das ligações para mudar o site para outro idioma disponível."
 
-#: qtranslate_core.php:1466
+#: qtranslate_core.php:1462
 msgid "For the sake of viewer convenience, the content is shown below in the alternative language."
 msgstr "Por uma questão de conveniência para o utilizador, o conteúdo é mostrado abaixo no idioma alternativo."
 
-#: qtranslate_core.php:1467
+#: qtranslate_core.php:1463
 msgid "You may click the link to switch the active language."
 msgstr "Pode clicar na ligação para alterar o idioma activo."
 
-#: qtranslate_frontend.php:160 qtranslate_widget.php:67
+#: qtranslate_frontend.php:171 qtranslate_widget.php:67
 msgid "Language"
 msgstr "Idioma"
 
@@ -1361,6 +1370,9 @@ msgstr "CSS do widget:"
 #: qtranslate.php:5
 msgid "Adds user-friendly and database-friendly multilingual content support."
 msgstr "Adiciona suporte para conteúdo multilingue de modo amigável para o utilizador e para a base de dados."
+
+#~ msgid "Menu item added is replaced with a sub-menu of available languages when menu is rendered. Depending on how your theme renders menu you may need to override and customize css entries %s and %s, originally defined in %s. The field \"URL\" of inserted menu item allows additional configuration described in %sFAQ%s."
+#~ msgstr "O item de menu adicionado é substituído por um submenu com os idiomas disponíveis quando o menu é apresentado. Dependendo como o seu tema apresenta o menu, pode necessitar de sobrepor e personalizar as entradas css %s e %s, definidas originalmente em %s. O campo \"URL\" do item de menu inserido permite configurações adicionais descritas nas %sFAQ%s."
 
 #~ msgid "WPBakery Visual Composer"
 #~ msgstr "WPBakery Visual Composer"
