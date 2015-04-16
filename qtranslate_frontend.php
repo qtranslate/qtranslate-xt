@@ -84,13 +84,15 @@ function qtranxf_wp_get_nav_menu_items( $items, $menu, $args )
 	$title='Language';//[none|Language|Current]
 	$current=true;//[shown|hidden]
 	$flags=true;//[none|all|items]
+	$lang_names=true;//names=[shown|hidden]
+	$colon=true;//[shown|hidden]
 	$topflag=true;
 	$itemsmodified=false;
 	foreach($items as $key => $item)
 	{
-		//qtranxf_dbg_echo('qtranxf_wp_get_nav_menu_items: $item->url: ',$item->url);
-		//qtranxf_dbg_echo('qtranxf_wp_get_nav_menu_items: $item: ',$item);
-		//qtranxf_dbg_echo('qtranxf_wp_get_nav_menu_items: item: '.$item->title.'; p='.$item->menu_item_parent.'; ID='.$item->ID);
+		//qtranxf_dbg_log('qtranxf_wp_get_nav_menu_items: $item->url: ',$item->url);
+		//qtranxf_dbg_log('qtranxf_wp_get_nav_menu_items: $item: ',$item);
+		//qtranxf_dbg_log('qtranxf_wp_get_nav_menu_items: item: '.$item->title.'; p='.$item->menu_item_parent.'; ID='.$item->ID);
 		$qtransLangSw = isset( $item->url ) && stristr( $item->url, 'qtransLangSw' ) !== FALSE;
 		if(!$qtransLangSw){
 			$item_title=qtranxf_use_language($language, $item->title, false, true);
@@ -109,14 +111,12 @@ function qtranxf_wp_get_nav_menu_items( $items, $menu, $args )
 				}
 			}
 		}
-		//qtranxf_dbg_echo('passed item: '.$item->title.'; p='.$item->menu_item_parent);
 
 		$item->post_content=qtranxf_use_language($language, $item->post_content, false, true);
 		$item->post_title=qtranxf_use_language($language, $item->post_title, false, true);
 		$item->post_excerpt=qtranxf_use_language($language, $item->post_excerpt, false, true);
 		$item->description=qtranxf_use_language($language, $item->description, false, true);
 		if(isset($item->attr_title)) $item->attr_title=qtranxf_use_language($language, $item->attr_title, false, true);
-		//qtranxf_dbg_echo('qtranxf_wp_get_nav_menu_items: $item: ',$item);
 
 		if($itemid<$item->ID) $itemid=$item->ID;
 		if($menu_order<$item->menu_order) $menu_order=$item->menu_order;
@@ -132,13 +132,22 @@ function qtranxf_wp_get_nav_menu_items( $items, $menu, $args )
 				if($flags) $topflag=(stripos($pars['flags'],'items')===FALSE);
 				else $topflag=false;
 			}
+			if(isset($pars['names'])){
+				$lang_names = (stripos($pars['names'],'hid')===FALSE);
+			}
 			if(isset($pars['title'])){
 				$title=$pars['title'];
 				if(stripos($pars['title'],'no')!==FALSE) $title='';
 				if(!$topflag && empty($title)) $title='Language';
 			}
+			if(isset($pars['colon'])){
+				$colon = (stripos($pars['colon'],'hid')===FALSE);
+			}
 			if(isset($pars['current'])){
 				$current=(stripos($pars['current'],'hid')===FALSE);
+			}
+			if( !$lang_names && !$flags ){
+				$flags = true;
 			}
 		}
 		if($type=='AL'){
@@ -157,16 +166,29 @@ function qtranxf_wp_get_nav_menu_items( $items, $menu, $args )
 			}elseif(stripos($title,'Current')!==FALSE){
 				$item->title=$q_config['language_name'][$toplang];
 			}else{
-				$item->title=__('Language','qtranslate');
+				$blocks = qtranxf_get_language_blocks($item->title);
+				if(count($blocks)<=1){//no customization is done
+					$item->title = __('Language', 'qtranslate');
+					if($item->title == 'Language') $item->title = qtranxf_translate_wp('Language');
+				}else{
+					$item->title = qtranxf_use_block($toplang, $blocks);
+				}
 			}
 			$item->url=null;
 		}
 		if($topflag){
-			if(!empty($item->title)) $item->title.=':&nbsp;';
-			$item->title.='<img src="'.$flag_location.$q_config['flag'][$toplang].'" alt="'.$q_config['language_name'][$toplang].' '.__('Flag', 'qtranslate').'" />';
+			if(!empty($item->title)){
+				if($colon) $item->title.=':';
+				$item->title.='&nbsp;';
+			}
+			$item->title.='<img src="'.$flag_location.$q_config['flag'][$toplang].'" alt="'.$q_config['language_name'][$toplang].'" />';//.' '.__('Flag', 'qtranslate')
 		}
+		if(empty($item->attr_title))
+			$item->attr_title = $q_config['language_name'][$toplang];
 		//$item->classes[] = 'qtranxs_flag_'.$language;
 		$item->classes[] = 'qtranxs-lang-menu';
+		$item->classes[] = 'qtranxs-lang-menu-'.$toplang;
+		//qtranxf_dbg_log('qtranxf_wp_get_nav_menu_items: top $item: ',$item);
 		$qtransmenu = $item;
 	}
 	//if(	$itemsmodified ) qtranxf_remove_detached_children($items);
@@ -188,9 +210,13 @@ function qtranxf_wp_get_nav_menu_items( $items, $menu, $args )
 		$item->object_id=$qtransmenu->object_id;
 		$item->type='custom';
 		$item->type_label='Custom';
-		$item->title=$q_config['language_name'][$lang];
+		$item->title='';
 		if($flags){
-			$item->title='<img src="'.$flag_location.$q_config['flag'][$lang].'" alt="'.$q_config['language_name'][$lang].' '.__('Flag', 'qtranslate').'" />&nbsp;'.$item->title;
+			$item->title='<img src="'.$flag_location.$q_config['flag'][$lang].'" alt="'.$q_config['language_name'][$lang].'" />';
+		}
+		if($lang_names){
+			if($flags) $item->title .= '&nbsp;';
+			$item->title .= $q_config['language_name'][$lang];
 		}
 		$item->post_title=$item->title;
 		$item->post_name='language-menuitem-'.$lang;
@@ -198,12 +224,14 @@ function qtranxf_wp_get_nav_menu_items( $items, $menu, $args )
 			$item->url=qtranxf_convertURL($url, $lang, false, true);
 			$item->url=esc_url($item->url);//not sure if this is needed
 		}
+		$item->attr_title = $q_config['language_name'][$lang];
 		$item->classes=array();
 		//$item->classes[] = 'qtranxs_flag_'.$lang;
 		$item->classes[] = 'qtranxs-lang-menu-item';
+		$item->classes[] = 'qtranxs-lang-menu-item-'.$lang;
 		$items[]=$item;
 		++$menu->count;
-		//qtranxf_dbg_echo('qtranxf_wp_get_nav_menu_items: $item',$item);
+		//qtranxf_dbg_log('qtranxf_wp_get_nav_menu_items: language menu $item',$item);
 	}
 	return $items;
 }

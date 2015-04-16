@@ -1324,7 +1324,6 @@ function qtranxf_nav_menu_metabox( $object )
 {
 	global $nav_menu_selected_id; 
 	$nm = __('Language Menu', 'qtranslate');
-	//$nm = qtranxf_multilingual('Language Menu', 'qtranslate');
 	$elems = array( '#qtransLangSwLM#' => $nm );
 
 	class qtranxcLangSwItems {
@@ -1333,7 +1332,7 @@ function qtranxf_nav_menu_metabox( $object )
 		public $object_id;
 		public $menu_item_parent = 0;
 		public $type = 'custom';
-		public $title;
+		public $title;// = 'Language';
 		public $url;
 		public $target = '';
 		public $attr_title = '';
@@ -1344,13 +1343,15 @@ function qtranxf_nav_menu_metabox( $object )
 	$elems_obj = array();
 	foreach ( $elems as $value => $title ) {
 		$elems_obj[$title] = new qtranxcLangSwItems();
-		$elems_obj[$title]->object_id = esc_attr( $value );
-		$elems_obj[$title]->title = esc_attr( $title );
-		$elems_obj[$title]->url = esc_attr( $value );
+		$obj = &$elems_obj[$title];
+		$obj->object_id = esc_attr( $value );
+		if(empty($obj->title)) $obj->title = esc_attr( $title );
+		$obj->label = esc_attr( $title );
+		$obj->url = esc_attr( $value );
 	}
 
 	$walker = new Walker_Nav_Menu_Checklist();
-/* Language menu items
+/* Language menu items - not used anymore
 .qtranxs-lang-menu
 {
 	//background-position: top left;
@@ -1376,7 +1377,12 @@ function qtranxf_nav_menu_metabox( $object )
 	<span class="list-controls hide-if-no-js">
 		<a href="javascript:void(0);" class="help" onclick="jQuery( '#help-login-links' ).toggle();"><?php _e( 'Help', 'qtranslate'); ?></a>
 		<span class="hide-if-js" id="help-login-links"><p><a name="help-login-links"></a>
-		<?php printf(__('Menu item added is replaced with a sub-menu of available languages when menu is rendered. Depending on how your theme renders menu you may need to override and customize css entries %s and %s, originally defined in %s. The field "URL" of inserted menu item allows additional configuration described in %sFAQ%s.', 'qtranslate' ), '.qtranxs-lang-menu', '.qtranxs-lang-menu-item', 'qtranslate.css', '<a href="https://wordpress.org/plugins/qtranslate-x/faq" target="blank">','</a>');?></p>
+		<?php 
+		echo __('Menu item added is replaced with a drop-down menu of available languages, when menu is rendered.', 'qtranslate');
+		echo ' ';
+		printf(__('The rendered menu items have CSS classes %s and %s ("%s" is a language code), which can be defined in theme style, if desired. The label of language menu can also be customized via field "%s" in the menu configuration.', 'qtranslate'), '.qtranxs-lang-menu, .qtranxs-lang-menu-xx, .qtranxs-lang-menu-item', '.qtranxs-lang-menu-item-xx', 'xx', qtranxf_translate_wp('Navigation Label'));
+		echo ' ';
+		printf(__('The field "%s" of inserted menu item allows additional configuration described in %sFAQ%s.', 'qtranslate'), qtranxf_translate_wp('URL'), '<a href="https://qtranslatexteam.wordpress.com/faq/#LanguageSwitcherMenuConfig" target="blank">','</a>'); //https://wordpress.org/plugins/qtranslate-x/faq ?></p>
 		</span>
 	</span>
 	<p class="button-controls">

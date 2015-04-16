@@ -110,6 +110,13 @@ Developers: please drop new topics here, the text will be moved to [qTranslate-X
 * Includes all changes after version 3.2.9. Please, review [Release Notes](https://qtranslatexteam.wordpress.com/2015/03/30/release-notes-3-3).
 * Translation: thanks to all translators contributed.
 
+### 3.2.9.9.1 alpha ###
+* Fix: alt attribute for flag icons in widget 'qTranslate Language Chooser': [WP Topic](https://wordpress.org/support/topic/flag-icons-%E2%80%93-missing-alt-attributes).
+* Fix: title attribute for language menu items: [WP Topic](https://wordpress.org/support/topic/language-switcher-menu-flag-images-in-title).
+* Feature: take language menu title from field 'Navigation Label' of menu editor: [WP Topic](https://wordpress.org/support/topic/change-the-menu-label-text).
+* Feature: options 'names' and 'colon' in Language Menu configuration.
+* Translation: .pot, .po and .mo files updated.
+
 ### 3.2.9.9.0 alpha ###
 * Design: Java script interface for 3rd-party integration, functions: getLanguages, getFlagLocation, isLanguageEnabled, addLanguageSwitchBeforeListener, addLanguageSwitchAfterListener, enableLanguageSwitchingButtons.
 * Translation: pot and po files updated.

@@ -132,6 +132,9 @@ function qtranxf_activation_hook()
 		$ver = get_option('qtranslate_version_previous');
 		if(!$ver) update_option('qtranslate_version_previous', 29000);
 	}
+
+	$f=WP_CONTENT_DIR.'/debug-qtranslate.log';
+	if(file_exists($f)) unlink($f);
 }
 
 function qtranxf_admin_notices_version()

@@ -81,7 +81,7 @@ if(WP_DEBUG){
  * Default domain translation for strings already translated by WordPress.
  * Use of this function prevents xgettext, poedit and other translating parsers from including the string that does not need translation.
  */
-function qtranxf_translate_wp($s) { __($s); }
+function qtranxf_translate_wp($s) { return __($s); }
 
 function qtranxf_parseURL($url) {
 	//this is not the same as native parse_url and so it is in use
@@ -195,7 +195,8 @@ function qtranxf_get_address_info($url) {
 function qtranxf_get_home_info() {
 	static $home_info;
 	if(!$home_info){
-		$url = defined('WP_HOME') ? WP_HOME : get_option('home');
+		//$url = defined('WP_HOME') ? WP_HOME : get_option('home');
+		$url = get_option('home');//WP does take care of WP_HOME
 		$home_info = qtranxf_get_address_info($url);
 	}
 	return $home_info;
@@ -204,7 +205,8 @@ function qtranxf_get_home_info() {
 function qtranxf_get_site_info() {
 	static $site_info;
 	if(!$site_info){
-		$url = defined('WP_SITEURL') ? WP_SITEURL : get_option('siteurl');
+		//$url = defined('WP_SITEURL') ? WP_SITEURL : get_option('siteurl');
+		$url = get_option('siteurl');//WP does take care of WP_SITEURL
 		$site_info = qtranxf_get_address_info($url);
 	}
 	return $site_info;

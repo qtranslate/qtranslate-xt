@@ -64,10 +64,10 @@ function qtranxf_init_language() {
 
 	$url_info['original_url'] = $_SERVER['REQUEST_URI'];//is in use in -slug, here is for debugging purpose only
 
-	$url_info['language'] = qtranxf_detect_language($url_info);
-	qtranxf_dbg_log('qtranxf_init_language: SERVER: ',$_SERVER);
+	//qtranxf_dbg_log('qtranxf_init_language: SERVER: ',$_SERVER);
 	//qtranxf_dbg_log('qtranxf_init_language: REQUEST_TIME_FLOAT: ',$_SERVER['REQUEST_TIME_FLOAT']);
-	qtranxf_dbg_log('qtranxf_init_language: detected: url_info: ',$url_info);
+	$url_info['language'] = qtranxf_detect_language($url_info);
+	//qtranxf_dbg_log('qtranxf_init_language: detected: url_info: ',$url_info);
 
 	$q_config['language'] = apply_filters('qtranslate_language', $url_info['language'], $url_info);
 
@@ -122,13 +122,12 @@ function qtranxf_init_language() {
 
 	//allow other plugins to initialize whatever they need for language
 	do_action('qtranslate_init_language',$url_info);
-	qtranxf_dbg_log('done: qtranxf_init_language: url_info: ',$url_info);
+	//qtranxf_dbg_log('qtranxf_init_language: done: url_info: ',$url_info);
 }
 add_action('plugins_loaded', 'qtranxf_init_language', 2);//user is not authenticated yet
 
 function qtranxf_detect_language(&$url_info) {
 	global $q_config;
-	//$url_info['home'] = $homeinfo['path'];//not in use any more
 
 	if(defined('WP_ADMIN')){
 		$siteinfo = qtranxf_get_site_info();
@@ -136,9 +135,13 @@ function qtranxf_detect_language(&$url_info) {
 		$url_info['path-base-length'] = $siteinfo['path-length'];
 	}else{
 		qtranxf_complete_url_info($url_info);
-		//$homeinfo = qtranxf_get_home_info();
-		//$url_info['path-base'] = $homeinfo['path'];
-		//$url_info['path-base-length'] = $homeinfo['path-length'];
+		if(!isset($url_info['path-base'])){
+			//path did not match neither 'site' nor 'home', but it came to this code, then redirect to home.
+			//may happen for testing
+			$target = get_option('home');
+			wp_redirect($target);
+			exit();
+		}
 		$url_info['doing_front_end'] = true;
 	}
 
@@ -1114,14 +1117,11 @@ function qtranxf_get_language_blocks($text) {
 }
 //}
 
-if (!function_exists('qtranxf_split')){
 function qtranxf_split($text) {
 	$blocks = qtranxf_get_language_blocks($text);
 	return qtranxf_split_blocks($blocks);
 }
-}
 
-if (!function_exists('qtranxf_split_blocks')){
 function qtranxf_split_blocks($blocks) {
 	global $q_config;
 	$result = array();
@@ -1222,7 +1222,6 @@ function qtranxf_split($text, $quicktags = true) {
 	//}
 	return $result;
 }// */
-}
 
 // not in use? QTranslate META calls 'qtrans_join' - added to compatibility
 //function qtranxf_join($texts) {
@@ -1354,7 +1353,6 @@ function qtranxf_use($lang, $text, $show_available=false, $show_empty=false) {
 }
 }
 
-if (!function_exists('qtranxf_use_language')){
 /** when $text is already known to be string */
 function qtranxf_use_language($lang, $text, $show_available=false, $show_empty=false) {
 	$blocks = qtranxf_get_language_blocks($text);
@@ -1362,9 +1360,7 @@ function qtranxf_use_language($lang, $text, $show_available=false, $show_empty=f
 		return $text;
 	return qtranxf_use_block($lang, $blocks, $show_available, $show_empty);
 }
-}
 
-if (!function_exists('qtranxf_use_block')){
 function qtranxf_use_block($lang, $blocks, $show_available=false, $show_empty=false) {
 	global $q_config;
 	$content = qtranxf_split_blocks($blocks);
@@ -1474,7 +1470,7 @@ function qtranxf_use_block($lang, $blocks, $show_available=false, $show_empty=fa
 
 	return '<p>'.preg_replace('/%LANG:([^:]*):([^%]*)%/', $language_list, $q_config['not_available'][$lang]).$altlanguagecontent;
 }
-}
+
 
 function qtranxf_showAllSeparated($text) {
 	if(empty($text)) return $text;
