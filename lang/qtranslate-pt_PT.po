@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qTranslate-X 3.2.9.9.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-04-16 14:47-0600\n"
-"PO-Revision-Date: 2015-04-15 15:03-0000\n"
+"PO-Revision-Date: 2015-04-16 22:50-0000\n"
 "Last-Translator: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "Language-Team: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -892,17 +892,17 @@ msgstr "﻿Ajuda"
 
 #: admin/qtx_configuration.php:1381
 msgid "Menu item added is replaced with a drop-down menu of available languages, when menu is rendered."
-msgstr ""
+msgstr "O item de menu adicionado é substituído por uma caixa de selecção com os idiomas disponíveis quando o menu é apresentado."
 
 #: admin/qtx_configuration.php:1383
 #, php-format
 msgid "The rendered menu items have CSS classes %s and %s (\"%s\" is a language code), which can be defined in theme style, if desired. The label of language menu can also be customized via field \"%s\" in the menu configuration."
-msgstr ""
+msgstr "Os itens do menu apresentado têm as classes CSS %s e %s (\"%s\" é um código de idioma), que podem ser definidas no estilo do tema, caso deseje. A legenda do menu de idioma também pode ser personalizada através do campo \"%s\" na configuração do menu."
 
 #: admin/qtx_configuration.php:1385
 #, php-format
 msgid "The field \"%s\" of inserted menu item allows additional configuration described in %sFAQ%s."
-msgstr ""
+msgstr "O campo \"%s\" do item de menu inserido permite configurações adicionais descritas nas %sFAQ%s."
 
 #: admin/qtx_configuration.php:1390
 msgid "Add to Menu"
