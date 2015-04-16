@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: qTranslate-X 3.2.9.9.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-14 13:25-0600\n"
+"POT-Creation-Date: 2015-04-16 14:35-0600\n"
 "PO-Revision-Date: 2015-02-04 14:41-0000\n"
 "Language-Team: qTranslate Team Translators\n"
 "MIME-Version: 1.0\n"
@@ -895,24 +895,33 @@ msgstr "Přidat jazyk &raquo;"
 msgid "Language Menu"
 msgstr ""
 
-#: admin/qtx_configuration.php:1377
+#: admin/qtx_configuration.php:1378
 msgid "Help"
 msgstr ""
 
-#: admin/qtx_configuration.php:1379
-#, php-format
-msgid "Menu item added is replaced with a sub-menu of available languages when menu is rendered. Depending on how your theme renders menu you may need to override and customize css entries %s and %s, originally defined in %s. The field \"URL\" of inserted menu item allows additional configuration described in %sFAQ%s."
+#: admin/qtx_configuration.php:1381
+msgid "Menu item added is replaced with a drop-down menu of available languages, when menu is rendered."
 msgstr ""
 
-#: admin/qtx_configuration.php:1384
+#: admin/qtx_configuration.php:1383
+#, php-format
+msgid "The rendered menu items have CSS classes %s and %s (\"%s\" is a language code), which can be defined in theme style, if desired. The label of language menu can also be customized via field \"%s\" in the menu configuration."
+msgstr ""
+
+#: admin/qtx_configuration.php:1385
+#, php-format
+msgid "The field \"%s\" of inserted menu item allows additional configuration described in %sFAQ%s."
+msgstr ""
+
+#: admin/qtx_configuration.php:1390
 msgid "Add to Menu"
 msgstr ""
 
-#: admin/qtx_configuration.php:1394
+#: admin/qtx_configuration.php:1400
 msgid "Language Switcher"
 msgstr ""
 
-#: admin/qtx_configuration.php:1439
+#: admin/qtx_configuration.php:1445
 msgid "Settings"
 msgstr "Nastavení"
 
@@ -1016,27 +1025,27 @@ msgstr ""
 msgid "The way the translatable fields are highlighted is configured with global option %s."
 msgstr ""
 
-#: qtranslate_core.php:1458
+#: qtranslate_core.php:1454
 msgid "For the sake of viewer convenience, the content is shown below in this site default language."
 msgstr ""
 
-#: qtranslate_core.php:1461
+#: qtranslate_core.php:1457
 msgid "For the sake of viewer convenience, the content is shown below in one of the available alternative languages."
 msgstr ""
 
-#: qtranslate_core.php:1464
+#: qtranslate_core.php:1460
 msgid "You may click one of the links to switch the site language to another available language."
 msgstr ""
 
-#: qtranslate_core.php:1466
+#: qtranslate_core.php:1462
 msgid "For the sake of viewer convenience, the content is shown below in the alternative language."
 msgstr ""
 
-#: qtranslate_core.php:1467
+#: qtranslate_core.php:1463
 msgid "You may click the link to switch the active language."
 msgstr ""
 
-#: qtranslate_frontend.php:160 qtranslate_widget.php:67
+#: qtranslate_frontend.php:171 qtranslate_widget.php:67
 msgid "Language"
 msgstr "Jazyk"
 

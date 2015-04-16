@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: qTranslate-X 3.2.9.9.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-14 13:25-0600\n"
+"POT-Creation-Date: 2015-04-16 14:35-0600\n"
 "PO-Revision-Date: 2015-04-07 13:38-0800\n"
 "Last-Translator: Németh Balázs <nb0000@gmail.com>\n"
 "Language-Team: \n"
@@ -884,24 +884,33 @@ msgstr "Nyelv hozzáadása &raquo;"
 msgid "Language Menu"
 msgstr "Nyelvi menü"
 
-#: admin/qtx_configuration.php:1377
+#: admin/qtx_configuration.php:1378
 msgid "Help"
 msgstr "Súgó"
 
-#: admin/qtx_configuration.php:1379
-#, php-format
-msgid "Menu item added is replaced with a sub-menu of available languages when menu is rendered. Depending on how your theme renders menu you may need to override and customize css entries %s and %s, originally defined in %s. The field \"URL\" of inserted menu item allows additional configuration described in %sFAQ%s."
-msgstr "A hozzáadott menüpont megjelenítéskor le lesz cserélve az elérhető nyelvek almenüjével. A sablon megjelenítésétől függően lehet, hogy módosítani kell a %s és %s css bejegyzéseket, ami eredetileg itt lett megadva: %s. A hozzáadott menü „URL” mezője további beállítást tesz lehetővé, amiről a %sGYIK%sben olvashat."
+#: admin/qtx_configuration.php:1381
+msgid "Menu item added is replaced with a drop-down menu of available languages, when menu is rendered."
+msgstr ""
 
-#: admin/qtx_configuration.php:1384
+#: admin/qtx_configuration.php:1383
+#, php-format
+msgid "The rendered menu items have CSS classes %s and %s (\"%s\" is a language code), which can be defined in theme style, if desired. The label of language menu can also be customized via field \"%s\" in the menu configuration."
+msgstr ""
+
+#: admin/qtx_configuration.php:1385
+#, php-format
+msgid "The field \"%s\" of inserted menu item allows additional configuration described in %sFAQ%s."
+msgstr ""
+
+#: admin/qtx_configuration.php:1390
 msgid "Add to Menu"
 msgstr "Hozzáadás a menühöz"
 
-#: admin/qtx_configuration.php:1394
+#: admin/qtx_configuration.php:1400
 msgid "Language Switcher"
 msgstr "Nyelv váltó"
 
-#: admin/qtx_configuration.php:1439
+#: admin/qtx_configuration.php:1445
 msgid "Settings"
 msgstr "Beállítások"
 
@@ -1002,27 +1011,27 @@ msgstr "Fordítható mezők kiemelése"
 msgid "The way the translatable fields are highlighted is configured with global option %s."
 msgstr "A fordítható mezők kiemelésének módját ez az opció határozza meg: %s."
 
-#: qtranslate_core.php:1458
+#: qtranslate_core.php:1454
 msgid "For the sake of viewer convenience, the content is shown below in this site default language."
 msgstr "A megtekintő kényelméért az alábbi tartalom a weboldal alapértelmezett nyelvén jelenik meg."
 
-#: qtranslate_core.php:1461
+#: qtranslate_core.php:1457
 msgid "For the sake of viewer convenience, the content is shown below in one of the available alternative languages."
 msgstr "A megtekintő kényelméért az alábbi tartalom az elérhető nyelvek egyikén jelenik meg."
 
-#: qtranslate_core.php:1464
+#: qtranslate_core.php:1460
 msgid "You may click one of the links to switch the site language to another available language."
 msgstr "Rákattinthat a linkek egyikére, hogy a weboldal nyelvét egy másik elérhető nyelvre váltsa."
 
-#: qtranslate_core.php:1466
+#: qtranslate_core.php:1462
 msgid "For the sake of viewer convenience, the content is shown below in the alternative language."
 msgstr "A megtekintő kényelméért az alábbi tartalom alternatív nyelven jelenik meg."
 
-#: qtranslate_core.php:1467
+#: qtranslate_core.php:1463
 msgid "You may click the link to switch the active language."
 msgstr "Rákattinthat a linkre az aktív nyelv módosításához."
 
-#: qtranslate_frontend.php:160 qtranslate_widget.php:67
+#: qtranslate_frontend.php:171 qtranslate_widget.php:67
 msgid "Language"
 msgstr "Nyelv"
 
@@ -1359,3 +1368,6 @@ msgstr "Widget CSS:"
 #: qtranslate.php:5
 msgid "Adds user-friendly and database-friendly multilingual content support."
 msgstr "Felhasználóbarát és adatbázisbarát módon támogatja több nyelv kezelését a WordPress-ben."
+
+#~ msgid "Menu item added is replaced with a sub-menu of available languages when menu is rendered. Depending on how your theme renders menu you may need to override and customize css entries %s and %s, originally defined in %s. The field \"URL\" of inserted menu item allows additional configuration described in %sFAQ%s."
+#~ msgstr "A hozzáadott menüpont megjelenítéskor le lesz cserélve az elérhető nyelvek almenüjével. A sablon megjelenítésétől függően lehet, hogy módosítani kell a %s és %s css bejegyzéseket, ami eredetileg itt lett megadva: %s. A hozzáadott menü „URL” mezője további beállítást tesz lehetővé, amiről a %sGYIK%sben olvashat."
