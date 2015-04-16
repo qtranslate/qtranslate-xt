@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qTranslate-X 3.2.9.9.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-04-14 13:25-0600\n"
-"PO-Revision-Date: 2015-04-13 23:37-0000\n"
+"PO-Revision-Date: 2015-04-15 15:03-0000\n"
 "Last-Translator: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "Language-Team: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -814,7 +814,7 @@ msgid "Experimental feature."
 msgstr "Recurso experimental."
 
 #: admin/qtx_configuration.php:1224
-#, fuzzy, php-format
+#, php-format
 msgid "If %s implements its own integration, this will need to be turned off."
 msgstr "Se a %s implementar a sua própria integração, isto terá que ser desactivado."
 
