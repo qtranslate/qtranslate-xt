@@ -533,7 +533,7 @@ function qts_UpdateOrder($order_id) {
 			$post->post_title = qtranxf_join_b($title);
 			$post->post_content = qtranxf_join_b($content);
 			$wpdb->show_errors();
-			$wpdb->query('UPDATE '.$wpdb->posts.' SET post_title="'.mysql_real_escape_string($post->post_title).'", post_content = "'.mysql_real_escape_string($post->post_content).'" WHERE ID = "'.$post->ID.'"');
+			$wpdb->query($wpdb->prepare('UPDATE '.$wpdb->posts.' SET post_title = %s, post_content = %s WHERE ID = %d', $post->post_title, $post->post_content, $post->ID));
 			wp_cache_add($post->ID, $post, 'posts');
 			unset($orders[$key]);
 		}
