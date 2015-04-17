@@ -74,7 +74,7 @@ GitHub Branch: master
 	fr_FR by eriath, Florent
 	hu_HU by Németh Balázs
 	id_ID by Masino Sinaga
-	it_IT by shecky
+	it_IT by Maurizio Omissoni, shecky
 	ja_JP by dapperdanman1400
 	mk_MK by Pavle Boskoski
 	ms_MY by Lorna Timbah, webgrrrl
