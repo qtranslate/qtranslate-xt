@@ -431,8 +431,11 @@ function qtranxf_endsWith($s, $n) {
 
 function qtranxf_getAvailableLanguages($text) {
 	global $q_config;
+	$blocks = qtranxf_get_language_blocks($text);
+	if(count($blocks) <= 1)
+		return FALSE;// no languages set
 	$result = array();
-	$content = qtranxf_split($text);
+	$content = qtranxf_split_blocks($blocks);
 	foreach($content as $language => $lang_text) {
 		$lang_text = trim($lang_text);
 		if(!empty($lang_text)) $result[] = $language;
@@ -449,6 +452,7 @@ function qtranxf_isAvailableIn($post_id, $language='') {
 	if($language == '') $language = $q_config['default_language'];
 	$p = get_post($post_id); $post = &$p;
 	$languages = qtranxf_getAvailableLanguages($post->post_content);
+	if($languages===FALSE) return $language == $q_config['default_language'];
 	return in_array($language,$languages);
 }
 

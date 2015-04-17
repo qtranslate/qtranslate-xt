@@ -1477,7 +1477,7 @@ function qtranxf_showAllSeparated($text) {
 	global $q_config;
 	$result = '';
 	foreach(qtranxf_getSortedLanguages() as $language) {
-		$result .= $q_config['language_name'][$language].':'.PHP_EOL.qtranxf_use($language, $text).PHP_EOL.PHP_EOL;
+		$result .= $q_config['language_name'][$language].':'.PHP_EOL .qtranxf_use($language, $text).PHP_EOL .PHP_EOL;
 	}
 	return $result;
 }

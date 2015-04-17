@@ -570,7 +570,10 @@ function qts_service() {
 	$service_settings = get_option('qts_service_settings');
 	// Detect available Languages and possible target languages
 	$available_languages = qtranxf_getAvailableLanguages($post->post_content);
-	if(sizeof($available_languages)==0) {
+	if($available_languages === FALSE && !empty($post->post_content)){
+		$available_languages = array($q_config['default_language']);
+	}
+	if($available_languages === FALSE || sizeof($available_languages)==0) {
 		$error = __('The requested Post has no content, no Translation possible.', 'qtranslate');
 	}
 
