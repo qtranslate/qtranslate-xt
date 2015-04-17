@@ -112,6 +112,7 @@ Developers: please drop new topics here, the text will be moved to [qTranslate-X
 
 ### 3.2.9.9.3 alpha ###
 * Enhancement: support for flags of type `svg`.
+* Translation: German (de_DE) po/mo files updated. Thanks to Robert Skiba.
 
 ### 3.2.9.9.2 alpha ###
 * Fix: troublesome use of deprecated function `mysql_real_escape_string` is removed: [WP Topic](https://wordpress.org/support/topic/bulk-remove-language).
