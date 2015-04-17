@@ -494,7 +494,7 @@ function qtranxf_language_form($lang = '', $language_code = '', $language_name =
 	$flag_dir = trailingslashit(WP_CONTENT_DIR).$q_config['flag_location'];
 	if($dir_handle = @opendir($flag_dir)) {
 		while (false !== ($file = readdir($dir_handle))) {
-			if(preg_match("/\.(jpeg|jpg|gif|png)$/i",$file)) {
+			if(preg_match("/\.(jpeg|jpg|gif|png|svg)$/i",$file)) {
 				$files[] = $file;
 			}
 		}

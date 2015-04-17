@@ -110,6 +110,9 @@ Developers: please drop new topics here, the text will be moved to [qTranslate-X
 * Includes all changes after version 3.2.9. Please, review [Release Notes](https://qtranslatexteam.wordpress.com/2015/03/30/release-notes-3-3).
 * Translation: thanks to all translators contributed.
 
+### 3.2.9.9.3 alpha ###
+* Enhancement: support for flags of type `svg`.
+
 ### 3.2.9.9.2 alpha ###
 * Fix: troublesome use of deprecated function `mysql_real_escape_string` is removed: [WP Topic](https://wordpress.org/support/topic/bulk-remove-language).
 
