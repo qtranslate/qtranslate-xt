@@ -115,6 +115,7 @@ Developers: please drop new topics here, the text will be moved to [qTranslate-X
 * Enhancement: improved report messages for action 'markdefault'.
 * Enhancement: improved messages in column "Language" of post listing pages.
 * Translation: German (de_DE) po/mo files updated. Thanks to Robert Skiba.
+* Enhancement: another attempt to check `REDIRECT_STATUS` in function `qtranxf_can_redirect` to prevent unnecessary redirection if `mod_rewrite` is already doing redirection. In particular, this should help to troubleshoot internal server error as it was observed in [Issue #96](https://github.com/qTranslate-Team/qtranslate-x/issues/96).
 
 ### 3.2.9.9.2 alpha ###
 * Fix: troublesome use of deprecated function `mysql_real_escape_string` is removed: [WP Topic](https://wordpress.org/support/topic/bulk-remove-language).

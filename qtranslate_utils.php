@@ -602,6 +602,6 @@ function qtranxf_can_redirect() {
 	return !defined('WP_ADMIN') && !defined('DOING_AJAX') && !defined('WP_CLI') && !defined('DOING_CRON') && empty($_POST)
 	//'REDIRECT_*' needs more testing
 	//&& !isset($_SERVER['REDIRECT_URL'])
-	//&& (!isset($_SERVER['REDIRECT_STATUS']) || $_SERVER['REDIRECT_STATUS']=='200')
+	&& (!isset($_SERVER['REDIRECT_STATUS']) || $_SERVER['REDIRECT_STATUS']=='200')
 	;
 }
