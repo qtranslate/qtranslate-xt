@@ -306,6 +306,8 @@ function qtranxf_admin_notices_plugin_integration()
 
 	$cnt += qtranxf_admin_notice_plugin_integration('wordpress-seo/wp-seo.php', 'Wordpress SEO & qTranslate&#8209;X', 'wp-seo-qtranslate-x/wordpress-seo-qtranslate-x.php');
 
+	$cnt += qtranxf_admin_notice_plugin_integration('js_composer/js_composer.php', 'WPBakery Visual Composer & qTranslate&#8209;X', 'js-composer-qtranslate-x/js-composer-qtranslate-x.php');
+
 	if($cnt>0){
 		qtranxf_admin_notice_dismiss_script();
 	}

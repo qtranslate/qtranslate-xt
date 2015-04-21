@@ -84,28 +84,6 @@ function qtranxf_fixSearchForm($form) {
 }
 */
 
-//function qtranxf_gettext($translated_text, $text, $domain) {
-function qtranxf_gettext($translated_text) {
-	//same as qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage
-	global $q_config;
-	//if(!isset($q_config['language'])){
-	//	//qtranxf_dbg_log('$q_config[language] is not set:',debug_backtrace());
-	//	return $translated_text;
-	//}
-	return qtranxf_use($q_config['language'], $translated_text, false);
-}
-
-//function qtranxf_gettext_with_context($translated_text, $text, $context, $domain) {
-function qtranxf_gettext_with_context($translated_text) {
-	//same as qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage
-	global $q_config;
-	//if(!isset($q_config['language'])){
-	//	//qtranxf_dbg_log('$q_config[language] is not set:',debug_backtrace());
-	//	return $translated_text;
-	//}
-	return qtranxf_use($q_config['language'], $translated_text, false);
-}
-
 // Hooks for Plugin compatibility
 /*
 //no need any more since $_SERVER['REQUEST_URI'] is no longer modified.
@@ -147,11 +125,15 @@ add_filter( 'wp_trim_words', 'qtranxf_trim_words', 0, 4);
 add_action('init', 'qtranxf_init');//user is authenticated
 add_action('widgets_init', 'qtranxf_widget_init');
 
-// Hooks (execution time critical filters) 
-add_filter('gettext', 'qtranxf_gettext',0);
-add_filter('gettext_with_context', 'qtranxf_gettext_with_context',0);
-//add_filter('gettext', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
-//add_filter('gettext_with_context', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
+
+// Hooks (execution time critical filters)
+
+/*
+ * since 3.2.9.9.4 gettext* filters moved to frontend.php
+ * they should not be needed on admin side and they, in particular, broke WPBakery Visual Composer in raw Editor Mode.
+*/
+//add_filter('gettext', 'qtranxf_gettext',0);
+//add_filter('gettext_with_context', 'qtranxf_gettext_with_context',0);
 
 add_filter('sanitize_title', 'qtranxf_useRawTitle',0, 3);
 

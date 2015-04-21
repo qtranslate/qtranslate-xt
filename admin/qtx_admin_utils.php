@@ -427,7 +427,32 @@ function qtranxf_edit_terms($term_id, $taxonomy){
 	//qtranxf_dbg_log('qtranxf_edit_terms: $name='.$name);
 }
 add_action('edit_terms','qtranxf_edit_terms');
+
+//function qtranxf_gettext($translated_text, $text, $domain) {
+function qtranxf_gettext($translated_text) {
+	//same as qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage
+	$blocks = qtranxf_get_language_blocks($translated_text);
+	if(count($blocks)<=1)//no language is encoded in the $text, the most frequent case
+		return $translated_text;
+	global $q_config;
+	//qtranxf_dbg_log('qtranxf_gettext: $translated_text=',$translated_text,true);
+	return $translated_text;
+	//return qtranxf_use_block($q_config['language'], $blocks);
+	//return qtranxf_use($q_config['language'], $translated_text, false);
+}
+
+//function qtranxf_gettext_with_context($translated_text, $text, $context, $domain) {
+function qtranxf_gettext_with_context($translated_text) {
+	return qtranxf_gettext($translated_text);
+}
+add_filter('gettext', 'qtranxf_gettext',0);
+add_filter('gettext_with_context', 'qtranxf_gettext_with_context',0);
 */
+
+function qtranxf_getLanguageEdit() {
+	global $q_config;
+	return isset($_COOKIE['qtrans_edit_language']) ? $_COOKIE['qtrans_edit_language'] : $q_config['language'];
+}
 
 function qtranxf_language_columns($columns) {
 	return array(
@@ -473,7 +498,6 @@ function qtranxf_languageColumn($column) {
 				$available_languages_name[] = $language_name;
 			}
 			$available_languages_names = join(', ', $available_languages_name);
-
 			echo apply_filters('qtranslate_available_languages_names',$available_languages_names);
 		}
 		do_action('qtranslate_languageColumn', $available_languages, $missing_languages);

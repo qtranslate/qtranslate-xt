@@ -625,8 +625,34 @@ function qtranxf_convertBlogInfoURL($url, $what) {
 }
 add_filter('bloginfo_url', 'qtranxf_convertBlogInfoURL',10,2);
 
+//function qtranxf_gettext($translated_text, $text, $domain) {
+function qtranxf_gettext($translated_text) {
+	//same as qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage
+	global $q_config;
+	//if(!isset($q_config['language'])){
+	//	//qtranxf_dbg_log('$q_config[language] is not set:',debug_backtrace());
+	//	return $translated_text;
+	//}
+	return qtranxf_use($q_config['language'], $translated_text, false);
+}
+
+//function qtranxf_gettext_with_context($translated_text, $text, $context, $domain) {
+function qtranxf_gettext_with_context($translated_text) {
+	//same as qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage
+	global $q_config;
+	//if(!isset($q_config['language'])){
+	//	//qtranxf_dbg_log('$q_config[language] is not set:',debug_backtrace());
+	//	return $translated_text;
+	//}
+	return qtranxf_use($q_config['language'], $translated_text, false);
+}
+
 //qtranxf_optionFilter();
 //add_filter('wp_head', 'qtranxf_add_css');
+
+// Hooks (execution time critical filters)
+add_filter('gettext', 'qtranxf_gettext',0);
+add_filter('gettext_with_context', 'qtranxf_gettext_with_context',0);
 
 // Compability with Default Widgets
 add_filter('widget_title', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);

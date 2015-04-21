@@ -383,11 +383,9 @@ function qtranxf_isMultilingual($str){
 	return preg_match('/(<!--:[a-z]{2}-->|\[:[a-z]{2}\])/im',$str);
 }
 
-if (!function_exists('qtranxf_getLanguage')){
 function qtranxf_getLanguage() {
 	global $q_config;
 	return $q_config['language'];
-}
 }
 
 function qtranxf_getLanguageName($lang = '') {
@@ -435,7 +433,7 @@ function qtranxf_getAvailableLanguages($text) {
 	if(count($blocks) <= 1)
 		return FALSE;// no languages set
 	$result = array();
-	$content = qtranxf_split_blocks($blocks);
+	$content = qtranxf_split_languages($blocks);
 	foreach($content as $language => $lang_text) {
 		$lang_text = trim($lang_text);
 		if(!empty($lang_text)) $result[] = $language;

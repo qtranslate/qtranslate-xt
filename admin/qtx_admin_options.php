@@ -12,7 +12,7 @@ function qtranxf_admin_set_default_options(&$ops)
 
 	$ops['admin']['bool']=array(
 		'auto_update_mo' => true,// automatically update .mo files
-		'plugin_js_composer_off' => false
+		//'plugin_js_composer_off' => false
 	);
 
 	//single line options
@@ -94,6 +94,7 @@ function qtranxf_reset_config()
 	delete_option('qtranslate_next_update_mo');
 
 	// obsolete options
+	delete_option('qtranslate_plugin_js_composer_off');
 	delete_option('qtranslate_widget_css');
 	delete_option('qtranslate_version');
 	delete_option('qtranslate_disable_header_css');
@@ -439,9 +440,9 @@ function qtranxf_updateSettings()
 		$_POST['lsb_style_active_class'] = '';
 	}
 
-	if(!(isset($_POST['plugin_js_composer']) && $_POST['plugin_js_composer']=='1')){
-		$_POST['plugin_js_composer_off'] = '1';
-	}
+	//if(!(isset($_POST['plugin_js_composer']) && $_POST['plugin_js_composer']=='1')){
+	//	$_POST['plugin_js_composer_off'] = '1';
+	//}
 
 	qtranxf_parse_post_type_excluded();
 
