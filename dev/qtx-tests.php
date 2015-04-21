@@ -10,6 +10,24 @@ function qtranxf_check_test($result, $expected, $test_name){
 	return false;
 }
 	//qtranxf_tst_log('qtx-tests: SERVER: ',$_SERVER);
-	require_once(dirname(__FILE__).'/qtx-test-convertURL.php');
+	//require_once(dirname(__FILE__).'/qtx-test-convertURL.php');
 	//require_once(dirname(__FILE__).'/qtx-test-date-time.php');
 	//exit();
+
+add_filter( 'wp_head', 'qtranxf_test_meta_cache', 1 );
+function qtranxf_test_meta_cache() {
+	global $post;
+	if( !is_singular() || !$post || 'post' != $post->post_type ){
+		qtranxf_tst_log('qtranxf_test_meta_cache: return');
+		return;
+	}
+	$views = get_post_meta( $post->ID, 'views', true );
+	$views = $views ? $views : 0;
+	$views++;
+	update_post_meta( $post->ID, 'views', $views );
+	$views_fetched = get_post_meta( $post->ID, 'views', true );
+	if(qtranxf_check_test($views_fetched,$views,'qtranxf_test_meta_cache')){
+		qtranxf_tst_log('qtranxf_test_meta_cache: ok');
+	}
+	//qtranxf_tst_log('qtranxf_test_meta_cache: views_expected='.$views.'; $views_fetched=',$views_fetched);
+}

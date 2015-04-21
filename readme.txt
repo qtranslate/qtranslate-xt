@@ -109,11 +109,15 @@ Developers: please drop new topics here, the text will be moved to [qTranslate-X
 
 ### 3.3 stable ###
 * Includes all changes after version 3.2.9. Please, review [Release Notes](https://qtranslatexteam.wordpress.com/2015/03/30/release-notes-3-3).
-* Translation: thanks to all translators contributed.
+* Translation: a lot of thanks to all translators contributed.
+
+### 3.2.9.9.5 alpha ###
+* Fix: use of post meta cache after its update, [Issue #138](https://github.com/qTranslate-Team/qtranslate-x/issues/138).
 
 ### 3.2.9.9.4 alpha ###
 * Feature replaced: Visual Composer compatibility moved to a separate plugin: [WPBakery Visual Composer & qTranslate-X](https://wordpress.org/plugins/js-composer-qtranslate-x)
 * Enhancement: filters 'gettext' and 'gettext_with_context' are moved to qtranslate_frontend.php, as they are not needed on admin side.
+* Enhancement: js scripts in the [3rd-party integration framework](https://qtranslatexteam.wordpress.com/integration/).
 * Fix: the list of available languages in the column 'Languages' of post listing.
 
 ### 3.2.9.9.3 alpha ###

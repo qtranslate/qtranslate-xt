@@ -546,10 +546,19 @@ function qtranxf_filter_postmeta($original_value, $object_id, $meta_key = '', $s
 	$lang = $q_config['language'];
 	$cache_key = $meta_type . '_meta';
 	$cache_key_lang = $cache_key . $lang;
-	$meta_cache = wp_cache_get( $object_id, $cache_key_lang );
+
+	$meta_cache_wp = wp_cache_get($object_id, $cache_key);
+	if($meta_cache_wp){
+		//if there is wp cache, then we check if there is qtx cache
+		$meta_cache = wp_cache_get( $object_id, $cache_key_lang );
+	}else{
+		//qtx cache would not be valid in the absence of wp cache, then do not even try to use it.
+		$meta_cache = null;
+	}
 	if( !$meta_cache ){
-		$meta_cache = wp_cache_get($object_id, $cache_key);
-		if ( !$meta_cache ) {
+		if ( $meta_cache_wp ) {
+			$meta_cache = $meta_cache_wp;
+		}else{
 			$meta_cache = update_meta_cache( $meta_type, array( $object_id ) );
 			$meta_cache = $meta_cache[$object_id];
 		}

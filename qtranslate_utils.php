@@ -59,11 +59,14 @@ if(WP_DEBUG){
 	}
 	assert_options(ASSERT_BAIL,true);
 
+	/*
 	function qtranxf_do_tests(){
+		//qtranxf_dbg
 		if(file_exists(dirname(__FILE__).'/dev/qtx-tests.php'))
 			require_once(dirname(__FILE__).'/dev/qtx-tests.php');
 	}
-	/*qtranxf_dbg */ //add_action('qtranslate_init_language','qtranxf_do_tests');
+	add_action('qtranslate_init_language','qtranxf_do_tests');
+	// */
 
 }else{
 	if(!function_exists('qtranxf_dbg_log')){
