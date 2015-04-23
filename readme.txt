@@ -114,6 +114,7 @@ Developers: please drop new topics here, the text will be moved to [qTranslate-X
 ### 3.2.9.9.5 alpha ###
 * Feature: query argument `qtranslate-mode=raw` to retrieve a page without translation as suggested in [issue #133](https://github.com/qTranslate-Team/qtranslate-x/issues/133).
 * Fix: use of post meta cache after its update, [Issue #138](https://github.com/qTranslate-Team/qtranslate-x/issues/138).
+* Translation: German (de_DE) po/mo files updated. Thanks to Robert Skiba.
 
 ### 3.2.9.9.4 alpha ###
 * Feature replaced: Visual Composer compatibility moved to a separate plugin: [WPBakery Visual Composer & qTranslate-X](https://wordpress.org/plugins/js-composer-qtranslate-x)
