@@ -59,6 +59,15 @@ function qtranxf_init_language() {
 				$url_info['query'] = $_SERVER['QUERY_STRING'];
 			}
 			$url_info['query'] = qtranxf_sanitize_url($url_info['query']); // to prevent xss
+			if(strpos($url_info['query'],'qtranslate-mode=raw')!==false){
+				$url_info['qtranslate-mode'] = 'raw';
+				$url_info['doing_front_end'] = true;
+				$q_config['url_info'] = $url_info;
+				$q_config['url_info']['language'] = $q_config['default_language'];
+				$q_config['language'] = $q_config['default_language'];
+				//qtranxf_load_option_qtrans_compatibility();
+				return;
+			}
 		}
 	}
 
