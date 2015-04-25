@@ -3,7 +3,7 @@ Developed by: qTranslate Team based on original code by Qian Qin
 Contributors: johnclause, chineseleper, Vavooon, grafcom
 Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, translation
 Requires at least: 3.9
-Tested up to: 4.1.2
+Tested up to: 4.2
 Stable tag: 3.2.9
 License: GPLv3 or later
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QEXEK3HX8AR6U
@@ -110,6 +110,9 @@ Developers: please drop new topics here, the text will be moved to [qTranslate-X
 ### 3.3 stable ###
 * Includes all changes after version 3.2.9. Please, review [Release Notes](https://qtranslatexteam.wordpress.com/2015/03/30/release-notes-3-3).
 * Translation: a lot of thanks to all translators contributed.
+
+### 3.2.9.9.6 alpha ###
+* Fix: action 'updated_postmeta' added to clear post meta data cache: [Issue #138](https://github.com/qTranslate-Team/qtranslate-x/issues/138).
 
 ### 3.2.9.9.5 alpha ###
 * Feature: query argument `qtranslate-mode=raw` to retrieve a page without translation as suggested in [issue #133](https://github.com/qTranslate-Team/qtranslate-x/issues/133).

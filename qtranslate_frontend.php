@@ -604,6 +604,17 @@ function qtranxf_filter_postmeta($original_value, $object_id, $meta_key = '', $s
 }
 add_filter('get_post_metadata', 'qtranxf_filter_postmeta', 5, 4);
 
+function qtranxf_updated_postmeta( $meta_id, $object_id, $meta_key, $meta_value ) {
+	global $q_config;
+	if(!isset($q_config['language'])) return;
+	$lang = $q_config['language'];
+	$meta_type = 'post';
+	$cache_key = $meta_type . '_meta';
+	$cache_key_lang = $cache_key . $lang;
+	wp_cache_delete($object_id, $cache_key_lang);
+}
+add_action('updated_postmeta', 'qtranxf_updated_postmeta', 5, 4);
+
 function qtranxf_checkCanonical($redirect_url, $requested_url) {
 	global $q_config;
 	//if(!qtranxf_can_redirect()) return $redirect_url;// WP already check this

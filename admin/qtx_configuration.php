@@ -526,7 +526,7 @@ function qtranxf_language_form($lang = '', $language_code = '', $language_name =
 <div class="form-field">
 	<label for="language_code"><?php _e('Language Code', 'qtranslate') ?></label>
 	<input name="language_code" id="language_code" type="text" value="<?php echo $language_code; ?>" size="2" maxlength="2"/>
-	<p><?php _e('2-Letter <a href="http://www.w3.org/WAI/ER/IG/ert/iso639.htm#2letter">ISO Language Code</a> for the Language you want to insert. (Example: en)', 'qtranslate'); ?></p>
+	<p><?php echo __('2-Letter <a href="http://www.w3.org/WAI/ER/IG/ert/iso639.htm#2letter">ISO Language Code</a> for the Language you want to insert. (Example: en)', 'qtranslate').'<br>'.__('The language code is used in language tags and in URLs. It is case sensitive. Use of lower case for the language code is preferable, but not required. The code may be arbitrary chosen by site owner, although it is preferable to use already commonly accepted code if available. Once a language code is created and entries for this language are made, it is difficult to change it, please make a careful decision.', 'qtranslate'); ?></p>
 </div>
 <div class="form-field">
 	<label for="language_flag"><?php _e('Flag', 'qtranslate') ?></label>
@@ -695,6 +695,7 @@ function qtranxf_conf() {
 		if(strlen($_POST['language_locale'])<2) $error = __('The Language must have a Locale!', 'qtranslate');
 		if($_POST['language_name']=='') $error = __('The Language must have a name!', 'qtranslate');
 		if(strlen($lang)!=2) $error = __('Language Code has to be 2 characters long!', 'qtranslate');
+		//$lang = strtolower($lang);
 		//$language_names = qtranxf_language_configured('language_name');
 		$langs=array(); qtranxf_load_languages($langs);
 		$language_names = $langs['language_name'];
