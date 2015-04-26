@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qTranslate-X 3.2.9.9.6\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-04-25 10:05-0600\n"
-"PO-Revision-Date: 2015-04-16 22:50-0000\n"
+"PO-Revision-Date: 2015-04-26 23:00-0000\n"
 "Last-Translator: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "Language-Team: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Language: pt_PT\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.7.5\n"
+"X-Generator: Poedit 1.7.6\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -155,10 +155,9 @@ msgid "Languages"
 msgstr "Idiomas"
 
 #: admin/qtx_admin_utils.php:485
-#, fuzzy
 msgctxt "Appears in the column \"Languages\" on post listing pages, when content has no language tags yet."
 msgid "Languages are not set"
-msgstr "O idioma já está em último!"
+msgstr "Idiomas não definidos"
 
 #: admin/qtx_admin_utils.php:495
 msgid "Unknown Language"
@@ -182,7 +181,7 @@ msgstr "<a href=\"http://www.w3.org/WAI/ER/IG/ert/iso639.htm#2letter\">Código d
 
 #: admin/qtx_configuration.php:529
 msgid "The language code is used in language tags and in URLs. It is case sensitive. Use of lower case for the language code is preferable, but not required. The code may be arbitrary chosen by site owner, although it is preferable to use already commonly accepted code if available. Once a language code is created and entries for this language are made, it is difficult to change it, please make a careful decision."
-msgstr ""
+msgstr "O código de idioma é utilizado nas etiquetas de idiomas e nos URLs. É sensível às maiúsculas e minúsculas, embora seja preferível utilizar minúsculas. O código pode ser escolhido arbitrariamente pelo proprietário do site, embora seja preferível utilizar um código que esteja disponível e que já seja geralmente aceite. Uma vez definido o código e criadas algumas entradas para esse idioma, será difícil alterar novamente, por favor pondere bem a sua decisão."
 
 #: admin/qtx_configuration.php:558
 msgid "Incorrect Flag Image Path! Please correct it!"
@@ -325,34 +324,34 @@ msgstr "Já existe um idioma com o mesmo código de idioma!"
 #: admin/qtx_configuration.php:792
 #, php-format
 msgid "%d database entries have been converted."
-msgstr ""
+msgstr "%d entradas foram convertidas na base de dados."
 
 #: admin/qtx_configuration.php:794
 msgid "No database entry has been affected while processing the conversion request."
-msgstr ""
+msgstr "Nenhuma entrada da da base de dados foi afectada ao processar este pedido de conversão."
 
 #: admin/qtx_configuration.php:817
 #, php-format
 msgid "%d pages have been processed to set the default language."
-msgstr ""
+msgstr "%d páginas foram processadas para definir o idioma padrão."
 
 #: admin/qtx_configuration.php:818
 msgid "No initially untranslated pages found to set the default language"
-msgstr ""
+msgstr "Não foram encontradas quaisquer páginas inicialmente sem tradução para definir o idioma padrão."
 
 #: admin/qtx_configuration.php:820
 #, php-format
 msgid "%d posts have been processed to set the default language."
-msgstr ""
+msgstr "%d artigos foram processados para definir o idioma padrão."
 
 #: admin/qtx_configuration.php:821
 msgid "No initially untranslated posts found to set the default language."
-msgstr ""
+msgstr "Não foram encontrados quaisquer artigos inicialmente sem tradução para definir o idioma padrão."
 
 #: admin/qtx_configuration.php:823
 #, php-format
 msgid "Post types other than \"post\" or \"page\", as well as unpublished entries, will have to be adjusted manually as needed, since there is no common way to automate setting the default language otherwise. It can be done with a custom script though. You may request a %spaid support%s for this."
-msgstr ""
+msgstr "Tipos de artigos além de \"artigo\" ou \"página\", tal como itens não publicados, terão que ser ajustados manualmente conforme necessário, uma vez que não há um sistema comum para automaticamente definir o idioma padrão. No entanto poderá ser feito com um script personalizado. Pode fazer um pedido de %ssuporte pago%s para este efeito."
 
 #: admin/qtx_configuration.php:850
 msgid "Language is already enabled or invalid!"
