@@ -533,14 +533,28 @@ function qtranxf_trim_words( $text, $num_words, $more, $original_text ) {
 }
 
 /**
+ * @since 3.2.9.9.6
+ * Delete translated post_meta cache for all languages.
+ * Cache may have a few languages, if it is persistent.
+ */
+function qtranxf_cache_delete_postmeta($object_id) {
+	global $q_config;
+	foreach($q_config['enabled_languages'] as $lang){
+		$cache_key_lang = 'post_meta' . $lang;
+		wp_cache_delete($object_id, $cache_key_lang);
+	}
+}
+
+/**
  * @since 3.2.3 translation of postmeta
  */
-function qtranxf_filter_postmeta($original_value, $object_id, $meta_key = '', $single = false){
+function qtranxf_cache_translate_postmeta($original_value, $object_id, $meta_key = '', $single = false){
 	global $q_config;
 	if(!isset($q_config['url_info'])){
-		//qtranxf_dbg_log('qtranxf_filter_postmeta: too early: $object_id='.$object_id.'; $meta_key',$meta_key,true);
+		//qtranxf_dbg_log('qtranxf_cache_translate_postmeta: too early: $object_id='.$object_id.'; $meta_key',$meta_key,true);
 		return $original_value;
 	}
+	//qtranxf_dbg_log('qtranxf_cache_translate_postmeta: $object_id='.$object_id.'; $meta_key=',$meta_key);
 
 	$meta_type = 'post';
 	$lang = $q_config['language'];
@@ -552,7 +566,8 @@ function qtranxf_filter_postmeta($original_value, $object_id, $meta_key = '', $s
 		//if there is wp cache, then we check if there is qtx cache
 		$meta_cache = wp_cache_get( $object_id, $cache_key_lang );
 	}else{
-		//qtx cache would not be valid in the absence of wp cache, then do not even try to use it.
+		//reset qtx cache, since it would not be valid in the absence of wp cache
+		qtranxf_cache_delete_postmeta($object_id);
 		$meta_cache = null;
 	}
 	if( !$meta_cache ){
@@ -563,16 +578,16 @@ function qtranxf_filter_postmeta($original_value, $object_id, $meta_key = '', $s
 			$meta_cache = $meta_cache[$object_id];
 		}
 
-		//qtranxf_dbg_log('qtranxf_filter_postmeta: $object_id='.$object_id.'; $meta_cache before:',$meta_cache);
+		//qtranxf_dbg_log('qtranxf_cache_translate_postmeta: $object_id='.$object_id.'; $meta_cache before:',$meta_cache);
 		foreach($meta_cache as $mkey => $mval){
 			if(strpos($mkey,'_url') !== false){
 				$val = array_map('maybe_unserialize', $mval);
 				switch($mkey){
 					case '_menu_item_url': break; // function qtranxf_wp_get_nav_menu_items takes care of this later
 					default:
-						//qtranxf_dbg_log('qtranxf_filter_postmeta: $object_id='.$object_id.'; $meta_cache['.$mkey.'] url before:',$val);
+						//qtranxf_dbg_log('qtranxf_cache_translate_postmeta: $object_id='.$object_id.'; $meta_cache['.$mkey.'] url before:',$val);
 						$val = qtranxf_convertURLs($val,$lang);
-						//qtranxf_dbg_log('qtranxf_filter_postmeta: $object_id='.$object_id.'; $meta_cache['.$mkey.'] url  after:',$val);
+						//qtranxf_dbg_log('qtranxf_cache_translate_postmeta: $object_id='.$object_id.'; $meta_cache['.$mkey.'] url  after:',$val);
 					break;
 				}
 			}else{
@@ -586,9 +601,9 @@ function qtranxf_filter_postmeta($original_value, $object_id, $meta_key = '', $s
 			}
 			$meta_cache[$mkey] = $val;
 		}
-		//qtranxf_dbg_log('qtranxf_filter_postmeta: $object_id='.$object_id.'; $meta_cache  after:',$meta_cache);
+		//qtranxf_dbg_log('qtranxf_cache_translate_postmeta: $object_id='.$object_id.'; $meta_cache  after:',$meta_cache);
 
-		wp_cache_add( $object_id, $meta_cache, $cache_key_lang );
+		wp_cache_set( $object_id, $meta_cache, $cache_key_lang );
 	}
 
 	if(!$meta_key)
@@ -602,16 +617,17 @@ function qtranxf_filter_postmeta($original_value, $object_id, $meta_key = '', $s
 	else
 		return array();
 }
-add_filter('get_post_metadata', 'qtranxf_filter_postmeta', 5, 4);
+add_filter('get_post_metadata', 'qtranxf_cache_translate_postmeta', 5, 4);
 
+/**
+ * @since 3.2.9.9.6
+ * Delete translated post_meta cache for all languages on cache update.
+ * Cache may have a few languages, if it is persistent.
+ */
 function qtranxf_updated_postmeta( $meta_id, $object_id, $meta_key, $meta_value ) {
-	global $q_config;
-	if(!isset($q_config['language'])) return;
-	$lang = $q_config['language'];
-	$meta_type = 'post';
-	$cache_key = $meta_type . '_meta';
-	$cache_key_lang = $cache_key . $lang;
-	wp_cache_delete($object_id, $cache_key_lang);
+	//may be optimized to replace the key needed
+	qtranxf_cache_delete_postmeta($object_id);
+	//qtranxf_dbg_log('qtranxf_updated_postmeta(meta_id='.$meta_id.', object_id='.$object_id.', meta_key='.$meta_key.', meta_value='.$meta_value.'): cache_key_lang=',$cache_key_lang);
 }
 add_action('updated_postmeta', 'qtranxf_updated_postmeta', 5, 4);
 
