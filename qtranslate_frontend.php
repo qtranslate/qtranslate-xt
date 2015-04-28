@@ -548,13 +548,13 @@ function qtranxf_cache_delete_postmeta($object_id) {
 /**
  * @since 3.2.3 translation of postmeta
  */
-function qtranxf_cache_translate_postmeta($original_value, $object_id, $meta_key = '', $single = false){
+function qtranxf_filter_postmeta($original_value, $object_id, $meta_key = '', $single = false){
 	global $q_config;
 	if(!isset($q_config['url_info'])){
-		//qtranxf_dbg_log('qtranxf_cache_translate_postmeta: too early: $object_id='.$object_id.'; $meta_key',$meta_key,true);
+		//qtranxf_dbg_log('qtranxf_filter_postmeta: too early: $object_id='.$object_id.'; $meta_key',$meta_key,true);
 		return $original_value;
 	}
-	//qtranxf_dbg_log('qtranxf_cache_translate_postmeta: $object_id='.$object_id.'; $meta_key=',$meta_key);
+	//qtranxf_dbg_log('qtranxf_filter_postmeta: $object_id='.$object_id.'; $meta_key=',$meta_key);
 
 	$meta_type = 'post';
 	$lang = $q_config['language'];
@@ -578,16 +578,16 @@ function qtranxf_cache_translate_postmeta($original_value, $object_id, $meta_key
 			$meta_cache = $meta_cache[$object_id];
 		}
 
-		//qtranxf_dbg_log('qtranxf_cache_translate_postmeta: $object_id='.$object_id.'; $meta_cache before:',$meta_cache);
+		//qtranxf_dbg_log('qtranxf_filter_postmeta: $object_id='.$object_id.'; $meta_cache before:',$meta_cache);
 		foreach($meta_cache as $mkey => $mval){
 			if(strpos($mkey,'_url') !== false){
 				$val = array_map('maybe_unserialize', $mval);
 				switch($mkey){
 					case '_menu_item_url': break; // function qtranxf_wp_get_nav_menu_items takes care of this later
 					default:
-						//qtranxf_dbg_log('qtranxf_cache_translate_postmeta: $object_id='.$object_id.'; $meta_cache['.$mkey.'] url before:',$val);
+						//qtranxf_dbg_log('qtranxf_filter_postmeta: $object_id='.$object_id.'; $meta_cache['.$mkey.'] url before:',$val);
 						$val = qtranxf_convertURLs($val,$lang);
-						//qtranxf_dbg_log('qtranxf_cache_translate_postmeta: $object_id='.$object_id.'; $meta_cache['.$mkey.'] url  after:',$val);
+						//qtranxf_dbg_log('qtranxf_filter_postmeta: $object_id='.$object_id.'; $meta_cache['.$mkey.'] url  after:',$val);
 					break;
 				}
 			}else{
@@ -601,7 +601,7 @@ function qtranxf_cache_translate_postmeta($original_value, $object_id, $meta_key
 			}
 			$meta_cache[$mkey] = $val;
 		}
-		//qtranxf_dbg_log('qtranxf_cache_translate_postmeta: $object_id='.$object_id.'; $meta_cache  after:',$meta_cache);
+		//qtranxf_dbg_log('qtranxf_filter_postmeta: $object_id='.$object_id.'; $meta_cache  after:',$meta_cache);
 
 		wp_cache_set( $object_id, $meta_cache, $cache_key_lang );
 	}
@@ -617,7 +617,7 @@ function qtranxf_cache_translate_postmeta($original_value, $object_id, $meta_key
 	else
 		return array();
 }
-add_filter('get_post_metadata', 'qtranxf_cache_translate_postmeta', 5, 4);
+add_filter('get_post_metadata', 'qtranxf_filter_postmeta', 5, 4);
 
 /**
  * @since 3.2.9.9.6

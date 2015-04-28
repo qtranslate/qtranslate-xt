@@ -267,7 +267,7 @@ Developers: please drop new topics here, the text will be moved to [qTranslate-X
 * Feature: multiple sets of Language Switching Buttons per page. Enabled by default above metabox 'Excerpt'. Will be customizable later.
 
 ### 3.2.3 ###
-* Improvement: auto-translation of metadata at front-end, filter `qtranxf_cache_translate_postmeta`. [[Ticket](https://wordpress.org/support/topic/qtranslate-x-hero-header)]
+* Improvement: auto-translation of metadata at front-end, filter `qtranxf_filter_postmeta`. [[Ticket](https://wordpress.org/support/topic/qtranslate-x-hero-header)]
 
 ### 3.2.2 stable ###
 * Translation: Dutch (nl_NL) po/mo updated, thanks to Marius Siroen.
