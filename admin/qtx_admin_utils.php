@@ -4,10 +4,30 @@ function qtranxf_detect_admin_language($url_info) {
 	global $q_config;
 	$cs=null;
 	$lang=null;
-	if(isset($_COOKIE[QTX_COOKIE_NAME_ADMIN])){
+
+	/** @since 3.2.9.9.6
+	 * Detect language from $_POST['WPLANG'].
+	 */
+	if(isset($_POST['WPLANG'])){
+		// User is switching the language using "Site Language" field on page /wp-admin/options-general.php
+		$wplang = sanitize_text_field($_POST['WPLANG']);
+		if(empty($wplang)) $wplang = 'en';
+		foreach($q_config['enabled_languages'] as $language){
+			if($q_config['locale'][$language] != $wplang) continue;
+			$lang = $language;
+			break;
+		}
+		if(!$lang){
+			$lang=substr($wplang,0,2);
+			$lang=qtranxf_resolveLangCase($lang,$cs);
+		}
+	}
+
+	if(!$lang && isset($_COOKIE[QTX_COOKIE_NAME_ADMIN])){
 		$lang=qtranxf_resolveLangCase($_COOKIE[QTX_COOKIE_NAME_ADMIN],$cs);
 		$url_info['lang_cookie_admin'] = $lang;
 	}
+
 	if(!$lang){
 		//$locale = get_locale();
 		//$url_info['locale'] = $locale;

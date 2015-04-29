@@ -623,7 +623,18 @@ var qTranslateX=function(pg)
 			var frm = page_config_forms[p];
 			var form;
 			if(frm.form){
-				form = document.getElementById(frm.form.id);
+				if(frm.form.id){
+					form = document.getElementById(frm.form.id);
+				}else if(frm.form.jquery){
+					form = $(frm.form.jquery);
+				}else if(frm.form.name){
+					var elms = document.getElementsByName(frm.form.name);
+					if(elms && elms.length){
+						form = elms[0];
+					//}else{
+					//	alert('qTranslate-X misconfiguraton: form with name "'+frm.form.name+'" is not found.');
+					}
+				}
 			}else{
 				form = this.getWrapForm();
 			}
