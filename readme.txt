@@ -33,28 +33,12 @@ qTranslate-X makes creation of multilingual content as easy as working with a si
 - Menu item "Language Switcher" to enable language choosing from a menu.
 - Use [Google XML Sitemaps v3 for qTranslate](https://wordpress.org/plugins/google-xml-sitemaps-v3-for-qtranslate/) plugin to rebuild your XML sitemap for better SEO support.
 
-The following plugins provide integration of qTranslate-X with other popular plugins:
+The website [qTranslate-X explained](https://qtranslatexteam.wordpress.com/about/) provides and keeps updated a few useful listings:
 
-- [ACF qTranslate](https://wordpress.org/plugins/acf-qtranslate/) for [Advanced Custom Fields](https://wordpress.org/plugins/advanced-custom-fields/). [[GitHub](https://github.com/funkjedi/acf-qtranslate)]
-- [All in One SEO Pack & qTranslate-X](https://wordpress.org/plugins/all-in-one-seo-pack-qtranslate-x/) for [All in One SEO Pack](https://wordpress.org/plugins/all-in-one-seo-pack). [[GitHub](https://github.com/qTranslate-Team/all-in-one-seo-pack-qtranslate-x)]
-- [Events Made Easy & qTranslate-X](https://wordpress.org/plugins/events-made-easy-qtranslate-x/) for [Events Made Easy](https://wordpress.org/plugins/events-made-easy/). [[GitHub](https://github.com/qTranslate-Team/events-made-easy-qtranslate-x)]
-- [qTranslate support for GravityForms](https://wordpress.org/plugins/qtranslate-support-for-gravityforms) for [Gravity Forms Directory](https://wordpress.org/plugins/gravity-forms-addons/). [[GitHub](https://github.com/mweimerskirch/wordpress-qtranslate-support-for-gravityforms)]
-- [WooCommerce & qTranslate-X](https://wordpress.org/plugins/woocommerce-qtranslate-x/) for [WooCommerce - excelling eCommerce](https://wordpress.org/plugins/woocommerce/). [[GitHub](https://github.com/qTranslate-Team/woocommerce-qtranslate-x)]
-- [Wordpress SEO & qTranslate-X](https://wordpress.org/plugins/wp-seo-qtranslate-x/) for [WordPress SEO by Yoast](https://wordpress.org/plugins/wordpress-seo/). [[GitHub](https://github.com/qTranslate-Team/wp-seo-qtranslate-x)]
-- [WPBakery Visual Composer & qTranslate-X](https://wordpress.org/plugins/js-composer-qtranslate-x) for [WPBakery Visual Composer](http://vc.wpbakery.com). [[GitHub](https://github.com/qTranslate-Team/js-composer-qtranslate-x)]
+- The [list of plugins, which provide integration](https://qtranslatexteam.wordpress.com/integrated-plugins/) of qTranslate-X with other popular plugins.
+- The [list of some plugins reported to be compatible](https://qtranslatexteam.wordpress.com/compatible/) with qTranslate-X without an additional integrating plugin.
 
-Below is the list of some plugins reported to be compatible with qTranslate-X without an additional integrating plugin:
-
-- [ALO EasyMail Newsletter](https://wordpress.org/support/plugin/alo-easymail)
-- [BuddyPress](https://wordpress.org/plugins/buddypress/) and its satellites.
-- [Cookie Law Info](https://wordpress.org/plugins/cookie-law-info/)
-- [Google XML Sitemaps v3 for qTranslate](https://wordpress.org/plugins/google-xml-sitemaps-v3-for-qtranslate/)
-- [Groups](https://wordpress.org/plugins/groups/)
-- [Multiple content blocks](https://wordpress.org/plugins/multiple-content-blocks/)
-- [TheCartPress eCommerce Shopping Cart](https://wordpress.org/plugins/thecartpress/)
-- [WP Photo Album Plus](https://wordpress.org/plugins/wp-photo-album-plus/)
-
-If you encounter a conflicting a plugin, please let us know, and meanwhile try to use other plugin of similar functionality, if possible.
+If you encounter a conflicting a plugin, please [let us know](https://qtranslatexteam.wordpress.com/contact-us/), and meanwhile try to use other plugin of similar functionality, if possible.
 
 You may still find a lot of useful information through reading [qTranslate](https://wordpress.org/plugins/qtranslate/ "Original qTranslate plugin")'s original documentation, which is not duplicated here in full. There are also other plugins, which offer multilingual support, but it seems that Qian Qin has very good original back-end design, and many people have been pleasantly using his plugin ever since. It stores all translations in the same single post, which makes it easy to maintain and to use it with other plugins. However, the user interface of former qTranslate got out of sync with the recent versions of Wordpress, especially after WP went to TinyMCE 4. There is a number of forks of qTranslate, see for example, [mqTranslate](https://wordpress.org/plugins/mqtranslate/ "mqTranslate plugin"), [qTranslate Plus](https://wordpress.org/plugins/qtranslate-xp/ "qTranslate Plus plugin") and [zTranslate](https://wordpress.org/plugins/ztranslate/ "zTranslate plugin"). They all try to fix qTranslate's user interface preserving its original back-end, which is what this plugin does too. This plugin is a hybrid of all of them and fixes a few bugs in each of them. It also has many new features too, like theme custom translatable fields, for example. We hope that this plugin is the most complete working version which combines the best features of [qTranslate](https://wordpress.org/plugins/qtranslate/ "Original qTranslate plugin"), [mqTranslate](https://wordpress.org/plugins/mqtranslate/ "mqTranslate fork"), [qTranslate Plus](https://wordpress.org/plugins/qtranslate-xp/ "qTranslate Plus fork") and [zTranslate](https://wordpress.org/plugins/ztranslate/ "zTranslate fork").
 
