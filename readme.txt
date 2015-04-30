@@ -37,6 +37,7 @@ The website [qTranslate-X explained](https://qtranslatexteam.wordpress.com/about
 
 - The [list of plugins, which provide integration](https://qtranslatexteam.wordpress.com/integrated-plugins/) of qTranslate-X with other popular plugins.
 - The [list of some plugins reported to be compatible](https://qtranslatexteam.wordpress.com/compatible/) with qTranslate-X without an additional integrating plugin.
+- The [list of some plugins reported not to be currently compatible](https://qtranslatexteam.wordpress.com/incompatible/) with qTranslate-X.
 
 If you encounter a conflicting plugin, please [let us know](https://qtranslatexteam.wordpress.com/contact-us/), and meanwhile try to use other plugin of similar functionality, if possible.
 
