@@ -45,7 +45,7 @@ You may still find a lot of useful information through reading [qTranslate](http
 
 We organized an anonymous entity [qTranslate Team](https://github.com/qTranslate-Team) to maintain a joint authority of all qTranslate-ish plugins. Anyone is welcome to join with a contribution. Participating plugin authors should share the support efforts for each other.
 
-GitHub repository is available: https://github.com/qTranslate-Team/qtranslate-x.git
+GitHub repository is available: [https://github.com/qTranslate-Team/qtranslate-x.git](https://github.com/qTranslate-Team/qtranslate-x).
 
 We thank our sponsors for persistent help and support:
 
@@ -60,16 +60,16 @@ We thank our sponsors for persistent help and support:
 
 Installation of this plugin is no different from any other plugin:
 
-1. Download the plugin from [here](http://wordpress.org/plugins/qtranslate-x/ "qTranslate-X").
-1. Extract all the files.
-1. Upload everything (keeping the directory structure) to the `/wp-content/plugins/` directory.
-1. Deactivate plugin qTranslate, mqTranslate, qTranslate Plus, or zTranslate, if you are running any.
-1. Activate qTranslate-X through the 'Plugins' configuration page in WordPress.
+1. Download the plugin from [WordPress](http://wordpress.org/plugins/qtranslate-x/ "qTranslate-X") or take the latest development version from [GitHub](https://github.com/qTranslate-Team/qtranslate-x).
+1. Use WordPress `/wp-admin/plugin-install.php` page to install a plugin or extract all the files and upload everything (keeping the directory structure) to the `/wp-content/plugins/` directory.
+1. Deactivate plugin qTranslate, mqTranslate, qTranslate Plus, zTranslate or any other multilingual plugin, if you are running any.
+1. Activate qTranslate-X through the 'Plugins' (`/wp-admin/plugins.php`) configuration page in WordPress.
 1. Open Settings->Languages configuration page and add/delete/disable any languages you need.
 1. Add the "qTranslate Language Chooser" widget or "Language Switcher" menu item to let your visitors switch the language.
 1. You may use [Google XML Sitemaps v3 for qTranslate](https://wordpress.org/plugins/google-xml-sitemaps-v3-for-qtranslate/) plugin to rebuild your XML sitemap for better SEO support.
 1. Configure theme custom fields to be translatable if needed (Settings -> Languages: "Custom Fields").
-1. Upgrading from [qTranslate](https://wordpress.org/plugins/qtranslate/ "qTranslate original plugin") required no additional actions, qTranslate-X will continue to work from the database entries of qTranslate. One may also go back to qTranslate at any time. Upgrading from other qTranslate forks may require re-configuration of the languages and taxonomies names, unless you rename corresponding database entries directly.
+1. Upgrading from [qTranslate](https://wordpress.org/plugins/qtranslate/ "qTranslate original plugin") required no additional actions, qTranslate-X will continue to work from the database entries of qTranslate. Upgrading from other qTranslate forks may require re-configuration of the languages and taxonomies names, unless you rename corresponding database entries directly.
+1. **Important**: Read [migration instructions](https://qtranslatexteam.wordpress.com/2015/02/24/migration-from-other-multilingual-plugins/), if you previously used other multilingual plugin.
 
 ## Frequently Asked Questions ##
 
