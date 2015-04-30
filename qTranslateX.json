@@ -1,0 +1,82 @@
+[
+{
+	"pages":[{"post.php":""},{"post-new.php":""}],
+	"anchors":["post","postexcerpt"],
+	"forms":[
+		{
+			"form":{"id":"post"},
+			"fields":[
+				{"id":"title"},
+				{"class":"wp-editor-area"},
+				{"id":"excerpt"},
+				{"id":"attachment_caption"},
+				{"id":"attachment_alt"}
+			]
+		}
+	],
+	"js-exec":{
+		"handle":"post-exec",
+		"src":"./admin/js/post-exec.min.js"
+	}
+}
+,
+{
+	"pages":[{"edit-tag.php":"action=edit"}],
+	"forms":[
+		{
+			"form":{"id":"edittag"},
+			"fields":[
+				{"id":"name"},
+				{"id":"description"},
+				{"id":"parent"}
+			]
+		}
+	],
+	"js-exec":{
+		"handle":"edit-tag-exec",
+		"src":"./admin/js/edit-tag-exec.min.js"
+	}
+}
+,
+{
+	"pages":[{"edit-tag.php":"^(?!.*action=edit).*$"}],
+	"forms":[
+		{
+			"form":{"id":"addtag"},
+			"fields":[
+				{"id":"tag-name"},
+				{"id":"tag-description"},
+				{"id":"parent"},
+				{"class":"tagcloud", "tag":"A", "encode":"display"},
+				{"class":"row-title", "container_id":"the-list", "encode":"display"},
+				{"class":"description", "container_id":"the-list", "encode":"display"},
+				{"class":"slug", "container_id":"the-list", "encode":"display"}
+			]
+		}
+	],
+	"js-exec":{
+		"handle":"edit-tags-exec",
+		"src":"./admin/js/edit-tags-exec.min.js"
+	}
+}
+,
+{
+	"pages":[{"nav-menus.php":""}],
+	"forms":[
+		{
+			"form":{"id":"update-nav-menu"},
+			"fields":[
+				{"class":"edit-menu-item-title", "tag":"LI"},
+				{"class":"edit-menu-item-attr-title", "tag":"LI"},
+				{"class":"edit-menu-item-description", "tag":"LI"},
+				{"class":"menu-item-title", "tag":"LI", "encode":"display"}
+				{"class":"item-title", "tag":"LI", "encode":"display"}
+			]
+		}
+	],
+	"js-exec":{
+		"handle":"nav-menus-exec",
+		"src":"./admin/js/nav-menus-exec.min.js"
+	}
+}
+]

@@ -205,6 +205,8 @@ function qtranxf_load_admin_page_config() {
 	$page_configs = array();//will be set to a default in the future
 
 	$page_configs = apply_filters('qtranslate_load_admin_page_config',$page_configs);
+	//qtranxf_dbg_log('qtranxf_load_admin_page_config: $page_configs:',json_encode($page_configs,JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES));
+
 	foreach($page_configs as $pgcfg){
 		foreach($pgcfg['pages'] as $page => $query){
 			//qtranxf_dbg_log('qtranxf_load_admin_page_config: $page='.$page.'; query=',$query);
