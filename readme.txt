@@ -95,6 +95,9 @@ Developers: please drop new topics here, the text will be moved to [qTranslate-X
 * Includes all changes after version 3.2.9. Please, review [Release Notes](https://qtranslatexteam.wordpress.com/2015/03/30/release-notes-3-3).
 * Translation: a lot of thanks to all translators contributed.
 
+### 3.2.9.9.7 alpha ###
+* Fix: one more problem is discovered in function `qtranxf_filter_postmeta` for the case of empty $meta_key, reported in [Issue #138](https://github.com/qTranslate-Team/qtranslate-x/issues/138).
+
 ### 3.2.9.9.6 alpha ###
 * Enhancement: override admin language from `$_POST['WPLANG']` in case user tries to change language using field 'Site Language' on page `/wp-admin/options-general.php`.
 * Fix: action 'updated_postmeta' added to clear post meta data cache: [Issue #138](https://github.com/qTranslate-Team/qtranslate-x/issues/138).

@@ -606,8 +606,33 @@ function qtranxf_filter_postmeta($original_value, $object_id, $meta_key = '', $s
 		wp_cache_set( $object_id, $meta_cache, $cache_key_lang );
 	}
 
-	if(!$meta_key)
+	if(!$meta_key){
+		if($single){
+	/**
+	  @since 3.2.9.9.7
+	  The code executed after a call to this filter in /wp-includes/meta.php,
+	  in function get_metadata, is apparently designed having non-empty $meta_key in mind:
+
+	  	if ( $single && is_array( $check ) ){
+	  		return $check[0];
+	  	}else
+	  		return $check;
+
+	  Following the logic of the code "if ( !$meta_key ) return $meta_cache;",
+		a few lines below in the same function, the code above rather have to be:
+
+	  	if ( $meta_key && $single && is_array( $check ) ){
+	  		return $check[0];
+	  	}else
+	  		return $check;
+
+	  The line below offsets this imperfection.
+	  If WP ever fixes that place, this block of code will have to be removed.
+	 */
+			return array($meta_cache);
+		}
 		return $meta_cache;
+	}
 
 	if(isset($meta_cache[$meta_key]))
 		return $meta_cache[$meta_key];
