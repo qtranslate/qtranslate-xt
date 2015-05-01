@@ -365,7 +365,7 @@ function qtranxf_external_host_ex($host,$homeinfo){
 	global $q_config;
 	//$homehost = qtranxf_get_home_info()['host'];
 	switch($q_config['url_mode']){
-		case QTX_URL_QUERY: return $homeinfo['host'] != $host;
+		case QTX_URL_QUERY:
 		case QTX_URL_PATH: return $homeinfo['host'] != $host;
 		case QTX_URL_DOMAIN: return !qtranxf_endsWith($host,$homeinfo['host']);
 		case QTX_URL_DOMAINS:
@@ -418,6 +418,8 @@ function qtranxf_startsWith($s, $n) {
 
 /**
  * @since 3.2.8
+ * $s - string to test
+ * $n - needle to search
  */
 function qtranxf_endsWith($s, $n) {
 	$l = strlen($n);
