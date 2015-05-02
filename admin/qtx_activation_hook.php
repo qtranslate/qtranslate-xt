@@ -78,7 +78,7 @@ function qtranxf_admin_notice_first_install(){
 	echo '</a>&nbsp;&nbsp;&nbsp;<a class="button" href="javascript:qtranxj_dismiss_admin_notice(\'initial-install\');">'.__('I have already done it, dismiss this message.', 'qtranslate');
 	echo '</a></p></div>';
 }
-//add_action('admin_notices', 'qtranxf_admin_notice_first_install');
+add_action('admin_notices', 'qtranxf_admin_notice_first_install');
 
 function qtranxf_admin_notice_deactivate_plugin($nm,$plugin)
 {
@@ -131,27 +131,30 @@ function qtranxf_activation_hook()
 
 	//deactivate_plugins(plugin_basename(__FILE__)); // Deactivate ourself
 
+	$next_thanks = get_option('qtranslate_next_thanks');
+	if($next_thanks !== false && $next_thanks < time()+7*24*60*60){
+		$next_thanks = time() + rand(10,20)*24*60*60;
+		update_option('qtranslate_next_thanks', $next_thanks);
+	}
+	$messages = qtranxf_update_admin_notice('next_thanks');
+
 	$default_language = get_option('qtranslate_default_language');
 	$first_install = $default_language===false;
 	if($first_install){
 		qtranxf_default_default_language();
 		$ver = qtranxf_version_int();
 		update_option('qtranslate_version_previous', $ver);
-		add_action('admin_notices', 'qtranxf_admin_notice_first_install');
 	}else{
 		$ver = get_option('qtranslate_version_previous');
 		if(!$ver) update_option('qtranslate_version_previous', 29000);
+
+		if(!isset($messages['initial-install'])){
+			$messages = qtranxf_update_option_admin_notices($messages,'initial-install');
+		}
 	}
 
 	$f=WP_CONTENT_DIR.'/debug-qtranslate.log';
 	if(file_exists($f)) unlink($f);
-
-	$next_thanks = get_option('qtranslate_next_thanks');
-	if($next_thanks !== false && $next_thanks < time()+7*24*60*60){
-		$next_thanks = time() + rand(10,20)*24*60*60;
-		update_option('qtranslate_next_thanks', $next_thanks);
-	}
-	qtranxf_update_admin_notice('next_thanks');
 }
 
 function qtranxf_admin_notices_version()
@@ -398,12 +401,18 @@ function qtranxf_admin_notices_survey_request()
 add_action('admin_notices', 'qtranxf_admin_notices_survey_request');
 
 
-function qtranxf_update_admin_notice($id)
+function qtranxf_update_option_admin_notices($messages, $id)
 {
-	$messages = get_option('qtranslate_admin_notices',array());
 	if(!is_array($messages)) $messages = array();
 	$messages[$id] = time();
 	update_option('qtranslate_admin_notices',$messages);
+	return $messages;
+}
+
+function qtranxf_update_admin_notice($id)
+{
+	$messages = get_option('qtranslate_admin_notices',array());
+	return qtranxf_update_option_admin_notices($messages,$id);
 }
 
 function qtranxf_ajax_qtranslate_admin_notice()
