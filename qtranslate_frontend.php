@@ -241,7 +241,7 @@ add_filter( 'wp_get_nav_menu_items',  'qtranxf_wp_get_nav_menu_items', 20, 3 );
 function qtranxf_wp_setup_nav_menu_item($menu_item) {
 	global $q_config;
 	if($menu_item->title==='test'){
-		//echo "qtranxf_wp_setup_nav_menu_item: '$text'<br>\n";
+		//echo "qtranxf_wp_setup_nav_menu_item: '$text'<br/>\n";
 		//qtranxf_dbg_echo('menu_item:',$menu_item,true);
 		//qtranxf_dbg_echo('menu_item->title:'.$menu_item->title);
 		//$menu_item->title='test';//is in use

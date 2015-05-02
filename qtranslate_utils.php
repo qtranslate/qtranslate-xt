@@ -42,7 +42,7 @@ if(WP_DEBUG){
 		function qtranxf_dbg_echo($msg,$var='novar',$bt=false,$exit=false){
 			if( $var !== 'novar' )
 				$msg .= var_export($var,true);
-			echo $msg."<br>\n";
+			echo $msg."<br/>\n";
 			if($bt){
 				debug_print_backtrace();
 			}

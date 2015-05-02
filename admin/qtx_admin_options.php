@@ -74,14 +74,13 @@ function qtranxf_reset_config()
 
 	if(!current_user_can('manage_options')) return;
 
-	$next_thanks = get_option('qtranslate_next_thanks');
-	if(!$next_thanks){
-		$next_thanks = time() + rand(100,200)*24*60*60;
-		update_option('qtranslate_next_thanks', $next_thanks);
+	if(isset($_POST['qtranslate_reset_admin_notices'])){
+		delete_option('qtranslate_admin_notices');
 	}
 
 	if( !isset($_POST['qtranslate_reset']) || !isset($_POST['qtranslate_reset2']) )
 		return;
+
 	// reset all settings
 	foreach($qtranslate_options['front'] as $ops){ foreach($ops as $nm => $def){ delete_option('qtranslate_'.$nm); } }
 	foreach($qtranslate_options['admin'] as $ops){ foreach($ops as $nm => $def){ delete_option('qtranslate_'.$nm); } }
@@ -89,9 +88,8 @@ function qtranxf_reset_config()
 	foreach($qtranslate_options['languages'] as $nm => $opn){ delete_option($opn); }
 
 	//internal private options not loaded by default
-	delete_option('qtranslate_admin_notices');
-	delete_option('qtranslate_next_thanks');
 	delete_option('qtranslate_next_update_mo');
+	delete_option('qtranslate_next_thanks');
 
 	// obsolete options
 	delete_option('qtranslate_plugin_js_composer_off');

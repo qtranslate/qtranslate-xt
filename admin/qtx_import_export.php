@@ -190,6 +190,10 @@ function qtranxf_admin_section_import_export($request_uri)
 				<label for="qtranslate_reset3"><input type="checkbox" name="qtranslate_reset3" id="qtranslate_reset3" value="1"/> <?php _e('Also delete Translations for Categories/Tags/Link Categories.', 'qtranslate'); ?></label>
 				<br/>
 				<small><?php _e('If something isn\'t working correctly, you can always try to reset all qTranslate settings. A Reset won\'t delete any posts but will remove all settings (including all languages added).', 'qtranslate'); ?></small>
+				<br/>
+				<label for="qtranslate_reset_admin_notices"><input type="checkbox" name="qtranslate_reset_admin_notices" id="qtranslate_reset_admin_notices" value="1"/> <?php _e('Reset admin notices.', 'qtranslate'); ?></label>
+				<br/>
+				<small><?php _e('All previously dismissed admin notices related to this plugin will show up again on next refresh of admin pages.', 'qtranslate'); ?></small>
 			</td>
 		</tr>
 	</table>

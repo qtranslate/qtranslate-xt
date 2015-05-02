@@ -67,8 +67,18 @@ function qtranxf_default_default_language()
 }
 
 function qtranxf_admin_notice_first_install(){
-
+	$messages = get_option('qtranslate_admin_notices');
+	if(isset($messages['initial-install'])) return;
+	qtranxf_admin_notice_dismiss_script();
+	echo '<div class="updated" id="qtranxs-initial-install"><p style="font-size: larger;">';// text-align: center;
+	printf(__('Are you new to plugin %s?', 'qtranslate'), '<a href="https://wordpress.org/plugins/qtranslate-x/" style="color:blue" target="_blank">qTranslate&#8209;X</a>');
+	echo '<br/>';
+	echo '</p><p><a class="button" href="https://qtranslatexteam.wordpress.com/startup-guide/" target="_blank">';
+	echo __('Read Startup Guide', 'qtranslate');
+	echo '</a>&nbsp;&nbsp;&nbsp;<a class="button" href="javascript:qtranxj_dismiss_admin_notice(\'initial-install\');">'.__('I have already done it, dismiss this message.', 'qtranslate');
+	echo '</a></p></div>';
 }
+//add_action('admin_notices', 'qtranxf_admin_notice_first_install');
 
 function qtranxf_admin_notice_deactivate_plugin($nm,$plugin)
 {
@@ -135,6 +145,13 @@ function qtranxf_activation_hook()
 
 	$f=WP_CONTENT_DIR.'/debug-qtranslate.log';
 	if(file_exists($f)) unlink($f);
+
+	$next_thanks = get_option('qtranslate_next_thanks');
+	if($next_thanks !== false && $next_thanks < time()+7*24*60*60){
+		$next_thanks = time() + rand(10,20)*24*60*60;
+		update_option('qtranslate_next_thanks', $next_thanks);
+	}
+	qtranxf_update_admin_notice('next_thanks');
 }
 
 function qtranxf_admin_notices_version()
@@ -274,14 +291,22 @@ function qtranxf_admin_notice_plugin_integration($plugin,$integr_title,$integr_p
 	return 1;
 }
 
-function qtranxf_admin_notice_dismiss_script()
+function qtranxf_admin_notice_dismiss_script()//($response_action=null)
 {
+	static $admin_notice_dismiss_script = false;
+	if($admin_notice_dismiss_script) return;
+	$admin_notice_dismiss_script = true;
 ?>
 <script type="text/javascript">
 	function qtranxj_dismiss_admin_notice(id) {
 		jQuery('#qtranxs-'+id).css('display','none');
 		jQuery.post(ajaxurl, { action: 'qtranslate_admin_notice', notice_id: id }
-		//,function(response) { eval(response); }
+	<?php /*
+		if($response_action){
+			//,function(response) { eval(response); }
+			echo ', function(response) { '.$response_action.' }';
+		}
+	*/ ?>
 		);
 	}
 </script>
@@ -315,6 +340,47 @@ function qtranxf_admin_notices_plugin_integration()
 add_action('admin_notices', 'qtranxf_admin_notices_plugin_integration');
 
 
+function qtranxf_admin_notices_next_thanks()
+{
+	$messages = get_option('qtranslate_admin_notices');
+	if(isset($messages['next_thanks'])) return;
+	qtranxf_admin_notice_dismiss_script();
+	//qtranxj_dismiss_admin_notice('next_thanks');
+	//document.location.href = 'https://qtranslatexteam.wordpress.com/donations/';
+?>
+<script type="text/javascript">
+	function qtranxj_dismiss_admin_notice_next_thanks() {
+		jQuery('#qtranxs-next_thanks').css('display','none');
+		jQuery.post(ajaxurl, { action: 'qtranslate_admin_notice', notice_id: 'next_thanks' }
+		, function(response) { document.location.href = 'https://qtranslatexteam.wordpress.com/donations/'; }
+		);
+	}
+</script>
+<?php
+	$tnx=sprintf(__('Thank you for using %s plugin!', 'qtranslate'), 'qTranslate&#8209;X');
+	echo '<div class="updated" id="qtranxs-next_thanks"><table><tr><td><img src="'.plugins_url('admin/img/Puss_in_Boots.png',QTRANSLATE_FILE).'" title="'.$tnx.'" alt="'.$tnx.'"></td><td>';
+	echo '<p>';// style="" text-align: center; font-size: larger;
+	printf(__('Thank you for using %s plugin!', 'qtranslate'), '<a href="https://wordpress.org/plugins/qtranslate-x/" style="color:blue" target="_blank">qTranslate&#8209;X</a>');
+	//echo '</p><p>';
+	echo '<br/>';
+	echo __('Our team would greatly appreciate any feedback:', 'qtranslate');
+	echo '<ul style="list-style: square; list-style-position: inside;"><li>';
+	printf(__('%sUse Support Forum%s to ask a question.', 'qtranslate'), '<a href="https://wordpress.org/support/plugin/qtranslate-x" target="_blank">', '</a>');
+	echo '</li><li>';
+	printf(_x('%sVisit%s %s website.', 'qtranslate'), '<a href="https://qtranslatexteam.wordpress.com/" target="_blank">', '</a>', '"<a href="https://qtranslatexteam.wordpress.com/about/" target="_blank">qTranslate-X explained</a>"');
+	echo '</li><li>';
+	printf(__('%sShare a new idea%s with our community.', 'qtranslate'), '<a href="https://qtranslatexteam.wordpress.com/contact-us/"  target="_blank">', '</a>');
+	echo '</li><li>';
+	printf(__('%sReview the plugin%s at WordPress site.', 'qtranslate'), '<a href="https://wordpress.org/support/view/plugin-reviews/qtranslate-x?rate=5#postform" target="_blank">', '</a>');
+	echo '</ul>';
+	echo '</p><p>&nbsp;';
+	echo '<a class="button" href="javascript:qtranxj_dismiss_admin_notice_next_thanks();">'.__('Thank me again in a few months!', 'qtranslate').'</a>';
+	echo '</p>';
+	echo '</td></tr></table></div>';
+}
+add_action('admin_notices', 'qtranxf_admin_notices_next_thanks');
+
+
 function qtranxf_admin_notices_survey_request()
 {
 	$messages = get_option('qtranslate_admin_notices');
@@ -322,7 +388,7 @@ function qtranxf_admin_notices_survey_request()
 	qtranxf_admin_notice_dismiss_script();
 	echo '<div class="updated" id="qtranxs-survey-translation-service"><p style="font-size: larger;">';// text-align: center;
 	printf(__('Thank you for using %s plugin!', 'qtranslate'), '<a href="https://wordpress.org/plugins/qtranslate-x/" style="color:blue" target="_blank">qTranslate&#8209;X</a>');
-	echo '<br>';
+	echo '<br/>';
 	printf(__('Please, help us to make a decision on "%s" feature, press the button below.', 'qtranslate'), __('Translation Service', 'qtranslate'));
 	echo '</p><p><a class="button" href="http://www.marius-siroen.com/qTranslate-X/TranslateServices/" target="_blank">';
 	printf(__('Survey on "%s" feature', 'qtranslate'), __('Translation Service', 'qtranslate'));
@@ -332,14 +398,19 @@ function qtranxf_admin_notices_survey_request()
 add_action('admin_notices', 'qtranxf_admin_notices_survey_request');
 
 
-function qtranxf_ajax_qtranslate_admin_notice()
+function qtranxf_update_admin_notice($id)
 {
-	if(!isset($_POST['notice_id'])) return;
-	$id = $_POST['notice_id'];
 	$messages = get_option('qtranslate_admin_notices',array());
 	if(!is_array($messages)) $messages = array();
 	$messages[$id] = time();
 	update_option('qtranslate_admin_notices',$messages);
+}
+
+function qtranxf_ajax_qtranslate_admin_notice()
+{
+	if(!isset($_POST['notice_id'])) return;
+	$id = sanitize_text_field($_POST['notice_id']);
+	qtranxf_update_admin_notice($id);
 	//echo "jQuery('#qtranxs_+$id').css('display','none');"; die();
 }
 add_action('wp_ajax_qtranslate_admin_notice', 'qtranxf_ajax_qtranslate_admin_notice');

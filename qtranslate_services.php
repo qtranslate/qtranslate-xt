@@ -853,7 +853,7 @@ if(!empty($message)) {
 		</div>
 	</div>
 	<div class="postbox closed">
-		<div class="handlediv" title="<?php _e('Click to toggle'); ?>" onclick="jQuery(this).parent().removeClass('closed');jQuery(this).hide();"><br></div>
+		<div class="handlediv" title="<?php _e('Click to toggle'); ?>" onclick="jQuery(this).parent().removeClass('closed');jQuery(this).hide();"><br/></div>
 		<h3 class="hndle"><?php _e('Review Article', 'qtranslate'); ?></h3>
 		<div class="inside">
 			<textarea name="qts_content_preview" id="qts_content_preview" readonly="readonly"><?php echo $post_content; ?></textarea>
@@ -920,7 +920,7 @@ function qts_quote() {
 		}
 	} else {
 		$content = '<p>'.__('An error occured!', 'qtranslate');
-		if(isset($answer['error'])) $content .= '<br>'.$answer['message'];
+		if(isset($answer['error'])) $content .= '<br/>'.$answer['message'];
 		$content .= '</p>';
 	}
 	if($mode == 'full') {
