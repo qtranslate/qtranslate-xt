@@ -103,6 +103,7 @@ Developers: please drop new topics here, the text will be moved to [qTranslate-X
 
 ### 3.2.9.9.8 (3.3 RC1) ###
 * Enhancement: admin message with a link to [Startup Guide](https://qtranslatexteam.wordpress.com/startup-guide/) on the first install.
+* Fix: sub-domains should be external hosts [Issue #148](https://github.com/qTranslate-Team/qtranslate-x/issues/148).
 
 ### 3.2.9.9.7 alpha ###
 * Fix: one more problem is discovered in function `qtranxf_filter_postmeta` for the case of empty $meta_key, reported in [Issue #138](https://github.com/qTranslate-Team/qtranslate-x/issues/138).
