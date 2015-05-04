@@ -370,7 +370,7 @@ function qtranxf_admin_notices_next_thanks()
 	echo '<ul style="list-style: square; list-style-position: inside;"><li>';
 	printf(__('%sUse Support Forum%s to ask a question.', 'qtranslate'), '<a href="https://wordpress.org/support/plugin/qtranslate-x" target="_blank">', '</a>');
 	echo '</li><li>';
-	printf(_x('%sVisit%s %s website.', 'qtranslate'), '<a href="https://qtranslatexteam.wordpress.com/" target="_blank">', '</a>', '"<a href="https://qtranslatexteam.wordpress.com/about/" target="_blank">qTranslate-X explained</a>"');
+	printf(__('%sVisit%s %s website.', 'qtranslate'), '<a href="https://qtranslatexteam.wordpress.com/" target="_blank">', '</a>', '"<a href="https://qtranslatexteam.wordpress.com/about/" target="_blank">qTranslate-X explained</a>"');
 	echo '</li><li>';
 	printf(__('%sShare a new idea%s with our community.', 'qtranslate'), '<a href="https://qtranslatexteam.wordpress.com/contact-us/"  target="_blank">', '</a>');
 	echo '</li><li>';

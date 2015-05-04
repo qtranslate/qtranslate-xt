@@ -101,7 +101,6 @@ msgstr ""
 
 #: admin/qtx_activation_hook.php:373
 #, php-format
-msgctxt "qtranslate"
 msgid "%sVisit%s %s website."
 msgstr ""
 
