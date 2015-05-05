@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: qTranslate-X 3.2.9.9.8\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-05-04 15:49-0600\n"
-"PO-Revision-Date: 2015-04-26 23:00-0000\n"
+"PO-Revision-Date: 2015-05-05 00:17-0000\n"
 "Last-Translator: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "Language-Team: Pedro Mendonça <ped.gaspar@gmail.com>\n"
+"Language: pt_PT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: pt_PT\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Generator: Poedit 1.7.6\n"
@@ -25,11 +25,11 @@ msgstr ""
 #: admin/qtx_activation_hook.php:74
 #, php-format
 msgid "Are you new to plugin %s?"
-msgstr ""
+msgstr "Não conhece o plugin %s?"
 
 #: admin/qtx_activation_hook.php:77
 msgid "Read Startup Guide"
-msgstr ""
+msgstr "Leia o Guia de Inicialização"
 
 #: admin/qtx_activation_hook.php:78 admin/qtx_activation_hook.php:398
 #: admin/qtx_activation_hook.php:452
@@ -98,32 +98,31 @@ msgstr "Obrigado por utilizar o plugin %s!"
 
 #: admin/qtx_activation_hook.php:369
 msgid "Our team would greatly appreciate any feedback:"
-msgstr ""
+msgstr "A nossa equipa apreciará bastante qualquer retorno:"
 
 #: admin/qtx_activation_hook.php:371
 #, php-format
 msgid "%sUse Support Forum%s to ask a question."
-msgstr ""
+msgstr "%sUtilize o fórum de suporte%s para fazer uma pergunta."
 
 #: admin/qtx_activation_hook.php:373
 #, php-format
-msgctxt "qtranslate"
 msgid "%sVisit%s %s website."
-msgstr ""
+msgstr "%sVisite%s o site %s."
 
 #: admin/qtx_activation_hook.php:375
 #, php-format
 msgid "%sShare a new idea%s with our community."
-msgstr ""
+msgstr "%sPartilhe uma nova ideia%s com a nossa comunidade."
 
 #: admin/qtx_activation_hook.php:377
 #, php-format
 msgid "%sReview the plugin%s at WordPress site."
-msgstr ""
+msgstr "%sFaça uma revisão do plugin%s no site do WordPress."
 
 #: admin/qtx_activation_hook.php:380
 msgid "Thank me again in a few months!"
-msgstr ""
+msgstr "Agradecer-me novamente daqui a alguns meses!"
 
 #: admin/qtx_activation_hook.php:395
 #, php-format
@@ -1057,11 +1056,11 @@ msgstr "Se algo não funcionar correctamente, pode sempre repor todas as defini�
 
 #: admin/qtx_import_export.php:194
 msgid "Reset admin notices."
-msgstr ""
+msgstr "Repor notificações de administração."
 
 #: admin/qtx_import_export.php:196
 msgid "All previously dismissed admin notices related to this plugin will show up again on next refresh of admin pages."
-msgstr ""
+msgstr "Todas as notificações de administração relativas a este plugin, que tenham sido previamente descartadas, serão novamente mostradas no próximo carregamento das páginas de administração."
 
 #: admin/qtx_languages.php:95
 msgid "Cannot delete Default Language!"
@@ -1437,6 +1436,10 @@ msgstr "CSS do widget:"
 #: qtranslate.php:5
 msgid "Adds user-friendly and database-friendly multilingual content support."
 msgstr "Adiciona suporte para conteúdo multilingue de modo amigável para o utilizador e para a base de dados."
+
+#~ msgctxt "qtranslate"
+#~ msgid "%sVisit%s %s website."
+#~ msgstr "%sVisite%s o site %s."
 
 #~ msgid "3rd-party plugins"
 #~ msgstr "Plugins de terceiros"
