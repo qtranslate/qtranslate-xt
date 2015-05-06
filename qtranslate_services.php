@@ -81,7 +81,7 @@ add_action('admin_menu', 'qts_init');
 add_action('qtranslate_admin_css', 'qts_css');
 add_action('qts_cron_hook', 'qts_cron');
 add_action('qtranslate_configuration', 'qts_config_hook', 10);
-add_action('qtranslate_loadConfig', 'qts_load');
+add_action('qtranslate_admin_loadConfig', 'qts_load');
 add_action('qtranslate_saveConfig', 'qts_save');
 add_action('qtranslate_clean_uri', 'qts_clean_uri');
 add_action('wp_ajax_qts_quote', 'qts_quote');
@@ -207,6 +207,7 @@ p.error a{color:#c00;}
 function qts_load() {
 	global $q_config, $qts_public_key;
 	// qTranslate Services
+	$q_config['admin_sections']['service'] = __('qTranslate Services Settings', 'qtranslate');
 	//$q_config['qtranslate_services'] = false;
 	qtranxf_load_option_bool('qtranslate_services',false);
 	//$qtranslate_services = get_option('qtranslate_qtranslate_services');
@@ -386,8 +387,7 @@ function qts_order_columns($columns) {
 
 function qts_config_hook($request_uri) {
 	global $q_config;
-	qtranxf_admin_section_start(__('qTranslate Services Settings', 'qtranslate'),'service');
-	// id="qtranslate-admin-service" style="display: none"
+	qtranxf_admin_section_start('service');
 ?>
 <table class="form-table">
 	<tr>
@@ -432,7 +432,7 @@ function qts_config_hook($request_uri) {
 					<td class="qts_no-bottom-border"><?php if(isset($services[$order['service_id']])): ?><a href="<?php echo $services[$order['service_id']]['service_url']; ?>" title="<?php _e('Website', 'qtranslate'); ?>"><?php echo $services[$order['service_id']]['service_name']; ?></a><?php endif; ?></td>
 					<td class="qts_no-bottom-border"><?php echo $q_config['language_name'][$order['source_language']]; ?></td>
 					<td class="qts_no-bottom-border"><?php echo $q_config['language_name'][$order['target_language']]; ?></td>
-					<td class="qts_no-bottom-border"><a class="delete" href="<?php echo add_query_arg('qts_delete', $order['order']['order_id'], $request_uri); ?>#qtranslate_service_settings">Delete</a></td>
+					<td class="qts_no-bottom-border"><a class="delete" href="<?php echo add_query_arg('qts_delete', $order['order']['order_id'], $request_uri); ?>#service">Delete</a></td>
 				</tr>
 <?php 
 			if(isset($order['status'])) {
@@ -447,7 +447,7 @@ function qts_config_hook($request_uri) {
 		}
 ?>
 			</table>
-			<p><?php printf(__('qTranslate Services will automatically check every hour whether the translations are finished and update your posts accordingly. You can always <a href="%s">check manually</a>.','qtranslate'),'options-general.php?page=qtranslate-x&qts_cron=true#qtranslate_service_settings'); ?></p>
+			<p><?php printf(__('qTranslate Services will automatically check every hour whether the translations are finished and update your posts accordingly. You can always <a href="%s">check manually</a>.','qtranslate'),'options-general.php?page=qtranslate-x&qts_cron=true#service'); ?></p>
 			<p><?php _e('Deleting an open order doesn\'t cancel it. You will have to logon to the service homepage and cancel it there.','qtranslate'); ?></p>
 <?php } else { ?>
 			<p><?php _e('No open orders.','qtranslate'); ?></p>
@@ -699,8 +699,8 @@ function qts_service() {
 <ul>
 	<li><a href="<?php echo add_query_arg('target_language', null, $url_link); ?>"><?php _e('Translate this post to another language.', 'qtranslate'); ?></a></li>
 	<li><a href="edit.php"><?php _e('Translate a different post.', 'qtranslate'); ?></a></li>
-	<li><a href="options-general.php?page=qtranslate-x#qtranslate_service_settings"><?php _e('View all open orders.', 'qtranslate'); ?></a></li>
-	<li><a href="options-general.php?page=qtranslate-x&qts_cron=true#qtranslate_service_settings"><?php _e('Let qTranslate Services check if any open orders are finished.', 'qtranslate'); ?></a></li>
+	<li><a href="options-general.php?page=qtranslate-x#service"><?php _e('View all open orders.', 'qtranslate'); ?></a></li>
+	<li><a href="options-general.php?page=qtranslate-x&qts_cron=true#service"><?php _e('Let qTranslate Services check if any open orders are finished.', 'qtranslate'); ?></a></li>
 	<li><a href="<?php echo get_permalink($post_id); ?> "><?php _e('View this post.', 'qtranslate'); ?></a></li>
 </ul>
 </div>

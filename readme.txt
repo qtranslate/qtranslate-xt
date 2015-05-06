@@ -76,7 +76,7 @@ Installation of this plugin is no different from any other plugin:
 
 FAQ list is available at "qTranslate-X explained" website: [https://qtranslatexteam.wordpress.com/faq/](https://qtranslatexteam.wordpress.com/faq/ "qTranslate-X explained FAQ"), where it is easier to maintain it in between releases.
 
-For the new installers, it may be useful to read [Start-up Guide](https://qtranslatexteam.wordpress.com/startup-guide/).
+For the new installers, it may be useful to read [Startup Guide](https://qtranslatexteam.wordpress.com/startup-guide/).
 
 It is important to read [migration instructions](https://qtranslatexteam.wordpress.com/2015/02/24/migration-from-other-multilingual-plugins/), if you previously used other multilingual plugin.
 
@@ -97,6 +97,10 @@ Developers: please drop new topics here, the text will be moved to [qTranslate-X
 
 ## Changelog ##
 
+### 3.3.1 ###
+* Enhancement: `qtrans_getAvailableLanguages` added to "Compatibility Functions".
+* Enhancement: tabs on configuration page, thanks to [Pedro Mendonça](https://github.com/pedro-mendonca) for the idea and initial coding: [Issue #135 & #153](https://github.com/qTranslate-Team/qtranslate-x/pull/153).
+ 
 ### 3.3 stable ###
 * Includes all changes after version 3.2.9. Please, review [Release Notes](https://qtranslatexteam.wordpress.com/2015/03/30/release-notes-3-3).
 * Translation: a lot of thanks to all translators contributed.

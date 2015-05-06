@@ -62,9 +62,26 @@ function qtranxf_admin_loadConfig()
 		qtranxf_load_option_array($nm,$def);
 	}
 
-	qtranxf_add_admin_filters();
+	// Set Admin Sections Names
+/*
+	$admin_sections['general'] = array( 'name' => __('General Settings', 'qtranslate') );
+	$admin_sections['advanced'] = array( 'name' => __('Advanced Settings', 'qtranslate') );
+	$admin_sections['integration'] = array( 'name' => __('Custom Integration', 'qtranslate') );
+	$admin_sections['import'] = array( 'name' => __('Import', 'qtranslate').'/'.__('Export', 'qtranslate') );
+	$admin_sections['languages'] = array( 'name' => __('Languages', 'qtranslate') );
+*/
+	$q_config['admin_sections'] = array();
+	$admin_sections = &$q_config['admin_sections'];
+	$admin_sections['general'] = __('General Settings', 'qtranslate');
+	$admin_sections['advanced'] = __('Advanced Settings', 'qtranslate');
+	$admin_sections['integration'] = __('Custom Integration', 'qtranslate');
+	$admin_sections['import'] = __('Import', 'qtranslate').'/'.__('Export', 'qtranslate');
 
 	do_action('qtranslate_admin_loadConfig');
+
+	$admin_sections['languages'] = __('Languages', 'qtranslate');//always last section
+
+	qtranxf_add_admin_filters();
 }
 //add_action('qtranslate_loadConfig','qtranxf_admin_loadConfig');
 

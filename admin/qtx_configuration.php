@@ -26,6 +26,10 @@ require_once(dirname(__FILE__).'/qtx_languages.php');
 require_once(dirname(__FILE__).'/qtx_import_export.php');
 require_once(dirname(__FILE__).'/qtx_user_options.php');
 
+// load qTranslate Services if available // disabled since 3.1
+//if(file_exists(dirname(QTRANSLATE_FILE).'/qtranslate_services.php'))
+//	require_once(dirname(QTRANSLATE_FILE).'/qtranslate_services.php');
+
 function qtranxf_collect_translations_deep( $qfields, $sep ) {
 	$content = reset($qfields);
 	//qtranxf_dbg_log('qtranxf_collect_translations_deep: $content: ',$content);
@@ -390,7 +394,48 @@ function qtranxf_add_admin_head_js ($enqueue_script=true) {
 	//}
 */
 	if(strpos($_SERVER['REQUEST_URI'],'page=qtranslate-x') !== FALSE) {
-		echo '<script type="text/javascript">'.PHP_EOL.'// <![CDATA['.PHP_EOL;
+		echo '<script type="text/javascript">'.PHP_EOL .'// <![CDATA['.PHP_EOL;
+?>
+function qtranxj_config_form_action(hash){
+	var f = jQuery('#qtranxs-configuration-form');
+	var a = f.attr('action');
+	a = a.replace(/(#.*|$)/,hash);
+	f.attr('action',a);
+}
+jQuery(function($) {
+	var hash = window.location.hash;
+	if (!hash) hash = '#general';
+	var tab = $('.tabs-content div' + hash.replace('#', '#tab-'));
+	if(!tab.length){
+		hash = '#general';
+		tab = $('.tabs-content div#tab-general');
+	}
+	if(tab.length>0) {
+		$('.nav-tab-wrapper').children().removeClass('nav-tab-active');
+		$('.nav-tab-wrapper a[href="' + hash + '"]').addClass('nav-tab-active');
+
+		$('.tabs-content').children().addClass('hidden');
+		//$('.tabs-content div' + hash.replace('#', '#tab-')).removeClass('hidden');
+		tab.removeClass('hidden');
+		qtranxj_config_form_action(hash);
+	}
+
+	$('.nav-tab-wrapper a').click(function() {
+		var hash = $(this).attr('href');
+		var tab_id = hash.replace('#', '#tab-');
+
+		// active tab
+		$(this).parent().children().removeClass('nav-tab-active');
+		$(this).addClass('nav-tab-active');
+
+		// active tab content
+		$('.tabs-content').children().addClass('hidden');
+		$('.tabs-content div' + tab_id).removeClass('hidden');
+		qtranxj_config_form_action(hash);
+	});
+});
+<?php
+/*
 ?>
 function qtranxj_getcookie(cname)
 {
@@ -430,7 +475,8 @@ function qtranxj_toggleShowHide(id) {
 	return false;
 }
 <?php
-		echo '//]]>'.PHP_EOL.'</script>'.PHP_EOL;
+*/
+		echo '//]]>'.PHP_EOL .'</script>'.PHP_EOL;
 	}
 }
 
@@ -619,20 +665,24 @@ function qtranxf_language_form($lang = '', $language_code = '', $language_name =
 <?php
 }
 
-function qtranxf_admin_section_start($section, $nm) {
+function qtranxf_admin_section_start($nm) {
+	//global $q_config;
 	// echo '<h3>'.$section.'<span id="qtranxs-show-'.$nm.'"> ( <a name="qtranslate_'.$nm.'_settings" href="#" onclick="return qtranxj_toggleShowHide(\'qtranslate-admin-'.$nm.'\');">'.__('Show', 'qtranslate').' / '.__('Hide', 'qtranslate').'</a> )</span></h3>'.PHP_EOL;
-	echo '<div id="tab-'.$nm.'" class="';if($nm!=='general'){echo 'hidden';};echo '"><!-- tab-ID -->'; 
-	echo '<div id="qtranslate-admin-'.$nm.'">'.PHP_EOL;
+	//echo '<div id="tab-'.$nm.'"';if($nm!=='general'){echo ' class="hidden"';};echo '>';
+	echo '<div id="tab-'.$nm.'">'.PHP_EOL;
+	//echo '<div id="qtranslate-admin-'.$nm.'">'.PHP_EOL;
 }
 
-function qtranxf_admin_section_end($nm) {
+function qtranxf_admin_section_end($nm, $button_name=null, $button_class='button-primary') {
+	if(!$button_name) $button_name = __('Save Changes', 'qtranslate');
+	echo '<p class="submit"><input type="submit" name="submit"';
+	if($button_class) echo ' class="'.$button_class.'"';
+	echo ' value="'.$button_name.'" /></p>';
+	//echo '</div>';
+	echo '</div>'; //'<!-- id="tab-'.$nm.'" -->';
 ?>
-<p class="submit">
-	<input type="submit" name="submit" class="button-primary" value="<?php _e('Save Changes', 'qtranslate') ?>" />
-</p>
-</div>
-</div><!-- /tab-ID -->
-<?php /*  Unnecessary as Show/Hide is obsolete
+<?php
+/*  Unnecessary as Show/Hide is obsolete
 <script type="text/javascript">
 //<![CDATA[
 	qtranxj_readShowHideCookie('qtranslate-admin-<?php echo $nm; ?>');
@@ -949,35 +999,30 @@ function qtranxf_conf() {
 <div id="message" class="error fade"><p><strong><?php echo $error; ?></strong></p></div>
 <?php endif; ?>
 
-<?php if(isset($_GET['edit'])) { ?>
 <div class="wrap">
+<?php if(isset($_GET['edit'])) { ?>
 <h2><?php _e('Edit Language', 'qtranslate'); ?></h2>
 <form action="" method="post" id="qtranxs-edit-language">
 <?php qtranxf_language_form($language_code, $language_code, $language_name, $language_locale, $language_date_format, $language_time_format, $language_flag, $language_na_message, $language_default, $original_lang); ?>
 <p class="submit"><input type="submit" name="submit" value="<?php _e('Save Changes &raquo;', 'qtranslate'); ?>" /></p>
 </form>
 <p><small><a href="<?php echo admin_url('options-general.php?page=qtranslate-x'); ?>"><?php _e('back to configuration page', 'qtranslate'); ?></a></small></p>
-</div>
 <?php } else { ?>
-<div class="wrap">
 <h2><?php _e('Language Management (qTranslate Configuration)', 'qtranslate'); ?></h2>
 <small><?php printf(__('For help on how to configure qTranslate correctly, take a look at the <a href="%1$s">qTranslate FAQ</a> and the <a href="%2$s">Support Forum</a>.', 'qtranslate')
 , 'https://qtranslatexteam.wordpress.com/faq/'
 //, 'http://wordpress.org/plugins/qtranslate-x/faq/'
 , 'https://wordpress.org/support/plugin/qtranslate-x'); ?></small>
 
-<?php // Launch jQuery - not sure if necessary as WordPress loads jQuery
-	wp_enqueue_script( ‘jquery’ );
+<?php /*
+	// Set jQuery script for Navigation Tabs behaviour
+	// Launch jQuery - not sure if necessary as WordPress loads jQuery
+	//wp_enqueue_script( 'jquery' );
 ?>
-
-<?php // Set jQuery script for Navigation Tabs behaviour ?>
-
 <script>
 jQuery(function($) {
-	/**
-	* TABS
-	*/
 	var hash = window.location.hash;
+	if (!hash) hash = '#general';
 	if (hash != '') {
 		$('.nav-tab-wrapper').children().removeClass('nav-tab-active');
 		$('.nav-tab-wrapper a[href="' + hash + '"]').addClass('nav-tab-active');
@@ -1000,27 +1045,16 @@ jQuery(function($) {
 
 });
 </script>
-
-<?php // Set Admin Sections Names
-	$qtx_admin_section_1 = __('General Settings', 'qtranslate');
-	$qtx_admin_section_2 = __('Advanced Settings', 'qtranslate');
-	$qtx_admin_section_3 = __('Custom Integration', 'qtranslate');
-	$qtx_admin_section_4 = __('Import', 'qtranslate').'/'.__('Export', 'qtranslate');
-	$qtx_admin_section_5 = __('Languages', 'qtranslate');
+<?php */ // Set Navigation Tabs
+	echo '<h2 class="nav-tab-wrapper">'.PHP_EOL;
+	foreach( $q_config['admin_sections'] as $slug => $name ){
+		echo '<a class="nav-tab" href="#'.$slug.'" title="'.sprintf(__('Click to switch to %s', 'qtranslate'), $name).'">'.$name.'</a>'.PHP_EOL;
+	}
+	echo '</h2>'.PHP_EOL;
 ?>
-
-<?php // Set Navigation Tabs ?>
-	<h2 class="nav-tab-wrapper">
-		<a class="nav-tab nav-tab-active" href="#general" title="<?php printf(__('Click to switch to %s', 'qtranslate'), $qtx_admin_section_1 ); ?>" ><?php echo $qtx_admin_section_1; ?></a>
-		<a class="nav-tab" href="#advanced" title="<?php printf(__('Click to switch to %s', 'qtranslate'), $qtx_admin_section_2 ); ?>" ><?php echo $qtx_admin_section_2; ?></a>
-		<a class="nav-tab" href="#integration" title="<?php printf(__('Click to switch to %s', 'qtranslate'), $qtx_admin_section_3 ); ?>" ><?php echo $qtx_admin_section_3; ?></a>
-		<a class="nav-tab" href="#import" title="<?php printf(__('Click to switch to %s', 'qtranslate'), $qtx_admin_section_4 ); ?>" ><?php echo $qtx_admin_section_4; ?></a>
-		<a class="nav-tab" href="#languages" title="<?php printf(__('Click to switch to %s', 'qtranslate'), $qtx_admin_section_5 ); ?>" ><?php echo $qtx_admin_section_5; ?></a>
-	</h2>
-
-	<form action="<?php echo $clean_uri;?>" method="post">
-	<div class="tabs-content"><!-- tabs-container -->
-	<?php qtranxf_admin_section_start($qtx_admin_section_1,'general'); //id="qtranslate-admin-general" ?>
+	<form id="qtranxs-configuration-form" action="<?php echo $clean_uri;?>" method="post">
+	<div class="tabs-content"><?php //<!-- tabs-container --> ?>
+	<?php qtranxf_admin_section_start('general'); ?>
 		<table class="form-table">
 			<tr>
 				<th scope="row"><?php _e('Default Language / Order', 'qtranslate') ?></th>
@@ -1072,7 +1106,7 @@ jQuery(function($) {
 			</tr>
 		</table>
 	<?php qtranxf_admin_section_end('general'); ?>
-	<?php qtranxf_admin_section_start($qtx_admin_section_2,'advanced'); //id="qtranslate-admin-advanced"
+	<?php qtranxf_admin_section_start('advanced');
 		$permalink_is_query = qtranxf_is_permalink_structure_query();
 		//qtranxf_dbg_echo('$permalink_is_query: ',$permalink_is_query);
 		$url_mode = $q_config['url_mode'];
@@ -1309,7 +1343,7 @@ jQuery(function($) {
 */ ?>
 		</table>
 	<?php qtranxf_admin_section_end('advanced'); ?>
-	<?php qtranxf_admin_section_start($qtx_admin_section_3,'integration'); ?>
+	<?php qtranxf_admin_section_start('integration'); ?>
 		<table class="form-table">
 			<tr valign="top">
 				<th scope="row"><?php echo __('Custom Fields', 'qtranslate');?></th>
@@ -1347,7 +1381,7 @@ jQuery(function($) {
 			<tr valign="top">
 				<th scope="row"><?php _e('Compatibility Functions', 'qtranslate');?></th>
 				<td>
-					<label for="qtranxs_qtrans_compatibility"><input type="checkbox" name="qtrans_compatibility" id="qtranxs_qtrans_compatibility" value="1"<?php checked($q_config['qtrans_compatibility']); ?>/>&nbsp;<?php printf(__('Enable function name compatibility (%s).', 'qtranslate'), 'qtrans_convertURL, qtrans_generateLanguageSelectCode, qtrans_getLanguage, qtrans_getLanguageName, qtrans_getSortedLanguages, qtrans_join, qtrans_split, qtrans_use, qtrans_useCurrentLanguageIfNotFoundShowAvailable, qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage, qtrans_useDefaultLanguage, qtrans_useTermLib'); ?></label><br/>
+					<label for="qtranxs_qtrans_compatibility"><input type="checkbox" name="qtrans_compatibility" id="qtranxs_qtrans_compatibility" value="1"<?php checked($q_config['qtrans_compatibility']); ?>/>&nbsp;<?php printf(__('Enable function name compatibility (%s).', 'qtranslate'), 'qtrans_convertURL, qtrans_getAvailableLanguages, qtrans_generateLanguageSelectCode, qtrans_getLanguage, qtrans_getLanguageName, qtrans_getSortedLanguages, qtrans_join, qtrans_split, qtrans_use, qtrans_useCurrentLanguageIfNotFoundShowAvailable, qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage, qtrans_useDefaultLanguage, qtrans_useTermLib'); ?></label><br/>
 					<small><?php printf(__('Some plugins and themes use direct calls to the functions listed, which are defined in former %s plugin and some of its forks. Turning this flag on will enable those function to exists, which will make the dependent plugins and themes to work. WordPress policy prohibits to define functions with the same names as in other plugins, since it generates user-unfriendly fatal errors, when two conflicting plugins are activated simultaneously. Before turning this option on, you have to make sure that there are no other plugins active, which define those functions.', 'qtranslate'), '<a href="https://wordpress.org/plugins/qtranslate/" target="_blank">qTranslate</a>'); ?></small>
 				</td>
 			</tr>
@@ -1366,16 +1400,18 @@ jQuery(function($) {
 			</tr>
 			<?php } */ ?>
 		</table>
-	<?php qtranxf_admin_section_end('integration'); ?>
-	</div><!-- /tabs-container -->
-<?php do_action('qtranslate_configuration', $clean_uri); ?>
+	<?php
+		qtranxf_admin_section_end('integration');
+		do_action('qtranslate_configuration', $clean_uri);
+	?>
+	</div><?php //<!-- /tabs-container --> ?>
 	</form>
 
-</div>
+</div><!-- /wrap -->
 <div class="wrap">
 
 <div class="tabs-content"><!-- tabs-container -->
-<?php qtranxf_admin_section_start($qtx_admin_section_5,'languages'); //id="qtranslate-admin-languages" ?>
+<?php qtranxf_admin_section_start('languages'); ?>
 <div id="col-container">
 
 <div id="col-right">
@@ -1423,9 +1459,9 @@ jQuery(function($) {
 		<td><?php echo $lang; ?></td>
 		<td><img src="<?php echo $flag_url; ?>" alt="<?php echo sprintf(__('%s Flag', 'qtranslate'), $language) ?>"></td>
 		<td><?php echo $language; ?></td>
-		<td><?php if(in_array($lang,$q_config['enabled_languages'])) { if($q_config['default_language']==$lang){ _e('Default', 'qtranslate'); } else{ ?><a class="edit" href="<?php echo $clean_uri; ?>&disable=<?php echo $lang; ?>"><?php _e('Disable', 'qtranslate'); ?></a><?php } } else { ?><a class="edit" href="<?php echo $clean_uri; ?>&enable=<?php echo $lang; ?>"><?php _e('Enable', 'qtranslate'); ?></a><?php } ?></td>
+		<td><?php if(in_array($lang,$q_config['enabled_languages'])) { if($q_config['default_language']==$lang){ _e('Default', 'qtranslate'); } else{ ?><a class="edit" href="<?php echo $clean_uri; ?>&disable=<?php echo $lang; ?>#languages"><?php _e('Disable', 'qtranslate'); ?></a><?php } } else { ?><a class="edit" href="<?php echo $clean_uri; ?>&enable=<?php echo $lang; ?>#languages"><?php _e('Enable', 'qtranslate'); ?></a><?php } ?></td>
 		<td><a class="edit" href="<?php echo $clean_uri; ?>&edit=<?php echo $lang; ?>"><?php _e('Edit', 'qtranslate'); ?></a></td>
-		<td><?php if(!isset($languages_stored[$lang])){ _e('Pre-Defined', 'qtranslate'); } else { ?><a class="delete" href="<?php echo $clean_uri; ?>&delete=<?php echo $lang; ?>"><?php if(isset($languages_predef[$lang])) _e('Reset', 'qtranslate'); else _e('Delete', 'qtranslate'); ?></a><?php } ?></td>
+		<td><?php if(!isset($languages_stored[$lang])){ _e('Pre-Defined', 'qtranslate'); } else { ?><a class="delete" href="<?php echo $clean_uri; ?>&delete=<?php echo $lang; ?>#languages"><?php if(isset($languages_predef[$lang])) _e('Reset', 'qtranslate'); else _e('Delete', 'qtranslate'); ?></a><?php } ?></td>
 	</tr>
 <?php }
 /*
@@ -1436,31 +1472,24 @@ jQuery(function($) {
 </table>
 <p><?php _e('Enabling a language will cause qTranslate to update the Gettext-Database for the language, which can take a while depending on your server\'s connection speed.', 'qtranslate');?></p>
 </div>
-</div><!-- /col-right -->
+</div>
 
 <div id="col-left">
 <div class="col-wrap">
 <div class="form-wrap">
 <h3><?php _e('Add Language', 'qtranslate'); ?></h3>
 <form name="addcat" id="addcat" method="post" class="add:the-list: validate">
-<?php qtranxf_language_form($language_code, $language_code, $language_name, $language_locale, $language_date_format, $language_time_format, $language_flag, $language_na_message, $language_default); ?>
-<p class="submit"><input type="submit" name="submit" value="<?php _e('Add Language &raquo;', 'qtranslate'); ?>" /></p>
-</form></div>
-</div>
-</div><!-- /col-left -->
-
-</div><!-- /col-container -->
-</div><!-- /tabs-container --><!-- /qtranslate-admin-languages in qtranxf_admin_section_start -->
-<?php /*  Unnecessary as Show/Hide is obsolete
-<script type="text/javascript">
-//<![CDATA[
-	qtranxj_readShowHideCookie('qtranslate-admin-languages');
-// ]]>
-</script>
-*/ ?>
-</div><!-- /wrap -->
 <?php
-}
+	qtranxf_language_form($language_code, $language_code, $language_name, $language_locale, $language_date_format, $language_time_format, $language_flag, $language_na_message, $language_default);
+	qtranxf_admin_section_end('languages',__('Add Language &raquo;', 'qtranslate'), null);
+/*
+<p class="submit"><input type="submit" name="submit" value="<?php _e('Add Language &raquo;', 'qtranslate'); ?>" /></p>
+*/
+?>
+</form></div></div></div></div></div>
+<?php } ?>
+</div>
+<?php
 }
 
 /* Add a metabox in admin menu page */

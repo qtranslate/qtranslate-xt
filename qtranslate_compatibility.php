@@ -10,15 +10,14 @@ if(!function_exists('qtrans_convertURL')){
 if(!function_exists('qtrans_generateLanguageSelectCode')){
 	function qtrans_generateLanguageSelectCode($style='', $id=''){ return qtranxf_generateLanguageSelectCode($style,$id); }
 }
+if(!function_exists('qtrans_getAvailableLanguages')){
+	function qtrans_getAvailableLanguages($text){ return qtranxf_getAvailableLanguages($text); }
+}
 if(!function_exists('qtrans_getLanguage')){
-	function qtrans_getLanguage(){
-		return qtranxf_getLanguage();
-	}
+	function qtrans_getLanguage(){ return qtranxf_getLanguage(); }
 }
 if(!function_exists('qtrans_getLanguageName')){
-	function qtrans_getLanguageName($lang = ''){
-		return qtranxf_getLanguageName($lang);
-	}
+	function qtrans_getLanguageName($lang = ''){ return qtranxf_getLanguageName($lang); }
 }
 if(!function_exists('qtrans_getSortedLanguages')){
 	function qtrans_getSortedLanguages($reverse = false){ return qtranxf_getSortedLanguages($reverse); }

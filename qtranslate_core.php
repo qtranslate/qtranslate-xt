@@ -118,9 +118,6 @@ function qtranxf_init_language() {
 		require_once(dirname(__FILE__)."/qtranslate_frontend.php");
 	}else{
 		require_once(dirname(__FILE__).'/admin/qtx_configuration.php');
-		// load qTranslate Services if available // disabled since 3.1
-		//if(file_exists(dirname(__FILE__).'/qtranslate_services.php'))
-		//	require_once(dirname(__FILE__).'/qtranslate_services.php');
 	}
 
 	qtranxf_load_option_qtrans_compatibility();

@@ -158,17 +158,15 @@ function qtranxf_add_row_migrate($nm,$plugin) {
 
 function qtranxf_admin_section_import_export($request_uri)
 {
-?>
-	<div class="tabs-content"><!-- tabs-container -->
-<?php
-	qtranxf_admin_section_start($qtx_admin_section_4,'import');
+	//echo '<div class="tabs-content">';
+	qtranxf_admin_section_start('import');
 ?>
 	<table class="form-table">
 		<tr valign="top" id="qtranslate-convert-database">
 			<th scope="row"><?php _e('Convert Database', 'qtranslate');?></th>
 			<td>
-				<?php printf(__('If you are updating from qTranslate 1.x or Polyglot, <a href="%s">click here</a> to convert posts to the new language tag format.', 'qtranslate'), $request_uri.'&convert=true'); ?>
-				<?php printf(__('If you have installed qTranslate for the first time on a Wordpress with existing posts, you can either go through all your posts manually and save them in the correct language or <a href="%s">click here</a> to mark all existing posts as written in the default language.', 'qtranslate'), $request_uri.'&markdefault=true'); ?>
+				<?php printf(__('If you are updating from qTranslate 1.x or Polyglot, <a href="%s">click here</a> to convert posts to the new language tag format.', 'qtranslate'), $request_uri.'&convert=true#import'); ?>
+				<?php printf(__('If you have installed qTranslate for the first time on a Wordpress with existing posts, you can either go through all your posts manually and save them in the correct language or <a href="%s">click here</a> to mark all existing posts as written in the default language.', 'qtranslate'), $request_uri.'&markdefault=true#import'); ?>
 				<?php _e('Both processes are <b>irreversible</b>! Be sure to make a full database backup before clicking one of the links.', 'qtranslate'); ?><br/><br/>
 				<label for="qtranxs_convert_database_none"><input type="radio" name="convert_database" id="qtranxs_convert_database_none" value="none" checked />&nbsp;<?php _e('Do not convert database', 'qtranslate'); ?></label><br/><br/>
 				<label for="qtranxs_convert_database_to_b_only"><input type="radio" name="convert_database" id="qtranxs_convert_database_to_b_only" value="b_only" />&nbsp;<?php echo __('Convert database to the "square bracket only" style.', 'qtranslate'); ?></label><br/>
@@ -201,8 +199,6 @@ function qtranxf_admin_section_import_export($request_uri)
 	</table>
 <?php
 	qtranxf_admin_section_end('import');
-?>
-	</div><!-- /tabs-container -->
-<?php
+	//echo '</div>';
 }
 add_action('qtranslate_configuration', 'qtranxf_admin_section_import_export', 9);
