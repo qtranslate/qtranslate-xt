@@ -1440,32 +1440,6 @@ function qtranxf_use_block($lang, $blocks, $show_available=false, $show_empty=fa
 			return '('.$q_config['language_name'][$alt_lang].') '.$alt_content;
 		else
 			return $alt_content;
-	/*
-		// check if content is available in default language, if not return first language found. (prevent empty result)
-		$language = $q_config['default_language'];
-		if(!isset($available_languages[$language])){
-			
-		}
-		if($lang!=$q_config['default_language']){
-			$language = $q_config['default_language'];
-			$lang_text = $content[$language];
-			//$lang_text = trim($lang_text);
-			if(!empty($lang_text)){
-				if ($q_config['show_displayed_language_prefix'])
-					return '('.$q_config['language_name'][$language].') '.$lang_text;
-				else
-					return $lang_text;
-			}
-		}
-		foreach($content as $language => $lang_text) {
-			$lang_text = trim($lang_text);
-			if(empty($lang_text)) continue;
-			if ($q_config['show_displayed_language_prefix'])
-				return '('.$q_config['language_name'][$language].') '.$lang_text;
-			else
-				return $lang_text;
-		}
-	*/
 	}
 
 	// display selection for available languages
@@ -1479,7 +1453,7 @@ function qtranxf_use_block($lang, $blocks, $show_available=false, $show_empty=fa
 		foreach($available_languages as $language) {
 			if($i==1) $language_list = $end_separator.$language_list;
 			if($i>1) $language_list = $normal_separator.$language_list;
-			$language_list = '<a href="'.qtranxf_convertURL('', $language, false, true).'">'.$q_config['language_name'][$language].'</a>'.$language_list;
+			$language_list = '<a href="'.qtranxf_convertURL('', $language, false, true).'" class="qtranxs-available-language-link qtranxs-available-language-link-'.$language.'">'.$q_config['language_name'][$language].'</a>'.$language_list;
 			++$i;
 		}
 	}
@@ -1510,7 +1484,7 @@ function qtranxf_use_block($lang, $blocks, $show_available=false, $show_empty=fa
 		$altlanguagecontent = '</p>';
 	}
 
-	return '<p>'.preg_replace('/%LANG:([^:]*):([^%]*)%/', $language_list, $q_config['not_available'][$lang]).$altlanguagecontent;
+	return '<p class="qtranxs-available-languages-message qtranxs-available-languages-message-'.$lang.'">'.preg_replace('/%LANG:([^:]*):([^%]*)%/', $language_list, $q_config['not_available'][$lang]).$altlanguagecontent;
 }
 
 
