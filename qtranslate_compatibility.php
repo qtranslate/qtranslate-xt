@@ -11,6 +11,9 @@ if(!function_exists('qtrans_generateLanguageSelectCode')){
 	function qtrans_generateLanguageSelectCode($style='', $id=''){ return qtranxf_generateLanguageSelectCode($style,$id); }
 }
 
+/**
+	Some 3rd-party plugins (for example "Google XML Sitemaps v3 for qTranslate") use this function and expect an array in return.
+*/
 if(!function_exists('qtrans_getAvailableLanguages')){
 	function qtrans_getAvailableLanguages($text){
 		$langs = qtranxf_getAvailableLanguages($text);
