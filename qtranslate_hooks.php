@@ -202,7 +202,6 @@ add_filter('the_permalink', 'qtranxf_convertURL');
 add_filter('feed_link', 'qtranxf_convertURL');
 add_filter('post_comments_feed_link', 'qtranxf_convertURL');
 add_filter('tag_feed_link', 'qtranxf_convertURL');
-add_filter('get_pagenum_link', 'qtranxf_convertURL');
 
 //add_filter('get_search_form', 'qtranxf_fixSearchForm', 10, 1);//no longer needed since we adjusted home_url()
 

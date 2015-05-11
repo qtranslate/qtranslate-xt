@@ -20,6 +20,9 @@
 // Exit if accessed directly
 if ( !defined( 'ABSPATH' ) ) exit;
 
+//if(file_exists(QTRANSLATE_DIR.'/front/qtx_front_slug.php'))
+//	require_once(QTRANSLATE_DIR.'/front/qtx_front_slug.php');
+
 function qtranxf_head(){
 	global $q_config;
 
@@ -707,6 +710,17 @@ function qtranxf_gettext_with_context($translated_text) {
 	//}
 	return qtranxf_use($q_config['language'], $translated_text, false);
 }
+
+/**
+ * @since 3.3.1
+ * Moved here from qtranslate_hooks.php and modified.
+*/
+function qtranxf_pagenum_link($url) {
+	//function qtranxf_gettext_with_context($translated_text, $text, $context, $domain) {
+	$url_fixed = preg_replace('#\?lang=[a-z]{2}/#i', '/', $url); //kind of ugly fix for function get_pagenum_link in /wp-includes/link-template.php. Maybe we should cancel filter 'bloginfo_url' instead?
+	return qtranxf_convertURL($url_fixed);
+}
+add_filter('get_pagenum_link', 'qtranxf_pagenum_link');
 
 //qtranxf_optionFilter();
 //add_filter('wp_head', 'qtranxf_add_css');
