@@ -1,4 +1,5 @@
 <?php
+if ( !defined( 'WP_ADMIN' ) ) exit;
 
 function qtranxf_updateGettextDatabases($force = false, $only_for_language = '') {
 	global $q_config;

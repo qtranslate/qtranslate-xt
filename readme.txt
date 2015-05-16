@@ -97,10 +97,18 @@ Developers: please drop new topics here, the text will be moved to [qTranslate-X
 
 ## Changelog ##
 
+### 3.3.2 ###
+* Feature: Meta-box 'LSB' for Language Switching Buttons, which can be placed anywhere on a page (not finished, just to test an idea on how it will look and work).
+* Feature: integration framework is finished in its first version as it is described in [Integration Guide](https://qtranslatexteam.wordpress.com/integration/). The configuration is now loadable from JSON files, which 3rd-party themes or plugins may generate.
+* Enhancement: pre-sets for option 'Highlight Style' are changed to use CSS property 'border' instead of 'box-shadow' and 'outline', otherwise the highlighting was not always visible, specifically when class 'widefat' is also in use.
+* Fix: visual mode misbehaviour in field 'Details' for events managed by plugin [Events Made Easy](https://wordpress.org/plugins/events-made-easy/) [Issue #152](https://github.com/qTranslate-Team/qtranslate-x/issues/152).
+
 ### 3.3.1 ###
 * Enhancement: added class attributes `qtranxs-available-language*` to the message about available languages to make it CSS-customizable: [WP Topic](https://wordpress.org/support/topic/translation-not-available-message-element-has-no-class).
 * Enhancement: `qtrans_getAvailableLanguages` added to "Compatibility Functions".
 * Enhancement: tabs on configuration page, thanks to [Pedro Mendonça](https://github.com/pedro-mendonca) for the idea and initial coding: [Issue #135 & #153](https://github.com/qTranslate-Team/qtranslate-x/pull/153).
+* Fix: pagination of posts under Query Mode of URL Modification (filter 'get_pagenum_link'): [Issue #155](https://github.com/qTranslate-Team/qtranslate-x/issues/155), [WP Topic](https://wordpress.org/support/topic/pagination-does-not-work-if-query-mode-used) and [WP Topic](https://wordpress.org/support/topic/navigation-problem-20).
+* Fix: locale 'ja_JP' changed back to 'ja' as this is what WordPress uses. Files lang/qtranslate-ja_JP.mo/po renamed to qtranslate-ja.mo/po.
 
 ### 3.3 stable ###
 * Includes all changes after version 3.2.9. Please, review [Release Notes](https://qtranslatexteam.wordpress.com/2015/03/30/release-notes-3-3).

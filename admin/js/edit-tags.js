@@ -1,5 +1,5 @@
 /* loaded in 
-	/wp-admin/edit-tag.php
+	/wp-admin/edit-tags.php
 */
 qTranslateConfig.js={
 	addContentHooks: function(qtx)
@@ -7,10 +7,10 @@ qTranslateConfig.js={
 		var form = document.getElementById('addtag');//AjaxForm
 		if(!form) return false;
 
-		var h=qtx.addContentHookByIdB('tag-name',form);
+		var h=qtx.addContentHookByIdB('tag-name');
 		if(!h) return false;
 
-		qtx.addContentHookByIdC('tag-description',form);
+		qtx.addContentHookByIdC('tag-description');
 
 		qtranxj_ce('input', {name: 'qtrans_term_field_name', type: 'hidden', className: 'hidden', value: h.name }, form, true);
 

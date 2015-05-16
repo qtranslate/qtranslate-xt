@@ -1,4 +1,6 @@
 <?php
+if ( !defined( 'ABSPATH' ) ) exit;
+
 if(!defined('QTRANS_INIT')){
 	define('QTRANS_INIT',true);
 }

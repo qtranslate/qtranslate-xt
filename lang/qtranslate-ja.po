@@ -449,7 +449,7 @@ msgid "For help on how to configure qTranslate correctly, take a look at the <a 
 msgstr "qTranslateを正しく設定する手伝いには、 <a href=\"%1$s\">qTranslate FAQ</a> あるいは <a href=\"%2$s\">サポートフォーラム</a>（英語のみ）へ問い合わせてください."
 
 #: admin/qtx_configuration.php:965
-msgid "General Settings"
+msgid "General"
 msgstr "一般設定"
 
 #: admin/qtx_configuration.php:968 admin/qtx_configuration.php:1004
@@ -532,7 +532,7 @@ msgid "When the frontpage is visited via bookmark/external link/type-in, the vis
 msgstr "ブックマーク/外部リンク/直接入力を通してトップページがアクセスされた場合、訪問者は、ブラウザで指定された言語の正しい URL に転送されます。"
 
 #: admin/qtx_configuration.php:1017
-msgid "Advanced Settings"
+msgid "Advanced"
 msgstr "詳細設定"
 
 #: admin/qtx_configuration.php:1024 admin/qtx_configuration.php:1026
@@ -828,7 +828,7 @@ msgid "The color in use is taken from your profile option %s, the third color."
 msgstr ""
 
 #: admin/qtx_configuration.php:1254
-msgid "Custom Integration"
+msgid "Integration"
 msgstr ""
 
 #: admin/qtx_configuration.php:1257

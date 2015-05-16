@@ -1,29 +1,53 @@
 <?php
-/*
-	Copyright 2014  qTranslate Team  (email : qTranslateTeam@gmail.com )
-
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 2 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
-	GNU General Public License for more details.
-
-	You should have received a copy of the GNU General Public License
-	along with this program; if not, write to the Free Software
-	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
-*/
-
-// Exit if accessed directly
 if ( !defined( 'ABSPATH' ) ) exit;
 
 //if(file_exists(QTRANSLATE_DIR.'/front/qtx_front_slug.php'))
 //	require_once(QTRANSLATE_DIR.'/front/qtx_front_slug.php');
 
-function qtranxf_head(){
+/**
+ * Response to action 'init', which runs after user is authenticated
+ * @since 3.3.2
+ */
+function qtranxf_init_front(){
+	global $q_config;
+	if($q_config['hide_untranslated']){
+		add_filter('wp_list_pages_excludes', 'qtranxf_excludePages');//moved here from _hooks.php since 3.2.8
+		add_filter('posts_where_request', 'qtranxf_excludeUntranslatedPosts',10,2);
+		add_filter('comments_clauses','qtranxf_excludeUntranslatedPostComments',10,2);
+	}
+	foreach($q_config['text_field_filters'] as $nm){
+		add_filter($nm, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage');
+	}
+
+	$q_config['front_config'] = apply_filters('qtranslate_load_front_page_config',$q_config['front_config']);
+	if(!empty($q_config['front_config'])){
+		foreach($q_config['front_config'] as $front_config){
+			//todo may be filtered by 'pages'
+			$filters = $front_config['filters'];
+			if(!empty($filters['text'])){
+				//qtranxf_dbg_log('$filters[text]: ',$filters['text']);
+				foreach($filters['text'] as $nm => $pr){
+					add_filter($nm, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', $pr);
+				}
+			}
+			if(!empty($filters['url'])){
+				//qtranxf_dbg_log('$filters[url]: ',$filters['url']);
+				foreach($filters['url'] as $nm => $pr){
+					add_filter($nm, 'qtranxf_convertURL', $pr);
+				}
+			}
+			if(!empty($filters['term'])){
+				//qtranxf_dbg_log('$filters[term]: ',$filters['term']);
+				foreach($filters['term'] as $nm => $pr){
+					add_filter($nm, 'qtranxf_useTermLib', $pr);
+				}
+			}
+		}
+	}
+}
+add_action('init','qtranxf_init_front');
+
+function qtranxf_wp_head(){
 	global $q_config;
 
 	if( $q_config['header_css_on'] ){
@@ -47,7 +71,7 @@ function qtranxf_head(){
 
 	//qtranxf_add_css();// since 3.2.5 no longer needed
 }
-add_action('wp_head', 'qtranxf_head');
+add_action('wp_head', 'qtranxf_wp_head');
 
 /*
 function qtranxf_remove_detached_children( $items )
@@ -711,6 +735,13 @@ function qtranxf_gettext_with_context($translated_text) {
 	return qtranxf_use($q_config['language'], $translated_text, false);
 }
 
+//function qtranxf_ngettext($translation, $single, $plural, $number, $domain) {
+function qtranxf_ngettext($translated_text) {
+	//same as qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage
+	global $q_config;
+	return qtranxf_use($q_config['language'], $translated_text, false);
+}
+
 /**
  * @since 3.3.1
  * Moved here from qtranslate_hooks.php and modified.
@@ -728,7 +759,9 @@ add_filter('get_pagenum_link', 'qtranxf_pagenum_link');
 // Hooks (execution time critical filters)
 add_filter('gettext', 'qtranxf_gettext',0);
 add_filter('gettext_with_context', 'qtranxf_gettext_with_context',0);
+add_filter('ngettext', 'qtranxf_ngettext',0);
 
+/* //moved to qTranslateX.json
 // Compability with Default Widgets
 add_filter('widget_title', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
 add_filter('widget_text', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
@@ -741,6 +774,19 @@ add_filter('get_comment_author', 'qtranxf_useCurrentLanguageIfNotFoundUseDefault
 add_filter('the_author', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
 add_filter('tml_title', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
 
+/ **
+ * @since 3.2
+ * wp-includes\category-template.php:1230 calls:
+ * $description = get_term_field( 'description', $term, $taxonomy );
+ *
+ * which calls wp-includes\taxonomy.php:1503
+ * return sanitize_term_field($field, $term->$field, $term->term_id, $taxonomy, $context);
+ *
+ * which calls wp-includes\taxonomy.php:2276:
+ * apply_filters( "term_{$field}", $value, $term_id, $taxonomy, $context );
+* /
+add_filter('term_description', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
+
 // translate terms
 add_filter('cat_row', 'qtranxf_useTermLib',0);
 add_filter('cat_rows', 'qtranxf_useTermLib',0);
@@ -751,16 +797,6 @@ add_filter('the_category', 'qtranxf_useTermLib',0);
 add_filter('get_term', 'qtranxf_useTermLib',0);
 add_filter('get_terms', 'qtranxf_useTermLib',0);
 add_filter('get_category', 'qtranxf_useTermLib',0);
+// */
 
-/**
- * @since 3.2
- * wp-includes\category-template.php:1230 calls:
- * $description = get_term_field( 'description', $term, $taxonomy );
- *
- * which calls wp-includes\taxonomy.php:1503
- * return sanitize_term_field($field, $term->$field, $term->term_id, $taxonomy, $context);
- *
- * which calls wp-includes\taxonomy.php:2276:
- * apply_filters( "term_{$field}", $value, $term_id, $taxonomy, $context );
-*/
-add_filter('term_description', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
+

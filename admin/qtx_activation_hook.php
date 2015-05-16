@@ -1,26 +1,24 @@
-<?php // encoding: utf-8
-/*
-	Copyright 2014  qTranslate Team  (email : qTranslateTeam@gmail.com )
-
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 2 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
-	GNU General Public License for more details.
-
-	You should have received a copy of the GNU General Public License
-	along with this program; if not, write to the Free Software
-	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
-*/
+<?php
+if ( !defined( 'WP_ADMIN' ) ) exit;
 
 function qtranxf_version_int() {
 	$ver = str_replace('.','',QTX_VERSION);
 	while(strlen($ver) < 5) $ver.='0';
 	return intval($ver);
+}
+
+/**
+ * Save language properties from configuration $cfg to database
+ * @since 3.3
+ */
+function qtranxf_save_languages($cfg)
+{
+	global $qtranslate_options;
+	foreach($qtranslate_options['languages'] as $nm => $opn){
+		if(empty($cfg[$nm])) delete_option($opn);
+		else update_option($opn,$cfg[$nm]);
+	}
+	return $cfg;
 }
 
 /**
@@ -64,6 +62,115 @@ function qtranxf_default_default_language()
 	update_option('qtranslate_enabled_languages',$enabled_languages);
 	update_option('qtranslate_default_language',$default_language);
 	return $default_language;
+}
+
+/**
+ * @since 3.3.2
+ */
+function qtranxf_load_config_files($json_files){
+	$content_dir = null;
+	$qtransx_dir = null;
+	foreach($json_files as $k => $fnm){
+		//$fnm = trim($v,'/\\');
+		if(file_exists($fnm)) continue;
+		$ffnm = null;
+		if($fnm[0] == '.' && $fnm[1] == '/'){
+			if(!$qtransx_dir) $qtransx_dir = QTRANSLATE_DIR;
+			$ffnm = $qtransx_dir.substr($fnm,1);
+		}
+		if(!file_exists($ffnm)){
+			if(!$content_dir) $content_dir = trailingslashit(WP_CONTENT_DIR);
+			$ffnm = $content_dir.$fnm;
+		}
+		if(file_exists($ffnm)){
+			$json_files[$k] = $ffnm;
+		}else{
+			qtranxf_error_log(sprintf(__('Could not find file "%s" listed in option "%s".', 'qtranslate'), $fnm, __('Configuration Files', 'qtranslate')));
+			unset($json_files[$k]);
+		}
+	}
+
+	//$cfg_admin = array();
+	//$cfg_front = array();
+	$cfg_all = array();
+	foreach($json_files as $fnm){
+		$cfg_json=file_get_contents($fnm);
+		//$cfg_json=php_strip_whitespace($fnm);
+		if($cfg_json){
+			$cfg=json_decode($cfg_json,true);
+			if($cfg){
+				$cfg_all = array_merge_recursive($cfg_all,$cfg);
+				//if(isset($cfg['admin-config'])) $cfg_admin = array_merge_recursive($cfg_admin,$cfg['admin-config']);
+				//if(isset($cfg['front-config'])) $cfg_front = array_merge_recursive($cfg_front,$cfg['front-config']);
+			}else{
+				qtranxf_error_log(sprintf(__('Could not parse %s file "%s" listed in option "%s".', 'qtranslate'), 'JSON', $fnm, __('Configuration Files', 'qtranslate')));
+			}
+		}else{
+			qtranxf_error_log(sprintf(__('Could not load file "%s" listed in option "%s".', 'qtranslate'), $fnm, __('Configuration Files', 'qtranslate')));
+		}
+	}
+	return $cfg_all;
+}
+
+/**
+ * @since 3.3.2
+ */
+function qtranxf_default_front_config(){
+	$json_files = get_option('qtranslate_config_files', array('./qTranslateX.json'));
+	$cfg = qtranxf_load_config_files($json_files);
+	$cfg_front = isset($cfg['front-config']) ? $cfg['front-config'] : array();
+	return $cfg_front;
+}
+
+function qtranxf_activation_hook()
+{
+	//global $q_config;
+
+	// Check if other qTranslate forks are activated.
+	if ( is_plugin_active( 'mqtranslate/mqtranslate.php' ) )
+		qtranxf_admin_notice_deactivate_plugin('mqTranslate','mqtranslate/mqtranslate.php');
+
+	if ( is_plugin_active( 'qtranslate/qtranslate.php' ) )
+		qtranxf_admin_notice_deactivate_plugin('qTranslate','qtranslate/qtranslate.php');
+
+	if ( is_plugin_active( 'qtranslate-xp/ppqtranslate.php' ) )
+		qtranxf_admin_notice_deactivate_plugin('qTranslate Plus','qtranslate-xp/ppqtranslate.php');
+
+	if ( is_plugin_active( 'ztranslate/ztranslate.php' ) )
+		qtranxf_admin_notice_deactivate_plugin('zTranslate','ztranslate/ztranslate.php');
+
+	//deactivate_plugins(plugin_basename(QTRANSLATE_FILE)); // Deactivate ourself
+
+	if(get_option('qtranslate_front_config')===false){
+		//option 'front_config' must exist in order for front-end to function properly
+		$front_config = qtranxf_default_front_config();
+		update_option('qtranslate_front_config', $front_config);
+	}
+
+	$next_thanks = get_option('qtranslate_next_thanks');
+	if($next_thanks !== false && $next_thanks < time()+7*24*60*60){
+		$next_thanks = time() + rand(10,20)*24*60*60;
+		update_option('qtranslate_next_thanks', $next_thanks);
+	}
+	$messages = qtranxf_update_admin_notice('next_thanks');
+
+	$default_language = get_option('qtranslate_default_language');
+	$first_install = $default_language===false;
+	if($first_install){
+		qtranxf_default_default_language();
+		$ver = qtranxf_version_int();
+		update_option('qtranslate_version_previous', $ver);
+	}else{
+		$ver = get_option('qtranslate_version_previous');
+		if(!$ver) update_option('qtranslate_version_previous', 29000);
+
+		if(!isset($messages['initial-install'])){
+			$messages = qtranxf_update_option_admin_notices($messages,'initial-install');
+		}
+	}
+
+	$f=WP_CONTENT_DIR.'/debug-qtranslate.log';
+	if(file_exists($f)) unlink($f);
 }
 
 function qtranxf_admin_notice_first_install(){
@@ -110,51 +217,6 @@ function qtranxf_admin_notice_deactivate_plugin($nm,$plugin)
 	//$msg=sprintf(__('Plugin %s cannot run concurrently with %s, please %sdeactivate %s%s. You may import compatible settings from %s to %s on Settings/Languages configuration page, once %s is running.','qtranslate'),$qtxlink,$link,'<a href="'.admin_url('plugins.php?action=deactivate&plugin='.encode($plugin).'&plugin_status=all&paged=1&s&_wpnonce='.$nonce.'">',$nm,'</a>',$nm,$qtxnm,$qtxnm);
 	//$msg=sprintf(__('Activation of plugin %s deactivated plugin %s since they cannot run simultaneously. You may import compatible settings from %s to %s on Settings/%sLanguages%s configuration page, once %s is running.%sContinue%s','qtranslate'),$qtxlink,$link,$nm,$qtxnm,'<a href="'.admin_url('/options-general.php?page=qtranslate-x').'">','</a>',$qtxnm,'</p><p><a  class="button" href="">','</a>');
 	wp_die('<p>'.$msg.'</p>');
-}
-
-function qtranxf_activation_hook()
-{
-	//global $q_config;
-
-	// Check if other qTranslate forks are activated.
-	if ( is_plugin_active( 'mqtranslate/mqtranslate.php' ) )
-		qtranxf_admin_notice_deactivate_plugin('mqTranslate','mqtranslate/mqtranslate.php');
-
-	if ( is_plugin_active( 'qtranslate/qtranslate.php' ) )
-		qtranxf_admin_notice_deactivate_plugin('qTranslate','qtranslate/qtranslate.php');
-
-	if ( is_plugin_active( 'qtranslate-xp/ppqtranslate.php' ) )
-		qtranxf_admin_notice_deactivate_plugin('qTranslate Plus','qtranslate-xp/ppqtranslate.php');
-
-	if ( is_plugin_active( 'ztranslate/ztranslate.php' ) )
-		qtranxf_admin_notice_deactivate_plugin('zTranslate','ztranslate/ztranslate.php');
-
-	//deactivate_plugins(plugin_basename(__FILE__)); // Deactivate ourself
-
-	$next_thanks = get_option('qtranslate_next_thanks');
-	if($next_thanks !== false && $next_thanks < time()+7*24*60*60){
-		$next_thanks = time() + rand(10,20)*24*60*60;
-		update_option('qtranslate_next_thanks', $next_thanks);
-	}
-	$messages = qtranxf_update_admin_notice('next_thanks');
-
-	$default_language = get_option('qtranslate_default_language');
-	$first_install = $default_language===false;
-	if($first_install){
-		qtranxf_default_default_language();
-		$ver = qtranxf_version_int();
-		update_option('qtranslate_version_previous', $ver);
-	}else{
-		$ver = get_option('qtranslate_version_previous');
-		if(!$ver) update_option('qtranslate_version_previous', 29000);
-
-		if(!isset($messages['initial-install'])){
-			$messages = qtranxf_update_option_admin_notices($messages,'initial-install');
-		}
-	}
-
-	$f=WP_CONTENT_DIR.'/debug-qtranslate.log';
-	if(file_exists($f)) unlink($f);
 }
 
 function qtranxf_admin_notices_version()

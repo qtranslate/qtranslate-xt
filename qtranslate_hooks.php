@@ -1,23 +1,4 @@
-<?php // encoding: utf-8
-/*
-	Copyright 2014  qTranslate Team  (email : qTranslateTeam@gmail.com )
-
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 2 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
-	GNU General Public License for more details.
-
-	You should have received a copy of the GNU General Public License
-	along with this program; if not, write to the Free Software
-	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
-*/
-
-// Exit if accessed directly
+<?php
 if ( !defined( 'ABSPATH' ) ) exit;
 
 /* qTranslate-X Hooks */
@@ -122,7 +103,6 @@ add_filter( 'wp_trim_words', 'qtranxf_trim_words', 0, 4);
 // add_action('category_add_form', 'qtranxf_modifyTermFormFor');
 // add_action('post_tag_add_form', 'qtranxf_modifyTermFormFor');
 // add_action('link_category_add_form', 'qtranxf_modifyTermFormFor');
-add_action('init', 'qtranxf_init');//user is authenticated
 add_action('widgets_init', 'qtranxf_widget_init');
 
 
@@ -153,6 +133,8 @@ add_filter('get_the_date', 'qtranxf_dateFromPostForCurrentLanguage',0,3);
 add_filter('get_the_modified_date', 'qtranxf_dateModifiedFromPostForCurrentLanguage',0,2);
 
 add_filter('locale', 'qtranxf_localeForCurrentLanguage',99);
+add_filter('core_version_check_locale', 'qtranxf_versionLocale');
+
 //add_filter('the_title', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', 0);//WP: fires for display purposes only
 add_filter('post_title', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', 0);
 add_filter('tag_rows', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
@@ -178,16 +160,20 @@ add_filter('link_name', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage'
 add_filter('link_description', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
 add_filter('the_author', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
 
+add_filter('comment_notification_text', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage');
+add_filter('comment_notification_headers', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage');
+add_filter('comment_notification_subject', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage');
+
 add_filter('pre_option_rss_language', 'qtranxf_getLanguage',0);
 
 add_filter('_wp_post_revision_field_post_title', 'qtranxf_showAllSeparated', 0);
 add_filter('_wp_post_revision_field_post_content', 'qtranxf_showAllSeparated', 0);
 add_filter('_wp_post_revision_field_post_excerpt', 'qtranxf_showAllSeparated', 0);
 
-// // Hooks (execution time non-critical filters) 
+/* moved to qTranslateX.json for front-end only
+// Hooks (execution time non-critical filters) 
 add_filter('author_feed_link', 'qtranxf_convertURL');
 add_filter('author_link', 'qtranxf_convertURL');
-add_filter('author_feed_link', 'qtranxf_convertURL');
 add_filter('day_link', 'qtranxf_convertURL');
 add_filter('get_comment_author_url_link', 'qtranxf_convertURL');
 add_filter('month_link', 'qtranxf_convertURL');
@@ -202,11 +188,6 @@ add_filter('the_permalink', 'qtranxf_convertURL');
 add_filter('feed_link', 'qtranxf_convertURL');
 add_filter('post_comments_feed_link', 'qtranxf_convertURL');
 add_filter('tag_feed_link', 'qtranxf_convertURL');
+*/
 
 //add_filter('get_search_form', 'qtranxf_fixSearchForm', 10, 1);//no longer needed since we adjusted home_url()
-
-add_filter('comment_notification_text', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage');
-add_filter('comment_notification_headers', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage');
-add_filter('comment_notification_subject', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage');
-
-add_filter('core_version_check_locale', 'qtranxf_versionLocale');

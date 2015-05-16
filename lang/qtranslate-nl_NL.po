@@ -635,7 +635,7 @@ msgstr ""
 "\">qTranslate FAQ</a> en het <a href=\"%2$s\">Support Forum</a>."
 
 #: admin/qtx_configuration.php:965
-msgid "General Settings"
+msgid "General"
 msgstr "Standaard Instellingen"
 
 #: admin/qtx_configuration.php:968 admin/qtx_configuration.php:1004
@@ -783,7 +783,7 @@ msgstr ""
 "door de browser is ingesteld."
 
 #: admin/qtx_configuration.php:1017
-msgid "Advanced Settings"
+msgid "Advanced"
 msgstr "Geavanceerde Instellingen"
 
 #: admin/qtx_configuration.php:1024 admin/qtx_configuration.php:1026
@@ -1197,7 +1197,7 @@ msgstr ""
 "De gebruikte kleur is afkomstig uit je profiel optie %s, de derde kleur."
 
 #: admin/qtx_configuration.php:1254
-msgid "Custom Integration"
+msgid "Integration"
 msgstr "Aangepaste integratie"
 
 #: admin/qtx_configuration.php:1257

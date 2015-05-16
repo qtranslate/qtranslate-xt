@@ -1,4 +1,6 @@
 <?php
+if ( !defined( 'ABSPATH' ) ) exit;
+
 /* There is no need to edit anything here! */
 define('QTX_STRING',	1);
 define('QTX_BOOLEAN',	2);
@@ -84,6 +86,7 @@ function qtranxf_set_default_options(&$ops)
 	$ops['front']['array']=array(
 		//'term_name'// uniquely special treatment
 		'text_field_filters' => array(),
+		'front_config' => array(),
 	);
 
 	//options processed in a special way
@@ -192,7 +195,7 @@ function qtranxf_default_locale()
 	$cfg['it'] = 'it_IT';
 	$cfg['ro'] = 'ro_RO';
 	$cfg['hu'] = 'hu_HU';
-	$cfg['ja'] = 'ja_JP';
+	$cfg['ja'] = 'ja';
 	$cfg['es'] = 'es_ES';
 	$cfg['vi'] = 'vi';
 	$cfg['ar'] = 'ar';
@@ -585,30 +588,4 @@ function qtranxf_load_languages_enabled()
 	//foreach($q_config['enabled_languages'] as $lang){
 	//	$q_config['windows_locale'][$lang] = $locales[$lang];
 	//}
-}
-
-/**
- * Load enabled languages properties from  database
- * @since 3.3
- */
-function qtranxf_default_lsb_style_wrap_class()
-{
-	global $q_config;
-	switch($q_config['lsb_style']){
-		case 'Tabs_in_Block.css': return 'qtranxs-lang-switch-wrap wp-ui-primary';
-		default: return 'qtranxs-lang-switch-wrap';
-	}
-}
-
-/**
- * Load enabled languages properties from  database
- * @since 3.3
- */
-function qtranxf_default_lsb_style_active_class()
-{
-	global $q_config;
-	switch($q_config['lsb_style']){
-		case 'Tabs_in_Block.css': return 'wp-ui-highlight';
-		default: return 'active';
-	}
 }

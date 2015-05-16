@@ -446,7 +446,7 @@ msgid "For help on how to configure qTranslate correctly, take a look at the <a 
 msgstr "Untuk bantuan bagaimana cara mengkonfigurasikan qTranslate dengan benar, kunjungi <a href=\"%1$s\">qTranslate FAQ</a> dan <a href=\"%2$s\">Forum Diskusi</a>."
 
 #: admin/qtx_configuration.php:965
-msgid "General Settings"
+msgid "General"
 msgstr "Pengaturan Umum"
 
 #: admin/qtx_configuration.php:968 admin/qtx_configuration.php:1004
@@ -529,7 +529,7 @@ msgid "When the frontpage is visited via bookmark/external link/type-in, the vis
 msgstr "Ketika halaman depan dikunjungi melalui bookmark/link eksternal/pengetikan, pengunjung akan diarahkan ke URL yang benar untuk bahasa yang ditentukan oleh browsernya."
 
 #: admin/qtx_configuration.php:1017
-msgid "Advanced Settings"
+msgid "Advanced"
 msgstr "Pengaturan Lanjut"
 
 #: admin/qtx_configuration.php:1024 admin/qtx_configuration.php:1026
@@ -825,7 +825,7 @@ msgid "The color in use is taken from your profile option %s, the third color."
 msgstr ""
 
 #: admin/qtx_configuration.php:1254
-msgid "Custom Integration"
+msgid "Integration"
 msgstr ""
 
 #: admin/qtx_configuration.php:1257

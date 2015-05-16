@@ -1,7 +1,7 @@
 <?php
+if ( !defined( 'WP_ADMIN' ) ) exit;
 
-function qtranxf_admin_set_default_options(&$ops)
-{
+function qtranxf_admin_set_default_options(&$ops){
 	//options processed in a standardized way
 	$ops['admin'] = array();
 
@@ -28,6 +28,8 @@ function qtranxf_admin_set_default_options(&$ops)
 	);
 
 	$ops['admin']['array']=array(
+		'config_files' => './qTranslateX.json',
+		'page_configs' => 'qtranxf_default_page_configs',
 		'custom_fields' => array(),
 		'custom_field_classes' => array(),
 		'custom_pages' => array(),
@@ -35,6 +37,51 @@ function qtranxf_admin_set_default_options(&$ops)
 	);
 
 	//options processed in a special way
+}
+
+/**
+ * Load 'page_configs' from *.json files listed in option 'config_files'.
+ * @since 3.3.1
+ */
+function qtranxf_default_page_configs(){
+	global $q_config;
+	$json_files = $q_config['config_files'];
+	$cfg = qtranxf_load_config_files($json_files);
+	if(empty($cfg)) return array();
+	if(current_user_can('manage_options')){
+		$cfg_front = isset($cfg['front-config']) ? $cfg['front-config'] : array();
+		if($q_config['front_config'] !== $cfg_front){
+			$q_config['front_config'] = $cfg_front;
+			qtranxf_update_option('front_config');
+		}
+	}
+	return $cfg['admin-config'];
+}
+
+/**
+ * Load enabled languages properties from  database
+ * @since 3.3
+ */
+function qtranxf_default_lsb_style_wrap_class()
+{
+	global $q_config;
+	switch($q_config['lsb_style']){
+		case 'Tabs_in_Block.css': return 'qtranxs-lang-switch-wrap wp-ui-primary';
+		default: return 'qtranxs-lang-switch-wrap';
+	}
+}
+
+/**
+ * Load enabled languages properties from  database
+ * @since 3.3
+ */
+function qtranxf_default_lsb_style_active_class()
+{
+	global $q_config;
+	switch($q_config['lsb_style']){
+		case 'Tabs_in_Block.css': return 'wp-ui-highlight';
+		default: return 'active';
+	}
 }
 
 function qtranxf_admin_loadConfig()
@@ -72,13 +119,13 @@ function qtranxf_admin_loadConfig()
 */
 	$q_config['admin_sections'] = array();
 	$admin_sections = &$q_config['admin_sections'];
-	$admin_sections['general'] = __('General Settings', 'qtranslate');
-	$admin_sections['advanced'] = __('Advanced Settings', 'qtranslate');
-	$admin_sections['integration'] = __('Custom Integration', 'qtranslate');
-	$admin_sections['import'] = __('Import', 'qtranslate').'/'.__('Export', 'qtranslate');
+	$admin_sections['general'] = __('General', 'qtranslate');//General Settings
+	$admin_sections['advanced'] = __('Advanced', 'qtranslate');//Advanced Settings
+	$admin_sections['integration'] = __('Integration', 'qtranslate');//Custom Integration
 
 	do_action('qtranslate_admin_loadConfig');
 
+	$admin_sections['import'] = __('Import', 'qtranslate').'/'.__('Export', 'qtranslate');
 	$admin_sections['languages'] = __('Languages', 'qtranslate');//always last section
 
 	qtranxf_add_admin_filters();
@@ -129,13 +176,17 @@ add_action('qtranslate_saveConfig','qtranxf_reset_config',20);
 
 function qtranxf_update_option( $nm, $default_value=null ) {
 	global $q_config;
-	if( !isset($q_config[$nm]) || $q_config[$nm] === '' ){
+	if( !isset($q_config[$nm]) || ( !is_integer($q_config[$nm]) && empty($q_config[$nm]) ) ){
 		delete_option('qtranslate_'.$nm);
 		return;
 	}
 	if(!is_null($default_value)){
-		if(is_string($default_value) && function_exists($default_value)){
-			$default_value = call_user_func($default_value);
+		if(is_string($default_value)){
+			if(function_exists($default_value)){
+				$default_value = call_user_func($default_value);
+			}elseif(is_array($q_config[$nm])){
+				$default_value = preg_split('/[\s,]+/',$default_value,null,PREG_SPLIT_NO_EMPTY);
+			}
 		}
 		if( $default_value===$q_config[$nm] ){
 			delete_option('qtranslate_'.$nm);
@@ -165,7 +216,9 @@ function qtranxf_update_option_bool( $nm, $default_value=null ) {
 	}
 }
 
-// saves entire configuration - it should be in admin only?
+/**
+ * saves entire configuration
+ */
 function qtranxf_saveConfig() {
 	global $q_config, $qtranslate_options;
 
@@ -299,11 +352,17 @@ function qtranxf_updateSetting($var, $type = QTX_STRING, $def = null) {
 			qtranxf_update_option($var, $def);
 			return true;
 		case QTX_ARRAY:
-			if(is_array($_POST[$var])){
-				$val = $_POST[$var];
-			}else{
-				$val = sanitize_text_field($_POST[$var]);
-				$val=preg_split('/[\s,]+/',$val,null,PREG_SPLIT_NO_EMPTY);
+			$val = $_POST[$var];
+			if(!is_array($_POST[$var])){
+				$val = sanitize_text_field($val);
+				$val = preg_split('/[\s,]+/',$val,null,PREG_SPLIT_NO_EMPTY);
+			}
+			if(empty($val) && !is_null($def)){
+				if(is_string($def)){
+					$val = preg_split('/[\s,]+/',$def,null,PREG_SPLIT_NO_EMPTY);
+				}else if(is_array($def)){
+					$val = $def;
+				}
 			}
 			if( isset($q_config[$var]) && qtranxf_array_compare($q_config[$var],$val) ) return false;
 			$q_config[$var] = $val;
@@ -393,6 +452,7 @@ function qtranxf_parse_post_type_excluded() {
 function qtranxf_updateSettings()
 {
 	global $qtranslate_options, $q_config;
+	$errors = array();
 	// update front settings
 
 	qtranxf_updateSetting('default_language', QTX_LANGUAGE);
@@ -447,6 +507,20 @@ function qtranxf_updateSettings()
 	// update admin settings
 
 	//special cases handling
+
+	if(isset($_POST['json_page_configs'])){
+		$cfg_json = sanitize_text_field(stripslashes($_POST['json_page_configs']));
+		if(empty($cfg_json)){
+			$_POST['page_configs'] = array();
+		}else{
+			$cfg = json_decode($cfg_json,true);
+			if($cfg){
+				$_POST['page_configs'] = $cfg;
+			}else{
+				$errors[] = sprintf(__('Cannot parse JSON code in the field "%s".', 'qtranslate'), __('Page Configurations', 'qtranslate'));
+			}
+		}
+	}
 	if($_POST['highlight_mode'] != QTX_HIGHLIGHT_MODE_CUSTOM_CSS){
 		$_POST['highlight_mode_custom_css'] = '';
 	}
@@ -480,4 +554,6 @@ function qtranxf_updateSettings()
 	foreach($qtranslate_options['admin']['array'] as $nm => $def){
 		qtranxf_updateSetting($nm, QTX_ARRAY, $def);
 	}
+
+	return $errors;
 }

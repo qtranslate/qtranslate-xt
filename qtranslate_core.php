@@ -1,23 +1,4 @@
-<?php // encoding: utf-8
-/*
-	Copyright 2014  qTranslate Team  (email : qTranslateTeam@gmail.com )
-
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 2 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
-	GNU General Public License for more details.
-
-	You should have received a copy of the GNU General Public License
-	along with this program; if not, write to the Free Software
-	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
-*/
-
-// Exit if accessed directly
+<?php
 if ( !defined( 'ABSPATH' ) ) exit;
 
 function qtranxf_init_language() {
@@ -468,39 +449,30 @@ function qtranxf_load_option_qtrans_compatibility(){
 	require_once(dirname(__FILE__).'/qtranslate_compatibility.php');
 }
 
+/* //use action 'init' in front-end and/or action 'admin_init' admin-end accordingly
+ * Response to action 'init', which runs after user is authenticated
+ * /
 function qtranxf_init() {
 	global $q_config;
 
 	do_action('qtranslate_init_begin');
 
-/*
-	// Check for WP Secret Key Mismatch
-	global $wp_default_secret_key;
-	if(strpos($q_config['url_info']['url'],'wp-login.php')!==false && defined('AUTH_KEY') && isset($wp_default_secret_key) && $wp_default_secret_key != AUTH_KEY) {
-		global $error;
-		$error = __('Your $wp_default_secret_key is mismatching with your AUTH_KEY. This might cause you not to be able to login anymore.', 'qtranslate');
-	}
-*/
+	//// Check for WP Secret Key Mismatch
+	//global $wp_default_secret_key;
+	//if(strpos($q_config['url_info']['url'],'wp-login.php')!==false && defined('AUTH_KEY') && isset($wp_default_secret_key) && $wp_default_secret_key != AUTH_KEY) {
+	//	global $error;
+	//	$error = __('Your $wp_default_secret_key is mismatching with your AUTH_KEY. This might cause you not to be able to login anymore.', 'qtranslate');
+	//}
 
-	// load plugin translations
-	// since 3.2-b3 moved to qtranxf_init_language
-	//load_plugin_textdomain('qtranslate', false, dirname(plugin_basename( __FILE__ )).'/lang');
 
-	if($q_config['url_info']['doing_front_end']){
-		// don't filter untranslated posts in admin
-		if($q_config['hide_untranslated']){
-			add_filter('wp_list_pages_excludes', 'qtranxf_excludePages');//moved here from _hooks.php since 3.2.8
-			add_filter('posts_where_request', 'qtranxf_excludeUntranslatedPosts',10,2);
-			add_filter('comments_clauses','qtranxf_excludeUntranslatedPostComments',10,2);
-		}
-		foreach($q_config['text_field_filters'] as $nm){
-			add_filter($nm, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage');
-		}
-	}
-
+	//if($q_config['url_info']['doing_front_end']){
+	//	do_action('qtranslate_init_front');
+	//}
 	//allow other plugins to initialize whatever they need for qTranslate
 	do_action('qtranslate_init');
 }
+add_action('init', 'qtranxf_init');//user is authenticated
+*/
 
 function qtranxf_front_header_css_default()
 {
@@ -569,8 +541,13 @@ function qtranxf_load_option_array($nm, $default_value=null) {
 	$vals = get_option('qtranslate_'.$nm);
 	if($vals === FALSE){
 		if(is_null($default_value)) return;
-		if(is_string($default_value)) $vals = preg_split('/[\s,]+/',$default_value,null,PREG_SPLIT_NO_EMPTY);
-		else if(is_array($default_value)) $vals = $default_value;
+		if(is_string($default_value)){
+			if(function_exists($default_value)){
+				$vals = call_user_func($default_value);
+			}else{
+				$vals = preg_split('/[\s,]+/',$default_value,null,PREG_SPLIT_NO_EMPTY);
+			}
+		}else if(is_array($default_value)) $vals = $default_value;
 	}
 	if(!is_array($vals)) return;
 
@@ -807,7 +784,7 @@ function qtranxf_timeFromCommentForCurrentLanguage($old_date, $format = '', $gmt
 
 /* END DATE TIME FUNCTIONS */
 
-if (!function_exists('qtranxf_useTermLib')){
+//if (!function_exists('qtranxf_useTermLib')){
 function qtranxf_useTermLib($obj) {
 	global $q_config;
 	if(is_array($obj)) {
@@ -829,7 +806,7 @@ function qtranxf_useTermLib($obj) {
 	}
 	return $obj;
 }
-}
+//}
 
 // check if it is a link to an ignored file type
 function qtranxf_ignored_file_type($path) {
@@ -973,7 +950,6 @@ function qtranxf_url_set_language($urlinfo,$lang,$showLanguage) {
 function qtranxf_get_url_for_language($url, $lang, $showLanguage=true) {
 	global $q_config;
 	static $url_cache=array();
-	//qtranxf_dbg_log('called: qtranxf_get_url_for_language('.$lang.($showLanguage?', true':', false').'): url=',$url,false);
 	//qtranxf_dbg_log('qtranxf_get_url_for_language: $url_cache:',$url_cache);
 	if(!isset($url_cache[$url])) $url_cache[$url] = array();
 	$urlinfo = &$url_cache[$url];

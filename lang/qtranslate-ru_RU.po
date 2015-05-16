@@ -456,7 +456,7 @@ msgid "For help on how to configure qTranslate correctly, take a look at the <a 
 msgstr "Для получения справки о том, как настроить qTranslate правильно, посмотрите <a href=\"%1$s\">qTranslate FAQ</a> и <a href=\"%2$s\">форум</a>."
 
 #: admin/qtx_configuration.php:965
-msgid "General Settings"
+msgid "General"
 msgstr "Общие настройки"
 
 #: admin/qtx_configuration.php:968 admin/qtx_configuration.php:1004
@@ -538,7 +538,7 @@ msgid "When the frontpage is visited via bookmark/external link/type-in, the vis
 msgstr "Когда главная страница посещается через закладки/внешние ссылки/type-in, посетитель будет направлен на правильный URL для языка, указанный в его браузере."
 
 #: admin/qtx_configuration.php:1017
-msgid "Advanced Settings"
+msgid "Advanced"
 msgstr "Дополнительные настройки"
 
 #: admin/qtx_configuration.php:1024 admin/qtx_configuration.php:1026
@@ -835,7 +835,7 @@ msgstr ""
 
 #: admin/qtx_configuration.php:1254
 #, fuzzy
-msgid "Custom Integration"
+msgid "Integration"
 msgstr "Пользовательские фильтры"
 
 #: admin/qtx_configuration.php:1257

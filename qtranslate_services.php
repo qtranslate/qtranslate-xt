@@ -1,23 +1,4 @@
-<?php // encoding: utf-8
-/*
-	Copyright 2014  qTranslate Team  (email : qTranslateTeam@gmail.com )
-
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 2 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
-	GNU General Public License for more details.
-
-	You should have received a copy of the GNU General Public License
-	along with this program; if not, write to the Free Software
-	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
-*/
-
-// Exit if accessed directly
+<?php
 if ( !defined( 'ABSPATH' ) ) exit;
 
 /* qTranslate Services */
@@ -346,7 +327,7 @@ function qts_translate_box($post) {
 		if($language!=$from) $to = $language;
 		if(isset($_REQUEST['post'])) {
 ?>
-			<li><img src="<?php echo qtranxf_flag_location().$q_config['flag'][$language]; ?>" alt="<?php echo $q_config['language_name'][$language]; ?>"> <a href="edit.php?page=qtranslate_services&post=<?php echo intval($_REQUEST['post']); ?>&target_language=<?php echo $language; ?>"><?php echo $q_config['language_name'][$language]; ?> <span class="qsprice"></span></a></li>
+			<li><img src="<?php echo qtranxf_flag_location().$q_config['flag'][$language]; ?>" alt="<?php echo $q_config['language_name'][$language]; ?>"> <a href="edit.php?page=qtranslate_services&post=<?php echo intval($_REQUEST['post']) ?>&target_language=<?php echo $language; ?>"><?php echo $q_config['language_name'][$language]; ?> <span class="qsprice"></span></a></li>
 <?php
 		} else {
 			echo '<li>'.__('Please save your post first.','qtranslate').'</li>';
@@ -364,7 +345,7 @@ function qts_translate_box($post) {
 			translate_from: '<?php echo $from; ?>',
 			translate_to: '<?php echo $to; ?>',
 			service_id: 5, 
-			post_id: '<?php echo intval($_REQUEST['post']); ?>'}, 
+			post_id: '<?php echo intval($_REQUEST['post']) ?>'}, 
 			function(response) {
 				eval(response);
 		})
@@ -394,9 +375,9 @@ function qts_config_hook($request_uri) {
 		<th scope="row"><?php _e('qTranslate Services', 'qtranslate') ?></th>
 		<td>
 			<?php if($q_config['qtranslate_services'] && !qts_isOpenSSLAvailable()) { printf(__('<div id="message" class="error fade"><p>qTranslate Services could not load <a href="%s">OpenSSL</a>!</p></div>'), 'http://www.php.net/manual/book.openssl.php'); } ?>
-			<label for="qtranslate_services"><input type="checkbox" name="qtranslate_services" id="qtranslate_services" value="1"<?php checked($q_config['qtranslate_services']); ?>/> <?php _e('Enable qTranslate Services', 'qtranslate'); ?></label>
+			<label for="qtranslate_services"><input type="checkbox" name="qtranslate_services" id="qtranslate_services" value="1"<?php checked($q_config['qtranslate_services']) ?>/> <?php _e('Enable qTranslate Services', 'qtranslate') ?></label>
 			<br/>
-			<small><?php _e('With qTranslate Services, you will be able to use professional human translation services with a few clicks.', 'qtranslate'); ?></small>
+			<small><?php _e('With qTranslate Services, you will be able to use professional human translation services with a few clicks.', 'qtranslate') ?></small>
 		</td>
 	</tr>
 <?php 
@@ -406,19 +387,19 @@ function qts_config_hook($request_uri) {
 		$orders = get_option('qts_orders');
 ?>
 	<tr valign="top">
-		<th scope="row"><h4><?php _e('Open Orders', 'qtranslate'); ?></h4></th>
+		<th scope="row"><h4><?php _e('Open Orders', 'qtranslate') ?></h4></th>
 		<td>
 <?php if(is_array($orders) && sizeof($orders)>0) { ?>
 			<table class="widefat">
 				<thead>
 				<tr>
-<?php print_column_headers('order'); ?>
+<?php print_column_headers('order') ?>
 				</tr>
 				</thead>
 
 				<tfoot>
 				<tr>
-<?php print_column_headers('order', false); ?>
+<?php print_column_headers('order', false) ?>
 				</tr>
 				</tfoot>
 <?php
@@ -428,18 +409,18 @@ function qts_config_hook($request_uri) {
 			$post->post_title = esc_html(qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($post->post_title));
 ?>
 				<tr>
-					<td class="qts_no-bottom-border"><a href="post.php?action=edit&post=<?php echo $order['post_id']; ?>" title="<?php printf(__('Edit %s', 'qtranslate'),$post->post_title); ?>"><?php echo $post->post_title; ?></a></td>
-					<td class="qts_no-bottom-border"><?php if(isset($services[$order['service_id']])): ?><a href="<?php echo $services[$order['service_id']]['service_url']; ?>" title="<?php _e('Website', 'qtranslate'); ?>"><?php echo $services[$order['service_id']]['service_name']; ?></a><?php endif; ?></td>
+					<td class="qts_no-bottom-border"><a href="post.php?action=edit&post=<?php echo $order['post_id']; ?>" title="<?php printf(__('Edit %s', 'qtranslate'),$post->post_title) ?>"><?php echo $post->post_title; ?></a></td>
+					<td class="qts_no-bottom-border"><?php if(isset($services[$order['service_id']])): ?><a href="<?php echo $services[$order['service_id']]['service_url']; ?>" title="<?php _e('Website', 'qtranslate') ?>"><?php echo $services[$order['service_id']]['service_name']; ?></a><?php endif; ?></td>
 					<td class="qts_no-bottom-border"><?php echo $q_config['language_name'][$order['source_language']]; ?></td>
 					<td class="qts_no-bottom-border"><?php echo $q_config['language_name'][$order['target_language']]; ?></td>
-					<td class="qts_no-bottom-border"><a class="delete" href="<?php echo add_query_arg('qts_delete', $order['order']['order_id'], $request_uri); ?>#service">Delete</a></td>
+					<td class="qts_no-bottom-border"><a class="delete" href="<?php echo add_query_arg('qts_delete', $order['order']['order_id'], $request_uri) ?>#service">Delete</a></td>
 				</tr>
 <?php 
 			if(isset($order['status'])) {
 ?>
 				<tr class="qts_status">
 					<td colspan="5">
-						<?php printf(__('Current Status: %s','qtranslate'), $order['status']); ?>
+						<?php printf(__('Current Status: %s','qtranslate'), $order['status']) ?>
 					</td>
 				</tr>
 <?php
@@ -447,10 +428,10 @@ function qts_config_hook($request_uri) {
 		}
 ?>
 			</table>
-			<p><?php printf(__('qTranslate Services will automatically check every hour whether the translations are finished and update your posts accordingly. You can always <a href="%s">check manually</a>.','qtranslate'),'options-general.php?page=qtranslate-x&qts_cron=true#service'); ?></p>
-			<p><?php _e('Deleting an open order doesn\'t cancel it. You will have to logon to the service homepage and cancel it there.','qtranslate'); ?></p>
+			<p><?php printf(__('qTranslate Services will automatically check every hour whether the translations are finished and update your posts accordingly. You can always <a href="%s">check manually</a>.','qtranslate'),'options-general.php?page=qtranslate-x&qts_cron=true#service') ?></p>
+			<p><?php _e('Deleting an open order doesn\'t cancel it. You will have to logon to the service homepage and cancel it there.','qtranslate') ?></p>
 <?php } else { ?>
-			<p><?php _e('No open orders.','qtranslate'); ?></p>
+			<p><?php _e('No open orders.','qtranslate') ?></p>
 <?php } ?>
 		</td>
 	</tr>
@@ -466,8 +447,8 @@ function qts_config_hook($request_uri) {
 ?>
 	<tr valign="top">
 		<th scope="row" colspan="2">
-			<h4><?php _e('Service Configuration', 'qtranslate');?></h4>
-			<p class="description"><?php _e('Below, you will find configuration settings for qTranslate Service Providers, which are required for them to operate.', 'qtranslate'); ?></p>
+			<h4><?php _e('Service Configuration', 'qtranslate') ?></h4>
+			<p class="description"><?php _e('Below, you will find configuration settings for qTranslate Service Providers, which are required for them to operate.', 'qtranslate') ?></p>
 		</th>
 	</tr>
 <?php
@@ -476,8 +457,8 @@ function qts_config_hook($request_uri) {
 ?>
 	<tr valign="top">
 		<th scope="row" colspan="2">
-			<h5><?php _e($service['service_name']);?> ( <a name="qts_service_<?php echo $service['service_id']; ?>" href="<?php echo $service['service_url']; ?>"><?php _e('Website', 'qtranslate'); ?></a> )</h5>
-			<p class="description"><?php _e($service['service_description']); ?></p>
+			<h5><?php _e($service['service_name']) ?> ( <a name="qts_service_<?php echo $service['service_id']; ?>" href="<?php echo $service['service_url']; ?>"><?php _e('Website', 'qtranslate') ?></a> )</h5>
+			<p class="description"><?php _e($service['service_description']) ?></p>
 		</th>
 	</tr>
 <?php
@@ -675,9 +656,9 @@ function qts_service() {
 	if(isset($error)) {
 ?>
 <div class="wrap">
-<h2><?php _e('qTranslate Services', 'qtranslate'); ?></h2>
+<h2><?php _e('qTranslate Services', 'qtranslate') ?></h2>
 <div id="message" class="error fade"><p><?php echo $error; ?></p></div>
-<p><?php printf(__('An serious error occured and qTranslate Services cannot proceed. For help, please visit the <a href="%s">Support Forum</a>','qtranslate'), 'http://www.qianqin.de/qtranslate/forum/');?></p>
+<p><?php printf(__('An serious error occured and qTranslate Services cannot proceed. For help, please visit the <a href="%s">Support Forum</a>','qtranslate'), 'http://www.qianqin.de/qtranslate/forum/') ?></p>
 </div>
 <?php
 	return;
@@ -685,23 +666,23 @@ function qts_service() {
 	if(isset($order_completed_message)) {
 ?>
 <div class="wrap">
-<h2><?php _e('qTranslate Services', 'qtranslate'); ?></h2>
-<div id="message" class="updated fade"><p><?php _e('Order successfully sent.', 'qtranslate'); ?></p></div>
-<p><?php _e('Your translation order has been successfully transfered to the selected service.','qtranslate'); ?></p>
+<h2><?php _e('qTranslate Services', 'qtranslate') ?></h2>
+<div id="message" class="updated fade"><p><?php _e('Order successfully sent.', 'qtranslate') ?></p></div>
+<p><?php _e('Your translation order has been successfully transfered to the selected service.','qtranslate') ?></p>
 <?php
 		if(!empty($order_completed_message)) {
 ?>
-<p><?php printf(__('The service returned this message: %s','qtranslate'), $order_completed_message);?></p>
+<p><?php printf(__('The service returned this message: %s','qtranslate'), $order_completed_message) ?></p>
 <?php
 		}
 ?>
-<p><?php _e('Feel free to choose an action:', 'qtranslate'); ?></p>
+<p><?php _e('Feel free to choose an action:', 'qtranslate') ?></p>
 <ul>
-	<li><a href="<?php echo add_query_arg('target_language', null, $url_link); ?>"><?php _e('Translate this post to another language.', 'qtranslate'); ?></a></li>
-	<li><a href="edit.php"><?php _e('Translate a different post.', 'qtranslate'); ?></a></li>
-	<li><a href="options-general.php?page=qtranslate-x#service"><?php _e('View all open orders.', 'qtranslate'); ?></a></li>
-	<li><a href="options-general.php?page=qtranslate-x&qts_cron=true#service"><?php _e('Let qTranslate Services check if any open orders are finished.', 'qtranslate'); ?></a></li>
-	<li><a href="<?php echo get_permalink($post_id); ?> "><?php _e('View this post.', 'qtranslate'); ?></a></li>
+	<li><a href="<?php echo add_query_arg('target_language', null, $url_link) ?>"><?php _e('Translate this post to another language.', 'qtranslate') ?></a></li>
+	<li><a href="edit.php"><?php _e('Translate a different post.', 'qtranslate') ?></a></li>
+	<li><a href="options-general.php?page=qtranslate-x#service"><?php _e('View all open orders.', 'qtranslate') ?></a></li>
+	<li><a href="options-general.php?page=qtranslate-x&qts_cron=true#service"><?php _e('Let qTranslate Services check if any open orders are finished.', 'qtranslate') ?></a></li>
+	<li><a href="<?php echo get_permalink($post_id) ?> "><?php _e('View this post.', 'qtranslate') ?></a></li>
 </ul>
 </div>
 <?php
@@ -709,7 +690,7 @@ function qts_service() {
 	}
 ?>
 <div class="wrap">
-<h2><?php _e('qTranslate Services', 'qtranslate'); ?></h2>
+<h2><?php _e('qTranslate Services', 'qtranslate') ?></h2>
 <?php
 if(!empty($message)) {
 ?>
@@ -734,7 +715,7 @@ if(!empty($message)) {
 <?php
 	if(empty($translate_to)) {
 ?>
-<p><?php _e('Please choose the language you want to translate to:', 'qtranslate');?></p>
+<p><?php _e('Please choose the language you want to translate to:', 'qtranslate') ?></p>
 <ul>
 <?php 
 		foreach($q_config['enabled_languages'] as $language) {
@@ -757,20 +738,20 @@ if(!empty($message)) {
 	<input type="hidden" name="token" value="<?php echo $_REQUEST['token']; ?>"/>
 	<div id="submitboxcontainer" class="metabox-holder">
 		<div id="submitdiv" class="postbox">
-			<h3 class="hndle"><?php _e('Confirm Order', 'qtranslate'); ?></h3>
+			<h3 class="hndle"><?php _e('Confirm Order', 'qtranslate') ?></h3>
 			<div class="inside">
-				<p><?php _e('Please confirm your order.', 'qtranslate'); ?></p>
-				<div class="qts_submit"><a class="button-primary" onclick="sendorder();"><?php _e('Confirm Order', 'qtranslate'); ?></a></div>
+				<p><?php _e('Please confirm your order.', 'qtranslate') ?></p>
+				<div class="qts_submit"><a class="button-primary" onclick="sendorder();"><?php _e('Confirm Order', 'qtranslate') ?></a></div>
 			</div>
 		</div>
 	</div>
 <?php else: ?>
 	<div id="submitboxcontainer" class="metabox-holder">
 		<div id="submitdiv" class="postbox">
-			<h3 class="hndle"><?php _e('Request Translation', 'qtranslate'); ?></h3>
+			<h3 class="hndle"><?php _e('Request Translation', 'qtranslate') ?></h3>
 			<div class="inside request">
-				<noscript><?php _e('Javascript is required for qTranslate Services', 'qtranslate'); ?></noscript>
-				<p><?php _e('Please choose a service first', 'qtranslate'); ?></p>
+				<noscript><?php _e('Javascript is required for qTranslate Services', 'qtranslate') ?></noscript>
+				<p><?php _e('Please choose a service first', 'qtranslate') ?></p>
 			</div>
 		</div>
 	</div>
@@ -779,7 +760,7 @@ if(!empty($message)) {
 		$timestamp = time();
 		if($timestamp != qts_queryQS(QTS_VERIFY, $timestamp)) {
 ?>
-<p class="error"><?php _e('ERROR: Could not connect to qTranslate Services. Please try again later.', 'qtranslate');?></p>
+<p class="error"><?php _e('ERROR: Could not connect to qTranslate Services. Please try again later.', 'qtranslate') ?></p>
 <?php
 			return;
 		}
@@ -787,7 +768,7 @@ if(!empty($message)) {
 ?>
 <div id="qts_boxes" class="metabox-holder">
 	<div class="postbox">
-		<h3 class="hndle"><?php _e('Translation Service', 'qtranslate'); ?></h3>
+		<h3 class="hndle"><?php _e('Translation Service', 'qtranslate') ?></h3>
 		<div class="inside">
 
 <ul>
@@ -815,14 +796,14 @@ if(!empty($message)) {
 				if(!$requirements_matched) {
 ?>
 <li>
-	<label><input type="radio" name="service_id" disabled="disabled" /> <b><?php echo qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($service['service_name']); ?></b> ( <a href="<?php echo $service['service_url']; ?>" target="_blank"><?php _e('Website', 'qtranslate'); ?></a> )</label>
-	<p class="error"><?php printf(__('Cannot use this service, not all <a href="%s">required fields</a> filled in for this service.','qtranslate'), 'options-general.php?page=qtranslate-x#qts_service_'.$service_id); ?></p>
-	<p class="service_description"><?php echo qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($service['service_description']); ?></p>
+	<label><input type="radio" name="service_id" disabled="disabled" /> <b><?php echo qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($service['service_name']) ?></b> ( <a href="<?php echo $service['service_url']; ?>" target="_blank"><?php _e('Website', 'qtranslate') ?></a> )</label>
+	<p class="error"><?php printf(__('Cannot use this service, not all <a href="%s">required fields</a> filled in for this service.','qtranslate'), 'options-general.php?page=qtranslate-x#qts_service_'.$service_id) ?></p>
+	<p class="service_description"><?php echo qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($service['service_description']) ?></p>
 </li>
 <?php
 				} else {
 ?>
-<li><label><input type="radio" id="qts_service_<?php echo $service['service_id'];?>" onclick="chooseservice(this.value)" value="<?php echo $service['service_id']; ?>"<?php checked($service['service_id'],$default_service); ?> <?php echo $confirm?'disabled="disabled"':'name="service_id"'; ?> /> <b><?php echo qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($service['service_name']); ?></b> ( <a href="<?php echo $service['service_url']; ?>" target="_blank"><?php _e('Website', 'qtranslate'); ?></a> )</label><p class="service_description"><?php echo qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($service['service_description']); ?></p></li>
+<li><label><input type="radio" id="qts_service_<?php echo $service['service_id'];?>" onclick="chooseservice(this.value)" value="<?php echo $service['service_id']; ?>"<?php checked($service['service_id'],$default_service) ?> <?php echo $confirm?'disabled="disabled"':'name="service_id"'; ?> /> <b><?php echo qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($service['service_name']) ?></b> ( <a href="<?php echo $service['service_url']; ?>" target="_blank"><?php _e('Website', 'qtranslate') ?></a> )</label><p class="service_description"><?php echo qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($service['service_description']) ?></p></li>
 <?php
 				}
 			}
@@ -832,7 +813,7 @@ if(!empty($message)) {
 	function chooseservice(id) {
 		if(id == '0') return;
 		jQuery('#qts_service_'+id).attr('checked','checked');
-		jQuery('#submitdiv .request').html('<?php _e('<p><img src="images/wpspin_light.gif"> Getting Quote...</p>', 'qtranslate'); ?>');
+		jQuery('#submitdiv .request').html('<?php _e('<p><img src="images/wpspin_light.gif"> Getting Quote...</p>', 'qtranslate') ?>');
 		jQuery.post(ajaxurl, {
 			action: 'qts_quote',
 			translate_from: '<?php echo $translate_from; ?>',
@@ -853,14 +834,14 @@ if(!empty($message)) {
 		</div>
 	</div>
 	<div class="postbox closed">
-		<div class="handlediv" title="<?php _e('Click to toggle'); ?>" onclick="jQuery(this).parent().removeClass('closed');jQuery(this).hide();"><br/></div>
-		<h3 class="hndle"><?php _e('Review Article', 'qtranslate'); ?></h3>
+		<div class="handlediv" title="<?php _e('Click to toggle') ?>" onclick="jQuery(this).parent().removeClass('closed');jQuery(this).hide();"><br/></div>
+		<h3 class="hndle"><?php _e('Review Article', 'qtranslate') ?></h3>
 		<div class="inside">
 			<textarea name="qts_content_preview" id="qts_content_preview" readonly="readonly"><?php echo $post_content; ?></textarea>
 		</div>
 	</div>
 
-<p><?php _e('Your article will be SSL encrypted and securly sent to qTranslate Services, which will forward your text to the chosen Translation Service. Once qTranslate Services receives the translated text, it will automatically appear on your blog.', 'qtranslate'); ?></p>
+<p><?php _e('Your article will be SSL encrypted and securly sent to qTranslate Services, which will forward your text to the chosen Translation Service. Once qTranslate Services receives the translated text, it will automatically appear on your blog.', 'qtranslate') ?></p>
 <?php
 		}
 ?>

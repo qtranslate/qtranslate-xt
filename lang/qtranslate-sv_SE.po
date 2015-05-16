@@ -456,7 +456,7 @@ msgstr "Du kan hitta hjälp med korrekta inställningar för qTranslate på <a h
 
 #: admin/qtx_configuration.php:965
 #, fuzzy
-msgid "General Settings"
+msgid "General"
 msgstr "Inställningar"
 
 #: admin/qtx_configuration.php:968 admin/qtx_configuration.php:1004
@@ -539,7 +539,7 @@ msgstr ""
 
 #: admin/qtx_configuration.php:1017
 #, fuzzy
-msgid "Advanced Settings"
+msgid "Advanced"
 msgstr "Inställningar"
 
 #: admin/qtx_configuration.php:1024 admin/qtx_configuration.php:1026
@@ -836,7 +836,7 @@ msgid "The color in use is taken from your profile option %s, the third color."
 msgstr ""
 
 #: admin/qtx_configuration.php:1254
-msgid "Custom Integration"
+msgid "Integration"
 msgstr ""
 
 #: admin/qtx_configuration.php:1257

@@ -1,4 +1,5 @@
 <?php
+if ( !defined( 'WP_ADMIN' ) ) exit;
 
 /**
  * Load array of stored in options language properties
@@ -14,19 +15,7 @@ function qtranxf_load_languages(&$cfg)
 	return $cfg;
 }
 
-/**
- * Save language properties from configuration $cfg to database
- * @since 3.3
- */
-function qtranxf_save_languages($cfg)
-{
-	global $qtranslate_options;
-	foreach($qtranslate_options['languages'] as $nm => $opn){
-		if(empty($cfg[$nm])) delete_option($opn);
-		else update_option($opn,$cfg[$nm]);
-	}
-	return $cfg;
-}
+//function qtranxf_save_languages($cfg) is in qtx_activation_hook.php as it is in use there
 
 /**
  * Remove language $lang properties from hash $langs.
