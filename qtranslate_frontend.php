@@ -62,9 +62,11 @@ function qtranxf_wp_head(){
 	//$lang=$q_config['language'];
 	//echo "\n<meta http-equiv=\"Content-Language\" content=\"".str_replace('_','-',$q_config['locale'][$lang])."\" />\n"; //obsolete way 
 	echo '<meta name="generator" content="qTranslate-X '.QTX_VERSION.'" />'.PHP_EOL;
-	foreach($q_config['enabled_languages'] as $language) {
+	foreach($q_config['enabled_languages'] as $lang) {
+		// @since 3.3.3 changes hreflang to be locale instead of language code.
+		$locale = str_replace('_','-',$q_config['locale'][$lang]);
 		//if($language != qtranxf_getLanguage())//standard requires them all
-		echo '<link hreflang="'.$language.'" href="'.qtranxf_convertURL('',$language,false,true).'" rel="alternate" />'.PHP_EOL;
+		echo '<link hreflang="'.$locale.'" href="'.qtranxf_convertURL('',$lang,false,true).'" rel="alternate" />'.PHP_EOL;
 	}
 	//https://support.google.com/webmasters/answer/189077
 	echo '<link hreflang="x-default" href="'.qtranxf_convertURL('',$q_config['default_language']).'" rel="alternate" />'.PHP_EOL;
@@ -115,6 +117,7 @@ function qtranxf_wp_get_nav_menu_items( $items, $menu, $args )
 	$colon=true;//[shown|hidden]
 	$topflag=true;
 	$itemsmodified=false;
+	//qtranxf_dbg_log('qtranxf_wp_get_nav_menu_items: count(items)=',count($items));
 	foreach($items as $key => $item)
 	{
 		//qtranxf_dbg_log('qtranxf_wp_get_nav_menu_items: $item->url: ',$item->url);
@@ -377,8 +380,14 @@ add_filter('the_posts', 'qtranxf_postsFilter', 5, 2);
 
 /** allow all filters within WP_Query - many other add_filters may not be needed now? */
 function qtranxf_pre_get_posts( &$query ) {//WP_Query
-	//qtranxf_dbg_echo('qtranxf_pre_get_posts: $query: ',$query);
+	qtranxf_dbg_log('qtranxf_pre_get_posts: $query: ',$query);
 	//'post_type'
+	if(isset($query->query_vars['post_type'])){
+			switch($query->query_vars['post_type']){
+				case 'nav_menu_item': return;
+				default: break;
+			}
+	}
 	$query->query_vars['suppress_filters'] = false;
 }
 add_action( 'pre_get_posts', 'qtranxf_pre_get_posts', 99 );
