@@ -380,7 +380,7 @@ add_filter('the_posts', 'qtranxf_postsFilter', 5, 2);
 
 /** allow all filters within WP_Query - many other add_filters may not be needed now? */
 function qtranxf_pre_get_posts( &$query ) {//WP_Query
-	qtranxf_dbg_log('qtranxf_pre_get_posts: $query: ',$query);
+	//qtranxf_dbg_log('qtranxf_pre_get_posts: $query: ',$query);
 	//'post_type'
 	if(isset($query->query_vars['post_type'])){
 			switch($query->query_vars['post_type']){
