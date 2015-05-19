@@ -1156,9 +1156,24 @@ var qTranslateX=function(pg)
 		return langSwitchWrap;
 	}
 
+	var setupMetaBoxLSB = function($){
+		var mb = document.getElementById('qtranxs-meta-box-lsb');
+		if(!mb) return;
+		var inside_elems = mb.getElementsByClassName('inside');
+		if(!inside_elems.length) return;//consistency check in case WP did some changes
+		$(mb).find('.hndle').remove();//original h3 element is replaced with span below
+		var sp = document.createElement('span');
+		mb.insertBefore(sp, inside_elems[0]);
+		sp.className = 'hndle ui-sortable-handle';
+		var langSwitchWrap = createSetOfLSB();
+		sp.appendChild(langSwitchWrap);
+		$(function($){$('#qtranxs-meta-box-lsb .hndle').unbind('click.postboxes');});
+	}
+
 	if(qTranslateConfig.LSB){
 		//additional initialization
 		addContentHooksTinyMCE();
+		setupMetaBoxLSB(jQuery);
 
 		//create sets of LSB
 		var anchors=[];

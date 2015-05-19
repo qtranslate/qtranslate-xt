@@ -97,6 +97,9 @@ Developers: please drop new topics here, the text will be moved to [qTranslate-X
 
 ## Changelog ##
 
+### 3.3.4 ###
+* Feature: Meta-box 'Language' with Language Switching Buttons is now ready for functionality testing.
+
 ### 3.3.3 ###
 * Fix: skip filter 'pre_get_posts' for post_type 'nav_menu_item': [WP Topic](https://wordpress.org/support/topic/menu-conflict-with-plugin-custom-field-template).
 * Fix: hreflang in `<link>` is now locale instead of language code: [WP Topic](https://wordpress.org/support/topic/setting-hreflang-language-locale).

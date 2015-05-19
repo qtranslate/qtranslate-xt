@@ -787,6 +787,7 @@ function qtranxf_get_user_admin_color() {
 
 function qtranxf_meta_box_LSB()
 {
+	/*
 	global $q_config;
 	$flag_location=qtranxf_flag_location();
 	$lsb = '<ul class="'.$q_config['lsb_style_wrap_class'].' qtranxs-meta-box-lsb">';
@@ -795,15 +796,21 @@ function qtranxf_meta_box_LSB()
 	}
 	$lsb .= '</ul>';
 	echo $lsb;
+	*/
+	printf(__('This is a set of "%s" from %s. Drag it to a place where you would need it the most. Use the handle at the top-right corner of this widget to hide this message.', 'qtranslate'), __('Language Switching Buttons','qtranslate'), '<a href="https://wordpress.org/plugins/qtranslate-x/" target="_blank">qTranslate&#8209;X</a>');
 }
 
 function qtranxf_add_meta_box_LSB()
 {
-	global $post_type;
+	global $post_type, $pagenow;
+	switch($pagenow){
+		case 'post.php': break;
+		default: return;
+	}
 	if(empty($post_type)) return;
 	//qtranxf_dbg_log('qtranxf_add_meta_box_LSB');
 	//add_meta_box( 'qtranxs-lsb', 'LSB', 'qtranxf_meta_box_LSB', $post_type, 'normal', 'high');
-	add_meta_box( 'qtranxs-meta-box-lsb', 'LSB', 'qtranxf_meta_box_LSB', null, 'normal', 'low');
+	add_meta_box( 'qtranxs-meta-box-lsb', qtranxf_translate_wp('Language'), 'qtranxf_meta_box_LSB', null, 'normal', 'low');
 }
 add_action( 'add_meta_boxes', 'qtranxf_add_meta_box_LSB' );
 
