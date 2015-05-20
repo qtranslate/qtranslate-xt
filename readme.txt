@@ -97,7 +97,9 @@ Developers: please drop new topics here, the text will be moved to [qTranslate-X
 
 ## Changelog ##
 
+
 ### 3.3.4 ###
+* Fix: function `qtrans_join`: [WP Topic](https://wordpress.org/support/topic/cant-switch-back-to-default-language).
 * Feature: Meta-box 'Language' with Language Switching Buttons is now ready for functionality testing.
 
 ### 3.3.3 ###
