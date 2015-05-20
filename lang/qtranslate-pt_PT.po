@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qTranslate-X 3.2.9.9.8\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-05-04 15:49-0600\n"
-"PO-Revision-Date: 2015-05-05 00:17-0000\n"
+"PO-Revision-Date: 2015-05-20 10:55-0000\n"
 "Last-Translator: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "Language-Team: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "Language: pt_PT\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.7.6\n"
+"X-Generator: Poedit 1.8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -453,7 +453,7 @@ msgstr "Para ajuda sobre como configurar correctamente o qTranslate, veja as <a 
 
 #: admin/qtx_configuration.php:965
 msgid "General"
-msgstr "Definições gerais"
+msgstr "Geral"
 
 #: admin/qtx_configuration.php:968 admin/qtx_configuration.php:1004
 msgid "Default Language / Order"
@@ -533,7 +533,7 @@ msgstr "Quando a página principal é acedida via favoritos/ligação externa/na
 
 #: admin/qtx_configuration.php:1017
 msgid "Advanced"
-msgstr "Definições avançadas"
+msgstr "Avançado"
 
 #: admin/qtx_configuration.php:1024 admin/qtx_configuration.php:1026
 #: admin/qtx_configuration.php:1117
@@ -823,7 +823,7 @@ msgstr "A cor utilizada foi obtida da opção %s do seu perfil, a terceira cor."
 
 #: admin/qtx_configuration.php:1254
 msgid "Integration"
-msgstr "Integração personalizada"
+msgstr "Integração"
 
 #: admin/qtx_configuration.php:1257
 msgid "Custom Fields"
