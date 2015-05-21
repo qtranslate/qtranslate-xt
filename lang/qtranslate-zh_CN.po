@@ -450,6 +450,7 @@ msgid "For help on how to configure qTranslate correctly, take a look at the <a 
 msgstr "若需了解如何正确设置 qTranslate，请访问 <a href=\"%1$s\">qTranslate FAQ</a> 以及<a href=\"%2$s\">支持论坛</a>。"
 
 #: admin/qtx_configuration.php:965
+#, fuzzy
 msgid "General"
 msgstr "一般设置"
 
@@ -533,6 +534,7 @@ msgid "When the frontpage is visited via bookmark/external link/type-in, the vis
 msgstr "当通过书签、外部链接、手动输入方式访问首页时，插件将会按照访问者浏览器设定的语言自动转向到对应的URL。"
 
 #: admin/qtx_configuration.php:1017
+#, fuzzy
 msgid "Advanced"
 msgstr "高级设置"
 
@@ -829,6 +831,7 @@ msgid "The color in use is taken from your profile option %s, the third color."
 msgstr ""
 
 #: admin/qtx_configuration.php:1254
+#, fuzzy
 msgid "Integration"
 msgstr ""
 

@@ -450,6 +450,7 @@ msgid "For help on how to configure qTranslate correctly, take a look at the <a 
 msgstr "A qTranslate helyes beállításához, tekintse meg a <a href=\"%1$s\">qTranslate GyIK</a> és a <a href=\"%2$s\">Fórum</a> oldalakat."
 
 #: admin/qtx_configuration.php:965
+#, fuzzy
 msgid "General"
 msgstr "Általános beállítások"
 
@@ -530,6 +531,7 @@ msgid "When the frontpage is visited via bookmark/external link/type-in, the vis
 msgstr "Ha a nyitó oldal könyvjelzővől, külső hivatkozásból vagy közvetlen címsorba írással lett megnyitva, akkor a látogató a böngésző nyelvének megfelelő URl-re lesz átirányítva."
 
 #: admin/qtx_configuration.php:1017
+#, fuzzy
 msgid "Advanced"
 msgstr "Haladó beállítások"
 
@@ -822,7 +824,6 @@ msgstr "A használt szín a %s profil opcióból a harmadik szín lesz."
 
 #: admin/qtx_configuration.php:1254
 #, fuzzy
-msgid "Integration"
 msgstr "Egyedi szűrők"
 
 #: admin/qtx_configuration.php:1257

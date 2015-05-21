@@ -449,6 +449,7 @@ msgid "For help on how to configure qTranslate correctly, take a look at the <a 
 msgstr "qTranslate'i hatasız yapılandırmak hakkında yardım almak için, <a href=\"%1$s\" title=\"qTranslate Sık Sorulan Sorular\">qTranslate SSS</a> ve <a href=\"%2$s\" title=\"qTranslate Yardım Forumu\">Yardım Forumu</a> adreslerine göz atın."
 
 #: admin/qtx_configuration.php:965
+#, fuzzy
 msgid "General"
 msgstr "Genel Ayarlar"
 
@@ -533,6 +534,7 @@ msgid "When the frontpage is visited via bookmark/external link/type-in, the vis
 msgstr "Kulanıcı anasayfaya Sık Kullanılanlar veya dış bağlantılarla geldiğinde, kullandığı tarayıcının diline göre otomatik olarak yönlendirilir."
 
 #: admin/qtx_configuration.php:1017
+#, fuzzy
 msgid "Advanced"
 msgstr "Gelişmiş Ayarlar"
 
@@ -829,6 +831,7 @@ msgid "The color in use is taken from your profile option %s, the third color."
 msgstr ""
 
 #: admin/qtx_configuration.php:1254
+#, fuzzy
 msgid "Integration"
 msgstr ""
 

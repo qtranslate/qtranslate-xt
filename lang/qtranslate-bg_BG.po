@@ -447,6 +447,7 @@ msgid "For help on how to configure qTranslate correctly, take a look at the <a 
 msgstr "За помощ по правилното настройване на qTranslate, моля вижте <a href=\"%1$s\">qTranslate ЧЗВ</a> и <a href=\"%2$s\">Форума за поддръжка</a> (на англ.)."
 
 #: admin/qtx_configuration.php:965
+#, fuzzy
 msgid "General"
 msgstr "Общи настройки"
 
@@ -530,6 +531,7 @@ msgid "When the frontpage is visited via bookmark/external link/type-in, the vis
 msgstr "Когато началната страница бъде заредена от отметка, външна хипервръзка или директно, посетителят автоматично ще бъде прехвърлен на езиковата версия на блога, съответна на настройките на неговия браузър."
 
 #: admin/qtx_configuration.php:1017
+#, fuzzy
 msgid "Advanced"
 msgstr "Разширени настройки"
 
@@ -826,6 +828,7 @@ msgid "The color in use is taken from your profile option %s, the third color."
 msgstr ""
 
 #: admin/qtx_configuration.php:1254
+#, fuzzy
 msgid "Integration"
 msgstr ""
 

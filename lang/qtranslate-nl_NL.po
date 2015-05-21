@@ -635,6 +635,7 @@ msgstr ""
 "\">qTranslate FAQ</a> en het <a href=\"%2$s\">Support Forum</a>."
 
 #: admin/qtx_configuration.php:965
+#, fuzzy
 msgid "General"
 msgstr "Standaard Instellingen"
 
@@ -783,6 +784,7 @@ msgstr ""
 "door de browser is ingesteld."
 
 #: admin/qtx_configuration.php:1017
+#, fuzzy
 msgid "Advanced"
 msgstr "Geavanceerde Instellingen"
 
@@ -1197,6 +1199,7 @@ msgstr ""
 "De gebruikte kleur is afkomstig uit je profiel optie %s, de derde kleur."
 
 #: admin/qtx_configuration.php:1254
+#, fuzzy
 msgid "Integration"
 msgstr "Aangepaste integratie"
 

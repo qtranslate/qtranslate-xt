@@ -444,6 +444,7 @@ msgid "For help on how to configure qTranslate correctly, take a look at the <a 
 msgstr "Pour vous aidez à configurer qTranslate correctement, visitez la <a href=\"%1$s\">Foire Aux Questions qTranslate</a> ou le <a href=\"%2$s\">Forum d’entraide</a>."
 
 #: admin/qtx_configuration.php:965
+#, fuzzy
 msgid "General"
 msgstr "Paramètres généraux"
 
@@ -524,6 +525,7 @@ msgid "When the frontpage is visited via bookmark/external link/type-in, the vis
 msgstr "Lorsque la première page est visitée par bookmark / lien externe / type-in, le visiteur sera redirigé à la bonne URL en fonction de la langue spécifiée par son navigateur."
 
 #: admin/qtx_configuration.php:1017
+#, fuzzy
 msgid "Advanced"
 msgstr "Paramètres avancés"
 
@@ -816,7 +818,6 @@ msgstr "La couleur utilisée est prise dans votre option de profil %s, en utilis
 
 #: admin/qtx_configuration.php:1254
 #, fuzzy
-msgid "Integration"
 msgstr "Filtres personnalisés"
 
 #: admin/qtx_configuration.php:1257
