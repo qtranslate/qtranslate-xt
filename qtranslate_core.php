@@ -100,6 +100,7 @@ function qtranxf_init_language() {
 	}else{
 		require_once(dirname(__FILE__).'/admin/qtx_configuration.php');
 	}
+	apply_filters('wp_translator', null);//create QTX_Translator object
 
 	qtranxf_load_option_qtrans_compatibility();
 
@@ -784,29 +785,35 @@ function qtranxf_timeFromCommentForCurrentLanguage($old_date, $format = '', $gmt
 
 /* END DATE TIME FUNCTIONS */
 
-//if (!function_exists('qtranxf_useTermLib')){
-function qtranxf_useTermLib($obj) {
+/**
+ * @since 3.4
+ */
+function qtranxf_use_term($lang, $obj, $taxonomy) {
 	global $q_config;
 	if(is_array($obj)) {
 		// handle arrays recursively
 		foreach($obj as $key => $t) {
-			$obj[$key] = qtranxf_useTermLib($obj[$key]);
+			$obj[$key] = qtranxf_use_term($lang, $obj[$key], $taxonomy);
 		}
 		return $obj;
 	}
 	if(is_object($obj)) {
 		// object conversion
-		if(isset($q_config['term_name'][$obj->name][$q_config['language']])) {
-			//qtranxf_dbg_echo('qtranxf_useTermLib: object: ',$obj,true);
-			$obj->name = $q_config['term_name'][$obj->name][$q_config['language']];
+		if(isset($q_config['term_name'][$obj->name][$lang])) {
+			//qtranxf_dbg_echo('qtranxf_translate_term: object: ',$obj,true);
+			$obj->name = $q_config['term_name'][$obj->name][$lang];
 		} 
-	} elseif(isset($q_config['term_name'][$obj][$q_config['language']])) {
-		//qtranxf_dbg_echo('qtranxf_useTermLib: string: ',$obj,true);
-		$obj = $q_config['term_name'][$obj][$q_config['language']];
+	} elseif(isset($q_config['term_name'][$obj][$lang])) {
+		//qtranxf_dbg_echo('qtranxf_translate_term: string: ',$obj,true);
+		$obj = $q_config['term_name'][$obj][$lang];
 	}
 	return $obj;
 }
-//}
+
+function qtranxf_useTermLib($obj) {
+	global $q_config;
+	return qtranxf_use_term($q_config['language'], $obj, null);
+}
 
 // check if it is a link to an ignored file type
 function qtranxf_ignored_file_type($path) {
@@ -1044,10 +1051,19 @@ function qtranxf_get_url_for_language($url, $lang, $showLanguage=true) {
 }
 
 //if (!function_exists('qtranxf_convertURL')){
+/**
+ * Encode URL $url with language $lang.
+ * @param (string) $url - URL to be converted.
+ * @param (string) $lang - two-letter language code of the language to convert $url to.
+ * @param (bool) $forceadmin - $url is not converted on admin side, unless $forceadmin is set to true.
+ * @param (bool) $showDefaultLanguage - When set to true, $url is always encoded with a language, otherwise it senses option "Hide URL language information for default language" to keep $url consistent with the currently active language.
+ *
+ * If you need a URL to switch the language, set $showDefaultLanguage=true, if you need a URL to keep the current language, set it to false.
+ */
 function qtranxf_convertURL($url='', $lang='', $forceadmin = false, $showDefaultLanguage = false) {
 	global $q_config;
 
-	if($lang=='') $lang = $q_config['language'];
+	if(empty($lang)) $lang = $q_config['language'];
 	if(empty($url)){
 		if( $q_config['url_info']['doing_front_end'] && defined('QTS_VERSION') && $q_config['url_mode'] != QTX_URL_QUERY){
 			//quick workaround, but need a permanent solution

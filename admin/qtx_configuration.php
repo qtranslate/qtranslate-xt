@@ -4,6 +4,7 @@ if ( !defined( 'WP_ADMIN' ) ) exit;
 require_once(QTRANSLATE_DIR.'/admin/qtx_admin_utils.php');
 require_once(QTRANSLATE_DIR.'/admin/qtx_admin_options.php');
 require_once(QTRANSLATE_DIR.'/admin/qtx_languages.php');
+require_once(QTRANSLATE_DIR.'/admin/qtx_admin_class_translator.php');
 require_once(QTRANSLATE_DIR.'/admin/qtx_import_export.php');
 require_once(QTRANSLATE_DIR.'/admin/qtx_user_options.php');
 
@@ -205,11 +206,17 @@ function qtranxf_select_admin_js ($enqueue_script=false) {
 function qtranxf_load_admin_page_config() {
 	global $q_config, $pagenow, $post_type;
 
+	/**
+	 * $page_configs holds the configuration for all pages.
+	*/
 	$page_configs = $q_config['page_configs'];
 	//if(defined('page_configs33')){
 	//	$page_configs = array();//will be set to a default in the future
 	//}
 
+	/**
+	 * A chance to alter $page_configs before it is parsed and filtered for this specific request.
+	 */
 	$page_configs = apply_filters('qtranslate_load_admin_page_config',$page_configs);
 	//qtranxf_dbg_log('qtranxf_load_admin_page_config: $page_configs:',$page_configs);
 

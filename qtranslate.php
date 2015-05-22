@@ -40,6 +40,11 @@ GitHub Branch: master
 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 */
 /*
+ * Search for 'Designed as interface for other plugin integration' in comments to functions
+ * to find out which functions are safe to use in the 3rd-party integration.
+ * Avoid accessing internal variables directly, as they are subject to be re-designed at any time.
+*/
+/*
 	Most flags in flags directory are made by Luc Balemans and downloaded from
 	FOTW Flags Of The World website at http://flagspot.net/flags/
 	(http://www.crwflags.com/FOTW/FLAGS/wflags.html)
@@ -101,26 +106,25 @@ GitHub Branch: master
 	===============
 	All Supporters! Thanks for all the gifts, cards and donations!
 */
-
 if ( ! function_exists( 'add_filter' ) ) {
 	header( 'Status: 403 Forbidden' );
 	header( 'HTTP/1.1 403 Forbidden' );
 	exit();
 }
+/**
+ * The constants defined below are
+ * Designed as interface for other plugin integration. The documentation is available at
+ * https://qtranslatexteam.wordpress.com/integration/
+ */
+define('QTX_VERSION','3.3.4');
+//define('page_configs33', true);
 
 if ( ! defined( 'QTRANSLATE_FILE' ) ) {
 	define( 'QTRANSLATE_FILE', __FILE__ );
 	define( 'QTRANSLATE_DIR', dirname(__FILE__) );
 }
 
-//define('page_configs33', true);
-define('QTX_VERSION','3.3.4');
-
-require_once(QTRANSLATE_DIR.'/qtranslate_options.php');
-require_once(QTRANSLATE_DIR.'/qtranslate_utils.php');
-require_once(QTRANSLATE_DIR.'/qtranslate_core.php');
-
-require_once(QTRANSLATE_DIR.'/qtranslate_widget.php');
+require_once(QTRANSLATE_DIR.'/inc/qtx_class_translator.php');
 
 if(is_admin()){
 	require_once(QTRANSLATE_DIR.'/admin/qtx_activation_hook.php');

@@ -401,15 +401,15 @@ function qtranxf_get_term_joined($obj,$taxonomy=null) {
 	return $obj;
 }
 
-function qtranxf_get_terms_joined($terms, $taxonomies=null, $args=null) {
+function qtranxf_get_terms_joined($terms, $taxonomy=null, $args=null) {
 	global $q_config;
 	if(is_array($terms)){
 		// handle arrays recursively
 		foreach($terms as $key => $term) {
-			$terms[$key] = qtranxf_get_terms_joined($term);
+			$terms[$key] = qtranxf_get_terms_joined($term,$taxonomy);
 		}
 	}else{
-		$terms = qtranxf_get_term_joined($terms);
+		$terms = qtranxf_get_term_joined($terms,$taxonomy);
 	}
 	return $terms;
 }

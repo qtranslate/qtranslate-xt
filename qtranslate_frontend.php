@@ -4,6 +4,8 @@ if ( !defined( 'ABSPATH' ) ) exit;
 //if(file_exists(QTRANSLATE_DIR.'/front/qtx_front_slug.php'))
 //	require_once(QTRANSLATE_DIR.'/front/qtx_front_slug.php');
 
+add_filter('wp_translator', 'QTX_Translator::get_translator');
+
 /**
  * Response to action 'init', which runs after user is authenticated
  * @since 3.3.2
@@ -467,7 +469,7 @@ function qtranxf_excludeUntranslatedPostComments($clauses, &$q/*WP_Comment_Query
 	//qtranxf_dbg_log('qtranxf_excludeUntranslatedPostComments: $wpdb->posts found');
 
 	$single_post_query=is_singular();
-	if($single_post_query){
+	if($single_post_query && isset($clauses['where'])){
 		$single_post_query = preg_match('/comment_post_ID\s*=\s*[\'"]*(\d+)[\'"]*/i',$clauses['where'])==1;
 	}
 	if(!$single_post_query){

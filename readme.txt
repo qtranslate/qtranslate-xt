@@ -101,6 +101,7 @@ Developers: please drop new topics here, the text will be moved to [qTranslate-X
 ### 3.3.4 ###
 * Fix: function `qtrans_join`: [WP Topic](https://wordpress.org/support/topic/cant-switch-back-to-default-language).
 * Feature: Meta-box 'Language' with Language Switching Buttons is now ready for functionality testing.
+* Feature: [Integration Framework](https://qtranslatexteam.wordpress.com/integration/) for PHP code.
 
 ### 3.3.3 ###
 * Fix: skip filter 'pre_get_posts' for post_type 'nav_menu_item': [WP Topic](https://wordpress.org/support/topic/menu-conflict-with-plugin-custom-field-template).
