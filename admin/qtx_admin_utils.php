@@ -8,20 +8,7 @@ function qtranxf_error_log($msg) {
 	global $q_config;
 	if(isset($q_config['errors'])) $q_config['errors'][] = $msg;
 	else $q_config['errors'] = array($msg);
-	error_log('qTranslate-X: '.$msg);
-}
-
-/**
- * @since 3.3.2
- */
-function qtranxf_qtranslate_basename(){
-	$path = QTRANSLATE_DIR;
-	while(true){
-		$dir = dirname($path);
-		if(!$dir || $dir == '.' ) return 'qtranslate-x';
-		if(basename($dir) == 'plugins') return basename($path);
-		$path = $dir;
-	}
+	error_log('qTranslate-X: '.strip_tags($msg));
 }
 
 /**
@@ -736,6 +723,11 @@ function qtranxf_filter_options_general($value)
 add_filter('option_blogname', 'qtranxf_filter_options_general');
 add_filter('option_blogdescription', 'qtranxf_filter_options_general');
 
+function qtranxf_updateGettextDatabases($force = false, $only_for_language = '') {
+	require_once(QTRANSLATE_DIR.'/admin/qtx_update_gettext_db.php');
+	qtranxf_updateGettextDatabasesEx($force, $only_for_language);
+}
+
 /* this did not work, need more investigation
 function qtranxf_enable_blog_title_filters($name)
 {
@@ -797,22 +789,24 @@ function qtranxf_meta_box_LSB()
 	$lsb .= '</ul>';
 	echo $lsb;
 	*/
-	printf(__('This is a set of "%s" from %s. Drag it to a place where you would need it the most. Use the handle at the top-right corner of this widget to hide this message.', 'qtranslate'), __('Language Switching Buttons','qtranslate'), '<a href="https://wordpress.org/plugins/qtranslate-x/" target="_blank">qTranslate&#8209;X</a>');
+	printf(__('This is a set of "%s" from %s. Click any blank space between the buttons and drag it to a place where you would need it the most. Click the handle at the top-right corner of this widget to hide this message.', 'qtranslate'), __('Language Switching Buttons','qtranslate'), '<a href="https://wordpress.org/plugins/qtranslate-x/" target="_blank">qTranslate&#8209;X</a>');
 }
 
-function qtranxf_add_meta_box_LSB()
+function qtranxf_add_meta_box_LSB($post_type, $post)
 {
-	global $post_type, $pagenow;
+	global $pagenow;
 	switch($pagenow){
 		case 'post.php': break;
 		default: return;
 	}
 	if(empty($post_type)) return;
-	//qtranxf_dbg_log('qtranxf_add_meta_box_LSB');
+	//qtranxf_dbg_log('qtranxf_add_meta_box_LSB: $post_type: ',$post_type);//, true);
+	$page_config = qtranxf_load_admin_page_config($post_type);
+	if(empty($page_config)) return;
 	//add_meta_box( 'qtranxs-lsb', 'LSB', 'qtranxf_meta_box_LSB', $post_type, 'normal', 'high');
 	add_meta_box( 'qtranxs-meta-box-lsb', qtranxf_translate_wp('Language'), 'qtranxf_meta_box_LSB', null, 'normal', 'low');
 }
-add_action( 'add_meta_boxes', 'qtranxf_add_meta_box_LSB' );
+add_action( 'add_meta_boxes', 'qtranxf_add_meta_box_LSB', 10, 2 );
 
 /**
  * @since 3.3

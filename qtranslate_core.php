@@ -860,8 +860,9 @@ function qtranxf_language_neutral_path($path) {
 	$language_neutral_path_cache[$path] = false;
 	return false;
 }
+
 /**
- * @since 
+ * @since 3.0
  */
 function qtranxf_url_del_language(&$urlinfo) {
 	global $q_config;
@@ -886,8 +887,10 @@ function qtranxf_url_del_language(&$urlinfo) {
 		case QTX_URL_PATH: // pre-path
 			// might already have language information
 			if(!empty($urlinfo['wp-path']) && preg_match('!^/([a-z]{2})(/|$)!i',$urlinfo['wp-path'],$match)) {
-				// found language information, remove it
-				$urlinfo['wp-path'] = substr($urlinfo['wp-path'], 3);
+				if(qtranxf_isEnabled($match[1])){
+					// found language information, remove it
+					$urlinfo['wp-path'] = substr($urlinfo['wp-path'], 3);
+				}
 			}
 			break;
 		case QTX_URL_DOMAIN: // pre-domain

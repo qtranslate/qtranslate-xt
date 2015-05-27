@@ -21,26 +21,30 @@ function qtranxf_init_front(){
 		add_filter($nm, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage');
 	}
 
-	$q_config['front_config'] = apply_filters('qtranslate_load_front_page_config',$q_config['front_config']);
-	if(!empty($q_config['front_config'])){
-		foreach($q_config['front_config'] as $front_config){
+	$front_config = apply_filters('i18n_front_config',$q_config['front_config']);
+	if(!empty($front_config)){
+		foreach($front_config as $k => $cfg){
 			//todo may be filtered by 'pages'
-			$filters = $front_config['filters'];
+			if(!isset($cfg['filters'])) continue;
+			$filters = $cfg['filters'];
 			if(!empty($filters['text'])){
 				//qtranxf_dbg_log('$filters[text]: ',$filters['text']);
 				foreach($filters['text'] as $nm => $pr){
+					if($pr === '') continue;
 					add_filter($nm, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', $pr);
 				}
 			}
 			if(!empty($filters['url'])){
 				//qtranxf_dbg_log('$filters[url]: ',$filters['url']);
 				foreach($filters['url'] as $nm => $pr){
+					if($pr === '') continue;
 					add_filter($nm, 'qtranxf_convertURL', $pr);
 				}
 			}
 			if(!empty($filters['term'])){
 				//qtranxf_dbg_log('$filters[term]: ',$filters['term']);
 				foreach($filters['term'] as $nm => $pr){
+					if($pr === '') continue;
 					add_filter($nm, 'qtranxf_useTermLib', $pr);
 				}
 			}
@@ -772,7 +776,7 @@ add_filter('gettext', 'qtranxf_gettext',0);
 add_filter('gettext_with_context', 'qtranxf_gettext_with_context',0);
 add_filter('ngettext', 'qtranxf_ngettext',0);
 
-/* //moved to qTranslateX.json
+/* //moved to i18n-config.json
 // Compability with Default Widgets
 add_filter('widget_title', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
 add_filter('widget_text', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);

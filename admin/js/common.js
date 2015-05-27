@@ -720,6 +720,93 @@ var qTranslateX=function(pg)
 	*/
 	var addPageHooks=function(page_config_forms)
 	{
+		for(var form_id in page_config_forms){
+			var frm = page_config_forms[form_id];
+			var form;
+			if(frm.form){
+				if(frm.form.id){
+					form = document.getElementById(frm.form.id);
+				}else if(frm.form.jquery){
+					form = $(frm.form.jquery);
+				}else if(frm.form.name){
+					var elms = document.getElementsByName(frm.form.name);
+					if(elms && elms.length){
+						form = elms[0];
+					//}else{
+					//	alert('qTranslate-X misconfiguraton: form with name "'+frm.form.name+'" is not found.');
+					}
+				}
+			}else{
+				form = document.getElementById(form_id);
+			}
+			if(!form){
+				form = getWrapForm();
+				if(!form) form = document;
+			}
+			//co('form=',form);
+			//c('frm.fields.length='+frm.fields.length);
+			//for(var f=0; f < frm.fields.length; ++f){
+			//	var fld = frm.fields[f];
+			for(var handle in frm.fields){
+				var fld = frm.fields[handle];
+				//c('encode='+fld.encode);
+				//c('id='+fld.id);
+				//c('class='+fld.class);
+				var containers=[];
+				if(fld.container_id){
+					var container = document.getElementById(fld.container_id);
+					if(container) containers.push(container);
+				}else if(fld.container_jquery){
+					containers = $(fld.container_jquery);
+				}else if(fld.container_class){
+					containers = document.getElementsByClassName(fld.container_class);
+				}else{// if(form){
+					containers.push(form);
+				}
+				var sep = fld.encode;
+				switch( sep ){
+					case 'none': continue;
+					case 'display':
+						if(fld.jquery){
+							for(var i=0; i < containers.length; ++i){
+								var container = containers[i];
+								//$(container).find(fld.jquery).each(function(i,e){qtx.addDisplayHook(e);});//also ok
+								var fields = jQuery(container).find(fld.jquery);
+								//co('addPageHooks:display: jquery='+fld.jquery+': fields.length=',fields.length);
+								qtx.addDisplayHooks(fields);
+							}
+						}else{
+							var id = fld.id ? fld.id : handle;
+							//co('addPageHooks:display: id=',id);
+							qtx.addDisplayHook(document.getElementById(id));
+						}
+						break;
+					case '[':
+					case '<':
+					case 'byline':
+					default:
+						if(fld.jquery){
+							for(var i=0; i < containers.length; ++i){
+								var container = containers[i];
+								//jQuery(container).find(fld.jquery).each(function(i,e){qtx.addContentHook(e,sep);});//also works
+								//co('addPageHooks:content: jquery='+fld.jquery+': container=',container);
+								var fields = jQuery(container).find(fld.jquery);
+								//co('addPageHooks:content: jquery='+fld.jquery+': fields.length=',fields.length);
+								qtx.addContentHooks(fields,sep);
+							}
+						}else{
+							var id = fld.id ? fld.id : handle;
+							//co('addPageHooks:content: id=',id);
+							qtx.addContentHookById(id,sep);
+						}
+						break;
+				}
+			}
+		}
+	}
+/*
+	var addPageHooks=function(page_config_forms)
+	{
 		for(var p=0; p < page_config_forms.length; ++p){
 			var frm = page_config_forms[p];
 			var form;
@@ -847,6 +934,7 @@ var qTranslateX=function(pg)
 			}
 		}
 	}
+*/
 
 	var addContentHooksTinyMCE=function()
 	{
@@ -1161,6 +1249,7 @@ var qTranslateX=function(pg)
 		if(!mb) return;
 		var inside_elems = mb.getElementsByClassName('inside');
 		if(!inside_elems.length) return;//consistency check in case WP did some changes
+		mb.className += ' closed';
 		$(mb).find('.hndle').remove();//original h3 element is replaced with span below
 		var sp = document.createElement('span');
 		mb.insertBefore(sp, inside_elems[0]);
@@ -1178,10 +1267,14 @@ var qTranslateX=function(pg)
 		//create sets of LSB
 		var anchors=[];
 		if(qTranslateConfig.page_config && qTranslateConfig.page_config.anchors){
-			for(var i=0; i < qTranslateConfig.page_config.anchors.length; ++i){
-				var anchor = qTranslateConfig.page_config.anchors[i];
-				var f = document.getElementById(anchor.id);
+			//for(var i=0; i < qTranslateConfig.page_config.anchors.length; ++i){
+			//	var anchor = qTranslateConfig.page_config.anchors[i];
+			//	var f = document.getElementById(anchor.id);
+			for(var id in qTranslateConfig.page_config.anchors){
+				var f = document.getElementById(id);
 				if(!f) continue;
+				var anchor = qTranslateConfig.page_config.anchors[id];
+				anchor.id = id;
 				anchor.f = f;
 				anchors.push(anchor);
 			}

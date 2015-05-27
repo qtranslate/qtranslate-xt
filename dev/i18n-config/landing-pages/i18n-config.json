@@ -1,0 +1,20 @@
+{"vendor":{"plugins/landing-pages":"1.0"},
+"admin-config":{
+	"post-landing-page":{
+		"pages":{"post.php":""},
+		"post_type":"landing-page",
+		"forms":{
+			"post":{
+				"fields":{
+					"title":{"encode":"none"},
+					"lp-main-headline":{}
+				}
+			}
+		}
+	},
+	"post-new-landing-page": {
+		"pages":{"post-new.php": "post_type=landing-page"},
+		"post_type":{"exclude": "landing-page"}
+	}
+}
+}

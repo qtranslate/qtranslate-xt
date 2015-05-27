@@ -97,6 +97,9 @@ Developers: please drop new topics here, the text will be moved to [qTranslate-X
 
 ## Changelog ##
 
+### 3.3.5 ###
+* Feature: [Integration Framework](https://qtranslatexteam.wordpress.com/integration/) finalizing JSON file format.
+* Enhancement: function `qtranxf_error_log` to show crucial error messages as admin notices on all admin pages and to update 'error_log' file.
 
 ### 3.3.4 ###
 * Fix: function `qtrans_join`: [WP Topic](https://wordpress.org/support/topic/cant-switch-back-to-default-language).

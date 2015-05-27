@@ -8,6 +8,19 @@ function qtranxf_version_int() {
 }
 
 /**
+ * @since 3.3.2
+ */
+function qtranxf_qtranslate_basename(){
+	$path = QTRANSLATE_DIR;
+	while(true){
+		$dir = dirname($path);
+		if(!$dir || $dir == '.' ) return 'qtranslate-x';
+		if(basename($dir) == 'plugins') return basename($path);
+		$path = $dir;
+	}
+}
+
+/**
  * Save language properties from configuration $cfg to database
  * @since 3.3
  */
@@ -67,6 +80,21 @@ function qtranxf_default_default_language()
 /**
  * @since 3.3.2
  */
+function qtranxf_merge_config($cfg_all, $cfg){
+	//return array_merge_recursive($cfg_all,$cfg);
+	foreach($cfg as $k => $v){
+		if(is_array($v) && isset($cfg_all[$k])){
+			$cfg_all[$k] = qtranxf_merge_config($cfg_all[$k], $v);
+		}else{
+			$cfg_all[$k] = $v;
+		}
+	}
+	return $cfg_all;
+}
+
+/**
+ * @since 3.3.2
+ */
 function qtranxf_load_config_files($json_files){
 	$content_dir = null;
 	$qtransx_dir = null;
@@ -85,13 +113,11 @@ function qtranxf_load_config_files($json_files){
 		if(file_exists($ffnm)){
 			$json_files[$k] = $ffnm;
 		}else{
-			qtranxf_error_log(sprintf(__('Could not find file "%s" listed in option "%s".', 'qtranslate'), $fnm, __('Configuration Files', 'qtranslate')));
+			qtranxf_error_log(sprintf(__('Could not find file "%s" listed in option "%s".', 'qtranslate'), $fnm, '<a href="'.admin_url('options-general.php?page=qtranslate-x#integration').'">'.__('Configuration Files', 'qtranslate').'</a>'));
 			unset($json_files[$k]);
 		}
 	}
 
-	//$cfg_admin = array();
-	//$cfg_front = array();
 	$cfg_all = array();
 	foreach($json_files as $fnm){
 		$cfg_json=file_get_contents($fnm);
@@ -99,28 +125,278 @@ function qtranxf_load_config_files($json_files){
 		if($cfg_json){
 			$cfg=json_decode($cfg_json,true);
 			if($cfg){
-				$cfg_all = array_merge_recursive($cfg_all,$cfg);
-				//if(isset($cfg['admin-config'])) $cfg_admin = array_merge_recursive($cfg_admin,$cfg['admin-config']);
-				//if(isset($cfg['front-config'])) $cfg_front = array_merge_recursive($cfg_front,$cfg['front-config']);
+				$cfg_all = qtranxf_merge_config($cfg_all,$cfg);
 			}else{
-				qtranxf_error_log(sprintf(__('Could not parse %s file "%s" listed in option "%s".', 'qtranslate'), 'JSON', $fnm, __('Configuration Files', 'qtranslate')));
+				qtranxf_error_log(sprintf(__('Could not parse %s file "%s" listed in option "%s".', 'qtranslate'), 'JSON', $fnm, '<a href="'.admin_url('options-general.php?page=qtranslate-x#integration').'">'.__('Configuration Files', 'qtranslate').'</a>'));
 			}
 		}else{
-			qtranxf_error_log(sprintf(__('Could not load file "%s" listed in option "%s".', 'qtranslate'), $fnm, __('Configuration Files', 'qtranslate')));
+			qtranxf_error_log(sprintf(__('Could not load file "%s" listed in option "%s".', 'qtranslate'), $fnm, '<a href="'.admin_url('options-general.php?page=qtranslate-x#integration').'">'.__('Configuration Files', 'qtranslate').'</a>'));
 		}
 	}
+	if(!isset($cfg_all['admin-config'])) $cfg_all['admin-config'] = array();
+	if(!isset($cfg_all['front-config'])) $cfg_all['front-config'] = array();
 	return $cfg_all;
 }
 
 /**
- * @since 3.3.2
+ * @since 3.4
  */
-function qtranxf_default_front_config(){
-	$json_files = get_option('qtranslate_config_files', array('./qTranslateX.json'));
-	$cfg = qtranxf_load_config_files($json_files);
-	$cfg_front = isset($cfg['front-config']) ? $cfg['front-config'] : array();
+function qtranxf_get_option_config_files(){
+	return get_option('qtranslate_config_files', array('./i18n-config.json'));
+}
+
+/**
+ * @since 3.4
+ */
+function qtranxf_set_field_jquery(&$f){
+	if(isset($f['jquery'])) return false;
+	if(isset($f['class'])){
+		$jq = '.'.$f['class'];
+		unset($f['class']);
+	}else{
+		$jq = '';
+	}
+	if(isset($f['tag'])){
+		$jq = $f['tag'].$jq;
+		unset($f['tag']);
+	}
+	if(isset($f['name'])){
+		$jq .= '[name="'.$f['name'].'"]';
+		unset($f['name']);
+	}
+	if(empty($jq)) return false;
+	$f['jquery'] = $jq;
+	return true;
+}
+
+/**
+ * @since 3.4
+ */
+function qtranxf_standardize_config_fields($fields){
+	foreach($fields as $k => $f ){
+		if(!is_array($f)) continue;
+		if(isset($f['id'])){
+			$id = $f['id']; unset($f['id']);
+			$fields[$id] = $f;
+			if($id !== $k) unset($fields[$k]);
+		}else if(qtranxf_set_field_jquery($f)){
+			$fields[$k] = $f;
+		}
+	}
+	return $fields;
+}
+
+/**
+ * @since 3.4
+ */
+function qtranxf_standardize_config_anchor( &$anchor ){
+	if(isset($anchor['id'])){
+		$id = $anchor['id'];
+		unset($anchor['id']);
+	}else if(is_string($anchor)){
+		switch($anchor){
+			case '':
+			case 'post':
+			case 'postexcerpt': return null; //do not allow these, to offset obsolete configurations
+			default: $id = $anchor; break;
+		}
+		$anchor = array();
+		$anchor['where'] = 'before';
+	}else{
+		return false;
+	}
+	return $id;
+}
+
+/**
+ * @since 3.4
+ */
+function qtranxf_standardize_front_config($cfg_front){
+	//remove filters with empty priorities
+	foreach($cfg_front as $k => $cfg){
+		if(!isset($cfg['filters'])) continue;
+		if(!empty($cfg['filters']['text'])){
+			foreach($cfg['filters']['text'] as $nm => $pr){
+				if($pr === '') unset($cfg_front[$k]['filters']['text'][$nm]);
+			}
+		}
+		if(!empty($cfg['filters']['url'])){
+			foreach($cfg['filters']['url'] as $nm => $pr){
+				if($pr === '') unset($cfg_front[$k]['filters']['url'][$nm]);
+			}
+		}
+		if(!empty($cfg['filters']['term'])){
+			foreach($cfg['filters']['term'] as $nm => $pr){
+				if($pr === '') unset($cfg_front[$k]['filters']['term'][$nm]);
+			}
+		}
+	}
 	return $cfg_front;
 }
+
+/**
+ * @since 3.4
+ */
+function qtranxf_standardize_admin_config($configs){
+	foreach($configs as $k => $config ){
+		if(!is_array($config)) continue;
+		if($k === 'forms'){
+			foreach($config as $form_id => $frm ){
+				if(isset($frm['form']['id'])){
+					$id = $frm['form']['id']; unset($frm['form']['id']);
+					if(empty($frm['form'])) unset($frm['form']);
+					$configs['forms'][$id] = $frm;
+					if($id !== $form_id) unset($configs['forms'][$form_id]);
+					$form_id = $id;
+				}
+				if(isset($frm['fields'])) $configs['forms'][$form_id]['fields'] = qtranxf_standardize_config_fields($frm['fields']);
+			}
+		}else if($k === 'anchors'){
+			if(empty($config)){
+				unset($configs['anchors']);
+			}else{
+				foreach($configs['anchors'] as $k => $anchor){
+					$id = qtranxf_standardize_config_anchor($anchor);
+					if(is_null($id)){
+						unset($configs['anchors'][$k]);
+					}else if(is_string($id)){
+						$configs['anchors'][$id] = $anchor;
+						if($id !== $k) unset($configs['anchors'][$k]);
+					}
+				}
+				if(empty($configs['anchors'])) unset($configs['anchors']);
+			}
+		}else{
+			$configs[$k] = qtranxf_standardize_admin_config($config);//recursive call
+		}
+	}
+	return $configs;
+}
+
+/**
+ * @since 3.4
+ */
+function qtranxf_standardize_i18n_config($configs){
+	if(isset($configs['admin-config']))
+		$configs['admin-config'] = qtranxf_standardize_admin_config($configs['admin-config']);
+	if(isset($configs['front-config']))
+		$configs['front-config'] = qtranxf_standardize_front_config($configs['front-config']);
+	return $configs;
+}
+
+/**
+ * @since 3.4
+ */
+function qtranxf_load_config_all($json_files, $custom_config){
+	$cfg = qtranxf_load_config_files($json_files);
+	$cfg = qtranxf_merge_config($cfg, $custom_config);
+	$cfg = qtranxf_standardize_i18n_config($cfg);
+	return $cfg;
+}
+
+/**
+ * @since 3.4
+ */
+function qtranxf_update_config_options($config_files){
+	//qtranxf_dbg_log('qtranxf_update_config_options: $config_files: ',$config_files);
+	update_option('qtranslate_config_files',$config_files);
+	$custom_config = get_option('qtranslate_custom_i18n_config', array());
+	$cfg = qtranxf_load_config_all($config_files, $custom_config);
+	update_option('qtranslate_admin_config', $cfg['admin-config']);
+	update_option('qtranslate_front_config', $cfg['front-config']);
+}
+
+/**
+ * @since 3.4
+ */
+function qtranxf_search_config_files(){
+	$found = array();
+	$plugins = wp_get_active_and_valid_plugins();
+	$n = strlen(WP_CONTENT_DIR);
+	foreach( $plugins as $plugin ){
+		$dir = dirname($plugin);
+		$bnm = basename($dir);
+		if(strpos($bnm,'qtranslate') !== FALSE) continue;
+		if($bnm == basename(QTRANSLATE_DIR)) continue;
+		$fn = $dir.'/i18n-config.json';
+		if(!file_exists($fn)) continue;
+		if(substr($fn,0,$n) == WP_CONTENT_DIR){
+			$path = substr($fn,$n+1);
+		}else{
+			$path = $fn;
+		}
+		$found[] = $path;
+	}
+	return $found;
+}
+
+/**
+ * Inserts new entry at the second position, for now.
+ * Later we may need to preserve order somehow.
+ * @since 3.4
+ */
+function qtranxf_add_config_file($config_files, $fn){
+	$a = array_slice($config_files,0,1);
+	$a[] = $fn;
+	foreach(array_slice($config_files,1) as $f){
+		if(!is_string($f)) continue;
+		$a[] = $f;
+	}
+	return $a;
+}
+
+/**
+ * @since 3.4
+ */
+function qtranxf_update_config_files(){
+	$config_files = qtranxf_get_option_config_files();
+	$config_files_found = qtranxf_search_config_files();
+	$changed = false;
+	foreach($config_files_found as $fn){
+		if(in_array($fn,$config_files)) continue;
+		$config_files = qtranxf_add_config_file($config_files, $fn);
+		$changed = true;
+	}
+	//qtranxf_dbg_log('qtranxf_update_config_files: $config_files: ',$config_files);
+	qtranxf_update_config_options($config_files);
+}
+
+function qtranxf_on_activate_plugin($plugin, $network_wide = false)
+{
+	//qtranxf_dbg_log('qtranxf_on_activate_plugin: $plugin: ',$plugin);
+	$dir = dirname($plugin);
+	$qtx = qtranxf_qtranslate_basename();
+	if($dir == $qtx) return;
+	$fn = WP_PLUGIN_DIR.'/'.$dir.'/i18n-config.json';
+	if(!file_exists($fn)) return;
+	$n = strlen(WP_CONTENT_DIR);
+	if(substr($fn,0,$n) == WP_CONTENT_DIR) $fn = substr($fn,$n+1);
+	//qtranxf_dbg_log('qtranxf_on_activate_plugin: $fn: ',$fn);
+	$config_files = qtranxf_get_option_config_files();
+	if(in_array($fn,$config_files)) return;
+	$config_files = qtranxf_add_config_file($config_files, $fn);
+	qtranxf_update_config_options($config_files);
+}
+add_action( 'activate_plugin', 'qtranxf_on_activate_plugin' );
+
+function qtranxf_on_deactivate_plugin($plugin, $network_deactivating = false)
+{
+	//qtranxf_dbg_log('qtranxf_on_deactivate_plugin: $plugin: ',$plugin);
+	$dir = dirname($plugin);
+	$qtx = qtranxf_qtranslate_basename();
+	if($dir == $qtx) return;
+	$fn = WP_PLUGIN_DIR.'/'.$dir.'/i18n-config.json';
+	if(!file_exists($fn)) return;
+	$n = strlen(WP_CONTENT_DIR);
+	if(substr($fn,0,$n) == WP_CONTENT_DIR) $fn = substr($fn,$n+1);
+	//qtranxf_dbg_log('qtranxf_on_deactivate_plugin: $fn: ',$fn);
+	$config_files = qtranxf_get_option_config_files();
+	$i = array_search($fn,$config_files);
+	if($i === FALSE) return;
+	unset($config_files[$i]);
+	qtranxf_update_config_options($config_files);
+}
+add_action( 'deactivate_plugin', 'qtranxf_on_deactivate_plugin' );
 
 function qtranxf_activation_hook()
 {
@@ -141,11 +417,7 @@ function qtranxf_activation_hook()
 
 	//deactivate_plugins(plugin_basename(QTRANSLATE_FILE)); // Deactivate ourself
 
-	if(get_option('qtranslate_front_config')===false){
-		//option 'front_config' must exist in order for front-end to function properly
-		$front_config = qtranxf_default_front_config();
-		update_option('qtranslate_front_config', $front_config);
-	}
+	qtranxf_update_config_files();
 
 	$next_thanks = get_option('qtranslate_next_thanks');
 	if($next_thanks !== false && $next_thanks < time()+7*24*60*60){
@@ -169,8 +441,17 @@ function qtranxf_activation_hook()
 		}
 	}
 
+	//clear file debug-qtranslate.log
 	$f=WP_CONTENT_DIR.'/debug-qtranslate.log';
-	if(file_exists($f)) unlink($f);
+	if(file_exists($f)){
+		if(WP_DEBUG){
+			$fh = fopen($f, "a+");
+			ftruncate($fh,0);
+			fclose($fh);
+		}else{
+			unlink($f);
+		}
+	}
 }
 
 function qtranxf_admin_notice_first_install(){
@@ -224,7 +505,10 @@ function qtranxf_admin_notices_version()
 	$ver_cur = qtranxf_version_int();
 	$ver_prv = get_option('qtranslate_version_previous',$ver_cur);
 	if($ver_cur == $ver_prv) return;
-	if($ver_prv < 33000 && $ver_cur >= 32980) qtranxf_admin_notices_new_options(array('Highlight Style','LSB Style'),'3.3','https://qtranslatexteam.wordpress.com/2015/03/30/release-notes-3-3');
+
+	if($ver_prv < 33000 && $ver_cur >= 32980) qtranxf_admin_notices_new_options(array(__('Highlight Style', 'qtranslate'),__('LSB Style', 'qtranslate')),'3.3','https://qtranslatexteam.wordpress.com/2015/03/30/release-notes-3-3');
+
+	if($ver_prv < 34000 && $ver_cur >= 32980) qtranxf_admin_notices_new_options(array('<a href="'.admin_url('options-general.php?page=qtranslate-x#integration').'">'.__('Configuration Files', 'qtranslate').'</a>'),'3.4','https://qtranslatexteam.wordpress.com/2015/05/15/release-notes-3-4/');
 }
 add_action('admin_notices', 'qtranxf_admin_notices_version');
 

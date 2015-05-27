@@ -1,6 +1,8 @@
 <?php
 if ( !defined( 'WP_ADMIN' ) ) exit;
 
+//define('','');
+
 function qtranxf_admin_set_default_options(&$ops){
 	//options processed in a standardized way
 	$ops['admin'] = array();
@@ -12,7 +14,6 @@ function qtranxf_admin_set_default_options(&$ops){
 
 	$ops['admin']['bool']=array(
 		'auto_update_mo' => true,// automatically update .mo files
-		//'plugin_js_composer_off' => false
 	);
 
 	//single line options
@@ -28,34 +29,16 @@ function qtranxf_admin_set_default_options(&$ops){
 	);
 
 	$ops['admin']['array']=array(
-		'config_files' => './qTranslateX.json',
-		'page_configs' => 'qtranxf_default_page_configs',
+		'config_files' => './i18n-config.json',
+		'admin_config' => array(),
+		'custom_i18n_config' => array(),
 		'custom_fields' => array(),
 		'custom_field_classes' => array(),
-		'custom_pages' => array(),
+		//'custom_pages' => array(),
 		'post_type_excluded' => array(),
 	);
 
 	//options processed in a special way
-}
-
-/**
- * Load 'page_configs' from *.json files listed in option 'config_files'.
- * @since 3.3.1
- */
-function qtranxf_default_page_configs(){
-	global $q_config;
-	$json_files = $q_config['config_files'];
-	$cfg = qtranxf_load_config_files($json_files);
-	if(empty($cfg)) return array();
-	if(current_user_can('manage_options')){
-		$cfg_front = isset($cfg['front-config']) ? $cfg['front-config'] : array();
-		if($q_config['front_config'] !== $cfg_front){
-			$q_config['front_config'] = $cfg_front;
-			qtranxf_update_option('front_config');
-		}
-	}
-	return $cfg['admin-config'];
 }
 
 /**
@@ -151,11 +134,12 @@ function qtranxf_reset_config()
 	foreach($qtranslate_options['default_value'] as $nm => $def){ delete_option('qtranslate_'.$nm); }
 	foreach($qtranslate_options['languages'] as $nm => $opn){ delete_option($opn); }
 
-	//internal private options not loaded by default
+	// internal private options not loaded by default
 	delete_option('qtranslate_next_update_mo');
 	delete_option('qtranslate_next_thanks');
 
 	// obsolete options
+	delete_option('qtranslate_custom_pages');
 	delete_option('qtranslate_plugin_js_composer_off');
 	delete_option('qtranslate_widget_css');
 	delete_option('qtranslate_version');
@@ -389,6 +373,26 @@ function qtranxf_updateSetting($var, $type = QTX_STRING, $def = null) {
 	return false;
 }
 
+/**
+ * Updates 'admin_config' and 'front_config' from *.json files listed in option 'config_files', and option 'custom_i18n_config'.
+ * @since 3.3.1
+ */
+function qtranxf_update_i18n_config(){
+	global $q_config;
+	//qtranxf_dbg_log('qtranxf_update_i18n_config: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
+	$json_files = $q_config['config_files'];
+	$custom_i18n_config = $q_config['custom_i18n_config'];
+	$cfg = qtranxf_load_config_all($json_files,$custom_i18n_config);
+	if($q_config['admin_config'] !== $cfg['admin-config']){
+		$q_config['admin_config'] = $cfg['admin-config'];
+		qtranxf_update_option('admin_config');
+	}
+	if($q_config['front_config'] !== $cfg['front-config']){
+		$q_config['front_config'] = $cfg['front-config'];
+		qtranxf_update_option('front_config');
+	}
+}
+
 function qtranxf_updateSettingFlagLocation($nm) {
 	global $q_config;
 	if(!isset($_POST['submit'])) return false;
@@ -496,7 +500,7 @@ function qtranxf_updateSettings()
 		$id='language_domain_'.$lang;
 		if(!isset($_POST[$id])) continue;
 		$domain = preg_replace('#^/*#','',untrailingslashit(trim($_POST[$id])));
-		//qtranxf_dbg_echo('qtranxf_conf: domain['.$lang.']: ',$domain);
+		//qtranxf_dbg_log('qtranxf_updateSettings: domain['.$lang.']: ',$domain);
 		$domains[$lang] = $domain;
 	}
 	if( !empty($domains) && (!isset($q_config['domains']) || !qtranxf_array_compare($q_config['domains'],$domains)) ){
@@ -508,19 +512,22 @@ function qtranxf_updateSettings()
 
 	//special cases handling
 
-	if(isset($_POST['json_page_configs'])){
-		$cfg_json = sanitize_text_field(stripslashes($_POST['json_page_configs']));
+	if(isset($_POST['json_custom_i18n_config'])){
+		$cfg_json = sanitize_text_field(stripslashes($_POST['json_custom_i18n_config']));
 		if(empty($cfg_json)){
-			$_POST['page_configs'] = array();
+			$_POST['custom_i18n_config'] = array();
 		}else{
 			$cfg = json_decode($cfg_json,true);
 			if($cfg){
-				$_POST['page_configs'] = $cfg;
+				$_POST['custom_i18n_config'] = $cfg;
+				unset($_POST['json_custom_i18n_config']);
 			}else{
-				$errors[] = sprintf(__('Cannot parse JSON code in the field "%s".', 'qtranslate'), __('Page Configurations', 'qtranslate'));
+				$_POST['json_custom_i18n_config'] = stripslashes($_POST['json_custom_i18n_config']);
+				$errors[] = sprintf(__('Cannot parse JSON code in the field "%s".', 'qtranslate'), __('Custom Configuration', 'qtranslate'));
 			}
 		}
 	}
+
 	if($_POST['highlight_mode'] != QTX_HIGHLIGHT_MODE_CUSTOM_CSS){
 		$_POST['highlight_mode_custom_css'] = '';
 	}
@@ -528,10 +535,6 @@ function qtranxf_updateSettings()
 		$_POST['lsb_style_wrap_class'] = '';
 		$_POST['lsb_style_active_class'] = '';
 	}
-
-	//if(!(isset($_POST['plugin_js_composer']) && $_POST['plugin_js_composer']=='1')){
-	//	$_POST['plugin_js_composer_off'] = '1';
-	//}
 
 	qtranxf_parse_post_type_excluded();
 
@@ -555,5 +558,13 @@ function qtranxf_updateSettings()
 		qtranxf_updateSetting($nm, QTX_ARRAY, $def);
 	}
 
+	qtranxf_update_i18n_config();
+
+	if(isset($q_config['errors'])){
+		foreach($q_config['errors'] as $msg){
+			$errors[] = $msg;
+		}
+		unset($q_config['errors']);
+	}
 	return $errors;
 }

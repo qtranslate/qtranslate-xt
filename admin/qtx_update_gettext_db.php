@@ -1,7 +1,7 @@
 <?php
 if ( !defined( 'WP_ADMIN' ) ) exit;
 
-function qtranxf_updateGettextDatabases($force = false, $only_for_language = '') {
+function qtranxf_updateGettextDatabasesEx($force = false, $only_for_language = '') {
 	global $q_config;
 	if($only_for_language && !qtranxf_isEnabled($only_for_language)) return false;
 	if(!is_dir(WP_LANG_DIR)) {

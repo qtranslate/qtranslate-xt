@@ -11,7 +11,7 @@ require_once(QTRANSLATE_DIR.'/qtranslate_widget.php');
 /**
  * Implementation of WP_Translator interface.
  * For a function documentation look up definition of WP_Translator.
- * @since 3.3.4
+ * @since 3.4
 */
 class QTX_Translator implements WP_Translator
 {
