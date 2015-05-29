@@ -524,7 +524,7 @@ msgstr ""
 
 #: admin/qtx_configuration.php:936
 #, php-format
-msgid "Review a combined JSON-encoded configuration as loaded from options %s and \"%s\", as well as from the theme and other plugins via filters %s and %s."
+msgid "Review a combined JSON-encoded configuration as loaded from options %s and %s, as well as from the theme and other plugins via filters %s and %s."
 msgstr ""
 
 #: admin/qtx_configuration.php:937 admin/qtx_configuration.php:1243
