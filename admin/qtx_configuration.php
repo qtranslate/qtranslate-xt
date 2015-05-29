@@ -933,7 +933,7 @@ function qtranxf_conf() {
 <p class="qtranxs_notes" style="font-size: small"><a href="<?php echo admin_url('options-general.php?page=qtranslate-x#integration') ?>"><?php _e('back to configuration page', 'qtranslate') ?></a></p>
 <h3 class="heading"><?php _e('Configuration Inspector', 'qtranslate') ?></h3>
 <p class="qtranxs_explanation">
-<?php printf(__('Review a combined JSON-encoded configuration as loaded from options %s and "%s", as well as from the theme and other plugins via filters %s and %s.', 'qtranslate'), '"'.__('Configuration Files', 'qtranslate').'"', '"'.__('Custom Configuration', 'qtranslate').'"', '"i18n_admin_config"', '"i18n_front_config"');
+<?php printf(__('Review a combined JSON-encoded configuration as loaded from options %s and %s, as well as from the theme and other plugins via filters %s and %s.', 'qtranslate'), '"'.__('Configuration Files', 'qtranslate').'"', '"'.__('Custom Configuration', 'qtranslate').'"', '"i18n_admin_config"', '"i18n_front_config"');
 echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 'qtranslate'), '<a href="https://qtranslatexteam.wordpress.com/integration/" target="_blank">', '</a>'); ?></p>
 <p class="qtranxs_explanation"><textarea class="widefat" rows="30"><?php echo json_encode($configs,JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES); ?></textarea></p>
 <p class="qtranxs_notes" style="font-size: small"><?php printf(__('Note to developers: ensure that front-end filter %s is also active on admin side, otherwise the changes it makes will not show up here. Having this filter active on admin side does not affect admin pages functionality, except this field.', 'qtranslate'), '"i18n_front_config"') ?></p>
