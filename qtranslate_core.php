@@ -493,10 +493,11 @@ function qtranxf_flag_location() {
 }
 
 function qtranxf_flag_location_default() {
-	//$q_config['flag_location'] = 'plugins/qtranslate-x/flags/';
-	$plugindir = dirname(plugin_basename( __FILE__ ));
-	return 'plugins/'.$plugindir.'/flags/';
+
+	$plugindir = ltrim( str_replace( WP_CONTENT_DIR, '', plugin_dir_path( __FILE__ ) ), '/\\' );
+	return path_join( $plugindir, 'flags/' );
 }
+
 
 function qtranxf_load_option_flag_location($nm) {
 	global $q_config;
