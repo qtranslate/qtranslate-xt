@@ -6,52 +6,58 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 add_filter('wp_translator', 'QTX_Translator::get_translator');
 
+function qtranxf_get_front_page_config($post_type) {
+	static $page_config;
+	if($page_config) return $page_config;
+
+	global $q_config;
+	$url_path = $q_config['url_info']['wp-path'];
+	$url_query = isset($q_config['url_info']['query']) ? $q_config['url_info']['query'] : '';
+
+	$front_config = $q_config['front_config'];
+	/**
+	 * Customize the front configuration for all pages.
+	 * @param (array) $front_config token 'front-config' of the configuration.
+	 */
+	$front_config = apply_filters('i18n_front_config', $front_config);
+	//qtranxf_dbg_log('qtranxf_get_front_page_config: $front_config: ', json_encode($front_config,JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES));
+
+	$page_config = qtranxf_parse_page_config($front_config, $url_path, $url_query, $post_type);
+	/**
+	 * Customize the $page_config for this front request.
+	 * @param (array) $page_config 'front_config', filtered for the current page.
+	 * @param (string) $url_path URL path without 'Site Address (URL)'.
+	 * @param (string) $url_query query part of URL without '?', sanitized version of $_SERVER['QUERY_STRING'].
+	 * @param (string) $post_type type of post serving on the current page, or null if not applicable.
+	 */
+	$page_config = apply_filters('i18n_front_page_config', $page_config, $url_path, $url_query, $post_type);
+	//qtranxf_dbg_log('qtranxf_get_front_page_config: $url_path='.$url_path.'; $url_query='.$url_query.'; $post_type='.$post_type.'; $page_config: ', json_encode($page_config,JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES));
+	return $page_config;
+}
+
 /**
  * Response to action 'init', which runs after user is authenticated
  * @since 3.3.2
  */
-function qtranxf_init_front(){
+function qtranxf_front_init(){
 	global $q_config;
 	if($q_config['hide_untranslated']){
 		add_filter('wp_list_pages_excludes', 'qtranxf_excludePages');//moved here from _hooks.php since 3.2.8
 		add_filter('posts_where_request', 'qtranxf_excludeUntranslatedPosts',10,2);
 		add_filter('comments_clauses','qtranxf_excludeUntranslatedPostComments',10,2);
 	}
+
 	foreach($q_config['text_field_filters'] as $nm){
 		add_filter($nm, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage');
 	}
 
-	$front_config = apply_filters('i18n_front_config',$q_config['front_config']);
-	if(!empty($front_config)){
-		foreach($front_config as $k => $cfg){
-			//todo may be filtered by 'pages'
-			if(!isset($cfg['filters'])) continue;
-			$filters = $cfg['filters'];
-			if(!empty($filters['text'])){
-				//qtranxf_dbg_log('$filters[text]: ',$filters['text']);
-				foreach($filters['text'] as $nm => $pr){
-					if($pr === '') continue;
-					add_filter($nm, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', $pr);
-				}
-			}
-			if(!empty($filters['url'])){
-				//qtranxf_dbg_log('$filters[url]: ',$filters['url']);
-				foreach($filters['url'] as $nm => $pr){
-					if($pr === '') continue;
-					add_filter($nm, 'qtranxf_convertURL', $pr);
-				}
-			}
-			if(!empty($filters['term'])){
-				//qtranxf_dbg_log('$filters[term]: ',$filters['term']);
-				foreach($filters['term'] as $nm => $pr){
-					if($pr === '') continue;
-					add_filter($nm, 'qtranxf_useTermLib', $pr);
-				}
-			}
-		}
+	$post_type = qtranxf_post_type();
+	$page_config = qtranxf_get_front_page_config($post_type);
+	if(!empty($page_config)){
+		qtranxf_add_filters($page_config);
 	}
 }
-add_action('init','qtranxf_init_front');
+add_action('init','qtranxf_front_init');
 
 function qtranxf_wp_head(){
 	global $q_config;

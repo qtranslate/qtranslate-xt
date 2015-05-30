@@ -1,7 +1,7 @@
 <?php
 if ( !defined( 'WP_ADMIN' ) ) exit;
 
-//define('','');
+require_once(QTRANSLATE_DIR.'/admin/qtx_admin_utils.php');
 
 function qtranxf_admin_set_default_options(&$ops){
 	//options processed in a standardized way
@@ -90,6 +90,10 @@ function qtranxf_admin_loadConfig()
 
 	foreach($qtranslate_options['admin']['array'] as $nm => $def){
 		qtranxf_load_option_array($nm,$def);
+	}
+
+	if(empty($q_config['admin_config'])){
+		qtranxf_update_i18n_config();
 	}
 
 	// Set Admin Sections Names
@@ -436,7 +440,7 @@ function qtranxf_parse_post_type_excluded() {
 	if(!isset($_POST['submit'])) return false;
 	$post_types = get_post_types();
 	if(isset($_POST['post_types'])){
-		//qtranxf_dbg_log('qtranxf_conf: $_POST[post_types]: ',$_POST['post_types']);
+		//qtranxf_dbg_log('qtranxf_parse_post_type_excluded: $_POST[post_types]: ',$_POST['post_types']);
 		if(!is_array($_POST['post_types'])) return false;
 		$post_type_excluded = array();
 		foreach ( $post_types as $post_type ) {
@@ -445,12 +449,12 @@ function qtranxf_parse_post_type_excluded() {
 			$post_type_excluded[] = $post_type;
 		}
 	}else{
-		//qtranxf_dbg_log('qtranxf_conf: $_POST[post_types] is not set');
+		//qtranxf_dbg_log('qtranxf_parse_post_type_excluded: $_POST[post_types] is not set');
 		$post_type_excluded = $post_types;
 	}
 	unset($_POST['post_types']);
 	$_POST['post_type_excluded'] = $post_type_excluded;
-	//qtranxf_dbg_log('qtranxf_conf: $_POST[post_type_excluded]: ',$_POST['post_type_excluded']);
+	//qtranxf_dbg_log('qtranxf_parse_post_type_excluded: $_POST[post_type_excluded]: ',$_POST['post_type_excluded']);
 }
 
 function qtranxf_updateSettings()

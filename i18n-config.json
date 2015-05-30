@@ -20,12 +20,14 @@
 }
 ,
 "options-general":{
-	"pages":{"options-general.php":"^$"},
+	"preg_delimiter":"#",
+	"pages":{"options-general.php":"^(?!.*page=[^=&]+).*$"},
 	"forms":{
 		"options":{
 			"fields":{
 				"blogname":{},
-				"blogdescription":{}
+				"blogdescription":{},
+				"head-title":{"jquery":"head title", "encode":"display"}
 			}
 		}
 	}

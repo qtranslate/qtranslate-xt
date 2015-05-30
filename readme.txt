@@ -97,6 +97,14 @@ Developers: please drop new topics here, the text will be moved to [qTranslate-X
 
 ## Changelog ##
 
+### 3.4 stable ###
+* Includes all changes after version 3.3. Please, review [Release Notes](https://qtranslatexteam.wordpress.com/2015/05/15/release-notes-3-4/).
+* Major new feature: [Integration Framework](https://qtranslatexteam.wordpress.com/integration/) is finalized in its first edition.
+* Translation: a lot of thanks to all translators contributed.
+
+### 3.3.6 ###
+* Feature: finalizing [Integration Framework](https://qtranslatexteam.wordpress.com/integration/).
+
 ### 3.3.5 ###
 * Feature: [Integration Framework](https://qtranslatexteam.wordpress.com/integration/) finalizing JSON file format.
 * Enhancement: function `qtranxf_error_log` to show crucial error messages as admin notices on all admin pages and to update 'error_log' file.

@@ -10,7 +10,7 @@ function qtranxf_version_int() {
 /**
  * @since 3.3.2
  */
-function qtranxf_qtranslate_basename(){
+function qtranxf_qtranslate_basedirname(){
 	$path = QTRANSLATE_DIR;
 	while(true){
 		$dir = dirname($path);
@@ -365,7 +365,7 @@ function qtranxf_on_activate_plugin($plugin, $network_wide = false)
 {
 	//qtranxf_dbg_log('qtranxf_on_activate_plugin: $plugin: ',$plugin);
 	$dir = dirname($plugin);
-	$qtx = qtranxf_qtranslate_basename();
+	$qtx = qtranxf_qtranslate_basedirname();
 	if($dir == $qtx) return;
 	$fn = WP_PLUGIN_DIR.'/'.$dir.'/i18n-config.json';
 	if(!file_exists($fn)) return;
@@ -383,8 +383,14 @@ function qtranxf_on_deactivate_plugin($plugin, $network_deactivating = false)
 {
 	//qtranxf_dbg_log('qtranxf_on_deactivate_plugin: $plugin: ',$plugin);
 	$dir = dirname($plugin);
-	$qtx = qtranxf_qtranslate_basename();
-	if($dir == $qtx) return;
+	$qtx = qtranxf_qtranslate_basedirname();
+	if($dir == $qtx){
+		if($dir == 'qtranslate-x'){//not testing version
+			$ver_cur = qtranxf_version_int();
+			update_option('qtranslate_version_previous',$ver_cur);
+		}
+		return;
+	}
 	$fn = WP_PLUGIN_DIR.'/'.$dir.'/i18n-config.json';
 	if(!file_exists($fn)) return;
 	$n = strlen(WP_CONTENT_DIR);
@@ -401,21 +407,31 @@ add_action( 'deactivate_plugin', 'qtranxf_on_deactivate_plugin' );
 function qtranxf_activation_hook()
 {
 	//global $q_config;
+	if(version_compare(PHP_VERSION, '5.2.0') < 0){
+		// Deactivate ourself
+		$plugin_dir = qtranxf_qtranslate_basedirname();
+		$lang_dir = $plugin_dir.'/lang';
+		load_plugin_textdomain('qtranslate', false, $lang_dir);
+		$msg = sprintf(__('Plugin %s requires PHP version %s at least. This server instance runs PHP version %s. A PHP version %s or higher is recommended. The plugin has not been activated.', 'qtranslate'), '<a href="https://wordpress.org/plugins/qtranslate-x/" style="color:blue" target="_blank">qTranslate&#8209;X</a>', '5.2.0', PHP_VERSION, '5.4.0');
+		deactivate_plugins($plugin_dir.'/qtranslate.php');
+		//deactivate_plugins(plugin_basename(QTRANSLATE_FILE));
+		wp_die( $msg );
+	}
 
 	// Check if other qTranslate forks are activated.
+	require_once(QTRANSLATE_DIR.'/admin/qtx_admin_options.php');
+	require_once(QTRANSLATE_DIR.'/admin/qtx_import_export.php');
 	if ( is_plugin_active( 'mqtranslate/mqtranslate.php' ) )
-		qtranxf_admin_notice_deactivate_plugin('mqTranslate','mqtranslate/mqtranslate.php');
+		qtranxf_admin_notice_deactivate_plugin('mqTranslate', 'mqtranslate/mqtranslate.php');
 
 	if ( is_plugin_active( 'qtranslate/qtranslate.php' ) )
-		qtranxf_admin_notice_deactivate_plugin('qTranslate','qtranslate/qtranslate.php');
+		qtranxf_admin_notice_deactivate_plugin('qTranslate', 'qtranslate/qtranslate.php');
 
 	if ( is_plugin_active( 'qtranslate-xp/ppqtranslate.php' ) )
-		qtranxf_admin_notice_deactivate_plugin('qTranslate Plus','qtranslate-xp/ppqtranslate.php');
+		qtranxf_admin_notice_deactivate_plugin('qTranslate Plus', 'qtranslate-xp/ppqtranslate.php');
 
 	if ( is_plugin_active( 'ztranslate/ztranslate.php' ) )
-		qtranxf_admin_notice_deactivate_plugin('zTranslate','ztranslate/ztranslate.php');
-
-	//deactivate_plugins(plugin_basename(QTRANSLATE_FILE)); // Deactivate ourself
+		qtranxf_admin_notice_deactivate_plugin('zTranslate', 'ztranslate/ztranslate.php');
 
 	qtranxf_update_config_files();
 
@@ -442,6 +458,7 @@ function qtranxf_activation_hook()
 	}
 
 	//clear file debug-qtranslate.log
+	//$f=null; //qtranxf_dbg
 	$f=WP_CONTENT_DIR.'/debug-qtranslate.log';
 	if(file_exists($f)){
 		if(WP_DEBUG){
@@ -468,25 +485,23 @@ function qtranxf_admin_notice_first_install(){
 }
 add_action('admin_notices', 'qtranxf_admin_notice_first_install');
 
-function qtranxf_admin_notice_deactivate_plugin($nm,$plugin)
+function qtranxf_admin_notice_deactivate_plugin($nm, $plugin)
 {
 	deactivate_plugins($plugin,true);
 	$d=dirname($plugin);
 	$link='<a href="https://wordpress.org/plugins/'.$d.'/" target="_blank">'.$nm.'</a>';
 	$qtxnm='qTranslate&#8209;X';
 	$qtxlink='<a href="https://wordpress.org/plugins/qtranslate-x/" target="_blank">'.$qtxnm.'</a>';
-	$imported=false;
-	//if($first_install){
+	$imported = false;
 	$f='qtranxf_migrate_import_'.str_replace('-','_',dirname($plugin));
 	if(function_exists($f)){
 		global $wpdb;
 		$options = $wpdb->get_col("SELECT `option_name` FROM {$wpdb->options} WHERE `option_name` LIKE 'qtranslate_%'");
 		if(empty($options)){
 			$f();
-			$imported=true;
+			$imported = true;
 		}
 	}
-	//}
 	$s = '</p><p>'.sprintf(__('It might be a good idea to review %smigration instructions%s, if you have not yet done so.', 'qtranslate'),'<a href="https://qtranslatexteam.wordpress.com/2015/02/24/migration-from-other-multilingual-plugins/" target="_blank">','</a>').'</p><p><a class="button" href="">';
 	$msg=sprintf(__('Activation of plugin %s deactivated plugin %s since they cannot run simultaneously.', 'qtranslate'), $qtxlink, $link).' ';
 	if($imported){

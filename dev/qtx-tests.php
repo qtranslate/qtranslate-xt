@@ -63,3 +63,21 @@ function qtranxf_test_meta_cache() {
 	//qtranxf_tst_log('qtranxf_test_meta_cache: views_expected='.$views.'; $views_fetched=',$views_fetched);
 }
 //add_filter( 'wp_head', 'qtranxf_test_meta_cache', 1 );// */
+
+/*
+"customize":{
+	"pages":{"customize.php":""},
+	"anchors":{"customize-control-blogname":{"where":"first"}},
+	"forms":{
+		"customize-controls":{
+			"fields":{
+				"blogname":{"jquery":"#customize-control-blogname input", "name":"customized[blogname]"},
+				"blogdescription":{"jquery":"#customize-control-blogdescription input", "name":"customized[blogdescription]"},
+				"preview-notice":{"jquery":"#customize-info span.preview-notice", "encode":"display"},
+				"head-title":{"jquery":"head title", "encode":"display"}
+			}
+		}
+	}
+}
+,
+*/

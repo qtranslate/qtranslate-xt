@@ -84,3 +84,15 @@
 {
 	vertical-align: middle;
 }
+
+#qtranxs-enabled-languages tr td{
+	padding: 0px 5px 0px 0px;
+}
+
+/*
+.form-table, .form-table td, .form-table td p, .form-table th, .form-wrap label
+.qtranxs_notes, .form-table td p.qtranxs_notes{
+*/
+.qtranxs_notes, .form-table td p.qtranxs_notes, .form-wrap p.qtranxs_notes{
+	font-size: smaller;
+}

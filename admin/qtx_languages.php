@@ -52,6 +52,7 @@ function qtranxf_disableLanguage($lang) {
 				$new_enabled[] = $q_config['enabled_languages'][$i];
 			}else{
 				qtranxf_unsetLanguage($q_config,$lang);
+				qtranxf_load_option('header_css','qtranxf_front_header_css_default');
 			}
 		}
 		$q_config['enabled_languages'] = $new_enabled;
@@ -68,6 +69,7 @@ function qtranxf_enableLanguage($lang) {
 	// force update of .mo files
 	if ($q_config['auto_update_mo']) qtranxf_updateGettextDatabases(true, $lang);
 	qtranxf_load_languages_enabled();
+	qtranxf_load_option('header_css','qtranxf_front_header_css_default');
 	return true;
 }
 

@@ -15,6 +15,18 @@
 	"post-new-landing-page": {
 		"pages":{"post-new.php": "post_type=landing-page"},
 		"post_type":{"exclude": "landing-page"}
+	},
+	"post-call-to-action":{
+		"pages":{"post.php":""},
+		"post_type":"wp-call-to-action",
+		"forms":{
+			"post":{
+				"fields":{
+					"title":{"encode":"none"},
+					"variation-notes":{"jquery":".wp-cta-notes"}
+				}
+			}
+		}
 	}
 }
 }

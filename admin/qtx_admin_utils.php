@@ -794,14 +794,15 @@ function qtranxf_meta_box_LSB()
 
 function qtranxf_add_meta_box_LSB($post_type, $post)
 {
-	global $pagenow;
+	global $q_config, $pagenow;
+	if( $q_config['editor_mode'] == QTX_EDITOR_MODE_RAW) return;
 	switch($pagenow){
 		case 'post.php': break;
 		default: return;
 	}
-	if(empty($post_type)) return;
+	if(empty($post_type)) if(isset($post->post_type)) $post_type = $post->post_type; else return;
 	//qtranxf_dbg_log('qtranxf_add_meta_box_LSB: $post_type: ',$post_type);//, true);
-	$page_config = qtranxf_load_admin_page_config($post_type);
+	$page_config = qtranxf_get_admin_page_config_LSB($post_type);
 	if(empty($page_config)) return;
 	//add_meta_box( 'qtranxs-lsb', 'LSB', 'qtranxf_meta_box_LSB', $post_type, 'normal', 'high');
 	add_meta_box( 'qtranxs-meta-box-lsb', qtranxf_translate_wp('Language'), 'qtranxf_meta_box_LSB', null, 'normal', 'low');
@@ -819,6 +820,12 @@ function qtranxf_post_type_optional($post_type) {
 			return false; //no option for this type
 		default: return true;
 	}
+}
+
+function qtranxf_json_encode($o){
+	if(version_compare(PHP_VERSION, '5.4.0') >= 0)
+		return json_encode($o,JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES);
+	return json_encode($o);
 }
 
 add_filter('manage_language_columns', 'qtranxf_language_columns');

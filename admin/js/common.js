@@ -297,14 +297,11 @@ var qTranslateX=function(pg)
 	 *
 	 * @since 3.3.2
 	 */
-	this.addContentHook=function(inpField,separator)
-	//addContentHook=function(inpField,form,separator)//argument 'form' is no longer needed, since 3.3.2
+	this.addContentHook=function(inpField,separator,field_name)
 	{
 		//co('addContentHook: inpField:',inpField);
 		//co('addContentHook: separator:',separator);
 		if( !inpField ) return false;
-		if( !inpField.name ) return false;
-		//if( typeof inpField.value !== 'string' ) return false;
 		switch(inpField.tagName){
 			case 'TEXTAREA': break;
 			case 'INPUT':
@@ -313,6 +310,11 @@ var qTranslateX=function(pg)
 				break;
 			default: return false;
 		}
+		if(!field_name){
+			if( !inpField.name ) return false;
+			field_name = inpField.name;
+		}
+		//if( typeof inpField.value !== 'string' ) return false;
 		if(inpField.id){
 			if(contentHooks[inpField.id]){
 				if(jQuery.contains(document,inpField))
@@ -326,7 +328,7 @@ var qTranslateX=function(pg)
 		//co('addContentHook: id=',inpField.id);
 		var h = contentHooks[inpField.id]={};
 		//h.id = inpField.id;
-		h.name = inpField.name;
+		h.name = field_name;
 		h.contentField=inpField;
 		//c('addContentHook: inpField.value='+inpField.value);
 		h.lang = qTranslateConfig.activeLanguage;
@@ -391,7 +393,7 @@ var qTranslateX=function(pg)
 	this.addContentHookC=function(inpField) { return qtx.addContentHook(inpField,'['); }//'<'
 	this.addContentHookB=function(inpField) { return qtx.addContentHook(inpField,'['); }
 
-	this.addContentHookById=function(id,sep) { return qtx.addContentHook(document.getElementById(id),sep); }
+	this.addContentHookById=function(id,sep,nm) { return qtx.addContentHook(document.getElementById(id),sep,nm); }
 	this.addContentHookByIdName=function(nm)
 	{
 		var sep;
@@ -415,11 +417,11 @@ var qTranslateX=function(pg)
 	 *
 	 * @since 3.1-b2
 	*/
-	this.addContentHooks=function(fields,sep)
+	this.addContentHooks=function(fields,sep,field_name)
 	{
 		for(var i=0; i<fields.length; ++i){
 			var field = fields[i];
-			qtx.addContentHook(field,sep);
+			qtx.addContentHook(field,sep,field_name);
 		}
 	}
 
@@ -715,7 +717,7 @@ var qTranslateX=function(pg)
 	}
 
 	/**
-	 * Parses page configuration, loaded in qtranxf_load_admin_page_config.
+	 * Parses page configuration, loaded in qtranxf_get_admin_page_config.
 	 * @since 3.1-b2
 	*/
 	var addPageHooks=function(page_config_forms)
@@ -792,12 +794,12 @@ var qTranslateX=function(pg)
 								//co('addPageHooks:content: jquery='+fld.jquery+': container=',container);
 								var fields = jQuery(container).find(fld.jquery);
 								//co('addPageHooks:content: jquery='+fld.jquery+': fields.length=',fields.length);
-								qtx.addContentHooks(fields,sep);
+								qtx.addContentHooks(fields,sep,fld.name);
 							}
 						}else{
 							var id = fld.id ? fld.id : handle;
 							//co('addPageHooks:content: id=',id);
-							qtx.addContentHookById(id,sep);
+							qtx.addContentHookById(id,sep,fld.name);
 						}
 						break;
 				}

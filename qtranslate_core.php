@@ -96,9 +96,9 @@ function qtranxf_init_language() {
 	load_plugin_textdomain('qtranslate', false, $lang_dir);
 
 	if($q_config['url_info']['doing_front_end']) {
-		require_once(dirname(__FILE__)."/qtranslate_frontend.php");
+		require_once(QTRANSLATE_DIR.'/qtranslate_frontend.php');
 	}else{
-		require_once(dirname(__FILE__).'/admin/qtx_configuration.php');
+		require_once(QTRANSLATE_DIR.'/admin/qtx_admin.php');
 	}
 	apply_filters('wp_translator', null);//create QTX_Translator object
 
@@ -672,6 +672,13 @@ function qtranxf_loadConfig() {
 	}
 	$q_config['ignore_file_types'] = $val;
 
+	if(empty($q_config['front_config'])){
+		//todo this should be granulated to load only what is needed
+		require_once(QTRANSLATE_DIR.'/admin/qtx_activation_hook.php');
+		require_once(QTRANSLATE_DIR.'/admin/qtx_admin.php');
+		qtranxf_update_i18n_config();
+	}
+
 	do_action('qtranslate_loadConfig');
 }
 
@@ -1056,10 +1063,10 @@ function qtranxf_get_url_for_language($url, $lang, $showLanguage=true) {
 //if (!function_exists('qtranxf_convertURL')){
 /**
  * Encode URL $url with language $lang.
- * @param (string) $url - URL to be converted.
- * @param (string) $lang - two-letter language code of the language to convert $url to.
- * @param (bool) $forceadmin - $url is not converted on admin side, unless $forceadmin is set to true.
- * @param (bool) $showDefaultLanguage - When set to true, $url is always encoded with a language, otherwise it senses option "Hide URL language information for default language" to keep $url consistent with the currently active language.
+ * @param (string) $url URL to be converted.
+ * @param (string) $lang two-letter language code of the language to convert $url to.
+ * @param (bool) $forceadmin $url is not converted on admin side, unless $forceadmin is set to true.
+ * @param (bool) $showDefaultLanguage When set to true, $url is always encoded with a language, otherwise it senses option "Hide URL language information for default language" to keep $url consistent with the currently active language.
  *
  * If you need a URL to switch the language, set $showDefaultLanguage=true, if you need a URL to keep the current language, set it to false.
  */
@@ -1457,6 +1464,7 @@ function qtranxf_use_block($lang, $blocks, $show_available=false, $show_empty=fa
 	//	//qtranxf_dbg_echo('$post='.$post);
 	//}
 
+	$msg = '';
 	if ( !empty($q_config['show_alternative_content']) && $q_config['show_alternative_content'] ) {
 		// show content in  alternative language
 		if(sizeof($available_languages) > 1){
@@ -1479,7 +1487,10 @@ function qtranxf_use_block($lang, $blocks, $show_available=false, $show_empty=fa
 		$altlanguagecontent = '</p>';
 	}
 
-	return '<p class="qtranxs-available-languages-message qtranxs-available-languages-message-'.$lang.'">'.preg_replace('/%LANG:([^:]*):([^%]*)%/', $language_list, $q_config['not_available'][$lang]).$altlanguagecontent;
+	$output = '<p class="qtranxs-available-languages-message qtranxs-available-languages-message-'.$lang.'">'.preg_replace('/%LANG:([^:]*):([^%]*)%/', $language_list, $q_config['not_available'][$lang]).$altlanguagecontent;
+	/* todo documentation
+	*/
+	return apply_filters('i18n_content_translation_not_available', $output, $lang, $language_list, $alt_lang, $alt_content, $msg, $q_config);
 }
 
 

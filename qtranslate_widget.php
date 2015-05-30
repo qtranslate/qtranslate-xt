@@ -14,7 +14,7 @@ opacity: 0.5;
 -webkit-transition: 1s ease opacity;
 transition: 1s ease opacity;
 }
-//.qtranxs_widget ul li span { margin: 0 5px 0 0; } /* other way to control spacing */
+/* .qtranxs_widget ul li span { margin: 0 5px 0 0; } */ /* other way to control spacing */
 .qtranxs_widget ul li.active { opacity: 0.8; }
 .qtranxs_widget ul li:hover { opacity: 1; }
 .qtranxs_widget img { box-shadow: none; vertical-align: middle; }
