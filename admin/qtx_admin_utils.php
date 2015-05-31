@@ -746,7 +746,11 @@ add_action( 'wp_head', 'qtranxf_disable_blog_title_filters' );
 function qtranxf_add_admin_filters(){
 	global $q_config;
 	switch($q_config['editor_mode']){
+		case QTX_EDITOR_MODE_SINGLGE:
 		case QTX_EDITOR_MODE_RAW:
+			add_filter('gettext', 'qtranxf_gettext',0);
+			add_filter('gettext_with_context', 'qtranxf_gettext_with_context',0);
+			add_filter('ngettext', 'qtranxf_ngettext',0);
 		break;
 		case QTX_EDITOR_MODE_LSB:
 		default:
@@ -758,6 +762,9 @@ function qtranxf_add_admin_filters(){
 
 function qtranxf_del_admin_filters(){
 	global $q_config;
+	remove_filter('gettext', 'qtranxf_gettext',0);
+	remove_filter('gettext_with_context', 'qtranxf_gettext_with_context',0);
+	remove_filter('ngettext', 'qtranxf_ngettext',0);
 	remove_filter('the_editor', 'qtranxf_the_editor');
 }
 

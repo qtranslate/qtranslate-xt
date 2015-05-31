@@ -734,35 +734,6 @@ function qtranxf_convertBlogInfoURL($url, $what) {
 }
 add_filter('bloginfo_url', 'qtranxf_convertBlogInfoURL',10,2);
 
-//function qtranxf_gettext($translated_text, $text, $domain) {
-function qtranxf_gettext($translated_text) {
-	//same as qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage
-	global $q_config;
-	//if(!isset($q_config['language'])){
-	//	//qtranxf_dbg_log('$q_config[language] is not set:',debug_backtrace());
-	//	return $translated_text;
-	//}
-	return qtranxf_use($q_config['language'], $translated_text, false);
-}
-
-//function qtranxf_gettext_with_context($translated_text, $text, $context, $domain) {
-function qtranxf_gettext_with_context($translated_text) {
-	//same as qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage
-	global $q_config;
-	//if(!isset($q_config['language'])){
-	//	//qtranxf_dbg_log('$q_config[language] is not set:',debug_backtrace());
-	//	return $translated_text;
-	//}
-	return qtranxf_use($q_config['language'], $translated_text, false);
-}
-
-//function qtranxf_ngettext($translation, $single, $plural, $number, $domain) {
-function qtranxf_ngettext($translated_text) {
-	//same as qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage
-	global $q_config;
-	return qtranxf_use($q_config['language'], $translated_text, false);
-}
-
 /**
  * @since 3.3.1
  * Moved here from qtranslate_hooks.php and modified.
