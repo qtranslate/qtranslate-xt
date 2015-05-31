@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qTranslate-X 3.3.6\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-05-30 00:03-0600\n"
-"PO-Revision-Date: 2015-05-20 10:55-0000\n"
+"PO-Revision-Date: 2015-05-30 20:55-0000\n"
 "Last-Translator: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "Language-Team: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Language: pt_PT\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.8\n"
+"X-Generator: Poedit 1.7.6\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -27,29 +27,28 @@ msgstr ""
 #: admin/qtx_configuration.php:472 admin/qtx_configuration.php:775
 #: admin/qtx_configuration.php:785 admin/qtx_configuration.php:787
 #: admin/qtx_configuration.php:789
-#, fuzzy
 msgid "Configuration Files"
-msgstr "Opções do serviço"
+msgstr "Ficheiros de configuração"
 
 #: admin/qtx_activation_hook.php:116
 #, php-format
 msgid "Could not find file \"%s\" listed in option \"%s\"."
-msgstr ""
+msgstr "Não foi possível encontrar o ficheiro \"%s\" listado na opção \"%s\"."
 
 #: admin/qtx_activation_hook.php:130
 #, php-format
 msgid "Could not parse %s file \"%s\" listed in option \"%s\"."
-msgstr ""
+msgstr "Não foi possível transcodificar o ficheiro %s \"%s\" listado na opção \"%s\"."
 
 #: admin/qtx_activation_hook.php:133
 #, php-format
 msgid "Could not load file \"%s\" listed in option \"%s\"."
-msgstr ""
+msgstr "Não foi possível carregar o ficheiro \"%s\" listado na opção \"%s\"."
 
 #: admin/qtx_activation_hook.php:415
 #, php-format
 msgid "Plugin %s requires PHP version %s at least. This server instance runs PHP version %s. A PHP version %s or higher is recommended. The plugin has not been activated."
-msgstr ""
+msgstr "O plugin %s necessita no mínimo do PHP versão %s. Este servidor corre o PHP versão %s. É recomendado o PHP de versão %s ou superior. O plugin não foi activado."
 
 #: admin/qtx_activation_hook.php:479
 #, php-format
@@ -58,7 +57,7 @@ msgstr "Não conhece o plugin %s?"
 
 #: admin/qtx_activation_hook.php:482
 msgid "Read Startup Guide"
-msgstr "Leia o Guia de Inicialização"
+msgstr "Ler o Startup Guide"
 
 #: admin/qtx_activation_hook.php:483 admin/qtx_activation_hook.php:759
 #: admin/qtx_activation_hook.php:813
@@ -203,7 +202,7 @@ msgstr "Menu de idioma"
 
 #: admin/qtx_admin.php:452
 msgid "Help"
-msgstr "﻿Ajuda"
+msgstr "Ajuda"
 
 #: admin/qtx_admin.php:455
 msgid "Menu item added is replaced with a drop-down menu of available languages, when menu is rendered."
@@ -245,7 +244,7 @@ msgstr "Integração"
 
 #: admin/qtx_admin_options.php:115 admin/qtx_configuration.php:569
 msgid "Export"
-msgstr "﻿Exportar"
+msgstr "Exportar"
 
 #: admin/qtx_admin_options.php:115 admin/qtx_configuration.php:569
 msgid "Import"
@@ -254,17 +253,16 @@ msgstr "Importar"
 #: admin/qtx_admin_options.php:530
 #, php-format
 msgid "Cannot parse JSON code in the field \"%s\"."
-msgstr ""
+msgstr "Não é possível transcodificar o código JSON no campo \"%s\"."
 
 #: admin/qtx_admin_options.php:530 admin/qtx_configuration.php:472
 #: admin/qtx_configuration.php:784
-#, fuzzy
 msgid "Custom Configuration"
-msgstr "Opções do serviço"
+msgstr "Configuração personalizada"
 
 #: admin/qtx_admin_slug.php:7 admin/qtx_admin_slug.php:17
 msgid "Slugs"
-msgstr ""
+msgstr "URL"
 
 #: admin/qtx_admin_slug.php:20 qtranslate_services.php:380
 msgid "With qTranslate Services, you will be able to use professional human translation services with a few clicks."
@@ -323,14 +321,13 @@ msgid "Not enabled"
 msgstr "Não activado"
 
 #: admin/qtx_admin_utils.php:792
-#, fuzzy
 msgid "Language Switching Buttons"
-msgstr "Utilizar Botões de Selecção de Idioma (BSI)"
+msgstr "Botões de Selecção de Idioma"
 
 #: admin/qtx_admin_utils.php:792
 #, php-format
 msgid "This is a set of \"%s\" from %s. Click any blank space between the buttons and drag it to a place where you would need it the most. Click the handle at the top-right corner of this widget to hide this message."
-msgstr ""
+msgstr "Isto é um conjunto de \"%s\" do %s. Clique em qualquer espaço vazio entre botões e arraste-o para onde precisar. Clique no controlo no canto do topo direito do widget para esconder esta mensagem."
 
 #: admin/qtx_configuration.php:21
 msgid "Language Code"
@@ -567,30 +564,29 @@ msgid "For help on how to configure qTranslate correctly, take a look at the <a 
 msgstr "Para ajuda sobre como configurar correctamente o qTranslate, veja as <a href=\"%1$s\">FAQ do qTranslate</a> e o <a href=\"%2$s\">Fórum de Suporte</a>."
 
 #: admin/qtx_configuration.php:470 admin/qtx_configuration.php:789
-#, fuzzy
 msgid "Configuration Inspector"
-msgstr "voltar à página de configuração"
+msgstr "Inspector de configuração"
 
 #: admin/qtx_configuration.php:472
 #, php-format
 msgid "Review a combined JSON-encoded configuration as loaded from options %s and %s, as well as from the theme and other plugins via filters %s and %s."
-msgstr ""
+msgstr "Revisão da configuração combinada de código JSON tal como é carregada pelas opções %s e %s, bem como do tema e outros plugins via filtros %s e %s."
 
 #: admin/qtx_configuration.php:473 admin/qtx_configuration.php:779
 #: admin/qtx_configuration.php:788
 #, php-format
 msgid "Please, read %sIntegration Guide%s for more information."
-msgstr ""
+msgstr "Por favor leia o %sIntegration Guide%s para mais informações."
 
 #: admin/qtx_configuration.php:475
 #, php-format
 msgid "Note to developers: ensure that front-end filter %s is also active on admin side, otherwise the changes it makes will not show up here. Having this filter active on admin side does not affect admin pages functionality, except this field."
-msgstr ""
+msgstr "Nota para programadores: garanta que o filtro %s da frente do site também está activo para a administração, de outro modo as alterações feitas não serão mostradas aqui. Ter este filtro activo na administração não afecta as suas funcionalidades, com a excepção deste campo."
 
 #: admin/qtx_configuration.php:480
-#, fuzzy, php-format
+#, php-format
 msgid "Click to switch to %s"
-msgstr "Clique para alternar"
+msgstr "Clique para mudar para %s"
 
 #: admin/qtx_configuration.php:493 admin/qtx_configuration.php:576
 msgid "Default Language / Order"
@@ -598,11 +594,11 @@ msgstr "Idioma por omissão / Ordem de idiomas"
 
 #: admin/qtx_configuration.php:494
 msgid "Every multilingual field is expected to have a meaningful content in the \"Default Language\". Usually, it is the language of your site before it became multilingual."
-msgstr ""
+msgstr "Todos os campos multilingues deverão ter conteúdo no \"Idioma por omissão\". Normalmente é o idioma do seu site antes de se tornar multilingue."
 
 #: admin/qtx_configuration.php:495
 msgid "Order of languages defines in which order they are listed, when languages need to be listed, otherwise it is not important."
-msgstr ""
+msgstr "A ordem dos idiomas define a ordem em que serão listados, para quando tenham que ser listados, de outro modo não é importante."
 
 #: admin/qtx_configuration.php:498
 msgid "Default Language"
@@ -953,37 +949,37 @@ msgstr "A cor utilizada foi obtida da opção %s do seu perfil, a terceira cor."
 #: admin/qtx_configuration.php:771
 #, php-format
 msgid "If your theme or some plugins are not fully integrated with %s, suggest their authors to review the %sIntegration Guide%s. In many cases they would only need to create a simple text file in order to be fully compatible with %s. Alternatively, you may create such a file for them and for yourselves."
-msgstr ""
+msgstr "Se o seu tema ou alguns plugins não estiverem completamente integrados com o %s, sugira aos seus autores a leitura do  %sIntegration Guide%s. Em muitos casos apenas será necessário criar um simples ficheiro de texto para se tornarem completamente compatíveis com o %s. Em alternativa, poderá criar você mesmo o ficheiro para os autores e para si."
 
 #: admin/qtx_configuration.php:772
 #, php-format
 msgid "Read %sIntegration Guide%s for more information on how to customize the configuration of %s."
-msgstr ""
+msgstr "Leia o %sIntegration Guide%s para mais informações sobre como personalizar a configuração do %s."
 
 #: admin/qtx_configuration.php:776
 #, php-format
 msgid "List of configuration files. Unless prefixed with \"%s\", paths are relative to %s variable: %s. Absolute paths are also acceptable."
-msgstr ""
+msgstr "Lista dos ficheiros de configuração. Salvo se precedidos com \"%s\", os caminhos são relativos à variável %s: %s. Caminhos absolutos também são aceitáveis."
 
 #: admin/qtx_configuration.php:778
 #, php-format
 msgid "The list gets auto-updated on a 3rd-party integrated plugin activation/deactivation. You may also add your own custom files for your theme or plugins. File \"%s\" is the default configuration loaded from this plugin folder. It is not recommended to modify any configuration file from other authors, but you may alter any configuration item through your own custom file appended to the end of this list."
-msgstr ""
+msgstr "Esta lista é actualizada automaticamente com a activação/desactivação de plugins integrados de terceiros. Também pode acicionar os seus próprios ficheiros personalizados para os seus temas ou plugins. O ficheiro \"%s\" é a configuração por omissão carregada a partir da pasta deste plugin. Não é recomendável modificar quaisquer ficheiros de configuração de outros autores, mas pode alterar qualquer item de configuração através do seu próprio ficheiro adicionado no fim desta lista."
 
 #: admin/qtx_configuration.php:785
 #, php-format
 msgid "Additional custom JSON-encoded configuration of %s for all admin pages. It is processed after all files from option \"%s\" are loaded, providing opportunity to add or to override configuration tokens as necessary."
-msgstr ""
+msgstr "Configuração personalizada e adicional de código JSON do %s para todas as páginas de administração. É processado depois de todos os ficheiros da opção \"%s\" serem carregados, dando oportunidade para adicionar ou substituir alguns tokens de configuração, conforme necessário."
 
 #: admin/qtx_configuration.php:787
 #, php-format
 msgid "It would make no difference, if the content of this field is stored in a file, which name is listed last in option \"%s\". Therefore, this field only provides flexibility for the sake of convenience."
-msgstr ""
+msgstr "Não faz qualquer diferença se o conteúdo deste campo estiver alojado num ficheiro, cujo nome esteja listado na opção \"%s\". Assim, este campo apenas proporciona alguma flexibilidade por uma questão de conveniência."
 
 #: admin/qtx_configuration.php:789
 #, php-format
 msgid "Use \"%s\" to review the resulting combined configuration from all \"%s\" and this option."
-msgstr ""
+msgstr "Utilize o \"%s\" para rever o resultado da configuração combinada de todos os \"%s\" juntamente com esta opção."
 
 #: admin/qtx_configuration.php:794
 msgid "Custom Fields"
@@ -1010,7 +1006,7 @@ msgstr "Todos os campos das classes especificadas responderão aos Botões de Se
 
 #: admin/qtx_configuration.php:814
 msgid "Custom Filters"
-msgstr "﻿Filtros personalizados"
+msgstr "Filtros personalizados"
 
 #: admin/qtx_configuration.php:817
 #, php-format
