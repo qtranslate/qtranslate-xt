@@ -65,6 +65,49 @@ if(WP_DEBUG){
  */
 function qtranxf_translate_wp($s) { return __($s); }
 
+/**
+ * @since 3.3.2
+ */
+function qtranxf_plugin_dirname(){
+	static $s;
+	if(!$s) $s = dirname(plugin_basename(QTRANSLATE_FILE));
+	return $s;
+/*
+	$path = QTRANSLATE_DIR;
+	while(true){
+		$nm = basename($path);
+		if(strpos($nm,'qtrans')!==false) return $nm;
+		$path = dirname($path);
+		if(empty($path) || $path == '.' || $path == '/' ) break;
+	}
+	return 'qtranslate-x';
+*/
+}
+
+/**
+ * Return path to plugin folder relative to WP_CONTENT_DIR.
+ * @since 3.4
+ */
+function qtranxf_plugin_dirname_from_wp_content(){
+	static $s;
+	if(!$s){
+		//qtranxf_dbg_log('__FILE__: ', __FILE__);//links are resolved
+		//qtranxf_dbg_log('wp_normalize_path(__FILE__): ', wp_normalize_path(__FILE__));//links are resolved, same as __FILE__
+		//qtranxf_dbg_log('plugin_dir_path: ', plugin_dir_path( __FILE__ ));//links are resolved, with trailing slash
+		//qtranxf_dbg_log('plugin_basename: ', plugin_basename( __FILE__ ));//no links resolved
+		//qtranxf_dbg_log('WP_CONTENT_DIR: ', WP_CONTENT_DIR);//no links resolved
+		//qtranxf_dbg_log('WP_PLUGIN_DIR: ', WP_PLUGIN_DIR);//no links resolved
+		//qtranxf_dbg_log('WP_MU_PLUGIN_DIR: ', WPMU_PLUGIN_DIR);//no links resolved
+		//qtranxf_dbg_log('plugin_dir_url: ', plugin_dir_url( __FILE__ ));//no links, naturally
+		//qtranxf_dbg_log('content_url: ', content_url());//no links either
+
+		$d = plugin_dir_url( QTRANSLATE_FILE );
+		$c = content_url();
+		$s = trim(substr($d, strlen($c)), '/\\');
+	}
+	return $s;
+}
+
 function qtranxf_parseURL($url) {
 	//this is not the same as native parse_url and so it is in use
 	//it should also work quicker than native parse_url, so we should keep it?

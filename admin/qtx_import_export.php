@@ -112,8 +112,9 @@ function qtranxf_migrate_plugins()
 add_action('qtranslate_saveConfig','qtranxf_migrate_plugins',30);
 
 function qtranxf_add_row_migrate($nm,$plugin) {
-	$plugin_file = WP_CONTENT_DIR.'/plugins/'.$plugin;
-	if(!file_exists($plugin_file)) return;
+	//$plugin_file = WP_CONTENT_DIR.'/plugins/'.$plugin;
+	$plugin_file = qtranxf_find_plugin_file($plugin);
+	if(!$plugin_file) return;
 	//$pd = get_plugin_data( $plugin_file.'/mqtranslate.php', false, true );
 	//qtranxf_dbg_log('qtranxf_add_row_migrate: $pd:',$pd);
 	switch($plugin){

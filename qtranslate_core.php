@@ -493,9 +493,11 @@ function qtranxf_flag_location() {
 }
 
 function qtranxf_flag_location_default() {
-
-	$plugindir = ltrim( str_replace( WP_CONTENT_DIR, '', plugin_dir_path( __FILE__ ) ), '/\\' );
-	return path_join( $plugindir, 'flags/' );
+	//$q_config['flag_location'] = 'plugins/qtranslate-x/flags/';
+	//return 'plugins/'.dirname(plugin_basename( __FILE__ )).'/flags/';//need to get rid of 'plugins'
+	//qtranxf_dbg_log('qtranxf_plugin_dirname: ', qtranxf_plugin_dirname());
+	//qtranxf_dbg_log('qtranxf_plugin_dirname_from_wp_content: ', qtranxf_plugin_dirname_from_wp_content());
+	return qtranxf_plugin_dirname_from_wp_content().'/flags/';
 }
 
 

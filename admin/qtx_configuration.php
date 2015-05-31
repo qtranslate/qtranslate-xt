@@ -877,8 +877,8 @@ echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 
 	$languages_predef = qtranxf_default_language_name();
 	$flag_location_url = qtranxf_flag_location();
 	$flag_location_dir = trailingslashit(WP_CONTENT_DIR).$q_config['flag_location'];
-	$flag_location_dir_def = dirname(QTRANSLATE_FILE).'/flags/';
-	$flag_location_url_def = trailingslashit(WP_CONTENT_URL).'/plugins/'.basename(dirname(QTRANSLATE_FILE)).'/flags/';
+	$flag_location_url_def = content_url(qtranxf_flag_location_default());
+	//trailingslashit(WP_CONTENT_URL).'/plugins/'.basename(dirname(QTRANSLATE_FILE)).'/flags/';
 	foreach($language_names as $lang => $language){ if($lang=='code') continue;
 		$flag = $flags[$lang];
 		if(file_exists($flag_location_dir.$flag)){

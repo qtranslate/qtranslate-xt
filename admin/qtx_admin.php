@@ -146,12 +146,29 @@ function qtranxf_get_admin_page_config($post_type) {
 		}
 
 		//make src to be relative to WP_CONTENT_DIR
-		$bnm = 'plugins/'.qtranxf_qtranslate_basedirname();
+		//$bnm = 'plugins/'.qtranxf_plugin_dirname();
+		$bnm = qtranxf_plugin_dirname_from_wp_content();
+		$content_dir = trailingslashit(WP_CONTENT_DIR);
 		foreach($page_config['js'] as $k => $js){
 			if(!isset($js['src'])) continue;
 			$src = $js['src'];
-			if( $src[0] != '.' || $src[1] != '/') continue;
-			$page_config['js'][$k]['src'] = $bnm.substr($src,1);
+			if( $src[0] == '.' && ($src[1] == '/' || $src[1] == DIRECTORY_SEPARATOR) ){
+				$page_config['js'][$k]['src'] = $bnm.substr($src,1);
+			}else{
+				if(file_exists($content_dir.$src)) continue;  //from WP_CONTENT_DIR as expected
+				$fp = dirname($bnm) . DIRECTORY_SEPARATOR . $src;  //from 'plugins' folder
+				if(file_exists($content_dir.$fp)){
+					$page_config['js'][$k]['src'] = $fp;
+					continue;
+				}
+				$fp = $bnm . DIRECTORY_SEPARATOR . $src; //from this plugin folder
+				if(file_exists($content_dir.$fp)){
+					$page_config['js'][$k]['src'] = $fp;
+					continue;
+				}
+				unset($page_config['js'][$k]);
+				qtranxf_error_log(sprintf(__('Could not find script file "%s" for handle "%s".', 'qtranslate'), $src, $js['handle']));
+			}
 		}
 
 	}

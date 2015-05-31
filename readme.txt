@@ -104,6 +104,7 @@ Developers: please drop new topics here, the text will be moved to [qTranslate-X
 
 ### 3.3.6 ###
 * Feature: finalizing [Integration Framework](https://qtranslatexteam.wordpress.com/integration/).
+* Enhancement: 'plugins' vs 'mu-plugins', links of sub-folders, etc. [Issue #168](https://github.com/qTranslate-Team/qtranslate-x/pull/168).
 
 ### 3.3.5 ###
 * Feature: [Integration Framework](https://qtranslatexteam.wordpress.com/integration/) finalizing JSON file format.

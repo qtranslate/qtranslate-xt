@@ -8,19 +8,6 @@ function qtranxf_version_int() {
 }
 
 /**
- * @since 3.3.2
- */
-function qtranxf_qtranslate_basedirname(){
-	$path = QTRANSLATE_DIR;
-	while(true){
-		$dir = dirname($path);
-		if(!$dir || $dir == '.' ) return 'qtranslate-x';
-		if(basename($dir) == 'plugins') return basename($path);
-		$path = $dir;
-	}
-}
-
-/**
  * Save language properties from configuration $cfg to database
  * @since 3.3
  */
@@ -361,16 +348,32 @@ function qtranxf_update_config_files(){
 	qtranxf_update_config_options($config_files);
 }
 
+function qtranxf_find_plugin_file($fp)
+{
+	$fp = DIRECTORY_SEPARATOR . $fp;
+	$fn = WP_PLUGIN_DIR . $fp;
+	while(!file_exists($fn)){
+		$fn = WPMU_PLUGIN_DIR . $fp;
+		if(file_exists($fn)) break;
+		$fn = WP_CONTENT_DIR . '/plugins' . $fp;
+		if(file_exists($fn)) break;
+		$fn = WP_CONTENT_DIR . '/mu-plugins' . $fp;
+		if(file_exists($fn)) break;
+		return;
+	}
+	$n = strlen(WP_CONTENT_DIR);
+	if(substr($fn,0,$n) == WP_CONTENT_DIR) $fn = substr($fn,$n+1);
+	return $fn;
+}
+
 function qtranxf_on_activate_plugin($plugin, $network_wide = false)
 {
 	//qtranxf_dbg_log('qtranxf_on_activate_plugin: $plugin: ',$plugin);
 	$dir = dirname($plugin);
-	$qtx = qtranxf_qtranslate_basedirname();
+	$qtx = qtranxf_plugin_dirname();
 	if($dir == $qtx) return;
-	$fn = WP_PLUGIN_DIR.'/'.$dir.'/i18n-config.json';
-	if(!file_exists($fn)) return;
-	$n = strlen(WP_CONTENT_DIR);
-	if(substr($fn,0,$n) == WP_CONTENT_DIR) $fn = substr($fn,$n+1);
+	$fn = qtranxf_find_plugin_file($dir . '/i18n-config.json');
+	if(!$fn) return;
 	//qtranxf_dbg_log('qtranxf_on_activate_plugin: $fn: ',$fn);
 	$config_files = qtranxf_get_option_config_files();
 	if(in_array($fn,$config_files)) return;
@@ -383,7 +386,7 @@ function qtranxf_on_deactivate_plugin($plugin, $network_deactivating = false)
 {
 	//qtranxf_dbg_log('qtranxf_on_deactivate_plugin: $plugin: ',$plugin);
 	$dir = dirname($plugin);
-	$qtx = qtranxf_qtranslate_basedirname();
+	$qtx = qtranxf_plugin_dirname();
 	if($dir == $qtx){
 		if($dir == 'qtranslate-x'){//not testing version
 			$ver_cur = qtranxf_version_int();
@@ -391,10 +394,8 @@ function qtranxf_on_deactivate_plugin($plugin, $network_deactivating = false)
 		}
 		return;
 	}
-	$fn = WP_PLUGIN_DIR.'/'.$dir.'/i18n-config.json';
-	if(!file_exists($fn)) return;
-	$n = strlen(WP_CONTENT_DIR);
-	if(substr($fn,0,$n) == WP_CONTENT_DIR) $fn = substr($fn,$n+1);
+	$fn = qtranxf_find_plugin_file($dir . '/i18n-config.json');
+	if(!$fn) return;
 	//qtranxf_dbg_log('qtranxf_on_deactivate_plugin: $fn: ',$fn);
 	$config_files = qtranxf_get_option_config_files();
 	$i = array_search($fn,$config_files);
@@ -409,7 +410,7 @@ function qtranxf_activation_hook()
 	//global $q_config;
 	if(version_compare(PHP_VERSION, '5.2.0') < 0){
 		// Deactivate ourself
-		$plugin_dir = qtranxf_qtranslate_basedirname();
+		$plugin_dir = qtranxf_plugin_dirname();
 		$lang_dir = $plugin_dir.'/lang';
 		load_plugin_textdomain('qtranslate', false, $lang_dir);
 		$msg = sprintf(__('Plugin %s requires PHP version %s at least. This server instance runs PHP version %s. A PHP version %s or higher is recommended. The plugin has not been activated.', 'qtranslate'), '<a href="https://wordpress.org/plugins/qtranslate-x/" style="color:blue" target="_blank">qTranslate&#8209;X</a>', '5.2.0', PHP_VERSION, '5.4.0');
@@ -628,9 +629,8 @@ function qtranxf_admin_notice_plugin_integration($plugin,$integr_title,$integr_p
 	$messages = get_option('qtranslate_admin_notices');
 	if(isset($messages['integration-'.$integr_slug])) return 0;
 
-	//$plugin_file = WP_PLUGIN_DIR.'/'.$plugin;
-	$plugin_file = WP_CONTENT_DIR.'/plugins/'.$plugin;
-	if(!file_exists($plugin_file)) return 0;
+	$plugin_file = qtranxf_find_plugin_file($plugin);
+	if(!$plugin_file) return 0;
 	$pd = get_plugin_data( $plugin_file, false, true );
 	$pluginName = $pd['Name'];
 	$pluginURI = $pd['PluginURI'];
@@ -644,8 +644,8 @@ function qtranxf_admin_notice_plugin_integration($plugin,$integr_title,$integr_p
 	echo ' ';
 	echo __('Please, press an appropriate button below.','qtranslate');
 
-	$integr_file = WP_CONTENT_DIR.'/plugins/'.$integr_plugin;
-	if(file_exists($integr_file)){
+	$integr_file = qtranxf_find_plugin_file($integr_plugin);
+	if($integr_file){
 		echo '</p><p> &nbsp; &nbsp; &nbsp; &nbsp;<a class="button" href="'.esc_url( wp_nonce_url( admin_url('plugins.php?action=activate&plugin='.urlencode($integr_plugin)), 'activate-plugin_'.$integr_plugin)).'"><strong>'.sprintf(__('Activate plugin %s', 'qtranslate'), '<span style="color:magenta">'.$integr_title.'</span>').'</strong></a>';
 	}else{
 		echo '</p><p> &nbsp; &nbsp; &nbsp; &nbsp;<a class="button" href="'.esc_url( wp_nonce_url( admin_url('update.php?action=install-plugin&plugin='.urlencode($integr_slug)), 'install-plugin_'.$integr_slug)).'"><strong>'.sprintf(__('Install plugin %s', 'qtranslate'), '<span style="color:magenta">'.$integr_title.'</span>').'</strong></a>';

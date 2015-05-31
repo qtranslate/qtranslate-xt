@@ -16,33 +16,32 @@ function qtranxf_error_log($msg) {
  * @since 3.3.2
  */
 function qtranxf_loadfiles_js($jss, $enqueue_script) {
-	//$plugins_dir = WP_CONTENT_DIR. DIRECTORY_SEPARATOR .'plugins'. DIRECTORY_SEPARATOR;
 	$cnt = 0;
 	$deps = array();
 	foreach($jss as $k => $js){
 		if(isset($js['javascript']) && !empty($js['javascript'])){
 			echo $js['javascript'];
 		}else if(isset($js['src'])){
+			$src = $js['src'];
 			if($enqueue_script){
 				$handle = isset($js['handle']) ? $js['handle'] : (is_string($k) ? $k : 'qtranslate-admin-js-'.(++$cnt) );
 				$ver = isset($js['ver']) ? $js['ver'] : QTX_VERSION;
-				$src = $js['src'];
-				if(file_exists(WP_CONTENT_DIR.'/plugins/'.$src)){
-					$url = plugins_url($src);
-				}else{
-					$url = content_url($src);
-				}
+				//if(file_exists(WP_CONTENT_DIR.'/plugins/'.$src)){//already tested during configuration loading
+				//	$url = plugins_url($src);
+				//}else{
+				$url = content_url($src);
+				//}
 				wp_register_script( $handle, $url, $deps, $ver, true);
 				wp_enqueue_script( $handle );
 				$deps[] = $handle;
 			}else{
-				$fp = WP_CONTENT_DIR. DIRECTORY_SEPARATOR .$js['src'];
-				if(!file_exists($fp)) $fp = WP_CONTENT_DIR.'/plugins/'.$js['src'];
-				if(!file_exists($fp)) $fp = $js['src'];
-				if(!file_exists($fp)){
-					qtranxf_error_log('Could not read file '.$js['src']);
-					continue;
-				}
+				$fp = WP_CONTENT_DIR . DIRECTORY_SEPARATOR . $src;
+				//if(!file_exists($fp)) $fp = WP_CONTENT_DIR.'/plugins/'.$js['src'];//already tested during configuration loading
+				//if(!file_exists($fp)) $fp = $js['src'];
+				//if(!file_exists($fp)){
+				//	qtranxf_error_log('Could not read file '.$js['src']);
+				//	continue;
+				//}
 				readfile($fp);
 			}
 		}
