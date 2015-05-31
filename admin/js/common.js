@@ -37,8 +37,8 @@ function co(t,o){ ++cc; console.log('== '+cc+': '+t+'%o',o); }
  */
 qtranxj_get_split_blocks = function(text)
 {
-	//var split_regex = /(<!--:[a-z]{2}-->|<!--:-->|\[:[a-z]{2}\]|\[:\]|\{:[a-z]{2}\}|\{:\})/gi;
-	var split_regex = /(<!--:[a-z]{2}-->|<!--:-->|\[:[a-z]{2}\]|\[:\])/gi;
+	var split_regex = /(<!--:[a-z]{2}-->|<!--:-->|\[:[a-z]{2}\]|\[:\]|\{:[a-z]{2}\}|\{:\})/gi; // @since 3.3.6 swirly brackets
+	//var split_regex = /(<!--:[a-z]{2}-->|<!--:-->|\[:[a-z]{2}\]|\[:\])/gi;
 	return text.xsplit(split_regex);
 }
 
@@ -77,7 +77,7 @@ qtranxj_split_blocks = function(blocks)
 	}
 	var clang_regex=/<!--:([a-z]{2})-->/gi;
 	var blang_regex=/\[:([a-z]{2})\]/gi;
-	//var slang_regex=/\{:([a-z]{2})\}/gi; //maybe later we will need it?
+	var slang_regex=/\{:([a-z]{2})\}/gi; // @since 3.3.6 swirly brackets
 	var lang = false;
 	var matches;
 	for(var i = 0;i<blocks.length;++i){
@@ -94,12 +94,12 @@ qtranxj_split_blocks = function(blocks)
 			lang = matches[1];
 			continue;
 		}
-		//matches = slang_regex.exec(b); slang_regex.lastIndex=0;
-		//if(matches!=null){
-		//	lang = matches[1];
-		//	continue;
-		//}
-		if( b == '<!--:-->' || b == '[:]' ){// || b == '{:}' ){
+		matches = slang_regex.exec(b); slang_regex.lastIndex=0;
+		if(matches!=null){
+			lang = matches[1];
+			continue;
+		}
+		if( b == '<!--:-->' || b == '[:]' || b == '{:}' ){
 			lang = false;
 			continue;
 		}
@@ -783,8 +783,9 @@ var qTranslateX=function(pg)
 							qtx.addDisplayHook(document.getElementById(id));
 						}
 						break;
-					case '[':
-					case '<':
+					case '['://b - bracket
+					case '<'://c - comment
+					case '{'://s - swirly bracket
 					case 'byline':
 					default:
 						if(fld.jquery){

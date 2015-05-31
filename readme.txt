@@ -106,6 +106,7 @@ Developers: please drop new topics here, the text will be moved to [qTranslate-X
 * Feature: finalizing [Integration Framework](https://qtranslatexteam.wordpress.com/integration/).
 * Enhancement: 'plugins' vs 'mu-plugins', links of sub-folders, etc. [Issue #168](https://github.com/qTranslate-Team/qtranslate-x/pull/168).
 * Enhancement: gettext filters in raw and single language modes.
+* Feature: swirly-bracket(brace) language encoding added to be used in places where square-bracket and comment encoding do not work. '[:]' sometimes conflict with shortcodes. '<!--:-->' does not survive tag clean up. '{:}'(swirly-bracket) seems to survive all.
 
 ### 3.3.5 ###
 * Feature: [Integration Framework](https://qtranslatexteam.wordpress.com/integration/) finalizing JSON file format.

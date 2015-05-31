@@ -111,6 +111,7 @@ function qtranxf_join_texts($texts,$sep) {
 	switch($sep){
 		//case '<': return qtranxf_join_c($texts);//no longer in use
 		case 'byline': return qtranxf_join_byline($texts);
+		case '{': return qtranxf_join_s($texts);
 		default: return qtranxf_join_b($texts);
 	}
 }

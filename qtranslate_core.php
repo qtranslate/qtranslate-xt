@@ -1116,13 +1116,14 @@ function qtranxf_convertURLs($url, $lang='', $forceadmin = false, $showDefaultLa
 	return $url;
 }
 
-//if (!function_exists('qtranxf_get_split_blocks')){
-// split text at all language comments and quick tags
+/**
+ * split text at all language comments and quick tags
+ * @since 3.3.6 swirly bracket encoding added
+ */
 function qtranxf_get_language_blocks($text) {
-	$split_regex = "#(<!--:[a-z]{2}-->|<!--:-->|\[:[a-z]{2}\]|\[:\])#ism";
+	$split_regex = "#(<!--:[a-z]{2}-->|<!--:-->|\[:[a-z]{2}\]|\[:\]|\{:[a-z]{2}\}|\{:\})#ism";
 	return preg_split($split_regex, $text, -1, PREG_SPLIT_NO_EMPTY|PREG_SPLIT_DELIM_CAPTURE);
 }
-//}
 
 function qtranxf_split($text) {
 	$blocks = qtranxf_get_language_blocks($text);
@@ -1145,9 +1146,14 @@ function qtranxf_split_blocks($blocks) {
 		}elseif(preg_match("#^\[:([a-z]{2})\]$#ism", $block, $matches)) {
 			$current_language = $matches[1];
 			continue;
+		// detect s-tags @since 3.3.6 swirly bracket encoding added
+		}elseif(preg_match("#^\{:([a-z]{2})\}$#ism", $block, $matches)) {
+			$current_language = $matches[1];
+			continue;
 		}
 		switch($block){
 			case '[:]':
+			case '{:}':
 			case '<!--:-->':
 				$current_language = false;
 				break;
@@ -1343,6 +1349,21 @@ function qtranxf_join_b($texts) {
 		$text .= '[:'.$lang.']'.$lang_text;
 	}
 	if(!empty($text)) $text .= '[:]';
+	return $text;
+}
+
+/**
+ * @since 3.3.6 swirly bracket encoding
+ */
+function qtranxf_join_s($texts) {
+	$text = qtranxf_allthesame($texts);
+	if(!is_null($text)) return $text;
+	$text = '';
+	foreach($texts as $lang => $lang_text) {
+		if(empty($lang_text)) continue;
+		$text .= '{:'.$lang.'}'.$lang_text;
+	}
+	if(!empty($text)) $text .= '{:}';
 	return $text;
 }
 
