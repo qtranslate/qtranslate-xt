@@ -29,7 +29,7 @@ function qtranxf_admin_set_default_options(&$ops){
 	);
 
 	$ops['admin']['array']=array(
-		'config_files' => './i18n-config.json',
+		'config_files' => array('./i18n-config.json'),
 		'admin_config' => array(),
 		'custom_i18n_config' => array(),
 		'custom_fields' => array(),
