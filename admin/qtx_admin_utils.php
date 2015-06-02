@@ -2,16 +2,6 @@
 if ( !defined( 'WP_ADMIN' ) ) exit;
 
 /**
- * @since 3.3.1
- */
-function qtranxf_error_log($msg) {
-	global $q_config;
-	if(isset($q_config['errors'])) $q_config['errors'][] = $msg;
-	else $q_config['errors'] = array($msg);
-	error_log('qTranslate-X: '.strip_tags($msg));
-}
-
-/**
  * Read or enqueue Java script files listed in $jss.
  * @since 3.3.2
  */

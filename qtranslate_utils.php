@@ -60,6 +60,16 @@ if(WP_DEBUG){
 }// */
 
 /**
+ * @since 3.3.1
+ */
+function qtranxf_error_log($msg) {
+	global $q_config;
+	if(isset($q_config['errors'])) $q_config['errors'][] = $msg;
+	else $q_config['errors'] = array($msg);
+	error_log('qTranslate-X: '.strip_tags($msg));
+}
+
+/**
  * Default domain translation for strings already translated by WordPress.
  * Use of this function prevents xgettext, poedit and other translating parsers from including the string that does not need translation.
  */

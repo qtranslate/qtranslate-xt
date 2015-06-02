@@ -3,24 +3,39 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 /* qTranslate-X Hooks */
 
+/**
+ * locale for current language and set it on PHP.
+ */
 function qtranxf_localeForCurrentLanguage($locale){
+	static $locale_lang;//cache
+	if(!empty($locale_lang)) return $locale_lang;
 	global $q_config;
-	//if( !isset($q_config['language']) ) return $locale;
-	// try to figure out the correct locale
-	$windows_locale = qtranxf_default_windows_locale(); //$q_config['windows_locale'];
 	$lang = $q_config['language'];
-	$locale_lang=$q_config['locale'][$lang];
-	$locale = array();
-	$locale[] = $locale_lang.".utf8";
-	$locale[] = $locale_lang."@euro";
-	$locale[] = $locale_lang;
-	$locale[] = $windows_locale[$lang];
-	$locale[] = $lang;
+	$locale_lang = $q_config['locale'][$lang];
+
+	// submit a few possible locales
+	$lc = array();
+	$lc[] = $locale_lang.'.utf8';
+	$lc[] = $locale_lang.'@euro';
+	$lc[] = $locale_lang;
+	$windows_locale = qtranxf_default_windows_locale();
+	if(isset($windows_locale[$lang])) $lc[] = $windows_locale[$lang];
+	$lc[] = $lang;
 
 	// return the correct locale and most importantly set it (wordpress doesn't, which is bad)
 	// only set LC_TIME as everything else doesn't seem to work with windows
-	setlocale(LC_TIME, $locale);
-
+	$loc = setlocale(LC_TIME, $lc);
+	if(!$loc){
+		$lc2 = array();
+		if(strlen($locale_lang) == 2){
+			$lc2[] = $locale_lang.'_'.strtoupper($locale_lang);
+			$loc = $locale_lang.'_'.strtoupper($lang); if(!in_array($loc,$lc2)) $lc2[] = $loc;
+		}
+		$loc = $lang.'_'.strtoupper($lang); if(!in_array($loc,$lc2)) $lc2[] = $loc;
+		$loc = setlocale(LC_TIME, $lc2);
+		//if(!$loc) qtranxf_error_log(sprintf('Could not set locale with setlocale(LC_TIME, %s).', json_encode(array_merge($lc, $lc2))));
+	}
+	//qtranxf_dbg_log('qtranxf_localeForCurrentLanguage: $locale='.$locale.'; return: '.$locale_lang.'; Set to ', $loc);
 	return $locale_lang;
 }
 
