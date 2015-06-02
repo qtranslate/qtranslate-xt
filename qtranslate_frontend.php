@@ -723,6 +723,10 @@ add_filter('redirect_canonical', 'qtranxf_checkCanonical', 10, 2);
  * @since 3.2.8 moved here from _hooks.php
  */
 function qtranxf_convertBlogInfoURL($url, $what) {
+	global $q_config;
+	/* WP uses line like 'trailingslashit( get_bloginfo( 'url' ) )' in /wp-includes/link-template.php, for example, which obviously breaks the further processing in QTX_URL_QUERY mode.
+	*/
+	if($q_config['url_mode'] == QTX_URL_QUERY) return $url; // @since 3.3.7
 	switch($what){
 		case 'stylesheet_url':
 		case 'template_url':
