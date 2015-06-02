@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qTranslate-X 3.3.7\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-06-02 11:53-0600\n"
-"PO-Revision-Date: 2015-05-30 20:55-0000\n"
+"PO-Revision-Date: 2015-06-02 19:41-0000\n"
 "Last-Translator: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "Language-Team: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Language: pt_PT\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.7.6\n"
+"X-Generator: Poedit 1.8.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -188,9 +188,9 @@ msgid "It is recommended to review %sRelease Notes%s for this new version of %s 
 msgstr "É recomendado rever as %snotas sobre esta actualização%s do %s antes de fazer quaisquer modificações."
 
 #: admin/qtx_admin.php:244
-#, fuzzy, php-format
+#, php-format
 msgid "Could not find script file \"%s\" for handle \"%s\"."
-msgstr "Não foi possível encontrar o ficheiro \"%s\" listado na opção \"%s\"."
+msgstr "Não foi possível encontrar o ficheiro script \"%s\" para lidar com o \"%s\"."
 
 #: admin/qtx_admin.php:455
 msgid "Language Management"
@@ -1180,7 +1180,7 @@ msgstr "Todas as notificações de administração relativas a este plugin, que 
 #: admin/qtx_languages.php:55
 #, php-format
 msgid "A manual update to option \"%s\" or to the theme custom CSS may be needed, after some languages are changed."
-msgstr ""
+msgstr "Pode ser necessário uma actualização manual da opção \"%s\" ou do CSS personalizado do tema, depois de alguns idiomas serem alterados."
 
 #: admin/qtx_languages.php:101
 msgid "Cannot delete Default Language!"
