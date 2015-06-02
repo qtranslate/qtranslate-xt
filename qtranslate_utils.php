@@ -70,6 +70,15 @@ function qtranxf_error_log($msg) {
 }
 
 /**
+ * @since 3.3.7
+ */
+function qtranxf_add_warning($msg) {
+	global $q_config;
+	if(!isset($q_config['warnings'])) $q_config['warnings'][] = $msg;
+	else $q_config['warnings'] = array($msg);
+}
+
+/**
  * Default domain translation for strings already translated by WordPress.
  * Use of this function prevents xgettext, poedit and other translating parsers from including the string that does not need translation.
  */

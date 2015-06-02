@@ -264,6 +264,7 @@ function qtranxf_conf() {
 			$q_config['not_available'][$lang] = wp_kses_data($_POST['language_na_message']);
 			qtranxf_copyLanguage($langs, $q_config, $lang);
 			qtranxf_save_languages($langs);
+			qtranxf_update_config_header_css();
 		}
 		if(!empty($errors)||isset($_GET['edit'])) {
 			// get old values in the form
@@ -277,7 +278,8 @@ function qtranxf_conf() {
 			$language_flag = sanitize_text_field($_POST['language_flag']);
 			$language_default = isset($_POST['language_default']) ? sanitize_text_field($_POST['language_default']) : $q_config['default_language'];
 		}
-	} elseif(isset($_GET['convert'])){
+	}
+	elseif(isset($_GET['convert'])){
 		// update language tags
 		global $wpdb;
 		$wpdb->show_errors();
@@ -293,7 +295,8 @@ function qtranxf_conf() {
 		}else{
 			$message[] = __('No database entry has been affected while processing the conversion request.', 'qtranslate');
 		}
-	} elseif(isset($_GET['markdefault'])){
+	}
+	elseif(isset($_GET['markdefault'])){
 		// update language tags
 		global $wpdb;
 		$wpdb->show_errors();
@@ -322,7 +325,8 @@ function qtranxf_conf() {
 
 			$message[] = sprintf(__('Post types other than "post" or "page", as well as unpublished entries, will have to be adjusted manually as needed, since there is no common way to automate setting the default language otherwise. It can be done with a custom script though. You may request a %spaid support%s for this.', 'qtranslate'), '<a href="https://qtranslatexteam.wordpress.com/contact-us/">', '</a>');
 		}
-	} elseif(isset($_GET['edit'])){
+	}
+	elseif(isset($_GET['edit'])){
 		$lang = $_GET['edit'];
 		$original_lang = $lang;
 		$language_code = $lang;
@@ -334,7 +338,8 @@ function qtranxf_conf() {
 		$language_time_format = isset($langs['time_format'][$lang])?$langs['time_format'][$lang]:'';
 		$language_na_message = isset($langs['not_available'][$lang])?$langs['not_available'][$lang]:'';
 		$language_flag = isset($langs['flag'][$lang])?$langs['flag'][$lang]:'';
-	} elseif(isset($_GET['delete'])) {
+	}
+	elseif(isset($_GET['delete'])){
 		$lang = $_GET['delete'];
 		// validate delete (protect code)
 		//if($q_config['default_language']==$lang) $errors[] = 'Cannot delete Default Language!';
@@ -344,13 +349,15 @@ function qtranxf_conf() {
 			$err = qtranxf_deleteLanguage($lang);
 			if(!empty($err)) $errors[] = $err;
 		}
-	} elseif(isset($_GET['enable'])) {
+	}
+	elseif(isset($_GET['enable'])){
 		$lang = $_GET['enable'];
 		// enable validate
 		if(!qtranxf_enableLanguage($lang)) {
 			$errors[] = __('Language is already enabled or invalid!', 'qtranslate');
 		}
-	} elseif(isset($_GET['disable'])) {
+	}
+	elseif(isset($_GET['disable'])){
 		$lang = $_GET['disable'];
 		// enable validate
 		if($lang==$q_config['default_language'])
@@ -362,7 +369,8 @@ function qtranxf_conf() {
 		if(empty($errors) && !qtranxf_disableLanguage($lang)) {
 			$errors[] = __('Language is already disabled!', 'qtranslate');
 		}
-	} elseif(isset($_GET['moveup'])) {
+	}
+	elseif(isset($_GET['moveup'])){
 		$languages = qtranxf_getSortedLanguages();
 		$msg = __('No such language!', 'qtranslate');
 		foreach($languages as $key => $language) {
@@ -378,7 +386,8 @@ function qtranxf_conf() {
 			break;
 		}
 		$message[] = $msg;
-	} elseif(isset($_GET['movedown'])) {
+	}
+	elseif(isset($_GET['movedown'])){
 		$languages = qtranxf_getSortedLanguages();
 		$msg = __('No such language!', 'qtranslate');
 		foreach($languages as $key => $language) {
@@ -429,8 +438,13 @@ function qtranxf_conf() {
 	if (!empty($errors)) :
 	foreach($errors as $key => $msg){
 ?>
-<div id="qtranxs_error_<?php echo $key ?>" class="error fade"><p><strong><span style="color: red;"><?php echo qtranxf_translate_wp('Error') ?></span><?php echo ':&nbsp;'.$msg ?></strong></p></div>
-<?php } endif; ?>
+<div id="qtranxs_error_<?php echo $key ?>" class="error"><p><strong><span style="color: red;"><?php echo qtranxf_translate_wp('Error') ?></span><?php echo ':&nbsp;'.$msg ?></strong></p></div>
+<?php } endif;
+	if (!empty($q_config['warnings'])) :
+	foreach($q_config['warnings'] as $key => $msg){
+?>
+<div id="qtranxs_warning_<?php echo $key ?>" class="update-nag"><p><strong><span style="color: blue;"><?php echo qtranxf_translate_wp('Warning') ?></span><?php echo ':&nbsp;'.$msg ?></strong></p></div>
+<?php } unset($q_config['warnings']); endif; ?>
 
 <div class="wrap">
 <?php if(isset($_GET['edit'])) { ?>
@@ -920,15 +934,3 @@ echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 
 </div>
 <?php
 }
-
-/* should be moved here from qtx_admin.php
-function qtranxf_admin_notices_config() {
-	global $q_config;
-	if(isset($q_config['errors']) && is_array($q_config['errors'])){
-		foreach($q_config['errors'] as $key => $msg){
-			echo '<div class="error fade" id="qtranxs_error_'.$key.'"><p><a href="'.admin_url('options-general.php?page=qtranslate-x').'" style="color:magenta">qTranslate&#8209;X</a>:&nbsp;<strong><span style="color: red;">'.qtranxf_translate_wp('Error').'</span>:&nbsp;'.$msg.'</strong></p></div>';
-		}
-		unset($q_config['errors']);
-	}
-}
-*/

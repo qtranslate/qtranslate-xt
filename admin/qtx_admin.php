@@ -585,6 +585,7 @@ function qtranxf_links($links, $file){ // copied from Sociable Plugin
 }
 add_filter('plugin_action_links', 'qtranxf_links', 10, 2);
 
+//should be moved to qtx_configuration.php from qtx_admin.php
 function qtranxf_admin_notices_config() {
 	global $q_config;
 	if(isset($q_config['errors']) && is_array($q_config['errors'])){
@@ -592,6 +593,12 @@ function qtranxf_admin_notices_config() {
 			echo '<div class="error fade" id="qtranxs_error_'.$key.'"><p><a href="'.admin_url('options-general.php?page=qtranslate-x').'" style="color:magenta">qTranslate&#8209;X</a>:&nbsp;<strong><span style="color: red;">'.qtranxf_translate_wp('Error').'</span>:&nbsp;'.$msg.'</strong></p></div>';
 		}
 		unset($q_config['errors']);
+	}
+	if(isset($q_config['warnings']) && is_array($q_config['warnings'])){
+		foreach($q_config['warnings'] as $key => $msg){
+			echo '<div class="update-nag" id="qtranxs_warning_'.$key.'"><p><a href="'.admin_url('options-general.php?page=qtranslate-x').'" style="color:magenta">qTranslate&#8209;X</a>:&nbsp;<strong><span style="color: blue;">'.qtranxf_translate_wp('Warning').'</span>:&nbsp;'.$msg.'</strong></p></div>';
+		}
+		unset($q_config['warnings']);
 	}
 }
 

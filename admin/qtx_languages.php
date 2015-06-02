@@ -28,6 +28,7 @@ function qtranxf_unsetLanguage(&$langs, $lang) {
 	unset($langs['date_format'][$lang]);
 	unset($langs['time_format'][$lang]);
 	unset($langs['not_available'][$lang]);
+	//unset($langs['languages'][$lang]);
 }
 
 /**
@@ -41,21 +42,32 @@ function qtranxf_copyLanguage(&$langs, $cfg, $lang) {
 	$langs['date_format'][$lang] = $cfg['date_format'][$lang];
 	$langs['time_format'][$lang] = $cfg['time_format'][$lang];
 	$langs['not_available'][$lang] = $cfg['not_available'][$lang];
+	//$langs['languages'][$lang] = $cfg['languages'][$lang];
+}
+
+function qtranxf_update_config_header_css() {
+	global $q_config;
+	$header_css = get_option('qtranslate_header_css');
+	if($header_css === false){
+		$q_config['header_css'] = qtranxf_front_header_css_default();
+	}
+	if(!$q_config['header_css_on'] || !empty($header_css)){
+		qtranxf_add_warning(sprintf(__('A manual update to option "%s" or to the theme custom CSS may be needed, after some languages are changed.', 'qtranslate'), __('Head inline CSS', 'qtranslate')));
+	}
 }
 
 function qtranxf_disableLanguage($lang) {
 	global $q_config;
 	if(qtranxf_isEnabled($lang)) {
 		$new_enabled = array();
-		for($i = 0; $i < sizeof($q_config['enabled_languages']); $i++) {
-			if($q_config['enabled_languages'][$i] != $lang) {
-				$new_enabled[] = $q_config['enabled_languages'][$i];
-			}else{
-				qtranxf_unsetLanguage($q_config,$lang);
-				qtranxf_load_option('header_css','qtranxf_front_header_css_default');
-			}
+		foreach($q_config['enabled_languages'] as $k => $l){
+			if($l != $lang) continue;
+			unset($q_config['enabled_languages'][$k]);
+			break;
 		}
-		$q_config['enabled_languages'] = $new_enabled;
+		qtranxf_unsetLanguage($q_config,$lang);
+		qtranxf_update_config_header_css();
+		//update_option('qtranslate_enabled_languages', $q_config['enabled_languages']);
 		return true;
 	}
 	return false;
@@ -66,10 +78,13 @@ function qtranxf_enableLanguage($lang) {
 	if(qtranxf_isEnabled($lang))// || !isset($q_config['language_name'][$lang]))
 		return false;
 	$q_config['enabled_languages'][] = $lang;
+
 	// force update of .mo files
 	if ($q_config['auto_update_mo']) qtranxf_updateGettextDatabases(true, $lang);
+
 	qtranxf_load_languages_enabled();
-	qtranxf_load_option('header_css','qtranxf_front_header_css_default');
+	qtranxf_update_config_header_css();
+	//update_option('qtranslate_enabled_languages', $q_config['enabled_languages']);
 	return true;
 }
 
