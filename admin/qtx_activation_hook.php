@@ -129,7 +129,13 @@ function qtranxf_load_config_files($json_files){
  * @since 3.4
  */
 function qtranxf_get_option_config_files(){
-	return get_option('qtranslate_config_files', array('./i18n-config.json'));
+	$config_files_def = array('./i18n-config.json');
+	$config_files = get_option('qtranslate_config_files', $config_files_def);
+	if(!is_array($config_files)){
+		$config_files = $config_files_def;
+		delete_option('qtranslate_config_files');
+	}
+	return $config_files;
 }
 
 /**

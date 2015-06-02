@@ -110,6 +110,7 @@ Developers: please drop new topics here, the text will be moved to [qTranslate-X
 * Fix: handling non-standard language code: [Issue #171](https://github.com/qTranslate-Team/qtranslate-x/issues/171).
 * Fix: 'Head inline CSS' update on language list changes.
 * Fix: pagination of posts under Query Mode of URL Modification (filter 'qtranxf_convertBlogInfoURL'): [Issue #155](https://github.com/qTranslate-Team/qtranslate-x/issues/155)
+* Fix: updated `qtranxf_get_option_config_files` to check for misconfigurations.
 
 ### 3.3.5 ###
 * Feature: [Integration Framework](https://qtranslatexteam.wordpress.com/integration/) finalizing JSON file format.
