@@ -717,7 +717,7 @@ var qTranslateX=function(pg)
 	}
 
 	/**
-	 * Parses page configuration, loaded in qtranxf_get_admin_page_config.
+	 * Parses page configuration, loaded in qtranxf_get_admin_page_config_post_type.
 	 * @since 3.1-b2
 	*/
 	var addPageHooks=function(page_config_forms)

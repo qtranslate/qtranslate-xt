@@ -808,11 +808,10 @@ function qtranxf_add_meta_box_LSB($post_type, $post)
 		default: return;
 	}
 	if(empty($post_type)) if(isset($post->post_type)) $post_type = $post->post_type; else return;
-	//qtranxf_dbg_log('qtranxf_add_meta_box_LSB: $post_type: ',$post_type);//, true);
-	$page_config = qtranxf_get_admin_page_config_LSB($post_type);
+	//qtranxf_dbg_log('qtranxf_add_meta_box_LSB: $post_type: ', $post_type);//, true);
+	$page_config = qtranxf_get_admin_page_config_post_type($post_type);
 	if(empty($page_config)) return;
-	//add_meta_box( 'qtranxs-lsb', 'LSB', 'qtranxf_meta_box_LSB', $post_type, 'normal', 'high');
-	add_meta_box( 'qtranxs-meta-box-lsb', qtranxf_translate_wp('Language'), 'qtranxf_meta_box_LSB', null, 'normal', 'low');
+	add_meta_box( 'qtranxs-meta-box-lsb', qtranxf_translate_wp('Language'), 'qtranxf_meta_box_LSB', $post_type, 'normal', 'low');
 }
 add_action( 'add_meta_boxes', 'qtranxf_add_meta_box_LSB', 10, 2 );
 

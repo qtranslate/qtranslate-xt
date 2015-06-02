@@ -102,7 +102,7 @@ Developers: please drop new topics here, the text will be moved to [qTranslate-X
 * Major new feature: [Integration Framework](https://qtranslatexteam.wordpress.com/integration/) is finalized in its first edition.
 * Translation: a lot of thanks to all translators contributed.
 
-### 3.3.6 ###
+### 3.3.7 ###
 * Feature: finalizing [Integration Framework](https://qtranslatexteam.wordpress.com/integration/).
 * Enhancement: 'plugins' vs 'mu-plugins', links of sub-folders, etc. [Issue #168](https://github.com/qTranslate-Team/qtranslate-x/pull/168).
 * Enhancement: gettext filters in raw and single language modes.

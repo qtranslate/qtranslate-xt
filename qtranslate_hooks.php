@@ -93,12 +93,19 @@ function qtranxf_fixSearchForm($form) {
 }
 add_filter('get_search_form', 'qtranxf_fixSearchForm', 10, 1);
 */
-/* // action 'wp' does not seem to fire
+/* // action 'wp' fires at front-end only
 function qtranxf_on_wp()
 {
 	//qtranxf_dbg_log('qtranxf_on_wp:');
 }
 add_action( 'wp', 'qtranxf_on_wp');
+*/
+/*
+function qtranxf_on_posts_selection($selection)
+{
+	//qtranxf_dbg_log('qtranxf_on_posts_selection:', $selection);
+}
+add_action( 'posts_selection', 'qtranxf_on_posts_selection');
 */
 
 // Hooks for Plugin compatibility

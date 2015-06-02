@@ -66,7 +66,7 @@ add_action('plugins_loaded', 'qtranxf_collect_translations_posted', 5);
 
 function qtranxf_admin_init()
 {
-	global $q_config, $post, $post_type;
+	global $q_config, $post;
 	//qtranxf_dbg_log('qtranxf_admin_init: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
 	qtranxf_admin_loadConfig();
 
@@ -94,10 +94,9 @@ function qtranxf_admin_init()
 		qtranxf_updateTermLibraryJoin();
 	}
 
-	$post_type = qtranxf_post_type();
-	$page_config = qtranxf_get_admin_page_config($post_type);
-	if(!empty($page_config)){
-		qtranxf_add_filters($page_config);
+	$page_configs = qtranxf_get_admin_page_config();
+	if(!empty($page_configs['']['filters'])){
+		qtranxf_add_filters($page_configs['']['filters']);
 	}
 
 	add_action('admin_notices', 'qtranxf_admin_notices_config');
@@ -108,9 +107,9 @@ add_action('admin_init','qtranxf_admin_init');
 /**
  * load field configurations for the current admin page
  */
-function qtranxf_get_admin_page_config($post_type) {
-	static $page_config;
-	if($page_config) return $page_config;
+function qtranxf_get_admin_page_config() {
+	static $page_configs;//cache
+	if($page_configs) return $page_configs;
 
 	global $q_config, $pagenow;
 	$admin_config = $q_config['admin_config'];
@@ -123,7 +122,82 @@ function qtranxf_get_admin_page_config($post_type) {
 	$admin_config = apply_filters('i18n_admin_config', $admin_config);
 	//qtranxf_dbg_log('qtranxf_get_admin_page_config: $admin_config: ',qtranxf_json_encode($admin_config));
 
-	$page_config = qtranxf_parse_page_config($admin_config, $pagenow, $url_query, $post_type);
+	$page_configs = qtranxf_parse_page_config($admin_config, $pagenow, $url_query);
+	//qtranxf_dbg_log('qtranxf_get_admin_page_config: $page_configs: ', $page_configs);
+	return $page_configs;
+}
+
+function qtranxf_get_admin_page_config_post_type($post_type) {
+	global $q_config, $pagenow;
+	static $page_config;//cache
+	if(!is_null($page_config)){
+		//qtranxf_dbg_log('qtranxf_get_admin_page_config_post_type: cached: '.$pagenow.'; post_type: ', $post_type);
+		return $page_config;
+	}
+	if( $q_config['editor_mode'] == QTX_EDITOR_MODE_RAW){
+		//qtranxf_dbg_log('qtranxf_get_admin_page_config_post_type: QTX_EDITOR_MODE_RAW: '.$pagenow.'; post_type: ', $post_type);
+		$page_config = array();
+		return $page_config;
+	}
+	if(!empty($q_config['post_type_excluded'])){
+		switch($pagenow){
+			case 'post.php':
+			case 'post-new.php':
+				if(in_array($post_type,$q_config['post_type_excluded'])){
+					//qtranxf_dbg_log('qtranxf_get_admin_page_config_post_type: post_type_excluded: pagenow: '.$pagenow.'; post_type: ', $post_type);
+					$page_config = array();
+					return $page_config;
+				}
+			default: break;
+		}
+	}
+	//qtranxf_dbg_log('qtranxf_get_admin_page_config_post_type: pagenow: '.$pagenow.'; post_type: ', $post_type);
+	$page_configs = qtranxf_get_admin_page_config();
+	//qtranxf_dbg_log('qtranxf_get_admin_page_config_post_type: $page_configs: ', $page_configs);
+	$page_config = isset($page_configs['']) ? $page_configs[''] : array();
+	if($post_type){
+		foreach($page_configs as $k => $cfg){
+			if(empty($k)) continue;
+			if(isset($cfg['post_type'])){
+				$cfg_post_type = $cfg['post_type'];
+				unset($cfg['post_type']);
+			}else{
+				$cfg_post_type = $k;
+			}
+			$matched = qtranxf_match_post_type($cfg_post_type, $post_type);
+			//qtranxf_dbg_log('qtranxf_get_admin_page_config_post_type: $cfg: ', $cfg);
+			//qtranxf_dbg_log('qtranxf_get_admin_page_config_post_type: $matched: ', $matched);
+			if($matched === false) continue;
+			if(is_null($matched)){
+				$page_config = array();
+				break;
+			}
+			$page_config = qtranxf_merge_config($page_config,$cfg);
+		}
+	}
+	//qtranxf_dbg_log('qtranxf_get_admin_page_config_post_type: $page_config: ', $page_config);
+
+	if(!empty($page_config)){
+		//clean up empty items
+		if(!empty($page_config['forms'])){
+			foreach($page_config['forms'] as $form_id => &$frm){
+				if(!isset($frm['fields'])) continue;
+				foreach($frm['fields'] as $k => $f){
+					if(isset($f['encode']) && $f['encode'] == 'none'){
+						//unset($page_config['forms'][$form_id]['fields'][$k]);
+						unset($frm['fields'][$k]);
+					}
+				}
+				foreach($frm as $k => $token){
+					if(empty($token)) unset($frm[$k]);
+				}
+				if(empty($frm)) unset($page_config['forms'][$form_id]);
+			}
+		}
+		foreach($page_config as $k => $cfg){
+			if(empty($cfg)) unset($page_config[$k]);
+		}
+	}
 
 	if(!empty($page_config)){
 		$page_config['js'] = array();
@@ -170,54 +244,25 @@ function qtranxf_get_admin_page_config($post_type) {
 				qtranxf_error_log(sprintf(__('Could not find script file "%s" for handle "%s".', 'qtranslate'), $src, $js['handle']));
 			}
 		}
-
 	}
 
-	/**
+	/*
 	 * Customize the $page_config for this admin request.
 	 * @param (array) $page_config 'admin_config', filtered for the current page.
 	 * @param (string) $pagenow value of WordPress global variable $pagenow.
 	 * @param (string) $url_query query part of URL without '?', sanitized version of $_SERVER['QUERY_STRING'].
 	 * @param (string) $post_type type of post serving on the current page, or null if not applicable.
 	 */
-	$page_config = apply_filters('i18n_admin_page_config', $page_config, $pagenow, $url_query, $post_type);
+	//$page_config = apply_filters('i18n_admin_page_config', $page_config, $pagenow, $url_query, $post_type);
 	//qtranxf_dbg_log('qtranxf_get_admin_page_config: $pagenow='.$pagenow.'; $url_query='.$url_query.'; $post_type='.$post_type.'; $page_config: ',qtranxf_json_encode($page_config));
+	qtranxf_write_config_log($page_config, '', $pagenow, '', $post_type);
 	return $page_config;
 }
 
-function qtranxf_get_admin_page_config_LSB($post_type) {
-	global $q_config, $pagenow;
-	static $page_config_lsb = null;
-	if(!is_null($page_config_lsb)){
-		//qtranxf_dbg_log('qtranxf_get_admin_page_config_LSB: cached: '.$pagenow.'; post_type: ', $post_type);
-		return $page_config_lsb;
-	}
-	if( $q_config['editor_mode'] == QTX_EDITOR_MODE_RAW){
-		//qtranxf_dbg_log('qtranxf_get_admin_page_config_LSB: QTX_EDITOR_MODE_RAW: '.$pagenow.'; post_type: ', $post_type);
-		$page_config_lsb = array();
-		return $page_config_lsb;
-	}
-	if(!empty($q_config['post_type_excluded'])){
-		switch($pagenow){
-			case 'post.php':
-			case 'post-new.php':
-				if(in_array($post_type,$q_config['post_type_excluded'])){
-					//qtranxf_dbg_log('qtranxf_get_admin_page_config_LSB: post_type_excluded: pagenow: '.$pagenow.'; post_type: ', $post_type);
-					return;
-				}
-			default: break;
-		}
-	}
-	//qtranxf_dbg_log('qtranxf_get_admin_page_config_LSB: pagenow: '.$pagenow.'; post_type: ', $post_type);
-	$page_config_lsb = qtranxf_get_admin_page_config($post_type);
-	//qtranxf_dbg_log('qtranxf_get_admin_page_config_LSB: $page_config: ', $page_config_lsb);
-	return $page_config_lsb;
-}
-
 function qtranxf_add_admin_footer_js ( $enqueue_script=false ) {
-	global $q_config, $post_type;
-	if(!$post_type) $post_type = qtranxf_post_type();
-	$page_config = qtranxf_get_admin_page_config_LSB($post_type);
+	global $q_config;
+	$post_type = qtranxf_post_type();
+	$page_config = qtranxf_get_admin_page_config_post_type($post_type);
 	if(empty($page_config)) return;
 
 	wp_dequeue_script('autosave');
