@@ -536,7 +536,6 @@ add_filter( 'wp_get_attachment_link', 'qtranxf_get_attachment_link', 5, 6);
 function qtranxf_home_url($url, $path, $orig_scheme, $blog_id)
 {
 	global $q_config;
-	if($q_config['url_mode'] == QTX_URL_QUERY) return $url; // @since 3.3.7
 	$lang = $q_config['language'];
 	//qtranxf_dbg_log('qtranxf_home_url: url='.$url.'; path='.$path.'; orig_scheme='.$orig_scheme);
 	$url = qtranxf_get_url_for_language($url, $lang, !$q_config['hide_default_language'] || $lang != $q_config['default_language']);
@@ -555,7 +554,6 @@ function qtranxf_home_url($url, $path, $orig_scheme, $blog_id)
 	}
 }
 */
-add_filter('home_url', 'qtranxf_home_url', 0, 4);
 
 function qtranxf_esc_html($text) {
 	//qtranxf_dbg_echo('qtranxf_esc_html:text=',$text,true);
@@ -725,9 +723,6 @@ add_filter('redirect_canonical', 'qtranxf_checkCanonical', 10, 2);
  */
 function qtranxf_convertBlogInfoURL($url, $what) {
 	global $q_config;
-	/* WP uses line like 'trailingslashit( get_bloginfo( 'url' ) )' in /wp-includes/link-template.php, for example, which obviously breaks the further processing in QTX_URL_QUERY mode.
-	*/
-	if($q_config['url_mode'] == QTX_URL_QUERY) return $url; // @since 3.3.7
 	switch($what){
 		case 'stylesheet_url':
 		case 'template_url':
@@ -737,7 +732,6 @@ function qtranxf_convertBlogInfoURL($url, $what) {
 		default: return qtranxf_convertURL($url);
 	}
 }
-add_filter('bloginfo_url', 'qtranxf_convertBlogInfoURL',10,2);
 
 /**
  * @since 3.3.1
@@ -750,13 +744,28 @@ function qtranxf_pagenum_link($url) {
 }
 add_filter('get_pagenum_link', 'qtranxf_pagenum_link');
 
+/**
+ * @since 3.3.7
+ */
+function qtranxf_add_front_filters(){
+	global $q_config;
+
+	if($q_config['url_mode'] != QTX_URL_QUERY){
+		/* WP uses line like 'trailingslashit( get_bloginfo( 'url' ) )' in /wp-includes/link-template.php, for example, which obviously breaks the further processing in QTX_URL_QUERY mode.
+		*/
+		add_filter('bloginfo_url', 'qtranxf_convertBlogInfoURL',10,2);
+		add_filter('home_url', 'qtranxf_home_url', 0, 4);
+	}
+
+	// Hooks (execution time critical filters)
+	add_filter('gettext', 'qtranxf_gettext',0);
+	add_filter('gettext_with_context', 'qtranxf_gettext_with_context',0);
+	add_filter('ngettext', 'qtranxf_ngettext',0);
+}
+qtranxf_add_front_filters();
+
 //qtranxf_optionFilter();
 //add_filter('wp_head', 'qtranxf_add_css');
-
-// Hooks (execution time critical filters)
-add_filter('gettext', 'qtranxf_gettext',0);
-add_filter('gettext_with_context', 'qtranxf_gettext_with_context',0);
-add_filter('ngettext', 'qtranxf_ngettext',0);
 
 /* //moved to i18n-config.json
 // Compability with Default Widgets
@@ -795,5 +804,3 @@ add_filter('get_term', 'qtranxf_useTermLib',0);
 add_filter('get_terms', 'qtranxf_useTermLib',0);
 add_filter('get_category', 'qtranxf_useTermLib',0);
 // */
-
-
