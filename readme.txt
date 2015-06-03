@@ -109,7 +109,7 @@ Developers: please drop new topics here, the text will be moved to [qTranslate-X
 * Feature: swirly-bracket(brace) language encoding added to be used in places where square-bracket and comment encoding do not work. '[:]' sometimes conflict with shortcodes. '<!--:-->' does not survive tag clean up. '{:}'(swirly-bracket) seems to survive all.
 * Fix: handling non-standard language code: [Issue #171](https://github.com/qTranslate-Team/qtranslate-x/issues/171).
 * Fix: 'Head inline CSS' update on language list changes.
-* Fix: pagination of posts under Query Mode of URL Modification (filter 'qtranxf_convertBlogInfoURL'): [Issue #155](https://github.com/qTranslate-Team/qtranslate-x/issues/155)
+* Fix: pagination of posts under Query Mode of URL Modification (filter 'qtranxf_convertBlogInfoURL'): [Issue #155](https://github.com/qTranslate-Team/qtranslate-x/issues/155). Filters 'home_url' and 'bloginfo_url' are disabled in Query mode.
 * Fix: updated `qtranxf_get_option_config_files` to check for misconfigurations.
 
 ### 3.3.5 ###

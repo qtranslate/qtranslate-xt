@@ -536,6 +536,7 @@ add_filter( 'wp_get_attachment_link', 'qtranxf_get_attachment_link', 5, 6);
 function qtranxf_home_url($url, $path, $orig_scheme, $blog_id)
 {
 	global $q_config;
+	if($q_config['url_mode'] == QTX_URL_QUERY) return $url; // @since 3.3.7
 	$lang = $q_config['language'];
 	//qtranxf_dbg_log('qtranxf_home_url: url='.$url.'; path='.$path.'; orig_scheme='.$orig_scheme);
 	$url = qtranxf_get_url_for_language($url, $lang, !$q_config['hide_default_language'] || $lang != $q_config['default_language']);
