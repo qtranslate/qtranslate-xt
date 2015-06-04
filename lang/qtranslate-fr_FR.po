@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: qTranslate-X 3.3.7\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-06-02 11:53-0600\n"
-"PO-Revision-Date: 2015-06-02 23:13+0100\n"
+"PO-Revision-Date: 2015-06-04 17:43+0100\n"
 "Last-Translator: Sophie <soph@sophie-g.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -341,7 +341,7 @@ msgstr "La base de données a été convertie au format en crochets."
 
 #: admin/qtx_admin_utils.php:231 admin/qtx_admin_utils.php:233
 msgid "Note: custom entries are not touched."
-msgstr "Note : les entrées personnalisées ne sont pas affectées."
+msgstr "Note : les contenus personnalisés ne sont pas affectés."
 
 #: admin/qtx_admin_utils.php:233
 msgid "Database has been converted to legacy dual-tag format."
@@ -477,7 +477,7 @@ msgstr ""
 "au format <a href=\"http://www.php.net/manual/function.strftime.php"
 "\">strftime</a> (utilisez %q pour le suffixe des jours anglais (st,nd,rd,"
 "th)) ou au format <a href=\"http://www.php.net/manual/function.date.php"
-"\">date</a>. Ce champs est optionnel. (Exemple: %A %B %e%q, %Y)"
+"\">date</a>. Ce champ est optionnel. (Exemple: %A %B %e%q, %Y)"
 
 #: admin/qtx_configuration.php:85
 msgid "Time Format"
@@ -493,7 +493,7 @@ msgstr ""
 "Dépend de votre mode de conversion Date / Heure, vous pouvez entrer une "
 "heure au format <a href=\"http://www.php.net/manual/function.strftime.php"
 "\">strftime</a> ou au format <a href=\"http://www.php.net/manual/function."
-"date.php\">date</a>. Ce champs est optionnel. (Exemple: %I:%M %p)"
+"date.php\">date</a>. Ce champ est optionnel. (Exemple: %I:%M %p)"
 
 #: admin/qtx_configuration.php:90
 msgid "Not Available Message"
@@ -505,7 +505,7 @@ msgid ""
 "(Example: Sorry, this entry is only available in %LANG:, : and %.)"
 msgstr ""
 "Message à afficher si l’article n’est pas disponible dans la langue "
-"demandée. (Exemple : Désolé, cette article est uniquement disponible en "
+"demandée. (Exemple : Désolé, ce contenu est uniquement disponible en "
 "%LANG:, : et %.)"
 
 #: admin/qtx_configuration.php:94
@@ -870,7 +870,9 @@ msgstr "Mode de modification de l’URL"
 
 #: admin/qtx_configuration.php:539
 msgid "Most SEO unfriendly, not recommended."
-msgstr "Très mauvais pour le SEO, pas recommandé."
+msgstr ""
+"Très mauvais pour le SEO (optimisation pour les moteurs de recherche), pas "
+"recommandé."
 
 #: admin/qtx_configuration.php:539
 msgid "Use Query Mode (?lang=en)"
@@ -878,7 +880,7 @@ msgstr "Utiliser le mode Query (?lang=fr)"
 
 #: admin/qtx_configuration.php:546
 msgid "SEO friendly."
-msgstr "Compatible avec SEO."
+msgstr "Compatible avec SEO (optimisation pour les moteurs de recherche)."
 
 #: admin/qtx_configuration.php:546
 msgid "Use Pre-Path Mode (Default, puts /en/ in front of URL)"
@@ -951,7 +953,7 @@ msgid ""
 "viewed directly."
 msgstr ""
 "Le message sur les langues disponibles pour le contenu d’un article ou d’une "
-"page peuvent aussi apparaitre si on consulte directement un article avec du "
+"page peut aussi apparaitre si on consulte directement un article avec du "
 "contenu non traduit."
 
 #: admin/qtx_configuration.php:583
@@ -962,7 +964,7 @@ msgid ""
 "under \"%s\" section."
 msgstr ""
 "Cette fonction ne marchera pas correctement si vous avez installé %s sur un "
-"blog ayant des entrées existantes. Dans ce cas, vous avez besoin d’aller "
+"blog ayant des contenus existants. Dans ce cas, vous avez besoin d’aller "
 "voir l’option \"%s\" dans la section \"%s\"."
 
 #: admin/qtx_configuration.php:585
@@ -1025,9 +1027,9 @@ msgid ""
 "visitor will be forwarded to the correct URL for the language specified by "
 "his browser."
 msgstr ""
-"Lorsque la première page est visitée par bookmark / lien externe / type-in, "
-"le visiteur sera redirigé à la bonne URL en fonction de la langue spécifiée "
-"par son navigateur."
+"Lorsque la première page est visitée par bookmark, lien externe ou "
+"directement, le visiteur sera redirigé à la bonne URL en fonction de la "
+"langue spécifiée par son navigateur."
 
 #: admin/qtx_configuration.php:605
 msgid "Post Types"
@@ -1166,15 +1168,15 @@ msgstr "Conversion de Date / Heure"
 
 #: admin/qtx_configuration.php:666
 msgid "Use emulated date function."
-msgstr "Utilisez la fonction de date générée."
+msgstr "Utilisez la fonction de date émulée."
 
 #: admin/qtx_configuration.php:667
 msgid ""
 "Use emulated date function and replace formats with the predefined formats "
 "for each language."
 msgstr ""
-"Utiliser la fonction de date générée et remplacer les formats par les "
-"formats prédefinis pour chaque langue."
+"Utiliser la fonction de date émulée et remplacer les formats par les formats "
+"prédéfinis pour chaque langue."
 
 #: admin/qtx_configuration.php:668
 msgid "Use strftime instead of date."
@@ -1186,7 +1188,7 @@ msgid ""
 "for each language."
 msgstr ""
 "Utiliser strftime au lieu de date et remplacer les formats avec les formats "
-"prédefinis pour chaque langue."
+"prédéfinis pour chaque langue."
 
 #: admin/qtx_configuration.php:670
 msgid ""
@@ -1308,7 +1310,7 @@ msgstr ""
 "La langue d’édition ne peut pas être changée sans recharger la page. "
 "Veuillez essayer ce mode si certains des champs traduisibles avancés ne "
 "répondent pas correctement aux Boutons de Changement de Langue à cause d’une "
-"incompatibilité avec une extension qui modifie profondéement le comportement "
+"incompatibilité avec une extension qui modifie profondément le comportement "
 "par défaut de WP. Ce mode est le plus compatible avec les autres thèmes et "
 "extensions."
 
@@ -1339,8 +1341,8 @@ msgstr "Classe du bouton actif :"
 #: admin/qtx_configuration.php:712
 msgid "The above is reset to an appropriate default, if the below is changed."
 msgstr ""
-"Ce qui est ci-dessus est remis à défaut de manière appropriée, si ce qui est "
-"ci-dessous est modifié."
+"Les valeurs ci-dessus sont remises à défaut de manière appropriée, si la "
+"sélection ci-dessous est modifiée."
 
 #: admin/qtx_configuration.php:713
 msgid "CSS set:"
@@ -1516,7 +1518,7 @@ msgid ""
 "the first field found, having an id specified, is picked up."
 msgstr ""
 "La valeur de l’attribut \"id\" est normalement unique dans une page, sinon "
-"le premier champ trouvé, qui a un id de spécifié, sera sélectionné."
+"le premier champ trouvé qui a un id de spécifié sera sélectionné."
 
 #: admin/qtx_configuration.php:824
 #, php-format
@@ -1569,9 +1571,9 @@ msgstr ""
 "permettra le fonctionnement des thèmes et extensions qui en dépendent. La "
 "politique de WordPress interdit de définir des fonctions avec des noms "
 "identiques à celles d’autres extensions, puisque ça génère des erreurs "
-"fatales très désagréables pour l’utilisateur, quand deux extensions en "
+"fatales très désagréables pour l’utilisateur quand deux extensions en "
 "conflit sont activées simultanément. Avant d’activer cette option, vous "
-"devez vous assurez qu’il n’y a pas d’autre extension active qui définit déjà "
+"devez vous assurer qu’il n’y a pas d’autre extension active qui définit déjà "
 "ces fonctions."
 
 #: admin/qtx_configuration.php:865
@@ -1702,7 +1704,7 @@ msgstr ""
 "Si vous installez qTranslate pour la première fois sur un blog Wordpress "
 "ayant des articles existants, vous pouvez soit éditer tous vos articles "
 "manuellement et les enregistrer dans la bonne langue ou <a href=\"%s"
-"\">cliquez ici</a> pour marquer tous les articles existants comme écrits "
+"\">cliquer ici</a> pour marquer tous les articles existants comme écrits "
 "dans la langue par défaut."
 
 #: admin/qtx_import_export.php:161
@@ -1711,7 +1713,7 @@ msgid ""
 "backup before clicking one of the links."
 msgstr ""
 "Ces deux processus sont <b>irréversibles</b> ! Assurez vous de faire une "
-"sauvegarde complète de votre base de données avant de cliquer sur un de ses "
+"sauvegarde complète de votre base de données avant de cliquer sur un de ces "
 "liens."
 
 #: admin/qtx_import_export.php:162
@@ -2275,12 +2277,12 @@ msgstr ""
 #~ msgstr ""
 #~ "Listez les chemins des pages d’admin personnalisées pour lesquelles vous "
 #~ "voulez afficher des Boutons de Changement de Langue. Ces Boutons vont "
-#~ "ensuite contrôles les champs configurés dans la section \"Champs "
+#~ "ensuite contrôler les champs configurés dans la section \"Champs "
 #~ "Personnalisés\". Vous pouvez n’inclure que la partie de l’URL complète "
-#~ "après %s, y compris une chaine de requete (query string) distinctive si "
+#~ "après %s, y compris une chaine de requête (query string) distinctive si "
 #~ "besoin. Vous pouvez lister autant de pages souhaitées que vous voulez, "
-#~ "séparées par des espaces/virgules. Pour plus d’information, lisez la %sFAQ"
-#~ "%s."
+#~ "séparées par des espaces ou virgules. Pour plus d’information, lisez la "
+#~ "%sFAQ%s."
 
 #~ msgid ""
 #~ "Menu item added is replaced with a sub-menu of available languages when "
