@@ -395,11 +395,10 @@ function qtranxf_get_browser_language(){
 		$prefered_languages[$match[1]] = $pr;
 	}
 	arsort($prefered_languages, SORT_NUMERIC);
-	//qtranxf_dbg_echo('qtranxf_get_browser_language: prefered_languages:',$prefered_languages);
+	//qtranxf_dbg_log('qtranxf_get_browser_language: prefered_languages:',$prefered_languages);
 	foreach($prefered_languages as $language => $priority) {
-		if(strlen($language)>2) $language = substr($language,0,2);
-		if(qtranxf_isEnabled($language))
-			return $language;
+		$lang = qtranxf_match_language_locale($language);
+		if($lang) return $lang;
 	}
 	return null;
 }
@@ -407,23 +406,24 @@ function qtranxf_get_browser_language(){
 function qtranxf_http_negotiate_language(){
 	global $q_config;
 	if(function_exists('http_negotiate_language')){
+		$default_language = $q_config['default_language'];
 		$supported=array();
-		$supported[]=str_replace('_','-',$q_config['locale'][$q_config['default_language']]);//needs to be the first
+		$supported[] = qtranxf_html_locale($q_config['locale'][$default_language]);//needs to be the first
+		if(!empty($q_config['locale_html'][$default_language])){
+			$supported[] = $q_config['locale_html'][$default_language];
+		}
 		foreach($q_config['enabled_languages'] as $lang){
-			if($lang == $q_config['default_language']) continue;
-			$supported[]=str_replace('_','-',$q_config['locale'][$lang]);
+			if($lang == $default_language) continue;
+			$supported[] = qtranxf_html_locale($q_config['locale'][$lang]);
+			if(!empty($q_config['locale_html'][$lang])){
+				$supported[] = $q_config['locale_html'][$lang];
+			}
 		}
 		$locale_negotiated = http_negotiate_language($supported);
-		//since 3.2-b3 added search, since locale may be different from two-letter code and not even started with language code.
-		foreach($q_config['enabled_languages'] as $lang){
-			$locale = str_replace('_','-',$q_config['locale'][$lang]);
-			if($locale == $locale_negotiated)
-				return $lang;
-		}
+		return qtranxf_match_language_locale($locale_negotiated);
 	}else{
 		return qtranxf_get_browser_language();
 	}
-	return null;
 }
 
 function qtranxf_resolveLangCase($lang,&$caseredirect)

@@ -885,3 +885,23 @@ function qtranxf_add_filters($filters){
 		}
 	}
 }
+
+/**
+ * @since 3.4
+ */
+function qtranxf_html_locale($locale){
+	return str_replace('_','-',$locale);
+}
+
+function qtranxf_match_language_locale($locale){
+	global $q_config;
+	foreach($q_config['enabled_languages'] as $lang) {
+		if(qtranxf_html_locale($q_config['locale'][$lang]) == $locale) return $lang;
+		if($q_config['locale'][$lang] == $locale) return $lang;
+		if(!empty($q_config['locale_html'][$lang]) && $q_config['locale_html'][$lang] == $locale) return $lang;
+	}
+	$locale_code = substr($locale,0,2);
+	foreach($q_config['enabled_languages'] as $lang) {
+		if( $locale_code == $lang ) return $lang;
+	}
+}

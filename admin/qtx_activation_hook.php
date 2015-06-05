@@ -15,6 +15,11 @@ function qtranxf_save_languages($cfg)
 {
 	global $qtranslate_options;
 	foreach($qtranslate_options['languages'] as $nm => $opn){
+		if(is_array($cfg[$nm])){
+			foreach($cfg[$nm] as $k => $v){
+				if(empty($v)) unset($cfg[$nm][$k]);
+			}
+		}
 		if(empty($cfg[$nm])) delete_option($opn);
 		else update_option($opn,$cfg[$nm]);
 	}

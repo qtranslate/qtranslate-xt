@@ -294,6 +294,7 @@ function qtranxf_add_admin_footer_js ( $enqueue_script=false ) {
 		$config['language_config'][$lang]['flag'] = $q_config['flag'][$lang];
 		$config['language_config'][$lang]['name'] = $q_config['language_name'][$lang];
 		$config['language_config'][$lang]['locale'] = $q_config['locale'][$lang];
+		$config['language_config'][$lang]['locale_html'] = !empty($q_config['locale_html'][$lang]) ? $q_config['locale_html'][$lang] : $lang;
 	}
 	if(!empty($page_config)){
 		$config['page_config'] = $page_config;

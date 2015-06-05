@@ -13,8 +13,16 @@ require_once(QTRANSLATE_DIR.'/admin/qtx_import_export.php');
 //if(file_exists(QTRANSLATE_DIR.'/admin/qtx_config_services.php'))
 //	require_once(QTRANSLATE_DIR.'/admin/qtx_config_services.php');
 
-function qtranxf_language_form($lang = '', $language_code = '', $language_name = '', $language_locale = '', $language_date_format = '', $language_time_format = '', $language_flag ='', $language_na_message = '', $language_default = '', $original_lang='') {
+function qtranxf_language_form($language_code='', $lang_props=null, $original_lang='') {
 	global $q_config;
+	if(!is_array($lang_props)) $lang_props = array();
+	$language_name = isset($lang_props['language_name']) ? $lang_props['language_name'] : '';
+	$language_locale = isset($lang_props['locale']) ? $lang_props['locale'] : '';
+	$language_locale_html = isset($lang_props['locale_html']) ? $lang_props['locale_html'] : '';
+	$language_date_format = isset($lang_props['date_format']) ? $lang_props['date_format'] : '';
+	$language_time_format = isset($lang_props['time_format']) ? $lang_props['time_format'] : '';
+	$language_flag = isset($lang_props['flag']) ? $lang_props['flag'] : '';
+	$language_na_message = isset($lang_props['not_available']) ? $lang_props['not_available'] : '';
 ?>
 <input type="hidden" name="original_lang" value="<?php echo $original_lang; ?>" />
 <div class="form-field">
@@ -64,7 +72,7 @@ function qtranxf_language_form($lang = '', $language_code = '', $language_name =
 //]]>
 </script>
 <div class="form-field">
-	<label for="language_name"><?php _e('Name', 'qtranslate') ?></label>
+	<label for="language_name"><?php _e('Name', 'qtranslate'); echo ' '; _e('(in native alphabet)', 'qtranslate') ?></label>
 	<input name="language_name" id="language_name" type="text" value="<?php echo $language_name; ?>"/>
 	<p class="qtranxs_notes"><?php _e('The Name of the language, which will be displayed on the site. (Example: English)', 'qtranslate') ?></p>
 </div>
@@ -74,6 +82,13 @@ function qtranxf_language_form($lang = '', $language_code = '', $language_name =
 	<p class="qtranxs_notes">
 	<?php _e('PHP and Wordpress Locale for the language. (Example: en_US)', 'qtranslate') ?><br/>
 	<?php _e('You will need to install the .mo file for this language.', 'qtranslate') ?>
+	</p>
+</div>
+<div class="form-field">
+	<label for="language_locale_html"><?php _e('Locale at front-end', 'qtranslate') ?></label>
+	<input name="language_locale_html" id="language_locale_html" type="text" value="<?php echo $language_locale_html; ?>"  size="5" maxlength="5"/>
+	<p class="qtranxs_notes">
+	<?php printf(__('Locale to be used in browser at front-end to set %s HTML attributes to specify alternative languages on a page. If left empty, then "%s" is used by default.', 'qtranslate'), '"hreflang"', __('Language Code', 'qtranslate')) ?><br/>
 	</p>
 </div>
 <div class="form-field">
@@ -88,7 +103,7 @@ function qtranxf_language_form($lang = '', $language_code = '', $language_name =
 </div>
 <div class="form-field">
 	<label for="language_na_message"><?php _e('Not Available Message', 'qtranslate') ?></label>
-	<input name="language_na_message" id="language_na_message" type="text" value="<?php echo $language_na_message; ?>"/>
+	<input name="language_na_message" id="language_na_message" type="text" value="<?php echo esc_html($language_na_message); ?>"/>
 	<p class="qtranxs_notes">
 	<?php _e('Message to display if post is not available in the requested language. (Example: Sorry, this entry is only available in %LANG:, : and %.)', 'qtranslate') ?><br/>
 	<?php _e('%LANG:&lt;normal_separator&gt;:&lt;last_separator&gt;% generates a list of languages separated by &lt;normal_separator&gt; except for the last one, where &lt;last_separator&gt; will be used instead.', 'qtranslate') ?><br/>
@@ -163,15 +178,11 @@ function qtranxf_conf() {
 
 	// init some needed variables
 	$errors = array();
-	$original_lang = '';
+
 	$language_code = '';
-	$language_name = '';
-	$language_locale = '';
-	$language_date_format = '';
-	$language_time_format = '';
-	$language_na_message = '';
-	$language_flag = '';
-	$language_default = '';
+	$lang_props = array();
+	$original_lang = '';
+
 	$altered_table = false;
 
 	$message = apply_filters('qtranslate_configuration_pre',array());
@@ -195,8 +206,6 @@ function qtranxf_conf() {
 		if(strlen($_POST['language_locale'])<2) $errors[] = __('The Language must have a Locale!', 'qtranslate');
 		if($_POST['language_name']=='') $errors[] = __('The Language must have a name!', 'qtranslate');
 		if(strlen($lang)!=2) $errors[] = __('Language Code has to be 2 characters long!', 'qtranslate');
-		//$lang = strtolower($lang);
-		//$language_names = qtranxf_language_configured('language_name');
 		$langs=array(); qtranxf_load_languages($langs);
 		$language_names = $langs['language_name'];
 		if($_POST['original_lang']==''&&empty($errors)) {
@@ -230,53 +239,29 @@ function qtranxf_conf() {
 			}
 		}
 
-		/**
-			@since 3.2.9.5
-			In earlier versions the 'if' below used to work correctly, but magic_quotes has been removed from PHP for a while, and 'if(get_magic_quotes_gpc())' is now always 'false'.
-			However, WP adds magic quotes anyway via call to add_magic_quotes() in
-			./wp-includes/load.php:function wp_magic_quotes()
-			called from
-			./wp-settings.php: wp_magic_quotes()
-			Then it looks like we have to always 'stripslashes' now, although it is dangerous, since applying 'stripslashes' twice messes it up.
-			This problem reveals when, for example, '\a' format is in use.
-			Possible test for '\' character, instead of 'get_magic_quotes_gpc()' can be 'strpos($_POST['language_date_format'],'\\\\')' for this particular case.
-			If Wordpress ever decides to remove calls to wp_magic_quotes, then this place will be in trouble again.
-			Discussions:
-			http://wordpress.stackexchange.com/questions/21693/wordpress-and-magic-quotes
-		*/
-		//if(get_magic_quotes_gpc()) {
-			//qtranxf_dbg_log('get_magic_quotes_gpc: before REQUEST[language_date_format]=',$_REQUEST['language_date_format']);
-			//qtranxf_dbg_log('get_magic_quotes_gpc: before POST[language_date_format]=',$_POST['language_date_format']);
-			//qtranxf_dbg_log('pos=',strpos($_POST['language_date_format'],'\\\\'));//shows a number
-			if(isset($_POST['language_date_format'])) $_POST['language_date_format'] = stripslashes($_POST['language_date_format']);
-			if(isset($_POST['language_time_format'])) $_POST['language_time_format'] = stripslashes($_POST['language_time_format']);
-			//qtranxf_dbg_log('pos=',strpos($_POST['language_date_format'],'\\\\'));//shows false
-			//qtranxf_dbg_log('get_magic_quotes_gpc: after REQUEST[language_date_format]=',$_REQUEST['language_date_format']);
-			//qtranxf_dbg_log('get_magic_quotes_gpc: after POST[language_date_format]=',$_POST['language_date_format']);
-		//}
+		$lang_props['language_name'] = sanitize_text_field($_POST['language_name']);
+		$lang_props['flag'] = sanitize_text_field($_POST['language_flag']);
+		$lang_props['locale'] = sanitize_text_field($_POST['language_locale']);
+		$lang_props['locale_html'] = sanitize_text_field($_POST['language_locale_html']);
+		$lang_props['date_format'] = sanitize_text_field(stripslashes($_POST['language_date_format']));
+		$lang_props['time_format'] = sanitize_text_field(stripslashes($_POST['language_time_format']));
+		$lang_props['not_available'] = wp_kses_post(stripslashes($_POST['language_na_message']));//allow valid HTML
 		if(empty($errors)) {
 			// everything is fine, insert language
-			$q_config['language_name'][$lang] = sanitize_text_field($_POST['language_name']);
-			$q_config['flag'][$lang] = sanitize_text_field($_POST['language_flag']);
-			$q_config['locale'][$lang] = sanitize_text_field($_POST['language_locale']);
-			$q_config['date_format'][$lang] = sanitize_text_field($_POST['language_date_format']);
-			$q_config['time_format'][$lang] = sanitize_text_field($_POST['language_time_format']);
-			$q_config['not_available'][$lang] = wp_kses_data($_POST['language_na_message']);
+			foreach($lang_props as $k => $v){
+				$q_config[$k][$lang] = $v;
+			}
 			qtranxf_copyLanguage($langs, $q_config, $lang);
 			qtranxf_save_languages($langs);
-			qtranxf_update_config_header_css();
+			qtranxf_enableLanguage($lang);
+			//qtranxf_update_config_header_css();
 		}
 		if(!empty($errors)||isset($_GET['edit'])) {
 			// get old values in the form
 			$original_lang = sanitize_text_field($_POST['original_lang']);
 			$language_code = $lang;
-			$language_name = sanitize_text_field($_POST['language_name']);
-			$language_locale = sanitize_text_field($_POST['language_locale']);
-			$language_date_format = sanitize_text_field($_POST['language_date_format']);
-			$language_time_format = sanitize_text_field($_POST['language_time_format']);
-			$language_na_message = wp_kses_data($_POST['language_na_message']);
-			$language_flag = sanitize_text_field($_POST['language_flag']);
-			$language_default = isset($_POST['language_default']) ? sanitize_text_field($_POST['language_default']) : $q_config['default_language'];
+		}else{
+			$lang_props = array();//reset form for new language
 		}
 	}
 	elseif(isset($_GET['convert'])){
@@ -332,12 +317,13 @@ function qtranxf_conf() {
 		$language_code = $lang;
 		//$langs = $q_config;
 		$langs = array(); qtranxf_languages_configured($langs);
-		$language_name = isset($langs['language_name'][$lang])?$langs['language_name'][$lang]:'';
-		$language_locale = isset($langs['locale'][$lang])?$langs['locale'][$lang]:'';
-		$language_date_format = isset($langs['date_format'][$lang])?$langs['date_format'][$lang]:'';
-		$language_time_format = isset($langs['time_format'][$lang])?$langs['time_format'][$lang]:'';
-		$language_na_message = isset($langs['not_available'][$lang])?$langs['not_available'][$lang]:'';
-		$language_flag = isset($langs['flag'][$lang])?$langs['flag'][$lang]:'';
+		$lang_props['language_name'] = isset($langs['language_name'][$lang])?$langs['language_name'][$lang]:'';
+		$lang_props['locale'] = isset($langs['locale'][$lang])?$langs['locale'][$lang]:'';
+		$lang_props['locale_html'] = isset($langs['locale_html'][$lang])?$langs['locale_html'][$lang]:'';
+		$lang_props['date_format'] = isset($langs['date_format'][$lang])?$langs['date_format'][$lang]:'';
+		$lang_props['time_format'] = isset($langs['time_format'][$lang])?$langs['time_format'][$lang]:'';
+		$lang_props['not_available'] = isset($langs['not_available'][$lang])?$langs['not_available'][$lang]:'';
+		$lang_props['flag'] = isset($langs['flag'][$lang])?$langs['flag'][$lang]:'';
 	}
 	elseif(isset($_GET['delete'])){
 		$lang = $_GET['delete'];
@@ -450,7 +436,7 @@ function qtranxf_conf() {
 <?php if(isset($_GET['edit'])) { ?>
 <h2><?php _e('Edit Language', 'qtranslate') ?></h2>
 <form action="" method="post" id="qtranxs-edit-language">
-<?php qtranxf_language_form($language_code, $language_code, $language_name, $language_locale, $language_date_format, $language_time_format, $language_flag, $language_na_message, $language_default, $original_lang) ?>
+<?php qtranxf_language_form($language_code, $lang_props, $original_lang) ?>
 <p class="submit"><input type="submit" name="submit" value="<?php _e('Save Changes &raquo;', 'qtranslate') ?>" /></p>
 </form>
 <p class="qtranxs_notes"><a href="<?php echo admin_url('options-general.php?page=qtranslate-x#languages') ?>"><?php _e('back to configuration page', 'qtranslate') ?></a></p>
@@ -926,7 +912,7 @@ echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 
 <h3><?php _e('Add Language', 'qtranslate') ?></h3>
 <form name="addlang" id="addlang" method="post" class="add:the-list: validate">
 <?php
-	qtranxf_language_form($language_code, $language_code, $language_name, $language_locale, $language_date_format, $language_time_format, $language_flag, $language_na_message, $language_default);
+	qtranxf_language_form($language_code, $lang_props, $original_lang);
 	qtranxf_admin_section_end('languages',__('Add Language &raquo;', 'qtranslate'), null);
 ?>
 </form></div></div></div></div></div>

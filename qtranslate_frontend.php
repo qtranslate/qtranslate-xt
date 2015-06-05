@@ -64,6 +64,8 @@ add_action('init','qtranxf_front_init');
 function qtranxf_wp_head(){
 	global $q_config;
 
+	echo '<meta name="generator" content="qTranslate-X '.QTX_VERSION.'" />'.PHP_EOL;
+
 	if( $q_config['header_css_on'] ){
 		echo '<style type="text/css">' . PHP_EOL .$q_config['header_css'].'</style>'. PHP_EOL;
 	}
@@ -73,14 +75,14 @@ function qtranxf_wp_head(){
 	if(is_404()) return;
 
 	// set links to translations of current page
-	//$lang=$q_config['language'];
-	//echo "\n<meta http-equiv=\"Content-Language\" content=\"".str_replace('_','-',$q_config['locale'][$lang])."\" />\n"; //obsolete way 
-	echo '<meta name="generator" content="qTranslate-X '.QTX_VERSION.'" />'.PHP_EOL;
 	foreach($q_config['enabled_languages'] as $lang) {
-		// @since 3.3.3 changes hreflang to be locale instead of language code.
-		$locale = str_replace('_','-',$q_config['locale'][$lang]);
+		if(!empty($q_config['locale_html'][$lang])){
+			$hreflang = $q_config['locale_html'][$lang];
+		}else{
+			$hreflang = $lang;
+		}
 		//if($language != qtranxf_getLanguage())//standard requires them all
-		echo '<link hreflang="'.$locale.'" href="'.qtranxf_convertURL('',$lang,false,true).'" rel="alternate" />'.PHP_EOL;
+		echo '<link hreflang="'.$hreflang.'" href="'.qtranxf_convertURL('',$lang,false,true).'" rel="alternate" />'.PHP_EOL;
 	}
 	//https://support.google.com/webmasters/answer/189077
 	echo '<link hreflang="x-default" href="'.qtranxf_convertURL('',$q_config['default_language']).'" rel="alternate" />'.PHP_EOL;

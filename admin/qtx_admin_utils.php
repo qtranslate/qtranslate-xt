@@ -67,11 +67,6 @@ function qtranxf_detect_admin_language($url_info) {
 	}
 
 	if(!$lang){
-		//$locale = get_locale();
-		//$url_info['locale'] = $locale;
-		//$lang = qtranxf_resolveLangCase(substr($locale,0,2),$cs);
-		//$url_info['lang_locale'] = $lang;
-		//if(!$lang)
 		$lang = $q_config['default_language'];
 	}
 	$url_info['doing_front_end'] = false;

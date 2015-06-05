@@ -25,6 +25,7 @@ function qtranxf_unsetLanguage(&$langs, $lang) {
 	unset($langs['language_name'][$lang]);
 	unset($langs['flag'][$lang]);
 	unset($langs['locale'][$lang]);
+	unset($langs['locale_html'][$lang]);
 	unset($langs['date_format'][$lang]);
 	unset($langs['time_format'][$lang]);
 	unset($langs['not_available'][$lang]);
@@ -39,6 +40,8 @@ function qtranxf_copyLanguage(&$langs, $cfg, $lang) {
 	$langs['language_name'][$lang] = $cfg['language_name'][$lang];
 	$langs['flag'][$lang] = $cfg['flag'][$lang];
 	$langs['locale'][$lang] = $cfg['locale'][$lang];
+	if(empty($cfg['locale_html'][$lang])) unset($langs['locale_html'][$lang]);
+	else $langs['locale_html'][$lang] = $cfg['locale_html'][$lang];
 	$langs['date_format'][$lang] = $cfg['date_format'][$lang];
 	$langs['time_format'][$lang] = $cfg['time_format'][$lang];
 	$langs['not_available'][$lang] = $cfg['not_available'][$lang];

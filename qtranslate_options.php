@@ -107,6 +107,7 @@ function qtranxf_set_default_options(&$ops)
 	$ops['languages']=array(
 		'language_name' => 'qtranslate_language_names',
 		'locale' => 'qtranslate_locales',
+		'locale_html' => 'qtranslate_locales_html',
 		'not_available' => 'qtranslate_na_messages',
 		'date_format' => 'qtranslate_date_formats',
 		'time_format' => 'qtranslate_time_formats',
@@ -210,6 +211,15 @@ function qtranxf_default_locale()
 	$cfg['el'] = 'el_GR';
 	//$cfg['tw'] = 'zh_TW';
 	return $cfg;
+}
+
+/**
+ * HTML locales for languages
+ * @since 3.4
+ */
+function qtranxf_default_locale_html(){
+	//HTML locales for languages are not provided by default
+	return array();
 }
 
 /**

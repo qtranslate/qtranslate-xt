@@ -102,6 +102,9 @@ Developers: please drop new topics here, the text will be moved to [qTranslate-X
 * Major new feature: [Integration Framework](https://qtranslatexteam.wordpress.com/integration/) is finalized in its first edition.
 * Translation: a lot of thanks to all translators contributed.
 
+### 3.3.8 ###
+* Enhancement: option 'Locale at front-end' added. [WP Topic](https://wordpress.org/support/topic/setting-hreflang-language-locale).
+
 ### 3.3.7 ###
 * Feature: finalizing [Integration Framework](https://qtranslatexteam.wordpress.com/integration/).
 * Feature: swirly-bracket(brace) language encoding added to be used in places where square-bracket and comment encoding do not work. '[:]' sometimes conflict with shortcodes. '<!--:-->' does not survive tag clean up. '{:}'(swirly-bracket) seems to survive all.
