@@ -77,6 +77,7 @@ GitHub Branch: master
 	cz by by bengo
 	da_DK by Jan Christensen, meviper
 	de_DE by Robert Skiba, Michel Weimerskirch, Maurizio Omissoni, Qian Qin
+	el_GR by Marios Bekatoros
 	eo    by Chuck Smith
 	es_CA by Carlos Sanz
 	es_ES by Alejandro Urrutia

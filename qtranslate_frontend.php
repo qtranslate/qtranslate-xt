@@ -46,6 +46,8 @@ function qtranxf_front_init(){
 		add_filter('wp_list_pages_excludes', 'qtranxf_excludePages');//moved here from _hooks.php since 3.2.8
 		add_filter('posts_where_request', 'qtranxf_excludeUntranslatedPosts',10,2);
 		add_filter('comments_clauses','qtranxf_excludeUntranslatedPostComments',10,2);
+		add_filter('get_previous_post_where', 'qtranxf_excludeUntranslatedAdjacentPosts');
+		add_filter('get_next_post_where', 'qtranxf_excludeUntranslatedAdjacentPosts');
 	}
 
 	foreach($q_config['text_field_filters'] as $nm){
@@ -407,18 +409,17 @@ add_action( 'pre_get_posts', 'qtranxf_pre_get_posts', 99 );
 /**
  * since 3.1-b3 new query to pass empty content and content without closing tags (sliders, galleries and other special kind of posts that never get translated)
  */
-function qtranxf_where_clause_translated_posts($lang) {
-	global $wpdb;
-	return  "($wpdb->posts.post_content='' OR $wpdb->posts.post_content LIKE '%![:".$lang."!]%' ESCAPE '!' OR $wpdb->posts.post_content LIKE '%<!--:".$lang."-->%' OR ($wpdb->posts.post_content NOT LIKE '%![:!]%' ESCAPE '!' AND $wpdb->posts.post_content NOT LIKE '%<!--:-->%'))";
+function qtranxf_where_clause_translated_posts($lang,$table_posts) {
+	$post_content = $table_posts.'.post_content';
+	return  "($post_content='' OR $post_content LIKE '%![:$lang!]%' ESCAPE '!' OR $post_content LIKE '%<!--:$lang-->%' OR ($post_content NOT LIKE '%![:!]%' ESCAPE '!' AND $post_content NOT LIKE '%<!--:-->%'))";
 }
 
 function qtranxf_excludePages($pages) {
-	global $wpdb;
 	static $exclude = 0;
 	if(!is_array($exclude)){
+		global $wpdb;
 		$lang = qtranxf_getLanguage();
-		$where = qtranxf_where_clause_translated_posts($lang);
-		//$query = "SELECT ID FROM $wpdb->posts WHERE post_type = 'page' AND post_status = 'publish' AND NOT ($wpdb->posts.post_content LIKE '%<!--:".$lang."-->%')";
+		$where = qtranxf_where_clause_translated_posts($lang,$wpdb->posts);
 		$query = "SELECT ID FROM $wpdb->posts WHERE post_type = 'page' AND post_status = 'publish' AND NOT ".$where;
 		$hide_pages = $wpdb->get_results($query);
 		$exclude = array();
@@ -429,8 +430,21 @@ function qtranxf_excludePages($pages) {
 	return array_merge($exclude, $pages);
 }
 
+/**
+ * @since 3.3.7
+ * applied in /wp-includes/link-template.php on line
+ *
+ * $where = apply_filters( "get_{$adjacent}_post_where", $wpdb->prepare( "WHERE p.post_date $op %s AND p.post_type = %s $where", $current_post_date, $post->post_type ), $in_same_term, $excluded_terms );
+ *
+ */
+function qtranxf_excludeUntranslatedAdjacentPosts($where) {
+	$lang = qtranxf_getLanguage();
+	$where .= ' AND '.qtranxf_where_clause_translated_posts($lang,'p');
+	//qtranxf_dbg_log('qtranxf_excludeUntranslatedAdjacentPosts: $where: ', $where);
+	return $where;
+}
+
 function qtranxf_excludeUntranslatedPosts($where,&$query) {//WP_Query
-	global $wpdb;
 	//qtranxf_dbg_echo('qtranxf_excludeUntranslatedPosts: post_type: ',$query->query_vars['post_type']);
 	switch($query->query_vars['post_type']){
 		//known not to filter
@@ -455,10 +469,9 @@ function qtranxf_excludeUntranslatedPosts($where,&$query) {//WP_Query
 		//}
 	}
 	if(!$single_post_query){
+		global $wpdb;
 		$lang = qtranxf_getLanguage();
-		$where .= ' AND '.qtranxf_where_clause_translated_posts($lang);
-		//$where .= " AND ($wpdb->posts.post_content='' OR $wpdb->posts.post_content LIKE '%![:".$lang."!]%' ESCAPE '!' OR $wpdb->posts.post_content LIKE '%<!--:".$lang."-->%' OR ($wpdb->posts.post_content NOT LIKE '%![:!]%' ESCAPE '!' AND $wpdb->posts.post_content NOT LIKE '%<!--:-->%'))";
-		//$where .= " AND ($wpdb->posts.post_content LIKE '%<!--:".qtranxf_getLanguage()."-->%')";
+		$where .= ' AND '.qtranxf_where_clause_translated_posts($lang,$wpdb->posts);
 	}
 	return $where;
 }
@@ -484,8 +497,7 @@ function qtranxf_excludeUntranslatedPostComments($clauses, &$q/*WP_Comment_Query
 	}
 	if(!$single_post_query){
 		$lang = qtranxf_getLanguage();
-		$clauses['where'] .= ' AND '.qtranxf_where_clause_translated_posts($lang);
-		//$clauses['where'] .= " AND ($wpdb->posts.post_content='' OR $wpdb->posts.post_content LIKE '%![:".$lang."!]%' ESCAPE '!' OR $wpdb->posts.post_content LIKE '%<!--:".$lang."-->%' OR ($wpdb->posts.post_content NOT LIKE '%![:!]%' ESCAPE '!' AND $wpdb->posts.post_content NOT LIKE '%<!--:-->%'))";
+		$clauses['where'] .= ' AND '.qtranxf_where_clause_translated_posts($lang,$wpdb->posts);
 	}
 	return $clauses;
 }
@@ -762,7 +774,7 @@ function qtranxf_add_front_filters(){
 	add_filter('gettext_with_context', 'qtranxf_gettext_with_context',0);
 	add_filter('ngettext', 'qtranxf_ngettext',0);
 }
-qtranxf_add_front_filters();
+qtranxf_add_front_filters();//should it be moved to qtranxf_front_init?
 
 //qtranxf_optionFilter();
 //add_filter('wp_head', 'qtranxf_add_css');

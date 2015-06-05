@@ -111,6 +111,7 @@ Developers: please drop new topics here, the text will be moved to [qTranslate-X
 * Fix: 'Head inline CSS' update on language list changes.
 * Fix: pagination of posts under Query Mode of URL Modification (filter 'qtranxf_convertBlogInfoURL'): [Issue #155](https://github.com/qTranslate-Team/qtranslate-x/issues/155). Filters 'home_url' and 'bloginfo_url' are disabled in Query mode.
 * Fix: updated `qtranxf_get_option_config_files` to check for misconfigurations.
+* Fix: prev/next_post_link [WP Topic](https://wordpress.org/support/topic/prevnext_post_link-return-links-to-articles-without-translation).
 
 ### 3.3.5 ###
 * Feature: [Integration Framework](https://qtranslatexteam.wordpress.com/integration/) finalizing JSON file format.
