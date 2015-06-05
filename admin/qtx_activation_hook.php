@@ -469,6 +469,7 @@ function qtranxf_activation_hook()
 
 	}
 
+	// @since 3.3.7
 	if($check_qtranslate_forks){ // possibly first install after a fork
 		if( get_option('qtranslate_qtrans_compatibility') === false ){
 			//to prevent most of fatal errors on upgrade
