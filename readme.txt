@@ -108,6 +108,7 @@ Developers: please drop new topics here, the text will be moved to [qTranslate-X
 * Enhancement: 'plugins' vs 'mu-plugins', links of sub-folders, etc. [Issue #168](https://github.com/qTranslate-Team/qtranslate-x/pull/168).
 * Enhancement: gettext filters in raw and single language modes.
 * Enhancement: turn on 'Compatibility Functions' on first activation, if a file of one of the former forks is detected.
+* Enhancement: translation of user metadata at front end [WP Topic](https://wordpress.org/support/topic/biographical-info-1).
 * Fix: handling non-standard language code: [Issue #171](https://github.com/qTranslate-Team/qtranslate-x/issues/171).
 * Fix: 'Head inline CSS' update on language list changes.
 * Fix: pagination of posts under Query Mode of URL Modification (filter 'qtranxf_convertBlogInfoURL'): [Issue #155](https://github.com/qTranslate-Team/qtranslate-x/issues/155). Filters 'home_url' and 'bloginfo_url' are disabled in Query mode.
