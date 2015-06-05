@@ -431,8 +431,10 @@ function qtranxf_activation_hook()
 	if ( is_plugin_active( 'mqtranslate/mqtranslate.php' ) )
 		qtranxf_admin_notice_deactivate_plugin('mqTranslate', 'mqtranslate/mqtranslate.php');
 
-	if ( is_plugin_active( 'qtranslate/qtranslate.php' ) )
+	if ( is_plugin_active( 'qtranslate/qtranslate.php' ) ){
+		update_option('qtranslate_qtrans_compatibility', '1');
 		qtranxf_admin_notice_deactivate_plugin('qTranslate', 'qtranslate/qtranslate.php');
+	}
 
 	if ( is_plugin_active( 'qtranslate-xp/ppqtranslate.php' ) )
 		qtranxf_admin_notice_deactivate_plugin('qTranslate Plus', 'qtranslate-xp/ppqtranslate.php');
@@ -443,6 +445,7 @@ function qtranxf_activation_hook()
 	qtranxf_update_config_files();
 
 	$next_thanks = get_option('qtranslate_next_thanks');
+	$check_qtranslate_forks = $next_thanks === false;
 	if($next_thanks !== false && $next_thanks < time()+7*24*60*60){
 		$next_thanks = time() + rand(10,20)*24*60*60;
 		update_option('qtranslate_next_thanks', $next_thanks);
@@ -455,12 +458,25 @@ function qtranxf_activation_hook()
 		qtranxf_default_default_language();
 		$ver = qtranxf_version_int();
 		update_option('qtranslate_version_previous', $ver);
+		$check_qtranslate_forks = true;
 	}else{
 		$ver = get_option('qtranslate_version_previous');
 		if(!$ver) update_option('qtranslate_version_previous', 29000);
 
 		if(!isset($messages['initial-install'])){
 			$messages = qtranxf_update_option_admin_notices($messages,'initial-install');
+		}
+
+	}
+
+	if($check_qtranslate_forks){ // possibly first install after a fork
+		if( get_option('qtranslate_qtrans_compatibility') === false ){
+			//to prevent most of fatal errors on upgrade
+			if ( file_exists(WP_PLUGIN_DIR.'/qtranslate/qtranslate.php')
+				|| file_exists(WP_PLUGIN_DIR.'/mqtranslate/mqtranslate.php')
+				|| file_exists(WP_PLUGIN_DIR.'/ztranslate/ztranslate.php')
+				|| file_exists(WP_PLUGIN_DIR.'/qtranslate-xp/ppqtranslate.php')
+			) update_option('qtranslate_qtrans_compatibility', '1');
 		}
 	}
 
