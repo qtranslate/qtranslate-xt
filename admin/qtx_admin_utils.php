@@ -77,19 +77,15 @@ add_filter('qtranslate_detect_admin_language','qtranxf_detect_admin_language');
 
 function qtranxf_array_compare($a,$b) {
 	if( !is_array($a) || !is_array($b) ) return false;
-	if(count($a)!=count($b)) return false;
-	foreach($a  as $k => $v){
-		if(is_array($v)) return qtranxf_array_compare($v,$b[$k]);
-		if($b[$k] !== $v) return false;
+	if(count($a) != count($b)) return false;
+	foreach($a as $k => $v){
+		if(is_array($v)){
+			if(!qtranxf_array_compare($v,$b[$k])) return false;
+		}else{
+			if($b[$k] !== $v) return false;
+		}
 	}
 	return true;
-	//$sa = serialize($a);
-	//$sb = serialize($b);
-	//return $sa === $sb;
-	//can be optimized
-	//$diff_a=array_diff($a,$b);
-	//$diff_b=array_diff($b,$a);
-	//return empty($diff_a) && empty($diff_b);
 }
 
 function qtranxf_join_texts($texts,$sep) {

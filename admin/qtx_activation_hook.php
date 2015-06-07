@@ -116,7 +116,7 @@ function qtranxf_load_config_files($json_files){
 		//$cfg_json=php_strip_whitespace($fnm);
 		if($cfg_json){
 			$cfg=json_decode($cfg_json,true);
-			if($cfg){
+			if(!empty($cfg) && is_array($cfg)){
 				$cfg_all = qtranxf_merge_config($cfg_all,$cfg);
 			}else{
 				qtranxf_error_log(sprintf(__('Could not parse %s file "%s" listed in option "%s".', 'qtranslate'), 'JSON', $fnm, '<a href="'.admin_url('options-general.php?page=qtranslate-x#integration').'">'.__('Configuration Files', 'qtranslate').'</a>'));

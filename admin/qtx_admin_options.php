@@ -516,7 +516,27 @@ function qtranxf_updateSettings()
 
 	//special cases handling
 
+	if(isset($_POST['json_config_files'])){
+		//verify that files are loadable
+		$json_config_files_post = sanitize_text_field(stripslashes($_POST['json_config_files']));
+		$json_files = preg_split('/[\s,]+/',$json_config_files_post,null,PREG_SPLIT_NO_EMPTY);
+		if(empty($json_files)){
+			$_POST['config_files'] = array();
+			unset($_POST['json_config_files']);
+		}else{
+			$nerr = isset($q_config['errors']) ? count($q_config['errors']) : 0;
+			$cfg = qtranxf_load_config_files($json_files);
+			if(!empty($q_config['errors']) && $nerr != count($q_config['errors'])){//new errors occurred
+				$_POST['json_config_files'] = implode(PHP_EOL,$json_files);
+			}else{
+				$_POST['config_files'] = implode(PHP_EOL,$json_files);
+				unset($_POST['json_config_files']);
+			}
+		}
+	}
+
 	if(isset($_POST['json_custom_i18n_config'])){
+		//verify that JSON string can be parsed
 		$cfg_json = sanitize_text_field(stripslashes($_POST['json_custom_i18n_config']));
 		if(empty($cfg_json)){
 			$_POST['custom_i18n_config'] = array();
@@ -568,7 +588,7 @@ function qtranxf_updateSettings()
 		foreach($q_config['errors'] as $msg){
 			$errors[] = $msg;
 		}
-		unset($q_config['errors']);
+		unset($q_config['errors']);//todo error handling needs to be cleaned up
 	}
 	return $errors;
 }

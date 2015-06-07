@@ -6,6 +6,7 @@
 		"forms":{
 			"main":{
 				"fields":{
+					"nickname":{},
 					"description":{}
 				}
 			}

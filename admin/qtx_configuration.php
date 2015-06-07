@@ -774,7 +774,7 @@ echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 
 			<tr valign="top">
 				<th scope="row"><?php _e('Configuration Files', 'qtranslate') ?></th>
 				<td><label for="qtranxs_config_files" class="qtranxs_explanation"><?php printf(__('List of configuration files. Unless prefixed with "%s", paths are relative to %s variable: %s. Absolute paths are also acceptable.', 'qtranslate'), './', 'WP_CONTENT_DIR', trailingslashit(WP_CONTENT_DIR)) ?></label>
-				<br/><textarea name="config_files" id="qtranxs_config_files" rows="4" style="width:100%"><?php echo implode(PHP_EOL,$q_config['config_files']) ?></textarea>
+				<br/><textarea name="json_config_files" id="qtranxs_config_files" rows="4" style="width:100%"><?php if(isset($_POST['json_config_files'])) echo $_POST['json_config_files']; else echo implode(PHP_EOL,$q_config['config_files']) ?></textarea>
 				<p class="qtranxs_notes"><?php printf(__('The list gets auto-updated on a 3rd-party integrated plugin activation/deactivation. You may also add your own custom files for your theme or plugins. File "%s" is the default configuration loaded from this plugin folder. It is not recommended to modify any configuration file from other authors, but you may alter any configuration item through your own custom file appended to the end of this list.', 'qtranslate'), './i18n-config.json');
 				echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 'qtranslate'), '<a href="https://qtranslatexteam.wordpress.com/integration/" target="_blank">', '</a>');
 				echo ' '.__('To reset to default, clear the text.', 'qtranslate') ?></p>
