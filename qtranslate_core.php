@@ -450,6 +450,9 @@ function qtranxf_load_option_qtrans_compatibility(){
 	require_once(dirname(__FILE__).'/qtranslate_compatibility.php');
 }
 
+/** Is in use by 3rd-party plugins (for example, alo_easymail) to test q-X presence */
+function qtranxf_init() {
+}
 /* //use action 'init' in front-end and/or action 'admin_init' admin-end accordingly
  * Response to action 'init', which runs after user is authenticated
  * /
