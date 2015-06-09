@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qTranslate-X 3.3.8\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-06-05 15:12-0600\n"
-"PO-Revision-Date: 2015-06-02 19:41-0000\n"
+"PO-Revision-Date: 2015-06-09 15:16-0000\n"
 "Last-Translator: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "Language-Team: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -361,7 +361,7 @@ msgstr "Escolha a bandeira correspondente ao idioma. (Exemplo: pt.png)"
 
 #: admin/qtx_configuration.php:75
 msgid "(in native alphabet)"
-msgstr ""
+msgstr "(no alfabeto nativo)"
 
 #: admin/qtx_configuration.php:77
 msgid "The Name of the language, which will be displayed on the site. (Example: English)"
@@ -381,12 +381,12 @@ msgstr "Precisa de instalar o ficheiro .mo para este idioma."
 
 #: admin/qtx_configuration.php:88
 msgid "Locale at front-end"
-msgstr ""
+msgstr "Código locale na frente do site"
 
 #: admin/qtx_configuration.php:91
 #, php-format
 msgid "Locale to be used in browser at front-end to set %s HTML attributes to specify alternative languages on a page. If left empty, then \"%s\" is used by default."
-msgstr ""
+msgstr "Código locale utilizado pelo browser na frente do site para definir o atributo HTML %s, para especificar idiomas alternativos na sua página. Se deixado em branco, então \"%s\" será utilizado por omissão."
 
 #: admin/qtx_configuration.php:95
 msgid "Date Format"
