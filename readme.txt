@@ -105,6 +105,7 @@ Developers: please drop new topics here, the text will be moved to [qTranslate-X
 ### 3.3.8 ###
 * Enhancement: option 'Locale at front-end' added. [WP Topic](https://wordpress.org/support/topic/setting-hreflang-language-locale).
 * Feature: custom language switching menu with `#?lang=xx`.
+* Enhancement: in function qtranxf_collect_translations_posted, parse variables collected as a query string in an option.
 
 ### 3.3.7 ###
 * Feature: finalizing [Integration Framework](https://qtranslatexteam.wordpress.com/integration/).
