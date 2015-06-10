@@ -307,8 +307,33 @@ function qtranxf_update_config_options($config_files){
 /**
  * @since 3.4
  */
-function qtranxf_search_config_files(){
+function qtranxf_search_config_files_theme()
+{
 	$found = array();
+	$n = strlen(WP_CONTENT_DIR);
+
+	$sdir = get_stylesheet_directory();//active theme
+	qtranxf_dbg_log('qtranxf_search_config_files_theme: $sdir: ',$sdir);
+	$fn = $sdir.'/i18n-config.json';
+	if(file_exists($fn))
+		$found[] = substr($fn,0,$n) == WP_CONTENT_DIR ? substr($fn,$n+1) : $fn;
+
+	$tdir = get_template_directory();//parent theme
+	qtranxf_dbg_log('qtranxf_search_config_files_theme: $tdir: ',$tdir);
+	if($tdir != $sdir){
+		$fn = $tdir.'/i18n-config.json';
+		if(file_exists($fn))
+			$found[] = substr($fn,0,$n) == WP_CONTENT_DIR ? substr($fn,$n+1) : $fn;
+	}
+
+	return $found;
+}
+
+/**
+ * @since 3.4
+ */
+function qtranxf_search_config_files(){
+	$found = qtranxf_search_config_files_theme();
 	$plugins = wp_get_active_and_valid_plugins();
 	$n = strlen(WP_CONTENT_DIR);
 	foreach( $plugins as $plugin ){
@@ -318,11 +343,7 @@ function qtranxf_search_config_files(){
 		if($bnm == basename(QTRANSLATE_DIR)) continue;
 		$fn = $dir.'/i18n-config.json';
 		if(!file_exists($fn)) continue;
-		if(substr($fn,0,$n) == WP_CONTENT_DIR){
-			$path = substr($fn,$n+1);
-		}else{
-			$path = $fn;
-		}
+		$path = substr($fn,0,$n) == WP_CONTENT_DIR ? substr($fn,$n+1) : $fn;
 		$found[] = $path;
 	}
 	return $found;
@@ -416,6 +437,51 @@ function qtranxf_on_deactivate_plugin($plugin, $network_deactivating = false)
 }
 add_action( 'deactivate_plugin', 'qtranxf_on_deactivate_plugin' );
 
+function qtranxf_on_switch_theme($new_name, $new_theme)
+{
+	$config_files = qtranxf_get_option_config_files();
+	$theme_root = get_theme_root().'/';
+	$changed = false;
+	$n = strlen(WP_CONTENT_DIR);
+
+	$old_theme_stylesheet = get_option( 'theme_switched');
+	$fn = $theme_root.$old_theme_stylesheet.'/i18n-config.json';
+	if(file_exists($fn)){
+		$fn = substr($fn,0,$n) == WP_CONTENT_DIR ? substr($fn,$n+1) : $fn;
+		$i = array_search($fn,$config_files);
+		if($i !== FALSE){
+			unset($config_files[$i]);
+			$changed = true;
+		}
+	}
+
+	$old_theme = wp_get_theme($old_theme_stylesheet);
+	if($old_theme && $old_theme->template != $old_theme_stylesheet){
+		$fn = $theme_root.$old_theme->template.'/i18n-config.json';
+		qtranxf_dbg_log('qtranxf_on_switch_theme: $fn: ', $fn);
+		if(file_exists($fn)){
+			$fn = substr($fn,0,$n) == WP_CONTENT_DIR ? substr($fn,$n+1) : $fn;
+			$i = array_search($fn,$config_files);
+			if($i !== FALSE){
+				unset($config_files[$i]);
+				$changed = true;
+			}
+		}
+	}
+
+	$found = qtranxf_search_config_files_theme();
+	foreach($found as $fn){
+		$i = array_search($fn,$config_files);
+		if($i === FALSE){
+			$config_files[] = $fn;
+			$changed = true;
+		}
+	}
+
+	if($changed) qtranxf_update_config_options($config_files);
+}
+add_action('switch_theme', 'qtranxf_on_switch_theme', 10, 2);
+
 function qtranxf_activation_hook()
 {
 	//global $q_config;
@@ -498,6 +564,8 @@ function qtranxf_activation_hook()
 			unlink($f);
 		}
 	}
+
+	do_action('qtranslate_activation_hook', $network_wide);
 }
 
 function qtranxf_admin_notice_first_install(){
@@ -640,6 +708,7 @@ function qtranxf_admin_notices_plugin_conflicts()
 	qtranxf_admin_notice_plugin_conflict('mqTranslate','mqtranslate/mqtranslate.php');
 	qtranxf_admin_notice_plugin_conflict('qTranslate Plus','qtranslate-xp/ppqtranslate.php');
 	qtranxf_admin_notice_plugin_conflict('zTranslate','ztranslate/ztranslate.php');
+	do_action('qtranslate_admin_notices_plugin_conflicts');
 }
 add_action('admin_notices', 'qtranxf_admin_notices_plugin_conflicts');
 
@@ -840,4 +909,11 @@ function qtranxf_admin_notices_new_options($nms,$ver,$url)
 	}
 	echo '<p>&nbsp;&nbsp;&nbsp;<a class="button" href="javascript:qtranxj_dismiss_admin_notice(\''.$id.'\');">'.__('I have already done it, dismiss this message.', 'qtranslate');
 	echo '</a></p></div>';
+}
+
+if(file_exists(QTRANSLATE_DIR.'/admin/qtx_admin_slug_activation_hook.php')){
+	function qtranxf_slug_run_activation_hook(){
+		require_once(QTRANSLATE_DIR.'/admin/qtx_admin_slug_activation_hook.php');
+	}
+	add_action('qtranslate_activation_hook','qtranxf_slug_run_activation_hook');
 }
