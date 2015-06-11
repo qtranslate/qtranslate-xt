@@ -111,37 +111,34 @@ function qtranxf_migrate_plugins()
 }
 add_action('qtranslate_saveConfig','qtranxf_migrate_plugins',30);
 
-function qtranxf_add_row_migrate($nm,$plugin) {
-	//$plugin_file = WP_CONTENT_DIR.'/plugins/'.$plugin;
+function qtranxf_add_row_migrate($nm,$plugin,$args=null) {
 	$plugin_file = qtranxf_find_plugin_file($plugin);
 	if(!$plugin_file) return;
 	//$pd = get_plugin_data( $plugin_file.'/mqtranslate.php', false, true );
 	//qtranxf_dbg_log('qtranxf_add_row_migrate: $pd:',$pd);
-	switch($plugin){
-		case 'sitepress-multilingual-cms': $href='https://wpml.org'; break;
-		default: $href='https://wordpress.org/plugins/'.$plugin; break;
-	}
+	$href = isset($args['href']) ? $args['href'] : 'https://wordpress.org/plugins/'.$plugin;
 ?>
 <tr valign="top" id="qtranslate-<?php echo $plugin; ?>">
 	<th scope="row"><?php _e('Plugin') ?> <a href="<?php echo $href; ?>/" target="_blank"><?php echo $nm; ?></a></th>
 	<td>
 <?php
-	switch($plugin){
-		case 'qtranslate':
-		case 'ztranslate':
-			_e('There is no need to migrate any setting, the database schema is compatible with this plugin.', 'qtranslate');
-		break;
-		case 'sitepress-multilingual-cms':
-			printf(__('Use plugin %s to import data.', 'qtranslate'),'<a href="https://wordpress.org/plugins/w2q-wpml-to-qtranslate/" target="_blank">W2Q: WPML to qTranslate</a>');
-		break;
-	default:
+	if(!empty($args['compatible'])){
+		_e('There is no need to migrate any setting, the database schema is compatible with this plugin.', 'qtranslate');
+	}else if(!empty($args['text'])){
+		echo $args['text'];
+	}else{
 ?>
 		<label for="<?php echo $plugin; ?>_no_migration"><input type="radio" name="<?php echo $plugin; ?>-migration" id="<?php echo $plugin; ?>_no_migration" value="none" checked /> <?php _e('Do not migrate any setting', 'qtranslate') ?></label>
 		<br/>
 		<label for="<?php echo $plugin; ?>_import_migration"><input type="radio" name="<?php echo $plugin; ?>-migration" id="<?php echo $plugin; ?>_import_migration" value="import" /> <?php echo __('Import settings from ', 'qtranslate').$nm; ?></label>
 		<br/>
 		<label for="<?php echo $plugin; ?>_export_migration"><input type="radio" name="<?php echo $plugin; ?>-migration" id="<?php echo $plugin; ?>_export_migration" value="export" /> <?php echo __('Export settings to ', 'qtranslate').$nm; ?></label>
-<?php break; } ?>
+<?php //break;
+	}
+	if(!empty($args['note'])){
+		echo '<p class="qtranxs_notes">'.$args['note'].'</p>';
+	}
+?>
 	</td>
 </tr>
 <?php
@@ -166,11 +163,12 @@ function qtranxf_admin_section_import_export($request_uri)
 				<small><?php _e('Note, that only string options and standard post and page fields are affected.','qtranslate') ?></small>
 			</td>
 		</tr>
-		<?php qtranxf_add_row_migrate('qTranslate','qtranslate') ?>
+		<?php qtranxf_add_row_migrate('qTranslate','qtranslate', array('compatible' => true)) ?>
 		<?php qtranxf_add_row_migrate('mqTranslate','mqtranslate') ?>
 		<?php qtranxf_add_row_migrate('qTranslate Plus','qtranslate-xp') ?>
-		<?php qtranxf_add_row_migrate('zTranslate','ztranslate') ?>
-		<?php qtranxf_add_row_migrate('WPML Multilingual CMS','sitepress-multilingual-cms') ?>
+		<?php qtranxf_add_row_migrate('zTranslate','ztranslate', array('compatible' => true)) ?>
+		<?php qtranxf_add_row_migrate('WPML Multilingual CMS','sitepress-multilingual-cms', array('href' => 'https://wpml.org', 'text' => sprintf(__('Use plugin %s to import data.', 'qtranslate'), '<a href="https://wordpress.org/plugins/w2q-wpml-to-qtranslate/" target="_blank">W2Q: WPML to qTranslate</a>'))) ?>
+		<?php do_action('qtranslate_add_row_migrate') ?>
 		<tr valign="top">
 			<th scope="row"><?php _e('Reset qTranslate', 'qtranslate') ?></th>
 			<td>

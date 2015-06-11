@@ -115,7 +115,10 @@ function qtranxf_set_default_options(&$ops)
 		//'windows_locale' => null,//this property is not stored
 	);
 
-	$ops = apply_filters('qtranslate_default_options',$ops);
+	/**
+	 * A chance to add additional options
+	*/
+	$ops = apply_filters('qtranslate_option_config',$ops);
 }
 
 /* pre-Domain Endings - for future use

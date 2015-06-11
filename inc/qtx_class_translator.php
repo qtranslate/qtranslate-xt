@@ -6,6 +6,9 @@ require_once(QTRANSLATE_DIR.'/qtranslate_options.php');
 require_once(QTRANSLATE_DIR.'/qtranslate_utils.php');
 require_once(QTRANSLATE_DIR.'/qtranslate_core.php');
 
+if(file_exists(QTRANSLATE_DIR.'/inc/qtx_slug.php'))
+	require_once(QTRANSLATE_DIR.'/inc/qtx_slug.php');
+
 require_once(QTRANSLATE_DIR.'/qtranslate_widget.php');
 
 /**

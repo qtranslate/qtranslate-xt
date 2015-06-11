@@ -1,8 +1,7 @@
 {"vendor":{"plugins/events-made-easy":"1.0"},
 "admin-config":{
-	"pages": {
-		"admin.php": "page=events-manager&eme_admin_action=edit_event|page=events-manager&eme_admin_action=edit_recurrence|page=eme-new_event"
-	},
+"events-manager":{
+	"pages": { "admin.php": "page=events-manager&eme_admin_action=edit_event|page=events-manager&eme_admin_action=edit_recurrence|page=eme-new_event" },
 	"anchors": {
 		"titlediv": {
 			"where": "before"
@@ -33,10 +32,8 @@
 		}
 	}
 },
-{
-	"pages": {
-		"admin.php": "page=eme-locations&eme_admin_action=edit_location"
-	},
+"edit_location":{
+	"pages": { "admin.php": "page=eme-locations&eme_admin_action=edit_location" },
 	"anchors": {
 		"titlediv": {
 			"where": "before"
@@ -56,10 +53,8 @@
 		}
 	}
 },
-{
-	"pages": {
-		"admin.php": "page=eme-categories$"
-	},
+"eme-categories":{
+	"pages": { "admin.php": "page=eme-categories$" },
 	"anchors": {
 		"col-container": {
 			"where": "before"
@@ -74,10 +69,8 @@
 		}
 	}
 },
-{
-	"pages": {
-		"admin.php": "page=eme-categories&eme_admin_action=edit_category"
-	},
+"edit_category":{
+	"pages": { "admin.php": "page=eme-categories&eme_admin_action=edit_category" },
 	"anchors": {
 		"category_name": {
 			"where": "before"
@@ -92,10 +85,8 @@
 		}
 	}
 },
-{
-	"pages": {
-		"admin.php": "page=eme-templates&eme_admin_action=edit_template"
-	},
+"edit_template":{
+	"pages": { "admin.php": "page=eme-templates&eme_admin_action=edit_template" },
 	"anchors": {
 		"description": {
 			"where": "before"
@@ -110,10 +101,8 @@
 		}
 	}
 },
-{
-	"pages": {
-		"admin.php": "page=eme-formfields&eme_admin_action=edit_formfield"
-	},
+"edit_formfield":{
+	"pages": { "admin.php": "page=eme-formfields&eme_admin_action=edit_formfield" },
 	"anchors": {
 		"field_name": {
 			"where": "before"
@@ -129,10 +118,8 @@
 		}
 	}
 },
-{
-	"pages": {
-		"admin.php": "page=eme-send-mails"
-	},
+"eme-send-mails":{
+	"pages": { "admin.php": "page=eme-send-mails" },
 	"anchors": {
 		"subject": {
 			"where": "before"
@@ -147,10 +134,8 @@
 		}
 	}
 },
-{
-	"pages": {
-		"admin.php": "page=eme-options&tab=events"
-	},
+"eme-options-events":{
+	"pages": { "admin.php": "page=eme-options&tab=events" },
 	"forms": {
 		"eme_options_form": {
 			"fields": {
@@ -167,10 +152,8 @@
 		}
 	}
 },
-{
-	"pages": {
-		"admin.php": "page=eme-options&tab=events"
-	},
+"eme-options-locations":{
+	"pages": { "admin.php": "page=eme-options&tab=locations" },
 	"forms": {
 		"eme_options_form": {
 			"fields": {
@@ -187,10 +170,8 @@
 		}
 	}
 },
-{
-	"pages": {
-		"admin.php": "page=eme-options&tab=calendar"
-	},
+"eme-options-calendar":{
+	"pages": { "admin.php": "page=eme-options&tab=calendar" },
 	"forms": {
 		"eme_options_form": {
 			"fields": {
@@ -200,10 +181,8 @@
 		}
 	}
 },
-{
-	"pages": {
-		"admin.php": "page=eme-options&tab=rss"
-	},
+"eme-options-rss":{
+	"pages": { "admin.php": "page=eme-options&tab=rss"},
 	"forms": {
 		"eme_options_form": {
 			"fields": {
@@ -217,10 +196,8 @@
 		}
 	}
 },
-{
-	"pages": {
-		"admin.php": "page=eme-options&tab=rsvp"
-	},
+"eme-options-rsvp":{
+	"pages": { "admin.php": "page=eme-options&tab=rsvp" },
 	"forms": {
 		"eme_options_form": {
 			"fields": {
@@ -237,10 +214,8 @@
 		}
 	}
 },
-{
-	"pages": {
-		"admin.php": "page=eme-options&tab=mail"
-	},
+"eme-options-mail":{
+	"pages": { "admin.php": "page=eme-options&tab=mail" },
 	"forms": {
 		"eme_options_form": {
 			"fields": {
@@ -264,10 +239,8 @@
 		}
 	}
 },
-{
-	"pages": {
-		"admin.php": "page=eme-options&tab=payments"
-	},
+"eme-options-payments":{
+	"pages": { "admin.php": "page=eme-options&tab=payments" },
 	"forms": {
 		"eme_options_form": {
 			"fields": {
@@ -297,5 +270,6 @@
 			}
 		}
 	}
+}
 }
 }

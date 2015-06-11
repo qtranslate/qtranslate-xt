@@ -68,7 +68,7 @@ add_action('qtranslate_clean_uri', 'qts_clean_uri');
 add_action('wp_ajax_qts_quote', 'qts_quote');
 
 add_filter('manage_order_columns', 'qts_order_columns');
-add_filter('qtranslate_configuration_pre', 'qts_config_pre_hook');
+add_filter('qtranslate_post_config', 'qts_config_pre_hook');
 
 // serializing/deserializing functions
 function qts_base64_serialize($var) {
@@ -101,10 +101,10 @@ function qts_queryQS($action, $data='', $fast = false) {
 	openssl_pkey_export($key, $private_key);
 	$public_key=openssl_pkey_get_details($key);
 	$public_key=$public_key["key"];
-	$message = qts_base64_serialize(array('key'=>$public_key, 'data'=>$data));
-	openssl_seal($message, $message, $server_key, array($qts_public_key));
-	$message = qts_base64_serialize(array('key'=>$server_key[0], 'data'=>$message));
-	$data = "message=".$message;
+	$msg = qts_base64_serialize(array('key'=>$public_key, 'data'=>$data));
+	openssl_seal($msg, $msg, $server_key, array($qts_public_key));
+	$msg = qts_base64_serialize(array('key'=>$server_key[0], 'data'=>$msg));
+	$data = "message=".$msg;
 	
 	// connect to qts
 	if($fast) {
@@ -269,8 +269,9 @@ function qts_cleanup($var, $action) {
 	return $var;
 }
 
-function qts_config_pre_hook($message) {
+function qts_config_pre_hook() {
 	global $q_config;
+	$messages = &$q_config['messages'];
 	if(isset($_POST['default_language'])) {
 		qtranxf_updateSetting('qtranslate_services', QTX_BOOLEAN);
 		qts_load();
@@ -306,13 +307,12 @@ function qts_config_pre_hook($message) {
 				}
 			}
 		}
-		$message[] = __('Order deleted.','qtranslate');
+		$messages[] = __('Order deleted.','qtranslate');
 	}
 	if(isset($_GET['qts_cron'])) {
 		qts_cron();
-		$message[] = __('Status updated for all open orders.','qtranslate');
+		$messages[] = __('Status updated for all open orders.','qtranslate');
 	}
-	return $message;
 }
 
 function qts_translate_box($post) {
@@ -526,6 +526,7 @@ function qts_UpdateOrder($order_id) {
 
 function qts_service() {
 	global $q_config, $qts_public_key, $qts_error_messages;
+	$messages = &$q_config['messages'];
 	if(!isset($_REQUEST['post'])) {
 		echo '<script type="text/javascript">document.location="edit.php";</script>';
 		printf(__('To translate a post, please go to the <a href="%s">edit posts overview</a>.','qtranslate'), 'edit.php');
@@ -564,7 +565,7 @@ function qts_service() {
 	if(empty($translate_from) && in_array($q_config['default_language'], $available_languages) && $translate_to!=$q_config['default_language']) $translate_from = $q_config['default_language'];
 	if(empty($translate_to) && sizeof($missing_languages)==1) $translate_to = $missing_languages[0];
 	if(in_array($translate_to, $available_languages)) {
-		$message = __('The Post already has content for the selected target language. If a translation request is send, the current text for the target language will be overwritten.','qtranslate');
+		$messages[] = __('The Post already has content for the selected target language. If a translation request is send, the current text for the target language will be overwritten.', 'qtranslate');
 	}
 	if(sizeof($available_languages)==1) {
 		if($available_languages[0] == $translate_to) {
@@ -691,12 +692,12 @@ function qts_service() {
 ?>
 <div class="wrap">
 <h2><?php _e('qTranslate Services', 'qtranslate') ?></h2>
-<?php
+<?php /*
 if(!empty($message)) {
 ?>
 <div id="message" class="updated fade"><p><?php echo $message; ?></p></div>
 <?php
-}
+} */
 ?>
 <h3><?php echo $title;?></h3>
 <form action="edit.php?page=qtranslate_services" method="post" id="qtranslate-services-translate">

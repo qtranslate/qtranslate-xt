@@ -1,8 +1,8 @@
 <?php
 if ( !defined( 'ABSPATH' ) ) exit;
 
-//if(file_exists(QTRANSLATE_DIR.'/front/qtx_front_slug.php'))
-//	require_once(QTRANSLATE_DIR.'/front/qtx_front_slug.php');
+if(file_exists(QTRANSLATE_DIR.'/front/qtx_front_slug.php'))
+	require_once(QTRANSLATE_DIR.'/front/qtx_front_slug.php');
 
 add_filter('wp_translator', 'QTX_Translator::get_translator');
 

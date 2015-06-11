@@ -126,7 +126,7 @@ if ( ! defined( 'QTRANSLATE_FILE' ) ) {
 
 require_once(QTRANSLATE_DIR.'/inc/qtx_class_translator.php');
 
-if(is_admin()){
+if(is_admin() ){ // && !(defined('DOING_AJAX') && DOING_AJAX)
 	require_once(QTRANSLATE_DIR.'/admin/qtx_activation_hook.php');
-	register_activation_hook(__FILE__, 'qtranxf_activation_hook');//does not work if inside qtranslate_configuration.php
+	register_activation_hook(__FILE__, 'qtranxf_activation_hook');
 }

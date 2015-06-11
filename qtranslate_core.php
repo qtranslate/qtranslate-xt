@@ -450,7 +450,9 @@ function qtranxf_load_option_qtrans_compatibility(){
 	require_once(dirname(__FILE__).'/qtranslate_compatibility.php');
 }
 
-/** Is in use by 3rd-party plugins (for example, alo_easymail) to test q-X presence */
+/** Is in use by 3rd-party plugins (for example, alo_easymail) to test q-X presence
+ * @since 3.4
+*/
 function qtranxf_init() {
 }
 /* //use action 'init' in front-end and/or action 'admin_init' admin-end accordingly
@@ -478,8 +480,7 @@ function qtranxf_init() {
 add_action('init', 'qtranxf_init');//user is authenticated
 */
 
-function qtranxf_front_header_css_default()
-{
+function qtranxf_front_header_css_default(){
 	global $q_config;
 	$flag_location=qtranxf_flag_location();
 	$css = '';
@@ -681,7 +682,7 @@ function qtranxf_loadConfig() {
 	if(empty($q_config['front_config'])){
 		//todo this should be granulated to load only what is needed
 		require_once(QTRANSLATE_DIR.'/admin/qtx_activation_hook.php');
-		require_once(QTRANSLATE_DIR.'/admin/qtx_admin.php');
+		require_once(QTRANSLATE_DIR.'/admin/qtx_admin_options_update.php');
 		qtranxf_update_i18n_config();
 	}
 

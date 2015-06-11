@@ -16,22 +16,12 @@ function qtranxf_loadfiles_js($jss, $enqueue_script) {
 			if($enqueue_script){
 				$handle = isset($js['handle']) ? $js['handle'] : (is_string($k) ? $k : 'qtranslate-admin-js-'.(++$cnt) );
 				$ver = isset($js['ver']) ? $js['ver'] : QTX_VERSION;
-				//if(file_exists(WP_CONTENT_DIR.'/plugins/'.$src)){//already tested during configuration loading
-				//	$url = plugins_url($src);
-				//}else{
 				$url = content_url($src);
-				//}
 				wp_register_script( $handle, $url, $deps, $ver, true);
 				wp_enqueue_script( $handle );
 				$deps[] = $handle;
 			}else{
 				$fp = WP_CONTENT_DIR . DIRECTORY_SEPARATOR . $src;
-				//if(!file_exists($fp)) $fp = WP_CONTENT_DIR.'/plugins/'.$js['src'];//already tested during configuration loading
-				//if(!file_exists($fp)) $fp = $js['src'];
-				//if(!file_exists($fp)){
-				//	qtranxf_error_log('Could not read file '.$js['src']);
-				//	continue;
-				//}
 				readfile($fp);
 			}
 		}

@@ -64,8 +64,11 @@ if(WP_DEBUG){
  */
 function qtranxf_error_log($msg) {
 	global $q_config;
-	if(isset($q_config['errors'])) $q_config['errors'][] = $msg;
-	else $q_config['errors'] = array($msg);
+	if(!isset($q_config['errors'])) $q_config['errors'] = array($msg);
+	else{
+		if(!in_array($msg,$q_config['errors']))
+			$q_config['errors'][] = $msg;
+	}
 	error_log('qTranslate-X: '.strip_tags($msg));
 }
 
