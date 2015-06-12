@@ -21,7 +21,7 @@ qTranslate-X makes creation of multilingual content as easy as working with a si
 
 - One-click local switching between the languages - Changing the language as easy as switching between Visual and HTML.
 - Language customizations without changing the .mo files - It stores all the translations in the same post fields, while shows it to user for editing one by one depending on the language to edit chosen.
-- In-line syntax '`<!--:en-->English Text<!--:--><!--:de-->Deutsch<!--:-->`' or '`[:en]English Text[:de]Deutsch[:]`' for theme-custom fields gets them translated. See [FAQ](https://wordpress.org/plugins/qtranslate-x/faq/ "qTranslate-X FAQ") for more information.
+- In-line syntax '`<!--:en-->English Text<!--:--><!--:de-->Deutsch<!--:-->`' or '`[:en]English Text[:de]Deutsch[:]`' for theme-custom fields gets them translated. See [FAQ](https://qtranslatexteam.wordpress.com/faq/ "qTranslate-X FAQ") for more information.
 - Starting from release 3.1 encoding like this '`[:en]English Text[:de]Deutsch`' may also have closing tag `[:]`, which makes the example looks like this: '`[:en]English Text[:de]Deutsch[:]`'. The advantage of this is that one now can encode strings like this '`[:en]English Text[:]<html-language-neutral-code>[:de]Deutsch[:]<another-html-language-neutral-code>`', with language-neutral text embedded. Closing tag is not required, but if it is absent and multilingual text happened to be used embedded within other language-neutral text, then a part of language-neutral text will be recognized as language-specific text and may be removed by translator. That was a common incompatibility issue with other plugins, which is now resolved. Comment-like encoding `<!--:-->` still works as well, and can be used if desired, but it does not have any feasible advantage over `[:]`-style.
 - Multilingual dates out of the box - translates dates and time for you.
 - Theme custom fields can be configured to be translatable too.
@@ -70,7 +70,7 @@ Installation of this plugin is no different from any other plugin:
 1. You may use [Google XML Sitemaps v3 for qTranslate](https://wordpress.org/plugins/google-xml-sitemaps-v3-for-qtranslate/) plugin to rebuild your XML sitemap for better SEO support.
 1. Configure theme custom fields to be translatable if needed (Settings -> Languages: "Custom Fields").
 1. Upgrading from [qTranslate](https://wordpress.org/plugins/qtranslate/ "qTranslate original plugin") required no additional actions, qTranslate-X will continue to work from the database entries of qTranslate. Upgrading from other qTranslate forks may require re-configuration of the languages and taxonomies names, unless you rename corresponding database entries directly.
-1. **Important**: Read [migration instructions](https://qtranslatexteam.wordpress.com/2015/02/24/migration-from-other-multilingual-plugins/), if you previously used other multilingual plugin.
+1. **Important**: Read [migration instructions](https://qtranslatexteam.wordpress.com/migration/), if you previously used other multilingual plugin.
 
 ## Frequently Asked Questions ##
 
@@ -78,7 +78,7 @@ FAQ list is available at "qTranslate-X explained" website: [https://qtranslatext
 
 For the new installers, it may be useful to read [Startup Guide](https://qtranslatexteam.wordpress.com/startup-guide/).
 
-It is important to read [migration instructions](https://qtranslatexteam.wordpress.com/2015/02/24/migration-from-other-multilingual-plugins/), if you previously used other multilingual plugin.
+It is important to read [migration instructions](https://qtranslatexteam.wordpress.com/migration/), if you previously used other multilingual plugin.
 
 Developers: please drop new topics here, the text will be moved to [qTranslate-X explained](https://qtranslatexteam.wordpress.com/faq/ "qTranslate-X explained FAQ") at the time of the next release.
 
@@ -88,7 +88,7 @@ Developers: please drop new topics here, the text will be moved to [qTranslate-X
 * Upgrading from other qTranslate forks also painless with an additional steps of configuration import and using 'Convert Database' option. One may also go back at any time using configuration export and 'Convert Database' option.
 * Former page and post translations are untouched and preserved in any case, except when using 'Convert Database' option.
 * Upgrading from other multilingual frameworks will require custom re-configuration. We suggest to search for a plugin, which may be already implemented to transfer the translations to qTranslate or to qTranslate-X. If a plugin works for one, it should work for other too, since qTranslate-X and qTranslate share the same database structures.
-* **Important**: read [migration instructions](https://qtranslatexteam.wordpress.com/2015/02/24/migration-from-other-multilingual-plugins/).
+* **Important**: read [migration instructions](https://qtranslatexteam.wordpress.com/migration/).
 
 ## Screenshots ##
 
@@ -349,7 +349,7 @@ Developers: please drop new topics here, the text will be moved to [qTranslate-X
 
 ### 3.2-b1 ###
 * Translation: Dutch (nl_NL) po/mo updated, thanks to Marius Siroen.
-* Improvement: updated activation/migration messages with a link to [Migration from other multilingual plugins](https://qtranslatexteam.wordpress.com/2015/02/24/migration-from-other-multilingual-plugins/) publication.
+* Improvement: updated activation/migration messages with a link to [Migration from other multilingual plugins](https://qtranslatexteam.wordpress.com/migration/) publication.
 * Improvement: updated "Compatibility Functions" option with `qtrans_split`.
 * Fix: dealing with https and port 443.
 
@@ -464,7 +464,7 @@ Developers: please drop new topics here, the text will be moved to [qTranslate-X
 * fix for https://wordpress.org/support/topic/comment-shows-404-error
 
 ### 2.9.3 ###
-* "Language Switcher" menu options, read [FAQ](https://wordpress.org/plugins/qtranslate-x/faq/) for more information.
+* "Language Switcher" menu options, read [FAQ](https://qtranslatexteam.wordpress.com/faq/) for more information.
 * fix for too early call to `current_user_can`, which caused a debug notice from within some other plugins.
 * fix for https://wordpress.org/support/topic/editor-adds-characters-before-text
 

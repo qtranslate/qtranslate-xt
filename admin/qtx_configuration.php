@@ -4,16 +4,6 @@ if ( !defined( 'WP_ADMIN' ) ) exit;
 require_once(QTRANSLATE_DIR.'/admin/qtx_admin_options_update.php');
 require_once(QTRANSLATE_DIR.'/admin/qtx_import_export.php');
 
-//if(file_exists(QTRANSLATE_DIR.'/admin/qtx_config_slug.php'))
-//	require_once(QTRANSLATE_DIR.'/admin/qtx_config_slug.php');
-
-// load qTranslate Services if available // disabled since 3.1
-//if(file_exists(QTRANSLATE_DIR.'/qtranslate_services.php'))
-//	require_once(QTRANSLATE_DIR.'/qtranslate_services.php');
-
-//if(file_exists(QTRANSLATE_DIR.'/admin/qtx_config_services.php'))
-//	require_once(QTRANSLATE_DIR.'/admin/qtx_config_services.php');
-
 function qtranxf_language_form() {
 	global $q_config;
 
@@ -131,7 +121,7 @@ function qtranxf_admin_section_end($nm, $button_name=null, $button_class='button
 }
 
 function qtranxf_conf() {
-	global $q_config, $wpdb;
+	global $q_config, $qtranslate_options, $wpdb;
 	//qtranxf_dbg_log('qtranxf_conf: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
 	//qtranxf_dbg_log('qtranxf_conf: POST: ',$_POST);
 	//qtranxf_dbg_log('qtranxf_conf: GET: ',$_GET);
@@ -144,7 +134,7 @@ function qtranxf_conf() {
 
 	// don't accidentally delete/enable/disable twice
 	//$clean_uri = preg_replace("/&(delete|enable|disable|convert|markdefault|moveup|movedown)=[^&#]*/i","",$_SERVER['REQUEST_URI']);
-	$clean_uri = $q_config['url_info']['admin-page-url'];
+	$clean_uri = $q_config['url_info']['qtranslate-settings-url'];
 	$clean_uri = apply_filters('qtranslate_clean_uri', $clean_uri);
 
 // Generate XHTML
@@ -162,11 +152,11 @@ function qtranxf_conf() {
 ?>
 <div id="qtranxs_error_<?php echo $key ?>" class="error notice is-dismissible"><p><strong><span style="color: red;"><?php echo qtranxf_translate_wp('Error') ?></span><?php echo ':&nbsp;'.$msg ?></strong></p></div>
 <?php } endif;
-	if (!empty($q_config['warnings'])) :
-	foreach($q_config['warnings'] as $key => $msg){
+	if (!empty($q_config['url_info']['warnings'])) :
+	foreach($q_config['url_info']['warnings'] as $key => $msg){
 ?>
 <div id="qtranxs_warning_<?php echo $key ?>" class="update-nag notice is-dismissible"><p><strong><span style="color: blue;"><?php echo qtranxf_translate_wp('Warning') ?></span><?php echo ':&nbsp;'.$msg ?></strong></p></div>
-<?php } unset($q_config['warnings']); endif;
+<?php } unset($q_config['url_info']['warnings']); endif;
 */
 ?>
 <div class="wrap">
@@ -181,7 +171,7 @@ function qtranxf_conf() {
 <h2><?php _e('Language Management (qTranslate Configuration)', 'qtranslate') ?></h2>
 <p class="qtranxs_heading" style="font-size: small"><?php printf(__('For help on how to configure qTranslate correctly, take a look at the <a href="%1$s">qTranslate FAQ</a> and the <a href="%2$s">Support Forum</a>.', 'qtranslate')
   , 'https://qtranslatexteam.wordpress.com/faq/'
-//, 'http://wordpress.org/plugins/qtranslate-x/faq/'
+//, 'https://wordpress.org/plugins/qtranslate-x/faq/'
   , 'https://wordpress.org/support/plugin/qtranslate-x') ?></p>
 <?php if(isset($_GET['config_inspector'])) {
 
@@ -526,7 +516,7 @@ echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 
 			<tr valign="top">
 				<th scope="row"><?php _e('Custom Fields', 'qtranslate') ?></th>
 				<td><p class="qtranxs_explanation">
-					<?php printf(__('Enter "%s" or "%s" attribute of text fields from your theme, which you wish to translate. This applies to post, page and media editors (%s). To lookup "%s" or "%s", right-click on the field in the post or the page editor and choose "%s". Look for an attribute of the field named "%s" or "%s". Enter it below, as many as you need, space- or comma-separated. After saving configuration, these fields will start responding to the language switching buttons, and you can enter different text for each language. The input fields of type %s will be parsed using %s syntax, while single line text fields will use %s syntax. If you need to override this behaviour, prepend prefix %s or %s to the name of the field to specify which syntax to use. For more information, read %sFAQ%s.', 'qtranslate'),'id','class','/wp-admin/post*','id','class',_x('Inspect Element','browser option','qtranslate'),'id','class','\'textarea\'',esc_html('<!--:-->'),'[:]','\'<\'','\'[\'','<a href="https://wordpress.org/plugins/qtranslate-x/faq/">','</a>') ?></p>
+					<?php printf(__('Enter "%s" or "%s" attribute of text fields from your theme, which you wish to translate. This applies to post, page and media editors (%s). To lookup "%s" or "%s", right-click on the field in the post or the page editor and choose "%s". Look for an attribute of the field named "%s" or "%s". Enter it below, as many as you need, space- or comma-separated. After saving configuration, these fields will start responding to the language switching buttons, and you can enter different text for each language. The input fields of type %s will be parsed using %s syntax, while single line text fields will use %s syntax. If you need to override this behaviour, prepend prefix %s or %s to the name of the field to specify which syntax to use. For more information, read %sFAQ%s.', 'qtranslate'),'id','class','/wp-admin/post*','id','class',_x('Inspect Element','browser option','qtranslate'),'id','class','\'textarea\'',esc_html('<!--:-->'),'[:]','\'<\'','\'[\'','<a href="https://qtranslatexteam.wordpress.com/faq/">','</a>') ?></p>
 				</td>
 			</tr>
 			<tr valign="top">
@@ -554,7 +544,7 @@ echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 
 			<tr valign="top">
 				<th scope="row"><?php _e('Custom Admin Pages', 'qtranslate') ?></th>
 				<td><label for="qtranxs_custom_pages" class="qtranxs_explanation"><input type="text" name="custom_pages" id="qtranxs_custom_pages" value="<?php echo implode(' ',$q_config['custom_pages']) ?>" style="width:100%"></label>
-					<p class="qtranxs_notes"><?php printf(__('List the custom admin page paths for which you wish Language Switching Buttons to show up. The Buttons will then control fields configured in "Custom Fields" section. You may only include part of the full URL after %s, including a distinctive query string if needed. As many as desired pages can be listed space/comma separated. For more information, read %sFAQ%s.', 'qtranslate'),'/wp-admin/','<a href="https://wordpress.org/plugins/qtranslate-x/faq/">','</a>') ?></p>
+					<p class="qtranxs_notes"><?php printf(__('List the custom admin page paths for which you wish Language Switching Buttons to show up. The Buttons will then control fields configured in "Custom Fields" section. You may only include part of the full URL after %s, including a distinctive query string if needed. As many as desired pages can be listed space/comma separated. For more information, read %sFAQ%s.', 'qtranslate'),'/wp-admin/','<a href="https://qtranslatexteam.wordpress.com/faq/">','</a>') ?></p>
 				</td>
 			</tr>
 			<?php */ ?>
@@ -567,6 +557,7 @@ echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 
 			</tr>
 		</table>
 	<?php qtranxf_admin_section_end('integration');
+		// Allow to load additional services
 		do_action('qtranslate_configuration', $clean_uri);
 	?>
 	</div><?php //<!-- /tabs-container --> ?>

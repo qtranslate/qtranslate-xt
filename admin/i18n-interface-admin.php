@@ -1,4 +1,4 @@
-<?php // encoding: utf-8
+<?php
 
 /**
  * WP_Translator interface for admin side.

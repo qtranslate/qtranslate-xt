@@ -63,22 +63,28 @@ if(WP_DEBUG){
  * @since 3.3.1
  */
 function qtranxf_error_log($msg) {
-	global $q_config;
-	if(!isset($q_config['errors'])) $q_config['errors'] = array($msg);
-	else{
-		if(!in_array($msg,$q_config['errors']))
-			$q_config['errors'][] = $msg;
-	}
+	qtranxf_add_admin_notice($msg,'errors');
 	error_log('qTranslate-X: '.strip_tags($msg));
 }
 
 /**
  * @since 3.3.7
  */
-function qtranxf_add_warning($msg) {
+function qtranxf_add_warning($msg) { qtranxf_add_admin_notice($msg,'warnings'); }
+function qtranxf_add_message($msg) { qtranxf_add_admin_notice($msg,'messages'); }
+
+/**
+ * @since 3.3.8.4
+ */
+function qtranxf_add_admin_notice($msg, $kind) {
 	global $q_config;
-	if(!isset($q_config['warnings'])) $q_config['warnings'][] = $msg;
-	else $q_config['warnings'] = array($msg);
+	if(isset($q_config['url_info'][$kind])){
+		if(!in_array($msg,$q_config['url_info'][$kind]))
+			$q_config['url_info'][$kind][] = $msg;
+	}else{
+		if(!isset($q_config['url_info'])) $q_config['url_info'] = array();
+		$q_config['url_info'][$kind] = array($msg);
+	}
 }
 
 /**

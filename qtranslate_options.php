@@ -1,4 +1,4 @@
-<?php
+<?php // encoding: utf-8
 if ( !defined( 'ABSPATH' ) ) exit;
 
 /* There is no need to edit anything here! */

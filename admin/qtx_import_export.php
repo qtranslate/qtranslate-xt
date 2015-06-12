@@ -1,8 +1,7 @@
 <?php
 if ( !defined( 'WP_ADMIN' ) ) exit;
 
-function qtranxf_get_plugin_name($slug)
-{
+/* function qtranxf_get_plugin_name($slug){
 	//there must be a better way to take it from file?
 	switch($slug) {
 		case 'qtranslate': return 'qTranslate';
@@ -10,9 +9,9 @@ function qtranxf_get_plugin_name($slug)
 		case 'qtranslate-xp': return 'qTranslate Plus';
 		case 'ztranslate': return 'zTranslate';
 		case 'sitepress-multilingual-cms': return 'WPML';
-		default: return '';
+		default: return apply_filters('qtranslate_get_plugin_name', '', $slug);
 	}
-}
+}// */
 
 function qtranxf_migrate_options_update($nm_to,$nm_from)
 {
@@ -78,18 +77,39 @@ function qtranxf_migrate_options_copy($nm_to,$nm_from)
 }
 
 function qtranxf_migrate_import_mqtranslate(){
-	qtranxf_migrate_options_update('qtranslate','mqtranslate');
+	qtranxf_migrate_import('mqTranslate','mqtranslate');
+	//qtranxf_migrate_options_update('qtranslate','mqtranslate');
 	update_option('qtranslate_qtrans_compatibility', '1');//since 3.1
+	$nm = '<span style="color:blue"><strong>mqTranslate</strong></span>';
+	qtranxf_add_message(sprintf(__('Option "%s" has also been turned on, as the most common case for importing configuration from %s. You may turn it off manually if your setup does not require it. Refer to %sFAQ%s for more information.', 'qtranslate'), '<span style="color:magenta">'.__('Compatibility Functions', 'qtranslate').'</span>', $nm, '<a href="https://qtranslatexteam.wordpress.com/faq/#CompatibilityFunctions" target="_blank">', '</a>'));
 }
-function qtranxf_migrate_export_mqtranslate(){ qtranxf_migrate_options_copy('mqtranslate','qtranslate'); }
+//function qtranxf_migrate_export_mqtranslate(){ qtranxf_migrate_options_copy('mqtranslate','qtranslate'); }
+function qtranxf_migrate_export_mqtranslate(){ qtranxf_migrate_export('mqTranslate','mqtranslate'); }
 
-function qtranxf_migrate_import_qtranslate_xp(){ qtranxf_migrate_options_update('qtranslate','ppqtranslate'); }
-function qtranxf_migrate_export_qtranslate_xp(){ qtranxf_migrate_options_copy('ppqtranslate','qtranslate'); }
+//function qtranxf_migrate_import_qtranslate_xp(){ qtranxf_migrate_options_update('qtranslate','ppqtranslate'); }
+//function qtranxf_migrate_export_qtranslate_xp(){ qtranxf_migrate_options_copy('ppqtranslate','qtranslate'); }
+function qtranxf_migrate_import_qtranslate_xp(){ qtranxf_migrate_import('qTranslate Plus','ppqtranslate'); }
+function qtranxf_migrate_export_qtranslate_xp(){ qtranxf_migrate_export('qTranslate Plus','ppqtranslate'); }
 
-//function qtranxf_migrate_import_ztranslate(){ qtranxf_migrate_options_update('qtranslate','ztranslate'); }
-//function qtranxf_migrate_export_ztranslate(){ qtranxf_migrate_options_copy('ztranslate','qtranslate'); }
+function qtranxf_migrate_import($plugin_name, $nm_from){
+	qtranxf_migrate_options_update('qtranslate', $nm_from);
 
-function qtranxf_migrate_plugin($plugin){
+	$nm = '<span style="color:blue"><strong>'.$plugin_name.'</strong></span>';
+
+	qtranxf_add_message(sprintf(__('Applicable options and taxonomy names from plugin %s have been imported. Note that the multilingual content of posts, pages and other objects has not been altered during this operation. There is no additional operation needed to import content, since its format is compatible with %s.', 'qtranslate'), $nm, 'qTranslate&#8209;X').' '.sprintf(__('It might be a good idea to review %smigration instructions%s, if you have not yet done so.', 'qtranslate'),'<a href="https://qtranslatexteam.wordpress.com/migration/" target="_blank">','</a>'));
+
+	qtranxf_add_message(sprintf(__('%sImportant%s: Before you start making edits to post and pages, please, make sure that both, your front site and admin back-end, work under this configuration. It may help to review "%s" and see if any of conflicting plugins mentioned there are used here. While the current content, coming from %s, is compatible with this plugin, the newly modified posts and pages will be saved with a new square-bracket-only encoding, which has a number of advantages comparing to former %s encoding. However, the new encoding is not straightforwardly compatible with %s and you will need an additional step available under "%s" option if you ever decide to go back to %s. Even with this additional conversion step, the 3rd-party plugins custom-stored data will not be auto-converted, but manual editing will still work. That is why it is advisable to create a test-copy of your site before making any further changes. In case you encounter a problem, please give us a chance to improve %s, send the login information to the test-copy of your site to %s along with a detailed step-by-step description of what is not working, and continue using your main site with %s meanwhile. It would also help, if you share a success story as well, either on %sthe forum%s, or via the same e-mail as mentioned above. Thank you very much for trying %s.', 'qtranslate'), '<span style="color:red">', '</span>', '<a href="https://qtranslatexteam.wordpress.com/known-issues/" target="_blank">'.'Known Issues'.'</a>', $nm, 'qTranslate', $nm, '<a href="https://qtranslatexteam.wordpress.com/option-convert-database/" target="_blank"><span style="color:magenta">'.__('Convert Database', 'qtranslate').'</span></a>', $nm, 'qTranslate&#8209;X', '<a href="mailto:qtranslateteam@gmail.com">qtranslateteam@gmail.com</a>', $nm, '<a href="https://wordpress.org/support/plugin/qtranslate-x">', '</a>', 'qTranslate&#8209;X').'<br/><span style="font-size: smaller">'.__('This is a one-time message, which you will not see again, unless the same import is repeated.', 'qtranslate').'</span>');
+}
+
+function qtranxf_migrate_export($plugin_name, $nm_to){
+	qtranxf_migrate_options_copy($nm_to, 'qtranslate');
+
+	$nm = '<span style="color:blue"><strong>'.$plugin_name.'</strong></span>';
+
+	qtranxf_add_message(sprintf(__('Applicable options have been exported to plugin %s. If you have done some post or page updates after migrating from %s, then "%s" operation is also required to convert the content to "dual language tag" style in order for plugin %s to function.', 'qtranslate'), $nm, $nm, '<a href="https://qtranslatexteam.wordpress.com/option-convert-database/" target="_blank"><span style="color:magenta">'.__('Convert Database', 'qtranslate').'</span></a>', $nm));
+}
+
+/* function qtranxf_migrate_plugin($plugin){
 	$var=$plugin.'-migration';
 	if(!isset($_POST[$var])) return;
 	$action = $_POST[$var];
@@ -101,13 +121,27 @@ function qtranxf_migrate_plugin($plugin){
 	//	update_option('qtranslate_qtrans_compatibility', '1');
 	qtranxf_reloadConfig();
 }
+*/
 
-function qtranxf_migrate_plugins()
-{
+function qtranxf_migrate_plugins(){
 	if(!current_user_can('manage_options')) return;
-	qtranxf_migrate_plugin('mqtranslate');
-	qtranxf_migrate_plugin('qtranslate-xp');
-	//qtranxf_migrate_plugin('ztranslate');//ok same db
+	//qtranxf_migrate_plugin('mqtranslate');
+	//qtranxf_migrate_plugin('qtranslate-xp');
+	////qtranxf_migrate_plugin('ztranslate');//ok same db
+	////do_action('qtranslate_migrate_plugins');
+	foreach($_POST as $key => $value){
+		if(!is_string($value)) continue;
+		if($value == 'none') continue;
+		if(!qtranxf_endsWith($key,'-migration')) continue;
+		$plugin = substr($key,0,-strlen('-migration'));
+		$f = 'qtranxf_migrate_'.$value.'_'.str_replace('-','_',$plugin);
+		if(!function_exists($f)) continue;
+		$f();
+		if($value == 'import'){
+			qtranxf_reloadConfig();
+		//}elseif($value == 'export'){
+		}
+	}
 }
 add_action('qtranslate_saveConfig','qtranxf_migrate_plugins',30);
 

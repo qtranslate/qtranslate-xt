@@ -68,7 +68,7 @@ add_action('qtranslate_clean_uri', 'qts_clean_uri');
 add_action('wp_ajax_qts_quote', 'qts_quote');
 
 add_filter('manage_order_columns', 'qts_order_columns');
-add_filter('qtranslate_post_config', 'qts_config_pre_hook');
+add_filter('qtranslate_editConfig', 'qts_config_pre_hook');
 
 // serializing/deserializing functions
 function qts_base64_serialize($var) {
@@ -271,7 +271,7 @@ function qts_cleanup($var, $action) {
 
 function qts_config_pre_hook() {
 	global $q_config;
-	$messages = &$q_config['messages'];
+	$messages = &$q_config['url_info']['messages'];
 	if(isset($_POST['default_language'])) {
 		qtranxf_updateSetting('qtranslate_services', QTX_BOOLEAN);
 		qts_load();
@@ -526,7 +526,7 @@ function qts_UpdateOrder($order_id) {
 
 function qts_service() {
 	global $q_config, $qts_public_key, $qts_error_messages;
-	$messages = &$q_config['messages'];
+	$messages = &$q_config['url_info']['messages'];
 	if(!isset($_REQUEST['post'])) {
 		echo '<script type="text/javascript">document.location="edit.php";</script>';
 		printf(__('To translate a post, please go to the <a href="%s">edit posts overview</a>.','qtranslate'), 'edit.php');

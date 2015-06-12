@@ -11,10 +11,14 @@ function qtranxf_init_language() {
 
 	qtranxf_loadConfig();
 
-	$q_config['cookie_enabled'] = isset($_COOKIE[QTX_COOKIE_NAME_FRONT]) || isset($_COOKIE[QTX_COOKIE_NAME_ADMIN]);
+	//'url_info' hash is not for external use, it is subject to change at any time.
+	//'url_info' is preserved on reloadConfig
+	if(!isset($q_config['url_info']))
+		$q_config['url_info'] = array();
 
-	$q_config['url_info'] = array(); //'url_info' hash is not for external use, it is subject to change at any time.
 	$url_info = &$q_config['url_info'];
+	$url_info['cookie_enabled'] = isset($_COOKIE[QTX_COOKIE_NAME_FRONT]) || isset($_COOKIE[QTX_COOKIE_NAME_ADMIN]);
+
 
 	if(WP_DEBUG){
 		$url_info['pagenow'] = $pagenow;
@@ -132,7 +136,7 @@ function qtranxf_detect_language(&$url_info) {
 	$lang = qtranxf_parse_language_info($url_info);
 
 	if( (!$lang || !isset($url_info['doing_front_end']))
-		&& (defined('DOING_AJAX') || !$q_config['cookie_enabled'])
+		&& (defined('DOING_AJAX') || !$url_info['cookie_enabled'])
 		&& isset($_SERVER['HTTP_REFERER'])
 	){
 		//get language from HTTP_REFERER, if needed, and detect front- vs back-end
@@ -953,7 +957,7 @@ function qtranxf_url_set_language($urlinfo,$lang,$showLanguage) {
 
 	// see if cookies are activated
 	if( !$showLanguage//there still no language information in the converted URL
-		&& !$q_config['cookie_enabled']// there will be no way to take language from the cookie
+		&& !$q_config['url_info']['cookie_enabled']// there will be no way to take language from the cookie
 		//&& empty($urlinfo['path']) //why this was here?
 		//&& !isset($q_config['url_info']['internal_referer'])//three below replace this one?
 		&& $q_config['language'] != $q_config['default_language']//we need to be able to get language other than default

@@ -1,4 +1,4 @@
-<?php // encoding: utf-8
+<?php
 if ( !defined( 'ABSPATH' ) ) exit;
 
 require_once(QTRANSLATE_DIR.'/admin/i18n-interface-admin.php');

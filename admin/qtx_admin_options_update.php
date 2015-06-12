@@ -2,17 +2,18 @@
 if ( !defined( 'WP_ADMIN' ) ) exit;
 
 require_once(QTRANSLATE_DIR.'/admin/qtx_admin_options.php');
+require_once(QTRANSLATE_DIR.'/admin/qtx_import_export.php');
 
-function qtranxf_onPostConfig(){
+function qtranxf_editConfig(){
 	global $q_config;
 	// init some needed variables
-	if(!isset($q_config['errors'])) $q_config['errors'] = array();
-	if(!isset($q_config['warnings'])) $q_config['warnings'] = array();
-	if(!isset($q_config['messages'])) $q_config['messages'] = array();
+	if(!isset($q_config['url_info']['errors'])) $q_config['url_info']['errors'] = array();
+	if(!isset($q_config['url_info']['warnings'])) $q_config['url_info']['warnings'] = array();
+	if(!isset($q_config['url_info']['messages'])) $q_config['url_info']['messages'] = array();
 
-	$errors = &$q_config['errors'];
-	//$warnings = &$q_config['warnings'];
-	$messages = &$q_config['messages'];
+	$errors = &$q_config['url_info']['errors'];
+	//$warnings = &$q_config['url_info']['warnings'];
+	$messages = &$q_config['url_info']['messages'];
 
 	$q_config['posted'] = array();
 	$q_config['posted']['lang_props'] = array();
@@ -28,8 +29,7 @@ function qtranxf_onPostConfig(){
 		$messages[] = __('qTranslate has been reset.', 'qtranslate');
 	} elseif(isset($_POST['default_language'])) {
 
-		$errs = qtranxf_updateSettings();
-		if(!empty($errs)) $errors = array_merge($errors,$errs);
+		qtranxf_updateSettings();
 
 		//execute actions
 		qtranxf_executeOnUpdate();
@@ -227,7 +227,7 @@ function qtranxf_onPostConfig(){
 		$messages[] = $msg;
 	}
 
-	do_action('qtranslate_post_config');
+	do_action('qtranslate_editConfig');
 
 	$everything_fine = ((isset($_POST['submit'])||isset($_GET['delete'])||isset($_GET['enable'])||isset($_GET['disable'])||isset($_GET['moveup'])||isset($_GET['movedown']))&&empty($errors));
 	if($everything_fine) {
@@ -255,6 +255,7 @@ function qtranxf_resetConfig(){
 
 	if(isset($_POST['qtranslate_reset_admin_notices'])){
 		delete_option('qtranslate_admin_notices');
+		qtranxf_add_message(__('Admin notices have been reset. You will see all applicable notices on admin pages and may dismiss them again.', 'qtranslate'));
 	}
 
 	if( !isset($_POST['qtranslate_reset']) || !isset($_POST['qtranslate_reset2']) )
@@ -588,8 +589,10 @@ function qtranxf_parse_post_type_excluded() {
 function qtranxf_updateSettings(){
 	global $qtranslate_options, $q_config;
 	//$errors = array();
-	$errors = &$q_config['errors'];
+	$errors = &$q_config['url_info']['errors'];
 	// update front settings
+
+	do_action('qtranslate_update_settings_pre');
 
 	qtranxf_updateSetting('default_language', QTX_LANGUAGE);
 	//enabled_languages are not changed at this place
@@ -652,22 +655,22 @@ function qtranxf_updateSettings(){
 			$_POST['config_files'] = array();
 			unset($_POST['json_config_files']);
 		}else{
-			$nerr = isset($q_config['errors']) ? count($q_config['errors']) : 0;
+			$nerr = isset($q_config['url_info']['errors']) ? count($q_config['url_info']['errors']) : 0;
 			$cfg = qtranxf_load_config_files($json_files);
-			if(!empty($q_config['errors']) && $nerr != count($q_config['errors'])){//new errors occurred
+			if(!empty($q_config['url_info']['errors']) && $nerr != count($q_config['url_info']['errors'])){//new errors occurred
 				$_POST['json_config_files'] = implode(PHP_EOL,$json_files);
 				remove_action('admin_notices', 'qtranxf_admin_notices_errors');
 				if($json_files == $q_config['config_files']){
 					//option is not changed, apparently something happened to files, then make the error permanent
-					update_option('qtranslate_config_errors',array_slice($q_config['errors'],$nerr));
+					update_option('qtranslate_config_errors',array_slice($q_config['url_info']['errors'],$nerr));
 				}
 				/*
 				$errs = get_option('qtranslate_config_errors');
 				if(is_array($errs)){
-					foreach($q_config['errors'] as $k => $msg){
-						if(in_array($msg,$errs)) unset($q_config['errors'][$k]);
+					foreach($q_config['url_info']['errors'] as $k => $msg){
+						if(in_array($msg,$errs)) unset($q_config['url_info']['errors'][$k]);
 					}
-					if(empty($q_config['errors'])) unset($q_config['errors']);
+					if(empty($q_config['url_info']['errors'])) unset($q_config['url_info']['errors']);
 				}
 				*/
 			}else{
@@ -705,6 +708,8 @@ function qtranxf_updateSettings(){
 
 	qtranxf_parse_post_type_excluded();
 
+	do_action('qtranslate_update_settings_admin');
+
 	foreach($qtranslate_options['admin']['int'] as $nm => $def){
 		qtranxf_updateSetting($nm, QTX_INTEGER, $def);
 	}
@@ -729,19 +734,20 @@ function qtranxf_updateSettings(){
 		qtranxf_update_i18n_config();
 
 /*
-	if(isset($q_config['errors'])){
-		foreach($q_config['errors'] as $msg){
+	if(isset($q_config['url_info']['errors'])){
+		foreach($q_config['url_info']['errors'] as $msg){
 			$errors[] = $msg;
 		}
-		unset($q_config['errors']);//todo error handling needs to be cleaned up
+		unset($q_config['url_info']['errors']);//todo error handling needs to be cleaned up
 	}
 	return $errors;
 */
+	do_action('qtranslate_update_settings');
 }
 
 function qtranxf_executeOnUpdate() {
 	global $q_config;
-	$messages = &$q_config['messages'];
+	$messages = &$q_config['url_info']['messages'];
 
 	if ( isset( $_POST['update_mo_now'] ) && $_POST['update_mo_now'] == '1' ) {
 		$result = qtranxf_updateGettextDatabases( true );
@@ -752,22 +758,7 @@ function qtranxf_executeOnUpdate() {
 		}
 	}
 
-	foreach($_POST as $key => $value){
-		if(!is_string($value)) continue;
-		if(!qtranxf_endsWith($key,'-migration')) continue;
-		$plugin = substr($key,0,-strlen('-migration'));
-		if($value == 'import'){
-			$nm = '<span style="color:blue"><strong>'.qtranxf_get_plugin_name($plugin).'</strong></span>';
-			$messages[] = sprintf(__('Applicable options and taxonomy names from plugin %s have been imported. Note that the multilingual content of posts, pages and other objects has not been altered during this operation. There is no additional operation needed to import content, since its format is compatible with %s.', 'qtranslate'), $nm, 'qTranslate&#8209;X').' '.sprintf(__('It might be a good idea to review %smigration instructions%s, if you have not yet done so.', 'qtranslate'),'<a href="https://qtranslatexteam.wordpress.com/2015/02/24/migration-from-other-multilingual-plugins/" target="_blank">','</a>');
-			$messages[] = sprintf(__('%sImportant%s: Before you start making edits to post and pages, please, make sure that both, your front site and admin back-end, work under this configuration. It may help to review "%s" and see if any of conflicting plugins mentioned there are used here. While the current content, coming from %s, is compatible with this plugin, the newly modified posts and pages will be saved with a new square-bracket-only encoding, which has a number of advantages comparing to former %s encoding. However, the new encoding is not straightforwardly compatible with %s and you will need an additional step available under "%s" option if you ever decide to go back to %s. Even with this additional conversion step, the 3rd-party plugins custom-stored data will not be auto-converted, but manual editing will still work. That is why it is advisable to create a test-copy of your site before making any further changes. In case you encounter a problem, please give us a chance to improve %s, send the login information to the test-copy of your site to %s along with a detailed step-by-step description of what is not working, and continue using your main site with %s meanwhile. It would also help, if you share a success story as well, either on %sthe forum%s, or via the same e-mail as mentioned above. Thank you very much for trying %s.', 'qtranslate'), '<span style="color:red">', '</span>', '<a href="https://wordpress.org/plugins/qtranslate-x/other_notes/" target="_blank">'.'Known Issues'.'</a>', $nm, 'qTranslate', $nm, '<span style="color:magenta">'.__('Convert Database', 'qtranslate').'</span>', $nm, 'qTranslate&#8209;X', '<a href="mailto:qtranslateteam@gmail.com">qtranslateteam@gmail.com</a>', $nm, '<a href="https://wordpress.org/support/plugin/qtranslate-x">', '</a>', 'qTranslate&#8209;X').'<br/><small>'.__('This is a one-time message, which you will not see again, unless the same import is repeated.', 'qtranslate').'</small>';
-			if ($plugin == 'mqtranslate'){
-				$messages[] = sprintf(__('Option "%s" has also been turned on, as the most common case for importing configuration from %s. You may turn it off manually if your setup does not require it. Refer to %sFAQ%s for more information.', 'qtranslate'), '<span style="color:magenta">'.__('Compatibility Functions', 'qtranslate').'</span>', $nm, '<a href="https://wordpress.org/plugins/qtranslate-x/faq/" target="_blank">', '</a>');
-			}
-		}elseif($value == 'export'){
-			$nm = '<span style="color:blue"><strong>'.qtranxf_get_plugin_name($plugin).'</strong></span>';
-			$messages[] = sprintf(__('Applicable options have been exported to plugin %s. If you have done some post or page updates after migrating from %s, then "%s" operation is also required to convert the content to "dual language tag" style in order for plugin %s to function.', 'qtranslate'), $nm, $nm, '<span style="color:magenta">'.__('Convert Database', 'qtranslate').'</span>', $nm);
-		}
-	}
+	// ==== import/export msg was here
 
 	if(isset($_POST['convert_database'])){
 		$msg = qtranxf_convert_database($_POST['convert_database']);
@@ -777,3 +768,8 @@ function qtranxf_executeOnUpdate() {
 
 //function qtranxf_updateLanguage() {
 //}
+
+/**
+ * Allow 3rd-party to include additional code here
+ */
+do_action('qtranslate_admin_options_update.php');

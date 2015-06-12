@@ -1,4 +1,4 @@
-<?php // encoding: utf-8
+<?php
 
 define('TRANSLATE_SHOW_DEFAULT', 1);
 define('TRANSLATE_SHOW_AVALABLE', 2);

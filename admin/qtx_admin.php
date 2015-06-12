@@ -6,12 +6,6 @@ require_once(QTRANSLATE_DIR.'/admin/qtx_languages.php');
 require_once(QTRANSLATE_DIR.'/admin/qtx_admin_class_translator.php');
 require_once(QTRANSLATE_DIR.'/admin/qtx_user_options.php');
 
-if(file_exists(QTRANSLATE_DIR.'/admin/qtx_admin_slug.php'))
-	require_once(QTRANSLATE_DIR.'/admin/qtx_admin_slug.php');
-
-//if(file_exists(QTRANSLATE_DIR.'/admin/qtx_admin_services.php'))
-//	require_once(QTRANSLATE_DIR.'/admin/qtx_admin_services.php');
-
 function qtranxf_collect_translations_deep( $qfields, $sep ) {
 	$content = reset($qfields);
 	//qtranxf_dbg_log('qtranxf_collect_translations_deep: $content: ',$content);
@@ -41,6 +35,7 @@ function qtranxf_collect_translations( &$qfields, &$request, $edit_lang ) {
 }
 
 function qtranxf_collect_translations_posted() {
+	qtranxf_dbg_log('qtranxf_collect_translations_posted: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
 	//qtranxf_dbg_log('qtranxf_collect_translations_posted: REQUEST: ',$_REQUEST);
 	//qtranxf_dbg_log('qtranxf_collect_translations_posted: POST: ',$_POST);
 	$edit_lang = null;
@@ -90,7 +85,7 @@ add_action('plugins_loaded', 'qtranxf_collect_translations_posted', 5);
 
 function qtranxf_admin_init(){
 	global $q_config, $pagenow;
-	//qtranxf_dbg_log('qtranxf_admin_init: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
+	qtranxf_dbg_log('qtranxf_admin_init: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
 	qtranxf_admin_loadConfig();
 
 	add_action('admin_notices', 'qtranxf_admin_notices_config');
@@ -98,10 +93,12 @@ function qtranxf_admin_init(){
 	if ( current_user_can('manage_options')
 		&& $pagenow == 'options-general.php'
 		&& strpos($q_config['url_info']['query'], 'page=qtranslate-x') !== false
+		//&& !empty($_POST) //todo run this only if one of the forms or actions submitted
 	){
+		$q_config['url_info']['qtranslate-settings-url'] = admin_url('options-general.php?page=qtranslate-x');
 		require_once(QTRANSLATE_DIR.'/admin/qtx_admin_options_update.php');
-		call_user_func('qtranxf_onPostConfig');
-		$q_config['url_info']['admin-page-url'] = admin_url('options-general.php?page=qtranslate-x');
+		//call_user_func('qtranxf_editConfig');
+		qtranxf_editConfig();
 	}
 
 	$next_thanks = get_option('qtranslate_next_thanks');
@@ -551,7 +548,7 @@ function qtranxf_nav_menu_metabox( $object ){
 		echo ' ';
 		printf(__('The rendered menu items have CSS classes %s and %s ("%s" is a language code), which can be defined in theme style, if desired. The label of language menu can also be customized via field "%s" in the menu configuration.', 'qtranslate'), '.qtranxs-lang-menu, .qtranxs-lang-menu-xx, .qtranxs-lang-menu-item', '.qtranxs-lang-menu-item-xx', 'xx', qtranxf_translate_wp('Navigation Label'));
 		echo ' ';
-		printf(__('The field "%s" of inserted menu item allows additional configuration described in %sFAQ%s.', 'qtranslate'), qtranxf_translate_wp('URL'), '<a href="https://qtranslatexteam.wordpress.com/faq/#LanguageSwitcherMenuConfig" target="blank">','</a>'); //https://wordpress.org/plugins/qtranslate-x/faq ?></p>
+		printf(__('The field "%s" of inserted menu item allows additional configuration described in %sFAQ%s.', 'qtranslate'), qtranxf_translate_wp('URL'), '<a href="https://qtranslatexteam.wordpress.com/faq/#LanguageSwitcherMenuConfig" target="blank">','</a>') ?></p>
 		</span>
 	</span>
 	<p class="button-controls">
@@ -616,30 +613,31 @@ function qtranxf_links($links, $file){ // copied from Sociable Plugin
 }
 add_filter('plugin_action_links', 'qtranxf_links', 10, 2);
 
-//should be moved to qtx_configuration.php from qtx_admin.php
+//should be moved to qtx_configuration.php from qtx_admin.php ?
 function qtranxf_admin_notices_config() {
 	global $q_config;
-	if( empty($q_config['errors']) && empty($q_config['warnings']) && empty($q_config['messages']) ) return;
+	if( empty($q_config['url_info']['errors']) && empty($q_config['url_info']['warnings']) && empty($q_config['url_info']['messages']) ) return;
 
-	$link = !isset($q_config['url_info']['admin-page-url']) ? '<a href="'.admin_url('options-general.php?page=qtranslate-x').'" style="color:magenta">qTranslate&#8209;X</a>:&nbsp;' : '';
+	$screen = get_current_screen();
+	$link = isset($screen->id) && $screen->id == 'settings_page_qtranslate-x' ? '' : '<a href="'.admin_url('options-general.php?page=qtranslate-x').'" style="color:magenta">qTranslate&#8209;X</a>:&nbsp;';
 
-	if(isset($q_config['errors']) && is_array($q_config['errors'])){
-		foreach($q_config['errors'] as $key => $msg){
+	if(isset($q_config['url_info']['errors']) && is_array($q_config['url_info']['errors'])){
+		foreach($q_config['url_info']['errors'] as $key => $msg){
 			echo '<div class="error notice is-dismissible" id="qtranxs_error_'.$key.'"><p>'.$link.'<strong><span style="color: red;">'.qtranxf_translate_wp('Error').'</span></strong>:&nbsp;'.$msg.'</p></div>';
 		}
-		unset($q_config['errors']);
+		unset($q_config['url_info']['errors']);
 	}
-	if(isset($q_config['warnings']) && is_array($q_config['warnings'])){
-		foreach($q_config['warnings'] as $key => $msg){
+	if(isset($q_config['url_info']['warnings']) && is_array($q_config['url_info']['warnings'])){
+		foreach($q_config['url_info']['warnings'] as $key => $msg){
 			echo '<div class="update-nag notice is-dismissible" id="qtranxs_warning_'.$key.'"><p>'.$link.'<strong><span style="color: blue;">'.qtranxf_translate_wp('Warning').'</span></strong>:&nbsp;'.$msg.'</p></div>';
 		}
-		unset($q_config['warnings']);
+		unset($q_config['url_info']['warnings']);
 	}
-	if(isset($q_config['messages']) && is_array($q_config['messages'])){
-		foreach($q_config['messages'] as $key => $msg){
+	if(isset($q_config['url_info']['messages']) && is_array($q_config['url_info']['messages'])){
+		foreach($q_config['url_info']['messages'] as $key => $msg){
 			echo '<div class="updated notice is-dismissible" id="qtranxs_message_'.$key.'"><p>'.$link.$msg.'</p></div>';
 		}
-		unset($q_config['messages']);
+		unset($q_config['url_info']['messages']);
 	}
 }
 
