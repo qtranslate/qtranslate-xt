@@ -35,7 +35,7 @@ function qtranxf_collect_translations( &$qfields, &$request, $edit_lang ) {
 }
 
 function qtranxf_collect_translations_posted() {
-	qtranxf_dbg_log('qtranxf_collect_translations_posted: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
+	//qtranxf_dbg_log('qtranxf_collect_translations_posted: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
 	//qtranxf_dbg_log('qtranxf_collect_translations_posted: REQUEST: ',$_REQUEST);
 	//qtranxf_dbg_log('qtranxf_collect_translations_posted: POST: ',$_POST);
 	$edit_lang = null;
@@ -85,7 +85,7 @@ add_action('plugins_loaded', 'qtranxf_collect_translations_posted', 5);
 
 function qtranxf_admin_init(){
 	global $q_config, $pagenow;
-	qtranxf_dbg_log('qtranxf_admin_init: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
+	//qtranxf_dbg_log('qtranxf_admin_init: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
 	qtranxf_admin_loadConfig();
 
 	add_action('admin_notices', 'qtranxf_admin_notices_config');
