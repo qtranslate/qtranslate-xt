@@ -593,6 +593,13 @@ function qtranxf_activation_hook()
 	qtranxf_update_config_files();
 }
 
+/**
+ * @since 3.4
+*/
+function qtranxf_deactivation_hook(){
+	do_action('qtranslate_deactivation_hook');
+}
+
 function qtranxf_admin_notice_first_install(){
 	$messages = get_option('qtranslate_admin_notices');
 	if(isset($messages['initial-install'])) return;
@@ -747,7 +754,7 @@ function qtranxf_admin_notice_plugin_integration($plugin,$integr_title,$integr_p
 
 	$plugin_file = qtranxf_find_plugin_file($plugin);
 	if(!$plugin_file) return 0;
-	$pd = get_plugin_data( $plugin_file, false, true );
+	$pd = get_plugin_data( WP_CONTENT_DIR .'/'. $plugin_file, false, true );
 	$pluginName = $pd['Name'];
 	$pluginURI = $pd['PluginURI'];
 
