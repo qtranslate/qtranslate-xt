@@ -37,26 +37,10 @@ function qtranxf_get_front_page_config() {
  * Response to action 'init', which runs after user is authenticated
  * @since 3.3.2
  */
-function qtranxf_front_init(){
-	global $q_config;
-	if($q_config['hide_untranslated']){
-		add_filter('wp_list_pages_excludes', 'qtranxf_excludePages');//moved here from _hooks.php since 3.2.8
-		add_filter('posts_where_request', 'qtranxf_excludeUntranslatedPosts',10,2);
-		add_filter('comments_clauses','qtranxf_excludeUntranslatedPostComments',10,2);
-		add_filter('get_previous_post_where', 'qtranxf_excludeUntranslatedAdjacentPosts');
-		add_filter('get_next_post_where', 'qtranxf_excludeUntranslatedAdjacentPosts');
-	}
-
-	foreach($q_config['text_field_filters'] as $nm){
-		add_filter($nm, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage');
-	}
-
-	$page_configs = qtranxf_get_front_page_config();
-	if(!empty($page_configs['']['filters'])){
-		qtranxf_add_filters($page_configs['']['filters']);
-	}
-}
-add_action('init','qtranxf_front_init');
+//function qtranxf_front_init(){
+//	global $q_config;
+//}
+//add_action('init','qtranxf_front_init');
 
 function qtranxf_wp_head(){
 	global $q_config;
@@ -111,8 +95,7 @@ function qtranxf_remove_detached_children( $items )
 }
 */
 
-function qtranxf_wp_get_nav_menu_items( $items, $menu, $args )
-{
+function qtranxf_wp_get_nav_menu_items( $items, $menu, $args ){
 	global $q_config;
 	$language = $q_config['language'];
 	$itemid = 0;
@@ -295,7 +278,7 @@ function qtranxf_add_language_menu_item(&$items, &$menu_order, &$itemid, $key, $
 		$item->classes[] = 'qtranxs-lang-menu-item';
 		$item->classes[] = 'qtranxs-lang-menu-item-'.$lang;
 		$items[]=$item;
-		//qtranxf_dbg_log('qtranxf_wp_get_nav_menu_items: language menu $item',$item);
+		//qtranxf_dbg_log('qtranxf_add_language_menu_item: language menu $item',$item);
 	}
 	//return $item;
 }
@@ -356,7 +339,8 @@ function qtranxf_postsFilter($posts,&$query) {//WP_Query
 	//$post->post_content = qtranxf_useCurrentLanguageIfNotFoundShowAvailable($post->post_content);
 	//$posts = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($posts);
 	if(!is_array($posts)) return $posts;
-	//qtranxf_dbg_echo('qtranxf_postsFilter: $post_type: ',$query->query_vars['post_type']);
+	//qtranxf_dbg_log('qtranxf_postsFilter: $post_type: ',$query->query_vars['post_type']);
+	//qtranxf_dbg_log('qtranxf_postsFilter: query_vars: ',$query->query_vars);
 	switch($query->query_vars['post_type']){
 		case 'nav_menu_item': return $posts;//will translate later in qtranxf_wp_get_nav_menu_items: to be able to filter empty labels.
 		default: break;
@@ -805,6 +789,24 @@ add_filter('get_pagenum_link', 'qtranxf_pagenum_link');
 function qtranxf_add_front_filters(){
 	global $q_config;
 
+	if($q_config['hide_untranslated']){
+		add_filter('wp_list_pages_excludes', 'qtranxf_excludePages');//moved here from _hooks.php since 3.2.8
+		add_filter('posts_where_request', 'qtranxf_excludeUntranslatedPosts',10,2);
+		add_filter('comments_clauses','qtranxf_excludeUntranslatedPostComments',10,2);
+		add_filter('get_previous_post_where', 'qtranxf_excludeUntranslatedAdjacentPosts');
+		add_filter('get_next_post_where', 'qtranxf_excludeUntranslatedAdjacentPosts');
+	}
+
+	foreach($q_config['text_field_filters'] as $nm){
+		add_filter($nm, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage');
+	}
+
+	$page_configs = qtranxf_get_front_page_config();
+	//qtranxf_dbg_log('$page_configs: ', $page_configs);
+	if(!empty($page_configs['']['filters'])){
+		qtranxf_add_filters($page_configs['']['filters']);
+	}
+
 	if($q_config['url_mode'] != QTX_URL_QUERY){
 		/* WP uses line like 'trailingslashit( get_bloginfo( 'url' ) )' in /wp-includes/link-template.php, for example, which obviously breaks the further processing in QTX_URL_QUERY mode.
 		*/
@@ -817,7 +819,7 @@ function qtranxf_add_front_filters(){
 	add_filter('gettext_with_context', 'qtranxf_gettext_with_context',0);
 	add_filter('ngettext', 'qtranxf_ngettext',0);
 }
-qtranxf_add_front_filters();//should it be moved to qtranxf_front_init?
+qtranxf_add_front_filters();
 
 //qtranxf_optionFilter();
 //add_filter('wp_head', 'qtranxf_add_css');

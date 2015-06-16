@@ -101,6 +101,11 @@ function qtranxf_ngettext($translated_text) {
 	return qtranxf_use($q_config['language'], $translated_text, false);
 }
 
+//function qtranxf_template_redirect() {
+//	//qtranxf_dbg_log('qtranxf_template_redirect: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
+//}
+//add_action('template_redirect','qtranxf_template_redirect');
+
 /* //'get_search_form' no longer needed since we adjusted home_url()
 function qtranxf_fixSearchForm($form) {
 	$form = preg_replace('#action="[^"]*"#','action="'.trailingslashit(qtranxf_convertURL(get_home_url())).'"',$form);

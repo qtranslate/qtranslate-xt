@@ -103,7 +103,7 @@ function qtranxf_editConfig(){
 	elseif(isset($_GET['convert'])){
 		// update language tags
 		global $wpdb;
-		$wpdb->show_errors();
+		$wpdb->show_errors(); @set_time_limit(0);
 		$cnt = 0;
 		//this will not work correctly if set of languages is different
 		foreach($q_config['enabled_languages'] as $lang) {
@@ -120,7 +120,7 @@ function qtranxf_editConfig(){
 	elseif(isset($_GET['markdefault'])){
 		// update language tags
 		global $wpdb;
-		$wpdb->show_errors();
+		$wpdb->show_errors(); @set_time_limit(0);
 		$result = $wpdb->get_results('SELECT ID, post_content, post_title, post_excerpt, post_type FROM '.$wpdb->posts.' WHERE post_status = \'publish\' AND  (post_type = \'post\' OR post_type = \'page\') AND NOT (post_content LIKE \'%<!--:-->%\' OR post_title LIKE \'%<!--:-->%\' OR post_content LIKE \'%![:!]%\' ESCAPE \'!\' OR post_title LIKE \'%![:!]%\' ESCAPE \'!\')');
 		if(is_array($result)){
 			$cnt_page = 0;

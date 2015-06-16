@@ -202,8 +202,7 @@ function qtranxf_convert_to_b_no_closing_deep($text) {
 
 function qtranxf_convert_database($action){
 	global $wpdb;
-	@set_time_limit(0);
-	$wpdb->show_errors();
+	$wpdb->show_errors(); @set_time_limit(0);
 	qtranxf_convert_database_options($action);
 	qtranxf_convert_database_posts($action);
 	qtranxf_convert_database_postmeta($action);
@@ -804,6 +803,15 @@ function qtranxf_json_encode($o){
 	if(version_compare(PHP_VERSION, '5.4.0') >= 0)
 		return json_encode($o,JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES);
 	return json_encode($o);
+}
+
+/**
+ * @since 3.4
+ * return reference to $page_config['forms'][$nm]['fields']
+ */
+function qtranxf_config_add_form( &$page_config, $nm){
+	if(!isset($page_config['forms'][$nm])) $page_config['forms'][$nm] = array('fields' => array());
+	else if(!isset($page_config['forms'][$nm]['fields'])) $page_config['forms'][$nm]['fields'] = array();
 }
 
 add_filter('manage_language_columns', 'qtranxf_language_columns');

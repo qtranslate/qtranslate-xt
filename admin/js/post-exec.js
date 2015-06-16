@@ -3,7 +3,7 @@
  /wp-admin/post-new.php
 */
 jQuery(document).ready(
-function(){
+function($){
 	var qtx = qTranslateConfig.js.get_qtx();
 	//co('post.php: qtx: ',qtx);
 
@@ -14,29 +14,33 @@ function(){
 		{
 		case '1':
 			if (url.search){
-				url.search+="&lang="+lang;
+				url.search += '&lang='+lang;
 			}else{
-				url.search="?lang="+lang;
+				url.search = '?lang='+lang;
 			}
 			break;
 		case '2':
+			//if( !qTranslateConfig.hide_default_language || qTranslateConfig.default_language != lang){
 			var homepath=qTranslateConfig.url_info_home;
 			var i=url.pathname.indexOf(homepath);
 			url.pathname=homepath+lang+url.pathname.substring(i+homepath.length-1);
+			//}
 			break;
 		case '3':
-			url.host=lang+'.'+url.host;
+			url.host = lang+'.'+url.host;
 			break;
 		case '4':
-			url.host=qTranslateConfig.domains[lang];
+			url.host = qTranslateConfig.domains[lang];
 			break;
 		}
 	}
 
 	var btnViewPostA;//a node of 'View Page/Post' link.
-	var origUrl, langUrl;
+	var origUrl, langUrl, origUrlQ;
 	var slugSamplePermalink;//'sample-permalink' node
 	var origSamplePermalink;
+	var view_link;
+	var permalink_query_field;
 	var setSlugLanguage=function(lang)
 	{
 		if(!btnViewPostA){
@@ -46,6 +50,7 @@ function(){
 			if(btnViewPostA.tagName != 'A') return;
 			origUrl=btnViewPostA.href;
 			langUrl=qtranxj_ce('a',{});
+			origUrlQ = origUrl.search(/\?/) > 0;
 		}
 
 		langUrl.href=origUrl;
@@ -55,10 +60,10 @@ function(){
 		var btnPreviewAction=document.getElementById('preview-action');
 		if (btnPreviewAction && btnPreviewAction.children.length)
 		{
-			btnPreviewAction.children[0].href=langUrl.href;
+			btnPreviewAction.children[0].href = langUrl.href;
 		}
 
-		if(qTranslateConfig.url_mode!=1){//!QTX_URL_QUERY
+		if(qTranslateConfig.url_mode!=1){// !QTX_URL_QUERY
 			if(!slugSamplePermalink){
 				var slugEl=document.getElementById('sample-permalink');
 				if (slugEl && slugEl.childNodes.length){
@@ -72,6 +77,19 @@ function(){
 				convertURL(langUrl,lang);
 				slugSamplePermalink.nodeValue=langUrl.href;
 			}
+		}else{// QTX_URL_QUERY
+			if(!permalink_query_field){
+				$('#sample-permalink').append('<span id="sample-permalink-lang-query"></span>');
+				permalink_query_field = $('#sample-permalink-lang-query');
+			}
+			if(permalink_query_field){
+				permalink_query_field.text( (origUrl.search(/\?/) < 0 ? '/?lang=' : '&lang=')+lang );
+			}
+		}
+
+		if(!view_link) view_link = document.getElementById('wp-admin-bar-view');
+		if(view_link && view_link.children.length){
+			view_link.children[0].href = langUrl.href;
 		}
 	}
 

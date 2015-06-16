@@ -82,7 +82,6 @@ qtranxj_split_blocks = function(blocks)
 	var matches;
 	for(var i = 0;i<blocks.length;++i){
 		var b=blocks[i];
-		//c('blocks['+i+']='+b);
 		if(!b.length) continue;
 		matches = clang_regex.exec(b); clang_regex.lastIndex=0;
 		if(matches!=null){
@@ -104,7 +103,8 @@ qtranxj_split_blocks = function(blocks)
 			continue;
 		}
 		if(lang){
-			result[lang] += b;
+			if(!result[lang]) result[lang] = b;
+			else result[lang] += b;
 			lang = false;
 		}else{ //keep neutral text
 			for(var key in result){
@@ -295,6 +295,14 @@ var qTranslateX=function(pg)
 	 * Designed as interface for other plugin integration. The documentation is available at
 	 * https://qtranslatexteam.wordpress.com/integration/
 	 *
+	 * @since 3.3.4
+	 */
+	this.hasContentHook=function(id){ return contentHooks[id]; }
+
+	/**
+	 * Designed as interface for other plugin integration. The documentation is available at
+	 * https://qtranslatexteam.wordpress.com/integration/
+	 *
 	 * @since 3.3.2
 	 */
 	this.addContentHook=function(inpField,separator,field_name)
@@ -335,11 +343,25 @@ var qTranslateX=function(pg)
 		var contents = qtranxj_split(inpField.value);//keep neutral text from older times, just in case.
 		                        //inpField.tagName
 		inpField.value = contents[h.lang];
+		var qtx_prefix;
+		if(separator){
+			switch(separator){
+				case 'slug': qtx_prefix = 'qtranslate-slugs['; break;
+				default: qtx_prefix = 'qtranslate-fields['; break;
+			}
+		}else{
+			//if(inpField.tagName==='TEXTAREA')
+			//	separator='<';
+			//else
+			separator = '[';//since 3.1 we get rid of <--:--> encoding
+			qtx_prefix = 'qtranslate-fields[';
+		}
+
 		var bfnm, sfnm, p = h.name.indexOf('[');
 		if(p<0){
-			bfnm = 'qtranslate-fields['+h.name+']';
+			bfnm = qtx_prefix + h.name+']';
 		}else{
-			bfnm = 'qtranslate-fields['+h.name.substring(0,p)+']';
+			bfnm = qtx_prefix + h.name.substring(0,p)+']';
 			if(h.name.lastIndexOf('[]') < 0){
 				bfnm += h.name.substring(p);
 			}else{
@@ -357,15 +379,12 @@ var qTranslateX=function(pg)
 			h.fields[lang] = f;
 			inpField.parentNode.insertBefore(f,inpField);
 		}
-		if(!separator){
-			//if(inpField.tagName==='TEXTAREA')
-			//	separator='<';
-			//else
-			separator='[';//since 3.1 we get rid of <--:--> encoding
-		}
+		
 		// since 3.2.9.8 - h.contents -> h.fields
-		h.sepfield = qtranxj_ce('input', {name: bfnm+'[qtranslate-separator]', type: 'hidden', className: 'hidden', value: separator });
-		inpField.parentNode.insertBefore(h.sepfield,inpField);
+		if(separator != 'slug'){
+			h.sepfield = qtranxj_ce('input', {name: bfnm+'[qtranslate-separator]', type: 'hidden', className: 'hidden', value: separator });
+			inpField.parentNode.insertBefore(h.sepfield,inpField);
+		}
 		h.separator=separator;
 
 		/**
@@ -1188,6 +1207,15 @@ var qTranslateX=function(pg)
 		}
 		if (qTranslateConfig.activeLanguage)
 		{
+			var ok2switch = true;
+			var onTabSwitchFunctionsSave = qTranslateConfig.onTabSwitchFunctionsSave;
+			for(var i=0; i<onTabSwitchFunctionsSave.length; ++i)
+			{
+				var ok = onTabSwitchFunctionsSave[i].call(qTranslateConfig.qtx,qTranslateConfig.activeLanguage,lang);
+				if(ok === false) ok2switch = false;
+			}
+			if(!ok2switch)
+				return;//cancel button switch, if one of onTabSwitchFunctionsSave returned 'false'.
 			var tabSwitches = qTranslateConfig.tabSwitches[qTranslateConfig.activeLanguage];
 			for(var i=0; i < tabSwitches.length; ++i){
 				tabSwitches[i].classList.remove(qTranslateConfig.lsb_style_active_class);
@@ -1195,11 +1223,6 @@ var qTranslateX=function(pg)
 				//tabSwitches[i].classList.remove('wp-ui-highlight');
 			}
 			//tabSwitches[qTranslateConfig.activeLanguage].classList.remove('active');
-			var onTabSwitchFunctionsSave = qTranslateConfig.onTabSwitchFunctionsSave;
-			for(var i=0; i<onTabSwitchFunctionsSave.length; ++i)
-			{
-				onTabSwitchFunctionsSave[i].call(qTranslateConfig.qtx,qTranslateConfig.activeLanguage,lang);
-			}
 		}
 		var langFrom = qTranslateConfig.activeLanguage;
 		qTranslateConfig.activeLanguage=lang;

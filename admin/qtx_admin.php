@@ -36,8 +36,8 @@ function qtranxf_collect_translations( &$qfields, &$request, $edit_lang ) {
 
 function qtranxf_collect_translations_posted() {
 	//qtranxf_dbg_log('qtranxf_collect_translations_posted: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
-	//qtranxf_dbg_log('qtranxf_collect_translations_posted: REQUEST: ',$_REQUEST);
-	//qtranxf_dbg_log('qtranxf_collect_translations_posted: POST: ',$_POST);
+	//qtranxf_dbg_log('qtranxf_collect_translations_posted: REQUEST: ', $_REQUEST);
+	//qtranxf_dbg_log('qtranxf_collect_translations_posted: POST: ', $_POST);
 	$edit_lang = null;
 	if(isset($_REQUEST['qtranslate-fields'])){
 		//$edit_lang = isset($_COOKIE['qtrans_edit_language']) ? $_COOKIE['qtrans_edit_language'] : qtranxf_getLanguage();
@@ -46,14 +46,8 @@ function qtranxf_collect_translations_posted() {
 			//qtranxf_dbg_log('qtranxf_collect_translations_posted: REQUEST[qtranslate-fields]['.$nm.']: ',$qfields);
 			qtranxf_collect_translations($qfields,$_REQUEST[$nm],$edit_lang);
 			//qtranxf_dbg_log('qtranxf_collect_translations_posted: collected REQUEST['.$nm.']: ',$_REQUEST[$nm]);
-			if(isset($_POST[$nm])){
-				//qtranxf_dbg_log('qtranxf_collect_translations_posted: POST['.$nm.']: ',$_POST[$nm]);
-				$_POST[$nm] = $_REQUEST[$nm];
-			}
-			if(isset($_GET[$nm])){
-				//qtranxf_dbg_log('qtranxf_collect_translations_posted: GET['.$nm.']: ',$_GET[$nm]);
-				$_GET[$nm] = $_REQUEST[$nm];
-			}
+			if(isset($_POST[$nm])) $_POST[$nm] = $_REQUEST[$nm];
+			if(isset($_GET[$nm])) $_GET[$nm] = $_REQUEST[$nm];
 		}
 		unset($_REQUEST['qtranslate-fields']);
 		unset($_POST['qtranslate-fields']);
@@ -80,6 +74,27 @@ function qtranxf_collect_translations_posted() {
 			if(isset($_GET[$nm]) ) $_GET [$nm] = $q;
 		}
 	}
+	if(isset($_REQUEST['qtranslate-slugs'])){
+		//ensure REQUEST has the value of the default language
+		//multilingual slug values will be processed later
+		if(!$edit_lang) $edit_lang = qtranxf_getLanguageEdit();
+		global $q_config;
+		$default_lang = $q_config['default_language'];
+		if($default_lang != $edit_lang){
+			foreach($_REQUEST['qtranslate-slugs'] as $nm => $val){
+				$_REQUEST['qtranslate-slugs'][$nm][$edit_lang] = $_REQUEST[$nm];
+				$_REQUEST[$nm] = $val[$default_lang];
+				if(isset($_POST[$nm])){
+					$_POST[$nm] = $_REQUEST[$nm];
+					$_POST['qtranslate-slugs'][$nm][$edit_lang] = $_REQUEST['qtranslate-slugs'][$nm][$edit_lang];
+				}
+				if(isset($_GET[$nm])){
+					$_GET[$nm] = $_REQUEST[$nm];
+					$_GET['qtranslate-slugs'][$nm][$edit_lang] = $_REQUEST['qtranslate-slugs'][$nm][$edit_lang];
+				}
+			}
+		}
+	}
 }
 add_action('plugins_loaded', 'qtranxf_collect_translations_posted', 5);
 
@@ -92,6 +107,7 @@ function qtranxf_admin_init(){
 
 	if ( current_user_can('manage_options')
 		&& $pagenow == 'options-general.php'
+		&& isset($q_config['url_info']['query'])
 		&& strpos($q_config['url_info']['query'], 'page=qtranslate-x') !== false
 		//&& !empty($_POST) //todo run this only if one of the forms or actions submitted
 	){
@@ -182,6 +198,8 @@ function qtranxf_get_admin_page_config_post_type($post_type) {
 	}
 	//qtranxf_dbg_log('qtranxf_get_admin_page_config_post_type: pagenow: '.$pagenow.'; post_type: ', $post_type);
 	$page_configs = qtranxf_get_admin_page_config();
+	//$page_configs = apply_filters('i18n_admin_config_post_type', $page_configs, $post_type);
+
 	//qtranxf_dbg_log('qtranxf_get_admin_page_config_post_type: $page_configs: ', $page_configs);
 	$page_config = isset($page_configs['']) ? $page_configs[''] : array();
 	if($post_type){
@@ -214,6 +232,9 @@ function qtranxf_get_admin_page_config_post_type($post_type) {
 				foreach($frm['fields'] as $k => $f){
 					if(isset($f['encode']) && $f['encode'] == 'none'){
 						//unset($page_config['forms'][$form_id]['fields'][$k]);
+						unset($frm['fields'][$k]);
+					}
+					if($post_type && !empty($f['post-type-excluded']) && preg_match('/'.$f['post-type-excluded'].'/',$post_type)){
 						unset($frm['fields'][$k]);
 					}
 				}
@@ -299,7 +320,7 @@ function qtranxf_add_admin_footer_js ( $enqueue_script=false ) {
 
 	$config=array();
 	// since 3.2.9.9.0 'enabled_languages' is replaced with 'language_config' structure
-	$keys=array('default_language', 'language', 'url_mode', 'lsb_style_wrap_class', 'lsb_style_active_class'); // ,'term_name'
+	$keys=array('default_language', 'language', 'url_mode', 'lsb_style_wrap_class', 'lsb_style_active_class', 'hide_default_language'); // ,'term_name'
 	foreach($keys as $key){
 		$config[$key]=$q_config[$key];
 	}

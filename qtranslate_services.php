@@ -513,7 +513,7 @@ function qts_UpdateOrder($order_id) {
 			$content[$order['target_language']] = $result['order_translated_text'];
 			$post->post_title = qtranxf_join_b($title);
 			$post->post_content = qtranxf_join_b($content);
-			$wpdb->show_errors();
+			$wpdb->show_errors(); @set_time_limit(0);
 			$wpdb->query($wpdb->prepare('UPDATE '.$wpdb->posts.' SET post_title = %s, post_content = %s WHERE ID = %d', $post->post_title, $post->post_content, $post->ID));
 			wp_cache_add($post->ID, $post, 'posts');
 			unset($orders[$key]);

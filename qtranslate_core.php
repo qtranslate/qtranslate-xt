@@ -3,6 +3,8 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 function qtranxf_init_language() {
 	global $q_config, $pagenow;
+	//qtranxf_dbg_log('qtranxf_init_language: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
+
 	//if(defined('QTRANS_INIT')){
 	//	//qtranxf_dbg_log('qtranxf_init_language: QTRANS_INIT: url_info: ',$q_config['url_info']);
 	//	return;
@@ -59,7 +61,6 @@ function qtranxf_init_language() {
 	$url_info['original_url'] = $_SERVER['REQUEST_URI'];//is in use in -slug, here is for debugging purpose only
 
 	//qtranxf_dbg_log('qtranxf_init_language: SERVER: ',$_SERVER);
-	//qtranxf_dbg_log('qtranxf_init_language: REQUEST_TIME_FLOAT: ',$_SERVER['REQUEST_TIME_FLOAT']);
 	$url_info['language'] = qtranxf_detect_language($url_info);
 	//qtranxf_dbg_log('qtranxf_init_language: detected: url_info: ',$url_info);
 
@@ -365,15 +366,13 @@ function qtranxf_detect_language_front(&$url_info) {
 	return $lang;
 }
 
-function qtranxf_setcookie_language($lang, $cookie_name, $cookie_path, $cookie_domain = NULL, $secure = false)
-{
+function qtranxf_setcookie_language($lang, $cookie_name, $cookie_path, $cookie_domain = NULL, $secure = false){
 	//qtranxf_dbg_log('qtranxf_setcookie_language: lang='.$lang.'; cookie_name='.$cookie_name.'; cookie_path='.$cookie_path);
 	setcookie($cookie_name, $lang, time()+31536000, $cookie_path, $cookie_domain, $secure);//one year
 	//two weeks 1209600
 }
 
-function qtranxf_set_language_cookie($lang)
-{
+function qtranxf_set_language_cookie($lang){
 	global $q_config;
 	if(defined('WP_ADMIN')){
 		//qtranxf_dbg_log('qtranxf_set_language_cookie: QTX_COOKIE_NAME_ADMIN: lang=',$lang);
@@ -430,8 +429,7 @@ function qtranxf_http_negotiate_language(){
 	}
 }
 
-function qtranxf_resolveLangCase($lang,&$caseredirect)
-{
+function qtranxf_resolveLangCase($lang,&$caseredirect){
 	if(qtranxf_isEnabled($lang)) return $lang;
 	$lng=strtolower($lang);
 	if(qtranxf_isEnabled($lng)){
@@ -458,6 +456,7 @@ function qtranxf_load_option_qtrans_compatibility(){
  * @since 3.4
 */
 function qtranxf_init() {
+	//qtranxf_dbg_log('qtranxf_init: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
 }
 /* //use action 'init' in front-end and/or action 'admin_init' admin-end accordingly
  * Response to action 'init', which runs after user is authenticated
@@ -1089,9 +1088,9 @@ function qtranxf_convertURL($url='', $lang='', $forceadmin = false, $showDefault
 		if( $q_config['url_info']['doing_front_end'] && defined('QTS_VERSION') && $q_config['url_mode'] != QTX_URL_QUERY){
 			//quick workaround, but need a permanent solution
 			$url = qts_get_url($lang);
-			//qtranxf_dbg_echo('qtranxf_convertURL: url=',$url);
+			//qtranxf_dbg_log('qtranxf_convertURL: qts_get_url: url=', $url);
 			if(!empty($url)){
-				if($q_config['hide_default_language'] && $showDefaultLanguage && $lang==$q_config['default_language'])
+				if($showDefaultLanguage && $q_config['hide_default_language'] && $lang==$q_config['default_language'])
 					$url=qtranxf_convertURL($url,$lang,$forceadmin,true);
 				return $url;
 			}
