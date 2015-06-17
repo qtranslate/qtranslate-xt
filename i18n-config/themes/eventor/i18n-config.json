@@ -10,6 +10,20 @@
 		}
 	}
 },
+"eventor-theme-settings-home": {
+	"pages": { "admin.php": "page=theme-settings&tab=home" },
+	"forms":{
+		"main":{
+			"fields":{
+				"call_to_action_title":{},
+				"call_to_action_undertitle":{},
+				"call_to_action_text":{},
+				"call_to_action_button_text":{},
+				"call_to_action_button_url":{}
+			}
+		}
+	}
+},
 "eventor-theme-settings-contact": {
 	"pages": { "admin.php": "page=theme-settings&tab=contact" },
 	"forms":{
