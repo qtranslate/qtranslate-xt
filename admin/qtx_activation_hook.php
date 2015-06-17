@@ -69,21 +69,6 @@ function qtranxf_default_default_language(){
 /**
  * @since 3.3.2
  */
-function qtranxf_merge_config($cfg_all, $cfg){
-	//return array_merge_recursive($cfg_all,$cfg);
-	foreach($cfg as $k => $v){
-		if(is_array($v) && isset($cfg_all[$k])){
-			$cfg_all[$k] = qtranxf_merge_config($cfg_all[$k], $v);
-		}else{
-			$cfg_all[$k] = $v;
-		}
-	}
-	return $cfg_all;
-}
-
-/**
- * @since 3.3.2
- */
 function qtranxf_load_config_files($json_files){
 	$content_dir = null;
 	$qtransx_dir = null;

@@ -719,6 +719,21 @@ function qtranxf_match_post_type($cfg_post_type, $post_type){
 }
 
 /**
+ * @since 3.3.2
+ */
+function qtranxf_merge_config($cfg_all, $cfg){
+	//return array_merge_recursive($cfg_all,$cfg);
+	foreach($cfg as $k => $v){
+		if(is_array($v) && isset($cfg_all[$k])){
+			$cfg_all[$k] = qtranxf_merge_config($cfg_all[$k], $v);
+		}else{
+			$cfg_all[$k] = $v;
+		}
+	}
+	return $cfg_all;
+}
+
+/**
  * filters i18n configurations for the current page
  */
 function qtranxf_parse_page_config($config, $url_path, $url_query) {

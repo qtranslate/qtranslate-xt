@@ -95,6 +95,7 @@ function qtranxf_admin_loadConfig(){
 	}
 
 	if(empty($q_config['admin_config'])){
+		require_once(QTRANSLATE_DIR.'/admin/qtx_admin_options_update.php');
 		qtranxf_update_i18n_config();
 	}
 
