@@ -1,32 +1,32 @@
 {"vendor":{"plugins/landing-pages":"1.0"},
 "admin-config":{
-	"post-landing-page":{
-		"pages":{"post.php":""},
-		"post_type":"landing-page",
-		"forms":{
-			"post":{
-				"fields":{
-					"title":{"encode":"none"},
-					"lp-main-headline":{}
-				}
-			}
-		}
-	},
-	"post-new-landing-page": {
-		"pages":{"post-new.php": "post_type=landing-page"},
-		"post_type":{"exclude": "landing-page"}
-	},
-	"post-call-to-action":{
-		"pages":{"post.php":""},
-		"post_type":"wp-call-to-action",
-		"forms":{
-			"post":{
-				"fields":{
-					"title":{"encode":"none"},
-					"variation-notes":{"jquery":".wp-cta-notes"}
-				}
+"post-landing-page":{
+	"pages":{"post.php":""},
+	"post_type":"landing-page",
+	"forms":{
+		"post":{
+			"fields":{
+				"title":{"encode":"none"},
+				"lp-main-headline":{}
 			}
 		}
 	}
+},
+"post-new-landing-page": {
+	"pages":{"post-new.php": "post_type=landing-page"},
+	"post_type":{"exclude": "landing-page"}
+},
+"post-call-to-action":{
+	"pages":{"post.php":""},
+	"post_type":"wp-call-to-action",
+	"forms":{
+		"post":{
+			"fields":{
+				"title":{"encode":"none"},
+				"variation-notes":{"jquery":".wp-cta-notes"}
+			}
+		}
+	}
+}
 }
 }

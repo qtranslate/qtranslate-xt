@@ -1,5 +1,16 @@
 {"vendor":{"themes/eventor":"1.0"},
 "admin-config": {
+"post": {
+	"pages": { "post.php": "", "post-new.php": "" },
+	"post_type":"speaker",
+	"forms":{
+		"main":{
+			"fields":{
+				"tk_title_info":{}
+			}
+		}
+	}
+},
 "eventor-theme-settings-general": {
 	"pages": { "admin.php": "page=theme-settings&tab=general" },
 	"forms":{
