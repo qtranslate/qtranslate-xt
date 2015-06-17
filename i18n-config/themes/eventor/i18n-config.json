@@ -5,7 +5,7 @@
 	"forms":{
 		"main":{
 			"fields":{
-				"footer_copy":{},
+				"footer_copy":{}
 			}
 		}
 	}
