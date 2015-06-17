@@ -1,6 +1,6 @@
 {"vendor":{"themes/eventor":"1.0"},
 "admin-config": {
-"post": {
+"eventor-post": {
 	"pages": { "post.php": "", "post-new.php": "" },
 	"post_type":"speaker",
 	"forms":{
