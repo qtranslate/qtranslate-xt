@@ -139,22 +139,22 @@
 			"get_category":"0"
 		},
 		"url":{
-			"author_feed_link":"20",
-			"author_link":"20",
-			"day_link":"20",
-			"get_comment_author_url_link":"20",
-			"month_link":"20",
-			"page_link":"20",
-			"post_link":"20",
-			"year_link":"20",
-			"category_link":"20",
-			"category_feed_link":"20",
-			"tag_link":"20",
-			"term_link":"20",
-			"the_permalink":"20",
-			"feed_link":"20",
-			"post_comments_feed_link":"20",
-			"tag_feed_link":"20"
+			"author_feed_link":"10",
+			"author_link":"10",
+			"day_link":"10",
+			"get_comment_author_url_link":"10",
+			"month_link":"10",
+			"page_link":"10",
+			"post_link":"10",
+			"year_link":"10",
+			"category_link":"10",
+			"category_feed_link":"10",
+			"tag_link":"10",
+			"term_link":"10",
+			"the_permalink":"10",
+			"feed_link":"10",
+			"post_comments_feed_link":"10",
+			"tag_feed_link":"10"
 		}
 	}
 }
