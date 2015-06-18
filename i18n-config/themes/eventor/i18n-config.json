@@ -53,7 +53,6 @@
 },
 "front-config": {
 "eventor-messages": {
-	"pages": { "eventor-contact": "" },
 	"filters": {
 		"text": {
 			"option_eventor_contact_subject_error_message":"20",
