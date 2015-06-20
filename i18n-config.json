@@ -110,7 +110,14 @@
 	},
 	"js-exec":{"nav-menus-exec":{"src":"./admin/js/nav-menus-exec.min.js"}}
 }
-},
+,
+"all-pages":{
+	"filters":{
+		"text":{ "admin_title":"20" }
+	}
+}
+}
+,
 "front-config":{
 "all-pages":{
 	"filters":{
@@ -131,8 +138,9 @@
 			"cat_row":"0",
 			"cat_rows":"0",
 			"wp_get_object_terms":"0",
-			"single_tag_title":"0",
 			"single_cat_title":"0",
+			"single_tag_title":"0",
+			"single_term_title":"0",
 			"the_category":"0",
 			"get_term":"0",
 			"get_terms":"0",
@@ -141,19 +149,19 @@
 		"url":{
 			"author_feed_link":"10",
 			"author_link":"10",
-			"day_link":"10",
 			"get_comment_author_url_link":"10",
+			"post_comments_feed_link":"10",
+			"day_link":"10",
 			"month_link":"10",
+			"year_link":"10",
 			"page_link":"10",
 			"post_link":"10",
-			"year_link":"10",
 			"category_link":"10",
 			"category_feed_link":"10",
 			"tag_link":"10",
 			"term_link":"10",
 			"the_permalink":"10",
 			"feed_link":"10",
-			"post_comments_feed_link":"10",
 			"tag_feed_link":"10"
 		}
 	}
