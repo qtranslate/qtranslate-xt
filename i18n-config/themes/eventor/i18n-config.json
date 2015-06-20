@@ -55,7 +55,7 @@
 "eventor-messages": {
 	"filters": {
 		"text": {
-			"option_eventor_general_footer_copy":"20"
+			"option_eventor_general_footer_copy":"20",
 			"option_eventor_contact_subject":"20",
 			"option_eventor_contact_marker_title":"20",
 			"option_eventor_contact_subject_error_message":"20",
@@ -66,7 +66,7 @@
 			"option_eventor_contact_message_unsuccessful":"20",
 			"option_eventor_contact_phone_error":"20",
 			"option_eventor_contact_date_error":"20",
-			"option_eventor_contact_doctor_error":"20",
+			"option_eventor_contact_doctor_error":"20"
 		}
 	}
 }
