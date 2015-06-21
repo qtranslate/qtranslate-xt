@@ -10,9 +10,15 @@
 				"excerpt":{},
 				"attachment_caption":{},
 				"attachment_alt":{},
+				"view-post-btn":{"encode":"display"},
 				"wp-editor-area":{"jquery":".wp-editor-area"},
 				"gallery-caption":{"jquery":".gallery-caption", "encode":"none"},
 				"wp-caption-text":{"jquery":".wp-caption-text", "encode":"display"}
+			}
+		},
+		"wpbody-content":{
+			"fields":{
+				"wrap-h2":{"jquery":".wrap>h2", "encode":"display"}
 			}
 		}
 	},
