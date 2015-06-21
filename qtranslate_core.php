@@ -3,7 +3,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 function qtranxf_init_language() {
 	global $q_config, $pagenow;
-	//qtranxf_dbg_log('qtranxf_init_language: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
+	//qtranxf_dbg_log('"plugins_loaded(2)": qtranxf_init_language: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
 
 	//if(defined('QTRANS_INIT')){
 	//	//qtranxf_dbg_log('qtranxf_init_language: QTRANS_INIT: url_info: ',$q_config['url_info']);
@@ -456,8 +456,10 @@ function qtranxf_load_option_qtrans_compatibility(){
  * @since 3.4
 */
 function qtranxf_init() {
-	//qtranxf_dbg_log('qtranxf_init: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
+	//qtranxf_dbg_log('"init": qtranxf_init: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
 }
+add_action('init', 'qtranxf_init');//user is authenticated
+
 /* //use action 'init' in front-end and/or action 'admin_init' admin-end accordingly
  * Response to action 'init', which runs after user is authenticated
  * /
@@ -480,7 +482,6 @@ function qtranxf_init() {
 	//allow other plugins to initialize whatever they need for qTranslate
 	do_action('qtranslate_init');
 }
-add_action('init', 'qtranxf_init');//user is authenticated
 */
 
 function qtranxf_front_header_css_default(){
@@ -594,6 +595,7 @@ function qtranxf_load_option_func($nm, $opn=null, $func=null) {
 
 function qtranxf_is_permalink_structure_query(){
 	$permalink_structure = get_option('permalink_structure');
+	//qtranxf_dbg_echo('qtranxf_is_permalink_structure_query: ', $permalink_structure);
 	return empty($permalink_structure)||strpos($permalink_structure, '?')!==false||strpos($permalink_structure, 'index.php')!==false;
 }
 
@@ -949,10 +951,12 @@ function qtranxf_url_set_language($urlinfo,$lang,$showLanguage) {
 				qtranxf_add_query_arg($urlinfo['query'],'lang='.$lang);
 				break;
 			default:
-				$urlinfo = apply_filters('qtranslate_url_set_language',$urlinfo,$lang,$url_mode);
+				//$urlinfo = apply_filters('qtranslate_url_set_language',$urlinfo,$lang,$url_mode);
 				break;
 		}
+		$urlinfo = apply_filters('qtranslate_url_set_language',$urlinfo,$lang,$url_mode);
 	}
+
 
 	// see if cookies are activated
 	if( !$showLanguage//there still no language information in the converted URL
@@ -1223,65 +1227,6 @@ function qtranxf_split_languages($blocks) {
 	}
 	return $result;
 }
-
-/*
-function qtranxf_split($text, $quicktags = true) {
-	global $q_config;
-	//init vars
-	$split_regex = "#(<!--[^-]*-->|\[:[a-z]{2}\])#ism";
-	//$split_regex = "#(<!--:[[a-z]{2}]?-->|\[:[a-z]{2}\])#ism";
-	$current_language = "";
-	$result = array();
-	foreach($q_config['enabled_languages'] as $language) {
-		$result[$language] = "";
-	}
-
-	// split text at all xml comments
-	$blocks = preg_split($split_regex, $text, -1, PREG_SPLIT_NO_EMPTY|PREG_SPLIT_DELIM_CAPTURE);
-	foreach($blocks as $block) {
-		# detect language tags
-		if(preg_match("#^<!--:([a-z]{2})-->$#ism", $block, $matches)) {
-			if(qtranxf_isEnabled($matches[1])) {
-				$current_language = $matches[1];
-			} else {
-				$current_language = "invalid";
-			}
-			continue;
-		// detect quicktags
-		} elseif($quicktags && preg_match("#^\[:([a-z]{2})\]$#ism", $block, $matches)) {
-			if(qtranxf_isEnabled($matches[1])) {
-				$current_language = $matches[1];
-			} else {
-				$current_language = "invalid";
-			}
-			continue;
-		// detect ending tags
-		} elseif(preg_match("#^<!--:-->$#ism", $block, $matches)) {
-			$current_language = "";
-			continue;
-		// detect defective more tag
-		//} elseif(preg_match("#^<!--more-->$#ism", $block, $matches)) {
-		//	foreach($q_config['enabled_languages'] as $language) {
-		//		$result[$language] .= $block;
-		//	}
-		//	continue;
-		}
-		// correctly categorize text block
-		if($current_language == "") {
-			// general block, add to all languages
-			foreach($q_config['enabled_languages'] as $language) {
-				$result[$language] .= $block;
-			}
-		} elseif($current_language != "invalid") {
-			// specific block, only add to active language
-			$result[$current_language] .= $block;
-		}
-	}
-	//foreach($result as $lang => $lang_content) {
-	//	$result[$lang] = preg_replace("#(<!--more-->|<!--nextpage-->)+$#ism","",$lang_content);
-	//}
-	return $result;
-}// */
 
 // not in use? QTranslate META calls 'qtrans_join' - added to compatibility
 //function qtranxf_join($texts) {

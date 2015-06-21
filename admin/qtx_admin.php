@@ -34,8 +34,36 @@ function qtranxf_collect_translations( &$qfields, &$request, $edit_lang ) {
 	}
 }
 
+function qtranxf_regroup_translations( &$qfields, &$request, $edit_lang, $default_lang ) {
+	if(isset($qfields['qtranslate-original-value'])){
+		$qfields[$edit_lang] = $request;
+		if($default_lang != $edit_lang){
+			$request = $qfields[$default_lang];
+		}
+	}else{
+		foreach($qfields as $nm => &$vals){
+			qtranxf_regroup_translations($vals,$request[$nm],$edit_lang,$default_lang); // recursive call
+		}
+	}
+}
+
+function qtranxf_regroup_translations_for( $type, $edit_lang, $default_lang ) {
+	if(!isset($_REQUEST[$type])) return;
+	foreach($_REQUEST[$type] as $nm => &$qfields){
+		qtranxf_regroup_translations($qfields,$_REQUEST[$nm],$edit_lang,$default_lang);
+		if(isset($_POST[$nm])){
+			$_POST[$nm] = $_REQUEST[$nm];
+			$_POST[$type][$nm] = $_REQUEST[$type][$nm];
+		}
+		if(isset($_GET[$nm])){
+			$_GET[$nm] = $_REQUEST[$nm];
+			$_GET[$type][$nm] = $_REQUEST[$type][$nm];
+		}
+	}
+}
+
 function qtranxf_collect_translations_posted() {
-	//qtranxf_dbg_log('qtranxf_collect_translations_posted: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
+	//qtranxf_dbg_log('"plugins_loaded(5)": qtranxf_collect_translations_posted: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
 	//qtranxf_dbg_log('qtranxf_collect_translations_posted: REQUEST: ', $_REQUEST);
 	//qtranxf_dbg_log('qtranxf_collect_translations_posted: POST: ', $_POST);
 	$edit_lang = null;
@@ -53,6 +81,7 @@ function qtranxf_collect_translations_posted() {
 		unset($_POST['qtranslate-fields']);
 		unset($_GET['qtranslate-fields']);
 	}
+
 	if(defined('DOING_AJAX') && DOING_AJAX){
 		//parse variables collected as a query string in an option
 		foreach($_REQUEST as $nm => $val){
@@ -74,33 +103,23 @@ function qtranxf_collect_translations_posted() {
 			if(isset($_GET[$nm]) ) $_GET [$nm] = $q;
 		}
 	}
-	if(isset($_REQUEST['qtranslate-slugs'])){
+
+	if(isset($_REQUEST['qtranslate-slugs']) || isset($_REQUEST['qtranslate-terms'])){
 		//ensure REQUEST has the value of the default language
-		//multilingual slug values will be processed later
+		//multilingual slug/term values will be processed later
 		if(!$edit_lang) $edit_lang = qtranxf_getLanguageEdit();
 		global $q_config;
-		$default_lang = $q_config['default_language'];
-		if($default_lang != $edit_lang){
-			foreach($_REQUEST['qtranslate-slugs'] as $nm => $val){
-				$_REQUEST['qtranslate-slugs'][$nm][$edit_lang] = $_REQUEST[$nm];
-				$_REQUEST[$nm] = $val[$default_lang];
-				if(isset($_POST[$nm])){
-					$_POST[$nm] = $_REQUEST[$nm];
-					$_POST['qtranslate-slugs'][$nm][$edit_lang] = $_REQUEST['qtranslate-slugs'][$nm][$edit_lang];
-				}
-				if(isset($_GET[$nm])){
-					$_GET[$nm] = $_REQUEST[$nm];
-					$_GET['qtranslate-slugs'][$nm][$edit_lang] = $_REQUEST['qtranslate-slugs'][$nm][$edit_lang];
-				}
-			}
-		}
+		$default_language = $q_config['default_language'];
+		$default_lang = qtranxf_getLanguage();
+		qtranxf_regroup_translations_for('qtranslate-terms', $edit_lang, $default_lang);
+		qtranxf_regroup_translations_for('qtranslate-slugs', $edit_lang, $default_lang);
 	}
 }
 add_action('plugins_loaded', 'qtranxf_collect_translations_posted', 5);
 
 function qtranxf_admin_init(){
 	global $q_config, $pagenow;
-	//qtranxf_dbg_log('qtranxf_admin_init: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
+	//qtranxf_dbg_log('"admin_init": qtranxf_admin_init: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
 	qtranxf_admin_loadConfig();
 
 	add_action('admin_notices', 'qtranxf_admin_notices_config');
@@ -139,6 +158,7 @@ function qtranxf_admin_init(){
 	if(current_user_can('manage_categories')){
 		//qtranxf_updateTermLibrary();
 		qtranxf_updateTermLibraryJoin();
+		//qtranxf_updateSlug();
 	}
 
 	$page_configs = qtranxf_get_admin_page_config();
@@ -224,6 +244,8 @@ function qtranxf_get_admin_page_config_post_type($post_type) {
 	}
 	//qtranxf_dbg_log('qtranxf_get_admin_page_config_post_type: $page_config: ', $page_config);
 
+	unset($page_config['filters']);
+
 	if(!empty($page_config)){
 		//clean up empty items
 		if(!empty($page_config['forms'])){
@@ -304,7 +326,7 @@ function qtranxf_get_admin_page_config_post_type($post_type) {
 	 * @param (string) $post_type type of post serving on the current page, or null if not applicable.
 	 */
 	//$page_config = apply_filters('i18n_admin_page_config', $page_config, $pagenow, $url_query, $post_type);
-	//qtranxf_dbg_log('qtranxf_get_admin_page_config: $pagenow='.$pagenow.'; $url_query='.$url_query.'; $post_type='.$post_type.'; $page_config: ',qtranxf_json_encode($page_config));
+	//qtranxf_dbg_log('qtranxf_get_admin_page_config_post_type: $pagenow='.$pagenow.'; $url_query='.$url_query.'; $post_type='.$post_type.'; $page_config: ',qtranxf_json_encode($page_config));
 	qtranxf_write_config_log($page_config, '', $pagenow, '', $post_type);
 	return $page_config;
 }
@@ -474,7 +496,7 @@ function qtranxf_add_admin_css () {
 }
 
 function qtranxf_admin_head() {
-	//qtranxf_dbg_log('qtranxf_admin_head:');
+	//qtranxf_dbg_log('"admin_head": qtranxf_admin_head: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
 	//wp_enqueue_script( 'jquery' );
 	//qtranxf_add_css();//Since 3.2.5 no longer needed
 	qtranxf_add_admin_css();
@@ -499,12 +521,36 @@ function qtranxf_settings_page() {
 	qtranxf_conf();
 }
 
-/* qTranslate-X Management Interface */
-function qtranxf_adminMenu() {
-	//global $menu, $submenu, $q_config;
-	//qtranxf_dbg_log('qtranxf_adminMenu: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
+/**
+ * @since 3.3.8.7
+ */
+function qtranxf_translate_menu(&$m) {
+	global $q_config;
+	$lang = $q_config['language'];
+	foreach($m as $k => &$item){
+		if(empty($item[0])) continue;
+		$item[0] = qtranxf_use_language($lang,$item[0]);
+	}
+}
+
+/**
+ * Adds qTranslate-X Management Interface and translates admin menu.
+ */
+function qtranxf_admin_menu() {
+	global $menu, $submenu;
+	if(!empty($menu)){
+		qtranxf_translate_menu($menu);
+	}
+	if(!empty($submenu)){
+		foreach($submenu as $k => $m){
+			qtranxf_translate_menu($submenu[$k]);
+		}
+	}
+	//qtranxf_dbg_log('"admin_menu": qtranxf_admin_menu: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
 	// Configuration Page
 	add_options_page(__('Language Management', 'qtranslate'), __('Languages', 'qtranslate'), 'manage_options', 'qtranslate-x', 'qtranxf_settings_page'); // returns 'settings_page_qtranslate-x'
+	//qtranxf_dbg_log('qtranxf_admin_menu: $menu: ', $menu);
+	//qtranxf_dbg_log('qtranxf_admin_menu: $submenu: ', $submenu);
 }
 
 /* Add a metabox in admin menu page */
@@ -664,6 +710,7 @@ function qtranxf_admin_notices_config() {
 
 
 add_action('admin_head-nav-menus.php', 'qtranxf_add_nav_menu_metabox');
-add_action('admin_menu', 'qtranxf_adminMenu');
+add_action('admin_menu', 'qtranxf_admin_menu', 999);
 add_action('admin_bar_menu', 'qtranxf_add_language_menu', 999);
-add_action('wp_before_admin_bar_render', 'qtranxf_fixAdminBar');
+add_action('wp_before_admin_bar_render', 'qtranxf_before_admin_bar_render');
+//add_action('wp_after_admin_bar_render', 'qtranxf_after_admin_bar_render' );

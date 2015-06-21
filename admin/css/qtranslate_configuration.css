@@ -96,3 +96,7 @@
 .qtranxs_notes, .form-table td p.qtranxs_notes, .form-wrap p.qtranxs_notes{
 	font-size: smaller;
 }
+
+.qtranxs_option_group {
+	text-decoration: underline;
+}

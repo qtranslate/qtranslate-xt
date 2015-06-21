@@ -38,7 +38,6 @@ function co(t,o){ ++cc; console.log('== '+cc+': '+t+'%o',o); }
 qtranxj_get_split_blocks = function(text)
 {
 	var split_regex = /(<!--:[a-z]{2}-->|<!--:-->|\[:[a-z]{2}\]|\[:\]|\{:[a-z]{2}\}|\{:\})/gi; // @since 3.3.6 swirly brackets
-	//var split_regex = /(<!--:[a-z]{2}-->|<!--:-->|\[:[a-z]{2}\]|\[:\])/gi;
 	return text.xsplit(split_regex);
 }
 
@@ -188,7 +187,6 @@ var qTranslateX=function(pg)
 {
 	var qtx = this;
 	qTranslateConfig.qtx = this;
-	//this.ge=function(id){ return document.getElementById(id); }
 
 	/**
 	 * Designed as interface for other plugin integration. The documentation is available at
@@ -222,13 +220,6 @@ var qTranslateX=function(pg)
 	 * Such data is preserved and re-saved until user deletes it manually.
 	 */
 	this.isLanguageEnabled=function(lang){ return !!qTranslateConfig.language_config[lang]; }
-	//this.isLanguageEnabled=function(lang)
-	//{
-	//	for(var i=0; i<qTranslateConfig.enabled_languages.length; ++i){
-	//		if(qTranslateConfig.enabled_languages[i]==lang) return true;
-	//	}
-	//	return false;
-	//}
 
 	var setLangCookie=function(lang) { document.cookie='qtrans_edit_language='+lang; }
 
@@ -268,27 +259,12 @@ var qTranslateX=function(pg)
 	var contentHooks={};
 	var contentHookId = 0;
 
-/* since 3.2.9.8 - h.contents -> h.fields
-	updateFusedValueHooked=function(h)
-	{
-		switch(h.separator){
-			case '<': h.mlContentField.value = qtranxj_join_c(h.contents); break;
-			case 'byline': h.mlContentField.value = qtranxj_join_byline(h.contents); break;
-			case '[':
-			default: h.mlContentField.value = qtranxj_join_b(h.contents); break;
-		}
-		//c('updateFusedValueHooked['+h.mce.id+'] text:'+h.mlContentField.value);
-	}
-*/
-
 	var updateFusedValueH=function(id,value)
 	{
-		var h=contentHooks[id];
-		var text=value.trim();
+		var h = contentHooks[id];
+		var text = value.trim();
 		//c('updateFusedValueH['+id+'] lang='+h.lang+'; text:'+text);
-		//h.contents[h.lang]=text;
-		h.fields[h.lang].value=text;
-		//updateFusedValueHooked(h);
+		h.fields[h.lang].value = text;
 	}
 
 	/**
@@ -305,10 +281,10 @@ var qTranslateX=function(pg)
 	 *
 	 * @since 3.3.2
 	 */
-	this.addContentHook=function(inpField,separator,field_name)
+	this.addContentHook=function(inpField,encode,field_name)
 	{
 		//co('addContentHook: inpField:',inpField);
-		//co('addContentHook: separator:',separator);
+		//co('addContentHook: encode:',encode);
 		if( !inpField ) return false;
 		switch(inpField.tagName){
 			case 'TEXTAREA': break;
@@ -344,16 +320,17 @@ var qTranslateX=function(pg)
 		                        //inpField.tagName
 		inpField.value = contents[h.lang];
 		var qtx_prefix;
-		if(separator){
-			switch(separator){
+		if(encode){
+			switch(encode){
 				case 'slug': qtx_prefix = 'qtranslate-slugs['; break;
+				case 'term': qtx_prefix = 'qtranslate-terms['; break;
 				default: qtx_prefix = 'qtranslate-fields['; break;
 			}
 		}else{
 			//if(inpField.tagName==='TEXTAREA')
-			//	separator='<';
+			//	encode='<';
 			//else
-			separator = '[';//since 3.1 we get rid of <--:--> encoding
+			encode = '[';//since 3.1 we get rid of <--:--> encoding
 			qtx_prefix = 'qtranslate-fields[';
 		}
 
@@ -381,11 +358,15 @@ var qTranslateX=function(pg)
 		}
 		
 		// since 3.2.9.8 - h.contents -> h.fields
-		if(separator != 'slug'){
-			h.sepfield = qtranxj_ce('input', {name: bfnm+'[qtranslate-separator]', type: 'hidden', className: 'hidden', value: separator });
-			inpField.parentNode.insertBefore(h.sepfield,inpField);
+		// since 3.3.8.7 - slug & term
+		switch(encode){
+			case 'slug':
+			case 'term':
+				h.sepfield = qtranxj_ce('input', {name: bfnm+'[qtranslate-original-value]', type: 'hidden', className: 'hidden', value: contents[qTranslateConfig.default_language] }); break;
+			default: h.sepfield = qtranxj_ce('input', {name: bfnm+'[qtranslate-separator]', type: 'hidden', className: 'hidden', value: encode }); break;
 		}
-		h.separator=separator;
+		inpField.parentNode.insertBefore(h.sepfield,inpField);
+		h.encode=encode;
 
 		/**
 		 * Highlighting the translatable fields
@@ -736,6 +717,24 @@ var qTranslateX=function(pg)
 	}
 
 	/**
+	 * adds translatable hooks for fields marked with classes
+	 * i18n-multilingual
+	 * i18n-multilingual-curly
+	 * i18n-multilingual-term
+	 * i18n-multilingual-slug
+	 * i18n-multilingual-display
+	 * @since 3.4
+	*/
+	var addMultilingualHooks=function($)
+	{
+		$('.i18n-multilingual').each(function(i,e){ qtx.addContentHook(e,'['); });
+		$('.i18n-multilingual-curly').each(function(i,e){ qtx.addContentHook(e,'{'); });
+		$('.i18n-multilingual-term').each(function(i,e){ qtx.addContentHook(e,'term'); });
+		$('.i18n-multilingual-slug').each(function(i,e){ qtx.addContentHook(e,'slug'); });
+		$('.i18n-multilingual-display').each(function(i,e){ qtx.addDisplayHook(e); });
+	}
+
+	/**
 	 * Parses page configuration, loaded in qtranxf_get_admin_page_config_post_type.
 	 * @since 3.1-b2
 	*/
@@ -766,10 +765,9 @@ var qTranslateX=function(pg)
 			}
 			//co('form=',form);
 			//c('frm.fields.length='+frm.fields.length);
-			//for(var f=0; f < frm.fields.length; ++f){
-			//	var fld = frm.fields[f];
 			for(var handle in frm.fields){
 				var fld = frm.fields[handle];
+				//co('fld['+handle+']: ',fld);
 				//c('encode='+fld.encode);
 				//c('id='+fld.id);
 				//c('class='+fld.class);
@@ -804,7 +802,7 @@ var qTranslateX=function(pg)
 						break;
 					case '['://b - bracket
 					case '<'://c - comment
-					case '{'://s - swirly bracket
+					case '{'://s - swirly/curly bracket
 					case 'byline':
 					default:
 						if(fld.jquery){
@@ -826,137 +824,6 @@ var qTranslateX=function(pg)
 			}
 		}
 	}
-/*
-	var addPageHooks=function(page_config_forms)
-	{
-		for(var p=0; p < page_config_forms.length; ++p){
-			var frm = page_config_forms[p];
-			var form;
-			if(frm.form){
-				if(frm.form.id){
-					form = document.getElementById(frm.form.id);
-				}else if(frm.form.jquery){
-					form = $(frm.form.jquery);
-				}else if(frm.form.name){
-					var elms = document.getElementsByName(frm.form.name);
-					if(elms && elms.length){
-						form = elms[0];
-					//}else{
-					//	alert('qTranslate-X misconfiguraton: form with name "'+frm.form.name+'" is not found.');
-					}
-				}
-			}else{
-				form = getWrapForm();
-			}
-			//co('form=',form);
-			//c('frm.fields.length='+frm.fields.length);
-			for(var f=0; f < frm.fields.length; ++f){
-				var fld = frm.fields[f];
-				//c('encode='+fld.encode);
-				//c('id='+fld.id);
-				//c('class='+fld.class);
-				var containers=[];
-				if(fld.container_id){
-					var container = document.getElementById(fld.container_id);
-					if(container) containers.push(container);
-				}else if(fld.container_jquery){
-					containers = $(fld.container_jquery);
-				}else if(fld.container_class){
-					containers = document.getElementsByClassName(fld.container_class);
-				}else if(form){
-					containers.push(form);
-				}
-				var sep = fld.encode;
-				switch( sep ){
-					case 'display':
-						if(fld.id){
-							//co('addPageHooks:display: id=',fld.id);
-							qtx.addDisplayHook(document.getElementById(fld.id));
-						}else if(fld.jquery){
-							for(var i=0; i < containers.length; ++i){
-								var container = containers[i];
-								//$(container).find(fld.jquery).each(function(i,e){qtx.addDisplayHook(e);});//also ok
-								var fields = jQuery(container).find(fld.jquery);
-								//co('addPageHooks:display: jquery='+fld.jquery+': fields.length=',fields.length);
-								qtx.addDisplayHooks(fields);
-							}
-						}else if(fld.class){
-							//co('addPageHooks: display: class='+fld.class+'; fld.tag='+fld.tag+'; containers: ',containers);
-							//c('class='+fld.class+'; containers.length='+containers.length);
-							for(var i=0; i < containers.length; ++i){
-								var container = containers[i];
-								var fields=container.getElementsByClassName(fld.class);
-								for(var j=0; j<fields.length; ++j){
-									var field=fields[j];
-									//c('field.tagName='+field.tagName);
-									if(fld.tag && fld.tag != field.tagName) continue;
-									qtx.addDisplayHook(field);
-								}
-								//this.addDisplayHooksByClass(fld.class,container);
-							}
-						}else if(fld.tag){
-							//co('addPageHooks: display: fld.tag='+fld.tag+'; containers: ',containers);
-							//c('tag='+fld.tag+'; containers.length='+containers.length);
-							for(var i=0; i < containers.length; ++i){
-								var container = containers[i];
-								//co('container=',container);
-								var elems=container.getElementsByTagName(fld.tag);
-								//co('elems=',elems);
-								qtx.addDisplayHooks(elems);
-							}
-						}else{
-							continue;
-						}
-						break;
-					case '[':
-					case '<':
-					case 'byline':
-					default:
-						if(!form) continue;
-						if(fld.id){
-							//co('addPageHooks:content: id=',fld.id);
-							qtx.addContentHookById(fld.id,sep);
-						}else if(fld.jquery){
-							for(var i=0; i < containers.length; ++i){
-								var container = containers[i];
-								//jQuery(container).find(fld.jquery).each(function(i,e){qtx.addContentHook(e,sep);});//also works
-								//co('addPageHooks:content: jquery='+fld.jquery+': container=',container);
-								var fields = jQuery(container).find(fld.jquery);
-								//co('addPageHooks:content: jquery='+fld.jquery+': fields.length=',fields.length);
-								qtx.addContentHooks(fields,sep);
-							}
-						}else if(fld.class){
-							//co('addPageHooks: content: class='+fld.class+'; fld.tag='+fld.tag+'; containers: ',containers);
-							for(var i=0; i < containers.length; ++i){
-								var container = containers[i];
-								var fields=container.getElementsByClassName(fld.class);
-								for(var j=0; j<fields.length; ++j){
-									var field=fields[j];
-									if(fld.tag && fld.tag != field.tagName) continue;
-									if(fld.name && (!field.name || fld.name != field.name)) continue;
-									qtx.addContentHook(field,sep);
-								}
-							}
-						}else if(fld.tag){
-							//co('addPageHooks: content: fld.tag='+fld.tag+'; containers: ',containers);
-							for(var i=0; i < containers.length; ++i){
-								var container = containers[i];
-								var fields=container.getElementsByTagName(fld.tag);
-								for(var j=0; j<fields.length; ++j){
-									var field=fields[j];
-									if(fld.name && (!field.name || fld.name != field.name)) continue;
-									qtx.addContentHook(field,sep);
-								}
-							}
-						}else{
-							continue;
-						}
-						break;
-				}
-			}
-		}
-	}
-*/
 
 	var addContentHooksTinyMCE=function()
 	{
@@ -1182,11 +1049,14 @@ var qTranslateX=function(pg)
 	if( qTranslateConfig.page_config && qTranslateConfig.page_config.forms)
 		addPageHooks(qTranslateConfig.page_config.forms);
 
+	addMultilingualHooks(jQuery);
+
 	if(!displayHookNodes.length && !displayHookAttrs.length){
 		var ok = false;
 		for(var key in contentHooks){ ok = true; break; }
-		if(!ok)
+		if(!ok){
 			return;
+		}
 	}
 
 	/**

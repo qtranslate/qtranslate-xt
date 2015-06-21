@@ -109,6 +109,8 @@ Developers: please drop new topics here, the text will be moved to [qTranslate-X
 * Enhancement: update option 'Configuration Files' on theme switch.
 * Enhancement: search for i18n-config.json files under active theme, plugins and `qtranslate-x/i18n-config` folder.
 * Enhancement: more on error handling.
+* Enhancement: translation of admin menu.
+* Enhancement: display translation of h2 titles on post.php (for custom types).
 
 ### 3.3.7 ###
 * Feature: finalizing [Integration Framework](https://qtranslatexteam.wordpress.com/integration/).

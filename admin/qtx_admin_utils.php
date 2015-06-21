@@ -217,37 +217,30 @@ function qtranxf_convert_database($action){
 
 function qtranxf_convert_database_options($action){
 	global $wpdb;
+	$wpdb->show_errors();
 	$result = $wpdb->get_results('SELECT option_id, option_value FROM '.$wpdb->options);
 	if(!$result) return;
 	switch($action){
 		case 'b_only':
 			foreach($result as $row) {
 				if(!qtranxf_isMultilingual($row->option_value)) continue;
-				//if(!preg_match('/(<!--:[a-z]{2}-->|\[:[a-z]{2}\])/im',$row->option_value)) continue;
 				$value = maybe_unserialize($row->option_value);
 				$value_converted=qtranxf_convert_to_b_deep($value);
 				$value_serialized = maybe_serialize($value_converted);
 				if($value_serialized === $row->option_value) continue;
 				//Since 3.2-b3: Replaced mysql_real_escape_string with $wpdb->prepare
 				$wpdb->query($wpdb->prepare('UPDATE '.$wpdb->options.' set option_value = %s WHERE option_id = %d', $value_serialized, $row->option_id));
-				//Old Line:
-				//$wpdb->query('UPDATE '.$wpdb->options.' set option_value = "'.mysql_real_escape_string($value_serialized).'" WHERE option_id='.$row->option_id);
-				//End Changes
 			}
 			break;
 		case 'c_dual':
 			foreach($result as $row) {
 				if(!qtranxf_isMultilingual($row->option_value)) continue;
-				//if(!preg_match('/(<!--:[a-z]{2}-->|\[:[a-z]{2}\])/im',$row->option_value)) continue;
 				$value = maybe_unserialize($row->option_value);
 				$value_converted=qtranxf_convert_to_b_no_closing_deep($value);
 				$value_serialized = maybe_serialize($value_converted);
 				if($value_serialized === $row->option_value) continue;
 				//Since 3.2-b3: Replaced mysql_real_escape_string with $wpdb->prepare
 				$wpdb->query($wpdb->prepare('UPDATE '.$wpdb->options.' set option_value = %s WHERE option_id = %d', $value_serialized, $row->option_id));
-				//Old Line:
-				//$wpdb->query('UPDATE '.$wpdb->options.' set option_value = "'.mysql_real_escape_string($value_serialized).'" WHERE option_id='.$row->option_id);
-				//End Changes
 			}
 			break;
 		default: break;
@@ -293,25 +286,21 @@ function qtranxf_convert_database_postmeta($action){
 		case 'b_only':
 			foreach($result as $row) {
 				if(!qtranxf_isMultilingual($row->meta_value)) continue;
-				//if(!preg_match('/(<!--:[a-z]{2}-->|\[:[a-z]{2}\])/im',$row->meta_value)) continue;
 				$value = maybe_unserialize($row->meta_value);
 				$value_converted=qtranxf_convert_to_b_deep($value);
 				$value_serialized = maybe_serialize($value_converted);
 				if($value_serialized === $row->meta_value) continue;
 				$wpdb->query($wpdb->prepare('UPDATE '.$wpdb->postmeta.' set meta_value = %s WHERE meta_id = %d', $value_serialized, $row->meta_id));
-				//$wpdb->query('UPDATE '.$wpdb->postmeta.' set meta_value = "'.mysql_real_escape_string($value_serialized).'" WHERE meta_id='.$row->meta_id);
 			}
 			break;
 		case 'c_dual':
 			foreach($result as $row) {
 				if(!qtranxf_isMultilingual($row->meta_value)) continue;
-				//if(!preg_match('/(<!--:[a-z]{2}-->|\[:[a-z]{2}\])/im',$row->meta_value)) continue;
 				$value = maybe_unserialize($row->meta_value);
 				$value_converted=qtranxf_convert_to_b_no_closing_deep($value);
 				$value_serialized = maybe_serialize($value_converted);
 				if($value_serialized === $row->meta_value) continue;
 				$wpdb->query($wpdb->prepare('UPDATE '.$wpdb->postmeta.' set meta_value = %s WHERE meta_id = %d', $value_serialized, $row->meta_id));
-				//$wpdb->query('UPDATE '.$wpdb->postmeta.' set meta_value = "'.mysql_real_escape_string($value_serialized).'" WHERE meta_id='.$row->meta_id);
 			}
 			break;
 		default: break;
@@ -469,6 +458,11 @@ function qtranxf_updateTermLibraryJoin() {
 	update_option('qtranslate_term_name',$q_config['term_name']);
 }
 
+function qtranxf_updateTranslations($type) {
+	global $q_config;
+	if(!isset($_POST[$type])) return;
+}
+
 /*
 function qtranxf_edit_terms($term_id, $taxonomy){
 	//qtranxf_dbg_log('qtranxf_edit_terms: $name='.$name);
@@ -574,16 +568,27 @@ function qtranxf_fetch_file_selection($dir,$suffix='.css'){
 	return $files;
 }
 
-function qtranxf_fixAdminBar($wp_admin_bar) {
-	global $wp_admin_bar;
+/*
+ * former qtranxf_fixAdminBar($wp_admin_bar)
+ */
+function qtranxf_before_admin_bar_render() {
+	global $wp_admin_bar, $q_config;
 	if(!isset($wp_admin_bar)) return;
-	$nodes=$wp_admin_bar->get_nodes();
-	//qtranxf_dbg_echo('$nodes:',$nodes);
+	$nodes = $wp_admin_bar->get_nodes();
+	//qtranxf_dbg_log('qtranxf_before_admin_bar_render: $nodes:', $nodes);
 	if(!isset($nodes)) return;//sometimes $nodes is NULL
+	$lang = $q_config['language'];
 	foreach($nodes as $node) {
-		$wp_admin_bar->add_node(qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($node));
+		//$nd = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($node);
+		$nd = qtranxf_use($lang,$node);
+		$wp_admin_bar->add_node($nd);
 	}
+	//qtranxf_dbg_log('qtranxf_before_admin_bar_render: $wp_admin_bar:', $wp_admin_bar);
 }
+
+//function qtranxf_after_admin_bar_render() {
+//	global $wp_admin_bar;
+//}
 
 function qtranxf_admin_list_cats($text) {
 	global $pagenow;
@@ -677,8 +682,8 @@ function qtranxf_the_editor($editor_div)
 	return $editor_div;
 }
 
-function qtranxf_filter_options_general($value)
-{
+/* @since 3.3.8.7 use filter 'admin_title' instead
+function qtranxf_filter_options_general($value){
 	global $q_config;
 	global $pagenow;
 	switch($pagenow){
@@ -692,6 +697,7 @@ function qtranxf_filter_options_general($value)
 }
 add_filter('option_blogname', 'qtranxf_filter_options_general');
 add_filter('option_blogdescription', 'qtranxf_filter_options_general');
+*/
 
 function qtranxf_updateGettextDatabases($force = false, $only_for_language = '') {
 	require_once(QTRANSLATE_DIR.'/admin/qtx_update_gettext_db.php');

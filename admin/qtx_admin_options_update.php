@@ -512,7 +512,6 @@ function qtranxf_updateSetting($var, $type = QTX_STRING, $def = null) {
  */
 function qtranxf_update_i18n_config(){
 	global $q_config;
-	//qtranxf_dbg_log('qtranxf_update_i18n_config: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
 	$json_files = $q_config['config_files'];
 	$custom_i18n_config = $q_config['custom_i18n_config'];
 	$cfg = qtranxf_load_config_all($json_files,$custom_i18n_config);

@@ -867,7 +867,7 @@ add_action('admin_notices', 'qtranxf_admin_notices_survey_request');
 
 
 function qtranxf_admin_notices_errors(){
-	//qtranxf_dbg_log('qtranxf_admin_notices_errors: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
+	//qtranxf_dbg_log('"admin_notices": qtranxf_admin_notices_errors: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
 	$msgs = get_option('qtranslate_config_errors');
 	if(!is_array($msgs)) return;
 	foreach($msgs as $key => $msg){

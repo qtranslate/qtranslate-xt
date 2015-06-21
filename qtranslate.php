@@ -3,7 +3,7 @@
 Plugin Name: qTranslate-X
 Plugin URI: http://wordpress.org/plugins/qtranslate-x/
 Description: Adds user-friendly and database-friendly multilingual content support.
-Version: 3.3.8.6
+Version: 3.3.8.7
 Author: qTranslate Team
 Author URI: http://qtranslatexteam.wordpress.com/about
 Tags: multilingual, multi, language, admin, tinymce, Polyglot, bilingual, widget, switcher, professional, human, translation, service, qTranslate, zTranslate, mqTranslate, qTranslate Plus, WPML
@@ -49,8 +49,7 @@ GitHub Branch: master
 	FOTW Flags Of The World website at http://flagspot.net/flags/
 	(http://www.crwflags.com/FOTW/FLAGS/wflags.html)
 */
-/*
-	Default Language Contributors
+/* Default Language Contributors
 	=============================
 	ar by Mohamed Magdy
 	de by Qian Qin
@@ -84,7 +83,7 @@ GitHub Branch: master
 	fr_FR by eriath, Florent
 	hu_HU by Németh Balázs
 	id_ID by Masino Sinaga
-	it_IT by Maurizio Omissoni, shecky
+	it_IT by Simone Montrucchio, Maurizio Omissoni, shecky
 	ja by dapperdanman1400
 	mk_MK by Pavle Boskoski
 	ms_MY by Lorna Timbah, webgrrrl
@@ -117,7 +116,7 @@ if ( ! function_exists( 'add_filter' ) ) {
  * Designed as interface for other plugin integration. The documentation is available at
  * https://qtranslatexteam.wordpress.com/integration/
  */
-define('QTX_VERSION','3.3.8.6');
+define('QTX_VERSION','3.3.8.7');
 
 if ( ! defined( 'QTRANSLATE_FILE' ) ) {
 	define( 'QTRANSLATE_FILE', __FILE__ );
