@@ -12,7 +12,7 @@
 	}
 },
 "eventor-theme-settings-general": {
-	"pages": { "admin.php": "page=theme-settings&tab=general" },
+	"pages": { "admin.php": "page=theme-settings(&updated=true)?&tab=general" },
 	"forms":{
 		"main":{
 			"fields":{
@@ -22,7 +22,7 @@
 	}
 },
 "eventor-theme-settings-home": {
-	"pages": { "admin.php": "page=theme-settings&tab=home" },
+	"pages": { "admin.php": "page=theme-settings(&updated=true)?&tab=home" },
 	"forms":{
 		"main":{
 			"fields":{
@@ -36,7 +36,7 @@
 	}
 },
 "eventor-theme-settings-contact": {
-	"pages": { "admin.php": "page=theme-settings&tab=contact" },
+	"pages": { "admin.php": "page=theme-settings(&updated=true)?&tab=contact" },
 	"forms":{
 		"main":{
 			"fields":{
