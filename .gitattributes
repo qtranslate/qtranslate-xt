@@ -1,8 +1,20 @@
 # Auto detect text files and perform LF normalization
-* text=auto
+* text eol=lf
 
 # Custom for Visual Studio
 *.cs     diff=csharp
+
+*.gif binary
+*.png binary
+*.jpg binary
+
+*.php text
+
+*.css text
+*.js text
+
+*.po text
+*.mo binary
 
 # Standard to msysgit
 *.doc	 diff=astextplain
