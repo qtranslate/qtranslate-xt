@@ -96,7 +96,7 @@
 }
 ,
 "nav-menus":{
-	"pages":{"nav-menus.php":"action=edit|^$"},
+	"pages":{"nav-menus.php":"action=edit|menu=\\d+|^$"},
 	"anchors":{"menu-to-edit":{"where":"before after"}},
 	"forms":{
 		"update-nav-menu":{
