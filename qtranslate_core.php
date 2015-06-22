@@ -97,7 +97,7 @@ function qtranxf_init_language() {
 
 	// load plugin translations
 	// since 3.2-b3 moved it here as https://codex.wordpress.org/Function_Reference/load_plugin_textdomain seem to recommend to run load_plugin_textdomain in 'plugins_loaded' action, which is this function respond to
-	$lang_dir = dirname(plugin_basename( __FILE__ )).'/lang';
+	$lang_dir = qtranxf_plugin_dirname().'/lang';
 	load_plugin_textdomain('qtranslate', false, $lang_dir);
 
 	if($q_config['url_info']['doing_front_end']) {
@@ -501,13 +501,8 @@ function qtranxf_flag_location() {
 }
 
 function qtranxf_flag_location_default() {
-	//$q_config['flag_location'] = 'plugins/qtranslate-x/flags/';
-	//return 'plugins/'.dirname(plugin_basename( __FILE__ )).'/flags/';//need to get rid of 'plugins'
-	//qtranxf_dbg_log('qtranxf_plugin_dirname: ', qtranxf_plugin_dirname());
-	//qtranxf_dbg_log('qtranxf_plugin_dirname_from_wp_content: ', qtranxf_plugin_dirname_from_wp_content());
 	return qtranxf_plugin_dirname_from_wp_content().'/flags/';
 }
-
 
 function qtranxf_load_option_flag_location($nm) {
 	global $q_config;

@@ -21,7 +21,7 @@ function qtranxf_loadfiles_js($jss, $enqueue_script) {
 				wp_enqueue_script( $handle );
 				$deps[] = $handle;
 			}else{
-				$fp = WP_CONTENT_DIR . DIRECTORY_SEPARATOR . $src;
+				$fp = WP_CONTENT_DIR . '/' . $src;
 				readfile($fp);
 			}
 		}

@@ -95,22 +95,27 @@ function qtranxf_add_admin_notice($msg, $kind) {
 function qtranxf_translate_wp($s) { return __($s); }
 
 /**
+ * @since 3.3.8.8
+ */
+function qtranxf_plugin_basename(){
+	static $s;
+	if(!$s){
+		$b = plugin_basename(QTRANSLATE_FILE);
+		$s = basename(dirname($b)).'/'.basename($b);//Windows trick when folder is linked
+	}
+	return $s;
+}
+
+/**
  * @since 3.3.2
  */
 function qtranxf_plugin_dirname(){
 	static $s;
-	if(!$s) $s = dirname(plugin_basename(QTRANSLATE_FILE));
-	return $s;
-/*
-	$path = QTRANSLATE_DIR;
-	while(true){
-		$nm = basename($path);
-		if(strpos($nm,'qtrans')!==false) return $nm;
-		$path = dirname($path);
-		if(empty($path) || $path == '.' || $path == '/' ) break;
+	if(!$s){
+		$b = plugin_basename(QTRANSLATE_FILE);
+		$s = basename(dirname($b));//Windows trick when folder is linked
 	}
-	return 'qtranslate-x';
-*/
+	return $s;
 }
 
 /**

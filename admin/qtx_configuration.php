@@ -137,9 +137,8 @@ function qtranxf_conf() {
 	$clean_uri = $q_config['url_info']['qtranslate-settings-url'];
 	$clean_uri = apply_filters('qtranslate_clean_uri', $clean_uri);
 
-// Generate XHTML
-	$plugindir = dirname(plugin_basename(QTRANSLATE_FILE));
-	$pluginurl=WP_PLUGIN_URL.'/'.$plugindir;
+	// Generate XHTML
+	$pluginurl = plugin_dir_url( QTRANSLATE_FILE );
 /* ?>
 <?php
 	if (!empty($message)) :
@@ -227,8 +226,8 @@ echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 
 						echo '<td><label title="' . $q_config['language_name'][$language] . '"><input type="radio" name="default_language" value="' . $language . '"';
 						checked($language,$q_config['default_language']);
 						echo ' />';
-						echo ' <a href="'.add_query_arg('moveup', $language, $clean_uri).'"><img src="'.$pluginurl.'/arrowup.png" alt="up" /></a>';
-						echo ' <a href="'.add_query_arg('movedown', $language, $clean_uri).'"><img src="'.$pluginurl.'/arrowdown.png" alt="down" /></a>';
+						echo ' <a href="'.add_query_arg('moveup', $language, $clean_uri).'"><img src="'.$pluginurl.'arrowup.png" alt="up" /></a>';
+						echo ' <a href="'.add_query_arg('movedown', $language, $clean_uri).'"><img src="'.$pluginurl.'arrowdown.png" alt="down" /></a>';
 						echo ' <img src="' . $flag_location.$q_config['flag'][$language] . '" alt="' . $q_config['language_name'][$language] . '" /> ';
 						echo ' '.$q_config['language_name'][$language];
 						echo '</label></td>';
