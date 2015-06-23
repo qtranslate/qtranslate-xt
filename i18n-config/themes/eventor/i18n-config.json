@@ -12,7 +12,7 @@
 	}
 },
 "eventor-theme-settings-general": {
-	"pages": { "admin.php": "page=theme-settings(&updated=true)?&tab=general" },
+	"pages": { "admin.php": "page=theme-settings(&updated=true)?(&tab=general|)" },
 	"forms":{
 		"main":{
 			"fields":{
