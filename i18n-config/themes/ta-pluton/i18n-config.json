@@ -1,7 +1,7 @@
 {"vendor":{"themes/ta-pluton":"1.0"},
 "admin-config": {
 	"theme-panel": {
-		"pages": { "admin.php": "page=_options&tab=0" },
+		"pages": { "admin.php": "page=_options&tab=" },
 		"anchors": { "redux_ajax_overlay": {"where": "after"} },
 		"forms": {
 			"redux-form-wrapper":{
@@ -44,9 +44,13 @@
 					"contact_tagline":{},
 					"address":{},
 					"social_title":{},
-					"custom_copyright":{}
+					"custom_copyright":{},
+					"redux-slides-header-display":{"jquery":".redux-slides-header", "encode":"display"}
 				}
 			}
+		},
+		"js-exec": {
+			"redux-slides-header-update":{"javascript":"jQuery(document).ready( function(){ qTranslateConfig.qtx.addLanguageSwitchAfterListener( function(){ jQuery('.slide-title').each(function(i,e){ var t = e.value; if(!t) return; jQuery(e).parents().eq( 3 ).find( '.redux-slides-header' ).text( t ); }); }); });"}
 		}
 	}
 }

@@ -40,7 +40,7 @@ define('TRANSLATE_SHOW_EMPTY', 4);
  *
  *   $term = apply_filters('multilingual_term', $term, $term_default=null, $taxonomy=null);
  *
- * @since 3.3.4
+ * @since 3.4
  */
 interface WP_Translator
 {
