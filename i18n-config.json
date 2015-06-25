@@ -110,7 +110,8 @@
 		},
 		"side-sortables":{
 			"fields":{
-				"label.title":{"jquery":"label.menu-item-title", "encode":"display"}
+				"label.title":{"jquery":"label.menu-item-title", "encode":"display"},
+				"accordion-section-title":{"jquery":"h3.accordion-section-title", "encode":"display"}
 			}
 		}
 	},
