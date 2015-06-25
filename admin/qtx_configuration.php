@@ -451,12 +451,20 @@ echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 
 							<?php _e('Do not highlight the translatable fields.', 'qtranslate') ?>
 						</label><br/>
 						<label title="<?php _e('Show a line on the left border of translatable fields.', 'qtranslate') ?>">
-							<input type="radio" name="highlight_mode" value="<?php echo QTX_HIGHLIGHT_MODE_LEFT_BORDER; ?>" <?php checked($highlight_mode, QTX_HIGHLIGHT_MODE_LEFT_BORDER) ?> />
+							<input type="radio" name="highlight_mode" value="<?php echo QTX_HIGHLIGHT_MODE_BORDER_LEFT; ?>" <?php checked($highlight_mode, QTX_HIGHLIGHT_MODE_BORDER_LEFT) ?> />
 							<?php _e('Show a line on the left border of translatable fields.', 'qtranslate') ?>
 						</label><br/>
 						<label title="<?php _e('Draw a border around translatable fields.', 'qtranslate') ?>">
 							<input type="radio" name="highlight_mode" value="<?php echo QTX_HIGHLIGHT_MODE_BORDER; ?>" <?php checked($highlight_mode, QTX_HIGHLIGHT_MODE_BORDER) ?> />
 							<?php _e('Draw a border around translatable fields.', 'qtranslate') ?>
+						</label><br/>
+						<label title="<?php _e('Show a shadow on the left of translatable fields.', 'qtranslate') ?>">
+							<input type="radio" name="highlight_mode" value="<?php echo QTX_HIGHLIGHT_MODE_LEFT_SHADOW; ?>" <?php checked($highlight_mode, QTX_HIGHLIGHT_MODE_LEFT_SHADOW) ?> />
+							<?php _e('Show a shadow on the left of translatable fields.', 'qtranslate') ?>
+						</label><br/>
+						<label title="<?php _e('Outline border around translatable fields.', 'qtranslate') ?>">
+							<input type="radio" name="highlight_mode" value="<?php echo QTX_HIGHLIGHT_MODE_OUTLINE; ?>" <?php checked($highlight_mode, QTX_HIGHLIGHT_MODE_OUTLINE) ?> />
+							<?php _e('Outline border around translatable fields.', 'qtranslate') ?>
 						</label><br/>
 						<label title="<?php _e('Use custom CSS', 'qtranslate') ?>">
 							<input type="radio" name="highlight_mode" value="<?php echo QTX_HIGHLIGHT_MODE_CUSTOM_CSS; ?>" <?php checked($highlight_mode, QTX_HIGHLIGHT_MODE_CUSTOM_CSS) ?>/>

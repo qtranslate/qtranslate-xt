@@ -444,26 +444,24 @@ function qtranxf_get_admin_highlight_css($highlight_mode) {
 	global $q_config;
 	$current_color_scheme = qtranxf_get_user_admin_color();
 	$clr = $current_color_scheme[2];
-	$css = '';
+	$css = 'input.qtranxs-translatable, textarea.qtranxs-translatable, div.qtranxs-translatable {' . PHP_EOL;
 	switch ( $highlight_mode ) {
-		case QTX_HIGHLIGHT_MODE_LEFT_BORDER:
-			$css .= 'input.qtranxs-translatable, textarea.qtranxs-translatable, div.qtranxs-translatable {' . PHP_EOL;
-			$css .= 'box-shadow: -3px 0 ' . $clr . ' !important;' . PHP_EOL; // v1
-			//$css .= 'box-shadow: inset 3px 0 ' . $clr . ' !important;' . PHP_EOL;// v2
-			//$css .= 'padding-left: 5px' . PHP_EOL;// v2
-			//$css .= 'border-left: 3px solid ' . $clr .  ' !important;' . PHP_EOL;// v3
-			$css .= '}' . PHP_EOL;
+		case QTX_HIGHLIGHT_MODE_BORDER_LEFT:// v3
+			$css .= 'border-left: 3px solid ' . $clr .  ' !important;' . PHP_EOL;
 			break;
-		case QTX_HIGHLIGHT_MODE_BORDER:
-			$css .= 'input.qtranxs-translatable, textarea.qtranxs-translatable, div.qtranxs-translatable {' . PHP_EOL;
-			$css .= 'outline: 2px solid ' . $clr . ' !important;' . PHP_EOL;// v1
-			//$css .= 'border: 1px solid ' . $clr .  ' !important;' . PHP_EOL;// v2
-			$css .= '}' . PHP_EOL;
+		case QTX_HIGHLIGHT_MODE_BORDER:// v2
+			$css .= 'border: 1px solid ' . $clr .  ' !important;' . PHP_EOL;
+			break;
+		case QTX_HIGHLIGHT_MODE_LEFT_SHADOW: // v1
+			$css .= 'box-shadow: -3px 0 ' . $clr . ' !important;' . PHP_EOL;
+			break;
+		case QTX_HIGHLIGHT_MODE_OUTLINE:// v1
+			$css .= 'outline: 2px solid ' . $clr . ' !important;' . PHP_EOL;
 			//$css .= 'div.qtranxs-translatable div.mce-panel {' . PHP_EOL;
 			//$css .= 'margin-top: 2px' . PHP_EOL;
-			//$css .= '}' . PHP_EOL;
 			break;
 	}
+	$css .= '}' . PHP_EOL;
 	return $css;
 }
 
