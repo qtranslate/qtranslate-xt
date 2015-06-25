@@ -439,7 +439,24 @@ function qtranxf_external_host($host){
 }
 
 function qtranxf_isMultilingual($str){
-return preg_match('/(<!--:[a-z]{2}-->|\[:[a-z]{2}\]|\{:[a-z]{2}\})/im',$str);
+	return preg_match('/<!--:[a-z]{2}-->|\[:[a-z]{2}\]|\{:[a-z]{2}\}/im',$str);
+}
+
+function qtranxf_is_multilingual_deep($value){
+	if(is_string($value)){
+		return qtranxf_isMultilingual($value);
+	}else if(is_array($value)){
+		foreach($value as $k => $v){
+			if(qtranxf_is_multilingual_deep($v))//recursive call
+				return true;
+		}
+	}else if(is_object($value) || $value instanceof __PHP_Incomplete_Class){
+		foreach(get_object_vars($value) as $k => $v) {
+			if(qtranxf_is_multilingual_deep($v))//recursive call
+				return true;
+		}
+	}
+	return false;
 }
 
 function qtranxf_getLanguage() {

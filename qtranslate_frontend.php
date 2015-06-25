@@ -303,6 +303,67 @@ add_filter('wp_setup_nav_menu_item', 'qtranxf_wp_setup_nav_menu_item');
 */
 
 /**
+ * @since 3.3.8.9
+ * @param (mixed) $value to translate, which may be array, object or string
+ *                and may have serialized parts with embedded multilingual values.
+ */
+function qtranxf_translate_deep($value,$lang){
+	if(is_string($value)){
+		if(!qtranxf_isMultilingual($value))
+			return $value; //most frequent case
+		if(is_serialized( $value )){
+			$value = unserialize($value);
+			$value = qtranxf_translate_deep($value,$lang);//recursive call
+			return serialize($value);
+		}
+		return qtranxf_use_language($lang,$value);
+	}else if(is_array($value)){
+		foreach($value as $k => $v){
+			$value[$k] = qtranxf_translate_deep($v,$lang);
+		}
+	}else if(is_object($value) || $value instanceof __PHP_Incomplete_Class){
+		foreach(get_object_vars($value) as $k => $v) {
+			$value->$k = qtranxf_translate_deep($v,$lang);
+		}
+	}
+	return $value;
+}
+
+/**
+ * @since 3.3.8.9
+ * Used to filter option values
+ */
+function qtranxf_translate_option($value, $lang=null){
+	global $q_config;
+	if(!$lang) $lang = $q_config['language'];
+	//qtranxf_dbg_log('qtranxf_translate_option: current_filter', current_filter());
+	//qtranxf_dbg_log('qtranxf_translate_option('.current_filter().'): $value: ', $value);
+	return qtranxf_translate_deep($value,$lang);
+}
+
+/*
+function qtranxf_split_languages_option($value, $nm, $lang){
+	$value_cached = wp_cache_get($nm, 'qtranxc_options');
+	if(isset($value_cached[0])) return $value_cached[0];//no translation needed
+	//global $q_config; if(!$lang) $lang = $q_config['language'];
+	if(isset($value_cached[$lang])) return $value_cached[$lang];
+
+	if(qtranxf_is_multilingual_deep($value)){
+		$s = is_serialized( $value );
+		if($s) $value = unserialize($value);
+		$values = qtranxf_split_languages($value);
+		if($s) foreach($values as $lng => $v){
+			$values[$lng] = serialize($v);
+		}
+		wp_cache_add($nm, $values, 'qtranxc_options');
+		return $values[$lang];
+	}else{
+		wp_cache_add($nm, array($value), 'qtranxc_options');
+		return $value;
+	}
+}// */
+
+/**
  * Filter all options for language tags
  */
 function qtranxf_filter_options(){
@@ -310,7 +371,7 @@ function qtranxf_filter_options(){
 	$where;
 	switch($q_config['filter_options_mode']){
 		case QTX_FILTER_OPTIONS_ALL:
-			$where=' WHERE autoload=\'yes\' AND (option_value LIKE \'%![:__!]%\' ESCAPE \'!\' OR option_value LIKE \'%<!--:__-->%\')';
+			$where=' WHERE autoload=\'yes\' AND (option_value LIKE \'%![:__!]%\' ESCAPE \'!\' OR option_value LIKE \'%{:__}%\' OR option_value LIKE \'%<!--:__-->%\')';
 			//$alloptions = wp_load_alloptions();
 			//foreach($alloptions as $option => $value) {
 			//	add_filter('option_'.$option, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
@@ -326,10 +387,13 @@ function qtranxf_filter_options(){
 		default: return;
 	}
 	$result = $wpdb->get_results('SELECT option_name FROM '.$wpdb->options.$where);
+	qtranxf_dbg_log('qtranxf_filter_options: $where: ', $where);
+	qtranxf_dbg_log('qtranxf_filter_options: $result: ', $result);
 	if(!$result) return;
 	foreach($result as $row) {
-		//qtranxf_dbg_log('add_filter: option_'.$row->option_name);
-		add_filter('option_'.$row->option_name, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
+		qtranxf_dbg_log('add_filter: option_'.$row->option_name);
+		//add_filter('option_'.$row->option_name, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
+		add_filter('option_'.$row->option_name,'qtranxf_translate_option',5);
 	}
 }
 qtranxf_filter_options();

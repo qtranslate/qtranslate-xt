@@ -1069,7 +1069,6 @@ function qtranxf_get_url_for_language($url, $lang, $showLanguage=true) {
 	return $complete;
 }
 
-//if (!function_exists('qtranxf_convertURL')){
 /**
  * Encode URL $url with language $lang.
  * @param (string) $url URL to be converted.
@@ -1106,7 +1105,6 @@ function qtranxf_convertURL($url='', $lang='', $forceadmin = false, $showDefault
 	//qtranxf_dbg_log('qtranxf_convertURL: complete: ',$complete);
 	return $complete;
 }
-//}
 
 function qtranxf_convertURLs($url, $lang='', $forceadmin = false, $showDefaultLanguage = false) {
 	global $q_config;
@@ -1200,9 +1198,14 @@ function qtranxf_split_languages($blocks) {
 		}elseif(preg_match("#^\[:([a-z]{2})\]$#ism", $block, $matches)) {
 			$current_language = $matches[1];
 			continue;
+		// detect s-tags @since 3.3.6 swirly bracket encoding added
+		}elseif(preg_match("#^\{:([a-z]{2})\}$#ism", $block, $matches)) {
+			$current_language = $matches[1];
+			continue;
 		}
 		switch($block){
 			case '[:]':
+			case '{:}':
 			case '<!--:-->':
 				$current_language = false;
 				break;
@@ -1340,7 +1343,7 @@ function qtranxf_join_byline($texts) {
 	return $text;
 }
 
-if (!function_exists('qtranxf_use')){
+//if (!function_exists('qtranxf_use')){
 function qtranxf_use($lang, $text, $show_available=false, $show_empty=false) {
 	//global $q_config;
 	// return full string if language is not enabled
@@ -1366,11 +1369,13 @@ function qtranxf_use($lang, $text, $show_available=false, $show_empty=false) {
 
 	return qtranxf_use_language($lang, $text, $show_available, $show_empty);
 }
-}
+//}
 
 /** when $text is already known to be string */
 function qtranxf_use_language($lang, $text, $show_available=false, $show_empty=false) {
 	$blocks = qtranxf_get_language_blocks($text);
+	//qtranxf_dbg_log('qtranxf_use_language('.$lang.') $text: ', $text);
+	//qtranxf_dbg_log('qtranxf_use_language: $blocks: ', $blocks);
 	if(count($blocks)<=1)//no language is encoded in the $text, the most frequent case
 		return $text;
 	return qtranxf_use_block($lang, $blocks, $show_available, $show_empty);

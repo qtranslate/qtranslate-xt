@@ -105,6 +105,9 @@ Read [migration instructions](https://qtranslatexteam.wordpress.com/migration/ "
 * Major new feature: [Integration Framework](https://qtranslatexteam.wordpress.com/integration/) is finalized in its first edition.
 * Translation: a lot of thanks to all translators contributed.
 
+### 3.3.8.9 ###
+* Enhancement: deep translation of options (`qtranxf_translate_option`) including embedded serialized values.
+
 ### 3.3.8 ###
 * Enhancement: option 'Locale at front-end' added. [WP Topic](https://wordpress.org/support/topic/setting-hreflang-language-locale).
 * Feature: custom language switching menu with `#?lang=xx`.
