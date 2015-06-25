@@ -178,6 +178,7 @@ function qtranxf_default_language_name()
 	$cfg['hr'] = 'Hrvatski';
 	$cfg['eu'] = 'Euskera';
 	$cfg['el'] = 'Ελληνικά';
+	$cfg['ua'] = 'Українська';
 	//$cfg['tw'] = '中文';
 	return $cfg;
 }
@@ -214,6 +215,7 @@ function qtranxf_default_locale()
 	$cfg['hr'] = 'hr_HR';
 	$cfg['eu'] = 'eu_ES';
 	$cfg['el'] = 'el_GR';
+	$cfg['ua'] = 'uk';
 	//$cfg['tw'] = 'zh_TW';
 	return $cfg;
 }
@@ -259,6 +261,7 @@ function qtranxf_default_not_available()
 	$cfg['hr'] = 'Žao nam je, ne postoji prijevod na raspolaganju za ovaj proizvod još %LANG:, : i %.';
 	$cfg['eu'] = 'Sentitzen dugu, baina sarrera hau %LANG-z:, : eta % bakarrik dago.';
 	$cfg['el'] = 'Συγγνώμη,αυτή η εγγραφή είναι διαθέσιμη μόνο στα %LANG:, : και %.';
+	$cfg['ua'] = 'Вибачте цей текст доступний тільки в %LANG:, : і %.';
 	//$cfg['tw'] = '对不起，此内容只适用于%LANG:，:和%。';
 	return $cfg;
 }
@@ -294,6 +297,7 @@ function qtranxf_default_date_format()
 	$cfg['hr'] = '%d/%m/%Y';
 	$cfg['eu'] = '%Y %B %e, %A';
 	$cfg['el'] = '%d/%m/%y';
+	$cfg['ua'] = '%A %B %e%q, %Y';
 	//$cfg['tw'] = '%x %A';
 	return $cfg;
 }
@@ -329,6 +333,7 @@ function qtranxf_default_time_format()
 	$cfg['hr'] = '%H:%M';
 	$cfg['eu'] = '%H:%M';
 	$cfg['el'] = '%H:%M';
+	$cfg['ua'] = '%H:%M';
 	//$cfg['tw'] = '%I:%M%p';
 	return $cfg;
 }
@@ -365,6 +370,7 @@ function qtranxf_default_flag()
 	$cfg['hr'] = 'hr.png';
 	$cfg['eu'] = 'eu_ES.png';
 	$cfg['el'] = 'gr.png';
+	$cfg['ua'] = 'ua.png';
 	//$cfg['tw'] = 'tw.png';
 	return $cfg;
 }
