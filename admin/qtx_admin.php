@@ -302,15 +302,22 @@ function qtranxf_get_admin_page_config_post_type($post_type) {
 				$page_config['js'][$k]['src'] = $bnm.substr($src,1);
 			}else{
 				if(file_exists($content_dir.$src)) continue;  //from WP_CONTENT_DIR as expected
-				$fp = dirname($bnm) . DIRECTORY_SEPARATOR . $src;  //from 'plugins' folder
+				$fp = dirname($bnm) . '/' . $src;  //from 'plugins' folder
 				if(file_exists($content_dir.$fp)){
 					$page_config['js'][$k]['src'] = $fp;
 					continue;
 				}
-				$fp = $bnm . DIRECTORY_SEPARATOR . $src; //from this plugin folder
+				$fp = $bnm . '/' . $src; //from this plugin folder
 				if(file_exists($content_dir.$fp)){
 					$page_config['js'][$k]['src'] = $fp;
 					continue;
+				}
+				if(file_exists($src)){ //absolute path was given
+					if(qtranxf_startsWith($src,$content_dir)){
+						$fp = substr($src,strlen($content_dir));
+						$page_config['js'][$k]['src'] = $fp;
+						continue;
+					}
 				}
 				unset($page_config['js'][$k]);
 				qtranxf_error_log(sprintf(__('Could not find script file "%s" for handle "%s".', 'qtranslate'), $src, $js['handle']));
