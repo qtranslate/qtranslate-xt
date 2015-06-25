@@ -387,11 +387,9 @@ function qtranxf_filter_options(){
 		default: return;
 	}
 	$result = $wpdb->get_results('SELECT option_name FROM '.$wpdb->options.$where);
-	qtranxf_dbg_log('qtranxf_filter_options: $where: ', $where);
-	qtranxf_dbg_log('qtranxf_filter_options: $result: ', $result);
 	if(!$result) return;
 	foreach($result as $row) {
-		qtranxf_dbg_log('add_filter: option_'.$row->option_name);
+		//qtranxf_dbg_log('add_filter: option_'.$row->option_name);
 		//add_filter('option_'.$row->option_name, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
 		add_filter('option_'.$row->option_name,'qtranxf_translate_option',5);
 	}
