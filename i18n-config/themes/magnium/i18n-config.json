@@ -1,6 +1,6 @@
 {"vendor":{"themes/magnium":"1.0"},
 "admin-config": {
-	"ipanel": {
+	"ipanel-magnium": {
 		"pages": { "admin.php": "page=ipanel_MAGNIUM_PANEL" },
 		"anchors": { "IPANEL": {"where": "before after"} },
 		"forms": {
