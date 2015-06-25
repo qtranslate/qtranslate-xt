@@ -9,7 +9,7 @@ function qtranxf_admin_set_default_options(&$ops){
 
 	$ops['admin']['int']=array(
 		'editor_mode' => QTX_EDITOR_MODE_LSB,
-		'highlight_mode' => QTX_HIGHLIGHT_MODE_LEFT_BORDER,
+		'highlight_mode' => QTX_HIGHLIGHT_MODE_BORDER_LEFT,
 	);
 
 	$ops['admin']['bool']=array(
