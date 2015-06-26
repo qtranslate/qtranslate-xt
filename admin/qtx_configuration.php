@@ -329,7 +329,7 @@ echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 
 			<tr valign="top">
 				<th scope="row"><?php _e('Flag Image Path', 'qtranslate') ?></th>
 				<td>
-					<?php echo trailingslashit(WP_CONTENT_URL) ?><input type="text" name="flag_location" id="flag_location" value="<?php echo $q_config['flag_location']; ?>" style="width:100%"/>
+					<?php echo trailingslashit(content_url()) ?><input type="text" name="flag_location" id="flag_location" value="<?php echo $q_config['flag_location']; ?>" style="width:100%"/>
 					<p class="qtranxs_notes"><?php printf(__('Path to the flag images under wp-content, with trailing slash. (Default: %s, clear the value above to reset it to the default)', 'qtranslate'), qtranxf_flag_location_default()) ?></p>
 				</td>
 			</tr>
@@ -609,7 +609,7 @@ echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 
 	$flag_location_url = qtranxf_flag_location();
 	$flag_location_dir = trailingslashit(WP_CONTENT_DIR).$q_config['flag_location'];
 	$flag_location_url_def = content_url(qtranxf_flag_location_default());
-	//trailingslashit(WP_CONTENT_URL).'/plugins/'.basename(dirname(QTRANSLATE_FILE)).'/flags/';
+	//trailingslashit(content_url()).'/plugins/'.basename(dirname(QTRANSLATE_FILE)).'/flags/';
 	foreach($language_names as $lang => $language){ if($lang=='code') continue;
 		$flag = $flags[$lang];
 		if(file_exists($flag_location_dir.$flag)){
