@@ -839,7 +839,6 @@ function qtranxf_convertBlogInfoURL($url, $what) {
  * Moved here from qtranslate_hooks.php and modified.
 */
 function qtranxf_pagenum_link($url) {
-	//function qtranxf_gettext_with_context($translated_text, $text, $context, $domain) {
 	$url_fixed = preg_replace('#\?lang=[a-z]{2}/#i', '/', $url); //kind of ugly fix for function get_pagenum_link in /wp-includes/link-template.php. Maybe we should cancel filter 'bloginfo_url' instead?
 	return qtranxf_convertURL($url_fixed);
 }
