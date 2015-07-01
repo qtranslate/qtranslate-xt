@@ -108,6 +108,7 @@ Read [migration instructions](https://qtranslatexteam.wordpress.com/migration/ "
 ### 3.3.8.9 ###
 * Enhancement: deep translation of options (`qtranxf_translate_option`) including embedded serialized values.
 * Enhancement: allow absolute paths in 'src' attribute in configuration: [Issue #186](https://github.com/qTranslate-Team/qtranslate-x/issues/186).
+* Enhancement: Dealing with '&' in term name, filter 'get_terms_args'.
 
 ### 3.3.8 ###
 * Enhancement: option 'Locale at front-end' added. [WP Topic](https://wordpress.org/support/topic/setting-hreflang-language-locale).

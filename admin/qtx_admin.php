@@ -66,6 +66,7 @@ function qtranxf_collect_translations_posted() {
 	//qtranxf_dbg_log('"plugins_loaded(5)": qtranxf_collect_translations_posted: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
 	//qtranxf_dbg_log('qtranxf_collect_translations_posted: REQUEST: ', $_REQUEST);
 	//qtranxf_dbg_log('qtranxf_collect_translations_posted: POST: ', $_POST);
+	//qtranxf_dbg_log('qtranxf_collect_translations_posted: count(REQUEST): ', count($_REQUEST, COUNT_RECURSIVE));
 	$edit_lang = null;
 	if(isset($_REQUEST['qtranslate-fields'])){
 		//$edit_lang = isset($_COOKIE['qtrans_edit_language']) ? $_COOKIE['qtrans_edit_language'] : qtranxf_getLanguage();
@@ -713,6 +714,28 @@ function qtranxf_admin_notices_config() {
 	}
 }
 
+/** A workaround for seems to be an overlook in WordPress core.
+ * Dealing with '&' in term name.
+ * A term name containing '&' is stored in database with '&amp;' instead of '&',
+ * but search in get_terms is done on raw '&' coming from $_POST variable.
+ */
+function qtranxf_get_terms_args($args) {
+	if(!empty($args['name'])){
+		$p = 0;
+		while(($p = strpos($args['name'],'&',$p)) !== false){
+			if(substr($args['name'],$p,5) == '&amp;'){
+				$p += 5;
+			}else{
+				++$p;
+				$args['name'] = substr($args['name'],0,$p).'amp;'.substr($args['name'],$p);
+				$p += 4;
+			}
+		}
+	}
+	return $args;
+}
+add_filter('get_terms_args', 'qtranxf_get_terms_args');
+//apply_filters( 'get_terms_args', $args, $taxonomies );
 
 add_action('admin_head-nav-menus.php', 'qtranxf_add_nav_menu_metabox');
 add_action('admin_menu', 'qtranxf_admin_menu', 999);

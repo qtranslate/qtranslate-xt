@@ -171,10 +171,7 @@ function qtranxf_standardize_config_fields($fields){
  * @since 3.4
  */
 function qtranxf_standardize_config_anchor( &$anchor ){
-	if(isset($anchor['id'])){
-		$id = $anchor['id'];
-		unset($anchor['id']);
-	}else if(is_string($anchor)){
+	if(is_string($anchor)){
 		switch($anchor){
 			case '':
 			case 'post':
@@ -183,6 +180,9 @@ function qtranxf_standardize_config_anchor( &$anchor ){
 		}
 		$anchor = array();
 		$anchor['where'] = 'before';
+	}else if(isset($anchor['id'])){
+		$id = $anchor['id'];
+		unset($anchor['id']);
 	}else{
 		return false;
 	}
