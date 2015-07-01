@@ -564,23 +564,16 @@ function qtranxf_updateSettingIgnoreFileTypes($nm) {
 }
 
 function qtranxf_parse_post_type_excluded() {
-	global $q_config;
 	if(!isset($_POST['submit'])) return false;
-	$post_types = get_post_types();
-	if(isset($_POST['post_types'])){
-		//qtranxf_dbg_log('qtranxf_parse_post_type_excluded: $_POST[post_types]: ',$_POST['post_types']);
-		if(!is_array($_POST['post_types'])) return false;
-		$post_type_excluded = array();
-		foreach ( $post_types as $post_type ) {
-			if(!qtranxf_post_type_optional($post_type)) continue;
-			if(isset($_POST['post_types'][$post_type])) continue;
-			$post_type_excluded[] = $post_type;
-		}
-	}else{
-		//qtranxf_dbg_log('qtranxf_parse_post_type_excluded: $_POST[post_types] is not set');
-		$post_type_excluded = $post_types;
+	if(!isset($_POST['post_types_all'])) return false;
+	if(!is_array($_POST['post_types_all'])) return false;
+	$post_type_excluded = array();
+	foreach($_POST['post_types_all'] as $post_type => $v){
+		if(isset($_POST['post_types'][$post_type])) continue;
+		$post_type_excluded[] = $post_type;
 	}
 	unset($_POST['post_types']);
+	unset($_POST['post_types_all']);
 	$_POST['post_type_excluded'] = $post_type_excluded;
 	//qtranxf_dbg_log('qtranxf_parse_post_type_excluded: $_POST[post_type_excluded]: ',$_POST['post_type_excluded']);
 }

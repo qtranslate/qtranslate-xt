@@ -319,7 +319,7 @@ echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 
 							if(!qtranxf_post_type_optional($post_type)) continue;
 							$post_type_off = isset($q_config['post_type_excluded']) && in_array($post_type,$q_config['post_type_excluded']);
 					?>
-					<span style="margin-right: 12pt"><input type="checkbox" name="post_types[<?php echo $post_type ?>]" id="post_type_<?php echo $post_type ?>" value="1"<?php checked(!$post_type_off) ?> />&nbsp;<?php echo $post_type ?></span>
+					<span style="margin-right: 12pt"><input type="hidden" name="post_types_all[<?php echo $post_type ?>]" value="<?php echo $post_type_off ? '0':'1' ?>"><input type="checkbox" name="post_types[<?php echo $post_type ?>]" id="post_type_<?php echo $post_type ?>" value="1"<?php checked(!$post_type_off) ?> />&nbsp;<?php echo $post_type ?></span>
 					<?php
 						}
 					?>
