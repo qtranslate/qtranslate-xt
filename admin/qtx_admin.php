@@ -334,7 +334,7 @@ function qtranxf_get_admin_page_config_post_type($post_type) {
 	 * @param (string) $post_type type of post serving on the current page, or null if not applicable.
 	 */
 	//$page_config = apply_filters('i18n_admin_page_config', $page_config, $pagenow, $url_query, $post_type);
-	//qtranxf_dbg_log('qtranxf_get_admin_page_config_post_type: $pagenow='.$pagenow.'; $url_query='.$url_query.'; $post_type='.$post_type.'; $page_config: ',qtranxf_json_encode($page_config));
+	//qtranxf_dbg_log('qtranxf_get_admin_page_config_post_type: $pagenow='.$pagenow.'; $url_query='.$q_config['url_info']['query'].'; $post_type='.$post_type.'; $page_config: ',qtranxf_json_encode($page_config));
 	qtranxf_write_config_log($page_config, '', $pagenow, '', $post_type);
 	return $page_config;
 }
