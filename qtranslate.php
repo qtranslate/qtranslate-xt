@@ -67,7 +67,8 @@ GitHub Branch: master
 	sv by bear3556, johdah 
 	vi by hathhai
 	zh(zh_CN) by Junyan Chen
-	ua(uk) Vadim V (https://wordpress.org/support/profile/vadim-v)
+	ua(uk) Vadym Volos (https://google.com/+VadymVolos https://wordpress.org/support/profile/vadim-v)
+
 
 	Plugin Translation Contributors
 	===============================
