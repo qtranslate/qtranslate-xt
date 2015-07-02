@@ -105,6 +105,9 @@ Read [migration instructions](https://qtranslatexteam.wordpress.com/migration/ "
 * Major new feature: [Integration Framework](https://qtranslatexteam.wordpress.com/integration/) is finalized in its first edition.
 * Translation: a lot of thanks to all translators contributed.
 
+### 3.3.9.0 ###
+* Fix: warning message on the first update from 3.3 due to new options creation.
+
 ### 3.3.8.9 ###
 * Enhancement: deep translation of options (`qtranxf_translate_option`) including embedded serialized values.
 * Enhancement: allow absolute paths in 'src' attribute in configuration: [Issue #186](https://github.com/qTranslate-Team/qtranslate-x/issues/186).

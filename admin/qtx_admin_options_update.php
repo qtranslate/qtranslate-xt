@@ -512,6 +512,12 @@ function qtranxf_updateSetting($var, $type = QTX_STRING, $def = null) {
  */
 function qtranxf_update_i18n_config(){
 	global $q_config;
+	if(!isset($q_config['config_files'])){
+		global $qtranslate_options;
+		qtranxf_admin_set_default_options($qtranslate_options);
+		qtranxf_load_option_array('config_files', $qtranslate_options['admin']['array']['config_files']);
+		qtranxf_load_option_array('custom_i18n_config', $qtranslate_options['admin']['array']['custom_i18n_config']);
+	}
 	$json_files = $q_config['config_files'];
 	$custom_i18n_config = $q_config['custom_i18n_config'];
 	$cfg = qtranxf_load_config_all($json_files,$custom_i18n_config);
