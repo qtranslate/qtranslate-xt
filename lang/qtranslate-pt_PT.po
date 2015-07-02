@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qTranslate-X 3.3.9.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-07-01 23:37-0600\n"
-"PO-Revision-Date: 2015-06-09 15:21-0000\n"
+"PO-Revision-Date: 2015-07-02 09:14+0100\n"
 "Last-Translator: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "Language-Team: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Language: pt_PT\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.8.1\n"
+"X-Generator: Poedit 1.8.2\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -39,11 +39,11 @@ msgstr "Não foi possível encontrar o ficheiro \"%s\" listado na opção \"%s\"
 #: admin/qtx_activation_hook.php:107
 #, php-format
 msgid "Once the problem is fixed, re-save the configuration by pressing button \"%s\" on plugin %ssettings page%s."
-msgstr ""
+msgstr "Assim que o problema esteja resolvido, guarde novamente a configuração primindo o botão \"%s\" na %spágina das definições%s do plugin."
 
 #: admin/qtx_activation_hook.php:90
 msgid "Please, either put file in place or update the option."
-msgstr ""
+msgstr "Por favor, insira o ficheiro no local necessário ou actualize a opção."
 
 #: admin/qtx_activation_hook.php:90 admin/qtx_activation_hook.php:104
 #: admin/qtx_activation_hook.php:107 admin/qtx_configuration.php:116
@@ -57,7 +57,7 @@ msgstr "Não foi possível transcodificar o ficheiro %s \"%s\" listado na opçã
 
 #: admin/qtx_activation_hook.php:104
 msgid "Please, correct the syntax error in the file."
-msgstr ""
+msgstr "Por favor, corrija o erro de sintaxe no ficheiro."
 
 #: admin/qtx_activation_hook.php:107
 #, php-format
@@ -66,7 +66,7 @@ msgstr "Não foi possível carregar o ficheiro \"%s\" listado na opção \"%s\".
 
 #: admin/qtx_activation_hook.php:107
 msgid "Please, make sure the file is accessible and readable."
-msgstr ""
+msgstr "Por favor, verifique se o ficheiro está acessível e legível."
 
 #: admin/qtx_activation_hook.php:547
 #, php-format
@@ -76,12 +76,11 @@ msgstr "O plugin %s necessita no mínimo do PHP versão %s. Este servidor corre 
 #: admin/qtx_activation_hook.php:642
 #, php-format
 msgid "Option \"%s\" for plugin %s has been auto-adjusted after recent changes in the site configuration. It might be a good idea to %sreview the changes%s in the list of configuration files."
-msgstr ""
+msgstr "A opção \"%s\" do plugin %s foi ajustada automaticamente depois das alterações recentes à configuração do site. Deverá fazer uma %srevisão das alterações%s na lista dos ficheiros de configuração."
 
 #: admin/qtx_activation_hook.php:645
-#, fuzzy
 msgid "Read Integration Guide"
-msgstr "Ler o Startup Guide"
+msgstr "Ler o Integration Guide"
 
 #: admin/qtx_activation_hook.php:646 admin/qtx_activation_hook.php:660
 #: admin/qtx_activation_hook.php:926 admin/qtx_activation_hook.php:987
@@ -386,7 +385,7 @@ msgstr "Não foi possível escrever em \"%s\", base de dados Gettext não pôde 
 
 #: admin/qtx_admin_options_update.php:258
 msgid "Admin notices have been reset. You will see all applicable notices on admin pages and may dismiss them again."
-msgstr ""
+msgstr "As notificações de administração foram repostas. Vai tornar a ver as notificações aplicáveis nas páginas de administração e poderá descartá-las novamente."
 
 #: admin/qtx_admin_options_update.php:694
 #, php-format
@@ -965,14 +964,12 @@ msgid "Draw a border around translatable fields."
 msgstr "Desenhar um borda à volta de campos que podem ser traduzidos."
 
 #: admin/qtx_configuration.php:461 admin/qtx_configuration.php:463
-#, fuzzy
 msgid "Show a shadow on the left of translatable fields."
-msgstr "Mostrar uma linha na borda esquerda dos campos que podem ser traduzidos."
+msgstr "Mostrar uma sombra na borda esquerda dos campos que podem ser traduzidos."
 
 #: admin/qtx_configuration.php:465 admin/qtx_configuration.php:467
-#, fuzzy
 msgid "Outline border around translatable fields."
-msgstr "Desenhar um borda à volta de campos que podem ser traduzidos."
+msgstr "Borda a envolver campos que podem ser traduzidos."
 
 #: admin/qtx_configuration.php:475
 #, php-format
