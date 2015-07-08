@@ -11,10 +11,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: de_DE\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.8.1\n"
-"X-Poedit-Basepath: C:\\Users\\skiba\\Downloads\\qtranslate\n"
+"X-Generator: Poedit 1.8.2\n"
+"X-Poedit-Basepath: C:/Users/skiba/Downloads/qtranslate\n"
 "X-Poedit-KeywordsList: _;gettext;dgettext:2;dcgettext:2;ngettext:1,2;dngettext2,3\n"
-"X-Poedit-SearchPath-0: C:\\Users\\skiba\\Downloads\\qtranslate\n"
+"X-Poedit-SearchPath-0: C:/Users/skiba/Downloads/qtranslate\n"
 
 #: admin/qtx_activation_hook.php:90 admin/qtx_activation_hook.php:104
 #: admin/qtx_activation_hook.php:107 admin/qtx_activation_hook.php:642
@@ -33,11 +33,11 @@ msgstr "Die Datei \"%s\", die in der Option \"%s\" aufgeführt wird, konnte nich
 #: admin/qtx_activation_hook.php:107
 #, php-format
 msgid "Once the problem is fixed, re-save the configuration by pressing button \"%s\" on plugin %ssettings page%s."
-msgstr ""
+msgstr "Sobald das Problem behoben wurde muss die Konfiguration erneut gespeichert werden durch klicken auf die Schaltfläche \"%s\" auf der Plugin-%sKonfigurationsseite%s."
 
 #: admin/qtx_activation_hook.php:90
 msgid "Please, either put file in place or update the option."
-msgstr ""
+msgstr "Bitte die Datei an die entsprechende Stelle kopieren oder die Option korrigieren."
 
 #: admin/qtx_activation_hook.php:90 admin/qtx_activation_hook.php:104
 #: admin/qtx_activation_hook.php:107 admin/qtx_configuration.php:116
@@ -51,7 +51,7 @@ msgstr "Die %s Datei \"%s\", die in der Option \"%s\" aufgeführt wird, konnte n
 
 #: admin/qtx_activation_hook.php:104
 msgid "Please, correct the syntax error in the file."
-msgstr ""
+msgstr "Bitte den Syntax-Fehler in der Datei korrigieren."
 
 #: admin/qtx_activation_hook.php:107
 #, php-format
@@ -60,7 +60,7 @@ msgstr "Die Datei \"%s\", die in der Option \"%s\" aufgeführt wird, konnte nich
 
 #: admin/qtx_activation_hook.php:107
 msgid "Please, make sure the file is accessible and readable."
-msgstr ""
+msgstr "Bitte sicherstellen, dass die Datei zugreifbar und lesbar ist."
 
 #: admin/qtx_activation_hook.php:547
 #, php-format
@@ -70,10 +70,9 @@ msgstr "Das Plugin %s benötigt mindestens PHP Version %s. Auf diesem Server ist
 #: admin/qtx_activation_hook.php:642
 #, php-format
 msgid "Option \"%s\" for plugin %s has been auto-adjusted after recent changes in the site configuration. It might be a good idea to %sreview the changes%s in the list of configuration files."
-msgstr ""
+msgstr "Die Option \"%s\" für das Plugin %s wurde automatisch angepasst wegen aktueller Änderungen in der Wordpress-Konfiguration. Es wird empfohlen, in der Liste der Konfigurationsdateien die %sÄnderungen zu überprüfen%s."
 
 #: admin/qtx_activation_hook.php:645
-#, fuzzy
 msgid "Read Integration Guide"
 msgstr "Leitfaden und Infos für Einsteiger aufrufen"
 
@@ -380,7 +379,7 @@ msgstr "Konnte nicht auf \"%s\" schreiben, Gettext Datenbanken konnten nicht her
 
 #: admin/qtx_admin_options_update.php:258
 msgid "Admin notices have been reset. You will see all applicable notices on admin pages and may dismiss them again."
-msgstr ""
+msgstr "Die Warnmeldungen für den Administrator wurden zurückgesetzt. Alle Warnmeldungen werden wieder angezeigt und können erneut "
 
 #: admin/qtx_admin_options_update.php:694
 #, php-format
@@ -959,12 +958,10 @@ msgid "Draw a border around translatable fields."
 msgstr "Übersetzbare Felder durch einen Rahmen hervorheben"
 
 #: admin/qtx_configuration.php:461 admin/qtx_configuration.php:463
-#, fuzzy
 msgid "Show a shadow on the left of translatable fields."
 msgstr "Übersetzbare Felder durch Linie am linken Rand hervorheben"
 
 #: admin/qtx_configuration.php:465 admin/qtx_configuration.php:467
-#, fuzzy
 msgid "Outline border around translatable fields."
 msgstr "Übersetzbare Felder durch einen Rahmen hervorheben"
 
