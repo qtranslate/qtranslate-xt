@@ -4,7 +4,7 @@ Contributors: johnclause, chineseleper, Vavooon, grafcom
 Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, translation
 Requires at least: 3.9
 Tested up to: 4.3
-Stable tag: 3.4
+Stable tag: 3.4.1
 License: GPLv3 or later
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QEXEK3HX8AR6U
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -99,6 +99,9 @@ Read [migration instructions](https://qtranslatexteam.wordpress.com/migration/ "
 2. Language Management Interface
 
 ## Changelog ##
+
+### 3.4.1 stable ###
+* Fix: i18n configuration loading for integrated plugins.
 
 ### 3.4 stable ###
 * Includes all changes after version 3.3. Please, review [Release Notes](https://qtranslatexteam.wordpress.com/2015/05/15/release-notes-3-4/).

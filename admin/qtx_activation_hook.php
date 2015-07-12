@@ -479,13 +479,12 @@ function qtranxf_find_plugin_config_files(&$fn_bnm, &$fn_qtx, $bnm){
 	while(qtranxf_endsWith($bnm,'-qtranslate-x')){
 		$bnm_qtx = substr($bnm,0,-13);
 		$plugins = wp_get_active_and_valid_plugins();
-		//while(qtranxf_find_plugin_by_foder($bnm_qtx,$plugins)){
-			$fn_qtx = qtranxf_plugin_dirname().'/i18n-config/plugins/'.$bnm_qtx.'/i18n-config.json';
-			$fn_qtx = qtranxf_find_plugin_file($fn_qtx);
-			if($fn_qtx) break;
-			$fn_qtx = qtranxf_plugin_dirname().'/i18n-config/themes/'.$bnm_qtx.'/i18n-config.json';
-			$fn_qtx = qtranxf_find_plugin_file($fn_qtx);
-		//}
+		$fn_qtx = qtranxf_plugin_dirname().'/i18n-config/plugins/'.$bnm_qtx.'/i18n-config.json';
+		$fn_qtx = qtranxf_find_plugin_file($fn_qtx);
+		if($fn_qtx) break;
+		$fn_qtx = qtranxf_plugin_dirname().'/i18n-config/themes/'.$bnm_qtx.'/i18n-config.json';
+		$fn_qtx = qtranxf_find_plugin_file($fn_qtx);
+		break;
 	}
 	return $fn_bnm || $fn_qtx;
 }
