@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'WP_ADMIN' ) ) exit;
+if ( !defined( 'ABSPATH' ) ) exit;
 
 function qtranxf_version_int() {
 	$ver = str_replace('.','',QTX_VERSION);

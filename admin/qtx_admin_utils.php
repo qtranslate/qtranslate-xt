@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'WP_ADMIN' ) ) exit;
+if ( !defined( 'ABSPATH' ) ) exit;
 
 /**
  * Read or enqueue Java script files listed in $jss.
@@ -701,7 +701,7 @@ add_filter('option_blogdescription', 'qtranxf_filter_options_general');
 
 function qtranxf_updateGettextDatabases($force = false, $only_for_language = '') {
 	require_once(QTRANSLATE_DIR.'/admin/qtx_update_gettext_db.php');
-	qtranxf_updateGettextDatabasesEx($force, $only_for_language);
+	return qtranxf_updateGettextDatabasesEx($force, $only_for_language);
 }
 
 /* this did not work, need more investigation

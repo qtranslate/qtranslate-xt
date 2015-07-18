@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'WP_ADMIN' ) ) exit;
+if ( !defined( 'ABSPATH' ) ) exit;
 
 /* function qtranxf_get_plugin_name($slug){
 	//there must be a better way to take it from file?

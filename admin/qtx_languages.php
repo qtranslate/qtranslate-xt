@@ -1,5 +1,6 @@
 <?php
-if ( !defined( 'WP_ADMIN' ) ) exit;
+if ( !defined( 'ABSPATH' ) ) exit;
+
 
 /**
  * Load array of stored in options language properties
@@ -30,6 +31,15 @@ function qtranxf_unsetLanguage(&$langs, $lang) {
 	unset($langs['time_format'][$lang]);
 	unset($langs['not_available'][$lang]);
 	//unset($langs['languages'][$lang]);
+}
+
+/** 
+ * @since 3.4.2
+ */
+function qtranxf_setLanguageAdmin($lang){
+	global $q_config;
+	$q_config['language'] = $lang;
+	qtranxf_set_language_cookie($lang);
 }
 
 /**
@@ -69,6 +79,9 @@ function qtranxf_disableLanguage($lang) {
 			break;
 		}
 		qtranxf_unsetLanguage($q_config,$lang);
+		if($q_config['language'] == $lang){
+			qtranxf_setLanguageAdmin($q_config['default_language']);
+		}
 		qtranxf_update_config_header_css();
 		//update_option('qtranslate_enabled_languages', $q_config['enabled_languages']);
 		return true;
@@ -108,5 +121,8 @@ function qtranxf_deleteLanguage($lang) {
 	$langs=array(); qtranxf_load_languages($langs);
 	qtranxf_unsetLanguage($langs,$lang);
 	qtranxf_save_languages($langs);
+	if($q_config['language'] == $lang){
+		qtranxf_setLanguageAdmin($q_config['default_language']);
+	}
 	return '';
 }

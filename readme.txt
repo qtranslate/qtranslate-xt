@@ -100,6 +100,10 @@ Read [migration instructions](https://qtranslatexteam.wordpress.com/migration/ "
 
 ## Changelog ##
 
+### 3.4.2 stable ###
+* Fix: i18n configuration loading on the first installation, [WP Topic](https://wordpress.org/support/topic/update-that-makes-one-see-the-site-only-a-blank-page).
+* Fix for qtranxf_updateGettextDatabases. 
+
 ### 3.4.1 stable ###
 * Fix: i18n configuration loading for integrated plugins.
 

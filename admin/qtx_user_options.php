@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'WP_ADMIN' ) ) exit;
+if ( !defined( 'ABSPATH' ) ) exit;
 
 add_action( 'show_user_profile', 'qtranxf_show_extra_profile_fields' );
 add_action( 'edit_user_profile', 'qtranxf_show_extra_profile_fields' );

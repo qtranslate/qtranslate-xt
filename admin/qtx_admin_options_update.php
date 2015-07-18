@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'WP_ADMIN' ) ) exit;
+if ( !defined( 'ABSPATH' ) ) exit;
 
 require_once(QTRANSLATE_DIR.'/admin/qtx_admin_options.php');
 require_once(QTRANSLATE_DIR.'/admin/qtx_import_export.php');
@@ -37,6 +37,7 @@ function qtranxf_editConfig(){
 
 	if(isset($_POST['original_lang'])) {
 		// validate form input
+		$original_lang = sanitize_text_field($_POST['original_lang']);
 		$lang = sanitize_text_field($_POST['language_code']);
 		if($_POST['language_na_message']=='') $errors[] = __('The Language must have a Not-Available Message!', 'qtranslate');
 		if(strlen($_POST['language_locale'])<2) $errors[] = __('The Language must have a Locale!', 'qtranslate');
@@ -44,33 +45,36 @@ function qtranxf_editConfig(){
 		if(strlen($lang)!=2) $errors[] = __('Language Code has to be 2 characters long!', 'qtranslate');
 		$langs=array(); qtranxf_load_languages($langs);
 		$language_names = $langs['language_name'];
-		if($_POST['original_lang']==''&&empty($errors)) {
+		if($original_lang=='' && empty($errors)) {
 			// new language
 			if(isset($language_names[$lang])) {
 				$errors[] = __('There is already a language with the same Language Code!', 'qtranslate');
 			} 
-		} 
-		if($_POST['original_lang']!=''&&empty($errors)) {
+		}
+		if($original_lang!='' && empty($errors)) {
 			// language update
-			if($lang!=$_POST['original_lang']&&isset($language_names[$lang])) {
+			if($lang!=$original_lang&&isset($language_names[$lang])) {
 				$errors[] = __('There is already a language with the same Language Code!', 'qtranslate');
 			} else {
-				if($lang!=$_POST['original_lang']){
+				if($lang!=$original_lang){
 					// remove old language
-					qtranxf_unsetLanguage($langs,$_POST['original_lang']);
-					qtranxf_unsetLanguage($q_config,$_POST['original_lang']);
+					qtranxf_unsetLanguage($langs,$original_lang);
+					qtranxf_unsetLanguage($q_config,$original_lang);
 				}
-				if(in_array($_POST['original_lang'],$q_config['enabled_languages'])) {
+				if(in_array($original_lang,$q_config['enabled_languages'])) {
 					// was enabled, so set modified one to enabled too
 					for($i = 0; $i < sizeof($q_config['enabled_languages']); $i++) {
-						if($q_config['enabled_languages'][$i] == $_POST['original_lang']) {
+						if($q_config['enabled_languages'][$i] == $original_lang) {
 							$q_config['enabled_languages'][$i] = $lang;
 						}
 					}
 				}
-				if($_POST['original_lang']==$q_config['default_language']){
+				if($original_lang==$q_config['default_language']){
 					// was default, so set modified the default
 					$q_config['default_language'] = $lang;
+				}
+				if($q_config['language'] == $original_lang){
+					qtranxf_setLanguageAdmin($lang);
 				}
 			}
 		}
@@ -94,7 +98,6 @@ function qtranxf_editConfig(){
 		}
 		if(!empty($errors)||isset($_GET['edit'])) {
 			// get old values in the form
-			$original_lang = sanitize_text_field($_POST['original_lang']);
 			$language_code = $lang;
 		}else{
 			$lang_props = array();//reset form for new language
@@ -662,15 +665,6 @@ function qtranxf_updateSettings(){
 					//option is not changed, apparently something happened to files, then make the error permanent
 					update_option('qtranslate_config_errors',array_slice($q_config['url_info']['errors'],$nerr));
 				}
-				/*
-				$errs = get_option('qtranslate_config_errors');
-				if(is_array($errs)){
-					foreach($q_config['url_info']['errors'] as $k => $msg){
-						if(in_array($msg,$errs)) unset($q_config['url_info']['errors'][$k]);
-					}
-					if(empty($q_config['url_info']['errors'])) unset($q_config['url_info']['errors']);
-				}
-				*/
 			}else{
 				$_POST['config_files'] = implode(PHP_EOL,$json_files);
 				unset($_POST['json_config_files']);
@@ -749,10 +743,8 @@ function qtranxf_executeOnUpdate() {
 
 	if ( isset( $_POST['update_mo_now'] ) && $_POST['update_mo_now'] == '1' ) {
 		$result = qtranxf_updateGettextDatabases( true );
-		if ( $result === true ) {
+		if( $result === 0 ) {
 			$messages[] = __( 'Gettext databases updated.', 'qtranslate' );
-		} elseif ( is_wp_error( $result ) ) {
-			$messages[] = __( 'Gettext databases <strong>not</strong> updated:', 'qtranslate' ) . ' ' . $result->get_error_message();
 		}
 	}
 

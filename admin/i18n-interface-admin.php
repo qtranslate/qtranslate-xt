@@ -1,4 +1,5 @@
 <?php
+if ( !defined( 'ABSPATH' ) ) exit;
 
 /**
  * WP_Translator interface for admin side.
