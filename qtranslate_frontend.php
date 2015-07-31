@@ -645,6 +645,7 @@ function qtranxf_esc_html($text) {
 // filter options
 add_filter('esc_html', 'qtranxf_esc_html', 0);
 
+if(!function_exists('qtranxf_trim_words')){
 //filter added in qtranslate_hooks.php
 function qtranxf_trim_words( $text, $num_words, $more, $original_text ) {
 	global $q_config;
@@ -654,6 +655,7 @@ function qtranxf_trim_words( $text, $num_words, $more, $original_text ) {
 	$lang = $q_config['language'];
 	$text = qtranxf_use_block($lang, $blocks, true, false);
 	return wp_trim_words($text, $num_words, $more);
+}
 }
 
 /**

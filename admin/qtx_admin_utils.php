@@ -640,6 +640,7 @@ function qtranxf_admin_the_title($title) {
 add_filter('the_title', 'qtranxf_admin_the_title', 0);//WP: fires for display purposes only
 
 //filter added in qtranslate_hooks.php
+if(!function_exists('qtranxf_trim_words')){
 function qtranxf_trim_words( $text, $num_words, $more, $original_text ) {
 	global $q_config;
 	//qtranxf_dbg_log('qtranxf_trim_words: $text: ',$text);
@@ -654,6 +655,7 @@ function qtranxf_trim_words( $text, $num_words, $more, $original_text ) {
 		$texts[$key] = wp_trim_words($txt, $num_words, $more);
 	}
 	return qtranxf_join_b($texts);//has to be 'b', because 'c' gets stripped in /wp-admin/includes/nav-menu.php:182: esc_html( $item->description )
+}
 }
 
 /**

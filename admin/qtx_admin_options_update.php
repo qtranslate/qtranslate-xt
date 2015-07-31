@@ -151,7 +151,11 @@ function qtranxf_editConfig(){
 		}
 	}
 	elseif(isset($_GET['edit'])){
-		$lang = $_GET['edit'];
+		$lang = sanitize_text_field($_GET['edit']);
+		$lang = preg_replace('/[^a-z]/i', '', $lang);
+		if(strlen($lang) != 2){
+			$errors[] = __('Language Code has to be 2 characters long!', 'qtranslate');
+		}
 		$original_lang = $lang;
 		$language_code = $lang;
 		//$langs = $q_config;
