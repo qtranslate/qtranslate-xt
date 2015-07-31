@@ -66,7 +66,7 @@ function($){
 		if(qTranslateConfig.url_mode!=1){// !QTX_URL_QUERY
 			if(!slugSamplePermalink){
 				var slugEl=document.getElementById('sample-permalink');
-				if (slugEl && slugEl.childNodes.length){
+				if (slugEl && slugEl.offsetHeight > 0 && slugEl.childNodes.length){
 					slugSamplePermalink=slugEl.childNodes[0];//span
 					origSamplePermalink=slugSamplePermalink.nodeValue;
 					//var slugEdit=document.getElementById('editable-post-name');
