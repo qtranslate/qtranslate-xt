@@ -118,7 +118,7 @@ add_action('plugins_loaded', 'qtranxf_init_language', 2);//user is not authentic
 function qtranxf_detect_language(&$url_info) {
 	global $q_config;
 
-	if(defined('WP_ADMIN')){
+	if(defined('WP_ADMIN') || defined('WP_CLI')){
 		$siteinfo = qtranxf_get_site_info();
 		$url_info['path-base'] = $siteinfo['path'];
 		$url_info['path-base-length'] = $siteinfo['path-length'];
@@ -731,6 +731,7 @@ function qtranxf_strftime($format, $date, $default = '', $before = '', $after = 
 	$search[] = '/(([^%])%3|^%3)/'; $replace[] = '${2}'.date('r',$date); // date r
 	$search[] = '/(([^%])%4|^%4)/'; $replace[] = '${2}'.$date; // date U
 	$format = preg_replace($search,$replace,$format);
+	qtranxf_dbg_log('qtranxf_strftime: $format='.$format.'; $date=',$date);
 	return $before.strftime($format, $date).$after;
 }
 

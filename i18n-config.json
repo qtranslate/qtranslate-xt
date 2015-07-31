@@ -59,7 +59,7 @@
 			"fields":{
 				"name":{},
 				"description":{},
-				"parent":{}
+				"parent":{ "encode":"display" }
 			}
 		}
 	},
