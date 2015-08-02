@@ -112,7 +112,6 @@ function qtranxf_deleteLanguage($lang) {
 	global $q_config;
 	if( !qtranxf_language_predefined($lang) ){
 		if( $q_config['default_language'] == $lang ){
-			//if($q_config['default_language']==$lang) $error = ;
 			//if(!isset($q_config['language_name'][$lang])||strtolower($lang)=='code') $error = __('No such language!', 'qtranslate');
 			return __('Cannot delete Default Language!', 'qtranslate');
 		}

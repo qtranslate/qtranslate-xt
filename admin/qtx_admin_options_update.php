@@ -173,11 +173,11 @@ function qtranxf_editConfig(){
 		// validate delete (protect code)
 		//if($q_config['default_language']==$lang) $errors[] = 'Cannot delete Default Language!';
 		//if(!isset($q_config['language_name'][$lang])||strtolower($lang)=='code') $errors[] = __('No such language!', 'qtranslate');
-		if(empty($errors)) {
-			// everything seems fine, delete language
-			$err = qtranxf_deleteLanguage($lang);
-			if(!empty($err)) $errors[] = $err;
-		}
+		//if(empty($errors)) {
+		//	// everything seems fine, delete language
+		$err = qtranxf_deleteLanguage($lang);
+		if(!empty($err)) $errors[] = $err;
+		//}
 	}
 	elseif(isset($_GET['enable'])){
 		$lang = $_GET['enable'];
