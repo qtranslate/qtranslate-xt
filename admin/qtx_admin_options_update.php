@@ -169,7 +169,7 @@ function qtranxf_editConfig(){
 		$lang_props['flag'] = isset($langs['flag'][$lang])?$langs['flag'][$lang]:'';
 	}
 	elseif(isset($_GET['delete'])){
-		$lang = $_GET['delete'];
+		$lang = sanitize_text_field($_GET['delete']);
 		// validate delete (protect code)
 		//if($q_config['default_language']==$lang) $errors[] = 'Cannot delete Default Language!';
 		//if(!isset($q_config['language_name'][$lang])||strtolower($lang)=='code') $errors[] = __('No such language!', 'qtranslate');
@@ -180,14 +180,14 @@ function qtranxf_editConfig(){
 		//}
 	}
 	elseif(isset($_GET['enable'])){
-		$lang = $_GET['enable'];
+		$lang = sanitize_text_field($_GET['enable']);
 		// enable validate
 		if(!qtranxf_enableLanguage($lang)) {
 			$errors[] = __('Language is already enabled or invalid!', 'qtranslate');
 		}
 	}
 	elseif(isset($_GET['disable'])){
-		$lang = $_GET['disable'];
+		$lang = sanitize_text_field($_GET['disable']);
 		// enable validate
 		if($lang==$q_config['default_language'])
 			$errors[] = __('Cannot disable Default Language!', 'qtranslate');
@@ -200,10 +200,11 @@ function qtranxf_editConfig(){
 		}
 	}
 	elseif(isset($_GET['moveup'])){
+		$lang = sanitize_text_field($_GET['moveup']);
 		$languages = qtranxf_getSortedLanguages();
 		$msg = __('No such language!', 'qtranslate');
 		foreach($languages as $key => $language) {
-			if($language!=$_GET['moveup']) continue;
+			if($language!=$lang) continue;
 			if($key==0) {
 				$msg = __('Language is already first!', 'qtranslate');
 				break;
@@ -217,10 +218,11 @@ function qtranxf_editConfig(){
 		$messages[] = $msg;
 	}
 	elseif(isset($_GET['movedown'])){
+		$lang = sanitize_text_field($_GET['movedown']);
 		$languages = qtranxf_getSortedLanguages();
 		$msg = __('No such language!', 'qtranslate');
 		foreach($languages as $key => $language) {
-			if($language!=$_GET['movedown']) continue;
+			if($language!=$lang) continue;
 			if($key==sizeof($languages)-1) {
 				$msg = __('Language is already last!', 'qtranslate');
 				break;
