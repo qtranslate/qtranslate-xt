@@ -89,7 +89,7 @@ function($){
 
 		if(!view_link) view_link = document.getElementById('wp-admin-bar-view');
 		if(view_link && view_link.children.length){
-			view_link.children[0].href = langUrl.href;
+			view_link.children[0].href = btnViewPostA.href;
 		}
 	}
 
