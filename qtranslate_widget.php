@@ -178,7 +178,6 @@ function qtranxf_generateLanguageSelectCode($style='', $id='') {
 					echo ' class="active"';
 				echo '><a href="'.qtranxf_convertURL($url, $language, false, true).'"';
 				echo ' class="qtranxs_flag_'.$language.' qtranxs_flag_and_text" title="'.$q_config['language_name'][$language].'">';
-				//echo '<img src="'.$flag_location.$q_config['flag'][$language].'"></img>';
 				echo '<span>'.$language.'</span></a></li>'.PHP_EOL;
 			}
 			echo '</ul><div class="qtranxs_widget_end"></div>'.PHP_EOL;
