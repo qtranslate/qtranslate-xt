@@ -650,6 +650,7 @@ echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 
 <h3><?php _e('Add Language', 'qtranslate') ?></h3>
 <form name="addlang" id="addlang" method="post" class="add:the-list: validate">
 <?php
+	wp_nonce_field($my_nonce_action); // Prevent CSRF
 	qtranxf_language_form();
 	qtranxf_admin_section_end('languages',__('Add Language &raquo;', 'qtranslate'), null);
 ?>
