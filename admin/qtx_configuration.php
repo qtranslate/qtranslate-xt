@@ -163,7 +163,7 @@ function qtranxf_conf() {
 <h2><?php _e('Edit Language', 'qtranslate') ?></h2>
 <form action="" method="post" id="qtranxs-edit-language">
 <?php qtranxf_language_form() ?>
-<p class="submit"><input type="submit" name="submit" value="<?php _e('Save Changes &raquo;', 'qtranslate') ?>" /></p>
+<p class="submit"><input type="submit" name="submit" class="button-primary" value="<?php _e('Save Changes &raquo;', 'qtranslate') ?>" /></p>
 </form>
 <p class="qtranxs_notes"><a href="<?php echo admin_url('options-general.php?page=qtranslate-x#languages') ?>"><?php _e('back to configuration page', 'qtranslate') ?></a></p>
 <?php
@@ -652,7 +652,7 @@ echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 
 <?php
 	wp_nonce_field($my_nonce_action); // Prevent CSRF
 	qtranxf_language_form();
-	qtranxf_admin_section_end('languages',__('Add Language &raquo;', 'qtranslate'), null);
+	qtranxf_admin_section_end('languages',__('Add Language &raquo;', 'qtranslate'));
 ?>
 </form></div></div></div></div></div>
 <?php } ?>
