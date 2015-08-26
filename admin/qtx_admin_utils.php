@@ -823,7 +823,7 @@ function qtranxf_config_add_form( &$page_config, $nm){
 }
 
 /**
- * @since 3.4.1
+ * @since 3.4.5
  * check the WP Nonce - OK if POST is empty
  * @link https://codex.wordpress.org/Function_Reference/wp_nonce_field#Examples
  * @param  string $my_action   Name specified when generating the nonce
