@@ -29,7 +29,7 @@ class qTranslateXWidget extends WP_Widget {
 
 	function qTranslateXWidget() {
 		$widget_ops = array('classname' => 'qtranxs_widget', 'description' => __('Allows your visitors to choose a Language.', 'qtranslate') );
-		$this->WP_Widget('qtranslate', __('qTranslate Language Chooser', 'qtranslate'), $widget_ops);
+		parent::__construct('qtranslate', __('qTranslate Language Chooser', 'qtranslate'), $widget_ops);
 	}
 
 	function widget($args, $instance) {

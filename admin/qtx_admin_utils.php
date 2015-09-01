@@ -338,7 +338,7 @@ function qtranxf_get_term_joined($obj,$taxonomy=null) {
 			//'[:'.$q_config['language'].']'.$obj->name
 			$obj->name = qtranxf_join_b($q_config['term_name'][$obj->name]);
 			//qtranxf_dbg_log('qtranxf_get_term_joined: object:',$obj);
-		} 
+		}
 	}elseif(isset($q_config['term_name'][$obj])) {
 		$obj = qtranxf_join_b($q_config['term_name'][$obj]);
 		//'[:'.$q_config['language'].']'.$obj.
@@ -820,6 +820,18 @@ function qtranxf_json_encode($o){
 function qtranxf_config_add_form( &$page_config, $nm){
 	if(!isset($page_config['forms'][$nm])) $page_config['forms'][$nm] = array('fields' => array());
 	else if(!isset($page_config['forms'][$nm]['fields'])) $page_config['forms'][$nm]['fields'] = array();
+}
+
+/**
+ * @since 3.4.5
+ * check the WP Nonce - OK if POST is empty
+ * @link https://codex.wordpress.org/Function_Reference/wp_nonce_field#Examples
+ * @param  string $my_action   Name specified when generating the nonce
+ * @param  string $nonce_field Form input name for the nonce
+ * @return boolean             True if the nonce is ok
+ */
+function qtranxf_verify_nonce($my_action, $nonce_field = '_wpnonce') {
+	return empty( $_POST ) || check_admin_referer( $my_action, $nonce_field );
 }
 
 add_filter('manage_language_columns', 'qtranxf_language_columns');

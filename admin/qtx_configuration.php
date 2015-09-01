@@ -28,7 +28,7 @@ function qtranxf_language_form() {
 </div>
 <div class="form-field">
 	<label for="language_flag"><?php _e('Flag', 'qtranslate') ?></label>
-	<?php 
+	<?php
 	$files = array();
 	$flag_dir = trailingslashit(WP_CONTENT_DIR).$q_config['flag_location'];
 	if($dir_handle = @opendir($flag_dir)) {
@@ -163,10 +163,16 @@ function qtranxf_conf() {
 <h2><?php _e('Edit Language', 'qtranslate') ?></h2>
 <form action="" method="post" id="qtranxs-edit-language">
 <?php qtranxf_language_form() ?>
-<p class="submit"><input type="submit" name="submit" value="<?php _e('Save Changes &raquo;', 'qtranslate') ?>" /></p>
+<p class="submit"><input type="submit" name="submit" class="button-primary" value="<?php _e('Save Changes &raquo;', 'qtranslate') ?>" /></p>
 </form>
 <p class="qtranxs_notes"><a href="<?php echo admin_url('options-general.php?page=qtranslate-x#languages') ?>"><?php _e('back to configuration page', 'qtranslate') ?></a></p>
-<?php } else { ?>
+<?php
+	} else {
+		$my_nonce_action = 'qtranslate-x_configuration_form';
+		if ( ! qtranxf_verify_nonce( $my_nonce_action ) ) {
+			return;
+		}
+?>
 <h2><?php _e('Language Management (qTranslate Configuration)', 'qtranslate') ?></h2>
 <p class="qtranxs_heading" style="font-size: small"><?php printf(__('For help on how to configure qTranslate correctly, take a look at the <a href="%1$s">qTranslate FAQ</a> and the <a href="%2$s">Support Forum</a>.', 'qtranslate')
   , 'https://qtranslatexteam.wordpress.com/faq/'
@@ -204,6 +210,7 @@ echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 
 	echo '</h2>'.PHP_EOL;
 ?>
 	<form id="qtranxs-configuration-form" action="<?php echo $clean_uri;?>" method="post">
+	<?php wp_nonce_field($my_nonce_action); // Prevent CSRF ?>
 	<div class="tabs-content"><?php //<!-- tabs-container --> ?>
 	<?php qtranxf_admin_section_start('general');
 		$permalink_is_query = qtranxf_is_permalink_structure_query();
@@ -314,7 +321,7 @@ echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 
 				<td>
 					<label for="post_types"><?php _e('Post types enabled for translation:', 'qtranslate') ?></label><p>
 					<?php
-						$post_types = get_post_types(); 
+						$post_types = get_post_types();
 						foreach ( $post_types as $post_type ) {
 							if(!qtranxf_post_type_optional($post_type)) continue;
 							$post_type_off = isset($q_config['post_type_excluded']) && in_array($post_type,$q_config['post_type_excluded']);
@@ -643,8 +650,9 @@ echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 
 <h3><?php _e('Add Language', 'qtranslate') ?></h3>
 <form name="addlang" id="addlang" method="post" class="add:the-list: validate">
 <?php
+	wp_nonce_field($my_nonce_action); // Prevent CSRF
 	qtranxf_language_form();
-	qtranxf_admin_section_end('languages',__('Add Language &raquo;', 'qtranslate'), null);
+	qtranxf_admin_section_end('languages',__('Add Language &raquo;', 'qtranslate'));
 ?>
 </form></div></div></div></div></div>
 <?php } ?>

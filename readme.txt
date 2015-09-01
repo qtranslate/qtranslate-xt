@@ -4,7 +4,7 @@ Contributors: johnclause, chineseleper, Vavooon, grafcom
 Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, translation
 Requires at least: 3.9
 Tested up to: 4.3
-Stable tag: 3.4.4
+Stable tag: 3.4.6
 License: GPLv3 or later
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QEXEK3HX8AR6U
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -112,7 +112,7 @@ Read [migration instructions](https://qtranslatexteam.wordpress.com/migration/ "
 
 ### 3.4.2 stable ###
 * Fix: i18n configuration loading on the first installation, [WP Topic](https://wordpress.org/support/topic/update-that-makes-one-see-the-site-only-a-blank-page).
-* Fix for qtranxf_updateGettextDatabases. 
+* Fix for qtranxf_updateGettextDatabases.
 
 ### 3.4.1 stable ###
 * Fix: i18n configuration loading for integrated plugins.
