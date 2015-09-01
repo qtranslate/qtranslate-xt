@@ -102,6 +102,7 @@ Read [migration instructions](https://qtranslatexteam.wordpress.com/migration/ "
 
 ### 3.4.4 stable ###
 * Fix: link 'View Page': [WP Topic](https://wordpress.org/support/topic/wpadminbar-view-page-returns-to-home-page).
+* Fix: security exploit found by WordPress for vulnerable parameters `json_config_files` and `json_custom_i18n_config`.
 
 ### 3.4.3 stable ###
 * Fix: qtranxf_trim_words defined at front and admin side: [Issue #201](https://github.com/qTranslate-Team/qtranslate-x/issues/201).

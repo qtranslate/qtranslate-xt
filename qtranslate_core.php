@@ -731,7 +731,7 @@ function qtranxf_strftime($format, $date, $default = '', $before = '', $after = 
 	$search[] = '/(([^%])%3|^%3)/'; $replace[] = '${2}'.date('r',$date); // date r
 	$search[] = '/(([^%])%4|^%4)/'; $replace[] = '${2}'.$date; // date U
 	$format = preg_replace($search,$replace,$format);
-	qtranxf_dbg_log('qtranxf_strftime: $format='.$format.'; $date=',$date);
+	//qtranxf_dbg_log('qtranxf_strftime: $format='.$format.'; $date=',$date);
 	return $before.strftime($format, $date).$after;
 }
 
