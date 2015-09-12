@@ -9,10 +9,14 @@ if(WP_DEBUG){
 			//if(!file_exists($d)) mkdir($d);
 			//$f=$d.'/qtranslate.log';
 			$f=WP_CONTENT_DIR.'/debug-qtranslate.log';
-			if( $var !== 'novar' )
-				$msg .= var_export($var,true);
+			if(isset($_SERVER['REQUEST_TIME_FLOAT'])) $msg = $_SERVER['REQUEST_TIME_FLOAT'].': '.$msg;
+			if( $var !== 'novar' ){
+				//$msg .= var_export($var,true);
+				$msg .= print_r($var,true);
+			}
 			if($bt){
-				$msg .= PHP_EOL.'backtrace:'.PHP_EOL.var_export(debug_backtrace(),true);
+				//$msg .= PHP_EOL.'backtrace:'.PHP_EOL.var_export(debug_backtrace(),true);
+				$msg .= PHP_EOL.'backtrace:'.PHP_EOL.print_r(debug_backtrace(),true);
 			}
 			error_log($msg.PHP_EOL,3,$f);
 			if($exit) exit();

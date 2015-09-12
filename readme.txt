@@ -3,7 +3,7 @@ Developed by: qTranslate Team based on original code by Qian Qin
 Contributors: johnclause, chineseleper, Vavooon, grafcom
 Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, translation
 Requires at least: 3.9
-Tested up to: 4.3
+Tested up to: 4.4
 Stable tag: 3.4.5
 License: GPLv3 or later
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QEXEK3HX8AR6U
@@ -13,7 +13,7 @@ Adds a user-friendly multilingual dynamic content management.
 
 ## Description ##
 
-The plugin offers a way to maintain dynamic multilingual content on a WordPress site. While static localization is already excellently implemented and offered by WordPress framework through [po/mo file framework](https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/), it is still impossible to maintain dynamic multilingual content without an additional specialized plugin, to a kind of which qTranslate-X belongs to. For example, what if you need to make title, content and excerpt of a page to be multilingual? In theory, it could be handled by po/mo files, but in an insanely inconvenient way.
+The plugin offers a way to maintain dynamic multilingual content on a WordPress site. While static localization is already excellently implemented and offered by WordPress framework through [po/mo file framework](https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/), it is still impossible to maintain dynamic multilingual content without an additional specialized plugin, a kind of which qTranslate-X belongs to. For example, what if you need to make title, content and excerpt of a page to be multilingual? In theory, it could be handled by po/mo files, but in an insanely inconvenient way.
 
 To deal with dynamic content, qTranslate-X provides language switching buttons on applicable admin editing pages, which, once pressed, make all the text of multilingual fields to be filled with the language chosen. The instant language change happens locally in your browser without sending an additional request to the server, which makes it most convenient for bi-lingual or few-lingual sites, for example, owners of which perform the translation of content on their own. qTranslate-X does not provide a way to translate static strings, assuming that this part is already implemented and handled by the WordPress localization framework.
 
@@ -101,7 +101,9 @@ Read [migration instructions](https://qtranslatexteam.wordpress.com/migration/ "
 ## Changelog ##
 
 ### 3.4.5 stable ###
+* Enhancement: choice 'css_only' for $style argument in `qtranxf_generateLanguageSelectCode`: [Issue #259](https://github.com/qTranslate-Team/qtranslate-x/issues/259).
 * Enhancement: [Handle the CSRF vulnerability](https://github.com/qTranslate-Team/qtranslate-x/pull/230).
+* Fix: obsolete widget constructor [Issue #250](https://github.com/qTranslate-Team/qtranslate-x/issues/250)
 * Fix: Enable a language when gettext database fails to update on a private server: [Issue #236](https://github.com/qTranslate-Team/qtranslate-x/issues/236).
 
 

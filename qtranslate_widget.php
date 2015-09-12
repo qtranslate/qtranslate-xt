@@ -52,7 +52,14 @@ class qTranslateXWidget extends WP_Widget {
 			echo $before_title . $title . $after_title;
 		}
 		$type = $instance['type'];
-		if($type!='text'&&$type!='image'&&$type!='both'&&$type!='dropdown') $type='text';
+		switch($type){
+			case 'text':
+			case 'image':
+			case 'both':
+			case 'css_only':
+			case 'dropdown': break;
+			default: $type='text';
+		}
 		qtranxf_generateLanguageSelectCode($type, $this->id);
 		echo $after_widget;
 	}
