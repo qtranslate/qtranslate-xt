@@ -117,6 +117,7 @@ function qtranxf_generateLanguageSelectCode($style='', $id='') {
 	switch($style) {
 		case 'image':
 		case 'text':
+		case 'css_only':
 		case 'dropdown':
 			echo PHP_EOL.'<ul class="qtranxs_language_chooser" id="'.$id.'">'.PHP_EOL;
 			foreach(qtranxf_getSortedLanguages() as $language) {
@@ -133,10 +134,12 @@ function qtranxf_generateLanguageSelectCode($style='', $id='') {
 				//	echo ' class="qtranxs_flag qtranxs_flag_'.$language.'"';
 				elseif($style=='text')
 					echo ' class="qtranxs_text qtranxs_text_'.$language.'"';
+				elseif($style=='css_only')
+					echo ' class="qtranxs_css qtranxs_css_'.$language.'"';					
 				echo '>';
 				if($style=='image') echo '<img src="'.$flag_location.$q_config['flag'][$language].'" alt="'.$q_config['language_name'][$language].'" />';
 				echo '<span';
-				if($style=='image') echo ' style="display:none"';
+				if($style=='image' || $style=='css_only') echo ' style="display:none"';
 				echo '>'.$q_config['language_name'][$language].'</span>';
 				echo '</a></li>'.PHP_EOL;
 			}
