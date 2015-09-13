@@ -37,12 +37,17 @@ function qtranxf_updateGettextDatabasesEx($force = false, $only_for_language = '
 	set_time_limit(300);
 
 	$langs = empty($only_for_language) ? $q_config['enabled_languages'] : array($only_for_language);
+	$locales = $q_config['locale'];
 	$errcnt = 0;
 	foreach ( $result['translations'] as $translation ) {
 		$locale = $translation['language'];
 		$lang = null;
 		foreach($langs as $lng) {
-			if($q_config['locale'][$lng] != $locale) continue;
+			if(!isset($locales[$lng])){
+				$locales = qtranxf_language_configured('locale');
+				if(!isset($locales[$lng])) continue;
+			}
+			if($locales[$lng] != $locale) continue;
 			$lang = $lng;
 			break;
 		}
