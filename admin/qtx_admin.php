@@ -751,7 +751,7 @@ function qtranxf_admin_home_url($url, $path, $orig_scheme, $blog_id)
 	if(isset($_COOKIE[QTX_COOKIE_NAME_FRONT]))
 		$lang = $_COOKIE[QTX_COOKIE_NAME_FRONT];
 	else
-		$lang = $q_config['language_default'];
+		$lang = $q_config['default_language'];
 	//qtranxf_dbg_log('qtranxf_admin_home_url: url='.$url.'; path='.$path.'; orig_scheme='.$orig_scheme);
 	$url = qtranxf_get_url_for_language($url, $lang, !$q_config['hide_default_language'] || $lang != $q_config['default_language']);
 	//qtranxf_dbg_log('qtranxf_admin_home_url: url='.$url.'; lang='.$lang);
