@@ -5,11 +5,12 @@ if ( !defined( 'ABSPATH' ) ) exit;
 if(WP_DEBUG){
 	if(!function_exists('qtranxf_dbg_log')){
 		function qtranxf_dbg_log($msg,$var='novar',$bt=false,$exit=false){
-			//$d=ABSPATH.'/wp-logs';
-			//if(!file_exists($d)) mkdir($d);
-			//$f=$d.'/qtranslate.log';
-			$f=WP_CONTENT_DIR.'/debug-qtranslate.log';
-			if(isset($_SERVER['REQUEST_TIME_FLOAT'])) $msg = $_SERVER['REQUEST_TIME_FLOAT'].': '.$msg;
+			global $pagenow;
+			if(isset($_SERVER['REQUEST_TIME_FLOAT'])) $h = $_SERVER['REQUEST_TIME_FLOAT'];
+			if(!empty($pagenow)) $h = $h.'('.$pagenow.')';
+			$cf = current_filter();
+			if(!empty($cf)) $h = $h.'['.$cf.']';
+			if(!empty($h)) $msg = $h.': '.$msg;
 			if( $var !== 'novar' ){
 				//$msg .= var_export($var,true);
 				$msg .= print_r($var,true);
@@ -18,6 +19,10 @@ if(WP_DEBUG){
 				//$msg .= PHP_EOL.'backtrace:'.PHP_EOL.var_export(debug_backtrace(),true);
 				$msg .= PHP_EOL.'backtrace:'.PHP_EOL.print_r(debug_backtrace(),true);
 			}
+			//$d=ABSPATH.'/wp-logs';
+			//if(!file_exists($d)) mkdir($d);
+			//$f=$d.'/qtranslate.log';
+			$f=WP_CONTENT_DIR.'/debug-qtranslate.log';
 			error_log($msg.PHP_EOL,3,$f);
 			if($exit) exit();
 		}
