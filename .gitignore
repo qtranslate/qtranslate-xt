@@ -223,13 +223,7 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
-admin/js/obsolete/edit-nav-menus.js
-admin/js/obsolete/edit-options-general.js
-admin/js/obsolete/edit-options-general.min.js
-admin/js/obsolete/edit-post.min.js
-admin/js/obsolete/edit-tag.min.js
-admin/js/obsolete/edit-nav-menus.min.js
-admin/js/obsolete/edit-post.js
-admin/js/obsolete/edit-tags.min.js
-admin/js/obsolete/edit-tags.js
-admin/js/obsolete/edit-tag.js
+
+#Convenience
+*.min-orig.js
+admin/js/obsolete/*
