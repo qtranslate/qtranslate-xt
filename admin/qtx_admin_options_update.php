@@ -6,6 +6,7 @@ require_once(QTRANSLATE_DIR.'/admin/qtx_import_export.php');
 
 function qtranxf_editConfig(){
 	global $q_config;
+	if(!qtranxf_verify_nonce('qtranslate-x_configuration_form')) return;
 	// init some needed variables
 	if(!isset($q_config['url_info']['errors'])) $q_config['url_info']['errors'] = array();
 	if(!isset($q_config['url_info']['warnings'])) $q_config['url_info']['warnings'] = array();

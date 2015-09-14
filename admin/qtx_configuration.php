@@ -168,8 +168,8 @@ function qtranxf_conf() {
 <p class="qtranxs_notes"><a href="<?php echo admin_url('options-general.php?page=qtranslate-x#languages') ?>"><?php _e('back to configuration page', 'qtranslate') ?></a></p>
 <?php
 	} else {
-		$my_nonce_action = 'qtranslate-x_configuration_form';
-		if ( ! qtranxf_verify_nonce( $my_nonce_action ) ) {
+		$nonce_action = 'qtranslate-x_configuration_form';
+		if ( ! qtranxf_verify_nonce( $nonce_action ) ) {
 			return;
 		}
 ?>
@@ -210,7 +210,7 @@ echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 
 	echo '</h2>'.PHP_EOL;
 ?>
 	<form id="qtranxs-configuration-form" action="<?php echo $clean_uri;?>" method="post">
-	<?php wp_nonce_field($my_nonce_action); // Prevent CSRF ?>
+	<?php wp_nonce_field($nonce_action); // Prevent CSRF ?>
 	<div class="tabs-content"><?php //<!-- tabs-container --> ?>
 	<?php qtranxf_admin_section_start('general');
 		$permalink_is_query = qtranxf_is_permalink_structure_query();
@@ -707,7 +707,7 @@ class QTX_LanguageList extends WP_List_Table
 <h3><?php _e('Add Language', 'qtranslate') ?></h3>
 <form name="addlang" id="addlang" method="post" class="add:the-list: validate">
 <?php
-	wp_nonce_field($my_nonce_action); // Prevent CSRF
+	wp_nonce_field($nonce_action); // Prevent CSRF
 	qtranxf_language_form();
 	qtranxf_admin_section_end('languages',__('Add Language &raquo;', 'qtranslate'));
 ?>
