@@ -111,6 +111,6 @@ function qtranxf_admin_loadConfig(){
 	$admin_sections['import'] = __('Import', 'qtranslate').'/'.__('Export', 'qtranslate');
 	$admin_sections['languages'] = __('Languages', 'qtranslate');//always last section
 
-	qtranxf_add_admin_filters();
+	qtranxf_add_conf_filters();
 }
 //add_action('qtranslate_loadConfig','qtranxf_admin_loadConfig');

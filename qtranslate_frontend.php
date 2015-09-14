@@ -325,7 +325,6 @@ add_filter('wp_setup_nav_menu_item', 'qtranxf_wp_setup_nav_menu_item');
  */
 function qtranxf_translate_deep($value,$lang){
 	if(is_string($value)){
-		//qtranxf_dbg_log_if(!empty($_POST),'qtranxf_translate_deep('.current_filter().'): $lang='.$lang.'; $value: ',$value);
 		if(!qtranxf_isMultilingual($value))
 			return $value; //most frequent case
 		if(is_serialized( $value )){
@@ -334,7 +333,6 @@ function qtranxf_translate_deep($value,$lang){
 			return serialize($value);
 		}
 		$lang_value =  qtranxf_use_language($lang,$value);
-		//qtranxf_dbg_log_if(!empty($_POST),'qtranxf_translate_deep: $lang_value: ',$lang_value);
 		return $lang_value;
 	}else if(is_array($value)){
 		foreach($value as $k => $v){

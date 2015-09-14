@@ -415,7 +415,7 @@ function qtranxf_reloadConfig() {
 	global $q_config;
 	$url_info = isset($q_config['url_info']) ? $q_config['url_info'] : null;
 	//qtranxf_dbg_log('qtranxf_reloadConfig: $url_info: ',$url_info);
-	qtranxf_del_admin_filters();
+	qtranxf_del_conf_filters();
 	qtranxf_loadConfig();
 	qtranxf_admin_loadConfig();
 	if($url_info){

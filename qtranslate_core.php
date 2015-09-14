@@ -24,6 +24,7 @@ function qtranxf_init_language() {
 
 	if(WP_DEBUG){
 		$url_info['pagenow'] = $pagenow;
+		$url_info['REQUEST_METHOD'] = $_SERVER['REQUEST_METHOD'];
 		if(defined('WP_ADMIN')&&WP_ADMIN) $url_info['WP_ADMIN'] = true;
 		if(defined('DOING_AJAX')) $url_info['DOING_AJAX_POST'] = $_POST;
 		if(defined('DOING_CRON')) $url_info['DOING_CRON_POST'] = $_POST;
@@ -87,6 +88,21 @@ function qtranxf_init_language() {
 		}
 	}elseif(isset($url_info['doredirect'])){
 		$url_info['doredirect'] .= ' - cancelled by can_redirect';
+		//qtranxf_dbg_log('qtranxf_init_language: doredirect canceled: $url_info: ',$url_info);
+		/*
+		if(!empty($_POST)){
+			$lang = $q_config['language'];
+			$url_orig = $url_info['scheme'].'://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+			//qtranxf_dbg_log('qtranxf_init_language: !empty($_POST): $url_info: ',$url_info);
+			//qtranxf_dbg_log('qtranxf_init_language: !empty($_POST): $_SERVER: ',$_SERVER);
+			$uri = $_SERVER['REQUEST_URI'];
+			//$uri = qtranxf_convertURL('',$lang);
+			//qtranxf_dbg_log('qtranxf_init_language: !empty($_POST): $uri: ',$uri);
+			$_SERVER['REQUEST_URI'] = $uri;
+			$url_info['original_url'] = $uri;
+			$url_info['path'] = $uri;
+		}
+		*/
 	}
 
 	// fix url to prevent xss - how does this prevents xss?

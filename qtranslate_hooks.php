@@ -191,7 +191,7 @@ add_action('widgets_init', 'qtranxf_widget_init');
 
 //function qtranxf_blogname($nm)
 //{
-//	//qtranxf_dbg_log_if(!empty($_POST),'qtranxf_blogname: $nm: ',$nm);
+//	//qtranxf_dbg_log(!empty($_POST),'qtranxf_blogname: $nm: ',$nm);
 //	return qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($nm);
 //}
 //add_filter('option_blogname', 'qtranxf_blogname',5);

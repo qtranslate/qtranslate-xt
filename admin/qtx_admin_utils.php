@@ -495,6 +495,7 @@ function qtranxf_getLanguageEdit() {
 	return isset($_COOKIE['qtrans_edit_language']) ? $_COOKIE['qtrans_edit_language'] : $q_config['language'];
 }
 
+/*
 function qtranxf_language_columns($columns) {
 	return array(
 		'code' => _x('Code', 'Two-letter Language Code meant.', 'qtranslate'),
@@ -505,6 +506,8 @@ function qtranxf_language_columns($columns) {
 		'status3' => __('Stored', 'qtranslate')
 	);
 }
+add_filter('manage_language_columns', 'qtranxf_language_columns');
+*/
 
 function qtranxf_languageColumnHeader($columns){
 	$new_columns = array();
@@ -722,7 +725,7 @@ function qtranxf_disable_blog_title_filters($name)
 add_action( 'wp_head', 'qtranxf_disable_blog_title_filters' );
 */
 
-function qtranxf_add_admin_filters(){
+function qtranxf_add_conf_filters(){
 	global $q_config;
 	switch($q_config['editor_mode']){
 		case QTX_EDITOR_MODE_SINGLGE:
@@ -739,7 +742,7 @@ function qtranxf_add_admin_filters(){
 	}
 }
 
-function qtranxf_del_admin_filters(){
+function qtranxf_del_conf_filters(){
 	global $q_config;
 	remove_filter('gettext', 'qtranxf_gettext',0);
 	remove_filter('gettext_with_context', 'qtranxf_gettext_with_context',0);
@@ -834,7 +837,6 @@ function qtranxf_verify_nonce($my_action, $nonce_field = '_wpnonce') {
 	return empty( $_POST ) || check_admin_referer( $my_action, $nonce_field );
 }
 
-add_filter('manage_language_columns', 'qtranxf_language_columns');
 add_filter('manage_posts_columns', 'qtranxf_languageColumnHeader');
 add_filter('manage_posts_custom_column', 'qtranxf_languageColumn');
 add_filter('manage_pages_columns', 'qtranxf_languageColumnHeader');
