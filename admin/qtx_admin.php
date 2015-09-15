@@ -518,6 +518,19 @@ function qtranxf_admin_footer() {
 //add_action('admin_print_footer_scripts', 'qtranxf_admin_footer',999);
 add_action('admin_footer', 'qtranxf_admin_footer',999);
 
+function qtranxf_customize_allowed_urls($urls) {
+	global $q_config;
+	$home = home_url('/', is_ssl() ? 'https' : 'http');
+	$urls[] = $home;
+	foreach($q_config['enabled_languages'] as $lang){
+		$url = qtranxf_convertURL($home,$lang,true,true);
+		$urls[] = $url;
+	}
+	if($q_config['hide_default_language']) $urls[] = qtranxf_convertURL($home,$q_config['default_language'],true,false);
+	return $urls;
+}
+add_filter( 'customize_allowed_urls', 'qtranxf_customize_allowed_urls' );
+
 function qtranxf_customize_controls_print_footer_scripts() {
 	qtranxf_add_admin_footer_js(false);
 }
