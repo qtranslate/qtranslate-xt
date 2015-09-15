@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qTranslate-X 3.4.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-09-14 21:36-0600\n"
-"PO-Revision-Date: 2015-07-02 09:14+0100\n"
+"PO-Revision-Date: 2015-09-15 08:58+0100\n"
 "Last-Translator: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "Language-Team: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Language: pt_PT\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.8.2\n"
+"X-Generator: Poedit 1.8.4\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -303,8 +303,7 @@ msgstr "O idioma tem que ter um código Locale!"
 msgid "The Language must have a name!"
 msgstr "O idioma tem que ter um nome!"
 
-#: admin/qtx_admin_options_update.php:46
-#: admin/qtx_admin_options_update.php:158
+#: admin/qtx_admin_options_update.php:46 admin/qtx_admin_options_update.php:158
 msgid "Language Code has to be 2 characters long!"
 msgstr "O código do idioma tem que conter 2 caracteres!"
 
@@ -561,7 +560,7 @@ msgstr "Para ajuda sobre como configurar correctamente o qTranslate, veja as <a 
 #: admin/qtx_configuration.php:182
 #, php-format
 msgid "Plugin development is supported through your %sdonations to the development team%s."
-msgstr ""
+msgstr "O desenvolvimento do plugin é suportado pelos seus %sdonativos à equipa de desenvolvimento%s."
 
 #: admin/qtx_configuration.php:200 admin/qtx_configuration.php:528
 msgid "Configuration Inspector"
@@ -1238,7 +1237,7 @@ msgstr "Pode ser necessário uma actualização manual da opção \"%s\" ou do C
 
 #: admin/qtx_languages.php:68
 msgid "If you do not wish to customize this option, then reset it to the default by emptying its value."
-msgstr ""
+msgstr "Se não quiser personalizar esta opção, então reponha para os valores por omissão deixando o campo em branco."
 
 #: admin/qtx_languages.php:116
 msgid "Cannot delete Default Language!"
@@ -1249,9 +1248,9 @@ msgid "Gettext databases <strong>not</strong> updated:"
 msgstr "Base de dados Gettext <strong>não</strong> actualizada:"
 
 #: admin/qtx_update_gettext_db.php:63
-#, fuzzy, php-format
+#, php-format
 msgid "Failed to update gettext database for \"%s\": %s"
-msgstr "Actualizar bases de dados Gettext agora."
+msgstr "Falhou ao actualizar a base de dados gettext para \"%s\": %s"
 
 #: admin/qtx_user_options.php:11
 msgid "Translation options"
@@ -1605,7 +1604,7 @@ msgstr "Texto e imagem"
 
 #: qtranslate_widget.php:106
 msgid "CSS only. List of items with CSS classes defined, but with no image or text. An appropriate custom CSS is expected to be provided in this case."
-msgstr ""
+msgstr "Apenas CSS. Lista de items com classes CSS definida, mas sem imagem ou texto. Neste caso deverá fornecer um CSS personalizado apropriado."
 
 #: qtranslate_widget.php:107
 msgid "Dropdown Box"
