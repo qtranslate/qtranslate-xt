@@ -106,6 +106,7 @@ Read [migration instructions](https://qtranslatexteam.wordpress.com/migration/ "
 * Fix: Obsolete widget constructor [Issue #250](https://github.com/qTranslate-Team/qtranslate-x/issues/250)
 * Fix: Enable a language when gettext database fails to update on a private server: [Issue #236](https://github.com/qTranslate-Team/qtranslate-x/issues/236).
 * Fix: use table of list of languages for WP 4.3.
+* Fix: disabled translation of posts in `qtranxf_postsFilter` with filter 'raw'.
 * Enhancement: choice 'css_only' for $style argument in `qtranxf_generateLanguageSelectCode`: [Issue #259](https://github.com/qTranslate-Team/qtranslate-x/issues/259).
 * Enhancement: [Handle the CSRF vulnerability](https://github.com/qTranslate-Team/qtranslate-x/pull/230).
 
