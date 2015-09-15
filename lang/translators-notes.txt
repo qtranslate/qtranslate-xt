@@ -1,0 +1,7 @@
+For translators:
+https://qtranslatexteam.wordpress.com/translators/
+https://github.com/qTranslate-Team/qtranslate-x/tree/master/lang
+https://www.transifex.com/qtranslatexteam/qtranslate-x/
+
+For developers:
+http://docs.transifex.com/client/

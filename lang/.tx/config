@@ -1,0 +1,9 @@
+[main]
+host = https://www.transifex.com
+
+[qtranslate-x.qtranslatepot]
+file_filter = qtranslate-<lang>.po
+source_file = qtranslate.pot
+source_lang = en
+type = PO
+

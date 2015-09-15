@@ -209,6 +209,10 @@ pip-log.txt
 .coverage
 .tox
 
+#Transifex
+tx.exe
+tx
+
 #Translations
 # *.mo
 *.po.err
