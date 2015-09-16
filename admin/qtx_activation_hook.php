@@ -969,9 +969,8 @@ function qtranxf_admin_notices_new_options($nms,$ver,$url){
 	//echo __('One time message:', 'qtranslate'); echo ' ';
 	if(!empty($nms)){
 		$opns = '';
-		for($i = 0; $i < sizeof($nms); ++$i){
-			$nm = $nms[$i];
-			if($i) $opns .= ', ';
+		foreach($nms as $nm){
+			if(!empty($opns)) $opns .= ', ';
 			$opns .= '"'.__($nm, 'qtranslate').'"';
 		}
 		echo '<p>';

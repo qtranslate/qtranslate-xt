@@ -137,41 +137,25 @@ function qtranxf_conf() {
 	$clean_uri = $q_config['url_info']['qtranslate-settings-url'];
 	$clean_uri = apply_filters('qtranslate_clean_uri', $clean_uri);
 
-	// Generate XHTML
 	$pluginurl = plugin_dir_url( QTRANSLATE_FILE );
-/* ?>
-<?php
-	if (!empty($message)) :
-	foreach($message as $key => $msg){
-?>
-<div id="qtranxs_message_<?php echo $key ?>" class="updated fade"><p><strong><?php echo $msg; ?></strong></p></div>
-<?php } endif;
-	if (!empty($errors)) :
-	foreach($errors as $key => $msg){
-?>
-<div id="qtranxs_error_<?php echo $key ?>" class="error notice is-dismissible"><p><strong><span style="color: red;"><?php echo qtranxf_translate_wp('Error') ?></span><?php echo ':&nbsp;'.$msg ?></strong></p></div>
-<?php } endif;
-	if (!empty($q_config['url_info']['warnings'])) :
-	foreach($q_config['url_info']['warnings'] as $key => $msg){
-?>
-<div id="qtranxs_warning_<?php echo $key ?>" class="update-nag notice is-dismissible"><p><strong><span style="color: blue;"><?php echo qtranxf_translate_wp('Warning') ?></span><?php echo ':&nbsp;'.$msg ?></strong></p></div>
-<?php } unset($q_config['url_info']['warnings']); endif;
-*/
+	$nonce_action = 'qtranslate-x_configuration_form';
+	if ( ! qtranxf_verify_nonce( $nonce_action ) ) return;
+
+	// Generate XHTML
 ?>
 <div class="wrap">
 <?php if(isset($_GET['edit'])) { ?>
 <h2><?php _e('Edit Language', 'qtranslate') ?></h2>
 <form action="" method="post" id="qtranxs-edit-language">
-<?php qtranxf_language_form() ?>
+<?php
+	wp_nonce_field($nonce_action);
+	qtranxf_language_form()
+?>
 <p class="submit"><input type="submit" name="submit" class="button-primary" value="<?php _e('Save Changes &raquo;', 'qtranslate') ?>" /></p>
 </form>
 <p class="qtranxs_notes"><a href="<?php echo admin_url('options-general.php?page=qtranslate-x#languages') ?>"><?php _e('back to configuration page', 'qtranslate') ?></a></p>
 <?php
 	} else {
-		$nonce_action = 'qtranslate-x_configuration_form';
-		if ( ! qtranxf_verify_nonce( $nonce_action ) ) {
-			return;
-		}
 ?>
 <h2><?php _e('Language Management (qTranslate Configuration)', 'qtranslate') ?></h2>
 <p class="qtranxs_heading" style="font-size: small"><?php printf(__('For help on how to configure qTranslate correctly, take a look at the <a href="%1$s">qTranslate FAQ</a> and the <a href="%2$s">Support Forum</a>.', 'qtranslate')

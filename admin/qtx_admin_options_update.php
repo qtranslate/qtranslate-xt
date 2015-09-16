@@ -61,13 +61,10 @@ function qtranxf_editConfig(){
 					// remove old language
 					qtranxf_unsetLanguage($langs,$original_lang);
 					qtranxf_unsetLanguage($q_config,$original_lang);
-				}
-				if(in_array($original_lang,$q_config['enabled_languages'])) {
-					// was enabled, so set modified one to enabled too
-					for($i = 0; $i < sizeof($q_config['enabled_languages']); $i++) {
-						if($q_config['enabled_languages'][$i] == $original_lang) {
-							$q_config['enabled_languages'][$i] = $lang;
-						}
+					// if was enabled, set modified one to enabled too
+					foreach($q_config['enabled_languages'] as $k => $lang) {
+						if($lang != $original_lang) continue;
+						$q_config['enabled_languages'][$k] = $lang;
 					}
 				}
 				if($original_lang==$q_config['default_language']){
