@@ -22,8 +22,8 @@ function qtranxf_language_form() {
 ?>
 <input type="hidden" name="original_lang" value="<?php echo $original_lang; ?>" />
 <div class="form-field">
-	<label for="language_code"><?php _e('Language Code', 'qtranslate') ?></label>
-	<input name="language_code" id="language_code" type="text" value="<?php echo $language_code; ?>" size="2" maxlength="2"/>
+	<label for="language_code"><?php _e('Language Code', 'qtranslate') ?><br/></label>
+	<input name="language_code" id="language_ code" type="text" value="<?php echo $language_code; ?>" size="2" maxlength="2"/>
 	<p class="qtranxs_notes"><?php echo __('2-Letter <a href="http://www.w3.org/WAI/ER/IG/ert/iso639.htm#2letter">ISO Language Code</a> for the Language you want to insert. (Example: en)', 'qtranslate').'<br/>'.__('The language code is used in language tags and in URLs. It is case sensitive. Use of lower case for the language code is preferable, but not required. The code may be arbitrary chosen by site owner, although it is preferable to use already commonly accepted code if available. Once a language code is created and entries for this language are made, it is difficult to change it, please make a careful decision.', 'qtranslate') ?></p>
 </div>
 <div class="form-field">
@@ -68,37 +68,37 @@ function qtranxf_language_form() {
 //]]>
 </script>
 <div class="form-field">
-	<label for="language_name"><?php _e('Name', 'qtranslate'); echo ' '; _e('(in native alphabet)', 'qtranslate') ?></label>
+	<label for="language_name"><?php _e('Name', 'qtranslate'); echo ' '; _e('(in native alphabet)', 'qtranslate') ?><br/></label>
 	<input name="language_name" id="language_name" type="text" value="<?php echo $language_name; ?>"/>
 	<p class="qtranxs_notes"><?php _e('The Name of the language, which will be displayed on the site. (Example: English)', 'qtranslate') ?></p>
 </div>
 <div class="form-field">
-	<label for="language_locale"><?php _e('Locale', 'qtranslate') ?></label>
-	<input name="language_locale" id="language_locale" type="text" value="<?php echo $language_locale; ?>"  size="5" maxlength="5"/>
+	<label for="language_locale"><?php _e('Locale', 'qtranslate') ?><br/></label>
+	<input name="language_locale" id="language_locale" type="text" value="<?php echo $language_locale; ?>" />
 	<p class="qtranxs_notes">
 	<?php _e('PHP and Wordpress Locale for the language. (Example: en_US)', 'qtranslate') ?><br/>
 	<?php _e('You will need to install the .mo file for this language.', 'qtranslate') ?>
 	</p>
 </div>
 <div class="form-field">
-	<label for="language_locale_html"><?php _e('Locale at front-end', 'qtranslate') ?></label>
-	<input name="language_locale_html" id="language_locale_html" type="text" value="<?php echo $language_locale_html; ?>"  size="5" maxlength="5"/>
+	<label for="language_locale_html"><?php _e('Locale at front-end', 'qtranslate') ?><br/></label>
+	<input name="language_locale_html" id="language_locale_html" type="text" value="<?php echo $language_locale_html; ?>" />
 	<p class="qtranxs_notes">
 	<?php printf(__('Locale to be used in browser at front-end to set %s HTML attributes to specify alternative languages on a page. If left empty, then "%s" is used by default.', 'qtranslate'), '"hreflang"', __('Language Code', 'qtranslate')) ?><br/>
 	</p>
 </div>
 <div class="form-field">
-	<label for="language_date_format"><?php _e('Date Format', 'qtranslate') ?></label>
+	<label for="language_date_format"><?php _e('Date Format', 'qtranslate') ?><br/></label>
 	<input name="language_date_format" id="language_date_format" type="text" value="<?php echo $language_date_format; ?>"/>
 	<p class="qtranxs_notes"><?php _e('Depending on your Date / Time Conversion Mode, you can either enter a <a href="http://www.php.net/manual/function.strftime.php">strftime</a> (use %q for day suffix (st,nd,rd,th)) or <a href="http://www.php.net/manual/function.date.php">date</a> format. This field is optional. (Example: %A %B %e%q, %Y)', 'qtranslate') ?></p>
 </div>
 <div class="form-field">
-	<label for="language_time_format"><?php _e('Time Format', 'qtranslate') ?></label>
+	<label for="language_time_format"><?php _e('Time Format', 'qtranslate') ?><br/></label>
 	<input name="language_time_format" id="language_time_format" type="text" value="<?php echo $language_time_format; ?>"/>
 	<p class="qtranxs_notes"><?php _e('Depending on your Date / Time Conversion Mode, you can either enter a <a href="http://www.php.net/manual/function.strftime.php">strftime</a> or <a href="http://www.php.net/manual/function.date.php">date</a> format. This field is optional. (Example: %I:%M %p)', 'qtranslate') ?></p>
 </div>
 <div class="form-field">
-	<label for="language_na_message"><?php _e('Not Available Message', 'qtranslate') ?></label>
+	<label for="language_na_message"><?php _e('Not Available Message', 'qtranslate') ?><br/></label>
 	<input name="language_na_message" id="language_na_message" type="text" value="<?php echo esc_html($language_na_message); ?>"/>
 	<p class="qtranxs_notes">
 	<?php _e('Message to display if post is not available in the requested language. (Example: Sorry, this entry is only available in %LANG:, : and %.)', 'qtranslate') ?><br/>
