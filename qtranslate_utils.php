@@ -44,6 +44,11 @@ if(WP_DEBUG){
 		function qtranxf_dbg_echo_if($condition,$msg,$var='novar',$bt=false,$exit=false){
 			if($condition)qtranxf_dbg_echo($msg,$var,$bt,$exit);
 		}
+
+		function qtranxf_dbg_print_filters_log(){
+			global $wp_current_filter;
+			return qtranxf_dbg_log('qtranxf_dbg_print_filters_log: $wp_current_filter: ', $wp_current_filter );
+		}
 	}
 	assert_options(ASSERT_BAIL,true);
 

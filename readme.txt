@@ -4,7 +4,7 @@ Contributors: johnclause, chineseleper, Vavooon, grafcom
 Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, translation
 Requires at least: 3.9
 Tested up to: 4.4
-Stable tag: 3.4.5
+Stable tag: 3.4.6
 License: GPLv3 or later
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QEXEK3HX8AR6U
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -101,10 +101,11 @@ Read [migration instructions](https://qtranslatexteam.wordpress.com/migration/ "
 ## Changelog ##
 
 ### 3.4.5.1 ###
+* Enhancement: argument `$found` for `qtranxf_split_blocks`.
 * Enhancement: removed limit of 5 characters in language form for locale: [Issue #262](https://github.com/qTranslate-Team/qtranslate-x/issues/262);
 
 ### 3.4.5 stable ###
-* Fix: Crash on customize.php screen. No Language Switching Buttons on customize screen yet, some values are not translated, but raw multilingual values work.
+* Fix: Crash on customize.php screen. No Language Switching Buttons on customize screen yet, some values are not translated, but raw multilingual values work. [Issue #223](https://github.com/qTranslate-Team/qtranslate-x/issues/223).
 * Fix: Remove children of parent menu item deleted: [Issue #255](https://github.com/qTranslate-Team/qtranslate-x/issues/255).
 * Fix: Obsolete widget constructor [Issue #250](https://github.com/qTranslate-Team/qtranslate-x/issues/250)
 * Fix: Enable a language when gettext database fails to update on a private server: [Issue #236](https://github.com/qTranslate-Team/qtranslate-x/issues/236).

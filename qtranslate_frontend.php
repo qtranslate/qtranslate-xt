@@ -356,7 +356,6 @@ function qtranxf_translate_deep($value,$lang){
 function qtranxf_translate_option($value, $lang=null){
 	global $q_config;
 	if(!$lang) $lang = $q_config['language'];
-	//qtranxf_dbg_log('qtranxf_translate_option('.current_filter().'): $value: ', $value);
 	return qtranxf_translate_deep($value,$lang);
 }
 
