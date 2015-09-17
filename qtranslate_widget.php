@@ -56,6 +56,7 @@ class qTranslateXWidget extends WP_Widget {
 			case 'text':
 			case 'image':
 			case 'both':
+			case 'short':
 			case 'css_only':
 			case 'dropdown': break;
 			default: $type='text';
@@ -103,6 +104,7 @@ class qTranslateXWidget extends WP_Widget {
 <p><label for="<?php echo $this->get_field_id('type') ?>1"><input type="radio" name="<?php echo $this->get_field_name('type') ?>" id="<?php echo $this->get_field_id('type') ?>1" value="text"<?php echo ($type=='text')?' checked="checked"':'' ?>/> <?php _e('Text only', 'qtranslate') ?></label></p>
 <p><label for="<?php echo $this->get_field_id('type') ?>2"><input type="radio" name="<?php echo $this->get_field_name('type') ?>" id="<?php echo $this->get_field_id('type') ?>2" value="image"<?php echo ($type=='image')?' checked="checked"':'' ?>/> <?php _e('Image only', 'qtranslate') ?></label></p>
 <p><label for="<?php echo $this->get_field_id('type') ?>3"><input type="radio" name="<?php echo $this->get_field_name('type') ?>" id="<?php echo $this->get_field_id('type') ?>3" value="both"<?php echo ($type=='both')?' checked="checked"':'' ?>/> <?php _e('Text and Image', 'qtranslate') ?></label></p>
+<p><label for="<?php echo $this->get_field_id('type') ?>3"><input type="radio" name="<?php echo $this->get_field_name('type') ?>" id="<?php echo $this->get_field_id('type') ?>3" value="short"<?php echo ($type=='short')?' checked="checked"':'' ?>/> <?php _e('2 Letter ISO Code', 'qtranslate') ?></label></p>
 <p><label for="<?php echo $this->get_field_id('type') ?>4"><input type="radio" name="<?php echo $this->get_field_name('type') ?>" id="<?php echo $this->get_field_id('type') ?>4" value="css_only"<?php echo ($type=='css_only')?' checked="checked"':'' ?>/> <?php _e('CSS only. List of items with CSS classes defined, but with no image or text. An appropriate custom CSS is expected to be provided in this case.', 'qtranslate') ?></label></p>
 <p><label for="<?php echo $this->get_field_id('type') ?>5"><input type="radio" name="<?php echo $this->get_field_name('type') ?>" id="<?php echo $this->get_field_id('type') ?>5" value="dropdown"<?php echo ($type=='dropdown')?' checked="checked"':'' ?>/> <?php _e('Dropdown Box', 'qtranslate') ?></label></p>
 <p><label for="<?php echo $this->get_field_id('widget-css') ?>"><input type="checkbox" id="<?php echo $this->get_field_id('widget-css-on') ?>" name="<?php echo $this->get_field_name('widget-css-on') ?>" <?php checked($widget_css_on) ?>/><?php echo __('Widget CSS:', 'qtranslate') ?></label><br/><textarea class="widefat" rows="6" name="<?php echo $this->get_field_name('widget-css') ?>" id="<?php echo $this->get_field_id('widget-css') ?>"><?php echo esc_attr($widget_css) ?></textarea><br/><small><?php echo __('To reset to default, clear the text.', 'qtranslate').' '.__('To disable this inline CSS, clear the check box.', 'qtranslate').' '.sprintf(__('Other common CSS block for flag classes "%s" is loaded in the head of HTML and can be controlled with option "%s".', 'qtranslate'), 'qtranxs_flag_xx', __('Head inline CSS','qtranslate')) ?></small></p>
@@ -178,6 +180,18 @@ function qtranxf_generateLanguageSelectCode($style='', $id='') {
 				echo ' class="qtranxs_flag_'.$language.' qtranxs_flag_and_text" title="'.$q_config['language_name'][$language].'">';
 				//echo '<img src="'.$flag_location.$q_config['flag'][$language].'"></img>';
 				echo '<span>'.$q_config['language_name'][$language].'</span></a></li>'.PHP_EOL;
+			}
+			echo '</ul><div class="qtranxs_widget_end"></div>'.PHP_EOL;
+			break;
+		case 'short':
+			echo PHP_EOL.'<ul class="qtranxs_language_chooser" id="'.$id.'">'.PHP_EOL;
+			foreach(qtranxf_getSortedLanguages() as $language) {
+				echo '<li';
+				if($language == $q_config['language'])
+					echo ' class="active"';
+				echo '><a href="'.qtranxf_convertURL($url, $language, false, true).'"';
+				echo ' class="qtranxs_flag_'.$language.' qtranxs_flag_and_text" title="'.$q_config['language_name'][$language].'">';
+				echo '<span>'.$language.'</span></a></li>'.PHP_EOL;
 			}
 			echo '</ul><div class="qtranxs_widget_end"></div>'.PHP_EOL;
 			break;
