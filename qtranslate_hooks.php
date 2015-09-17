@@ -39,6 +39,15 @@ function qtranxf_localeForCurrentLanguage($locale){
 	return $locale_lang;
 }
 
+//add_action('after_setup_theme', 'qtranxf_after_theme_setup');
+//function qtranxf_after_theme_setup(){
+//	global $q_config;
+//	$locale = get_locale();
+//qtranxf_dbg_log('after_setup_theme: $q_config[language]: ',$q_config['language']);
+//qtranxf_dbg_log('after_setup_theme: $locale: ',$locale);
+//	//load_theme_textdomain('my_theme', get_template_directory() . '/languages');
+//}
+
 function qtranxf_useCurrentLanguageIfNotFoundShowEmpty($content) {
 	global $q_config;
 	return qtranxf_use($q_config['language'], $content, false, true);
@@ -179,6 +188,13 @@ add_action('widgets_init', 'qtranxf_widget_init');
 //add_filter('gettext', 'qtranxf_gettext',0);
 //add_filter('gettext_with_context', 'qtranxf_gettext_with_context',0);
 */
+
+//function qtranxf_blogname($nm)
+//{
+//	//qtranxf_dbg_log(!empty($_POST),'qtranxf_blogname: $nm: ',$nm);
+//	return qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($nm);
+//}
+//add_filter('option_blogname', 'qtranxf_blogname',5);
 
 add_filter('sanitize_title', 'qtranxf_useRawTitle',0, 3);
 

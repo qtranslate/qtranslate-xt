@@ -71,13 +71,14 @@ function qtranxf_test_meta_cache() {
 	"forms":{
 		"customize-controls":{
 			"fields":{
-				"blogname":{"jquery":"#customize-control-blogname input", "name":"customized[blogname]"},
-				"blogdescription":{"jquery":"#customize-control-blogdescription input", "name":"customized[blogdescription]"},
-				"preview-notice":{"jquery":"#customize-info span.preview-notice", "encode":"display"},
-				"head-title":{"jquery":"head title", "encode":"display"}
+				"blogname":{"jquery":"#customize-control-blogname input", "name":"blogname"},
+				"blogdescription":{"jquery":"#customize-control-blogdescription input", "name":"blogdescription"},
+				"preview-notice":{"jquery":"#customize-info span.preview-notice", "encode":"display"}
 			}
 		}
-	}
+	},
+	"js-conf":{"customize-conf":{"src":"./admin/js/customize-conf.min.js"}},
+	"js-exec":{"customize-exec":{"src":"./admin/js/customize-exec.min.js"}}
 }
 ,
 */

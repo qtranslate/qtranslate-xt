@@ -338,7 +338,7 @@ function qtranxf_get_term_joined($obj,$taxonomy=null) {
 			//'[:'.$q_config['language'].']'.$obj->name
 			$obj->name = qtranxf_join_b($q_config['term_name'][$obj->name]);
 			//qtranxf_dbg_log('qtranxf_get_term_joined: object:',$obj);
-		} 
+		}
 	}elseif(isset($q_config['term_name'][$obj])) {
 		$obj = qtranxf_join_b($q_config['term_name'][$obj]);
 		//'[:'.$q_config['language'].']'.$obj.
@@ -495,6 +495,7 @@ function qtranxf_getLanguageEdit() {
 	return isset($_COOKIE['qtrans_edit_language']) ? $_COOKIE['qtrans_edit_language'] : $q_config['language'];
 }
 
+/*
 function qtranxf_language_columns($columns) {
 	return array(
 		'code' => _x('Code', 'Two-letter Language Code meant.', 'qtranslate'),
@@ -505,6 +506,8 @@ function qtranxf_language_columns($columns) {
 		'status3' => __('Stored', 'qtranslate')
 	);
 }
+add_filter('manage_language_columns', 'qtranxf_language_columns');
+*/
 
 function qtranxf_languageColumnHeader($columns){
 	$new_columns = array();
@@ -722,7 +725,7 @@ function qtranxf_disable_blog_title_filters($name)
 add_action( 'wp_head', 'qtranxf_disable_blog_title_filters' );
 */
 
-function qtranxf_add_admin_filters(){
+function qtranxf_add_conf_filters(){
 	global $q_config;
 	switch($q_config['editor_mode']){
 		case QTX_EDITOR_MODE_SINGLGE:
@@ -739,7 +742,7 @@ function qtranxf_add_admin_filters(){
 	}
 }
 
-function qtranxf_del_admin_filters(){
+function qtranxf_del_conf_filters(){
 	global $q_config;
 	remove_filter('gettext', 'qtranxf_gettext',0);
 	remove_filter('gettext_with_context', 'qtranxf_gettext_with_context',0);
@@ -822,7 +825,18 @@ function qtranxf_config_add_form( &$page_config, $nm){
 	else if(!isset($page_config['forms'][$nm]['fields'])) $page_config['forms'][$nm]['fields'] = array();
 }
 
-add_filter('manage_language_columns', 'qtranxf_language_columns');
+/**
+ * @since 3.4.5
+ * check the WP Nonce - OK if POST is empty
+ * @link https://codex.wordpress.org/Function_Reference/wp_nonce_field#Examples
+ * @param  string $nonce_name  Name specified when generating the nonce
+ * @param  string $nonce_field Form input name for the nonce
+ * @return boolean             True if the nonce is ok
+ */
+function qtranxf_verify_nonce($nonce_name, $nonce_field = '_wpnonce') {
+	return empty( $_POST ) || check_admin_referer( $nonce_name, $nonce_field );
+}
+
 add_filter('manage_posts_columns', 'qtranxf_languageColumnHeader');
 add_filter('manage_posts_custom_column', 'qtranxf_languageColumn');
 add_filter('manage_pages_columns', 'qtranxf_languageColumnHeader');

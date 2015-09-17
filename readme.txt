@@ -3,8 +3,8 @@ Developed by: qTranslate Team based on original code by Qian Qin
 Contributors: johnclause, chineseleper, Vavooon, grafcom
 Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, translation
 Requires at least: 3.9
-Tested up to: 4.3
-Stable tag: 3.4.4
+Tested up to: 4.4
+Stable tag: 3.4.6
 License: GPLv3 or later
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QEXEK3HX8AR6U
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -13,7 +13,7 @@ Adds a user-friendly multilingual dynamic content management.
 
 ## Description ##
 
-The plugin offers a way to maintain dynamic multilingual content on a WordPress site. While static localization is already excellently implemented and offered by WordPress framework through [po/mo file framework](https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/), it is still impossible to maintain dynamic multilingual content without an additional specialized plugin, to a kind of which qTranslate-X belongs to. For example, what if you need to make title, content and excerpt of a page to be multilingual? In theory, it could be handled by po/mo files, but in an insanely inconvenient way.
+The plugin offers a way to maintain dynamic multilingual content on a WordPress site. While static localization is already excellently implemented and offered by WordPress framework through [po/mo file framework](https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/), it is still impossible to maintain dynamic multilingual content without an additional specialized plugin, a kind of which qTranslate-X belongs to. For example, what if you need to make title, content and excerpt of a page to be multilingual? In theory, it could be handled by po/mo files, but in an insanely inconvenient way.
 
 To deal with dynamic content, qTranslate-X provides language switching buttons on applicable admin editing pages, which, once pressed, make all the text of multilingual fields to be filled with the language chosen. The instant language change happens locally in your browser without sending an additional request to the server, which makes it most convenient for bi-lingual or few-lingual sites, for example, owners of which perform the translation of content on their own. qTranslate-X does not provide a way to translate static strings, assuming that this part is already implemented and handled by the WordPress localization framework.
 
@@ -100,8 +100,24 @@ Read [migration instructions](https://qtranslatexteam.wordpress.com/migration/ "
 
 ## Changelog ##
 
+### 3.4.5.1 ###
+* Enhancement: argument `$found` for `qtranxf_split_blocks`.
+* Enhancement: removed limit of 5 characters in language form for locale: [Issue #262](https://github.com/qTranslate-Team/qtranslate-x/issues/262);
+
+### 3.4.5 stable ###
+* Fix: Crash on customize.php screen. No Language Switching Buttons on customize screen yet, some values are not translated, but raw multilingual values work. [Issue #223](https://github.com/qTranslate-Team/qtranslate-x/issues/223).
+* Fix: Remove children of parent menu item deleted: [Issue #255](https://github.com/qTranslate-Team/qtranslate-x/issues/255).
+* Fix: Obsolete widget constructor [Issue #250](https://github.com/qTranslate-Team/qtranslate-x/issues/250)
+* Fix: Enable a language when gettext database fails to update on a private server: [Issue #236](https://github.com/qTranslate-Team/qtranslate-x/issues/236).
+* Fix: use table of list of languages for WP 4.3.
+* Fix: disabled translation of posts in `qtranxf_postsFilter` with filter 'raw'.
+* Enhancement: `home_url` on admin side now returns url of current front end language - this helps on customize screen.
+* Enhancement: choice 'css_only' for $style argument in `qtranxf_generateLanguageSelectCode`: [Issue #259](https://github.com/qTranslate-Team/qtranslate-x/issues/259).
+* Enhancement: [Handle the CSRF vulnerability](https://github.com/qTranslate-Team/qtranslate-x/pull/230).
+
 ### 3.4.4 stable ###
 * Fix: link 'View Page': [WP Topic](https://wordpress.org/support/topic/wpadminbar-view-page-returns-to-home-page).
+* Fix: security exploit found by WordPress for vulnerable parameters `json_config_files` and `json_custom_i18n_config`: [report](https://qtranslatexteam.wordpress.com/2015/09/03/why-qtranslate-x-disappeared-from-wordpress-repository).
 
 ### 3.4.3 stable ###
 * Fix: qtranxf_trim_words defined at front and admin side: [Issue #201](https://github.com/qTranslate-Team/qtranslate-x/issues/201).
@@ -111,7 +127,7 @@ Read [migration instructions](https://qtranslatexteam.wordpress.com/migration/ "
 
 ### 3.4.2 stable ###
 * Fix: i18n configuration loading on the first installation, [WP Topic](https://wordpress.org/support/topic/update-that-makes-one-see-the-site-only-a-blank-page).
-* Fix for qtranxf_updateGettextDatabases. 
+* Fix for qtranxf_updateGettextDatabases.
 
 ### 3.4.1 stable ###
 * Fix: i18n configuration loading for integrated plugins.

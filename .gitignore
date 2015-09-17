@@ -209,6 +209,10 @@ pip-log.txt
 .coverage
 .tox
 
+#Transifex
+tx.exe
+tx
+
 #Translations
 # *.mo
 *.po.err
@@ -223,3 +227,7 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+
+#Convenience
+*.min-orig.js
+admin/js/obsolete/*

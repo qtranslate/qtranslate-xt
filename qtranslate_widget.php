@@ -29,7 +29,7 @@ class qTranslateXWidget extends WP_Widget {
 
 	function qTranslateXWidget() {
 		$widget_ops = array('classname' => 'qtranxs_widget', 'description' => __('Allows your visitors to choose a Language.', 'qtranslate') );
-		$this->WP_Widget('qtranslate', __('qTranslate Language Chooser', 'qtranslate'), $widget_ops);
+		parent::__construct('qtranslate', __('qTranslate Language Chooser', 'qtranslate'), $widget_ops);
 	}
 
 	function widget($args, $instance) {
@@ -52,7 +52,14 @@ class qTranslateXWidget extends WP_Widget {
 			echo $before_title . $title . $after_title;
 		}
 		$type = $instance['type'];
-		if($type!='text'&&$type!='image'&&$type!='both'&&$type!='dropdown') $type='text';
+		switch($type){
+			case 'text':
+			case 'image':
+			case 'both':
+			case 'css_only':
+			case 'dropdown': break;
+			default: $type='text';
+		}
 		qtranxf_generateLanguageSelectCode($type, $this->id);
 		echo $after_widget;
 	}
@@ -96,7 +103,8 @@ class qTranslateXWidget extends WP_Widget {
 <p><label for="<?php echo $this->get_field_id('type') ?>1"><input type="radio" name="<?php echo $this->get_field_name('type') ?>" id="<?php echo $this->get_field_id('type') ?>1" value="text"<?php echo ($type=='text')?' checked="checked"':'' ?>/> <?php _e('Text only', 'qtranslate') ?></label></p>
 <p><label for="<?php echo $this->get_field_id('type') ?>2"><input type="radio" name="<?php echo $this->get_field_name('type') ?>" id="<?php echo $this->get_field_id('type') ?>2" value="image"<?php echo ($type=='image')?' checked="checked"':'' ?>/> <?php _e('Image only', 'qtranslate') ?></label></p>
 <p><label for="<?php echo $this->get_field_id('type') ?>3"><input type="radio" name="<?php echo $this->get_field_name('type') ?>" id="<?php echo $this->get_field_id('type') ?>3" value="both"<?php echo ($type=='both')?' checked="checked"':'' ?>/> <?php _e('Text and Image', 'qtranslate') ?></label></p>
-<p><label for="<?php echo $this->get_field_id('type') ?>4"><input type="radio" name="<?php echo $this->get_field_name('type') ?>" id="<?php echo $this->get_field_id('type') ?>4" value="dropdown"<?php echo ($type=='dropdown')?' checked="checked"':'' ?>/> <?php _e('Dropdown Box', 'qtranslate') ?></label></p>
+<p><label for="<?php echo $this->get_field_id('type') ?>4"><input type="radio" name="<?php echo $this->get_field_name('type') ?>" id="<?php echo $this->get_field_id('type') ?>4" value="css_only"<?php echo ($type=='css_only')?' checked="checked"':'' ?>/> <?php _e('CSS only. List of items with CSS classes defined, but with no image or text. An appropriate custom CSS is expected to be provided in this case.', 'qtranslate') ?></label></p>
+<p><label for="<?php echo $this->get_field_id('type') ?>5"><input type="radio" name="<?php echo $this->get_field_name('type') ?>" id="<?php echo $this->get_field_id('type') ?>5" value="dropdown"<?php echo ($type=='dropdown')?' checked="checked"':'' ?>/> <?php _e('Dropdown Box', 'qtranslate') ?></label></p>
 <p><label for="<?php echo $this->get_field_id('widget-css') ?>"><input type="checkbox" id="<?php echo $this->get_field_id('widget-css-on') ?>" name="<?php echo $this->get_field_name('widget-css-on') ?>" <?php checked($widget_css_on) ?>/><?php echo __('Widget CSS:', 'qtranslate') ?></label><br/><textarea class="widefat" rows="6" name="<?php echo $this->get_field_name('widget-css') ?>" id="<?php echo $this->get_field_id('widget-css') ?>"><?php echo esc_attr($widget_css) ?></textarea><br/><small><?php echo __('To reset to default, clear the text.', 'qtranslate').' '.__('To disable this inline CSS, clear the check box.', 'qtranslate').' '.sprintf(__('Other common CSS block for flag classes "%s" is loaded in the head of HTML and can be controlled with option "%s".', 'qtranslate'), 'qtranxs_flag_xx', __('Head inline CSS','qtranslate')) ?></small></p>
 <?php
 /*
@@ -117,6 +125,7 @@ function qtranxf_generateLanguageSelectCode($style='', $id='') {
 	switch($style) {
 		case 'image':
 		case 'text':
+		case 'css_only':
 		case 'dropdown':
 			echo PHP_EOL.'<ul class="qtranxs_language_chooser" id="'.$id.'">'.PHP_EOL;
 			foreach(qtranxf_getSortedLanguages() as $language) {
@@ -133,10 +142,12 @@ function qtranxf_generateLanguageSelectCode($style='', $id='') {
 				//	echo ' class="qtranxs_flag qtranxs_flag_'.$language.'"';
 				elseif($style=='text')
 					echo ' class="qtranxs_text qtranxs_text_'.$language.'"';
+				elseif($style=='css_only')
+					echo ' class="qtranxs_css qtranxs_css_'.$language.'"';
 				echo '>';
 				if($style=='image') echo '<img src="'.$flag_location.$q_config['flag'][$language].'" alt="'.$q_config['language_name'][$language].'" />';
 				echo '<span';
-				if($style=='image') echo ' style="display:none"';
+				if($style=='image' || $style=='css_only') echo ' style="display:none"';
 				echo '>'.$q_config['language_name'][$language].'</span>';
 				echo '</a></li>'.PHP_EOL;
 			}

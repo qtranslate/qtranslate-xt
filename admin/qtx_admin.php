@@ -63,7 +63,6 @@ function qtranxf_regroup_translations_for( $type, $edit_lang, $default_lang ) {
 }
 
 function qtranxf_collect_translations_posted() {
-	//qtranxf_dbg_log('"plugins_loaded(5)": qtranxf_collect_translations_posted: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
 	//qtranxf_dbg_log('qtranxf_collect_translations_posted: REQUEST: ', $_REQUEST);
 	//qtranxf_dbg_log('qtranxf_collect_translations_posted: POST: ', $_POST);
 	//qtranxf_dbg_log('qtranxf_collect_translations_posted: count(REQUEST): ', count($_REQUEST, COUNT_RECURSIVE));
@@ -343,6 +342,7 @@ function qtranxf_add_admin_footer_js ( $enqueue_script=false ) {
 	global $q_config;
 	$post_type = qtranxf_post_type();
 	$page_config = qtranxf_get_admin_page_config_post_type($post_type);
+	//qtranxf_dbg_log('qtranxf_add_admin_footer_js: $page_config: ',$page_config);
 	if(empty($page_config)) return;
 
 	wp_dequeue_script('autosave');
@@ -502,12 +502,10 @@ function qtranxf_add_admin_css () {
 }
 
 function qtranxf_admin_head() {
-	//qtranxf_dbg_log('"admin_head": qtranxf_admin_head: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
 	//wp_enqueue_script( 'jquery' );
 	//qtranxf_add_css();//Since 3.2.5 no longer needed
 	qtranxf_add_admin_css();
 	qtranxf_add_admin_head_js();
-	//Since 3.2.7 qtranxf_optionFilter('disable');//why this is here?
 }
 add_action('admin_head', 'qtranxf_admin_head');
 
@@ -520,6 +518,24 @@ function qtranxf_admin_footer() {
 //add_action('admin_print_footer_scripts', 'qtranxf_admin_footer',999);
 add_action('admin_footer', 'qtranxf_admin_footer',999);
 
+function qtranxf_customize_allowed_urls($urls) {
+	global $q_config;
+	$home = home_url('/', is_ssl() ? 'https' : 'http');
+	$urls[] = $home;
+	foreach($q_config['enabled_languages'] as $lang){
+		$url = qtranxf_convertURL($home,$lang,true,true);
+		$urls[] = $url;
+	}
+	if($q_config['hide_default_language']) $urls[] = qtranxf_convertURL($home,$q_config['default_language'],true,false);
+	return $urls;
+}
+add_filter( 'customize_allowed_urls', 'qtranxf_customize_allowed_urls' );
+
+function qtranxf_customize_controls_print_footer_scripts() {
+	qtranxf_add_admin_footer_js(false);
+}
+//add_action( 'customize_controls_print_footer_scripts', 'qtranxf_customize_controls_print_footer_scripts',999);
+//add_action( 'customize_controls_print_styles', 'qtranxf_add_admin_css');
 
 /** @since 3.4 */
 function qtranxf_settings_page() {
@@ -736,6 +752,33 @@ function qtranxf_get_terms_args($args) {
 }
 add_filter('get_terms_args', 'qtranxf_get_terms_args');
 //apply_filters( 'get_terms_args', $args, $taxonomies );
+
+/**
+ * Encode front end language on home_url, since, on admin side, it is mostly in use to create links to a preview pages.
+ * @since 3.4.5
+*/
+function qtranxf_admin_home_url($url, $path, $orig_scheme, $blog_id)
+{
+	global $q_config;
+	//qtranxf_dbg_log('qtranxf_admin_home_url: $_COOKIE: ', $_COOKIE);
+	if(isset($_COOKIE[QTX_COOKIE_NAME_FRONT]))
+		$lang = $_COOKIE[QTX_COOKIE_NAME_FRONT];
+	else
+		$lang = $q_config['default_language'];
+	//qtranxf_dbg_log('qtranxf_admin_home_url: url='.$url.'; path='.$path.'; orig_scheme='.$orig_scheme);
+	$url = qtranxf_get_url_for_language($url, $lang, !$q_config['hide_default_language'] || $lang != $q_config['default_language']);
+	//qtranxf_dbg_log('qtranxf_admin_home_url: url='.$url.'; lang='.$lang);
+	return $url;
+}
+
+function qtranxf_add_admin_filters()
+{
+	global $q_config;
+	if($q_config['url_mode'] != QTX_URL_QUERY){//otherwise '?' may interfere with WP code
+		add_filter('home_url', 'qtranxf_admin_home_url', 5, 4);
+	}
+}
+qtranxf_add_admin_filters();
 
 add_action('admin_head-nav-menus.php', 'qtranxf_add_nav_menu_metabox');
 add_action('admin_menu', 'qtranxf_admin_menu', 999);

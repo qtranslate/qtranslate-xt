@@ -22,13 +22,13 @@ function qtranxf_language_form() {
 ?>
 <input type="hidden" name="original_lang" value="<?php echo $original_lang; ?>" />
 <div class="form-field">
-	<label for="language_code"><?php _e('Language Code', 'qtranslate') ?></label>
-	<input name="language_code" id="language_code" type="text" value="<?php echo $language_code; ?>" size="2" maxlength="2"/>
+	<label for="language_code"><?php _e('Language Code', 'qtranslate') ?><br/></label>
+	<input name="language_code" id="language_ code" type="text" value="<?php echo $language_code; ?>" size="2" maxlength="2"/>
 	<p class="qtranxs_notes"><?php echo __('2-Letter <a href="http://www.w3.org/WAI/ER/IG/ert/iso639.htm#2letter">ISO Language Code</a> for the Language you want to insert. (Example: en)', 'qtranslate').'<br/>'.__('The language code is used in language tags and in URLs. It is case sensitive. Use of lower case for the language code is preferable, but not required. The code may be arbitrary chosen by site owner, although it is preferable to use already commonly accepted code if available. Once a language code is created and entries for this language are made, it is difficult to change it, please make a careful decision.', 'qtranslate') ?></p>
 </div>
 <div class="form-field">
 	<label for="language_flag"><?php _e('Flag', 'qtranslate') ?></label>
-	<?php 
+	<?php
 	$files = array();
 	$flag_dir = trailingslashit(WP_CONTENT_DIR).$q_config['flag_location'];
 	if($dir_handle = @opendir($flag_dir)) {
@@ -68,37 +68,37 @@ function qtranxf_language_form() {
 //]]>
 </script>
 <div class="form-field">
-	<label for="language_name"><?php _e('Name', 'qtranslate'); echo ' '; _e('(in native alphabet)', 'qtranslate') ?></label>
+	<label for="language_name"><?php _e('Name', 'qtranslate'); echo ' '; _e('(in native alphabet)', 'qtranslate') ?><br/></label>
 	<input name="language_name" id="language_name" type="text" value="<?php echo $language_name; ?>"/>
 	<p class="qtranxs_notes"><?php _e('The Name of the language, which will be displayed on the site. (Example: English)', 'qtranslate') ?></p>
 </div>
 <div class="form-field">
-	<label for="language_locale"><?php _e('Locale', 'qtranslate') ?></label>
-	<input name="language_locale" id="language_locale" type="text" value="<?php echo $language_locale; ?>"  size="5" maxlength="5"/>
+	<label for="language_locale"><?php _e('Locale', 'qtranslate') ?><br/></label>
+	<input name="language_locale" id="language_locale" type="text" value="<?php echo $language_locale; ?>" />
 	<p class="qtranxs_notes">
 	<?php _e('PHP and Wordpress Locale for the language. (Example: en_US)', 'qtranslate') ?><br/>
 	<?php _e('You will need to install the .mo file for this language.', 'qtranslate') ?>
 	</p>
 </div>
 <div class="form-field">
-	<label for="language_locale_html"><?php _e('Locale at front-end', 'qtranslate') ?></label>
-	<input name="language_locale_html" id="language_locale_html" type="text" value="<?php echo $language_locale_html; ?>"  size="5" maxlength="5"/>
+	<label for="language_locale_html"><?php _e('Locale at front-end', 'qtranslate') ?><br/></label>
+	<input name="language_locale_html" id="language_locale_html" type="text" value="<?php echo $language_locale_html; ?>" />
 	<p class="qtranxs_notes">
 	<?php printf(__('Locale to be used in browser at front-end to set %s HTML attributes to specify alternative languages on a page. If left empty, then "%s" is used by default.', 'qtranslate'), '"hreflang"', __('Language Code', 'qtranslate')) ?><br/>
 	</p>
 </div>
 <div class="form-field">
-	<label for="language_date_format"><?php _e('Date Format', 'qtranslate') ?></label>
+	<label for="language_date_format"><?php _e('Date Format', 'qtranslate') ?><br/></label>
 	<input name="language_date_format" id="language_date_format" type="text" value="<?php echo $language_date_format; ?>"/>
 	<p class="qtranxs_notes"><?php _e('Depending on your Date / Time Conversion Mode, you can either enter a <a href="http://www.php.net/manual/function.strftime.php">strftime</a> (use %q for day suffix (st,nd,rd,th)) or <a href="http://www.php.net/manual/function.date.php">date</a> format. This field is optional. (Example: %A %B %e%q, %Y)', 'qtranslate') ?></p>
 </div>
 <div class="form-field">
-	<label for="language_time_format"><?php _e('Time Format', 'qtranslate') ?></label>
+	<label for="language_time_format"><?php _e('Time Format', 'qtranslate') ?><br/></label>
 	<input name="language_time_format" id="language_time_format" type="text" value="<?php echo $language_time_format; ?>"/>
 	<p class="qtranxs_notes"><?php _e('Depending on your Date / Time Conversion Mode, you can either enter a <a href="http://www.php.net/manual/function.strftime.php">strftime</a> or <a href="http://www.php.net/manual/function.date.php">date</a> format. This field is optional. (Example: %I:%M %p)', 'qtranslate') ?></p>
 </div>
 <div class="form-field">
-	<label for="language_na_message"><?php _e('Not Available Message', 'qtranslate') ?></label>
+	<label for="language_na_message"><?php _e('Not Available Message', 'qtranslate') ?><br/></label>
 	<input name="language_na_message" id="language_na_message" type="text" value="<?php echo esc_html($language_na_message); ?>"/>
 	<p class="qtranxs_notes">
 	<?php _e('Message to display if post is not available in the requested language. (Example: Sorry, this entry is only available in %LANG:, : and %.)', 'qtranslate') ?><br/>
@@ -137,41 +137,33 @@ function qtranxf_conf() {
 	$clean_uri = $q_config['url_info']['qtranslate-settings-url'];
 	$clean_uri = apply_filters('qtranslate_clean_uri', $clean_uri);
 
-	// Generate XHTML
 	$pluginurl = plugin_dir_url( QTRANSLATE_FILE );
-/* ?>
-<?php
-	if (!empty($message)) :
-	foreach($message as $key => $msg){
-?>
-<div id="qtranxs_message_<?php echo $key ?>" class="updated fade"><p><strong><?php echo $msg; ?></strong></p></div>
-<?php } endif;
-	if (!empty($errors)) :
-	foreach($errors as $key => $msg){
-?>
-<div id="qtranxs_error_<?php echo $key ?>" class="error notice is-dismissible"><p><strong><span style="color: red;"><?php echo qtranxf_translate_wp('Error') ?></span><?php echo ':&nbsp;'.$msg ?></strong></p></div>
-<?php } endif;
-	if (!empty($q_config['url_info']['warnings'])) :
-	foreach($q_config['url_info']['warnings'] as $key => $msg){
-?>
-<div id="qtranxs_warning_<?php echo $key ?>" class="update-nag notice is-dismissible"><p><strong><span style="color: blue;"><?php echo qtranxf_translate_wp('Warning') ?></span><?php echo ':&nbsp;'.$msg ?></strong></p></div>
-<?php } unset($q_config['url_info']['warnings']); endif;
-*/
+	$nonce_action = 'qtranslate-x_configuration_form';
+	if ( ! qtranxf_verify_nonce( $nonce_action ) ) return;
+
+	// Generate XHTML
 ?>
 <div class="wrap">
 <?php if(isset($_GET['edit'])) { ?>
 <h2><?php _e('Edit Language', 'qtranslate') ?></h2>
 <form action="" method="post" id="qtranxs-edit-language">
-<?php qtranxf_language_form() ?>
-<p class="submit"><input type="submit" name="submit" value="<?php _e('Save Changes &raquo;', 'qtranslate') ?>" /></p>
+<?php
+	wp_nonce_field($nonce_action);
+	qtranxf_language_form()
+?>
+<p class="submit"><input type="submit" name="submit" class="button-primary" value="<?php _e('Save Changes &raquo;', 'qtranslate') ?>" /></p>
 </form>
 <p class="qtranxs_notes"><a href="<?php echo admin_url('options-general.php?page=qtranslate-x#languages') ?>"><?php _e('back to configuration page', 'qtranslate') ?></a></p>
-<?php } else { ?>
+<?php
+	} else {
+?>
 <h2><?php _e('Language Management (qTranslate Configuration)', 'qtranslate') ?></h2>
 <p class="qtranxs_heading" style="font-size: small"><?php printf(__('For help on how to configure qTranslate correctly, take a look at the <a href="%1$s">qTranslate FAQ</a> and the <a href="%2$s">Support Forum</a>.', 'qtranslate')
   , 'https://qtranslatexteam.wordpress.com/faq/'
 //, 'https://wordpress.org/plugins/qtranslate-x/faq/'
-  , 'https://wordpress.org/support/plugin/qtranslate-x') ?></p>
+  , 'https://wordpress.org/support/plugin/qtranslate-x');
+	echo '<br><small><em>';
+	printf(__('Plugin development is supported through your %sdonations to the development team%s.','qtranslate'),'<a href="https://qtranslatexteam.wordpress.com/donations/" target="_blank">', '</a>') ?></em></small></p>
 <?php if(isset($_GET['config_inspector'])) {
 
 	$admin_config = $q_config['admin_config'];
@@ -204,6 +196,7 @@ echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 
 	echo '</h2>'.PHP_EOL;
 ?>
 	<form id="qtranxs-configuration-form" action="<?php echo $clean_uri;?>" method="post">
+	<?php wp_nonce_field($nonce_action); // Prevent CSRF ?>
 	<div class="tabs-content"><?php //<!-- tabs-container --> ?>
 	<?php qtranxf_admin_section_start('general');
 		$permalink_is_query = qtranxf_is_permalink_structure_query();
@@ -314,7 +307,7 @@ echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 
 				<td>
 					<label for="post_types"><?php _e('Post types enabled for translation:', 'qtranslate') ?></label><p>
 					<?php
-						$post_types = get_post_types(); 
+						$post_types = get_post_types();
 						foreach ( $post_types as $post_type ) {
 							if(!qtranxf_post_type_optional($post_type)) continue;
 							$post_type_off = isset($q_config['post_type_excluded']) && in_array($post_type,$q_config['post_type_excluded']);
@@ -504,7 +497,7 @@ echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 
 			<tr valign="top">
 				<th scope="row"><?php _e('Configuration Files', 'qtranslate') ?></th>
 				<td><label for="qtranxs_config_files" class="qtranxs_explanation"><?php printf(__('List of configuration files. Unless prefixed with "%s", paths are relative to %s variable: %s. Absolute paths are also acceptable.', 'qtranslate'), './', 'WP_CONTENT_DIR', trailingslashit(WP_CONTENT_DIR)) ?></label>
-				<br/><textarea name="json_config_files" id="qtranxs_config_files" rows="4" style="width:100%"><?php if(isset($_POST['json_config_files'])) echo $_POST['json_config_files']; else echo implode(PHP_EOL,$q_config['config_files']) ?></textarea>
+				<br/><textarea name="json_config_files" id="qtranxs_config_files" rows="4" style="width:100%"><?php if(isset($_POST['json_config_files'])) echo sanitize_text_field(stripslashes($_POST['json_config_files'])); else echo implode(PHP_EOL,$q_config['config_files']); ?></textarea>
 				<p class="qtranxs_notes"><?php printf(__('The list gets auto-updated on a 3rd-party integrated plugin activation/deactivation. You may also add your own custom files for your theme or plugins. File "%s" is the default configuration loaded from this plugin folder. It is not recommended to modify any configuration file from other authors, but you may alter any configuration item through your own custom file appended to the end of this list.', 'qtranslate'), './i18n-config.json');
 				echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 'qtranslate'), '<a href="https://qtranslatexteam.wordpress.com/integration/" target="_blank">', '</a>');
 				echo ' '.__('To reset to default, clear the text.', 'qtranslate') ?></p>
@@ -513,7 +506,7 @@ echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 
 			<tr valign="top">
 				<th scope="row"><?php _e('Custom Configuration', 'qtranslate') ?></th>
 				<td><label for="qtranxs_json_custom_i18n_config" class="qtranxs_explanation"><?php printf(__('Additional custom JSON-encoded configuration of %s for all admin pages. It is processed after all files from option "%s" are loaded, providing opportunity to add or to override configuration tokens as necessary.', 'qtranslate'), 'qTranslate&#8209;X', __('Configuration Files', 'qtranslate')); ?></label>
-				<br/><textarea name="json_custom_i18n_config" id="qtranxs_json_custom_i18n_config" rows="4" style="width:100%"><?php if(isset($_POST['json_custom_i18n_config'])) echo $_POST['json_custom_i18n_config']; else if(!empty($q_config['custom_i18n_config'])) echo qtranxf_json_encode($q_config['custom_i18n_config']) ?></textarea>
+				<br/><textarea name="json_custom_i18n_config" id="qtranxs_json_custom_i18n_config" rows="4" style="width:100%"><?php if(isset($_POST['json_custom_i18n_config'])) echo sanitize_text_field(stripslashes($_POST['json_custom_i18n_config'])); else if(!empty($q_config['custom_i18n_config'])) echo qtranxf_json_encode($q_config['custom_i18n_config']) ?></textarea>
 				<p class="qtranxs_notes"><?php printf(__('It would make no difference, if the content of this field is stored in a file, which name is listed last in option "%s". Therefore, this field only provides flexibility for the sake of convenience.', 'qtranslate'), __('Configuration Files', 'qtranslate'));
 				echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 'qtranslate'), '<a href="https://qtranslatexteam.wordpress.com/integration/" target="_blank">', '</a>');
 				echo ' '; printf(__('Use "%s" to review the resulting combined configuration from all "%s" and this option.', 'qtranslate'), '<a href="'.admin_url('options-general.php?page=qtranslate-x&config_inspector=show').'">'.__('Configuration Inspector', 'qtranslate').'</a>', __('Configuration Files', 'qtranslate'));
@@ -575,6 +568,72 @@ echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 
 
 <div class="tabs-content">
 <?php qtranxf_admin_section_start('languages') ?>
+<?php
+class QTX_LanguageList extends WP_List_Table
+{
+	private $_clean_uri;
+	private $_language_names;
+
+	public function __construct($language_names,$clean_uri) {
+		parent::__construct(array('screen' => 'language'));
+		$this->_language_names = $language_names;
+		$this->_clean_uri = $clean_uri;
+	}
+
+	public function get_columns() {
+		return array(
+			'code' => _x('Code', 'Two-letter Language Code meant.', 'qtranslate'),
+			'flag' => __('Flag', 'qtranslate'),
+			'name' => __('Name', 'qtranslate'),
+			'action' => __('Action', 'qtranslate'),
+			'edit' => __('Edit', 'qtranslate'),
+			'stored' => __('Stored', 'qtranslate')
+		);
+	}
+
+	/* public function get_sortable_columns() {
+		return array(
+			'code' => array('code',false),
+			'name' => array('name',true) //true means it's already sorted
+		);
+	}*/
+
+	protected function column_default( $item, $column_name ) { return $item[$column_name]; }
+	protected function get_default_primary_column_name() { return 'name'; }
+	protected function display_tablenav($which){}
+	protected function get_table_classes() { return array( 'widefat', 'qtranxs-language-list' ); }
+
+	public function prepare_items() {
+		global $q_config;
+		$flags = qtranxf_language_configured('flag');
+		$languages_stored = get_option('qtranslate_language_names',array());
+		$languages_predef = qtranxf_default_language_name();
+		$flag_location_url = qtranxf_flag_location();
+		$flag_location_dir = trailingslashit(WP_CONTENT_DIR).$q_config['flag_location'];
+		$flag_location_url_def = content_url(qtranxf_flag_location_default());
+		//trailingslashit(content_url()).'/plugins/'.basename(dirname(QTRANSLATE_FILE)).'/flags/';
+		$clean_uri = $this->_clean_uri;
+		$data = array();
+		foreach($this->_language_names as $lang => $language){ if($lang=='code') continue;
+			$flag = $flags[$lang];
+			if(file_exists($flag_location_dir.$flag)){
+				$flag_url = $flag_location_url.$flag;
+			}else{
+				$flag_url = $flag_location_url_def.$flag;
+			}
+			$data[] = array(
+				'code' => $lang,
+				'flag' => '<img src="'.$flag_url.'" alt="'.sprintf(__('%s Flag', 'qtranslate'), $language).'">',
+				'name' => $language,
+				'action' => in_array($lang,$q_config['enabled_languages']) ? ($q_config['default_language']==$lang ? __('Default', 'qtranslate') : '<a class="edit" href="'.$clean_uri.'&disable='.$lang.'#languages">'.__('Disable', 'qtranslate').'</a>') : '<a class="edit" href="'.$clean_uri.'&enable='.$lang.'#languages">'.__('Enable', 'qtranslate').'</a>',
+				'edit' => '<a class="edit" href="'.$clean_uri.'&edit='.$lang.'">'.__('Edit', 'qtranslate').'</a>',
+				'stored' => !isset($languages_stored[$lang]) ? __('Pre-Defined', 'qtranslate') : '<a class="delete" href="'.$clean_uri.'&delete='.$lang.'#languages">'.(isset($languages_predef[$lang]) ? __('Reset', 'qtranslate') : __('Delete', 'qtranslate')). '</a>'
+			);
+		}
+		$this->items = $data;
+	}
+}
+?>
 <div id="col-container">
 
 <div id="col-right">
@@ -582,28 +641,21 @@ echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 
 <h3><?php _e('List of Configured Languages','qtranslate') ?></h3>
 <p class="qtranxs_notes"><?php
 	$language_names = qtranxf_language_configured('language_name');
-	$flags = qtranxf_language_configured('flag');
-	//$windows_locales = qtranxf_language_configured('windows_locale');
 	printf(__('Only enabled languages are loaded at front-end, while all %d configured languages are listed here.','qtranslate'),count($language_names));
 	echo ' '; _e('The table below contains both pre-defined and manually added or modified languages.','qtranslate');
 	echo ' '; printf(__('You may %s or %s a language, or %s manually added language, or %s previous modifications of a pre-defined language.', 'qtranslate'), '"'.__('Enable', 'qtranslate').'"', '"'.__('Disable', 'qtranslate').'"', '"'.__('Delete', 'qtranslate').'"', '"'.__('Reset', 'qtranslate').'"');
 	echo ' '; printf(__('Click %s to modify language properties.', 'qtranslate'), '"'.__('Edit', 'qtranslate').'"');
 ?></p>
+<?php
+	$tbl = new QTX_LanguageList($language_names,$clean_uri);
+	$tbl->prepare_items();
+	$tbl->display();
+/* ?>
 <table class="widefat">
-	<thead>
-	<tr>
-<?php print_column_headers('language') ?>
-	</tr>
-	</thead>
-
-	<tfoot>
-	<tr>
-<?php print_column_headers('language', false) ?>
-	</tr>
-	</tfoot>
-
+	<thead><tr><?php $tbl->print_column_headers(true) ?></tr></thead>
 	<tbody id="the-list" class="qtranxs-language-list" class="list:cat">
 <?php
+	$flags = qtranxf_language_configured('flag');
 	$languages_stored = get_option('qtranslate_language_names',array());
 	$languages_predef = qtranxf_default_language_name();
 	$flag_location_url = qtranxf_flag_location();
@@ -626,13 +678,11 @@ echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 
 		<td><a class="edit" href="<?php echo $clean_uri; ?>&edit=<?php echo $lang; ?>"><?php _e('Edit', 'qtranslate') ?></a></td>
 		<td><?php if(!isset($languages_stored[$lang])){ _e('Pre-Defined', 'qtranslate'); } else { ?><a class="delete" href="<?php echo $clean_uri; ?>&delete=<?php echo $lang; ?>#languages"><?php if(isset($languages_predef[$lang])) _e('Reset', 'qtranslate'); else _e('Delete', 'qtranslate') ?></a><?php } ?></td>
 	</tr>
-<?php }
-/*
-<td><?php if($q_config['default_language']==$lang){ _e('Default', 'qtranslate'); } else { ?><a class="delete" href="<?php echo $clean_uri; ?>&delete=<?php echo $lang; ?>"><?php _e('Delete', 'qtranslate') ?></a><?php } ?></td>
-*/
-?>
+<?php } ?>
 	</tbody>
+	<tfoot><tr><?php $tbl->print_column_headers(false) ?></tr></tfoot>
 </table>
+<?php */ ?>
 <p class="qtranxs_notes"><?php _e('Enabling a language will cause qTranslate to update the Gettext-Database for the language, which can take a while depending on your server\'s connection speed.', 'qtranslate') ?></p>
 </div>
 </div>
@@ -643,8 +693,9 @@ echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 
 <h3><?php _e('Add Language', 'qtranslate') ?></h3>
 <form name="addlang" id="addlang" method="post" class="add:the-list: validate">
 <?php
+	wp_nonce_field($nonce_action); // Prevent CSRF
 	qtranxf_language_form();
-	qtranxf_admin_section_end('languages',__('Add Language &raquo;', 'qtranslate'), null);
+	qtranxf_admin_section_end('languages',__('Add Language &raquo;', 'qtranslate'));
 ?>
 </form></div></div></div></div></div>
 <?php } ?>

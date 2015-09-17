@@ -6,6 +6,7 @@ require_once(QTRANSLATE_DIR.'/admin/qtx_import_export.php');
 
 function qtranxf_editConfig(){
 	global $q_config;
+	if(!qtranxf_verify_nonce('qtranslate-x_configuration_form')) return;
 	// init some needed variables
 	if(!isset($q_config['url_info']['errors'])) $q_config['url_info']['errors'] = array();
 	if(!isset($q_config['url_info']['warnings'])) $q_config['url_info']['warnings'] = array();
@@ -60,13 +61,10 @@ function qtranxf_editConfig(){
 					// remove old language
 					qtranxf_unsetLanguage($langs,$original_lang);
 					qtranxf_unsetLanguage($q_config,$original_lang);
-				}
-				if(in_array($original_lang,$q_config['enabled_languages'])) {
-					// was enabled, so set modified one to enabled too
-					for($i = 0; $i < sizeof($q_config['enabled_languages']); $i++) {
-						if($q_config['enabled_languages'][$i] == $original_lang) {
-							$q_config['enabled_languages'][$i] = $lang;
-						}
+					// if was enabled, set modified one to enabled too
+					foreach($q_config['enabled_languages'] as $k => $lang) {
+						if($lang != $original_lang) continue;
+						$q_config['enabled_languages'][$k] = $lang;
 					}
 				}
 				if($original_lang==$q_config['default_language']){
@@ -415,7 +413,7 @@ function qtranxf_reloadConfig() {
 	global $q_config;
 	$url_info = isset($q_config['url_info']) ? $q_config['url_info'] : null;
 	//qtranxf_dbg_log('qtranxf_reloadConfig: $url_info: ',$url_info);
-	qtranxf_del_admin_filters();
+	qtranxf_del_conf_filters();
 	qtranxf_loadConfig();
 	qtranxf_admin_loadConfig();
 	if($url_info){
