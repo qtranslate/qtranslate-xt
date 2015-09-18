@@ -47,7 +47,7 @@ if(WP_DEBUG){
 
 		function qtranxf_dbg_print_filters_log(){
 			global $wp_current_filter;
-			return qtranxf_dbg_log('qtranxf_dbg_print_filters_log: $wp_current_filter: ', $wp_current_filter );
+			return 'qtranxf_dbg_print_filters_log: $wp_current_filter: '.print_r($wp_current_filter,true).PHP_EOL;
 		}
 	}
 	assert_options(ASSERT_BAIL,true);

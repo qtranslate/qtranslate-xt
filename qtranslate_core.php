@@ -82,7 +82,11 @@ function qtranxf_init_language() {
 				//header('Location: '.$target);
 				exit();
 			}else{
-				$url_info['doredirect'] .= ' - cancelled, because it goes to the same target.';
+				//neutral path
+				$url_info['doredirect'] .= ' - cancelled, because it goes to the same target - neutral URL';
+				$q_config['language'] = $q_config['default_language'];//otherwise sitemaps do not work, for example.
+				//$url_info['language'] = 'none';
+				//$url_info['language_neutral_path'] = $url_info['wp-path'];
 			}
 			//qtranxf_dbg_log('qtranxf_init_language: doredirect: ',$url_info['doredirect']);
 		}
