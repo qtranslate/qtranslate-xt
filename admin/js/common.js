@@ -285,6 +285,7 @@ var qTranslateX=function(pg)
 	{
 		//co('addContentHook: inpField:',inpField);
 		//co('addContentHook: encode:',encode);
+		//co('addContentHook: field_name:',field_name);
 		if( !inpField ) return false;
 		switch(inpField.tagName){
 			case 'TEXTAREA': break;
@@ -712,8 +713,8 @@ var qTranslateX=function(pg)
 			var nm=qTranslateConfig.custom_field_classes[i];
 			qtx.addContentHooksByClass(nm);
 		}
-		setTinyMceInit();
-		//this.addContentHooksTinyMCE();
+		if(qTranslateConfig.LSB)
+			setTinyMceInit();
 	}
 
 	/**
@@ -789,6 +790,7 @@ var qTranslateX=function(pg)
 						if(fld.jquery){
 							for(var i=0; i < containers.length; ++i){
 								var container = containers[i];
+								//co('addPageHooks:display: container: ',container);
 								//$(container).find(fld.jquery).each(function(i,e){qtx.addDisplayHook(e);});//also ok
 								var fields = jQuery(container).find(fld.jquery);
 								//co('addPageHooks:display: jquery='+fld.jquery+': fields.length=',fields.length);
@@ -1051,6 +1053,8 @@ var qTranslateX=function(pg)
 
 	addMultilingualHooks(jQuery);
 
+	//co('displayHookNodes.length=',displayHookNodes.length);
+	//co('displayHookAttrs.length=',displayHookAttrs.length);
 	if(!displayHookNodes.length && !displayHookAttrs.length){
 		var ok = false;
 		for(var key in contentHooks){ ok = true; break; }
@@ -1155,6 +1159,7 @@ var qTranslateX=function(pg)
 		$(function($){$('#qtranxs-meta-box-lsb .hndle').unbind('click.postboxes');});
 	}
 
+	//co('qTranslateConfig.LSB=',qTranslateConfig.LSB);
 	if(qTranslateConfig.LSB){
 		//additional initialization
 		addContentHooksTinyMCE();
@@ -1216,82 +1221,6 @@ var qTranslateX=function(pg)
 	}
 }
 
-/*
- * @since 3.3.2 Moved code to two functions instead of having this object
- * @since 3.2.4 Multiple sets of Language Switching Buttons
- * 
-function qtranxj_LanguageSwitch(langSwitchWrap)
-{
-	//var langs=qTranslateConfig.enabled_languages, langNames=qTranslateConfig.language_name;
-	var langs=qTranslateConfig.language_config;
-	if(!qTranslateConfig.tabSwitches) qTranslateConfig.tabSwitches={};
-	function switchTab()
-	{
-		var tabSwitch=this;
-		if (!tabSwitch.lang){
-			alert('qTranslate-X: This should not have happened: Please, report this incident to the developers: !tabSwitch.lang');
-			return;
-		}
-		if ( qTranslateConfig.activeLanguage === tabSwitch.lang ){
-			return;
-		}
-		if (qTranslateConfig.activeLanguage)
-		{
-			var tabSwitches = qTranslateConfig.tabSwitches[qTranslateConfig.activeLanguage];
-			for(var i=0; i < tabSwitches.length; ++i){
-				tabSwitches[i].classList.remove(qTranslateConfig.lsb_style_active_class);
-				//tabSwitches[i].classList.remove('active');
-				//tabSwitches[i].classList.remove('wp-ui-highlight');
-			}
-			//tabSwitches[qTranslateConfig.activeLanguage].classList.remove('active');
-			var onTabSwitchFunctionsSave = qTranslateConfig.onTabSwitchFunctionsSave;
-			for(var i=0; i<onTabSwitchFunctionsSave.length; ++i)
-			{
-				onTabSwitchFunctionsSave[i].call(qTranslateConfig.qtx,qTranslateConfig.activeLanguage,tabSwitch.lang);
-			}
-		}
-		var langFrom = qTranslateConfig.activeLanguage;
-		qTranslateConfig.activeLanguage=tabSwitch.lang;
-		{
-			var tabSwitches = qTranslateConfig.tabSwitches[qTranslateConfig.activeLanguage];
-			for(var i=0; i < tabSwitches.length; ++i){
-				tabSwitches[i].classList.add(qTranslateConfig.lsb_style_active_class);
-				//tabSwitches[i].classList.add('active');
-				//tabSwitches[i].classList.add('wp-ui-highlight');
-			}
-			//tabSwitch.classList.add('active');
-		}
-		var onTabSwitchFunctions = qTranslateConfig.onTabSwitchFunctions;
-		for(var i=0; i<onTabSwitchFunctions.length; ++i)
-		{
-			onTabSwitchFunctions[i].call(qTranslateConfig.qtx,tabSwitch.lang,langFrom);
-		}
-		var onTabSwitchFunctionsLoad = qTranslateConfig.onTabSwitchFunctionsLoad;
-		for(var i=0; i<onTabSwitchFunctionsLoad.length; ++i)
-		{
-			onTabSwitchFunctionsLoad[i].call(qTranslateConfig.qtx,tabSwitch.lang,langFrom);
-		}
-	}
-	//location.pathname.indexOf();
-	//for(var i=0; i<langs.length; ++i)
-	for(var lang in langs)
-	{
-		var lang_conf = langs[lang];
-		var flag_location=qTranslateConfig.flag_location;
-		//var lang=langs[i];
-		//var tabSwitch=qtranxj_ce ('li', {lang: lang, className: 'qtranxs-lang-switch', onclick: switchTab }, langSwitchWrap );
-		//qtranxj_ce('img', {src: flag_location+qTranslateConfig.flag[lang]}, tabSwitch);
-		//qtranxj_ce('span', {innerHTML: langNames[lang]}, tabSwitch);
-		var tabSwitch=qtranxj_ce ('li', {lang: lang, className: 'qtranxs-lang-switch', onclick: switchTab }, langSwitchWrap );
-		qtranxj_ce('img', {src: flag_location+lang_conf.flag}, tabSwitch);
-		qtranxj_ce('span', {innerHTML: lang_conf.name}, tabSwitch);
-		if ( qTranslateConfig.activeLanguage == lang )
-			tabSwitch.classList.add(qTranslateConfig.lsb_style_active_class);
-		if(!qTranslateConfig.tabSwitches[lang]) qTranslateConfig.tabSwitches[lang] = [];
-		qTranslateConfig.tabSwitches[lang].push(tabSwitch);
-	}
-}// */
-
 /**
  * Designed as interface for other plugin integration. The documentation is available at
  * https://qtranslatexteam.wordpress.com/integration/
@@ -1301,6 +1230,7 @@ function qtranxj_LanguageSwitch(langSwitchWrap)
  * @since 3.4
  */
 qTranslateConfig.js.get_qtx = function(){
+	//co('get_qtx: qtx: ', qTranslateConfig.qtx);
 	if(!qTranslateConfig.qtx) new qTranslateX(qTranslateConfig.js);
 	return qTranslateConfig.qtx;
 }
