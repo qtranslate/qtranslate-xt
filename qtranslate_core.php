@@ -84,29 +84,15 @@ function qtranxf_init_language() {
 			}else{
 				//neutral path
 				$url_info['doredirect'] .= ' - cancelled, because it goes to the same target - neutral URL';
-				$q_config['language'] = $q_config['default_language'];//otherwise sitemaps do not work, for example.
-				//$url_info['language'] = 'none';
-				//$url_info['language_neutral_path'] = $url_info['wp-path'];
+				if($pagenow == 'index.php' && $q_config['url_mode'] == QTX_URL_PATH){
+					$_SERVER['REQUEST_URI'] = trailingslashit($url_info['path-base']).$lang.$url_info['wp-path'];//should not hurt?
+				}
 			}
-			//qtranxf_dbg_log('qtranxf_init_language: doredirect: ',$url_info['doredirect']);
+			//qtranxf_dbg_log('qtranxf_init_language: doredirect canceled: $url_info: ',$url_info);
 		}
 	}elseif(isset($url_info['doredirect'])){
 		$url_info['doredirect'] .= ' - cancelled by can_redirect';
 		//qtranxf_dbg_log('qtranxf_init_language: doredirect canceled: $url_info: ',$url_info);
-		/*
-		if(!empty($_POST)){
-			$lang = $q_config['language'];
-			$url_orig = $url_info['scheme'].'://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-			//qtranxf_dbg_log('qtranxf_init_language: !empty($_POST): $url_info: ',$url_info);
-			//qtranxf_dbg_log('qtranxf_init_language: !empty($_POST): $_SERVER: ',$_SERVER);
-			$uri = $_SERVER['REQUEST_URI'];
-			//$uri = qtranxf_convertURL('',$lang);
-			//qtranxf_dbg_log('qtranxf_init_language: !empty($_POST): $uri: ',$uri);
-			$_SERVER['REQUEST_URI'] = $uri;
-			$url_info['original_url'] = $uri;
-			$url_info['path'] = $uri;
-		}
-		*/
 	}
 
 	// fix url to prevent xss - how does this prevents xss?
@@ -882,7 +868,8 @@ function qtranxf_language_neutral_path($path) {
 		//qtranxf_dbg_log('qtranxf_language_neutral_path: cached='.$language_neutral_path_cache[$path].': path='.$path);
 		return $language_neutral_path_cache[$path];
 	}
-	if(preg_match('#^/(wp-.*\.php|wp-admin/|xmlrpc.php|.*sitemap.*|robots.txt|oauth/)#', $path)){
+	//if(preg_match('#^/(wp-.*\.php|wp-admin/|xmlrpc.php|.*sitemap.*|robots.txt|oauth/)#', $path)){//sitemap.hml works ok without it
+	if(preg_match('#^/(wp-.*\.php|wp-admin/|xmlrpc.php|robots.txt|oauth/)#', $path)){
 		$language_neutral_path_cache[$path] = true;
 		//qtranxf_dbg_log('qtranxf_language_neutral_path: preg_match: path='.$path);
 		return true;
