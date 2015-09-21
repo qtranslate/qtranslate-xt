@@ -1452,12 +1452,19 @@ function qtranxf_use_block($lang, $blocks, $show_available=false, $show_empty=fa
 		$normal_separator = $match[1];
 		$end_separator = $match[2];
 		// build available languages string backward
+		$translations = get_translations_for_domain('qtranslate');
+		$english_names = qtranxf_default_windows_locale();//todo: load enabled only
 		$i = 0;
 		//foreach($available_languages as $language) {
 		foreach($available_langs as $language => $b) {
 			if($i==1) $language_list = $end_separator.$language_list;
-			if($i>1) $language_list = $normal_separator.$language_list;
-			$language_list = '<a href="'.qtranxf_convertURL('', $language, false, true).'" class="qtranxs-available-language-link qtranxs-available-language-link-'.$language.'">'.__($q_config['language_name'][$language],'qtranslate').'</a>'.$language_list;
+			elseif($i>1) $language_list = $normal_separator.$language_list;
+			if(!empty($english_names[$language]) && isset($translations->entries[$english_names[$language]])){
+				$language_name = $translations->entries[$english_names[$language]]->translations[0];
+			}else{
+				$language_name = $q_config['language_name'][$language];
+			}
+			$language_list = '<a href="'.qtranxf_convertURL('', $language, false, true).'" class="qtranxs-available-language-link qtranxs-available-language-link-'.$language.'">'.$language_name.'</a>'.$language_list;
 			++$i;
 		}
 	}
