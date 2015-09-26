@@ -100,6 +100,10 @@ Read [migration instructions](https://qtranslatexteam.wordpress.com/migration/ "
 
 ## Changelog ##
 
+### 3.4.5.2 ###
+* Improvement: admin configuration loading is moved to filter 'plugins_loaded', search for function `qtranxf_admin_load` to see the change.
+* Fix: removed meta box "Languages" in any Editor Mode, except "Single Language".
+
 ### 3.4.5.1 ###
 * Enhancement: argument `$found` for `qtranxf_split_blocks`.
 * Enhancement: removed limit of 5 characters in language form for locale: [Issue #262](https://github.com/qTranslate-Team/qtranslate-x/issues/262);

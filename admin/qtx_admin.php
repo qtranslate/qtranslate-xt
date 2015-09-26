@@ -117,10 +117,20 @@ function qtranxf_collect_translations_posted() {
 }
 add_action('plugins_loaded', 'qtranxf_collect_translations_posted', 5);
 
+function qtranxf_admin_load()
+{
+	//qtranxf_dbg_log('qtranxf_admin_load:');
+	qtranxf_admin_loadConfig();
+	$page_configs = qtranxf_get_admin_page_config();
+	if(!empty($page_configs['']['filters'])){
+		qtranxf_add_filters($page_configs['']['filters']);
+	}
+	qtranxf_add_admin_filters();
+}
+qtranxf_admin_load();
+
 function qtranxf_admin_init(){
 	global $q_config, $pagenow;
-	//qtranxf_dbg_log('"admin_init": qtranxf_admin_init: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
-	qtranxf_admin_loadConfig();
 
 	add_action('admin_notices', 'qtranxf_admin_notices_config');
 
@@ -160,14 +170,9 @@ function qtranxf_admin_init(){
 		qtranxf_updateTermLibraryJoin();
 		//qtranxf_updateSlug();
 	}
-
-	$page_configs = qtranxf_get_admin_page_config();
-	if(!empty($page_configs['']['filters'])){
-		qtranxf_add_filters($page_configs['']['filters']);
-	}
 }
 //add_action('qtranslate_init_begin','qtranxf_admin_init');
-add_action('admin_init','qtranxf_admin_init');
+add_action('admin_init','qtranxf_admin_init',2);
 
 /**
  * load field configurations for the current admin page
@@ -778,7 +783,7 @@ function qtranxf_add_admin_filters()
 		add_filter('home_url', 'qtranxf_admin_home_url', 5, 4);
 	}
 }
-qtranxf_add_admin_filters();
+//qtranxf_add_admin_filters();
 
 add_action('admin_head-nav-menus.php', 'qtranxf_add_nav_menu_metabox');
 add_action('admin_menu', 'qtranxf_admin_menu', 999);

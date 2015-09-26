@@ -783,7 +783,7 @@ function qtranxf_meta_box_LSB()
 function qtranxf_add_meta_box_LSB($post_type, $post)
 {
 	global $q_config, $pagenow;
-	if( $q_config['editor_mode'] == QTX_EDITOR_MODE_RAW) return;
+	if( $q_config['editor_mode'] != QTX_EDITOR_MODE_LSB) return;
 	switch($pagenow){
 		case 'post-new.php':
 		case 'post.php': break;

@@ -464,7 +464,7 @@ function qtranxf_load_option_qtrans_compatibility(){
 function qtranxf_init() {
 	//qtranxf_dbg_log('"init": qtranxf_init: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
 }
-add_action('init', 'qtranxf_init');//user is authenticated
+add_action('init', 'qtranxf_init',2);//user is authenticated
 
 /* //use action 'init' in front-end and/or action 'admin_init' admin-end accordingly
  * Response to action 'init', which runs after user is authenticated
