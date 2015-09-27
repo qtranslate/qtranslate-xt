@@ -8,6 +8,7 @@ function($){
 	var onWidgetUpdate = function( evt, widget ){
 		widget.find('span.in-widget-title').each(function(i,e){qtx.addDisplayHook(e);});
 		widget.find("input[id^='widget-'][id$='-title']").each(function(i,e){qtx.refreshContentHook(e);});
+		widget.find("textarea[id^='widget-text-'][id$='-text']").each(function(i,e){qtx.refreshContentHook(e);});
 	}
 
 	if(wpWidgets){
@@ -20,8 +21,4 @@ function($){
 	}
 
 	qtx.addLanguageSwitchAfterListener(onLanguageSwitchAfter);
-
-/*
-	{"jquery":"span.in-widget-title", "encode":"display"} //does not always work
-*/
 });

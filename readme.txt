@@ -100,6 +100,14 @@ Read [migration instructions](https://qtranslatexteam.wordpress.com/migration/ "
 
 ## Changelog ##
 
+### 3.4.6 ###
+* All issues after version 3.4.5
+
+### 3.4.5.3 ###
+* Enhancement: integration with plugin [bbPress](https://wordpress.org/plugins/bbpress/) started, file `./i18n-config/plugins/bbpress/i18n-config.json`.
+* Enhancement: integration with theme [WPEX Elegant](https://themetix.com/wpex-elegant/) started, file `./i18n-config/themes/wpex-elegant/i18n-config.json`.
+* Enhancement: integration of WP Widget "Text" is enabled: [WP Issue](https://wordpress.org/support/topic/widget-text-translation-ability).
+
 ### 3.4.5.2 ###
 * Improvement: admin configuration loading is moved to filter 'plugins_loaded', search for function `qtranxf_admin_load` to see the change.
 * Fix: removed meta box "Languages" in any Editor Mode, except "Single Language".
