@@ -639,8 +639,10 @@ function qtranxf_admin_notice_config_files_changed(){
 	$url = admin_url('options-general.php?page=qtranslate-x#integration');
 	echo '<div class="update-nag notice is-dismissible" id="qtranxs-config-files-changed"><p>';
 	printf(__('Option "%s" for plugin %s has been auto-adjusted after recent changes in the site configuration. It might be a good idea to %sreview the changes%s in the list of configuration files.', 'qtranslate'), '<a href="'.$url.'">'.__('Configuration Files', 'qtranslate').'</a>', '<a href="https://wordpress.org/plugins/qtranslate-x/" style="color:blue" target="_blank">qTranslate&#8209;X</a>', '<a href="'.$url.'">', '</a>');
-	echo '<br/>';
-	echo '</p><p><a class="button" href="https://qtranslatexteam.wordpress.com/integration/" target="_blank">';
+	echo '<br/></p><p>';
+	echo '<a class="button" href="'.$url.'">';
+	printf(__('Review Option "%s"', 'qtranslate'), __('Configuration Files', 'qtranslate'));
+	echo '</a>&nbsp;&nbsp;&nbsp;<a class="button" href="https://qtranslatexteam.wordpress.com/integration/" target="_blank">';
 	echo __('Read Integration Guide', 'qtranslate');
 	echo '</a>&nbsp;&nbsp;&nbsp;<a class="button" href="javascript:qtranxj_dismiss_admin_notice(\'config-files-changed\');">'.__('I have already done it, dismiss this message.', 'qtranslate');
 	echo '</a></p></div>';
