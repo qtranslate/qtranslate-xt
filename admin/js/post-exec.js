@@ -23,7 +23,7 @@ function($){
 			//if( !qTranslateConfig.hide_default_language || qTranslateConfig.default_language != lang){
 			var homepath=qTranslateConfig.url_info_home;
 			var i=url.pathname.indexOf(homepath);
-			url.pathname=homepath+lang+url.pathname.substring(i+homepath.length-1);
+			url.pathname=homepath+lang+url.pathname.substring(i+homepath.length+2);
 			//}
 			break;
 		case '3':
