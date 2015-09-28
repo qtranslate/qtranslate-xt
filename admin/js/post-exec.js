@@ -21,9 +21,9 @@ function($){
 			break;
 		case '2':
 			//if( !qTranslateConfig.hide_default_language || qTranslateConfig.default_language != lang){
-			var homepath=qTranslateConfig.url_info_home;
+			var homepath=qTranslateConfig.home_url_path;
 			var i=url.pathname.indexOf(homepath);
-			url.pathname=homepath+lang+url.pathname.substring(i+homepath.length+2);
+			url.pathname=qTranslateConfig.homeinfo_path+lang+url.pathname.substring(i+homepath.length-1);
 			//}
 			break;
 		case '3':

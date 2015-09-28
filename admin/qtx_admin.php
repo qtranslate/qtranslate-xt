@@ -365,7 +365,8 @@ function qtranxf_add_admin_footer_js ( $enqueue_script=false ) {
 		$config['domains']=$q_config['domains'];
 	}
 	$homeinfo=qtranxf_get_home_info();
-	$config['url_info_home']=trailingslashit($homeinfo['path']);//$q_config['url_info']['home'];
+	$config['homeinfo_path']=trailingslashit($homeinfo['path']);
+	$config['home_url_path']=parse_url(home_url('/'),PHP_URL_PATH);//todo optimize
 	$config['flag_location']=qtranxf_flag_location();
 	$config['js']=array();
 	//$config['flag']=array();//deprecated since 3.2.9.9.0
