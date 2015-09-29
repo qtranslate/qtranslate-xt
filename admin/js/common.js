@@ -611,13 +611,21 @@ var qTranslateX=function(pg)
 	{
 		//var qtx = this;
 		setLangCookie(lang);
-		for(var i=0; i<displayHookNodes.length; ++i){
+		for(var i = displayHookNodes.length; --i >= 0; ){
 			var h=displayHookNodes[i];
-			h.nd.nodeValue = h.contents[lang];
+			if(h.nd.parentNode){
+				h.nd.nodeValue = h.contents[lang];//IE gets upset here if node was removed
+			}else{
+				displayHookNodes.splice(i,1);//node was removed by some other function
+			}
 		}
-		for(var i=0; i<displayHookAttrs.length; ++i){
+		for(var i = displayHookAttrs.length; --i >= 0;){
 			var h=displayHookAttrs[i];
-			h.nd.value = h.contents[lang];
+			if(h.nd.parentNode){
+				h.nd.value = h.contents[lang];
+			}else{
+				displayHookAttrs.splice(i,1);//node was removed by some other function
+			}
 		}
 		for(var key in contentHooks){
 			var h=contentHooks[key];
