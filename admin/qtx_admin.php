@@ -125,6 +125,8 @@ function qtranxf_admin_load()
 	if(!empty($page_configs['']['filters'])){
 		qtranxf_add_filters($page_configs['']['filters']);
 	}
+	$bnm = qtranxf_plugin_basename();
+	add_filter( 'plugin_action_links_'.$bnm, 'qtranxf_links', 10, 4);
 	qtranxf_add_admin_filters();
 }
 qtranxf_admin_load();
@@ -694,19 +696,11 @@ function qtranxf_add_language_menu( $wp_admin_bar ){
 	}
 }
 
-function qtranxf_links($links, $file){ // copied from Sociable Plugin
-	//Static so we don't call plugin_basename on every plugin row.
-	static $this_plugin;
-	if (!$this_plugin){
-		$this_plugin = plugin_basename(QTRANSLATE_FILE);
-	}
-	if ($file == $this_plugin){
-		$settings_link = '<a href="options-general.php?page=qtranslate-x">' . __('Settings', 'qtranslate') . '</a>';
-		array_unshift( $links, $settings_link ); // before other links
-	}
+function qtranxf_links($links, $file, $plugin_data, $context){
+	$settings_link = '<a href="options-general.php?page=qtranslate-x">' . __('Settings', 'qtranslate') . '</a>';
+	array_unshift( $links, $settings_link ); // before other links
 	return $links;
 }
-add_filter('plugin_action_links', 'qtranxf_links', 10, 2);
 
 //should be moved to qtx_configuration.php from qtx_admin.php ?
 function qtranxf_admin_notices_config() {
@@ -784,7 +778,6 @@ function qtranxf_add_admin_filters()
 		add_filter('home_url', 'qtranxf_admin_home_url', 5, 4);
 	}
 }
-//qtranxf_add_admin_filters();
 
 add_action('admin_head-nav-menus.php', 'qtranxf_add_nav_menu_metabox');
 add_action('admin_menu', 'qtranxf_admin_menu', 999);

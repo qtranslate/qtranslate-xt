@@ -56,8 +56,7 @@ function qtranxf_translate_wp($s) { return __($s); }
 function qtranxf_plugin_basename(){
 	static $s;
 	if(!$s){
-		$b = plugin_basename(QTRANSLATE_FILE);
-		$s = basename(dirname($b)).'/'.basename($b);//Windows trick when folder is linked
+		$s = plugin_basename(wp_normalize_path(QTRANSLATE_FILE));
 	}
 	return $s;
 }
@@ -68,8 +67,8 @@ function qtranxf_plugin_basename(){
 function qtranxf_plugin_dirname(){
 	static $s;
 	if(!$s){
-		$b = plugin_basename(QTRANSLATE_FILE);
-		$s = basename(dirname($b));//Windows trick when folder is linked
+		$b = qtranxf_plugin_basename();
+		$s = dirname($b);
 	}
 	return $s;
 }

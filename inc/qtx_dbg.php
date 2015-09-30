@@ -18,8 +18,8 @@ if(WP_DEBUG){
 			}
 			if(!empty($h)) $msg = $h.': '.$msg;
 			if( $var !== 'novar' ){
-				//$msg .= var_export($var,true);
-				$msg .= print_r($var,true);
+				$msg .= var_export($var,true);
+				//$msg .= print_r($var,true);
 			}
 			if($bt){
 				//$msg .= PHP_EOL.'backtrace:'.PHP_EOL.var_export(debug_backtrace(),true);
