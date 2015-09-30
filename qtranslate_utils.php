@@ -9,7 +9,6 @@ if(WP_DEBUG){
 		function qtranxf_dbg_echo($msg,$var=null,$bt=false,$exit=false){}
 		function qtranxf_dbg_log_if($condition,$msg,$var=null,$bt=false,$exit=false){}
 		function qtranxf_dbg_echo_if($condition,$msg,$var=null,$bt=false,$exit=false){}
-		function qtranxf_dbg_print_filters_log(){}
 	}
 	//assert_options(ASSERT_ACTIVE,false);
 	//assert_options(ASSERT_WARNING,false);
@@ -76,8 +75,39 @@ function qtranxf_plugin_dirname(){
 }
 
 /**
- * Return path to plugin folder relative to WP_CONTENT_DIR.
+ * Return path to plugin folder relative to WP_CONTENT_DIR. Works for plugin paths only.
+ * No trailing slash in the return string.
+ * It may return absolute path to plugin folder in case content and plugin directories are on different devices.
+ * $plugin is path to plugin file, like the one coming from __FILE__.
+ * @since 3.4.5
+*/
+function qtranxf_dir_from_wp_content($plugin){
+	global $wp_plugin_paths;
+	$plugin_realpath = wp_normalize_path( dirname( realpath( $plugin ) ) );
+	$d = $plugin_realpath;
+	foreach ( $wp_plugin_paths as $dir => $realdir ) {
+		if ( $plugin_realpath != $realdir ) continue;
+		$d = $dir;
+		break;
+	}
+	$c = trailingslashit(wp_normalize_path(WP_CONTENT_DIR));
+	$d_len = strlen($d);
+	$c_len = strlen($c);
+	$i = 0;
+	while($i < $d_len && $i < $c_len && $d[$i] == $c[$i]) ++$i;
+	if($i == $c_len) return substr($d,$c_len);
+	if($i == 0) return $d;//return absolute path then
+	$c = substr($c,$i);
+	$d = substr($d,$i);
+	for($i = substr_count($c,'/'); --$i >= 0;) $d = '../'.$d;
+	return $d;
+}
+
+/**
+ * Return path to QTX plugin folder relative to WP_CONTENT_DIR.
+ * Uses qtranxf_dir_from_wp_content
  * @since 3.4
+ * @since 3.4.5 modified for multisite.
  */
 function qtranxf_plugin_dirname_from_wp_content(){
 	static $s;
@@ -87,14 +117,12 @@ function qtranxf_plugin_dirname_from_wp_content(){
 		//qtranxf_dbg_log('plugin_dir_path: ', plugin_dir_path( __FILE__ ));//links are resolved, with trailing slash
 		//qtranxf_dbg_log('plugin_basename: ', plugin_basename( __FILE__ ));//no links resolved
 		//qtranxf_dbg_log('WP_CONTENT_DIR: ', WP_CONTENT_DIR);//no links resolved
+		//qtranxf_dbg_log('wp_content_dir(): ', wp_content_dir());//no links resolved
 		//qtranxf_dbg_log('WP_PLUGIN_DIR: ', WP_PLUGIN_DIR);//no links resolved
 		//qtranxf_dbg_log('WP_MU_PLUGIN_DIR: ', WPMU_PLUGIN_DIR);//no links resolved
 		//qtranxf_dbg_log('plugin_dir_url: ', plugin_dir_url( __FILE__ ));//no links, naturally
 		//qtranxf_dbg_log('content_url: ', content_url());//no links either
-
-		$d = plugin_dir_url( QTRANSLATE_FILE );
-		$c = content_url();
-		$s = trim(substr($d, strlen($c)), '/\\');
+		$s = qtranxf_dir_from_wp_content(QTRANSLATE_FILE);
 	}
 	return $s;
 }
