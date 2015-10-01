@@ -430,12 +430,13 @@ function qtranxf_add_admin_head_js ($enqueue_script=true) {
 function qtranxf_add_admin_lang_icons ()
 {
 	global $q_config;
+	$flag_location = qtranxf_flag_location();
 	echo '<style type="text/css">'.PHP_EOL;
 	echo "#wpadminbar #wp-admin-bar-language>div.ab-item{ background-size: 0;";
-	echo "background-image: url(".qtranxf_flag_location().$q_config['flag'][$q_config['language']].");}\n";
+	echo 'background-image: url('.$flag_location.$q_config['flag'][$q_config['language']].');}'.PHP_EOL;
 	foreach($q_config['enabled_languages'] as $language) 
 	{
-		echo "#wpadminbar ul li#wp-admin-bar-".$language." {background-size: 0; background-image: url(".qtranxf_flag_location().$q_config['flag'][$language].");}\n";
+		echo '#wpadminbar ul li#wp-admin-bar-'.$language.' {background-size: 0; background-image: url('.$flag_location.$q_config['flag'][$language].'); margin-right: 5px; }'.PHP_EOL;
 	}
 	echo '</style>'.PHP_EOL;
 }
