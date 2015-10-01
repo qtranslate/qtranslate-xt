@@ -68,8 +68,8 @@
 #wpadminbar #wp-admin-bar-language ul li
 {
 	background-repeat: no-repeat;
-	background-position: right; 
-	background-size: 22px;
+	background-position: right;
+	background-size: 18px;
 }
 
 #wpadminbar li#wp-admin-bar-language { display: block; }
