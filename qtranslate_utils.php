@@ -512,13 +512,16 @@ function qtranxf_getAvailableLanguages($text) {
 	return $result;
 }
 
-function qtranxf_isAvailableIn($post_id, $language='') {
+function qtranxf_isAvailableIn($post_id, $lang='') {
 	global $q_config;
-	if($language == '') $language = $q_config['default_language'];
-	$p = get_post($post_id); $post = &$p;
-	$languages = qtranxf_getAvailableLanguages($post->post_content);
-	if($languages===FALSE) return $language == $q_config['default_language'];
-	return in_array($language,$languages);
+	if(empty($lang)) $lang = $q_config['default_language'];
+	global $wpdb;
+	$post_content = $wpdb->get_var( $wpdb->prepare( "SELECT post_content FROM $wpdb->posts WHERE ID = %d", $post_id ) );
+	//qtranxf_dbg_log('qtranxf_isAvailableIn: $post_content: ', $post_content);
+	if(empty($post_content)) return false;
+	$languages = qtranxf_getAvailableLanguages($post_content);
+	if($languages===FALSE) return $lang == $q_config['default_language'];
+	return in_array($lang,$languages);
 }
 
 function qtranxf_convertDateFormatToStrftimeFormat($format) {
