@@ -22,8 +22,11 @@ function($){
 		case '2':
 			//if( !qTranslateConfig.hide_default_language || qTranslateConfig.default_language != lang){
 			var homepath=qTranslateConfig.home_url_path;
-			var i=url.pathname.indexOf(homepath);
-			url.pathname=qTranslateConfig.homeinfo_path+lang+url.pathname.substring(i+homepath.length-1);
+			var p = url.pathname;
+			if(p[0] != '/') p = '/'+p;//to deal with IE imperfection: http://stackoverflow.com/questions/956233/javascript-pathname-ie-quirk
+			var i=p.indexOf(homepath);
+			if(i >= 0)
+				url.pathname=qTranslateConfig.homeinfo_path+lang+p.substring(i+homepath.length-1);
 			//}
 			break;
 		case '3':
