@@ -1464,7 +1464,7 @@ function qtranxf_use_block($lang, $blocks, $show_available=false, $show_empty=fa
 			}else{
 				$language_name = $q_config['language_name'][$language];
 			}
-			$language_list = '<a href="'.qtranxf_convertURL('', $language, false, true).'" class="qtranxs-available-language-link qtranxs-available-language-link-'.$language.'">'.$language_name.'</a>'.$language_list;
+			$language_list = '"<a href="'.qtranxf_convertURL('', $language, false, true).'" class="qtranxs-available-language-link qtranxs-available-language-link-'.$language.'">'.$language_name.'</a>"'.$language_list;
 			++$i;
 		}
 	}
