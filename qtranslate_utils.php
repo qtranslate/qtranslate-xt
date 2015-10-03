@@ -455,13 +455,15 @@ function qtranxf_getLanguageDefault() {
 
 function qtranxf_getLanguageName($lang = '') {
     global $q_config;
-		if($lang=='' || !qtranxf_isEnabled($lang)) $lang = $q_config['language'];
+		//if($lang=='' || !qtranxf_isEnabled($lang)) $lang = $q_config['language'];
+		if(empty($lang)) $lang = $q_config['language'];
     return $q_config['language_name'][$lang];
 }
 
 function qtranxf_isEnabled($lang) {
 	global $q_config;
-	return in_array($lang, $q_config['enabled_languages']);
+	return isset($q_config['locale'][$lang]);//only available languages are loaded, this will work quiker
+	//return in_array($lang, $q_config['enabled_languages']);
 }
 
 /**
