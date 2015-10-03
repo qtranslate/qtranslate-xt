@@ -1,0 +1,470 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: \n"
+
+msgid "af"
+msgstr "አፍሪካንኛ"
+
+msgid "ak"
+msgstr "አካንኛ"
+
+msgid "sq"
+msgstr "ልቤኒኛ"
+
+msgid "arq"
+msgstr "የአልጄሪያ ዓረብኛ"
+
+msgid "am"
+msgstr "አማርኛ"
+
+msgid "ar"
+msgstr "ዓረብኛ"
+
+msgid "hy"
+msgstr "አርመናዊ"
+
+msgid "rup_MK"
+msgstr "አሮማንያን"
+
+msgid "frp"
+msgstr "አርፒታን"
+
+msgid "as"
+msgstr "አሳሜዛዊ"
+
+msgid "az"
+msgstr "አዘርባጃንኛ"
+
+msgid "az_TR"
+msgstr ""
+
+msgid "bcc"
+msgstr ""
+
+msgid "ba"
+msgstr "ባስኪርኛ"
+
+msgid "eu"
+msgstr "ባስክኛ"
+
+msgid "bel"
+msgstr ""
+
+msgid "bn_BD"
+msgstr "ቤንጋሊኛ"
+
+msgid "bs_BA"
+msgstr "ቦስኒያንኛ"
+
+msgid "bre"
+msgstr "ብሬቶንኛ"
+
+msgid "bg_BG"
+msgstr "ቡልጋሪኛ"
+
+msgid "ca"
+msgstr "ካታላንኛ"
+
+msgid "bal"
+msgstr "ባሉቺ"
+
+msgid "zh_CN"
+msgstr ""
+
+msgid "zh_HK"
+msgstr ""
+
+msgid "zh_TW"
+msgstr ""
+
+msgid "co"
+msgstr "ኮርሲካኛ"
+
+msgid "hr"
+msgstr "ክሮሽያንኛ"
+
+msgid "cs_CZ"
+msgstr "ቼክኛ"
+
+msgid "da_DK"
+msgstr "ዴኒሽ"
+
+msgid "dv"
+msgstr "ዲቬህ"
+
+msgid "nl_NL"
+msgstr "ደች"
+
+msgid "nl_BE"
+msgstr "ፍሌሚሽ"
+
+msgid "dzo"
+msgstr ""
+
+msgid "en_AU"
+msgstr "የአውስትራሊያ እንግሊዝኛ"
+
+msgid "en_CA"
+msgstr "የካናዳ እንግሊዝኛ"
+
+msgid "en_NZ"
+msgstr ""
+
+msgid "en_ZA"
+msgstr ""
+
+msgid "en_GB"
+msgstr "የብሪቲሽ እንግሊዝኛ"
+
+msgid "eo"
+msgstr "ኤስፐራንቶ"
+
+msgid "et"
+msgstr "ኢስቶኒያንኛ"
+
+msgid "fo"
+msgstr "ፋሮኛ"
+
+msgid "fi"
+msgstr "ፊኒሽ"
+
+msgid "fr_BE"
+msgstr ""
+
+msgid "fr_CA"
+msgstr "የካናዳ ፈረንሳይኛ"
+
+msgid "fr_FR"
+msgstr "ፈረንሳይኛ"
+
+msgid "fy"
+msgstr "የምዕራብ ፍሪስኛ"
+
+msgid "fur"
+msgstr ""
+
+msgid "fuc"
+msgstr ""
+
+msgid "gl_ES"
+msgstr "ጋሊሺያ"
+
+msgid "ka_GE"
+msgstr "ጆርጂያን"
+
+msgid "de_DE"
+msgstr "ጀርመን"
+
+msgid "de_CH"
+msgstr "የስዊዝ ከፍተኛ ጀርመንኛ"
+
+msgid "el"
+msgstr "ግሪክኛ"
+
+msgid "gn"
+msgstr "ጓራኒኛ"
+
+msgid "gu"
+msgstr "ጉጃርቲኛ"
+
+msgid "haw_US"
+msgstr "ሃዊያኛ"
+
+msgid "haz"
+msgstr ""
+
+msgid "he_IL"
+msgstr "ዕብራስጥ"
+
+msgid "hi_IN"
+msgstr "ሒንዱኛ"
+
+msgid "hu_HU"
+msgstr "ሀንጋሪኛ"
+
+msgid "is_IS"
+msgstr "አይስላንድኛ"
+
+msgid "ido"
+msgstr ""
+
+msgid "id_ID"
+msgstr "ኢንዶኔዥኛ"
+
+msgid "ga"
+msgstr "አይሪሽ"
+
+msgid "it_IT"
+msgstr "ጣሊያንኛ"
+
+msgid "ja"
+msgstr "ጃፓንኛ"
+
+msgid "jv_ID"
+msgstr "ጃቫንኛ"
+
+msgid "kab"
+msgstr "ካብይል"
+
+msgid "kn"
+msgstr "ካናዳኛ"
+
+msgid "kk"
+msgstr "ካዛክኛ"
+
+msgid "km"
+msgstr "ክመርኛ ማእከላዊ"
+
+msgid "kin"
+msgstr ""
+
+msgid "ky_KY"
+msgstr "ኪርጊዝኛ"
+
+msgid "ko_KR"
+msgstr "ኮሪያኛ"
+
+msgid "ckb"
+msgstr "የሶራኒ ኩርድኛ"
+
+msgid "lo"
+msgstr "ላውስኛ"
+
+msgid "lv"
+msgstr "ላትቪያን"
+
+msgid "li"
+msgstr ""
+
+msgid "lin"
+msgstr ""
+
+msgid "lt_LT"
+msgstr "ሉቴንያንኛ"
+
+msgid "lb_LU"
+msgstr "ሉክዘምበርገርኛ"
+
+msgid "mk_MK"
+msgstr "ማሴዶንኛ"
+
+msgid "mg_MG"
+msgstr "ማላጋስኛ"
+
+msgid "ms_MY"
+msgstr "ማላይኛ"
+
+msgid "ml_IN"
+msgstr "ማላያላምኛ"
+
+msgid "mri"
+msgstr ""
+
+msgid "mr"
+msgstr "ማራቲኛ"
+
+msgid "xmf"
+msgstr ""
+
+msgid "mn"
+msgstr "ሞንጎላዊኛ"
+
+msgid "me_ME"
+msgstr ""
+
+msgid "ary"
+msgstr ""
+
+msgid "my_MM"
+msgstr ""
+
+msgid "ne_NP"
+msgstr "ኔፓሊኛ"
+
+msgid "nb_NO"
+msgstr "የኖርዌይ ቦክማል"
+
+msgid "nn_NO"
+msgstr "የኖርዌይ ናይኖርስክ"
+
+msgid "oci"
+msgstr ""
+
+msgid "ory"
+msgstr ""
+
+msgid "os"
+msgstr "ኦሴቲክ"
+
+msgid "ps"
+msgstr "ፓሽቶኛ"
+
+msgid "fa_IR"
+msgstr "ፐርሺያኛ"
+
+msgid "fa_AF"
+msgstr ""
+
+msgid "pl_PL"
+msgstr "ፖሊሽኛ"
+
+msgid "pt_BR"
+msgstr "የብራዚል ፖርቹጋልኛ"
+
+msgid "pt_PT"
+msgstr "የአውሮፓ ፖርቹጋልኛ"
+
+msgid "pa_IN"
+msgstr "ፑንጃብኛ"
+
+msgid "rhg"
+msgstr ""
+
+msgid "ro_RO"
+msgstr "ሮማኒያን"
+
+msgid "roh"
+msgstr ""
+
+msgid "ru_RU"
+msgstr "ራሽያኛ"
+
+msgid "ru_UA"
+msgstr ""
+
+msgid "rue"
+msgstr ""
+
+msgid "sah"
+msgstr ""
+
+msgid "sa_IN"
+msgstr ""
+
+msgid "srd"
+msgstr ""
+
+msgid "gd"
+msgstr "እስኮትስ ጌልክኛ"
+
+msgid "sr_RS"
+msgstr "ሰርቢኛ"
+
+msgid "szl"
+msgstr ""
+
+msgid "sd_PK"
+msgstr "ሲንድሂኛ"
+
+msgid "si_LK"
+msgstr "ሲንሃልኛ"
+
+msgid "sk_SK"
+msgstr "ስሎቫክኛ"
+
+msgid "sl_SI"
+msgstr "ስሎቪኛ"
+
+msgid "so_SO"
+msgstr "ሱማልኛ"
+
+msgid "azb"
+msgstr ""
+
+msgid "es_AR"
+msgstr ""
+
+msgid "es_CL"
+msgstr ""
+
+msgid "es_CO"
+msgstr ""
+
+msgid "es_MX"
+msgstr "የሜክሲኮ ስፓንሽኛ"
+
+msgid "es_PE"
+msgstr ""
+
+msgid "es_PR"
+msgstr ""
+
+msgid "es_ES"
+msgstr "የአውሮፓ ስፓንሽኛ"
+
+msgid "es_VE"
+msgstr ""
+
+msgid "su_ID"
+msgstr "ሱዳንኛ"
+
+msgid "sw"
+msgstr "ስዋሂሊኛ"
+
+msgid "sv_SE"
+msgstr "ስዊድንኛ"
+
+msgid "gsw"
+msgstr "የስዊዝ ጀርመን"
+
+msgid "tl"
+msgstr "ታጋሎገኛ"
+
+msgid "tg"
+msgstr "ታጂኪኛ"
+
+msgid "tzm"
+msgstr "መካከለኛ አትላስ ታማዚግት"
+
+msgid "ta_IN"
+msgstr "ታሚልኛ"
+
+msgid "ta_LK"
+msgstr ""
+
+msgid "tt_RU"
+msgstr "ታታርኛ"
+
+msgid "te"
+msgstr "ተሉጉኛ"
+
+msgid "th"
+msgstr "ታይኛ"
+
+msgid "bo"
+msgstr "ቲቤታንኛ"
+
+msgid "tir"
+msgstr ""
+
+msgid "tr_TR"
+msgstr "ቱርክኛ"
+
+msgid "tuk"
+msgstr ""
+
+msgid "ug_CN"
+msgstr "ኡዊግሁርኛ"
+
+msgid "uk"
+msgstr "ዩክሬንኛ"
+
+msgid "ur"
+msgstr "ኡርዱኛ"
+
+msgid "uz_UZ"
+msgstr "ኡዝቤክኛ"
+
+msgid "vi"
+msgstr "ቪትናምኛ"
+
+msgid "wa"
+msgstr ""
+
+msgid "cy"
+msgstr "ወልሽ"
+
+msgid "yor"
+msgstr ""
+

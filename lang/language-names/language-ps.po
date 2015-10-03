@@ -1,0 +1,470 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: \n"
+
+msgid "af"
+msgstr "افريکاني"
+
+msgid "ak"
+msgstr ""
+
+msgid "sq"
+msgstr "الباني"
+
+msgid "arq"
+msgstr ""
+
+msgid "am"
+msgstr "امهاري"
+
+msgid "ar"
+msgstr "عربي"
+
+msgid "hy"
+msgstr "ارمني"
+
+msgid "rup_MK"
+msgstr ""
+
+msgid "frp"
+msgstr ""
+
+msgid "as"
+msgstr "آسامي"
+
+msgid "az"
+msgstr "أذربائجاني"
+
+msgid "az_TR"
+msgstr ""
+
+msgid "bcc"
+msgstr ""
+
+msgid "ba"
+msgstr ""
+
+msgid "eu"
+msgstr "باسکي"
+
+msgid "bel"
+msgstr ""
+
+msgid "bn_BD"
+msgstr "بنګالي"
+
+msgid "bs_BA"
+msgstr "بوسني"
+
+msgid "bre"
+msgstr "برېتون"
+
+msgid "bg_BG"
+msgstr "بلغاري"
+
+msgid "ca"
+msgstr "کټلاني"
+
+msgid "bal"
+msgstr "بلوڅي"
+
+msgid "zh_CN"
+msgstr ""
+
+msgid "zh_HK"
+msgstr ""
+
+msgid "zh_TW"
+msgstr ""
+
+msgid "co"
+msgstr ""
+
+msgid "hr"
+msgstr "کروواتي"
+
+msgid "cs_CZ"
+msgstr "چېک"
+
+msgid "da_DK"
+msgstr "ډېنش"
+
+msgid "dv"
+msgstr ""
+
+msgid "nl_NL"
+msgstr "هالېنډي"
+
+msgid "nl_BE"
+msgstr ""
+
+msgid "dzo"
+msgstr ""
+
+msgid "en_AU"
+msgstr ""
+
+msgid "en_CA"
+msgstr ""
+
+msgid "en_NZ"
+msgstr ""
+
+msgid "en_ZA"
+msgstr ""
+
+msgid "en_GB"
+msgstr ""
+
+msgid "eo"
+msgstr "اسپرانتو"
+
+msgid "et"
+msgstr "حبشي"
+
+msgid "fo"
+msgstr "فاروئې"
+
+msgid "fi"
+msgstr "فینلنډي"
+
+msgid "fr_BE"
+msgstr ""
+
+msgid "fr_CA"
+msgstr ""
+
+msgid "fr_FR"
+msgstr "فرانسوي"
+
+msgid "fy"
+msgstr "فريزي"
+
+msgid "fur"
+msgstr ""
+
+msgid "fuc"
+msgstr ""
+
+msgid "gl_ES"
+msgstr "ګلېشيايي"
+
+msgid "ka_GE"
+msgstr "جورجيائي"
+
+msgid "de_DE"
+msgstr "الماني"
+
+msgid "de_CH"
+msgstr ""
+
+msgid "el"
+msgstr "یوناني"
+
+msgid "gn"
+msgstr "ګوراني"
+
+msgid "gu"
+msgstr "ګجراتي"
+
+msgid "haw_US"
+msgstr ""
+
+msgid "haz"
+msgstr ""
+
+msgid "he_IL"
+msgstr "عبري"
+
+msgid "hi_IN"
+msgstr "هندي"
+
+msgid "hu_HU"
+msgstr "هنګري"
+
+msgid "is_IS"
+msgstr "أيسلېنډي"
+
+msgid "ido"
+msgstr ""
+
+msgid "id_ID"
+msgstr "انډونېشيايي"
+
+msgid "ga"
+msgstr "ائيرلېنډي"
+
+msgid "it_IT"
+msgstr "ایټالوي"
+
+msgid "ja"
+msgstr "جاپانی"
+
+msgid "jv_ID"
+msgstr "جاوايې"
+
+msgid "kab"
+msgstr ""
+
+msgid "kn"
+msgstr "کنأډه"
+
+msgid "kk"
+msgstr ""
+
+msgid "km"
+msgstr "کمبوډيايې يا د کمبوډيا"
+
+msgid "kin"
+msgstr ""
+
+msgid "ky_KY"
+msgstr "کرګيز"
+
+msgid "ko_KR"
+msgstr "کوريائي"
+
+msgid "ckb"
+msgstr ""
+
+msgid "lo"
+msgstr "لويتين"
+
+msgid "lv"
+msgstr "لېټواني"
+
+msgid "li"
+msgstr ""
+
+msgid "lin"
+msgstr ""
+
+msgid "lt_LT"
+msgstr "ليتواني"
+
+msgid "lb_LU"
+msgstr ""
+
+msgid "mk_MK"
+msgstr "مقدوني"
+
+msgid "mg_MG"
+msgstr "ملغاسي"
+
+msgid "ms_MY"
+msgstr "ملایا"
+
+msgid "ml_IN"
+msgstr "مالايالم"
+
+msgid "mri"
+msgstr ""
+
+msgid "mr"
+msgstr "مراټهي"
+
+msgid "xmf"
+msgstr ""
+
+msgid "mn"
+msgstr "مغولي"
+
+msgid "me_ME"
+msgstr ""
+
+msgid "ary"
+msgstr ""
+
+msgid "my_MM"
+msgstr ""
+
+msgid "ne_NP"
+msgstr "نېپالي"
+
+msgid "nb_NO"
+msgstr ""
+
+msgid "nn_NO"
+msgstr "ناروېئي (نائنورسک)"
+
+msgid "oci"
+msgstr ""
+
+msgid "ory"
+msgstr ""
+
+msgid "os"
+msgstr ""
+
+msgid "ps"
+msgstr "پښتو"
+
+msgid "fa_IR"
+msgstr "فارسي"
+
+msgid "fa_AF"
+msgstr ""
+
+msgid "pl_PL"
+msgstr "پولنډي"
+
+msgid "pt_BR"
+msgstr "پرتگال (برازيل)"
+
+msgid "pt_PT"
+msgstr "پرتګالي (پرتګال)"
+
+msgid "pa_IN"
+msgstr "پنجابي"
+
+msgid "rhg"
+msgstr ""
+
+msgid "ro_RO"
+msgstr "روماني"
+
+msgid "roh"
+msgstr ""
+
+msgid "ru_RU"
+msgstr "روسي"
+
+msgid "ru_UA"
+msgstr ""
+
+msgid "rue"
+msgstr ""
+
+msgid "sah"
+msgstr ""
+
+msgid "sa_IN"
+msgstr ""
+
+msgid "srd"
+msgstr ""
+
+msgid "gd"
+msgstr "سکاټلېنډي ګېلک"
+
+msgid "sr_RS"
+msgstr "سربيائي"
+
+msgid "szl"
+msgstr ""
+
+msgid "sd_PK"
+msgstr "سندهي"
+
+msgid "si_LK"
+msgstr "سينهالي"
+
+msgid "sk_SK"
+msgstr "سلوواکي"
+
+msgid "sl_SI"
+msgstr "سلوواني"
+
+msgid "so_SO"
+msgstr "سومالي"
+
+msgid "azb"
+msgstr ""
+
+msgid "es_AR"
+msgstr ""
+
+msgid "es_CL"
+msgstr ""
+
+msgid "es_CO"
+msgstr ""
+
+msgid "es_MX"
+msgstr ""
+
+msgid "es_PE"
+msgstr ""
+
+msgid "es_PR"
+msgstr ""
+
+msgid "es_ES"
+msgstr "هسپانوي"
+
+msgid "es_VE"
+msgstr ""
+
+msgid "su_ID"
+msgstr "سوډاني"
+
+msgid "sw"
+msgstr "سواهېلي"
+
+msgid "sv_SE"
+msgstr "سویډنی"
+
+msgid "gsw"
+msgstr ""
+
+msgid "tl"
+msgstr ""
+
+msgid "tg"
+msgstr "تاجک"
+
+msgid "tzm"
+msgstr ""
+
+msgid "ta_IN"
+msgstr "تامل"
+
+msgid "ta_LK"
+msgstr ""
+
+msgid "tt_RU"
+msgstr "تاتار"
+
+msgid "te"
+msgstr "تېليګو"
+
+msgid "th"
+msgstr "تايلېنډي"
+
+msgid "bo"
+msgstr ""
+
+msgid "tir"
+msgstr ""
+
+msgid "tr_TR"
+msgstr "ترکي"
+
+msgid "tuk"
+msgstr ""
+
+msgid "ug_CN"
+msgstr "اويگور"
+
+msgid "uk"
+msgstr "اوکرانايي"
+
+msgid "ur"
+msgstr "اردو"
+
+msgid "uz_UZ"
+msgstr "ازبکي"
+
+msgid "vi"
+msgstr "وېتنامي"
+
+msgid "wa"
+msgstr ""
+
+msgid "cy"
+msgstr "ويلشي"
+
+msgid "yor"
+msgstr ""
+

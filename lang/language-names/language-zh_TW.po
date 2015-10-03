@@ -1,0 +1,470 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: \n"
+
+msgid "af"
+msgstr "南非荷兰文"
+
+msgid "ak"
+msgstr "阿肯文"
+
+msgid "sq"
+msgstr "阿尔巴尼亚文"
+
+msgid "arq"
+msgstr ""
+
+msgid "am"
+msgstr "阿姆哈拉文"
+
+msgid "ar"
+msgstr "阿拉伯文"
+
+msgid "hy"
+msgstr "亚美尼亚文"
+
+msgid "rup_MK"
+msgstr "阿罗马尼亚文"
+
+msgid "frp"
+msgstr ""
+
+msgid "as"
+msgstr "阿萨姆文"
+
+msgid "az"
+msgstr "阿塞拜疆文"
+
+msgid "az_TR"
+msgstr ""
+
+msgid "bcc"
+msgstr ""
+
+msgid "ba"
+msgstr "巴什客尔文"
+
+msgid "eu"
+msgstr "巴斯克文"
+
+msgid "bel"
+msgstr ""
+
+msgid "bn_BD"
+msgstr "孟加拉文"
+
+msgid "bs_BA"
+msgstr "波斯尼亚文"
+
+msgid "bre"
+msgstr "布里多尼文"
+
+msgid "bg_BG"
+msgstr "保加利亚文"
+
+msgid "ca"
+msgstr "加泰罗尼亚文"
+
+msgid "bal"
+msgstr "俾路支文"
+
+msgid "zh_CN"
+msgstr ""
+
+msgid "zh_HK"
+msgstr ""
+
+msgid "zh_TW"
+msgstr ""
+
+msgid "co"
+msgstr "科西嘉文"
+
+msgid "hr"
+msgstr "克罗地亚文"
+
+msgid "cs_CZ"
+msgstr "捷克文"
+
+msgid "da_DK"
+msgstr "丹麦文"
+
+msgid "dv"
+msgstr "迪维希文"
+
+msgid "nl_NL"
+msgstr "荷兰文"
+
+msgid "nl_BE"
+msgstr "佛兰芒文"
+
+msgid "dzo"
+msgstr ""
+
+msgid "en_AU"
+msgstr "澳大利亚英文"
+
+msgid "en_CA"
+msgstr "加拿大英文"
+
+msgid "en_NZ"
+msgstr ""
+
+msgid "en_ZA"
+msgstr ""
+
+msgid "en_GB"
+msgstr "英式英文"
+
+msgid "eo"
+msgstr "世界文"
+
+msgid "et"
+msgstr "爱沙尼亚文"
+
+msgid "fo"
+msgstr "法罗文"
+
+msgid "fi"
+msgstr "芬兰文"
+
+msgid "fr_BE"
+msgstr ""
+
+msgid "fr_CA"
+msgstr "加拿大法文"
+
+msgid "fr_FR"
+msgstr "法文"
+
+msgid "fy"
+msgstr "西弗里西亚文"
+
+msgid "fur"
+msgstr "弗留利文"
+
+msgid "fuc"
+msgstr ""
+
+msgid "gl_ES"
+msgstr "加利西亚文"
+
+msgid "ka_GE"
+msgstr "格鲁吉亚文"
+
+msgid "de_DE"
+msgstr "德文"
+
+msgid "de_CH"
+msgstr "瑞士高地德文"
+
+msgid "el"
+msgstr "希腊文"
+
+msgid "gn"
+msgstr "瓜拉尼文"
+
+msgid "gu"
+msgstr "古吉拉特文"
+
+msgid "haw_US"
+msgstr "夏威夷文"
+
+msgid "haz"
+msgstr ""
+
+msgid "he_IL"
+msgstr "希伯来文"
+
+msgid "hi_IN"
+msgstr "印地文"
+
+msgid "hu_HU"
+msgstr "匈牙利文"
+
+msgid "is_IS"
+msgstr "冰岛文"
+
+msgid "ido"
+msgstr ""
+
+msgid "id_ID"
+msgstr "印度尼西亚文"
+
+msgid "ga"
+msgstr "爱尔兰文"
+
+msgid "it_IT"
+msgstr "意大利文"
+
+msgid "ja"
+msgstr "日文"
+
+msgid "jv_ID"
+msgstr "爪哇文"
+
+msgid "kab"
+msgstr "卡比尔文"
+
+msgid "kn"
+msgstr "卡纳达文"
+
+msgid "kk"
+msgstr "哈萨克文"
+
+msgid "km"
+msgstr "高棉文"
+
+msgid "kin"
+msgstr ""
+
+msgid "ky_KY"
+msgstr "吉尔吉斯文"
+
+msgid "ko_KR"
+msgstr "韩文"
+
+msgid "ckb"
+msgstr "索拉尼库尔德文"
+
+msgid "lo"
+msgstr "老挝文"
+
+msgid "lv"
+msgstr "拉脱维亚文"
+
+msgid "li"
+msgstr "淋布尔吉文"
+
+msgid "lin"
+msgstr ""
+
+msgid "lt_LT"
+msgstr "立陶宛文"
+
+msgid "lb_LU"
+msgstr "卢森堡文"
+
+msgid "mk_MK"
+msgstr "马其顿文"
+
+msgid "mg_MG"
+msgstr "马尔加什文"
+
+msgid "ms_MY"
+msgstr "马来文"
+
+msgid "ml_IN"
+msgstr "马拉雅拉姆文"
+
+msgid "mri"
+msgstr ""
+
+msgid "mr"
+msgstr "马拉地文"
+
+msgid "xmf"
+msgstr ""
+
+msgid "mn"
+msgstr "蒙古文"
+
+msgid "me_ME"
+msgstr ""
+
+msgid "ary"
+msgstr ""
+
+msgid "my_MM"
+msgstr ""
+
+msgid "ne_NP"
+msgstr "尼泊尔文"
+
+msgid "nb_NO"
+msgstr "挪威博克马尔文"
+
+msgid "nn_NO"
+msgstr "挪威尼诺斯克文"
+
+msgid "oci"
+msgstr ""
+
+msgid "ory"
+msgstr ""
+
+msgid "os"
+msgstr "奥塞梯文"
+
+msgid "ps"
+msgstr "普什图文"
+
+msgid "fa_IR"
+msgstr "波斯文"
+
+msgid "fa_AF"
+msgstr ""
+
+msgid "pl_PL"
+msgstr "波兰文"
+
+msgid "pt_BR"
+msgstr "巴西葡萄牙文"
+
+msgid "pt_PT"
+msgstr "欧洲葡萄牙文"
+
+msgid "pa_IN"
+msgstr "旁遮普文"
+
+msgid "rhg"
+msgstr ""
+
+msgid "ro_RO"
+msgstr "罗马尼亚文"
+
+msgid "roh"
+msgstr ""
+
+msgid "ru_RU"
+msgstr "俄文"
+
+msgid "ru_UA"
+msgstr ""
+
+msgid "rue"
+msgstr ""
+
+msgid "sah"
+msgstr "雅库特文"
+
+msgid "sa_IN"
+msgstr ""
+
+msgid "srd"
+msgstr ""
+
+msgid "gd"
+msgstr "苏格兰盖尔文"
+
+msgid "sr_RS"
+msgstr "塞尔维亚文"
+
+msgid "szl"
+msgstr ""
+
+msgid "sd_PK"
+msgstr "信德文"
+
+msgid "si_LK"
+msgstr "僧伽罗文"
+
+msgid "sk_SK"
+msgstr "斯洛伐克文"
+
+msgid "sl_SI"
+msgstr "斯洛文尼亚文"
+
+msgid "so_SO"
+msgstr "索马里文"
+
+msgid "azb"
+msgstr ""
+
+msgid "es_AR"
+msgstr ""
+
+msgid "es_CL"
+msgstr ""
+
+msgid "es_CO"
+msgstr ""
+
+msgid "es_MX"
+msgstr "墨西哥西班牙文"
+
+msgid "es_PE"
+msgstr ""
+
+msgid "es_PR"
+msgstr ""
+
+msgid "es_ES"
+msgstr "欧洲西班牙文"
+
+msgid "es_VE"
+msgstr ""
+
+msgid "su_ID"
+msgstr "巽他文"
+
+msgid "sw"
+msgstr "斯瓦希里文"
+
+msgid "sv_SE"
+msgstr "瑞典文"
+
+msgid "gsw"
+msgstr "瑞士德文"
+
+msgid "tl"
+msgstr "塔加洛文"
+
+msgid "tg"
+msgstr "塔吉克文"
+
+msgid "tzm"
+msgstr "塔马齐格特文"
+
+msgid "ta_IN"
+msgstr "泰米尔文"
+
+msgid "ta_LK"
+msgstr ""
+
+msgid "tt_RU"
+msgstr "塔塔尔文"
+
+msgid "te"
+msgstr "泰卢固文"
+
+msgid "th"
+msgstr "泰文"
+
+msgid "bo"
+msgstr "藏文"
+
+msgid "tir"
+msgstr ""
+
+msgid "tr_TR"
+msgstr "土耳其文"
+
+msgid "tuk"
+msgstr ""
+
+msgid "ug_CN"
+msgstr "维吾尔文"
+
+msgid "uk"
+msgstr "乌克兰文"
+
+msgid "ur"
+msgstr "乌尔都文"
+
+msgid "uz_UZ"
+msgstr "乌兹别克文"
+
+msgid "vi"
+msgstr "越南文"
+
+msgid "wa"
+msgstr "瓦隆文"
+
+msgid "cy"
+msgstr "威尔士文"
+
+msgid "yor"
+msgstr ""
+

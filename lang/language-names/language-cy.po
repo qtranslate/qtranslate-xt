@@ -1,0 +1,470 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: \n"
+
+msgid "af"
+msgstr "Affricâneg"
+
+msgid "ak"
+msgstr "Acaneg"
+
+msgid "sq"
+msgstr "Albaneg"
+
+msgid "arq"
+msgstr "Arabeg Algeria"
+
+msgid "am"
+msgstr "Amhareg"
+
+msgid "ar"
+msgstr "Arabeg"
+
+msgid "hy"
+msgstr "Armeneg"
+
+msgid "rup_MK"
+msgstr "Aromaneg"
+
+msgid "frp"
+msgstr "Arpitaneg"
+
+msgid "as"
+msgstr "Asameg"
+
+msgid "az"
+msgstr "Aserbaijaneg"
+
+msgid "az_TR"
+msgstr ""
+
+msgid "bcc"
+msgstr ""
+
+msgid "ba"
+msgstr "Bashcorteg"
+
+msgid "eu"
+msgstr "Basgeg"
+
+msgid "bel"
+msgstr ""
+
+msgid "bn_BD"
+msgstr "Bengaleg"
+
+msgid "bs_BA"
+msgstr "Bosnieg"
+
+msgid "bre"
+msgstr "Llydaweg"
+
+msgid "bg_BG"
+msgstr "Bwlgareg"
+
+msgid "ca"
+msgstr "Catalaneg"
+
+msgid "bal"
+msgstr "Balwtsi"
+
+msgid "zh_CN"
+msgstr ""
+
+msgid "zh_HK"
+msgstr ""
+
+msgid "zh_TW"
+msgstr ""
+
+msgid "co"
+msgstr "Corseg"
+
+msgid "hr"
+msgstr "Croateg"
+
+msgid "cs_CZ"
+msgstr "Tsieceg"
+
+msgid "da_DK"
+msgstr "Daneg"
+
+msgid "dv"
+msgstr "Difehi"
+
+msgid "nl_NL"
+msgstr "Iseldireg"
+
+msgid "nl_BE"
+msgstr "Fflemeg"
+
+msgid "dzo"
+msgstr ""
+
+msgid "en_AU"
+msgstr "Saesneg Awstralia"
+
+msgid "en_CA"
+msgstr "Saesneg Canada"
+
+msgid "en_NZ"
+msgstr ""
+
+msgid "en_ZA"
+msgstr ""
+
+msgid "en_GB"
+msgstr "Saesneg Prydain"
+
+msgid "eo"
+msgstr "Esperanto"
+
+msgid "et"
+msgstr "Estoneg"
+
+msgid "fo"
+msgstr "Ffaröeg"
+
+msgid "fi"
+msgstr "Ffinneg"
+
+msgid "fr_BE"
+msgstr ""
+
+msgid "fr_CA"
+msgstr "Ffrangeg Canada"
+
+msgid "fr_FR"
+msgstr "Ffrangeg"
+
+msgid "fy"
+msgstr "Ffriseg y Gorllewin"
+
+msgid "fur"
+msgstr "Ffriwleg"
+
+msgid "fuc"
+msgstr ""
+
+msgid "gl_ES"
+msgstr "Galisieg"
+
+msgid "ka_GE"
+msgstr "Georgeg"
+
+msgid "de_DE"
+msgstr "Almaeneg"
+
+msgid "de_CH"
+msgstr "Almaeneg Safonol y Swistir"
+
+msgid "el"
+msgstr "Groeg"
+
+msgid "gn"
+msgstr "Guaraní"
+
+msgid "gu"
+msgstr "Gwjarati"
+
+msgid "haw_US"
+msgstr "Hawäieg"
+
+msgid "haz"
+msgstr ""
+
+msgid "he_IL"
+msgstr "Hebraeg"
+
+msgid "hi_IN"
+msgstr "Hindi"
+
+msgid "hu_HU"
+msgstr "Hwngareg"
+
+msgid "is_IS"
+msgstr "Islandeg"
+
+msgid "ido"
+msgstr ""
+
+msgid "id_ID"
+msgstr "Indoneseg"
+
+msgid "ga"
+msgstr "Gwyddeleg"
+
+msgid "it_IT"
+msgstr "Eidaleg"
+
+msgid "ja"
+msgstr "Japaneeg"
+
+msgid "jv_ID"
+msgstr "Jafanaeg"
+
+msgid "kab"
+msgstr "Cabileg"
+
+msgid "kn"
+msgstr "Kannada"
+
+msgid "kk"
+msgstr "Casacheg"
+
+msgid "km"
+msgstr "Chmereg"
+
+msgid "kin"
+msgstr ""
+
+msgid "ky_KY"
+msgstr "Cirgiseg"
+
+msgid "ko_KR"
+msgstr "Coreeg"
+
+msgid "ckb"
+msgstr "Cwrdeg Sorani"
+
+msgid "lo"
+msgstr "Laoeg"
+
+msgid "lv"
+msgstr "Latfieg"
+
+msgid "li"
+msgstr "Limbwrgeg"
+
+msgid "lin"
+msgstr ""
+
+msgid "lt_LT"
+msgstr "Lithwaneg"
+
+msgid "lb_LU"
+msgstr "Lwcsembwrgeg"
+
+msgid "mk_MK"
+msgstr "Macedoneg"
+
+msgid "mg_MG"
+msgstr "Malagaseg"
+
+msgid "ms_MY"
+msgstr "Maleieg"
+
+msgid "ml_IN"
+msgstr "Malayalam"
+
+msgid "mri"
+msgstr ""
+
+msgid "mr"
+msgstr "Marathi"
+
+msgid "xmf"
+msgstr ""
+
+msgid "mn"
+msgstr "Mongoleg"
+
+msgid "me_ME"
+msgstr ""
+
+msgid "ary"
+msgstr "Arabeg Moroco"
+
+msgid "my_MM"
+msgstr ""
+
+msgid "ne_NP"
+msgstr "Nepaleg"
+
+msgid "nb_NO"
+msgstr "Norwyeg Bokmål"
+
+msgid "nn_NO"
+msgstr "Norwyeg Nynorsk"
+
+msgid "oci"
+msgstr ""
+
+msgid "ory"
+msgstr ""
+
+msgid "os"
+msgstr "Oseteg"
+
+msgid "ps"
+msgstr "Pashto"
+
+msgid "fa_IR"
+msgstr "Perseg"
+
+msgid "fa_AF"
+msgstr ""
+
+msgid "pl_PL"
+msgstr "Pwyleg"
+
+msgid "pt_BR"
+msgstr "Portiwgeeg Brasil"
+
+msgid "pt_PT"
+msgstr "Portiwgeeg Ewrop"
+
+msgid "pa_IN"
+msgstr "Pwnjabeg"
+
+msgid "rhg"
+msgstr ""
+
+msgid "ro_RO"
+msgstr "Rwmaneg"
+
+msgid "roh"
+msgstr ""
+
+msgid "ru_RU"
+msgstr "Rwseg"
+
+msgid "ru_UA"
+msgstr ""
+
+msgid "rue"
+msgstr ""
+
+msgid "sah"
+msgstr "Iacwteg"
+
+msgid "sa_IN"
+msgstr ""
+
+msgid "srd"
+msgstr ""
+
+msgid "gd"
+msgstr "Gaeleg yr Alban"
+
+msgid "sr_RS"
+msgstr "Serbeg"
+
+msgid "szl"
+msgstr "Silesieg"
+
+msgid "sd_PK"
+msgstr "Sindhi"
+
+msgid "si_LK"
+msgstr "Sinhaleg"
+
+msgid "sk_SK"
+msgstr "Slofaceg"
+
+msgid "sl_SI"
+msgstr "Slofeneg"
+
+msgid "so_SO"
+msgstr "Somaleg"
+
+msgid "azb"
+msgstr ""
+
+msgid "es_AR"
+msgstr ""
+
+msgid "es_CL"
+msgstr ""
+
+msgid "es_CO"
+msgstr ""
+
+msgid "es_MX"
+msgstr "Sbaeneg Mecsico"
+
+msgid "es_PE"
+msgstr ""
+
+msgid "es_PR"
+msgstr ""
+
+msgid "es_ES"
+msgstr "Sbaeneg Ewrop"
+
+msgid "es_VE"
+msgstr ""
+
+msgid "su_ID"
+msgstr "Swndaneg"
+
+msgid "sw"
+msgstr "Swahili"
+
+msgid "sv_SE"
+msgstr "Swedeg"
+
+msgid "gsw"
+msgstr "Almaeneg y Swistir"
+
+msgid "tl"
+msgstr "Tagalog"
+
+msgid "tg"
+msgstr "Tajiceg"
+
+msgid "tzm"
+msgstr "Tamaseit Canolbarth Moroco"
+
+msgid "ta_IN"
+msgstr "Tamileg"
+
+msgid "ta_LK"
+msgstr ""
+
+msgid "tt_RU"
+msgstr "Tatareg"
+
+msgid "te"
+msgstr "Telugu"
+
+msgid "th"
+msgstr "Thai"
+
+msgid "bo"
+msgstr "Tibeteg"
+
+msgid "tir"
+msgstr ""
+
+msgid "tr_TR"
+msgstr "Tyrceg"
+
+msgid "tuk"
+msgstr ""
+
+msgid "ug_CN"
+msgstr "Uighur"
+
+msgid "uk"
+msgstr "Wcreineg"
+
+msgid "ur"
+msgstr "Wrdw"
+
+msgid "uz_UZ"
+msgstr "Wsbeceg"
+
+msgid "vi"
+msgstr "Fietnameg"
+
+msgid "wa"
+msgstr "Walwneg"
+
+msgid "cy"
+msgstr "Cymraeg"
+
+msgid "yor"
+msgstr ""
+

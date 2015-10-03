@@ -1,0 +1,470 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: \n"
+
+msgid "af"
+msgstr "Afrikaans"
+
+msgid "ak"
+msgstr "Akan"
+
+msgid "sq"
+msgstr "Albanees"
+
+msgid "arq"
+msgstr ""
+
+msgid "am"
+msgstr "Amharies"
+
+msgid "ar"
+msgstr "Arabies"
+
+msgid "hy"
+msgstr "Armeens"
+
+msgid "rup_MK"
+msgstr ""
+
+msgid "frp"
+msgstr ""
+
+msgid "as"
+msgstr "Assamees"
+
+msgid "az"
+msgstr "Azerbeidjans"
+
+msgid "az_TR"
+msgstr ""
+
+msgid "bcc"
+msgstr ""
+
+msgid "ba"
+msgstr "Baskir"
+
+msgid "eu"
+msgstr "Baskies"
+
+msgid "bel"
+msgstr ""
+
+msgid "bn_BD"
+msgstr "Bengaals"
+
+msgid "bs_BA"
+msgstr "Bosnies"
+
+msgid "bre"
+msgstr "Bretons"
+
+msgid "bg_BG"
+msgstr "Bulgaars"
+
+msgid "ca"
+msgstr "Katalaans"
+
+msgid "bal"
+msgstr ""
+
+msgid "zh_CN"
+msgstr ""
+
+msgid "zh_HK"
+msgstr ""
+
+msgid "zh_TW"
+msgstr ""
+
+msgid "co"
+msgstr "Korsikaans"
+
+msgid "hr"
+msgstr "Kroaties"
+
+msgid "cs_CZ"
+msgstr "Tsjeggies"
+
+msgid "da_DK"
+msgstr "Deens"
+
+msgid "dv"
+msgstr "Divehi"
+
+msgid "nl_NL"
+msgstr "Nederlands"
+
+msgid "nl_BE"
+msgstr "Vlaams"
+
+msgid "dzo"
+msgstr ""
+
+msgid "en_AU"
+msgstr ""
+
+msgid "en_CA"
+msgstr ""
+
+msgid "en_NZ"
+msgstr ""
+
+msgid "en_ZA"
+msgstr ""
+
+msgid "en_GB"
+msgstr "Engels (VK)"
+
+msgid "eo"
+msgstr "Esperanto"
+
+msgid "et"
+msgstr "Estnies"
+
+msgid "fo"
+msgstr "Faroees"
+
+msgid "fi"
+msgstr "Fins"
+
+msgid "fr_BE"
+msgstr ""
+
+msgid "fr_CA"
+msgstr ""
+
+msgid "fr_FR"
+msgstr "Frans"
+
+msgid "fy"
+msgstr "Wes-Fries"
+
+msgid "fur"
+msgstr ""
+
+msgid "fuc"
+msgstr ""
+
+msgid "gl_ES"
+msgstr "Galisies"
+
+msgid "ka_GE"
+msgstr "Georgies"
+
+msgid "de_DE"
+msgstr "Duits"
+
+msgid "de_CH"
+msgstr "Switserse hoog-Duits"
+
+msgid "el"
+msgstr "Grieks"
+
+msgid "gn"
+msgstr "Guarani"
+
+msgid "gu"
+msgstr "Goedjarati"
+
+msgid "haw_US"
+msgstr "Hawaiies"
+
+msgid "haz"
+msgstr ""
+
+msgid "he_IL"
+msgstr "Hebreeus"
+
+msgid "hi_IN"
+msgstr "Hindi"
+
+msgid "hu_HU"
+msgstr "Hongaars"
+
+msgid "is_IS"
+msgstr "Yslands"
+
+msgid "ido"
+msgstr ""
+
+msgid "id_ID"
+msgstr "Indonesies"
+
+msgid "ga"
+msgstr "Iers"
+
+msgid "it_IT"
+msgstr "Italiaans"
+
+msgid "ja"
+msgstr "Japannees"
+
+msgid "jv_ID"
+msgstr "Javaans"
+
+msgid "kab"
+msgstr "Kabyle"
+
+msgid "kn"
+msgstr "Kannada"
+
+msgid "kk"
+msgstr "Kazaks"
+
+msgid "km"
+msgstr "Khmer"
+
+msgid "kin"
+msgstr ""
+
+msgid "ky_KY"
+msgstr "Kirgisies"
+
+msgid "ko_KR"
+msgstr "Koreaans"
+
+msgid "ckb"
+msgstr "Sorani Koerdies"
+
+msgid "lo"
+msgstr "Lao"
+
+msgid "lv"
+msgstr "Letties"
+
+msgid "li"
+msgstr "Limburgs"
+
+msgid "lin"
+msgstr ""
+
+msgid "lt_LT"
+msgstr "Litaus"
+
+msgid "lb_LU"
+msgstr "Luxemburgs"
+
+msgid "mk_MK"
+msgstr "Masedonies"
+
+msgid "mg_MG"
+msgstr "Malgassies"
+
+msgid "ms_MY"
+msgstr "Maleis"
+
+msgid "ml_IN"
+msgstr "Malabaars"
+
+msgid "mri"
+msgstr ""
+
+msgid "mr"
+msgstr "Marathi"
+
+msgid "xmf"
+msgstr ""
+
+msgid "mn"
+msgstr "Mongools"
+
+msgid "me_ME"
+msgstr ""
+
+msgid "ary"
+msgstr ""
+
+msgid "my_MM"
+msgstr ""
+
+msgid "ne_NP"
+msgstr "Nepalees"
+
+msgid "nb_NO"
+msgstr "Noorse Bokmål"
+
+msgid "nn_NO"
+msgstr "Noorweegse Nynorsk"
+
+msgid "oci"
+msgstr ""
+
+msgid "ory"
+msgstr ""
+
+msgid "os"
+msgstr "Osseties"
+
+msgid "ps"
+msgstr "Pasjto"
+
+msgid "fa_IR"
+msgstr "Persies"
+
+msgid "fa_AF"
+msgstr ""
+
+msgid "pl_PL"
+msgstr "Pools"
+
+msgid "pt_BR"
+msgstr ""
+
+msgid "pt_PT"
+msgstr "Portugees"
+
+msgid "pa_IN"
+msgstr "Pandjabi"
+
+msgid "rhg"
+msgstr ""
+
+msgid "ro_RO"
+msgstr "Roemeens"
+
+msgid "roh"
+msgstr ""
+
+msgid "ru_RU"
+msgstr "Russies"
+
+msgid "ru_UA"
+msgstr ""
+
+msgid "rue"
+msgstr ""
+
+msgid "sah"
+msgstr ""
+
+msgid "sa_IN"
+msgstr ""
+
+msgid "srd"
+msgstr ""
+
+msgid "gd"
+msgstr "Skotse Gallies"
+
+msgid "sr_RS"
+msgstr "Serwies"
+
+msgid "szl"
+msgstr ""
+
+msgid "sd_PK"
+msgstr "Sindhi"
+
+msgid "si_LK"
+msgstr "Sinhala"
+
+msgid "sk_SK"
+msgstr "Slowaaks"
+
+msgid "sl_SI"
+msgstr "Sloweens"
+
+msgid "so_SO"
+msgstr "Somalies"
+
+msgid "azb"
+msgstr ""
+
+msgid "es_AR"
+msgstr ""
+
+msgid "es_CL"
+msgstr ""
+
+msgid "es_CO"
+msgstr ""
+
+msgid "es_MX"
+msgstr ""
+
+msgid "es_PE"
+msgstr ""
+
+msgid "es_PR"
+msgstr ""
+
+msgid "es_ES"
+msgstr "Spaans"
+
+msgid "es_VE"
+msgstr ""
+
+msgid "su_ID"
+msgstr "Sundanees"
+
+msgid "sw"
+msgstr "Swahili"
+
+msgid "sv_SE"
+msgstr "Sweeds"
+
+msgid "gsw"
+msgstr "Switserse Duits"
+
+msgid "tl"
+msgstr ""
+
+msgid "tg"
+msgstr "Tadzjieks"
+
+msgid "tzm"
+msgstr "Sentraal Atlas Tamazight"
+
+msgid "ta_IN"
+msgstr "Tamil"
+
+msgid "ta_LK"
+msgstr ""
+
+msgid "tt_RU"
+msgstr "Tataars"
+
+msgid "te"
+msgstr "Teloegoe"
+
+msgid "th"
+msgstr "Thai"
+
+msgid "bo"
+msgstr "Tibettaans"
+
+msgid "tir"
+msgstr ""
+
+msgid "tr_TR"
+msgstr "Turks"
+
+msgid "tuk"
+msgstr ""
+
+msgid "ug_CN"
+msgstr "Uighur"
+
+msgid "uk"
+msgstr "Oekraïens"
+
+msgid "ur"
+msgstr "Oerdoe"
+
+msgid "uz_UZ"
+msgstr "Oezbeeks"
+
+msgid "vi"
+msgstr "Viëtnamees"
+
+msgid "wa"
+msgstr ""
+
+msgid "cy"
+msgstr "Wallies"
+
+msgid "yor"
+msgstr ""
+

@@ -1,0 +1,470 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: \n"
+
+msgid "af"
+msgstr "Afrikaans"
+
+msgid "ak"
+msgstr "Akan"
+
+msgid "sq"
+msgstr "Albania"
+
+msgid "arq"
+msgstr "Arab Algeria"
+
+msgid "am"
+msgstr "Amharic"
+
+msgid "ar"
+msgstr "Arab"
+
+msgid "hy"
+msgstr "Armenia"
+
+msgid "rup_MK"
+msgstr ""
+
+msgid "frp"
+msgstr ""
+
+msgid "as"
+msgstr "Assam"
+
+msgid "az"
+msgstr "Azerbaijan"
+
+msgid "az_TR"
+msgstr ""
+
+msgid "bcc"
+msgstr ""
+
+msgid "ba"
+msgstr "Bashkir"
+
+msgid "eu"
+msgstr "Basque"
+
+msgid "bel"
+msgstr ""
+
+msgid "bn_BD"
+msgstr "Benggala"
+
+msgid "bs_BA"
+msgstr "Bosnia"
+
+msgid "bre"
+msgstr "Breton"
+
+msgid "bg_BG"
+msgstr "Bulgaria"
+
+msgid "ca"
+msgstr "Catalonia"
+
+msgid "bal"
+msgstr "Baluchi"
+
+msgid "zh_CN"
+msgstr ""
+
+msgid "zh_HK"
+msgstr ""
+
+msgid "zh_TW"
+msgstr ""
+
+msgid "co"
+msgstr "Corsica"
+
+msgid "hr"
+msgstr "Croatia"
+
+msgid "cs_CZ"
+msgstr "Czech"
+
+msgid "da_DK"
+msgstr "Denmark"
+
+msgid "dv"
+msgstr "Divehi"
+
+msgid "nl_NL"
+msgstr "Belanda"
+
+msgid "nl_BE"
+msgstr "Flemish"
+
+msgid "dzo"
+msgstr ""
+
+msgid "en_AU"
+msgstr "Inggeris Australia"
+
+msgid "en_CA"
+msgstr "Inggeris Kanada"
+
+msgid "en_NZ"
+msgstr ""
+
+msgid "en_ZA"
+msgstr ""
+
+msgid "en_GB"
+msgstr "Inggeris British"
+
+msgid "eo"
+msgstr "Esperanto"
+
+msgid "et"
+msgstr "Estonia"
+
+msgid "fo"
+msgstr "Faroe"
+
+msgid "fi"
+msgstr "Finland"
+
+msgid "fr_BE"
+msgstr ""
+
+msgid "fr_CA"
+msgstr "Perancis Kanada"
+
+msgid "fr_FR"
+msgstr "Perancis"
+
+msgid "fy"
+msgstr "Frisian Barat"
+
+msgid "fur"
+msgstr ""
+
+msgid "fuc"
+msgstr ""
+
+msgid "gl_ES"
+msgstr "Galicia"
+
+msgid "ka_GE"
+msgstr "Georgia"
+
+msgid "de_DE"
+msgstr "Jerman"
+
+msgid "de_CH"
+msgstr "Jerman Halus Switzerland"
+
+msgid "el"
+msgstr "Greek"
+
+msgid "gn"
+msgstr "Guarani"
+
+msgid "gu"
+msgstr "Gujerat"
+
+msgid "haw_US"
+msgstr "Hawaii"
+
+msgid "haz"
+msgstr ""
+
+msgid "he_IL"
+msgstr "Ibrani"
+
+msgid "hi_IN"
+msgstr "Hindi"
+
+msgid "hu_HU"
+msgstr "Hungary"
+
+msgid "is_IS"
+msgstr "Iceland"
+
+msgid "ido"
+msgstr ""
+
+msgid "id_ID"
+msgstr "Indonesia"
+
+msgid "ga"
+msgstr "Ireland"
+
+msgid "it_IT"
+msgstr "Itali"
+
+msgid "ja"
+msgstr "Jepun"
+
+msgid "jv_ID"
+msgstr "Jawa"
+
+msgid "kab"
+msgstr "Kabyle"
+
+msgid "kn"
+msgstr "Kannada"
+
+msgid "kk"
+msgstr "Kazakhstan"
+
+msgid "km"
+msgstr "Khmer"
+
+msgid "kin"
+msgstr ""
+
+msgid "ky_KY"
+msgstr "Kirghiz"
+
+msgid "ko_KR"
+msgstr "Korea"
+
+msgid "ckb"
+msgstr "Kurdi Sorani"
+
+msgid "lo"
+msgstr "Laos"
+
+msgid "lv"
+msgstr "Latvia"
+
+msgid "li"
+msgstr ""
+
+msgid "lin"
+msgstr ""
+
+msgid "lt_LT"
+msgstr "Lithuania"
+
+msgid "lb_LU"
+msgstr "Luxembourg"
+
+msgid "mk_MK"
+msgstr "Macedonia"
+
+msgid "mg_MG"
+msgstr "Malagasy"
+
+msgid "ms_MY"
+msgstr "Bahasa Melayu"
+
+msgid "ml_IN"
+msgstr "Malayalam"
+
+msgid "mri"
+msgstr ""
+
+msgid "mr"
+msgstr "Marathi"
+
+msgid "xmf"
+msgstr ""
+
+msgid "mn"
+msgstr "Mongolia"
+
+msgid "me_ME"
+msgstr ""
+
+msgid "ary"
+msgstr "Arab Maghribi"
+
+msgid "my_MM"
+msgstr ""
+
+msgid "ne_NP"
+msgstr "Nepal"
+
+msgid "nb_NO"
+msgstr "Bokmål Norway"
+
+msgid "nn_NO"
+msgstr "Nynorsk Norway"
+
+msgid "oci"
+msgstr ""
+
+msgid "ory"
+msgstr ""
+
+msgid "os"
+msgstr "Ossete"
+
+msgid "ps"
+msgstr "Pashto"
+
+msgid "fa_IR"
+msgstr "Parsi"
+
+msgid "fa_AF"
+msgstr ""
+
+msgid "pl_PL"
+msgstr "Poland"
+
+msgid "pt_BR"
+msgstr "Portugis Brazil"
+
+msgid "pt_PT"
+msgstr "Portugis Eropah"
+
+msgid "pa_IN"
+msgstr "Punjabi"
+
+msgid "rhg"
+msgstr ""
+
+msgid "ro_RO"
+msgstr "Romania"
+
+msgid "roh"
+msgstr ""
+
+msgid "ru_RU"
+msgstr "Rusia"
+
+msgid "ru_UA"
+msgstr ""
+
+msgid "rue"
+msgstr ""
+
+msgid "sah"
+msgstr ""
+
+msgid "sa_IN"
+msgstr ""
+
+msgid "srd"
+msgstr ""
+
+msgid "gd"
+msgstr "Scots Gaelic"
+
+msgid "sr_RS"
+msgstr "Serbia"
+
+msgid "szl"
+msgstr ""
+
+msgid "sd_PK"
+msgstr "Sindhi"
+
+msgid "si_LK"
+msgstr "Sinhala"
+
+msgid "sk_SK"
+msgstr "Slovak"
+
+msgid "sl_SI"
+msgstr "Slovenia"
+
+msgid "so_SO"
+msgstr "Somali"
+
+msgid "azb"
+msgstr ""
+
+msgid "es_AR"
+msgstr ""
+
+msgid "es_CL"
+msgstr ""
+
+msgid "es_CO"
+msgstr ""
+
+msgid "es_MX"
+msgstr "Sepanyol Mexico"
+
+msgid "es_PE"
+msgstr ""
+
+msgid "es_PR"
+msgstr ""
+
+msgid "es_ES"
+msgstr "Sepanyol Eropah"
+
+msgid "es_VE"
+msgstr ""
+
+msgid "su_ID"
+msgstr "Sunda"
+
+msgid "sw"
+msgstr "Swahili"
+
+msgid "sv_SE"
+msgstr "Sweden"
+
+msgid "gsw"
+msgstr "Jerman Switzerland"
+
+msgid "tl"
+msgstr ""
+
+msgid "tg"
+msgstr "Tajik"
+
+msgid "tzm"
+msgstr "Tamazight Atlas Tengah"
+
+msgid "ta_IN"
+msgstr "Tamil"
+
+msgid "ta_LK"
+msgstr ""
+
+msgid "tt_RU"
+msgstr "Tatar"
+
+msgid "te"
+msgstr "Telugu"
+
+msgid "th"
+msgstr "Thai"
+
+msgid "bo"
+msgstr "Tibet"
+
+msgid "tir"
+msgstr ""
+
+msgid "tr_TR"
+msgstr "Turki"
+
+msgid "tuk"
+msgstr ""
+
+msgid "ug_CN"
+msgstr "Uyghur"
+
+msgid "uk"
+msgstr "Ukraine"
+
+msgid "ur"
+msgstr "Urdu"
+
+msgid "uz_UZ"
+msgstr "Uzbekistan"
+
+msgid "vi"
+msgstr "Vietnam"
+
+msgid "wa"
+msgstr ""
+
+msgid "cy"
+msgstr "Wales"
+
+msgid "yor"
+msgstr ""
+

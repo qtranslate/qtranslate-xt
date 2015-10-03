@@ -1,0 +1,470 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: \n"
+
+msgid "af"
+msgstr "Afraganais"
+
+msgid "ak"
+msgstr "Akan"
+
+msgid "sq"
+msgstr "Albàinis"
+
+msgid "arq"
+msgstr "Arabais Aildireach"
+
+msgid "am"
+msgstr "Amtharais"
+
+msgid "ar"
+msgstr "Arabais"
+
+msgid "hy"
+msgstr "Airmeinis"
+
+msgid "rup_MK"
+msgstr ""
+
+msgid "frp"
+msgstr "Arpitan"
+
+msgid "as"
+msgstr "Asamais"
+
+msgid "az"
+msgstr "Asarbaideànais"
+
+msgid "az_TR"
+msgstr ""
+
+msgid "bcc"
+msgstr ""
+
+msgid "ba"
+msgstr "Bashkir"
+
+msgid "eu"
+msgstr "Basgais"
+
+msgid "bel"
+msgstr ""
+
+msgid "bn_BD"
+msgstr "Beangailis"
+
+msgid "bs_BA"
+msgstr "Bosnais"
+
+msgid "bre"
+msgstr "Breatnais"
+
+msgid "bg_BG"
+msgstr "Bulgarais"
+
+msgid "ca"
+msgstr "Catalanais"
+
+msgid "bal"
+msgstr "Baluchì"
+
+msgid "zh_CN"
+msgstr ""
+
+msgid "zh_HK"
+msgstr ""
+
+msgid "zh_TW"
+msgstr ""
+
+msgid "co"
+msgstr "Corsais"
+
+msgid "hr"
+msgstr "Cròthaisis"
+
+msgid "cs_CZ"
+msgstr "Seacais"
+
+msgid "da_DK"
+msgstr "Danmhairgis"
+
+msgid "dv"
+msgstr "Divehi"
+
+msgid "nl_NL"
+msgstr "Duitsis"
+
+msgid "nl_BE"
+msgstr "Flannrais"
+
+msgid "dzo"
+msgstr ""
+
+msgid "en_AU"
+msgstr "Beurla Astràilia"
+
+msgid "en_CA"
+msgstr "Beurla Chanada"
+
+msgid "en_NZ"
+msgstr ""
+
+msgid "en_ZA"
+msgstr ""
+
+msgid "en_GB"
+msgstr "Beurla Bhreatainn"
+
+msgid "eo"
+msgstr "Esperanto"
+
+msgid "et"
+msgstr "Eastoinis"
+
+msgid "fo"
+msgstr "Fàrothais"
+
+msgid "fi"
+msgstr "Fionnlannais"
+
+msgid "fr_BE"
+msgstr ""
+
+msgid "fr_CA"
+msgstr "Fraingis Chanada"
+
+msgid "fr_FR"
+msgstr "Fraingis"
+
+msgid "fy"
+msgstr "Frìoslannais Shiarach"
+
+msgid "fur"
+msgstr "Friùilis"
+
+msgid "fuc"
+msgstr ""
+
+msgid "gl_ES"
+msgstr "Gailìsis"
+
+msgid "ka_GE"
+msgstr "Cairtbheilis"
+
+msgid "de_DE"
+msgstr "Gearmailtis"
+
+msgid "de_CH"
+msgstr "Àrd-Ghearmailtis na h-Eilbheise"
+
+msgid "el"
+msgstr "Greugais"
+
+msgid "gn"
+msgstr "Guaraní"
+
+msgid "gu"
+msgstr "Gujarati"
+
+msgid "haw_US"
+msgstr "Cànan Hawai’i"
+
+msgid "haz"
+msgstr ""
+
+msgid "he_IL"
+msgstr "Eabhra"
+
+msgid "hi_IN"
+msgstr "Hindis"
+
+msgid "hu_HU"
+msgstr "Ungairis"
+
+msgid "is_IS"
+msgstr "Innis Tìlis"
+
+msgid "ido"
+msgstr ""
+
+msgid "id_ID"
+msgstr "Innd-Innsis"
+
+msgid "ga"
+msgstr "Gaeilge"
+
+msgid "it_IT"
+msgstr "Eadailtis"
+
+msgid "ja"
+msgstr "Seapanais"
+
+msgid "jv_ID"
+msgstr "Deàbhanais"
+
+msgid "kab"
+msgstr "Kabyle"
+
+msgid "kn"
+msgstr "Kannada"
+
+msgid "kk"
+msgstr "Casachais"
+
+msgid "km"
+msgstr "Cmèar"
+
+msgid "kin"
+msgstr ""
+
+msgid "ky_KY"
+msgstr "Cìorgasais"
+
+msgid "ko_KR"
+msgstr "Coirèanais"
+
+msgid "ckb"
+msgstr "Cùrdais Soranî"
+
+msgid "lo"
+msgstr "Làtho"
+
+msgid "lv"
+msgstr "Laitbheis"
+
+msgid "li"
+msgstr "Cànan Limburg"
+
+msgid "lin"
+msgstr ""
+
+msgid "lt_LT"
+msgstr "Liotuainis"
+
+msgid "lb_LU"
+msgstr "Lugsamburgais"
+
+msgid "mk_MK"
+msgstr "Masadonais"
+
+msgid "mg_MG"
+msgstr "Malagasais"
+
+msgid "ms_MY"
+msgstr "Malaidhis"
+
+msgid "ml_IN"
+msgstr "Malayalam"
+
+msgid "mri"
+msgstr ""
+
+msgid "mr"
+msgstr "Marathi"
+
+msgid "xmf"
+msgstr ""
+
+msgid "mn"
+msgstr "Mongolais"
+
+msgid "me_ME"
+msgstr ""
+
+msgid "ary"
+msgstr "Arabais Mhorocach"
+
+msgid "my_MM"
+msgstr ""
+
+msgid "ne_NP"
+msgstr "Neapàlais"
+
+msgid "nb_NO"
+msgstr "Bokmål na Nirribhidh"
+
+msgid "nn_NO"
+msgstr "Nynorsk na Nirribhidh"
+
+msgid "oci"
+msgstr ""
+
+msgid "ory"
+msgstr ""
+
+msgid "os"
+msgstr "Ossetic"
+
+msgid "ps"
+msgstr "Pashto"
+
+msgid "fa_IR"
+msgstr "Peirsis"
+
+msgid "fa_AF"
+msgstr ""
+
+msgid "pl_PL"
+msgstr "Pòlainnis"
+
+msgid "pt_BR"
+msgstr "Portagailis Bhraisileach"
+
+msgid "pt_PT"
+msgstr "Portagailis Eòrpach"
+
+msgid "pa_IN"
+msgstr "Panjabi"
+
+msgid "rhg"
+msgstr ""
+
+msgid "ro_RO"
+msgstr "Romàinis"
+
+msgid "roh"
+msgstr ""
+
+msgid "ru_RU"
+msgstr "Ruisis"
+
+msgid "ru_UA"
+msgstr ""
+
+msgid "rue"
+msgstr "Rusyn"
+
+msgid "sah"
+msgstr "Sachais"
+
+msgid "sa_IN"
+msgstr ""
+
+msgid "srd"
+msgstr ""
+
+msgid "gd"
+msgstr "Gàidhlig"
+
+msgid "sr_RS"
+msgstr "Sèirbis"
+
+msgid "szl"
+msgstr ""
+
+msgid "sd_PK"
+msgstr "Sindhi"
+
+msgid "si_LK"
+msgstr "Sinhala"
+
+msgid "sk_SK"
+msgstr "Slòbhacais"
+
+msgid "sl_SI"
+msgstr "Slòbhainis"
+
+msgid "so_SO"
+msgstr "Somàilis"
+
+msgid "azb"
+msgstr ""
+
+msgid "es_AR"
+msgstr ""
+
+msgid "es_CL"
+msgstr ""
+
+msgid "es_CO"
+msgstr ""
+
+msgid "es_MX"
+msgstr "Spàinntis Mheagsagach"
+
+msgid "es_PE"
+msgstr ""
+
+msgid "es_PR"
+msgstr ""
+
+msgid "es_ES"
+msgstr "Spàinntis Eòrpach"
+
+msgid "es_VE"
+msgstr ""
+
+msgid "su_ID"
+msgstr "Cànan Sunda"
+
+msgid "sw"
+msgstr "Kiswahili"
+
+msgid "sv_SE"
+msgstr "Suainis"
+
+msgid "gsw"
+msgstr "Gearmailtis Eilbheiseach"
+
+msgid "tl"
+msgstr "Tagalog"
+
+msgid "tg"
+msgstr "Taidigis"
+
+msgid "tzm"
+msgstr "Tamazight Meadhan na h-Atlas"
+
+msgid "ta_IN"
+msgstr "Taimilis"
+
+msgid "ta_LK"
+msgstr ""
+
+msgid "tt_RU"
+msgstr "Tatarais"
+
+msgid "te"
+msgstr "Telugu"
+
+msgid "th"
+msgstr "Tàidh"
+
+msgid "bo"
+msgstr "Tibeitis"
+
+msgid "tir"
+msgstr ""
+
+msgid "tr_TR"
+msgstr "Turcais"
+
+msgid "tuk"
+msgstr ""
+
+msgid "ug_CN"
+msgstr "Ùigiurais"
+
+msgid "uk"
+msgstr "Ucràinis"
+
+msgid "ur"
+msgstr "Ùrdu"
+
+msgid "uz_UZ"
+msgstr "Usbagais"
+
+msgid "vi"
+msgstr "Bhiet-Namais"
+
+msgid "wa"
+msgstr "Walloon"
+
+msgid "cy"
+msgstr "Cuimris"
+
+msgid "yor"
+msgstr ""
+

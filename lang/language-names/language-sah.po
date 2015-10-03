@@ -1,0 +1,470 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: \n"
+
+msgid "af"
+msgstr "Аппырыкааныстыы"
+
+msgid "ak"
+msgstr ""
+
+msgid "sq"
+msgstr "Албаанскайдыы"
+
+msgid "arq"
+msgstr ""
+
+msgid "am"
+msgstr ""
+
+msgid "ar"
+msgstr "Араабтыы"
+
+msgid "hy"
+msgstr "Эрмээннии"
+
+msgid "rup_MK"
+msgstr ""
+
+msgid "frp"
+msgstr ""
+
+msgid "as"
+msgstr ""
+
+msgid "az"
+msgstr "Адьырбайдьаанныы"
+
+msgid "az_TR"
+msgstr ""
+
+msgid "bcc"
+msgstr ""
+
+msgid "ba"
+msgstr ""
+
+msgid "eu"
+msgstr ""
+
+msgid "bel"
+msgstr ""
+
+msgid "bn_BD"
+msgstr "Бенгаллыы"
+
+msgid "bs_BA"
+msgstr "Босныйалыы"
+
+msgid "bre"
+msgstr ""
+
+msgid "bg_BG"
+msgstr "Булҕаардыы"
+
+msgid "ca"
+msgstr "Каталаанныы"
+
+msgid "bal"
+msgstr ""
+
+msgid "zh_CN"
+msgstr ""
+
+msgid "zh_HK"
+msgstr ""
+
+msgid "zh_TW"
+msgstr ""
+
+msgid "co"
+msgstr ""
+
+msgid "hr"
+msgstr ""
+
+msgid "cs_CZ"
+msgstr "Чиэскэйдии"
+
+msgid "da_DK"
+msgstr "Даатскайдыы"
+
+msgid "dv"
+msgstr ""
+
+msgid "nl_NL"
+msgstr ""
+
+msgid "nl_BE"
+msgstr ""
+
+msgid "dzo"
+msgstr ""
+
+msgid "en_AU"
+msgstr ""
+
+msgid "en_CA"
+msgstr ""
+
+msgid "en_NZ"
+msgstr ""
+
+msgid "en_ZA"
+msgstr ""
+
+msgid "en_GB"
+msgstr ""
+
+msgid "eo"
+msgstr ""
+
+msgid "et"
+msgstr "Эстиэнийэлии"
+
+msgid "fo"
+msgstr ""
+
+msgid "fi"
+msgstr "Пииннии"
+
+msgid "fr_BE"
+msgstr ""
+
+msgid "fr_CA"
+msgstr ""
+
+msgid "fr_FR"
+msgstr "Пырансуустуу"
+
+msgid "fy"
+msgstr ""
+
+msgid "fur"
+msgstr ""
+
+msgid "fuc"
+msgstr ""
+
+msgid "gl_ES"
+msgstr ""
+
+msgid "ka_GE"
+msgstr "Гурусууннуу"
+
+msgid "de_DE"
+msgstr "Ниэмэстии"
+
+msgid "de_CH"
+msgstr ""
+
+msgid "el"
+msgstr "Гириэктии"
+
+msgid "gn"
+msgstr ""
+
+msgid "gu"
+msgstr ""
+
+msgid "haw_US"
+msgstr ""
+
+msgid "haz"
+msgstr ""
+
+msgid "he_IL"
+msgstr ""
+
+msgid "hi_IN"
+msgstr ""
+
+msgid "hu_HU"
+msgstr "Бэҥгиэрдии"
+
+msgid "is_IS"
+msgstr ""
+
+msgid "ido"
+msgstr ""
+
+msgid "id_ID"
+msgstr ""
+
+msgid "ga"
+msgstr ""
+
+msgid "it_IT"
+msgstr "Ытаалыйалыы"
+
+msgid "ja"
+msgstr "Дьоппуоннуу"
+
+msgid "jv_ID"
+msgstr ""
+
+msgid "kab"
+msgstr ""
+
+msgid "kn"
+msgstr ""
+
+msgid "kk"
+msgstr "Хаһаахтыы"
+
+msgid "km"
+msgstr ""
+
+msgid "kin"
+msgstr ""
+
+msgid "ky_KY"
+msgstr "Кыргыстыы"
+
+msgid "ko_KR"
+msgstr "Кэриэйдии"
+
+msgid "ckb"
+msgstr ""
+
+msgid "lo"
+msgstr ""
+
+msgid "lv"
+msgstr ""
+
+msgid "li"
+msgstr ""
+
+msgid "lin"
+msgstr ""
+
+msgid "lt_LT"
+msgstr ""
+
+msgid "lb_LU"
+msgstr ""
+
+msgid "mk_MK"
+msgstr ""
+
+msgid "mg_MG"
+msgstr ""
+
+msgid "ms_MY"
+msgstr ""
+
+msgid "ml_IN"
+msgstr ""
+
+msgid "mri"
+msgstr ""
+
+msgid "mr"
+msgstr ""
+
+msgid "xmf"
+msgstr ""
+
+msgid "mn"
+msgstr "Моҕуоллуу"
+
+msgid "me_ME"
+msgstr ""
+
+msgid "ary"
+msgstr ""
+
+msgid "my_MM"
+msgstr ""
+
+msgid "ne_NP"
+msgstr "Ньыпааллыы"
+
+msgid "nb_NO"
+msgstr ""
+
+msgid "nn_NO"
+msgstr ""
+
+msgid "oci"
+msgstr ""
+
+msgid "ory"
+msgstr ""
+
+msgid "os"
+msgstr ""
+
+msgid "ps"
+msgstr ""
+
+msgid "fa_IR"
+msgstr "Пиэрсийэлии"
+
+msgid "fa_AF"
+msgstr ""
+
+msgid "pl_PL"
+msgstr ""
+
+msgid "pt_BR"
+msgstr ""
+
+msgid "pt_PT"
+msgstr "Португааллыы"
+
+msgid "pa_IN"
+msgstr "Пандьаабтыы"
+
+msgid "rhg"
+msgstr ""
+
+msgid "ro_RO"
+msgstr "Румыынныы"
+
+msgid "roh"
+msgstr ""
+
+msgid "ru_RU"
+msgstr "Нууччалыы"
+
+msgid "ru_UA"
+msgstr ""
+
+msgid "rue"
+msgstr ""
+
+msgid "sah"
+msgstr "саха тыла"
+
+msgid "sa_IN"
+msgstr ""
+
+msgid "srd"
+msgstr ""
+
+msgid "gd"
+msgstr ""
+
+msgid "sr_RS"
+msgstr ""
+
+msgid "szl"
+msgstr ""
+
+msgid "sd_PK"
+msgstr ""
+
+msgid "si_LK"
+msgstr ""
+
+msgid "sk_SK"
+msgstr "Словаактыы"
+
+msgid "sl_SI"
+msgstr ""
+
+msgid "so_SO"
+msgstr ""
+
+msgid "azb"
+msgstr ""
+
+msgid "es_AR"
+msgstr ""
+
+msgid "es_CL"
+msgstr ""
+
+msgid "es_CO"
+msgstr ""
+
+msgid "es_MX"
+msgstr ""
+
+msgid "es_PE"
+msgstr ""
+
+msgid "es_PR"
+msgstr ""
+
+msgid "es_ES"
+msgstr "Ыспаанныы"
+
+msgid "es_VE"
+msgstr ""
+
+msgid "su_ID"
+msgstr ""
+
+msgid "sw"
+msgstr ""
+
+msgid "sv_SE"
+msgstr ""
+
+msgid "gsw"
+msgstr ""
+
+msgid "tl"
+msgstr ""
+
+msgid "tg"
+msgstr "Тадьыыктыы"
+
+msgid "tzm"
+msgstr ""
+
+msgid "ta_IN"
+msgstr "Тамыллыы"
+
+msgid "ta_LK"
+msgstr ""
+
+msgid "tt_RU"
+msgstr ""
+
+msgid "te"
+msgstr "Төлүгүлүү"
+
+msgid "th"
+msgstr ""
+
+msgid "bo"
+msgstr "Тибиэттии"
+
+msgid "tir"
+msgstr ""
+
+msgid "tr_TR"
+msgstr ""
+
+msgid "tuk"
+msgstr ""
+
+msgid "ug_CN"
+msgstr "Уйгуурдуу"
+
+msgid "uk"
+msgstr "Украйыыньыстыы"
+
+msgid "ur"
+msgstr ""
+
+msgid "uz_UZ"
+msgstr "Үзбиэктии"
+
+msgid "vi"
+msgstr ""
+
+msgid "wa"
+msgstr ""
+
+msgid "cy"
+msgstr ""
+
+msgid "yor"
+msgstr ""
+

@@ -1,0 +1,470 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: \n"
+
+msgid "af"
+msgstr "આફ્રિકન્સ"
+
+msgid "ak"
+msgstr "અકાન"
+
+msgid "sq"
+msgstr "અલ્બેનિયન"
+
+msgid "arq"
+msgstr "આલ્જેરિયન અરબી"
+
+msgid "am"
+msgstr "એમ્હારિક"
+
+msgid "ar"
+msgstr "અરબી"
+
+msgid "hy"
+msgstr "આર્મેનિયન"
+
+msgid "rup_MK"
+msgstr "અરોમેનિયન"
+
+msgid "frp"
+msgstr ""
+
+msgid "as"
+msgstr "આસામી"
+
+msgid "az"
+msgstr "અઝરબૈજાની"
+
+msgid "az_TR"
+msgstr ""
+
+msgid "bcc"
+msgstr ""
+
+msgid "ba"
+msgstr "બશ્કીર"
+
+msgid "eu"
+msgstr "બાસ્ક"
+
+msgid "bel"
+msgstr ""
+
+msgid "bn_BD"
+msgstr "બંગાળી"
+
+msgid "bs_BA"
+msgstr "બોસ્નિયન"
+
+msgid "bre"
+msgstr "બ્રેટોન"
+
+msgid "bg_BG"
+msgstr "બલ્ગેરિયન"
+
+msgid "ca"
+msgstr "કતલાન"
+
+msgid "bal"
+msgstr "બલૂચી"
+
+msgid "zh_CN"
+msgstr ""
+
+msgid "zh_HK"
+msgstr ""
+
+msgid "zh_TW"
+msgstr ""
+
+msgid "co"
+msgstr "કોર્સિકન"
+
+msgid "hr"
+msgstr "ક્રોએશિયન"
+
+msgid "cs_CZ"
+msgstr "ચેક"
+
+msgid "da_DK"
+msgstr "ડેનિશ"
+
+msgid "dv"
+msgstr "દિવેહી"
+
+msgid "nl_NL"
+msgstr "ડચ"
+
+msgid "nl_BE"
+msgstr "ફ્લેમિશ"
+
+msgid "dzo"
+msgstr ""
+
+msgid "en_AU"
+msgstr "ઓસ્ટ્રેલિયન અંગ્રેજી"
+
+msgid "en_CA"
+msgstr "કેનેડિયન અંગ્રેજી"
+
+msgid "en_NZ"
+msgstr ""
+
+msgid "en_ZA"
+msgstr ""
+
+msgid "en_GB"
+msgstr "બ્રિટિશ અંગ્રેજી"
+
+msgid "eo"
+msgstr "એસ્પેરાન્ટો"
+
+msgid "et"
+msgstr "એસ્ટોનિયન"
+
+msgid "fo"
+msgstr "ફોરિસ્ત"
+
+msgid "fi"
+msgstr "ફિનિશ"
+
+msgid "fr_BE"
+msgstr ""
+
+msgid "fr_CA"
+msgstr "કેનેડિયન ફ્રેંચ"
+
+msgid "fr_FR"
+msgstr "ફ્રેન્ચ"
+
+msgid "fy"
+msgstr "પશ્ચિમી ફ્રિસિયન"
+
+msgid "fur"
+msgstr "ફ્રિયુલિયાન"
+
+msgid "fuc"
+msgstr ""
+
+msgid "gl_ES"
+msgstr "ગેલિશિયન"
+
+msgid "ka_GE"
+msgstr "જ્યોર્જિઅન"
+
+msgid "de_DE"
+msgstr "જર્મન"
+
+msgid "de_CH"
+msgstr "સ્વિસ હાય જર્મન"
+
+msgid "el"
+msgstr "ગ્રીક"
+
+msgid "gn"
+msgstr "ગુઆરાની"
+
+msgid "gu"
+msgstr "ગુજરાતી"
+
+msgid "haw_US"
+msgstr "હાવાઇયન"
+
+msgid "haz"
+msgstr ""
+
+msgid "he_IL"
+msgstr "હીબ્રુ"
+
+msgid "hi_IN"
+msgstr "હિન્દી"
+
+msgid "hu_HU"
+msgstr "હંગેરિયન"
+
+msgid "is_IS"
+msgstr "આઇસલેન્ડિક"
+
+msgid "ido"
+msgstr ""
+
+msgid "id_ID"
+msgstr "ઇન્ડોનેશિયન"
+
+msgid "ga"
+msgstr "આઇરિશ"
+
+msgid "it_IT"
+msgstr "ઇટાલિયન"
+
+msgid "ja"
+msgstr "જાપાનીઝ"
+
+msgid "jv_ID"
+msgstr "જાવાનીસ"
+
+msgid "kab"
+msgstr "કબાઇલ"
+
+msgid "kn"
+msgstr "કન્નડ"
+
+msgid "kk"
+msgstr "કઝાખ"
+
+msgid "km"
+msgstr "ખ્મેર"
+
+msgid "kin"
+msgstr ""
+
+msgid "ky_KY"
+msgstr "કિર્ગીઝ"
+
+msgid "ko_KR"
+msgstr "કોરિયન"
+
+msgid "ckb"
+msgstr "સેન્ટ્રલ કુર્દિશ"
+
+msgid "lo"
+msgstr "લાઓથિયન"
+
+msgid "lv"
+msgstr "લાતવિયન"
+
+msgid "li"
+msgstr "લિંબૂર્ગિશ"
+
+msgid "lin"
+msgstr ""
+
+msgid "lt_LT"
+msgstr "લિથુનિયન"
+
+msgid "lb_LU"
+msgstr "લક્ઝેમબર્ગિશ"
+
+msgid "mk_MK"
+msgstr "મેસેડોનિયન"
+
+msgid "mg_MG"
+msgstr "મલાગસી"
+
+msgid "ms_MY"
+msgstr "મલય"
+
+msgid "ml_IN"
+msgstr "મલયાલમ"
+
+msgid "mri"
+msgstr ""
+
+msgid "mr"
+msgstr "મરાઠી"
+
+msgid "xmf"
+msgstr ""
+
+msgid "mn"
+msgstr "મોંગોલિયન"
+
+msgid "me_ME"
+msgstr ""
+
+msgid "ary"
+msgstr "મોરોક્કન અરબી"
+
+msgid "my_MM"
+msgstr ""
+
+msgid "ne_NP"
+msgstr "નેપાળી"
+
+msgid "nb_NO"
+msgstr "નોર્વેજીયન બોકમાલ"
+
+msgid "nn_NO"
+msgstr "નૉર્વેજીયન નાયનૉર્સ્ક"
+
+msgid "oci"
+msgstr ""
+
+msgid "ory"
+msgstr ""
+
+msgid "os"
+msgstr "ઓસ્સેટિક"
+
+msgid "ps"
+msgstr "પશ્તો"
+
+msgid "fa_IR"
+msgstr "ફારસી"
+
+msgid "fa_AF"
+msgstr ""
+
+msgid "pl_PL"
+msgstr "પોલીશ"
+
+msgid "pt_BR"
+msgstr "બ્રાઝિલીયન પોર્ટુગીઝ"
+
+msgid "pt_PT"
+msgstr "યુરોપિયન પોર્ટુગીઝ"
+
+msgid "pa_IN"
+msgstr "પંજાબી"
+
+msgid "rhg"
+msgstr ""
+
+msgid "ro_RO"
+msgstr "રોમાનિયન"
+
+msgid "roh"
+msgstr ""
+
+msgid "ru_RU"
+msgstr "રશિયન"
+
+msgid "ru_UA"
+msgstr ""
+
+msgid "rue"
+msgstr ""
+
+msgid "sah"
+msgstr "યાકૂત"
+
+msgid "sa_IN"
+msgstr ""
+
+msgid "srd"
+msgstr ""
+
+msgid "gd"
+msgstr "સ્કોટ્સ ગેલિક"
+
+msgid "sr_RS"
+msgstr "સર્બિયન"
+
+msgid "szl"
+msgstr ""
+
+msgid "sd_PK"
+msgstr "સિંધી"
+
+msgid "si_LK"
+msgstr "સિંહાલી"
+
+msgid "sk_SK"
+msgstr "સ્લોવૅક"
+
+msgid "sl_SI"
+msgstr "સ્લોવેનિયન"
+
+msgid "so_SO"
+msgstr "સોમાલી"
+
+msgid "azb"
+msgstr ""
+
+msgid "es_AR"
+msgstr ""
+
+msgid "es_CL"
+msgstr ""
+
+msgid "es_CO"
+msgstr ""
+
+msgid "es_MX"
+msgstr "મેક્સિકન સ્પેનિશ"
+
+msgid "es_PE"
+msgstr ""
+
+msgid "es_PR"
+msgstr ""
+
+msgid "es_ES"
+msgstr "યુરોપિયન સ્પેનિશ"
+
+msgid "es_VE"
+msgstr ""
+
+msgid "su_ID"
+msgstr "સંડેનીઝ"
+
+msgid "sw"
+msgstr "સ્વાહિલી"
+
+msgid "sv_SE"
+msgstr "સ્વીડિશ"
+
+msgid "gsw"
+msgstr "સ્વિસ જર્મન"
+
+msgid "tl"
+msgstr "ટાગાલોગ"
+
+msgid "tg"
+msgstr "તાજીક"
+
+msgid "tzm"
+msgstr "સેન્ટ્રલ ઍટ્લસ તામાઝિગ્ટ"
+
+msgid "ta_IN"
+msgstr "તમિલ"
+
+msgid "ta_LK"
+msgstr ""
+
+msgid "tt_RU"
+msgstr "તતાર"
+
+msgid "te"
+msgstr "તેલુગુ"
+
+msgid "th"
+msgstr "થાઈ"
+
+msgid "bo"
+msgstr "તિબેટીયન"
+
+msgid "tir"
+msgstr ""
+
+msgid "tr_TR"
+msgstr "ટર્કીશ"
+
+msgid "tuk"
+msgstr ""
+
+msgid "ug_CN"
+msgstr "ઉઇગુર"
+
+msgid "uk"
+msgstr "યુક્રેનિયન"
+
+msgid "ur"
+msgstr "ઉર્દૂ"
+
+msgid "uz_UZ"
+msgstr "ઉઝ્બેક"
+
+msgid "vi"
+msgstr "વિયેતનામીસ"
+
+msgid "wa"
+msgstr "વાલૂન"
+
+msgid "cy"
+msgstr "વેલ્શ"
+
+msgid "yor"
+msgstr ""
+

@@ -1,0 +1,470 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: \n"
+
+msgid "af"
+msgstr "afrikanščina"
+
+msgid "ak"
+msgstr "akanščina"
+
+msgid "sq"
+msgstr "albanščina"
+
+msgid "arq"
+msgstr ""
+
+msgid "am"
+msgstr "amharščina"
+
+msgid "ar"
+msgstr "arabščina"
+
+msgid "hy"
+msgstr "armenščina"
+
+msgid "rup_MK"
+msgstr "aromunščina"
+
+msgid "frp"
+msgstr ""
+
+msgid "as"
+msgstr "asamščina"
+
+msgid "az"
+msgstr "azerbajdžanščina"
+
+msgid "az_TR"
+msgstr ""
+
+msgid "bcc"
+msgstr ""
+
+msgid "ba"
+msgstr "baškirščina"
+
+msgid "eu"
+msgstr "baskovščina"
+
+msgid "bel"
+msgstr ""
+
+msgid "bn_BD"
+msgstr "bengalščina"
+
+msgid "bs_BA"
+msgstr "bosanščina"
+
+msgid "bre"
+msgstr "bretonščina"
+
+msgid "bg_BG"
+msgstr "bolgarščina"
+
+msgid "ca"
+msgstr "katalonščina"
+
+msgid "bal"
+msgstr "beludžijščina"
+
+msgid "zh_CN"
+msgstr ""
+
+msgid "zh_HK"
+msgstr ""
+
+msgid "zh_TW"
+msgstr ""
+
+msgid "co"
+msgstr "korziščina"
+
+msgid "hr"
+msgstr "hrvaščina"
+
+msgid "cs_CZ"
+msgstr "češčina"
+
+msgid "da_DK"
+msgstr "danščina"
+
+msgid "dv"
+msgstr "diveščina"
+
+msgid "nl_NL"
+msgstr "nizozemščina"
+
+msgid "nl_BE"
+msgstr "flamščina"
+
+msgid "dzo"
+msgstr ""
+
+msgid "en_AU"
+msgstr "avstralska angleščina"
+
+msgid "en_CA"
+msgstr "kanadska angleščina"
+
+msgid "en_NZ"
+msgstr ""
+
+msgid "en_ZA"
+msgstr ""
+
+msgid "en_GB"
+msgstr "angleščina (VB)"
+
+msgid "eo"
+msgstr "esperanto"
+
+msgid "et"
+msgstr "estonščina"
+
+msgid "fo"
+msgstr "ferščina"
+
+msgid "fi"
+msgstr "finščina"
+
+msgid "fr_BE"
+msgstr ""
+
+msgid "fr_CA"
+msgstr "kanadska francoščina"
+
+msgid "fr_FR"
+msgstr "francoščina"
+
+msgid "fy"
+msgstr "frizijščina"
+
+msgid "fur"
+msgstr "furlanščina"
+
+msgid "fuc"
+msgstr ""
+
+msgid "gl_ES"
+msgstr "galicijščina"
+
+msgid "ka_GE"
+msgstr "gruzinščina"
+
+msgid "de_DE"
+msgstr "nemščina"
+
+msgid "de_CH"
+msgstr "visoka nemščina (Švica)"
+
+msgid "el"
+msgstr "grščina"
+
+msgid "gn"
+msgstr "gvaranijščina"
+
+msgid "gu"
+msgstr "gudžaratščina"
+
+msgid "haw_US"
+msgstr "havajščina"
+
+msgid "haz"
+msgstr ""
+
+msgid "he_IL"
+msgstr "hebrejščina"
+
+msgid "hi_IN"
+msgstr "hindujščina"
+
+msgid "hu_HU"
+msgstr "madžarščina"
+
+msgid "is_IS"
+msgstr "islandščina"
+
+msgid "ido"
+msgstr ""
+
+msgid "id_ID"
+msgstr "indonezijščina"
+
+msgid "ga"
+msgstr "irščina"
+
+msgid "it_IT"
+msgstr "italijanščina"
+
+msgid "ja"
+msgstr "japonščina"
+
+msgid "jv_ID"
+msgstr "javanščina"
+
+msgid "kab"
+msgstr "kabilščina"
+
+msgid "kn"
+msgstr "kanada"
+
+msgid "kk"
+msgstr "kazaščina"
+
+msgid "km"
+msgstr "kmerščina"
+
+msgid "kin"
+msgstr ""
+
+msgid "ky_KY"
+msgstr "kirgiščina"
+
+msgid "ko_KR"
+msgstr "korejščina"
+
+msgid "ckb"
+msgstr "soranska kurdščina"
+
+msgid "lo"
+msgstr "laoščina"
+
+msgid "lv"
+msgstr "latvijščina"
+
+msgid "li"
+msgstr "limburščina"
+
+msgid "lin"
+msgstr ""
+
+msgid "lt_LT"
+msgstr "litovščina"
+
+msgid "lb_LU"
+msgstr "luksemburščina"
+
+msgid "mk_MK"
+msgstr "makedonščina"
+
+msgid "mg_MG"
+msgstr "malagaščina"
+
+msgid "ms_MY"
+msgstr "malajščina"
+
+msgid "ml_IN"
+msgstr "malajalamščina"
+
+msgid "mri"
+msgstr ""
+
+msgid "mr"
+msgstr "maratščina"
+
+msgid "xmf"
+msgstr ""
+
+msgid "mn"
+msgstr "mongolščina"
+
+msgid "me_ME"
+msgstr ""
+
+msgid "ary"
+msgstr ""
+
+msgid "my_MM"
+msgstr ""
+
+msgid "ne_NP"
+msgstr "nepalščina"
+
+msgid "nb_NO"
+msgstr "knjižna norveščina"
+
+msgid "nn_NO"
+msgstr "novonorveščina"
+
+msgid "oci"
+msgstr ""
+
+msgid "ory"
+msgstr ""
+
+msgid "os"
+msgstr "osetinščina"
+
+msgid "ps"
+msgstr "paštunščina"
+
+msgid "fa_IR"
+msgstr "perzijščina"
+
+msgid "fa_AF"
+msgstr ""
+
+msgid "pl_PL"
+msgstr "poljščina"
+
+msgid "pt_BR"
+msgstr "brazilska portugalščina"
+
+msgid "pt_PT"
+msgstr "iberska portugalščina"
+
+msgid "pa_IN"
+msgstr "pandžabščina"
+
+msgid "rhg"
+msgstr ""
+
+msgid "ro_RO"
+msgstr "romunščina"
+
+msgid "roh"
+msgstr ""
+
+msgid "ru_RU"
+msgstr "ruščina"
+
+msgid "ru_UA"
+msgstr ""
+
+msgid "rue"
+msgstr ""
+
+msgid "sah"
+msgstr "jakutščina"
+
+msgid "sa_IN"
+msgstr ""
+
+msgid "srd"
+msgstr ""
+
+msgid "gd"
+msgstr "škotska gelščina"
+
+msgid "sr_RS"
+msgstr "srbščina"
+
+msgid "szl"
+msgstr ""
+
+msgid "sd_PK"
+msgstr "sindščina"
+
+msgid "si_LK"
+msgstr "singalščina"
+
+msgid "sk_SK"
+msgstr "slovaščina"
+
+msgid "sl_SI"
+msgstr "slovenščina"
+
+msgid "so_SO"
+msgstr "somalščina"
+
+msgid "azb"
+msgstr ""
+
+msgid "es_AR"
+msgstr ""
+
+msgid "es_CL"
+msgstr ""
+
+msgid "es_CO"
+msgstr ""
+
+msgid "es_MX"
+msgstr ""
+
+msgid "es_PE"
+msgstr ""
+
+msgid "es_PR"
+msgstr ""
+
+msgid "es_ES"
+msgstr "iberska španščina"
+
+msgid "es_VE"
+msgstr ""
+
+msgid "su_ID"
+msgstr "sundanščina"
+
+msgid "sw"
+msgstr "svahili"
+
+msgid "sv_SE"
+msgstr "švedščina"
+
+msgid "gsw"
+msgstr "nemščina (Švica)"
+
+msgid "tl"
+msgstr "tagalogščina"
+
+msgid "tg"
+msgstr "tadžiščina"
+
+msgid "tzm"
+msgstr "tamašek (srednji atlas)"
+
+msgid "ta_IN"
+msgstr "tamilščina"
+
+msgid "ta_LK"
+msgstr ""
+
+msgid "tt_RU"
+msgstr "tatarščina"
+
+msgid "te"
+msgstr "telugijščina"
+
+msgid "th"
+msgstr "tajščina"
+
+msgid "bo"
+msgstr "tibetanščina"
+
+msgid "tir"
+msgstr ""
+
+msgid "tr_TR"
+msgstr "turščina"
+
+msgid "tuk"
+msgstr ""
+
+msgid "ug_CN"
+msgstr "ujgurščina"
+
+msgid "uk"
+msgstr "ukrajinščina"
+
+msgid "ur"
+msgstr "urdujščina"
+
+msgid "uz_UZ"
+msgstr "uzbeščina"
+
+msgid "vi"
+msgstr "vietnamščina"
+
+msgid "wa"
+msgstr "valonščina"
+
+msgid "cy"
+msgstr "valižanščina"
+
+msgid "yor"
+msgstr ""
+

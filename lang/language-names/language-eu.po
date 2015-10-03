@@ -1,0 +1,470 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: \n"
+
+msgid "af"
+msgstr "afrikaansa"
+
+msgid "ak"
+msgstr "akanera"
+
+msgid "sq"
+msgstr "albaniera"
+
+msgid "arq"
+msgstr ""
+
+msgid "am"
+msgstr "amharera"
+
+msgid "ar"
+msgstr "arabiera"
+
+msgid "hy"
+msgstr "armeniera"
+
+msgid "rup_MK"
+msgstr ""
+
+msgid "frp"
+msgstr ""
+
+msgid "as"
+msgstr "assamera"
+
+msgid "az"
+msgstr "azerbaijanera"
+
+msgid "az_TR"
+msgstr ""
+
+msgid "bcc"
+msgstr ""
+
+msgid "ba"
+msgstr "bashkirrera"
+
+msgid "eu"
+msgstr "euskara"
+
+msgid "bel"
+msgstr ""
+
+msgid "bn_BD"
+msgstr "bengalera"
+
+msgid "bs_BA"
+msgstr "bosniera"
+
+msgid "bre"
+msgstr "bretoiera"
+
+msgid "bg_BG"
+msgstr "bulgariera"
+
+msgid "ca"
+msgstr "katalana"
+
+msgid "bal"
+msgstr ""
+
+msgid "zh_CN"
+msgstr ""
+
+msgid "zh_HK"
+msgstr ""
+
+msgid "zh_TW"
+msgstr ""
+
+msgid "co"
+msgstr "korsikera"
+
+msgid "hr"
+msgstr "kroaziera"
+
+msgid "cs_CZ"
+msgstr "txekiera"
+
+msgid "da_DK"
+msgstr "daniera"
+
+msgid "dv"
+msgstr "divehiera"
+
+msgid "nl_NL"
+msgstr "nederlandera"
+
+msgid "nl_BE"
+msgstr "flandriera"
+
+msgid "dzo"
+msgstr ""
+
+msgid "en_AU"
+msgstr ""
+
+msgid "en_CA"
+msgstr ""
+
+msgid "en_NZ"
+msgstr ""
+
+msgid "en_ZA"
+msgstr ""
+
+msgid "en_GB"
+msgstr ""
+
+msgid "eo"
+msgstr "esperantoa"
+
+msgid "et"
+msgstr "estoniera"
+
+msgid "fo"
+msgstr "faroera"
+
+msgid "fi"
+msgstr "finlandiera"
+
+msgid "fr_BE"
+msgstr ""
+
+msgid "fr_CA"
+msgstr ""
+
+msgid "fr_FR"
+msgstr "frantsesa"
+
+msgid "fy"
+msgstr "frisiera"
+
+msgid "fur"
+msgstr ""
+
+msgid "fuc"
+msgstr ""
+
+msgid "gl_ES"
+msgstr "galiziera"
+
+msgid "ka_GE"
+msgstr "georgiera"
+
+msgid "de_DE"
+msgstr "alemana"
+
+msgid "de_CH"
+msgstr "aleman garaia (Suitza)"
+
+msgid "el"
+msgstr "greziera"
+
+msgid "gn"
+msgstr "guaraniera"
+
+msgid "gu"
+msgstr "gujaratera"
+
+msgid "haw_US"
+msgstr "hawaiiera"
+
+msgid "haz"
+msgstr ""
+
+msgid "he_IL"
+msgstr "hebreera"
+
+msgid "hi_IN"
+msgstr "hindia"
+
+msgid "hu_HU"
+msgstr "hungariera"
+
+msgid "is_IS"
+msgstr "islandiera"
+
+msgid "ido"
+msgstr ""
+
+msgid "id_ID"
+msgstr "indonesiera"
+
+msgid "ga"
+msgstr "gaelikoa"
+
+msgid "it_IT"
+msgstr "italiera"
+
+msgid "ja"
+msgstr "japoniera"
+
+msgid "jv_ID"
+msgstr "javera"
+
+msgid "kab"
+msgstr "kabilera"
+
+msgid "kn"
+msgstr "kannadera"
+
+msgid "kk"
+msgstr "kazakhera"
+
+msgid "km"
+msgstr "khemerera"
+
+msgid "kin"
+msgstr ""
+
+msgid "ky_KY"
+msgstr "kirgizera"
+
+msgid "ko_KR"
+msgstr "koreera"
+
+msgid "ckb"
+msgstr "soraniera"
+
+msgid "lo"
+msgstr "laosera"
+
+msgid "lv"
+msgstr "letoniera"
+
+msgid "li"
+msgstr ""
+
+msgid "lin"
+msgstr ""
+
+msgid "lt_LT"
+msgstr "lituaniera"
+
+msgid "lb_LU"
+msgstr "luxenburgera"
+
+msgid "mk_MK"
+msgstr "mazedoniera"
+
+msgid "mg_MG"
+msgstr "malagasyera"
+
+msgid "ms_MY"
+msgstr "malaysiera"
+
+msgid "ml_IN"
+msgstr "malayalamera"
+
+msgid "mri"
+msgstr ""
+
+msgid "mr"
+msgstr "marathera"
+
+msgid "xmf"
+msgstr ""
+
+msgid "mn"
+msgstr "mongoliera"
+
+msgid "me_ME"
+msgstr ""
+
+msgid "ary"
+msgstr ""
+
+msgid "my_MM"
+msgstr ""
+
+msgid "ne_NP"
+msgstr "nepalera"
+
+msgid "nb_NO"
+msgstr "bokmala (Norvegia)"
+
+msgid "nn_NO"
+msgstr "nynorsk norvegiera"
+
+msgid "oci"
+msgstr ""
+
+msgid "ory"
+msgstr ""
+
+msgid "os"
+msgstr "osetiera"
+
+msgid "ps"
+msgstr "paxtuera"
+
+msgid "fa_IR"
+msgstr "persiera"
+
+msgid "fa_AF"
+msgstr ""
+
+msgid "pl_PL"
+msgstr "poloniera"
+
+msgid "pt_BR"
+msgstr ""
+
+msgid "pt_PT"
+msgstr "portugesa (Europa)"
+
+msgid "pa_IN"
+msgstr "punjabera"
+
+msgid "rhg"
+msgstr ""
+
+msgid "ro_RO"
+msgstr "errumaniera"
+
+msgid "roh"
+msgstr ""
+
+msgid "ru_RU"
+msgstr "errusiera"
+
+msgid "ru_UA"
+msgstr ""
+
+msgid "rue"
+msgstr ""
+
+msgid "sah"
+msgstr ""
+
+msgid "sa_IN"
+msgstr ""
+
+msgid "srd"
+msgstr ""
+
+msgid "gd"
+msgstr "eskoziako gaelikoa"
+
+msgid "sr_RS"
+msgstr "serbiera"
+
+msgid "szl"
+msgstr ""
+
+msgid "sd_PK"
+msgstr "sindhia"
+
+msgid "si_LK"
+msgstr "sinhala"
+
+msgid "sk_SK"
+msgstr "eslovakiera"
+
+msgid "sl_SI"
+msgstr "esloveniera"
+
+msgid "so_SO"
+msgstr "somaliera"
+
+msgid "azb"
+msgstr ""
+
+msgid "es_AR"
+msgstr ""
+
+msgid "es_CL"
+msgstr ""
+
+msgid "es_CO"
+msgstr ""
+
+msgid "es_MX"
+msgstr ""
+
+msgid "es_PE"
+msgstr ""
+
+msgid "es_PR"
+msgstr ""
+
+msgid "es_ES"
+msgstr "espainiera (Europa)"
+
+msgid "es_VE"
+msgstr ""
+
+msgid "su_ID"
+msgstr "sundanera"
+
+msgid "sw"
+msgstr "swahili"
+
+msgid "sv_SE"
+msgstr "suediera"
+
+msgid "gsw"
+msgstr "alemana (Suitza)"
+
+msgid "tl"
+msgstr "tagalog"
+
+msgid "tg"
+msgstr "tajikistanera"
+
+msgid "tzm"
+msgstr "Maroko erdialdeko tamazighta"
+
+msgid "ta_IN"
+msgstr "tamilera"
+
+msgid "ta_LK"
+msgstr ""
+
+msgid "tt_RU"
+msgstr "tatarera"
+
+msgid "te"
+msgstr "teluguera"
+
+msgid "th"
+msgstr "thailandiera"
+
+msgid "bo"
+msgstr "tibetera"
+
+msgid "tir"
+msgstr ""
+
+msgid "tr_TR"
+msgstr "turkiera"
+
+msgid "tuk"
+msgstr ""
+
+msgid "ug_CN"
+msgstr "uigurrera"
+
+msgid "uk"
+msgstr "ukrainera"
+
+msgid "ur"
+msgstr "urdua"
+
+msgid "uz_UZ"
+msgstr "uzbekera"
+
+msgid "vi"
+msgstr "vietnamera"
+
+msgid "wa"
+msgstr ""
+
+msgid "cy"
+msgstr "galesera"
+
+msgid "yor"
+msgstr ""
+

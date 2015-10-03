@@ -1,0 +1,470 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: \n"
+
+msgid "af"
+msgstr "африкаанс"
+
+msgid "ak"
+msgstr "акан"
+
+msgid "sq"
+msgstr "албанська"
+
+msgid "arq"
+msgstr "алжирська арабська"
+
+msgid "am"
+msgstr "амхарська"
+
+msgid "ar"
+msgstr "арабська"
+
+msgid "hy"
+msgstr "вірменська"
+
+msgid "rup_MK"
+msgstr "арумунська"
+
+msgid "frp"
+msgstr "арпітанська"
+
+msgid "as"
+msgstr "ассамська"
+
+msgid "az"
+msgstr "азербайджанська"
+
+msgid "az_TR"
+msgstr ""
+
+msgid "bcc"
+msgstr ""
+
+msgid "ba"
+msgstr "башкирська"
+
+msgid "eu"
+msgstr "баскська"
+
+msgid "bel"
+msgstr ""
+
+msgid "bn_BD"
+msgstr "бенгальська"
+
+msgid "bs_BA"
+msgstr "боснійська"
+
+msgid "bre"
+msgstr "бретонська"
+
+msgid "bg_BG"
+msgstr "болгарська"
+
+msgid "ca"
+msgstr "каталонська"
+
+msgid "bal"
+msgstr "балучі"
+
+msgid "zh_CN"
+msgstr ""
+
+msgid "zh_HK"
+msgstr ""
+
+msgid "zh_TW"
+msgstr ""
+
+msgid "co"
+msgstr "корсиканська"
+
+msgid "hr"
+msgstr "хорватська"
+
+msgid "cs_CZ"
+msgstr "чеська"
+
+msgid "da_DK"
+msgstr "данська"
+
+msgid "dv"
+msgstr "дівехі"
+
+msgid "nl_NL"
+msgstr "голландська"
+
+msgid "nl_BE"
+msgstr "фламандська"
+
+msgid "dzo"
+msgstr ""
+
+msgid "en_AU"
+msgstr ""
+
+msgid "en_CA"
+msgstr ""
+
+msgid "en_NZ"
+msgstr ""
+
+msgid "en_ZA"
+msgstr ""
+
+msgid "en_GB"
+msgstr "англійська британська"
+
+msgid "eo"
+msgstr "есперанто"
+
+msgid "et"
+msgstr "естонська"
+
+msgid "fo"
+msgstr "фарерська"
+
+msgid "fi"
+msgstr "фінська"
+
+msgid "fr_BE"
+msgstr ""
+
+msgid "fr_CA"
+msgstr ""
+
+msgid "fr_FR"
+msgstr "французька"
+
+msgid "fy"
+msgstr "західнофризька"
+
+msgid "fur"
+msgstr "фріульська"
+
+msgid "fuc"
+msgstr ""
+
+msgid "gl_ES"
+msgstr "галісійська"
+
+msgid "ka_GE"
+msgstr "грузинська"
+
+msgid "de_DE"
+msgstr "німецька"
+
+msgid "de_CH"
+msgstr "верхньонімецька (Швейцарія)"
+
+msgid "el"
+msgstr "грецька"
+
+msgid "gn"
+msgstr "гуарані"
+
+msgid "gu"
+msgstr "гуджараті"
+
+msgid "haw_US"
+msgstr "гавайська"
+
+msgid "haz"
+msgstr ""
+
+msgid "he_IL"
+msgstr "іврит"
+
+msgid "hi_IN"
+msgstr "гінді"
+
+msgid "hu_HU"
+msgstr "угорська"
+
+msgid "is_IS"
+msgstr "ісландська"
+
+msgid "ido"
+msgstr ""
+
+msgid "id_ID"
+msgstr "індонезійська"
+
+msgid "ga"
+msgstr "ірландська"
+
+msgid "it_IT"
+msgstr "італійська"
+
+msgid "ja"
+msgstr "японська"
+
+msgid "jv_ID"
+msgstr "яванська"
+
+msgid "kab"
+msgstr "кабільська"
+
+msgid "kn"
+msgstr "каннада"
+
+msgid "kk"
+msgstr "казахська"
+
+msgid "km"
+msgstr "кхмерська"
+
+msgid "kin"
+msgstr ""
+
+msgid "ky_KY"
+msgstr "киргизька"
+
+msgid "ko_KR"
+msgstr "корейська"
+
+msgid "ckb"
+msgstr "курдська (сорані)"
+
+msgid "lo"
+msgstr "лаоська"
+
+msgid "lv"
+msgstr "латвійська"
+
+msgid "li"
+msgstr "лімбургійська"
+
+msgid "lin"
+msgstr ""
+
+msgid "lt_LT"
+msgstr "литовська"
+
+msgid "lb_LU"
+msgstr "люксембурзька"
+
+msgid "mk_MK"
+msgstr "македонська"
+
+msgid "mg_MG"
+msgstr "малагасійська"
+
+msgid "ms_MY"
+msgstr "малайська"
+
+msgid "ml_IN"
+msgstr "малаялам"
+
+msgid "mri"
+msgstr ""
+
+msgid "mr"
+msgstr "маратхі"
+
+msgid "xmf"
+msgstr ""
+
+msgid "mn"
+msgstr "монгольська"
+
+msgid "me_ME"
+msgstr ""
+
+msgid "ary"
+msgstr ""
+
+msgid "my_MM"
+msgstr ""
+
+msgid "ne_NP"
+msgstr "непальська"
+
+msgid "nb_NO"
+msgstr "букмол (Норвегія)"
+
+msgid "nn_NO"
+msgstr "нюношк (Норвегія)"
+
+msgid "oci"
+msgstr ""
+
+msgid "ory"
+msgstr ""
+
+msgid "os"
+msgstr "осетинська"
+
+msgid "ps"
+msgstr "пушту"
+
+msgid "fa_IR"
+msgstr "перська"
+
+msgid "fa_AF"
+msgstr ""
+
+msgid "pl_PL"
+msgstr "польська"
+
+msgid "pt_BR"
+msgstr ""
+
+msgid "pt_PT"
+msgstr "португальська (Європа)"
+
+msgid "pa_IN"
+msgstr "панджабі"
+
+msgid "rhg"
+msgstr ""
+
+msgid "ro_RO"
+msgstr "румунська"
+
+msgid "roh"
+msgstr ""
+
+msgid "ru_RU"
+msgstr "російська"
+
+msgid "ru_UA"
+msgstr ""
+
+msgid "rue"
+msgstr ""
+
+msgid "sah"
+msgstr "якутська"
+
+msgid "sa_IN"
+msgstr ""
+
+msgid "srd"
+msgstr ""
+
+msgid "gd"
+msgstr "гаельська"
+
+msgid "sr_RS"
+msgstr "сербська"
+
+msgid "szl"
+msgstr ""
+
+msgid "sd_PK"
+msgstr "сіндхі"
+
+msgid "si_LK"
+msgstr "сингальська"
+
+msgid "sk_SK"
+msgstr "словацька"
+
+msgid "sl_SI"
+msgstr "словенська"
+
+msgid "so_SO"
+msgstr "сомалі"
+
+msgid "azb"
+msgstr ""
+
+msgid "es_AR"
+msgstr ""
+
+msgid "es_CL"
+msgstr ""
+
+msgid "es_CO"
+msgstr ""
+
+msgid "es_MX"
+msgstr ""
+
+msgid "es_PE"
+msgstr ""
+
+msgid "es_PR"
+msgstr ""
+
+msgid "es_ES"
+msgstr "іспанська (Європа)"
+
+msgid "es_VE"
+msgstr ""
+
+msgid "su_ID"
+msgstr "сунданська"
+
+msgid "sw"
+msgstr "суахілі"
+
+msgid "sv_SE"
+msgstr "шведська"
+
+msgid "gsw"
+msgstr "німецька (Швейцарія)"
+
+msgid "tl"
+msgstr "тагальська"
+
+msgid "tg"
+msgstr "таджицька"
+
+msgid "tzm"
+msgstr "центральномароканська тамазіт"
+
+msgid "ta_IN"
+msgstr "тамільська"
+
+msgid "ta_LK"
+msgstr ""
+
+msgid "tt_RU"
+msgstr "татарська"
+
+msgid "te"
+msgstr "телугу"
+
+msgid "th"
+msgstr "тайська"
+
+msgid "bo"
+msgstr "тибетська"
+
+msgid "tir"
+msgstr ""
+
+msgid "tr_TR"
+msgstr "турецька"
+
+msgid "tuk"
+msgstr ""
+
+msgid "ug_CN"
+msgstr "уйгурська"
+
+msgid "uk"
+msgstr "українська"
+
+msgid "ur"
+msgstr "урду"
+
+msgid "uz_UZ"
+msgstr "узбецька"
+
+msgid "vi"
+msgstr "вʼєтнамська"
+
+msgid "wa"
+msgstr "валлонська"
+
+msgid "cy"
+msgstr "валлійська"
+
+msgid "yor"
+msgstr ""
+

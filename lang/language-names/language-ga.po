@@ -1,0 +1,470 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: \n"
+
+msgid "af"
+msgstr "Afracáinis"
+
+msgid "ak"
+msgstr "Acáinis"
+
+msgid "sq"
+msgstr "Albáinis"
+
+msgid "arq"
+msgstr ""
+
+msgid "am"
+msgstr "Amáiris"
+
+msgid "ar"
+msgstr "Araibis"
+
+msgid "hy"
+msgstr "Airméinis"
+
+msgid "rup_MK"
+msgstr "Arómáinis"
+
+msgid "frp"
+msgstr ""
+
+msgid "as"
+msgstr "Asaimis"
+
+msgid "az"
+msgstr "Asarbaiseáinis"
+
+msgid "az_TR"
+msgstr ""
+
+msgid "bcc"
+msgstr ""
+
+msgid "ba"
+msgstr "Baiscíris"
+
+msgid "eu"
+msgstr "Bascais"
+
+msgid "bel"
+msgstr ""
+
+msgid "bn_BD"
+msgstr "Beangáilis"
+
+msgid "bs_BA"
+msgstr "Boisnis"
+
+msgid "bre"
+msgstr "Briotáinis"
+
+msgid "bg_BG"
+msgstr "Bulgáiris"
+
+msgid "ca"
+msgstr "Catalóinis"
+
+msgid "bal"
+msgstr ""
+
+msgid "zh_CN"
+msgstr ""
+
+msgid "zh_HK"
+msgstr ""
+
+msgid "zh_TW"
+msgstr ""
+
+msgid "co"
+msgstr "Corsaicis"
+
+msgid "hr"
+msgstr "Cróitis"
+
+msgid "cs_CZ"
+msgstr "Seicis"
+
+msgid "da_DK"
+msgstr "Danmhairgis"
+
+msgid "dv"
+msgstr "Divéihis"
+
+msgid "nl_NL"
+msgstr "Ollainnis"
+
+msgid "nl_BE"
+msgstr "Pléimeannais"
+
+msgid "dzo"
+msgstr ""
+
+msgid "en_AU"
+msgstr "Béarla Astrálach"
+
+msgid "en_CA"
+msgstr "Béarla Ceanadach"
+
+msgid "en_NZ"
+msgstr ""
+
+msgid "en_ZA"
+msgstr ""
+
+msgid "en_GB"
+msgstr "Béarla Briotanach"
+
+msgid "eo"
+msgstr "Esperanto"
+
+msgid "et"
+msgstr "Eastóinis"
+
+msgid "fo"
+msgstr "Faróis"
+
+msgid "fi"
+msgstr "Fionlainnis"
+
+msgid "fr_BE"
+msgstr ""
+
+msgid "fr_CA"
+msgstr "Fraincis Cheanadach"
+
+msgid "fr_FR"
+msgstr "Fraincis"
+
+msgid "fy"
+msgstr "Freaslainnis Iartharach"
+
+msgid "fur"
+msgstr "Friúilis"
+
+msgid "fuc"
+msgstr ""
+
+msgid "gl_ES"
+msgstr "Gailísis"
+
+msgid "ka_GE"
+msgstr "Seoirsis"
+
+msgid "de_DE"
+msgstr "Gearmáinis"
+
+msgid "de_CH"
+msgstr "Ard-Ghearmáinis Eilvéiseach"
+
+msgid "el"
+msgstr "Gréigis"
+
+msgid "gn"
+msgstr "Guaráinis"
+
+msgid "gu"
+msgstr "Gúisearáitis"
+
+msgid "haw_US"
+msgstr "Haváis"
+
+msgid "haz"
+msgstr ""
+
+msgid "he_IL"
+msgstr "Eabhrais"
+
+msgid "hi_IN"
+msgstr "Hiondúis"
+
+msgid "hu_HU"
+msgstr "Ungáiris"
+
+msgid "is_IS"
+msgstr "Íoslainnis"
+
+msgid "ido"
+msgstr ""
+
+msgid "id_ID"
+msgstr "Indinéisis"
+
+msgid "ga"
+msgstr "Gaeilge"
+
+msgid "it_IT"
+msgstr "Iodáilis"
+
+msgid "ja"
+msgstr "Seapáinis"
+
+msgid "jv_ID"
+msgstr "Iáivis"
+
+msgid "kab"
+msgstr ""
+
+msgid "kn"
+msgstr "Cannadais"
+
+msgid "kk"
+msgstr "Casaicis"
+
+msgid "km"
+msgstr "Ciméiris"
+
+msgid "kin"
+msgstr ""
+
+msgid "ky_KY"
+msgstr "Cirgisis"
+
+msgid "ko_KR"
+msgstr "Cóiréis"
+
+msgid "ckb"
+msgstr ""
+
+msgid "lo"
+msgstr "Laoisis"
+
+msgid "lv"
+msgstr "Laitvis"
+
+msgid "li"
+msgstr ""
+
+msgid "lin"
+msgstr ""
+
+msgid "lt_LT"
+msgstr "Liotuáinis"
+
+msgid "lb_LU"
+msgstr "Lucsambuirgis"
+
+msgid "mk_MK"
+msgstr "Macadóinis"
+
+msgid "mg_MG"
+msgstr "Malagáisis"
+
+msgid "ms_MY"
+msgstr "Malaeis"
+
+msgid "ml_IN"
+msgstr "Mailéalaimis"
+
+msgid "mri"
+msgstr ""
+
+msgid "mr"
+msgstr "Maraitis"
+
+msgid "xmf"
+msgstr ""
+
+msgid "mn"
+msgstr "Mongóilis"
+
+msgid "me_ME"
+msgstr ""
+
+msgid "ary"
+msgstr ""
+
+msgid "my_MM"
+msgstr ""
+
+msgid "ne_NP"
+msgstr "Neipeailis"
+
+msgid "nb_NO"
+msgstr "Ioruais Bokmål"
+
+msgid "nn_NO"
+msgstr "Nua-Ioruais"
+
+msgid "oci"
+msgstr ""
+
+msgid "ory"
+msgstr ""
+
+msgid "os"
+msgstr "Oiséitis"
+
+msgid "ps"
+msgstr "Paistis"
+
+msgid "fa_IR"
+msgstr "Peirsis"
+
+msgid "fa_AF"
+msgstr ""
+
+msgid "pl_PL"
+msgstr "Polainnis"
+
+msgid "pt_BR"
+msgstr "Portaingéilis na Brasaíle"
+
+msgid "pt_PT"
+msgstr "Portaingéilis Ibéarach"
+
+msgid "pa_IN"
+msgstr "Puinseáibis"
+
+msgid "rhg"
+msgstr ""
+
+msgid "ro_RO"
+msgstr "Rómáinis"
+
+msgid "roh"
+msgstr ""
+
+msgid "ru_RU"
+msgstr "Rúisis"
+
+msgid "ru_UA"
+msgstr ""
+
+msgid "rue"
+msgstr ""
+
+msgid "sah"
+msgstr "Sachais"
+
+msgid "sa_IN"
+msgstr ""
+
+msgid "srd"
+msgstr ""
+
+msgid "gd"
+msgstr "Gaeilge na hAlban"
+
+msgid "sr_RS"
+msgstr "Seirbis"
+
+msgid "szl"
+msgstr "Siléisis"
+
+msgid "sd_PK"
+msgstr "Sindis"
+
+msgid "si_LK"
+msgstr "Siolóinis"
+
+msgid "sk_SK"
+msgstr "Slóvaicis"
+
+msgid "sl_SI"
+msgstr "Slóivéinis"
+
+msgid "so_SO"
+msgstr "Somáilis"
+
+msgid "azb"
+msgstr ""
+
+msgid "es_AR"
+msgstr ""
+
+msgid "es_CL"
+msgstr ""
+
+msgid "es_CO"
+msgstr ""
+
+msgid "es_MX"
+msgstr "Spáinnis Mheicsiceach"
+
+msgid "es_PE"
+msgstr ""
+
+msgid "es_PR"
+msgstr ""
+
+msgid "es_ES"
+msgstr "Spáinnis Eorpach"
+
+msgid "es_VE"
+msgstr ""
+
+msgid "su_ID"
+msgstr "Sundais"
+
+msgid "sw"
+msgstr "Svahaílis"
+
+msgid "sv_SE"
+msgstr "Sualainnis"
+
+msgid "gsw"
+msgstr "Gearmáinis Eilvéiseach"
+
+msgid "tl"
+msgstr "Tagálaigis"
+
+msgid "tg"
+msgstr "Táidsícis"
+
+msgid "tzm"
+msgstr ""
+
+msgid "ta_IN"
+msgstr "Tamailis"
+
+msgid "ta_LK"
+msgstr ""
+
+msgid "tt_RU"
+msgstr "Tatairis"
+
+msgid "te"
+msgstr "Teileagúis"
+
+msgid "th"
+msgstr "Téalainnis"
+
+msgid "bo"
+msgstr "Tibéidis"
+
+msgid "tir"
+msgstr ""
+
+msgid "tr_TR"
+msgstr "Tuircis"
+
+msgid "tuk"
+msgstr ""
+
+msgid "ug_CN"
+msgstr "Uigiúiris"
+
+msgid "uk"
+msgstr "Úcráinis"
+
+msgid "ur"
+msgstr "Urdúis"
+
+msgid "uz_UZ"
+msgstr "Úisbéiceastáinis"
+
+msgid "vi"
+msgstr "Vítneaimis"
+
+msgid "wa"
+msgstr "Vallúnais"
+
+msgid "cy"
+msgstr "Breatnais"
+
+msgid "yor"
+msgstr ""
+

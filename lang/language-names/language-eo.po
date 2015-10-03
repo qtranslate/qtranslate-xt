@@ -1,0 +1,470 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: \n"
+
+msgid "af"
+msgstr "afrikansa"
+
+msgid "ak"
+msgstr "akana"
+
+msgid "sq"
+msgstr "albana"
+
+msgid "arq"
+msgstr ""
+
+msgid "am"
+msgstr "amhara"
+
+msgid "ar"
+msgstr "araba"
+
+msgid "hy"
+msgstr "armena"
+
+msgid "rup_MK"
+msgstr ""
+
+msgid "frp"
+msgstr ""
+
+msgid "as"
+msgstr "asama"
+
+msgid "az"
+msgstr "azerbajĝana"
+
+msgid "az_TR"
+msgstr ""
+
+msgid "bcc"
+msgstr ""
+
+msgid "ba"
+msgstr "baŝkira"
+
+msgid "eu"
+msgstr "eŭska"
+
+msgid "bel"
+msgstr ""
+
+msgid "bn_BD"
+msgstr "bengala"
+
+msgid "bs_BA"
+msgstr "bosnia"
+
+msgid "bre"
+msgstr "bretona"
+
+msgid "bg_BG"
+msgstr "bulgara"
+
+msgid "ca"
+msgstr "kataluna"
+
+msgid "bal"
+msgstr ""
+
+msgid "zh_CN"
+msgstr ""
+
+msgid "zh_HK"
+msgstr ""
+
+msgid "zh_TW"
+msgstr ""
+
+msgid "co"
+msgstr "korsika"
+
+msgid "hr"
+msgstr "kroata"
+
+msgid "cs_CZ"
+msgstr "ĉeĥa"
+
+msgid "da_DK"
+msgstr "dana"
+
+msgid "dv"
+msgstr "mahla"
+
+msgid "nl_NL"
+msgstr "nederlanda"
+
+msgid "nl_BE"
+msgstr "flandra"
+
+msgid "dzo"
+msgstr ""
+
+msgid "en_AU"
+msgstr "aŭstralia angla"
+
+msgid "en_CA"
+msgstr "kanada angla"
+
+msgid "en_NZ"
+msgstr ""
+
+msgid "en_ZA"
+msgstr ""
+
+msgid "en_GB"
+msgstr "brita angla"
+
+msgid "eo"
+msgstr "esperanto"
+
+msgid "et"
+msgstr "estona"
+
+msgid "fo"
+msgstr "feroa"
+
+msgid "fi"
+msgstr "finna"
+
+msgid "fr_BE"
+msgstr ""
+
+msgid "fr_CA"
+msgstr "kanada franca"
+
+msgid "fr_FR"
+msgstr "franca"
+
+msgid "fy"
+msgstr "frisa"
+
+msgid "fur"
+msgstr ""
+
+msgid "fuc"
+msgstr ""
+
+msgid "gl_ES"
+msgstr "galega"
+
+msgid "ka_GE"
+msgstr "kartvela"
+
+msgid "de_DE"
+msgstr "germana"
+
+msgid "de_CH"
+msgstr "svisa germana"
+
+msgid "el"
+msgstr "greka"
+
+msgid "gn"
+msgstr "gvarania"
+
+msgid "gu"
+msgstr "guĝarata"
+
+msgid "haw_US"
+msgstr "havaja"
+
+msgid "haz"
+msgstr ""
+
+msgid "he_IL"
+msgstr "hebrea"
+
+msgid "hi_IN"
+msgstr "hinda"
+
+msgid "hu_HU"
+msgstr "hungara"
+
+msgid "is_IS"
+msgstr "islanda"
+
+msgid "ido"
+msgstr ""
+
+msgid "id_ID"
+msgstr "indonezia"
+
+msgid "ga"
+msgstr "irlanda"
+
+msgid "it_IT"
+msgstr "itala"
+
+msgid "ja"
+msgstr "japana"
+
+msgid "jv_ID"
+msgstr "java"
+
+msgid "kab"
+msgstr ""
+
+msgid "kn"
+msgstr "kanara"
+
+msgid "kk"
+msgstr "kazaĥa"
+
+msgid "km"
+msgstr "kmera"
+
+msgid "kin"
+msgstr ""
+
+msgid "ky_KY"
+msgstr "kirgiza"
+
+msgid "ko_KR"
+msgstr "korea"
+
+msgid "ckb"
+msgstr "sorana"
+
+msgid "lo"
+msgstr "laŭa"
+
+msgid "lv"
+msgstr "latva"
+
+msgid "li"
+msgstr ""
+
+msgid "lin"
+msgstr ""
+
+msgid "lt_LT"
+msgstr "litova"
+
+msgid "lb_LU"
+msgstr "luksemburga"
+
+msgid "mk_MK"
+msgstr "makedona"
+
+msgid "mg_MG"
+msgstr "malagasa"
+
+msgid "ms_MY"
+msgstr "malaja"
+
+msgid "ml_IN"
+msgstr "malajalama"
+
+msgid "mri"
+msgstr ""
+
+msgid "mr"
+msgstr "marata"
+
+msgid "xmf"
+msgstr ""
+
+msgid "mn"
+msgstr "mongola"
+
+msgid "me_ME"
+msgstr ""
+
+msgid "ary"
+msgstr ""
+
+msgid "my_MM"
+msgstr ""
+
+msgid "ne_NP"
+msgstr "nepala"
+
+msgid "nb_NO"
+msgstr "dannorvega"
+
+msgid "nn_NO"
+msgstr "novnorvega"
+
+msgid "oci"
+msgstr ""
+
+msgid "ory"
+msgstr ""
+
+msgid "os"
+msgstr ""
+
+msgid "ps"
+msgstr "paŝtoa"
+
+msgid "fa_IR"
+msgstr "persa"
+
+msgid "fa_AF"
+msgstr ""
+
+msgid "pl_PL"
+msgstr "pola"
+
+msgid "pt_BR"
+msgstr "brazilportugala"
+
+msgid "pt_PT"
+msgstr "eŭropportugala"
+
+msgid "pa_IN"
+msgstr "panĝaba"
+
+msgid "rhg"
+msgstr ""
+
+msgid "ro_RO"
+msgstr "rumana"
+
+msgid "roh"
+msgstr ""
+
+msgid "ru_RU"
+msgstr "rusa"
+
+msgid "ru_UA"
+msgstr ""
+
+msgid "rue"
+msgstr ""
+
+msgid "sah"
+msgstr ""
+
+msgid "sa_IN"
+msgstr ""
+
+msgid "srd"
+msgstr ""
+
+msgid "gd"
+msgstr "gaela"
+
+msgid "sr_RS"
+msgstr "serba"
+
+msgid "szl"
+msgstr ""
+
+msgid "sd_PK"
+msgstr "sinda"
+
+msgid "si_LK"
+msgstr "sinhala"
+
+msgid "sk_SK"
+msgstr "slovaka"
+
+msgid "sl_SI"
+msgstr "slovena"
+
+msgid "so_SO"
+msgstr "somala"
+
+msgid "azb"
+msgstr ""
+
+msgid "es_AR"
+msgstr ""
+
+msgid "es_CL"
+msgstr ""
+
+msgid "es_CO"
+msgstr ""
+
+msgid "es_MX"
+msgstr "meksika hispana"
+
+msgid "es_PE"
+msgstr ""
+
+msgid "es_PR"
+msgstr ""
+
+msgid "es_ES"
+msgstr "eŭropa hispana"
+
+msgid "es_VE"
+msgstr ""
+
+msgid "su_ID"
+msgstr "sunda"
+
+msgid "sw"
+msgstr "svahila"
+
+msgid "sv_SE"
+msgstr "sveda"
+
+msgid "gsw"
+msgstr ""
+
+msgid "tl"
+msgstr "tagaloga"
+
+msgid "tg"
+msgstr "taĝika"
+
+msgid "tzm"
+msgstr ""
+
+msgid "ta_IN"
+msgstr "tamila"
+
+msgid "ta_LK"
+msgstr ""
+
+msgid "tt_RU"
+msgstr "tatara"
+
+msgid "te"
+msgstr "telugua"
+
+msgid "th"
+msgstr "taja"
+
+msgid "bo"
+msgstr "tibeta"
+
+msgid "tir"
+msgstr ""
+
+msgid "tr_TR"
+msgstr "turka"
+
+msgid "tuk"
+msgstr ""
+
+msgid "ug_CN"
+msgstr "ujgura"
+
+msgid "uk"
+msgstr "ukraina"
+
+msgid "ur"
+msgstr "urduo"
+
+msgid "uz_UZ"
+msgstr "uzbeka"
+
+msgid "vi"
+msgstr "vjetnama"
+
+msgid "wa"
+msgstr ""
+
+msgid "cy"
+msgstr "kimra"
+
+msgid "yor"
+msgstr ""
+

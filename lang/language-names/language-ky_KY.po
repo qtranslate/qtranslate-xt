@@ -1,0 +1,470 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: \n"
+
+msgid "af"
+msgstr "африкаанча"
+
+msgid "ak"
+msgstr "аканча"
+
+msgid "sq"
+msgstr "албанча"
+
+msgid "arq"
+msgstr ""
+
+msgid "am"
+msgstr "амхарча"
+
+msgid "ar"
+msgstr "арабча"
+
+msgid "hy"
+msgstr "армянча"
+
+msgid "rup_MK"
+msgstr ""
+
+msgid "frp"
+msgstr ""
+
+msgid "as"
+msgstr "ассамча"
+
+msgid "az"
+msgstr "азербайжанча"
+
+msgid "az_TR"
+msgstr ""
+
+msgid "bcc"
+msgstr ""
+
+msgid "ba"
+msgstr "башкырча"
+
+msgid "eu"
+msgstr "баскча"
+
+msgid "bel"
+msgstr ""
+
+msgid "bn_BD"
+msgstr "бангладешче"
+
+msgid "bs_BA"
+msgstr "боснийче"
+
+msgid "bre"
+msgstr "бретончо"
+
+msgid "bg_BG"
+msgstr "болгарча"
+
+msgid "ca"
+msgstr "каталанча"
+
+msgid "bal"
+msgstr ""
+
+msgid "zh_CN"
+msgstr ""
+
+msgid "zh_HK"
+msgstr ""
+
+msgid "zh_TW"
+msgstr ""
+
+msgid "co"
+msgstr "корсиканча"
+
+msgid "hr"
+msgstr "хорватча"
+
+msgid "cs_CZ"
+msgstr "чехче"
+
+msgid "da_DK"
+msgstr "датча"
+
+msgid "dv"
+msgstr ""
+
+msgid "nl_NL"
+msgstr "голландча"
+
+msgid "nl_BE"
+msgstr "фламандча"
+
+msgid "dzo"
+msgstr ""
+
+msgid "en_AU"
+msgstr ""
+
+msgid "en_CA"
+msgstr ""
+
+msgid "en_NZ"
+msgstr ""
+
+msgid "en_ZA"
+msgstr ""
+
+msgid "en_GB"
+msgstr ""
+
+msgid "eo"
+msgstr "эсперанто"
+
+msgid "et"
+msgstr "эстончо"
+
+msgid "fo"
+msgstr "фароэче"
+
+msgid "fi"
+msgstr "финче"
+
+msgid "fr_BE"
+msgstr ""
+
+msgid "fr_CA"
+msgstr ""
+
+msgid "fr_FR"
+msgstr "французча"
+
+msgid "fy"
+msgstr "батыш фризче"
+
+msgid "fur"
+msgstr ""
+
+msgid "fuc"
+msgstr ""
+
+msgid "gl_ES"
+msgstr "галисияча"
+
+msgid "ka_GE"
+msgstr "грузинче"
+
+msgid "de_DE"
+msgstr "немисче"
+
+msgid "de_CH"
+msgstr ""
+
+msgid "el"
+msgstr "грекче"
+
+msgid "gn"
+msgstr "гуараш"
+
+msgid "gu"
+msgstr "гужаратча"
+
+msgid "haw_US"
+msgstr "гавайча"
+
+msgid "haz"
+msgstr ""
+
+msgid "he_IL"
+msgstr "ивритте"
+
+msgid "hi_IN"
+msgstr "хиндиче"
+
+msgid "hu_HU"
+msgstr "мажарча"
+
+msgid "is_IS"
+msgstr "исландча"
+
+msgid "ido"
+msgstr ""
+
+msgid "id_ID"
+msgstr "индонезче"
+
+msgid "ga"
+msgstr "ирландча"
+
+msgid "it_IT"
+msgstr "италиянча"
+
+msgid "ja"
+msgstr "япончо"
+
+msgid "jv_ID"
+msgstr "жаванизче"
+
+msgid "kab"
+msgstr "кабылча"
+
+msgid "kn"
+msgstr "каннадача"
+
+msgid "kk"
+msgstr "казакча"
+
+msgid "km"
+msgstr "кмерче"
+
+msgid "kin"
+msgstr ""
+
+msgid "ky_KY"
+msgstr "кыргызча"
+
+msgid "ko_KR"
+msgstr "корейче"
+
+msgid "ckb"
+msgstr "сорани курд"
+
+msgid "lo"
+msgstr "лаочо"
+
+msgid "lv"
+msgstr "латышча"
+
+msgid "li"
+msgstr ""
+
+msgid "lin"
+msgstr ""
+
+msgid "lt_LT"
+msgstr "литовчо"
+
+msgid "lb_LU"
+msgstr "люксембургча"
+
+msgid "mk_MK"
+msgstr "македончо"
+
+msgid "mg_MG"
+msgstr "малагасча"
+
+msgid "ms_MY"
+msgstr "малайча"
+
+msgid "ml_IN"
+msgstr "малайаламча"
+
+msgid "mri"
+msgstr ""
+
+msgid "mr"
+msgstr "маратиче"
+
+msgid "xmf"
+msgstr ""
+
+msgid "mn"
+msgstr "моңголчо"
+
+msgid "me_ME"
+msgstr ""
+
+msgid "ary"
+msgstr ""
+
+msgid "my_MM"
+msgstr ""
+
+msgid "ne_NP"
+msgstr "непалча"
+
+msgid "nb_NO"
+msgstr "норвежче (Букмал)"
+
+msgid "nn_NO"
+msgstr "норвежче (Нинорск)"
+
+msgid "oci"
+msgstr ""
+
+msgid "ory"
+msgstr ""
+
+msgid "os"
+msgstr ""
+
+msgid "ps"
+msgstr "пашточо"
+
+msgid "fa_IR"
+msgstr "фарсча"
+
+msgid "fa_AF"
+msgstr ""
+
+msgid "pl_PL"
+msgstr "полякча"
+
+msgid "pt_BR"
+msgstr ""
+
+msgid "pt_PT"
+msgstr "португалча (Европа)"
+
+msgid "pa_IN"
+msgstr "пунжабиче"
+
+msgid "rhg"
+msgstr ""
+
+msgid "ro_RO"
+msgstr "румынча"
+
+msgid "roh"
+msgstr ""
+
+msgid "ru_RU"
+msgstr "орусча"
+
+msgid "ru_UA"
+msgstr ""
+
+msgid "rue"
+msgstr ""
+
+msgid "sah"
+msgstr ""
+
+msgid "sa_IN"
+msgstr ""
+
+msgid "srd"
+msgstr ""
+
+msgid "gd"
+msgstr ""
+
+msgid "sr_RS"
+msgstr "сербче"
+
+msgid "szl"
+msgstr ""
+
+msgid "sd_PK"
+msgstr "синдхиче"
+
+msgid "si_LK"
+msgstr "сингалача"
+
+msgid "sk_SK"
+msgstr "словакча"
+
+msgid "sl_SI"
+msgstr "словенче"
+
+msgid "so_SO"
+msgstr "сомаличе"
+
+msgid "azb"
+msgstr ""
+
+msgid "es_AR"
+msgstr ""
+
+msgid "es_CL"
+msgstr ""
+
+msgid "es_CO"
+msgstr ""
+
+msgid "es_MX"
+msgstr ""
+
+msgid "es_PE"
+msgstr ""
+
+msgid "es_PR"
+msgstr ""
+
+msgid "es_ES"
+msgstr "испанча (Европа)"
+
+msgid "es_VE"
+msgstr ""
+
+msgid "su_ID"
+msgstr "сунданча"
+
+msgid "sw"
+msgstr "суахиличе"
+
+msgid "sv_SE"
+msgstr "шведче"
+
+msgid "gsw"
+msgstr "немисче (Швейцария)"
+
+msgid "tl"
+msgstr ""
+
+msgid "tg"
+msgstr "тажикче"
+
+msgid "tzm"
+msgstr "борбордук Атлас тамазитче"
+
+msgid "ta_IN"
+msgstr "тамилче"
+
+msgid "ta_LK"
+msgstr ""
+
+msgid "tt_RU"
+msgstr "татарча"
+
+msgid "te"
+msgstr "телугуча"
+
+msgid "th"
+msgstr "тайча"
+
+msgid "bo"
+msgstr "тибетче"
+
+msgid "tir"
+msgstr ""
+
+msgid "tr_TR"
+msgstr "түркчө"
+
+msgid "tuk"
+msgstr ""
+
+msgid "ug_CN"
+msgstr "уйгурча"
+
+msgid "uk"
+msgstr "украинче"
+
+msgid "ur"
+msgstr "урдуча"
+
+msgid "uz_UZ"
+msgstr "өзбекче"
+
+msgid "vi"
+msgstr "вьетнамча"
+
+msgid "wa"
+msgstr ""
+
+msgid "cy"
+msgstr "уелшче"
+
+msgid "yor"
+msgstr ""
+

@@ -1,0 +1,470 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: \n"
+
+msgid "af"
+msgstr "աֆրիկաանս"
+
+msgid "ak"
+msgstr "աքաներեն"
+
+msgid "sq"
+msgstr "ալբաներեն"
+
+msgid "arq"
+msgstr "ալժիրական արաբերեն"
+
+msgid "am"
+msgstr "ամհարերեն"
+
+msgid "ar"
+msgstr "արաբերեն"
+
+msgid "hy"
+msgstr "հայերեն"
+
+msgid "rup_MK"
+msgstr "արոմաներեն"
+
+msgid "frp"
+msgstr ""
+
+msgid "as"
+msgstr "ասամերեն"
+
+msgid "az"
+msgstr "ադրբեջաներեն"
+
+msgid "az_TR"
+msgstr ""
+
+msgid "bcc"
+msgstr ""
+
+msgid "ba"
+msgstr "բաշկիրերեն"
+
+msgid "eu"
+msgstr "բասկերեն"
+
+msgid "bel"
+msgstr ""
+
+msgid "bn_BD"
+msgstr "բենգալերեն"
+
+msgid "bs_BA"
+msgstr "բոսնիերեն"
+
+msgid "bre"
+msgstr "բրետոներեն"
+
+msgid "bg_BG"
+msgstr "բուլղարերեն"
+
+msgid "ca"
+msgstr "կատալաներեն"
+
+msgid "bal"
+msgstr ""
+
+msgid "zh_CN"
+msgstr ""
+
+msgid "zh_HK"
+msgstr ""
+
+msgid "zh_TW"
+msgstr ""
+
+msgid "co"
+msgstr "կորսիկերեն"
+
+msgid "hr"
+msgstr "խորվաթերեն"
+
+msgid "cs_CZ"
+msgstr "չեխերեն"
+
+msgid "da_DK"
+msgstr "դանիերեն"
+
+msgid "dv"
+msgstr ""
+
+msgid "nl_NL"
+msgstr "հոլանդերեն"
+
+msgid "nl_BE"
+msgstr "ֆլամանդերեն"
+
+msgid "dzo"
+msgstr ""
+
+msgid "en_AU"
+msgstr "ավստրալիական անգլերեն"
+
+msgid "en_CA"
+msgstr "կանադական անգլերեն"
+
+msgid "en_NZ"
+msgstr ""
+
+msgid "en_ZA"
+msgstr ""
+
+msgid "en_GB"
+msgstr "բրիտանական անգլերեն"
+
+msgid "eo"
+msgstr "էսպերանտո"
+
+msgid "et"
+msgstr "էստոներեն"
+
+msgid "fo"
+msgstr "ֆարյորերեն"
+
+msgid "fi"
+msgstr "ֆիններեն"
+
+msgid "fr_BE"
+msgstr ""
+
+msgid "fr_CA"
+msgstr "կանադական ֆրանսերեն"
+
+msgid "fr_FR"
+msgstr "ֆրանսերեն"
+
+msgid "fy"
+msgstr "արևմտյան ֆրիզերեն"
+
+msgid "fur"
+msgstr "ֆրիուլիերեն"
+
+msgid "fuc"
+msgstr ""
+
+msgid "gl_ES"
+msgstr "գալիսերեն"
+
+msgid "ka_GE"
+msgstr "վրացերեն"
+
+msgid "de_DE"
+msgstr "գերմաներեն"
+
+msgid "de_CH"
+msgstr "շվեյցարական բարձր գերմաներեն"
+
+msgid "el"
+msgstr "հունարեն"
+
+msgid "gn"
+msgstr "գուարանի"
+
+msgid "gu"
+msgstr "գուջարաթի"
+
+msgid "haw_US"
+msgstr "հավայիերեն"
+
+msgid "haz"
+msgstr ""
+
+msgid "he_IL"
+msgstr "եբրայերեն"
+
+msgid "hi_IN"
+msgstr "հինդի"
+
+msgid "hu_HU"
+msgstr "հունգարերեն"
+
+msgid "is_IS"
+msgstr "իսլանդերեն"
+
+msgid "ido"
+msgstr ""
+
+msgid "id_ID"
+msgstr "ինդոնեզերեն"
+
+msgid "ga"
+msgstr "իռլանդերեն"
+
+msgid "it_IT"
+msgstr "իտալերեն"
+
+msgid "ja"
+msgstr "ճապոներեն"
+
+msgid "jv_ID"
+msgstr "ճավայերեն"
+
+msgid "kab"
+msgstr "կաբիլերեն"
+
+msgid "kn"
+msgstr "կաննադա"
+
+msgid "kk"
+msgstr "ղազախերեն"
+
+msgid "km"
+msgstr "քմերերեն"
+
+msgid "kin"
+msgstr ""
+
+msgid "ky_KY"
+msgstr "ղրղզերեն"
+
+msgid "ko_KR"
+msgstr "կորեերեն"
+
+msgid "ckb"
+msgstr "սորանի (քրդերեն)"
+
+msgid "lo"
+msgstr "լաոսերեն"
+
+msgid "lv"
+msgstr "լատվիերեն"
+
+msgid "li"
+msgstr ""
+
+msgid "lin"
+msgstr ""
+
+msgid "lt_LT"
+msgstr "լիտվերեն"
+
+msgid "lb_LU"
+msgstr "լյուքսեմբուրգերեն"
+
+msgid "mk_MK"
+msgstr "մակեդոներեն"
+
+msgid "mg_MG"
+msgstr "մալագասերեն"
+
+msgid "ms_MY"
+msgstr "մալայերեն"
+
+msgid "ml_IN"
+msgstr "մալայալամ"
+
+msgid "mri"
+msgstr ""
+
+msgid "mr"
+msgstr "մարաթի"
+
+msgid "xmf"
+msgstr ""
+
+msgid "mn"
+msgstr "մոնղոլերեն"
+
+msgid "me_ME"
+msgstr ""
+
+msgid "ary"
+msgstr ""
+
+msgid "my_MM"
+msgstr ""
+
+msgid "ne_NP"
+msgstr "նեպալերեն"
+
+msgid "nb_NO"
+msgstr "նորվեգերեն բուկմոլ"
+
+msgid "nn_NO"
+msgstr "նորվեգերեն նյունորսկ"
+
+msgid "oci"
+msgstr ""
+
+msgid "ory"
+msgstr ""
+
+msgid "os"
+msgstr "օսերեն"
+
+msgid "ps"
+msgstr "փուշթու"
+
+msgid "fa_IR"
+msgstr "պարսկերեն"
+
+msgid "fa_AF"
+msgstr ""
+
+msgid "pl_PL"
+msgstr "լեհերեն"
+
+msgid "pt_BR"
+msgstr "բրազիլական պորտուգալերեն"
+
+msgid "pt_PT"
+msgstr "եվրոպական պորտուգալերեն"
+
+msgid "pa_IN"
+msgstr "փենջաբերեն"
+
+msgid "rhg"
+msgstr ""
+
+msgid "ro_RO"
+msgstr "ռումիներեն"
+
+msgid "roh"
+msgstr ""
+
+msgid "ru_RU"
+msgstr "ռուսերեն"
+
+msgid "ru_UA"
+msgstr ""
+
+msgid "rue"
+msgstr "ռուսիներեն"
+
+msgid "sah"
+msgstr ""
+
+msgid "sa_IN"
+msgstr ""
+
+msgid "srd"
+msgstr ""
+
+msgid "gd"
+msgstr "Գաելյան Շոտլանդերեն"
+
+msgid "sr_RS"
+msgstr "սերբերեն"
+
+msgid "szl"
+msgstr ""
+
+msgid "sd_PK"
+msgstr "սինդհի"
+
+msgid "si_LK"
+msgstr "սինհալերեն"
+
+msgid "sk_SK"
+msgstr "սլովակերեն"
+
+msgid "sl_SI"
+msgstr "սլովեներեն"
+
+msgid "so_SO"
+msgstr "սոմալիերեն"
+
+msgid "azb"
+msgstr ""
+
+msgid "es_AR"
+msgstr ""
+
+msgid "es_CL"
+msgstr ""
+
+msgid "es_CO"
+msgstr ""
+
+msgid "es_MX"
+msgstr "մեքսիկական իսպաներեն"
+
+msgid "es_PE"
+msgstr ""
+
+msgid "es_PR"
+msgstr ""
+
+msgid "es_ES"
+msgstr "եվրոպական իսպաներեն"
+
+msgid "es_VE"
+msgstr ""
+
+msgid "su_ID"
+msgstr "սունդաներեն"
+
+msgid "sw"
+msgstr "սուահիլի"
+
+msgid "sv_SE"
+msgstr "շվեդերեն"
+
+msgid "gsw"
+msgstr "շվեյցարական գերմաներեն"
+
+msgid "tl"
+msgstr "տագալերեն"
+
+msgid "tg"
+msgstr "տաջիկերեն"
+
+msgid "tzm"
+msgstr "կենտրոնատլասյան թամազիխտ"
+
+msgid "ta_IN"
+msgstr "թամիլերեն"
+
+msgid "ta_LK"
+msgstr ""
+
+msgid "tt_RU"
+msgstr "թաթարերեն"
+
+msgid "te"
+msgstr "թելուգու"
+
+msgid "th"
+msgstr "թայերեն"
+
+msgid "bo"
+msgstr "տիբեթերեն"
+
+msgid "tir"
+msgstr ""
+
+msgid "tr_TR"
+msgstr "թուրքերեն"
+
+msgid "tuk"
+msgstr ""
+
+msgid "ug_CN"
+msgstr "ույղուրերեն"
+
+msgid "uk"
+msgstr "ուկրաիներեն"
+
+msgid "ur"
+msgstr "ուրդու"
+
+msgid "uz_UZ"
+msgstr "ուզբեկերեն"
+
+msgid "vi"
+msgstr "վիետնամերեն"
+
+msgid "wa"
+msgstr "վալոներեն"
+
+msgid "cy"
+msgstr "ուելսերեն"
+
+msgid "yor"
+msgstr ""
+

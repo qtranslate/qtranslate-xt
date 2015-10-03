@@ -1,0 +1,470 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: \n"
+
+msgid "af"
+msgstr "អាហ្វ្រិកាន"
+
+msgid "ak"
+msgstr "អាកាន"
+
+msgid "sq"
+msgstr "អាល់បានី"
+
+msgid "arq"
+msgstr ""
+
+msgid "am"
+msgstr "អាមហារីច"
+
+msgid "ar"
+msgstr "អារ៉ាប់"
+
+msgid "hy"
+msgstr "អារមេនី"
+
+msgid "rup_MK"
+msgstr ""
+
+msgid "frp"
+msgstr ""
+
+msgid "as"
+msgstr "អាសាមីស"
+
+msgid "az"
+msgstr "អាហ៊្សែរបែហ្សង់"
+
+msgid "az_TR"
+msgstr ""
+
+msgid "bcc"
+msgstr ""
+
+msgid "ba"
+msgstr "បែស្កឺ"
+
+msgid "eu"
+msgstr "បាស្កេ"
+
+msgid "bel"
+msgstr ""
+
+msgid "bn_BD"
+msgstr "បង់ក្លាដែស"
+
+msgid "bs_BA"
+msgstr "បូស្នី"
+
+msgid "bre"
+msgstr "ប្រីស្តុន"
+
+msgid "bg_BG"
+msgstr "ប៊ុលហ្ការី"
+
+msgid "ca"
+msgstr "កាតាឡាន"
+
+msgid "bal"
+msgstr ""
+
+msgid "zh_CN"
+msgstr ""
+
+msgid "zh_HK"
+msgstr ""
+
+msgid "zh_TW"
+msgstr ""
+
+msgid "co"
+msgstr "កូស៊ីខាន"
+
+msgid "hr"
+msgstr "ក្រូអាត"
+
+msgid "cs_CZ"
+msgstr "ឆេក"
+
+msgid "da_DK"
+msgstr "ដាណឺម៉ាក"
+
+msgid "dv"
+msgstr ""
+
+msgid "nl_NL"
+msgstr "ហុល្លង់"
+
+msgid "nl_BE"
+msgstr "ផ្លាមីស"
+
+msgid "dzo"
+msgstr ""
+
+msgid "en_AU"
+msgstr ""
+
+msgid "en_CA"
+msgstr ""
+
+msgid "en_NZ"
+msgstr ""
+
+msgid "en_ZA"
+msgstr ""
+
+msgid "en_GB"
+msgstr "អង់គ្លេស (ច.អ.)"
+
+msgid "eo"
+msgstr "អេស្ពេរ៉ាន់តូ"
+
+msgid "et"
+msgstr "អេស្តូនី"
+
+msgid "fo"
+msgstr "ហ្វារូស"
+
+msgid "fi"
+msgstr "ហ្វាំងឡង់"
+
+msgid "fr_BE"
+msgstr ""
+
+msgid "fr_CA"
+msgstr ""
+
+msgid "fr_FR"
+msgstr "បារាំង"
+
+msgid "fy"
+msgstr "ហ្វ្រីស៊ានខាងលិច"
+
+msgid "fur"
+msgstr ""
+
+msgid "fuc"
+msgstr ""
+
+msgid "gl_ES"
+msgstr "ហ្គាលីស្យាន"
+
+msgid "ka_GE"
+msgstr "ហ្សក​ហ្ស៊ី"
+
+msgid "de_DE"
+msgstr "អាល្លឺម៉ង់"
+
+msgid "de_CH"
+msgstr ""
+
+msgid "el"
+msgstr "ក្រិច"
+
+msgid "gn"
+msgstr "ហ្គូរ៉ានី"
+
+msgid "gu"
+msgstr "ហ្កុយ៉ារាទី"
+
+msgid "haw_US"
+msgstr "ហាវៃ"
+
+msgid "haz"
+msgstr ""
+
+msgid "he_IL"
+msgstr "អ៊ីស្រាអែល"
+
+msgid "hi_IN"
+msgstr "ហិណ្ឌី"
+
+msgid "hu_HU"
+msgstr "ហុងគ្រី"
+
+msgid "is_IS"
+msgstr "អ៊ីស្លង់"
+
+msgid "ido"
+msgstr ""
+
+msgid "id_ID"
+msgstr "ឥណ្ឌូណេស៊ី"
+
+msgid "ga"
+msgstr "អៀរឡង់"
+
+msgid "it_IT"
+msgstr "អ៊ីតាលី"
+
+msgid "ja"
+msgstr "ជប៉ុន"
+
+msgid "jv_ID"
+msgstr "ជ្វា"
+
+msgid "kab"
+msgstr "កាប៊ីឡេ"
+
+msgid "kn"
+msgstr "កន្នដ"
+
+msgid "kk"
+msgstr "កាហ្សាក់ស្តង់់"
+
+msgid "km"
+msgstr "ខ្មែរ"
+
+msgid "kin"
+msgstr ""
+
+msgid "ky_KY"
+msgstr "គៀរហ្គីស្តង់"
+
+msgid "ko_KR"
+msgstr "កូរ៉េ"
+
+msgid "ckb"
+msgstr "ខឺដកណ្តាល"
+
+msgid "lo"
+msgstr "ឡាវ"
+
+msgid "lv"
+msgstr "ឡាតវី"
+
+msgid "li"
+msgstr ""
+
+msgid "lin"
+msgstr ""
+
+msgid "lt_LT"
+msgstr "លីទុយអានី"
+
+msgid "lb_LU"
+msgstr "លុចហ្សំបួរ"
+
+msgid "mk_MK"
+msgstr "ម៉ាសេដូនី"
+
+msgid "mg_MG"
+msgstr "ម៉ាឡាហ្គាស៊ី"
+
+msgid "ms_MY"
+msgstr "ម៉ាឡេស៊ី"
+
+msgid "ml_IN"
+msgstr "មលយាល័ម"
+
+msgid "mri"
+msgstr ""
+
+msgid "mr"
+msgstr "ម៉ារ៉ាធី"
+
+msgid "xmf"
+msgstr ""
+
+msgid "mn"
+msgstr "ម៉ុងហ្គោលី"
+
+msgid "me_ME"
+msgstr ""
+
+msgid "ary"
+msgstr ""
+
+msgid "my_MM"
+msgstr ""
+
+msgid "ne_NP"
+msgstr "នេប៉ាល់"
+
+msgid "nb_NO"
+msgstr "ន័រវែស បុកម៉ាល់"
+
+msgid "nn_NO"
+msgstr "ន័រវែស នីនូស"
+
+msgid "oci"
+msgstr ""
+
+msgid "ory"
+msgstr ""
+
+msgid "os"
+msgstr ""
+
+msgid "ps"
+msgstr "បាស្តូ"
+
+msgid "fa_IR"
+msgstr "ភឺសៀន"
+
+msgid "fa_AF"
+msgstr ""
+
+msgid "pl_PL"
+msgstr "ប៉ូឡូញ"
+
+msgid "pt_BR"
+msgstr ""
+
+msgid "pt_PT"
+msgstr "ព័រទុយហ្គាល់ (អឺរ៉ុប)"
+
+msgid "pa_IN"
+msgstr "បឹនជាពិ"
+
+msgid "rhg"
+msgstr ""
+
+msgid "ro_RO"
+msgstr "រូម៉ានី"
+
+msgid "roh"
+msgstr ""
+
+msgid "ru_RU"
+msgstr "រុស្ស៊ី"
+
+msgid "ru_UA"
+msgstr ""
+
+msgid "rue"
+msgstr ""
+
+msgid "sah"
+msgstr ""
+
+msgid "sa_IN"
+msgstr ""
+
+msgid "srd"
+msgstr ""
+
+msgid "gd"
+msgstr "ភាសាហ្កែលិគ (gd)"
+
+msgid "sr_RS"
+msgstr "ស៊ែប"
+
+msgid "szl"
+msgstr ""
+
+msgid "sd_PK"
+msgstr "ស៊ីនឌី"
+
+msgid "si_LK"
+msgstr "ស្រីលង្កា"
+
+msgid "sk_SK"
+msgstr "ស្លូវ៉ាគី"
+
+msgid "sl_SI"
+msgstr "ស្លូវ៉ានី"
+
+msgid "so_SO"
+msgstr "សូម៉ាលី"
+
+msgid "azb"
+msgstr ""
+
+msgid "es_AR"
+msgstr ""
+
+msgid "es_CL"
+msgstr ""
+
+msgid "es_CO"
+msgstr ""
+
+msgid "es_MX"
+msgstr ""
+
+msgid "es_PE"
+msgstr ""
+
+msgid "es_PR"
+msgstr ""
+
+msgid "es_ES"
+msgstr "អេស្ប៉ាញ (អ៊ឺរ៉ុប)"
+
+msgid "es_VE"
+msgstr ""
+
+msgid "su_ID"
+msgstr "ស៊ូដង់"
+
+msgid "sw"
+msgstr "ស្វាហ៊ីលី"
+
+msgid "sv_SE"
+msgstr "ស៊ុយអែដ"
+
+msgid "gsw"
+msgstr "អាល្លឺម៉ង (ស្វីស)"
+
+msgid "tl"
+msgstr ""
+
+msgid "tg"
+msgstr "តាដហ្សីគីស្តង់"
+
+msgid "tzm"
+msgstr "តាម៉ាសាយអាត្លាសកណ្តាល"
+
+msgid "ta_IN"
+msgstr "តាមីល"
+
+msgid "ta_LK"
+msgstr ""
+
+msgid "tt_RU"
+msgstr "តាតា"
+
+msgid "te"
+msgstr "តេលុគុ"
+
+msgid "th"
+msgstr "ថៃ"
+
+msgid "bo"
+msgstr "ទីបេ"
+
+msgid "tir"
+msgstr ""
+
+msgid "tr_TR"
+msgstr "ទួរគី"
+
+msgid "tuk"
+msgstr ""
+
+msgid "ug_CN"
+msgstr "អ៊ុយហ្គឺរ"
+
+msgid "uk"
+msgstr "អ៊ុយក្រែន"
+
+msgid "ur"
+msgstr "អ៊ូរឌូ"
+
+msgid "uz_UZ"
+msgstr "អ៊ូហ្សបេគីស្តង់"
+
+msgid "vi"
+msgstr "វៀតណាម"
+
+msgid "wa"
+msgstr ""
+
+msgid "cy"
+msgstr "វេល"
+
+msgid "yor"
+msgstr ""
+

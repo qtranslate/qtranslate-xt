@@ -1,0 +1,470 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: \n"
+
+msgid "af"
+msgstr "Tiếng Nam Phi"
+
+msgid "ak"
+msgstr "Tiếng Akan"
+
+msgid "sq"
+msgstr "Tiếng An-ba-ni"
+
+msgid "arq"
+msgstr "Tiếng Ả Rập Algeria"
+
+msgid "am"
+msgstr "Tiếng Amharic"
+
+msgid "ar"
+msgstr "Tiếng Ả Rập"
+
+msgid "hy"
+msgstr "Tiếng Armenia"
+
+msgid "rup_MK"
+msgstr "Tiếng Aromania"
+
+msgid "frp"
+msgstr "Tiếng Arpitan"
+
+msgid "as"
+msgstr "Tiếng Assam"
+
+msgid "az"
+msgstr "Tiếng Azerbaijan"
+
+msgid "az_TR"
+msgstr ""
+
+msgid "bcc"
+msgstr ""
+
+msgid "ba"
+msgstr "Tiếng Bashkir"
+
+msgid "eu"
+msgstr "Tiếng Basque"
+
+msgid "bel"
+msgstr ""
+
+msgid "bn_BD"
+msgstr "Tiếng Bengali"
+
+msgid "bs_BA"
+msgstr "Tiếng Nam Tư"
+
+msgid "bre"
+msgstr "Tiếng Breton"
+
+msgid "bg_BG"
+msgstr "Tiếng Bulgaria"
+
+msgid "ca"
+msgstr "Tiếng Catalan"
+
+msgid "bal"
+msgstr "Tiếng Baluchi"
+
+msgid "zh_CN"
+msgstr ""
+
+msgid "zh_HK"
+msgstr ""
+
+msgid "zh_TW"
+msgstr ""
+
+msgid "co"
+msgstr "Tiếng Corsica"
+
+msgid "hr"
+msgstr "Tiếng Croatia"
+
+msgid "cs_CZ"
+msgstr "Tiếng Séc"
+
+msgid "da_DK"
+msgstr "Tiếng Đan Mạch"
+
+msgid "dv"
+msgstr "Tiếng Divehi"
+
+msgid "nl_NL"
+msgstr "Tiếng Hà Lan"
+
+msgid "nl_BE"
+msgstr "Tiếng Flemish"
+
+msgid "dzo"
+msgstr ""
+
+msgid "en_AU"
+msgstr ""
+
+msgid "en_CA"
+msgstr ""
+
+msgid "en_NZ"
+msgstr ""
+
+msgid "en_ZA"
+msgstr ""
+
+msgid "en_GB"
+msgstr "Tiếng Anh (Anh)"
+
+msgid "eo"
+msgstr "Tiếng Quốc Tế Ngữ"
+
+msgid "et"
+msgstr "Tiếng Estonia"
+
+msgid "fo"
+msgstr "Tiếng Faore"
+
+msgid "fi"
+msgstr "Tiếng Phần Lan"
+
+msgid "fr_BE"
+msgstr ""
+
+msgid "fr_CA"
+msgstr ""
+
+msgid "fr_FR"
+msgstr "Tiếng Pháp"
+
+msgid "fy"
+msgstr "Tiếng Frisia"
+
+msgid "fur"
+msgstr "Tiếng Friulian"
+
+msgid "fuc"
+msgstr ""
+
+msgid "gl_ES"
+msgstr "Tiếng Galician"
+
+msgid "ka_GE"
+msgstr "Tiếng Gruzia"
+
+msgid "de_DE"
+msgstr "Tiếng Đức"
+
+msgid "de_CH"
+msgstr "Tiếng Thượng Giéc-man (Thụy Sĩ)"
+
+msgid "el"
+msgstr "Tiếng Hy Lạp"
+
+msgid "gn"
+msgstr "Tiếng Guarani"
+
+msgid "gu"
+msgstr "Tiếng Gujarati"
+
+msgid "haw_US"
+msgstr "Tiếng Hawaii"
+
+msgid "haz"
+msgstr ""
+
+msgid "he_IL"
+msgstr "Tiếng Do Thái"
+
+msgid "hi_IN"
+msgstr "Tiếng Hindi"
+
+msgid "hu_HU"
+msgstr "Tiếng Hungary"
+
+msgid "is_IS"
+msgstr "Tiếng Iceland"
+
+msgid "ido"
+msgstr ""
+
+msgid "id_ID"
+msgstr "Tiếng Indonesia"
+
+msgid "ga"
+msgstr "Tiếng Ai-len"
+
+msgid "it_IT"
+msgstr "Tiếng Ý"
+
+msgid "ja"
+msgstr "Tiếng Nhật"
+
+msgid "jv_ID"
+msgstr "Tiếng Java"
+
+msgid "kab"
+msgstr "Tiếng Kabyle"
+
+msgid "kn"
+msgstr "Tiếng Kannada"
+
+msgid "kk"
+msgstr "Tiếng Kazakh"
+
+msgid "km"
+msgstr "Tiếng Khơ-me"
+
+msgid "kin"
+msgstr ""
+
+msgid "ky_KY"
+msgstr "Tiếng Kyrgyz"
+
+msgid "ko_KR"
+msgstr "Tiếng Hàn"
+
+msgid "ckb"
+msgstr "Tiếng Kurd Miền Trung"
+
+msgid "lo"
+msgstr "Tiếng Lào"
+
+msgid "lv"
+msgstr "Tiếng Latvia"
+
+msgid "li"
+msgstr "Tiếng Limburg"
+
+msgid "lin"
+msgstr ""
+
+msgid "lt_LT"
+msgstr "Tiếng Lít-va"
+
+msgid "lb_LU"
+msgstr "Tiếng Luxembourg"
+
+msgid "mk_MK"
+msgstr "Tiếng Macedonia"
+
+msgid "mg_MG"
+msgstr "Tiếng Malagasy"
+
+msgid "ms_MY"
+msgstr "Tiếng Malaysia"
+
+msgid "ml_IN"
+msgstr "Tiếng Malayalam"
+
+msgid "mri"
+msgstr ""
+
+msgid "mr"
+msgstr "Tiếng Marathi"
+
+msgid "xmf"
+msgstr ""
+
+msgid "mn"
+msgstr "Tiếng Mông Cổ"
+
+msgid "me_ME"
+msgstr ""
+
+msgid "ary"
+msgstr ""
+
+msgid "my_MM"
+msgstr ""
+
+msgid "ne_NP"
+msgstr "Tiếng Nepal"
+
+msgid "nb_NO"
+msgstr "Tiếng Na Uy (Bokmål)"
+
+msgid "nn_NO"
+msgstr "Tiếng Na Uy (Nynorsk)"
+
+msgid "oci"
+msgstr ""
+
+msgid "ory"
+msgstr ""
+
+msgid "os"
+msgstr "Tiếng Ossetic"
+
+msgid "ps"
+msgstr "Tiếng Pashto"
+
+msgid "fa_IR"
+msgstr "Tiếng Ba Tư"
+
+msgid "fa_AF"
+msgstr ""
+
+msgid "pl_PL"
+msgstr "Tiếng Ba Lan"
+
+msgid "pt_BR"
+msgstr "Tiếng Bồ Đào Nha (Braxin)"
+
+msgid "pt_PT"
+msgstr "Tiếng Bồ Đào Nha (Châu Âu)"
+
+msgid "pa_IN"
+msgstr "Tiếng Punjab"
+
+msgid "rhg"
+msgstr ""
+
+msgid "ro_RO"
+msgstr "Tiếng Rumani"
+
+msgid "roh"
+msgstr ""
+
+msgid "ru_RU"
+msgstr "Tiếng Nga"
+
+msgid "ru_UA"
+msgstr ""
+
+msgid "rue"
+msgstr ""
+
+msgid "sah"
+msgstr "Tiếng Sakha"
+
+msgid "sa_IN"
+msgstr ""
+
+msgid "srd"
+msgstr ""
+
+msgid "gd"
+msgstr "Tiếng Xentơ (Xcốt len)"
+
+msgid "sr_RS"
+msgstr "Tiếng Serbia"
+
+msgid "szl"
+msgstr ""
+
+msgid "sd_PK"
+msgstr "Tiếng Sindhi"
+
+msgid "si_LK"
+msgstr "Tiếng Sinhala"
+
+msgid "sk_SK"
+msgstr "Tiếng Slovak"
+
+msgid "sl_SI"
+msgstr "Tiếng Slovenia"
+
+msgid "so_SO"
+msgstr "Tiếng Somali"
+
+msgid "azb"
+msgstr ""
+
+msgid "es_AR"
+msgstr ""
+
+msgid "es_CL"
+msgstr ""
+
+msgid "es_CO"
+msgstr ""
+
+msgid "es_MX"
+msgstr ""
+
+msgid "es_PE"
+msgstr ""
+
+msgid "es_PR"
+msgstr ""
+
+msgid "es_ES"
+msgstr "Tiếng Tây Ban Nha (Châu Âu)"
+
+msgid "es_VE"
+msgstr ""
+
+msgid "su_ID"
+msgstr "Tiếng Sunda"
+
+msgid "sw"
+msgstr "Tiếng Swahili"
+
+msgid "sv_SE"
+msgstr "Tiếng Thụy Điển"
+
+msgid "gsw"
+msgstr "Tiếng Đức (Thụy Sĩ)"
+
+msgid "tl"
+msgstr "Tiếng Tagalog"
+
+msgid "tg"
+msgstr "Tiếng Tajik"
+
+msgid "tzm"
+msgstr "Tiếng Tamazight Miền Trung Ma-rốc"
+
+msgid "ta_IN"
+msgstr "Tiếng Tamil"
+
+msgid "ta_LK"
+msgstr ""
+
+msgid "tt_RU"
+msgstr "Tiếng Tatar"
+
+msgid "te"
+msgstr "Tiếng Telugu"
+
+msgid "th"
+msgstr "Tiếng Thái"
+
+msgid "bo"
+msgstr "Tiếng Tây Tạng"
+
+msgid "tir"
+msgstr ""
+
+msgid "tr_TR"
+msgstr "Tiếng Thổ Nhĩ Kỳ"
+
+msgid "tuk"
+msgstr ""
+
+msgid "ug_CN"
+msgstr "Tiếng Uyghur"
+
+msgid "uk"
+msgstr "Tiếng Ucraina"
+
+msgid "ur"
+msgstr "Tiếng Uđu"
+
+msgid "uz_UZ"
+msgstr "Tiếng Uzbek"
+
+msgid "vi"
+msgstr "Tiếng Việt"
+
+msgid "wa"
+msgstr "Tiếng Walloon"
+
+msgid "cy"
+msgstr "Tiếng Wales"
+
+msgid "yor"
+msgstr ""
+

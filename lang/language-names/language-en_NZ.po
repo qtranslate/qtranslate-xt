@@ -1,0 +1,470 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: \n"
+
+msgid "af"
+msgstr "Afrikaans"
+
+msgid "ak"
+msgstr "Akan"
+
+msgid "sq"
+msgstr "Albanian"
+
+msgid "arq"
+msgstr "Algerian Arabic"
+
+msgid "am"
+msgstr "Amharic"
+
+msgid "ar"
+msgstr "Arabic"
+
+msgid "hy"
+msgstr "Armenian"
+
+msgid "rup_MK"
+msgstr "Aromanian"
+
+msgid "frp"
+msgstr "Arpitan"
+
+msgid "as"
+msgstr "Assamese"
+
+msgid "az"
+msgstr "Azerbaijani"
+
+msgid "az_TR"
+msgstr ""
+
+msgid "bcc"
+msgstr ""
+
+msgid "ba"
+msgstr "Bashkir"
+
+msgid "eu"
+msgstr "Basque"
+
+msgid "bel"
+msgstr ""
+
+msgid "bn_BD"
+msgstr "Bengali"
+
+msgid "bs_BA"
+msgstr "Bosnian"
+
+msgid "bre"
+msgstr "Breton"
+
+msgid "bg_BG"
+msgstr "Bulgarian"
+
+msgid "ca"
+msgstr "Catalan"
+
+msgid "bal"
+msgstr "Baluchi"
+
+msgid "zh_CN"
+msgstr ""
+
+msgid "zh_HK"
+msgstr ""
+
+msgid "zh_TW"
+msgstr ""
+
+msgid "co"
+msgstr "Corsican"
+
+msgid "hr"
+msgstr "Croatian"
+
+msgid "cs_CZ"
+msgstr "Czech"
+
+msgid "da_DK"
+msgstr "Danish"
+
+msgid "dv"
+msgstr "Divehi"
+
+msgid "nl_NL"
+msgstr "Dutch"
+
+msgid "nl_BE"
+msgstr "Flemish"
+
+msgid "dzo"
+msgstr ""
+
+msgid "en_AU"
+msgstr "Australian English"
+
+msgid "en_CA"
+msgstr "Canadian English"
+
+msgid "en_NZ"
+msgstr ""
+
+msgid "en_ZA"
+msgstr ""
+
+msgid "en_GB"
+msgstr "British English"
+
+msgid "eo"
+msgstr "Esperanto"
+
+msgid "et"
+msgstr "Estonian"
+
+msgid "fo"
+msgstr "Faroese"
+
+msgid "fi"
+msgstr "Finnish"
+
+msgid "fr_BE"
+msgstr ""
+
+msgid "fr_CA"
+msgstr "Canadian French"
+
+msgid "fr_FR"
+msgstr "French"
+
+msgid "fy"
+msgstr "Western Frisian"
+
+msgid "fur"
+msgstr "Friulian"
+
+msgid "fuc"
+msgstr ""
+
+msgid "gl_ES"
+msgstr "Galician"
+
+msgid "ka_GE"
+msgstr "Georgian"
+
+msgid "de_DE"
+msgstr "German"
+
+msgid "de_CH"
+msgstr "Swiss High German"
+
+msgid "el"
+msgstr "Greek"
+
+msgid "gn"
+msgstr "Guarani"
+
+msgid "gu"
+msgstr "Gujarati"
+
+msgid "haw_US"
+msgstr "Hawaiian"
+
+msgid "haz"
+msgstr ""
+
+msgid "he_IL"
+msgstr "Hebrew"
+
+msgid "hi_IN"
+msgstr "Hindi"
+
+msgid "hu_HU"
+msgstr "Hungarian"
+
+msgid "is_IS"
+msgstr "Icelandic"
+
+msgid "ido"
+msgstr ""
+
+msgid "id_ID"
+msgstr "Indonesian"
+
+msgid "ga"
+msgstr "Irish"
+
+msgid "it_IT"
+msgstr "Italian"
+
+msgid "ja"
+msgstr "Japanese"
+
+msgid "jv_ID"
+msgstr "Javanese"
+
+msgid "kab"
+msgstr "Kabyle"
+
+msgid "kn"
+msgstr "Kannada"
+
+msgid "kk"
+msgstr "Kazakh"
+
+msgid "km"
+msgstr "Khmer"
+
+msgid "kin"
+msgstr ""
+
+msgid "ky_KY"
+msgstr "Kyrgyz"
+
+msgid "ko_KR"
+msgstr "Korean"
+
+msgid "ckb"
+msgstr "Central Kurdish"
+
+msgid "lo"
+msgstr "Lao"
+
+msgid "lv"
+msgstr "Latvian"
+
+msgid "li"
+msgstr "Limburgish"
+
+msgid "lin"
+msgstr ""
+
+msgid "lt_LT"
+msgstr "Lithuanian"
+
+msgid "lb_LU"
+msgstr "Luxembourgish"
+
+msgid "mk_MK"
+msgstr "Macedonian"
+
+msgid "mg_MG"
+msgstr "Malagasy"
+
+msgid "ms_MY"
+msgstr "Malay"
+
+msgid "ml_IN"
+msgstr "Malayalam"
+
+msgid "mri"
+msgstr ""
+
+msgid "mr"
+msgstr "Marathi"
+
+msgid "xmf"
+msgstr "Mingrelian"
+
+msgid "mn"
+msgstr "Mongolian"
+
+msgid "me_ME"
+msgstr ""
+
+msgid "ary"
+msgstr "Moroccan Arabic"
+
+msgid "my_MM"
+msgstr ""
+
+msgid "ne_NP"
+msgstr "Nepali"
+
+msgid "nb_NO"
+msgstr "Norwegian Bokmål"
+
+msgid "nn_NO"
+msgstr "Norwegian Nynorsk"
+
+msgid "oci"
+msgstr ""
+
+msgid "ory"
+msgstr ""
+
+msgid "os"
+msgstr "Ossetic"
+
+msgid "ps"
+msgstr "Pashto"
+
+msgid "fa_IR"
+msgstr "Persian"
+
+msgid "fa_AF"
+msgstr "Dari"
+
+msgid "pl_PL"
+msgstr "Polish"
+
+msgid "pt_BR"
+msgstr "Brazilian Portuguese"
+
+msgid "pt_PT"
+msgstr "European Portuguese"
+
+msgid "pa_IN"
+msgstr "Punjabi"
+
+msgid "rhg"
+msgstr ""
+
+msgid "ro_RO"
+msgstr "Romanian"
+
+msgid "roh"
+msgstr ""
+
+msgid "ru_RU"
+msgstr "Russian"
+
+msgid "ru_UA"
+msgstr ""
+
+msgid "rue"
+msgstr "Rusyn"
+
+msgid "sah"
+msgstr "Sakha"
+
+msgid "sa_IN"
+msgstr ""
+
+msgid "srd"
+msgstr ""
+
+msgid "gd"
+msgstr "Scottish Gaelic"
+
+msgid "sr_RS"
+msgstr "Serbian"
+
+msgid "szl"
+msgstr "Silesian"
+
+msgid "sd_PK"
+msgstr "Sindhi"
+
+msgid "si_LK"
+msgstr "Sinhala"
+
+msgid "sk_SK"
+msgstr "Slovak"
+
+msgid "sl_SI"
+msgstr "Slovenian"
+
+msgid "so_SO"
+msgstr "Somali"
+
+msgid "azb"
+msgstr ""
+
+msgid "es_AR"
+msgstr ""
+
+msgid "es_CL"
+msgstr ""
+
+msgid "es_CO"
+msgstr ""
+
+msgid "es_MX"
+msgstr "Mexican Spanish"
+
+msgid "es_PE"
+msgstr ""
+
+msgid "es_PR"
+msgstr ""
+
+msgid "es_ES"
+msgstr "European Spanish"
+
+msgid "es_VE"
+msgstr ""
+
+msgid "su_ID"
+msgstr "Sundanese"
+
+msgid "sw"
+msgstr "Swahili"
+
+msgid "sv_SE"
+msgstr "Swedish"
+
+msgid "gsw"
+msgstr "Swiss German"
+
+msgid "tl"
+msgstr "Tagalog"
+
+msgid "tg"
+msgstr "Tajik"
+
+msgid "tzm"
+msgstr "Central Atlas Tamazight"
+
+msgid "ta_IN"
+msgstr "Tamil"
+
+msgid "ta_LK"
+msgstr ""
+
+msgid "tt_RU"
+msgstr "Tatar"
+
+msgid "te"
+msgstr "Telugu"
+
+msgid "th"
+msgstr "Thai"
+
+msgid "bo"
+msgstr "Tibetan"
+
+msgid "tir"
+msgstr ""
+
+msgid "tr_TR"
+msgstr "Turkish"
+
+msgid "tuk"
+msgstr ""
+
+msgid "ug_CN"
+msgstr "Uyghur"
+
+msgid "uk"
+msgstr "Ukrainian"
+
+msgid "ur"
+msgstr "Urdu"
+
+msgid "uz_UZ"
+msgstr "Uzbek"
+
+msgid "vi"
+msgstr "Vietnamese"
+
+msgid "wa"
+msgstr "Walloon"
+
+msgid "cy"
+msgstr "Welsh"
+
+msgid "yor"
+msgstr ""
+

@@ -1,0 +1,470 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: \n"
+
+msgid "af"
+msgstr "아프리칸스어"
+
+msgid "ak"
+msgstr "아칸어"
+
+msgid "sq"
+msgstr "알바니아어"
+
+msgid "arq"
+msgstr "알제리 아랍어"
+
+msgid "am"
+msgstr "암하라어"
+
+msgid "ar"
+msgstr "아랍어"
+
+msgid "hy"
+msgstr "아르메니아어"
+
+msgid "rup_MK"
+msgstr "아로마니아어"
+
+msgid "frp"
+msgstr ""
+
+msgid "as"
+msgstr "아삼어"
+
+msgid "az"
+msgstr "아제르바이잔어"
+
+msgid "az_TR"
+msgstr ""
+
+msgid "bcc"
+msgstr ""
+
+msgid "ba"
+msgstr "바슈키르어"
+
+msgid "eu"
+msgstr "바스크어"
+
+msgid "bel"
+msgstr ""
+
+msgid "bn_BD"
+msgstr "벵골어"
+
+msgid "bs_BA"
+msgstr "보스니아어"
+
+msgid "bre"
+msgstr "브르타뉴어"
+
+msgid "bg_BG"
+msgstr "불가리아어"
+
+msgid "ca"
+msgstr "카탈로니아어"
+
+msgid "bal"
+msgstr "발루치어"
+
+msgid "zh_CN"
+msgstr ""
+
+msgid "zh_HK"
+msgstr ""
+
+msgid "zh_TW"
+msgstr ""
+
+msgid "co"
+msgstr "코르시카어"
+
+msgid "hr"
+msgstr "크로아티아어"
+
+msgid "cs_CZ"
+msgstr "체코어"
+
+msgid "da_DK"
+msgstr "덴마크어"
+
+msgid "dv"
+msgstr "디베히어"
+
+msgid "nl_NL"
+msgstr "네덜란드어"
+
+msgid "nl_BE"
+msgstr "플라망어"
+
+msgid "dzo"
+msgstr ""
+
+msgid "en_AU"
+msgstr "영어(호주)"
+
+msgid "en_CA"
+msgstr ""
+
+msgid "en_NZ"
+msgstr ""
+
+msgid "en_ZA"
+msgstr ""
+
+msgid "en_GB"
+msgstr ""
+
+msgid "eo"
+msgstr "에스페란토어"
+
+msgid "et"
+msgstr "에스토니아어"
+
+msgid "fo"
+msgstr "페로어"
+
+msgid "fi"
+msgstr "핀란드어"
+
+msgid "fr_BE"
+msgstr ""
+
+msgid "fr_CA"
+msgstr ""
+
+msgid "fr_FR"
+msgstr "프랑스어"
+
+msgid "fy"
+msgstr "서프리지아어"
+
+msgid "fur"
+msgstr "프리우리안어"
+
+msgid "fuc"
+msgstr ""
+
+msgid "gl_ES"
+msgstr "갈리시아어"
+
+msgid "ka_GE"
+msgstr "조지아어"
+
+msgid "de_DE"
+msgstr "독일어"
+
+msgid "de_CH"
+msgstr "고지 독일어(스위스)"
+
+msgid "el"
+msgstr "그리스어"
+
+msgid "gn"
+msgstr "과라니어"
+
+msgid "gu"
+msgstr "구자라트어"
+
+msgid "haw_US"
+msgstr "하와이어"
+
+msgid "haz"
+msgstr ""
+
+msgid "he_IL"
+msgstr "히브리어"
+
+msgid "hi_IN"
+msgstr "힌디어"
+
+msgid "hu_HU"
+msgstr "헝가리어"
+
+msgid "is_IS"
+msgstr "아이슬란드어"
+
+msgid "ido"
+msgstr ""
+
+msgid "id_ID"
+msgstr "인도네시아어"
+
+msgid "ga"
+msgstr "아일랜드어"
+
+msgid "it_IT"
+msgstr "이탈리아어"
+
+msgid "ja"
+msgstr "일본어"
+
+msgid "jv_ID"
+msgstr "자바어"
+
+msgid "kab"
+msgstr "커바일어"
+
+msgid "kn"
+msgstr "칸나다어"
+
+msgid "kk"
+msgstr "카자흐어"
+
+msgid "km"
+msgstr "캄보디아어"
+
+msgid "kin"
+msgstr ""
+
+msgid "ky_KY"
+msgstr "키르기스어"
+
+msgid "ko_KR"
+msgstr "한국어"
+
+msgid "ckb"
+msgstr "소라니 쿠르드어"
+
+msgid "lo"
+msgstr "라오어"
+
+msgid "lv"
+msgstr "라트비아어"
+
+msgid "li"
+msgstr "림버거어"
+
+msgid "lin"
+msgstr ""
+
+msgid "lt_LT"
+msgstr "리투아니아어"
+
+msgid "lb_LU"
+msgstr "룩셈부르크어"
+
+msgid "mk_MK"
+msgstr "마케도니아어"
+
+msgid "mg_MG"
+msgstr "말라가시어"
+
+msgid "ms_MY"
+msgstr "말레이어"
+
+msgid "ml_IN"
+msgstr "말라얄람어"
+
+msgid "mri"
+msgstr ""
+
+msgid "mr"
+msgstr "마라티어"
+
+msgid "xmf"
+msgstr ""
+
+msgid "mn"
+msgstr "몽고어"
+
+msgid "me_ME"
+msgstr ""
+
+msgid "ary"
+msgstr "모로코 아랍어"
+
+msgid "my_MM"
+msgstr ""
+
+msgid "ne_NP"
+msgstr "네팔어"
+
+msgid "nb_NO"
+msgstr "노르웨이어(보크말)"
+
+msgid "nn_NO"
+msgstr "노르웨이어(니노르스크)"
+
+msgid "oci"
+msgstr ""
+
+msgid "ory"
+msgstr ""
+
+msgid "os"
+msgstr "오세트어"
+
+msgid "ps"
+msgstr "파슈토어"
+
+msgid "fa_IR"
+msgstr "페르시아어"
+
+msgid "fa_AF"
+msgstr ""
+
+msgid "pl_PL"
+msgstr "폴란드어"
+
+msgid "pt_BR"
+msgstr ""
+
+msgid "pt_PT"
+msgstr "포르투갈어"
+
+msgid "pa_IN"
+msgstr "펀잡어"
+
+msgid "rhg"
+msgstr ""
+
+msgid "ro_RO"
+msgstr "루마니아어"
+
+msgid "roh"
+msgstr ""
+
+msgid "ru_RU"
+msgstr "러시아어"
+
+msgid "ru_UA"
+msgstr ""
+
+msgid "rue"
+msgstr "루신어"
+
+msgid "sah"
+msgstr "야큐트어"
+
+msgid "sa_IN"
+msgstr ""
+
+msgid "srd"
+msgstr ""
+
+msgid "gd"
+msgstr "스코틀랜드 게일어"
+
+msgid "sr_RS"
+msgstr "세르비아어"
+
+msgid "szl"
+msgstr ""
+
+msgid "sd_PK"
+msgstr "신디어"
+
+msgid "si_LK"
+msgstr "스리랑카어"
+
+msgid "sk_SK"
+msgstr "슬로바키아어"
+
+msgid "sl_SI"
+msgstr "슬로베니아어"
+
+msgid "so_SO"
+msgstr "소말리아어"
+
+msgid "azb"
+msgstr ""
+
+msgid "es_AR"
+msgstr ""
+
+msgid "es_CL"
+msgstr ""
+
+msgid "es_CO"
+msgstr ""
+
+msgid "es_MX"
+msgstr ""
+
+msgid "es_PE"
+msgstr ""
+
+msgid "es_PR"
+msgstr ""
+
+msgid "es_ES"
+msgstr "스페인어"
+
+msgid "es_VE"
+msgstr ""
+
+msgid "su_ID"
+msgstr "순다어"
+
+msgid "sw"
+msgstr "스와힐리어"
+
+msgid "sv_SE"
+msgstr "스웨덴어"
+
+msgid "gsw"
+msgstr "독일어(스위스)"
+
+msgid "tl"
+msgstr "타갈로그어"
+
+msgid "tg"
+msgstr "타지크어"
+
+msgid "tzm"
+msgstr "중앙 모로코 타마지트어"
+
+msgid "ta_IN"
+msgstr "타밀어"
+
+msgid "ta_LK"
+msgstr ""
+
+msgid "tt_RU"
+msgstr "타타르어"
+
+msgid "te"
+msgstr "텔루구어"
+
+msgid "th"
+msgstr "태국어"
+
+msgid "bo"
+msgstr "티베트어"
+
+msgid "tir"
+msgstr ""
+
+msgid "tr_TR"
+msgstr "터키어"
+
+msgid "tuk"
+msgstr ""
+
+msgid "ug_CN"
+msgstr "위구르어"
+
+msgid "uk"
+msgstr "우크라이나어"
+
+msgid "ur"
+msgstr "우르두어"
+
+msgid "uz_UZ"
+msgstr "우즈베크어"
+
+msgid "vi"
+msgstr "베트남어"
+
+msgid "wa"
+msgstr "왈론어"
+
+msgid "cy"
+msgstr "웨일스어"
+
+msgid "yor"
+msgstr ""
+

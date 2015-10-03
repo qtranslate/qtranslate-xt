@@ -1,0 +1,470 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: \n"
+
+msgid "af"
+msgstr "afrikaans"
+
+msgid "ak"
+msgstr "akan"
+
+msgid "sq"
+msgstr "albanskt"
+
+msgid "arq"
+msgstr ""
+
+msgid "am"
+msgstr "amhariskt"
+
+msgid "ar"
+msgstr "arabiskt"
+
+msgid "hy"
+msgstr "armenskt"
+
+msgid "rup_MK"
+msgstr ""
+
+msgid "frp"
+msgstr ""
+
+msgid "as"
+msgstr "assamesiskt"
+
+msgid "az"
+msgstr "aserbajdsjanskt"
+
+msgid "az_TR"
+msgstr ""
+
+msgid "bcc"
+msgstr ""
+
+msgid "ba"
+msgstr "bashkir"
+
+msgid "eu"
+msgstr "baskiskt"
+
+msgid "bel"
+msgstr ""
+
+msgid "bn_BD"
+msgstr "bengalskt"
+
+msgid "bs_BA"
+msgstr "bosniskt"
+
+msgid "bre"
+msgstr "bretonskt"
+
+msgid "bg_BG"
+msgstr "bulgarskt"
+
+msgid "ca"
+msgstr "katalani"
+
+msgid "bal"
+msgstr ""
+
+msgid "zh_CN"
+msgstr ""
+
+msgid "zh_HK"
+msgstr ""
+
+msgid "zh_TW"
+msgstr ""
+
+msgid "co"
+msgstr "korsikanskt"
+
+msgid "hr"
+msgstr "kroatiskt"
+
+msgid "cs_CZ"
+msgstr "kekkiskt"
+
+msgid "da_DK"
+msgstr "danskt"
+
+msgid "dv"
+msgstr "divehi"
+
+msgid "nl_NL"
+msgstr "hálendskt"
+
+msgid "nl_BE"
+msgstr "flamskt"
+
+msgid "dzo"
+msgstr ""
+
+msgid "en_AU"
+msgstr ""
+
+msgid "en_CA"
+msgstr ""
+
+msgid "en_NZ"
+msgstr ""
+
+msgid "en_ZA"
+msgstr ""
+
+msgid "en_GB"
+msgstr "enskt (UK)"
+
+msgid "eo"
+msgstr "esperanto"
+
+msgid "et"
+msgstr "estiskt"
+
+msgid "fo"
+msgstr "føroyskt"
+
+msgid "fi"
+msgstr "finskt"
+
+msgid "fr_BE"
+msgstr ""
+
+msgid "fr_CA"
+msgstr ""
+
+msgid "fr_FR"
+msgstr "franskt"
+
+msgid "fy"
+msgstr "vestur frísiskt"
+
+msgid "fur"
+msgstr ""
+
+msgid "fuc"
+msgstr ""
+
+msgid "gl_ES"
+msgstr "galisiskt"
+
+msgid "ka_GE"
+msgstr "georgiskt"
+
+msgid "de_DE"
+msgstr "týskt"
+
+msgid "de_CH"
+msgstr "høgt týskt (Sveis)"
+
+msgid "el"
+msgstr "grikskt"
+
+msgid "gn"
+msgstr "guarani"
+
+msgid "gu"
+msgstr "gujarati"
+
+msgid "haw_US"
+msgstr "hawaiianskt"
+
+msgid "haz"
+msgstr ""
+
+msgid "he_IL"
+msgstr "hebraiskt"
+
+msgid "hi_IN"
+msgstr "hindi"
+
+msgid "hu_HU"
+msgstr "ungarskt"
+
+msgid "is_IS"
+msgstr "íslendskt"
+
+msgid "ido"
+msgstr ""
+
+msgid "id_ID"
+msgstr "indonesiskt"
+
+msgid "ga"
+msgstr "írskt"
+
+msgid "it_IT"
+msgstr "italskt"
+
+msgid "ja"
+msgstr "japanskt"
+
+msgid "jv_ID"
+msgstr "javanskt"
+
+msgid "kab"
+msgstr "kabyle"
+
+msgid "kn"
+msgstr "kannada"
+
+msgid "kk"
+msgstr "kazakh"
+
+msgid "km"
+msgstr "khmer"
+
+msgid "kin"
+msgstr ""
+
+msgid "ky_KY"
+msgstr "kyrgyz"
+
+msgid "ko_KR"
+msgstr "koreanskt"
+
+msgid "ckb"
+msgstr "miðkurdiskt"
+
+msgid "lo"
+msgstr "laoskt"
+
+msgid "lv"
+msgstr "lettiskt"
+
+msgid "li"
+msgstr ""
+
+msgid "lin"
+msgstr ""
+
+msgid "lt_LT"
+msgstr "litaviskt"
+
+msgid "lb_LU"
+msgstr "luksemborgskt"
+
+msgid "mk_MK"
+msgstr "makedónskt"
+
+msgid "mg_MG"
+msgstr "malagassiskt"
+
+msgid "ms_MY"
+msgstr "malaiiskt"
+
+msgid "ml_IN"
+msgstr "malayalam"
+
+msgid "mri"
+msgstr ""
+
+msgid "mr"
+msgstr "marathi"
+
+msgid "xmf"
+msgstr ""
+
+msgid "mn"
+msgstr "mongolskt"
+
+msgid "me_ME"
+msgstr ""
+
+msgid "ary"
+msgstr ""
+
+msgid "my_MM"
+msgstr ""
+
+msgid "ne_NP"
+msgstr "nepalskt"
+
+msgid "nb_NO"
+msgstr "norskt bókmál"
+
+msgid "nn_NO"
+msgstr "nýnorskt"
+
+msgid "oci"
+msgstr ""
+
+msgid "ory"
+msgstr ""
+
+msgid "os"
+msgstr "ossetiskt"
+
+msgid "ps"
+msgstr "pashto"
+
+msgid "fa_IR"
+msgstr "persiskt"
+
+msgid "fa_AF"
+msgstr ""
+
+msgid "pl_PL"
+msgstr "pólskt"
+
+msgid "pt_BR"
+msgstr "portugiskiskt (Brasilia)"
+
+msgid "pt_PT"
+msgstr "portugiskiskt (Evropa)"
+
+msgid "pa_IN"
+msgstr "punjabi"
+
+msgid "rhg"
+msgstr ""
+
+msgid "ro_RO"
+msgstr "rumenskt"
+
+msgid "roh"
+msgstr ""
+
+msgid "ru_RU"
+msgstr "russiskt"
+
+msgid "ru_UA"
+msgstr ""
+
+msgid "rue"
+msgstr ""
+
+msgid "sah"
+msgstr ""
+
+msgid "sa_IN"
+msgstr ""
+
+msgid "srd"
+msgstr ""
+
+msgid "gd"
+msgstr "skotskt gæliskt"
+
+msgid "sr_RS"
+msgstr "serbiskt"
+
+msgid "szl"
+msgstr ""
+
+msgid "sd_PK"
+msgstr "sindhi"
+
+msgid "si_LK"
+msgstr "singalesiskt"
+
+msgid "sk_SK"
+msgstr "slovakiskt"
+
+msgid "sl_SI"
+msgstr "slovenskt"
+
+msgid "so_SO"
+msgstr "somaliskt"
+
+msgid "azb"
+msgstr ""
+
+msgid "es_AR"
+msgstr ""
+
+msgid "es_CL"
+msgstr ""
+
+msgid "es_CO"
+msgstr ""
+
+msgid "es_MX"
+msgstr ""
+
+msgid "es_PE"
+msgstr ""
+
+msgid "es_PR"
+msgstr ""
+
+msgid "es_ES"
+msgstr "spanskt"
+
+msgid "es_VE"
+msgstr ""
+
+msgid "su_ID"
+msgstr "sundanesiskt"
+
+msgid "sw"
+msgstr "swahili"
+
+msgid "sv_SE"
+msgstr "svenskt"
+
+msgid "gsw"
+msgstr "týskt (Sveis)"
+
+msgid "tl"
+msgstr "tagalog"
+
+msgid "tg"
+msgstr "tajik"
+
+msgid "tzm"
+msgstr "miðatlasfjøll tamazight"
+
+msgid "ta_IN"
+msgstr "tamilskt"
+
+msgid "ta_LK"
+msgstr ""
+
+msgid "tt_RU"
+msgstr "tatar"
+
+msgid "te"
+msgstr "telugu"
+
+msgid "th"
+msgstr "tailendskt"
+
+msgid "bo"
+msgstr "tibetskt"
+
+msgid "tir"
+msgstr ""
+
+msgid "tr_TR"
+msgstr "turkiskt"
+
+msgid "tuk"
+msgstr ""
+
+msgid "ug_CN"
+msgstr "uyghur"
+
+msgid "uk"
+msgstr "ukrainskt"
+
+msgid "ur"
+msgstr "urdu"
+
+msgid "uz_UZ"
+msgstr "usbekiskt"
+
+msgid "vi"
+msgstr "vjetnamesiskt"
+
+msgid "wa"
+msgstr ""
+
+msgid "cy"
+msgstr "walisiskt"
+
+msgid "yor"
+msgstr ""
+

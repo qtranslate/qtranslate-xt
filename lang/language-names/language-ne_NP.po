@@ -1,0 +1,470 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: \n"
+
+msgid "af"
+msgstr "अफ्रिकान्स"
+
+msgid "ak"
+msgstr "आकान"
+
+msgid "sq"
+msgstr "अल्बानियाली"
+
+msgid "arq"
+msgstr "अल्जेरियाली अरबी"
+
+msgid "am"
+msgstr "अम्हारिक"
+
+msgid "ar"
+msgstr "अरबी"
+
+msgid "hy"
+msgstr "आर्मेनियाली"
+
+msgid "rup_MK"
+msgstr "अरोमानीयाली"
+
+msgid "frp"
+msgstr "अर्पितान"
+
+msgid "as"
+msgstr "आसामी"
+
+msgid "az"
+msgstr "अजरबैजानी"
+
+msgid "az_TR"
+msgstr ""
+
+msgid "bcc"
+msgstr ""
+
+msgid "ba"
+msgstr "बास्किर"
+
+msgid "eu"
+msgstr "बास्क"
+
+msgid "bel"
+msgstr ""
+
+msgid "bn_BD"
+msgstr "बंगाली"
+
+msgid "bs_BA"
+msgstr "बोस्नियाली"
+
+msgid "bre"
+msgstr "ब्रेटन"
+
+msgid "bg_BG"
+msgstr "बुल्गेरियाली"
+
+msgid "ca"
+msgstr "क्याटालन"
+
+msgid "bal"
+msgstr "बालुची"
+
+msgid "zh_CN"
+msgstr ""
+
+msgid "zh_HK"
+msgstr ""
+
+msgid "zh_TW"
+msgstr ""
+
+msgid "co"
+msgstr "कोर्सिकन"
+
+msgid "hr"
+msgstr "क्रोयसियाली"
+
+msgid "cs_CZ"
+msgstr "चेक"
+
+msgid "da_DK"
+msgstr "डेनिस"
+
+msgid "dv"
+msgstr "दिबेही"
+
+msgid "nl_NL"
+msgstr "डच"
+
+msgid "nl_BE"
+msgstr "फ्लेमिस"
+
+msgid "dzo"
+msgstr ""
+
+msgid "en_AU"
+msgstr "अस्ट्रेलियाली अङ्ग्रेजी"
+
+msgid "en_CA"
+msgstr "क्यानाडेली अङ्ग्रेजी"
+
+msgid "en_NZ"
+msgstr ""
+
+msgid "en_ZA"
+msgstr ""
+
+msgid "en_GB"
+msgstr "बेलायती अङ्ग्रेजी"
+
+msgid "eo"
+msgstr "एस्पेरान्तो"
+
+msgid "et"
+msgstr "इस्टोनियाली"
+
+msgid "fo"
+msgstr "फारोज"
+
+msgid "fi"
+msgstr "फिनिस"
+
+msgid "fr_BE"
+msgstr ""
+
+msgid "fr_CA"
+msgstr "क्यानेडाली फ्रान्सेली"
+
+msgid "fr_FR"
+msgstr "फ्रान्सेली"
+
+msgid "fy"
+msgstr "फ्रिजीयन"
+
+msgid "fur"
+msgstr "फ्रिउलियाली"
+
+msgid "fuc"
+msgstr ""
+
+msgid "gl_ES"
+msgstr "गलिसियाली"
+
+msgid "ka_GE"
+msgstr "जर्जियाली"
+
+msgid "de_DE"
+msgstr "जर्मन"
+
+msgid "de_CH"
+msgstr "स्वीस हाई जर्मन"
+
+msgid "el"
+msgstr "ग्रीक"
+
+msgid "gn"
+msgstr "गुवारानी"
+
+msgid "gu"
+msgstr "गुजराती"
+
+msgid "haw_US"
+msgstr "हवाइयन"
+
+msgid "haz"
+msgstr ""
+
+msgid "he_IL"
+msgstr "हिब्रु"
+
+msgid "hi_IN"
+msgstr "हिन्दी"
+
+msgid "hu_HU"
+msgstr "हङ्गेरियाली"
+
+msgid "is_IS"
+msgstr "आइसल्यान्डियाली"
+
+msgid "ido"
+msgstr ""
+
+msgid "id_ID"
+msgstr "इन्डोनेसियाली"
+
+msgid "ga"
+msgstr "आयरिस"
+
+msgid "it_IT"
+msgstr "इटालेली"
+
+msgid "ja"
+msgstr "जापानी"
+
+msgid "jv_ID"
+msgstr "जाभानी"
+
+msgid "kab"
+msgstr "काबिल"
+
+msgid "kn"
+msgstr "कन्नाडा"
+
+msgid "kk"
+msgstr "काजाख"
+
+msgid "km"
+msgstr "खमेर"
+
+msgid "kin"
+msgstr ""
+
+msgid "ky_KY"
+msgstr "किर्गिज"
+
+msgid "ko_KR"
+msgstr "कोरियाली"
+
+msgid "ckb"
+msgstr "केन्द्रीय कुर्दी"
+
+msgid "lo"
+msgstr "लाओ"
+
+msgid "lv"
+msgstr "लात्भियाली"
+
+msgid "li"
+msgstr "लिम्बुर्गी"
+
+msgid "lin"
+msgstr ""
+
+msgid "lt_LT"
+msgstr "लिथुआनियाली"
+
+msgid "lb_LU"
+msgstr "लक्जेम्बर्गी"
+
+msgid "mk_MK"
+msgstr "म्यासेडोनियाली"
+
+msgid "mg_MG"
+msgstr "मलागासी"
+
+msgid "ms_MY"
+msgstr "मलाय"
+
+msgid "ml_IN"
+msgstr "मलयालम"
+
+msgid "mri"
+msgstr ""
+
+msgid "mr"
+msgstr "मराठी"
+
+msgid "xmf"
+msgstr "मिनग्रेलियाली"
+
+msgid "mn"
+msgstr "मङ्गोलियाली"
+
+msgid "me_ME"
+msgstr ""
+
+msgid "ary"
+msgstr "मोरोक्कोली अरबी"
+
+msgid "my_MM"
+msgstr ""
+
+msgid "ne_NP"
+msgstr "नेपाली"
+
+msgid "nb_NO"
+msgstr "नर्वेली बोकमाल"
+
+msgid "nn_NO"
+msgstr "नर्वेली नाइनोर्स्क"
+
+msgid "oci"
+msgstr ""
+
+msgid "ory"
+msgstr ""
+
+msgid "os"
+msgstr "अोस्सेटिक"
+
+msgid "ps"
+msgstr "पास्तो"
+
+msgid "fa_IR"
+msgstr "फारसी"
+
+msgid "fa_AF"
+msgstr ""
+
+msgid "pl_PL"
+msgstr "पोलिस"
+
+msgid "pt_BR"
+msgstr "ब्राजिली पोर्तुगी"
+
+msgid "pt_PT"
+msgstr "युरोपेली पोर्तुगी"
+
+msgid "pa_IN"
+msgstr "पंजाबी"
+
+msgid "rhg"
+msgstr ""
+
+msgid "ro_RO"
+msgstr "रोमानियाली"
+
+msgid "roh"
+msgstr ""
+
+msgid "ru_RU"
+msgstr "रूसी"
+
+msgid "ru_UA"
+msgstr ""
+
+msgid "rue"
+msgstr ""
+
+msgid "sah"
+msgstr ""
+
+msgid "sa_IN"
+msgstr ""
+
+msgid "srd"
+msgstr ""
+
+msgid "gd"
+msgstr "स्कटिस गाएलिक"
+
+msgid "sr_RS"
+msgstr "सर्बियाली"
+
+msgid "szl"
+msgstr ""
+
+msgid "sd_PK"
+msgstr "सिन्धी"
+
+msgid "si_LK"
+msgstr "सिन्हाली"
+
+msgid "sk_SK"
+msgstr "स्लोभाकियाली"
+
+msgid "sl_SI"
+msgstr "स्लोभेनियाली"
+
+msgid "so_SO"
+msgstr "सोमाली"
+
+msgid "azb"
+msgstr ""
+
+msgid "es_AR"
+msgstr ""
+
+msgid "es_CL"
+msgstr ""
+
+msgid "es_CO"
+msgstr ""
+
+msgid "es_MX"
+msgstr "मेक्सिकन स्पेनी"
+
+msgid "es_PE"
+msgstr ""
+
+msgid "es_PR"
+msgstr ""
+
+msgid "es_ES"
+msgstr "युरोपेली स्पेनी"
+
+msgid "es_VE"
+msgstr ""
+
+msgid "su_ID"
+msgstr ""
+
+msgid "sw"
+msgstr "स्वाहिली"
+
+msgid "sv_SE"
+msgstr "स्विडिस"
+
+msgid "gsw"
+msgstr "स्वीस जर्मन"
+
+msgid "tl"
+msgstr ""
+
+msgid "tg"
+msgstr "ताजिक"
+
+msgid "tzm"
+msgstr "केन्द्रीय एट्लास टामाजिघट"
+
+msgid "ta_IN"
+msgstr "तामिल"
+
+msgid "ta_LK"
+msgstr ""
+
+msgid "tt_RU"
+msgstr "तातार"
+
+msgid "te"
+msgstr "तेलुगु"
+
+msgid "th"
+msgstr "थाई"
+
+msgid "bo"
+msgstr "तिब्बती"
+
+msgid "tir"
+msgstr ""
+
+msgid "tr_TR"
+msgstr "टर्किश"
+
+msgid "tuk"
+msgstr ""
+
+msgid "ug_CN"
+msgstr "उइघुर"
+
+msgid "uk"
+msgstr "युक्रेनी"
+
+msgid "ur"
+msgstr "उर्दु"
+
+msgid "uz_UZ"
+msgstr "उज्बेकी"
+
+msgid "vi"
+msgstr "भियतनामी"
+
+msgid "wa"
+msgstr ""
+
+msgid "cy"
+msgstr "वेल्श"
+
+msgid "yor"
+msgstr ""
+
