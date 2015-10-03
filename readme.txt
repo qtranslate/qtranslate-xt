@@ -103,6 +103,10 @@ Read [migration instructions](https://qtranslatexteam.wordpress.com/migration/ "
 ### 3.4.6 ###
 * All issues after version 3.4.5
 
+### 3.4.5.4 ###
+* Enhancement: Translation of language names to other languages: [Issue #264](https://github.com/qTranslate-Team/qtranslate-x/issues/264).
+* Fix: enabled back translation of posts in `qtranxf_postsFilter` with filter 'raw'.
+
 ### 3.4.5.3 ###
 * Enhancement: integration with plugin [bbPress](https://wordpress.org/plugins/bbpress/) started, file `./i18n-config/plugins/bbpress/i18n-config.json`.
 * Enhancement: integration with theme [WPEX Elegant](https://themetix.com/wpex-elegant/) started, file `./i18n-config/themes/wpex-elegant/i18n-config.json`.
@@ -117,7 +121,7 @@ Read [migration instructions](https://qtranslatexteam.wordpress.com/migration/ "
 * Enhancement: argument `$found` for `qtranxf_split_blocks`.
 * Enhancement: removed limit of 5 characters in language form for locale: [Issue #262](https://github.com/qTranslate-Team/qtranslate-x/issues/262);
 
-### 3.4.5 stable ###
+### 3.4.5 ###
 * Fix: Crash on customize.php screen. No Language Switching Buttons on customize screen yet, some values are not translated, but raw multilingual values work. [Issue #223](https://github.com/qTranslate-Team/qtranslate-x/issues/223).
 * Fix: Remove children of parent menu item deleted: [Issue #255](https://github.com/qTranslate-Team/qtranslate-x/issues/255).
 * Fix: Obsolete widget constructor [Issue #250](https://github.com/qTranslate-Team/qtranslate-x/issues/250)
