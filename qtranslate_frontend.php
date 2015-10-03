@@ -422,6 +422,7 @@ qtranxf_filter_options();
 
 function qtranxf_postsFilter($posts,&$query) {//WP_Query
 	global $q_config;
+	//qtranxf_dbg_log('qtranxf_postsFilter: $posts: ',$posts);
 	//$post->post_content = qtranxf_useCurrentLanguageIfNotFoundShowAvailable($post->post_content);
 	//$posts = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($posts);
 	if(!is_array($posts)) return $posts;
@@ -433,7 +434,7 @@ function qtranxf_postsFilter($posts,&$query) {//WP_Query
 	}
 	$lang = $q_config['language'];
 	foreach($posts as $post) {//post is an object derived from WP_Post
-		if($post->filter == 'raw') continue;//@since 3.4.5
+		//if($post->filter == 'raw') continue;//@since 3.4.5 - makes 'get_the_exerpts' to return raw, breaks "more" tags in 'the_content', etc.
 		//qtranxf_dbg_log('qtranxf_postsFilter: ID='.$post->ID.'; post_type='.$post->post_type.'; $post->filter: ',$post->filter);
 		foreach(get_object_vars($post) as $key => $txt) {
 			switch($key){//the quickest way to proceed
@@ -468,14 +469,7 @@ function qtranxf_postsFilter($posts,&$query) {//WP_Query
 					break;
 				//other maybe, if it is a string, most likely it never comes here
 				default:
-					//qtranxf_dbg_echo('qtranxf_postsFilter: other: $post->'.$key.': ',$txt);
 					$post->$key = qtranxf_use($lang, $txt, false);
-					//if(!is_string($txt)){
-					//	//qtranxf_dbg_echo('not string: $post->'.$key.': ',$txt);
-					//	continue;
-					//}
-					//qtranxf_dbg_echo('string: $post->'.$key.': ',$txt);
-					//$post->$key = qtranxf_use_language($lang, $txt, false);
 			}
 		}
 	}
