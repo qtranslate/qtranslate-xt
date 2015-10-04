@@ -1,27 +1,30 @@
 # qTranslate-X Translation Template.
 # Copyright (C) 2015 qTranslate Team
 # This file is distributed under the same license as the qTranslate-X package.
-# 
+#
 # Translators:
 msgid ""
 msgstr ""
 "Project-Id-Version: qtranslate-x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-09-14 21:36-0600\n"
-"PO-Revision-Date: 2015-09-15 19:58+0000\n"
+"PO-Revision-Date: 2015-10-04 11:19-0700\n"
 "Last-Translator: \n"
-"Language-Team: Norwegian Bokmål (Norway) (http://www.transifex.com/qtranslatexteam/qtranslate-x/language/nb_NO/)\n"
+"Language-Team: Norwegian Bokmål (Norway) (http://www.transifex.com/"
+"qtranslatexteam/qtranslate-x/language/nb_NO/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: nb_NO\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.8.5\n"
 
 #: admin/qtx_activation_hook.php:90 admin/qtx_activation_hook.php:104
 #: admin/qtx_activation_hook.php:107 admin/qtx_activation_hook.php:641
 #: admin/qtx_activation_hook.php:700 admin/qtx_configuration.php:202
 #: admin/qtx_configuration.php:514 admin/qtx_configuration.php:524
 #: admin/qtx_configuration.php:526 admin/qtx_configuration.php:528
+#, fuzzy
 msgid "Configuration Files"
 msgstr ""
 
@@ -34,8 +37,8 @@ msgstr ""
 #: admin/qtx_activation_hook.php:107
 #, php-format
 msgid ""
-"Once the problem is fixed, re-save the configuration by pressing button "
-"\"%s\" on plugin %ssettings page%s."
+"Once the problem is fixed, re-save the configuration by pressing button \"%s"
+"\" on plugin %ssettings page%s."
 msgstr ""
 
 #: admin/qtx_activation_hook.php:90
@@ -77,8 +80,8 @@ msgstr ""
 #, php-format
 msgid ""
 "Option \"%s\" for plugin %s has been auto-adjusted after recent changes in "
-"the site configuration. It might be a good idea to %sreview the changes%s in"
-" the list of configuration files."
+"the site configuration. It might be a good idea to %sreview the changes%s "
+"in the list of configuration files."
 msgstr ""
 
 #: admin/qtx_activation_hook.php:644
@@ -125,8 +128,8 @@ msgstr ""
 #: admin/qtx_activation_hook.php:685
 #, php-format
 msgid ""
-"You may import/export compatible settings from %s to %s on "
-"Settings/Languages configuration page, once %s is running.%sContinue%s"
+"You may import/export compatible settings from %s to %s on Settings/"
+"Languages configuration page, once %s is running.%sContinue%s"
 msgstr ""
 
 #: admin/qtx_activation_hook.php:698 admin/qtx_configuration.php:453
@@ -143,9 +146,9 @@ msgstr ""
 #, php-format
 msgid ""
 "%sError:%s plugin %s cannot run concurrently with plugin %s. You may import "
-"and export compatible settings between %s and %s on Settings/<a "
-"href=\"%s\">Languages</a> configuration page. Then you have to deactivate "
-"one of the plugins to continue."
+"and export compatible settings between %s and %s on Settings/<a href=\"%s"
+"\">Languages</a> configuration page. Then you have to deactivate one of the "
+"plugins to continue."
 msgstr ""
 
 #: admin/qtx_activation_hook.php:775 admin/qtx_activation_hook.php:777
@@ -233,8 +236,8 @@ msgstr ""
 #, php-format
 msgid ""
 "The latest version of plugin %s has a number of new options, for example, "
-"%s, which may change the look of some pages. Please, review the help text of"
-" new options on %sconfiguration page%s."
+"%s, which may change the look of some pages. Please, review the help text "
+"of new options on %sconfiguration page%s."
 msgstr ""
 
 #: admin/qtx_activation_hook.php:983
@@ -377,8 +380,8 @@ msgstr ""
 #, php-format
 msgid ""
 "Post types other than \"post\" or \"page\", as well as unpublished entries, "
-"will have to be adjusted manually as needed, since there is no common way to"
-" automate setting the default language otherwise. It can be done with a "
+"will have to be adjusted manually as needed, since there is no common way "
+"to automate setting the default language otherwise. It can be done with a "
 "custom script though. You may request a %spaid support%s for this."
 msgstr ""
 
@@ -477,8 +480,8 @@ msgstr ""
 #, php-format
 msgid ""
 "This is a set of \"%s\" from %s. Click any blank space between the buttons "
-"and drag it to a place where you would need it the most. Click the handle at"
-" the top-right corner of this widget to hide this message."
+"and drag it to a place where you would need it the most. Click the handle "
+"at the top-right corner of this widget to hide this message."
 msgstr ""
 
 #: admin/qtx_admin_utils.php:796 qtranslate_frontend.php:209
@@ -565,9 +568,9 @@ msgstr ""
 msgid ""
 "Depending on your Date / Time Conversion Mode, you can either enter a <a "
 "href=\"http://www.php.net/manual/function.strftime.php\">strftime</a> (use "
-"%q for day suffix (st,nd,rd,th)) or <a "
-"href=\"http://www.php.net/manual/function.date.php\">date</a> format. This "
-"field is optional. (Example: %A %B %e%q, %Y)"
+"%q for day suffix (st,nd,rd,th)) or <a href=\"http://www.php.net/manual/"
+"function.date.php\">date</a> format. This field is optional. (Example: %A "
+"%B %e%q, %Y)"
 msgstr ""
 
 #: admin/qtx_configuration.php:96
@@ -706,9 +709,9 @@ msgstr ""
 #: admin/qtx_configuration.php:248
 #, php-format
 msgid ""
-"Choose the default language of your blog. This is the language which will be"
-" shown on %s. You can also change the order the languages by clicking on the"
-" arrows above."
+"Choose the default language of your blog. This is the language which will "
+"be shown on %s. You can also change the order the languages by clicking on "
+"the arrows above."
 msgstr ""
 
 #: admin/qtx_configuration.php:253 admin/qtx_configuration.php:255
@@ -797,8 +800,8 @@ msgstr ""
 #, php-format
 msgid ""
 "This function will not work correctly if you installed %s on a blog with "
-"existing entries. In this case you will need to take a look at option \"%s\""
-" under \"%s\" section."
+"existing entries. In this case you will need to take a look at option \"%s"
+"\" under \"%s\" section."
 msgstr ""
 
 #: admin/qtx_configuration.php:302
@@ -810,9 +813,9 @@ msgstr ""
 #: admin/qtx_configuration.php:304
 msgid ""
 "This is relevant to all fields other than the main content of posts and "
-"pages. Such untranslated fields are always shown in an alternative available"
-" language, and will be prefixed with the language name in parentheses, if "
-"this option is on."
+"pages. Such untranslated fields are always shown in an alternative "
+"available language, and will be prefixed with the language name in "
+"parentheses, if this option is on."
 msgstr ""
 
 #: admin/qtx_configuration.php:306
@@ -824,12 +827,13 @@ msgstr ""
 #: admin/qtx_configuration.php:307
 #, php-format
 msgid ""
-"When a page or a post with an untranslated content is viewed, a message with"
-" a list of other available languages is displayed, in which languages are "
-"ordered as defined by option \"%s\". If this option is on, then the content "
-"in default language will also be shown, instead of the expected language, "
-"for the sake of user convenience. If default language is not available for "
-"the content, then the content in the first available language is shown."
+"When a page or a post with an untranslated content is viewed, a message "
+"with a list of other available languages is displayed, in which languages "
+"are ordered as defined by option \"%s\". If this option is on, then the "
+"content in default language will also be shown, instead of the expected "
+"language, for the sake of user convenience. If default language is not "
+"available for the content, then the content in the first available language "
+"is shown."
 msgstr ""
 
 #: admin/qtx_configuration.php:311
@@ -869,8 +873,8 @@ msgstr ""
 #: admin/qtx_configuration.php:342
 #, php-format
 msgid ""
-"Path to the flag images under wp-content, with trailing slash. (Default: %s,"
-" clear the value above to reset it to the default)"
+"Path to the flag images under wp-content, with trailing slash. (Default: "
+"%s, clear the value above to reset it to the default)"
 msgstr ""
 
 #: admin/qtx_configuration.php:346
@@ -913,9 +917,8 @@ msgstr ""
 #: admin/qtx_configuration.php:365
 #, php-format
 msgid ""
-"Language cookie is auto-disabled for \"%s\" \"Pre-Domain\" and \"Per-"
-"Domain\", as language is always unambiguously defined by a url in those "
-"modes."
+"Language cookie is auto-disabled for \"%s\" \"Pre-Domain\" and \"Per-Domain"
+"\", as language is always unambiguously defined by a url in those modes."
 msgstr ""
 
 #: admin/qtx_configuration.php:365
@@ -975,8 +978,8 @@ msgstr ""
 
 #: admin/qtx_configuration.php:386
 msgid ""
-"Use strftime instead of date and replace formats with the predefined formats"
-" for each language."
+"Use strftime instead of date and replace formats with the predefined "
+"formats for each language."
 msgstr ""
 
 #: admin/qtx_configuration.php:387
@@ -1009,14 +1012,14 @@ msgstr ""
 #, php-format
 msgid ""
 "By default, all options are filtered to be translated at front-end for the "
-"sake of simplicity of configuration. However, for a developed site, this may"
-" cause a considerable performance degradation. Normally, there are very few "
-"options, which actually need a translation. You may simply list them above "
-"to minimize the performance impact, while still getting translations needed."
-" Options names must match the field \"%s\" of table \"%s\" of WordPress "
-"database. A minimum common set of option, normally needed a translation, is "
-"already entered in the list above as a default example. Option names in the "
-"list may contain wildcard with symbol \"%s\"."
+"sake of simplicity of configuration. However, for a developed site, this "
+"may cause a considerable performance degradation. Normally, there are very "
+"few options, which actually need a translation. You may simply list them "
+"above to minimize the performance impact, while still getting translations "
+"needed. Options names must match the field \"%s\" of table \"%s\" of "
+"WordPress database. A minimum common set of option, normally needed a "
+"translation, is already entered in the list above as a default example. "
+"Option names in the list may contain wildcard with symbol \"%s\"."
 msgstr ""
 
 #: admin/qtx_configuration.php:407
@@ -1048,8 +1051,9 @@ msgstr ""
 
 #: admin/qtx_configuration.php:412
 msgid ""
-"Some people prefer to edit the raw entries containing all languages together"
-" separated by language defining tags, as they are stored in database."
+"Some people prefer to edit the raw entries containing all languages "
+"together separated by language defining tags, as they are stored in "
+"database."
 msgstr ""
 
 #: admin/qtx_configuration.php:413
@@ -1161,19 +1165,19 @@ msgstr ""
 #: admin/qtx_configuration.php:515
 #, php-format
 msgid ""
-"List of configuration files. Unless prefixed with \"%s\", paths are relative"
-" to %s variable: %s. Absolute paths are also acceptable."
+"List of configuration files. Unless prefixed with \"%s\", paths are "
+"relative to %s variable: %s. Absolute paths are also acceptable."
 msgstr ""
 
 #: admin/qtx_configuration.php:517
 #, php-format
 msgid ""
-"The list gets auto-updated on a 3rd-party integrated plugin "
-"activation/deactivation. You may also add your own custom files for your "
-"theme or plugins. File \"%s\" is the default configuration loaded from this "
-"plugin folder. It is not recommended to modify any configuration file from "
-"other authors, but you may alter any configuration item through your own "
-"custom file appended to the end of this list."
+"The list gets auto-updated on a 3rd-party integrated plugin activation/"
+"deactivation. You may also add your own custom files for your theme or "
+"plugins. File \"%s\" is the default configuration loaded from this plugin "
+"folder. It is not recommended to modify any configuration file from other "
+"authors, but you may alter any configuration item through your own custom "
+"file appended to the end of this list."
 msgstr ""
 
 #: admin/qtx_configuration.php:524
@@ -1188,8 +1192,8 @@ msgstr ""
 #, php-format
 msgid ""
 "It would make no difference, if the content of this field is stored in a "
-"file, which name is listed last in option \"%s\". Therefore, this field only"
-" provides flexibility for the sake of convenience."
+"file, which name is listed last in option \"%s\". Therefore, this field "
+"only provides flexibility for the sake of convenience."
 msgstr ""
 
 #: admin/qtx_configuration.php:528
@@ -1209,14 +1213,14 @@ msgid ""
 "Enter \"%s\" or \"%s\" attribute of text fields from your theme, which you "
 "wish to translate. This applies to post, page and media editors (%s). To "
 "lookup \"%s\" or \"%s\", right-click on the field in the post or the page "
-"editor and choose \"%s\". Look for an attribute of the field named \"%s\" or"
-" \"%s\". Enter it below, as many as you need, space- or comma-separated. "
+"editor and choose \"%s\". Look for an attribute of the field named \"%s\" "
+"or \"%s\". Enter it below, as many as you need, space- or comma-separated. "
 "After saving configuration, these fields will start responding to the "
 "language switching buttons, and you can enter different text for each "
 "language. The input fields of type %s will be parsed using %s syntax, while "
 "single line text fields will use %s syntax. If you need to override this "
-"behaviour, prepend prefix %s or %s to the name of the field to specify which"
-" syntax to use. For more information, read %sFAQ%s."
+"behaviour, prepend prefix %s or %s to the name of the field to specify "
+"which syntax to use. For more information, read %sFAQ%s."
 msgstr ""
 
 #: admin/qtx_configuration.php:535
@@ -1263,13 +1267,13 @@ msgstr ""
 #, php-format
 msgid ""
 "Some plugins and themes use direct calls to the functions listed, which are "
-"defined in former %s plugin and some of its forks. Turning this flag on will"
-" enable those function to exists, which will make the dependent plugins and "
-"themes to work. WordPress policy prohibits to define functions with the same"
-" names as in other plugins, since it generates user-unfriendly fatal errors,"
-" when two conflicting plugins are activated simultaneously. Before turning "
-"this option on, you have to make sure that there are no other plugins "
-"active, which define those functions."
+"defined in former %s plugin and some of its forks. Turning this flag on "
+"will enable those function to exists, which will make the dependent plugins "
+"and themes to work. WordPress policy prohibits to define functions with the "
+"same names as in other plugins, since it generates user-unfriendly fatal "
+"errors, when two conflicting plugins are activated simultaneously. Before "
+"turning this option on, you have to make sure that there are no other "
+"plugins active, which define those functions."
 msgstr ""
 
 #: admin/qtx_configuration.php:601
@@ -1341,9 +1345,9 @@ msgstr ""
 
 #: admin/qtx_configuration.php:702
 msgid ""
-"Enabling a language will cause qTranslate to update the Gettext-Database for"
-" the language, which can take a while depending on your server's connection "
-"speed."
+"Enabling a language will cause qTranslate to update the Gettext-Database "
+"for the language, which can take a while depending on your server's "
+"connection speed."
 msgstr ""
 
 #: admin/qtx_configuration.php:709
@@ -1357,41 +1361,41 @@ msgstr ""
 #: admin/qtx_import_export.php:84
 #, php-format
 msgid ""
-"Option \"%s\" has also been turned on, as the most common case for importing"
-" configuration from %s. You may turn it off manually if your setup does not "
-"require it. Refer to %sFAQ%s for more information."
+"Option \"%s\" has also been turned on, as the most common case for "
+"importing configuration from %s. You may turn it off manually if your setup "
+"does not require it. Refer to %sFAQ%s for more information."
 msgstr ""
 
 #: admin/qtx_import_export.php:99
 #, php-format
 msgid ""
 "Applicable options and taxonomy names from plugin %s have been imported. "
-"Note that the multilingual content of posts, pages and other objects has not"
-" been altered during this operation. There is no additional operation needed"
-" to import content, since its format is compatible with %s."
+"Note that the multilingual content of posts, pages and other objects has "
+"not been altered during this operation. There is no additional operation "
+"needed to import content, since its format is compatible with %s."
 msgstr ""
 
 #: admin/qtx_import_export.php:101
 #, php-format
 msgid ""
-"%sImportant%s: Before you start making edits to post and pages, please, make"
-" sure that both, your front site and admin back-end, work under this "
+"%sImportant%s: Before you start making edits to post and pages, please, "
+"make sure that both, your front site and admin back-end, work under this "
 "configuration. It may help to review \"%s\" and see if any of conflicting "
 "plugins mentioned there are used here. While the current content, coming "
 "from %s, is compatible with this plugin, the newly modified posts and pages "
-"will be saved with a new square-bracket-only encoding, which has a number of"
-" advantages comparing to former %s encoding. However, the new encoding is "
+"will be saved with a new square-bracket-only encoding, which has a number "
+"of advantages comparing to former %s encoding. However, the new encoding is "
 "not straightforwardly compatible with %s and you will need an additional "
-"step available under \"%s\" option if you ever decide to go back to %s. Even"
-" with this additional conversion step, the 3rd-party plugins custom-stored "
-"data will not be auto-converted, but manual editing will still work. That is"
-" why it is advisable to create a test-copy of your site before making any "
-"further changes. In case you encounter a problem, please give us a chance to"
-" improve %s, send the login information to the test-copy of your site to %s "
-"along with a detailed step-by-step description of what is not working, and "
-"continue using your main site with %s meanwhile. It would also help, if you "
-"share a success story as well, either on %sthe forum%s, or via the same "
-"e-mail as mentioned above. Thank you very much for trying %s."
+"step available under \"%s\" option if you ever decide to go back to %s. "
+"Even with this additional conversion step, the 3rd-party plugins custom-"
+"stored data will not be auto-converted, but manual editing will still work. "
+"That is why it is advisable to create a test-copy of your site before "
+"making any further changes. In case you encounter a problem, please give us "
+"a chance to improve %s, send the login information to the test-copy of your "
+"site to %s along with a detailed step-by-step description of what is not "
+"working, and continue using your main site with %s meanwhile. It would also "
+"help, if you share a success story as well, either on %sthe forum%s, or via "
+"the same e-mail as mentioned above. Thank you very much for trying %s."
 msgstr ""
 
 #: admin/qtx_import_export.php:101
@@ -1464,9 +1468,9 @@ msgstr ""
 #: admin/qtx_import_export.php:195
 #, php-format
 msgid ""
-"The square bracket language tag %s only will be used as opposite to dual-tag"
-" (%s and %s) %s legacy database format. All string options and standard post"
-" and page fields will be uniformly encoded like %s."
+"The square bracket language tag %s only will be used as opposite to dual-"
+"tag (%s and %s) %s legacy database format. All string options and standard "
+"post and page fields will be uniformly encoded like %s."
 msgstr ""
 
 #: admin/qtx_import_export.php:196
@@ -1527,8 +1531,8 @@ msgstr ""
 
 #: admin/qtx_languages.php:68
 msgid ""
-"If you do not wish to customize this option, then reset it to the default by"
-" emptying its value."
+"If you do not wish to customize this option, then reset it to the default "
+"by emptying its value."
 msgstr ""
 
 #: admin/qtx_languages.php:116
@@ -1567,8 +1571,8 @@ msgstr ""
 
 #: qtranslate_core.php:1469
 msgid ""
-"For the sake of viewer convenience, the content is shown below in one of the"
-" available alternative languages."
+"For the sake of viewer convenience, the content is shown below in one of "
+"the available alternative languages."
 msgstr ""
 
 #: qtranslate_core.php:1472
@@ -1728,8 +1732,8 @@ msgstr ""
 #: qtranslate_services.php:532
 #, php-format
 msgid ""
-"To translate a post, please go to the <a href=\"%s\">edit posts "
-"overview</a>."
+"To translate a post, please go to the <a href=\"%s\">edit posts overview</"
+"a>."
 msgstr ""
 
 #: qtranslate_services.php:548
@@ -1935,8 +1939,8 @@ msgstr ""
 
 #: qtranslate_widget.php:106
 msgid ""
-"CSS only. List of items with CSS classes defined, but with no image or text."
-" An appropriate custom CSS is expected to be provided in this case."
+"CSS only. List of items with CSS classes defined, but with no image or "
+"text. An appropriate custom CSS is expected to be provided in this case."
 msgstr ""
 
 #: qtranslate_widget.php:107
@@ -1946,8 +1950,8 @@ msgstr ""
 #: qtranslate_widget.php:108
 #, php-format
 msgid ""
-"Other common CSS block for flag classes \"%s\" is loaded in the head of HTML"
-" and can be controlled with option \"%s\"."
+"Other common CSS block for flag classes \"%s\" is loaded in the head of "
+"HTML and can be controlled with option \"%s\"."
 msgstr ""
 
 #: qtranslate_widget.php:108
