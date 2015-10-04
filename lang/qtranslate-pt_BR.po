@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: qTranslate-X 3.4.5\n"
+"Project-Id-Version: qTranslate-X 3.4.5.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-14 21:36-0600\n"
+"POT-Creation-Date: 2015-10-04 11:51-0600\n"
 "PO-Revision-Date: 2015-02-04 14:43-0000\n"
 "Language-Team: qTranslate Team Translators\n"
 "MIME-Version: 1.0\n"
@@ -23,9 +23,10 @@ msgstr ""
 
 #: admin/qtx_activation_hook.php:90 admin/qtx_activation_hook.php:104
 #: admin/qtx_activation_hook.php:107 admin/qtx_activation_hook.php:641
-#: admin/qtx_activation_hook.php:700 admin/qtx_configuration.php:202
-#: admin/qtx_configuration.php:514 admin/qtx_configuration.php:524
-#: admin/qtx_configuration.php:526 admin/qtx_configuration.php:528
+#: admin/qtx_activation_hook.php:644 admin/qtx_activation_hook.php:702
+#: admin/qtx_configuration.php:186 admin/qtx_configuration.php:498
+#: admin/qtx_configuration.php:509 admin/qtx_configuration.php:511
+#: admin/qtx_configuration.php:513
 #, fuzzy
 msgid "Configuration Files"
 msgstr "Configuração do Serviço"
@@ -79,191 +80,196 @@ msgid "Option \"%s\" for plugin %s has been auto-adjusted after recent changes i
 msgstr ""
 
 #: admin/qtx_activation_hook.php:644
+#, php-format
+msgid "Review Option \"%s\""
+msgstr ""
+
+#: admin/qtx_activation_hook.php:646
 msgid "Read Integration Guide"
 msgstr ""
 
-#: admin/qtx_activation_hook.php:645 admin/qtx_activation_hook.php:659
-#: admin/qtx_activation_hook.php:925 admin/qtx_activation_hook.php:986
+#: admin/qtx_activation_hook.php:647 admin/qtx_activation_hook.php:661
+#: admin/qtx_activation_hook.php:927 admin/qtx_activation_hook.php:987
 msgid "I have already done it, dismiss this message."
 msgstr ""
 
-#: admin/qtx_activation_hook.php:655
+#: admin/qtx_activation_hook.php:657
 #, php-format
 msgid "Are you new to plugin %s?"
 msgstr ""
 
-#: admin/qtx_activation_hook.php:658
+#: admin/qtx_activation_hook.php:660
 msgid "Read Startup Guide"
 msgstr ""
 
-#: admin/qtx_activation_hook.php:680 admin/qtx_activation_hook.php:772
+#: admin/qtx_activation_hook.php:682 admin/qtx_activation_hook.php:774
 #: admin/qtx_import_export.php:99
 #, php-format
 msgid "It might be a good idea to review %smigration instructions%s, if you have not yet done so."
 msgstr ""
 
-#: admin/qtx_activation_hook.php:681
+#: admin/qtx_activation_hook.php:683
 #, php-format
 msgid "Activation of plugin %s deactivated plugin %s since they cannot run simultaneously."
 msgstr ""
 
-#: admin/qtx_activation_hook.php:683
+#: admin/qtx_activation_hook.php:685
 #, php-format
 msgid "The compatible settings from %s have been imported to %s. Further tuning, import, export and reset of options can be done at Settings/Languages configuration page, once %s is running.%sContinue%s"
 msgstr ""
 
-#: admin/qtx_activation_hook.php:685
+#: admin/qtx_activation_hook.php:687
 #, php-format
 msgid "You may import/export compatible settings from %s to %s on Settings/Languages configuration page, once %s is running.%sContinue%s"
 msgstr ""
 
-#: admin/qtx_activation_hook.php:698 admin/qtx_configuration.php:453
-#: admin/qtx_configuration.php:457 admin/qtx_user_options.php:20
+#: admin/qtx_activation_hook.php:700 admin/qtx_configuration.php:437
+#: admin/qtx_configuration.php:441 admin/qtx_user_options.php:20
 msgid "Highlight Style"
 msgstr ""
 
-#: admin/qtx_activation_hook.php:698 admin/qtx_configuration.php:422
-#: admin/qtx_configuration.php:425
+#: admin/qtx_activation_hook.php:700 admin/qtx_configuration.php:406
+#: admin/qtx_configuration.php:409
 msgid "LSB Style"
 msgstr ""
 
-#: admin/qtx_activation_hook.php:770
+#: admin/qtx_activation_hook.php:772
 #, php-format
 msgid "%sError:%s plugin %s cannot run concurrently with plugin %s. You may import and export compatible settings between %s and %s on Settings/<a href=\"%s\">Languages</a> configuration page. Then you have to deactivate one of the plugins to continue."
 msgstr ""
 
-#: admin/qtx_activation_hook.php:775 admin/qtx_activation_hook.php:777
+#: admin/qtx_activation_hook.php:777 admin/qtx_activation_hook.php:779
 #, php-format
 msgid "Deactivate %s"
 msgstr ""
 
-#: admin/qtx_activation_hook.php:813
+#: admin/qtx_activation_hook.php:815
 #, php-format
 msgid "Plugin %s may be integrated with multilingual plugin %s with a help of plugin %s."
 msgstr ""
 
-#: admin/qtx_activation_hook.php:815
+#: admin/qtx_activation_hook.php:817
 msgid "Please, press an appropriate button below."
-msgstr ""
-
-#: admin/qtx_activation_hook.php:819
-#, php-format
-msgid "Activate plugin %s"
 msgstr ""
 
 #: admin/qtx_activation_hook.php:821
 #, php-format
-msgid "Install plugin %s"
+msgid "Activate plugin %s"
 msgstr ""
 
 #: admin/qtx_activation_hook.php:823
+#, php-format
+msgid "Install plugin %s"
+msgstr ""
+
+#: admin/qtx_activation_hook.php:825
 msgid "I am aware of that, dismiss this message."
 msgstr ""
 
-#: admin/qtx_activation_hook.php:891 admin/qtx_activation_hook.php:894
-#: admin/qtx_activation_hook.php:920
+#: admin/qtx_activation_hook.php:893 admin/qtx_activation_hook.php:896
+#: admin/qtx_activation_hook.php:922
 #, php-format
 msgid "Thank you for using %s plugin!"
 msgstr ""
 
-#: admin/qtx_activation_hook.php:897
-msgid "Our team would greatly appreciate any feedback:"
-msgstr ""
-
 #: admin/qtx_activation_hook.php:899
-#, php-format
-msgid "%sUse Support Forum%s to ask a question."
+msgid "Our team would greatly appreciate any feedback:"
 msgstr ""
 
 #: admin/qtx_activation_hook.php:901
 #, php-format
-msgid "%sVisit%s %s website."
+msgid "%sUse Support Forum%s to ask a question."
 msgstr ""
 
 #: admin/qtx_activation_hook.php:903
 #, php-format
-msgid "%sShare a new idea%s with our community."
+msgid "%sVisit%s %s website."
 msgstr ""
 
 #: admin/qtx_activation_hook.php:905
 #, php-format
+msgid "%sShare a new idea%s with our community."
+msgstr ""
+
+#: admin/qtx_activation_hook.php:907
+#, php-format
 msgid "%sReview the plugin%s at WordPress site."
 msgstr ""
 
-#: admin/qtx_activation_hook.php:908
+#: admin/qtx_activation_hook.php:910
 msgid "Thank me again in a few months!"
-msgstr ""
-
-#: admin/qtx_activation_hook.php:922
-#, php-format
-msgid "Please, help us to make a decision on \"%s\" feature, press the button below."
-msgstr ""
-
-#: admin/qtx_activation_hook.php:922 admin/qtx_activation_hook.php:924
-#: qtranslate_services.php:772
-msgid "Translation Service"
 msgstr ""
 
 #: admin/qtx_activation_hook.php:924
 #, php-format
+msgid "Please, help us to make a decision on \"%s\" feature, press the button below."
+msgstr ""
+
+#: admin/qtx_activation_hook.php:924 admin/qtx_activation_hook.php:926
+#: qtranslate_services.php:772
+msgid "Translation Service"
+msgstr ""
+
+#: admin/qtx_activation_hook.php:926
+#, php-format
 msgid "Survey on \"%s\" feature"
 msgstr ""
 
-#: admin/qtx_activation_hook.php:978
+#: admin/qtx_activation_hook.php:979
 #, php-format
 msgid "The latest version of plugin %s has a number of new options, for example, %s, which may change the look of some pages. Please, review the help text of new options on %sconfiguration page%s."
 msgstr ""
 
-#: admin/qtx_activation_hook.php:983
+#: admin/qtx_activation_hook.php:984
 #, php-format
 msgid "It is recommended to review %sRelease Notes%s for this new version of %s before making any further changes."
 msgstr ""
 
-#: admin/qtx_admin.php:323
+#: admin/qtx_admin.php:330
 #, php-format
 msgid "Could not find script file \"%s\" for handle \"%s\"."
 msgstr ""
 
-#: admin/qtx_admin.php:573
+#: admin/qtx_admin.php:582
 msgid "Language Management"
 msgstr "Gestão de Idiomas"
 
-#: admin/qtx_admin.php:573 admin/qtx_admin_options.php:112
+#: admin/qtx_admin.php:582 admin/qtx_admin_options.php:112
 #: admin/qtx_admin_utils.php:519
 msgid "Languages"
 msgstr "Idiomas"
 
-#: admin/qtx_admin.php:581
+#: admin/qtx_admin.php:590
 msgid "Language Menu"
 msgstr ""
 
-#: admin/qtx_admin.php:633
+#: admin/qtx_admin.php:642
 msgid "Help"
 msgstr ""
 
-#: admin/qtx_admin.php:636
+#: admin/qtx_admin.php:645
 msgid "Menu item added is replaced with a drop-down menu of available languages, when menu is rendered."
 msgstr ""
 
-#: admin/qtx_admin.php:638
+#: admin/qtx_admin.php:647
 #, php-format
 msgid "The rendered menu items have CSS classes %s and %s (\"%s\" is a language code), which can be defined in theme style, if desired. The label of language menu can also be customized via field \"%s\" in the menu configuration."
 msgstr ""
 
-#: admin/qtx_admin.php:640
+#: admin/qtx_admin.php:649
 #, php-format
 msgid "The field \"%s\" of inserted menu item allows additional configuration described in %sFAQ%s."
 msgstr ""
 
-#: admin/qtx_admin.php:645
+#: admin/qtx_admin.php:654
 msgid "Add to Menu"
 msgstr ""
 
-#: admin/qtx_admin.php:654
+#: admin/qtx_admin.php:663
 msgid "Language Switcher"
 msgstr ""
 
-#: admin/qtx_admin.php:698
+#: admin/qtx_admin.php:701
 msgid "Settings"
 msgstr "Configurações"
 
@@ -281,11 +287,11 @@ msgstr "Definições Avançadas"
 msgid "Integration"
 msgstr ""
 
-#: admin/qtx_admin_options.php:111 admin/qtx_configuration.php:300
+#: admin/qtx_admin_options.php:111 admin/qtx_configuration.php:284
 msgid "Export"
 msgstr ""
 
-#: admin/qtx_admin_options.php:111 admin/qtx_configuration.php:300
+#: admin/qtx_admin_options.php:111 admin/qtx_configuration.php:284
 msgid "Import"
 msgstr ""
 
@@ -306,7 +312,7 @@ msgid "The Language must have a name!"
 msgstr ""
 
 #: admin/qtx_admin_options_update.php:46
-#: admin/qtx_admin_options_update.php:158
+#: admin/qtx_admin_options_update.php:155
 msgid "Language Code has to be 2 characters long!"
 msgstr "Código do Idioma tem de ter 2 caracteres!"
 
@@ -314,94 +320,94 @@ msgstr "Código do Idioma tem de ter 2 caracteres!"
 msgid "There is already a language with the same Language Code!"
 msgstr "Já existe um idioma com o mesmo Código!"
 
-#: admin/qtx_admin_options_update.php:119
+#: admin/qtx_admin_options_update.php:116
 #, php-format
 msgid "%d database entries have been converted."
 msgstr ""
 
-#: admin/qtx_admin_options_update.php:121
+#: admin/qtx_admin_options_update.php:118
 msgid "No database entry has been affected while processing the conversion request."
 msgstr ""
 
-#: admin/qtx_admin_options_update.php:145
+#: admin/qtx_admin_options_update.php:142
 #, php-format
 msgid "%d pages have been processed to set the default language."
 msgstr ""
 
-#: admin/qtx_admin_options_update.php:146
+#: admin/qtx_admin_options_update.php:143
 msgid "No initially untranslated pages found to set the default language"
 msgstr ""
 
-#: admin/qtx_admin_options_update.php:148
+#: admin/qtx_admin_options_update.php:145
 #, php-format
 msgid "%d posts have been processed to set the default language."
 msgstr ""
 
-#: admin/qtx_admin_options_update.php:149
+#: admin/qtx_admin_options_update.php:146
 msgid "No initially untranslated posts found to set the default language."
 msgstr ""
 
-#: admin/qtx_admin_options_update.php:151
+#: admin/qtx_admin_options_update.php:148
 #, php-format
 msgid "Post types other than \"post\" or \"page\", as well as unpublished entries, will have to be adjusted manually as needed, since there is no common way to automate setting the default language otherwise. It can be done with a custom script though. You may request a %spaid support%s for this."
 msgstr ""
 
-#: admin/qtx_admin_options_update.php:187
+#: admin/qtx_admin_options_update.php:184
 msgid "Language is already enabled or invalid!"
 msgstr ""
 
-#: admin/qtx_admin_options_update.php:194
+#: admin/qtx_admin_options_update.php:191
 msgid "Cannot disable Default Language!"
 msgstr "Não pode desativar o Idioma Principal!"
 
-#: admin/qtx_admin_options_update.php:197
-#: admin/qtx_admin_options_update.php:206
-#: admin/qtx_admin_options_update.php:224
+#: admin/qtx_admin_options_update.php:194
+#: admin/qtx_admin_options_update.php:203
+#: admin/qtx_admin_options_update.php:221
 msgid "No such language!"
 msgstr "Idioma não existe!"
 
-#: admin/qtx_admin_options_update.php:200
+#: admin/qtx_admin_options_update.php:197
 msgid "Language is already disabled!"
 msgstr "Esse Idioma já se encontra desativado!"
 
-#: admin/qtx_admin_options_update.php:210
+#: admin/qtx_admin_options_update.php:207
 msgid "Language is already first!"
 msgstr "Idioma já é o primeiro!"
 
-#: admin/qtx_admin_options_update.php:216
-#: admin/qtx_admin_options_update.php:234
+#: admin/qtx_admin_options_update.php:213
+#: admin/qtx_admin_options_update.php:231
 msgid "New order saved."
 msgstr "Nova ordem salva."
 
-#: admin/qtx_admin_options_update.php:228
+#: admin/qtx_admin_options_update.php:225
 msgid "Language is already last!"
 msgstr "Idioma já é o último!"
 
-#: admin/qtx_admin_options_update.php:247
+#: admin/qtx_admin_options_update.php:244
 msgid "Options saved."
 msgstr "Opções salvas."
 
-#: admin/qtx_admin_options_update.php:253
+#: admin/qtx_admin_options_update.php:250
 #, php-format
 msgid "Could not write to \"%s\", Gettext Databases could not be downloaded!"
 msgstr ""
 
-#: admin/qtx_admin_options_update.php:268
+#: admin/qtx_admin_options_update.php:265
 msgid "Admin notices have been reset. You will see all applicable notices on admin pages and may dismiss them again."
 msgstr ""
 
-#: admin/qtx_admin_options_update.php:695
+#: admin/qtx_admin_options_update.php:692
 #, php-format
 msgid "Cannot parse JSON code in the field \"%s\"."
 msgstr ""
 
-#: admin/qtx_admin_options_update.php:695 admin/qtx_configuration.php:202
-#: admin/qtx_configuration.php:523
+#: admin/qtx_admin_options_update.php:692 admin/qtx_configuration.php:186
+#: admin/qtx_configuration.php:502 admin/qtx_configuration.php:508
 #, fuzzy
 msgid "Custom Configuration"
 msgstr "Configuração do Serviço"
 
-#: admin/qtx_admin_options_update.php:754
+#: admin/qtx_admin_options_update.php:751
 msgid "Gettext databases updated."
 msgstr ""
 
@@ -442,7 +448,7 @@ msgid "This is a set of \"%s\" from %s. Click any blank space between the button
 msgstr ""
 
 #: admin/qtx_admin_utils.php:796 qtranslate_frontend.php:209
-#: qtranslate_widget.php:48
+#: qtranslate_widget.php:50
 msgid "Language"
 msgstr "Idioma"
 
@@ -459,7 +465,7 @@ msgid "The language code is used in language tags and in URLs. It is case sensit
 msgstr ""
 
 #: admin/qtx_configuration.php:30 admin/qtx_configuration.php:53
-#: admin/qtx_configuration.php:602
+#: admin/qtx_configuration.php:587
 msgid "Flag"
 msgstr "Bandeira"
 
@@ -475,7 +481,7 @@ msgstr "Escolha a bandeira correspondente ao idioma. (Exemplo: pt.png)"
 msgid "(in native alphabet)"
 msgstr ""
 
-#: admin/qtx_configuration.php:71 admin/qtx_configuration.php:603
+#: admin/qtx_configuration.php:71 admin/qtx_configuration.php:588
 msgid "Name"
 msgstr "Nome"
 
@@ -541,592 +547,593 @@ msgstr ""
 msgid "Switching language to %1$s... If the Dashboard isn't loading, use this <a href=\"%2$s\" title=\"Dashboard\">link</a>."
 msgstr ""
 
-#: admin/qtx_configuration.php:163
+#: admin/qtx_configuration.php:148
 msgid "Edit Language"
 msgstr "Editar Idioma "
 
-#: admin/qtx_configuration.php:166
+#: admin/qtx_configuration.php:154
 msgid "Save Changes &raquo;"
 msgstr "Salvar Alterações &raquo;"
 
-#: admin/qtx_configuration.php:168 admin/qtx_configuration.php:199
-#: admin/qtx_configuration.php:206
+#: admin/qtx_configuration.php:156 admin/qtx_configuration.php:183
+#: admin/qtx_configuration.php:190
 msgid "back to configuration page"
 msgstr ""
 
-#: admin/qtx_configuration.php:176
+#: admin/qtx_configuration.php:160
 msgid "Language Management (qTranslate Configuration)"
 msgstr "Gestão de Idiomas (Configuração do qTranslate)"
 
-#: admin/qtx_configuration.php:177
+#: admin/qtx_configuration.php:161
 #, php-format
 msgid "For help on how to configure qTranslate correctly, take a look at the <a href=\"%1$s\">qTranslate FAQ</a> and the <a href=\"%2$s\">Support Forum</a>."
 msgstr "Para obter ajuda sobre como configurar o qTranslate corretamente, consulte o <a href=\"%1$s\">qTranslate FAQ</a> e também <a href=\"%2$s\">Forum de Suporte</a>."
 
-#: admin/qtx_configuration.php:182
+#: admin/qtx_configuration.php:166
 #, php-format
 msgid "Plugin development is supported through your %sdonations to the development team%s."
 msgstr ""
 
-#: admin/qtx_configuration.php:200 admin/qtx_configuration.php:528
+#: admin/qtx_configuration.php:184 admin/qtx_configuration.php:502
+#: admin/qtx_configuration.php:513
 msgid "Configuration Inspector"
 msgstr ""
 
-#: admin/qtx_configuration.php:202
+#: admin/qtx_configuration.php:186
 #, php-format
 msgid "Review a combined JSON-encoded configuration as loaded from options %s and %s, as well as from the theme and other plugins via filters %s and %s."
 msgstr ""
 
-#: admin/qtx_configuration.php:203 admin/qtx_configuration.php:518
-#: admin/qtx_configuration.php:527
+#: admin/qtx_configuration.php:187 admin/qtx_configuration.php:503
+#: admin/qtx_configuration.php:512
 #, php-format
 msgid "Please, read %sIntegration Guide%s for more information."
 msgstr ""
 
-#: admin/qtx_configuration.php:205
+#: admin/qtx_configuration.php:189
 #, php-format
 msgid "Note to developers: ensure that front-end filter %s is also active on admin side, otherwise the changes it makes will not show up here. Having this filter active on admin side does not affect admin pages functionality, except this field."
 msgstr ""
 
-#: admin/qtx_configuration.php:210
+#: admin/qtx_configuration.php:194
 #, php-format
 msgid "Click to switch to %s"
 msgstr ""
 
-#: admin/qtx_configuration.php:224 admin/qtx_configuration.php:307
+#: admin/qtx_configuration.php:208 admin/qtx_configuration.php:291
 msgid "Default Language / Order"
 msgstr "Idioma Principal / Ordem"
 
-#: admin/qtx_configuration.php:225
+#: admin/qtx_configuration.php:209
 msgid "Every multilingual field is expected to have a meaningful content in the \"Default Language\". Usually, it is the language of your site before it became multilingual."
 msgstr ""
 
-#: admin/qtx_configuration.php:226
+#: admin/qtx_configuration.php:210
 msgid "Order of languages defines in which order they are listed, when languages need to be listed, otherwise it is not important."
 msgstr ""
 
-#: admin/qtx_configuration.php:229
+#: admin/qtx_configuration.php:213
 msgid "Default Language"
 msgstr ""
 
-#: admin/qtx_configuration.php:243 admin/qtx_configuration.php:644
-#: admin/qtx_configuration.php:662
+#: admin/qtx_configuration.php:227 admin/qtx_configuration.php:629
+#: admin/qtx_configuration.php:647
 msgid "Disable"
 msgstr "Desativar"
 
-#: admin/qtx_configuration.php:243 admin/qtx_configuration.php:605
-#: admin/qtx_configuration.php:645 admin/qtx_configuration.php:663
+#: admin/qtx_configuration.php:227 admin/qtx_configuration.php:590
+#: admin/qtx_configuration.php:630 admin/qtx_configuration.php:648
 msgid "Edit"
 msgstr "Editar"
 
-#: admin/qtx_configuration.php:248
+#: admin/qtx_configuration.php:232
 #, php-format
 msgid "Choose the default language of your blog. This is the language which will be shown on %s. You can also change the order the languages by clicking on the arrows above."
 msgstr "Escolha o idioma predefinido do seu blog. Este idioma será mostrado em %s. Pode mudar a ordem dos idiomas clicando nas setas acima."
 
-#: admin/qtx_configuration.php:253 admin/qtx_configuration.php:255
-#: admin/qtx_configuration.php:365
+#: admin/qtx_configuration.php:237 admin/qtx_configuration.php:239
+#: admin/qtx_configuration.php:349
 msgid "URL Modification Mode"
 msgstr ""
 
-#: admin/qtx_configuration.php:256
+#: admin/qtx_configuration.php:240
 msgid "Most SEO unfriendly, not recommended."
 msgstr ""
 
-#: admin/qtx_configuration.php:256
+#: admin/qtx_configuration.php:240
 msgid "Use Query Mode (?lang=en)"
 msgstr ""
 
-#: admin/qtx_configuration.php:263
+#: admin/qtx_configuration.php:247
 msgid "SEO friendly."
 msgstr ""
 
-#: admin/qtx_configuration.php:263
+#: admin/qtx_configuration.php:247
 msgid "Use Pre-Path Mode (Default, puts /en/ in front of URL)"
 msgstr ""
 
-#: admin/qtx_configuration.php:264
+#: admin/qtx_configuration.php:248
 msgid "Use Pre-Domain Mode (uses http://en.yoursite.com)"
 msgstr ""
 
-#: admin/qtx_configuration.php:264
+#: admin/qtx_configuration.php:248
 msgid "You will need to configure DNS sub-domains on your site."
 msgstr ""
 
-#: admin/qtx_configuration.php:269
+#: admin/qtx_configuration.php:253
 msgid "Hide URL language information for default language."
 msgstr ""
 
-#: admin/qtx_configuration.php:270
+#: admin/qtx_configuration.php:254
 msgid "This is only applicable to Pre-Path and Pre-Domain mode."
 msgstr ""
 
-#: admin/qtx_configuration.php:275
+#: admin/qtx_configuration.php:259
 msgid "Use Per-Domain mode: specify separate user-defined domain for each language."
 msgstr ""
 
-#: admin/qtx_configuration.php:287
+#: admin/qtx_configuration.php:271
 msgid "Domain for"
 msgstr ""
 
-#: admin/qtx_configuration.php:292
+#: admin/qtx_configuration.php:276
 #, fuzzy
 msgid "Untranslated Content"
 msgstr "Esconder Conteúdo Não Traduzido"
 
-#: admin/qtx_configuration.php:294
+#: admin/qtx_configuration.php:278
 #, php-format
 msgid "The choices below define how to handle untranslated content at front-end of the site. A content of a page or a post is considered untranslated if the main text (%s) is empty for a given language, regardless of other fields like title, excerpt, etc. All three options are independent of each other."
 msgstr ""
 
-#: admin/qtx_configuration.php:296
+#: admin/qtx_configuration.php:280
 msgid "Hide Content which is not available for the selected language."
 msgstr "Esconder Conteúdo que não esteja disponível para os idiomas selecionados."
 
-#: admin/qtx_configuration.php:298
+#: admin/qtx_configuration.php:282
 msgid "When checked, posts will be hidden if the content is not available for the selected language. If unchecked, a message will appear showing all the languages the content is available in."
 msgstr "Quando selecionado, os posts sem conteúdo para o idioma serão ocultados. Se não selecionado, aparecerá uma mensagem mostrando os idiomas em que o artigo está disponível."
 
-#: admin/qtx_configuration.php:299
+#: admin/qtx_configuration.php:283
 msgid "The message about available languages for the content of a post or a page may also appear if a single post display with an untranslated content if viewed directly."
 msgstr ""
 
-#: admin/qtx_configuration.php:300 admin/qtx_import_export.php:101
+#: admin/qtx_configuration.php:284 admin/qtx_import_export.php:101
 #: admin/qtx_import_export.php:109 admin/qtx_import_export.php:188
 msgid "Convert Database"
 msgstr ""
 
-#: admin/qtx_configuration.php:300
+#: admin/qtx_configuration.php:284
 #, php-format
 msgid "This function will not work correctly if you installed %s on a blog with existing entries. In this case you will need to take a look at option \"%s\" under \"%s\" section."
 msgstr "Esta função não funcionará corretamente se instalou o %s num blog com conteúdo. Neste caso veja \"%s\" em \"%s\"."
 
-#: admin/qtx_configuration.php:302
+#: admin/qtx_configuration.php:286
 msgid "Show displayed language prefix when content is not available for the selected language."
 msgstr ""
 
-#: admin/qtx_configuration.php:304
+#: admin/qtx_configuration.php:288
 msgid "This is relevant to all fields other than the main content of posts and pages. Such untranslated fields are always shown in an alternative available language, and will be prefixed with the language name in parentheses, if this option is on."
 msgstr ""
 
-#: admin/qtx_configuration.php:306
+#: admin/qtx_configuration.php:290
 #, fuzzy
 msgid "Show content in an alternative language when translation is not available for the selected language."
 msgstr "Esconder Conteúdo que não esteja disponível para os idiomas selecionados."
 
-#: admin/qtx_configuration.php:307
+#: admin/qtx_configuration.php:291
 #, php-format
 msgid "When a page or a post with an untranslated content is viewed, a message with a list of other available languages is displayed, in which languages are ordered as defined by option \"%s\". If this option is on, then the content in default language will also be shown, instead of the expected language, for the sake of user convenience. If default language is not available for the content, then the content in the first available language is shown."
 msgstr ""
 
-#: admin/qtx_configuration.php:311
+#: admin/qtx_configuration.php:295
 msgid "Detect Browser Language"
 msgstr "Detectar Idioma do Navegador"
 
-#: admin/qtx_configuration.php:313
+#: admin/qtx_configuration.php:297
 msgid "Detect the language of the browser and redirect accordingly."
 msgstr "Detecta o idioma do navegador e redireciona em conformidade."
 
-#: admin/qtx_configuration.php:314
+#: admin/qtx_configuration.php:298
 msgid "When the frontpage is visited via bookmark/external link/type-in, the visitor will be forwarded to the correct URL for the language specified by his browser."
 msgstr "Quando a página principal é visitada através de favorito/ligação externa/teclado, o visitante será dirigido para o URL correto conforme o idioma do seu navegador.."
 
-#: admin/qtx_configuration.php:322
+#: admin/qtx_configuration.php:306
 msgid "Post Types"
 msgstr ""
 
-#: admin/qtx_configuration.php:324
+#: admin/qtx_configuration.php:308
 msgid "Post types enabled for translation:"
 msgstr ""
 
-#: admin/qtx_configuration.php:335
+#: admin/qtx_configuration.php:319
 msgid "If a post type unchecked, no fields in a post of that type are treated as translatable on editing pages. However, the manual raw multilingual entries with language tags may still get translated in a usual way at front-end."
 msgstr ""
 
-#: admin/qtx_configuration.php:339
+#: admin/qtx_configuration.php:323
 msgid "Flag Image Path"
 msgstr ""
 
-#: admin/qtx_configuration.php:342
+#: admin/qtx_configuration.php:326
 #, php-format
 msgid "Path to the flag images under wp-content, with trailing slash. (Default: %s, clear the value above to reset it to the default)"
 msgstr ""
 
-#: admin/qtx_configuration.php:346
+#: admin/qtx_configuration.php:330
 msgid "Ignore Links"
 msgstr ""
 
-#: admin/qtx_configuration.php:349
+#: admin/qtx_configuration.php:333
 #, php-format
 msgid "Don't convert links to files of the given file types. (Always included: %s)"
 msgstr ""
 
-#: admin/qtx_configuration.php:353 admin/qtx_languages.php:68
-#: qtranslate_widget.php:108
+#: admin/qtx_configuration.php:337 admin/qtx_languages.php:68
+#: qtranslate_widget.php:111
 msgid "Head inline CSS"
 msgstr ""
 
-#: admin/qtx_configuration.php:355
+#: admin/qtx_configuration.php:339
 msgid "CSS code added by plugin in the head of front-end pages:"
 msgstr ""
 
-#: admin/qtx_configuration.php:358 qtranslate_widget.php:108
+#: admin/qtx_configuration.php:342 qtranslate_widget.php:111
 msgid "To disable this inline CSS, clear the check box."
 msgstr ""
 
-#: admin/qtx_configuration.php:358 admin/qtx_configuration.php:484
-#: admin/qtx_configuration.php:519 qtranslate_widget.php:108
+#: admin/qtx_configuration.php:342 admin/qtx_configuration.php:468
+#: admin/qtx_configuration.php:504 qtranslate_widget.php:111
 msgid "To reset to default, clear the text."
 msgstr ""
 
-#: admin/qtx_configuration.php:362
+#: admin/qtx_configuration.php:346
 #, fuzzy
 msgid "Cookie Settings"
 msgstr "Configurações"
 
-#: admin/qtx_configuration.php:364
+#: admin/qtx_configuration.php:348
 #, php-format
 msgid "Disable language client cookie \"%s\" (not recommended)."
 msgstr ""
 
-#: admin/qtx_configuration.php:365
+#: admin/qtx_configuration.php:349
 #, php-format
 msgid "Language cookie is auto-disabled for \"%s\" \"Pre-Domain\" and \"Per-Domain\", as language is always unambiguously defined by a url in those modes."
 msgstr ""
 
-#: admin/qtx_configuration.php:365
+#: admin/qtx_configuration.php:349
 #, php-format
 msgid "Otherwise, use this option with a caution, for simple enough sites only. If checked, the user choice of browsing language will not be saved between sessions and some AJAX calls may deliver unexpected language, as well as some undesired language switching during browsing may occur under certain themes (%sRead More%s)."
 msgstr ""
 
-#: admin/qtx_configuration.php:367
+#: admin/qtx_configuration.php:351
 #, php-format
 msgid "Make %s cookies available only through HTTPS connections."
 msgstr ""
 
-#: admin/qtx_configuration.php:368
+#: admin/qtx_configuration.php:352
 msgid "Don't check this if you don't know what you're doing!"
 msgstr ""
 
-#: admin/qtx_configuration.php:372
+#: admin/qtx_configuration.php:356
 msgid "Update Gettext Databases"
 msgstr ""
 
-#: admin/qtx_configuration.php:374
+#: admin/qtx_configuration.php:358
 msgid "Automatically check for .mo-Database Updates of installed languages."
 msgstr ""
 
-#: admin/qtx_configuration.php:376
+#: admin/qtx_configuration.php:360
 msgid "Update Gettext databases now."
 msgstr ""
 
-#: admin/qtx_configuration.php:377
+#: admin/qtx_configuration.php:361
 msgid "qTranslate will query the Wordpress Localisation Repository every week and download the latest Gettext Databases (.mo Files)."
 msgstr ""
 
-#: admin/qtx_configuration.php:381
+#: admin/qtx_configuration.php:365
 msgid "Date / Time Conversion"
 msgstr ""
 
-#: admin/qtx_configuration.php:383
+#: admin/qtx_configuration.php:367
 msgid "Use emulated date function."
 msgstr ""
 
-#: admin/qtx_configuration.php:384
+#: admin/qtx_configuration.php:368
 msgid "Use emulated date function and replace formats with the predefined formats for each language."
 msgstr ""
 
-#: admin/qtx_configuration.php:385
+#: admin/qtx_configuration.php:369
 msgid "Use strftime instead of date."
 msgstr ""
 
-#: admin/qtx_configuration.php:386
+#: admin/qtx_configuration.php:370
 msgid "Use strftime instead of date and replace formats with the predefined formats for each language."
 msgstr ""
 
-#: admin/qtx_configuration.php:387
+#: admin/qtx_configuration.php:371
 msgid "Depending on the mode selected, additional customizations of the theme may be needed."
 msgstr ""
 
-#: admin/qtx_configuration.php:396
+#: admin/qtx_configuration.php:380
 msgid "Translation of options"
 msgstr ""
 
-#: admin/qtx_configuration.php:398
+#: admin/qtx_configuration.php:382
 msgid "Filter all WordPress options for translation at front-end. It may hurt performance of the site, but ensures that all options are translated."
 msgstr ""
 
-#: admin/qtx_configuration.php:398
+#: admin/qtx_configuration.php:382
 msgid "Starting from version 3.2.5, only options with multilingual content get filtered, which should help on performance issues."
 msgstr ""
 
-#: admin/qtx_configuration.php:400
+#: admin/qtx_configuration.php:384
 msgid "Translate only options listed below (for experts only):"
 msgstr ""
 
-#: admin/qtx_configuration.php:403
+#: admin/qtx_configuration.php:387
 #, php-format
 msgid "By default, all options are filtered to be translated at front-end for the sake of simplicity of configuration. However, for a developed site, this may cause a considerable performance degradation. Normally, there are very few options, which actually need a translation. You may simply list them above to minimize the performance impact, while still getting translations needed. Options names must match the field \"%s\" of table \"%s\" of WordPress database. A minimum common set of option, normally needed a translation, is already entered in the list above as a default example. Option names in the list may contain wildcard with symbol \"%s\"."
 msgstr ""
 
-#: admin/qtx_configuration.php:407
+#: admin/qtx_configuration.php:391
 msgid "Editor Mode"
 msgstr ""
 
-#: admin/qtx_configuration.php:409
+#: admin/qtx_configuration.php:393
 msgid "Use Language Switching Buttons (LSB)."
 msgstr ""
 
-#: admin/qtx_configuration.php:410
+#: admin/qtx_configuration.php:394
 msgid "Pages with translatable fields have Language Switching Buttons, which control what language is being edited, while admin language stays the same."
 msgstr ""
 
-#: admin/qtx_configuration.php:410
+#: admin/qtx_configuration.php:394
 msgid "This is the default mode."
 msgstr ""
 
-#: admin/qtx_configuration.php:411
+#: admin/qtx_configuration.php:395
 msgid "Do not use Language Switching Buttons to edit multi-language text entries."
 msgstr ""
 
-#: admin/qtx_configuration.php:411
+#: admin/qtx_configuration.php:395
 msgid "Editor Raw Mode"
 msgstr ""
 
-#: admin/qtx_configuration.php:412
+#: admin/qtx_configuration.php:396
 msgid "Some people prefer to edit the raw entries containing all languages together separated by language defining tags, as they are stored in database."
 msgstr ""
 
-#: admin/qtx_configuration.php:413
+#: admin/qtx_configuration.php:397
 #, fuzzy
 msgid "Single Language Mode."
 msgstr "Código do Idioma"
 
-#: admin/qtx_configuration.php:413
+#: admin/qtx_configuration.php:397
 #, fuzzy
 msgid "The language edited is the same as admin language."
 msgstr "Já existe um idioma com o mesmo Código!"
 
-#: admin/qtx_configuration.php:414
+#: admin/qtx_configuration.php:398
 msgid "Edit language cannot be switched without page re-loading. Try this mode, if some of the advanced translatable fields do not properly respond to the Language Switching Buttons due to incompatibility with a plugin, which severely alters the default WP behaviour. This mode is the most compatible with other themes and plugins."
 msgstr ""
 
-#: admin/qtx_configuration.php:414
+#: admin/qtx_configuration.php:398
 msgid "One may find convenient to use the default Editor Mode, while remembering not to switch edit languages on custom advanced translatable fields, where LSB do not work."
 msgstr ""
 
-#: admin/qtx_configuration.php:426
+#: admin/qtx_configuration.php:410
 msgid "Choose CSS style for how Language Switching Buttons are rendered:"
 msgstr ""
 
-#: admin/qtx_configuration.php:427
+#: admin/qtx_configuration.php:411
 #, php-format
 msgid "LSB %s-wrap classes:"
 msgstr ""
 
-#: admin/qtx_configuration.php:428
+#: admin/qtx_configuration.php:412
 msgid "Active button class:"
 msgstr ""
 
-#: admin/qtx_configuration.php:429
+#: admin/qtx_configuration.php:413
 msgid "The above is reset to an appropriate default, if the below is changed."
 msgstr ""
 
-#: admin/qtx_configuration.php:430
+#: admin/qtx_configuration.php:414
 msgid "CSS set:"
 msgstr ""
 
-#: admin/qtx_configuration.php:434 admin/qtx_configuration.php:436
-#: admin/qtx_configuration.php:478 admin/qtx_configuration.php:480
+#: admin/qtx_configuration.php:418 admin/qtx_configuration.php:420
+#: admin/qtx_configuration.php:462 admin/qtx_configuration.php:464
 msgid "Use custom CSS"
 msgstr ""
 
-#: admin/qtx_configuration.php:436
+#: admin/qtx_configuration.php:420
 #, php-format
 msgid "Choice \"%s\" disables this option and allows one to use its own custom CSS provided by other means."
 msgstr ""
 
-#: admin/qtx_configuration.php:455
+#: admin/qtx_configuration.php:439
 msgid "When there are many integrated or customized translatable fields, it may become confusing to know which field has multilingual value. The highlighting of translatable fields may come handy then:"
 msgstr ""
 
-#: admin/qtx_configuration.php:458 admin/qtx_configuration.php:460
+#: admin/qtx_configuration.php:442 admin/qtx_configuration.php:444
 msgid "Do not highlight the translatable fields."
 msgstr ""
 
-#: admin/qtx_configuration.php:462 admin/qtx_configuration.php:464
+#: admin/qtx_configuration.php:446 admin/qtx_configuration.php:448
 msgid "Show a line on the left border of translatable fields."
 msgstr ""
 
-#: admin/qtx_configuration.php:466 admin/qtx_configuration.php:468
+#: admin/qtx_configuration.php:450 admin/qtx_configuration.php:452
 msgid "Draw a border around translatable fields."
 msgstr ""
 
-#: admin/qtx_configuration.php:470 admin/qtx_configuration.php:472
+#: admin/qtx_configuration.php:454 admin/qtx_configuration.php:456
 msgid "Show a shadow on the left of translatable fields."
 msgstr ""
 
-#: admin/qtx_configuration.php:474 admin/qtx_configuration.php:476
+#: admin/qtx_configuration.php:458 admin/qtx_configuration.php:460
 msgid "Outline border around translatable fields."
 msgstr ""
 
-#: admin/qtx_configuration.php:484
+#: admin/qtx_configuration.php:468
 #, php-format
 msgid "The color in use is taken from your profile option %s, the third color."
 msgstr ""
 
-#: admin/qtx_configuration.php:510
+#: admin/qtx_configuration.php:494
 #, php-format
 msgid "If your theme or some plugins are not fully integrated with %s, suggest their authors to review the %sIntegration Guide%s. In many cases they would only need to create a simple text file in order to be fully compatible with %s. Alternatively, you may create such a file for them and for yourselves."
 msgstr ""
 
-#: admin/qtx_configuration.php:511
+#: admin/qtx_configuration.php:495
 #, php-format
 msgid "Read %sIntegration Guide%s for more information on how to customize the configuration of %s."
 msgstr ""
 
-#: admin/qtx_configuration.php:515
+#: admin/qtx_configuration.php:499
 #, php-format
 msgid "List of configuration files. Unless prefixed with \"%s\", paths are relative to %s variable: %s. Absolute paths are also acceptable."
 msgstr ""
 
-#: admin/qtx_configuration.php:517
+#: admin/qtx_configuration.php:501
 #, php-format
 msgid "The list gets auto-updated on a 3rd-party integrated plugin activation/deactivation. You may also add your own custom files for your theme or plugins. File \"%s\" is the default configuration loaded from this plugin folder. It is not recommended to modify any configuration file from other authors, but you may alter any configuration item through your own custom file appended to the end of this list."
 msgstr ""
 
-#: admin/qtx_configuration.php:524
-#, php-format
-msgid "Additional custom JSON-encoded configuration of %s for all admin pages. It is processed after all files from option \"%s\" are loaded, providing opportunity to add or to override configuration tokens as necessary."
-msgstr ""
-
-#: admin/qtx_configuration.php:526
-#, php-format
-msgid "It would make no difference, if the content of this field is stored in a file, which name is listed last in option \"%s\". Therefore, this field only provides flexibility for the sake of convenience."
-msgstr ""
-
-#: admin/qtx_configuration.php:528
+#: admin/qtx_configuration.php:502 admin/qtx_configuration.php:513
 #, php-format
 msgid "Use \"%s\" to review the resulting combined configuration from all \"%s\" and this option."
 msgstr ""
 
-#: admin/qtx_configuration.php:533
+#: admin/qtx_configuration.php:509
+#, php-format
+msgid "Additional custom JSON-encoded configuration of %s for all admin pages. It is processed after all files from option \"%s\" are loaded, providing opportunity to add or to override configuration tokens as necessary."
+msgstr ""
+
+#: admin/qtx_configuration.php:511
+#, php-format
+msgid "It would make no difference, if the content of this field is stored in a file, which name is listed last in option \"%s\". Therefore, this field only provides flexibility for the sake of convenience."
+msgstr ""
+
+#: admin/qtx_configuration.php:518
 msgid "Custom Fields"
 msgstr ""
 
-#: admin/qtx_configuration.php:535
+#: admin/qtx_configuration.php:520
 #, php-format
 msgid "Enter \"%s\" or \"%s\" attribute of text fields from your theme, which you wish to translate. This applies to post, page and media editors (%s). To lookup \"%s\" or \"%s\", right-click on the field in the post or the page editor and choose \"%s\". Look for an attribute of the field named \"%s\" or \"%s\". Enter it below, as many as you need, space- or comma-separated. After saving configuration, these fields will start responding to the language switching buttons, and you can enter different text for each language. The input fields of type %s will be parsed using %s syntax, while single line text fields will use %s syntax. If you need to override this behaviour, prepend prefix %s or %s to the name of the field to specify which syntax to use. For more information, read %sFAQ%s."
 msgstr ""
 
-#: admin/qtx_configuration.php:535
+#: admin/qtx_configuration.php:520
 msgctxt "browser option"
 msgid "Inspect Element"
 msgstr ""
 
-#: admin/qtx_configuration.php:542
+#: admin/qtx_configuration.php:527
 msgid "The value of \"id\" attribute is normally unique within one page, otherwise the first field found, having an id specified, is picked up."
 msgstr ""
 
-#: admin/qtx_configuration.php:549
+#: admin/qtx_configuration.php:534
 #, php-format
 msgid "All the fields of specified classes will respond to Language Switching Buttons. Be careful not to include a class, which would affect language-neutral fields. If you cannot uniquely identify a field needed neither by %s, nor by %s attribute, report the issue on %sSupport Forum%s"
 msgstr ""
 
-#: admin/qtx_configuration.php:553
+#: admin/qtx_configuration.php:538
 msgid "Custom Filters"
 msgstr ""
 
-#: admin/qtx_configuration.php:556
+#: admin/qtx_configuration.php:541
 #, php-format
 msgid "Names of filters (which are enabled on theme or other plugins via %s function) to add translation to. For more information, read %sFAQ%s."
 msgstr ""
 
-#: admin/qtx_configuration.php:568 admin/qtx_import_export.php:84
+#: admin/qtx_configuration.php:553 admin/qtx_import_export.php:84
 msgid "Compatibility Functions"
 msgstr ""
 
-#: admin/qtx_configuration.php:570
+#: admin/qtx_configuration.php:555
 #, php-format
 msgid "Enable function name compatibility (%s)."
 msgstr ""
 
-#: admin/qtx_configuration.php:571
+#: admin/qtx_configuration.php:556
 #, php-format
 msgid "Some plugins and themes use direct calls to the functions listed, which are defined in former %s plugin and some of its forks. Turning this flag on will enable those function to exists, which will make the dependent plugins and themes to work. WordPress policy prohibits to define functions with the same names as in other plugins, since it generates user-unfriendly fatal errors, when two conflicting plugins are activated simultaneously. Before turning this option on, you have to make sure that there are no other plugins active, which define those functions."
 msgstr ""
 
-#: admin/qtx_configuration.php:601
+#: admin/qtx_configuration.php:586
 msgctxt "Two-letter Language Code meant."
 msgid "Code"
 msgstr ""
 
-#: admin/qtx_configuration.php:604 qtranslate_services.php:365
+#: admin/qtx_configuration.php:589 qtranslate_services.php:365
 msgid "Action"
 msgstr ""
 
-#: admin/qtx_configuration.php:606
+#: admin/qtx_configuration.php:591
 msgid "Stored"
 msgstr ""
 
-#: admin/qtx_configuration.php:642
+#: admin/qtx_configuration.php:627
 #, fuzzy, php-format
 msgid "%s Flag"
 msgstr "Bandeira"
 
-#: admin/qtx_configuration.php:644
+#: admin/qtx_configuration.php:629
 msgid "Default"
 msgstr ""
 
-#: admin/qtx_configuration.php:644 admin/qtx_configuration.php:662
+#: admin/qtx_configuration.php:629 admin/qtx_configuration.php:647
 msgid "Enable"
 msgstr "Ativar"
 
-#: admin/qtx_configuration.php:646 admin/qtx_configuration.php:662
+#: admin/qtx_configuration.php:631 admin/qtx_configuration.php:647
 msgid "Delete"
 msgstr "Apagar"
 
-#: admin/qtx_configuration.php:646
+#: admin/qtx_configuration.php:631
 msgid "Pre-Defined"
 msgstr ""
 
-#: admin/qtx_configuration.php:646 admin/qtx_configuration.php:662
+#: admin/qtx_configuration.php:631 admin/qtx_configuration.php:647
 msgid "Reset"
 msgstr ""
 
-#: admin/qtx_configuration.php:657
+#: admin/qtx_configuration.php:642
 #, fuzzy
 msgid "List of Configured Languages"
 msgstr "Idioma de Origem"
 
-#: admin/qtx_configuration.php:660
+#: admin/qtx_configuration.php:645
 #, php-format
 msgid "Only enabled languages are loaded at front-end, while all %d configured languages are listed here."
 msgstr ""
 
-#: admin/qtx_configuration.php:661
+#: admin/qtx_configuration.php:646
 msgid "The table below contains both pre-defined and manually added or modified languages."
 msgstr ""
 
-#: admin/qtx_configuration.php:662
+#: admin/qtx_configuration.php:647
 #, php-format
 msgid "You may %s or %s a language, or %s manually added language, or %s previous modifications of a pre-defined language."
 msgstr ""
 
-#: admin/qtx_configuration.php:663
+#: admin/qtx_configuration.php:648
 #, php-format
 msgid "Click %s to modify language properties."
 msgstr ""
 
-#: admin/qtx_configuration.php:702
+#: admin/qtx_configuration.php:687
 msgid "Enabling a language will cause qTranslate to update the Gettext-Database for the language, which can take a while depending on your server's connection speed."
 msgstr "Ativar um idioma vai fazer com que o qTranslate atualize a base de dados 'GetText' para esse ididoma, o que pode demorar algum tempo."
 
-#: admin/qtx_configuration.php:709
+#: admin/qtx_configuration.php:694
 msgid "Add Language"
 msgstr "Adicionar Idioma"
 
-#: admin/qtx_configuration.php:714
+#: admin/qtx_configuration.php:699
 msgid "Add Language &raquo;"
 msgstr "Adicionar Idioma &raquo;"
 
@@ -1278,23 +1285,23 @@ msgstr ""
 msgid "The way the translatable fields are highlighted is configured with global option %s."
 msgstr ""
 
-#: qtranslate_core.php:1466
+#: qtranslate_core.php:1482
 msgid "For the sake of viewer convenience, the content is shown below in this site default language."
 msgstr ""
 
-#: qtranslate_core.php:1469
+#: qtranslate_core.php:1485
 msgid "For the sake of viewer convenience, the content is shown below in one of the available alternative languages."
 msgstr ""
 
-#: qtranslate_core.php:1472
+#: qtranslate_core.php:1488
 msgid "You may click one of the links to switch the site language to another available language."
 msgstr ""
 
-#: qtranslate_core.php:1474
+#: qtranslate_core.php:1490
 msgid "For the sake of viewer convenience, the content is shown below in the alternative language."
 msgstr ""
 
-#: qtranslate_core.php:1475
+#: qtranslate_core.php:1491
 msgid "You may click the link to switch the active language."
 msgstr ""
 
@@ -1579,57 +1586,71 @@ msgstr ""
 msgid "Translate"
 msgstr "Traduzir"
 
-#: qtranslate_widget.php:31
+#: qtranslate_widget.php:33
 msgid "Allows your visitors to choose a Language."
 msgstr ""
 
-#: qtranslate_widget.php:32
+#: qtranslate_widget.php:34
 msgid "qTranslate Language Chooser"
 msgstr ""
 
-#: qtranslate_widget.php:99
+#: qtranslate_widget.php:97
 msgid "Title:"
 msgstr ""
 
-#: qtranslate_widget.php:100
+#: qtranslate_widget.php:98
 msgid "Hide Title:"
 msgstr "Esconder Título:"
 
-#: qtranslate_widget.php:101
+#: qtranslate_widget.php:99
 #, fuzzy
 msgid "Hide Title Colon:"
 msgstr "Esconder Título:"
 
-#: qtranslate_widget.php:102
+#: qtranslate_widget.php:100
 msgid "Display:"
 msgstr "Mostrar:"
 
-#: qtranslate_widget.php:103
+#: qtranslate_widget.php:101
 msgid "Text only"
 msgstr "Só Texto"
 
-#: qtranslate_widget.php:104
+#: qtranslate_widget.php:102
 msgid "Image only"
 msgstr "Só Imagem"
 
-#: qtranslate_widget.php:105
+#: qtranslate_widget.php:103 qtranslate_widget.php:108
 msgid "Text and Image"
 msgstr "Texto e Imagem"
 
-#: qtranslate_widget.php:106
-msgid "CSS only. List of items with CSS classes defined, but with no image or text. An appropriate custom CSS is expected to be provided in this case."
+#: qtranslate_widget.php:104
+msgid "Dropdown Box"
+msgstr ""
+
+#: qtranslate_widget.php:105
+msgid "Custom list item format:"
 msgstr ""
 
 #: qtranslate_widget.php:107
-msgid "Dropdown Box"
+#, php-format
+msgid "Accepted format arguments:%s - Flag Image%s - Language Name%s - Language 2-Letter Code%s"
 msgstr ""
 
 #: qtranslate_widget.php:108
 #, php-format
+msgid "For example, format \"%s\" would do the same as the choice \"%s\"."
+msgstr ""
+
+#: qtranslate_widget.php:109
+msgid "An appropriate custom CSS is expected to be provided in this case."
+msgstr ""
+
+#: qtranslate_widget.php:111
+#, php-format
 msgid "Other common CSS block for flag classes \"%s\" is loaded in the head of HTML and can be controlled with option \"%s\"."
 msgstr ""
 
-#: qtranslate_widget.php:108
+#: qtranslate_widget.php:111
 msgid "Widget CSS:"
 msgstr ""
 
