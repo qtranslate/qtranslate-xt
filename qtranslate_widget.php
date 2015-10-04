@@ -25,8 +25,9 @@ transition: 1s ease opacity;
 
 //define('QTX_WIDGET_CUSTOM_FORMAT','%f<span>%n</span>');
 
-/* qTranslate-X Widget */
-
+/**
+ * qTranslate-X Language Switching Widget
+ */
 class qTranslateXWidget extends WP_Widget {
 
 	function qTranslateXWidget() {
@@ -117,8 +118,16 @@ class qTranslateXWidget extends WP_Widget {
 }
 
 /**
- * Language Select Code for non-Widget users
+ * Language Select Code for non-Widget users.
  * @since 3.4.5 type of argument is changed, compatibility with old way is preserved.
+ *
+ * @args - is hash array of options in the form 'key' => 'value'.
+ *   It accepts the following keys:
+ *     'type' - one of the values: 'text', 'image', 'both', 'dropdown' and 'custom', which match the choices on widget admin page.
+ *     'format' - needs to be provided if 'type' is 'custom'. Read help text to this option on widget admin page.
+ *     'id' - id of widget, which is used as a distinctive string to create CSS entities.
+ *
+ * @id - is left there to preserve compatibility with old way, but should not be used anymore.
 */
 function qtranxf_generateLanguageSelectCode($args = array(), $id='') {
 	global $q_config;
