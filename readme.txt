@@ -105,6 +105,7 @@ Read [migration instructions](https://qtranslatexteam.wordpress.com/migration/ "
 
 ### 3.4.5.4 ###
 * Enhancement: Translation of language names to other languages: [Issue #264](https://github.com/qTranslate-Team/qtranslate-x/issues/264).
+* Enhancement: Ability to remove meta tag "generator": [Issue #244](https://github.com/qTranslate-Team/qtranslate-x/issues/244).
 * Fix: enabled back translation of posts in `qtranxf_postsFilter` with filter 'raw'.
 
 ### 3.4.5.3 ###
