@@ -45,8 +45,6 @@ function qtranxf_get_front_page_config() {
 function qtranxf_wp_head(){
 	global $q_config;
 
-	echo '<meta name="generator" content="qTranslate-X '.QTX_VERSION.'" />'.PHP_EOL;
-
 	if( $q_config['header_css_on'] ){
 		echo '<style type="text/css">' . PHP_EOL .$q_config['header_css'].'</style>'. PHP_EOL;
 	}
@@ -71,6 +69,18 @@ function qtranxf_wp_head(){
 	//qtranxf_add_css();// since 3.2.5 no longer needed
 }
 add_action('wp_head', 'qtranxf_wp_head');
+
+/**
+ * Moved line '<meta name="generator"' to a separate action.
+ * Developers may use code
+ *   remove_action('wp_head','qtranxf_wp_head_meta_generator');
+ * to remove this line from the header.
+ * @since 3.4.5.4
+*/
+function qtranxf_wp_head_meta_generator(){
+	echo '<meta name="generator" content="qTranslate-X '.QTX_VERSION.'" />'.PHP_EOL;
+}
+add_action('wp_head', 'qtranxf_wp_head_meta_generator');
 
 function qtranxf_wp_get_nav_menu_items( $items, $menu, $args ){
 	global $q_config;
