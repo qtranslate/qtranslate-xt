@@ -3,6 +3,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language: \n"
 
+msgid "en"
+msgstr "དབྱིན་ཇིའི་སྐད།"
+
+msgid "en_US"
+msgstr "དབྱིན་ཇིའི་སྐད། (ཨ་རི་)"
+
 msgid "af"
 msgstr ""
 
