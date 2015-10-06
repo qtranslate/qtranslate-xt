@@ -216,17 +216,16 @@ function qtranxf_add_language_menu_item(&$items, &$menu_order, &$itemid, $key, $
 		}else{
 			$blocks = qtranxf_get_language_blocks($item->title);
 			if(count($blocks)<=1){//no customization is done
-				$item->title = __('Language', 'qtranslate');
-				if($item->title == 'Language') $item->title = qtranxf_translate_wp('Language');
+				$item->title = qtranxf_translate('Language');
 			}else{
-				$item->title = qtranxf_use_block($toplang, $blocks);
+				$item->title = qtranxf_use_block($language, $blocks);
 			}
 		}
 		$item->url=qtranxf_convertURL($url, $language, false, true);
 	}
 	if($topflag){
 		if(!empty($item->title)){
-			if($colon) $item->title.=':';
+			if($colon) $item->title.=_x(':', 'Colon after a title. For example, in top item of Language Menu.', 'qtranslate');
 			$item->title.='&nbsp;';
 		}
 		$item->title.='<img src="'.$flag_location.$q_config['flag'][$toplang].'" alt="'.$q_config['language_name'][$toplang].'" />';//.' '.__('Flag', 'qtranslate')
