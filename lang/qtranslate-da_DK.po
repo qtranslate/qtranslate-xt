@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: qTranslate-X 3.4.5.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-04 11:51-0600\n"
+"POT-Creation-Date: 2015-10-06 14:00-0600\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jan Christensen <deletestuff@gmail.com>\n"
 "Language-Team: Jan Christensen <deletestuff@gmail.com>\n"
@@ -444,7 +444,7 @@ msgstr "Sprogkode"
 msgid "This is a set of \"%s\" from %s. Click any blank space between the buttons and drag it to a place where you would need it the most. Click the handle at the top-right corner of this widget to hide this message."
 msgstr ""
 
-#: admin/qtx_admin_utils.php:796 qtranslate_frontend.php:209
+#: admin/qtx_admin_utils.php:796 qtranslate_frontend.php:219
 #: qtranslate_widget.php:50
 msgid "Language"
 msgstr "Sprog"
@@ -1310,6 +1310,11 @@ msgstr ""
 
 #: qtranslate_core.php:1491
 msgid "You may click the link to switch the active language."
+msgstr ""
+
+#: qtranslate_frontend.php:228
+msgctxt "Colon after a title. For example, in top item of Language Menu."
+msgid ":"
 msgstr ""
 
 #: qtranslate_services.php:43

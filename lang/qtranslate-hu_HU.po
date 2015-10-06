@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: qTranslate-X 3.4.5.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-04 11:51-0600\n"
+"POT-Creation-Date: 2015-10-06 14:00-0600\n"
 "PO-Revision-Date: 2015-06-07 14:37-0800\n"
 "Last-Translator: Németh Balázs <nb0000@gmail.com>\n"
 "Language-Team: \n"
@@ -438,7 +438,7 @@ msgstr "Nyelvválasztó gombok"
 msgid "This is a set of \"%s\" from %s. Click any blank space between the buttons and drag it to a place where you would need it the most. Click the handle at the top-right corner of this widget to hide this message."
 msgstr "Ez egy „%s”-csoport innen: %s. Kattintson a gombok közötti részre, és áthúzhatja oda, ahol legjobban megfelel. Kattintson a widget kezelőre a jobb felső sarokban ezen üzenet elrejtéséhez."
 
-#: admin/qtx_admin_utils.php:796 qtranslate_frontend.php:209
+#: admin/qtx_admin_utils.php:796 qtranslate_frontend.php:219
 #: qtranslate_widget.php:50
 msgid "Language"
 msgstr "Nyelv"
@@ -1290,6 +1290,11 @@ msgstr "A megtekintő kényelméért az alábbi tartalom alternatív nyelven jel
 #: qtranslate_core.php:1491
 msgid "You may click the link to switch the active language."
 msgstr "Rákattinthat a linkre az aktív nyelv módosításához."
+
+#: qtranslate_frontend.php:228
+msgctxt "Colon after a title. For example, in top item of Language Menu."
+msgid ":"
+msgstr ""
 
 #: qtranslate_services.php:43
 msgid "The language/s do not have a valid ISO 639-1 representation."

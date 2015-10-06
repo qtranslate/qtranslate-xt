@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: qtranslate-x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-04 11:51-0600\n"
+"POT-Creation-Date: 2015-10-06 14:00-0600\n"
 "PO-Revision-Date: 2015-09-15 19:58+0000\n"
 "Last-Translator: \n"
 "Language-Team: Slovak (Slovakia) (http://www.transifex.com/qtranslatexteam/qtranslate-x/language/sk_SK/)\n"
@@ -16,10 +16,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: sk_SK\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-
-#: dummy entry to trick transifex
-msgid "dummy entry to trick transifex - remove when at least one real translation is in place"
-msgstr "dummy entry to trick transifex - remove when at least one real translation is in place"
 
 #: admin/qtx_activation_hook.php:90 admin/qtx_activation_hook.php:104
 #: admin/qtx_activation_hook.php:107 admin/qtx_activation_hook.php:641
@@ -441,7 +437,7 @@ msgstr ""
 msgid "This is a set of \"%s\" from %s. Click any blank space between the buttons and drag it to a place where you would need it the most. Click the handle at the top-right corner of this widget to hide this message."
 msgstr ""
 
-#: admin/qtx_admin_utils.php:796 qtranslate_frontend.php:209
+#: admin/qtx_admin_utils.php:796 qtranslate_frontend.php:219
 #: qtranslate_widget.php:50
 msgid "Language"
 msgstr ""
@@ -1292,6 +1288,11 @@ msgstr ""
 msgid "You may click the link to switch the active language."
 msgstr ""
 
+#: qtranslate_frontend.php:228
+msgctxt "Colon after a title. For example, in top item of Language Menu."
+msgid ":"
+msgstr ""
+
 #: qtranslate_services.php:43
 msgid "The language/s do not have a valid ISO 639-1 representation."
 msgstr ""
@@ -1643,3 +1644,6 @@ msgstr ""
 #: qtranslate.php:5
 msgid "Adds user-friendly and database-friendly multilingual content support."
 msgstr ""
+
+#~ msgid "dummy entry to trick transifex - remove when at least one real translation is in place"
+#~ msgstr "dummy entry to trick transifex - remove when at least one real translation is in place"
