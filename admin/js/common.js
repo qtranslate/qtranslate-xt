@@ -929,6 +929,7 @@ var qTranslateX=function(pg)
 		loadTinyMceHooks=function()
 		{
 			if (!window.tinyMCE) return;
+			if (!tinyMCE.editors) return;
 			for(var i=0; i<tinyMCE.editors.length; ++i){
 				var ed=tinyMCE.editors[i];
 				setEditorHooks(ed);
