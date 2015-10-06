@@ -3,13 +3,14 @@ msgstr ""
 "Project-Id-Version: qTranslate-X 3.4.5.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-06 14:00-0600\n"
-"PO-Revision-Date: 2015-06-04 17:43+0100\n"
+"PO-Revision-Date: 2015-10-06 13:05-0700\n"
 "Last-Translator: Sophie <soph@sophie-g.net>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.8.5\n"
+"Language-Team: \n"
+"Language: fr_FR\n"
 
 #: admin/qtx_activation_hook.php:90 admin/qtx_activation_hook.php:104
 #: admin/qtx_activation_hook.php:107 admin/qtx_activation_hook.php:641
@@ -299,8 +300,7 @@ msgstr "La langue doit avoir un code local !"
 msgid "The Language must have a name!"
 msgstr "La langue doit avoir un nom !"
 
-#: admin/qtx_admin_options_update.php:46
-#: admin/qtx_admin_options_update.php:155
+#: admin/qtx_admin_options_update.php:46 admin/qtx_admin_options_update.php:155
 msgid "Language Code has to be 2 characters long!"
 msgstr "Le code de la langue doit être long de 2 caractères !"
 
@@ -1288,7 +1288,7 @@ msgstr "Vous pouvez cliquer le lien pour changer de langue active."
 #: qtranslate_frontend.php:228
 msgctxt "Colon after a title. For example, in top item of Language Menu."
 msgid ":"
-msgstr ""
+msgstr " :"
 
 #: qtranslate_services.php:43
 msgid "The language/s do not have a valid ISO 639-1 representation."
