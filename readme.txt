@@ -100,11 +100,11 @@ Read [migration instructions](https://qtranslatexteam.wordpress.com/migration/ "
 
 ## Changelog ##
 
-### 3.4.6 ###
-* All issues after version 3.4.5
+### 3.4.6 stable ###
+* All issues after version 3.4.4
 
 ### 3.4.5.4 ###
-* Enhancement: Translation of language names to other languages: [Issue #264](https://github.com/qTranslate-Team/qtranslate-x/issues/264).
+* Enhancement: Translation of language names to other languages: [Issue #264](https://github.com/qTranslate-Team/qtranslate-x/issues/264). Thanks to [benique](https://github.com/benique).
 * Enhancement: Moved meta tag "generator" to a separate action: [Issue #244](https://github.com/qTranslate-Team/qtranslate-x/issues/244).
 * Fix: enabled back translation of posts in `qtranxf_postsFilter` with filter 'raw'.
 
