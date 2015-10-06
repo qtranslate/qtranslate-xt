@@ -212,7 +212,7 @@ function qtranxf_add_language_menu_item(&$items, &$menu_order, &$itemid, $key, $
 				$item->title = qtranxf_use_block($toplang, $blocks);
 			}
 		}
-		$item->url='';
+		$item->url=qtranxf_convertURL($url, $language, false, true);
 	}
 	if($topflag){
 		if(!empty($item->title)){
@@ -248,7 +248,7 @@ function qtranxf_add_language_menu_item(&$items, &$menu_order, &$itemid, $key, $
 
 		//add properties required for nav_menu_item, whose absense causes class-wp-customize-setting.php to throw Exception in function __construct
 		//$item->db_id=$item->ID;
-		$item->url='';
+		//$item->url='';//gets assigned later
 		$item->target = '';
 		$item->description = '';
 		$item->xfn = '';
@@ -271,10 +271,10 @@ function qtranxf_add_language_menu_item(&$items, &$menu_order, &$itemid, $key, $
 		}
 		$item->post_title=$item->title;
 		$item->post_name='language-menuitem-'.$lang;
-		if($lang!=$language){
+		//if($lang!=$language){ menu url should not be empty
 			$item->url=qtranxf_convertURL($url, $lang, false, true);
 			$item->url=esc_url($item->url);//not sure if this is needed
-		}
+		//}
 		$item->attr_title = $q_config['language_name'][$lang];
 		$item->classes=array();
 		//$item->classes[] = 'qtranxs_flag_'.$lang;
