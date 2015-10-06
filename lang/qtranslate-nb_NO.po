@@ -17,6 +17,10 @@ msgstr ""
 "Language: nb_NO\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: dummy entry to trick transifex
+msgid "dummy entry to trick transifex - remove when at least one real translation is in place"
+msgstr "dummy entry to trick transifex - remove when at least one real translation is in place"
+
 #: admin/qtx_activation_hook.php:90 admin/qtx_activation_hook.php:104
 #: admin/qtx_activation_hook.php:107 admin/qtx_activation_hook.php:641
 #: admin/qtx_activation_hook.php:644 admin/qtx_activation_hook.php:702
