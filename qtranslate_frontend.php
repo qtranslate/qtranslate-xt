@@ -100,7 +100,17 @@ function qtranxf_wp_get_nav_menu_items( $items, $menu, $args ){
 		//qtranxf_dbg_log('qtranxf_wp_get_nav_menu_items: item: '.$item->title.'; p='.$item->menu_item_parent.'; ID='.$item->ID);
 		$qtransLangSw = isset( $item->url ) && stristr( $item->url, 'qtransLangSw' ) !== FALSE;
 		if(!$qtransLangSw){
-			$item_title=qtranxf_use_language($language, $item->title, false, true);
+			if(!empty($item->title)){
+				if(empty($item->post_title)){
+					if($item->type == 'post_type'){
+						$p = get_post($item->object_id);
+						if($p && isset($p->post_title_ml)){
+							$item->title = $p->post_title_ml;
+						}
+					}
+				}
+				$item_title=qtranxf_use_language($language, $item->title, false, true);
+			}
 			//qtranxf_dbg_log('qtranxf_wp_get_nav_menu_items: $item_title: ',$item_title);
 			if(empty($item_title)){
 				//qtranxf_dbg_log('removed item: '.$item->title.'; p='.$item->menu_item_parent);
@@ -221,7 +231,7 @@ function qtranxf_add_language_menu_item(&$items, &$menu_order, &$itemid, $key, $
 				$item->title = qtranxf_use_block($language, $blocks);
 			}
 		}
-		$item->url=qtranxf_convertURL($url, $language, false, true);
+		$item->url='#';//qtranxf_convertURL($url, $language, false, true);
 	}
 	if($topflag){
 		if(!empty($item->title)){
@@ -474,8 +484,14 @@ function qtranxf_postsFilter($posts,&$query) {//WP_Query
 				case 'post_title':
 				case 'post_excerpt':
 				case 'post_content_filtered'://not sure how this is in use
-					$post->$key = qtranxf_use_language($lang, $txt, false);
-					break;
+				{
+					$blocks = qtranxf_get_language_blocks($txt);
+					if(count($blocks)>1){//value is multilingual
+						$key_ml = $key.'_ml';
+						$post->$key_ml = $txt;
+						$post->$key = qtranxf_use_block($lang, $blocks, false);
+					}
+				} break;
 				//other maybe, if it is a string, most likely it never comes here
 				default:
 					$post->$key = qtranxf_use($lang, $txt, false);
