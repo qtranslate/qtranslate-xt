@@ -94,22 +94,41 @@ function qtranxf_wp_get_nav_menu_items( $items, $menu, $args ){
 	foreach($items as $key => $item)
 	{
 		if(isset($item->item_lang)) continue;
+		if(isset($itemsremoved[$item->menu_item_parent])){
+			$itemsremoved[$item->ID] = $item;
+			unset($items[$key]);//remove a child of removed item
+			continue;
+		}
 		$item->item_lang = $language;
 		//qtranxf_dbg_log('qtranxf_wp_get_nav_menu_items: $item->url: ',$item->url);
 		//qtranxf_dbg_log('qtranxf_wp_get_nav_menu_items: $item: ',$item);
 		//qtranxf_dbg_log('qtranxf_wp_get_nav_menu_items: item: '.$item->title.'; p='.$item->menu_item_parent.'; ID='.$item->ID);
 		$qtransLangSw = isset( $item->url ) && stristr( $item->url, 'qtransLangSw' ) !== FALSE;
 		if(!$qtransLangSw){
-			if(!empty($item->title)){
-				if(empty($item->post_title)){
-					if($item->type == 'post_type'){
-						$p = get_post($item->object_id);
-						if($p && isset($p->post_title_ml)){
-							$item->title = $p->post_title_ml;
-						}
+			$item_title = $item->title;
+			if(!empty($item_title)){
+				if(empty($item->post_title) && !qtranxf_isMultilingual($item_title)){
+					//qtranxf_dbg_log('qtranxf_wp_get_nav_menu_items: $item->title && !$item->post_title: $item: ',$item);
+					switch($item->type){
+						case 'post_type':
+							$p = get_post($item->object_id);
+							if($p && isset($p->post_title_ml)){
+								$item_title = $p->post_title_ml;
+								$item_title=qtranxf_use_language($language, $item_title, false, true);
+							}
+						break;
+						//case 'taxonomy':
+						//	if(isset($q_config['term_name'][$item_title][$language])){
+						//		$item_title = $q_config['term_name'][$item_title][$language];
+						//	}else{
+						//		$item_title = '';
+						//	}
+						//break;
 					}
+				}else{
+					//qtranxf_dbg_log('qtranxf_wp_get_nav_menu_items: $item->title && $item->post_title: $item: ',$item);
+					$item_title=qtranxf_use_language($language, $item_title, false, true);
 				}
-				$item_title=qtranxf_use_language($language, $item->title, false, true);
 			}
 			//qtranxf_dbg_log('qtranxf_wp_get_nav_menu_items: $item_title: ',$item_title);
 			if(empty($item_title)){
