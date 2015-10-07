@@ -597,13 +597,18 @@ function qtranxf_load_languages_enabled()
 	global $q_config, $qtranslate_options;
 	foreach($qtranslate_options['languages'] as $nm => $opn){
 		$f = 'qtranxf_default_'.$nm;
-		$val = qtranxf_load_option_func($nm,$opn,$f);
+		qtranxf_load_option_func($nm,$opn,$f);
+		$val = array();
 		$def = null;
 		foreach($q_config['enabled_languages'] as $lang){
-			if(isset($q_config[$nm][$lang])) continue;
-			if(is_null($def) && function_exists($f)) $def = call_user_func($f);
-			$q_config[$nm][$lang] = isset($def[$lang]) ? $def[$lang] : '';
+			if(isset($q_config[$nm][$lang])){
+				$val[$lang] = $q_config[$nm][$lang];
+			}else{
+				if(is_null($def) && function_exists($f)) $def = call_user_func($f);
+				$val[$lang] = isset($def[$lang]) ? $def[$lang] : '';
+			}
 		}
+		$q_config[$nm] = $val;
 	}
 	//$locales = qtranxf_default_windows_locale();
 	//foreach($q_config['enabled_languages'] as $lang){

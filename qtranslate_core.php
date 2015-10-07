@@ -584,7 +584,7 @@ function qtranxf_load_option_bool( $nm, $default_value=null ) {
 }
 
 function qtranxf_load_option_func($nm, $opn=null, $func=null) {
-	global $q_config, $qtranslate_options;
+	global $q_config;
 	if(!$opn) $opn = 'qtranslate_'.$nm;
 	$val = get_option($opn);
 	if($val===FALSE){

@@ -211,6 +211,7 @@ function qtranxf_editConfig(){
 			$languages[$key-1] = $language;
 			$q_config['enabled_languages'] = $languages;
 			$msg = __('New order saved.', 'qtranslate');
+			qtranxf_update_config_header_css();
 			break;
 		}
 		$messages[] = $msg;
@@ -229,6 +230,7 @@ function qtranxf_editConfig(){
 			$languages[$key+1] = $language;
 			$q_config['enabled_languages'] = $languages;
 			$msg = __('New order saved.', 'qtranslate');
+			qtranxf_update_config_header_css();
 			break;
 		}
 		$messages[] = $msg;
