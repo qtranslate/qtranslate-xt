@@ -108,22 +108,29 @@ function qtranxf_wp_get_nav_menu_items( $items, $menu, $args ){
 			$item_title = $item->title;
 			if(!empty($item_title)){
 				if(empty($item->post_title) && !qtranxf_isMultilingual($item_title)){
-					//qtranxf_dbg_log('qtranxf_wp_get_nav_menu_items: $item->title && !$item->post_title: $item: ',$item);
+					//$item does not have custom menu title, then it fetches information from post_title, but it is already translated with ShowEmpty=false, which gives either valid translation or possibly something like "(English) English Text". We need to translate again and to skip menu item if translation does not exist.
 					switch($item->type){
 						case 'post_type':
 							$p = get_post($item->object_id);
 							if($p && isset($p->post_title_ml)){
-								$item_title = $p->post_title_ml;
-								$item_title=qtranxf_use_language($language, $item_title, false, true);
+								$item_title=qtranxf_use_language($language, $p->post_title_ml, false, true);
 							}
 						break;
-						//case 'taxonomy':
-						//	if(isset($q_config['term_name'][$item_title][$language])){
-						//		$item_title = $q_config['term_name'][$item_title][$language];
-						//	}else{
-						//		$item_title = '';
-						//	}
-						//break;
+						case 'taxonomy':
+							//qtranxf_dbg_log('qtranxf_wp_get_nav_menu_items: taxonomy: $item: ',$item);
+							$term = wp_cache_get( $item->object_id, $item->object );
+							if($term){
+								//qtranxf_dbg_log('qtranxf_wp_get_nav_menu_items: $term: ',$term);
+								if(isset($q_config['term_name'][$term->name][$language])){
+									$item_title = $q_config['term_name'][$term->name][$language];
+								}else{
+									$item_title = '';
+								}
+								if(!empty($term->description)){
+									$item->description=qtranxf_use_language($language, $term->description, false, true);
+								}
+							}
+						break;
 					}
 				}else{
 					//qtranxf_dbg_log('qtranxf_wp_get_nav_menu_items: $item->title && $item->post_title: $item: ',$item);
