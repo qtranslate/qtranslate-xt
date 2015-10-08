@@ -127,7 +127,7 @@ function qtranxf_wp_get_nav_menu_items( $items, $menu, $args ){
 									$item_title = '';
 								}
 								if(!empty($term->description)){
-									$item->description=qtranxf_use_language($language, $term->description, false, true);
+									$item->description = $term->description;
 								}
 							}
 						break;
