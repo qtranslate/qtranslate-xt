@@ -104,6 +104,7 @@ Read [migration instructions](https://qtranslatexteam.wordpress.com/migration/ "
 * All issues after version 3.4.4
 
 ### 3.4.5.4 ###
+* Feature: Type 'custom' with arbitrary format of items for widget "qTranslate Language Chooser". Arguments of function `qtranxf_generateLanguageSelectCode` [are chenge](https://qtranslatexteam.wordpress.com/faq/#LanguageSwitchingMethods346) to comply with WordPress standards. Compatibility with old arguments is preserved.
 * Enhancement: Translation of language names to other languages: [Issue #264](https://github.com/qTranslate-Team/qtranslate-x/issues/264). Thanks to [benique](https://github.com/benique).
 * Enhancement: Moved meta tag "generator" to a separate action: [Issue #244](https://github.com/qTranslate-Team/qtranslate-x/issues/244).
 * Enhancement: PNG files have been further compressed with advanced algorightms: [PR #279](https://github.com/qTranslate-Team/qtranslate-x/pull/279). Thanks to [benique](https://github.com/benique).
