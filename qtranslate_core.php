@@ -1442,31 +1442,12 @@ function qtranxf_use_block($lang, $blocks, $show_available=false, $show_empty=fa
 	if(preg_match('/%LANG:([^:]*):([^%]*)%/',$q_config['not_available'][$lang],$match)) {
 		$normal_separator = $match[1];
 		$end_separator = $match[2];
-		if(!is_textdomain_loaded('language-names')){//is not loaded by default, since this place should not be hit frequently
-			$locale = $q_config['locale'][$q_config['language']];
-			load_textdomain( 'language-names', QTRANSLATE_DIR . '/lang/language-names/language-'.$locale.'.mo' );
-		}
-		$translations = get_translations_for_domain('language-names');
 		// build available languages string backward
 		$i = 0;
 		foreach($available_langs as $language => $b) {
 			if($i==1) $language_list = $end_separator.$language_list;
 			elseif($i>1) $language_list = $normal_separator.$language_list;
-			$locale = $q_config['locale'][$language];
-			while(!isset($translations->entries[$locale])){
-				if($locale[2] == '_'){
-					$locale = substr($locale,0,2);
-					if(isset($translations->entries[$locale])) break;
-				}
-				$locale = null;
-				break;
-			}
-			if($locale){
-				$language_name = $translations->entries[$locale]->translations[0];
-				$language_name = mb_convert_case($language_name,MB_CASE_TITLE);
-			}else{
-				$language_name = $q_config['language_name'][$language];
-			}
+			$language_name = qtranxf_getLanguageName($language);
 			$language_list = '&ldquo;<a href="'.qtranxf_convertURL('', $language, false, true).'" class="qtranxs-available-language-link qtranxs-available-language-link-'.$language.'">'.$language_name.'</a>&rdquo;'.$language_list;
 			++$i;
 		}

@@ -466,11 +466,42 @@ function qtranxf_getLanguageDefault() {
 	return $q_config['default_language'];
 }
 
-function qtranxf_getLanguageName($lang = '') {
-    global $q_config;
-		//if($lang=='' || !qtranxf_isEnabled($lang)) $lang = $q_config['language'];
-		if(empty($lang)) $lang = $q_config['language'];
-    return $q_config['language_name'][$lang];
+/**
+ * @since 3.4.5.4 - return language name in native language, former qtranxf_getLanguageName.
+*/
+function qtranxf_getLanguageNameNative($lang = ''){
+	global $q_config;
+	if(empty($lang)) $lang = $q_config['language'];
+	return $q_config['language_name'][$lang];
+}
+
+/**
+ * @since 3.4.5.4 - return language name in active language, if available, otherwise the name in native language.
+*/
+function qtranxf_getLanguageName($lang = ''){
+	global $q_config, $l10n;
+	if(empty($lang)) return $q_config['language_name'][$q_config['language']];
+	if(isset($q_config['language-names'][$lang])) return $q_config['language-names'][$lang];
+	if(!isset($l10n['language-names'])){//is not loaded by default, since this place should not be hit frequently
+		$locale = $q_config['locale'][$q_config['language']];
+		if(!load_textdomain( 'language-names', QTRANSLATE_DIR . '/lang/language-names/language-'.$locale.'.mo' )){
+			if($locale[2] == '_'){
+				$locale = substr($locale,0,2);
+				load_textdomain( 'language-names', QTRANSLATE_DIR . '/lang/language-names/language-'.$locale.'.mo' );
+			}
+		}
+	}
+	$translations = get_translations_for_domain('language-names');
+	$locale = $q_config['locale'][$lang];
+	while(!isset($translations->entries[$locale])){
+		if($locale[2] == '_'){
+			$locale = substr($locale,0,2);
+			if(isset($translations->entries[$locale])) break;
+		}
+		return $q_config['language-names'][$lang] = $q_config['language_name'][$lang];
+	}
+	$n = $translations->entries[$locale]->translations[0];
+	return $q_config['language-names'][$lang] = mb_convert_case($n,MB_CASE_TITLE);
 }
 
 function qtranxf_isEnabled($lang) {

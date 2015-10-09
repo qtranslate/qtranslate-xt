@@ -30,7 +30,7 @@ if(!function_exists('qtrans_getLanguage')){
 	function qtrans_getLanguage(){ return qtranxf_getLanguage(); }
 }
 if(!function_exists('qtrans_getLanguageName')){
-	function qtrans_getLanguageName($lang = ''){ return qtranxf_getLanguageName($lang); }
+	function qtrans_getLanguageName($lang = ''){ return qtranxf_getLanguageNameNative($lang); }
 }
 if(!function_exists('qtrans_getSortedLanguages')){
 	function qtrans_getSortedLanguages($reverse = false){ return qtranxf_getSortedLanguages($reverse); }
