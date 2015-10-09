@@ -1,7 +1,11 @@
-For translators:
+General instructions for translators:
 https://qtranslatexteam.wordpress.com/translators/
+
+PO files can be downloaded from:
 https://github.com/qTranslate-Team/qtranslate-x/tree/master/lang
+
+Translators may also use Transifex:
 https://www.transifex.com/qtranslatexteam/qtranslate-x/
 
-For developers:
+For developers to integrate Transifex:
 http://docs.transifex.com/client/
