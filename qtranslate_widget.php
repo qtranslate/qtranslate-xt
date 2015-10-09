@@ -104,7 +104,16 @@ class qTranslateXWidget extends WP_Widget {
 <p><label for="<?php echo $this->get_field_id('type') ?>-dropdown"><input type="radio" name="<?php echo $this->get_field_name('type') ?>" id="<?php echo $this->get_field_id('type') ?>-dropdown" value="dropdown"<?php checked($type=='dropdown') ?>/> <?php _e('Dropdown Box', 'qtranslate') ?></label></p>
 <p><label for="<?php echo $this->get_field_id('type') ?>-custom"><input type="radio" name="<?php echo $this->get_field_name('type') ?>" id="<?php echo $this->get_field_id('type') ?>-custom" value="custom"<?php checked($type=='custom') ?>/> <?php _e('Custom list item format:', 'qtranslate') ?></label></p><p>
 <label for="<?php echo $this->get_field_id('format') ?>-format"><input type="text" class="widefat" name="<?php echo $this->get_field_name('format') ?>" id="<?php echo $this->get_field_id('format') ?>-format" value="<?php echo esc_html($format) ?>" /></label>
-<br ><?php printf(__('Accepted format arguments:%s - Flag Image%s - Language Name%s - Language 2-Letter Code%s', 'qtranslate'), '<ul><li>%f', '</li><li>%n', '</li><li>%c', '</ul>') ?>
+<br ><?php
+//printf(__('Accepted format arguments:%s - Flag Image HTML, "%s"%s - Flag Image URL%s - Language Native Name%s - Language Name in Active Language%s - Language 2-Letter Code%s', 'qtranslate'), '<ul><li>%f', '&lt;img ... /&gt;', '</li><li>%s', '</li><li>%n', '</li><li>%a', '</li><li>%c', '</ul>')
+	echo __('Accepted format arguments:','qtranslate').'<ul>'.PHP_EOL;
+	echo '<li>%f - '.__('Flag Image HTML','qtranslate').'</li>'.PHP_EOL;
+	echo '<li>%s - '.__('Flag Image URL','qtranslate').'</li>'.PHP_EOL;
+	echo '<li>%n - '.__('Language Native Name','qtranslate').'</li>'.PHP_EOL;
+	echo '<li>%a - '.__('Language Name in Active Language','qtranslate').'</li>'.PHP_EOL;
+	echo '<li>%c - '.__('Language 2-Letter Code','qtranslate').'</li>'.PHP_EOL;
+	echo '</ul>';
+?>
 <small><?php printf(__('For example, format "%s" would do the same as the choice "%s".', 'qtranslate'), esc_html('%f<span>%n</span>'), __('Text and Image', 'qtranslate')) ?>&nbsp;
 <?php _e('An appropriate custom CSS is expected to be provided in this case.', 'qtranslate') ?></small>
 </p>
@@ -118,6 +127,10 @@ class qTranslateXWidget extends WP_Widget {
 
 /**
  * Language Select Code for non-Widget users
+ * @args is a hash array of options, which accepts the following keys:
+ *   ‘type’ – one of the values: ‘text’, ‘image’, ‘both’, ‘dropdown’ and ‘custom’, which match the choices on widget admin page.
+ *   ‘format’ – needs to be provided if ‘type’ is ‘custom’. Read help text to this option on widget admin page.
+ *   ‘id’ – id of widget, which is used as a distinctive string to create CSS entities.
  * @since 3.4.5 type of argument is changed, compatibility with old way is preserved.
 */
 function qtranxf_generateLanguageSelectCode($args = array(), $id='') {
@@ -215,9 +228,16 @@ function qtranxf_generateLanguageSelectCode($args = array(), $id='') {
 			$format = isset($args['format']) ? $args['format'] : '';
 			foreach(qtranxf_getSortedLanguages() as $language) {
 				$alt = $q_config['language_name'][$language].' ('.$language.')';
+				$s = $flag_location.$q_config['flag'][$language];
+				$n = $q_config['language_name'][$language];
 				$content = $format;
-				$content = str_replace('%f', '<img src="'.$flag_location.$q_config['flag'][$language].'" alt="'.$alt.'" />', $content);
-				$content = str_replace('%n', $q_config['language_name'][$language], $content);
+				$content = str_replace('%f', '<img src="'.$s.'" alt="'.$alt.'" />', $content);
+				$content = str_replace('%s', $s, $content);
+				$content = str_replace('%n', $n, $content);
+				if(strpos($content,'%a')!==FALSE){
+					$a = qtranxf_getLanguageName($language);//this is an expensive function, do not call without necessity.
+					$content = str_replace('%a', $a==$n ? '' : $a, $content);
+				}
 				$content = str_replace('%c', $language, $content);
 				$classes = array('language-chooser-item', 'language-chooser-item-'.$language);
 				if($language == $q_config['language']) $classes[] = 'active';
