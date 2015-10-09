@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: qTranslate-X 3.4.5.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-06 14:00-0600\n"
+"POT-Creation-Date: 2015-10-08 21:10-0600\n"
 "PO-Revision-Date: 2015-06-18 09:58-0800\n"
 "Last-Translator: Simone Montrucchio <simonemontrucchio@users.github.com>\n"
 "Language-Team: ITALIAN <IT@li.org>\n"
@@ -427,7 +427,7 @@ msgstr "Non puoi disabilitare la Lingua Principale!"
 # @ qtranslate
 #: admin/qtx_admin_options_update.php:194
 #: admin/qtx_admin_options_update.php:203
-#: admin/qtx_admin_options_update.php:221
+#: admin/qtx_admin_options_update.php:222
 msgid "No such language!"
 msgstr "Nessuna lingua!"
 
@@ -443,45 +443,45 @@ msgstr "La lingua è già la principale!"
 
 # @ qtranslate
 #: admin/qtx_admin_options_update.php:213
-#: admin/qtx_admin_options_update.php:231
+#: admin/qtx_admin_options_update.php:232
 msgid "New order saved."
 msgstr "Nuovo ordine salvato."
 
 # @ qtranslate
-#: admin/qtx_admin_options_update.php:225
+#: admin/qtx_admin_options_update.php:226
 msgid "Language is already last!"
 msgstr "La lingua è già l'ultima!"
 
 # @ qtranslate
-#: admin/qtx_admin_options_update.php:244
+#: admin/qtx_admin_options_update.php:246
 msgid "Options saved."
 msgstr "Opzioni salvate."
 
 # @ qtranslate
-#: admin/qtx_admin_options_update.php:250
+#: admin/qtx_admin_options_update.php:252
 #, php-format
 msgid "Could not write to \"%s\", Gettext Databases could not be downloaded!"
 msgstr "Impossibile scrivere su \"%s\", i Database Gettext  potrebbero non essere stati scaricati!"
 
 # @ qtranslate
-#: admin/qtx_admin_options_update.php:265
+#: admin/qtx_admin_options_update.php:267
 msgid "Admin notices have been reset. You will see all applicable notices on admin pages and may dismiss them again."
 msgstr "Gli avvisi amministratori sono stati ripristinati. Vedrai tutti gli avvisi applicabili sulle pagine amministratore e potrai rimuoverli nuovamente."
 
 # @ qtranslate
-#: admin/qtx_admin_options_update.php:692
+#: admin/qtx_admin_options_update.php:694
 #, php-format
 msgid "Cannot parse JSON code in the field \"%s\"."
 msgstr "Impossibile analizzare il codice JSON nel campo \"%s\"."
 
 # @ qtranslate
-#: admin/qtx_admin_options_update.php:692 admin/qtx_configuration.php:186
+#: admin/qtx_admin_options_update.php:694 admin/qtx_configuration.php:186
 #: admin/qtx_configuration.php:502 admin/qtx_configuration.php:508
 msgid "Custom Configuration"
 msgstr "Configurazione Servizio"
 
 # @ qtranslate
-#: admin/qtx_admin_options_update.php:751
+#: admin/qtx_admin_options_update.php:753
 msgid "Gettext databases updated."
 msgstr "Database Gettext aggiornati."
 
@@ -528,7 +528,7 @@ msgid "This is a set of \"%s\" from %s. Click any blank space between the button
 msgstr "Questo è un set di \"%s\" da %s. Clicca qualsiasi spazio vuoto tra i tasti e trascinalo nel posto in cui è più necessario. Clicca nell'angolo superiore destro di questo widget per nascondere questo messaggio."
 
 # @ qtranslate
-#: admin/qtx_admin_utils.php:796 qtranslate_frontend.php:219
+#: admin/qtx_admin_utils.php:796 qtranslate_frontend.php:255
 #: qtranslate_widget.php:50
 msgid "Language"
 msgstr "Lingua"
@@ -921,7 +921,7 @@ msgstr "Non convertire i links ai files di un determinato tipo. (Sempre inclusi:
 
 # @ qtranslate
 #: admin/qtx_configuration.php:337 admin/qtx_languages.php:68
-#: qtranslate_widget.php:111
+#: qtranslate_widget.php:120
 msgid "Head inline CSS"
 msgstr "Intestazione inline CSS"
 
@@ -931,13 +931,13 @@ msgid "CSS code added by plugin in the head of front-end pages:"
 msgstr "Codice CSS aggiunto dal plugin nell'intestazione delle pagine nel front-end:"
 
 # @ qtranslate
-#: admin/qtx_configuration.php:342 qtranslate_widget.php:111
+#: admin/qtx_configuration.php:342 qtranslate_widget.php:120
 msgid "To disable this inline CSS, clear the check box."
 msgstr "Per disabilitare questo inline CSS, disattiva la casella di controllo."
 
 # @ qtranslate
 #: admin/qtx_configuration.php:342 admin/qtx_configuration.php:468
-#: admin/qtx_configuration.php:504 qtranslate_widget.php:111
+#: admin/qtx_configuration.php:504 qtranslate_widget.php:120
 msgid "To reset to default, clear the text."
 msgstr "Per ripristinare al default, cancellare il testo."
 
@@ -1519,7 +1519,7 @@ msgid "If you do not wish to customize this option, then reset it to the default
 msgstr ""
 
 # @ qtranslate
-#: admin/qtx_languages.php:116
+#: admin/qtx_languages.php:113
 msgid "Cannot delete Default Language!"
 msgstr "Non puoi disabilitare il Linguaggio Principale!"
 
@@ -1551,31 +1551,31 @@ msgid "The way the translatable fields are highlighted is configured with global
 msgstr "Il modo in cui i campi traducibili sono evidenziati è configurato nell'opzione globale %s."
 
 # @ qtranslate
-#: qtranslate_core.php:1482
+#: qtranslate_core.php:1463
 msgid "For the sake of viewer convenience, the content is shown below in this site default language."
 msgstr "Per ragioni di convenienza del visitatore, il contenuto è mostrato sotto nella lingua principale di questo sito."
 
 # @ qtranslate
-#: qtranslate_core.php:1485
+#: qtranslate_core.php:1466
 msgid "For the sake of viewer convenience, the content is shown below in one of the available alternative languages."
 msgstr "Per ragioni di convenienza del visitatore, il contenuto è mostrato sotto in una delle  lingue alternative disponibili."
 
 # @ qtranslate
-#: qtranslate_core.php:1488
+#: qtranslate_core.php:1469
 msgid "You may click one of the links to switch the site language to another available language."
 msgstr "Puoi cliccare su uno dei links per cambiare la lingua del sito in un'altra lingua disponibile."
 
 # @ qtranslate
-#: qtranslate_core.php:1490
+#: qtranslate_core.php:1471
 msgid "For the sake of viewer convenience, the content is shown below in the alternative language."
 msgstr "Per ragioni di convenienza del visitatore, il contenuto è mostrato sotto nella lingua alternativa."
 
 # @ qtranslate
-#: qtranslate_core.php:1491
+#: qtranslate_core.php:1472
 msgid "You may click the link to switch the active language."
 msgstr "Puoi cliccare sul link per cambiare la lingua attiva."
 
-#: qtranslate_frontend.php:228
+#: qtranslate_frontend.php:264
 msgctxt "Colon after a title. For example, in top item of Language Menu."
 msgid ":"
 msgstr ""
@@ -1968,7 +1968,7 @@ msgid "Image only"
 msgstr "Solo immagini"
 
 # @ qtranslate
-#: qtranslate_widget.php:103 qtranslate_widget.php:108
+#: qtranslate_widget.php:103 qtranslate_widget.php:117
 msgid "Text and Image"
 msgstr "Testo ed Immagini"
 
@@ -1981,28 +1981,57 @@ msgstr "Casella a tendina"
 msgid "Custom list item format:"
 msgstr ""
 
-#: qtranslate_widget.php:107
-#, php-format
-msgid "Accepted format arguments:%s - Flag Image%s - Language Name%s - Language 2-Letter Code%s"
+#: qtranslate_widget.php:109
+msgid "Accepted format arguments:"
 msgstr ""
 
-#: qtranslate_widget.php:108
+# @ qtranslate
+#: qtranslate_widget.php:110
+#, fuzzy
+msgid "Flag Image HTML"
+msgstr "Percorso Immagine Bandiere"
+
+# @ qtranslate
+#: qtranslate_widget.php:111
+#, fuzzy
+msgid "Flag Image URL"
+msgstr "Percorso Immagine Bandiere"
+
+# @ qtranslate
+#: qtranslate_widget.php:112
+#, fuzzy
+msgid "Language Native Name"
+msgstr "Gestione Linguaggi"
+
+# @ qtranslate
+#: qtranslate_widget.php:113
+#, fuzzy
+msgid "Language Name in Active Language"
+msgstr "Non è stata impostata una lingua"
+
+# @ qtranslate
+#: qtranslate_widget.php:114
+#, fuzzy
+msgid "Language 2-Letter Code"
+msgstr "Codice Lingua"
+
+#: qtranslate_widget.php:117
 #, php-format
 msgid "For example, format \"%s\" would do the same as the choice \"%s\"."
 msgstr ""
 
-#: qtranslate_widget.php:109
+#: qtranslate_widget.php:118
 msgid "An appropriate custom CSS is expected to be provided in this case."
 msgstr ""
 
 # @ qtranslate
-#: qtranslate_widget.php:111
+#: qtranslate_widget.php:120
 #, php-format
 msgid "Other common CSS block for flag classes \"%s\" is loaded in the head of HTML and can be controlled with option \"%s\"."
 msgstr "Un altro blocco comune di CSS per le classi delle bandiere \"%s\" è caricato nell'intestazione dell'HTML a può essere controllato con l'opzione \"%s\"."
 
 # @ qtranslate
-#: qtranslate_widget.php:111
+#: qtranslate_widget.php:120
 msgid "Widget CSS:"
 msgstr "Widget CSS:"
 

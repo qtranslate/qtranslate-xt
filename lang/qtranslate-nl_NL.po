@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: qtranslate-x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-06 14:00-0600\n"
+"POT-Creation-Date: 2015-10-08 21:10-0600\n"
 "PO-Revision-Date: 2015-10-06 12:14+0100\n"
 "Last-Translator: Marius Siroen <marius@marius-siroen.com>\n"
 "Language-Team: Dutch (Netherlands) (http://www.transifex.com/projects/p/qtranslate-x/language/nl_NL/)\n"
@@ -357,7 +357,7 @@ msgstr "Standaard taal kan niet uitgeschakeld worden!"
 
 #: admin/qtx_admin_options_update.php:194
 #: admin/qtx_admin_options_update.php:203
-#: admin/qtx_admin_options_update.php:221
+#: admin/qtx_admin_options_update.php:222
 msgid "No such language!"
 msgstr "Geen bekende taal!"
 
@@ -370,38 +370,38 @@ msgid "Language is already first!"
 msgstr "Taal is al de eerste!"
 
 #: admin/qtx_admin_options_update.php:213
-#: admin/qtx_admin_options_update.php:231
+#: admin/qtx_admin_options_update.php:232
 msgid "New order saved."
 msgstr "Nieuwe bestelling is opgeslagen."
 
-#: admin/qtx_admin_options_update.php:225
+#: admin/qtx_admin_options_update.php:226
 msgid "Language is already last!"
 msgstr "Taal is al laatste!"
 
-#: admin/qtx_admin_options_update.php:244
+#: admin/qtx_admin_options_update.php:246
 msgid "Options saved."
 msgstr "Opties opgeslagen."
 
-#: admin/qtx_admin_options_update.php:250
+#: admin/qtx_admin_options_update.php:252
 #, php-format
 msgid "Could not write to \"%s\", Gettext Databases could not be downloaded!"
 msgstr "Kan niet schrijven naar \"%s\", Gettext Database kon niet worden gedownload!"
 
-#: admin/qtx_admin_options_update.php:265
+#: admin/qtx_admin_options_update.php:267
 msgid "Admin notices have been reset. You will see all applicable notices on admin pages and may dismiss them again."
 msgstr "Admin mededelingen zijn gereset. Alle toepasselijke kennisgevingen op de admin pagina's worden weer zichtbaar en je kunt deze opnieuw verbergen."
 
-#: admin/qtx_admin_options_update.php:692
+#: admin/qtx_admin_options_update.php:694
 #, php-format
 msgid "Cannot parse JSON code in the field \"%s\"."
 msgstr "Kan JSON code niet converteren in het veld \"%s\"."
 
-#: admin/qtx_admin_options_update.php:692 admin/qtx_configuration.php:186
+#: admin/qtx_admin_options_update.php:694 admin/qtx_configuration.php:186
 #: admin/qtx_configuration.php:502 admin/qtx_configuration.php:508
 msgid "Custom Configuration"
 msgstr "Aangepaste configuratie"
 
-#: admin/qtx_admin_options_update.php:751
+#: admin/qtx_admin_options_update.php:753
 msgid "Gettext databases updated."
 msgstr "Gettext database is bijgewerkt."
 
@@ -439,7 +439,7 @@ msgstr "Taal Wisselen Knoppen"
 msgid "This is a set of \"%s\" from %s. Click any blank space between the buttons and drag it to a place where you would need it the most. Click the handle at the top-right corner of this widget to hide this message."
 msgstr "Dit is een set van \"%s\" voor %s. Klik op een lege ruimte naast de knoppen en sleep deze naar een plek waar je ze het het meest nodig zou hebben. Klik op het teken aan de rechterbovenhoek van deze widget om deze boodschap te verbergen."
 
-#: admin/qtx_admin_utils.php:796 qtranslate_frontend.php:219
+#: admin/qtx_admin_utils.php:796 qtranslate_frontend.php:255
 #: qtranslate_widget.php:50
 msgid "Language"
 msgstr "Taal"
@@ -759,7 +759,7 @@ msgid "Don't convert links to files of the given file types. (Always included: %
 msgstr "Laat koppelingen niet omzetten naar bestanden van bepaalde bestandstypen. (Altijd inbegrepen: %s)"
 
 #: admin/qtx_configuration.php:337 admin/qtx_languages.php:68
-#: qtranslate_widget.php:111
+#: qtranslate_widget.php:120
 msgid "Head inline CSS"
 msgstr "Kop inline CSS"
 
@@ -767,12 +767,12 @@ msgstr "Kop inline CSS"
 msgid "CSS code added by plugin in the head of front-end pages:"
 msgstr "CSS-code toegevoegd door de plugin in de kop van de website pagina's:"
 
-#: admin/qtx_configuration.php:342 qtranslate_widget.php:111
+#: admin/qtx_configuration.php:342 qtranslate_widget.php:120
 msgid "To disable this inline CSS, clear the check box."
 msgstr "Om deze inline CSS uit te schakelen, vink het selectievakje uit."
 
 #: admin/qtx_configuration.php:342 admin/qtx_configuration.php:468
-#: admin/qtx_configuration.php:504 qtranslate_widget.php:111
+#: admin/qtx_configuration.php:504 qtranslate_widget.php:120
 msgid "To reset to default, clear the text."
 msgstr "Wis de tekst om de standaard waarde te herstellen."
 
@@ -1244,7 +1244,7 @@ msgstr "Een handmatige update voor optie \"%s\" of aan het aangepaste CSS van he
 msgid "If you do not wish to customize this option, then reset it to the default by emptying its value."
 msgstr "Als je deze optie niet wilt  aanpassen, wis de inhoud om de standaard waarde te herstellen."
 
-#: admin/qtx_languages.php:116
+#: admin/qtx_languages.php:113
 msgid "Cannot delete Default Language!"
 msgstr "Kan Standaardtaal niet verwijderen!"
 
@@ -1270,27 +1270,27 @@ msgstr "Markeer vertaalbare velden"
 msgid "The way the translatable fields are highlighted is configured with global option %s."
 msgstr "De manier waarop de vertaalbare velden worden gemarkeerd is geconfigureerd met de algemene optie %s."
 
-#: qtranslate_core.php:1482
+#: qtranslate_core.php:1463
 msgid "For the sake of viewer convenience, the content is shown below in this site default language."
 msgstr "Voor het gemak van de kijker, is de inhoud hieronder weergegeven in de standaard taal van deze site."
 
-#: qtranslate_core.php:1485
+#: qtranslate_core.php:1466
 msgid "For the sake of viewer convenience, the content is shown below in one of the available alternative languages."
 msgstr "Voor het gemak van de kijker, wordt de inhoud hieronder weergegeven in een van de beschikbare alternatieve talen."
 
-#: qtranslate_core.php:1488
+#: qtranslate_core.php:1469
 msgid "You may click one of the links to switch the site language to another available language."
 msgstr "Je kunt op een van de koppelingen klikken om de taal van de site naar een andere beschikbare taal te veranderen."
 
-#: qtranslate_core.php:1490
+#: qtranslate_core.php:1471
 msgid "For the sake of viewer convenience, the content is shown below in the alternative language."
 msgstr "Voor het gemak van de kijker, is de inhoud hieronder weergegeven in de alternatieve taal."
 
-#: qtranslate_core.php:1491
+#: qtranslate_core.php:1472
 msgid "You may click the link to switch the active language."
 msgstr "Je kunt klikken op de link om naar de actieve taal over te schakelen."
 
-#: qtranslate_frontend.php:228
+#: qtranslate_frontend.php:264
 msgctxt "Colon after a title. For example, in top item of Language Menu."
 msgid ":"
 msgstr ""
@@ -1608,7 +1608,7 @@ msgstr "Alleen tekst"
 msgid "Image only"
 msgstr "Alleen plaatje"
 
-#: qtranslate_widget.php:103 qtranslate_widget.php:108
+#: qtranslate_widget.php:103 qtranslate_widget.php:117
 msgid "Text and Image"
 msgstr "Tekst en plaatje"
 
@@ -1620,32 +1620,59 @@ msgstr "Dropdown Box"
 msgid "Custom list item format:"
 msgstr "Aangeast formaat van de lijst:"
 
-#: qtranslate_widget.php:107
-#, php-format
-msgid "Accepted format arguments:%s - Flag Image%s - Language Name%s - Language 2-Letter Code%s"
-msgstr "Geaccepteerde formaten:%s - Vlag afbeelding%s - Taal naam%s - Taal 2-Letter code%s"
+#: qtranslate_widget.php:109
+msgid "Accepted format arguments:"
+msgstr ""
 
-#: qtranslate_widget.php:108
+#: qtranslate_widget.php:110
+#, fuzzy
+msgid "Flag Image HTML"
+msgstr "Locatie van de afbeedlingen van de vlaggen"
+
+#: qtranslate_widget.php:111
+#, fuzzy
+msgid "Flag Image URL"
+msgstr "Locatie van de afbeedlingen van de vlaggen"
+
+#: qtranslate_widget.php:112
+#, fuzzy
+msgid "Language Native Name"
+msgstr "Talen Beheer"
+
+#: qtranslate_widget.php:113
+#, fuzzy
+msgid "Language Name in Active Language"
+msgstr "Talen zijn niet ingesteld"
+
+#: qtranslate_widget.php:114
+#, fuzzy
+msgid "Language 2-Letter Code"
+msgstr "Taal Code"
+
+#: qtranslate_widget.php:117
 #, php-format
 msgid "For example, format \"%s\" would do the same as the choice \"%s\"."
 msgstr "Bijvoorbeeld, formaat \"%s\" zou hetzelfde doen als de keuze \"%s\"."
 
-#: qtranslate_widget.php:109
+#: qtranslate_widget.php:118
 msgid "An appropriate custom CSS is expected to be provided in this case."
 msgstr "Een geschikt CSS aanpassing wordt verwacht in dit geval."
 
-#: qtranslate_widget.php:111
+#: qtranslate_widget.php:120
 #, php-format
 msgid "Other common CSS block for flag classes \"%s\" is loaded in the head of HTML and can be controlled with option \"%s\"."
 msgstr "Andere gemeenschappelijke CSS instellingen voor vlag klassen \"%s\" is in de kop van HTML geladen en kan worden gecontroleerd met de optie \"%s\" onder Instellingen -  Talen - Geavanceerd."
 
-#: qtranslate_widget.php:111
+#: qtranslate_widget.php:120
 msgid "Widget CSS:"
 msgstr "Widget CSS:"
 
 #: qtranslate.php:5
 msgid "Adds user-friendly and database-friendly multilingual content support."
 msgstr "Voegt ondersteuning voor gebruiks- en database-vriendelijke meertalige inhoud toe."
+
+#~ msgid "Accepted format arguments:%s - Flag Image%s - Language Name%s - Language 2-Letter Code%s"
+#~ msgstr "Geaccepteerde formaten:%s - Vlag afbeelding%s - Taal naam%s - Taal 2-Letter code%s"
 
 #~ msgid "Slugs"
 #~ msgstr "Slugs"

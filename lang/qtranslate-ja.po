@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: qTranslate-X 3.4.5.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-06 14:00-0600\n"
+"POT-Creation-Date: 2015-10-08 21:10-0600\n"
 "PO-Revision-Date: 2011-02-14 23:07+0900\n"
 "Last-Translator: \n"
 "Language-Team: Qian Qin <mail@qianqin.de>\n"
@@ -357,7 +357,7 @@ msgstr "デフォルトの言語は無効にできません！"
 
 #: admin/qtx_admin_options_update.php:194
 #: admin/qtx_admin_options_update.php:203
-#: admin/qtx_admin_options_update.php:221
+#: admin/qtx_admin_options_update.php:222
 msgid "No such language!"
 msgstr "その言語はありません！"
 
@@ -370,39 +370,39 @@ msgid "Language is already first!"
 msgstr "この言語は既に最初です！"
 
 #: admin/qtx_admin_options_update.php:213
-#: admin/qtx_admin_options_update.php:231
+#: admin/qtx_admin_options_update.php:232
 msgid "New order saved."
 msgstr "新しい順番が保存されました。"
 
-#: admin/qtx_admin_options_update.php:225
+#: admin/qtx_admin_options_update.php:226
 msgid "Language is already last!"
 msgstr "この言語は既に最後です！"
 
-#: admin/qtx_admin_options_update.php:244
+#: admin/qtx_admin_options_update.php:246
 msgid "Options saved."
 msgstr "オプションが保存されました。"
 
-#: admin/qtx_admin_options_update.php:250
+#: admin/qtx_admin_options_update.php:252
 #, php-format
 msgid "Could not write to \"%s\", Gettext Databases could not be downloaded!"
 msgstr "「%s」に書き出せなかったため, Gettext のデータベースがダウンロードできませんでした！"
 
-#: admin/qtx_admin_options_update.php:265
+#: admin/qtx_admin_options_update.php:267
 msgid "Admin notices have been reset. You will see all applicable notices on admin pages and may dismiss them again."
 msgstr ""
 
-#: admin/qtx_admin_options_update.php:692
+#: admin/qtx_admin_options_update.php:694
 #, php-format
 msgid "Cannot parse JSON code in the field \"%s\"."
 msgstr ""
 
-#: admin/qtx_admin_options_update.php:692 admin/qtx_configuration.php:186
+#: admin/qtx_admin_options_update.php:694 admin/qtx_configuration.php:186
 #: admin/qtx_configuration.php:502 admin/qtx_configuration.php:508
 #, fuzzy
 msgid "Custom Configuration"
 msgstr "サービス設定"
 
-#: admin/qtx_admin_options_update.php:751
+#: admin/qtx_admin_options_update.php:753
 msgid "Gettext databases updated."
 msgstr "Gettext のデータベースは更新されました。"
 
@@ -443,7 +443,7 @@ msgstr "言語コード"
 msgid "This is a set of \"%s\" from %s. Click any blank space between the buttons and drag it to a place where you would need it the most. Click the handle at the top-right corner of this widget to hide this message."
 msgstr ""
 
-#: admin/qtx_admin_utils.php:796 qtranslate_frontend.php:219
+#: admin/qtx_admin_utils.php:796 qtranslate_frontend.php:255
 #: qtranslate_widget.php:50
 msgid "Language"
 msgstr "言語"
@@ -769,7 +769,7 @@ msgid "Don't convert links to files of the given file types. (Always included: %
 msgstr "この既定のファイルの種類へのリンクを変換しません （デフォルト: gif,jpg,jpeg,png,pdf,swf,tif,rar,zip,7z,mpg,divx,mpeg,avi,css,js）"
 
 #: admin/qtx_configuration.php:337 admin/qtx_languages.php:68
-#: qtranslate_widget.php:111
+#: qtranslate_widget.php:120
 msgid "Head inline CSS"
 msgstr ""
 
@@ -777,12 +777,12 @@ msgstr ""
 msgid "CSS code added by plugin in the head of front-end pages:"
 msgstr ""
 
-#: admin/qtx_configuration.php:342 qtranslate_widget.php:111
+#: admin/qtx_configuration.php:342 qtranslate_widget.php:120
 msgid "To disable this inline CSS, clear the check box."
 msgstr ""
 
 #: admin/qtx_configuration.php:342 admin/qtx_configuration.php:468
-#: admin/qtx_configuration.php:504 qtranslate_widget.php:111
+#: admin/qtx_configuration.php:504 qtranslate_widget.php:120
 msgid "To reset to default, clear the text."
 msgstr ""
 
@@ -1262,7 +1262,7 @@ msgstr ""
 msgid "If you do not wish to customize this option, then reset it to the default by emptying its value."
 msgstr ""
 
-#: admin/qtx_languages.php:116
+#: admin/qtx_languages.php:113
 #, fuzzy
 msgid "Cannot delete Default Language!"
 msgstr "デフォルトの言語は無効にできません！"
@@ -1291,27 +1291,27 @@ msgstr ""
 msgid "The way the translatable fields are highlighted is configured with global option %s."
 msgstr ""
 
-#: qtranslate_core.php:1482
+#: qtranslate_core.php:1463
 msgid "For the sake of viewer convenience, the content is shown below in this site default language."
 msgstr ""
 
-#: qtranslate_core.php:1485
+#: qtranslate_core.php:1466
 msgid "For the sake of viewer convenience, the content is shown below in one of the available alternative languages."
 msgstr ""
 
-#: qtranslate_core.php:1488
+#: qtranslate_core.php:1469
 msgid "You may click one of the links to switch the site language to another available language."
 msgstr ""
 
-#: qtranslate_core.php:1490
+#: qtranslate_core.php:1471
 msgid "For the sake of viewer convenience, the content is shown below in the alternative language."
 msgstr ""
 
-#: qtranslate_core.php:1491
+#: qtranslate_core.php:1472
 msgid "You may click the link to switch the active language."
 msgstr ""
 
-#: qtranslate_frontend.php:228
+#: qtranslate_frontend.php:264
 msgctxt "Colon after a title. For example, in top item of Language Menu."
 msgid ":"
 msgstr ""
@@ -1634,7 +1634,7 @@ msgstr "テキストのみ"
 msgid "Image only"
 msgstr "画像のみ"
 
-#: qtranslate_widget.php:103 qtranslate_widget.php:108
+#: qtranslate_widget.php:103 qtranslate_widget.php:117
 msgid "Text and Image"
 msgstr "テキストと画像"
 
@@ -1646,26 +1646,50 @@ msgstr "ドロップダウン・ボックス"
 msgid "Custom list item format:"
 msgstr ""
 
-#: qtranslate_widget.php:107
-#, php-format
-msgid "Accepted format arguments:%s - Flag Image%s - Language Name%s - Language 2-Letter Code%s"
+#: qtranslate_widget.php:109
+msgid "Accepted format arguments:"
 msgstr ""
 
-#: qtranslate_widget.php:108
+#: qtranslate_widget.php:110
+#, fuzzy
+msgid "Flag Image HTML"
+msgstr "国旗画像のパス"
+
+#: qtranslate_widget.php:111
+#, fuzzy
+msgid "Flag Image URL"
+msgstr "国旗画像のパス"
+
+#: qtranslate_widget.php:112
+#, fuzzy
+msgid "Language Native Name"
+msgstr "言語管理"
+
+#: qtranslate_widget.php:113
+#, fuzzy
+msgid "Language Name in Active Language"
+msgstr "この言語は既に最後です！"
+
+#: qtranslate_widget.php:114
+#, fuzzy
+msgid "Language 2-Letter Code"
+msgstr "言語コード"
+
+#: qtranslate_widget.php:117
 #, php-format
 msgid "For example, format \"%s\" would do the same as the choice \"%s\"."
 msgstr ""
 
-#: qtranslate_widget.php:109
+#: qtranslate_widget.php:118
 msgid "An appropriate custom CSS is expected to be provided in this case."
 msgstr ""
 
-#: qtranslate_widget.php:111
+#: qtranslate_widget.php:120
 #, php-format
 msgid "Other common CSS block for flag classes \"%s\" is loaded in the head of HTML and can be controlled with option \"%s\"."
 msgstr ""
 
-#: qtranslate_widget.php:111
+#: qtranslate_widget.php:120
 msgid "Widget CSS:"
 msgstr ""
 
