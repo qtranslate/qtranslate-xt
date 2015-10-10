@@ -121,15 +121,19 @@ function qtranxf_admin_load()
 {
 	//qtranxf_dbg_log('qtranxf_admin_load:');
 	qtranxf_admin_loadConfig();
+	$bnm = qtranxf_plugin_basename();
+	add_filter( 'plugin_action_links_'.$bnm, 'qtranxf_links', 10, 4);
+	add_action( 'qtranslate_init_language', 'qtranxf_load_admin_page_config', 20);//should be excuted after all plugins loaded their *-admin.php
+	qtranxf_add_admin_filters();
+}
+qtranxf_admin_load();
+
+function qtranxf_load_admin_page_config(){
 	$page_configs = qtranxf_get_admin_page_config();
 	if(!empty($page_configs['']['filters'])){
 		qtranxf_add_filters($page_configs['']['filters']);
 	}
-	$bnm = qtranxf_plugin_basename();
-	add_filter( 'plugin_action_links_'.$bnm, 'qtranxf_links', 10, 4);
-	qtranxf_add_admin_filters();
 }
-qtranxf_admin_load();
 
 function qtranxf_admin_init(){
 	global $q_config, $pagenow;
@@ -181,10 +185,13 @@ add_action('admin_init','qtranxf_admin_init',2);
  */
 function qtranxf_get_admin_page_config() {
 	static $page_configs;//cache
-	if($page_configs) return $page_configs;
-
+	if($page_configs){
+		//qtranxf_dbg_log('qtranxf_get_admin_page_config: $page_configs: cached: ', $page_configs);
+		return $page_configs;
+	}
 	global $q_config, $pagenow;
 	$admin_config = $q_config['admin_config'];
+	//qtranxf_dbg_log('qtranxf_get_admin_page_config: $admin_config: raw: ',qtranxf_json_encode($admin_config));
 	$admin_config = apply_filters('qtranslate_load_admin_page_config',$admin_config);//obsolete
 	$url_query = isset($q_config['url_info']['query']) ? $q_config['url_info']['query'] : '';
 	/**
@@ -192,7 +199,7 @@ function qtranxf_get_admin_page_config() {
 	 * @param (array) $admin_config token 'admin-config' of the configuration.
 	 */
 	$admin_config = apply_filters('i18n_admin_config', $admin_config);
-	//qtranxf_dbg_log('qtranxf_get_admin_page_config: $admin_config: ',qtranxf_json_encode($admin_config));
+	//qtranxf_dbg_log('qtranxf_get_admin_page_config: $admin_config: filtered: ',qtranxf_json_encode($admin_config));
 
 	$page_configs = qtranxf_parse_page_config($admin_config, $pagenow, $url_query);
 	//qtranxf_dbg_log('qtranxf_get_admin_page_config: $page_configs: ', $page_configs);
