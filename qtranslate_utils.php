@@ -878,7 +878,7 @@ function qtranxf_parse_page_config($config, $url_path, $url_query) {
 
 	//qtranxf_dbg_log('qtranxf_parse_page_config: $page_configs: ', $page_configs);
 	foreach($page_configs as $post_type_key => &$page_config){
-		if(!empty($post_type_key))
+		//if(!empty($post_type_key))
 		//qtranxf_dbg_log('qtranxf_parse_page_config: $post_type_key="'.$post_type_key.'"; page_config: ', $page_config);
 		if(!empty($page_config)){
 			//clean up 'fields'
