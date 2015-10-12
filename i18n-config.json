@@ -79,7 +79,7 @@
 			"fields":{
 				"tag-name":{},
 				"tag-description":{},
-				"parent":{}
+				"parent":{"encode":"display"}
 			}
 		},
 		"col-left":{
