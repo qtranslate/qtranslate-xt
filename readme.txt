@@ -91,8 +91,8 @@ Developers: please drop new topics here, the text will be moved to [qTranslate-X
 
 ## Upgrade Notice ##
 
-### 3.4.6.1 ###
-This version recovers previously broken functionality of "Woocommerce & qTranslate-X".
+### 3.4.6.2 ###
+This version recovers translation of parent of a category on category edit page.
 
 ## Screenshots ##
 
@@ -102,7 +102,7 @@ This version recovers previously broken functionality of "Woocommerce & qTransla
 ## Changelog ##
 
 ### 3.4.6.2 ###
-* Fix: recovered translation of parent of category on category edit page.
+* Fix: recovered translation of parent of a category on category edit page.
 
 ### 3.4.6.1 stable ###
 * Fix: Call of `qtranxf_get_admin_page_config` is moved after all integrating plugins loaded their `*-admin.php`, otherwise i18n configuration is loaded only partially, which broke "Woocommerce & qTranslate-X". [Issue #277](https://github.com/qTranslate-Team/qtranslate-x/issues/277).
