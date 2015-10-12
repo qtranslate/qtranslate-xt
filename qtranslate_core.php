@@ -1329,6 +1329,44 @@ function qtranxf_join_s($texts) {
 	return $text;
 }
 
+/**
+ * Prepares multilingual text leaving text that matches $rx_sep outside of language tags.
+ * @since 3.4.6.2
+*/
+function qtranxf_join_byseparator($texts,$rx_sep) {
+	$text = qtranxf_allthesame($texts);
+	if(!is_null($text)) return $text;
+
+	$lines=array();
+	foreach($texts as $lang => $text){
+		$lines[$lang] = preg_split($rx_sep,$text,null,PREG_SPLIT_DELIM_CAPTURE);
+	}
+
+	$text = '';
+	while(true){
+		$done = true;
+		$ln = array();
+		$sep = '';
+		foreach($lines as $lang => $txts){
+			$t = current($txts);
+			if ( $t === false ) continue;
+			if(preg_match($rx_sep,$t)){
+				$sep = $t;
+				$t = next($txts);
+			}
+			$done = false;
+			$ln[$lang] = $t;
+			next($txts);
+		}
+		if( $done ) break;
+		$text .= qtranxf_join_b($ln).$sep;
+	}
+	return $text;
+}
+
+/**
+ * Prepare multilingal text leaving new line outside of language tags '[:]'.
+*/
 function qtranxf_join_byline($texts) {
 	$text = qtranxf_allthesame($texts);
 	if(!is_null($text)) return $text;
