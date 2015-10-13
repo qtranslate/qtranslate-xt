@@ -106,6 +106,11 @@ function qtranxf_init_language() {
 	$lang_dir = qtranxf_plugin_dirname().'/lang';
 	load_plugin_textdomain('qtranslate', false, $lang_dir);
 
+	/**
+	 * allow other plugins to initialize whatever they need before the fork between front and admin.
+	*/
+	do_action('qtranslate_load_front_admin',$url_info);
+
 	if($q_config['url_info']['doing_front_end']) {
 		require_once(QTRANSLATE_DIR.'/qtranslate_frontend.php');
 	}else{
@@ -115,7 +120,9 @@ function qtranxf_init_language() {
 
 	qtranxf_load_option_qtrans_compatibility();
 
-	//allow other plugins to initialize whatever they need for language
+	/**
+	 * allow other plugins to initialize whatever they need for language
+	 */
 	do_action('qtranslate_init_language',$url_info);
 	//qtranxf_dbg_log('qtranxf_init_language: done: url_info: ',$url_info);
 }
