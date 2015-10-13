@@ -105,7 +105,7 @@ This version recovers translation of parent of a category on category edit page.
 
 ## Changelog ##
 
-### 3.4.6.2 ###
+### 3.4.6.2 stable ###
 * Fix: recovered translation of parent of a category on category edit page.
 
 ### 3.4.6.1 stable ###
