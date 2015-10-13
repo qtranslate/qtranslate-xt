@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qTranslate-X 3.4.5.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-08 21:10-0600\n"
-"PO-Revision-Date: 2015-10-06 09:21+0100\n"
+"PO-Revision-Date: 2015-10-12 10:56+0100\n"
 "Last-Translator: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "Language-Team: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -309,8 +309,7 @@ msgstr "O idioma tem que ter um código Locale!"
 msgid "The Language must have a name!"
 msgstr "O idioma tem que ter um nome!"
 
-#: admin/qtx_admin_options_update.php:46
-#: admin/qtx_admin_options_update.php:155
+#: admin/qtx_admin_options_update.php:46 admin/qtx_admin_options_update.php:155
 msgid "Language Code has to be 2 characters long!"
 msgstr "O código do idioma tem que conter 2 caracteres!"
 
@@ -1296,7 +1295,7 @@ msgstr "Pode clicar na ligação para alterar o idioma activo."
 #: qtranslate_frontend.php:264
 msgctxt "Colon after a title. For example, in top item of Language Menu."
 msgid ":"
-msgstr ""
+msgstr ":"
 
 #: qtranslate_services.php:43
 msgid "The language/s do not have a valid ISO 639-1 representation."
@@ -1625,32 +1624,27 @@ msgstr "Formato personalizado dos itens da lista:"
 
 #: qtranslate_widget.php:109
 msgid "Accepted format arguments:"
-msgstr ""
+msgstr "Argumentos de formatação aceites:"
 
 #: qtranslate_widget.php:110
-#, fuzzy
 msgid "Flag Image HTML"
-msgstr "Caminho para a imagem da bandeira"
+msgstr "HTML da imagem da bandeira"
 
 #: qtranslate_widget.php:111
-#, fuzzy
 msgid "Flag Image URL"
-msgstr "Caminho para a imagem da bandeira"
+msgstr "URL da imagem da bandeira"
 
 #: qtranslate_widget.php:112
-#, fuzzy
 msgid "Language Native Name"
-msgstr "Gestão de idiomas"
+msgstr "Nome nativo do idioma"
 
 #: qtranslate_widget.php:113
-#, fuzzy
 msgid "Language Name in Active Language"
-msgstr "Idiomas não definidos"
+msgstr "Nome do idioma no idioma activo"
 
 #: qtranslate_widget.php:114
-#, fuzzy
 msgid "Language 2-Letter Code"
-msgstr "Código do idioma"
+msgstr "Código do idioma de 2 letras"
 
 #: qtranslate_widget.php:117
 #, php-format
