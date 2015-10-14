@@ -232,7 +232,10 @@ echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 
 					}
 				?>
 					</table>
-					<p class="qtranxs_notes"><?php printf(__('Choose the default language of your blog. This is the language which will be shown on %s. You can also change the order the languages by clicking on the arrows above.', 'qtranslate'), get_bloginfo('url')) ?></p>
+					<p class="qtranxs_notes"><?php
+						$url = get_bloginfo('url');
+						$url = qtranxf_convertURL($url, $q_config['default_language'], true);
+						printf(__('Choose the default language of your blog. This is the language which will be shown on %s. You can also change the order the languages by clicking on the arrows above.', 'qtranslate'), $url) ?></p>
 					</fieldset>
 				</td>
 			</tr>
@@ -291,7 +294,7 @@ echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 
 					<p class="qtranxs_notes"><?php _e('This is relevant to all fields other than the main content of posts and pages. Such untranslated fields are always shown in an alternative available language, and will be prefixed with the language name in parentheses, if this option is on.', 'qtranslate') ?></p>
 					<br/>
 					<label for="show_alternative_content"><input type="checkbox" name="show_alternative_content" id="show_alternative_content" value="1"<?php checked($q_config['show_alternative_content']) ?>/> <?php _e('Show content in an alternative language when translation is not available for the selected language.', 'qtranslate') ?></label>
-					<p class="qtranxs_notes"><?php printf(__('When a page or a post with an untranslated content is viewed, a message with a list of other available languages is displayed, in which languages are ordered as defined by option "%s". If this option is on, then the content in default language will also be shown, instead of the expected language, for the sake of user convenience. If default language is not available for the content, then the content in the first available language is shown.', 'qtranslate'), __('Default Language / Order', 'qtranslate')) ?></p>
+					<p class="qtranxs_notes"><?php printf(__('When a page or a post with an untranslated content is viewed, a message with a list of other available languages is displayed, in which languages are ordered as defined by option "%s". If this option is on, then the content of the first available language will also be shown, instead of the expected language, for the sake of user convenience.', 'qtranslate'), __('Default Language / Order', 'qtranslate')) ?></p>
 				</td>
 			</tr>
 			<tr valign="top">

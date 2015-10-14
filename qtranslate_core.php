@@ -1451,27 +1451,37 @@ function qtranxf_use_block($lang, $blocks, $show_available=false, $show_empty=fa
 
 	// content is not available in requested language (bad!!) what now?
 
-	//remove available languages that are not enabled
-	foreach($available_langs as $language => $b) {
-		if(qtranxf_isEnabled($language)) continue;
-		unset($available_langs[$language]);
+	//remove available languages that are not enabled and sort them in the order of enabled languages
+	//foreach($available_langs as $language => $b) {
+	//	if(qtranxf_isEnabled($language)) continue;
+	//	unset($available_langs[$language]);
+	//}
+	$alangs = array();
+	foreach($q_config['enabled_languages'] as $language) {
+		if(empty($available_langs[$language])) continue;
+		$alangs[] = $language;
 	}
+	if(empty($alangs)) return '';
 
-	// set alternative language
-	if(empty($available_langs[$q_config['default_language']])){
-		$alt_lang = null;
-		$alt_content = null;
-		$alt_lang_is_default = false;
-		foreach($available_langs as $language => $b) {
-			$alt_lang = $language;
-			$alt_content = $content[$language];
-			break;
-		}
-	}else{
-		$alt_lang = $q_config['default_language'];
-		$alt_content = $content[$alt_lang];
-		$alt_lang_is_default = true;
-	}
+	$available_langs = $alangs;
+	// set alternative language to the first available in the order of enabled languages
+	$alt_lang = current($available_langs);
+	$alt_content = $content[$alt_lang];
+	$alt_lang_is_default = $alt_lang == $q_config['default_language'];
+	//if(empty($available_langs[$q_config['default_language']])){
+	//	$alt_lang = null;
+	//	$alt_content = null;
+	//		$alt_lang_is_default = false;
+	//	foreach($available_langs as $language) {
+	//		$alt_lang = $language;
+	//		$alt_content = $content[$language];
+	//		break;
+	//	}
+	//}else{
+	//	$alt_lang = $q_config['default_language'];
+	//	$alt_content = $content[$alt_lang];
+	//	$alt_lang_is_default = true;
+	//}
 	if(!$alt_lang) return '';
 
 	if(!$show_available){
@@ -1489,7 +1499,7 @@ function qtranxf_use_block($lang, $blocks, $show_available=false, $show_empty=fa
 		$end_separator = $match[2];
 		// build available languages string backward
 		$i = 0;
-		foreach($available_langs as $language => $b) {
+		foreach(array_reverse($available_langs) as $language) {
 			if($i==1) $language_list = $end_separator.$language_list;
 			elseif($i>1) $language_list = $normal_separator.$language_list;
 			$language_name = qtranxf_getLanguageName($language);
