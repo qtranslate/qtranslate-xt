@@ -1493,7 +1493,8 @@ function qtranxf_use_block($lang, $blocks, $show_available=false, $show_empty=fa
 			if($i==1) $language_list = $end_separator.$language_list;
 			elseif($i>1) $language_list = $normal_separator.$language_list;
 			$language_name = qtranxf_getLanguageName($language);
-			$language_list = '&ldquo;<a href="'.qtranxf_convertURL('', $language, false, true).'" class="qtranxs-available-language-link qtranxs-available-language-link-'.$language.'">'.$language_name.'</a>&rdquo;'.$language_list;
+			//$language_list = '&ldquo;<a href="'.qtranxf_convertURL('', $language, false, true).'" class="qtranxs-available-language-link qtranxs-available-language-link-'.$language.'">'.$language_name.'</a>&rdquo;'.$language_list;
+			$language_list = '<a href="'.qtranxf_convertURL('', $language, false, true).'" class="qtranxs-available-language-link qtranxs-available-language-link-'.$language.'">'.$language_name.'</a>'.$language_list;
 			++$i;
 		}
 	}

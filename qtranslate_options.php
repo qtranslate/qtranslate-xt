@@ -237,10 +237,11 @@ function qtranxf_default_not_available()
 {
 	// %LANG:<normal_separator>:<last_separator>% generates a list of languages separated by <normal_separator> except for the last one, where <last_separator> will be used instead.
 	$cfg = array();
-	$cfg['de'] = 'Leider ist der Eintrag nur auf %LANG:, : und % verfügbar.';
-	$cfg['en'] = 'Sorry, this entry is only available in %LANG:, : and %.';
+	//Sorry, this entry is only available in "%LANG:, :" and "%".
+	$cfg['de'] = 'Leider ist der Eintrag nur auf %LANG:, : und % verfügbar.';//nq
+	$cfg['en'] = 'Sorry, this entry is only available in %LANG:, : and %.';//nq
 	$cfg['zh'] = '对不起，此内容只适用于%LANG:，:和%。';
-	$cfg['ru'] = 'Извините, этот техт доступен только в %LANG:, : и %.';
+	$cfg['ru'] = 'Извините, этот техт доступен только в &ldquo;%LANG:&rdquo;, &ldquo;:&rdquo; и &ldquo;%&rdquo;.';
 	$cfg['fi'] = 'Anteeksi, mutta tämä kirjoitus on saatavana ainoastaan näillä kielillä: %LANG:, : ja %.';
 	$cfg['fr'] = 'Désolé, cet article est seulement disponible en %LANG:, : et %.';
 	$cfg['nl'] = 'Onze verontschuldigingen, dit bericht is alleen beschikbaar in %LANG:, : en %.';
@@ -261,7 +262,7 @@ function qtranxf_default_not_available()
 	$cfg['hr'] = 'Žao nam je, ne postoji prijevod na raspolaganju za ovaj proizvod još %LANG:, : i %.';
 	$cfg['eu'] = 'Sentitzen dugu, baina sarrera hau %LANG-z:, : eta % bakarrik dago.';
 	$cfg['el'] = 'Συγγνώμη,αυτή η εγγραφή είναι διαθέσιμη μόνο στα %LANG:, : και %.';
-	$cfg['ua'] = 'Вибачте цей текст доступний тільки в %LANG:, : і %.';
+	$cfg['ua'] = 'Вибачте цей текст доступний тільки в &ldquo;%LANG:&rdquo;, &ldquo;: і &ldquo;%&rdquo;.';
 	//$cfg['tw'] = '对不起，此内容只适用于%LANG:，:和%。';
 	return $cfg;
 }

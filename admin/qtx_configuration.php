@@ -102,7 +102,10 @@ function qtranxf_language_form() {
 	<input name="language_na_message" id="language_na_message" type="text" value="<?php echo esc_html($language_na_message); ?>"/>
 	<p class="qtranxs_notes">
 	<?php _e('Message to display if post is not available in the requested language. (Example: Sorry, this entry is only available in %LANG:, : and %.)', 'qtranslate') ?><br/>
-	<?php _e('%LANG:&lt;normal_separator&gt;:&lt;last_separator&gt;% generates a list of languages separated by &lt;normal_separator&gt; except for the last one, where &lt;last_separator&gt; will be used instead.', 'qtranslate') ?><br/>
+	<?php _e('%LANG:&lt;normal_separator&gt;:&lt;last_separator&gt;% generates a list of languages separated by &lt;normal_separator&gt; except for the last one, where &lt;last_separator&gt; will be used instead.', 'qtranslate');
+		echo ' ';
+		printf(__('The language names substituted into the list of available languages are shown translated in the active language. The nominative form of language names is used as it is fetched from %s may not fit the grammar rules of your language. It is then advisable to include quotes in this message like this "%s". Alternatively you may modify "%s" files in folder "%s" with names that fit your grammar rules. Please, %scontact the development team%s, if you decide to modify "%s" files.', 'qtranslate'), '<a href="http://unicode.org/Public/cldr/latest" title="Unicode Common Locale Data Repository" target="_blank" tabindex="-1">CLDR</a>', 'Sorry, this entry is only available in "%LANG:", ":" and "%".', '.po', '<a href="https://github.com/qTranslate-Team/qtranslate-x/tree/master/lang/language-names" target="_blank" tabindex="-1">/lang/language-names/</a>', '<a href="https://qtranslatexteam.wordpress.com/contact-us/" target="_blank" tabindex="-1">', '</a>', '.po');
+	?>
 	</p>
 </div>
 <?php
@@ -692,7 +695,7 @@ class QTX_LanguageList extends WP_List_Table
 <div class="col-wrap">
 <div class="form-wrap">
 <h3><?php _e('Add Language', 'qtranslate') ?></h3>
-<form name="addlang" id="addlang" method="post" class="add:the-list: validate">
+<form action="<?php echo $clean_uri ?>" name="addlang" id="addlang" method="post" class="add:the-list: validate">
 <?php
 	wp_nonce_field($nonce_action); // Prevent CSRF
 	qtranxf_language_form();
