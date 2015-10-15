@@ -99,18 +99,6 @@ function qtranxf_admin_loadConfig(){
 		qtranxf_update_i18n_config();
 	}
 
-	// Set Admin Sections Names
-	$q_config['admin_sections'] = array();
-	$admin_sections = &$q_config['admin_sections'];
-	$admin_sections['general'] = __('General', 'qtranslate');//General Settings
-	$admin_sections['advanced'] = __('Advanced', 'qtranslate');//Advanced Settings
-
-	do_action('qtranslate_admin_loadConfig');
-
-	$admin_sections['integration'] = __('Integration', 'qtranslate');//Custom Integration
-	$admin_sections['import'] = __('Import', 'qtranslate').'/'.__('Export', 'qtranslate');
-	$admin_sections['languages'] = __('Languages', 'qtranslate');//always last section
-
 	qtranxf_add_conf_filters();
 }
 //add_action('qtranslate_loadConfig','qtranxf_admin_loadConfig');

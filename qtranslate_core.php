@@ -1482,7 +1482,7 @@ function qtranxf_use_block($lang, $blocks, $show_available=false, $show_empty=fa
 	//	$alt_content = $content[$alt_lang];
 	//	$alt_lang_is_default = true;
 	//}
-	if(!$alt_lang) return '';
+	//if(!$alt_lang) return '';
 
 	if(!$show_available){
 		if ($q_config['show_displayed_language_prefix'])

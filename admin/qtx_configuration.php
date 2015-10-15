@@ -123,6 +123,25 @@ function qtranxf_admin_section_end($nm, $button_name=null, $button_class='button
 	echo '</div>'.PHP_EOL; //'<!-- id="tab-'.$nm.'" -->';
 }
 
+/**
+ * Set Admin Sections Names
+ */
+function qtranxf_get_admin_sections() {
+	//$q_config['admin_sections'] = array();
+	//$admin_sections = &$q_config['admin_sections'];
+	$admin_sections = array();
+	$admin_sections['general'] = __('General', 'qtranslate');//General Settings
+	$admin_sections['advanced'] = __('Advanced', 'qtranslate');//Advanced Settings
+
+	$custom_sections = apply_filters('qtranslate_admin_sections', array());
+	foreach($custom_sections as $k => $v) $admin_sections[$k] = $v;
+
+	$admin_sections['integration'] = __('Integration', 'qtranslate');//Custom Integration
+	$admin_sections['import'] = __('Import', 'qtranslate').'/'.__('Export', 'qtranslate');
+	$admin_sections['languages'] = __('Languages', 'qtranslate');//always last section
+	return $admin_sections;
+}
+
 function qtranxf_conf() {
 	global $q_config, $qtranslate_options, $wpdb;
 	//qtranxf_dbg_log('qtranxf_conf: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
@@ -143,6 +162,9 @@ function qtranxf_conf() {
 	$pluginurl = plugin_dir_url( QTRANSLATE_FILE );
 	$nonce_action = 'qtranslate-x_configuration_form';
 	if ( ! qtranxf_verify_nonce( $nonce_action ) ) return;
+
+	// Allow to prepare loading additional features
+	do_action('qtranslate_configuration_pre', $clean_uri);
 
 	// Generate XHTML
 ?>
@@ -190,10 +212,12 @@ function qtranxf_conf() {
 echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 'qtranslate'), '<a href="https://qtranslatexteam.wordpress.com/integration/" target="_blank">', '</a>'); ?></p>
 <p class="qtranxs_explanation"><textarea class="widefat" rows="30"><?php echo qtranxf_json_encode($configs); ?></textarea></p>
 <p class="qtranxs_notes"><?php printf(__('Note to developers: ensure that front-end filter %s is also active on admin side, otherwise the changes it makes will not show up here. Having this filter active on admin side does not affect admin pages functionality, except this field.', 'qtranslate'), '"i18n_front_config"') ?></p>
-<p class="qtranxs_notes"><a href="<?php echo admin_url('options-general.php?page=qtranslate-x#integration') ?>"><?php _e('back to configuration page', 'qtranslate') ?></a></p><?php }else{
+<p class="qtranxs_notes"><a href="<?php echo admin_url('options-general.php?page=qtranslate-x#integration') ?>"><?php _e('back to configuration page', 'qtranslate') ?></a></p>
+<?php }else{
 	// Set Navigation Tabs
+	$admin_sections = qtranxf_get_admin_sections();
 	echo '<h2 class="nav-tab-wrapper">'.PHP_EOL;
-	foreach( $q_config['admin_sections'] as $slug => $name ){
+	foreach( $admin_sections as $slug => $name ){
 		echo '<a class="nav-tab" href="#'.$slug.'" title="'.sprintf(__('Click to switch to %s', 'qtranslate'), $name).'">'.$name.'</a>'.PHP_EOL;
 	}
 	echo '</h2>'.PHP_EOL;
