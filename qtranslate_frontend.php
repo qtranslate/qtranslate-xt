@@ -732,7 +732,124 @@ function qtranxf_cache_delete_metadata($meta_type, $object_id){//, $meta_key) {
 
 /**
  * @since 3.2.3 translation of meta data
+ * @since 3.4.6.4 improved caching algorithm
  */
+function qtranxf_translate_metadata($meta_type, $original_value, $object_id, $meta_key = '', $single = false){
+	global $q_config;
+	static $meta_cache_unserialized = array();
+	if(!isset($q_config['url_info'])){
+		//qtranxf_dbg_log('qtranxf_filter_postmeta: too early: $object_id='.$object_id.'; $meta_key',$meta_key,true);
+		return $original_value;
+	}
+	//qtranxf_dbg_log('qtranxf_filter_postmeta: $object_id='.$object_id.'; $meta_key=',$meta_key);
+
+	//$meta_type = 'post';
+	$lang = $q_config['language'];
+	$cache_key = $meta_type . '_meta';
+	$cache_key_lang = $cache_key . $lang;
+
+	$meta_cache_wp = wp_cache_get($object_id, $cache_key);
+	if($meta_cache_wp){
+		//if there is wp cache, then we check if there is qtx cache
+		$meta_cache = wp_cache_get( $object_id, $cache_key_lang );
+	}else{
+		//reset qtx cache, since it would not be valid in the absence of wp cache
+		qtranxf_cache_delete_metadata($meta_type, $object_id);
+		$meta_cache = null;
+	}
+
+	if(!isset($meta_cache_unserialized[$meta_type])) $meta_cache_unserialized[$meta_type] = array();
+	if(!isset($meta_cache_unserialized[$meta_type][$object_id])) $meta_cache_unserialized[$meta_type][$object_id] = array();
+	$meta_unserialized = &$meta_cache_unserialized[$meta_type][$object_id];
+
+	if( !$meta_cache ){
+		if ( $meta_cache_wp ) {
+			$meta_cache = $meta_cache_wp;
+		}else{
+			$meta_cache = update_meta_cache( $meta_type, array( $object_id ) );
+			$meta_cache = $meta_cache[$object_id];
+		}
+		$meta_unserialized = array();//clear this cache if we are re-doing meta_cache
+		//qtranxf_dbg_log('qtranxf_filter_postmeta: $object_id='.$object_id.'; $meta_cache before:',$meta_cache);
+		foreach($meta_cache as $mkey => $mval){
+			$meta_unserialized[$mkey] = array();
+			if(strpos($mkey,'_url') !== false){
+				switch($mkey){
+					case '_menu_item_url': break; // function qtranxf_wp_get_nav_menu_items takes care of this later
+					default:
+						foreach($mval as $k => $v){
+							$s = is_serialized($v);
+							if($s) $v = unserialize($v);
+							$v = qtranxf_convertURLs($v,$lang);
+							$meta_unserialized[$mkey][$k] = $v;
+							if($s) $v = serialize($v);
+							$meta_cache[$mkey][$k] = $v;
+						}
+					break;
+				}
+			}else{
+				foreach($mval as $k => $v){
+					if(!qtranxf_isMultilingual($v)) continue;
+					$s = is_serialized($v);
+					if($s) $v = unserialize($v);
+					$v = qtranxf_use($lang, $v, false, false);
+					$meta_unserialized[$mkey][$k] = $v;
+					if($s) $v = serialize($v);
+					$meta_cache[$mkey][$k] = $v;
+				}
+			}
+		}
+		//qtranxf_dbg_log('qtranxf_filter_postmeta: $object_id='.$object_id.'; $meta_cache  after:',$meta_cache);
+		wp_cache_set( $object_id, $meta_cache, $cache_key_lang );
+	}
+
+	if(!$meta_key){
+		if($single){
+	/**
+	  @since 3.2.9.9.7
+	  The code executed after a call to this filter in /wp-includes/meta.php,
+	  in function get_metadata, is apparently designed having non-empty $meta_key in mind:
+
+	  	if ( $single && is_array( $check ) ){
+	  		return $check[0];
+	  	}else
+	  		return $check;
+
+	  Following the logic of the code "if ( !$meta_key ) return $meta_cache;",
+		a few lines below in the same function, the code above rather have to be:
+
+	  	if ( $meta_key && $single && is_array( $check ) ){
+	  		return $check[0];
+	  	}else
+	  		return $check;
+
+	  WP assumes that, if $meta_key is empty, then $single must be 'false', but developers sometimes put 'true' anyway, as it is ignored in the original function. The line below offsets this imperfection.
+	  If WP ever fixes that place, this block of code can be removed.
+	 */
+			return array($meta_cache);
+		}
+		return $meta_cache;
+	}
+
+	if(isset($meta_cache[$meta_key])){
+		//cache unserialized values, just for the sake of performance.
+		$meta_key_unserialized = &$meta_unserialized[$meta_key];
+		if($single){
+			if(!isset($meta_key_unserialized[0])) $meta_key_unserialized[0] = maybe_unserialize($meta_cache[$meta_key][0]);
+		}else{
+			foreach($meta_cache[$meta_key] as $k => $v){
+				if(!isset($meta_key_unserialized[$k])) $meta_key_unserialized[$k] = maybe_unserialize($meta_cache[$meta_key][$k]);
+			}
+		}
+		return $meta_key_unserialized;
+	}
+
+	if ($single)
+		return '';
+	else
+		return array();
+}
+/* // code before 3.4.6.4
 function qtranxf_translate_metadata($meta_type, $original_value, $object_id, $meta_key = '', $single = false){
 	global $q_config;
 	if(!isset($q_config['url_info'])){
@@ -813,7 +930,7 @@ function qtranxf_translate_metadata($meta_type, $original_value, $object_id, $me
 
 	  The line below offsets this imperfection.
 	  If WP ever fixes that place, this block of code will have to be removed.
-	 */
+	 * /
 			return array($meta_cache);
 		}
 		return $meta_cache;
@@ -827,6 +944,7 @@ function qtranxf_translate_metadata($meta_type, $original_value, $object_id, $me
 	else
 		return array();
 }
+*/
 
 /**
  * @since 3.2.3 translation of postmeta
