@@ -781,8 +781,10 @@ function qtranxf_admin_home_url($url, $path, $orig_scheme, $blog_id)
 
 function qtranxf_add_admin_filters()
 {
-	global $q_config;
-	if($q_config['url_mode'] != QTX_URL_QUERY){//otherwise '?' may interfere with WP code
+	global $q_config, $pagenow;
+	if($q_config['url_mode'] != QTX_URL_QUERY //otherwise '?' may interfere with WP code
+		&& $pagenow == 'customize.php'
+	){
 		add_filter('home_url', 'qtranxf_admin_home_url', 5, 4);
 	}
 }
