@@ -99,6 +99,10 @@ function qtranxf_admin_loadConfig(){
 		qtranxf_update_i18n_config();
 	}
 
+	/**
+	 * Opportunity to load additional admin features.
+	 */
+	do_action('qtranslate_admin_loadConfig');
+
 	qtranxf_add_conf_filters();
 }
-//add_action('qtranslate_loadConfig','qtranxf_admin_loadConfig');

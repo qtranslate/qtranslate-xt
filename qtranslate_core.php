@@ -465,9 +465,10 @@ function qtranxf_load_option_qtrans_compatibility(){
 	require_once(dirname(__FILE__).'/qtranslate_compatibility.php');
 }
 
-/** Is in use by 3rd-party plugins (for example, alo_easymail) to test q-X presence
+/** Is in use by 3rd-party plugins (for example, alo_easymail) to test q-X presence,
+ * which they should have done by testing "if ( defined( 'QTRANSLATE_FILE' )"
  * @since 3.4
-*/
+ */
 function qtranxf_init() {
 	//qtranxf_dbg_log('"init": qtranxf_init: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
 }
@@ -699,6 +700,9 @@ function qtranxf_loadConfig() {
 		qtranxf_update_i18n_config();
 	}
 
+	/**
+	 * Opportunity to load additional front-end features.
+	 */
 	do_action('qtranslate_loadConfig');
 }
 

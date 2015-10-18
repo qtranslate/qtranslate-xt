@@ -95,6 +95,9 @@ Developers: please drop new topics here, the text will be moved to [qTranslate-X
 
 ## Upgrade Notice ##
 
+### 3.4.6.4 ###
+Fix: A fix for Internal Server Error 500 under some circumstances.
+
 ### 3.4.6.2 ###
 This version recovers translation of parent of a category on category edit page.
 
@@ -107,7 +110,7 @@ This version recovers translation of parent of a category on category edit page.
 
 ### 3.4.6.4 ###
 * Enhancement: The list of avalable languages in "Not Available Message" and alternative language shown now follow the order of languges defined on configuration page, ignoring the default language. For example, if the first language in the order is English, the second is your native and the default, then English translation will be preferably shown as alternative language. Most sites are expected to be are unaffected, since the first language in order is normally the default langauge. However, it may make sense to first try to show most common language (like English in this example), instead of the default language. Now it is possible with putting the most common language to be the first in the order of languages. The order also affects language menu, widget and language shown when translation is not available.
-* Fix: `home_url()` on admin side is now only filtered on `/wp-admin/customize.php` page, otherwise it created a few problems, for example, wrong overwriting of `.htaccess` file in some cases. [WP Topic](https://wordpress.org/support/topic/internal-server-error-500-after-346-update).
+* Fix: `home_url()` on admin side is now only filtered on `/wp-admin/customize.php` page, otherwise it created a few problems, for example, wrong overwriting of `.htaccess` file in some cases, causing Internal Server Error 500 with infinite redirection loop: [WP Topic](https://wordpress.org/support/topic/internal-server-error-500-after-346-update).
 * Fix: consistency and caching of meta data translations. Known affected theme: [Sahifa](http://themeforest.net/item/sahifa-responsive-wordpress-news-magazine-blog-theme/2819356). [WP Issue](https://wordpress.org/support/topic/qtranslate-x-not-working-with-sahifa-custom-sliders).
 
 ### 3.4.6.2 stable ###
