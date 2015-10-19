@@ -501,7 +501,15 @@ function qtranxf_getLanguageName($lang = ''){
 		return $q_config['language-names'][$lang] = $q_config['language_name'][$lang];
 	}
 	$n = $translations->entries[$locale]->translations[0];
-	return $q_config['language-names'][$lang] = mb_convert_case($n,MB_CASE_TITLE);
+	if(empty($q_config['language_name_case'])){//Camel Case by default
+		if(function_exists('mb_convert_case')){// module 'mbstring' may not be installed by default: https://wordpress.org/support/topic/qtranslate_utilsphp-on-line-504
+			$n = mb_convert_case($n,MB_CASE_TITLE);
+		}else{
+			$msg = 'qTranslate-X: Enable PHP module "mbstring" to get names of languages printed in "Camel Case" or disable option \'Show language names in "Camel Case"\' on admin page '.admin_url('options-general.php?page=qtranslate-x#general').'. You may find more information at http://php.net/manual/en/mbstring.installation.php, or search for PHP installation options on control panel of your server provider.';
+			error_log($msg);
+		}
+	}
+	return $q_config['language-names'][$lang] = $n;
 }
 
 function qtranxf_isEnabled($lang) {

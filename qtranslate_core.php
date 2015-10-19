@@ -3,7 +3,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 function qtranxf_init_language() {
 	global $q_config, $pagenow;
-	//qtranxf_dbg_log('"plugins_loaded(2)": qtranxf_init_language: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
+	//qtranxf_dbg_log('1.qtranxf_init_language:');
 
 	//if(defined('QTRANS_INIT')){
 	//	//qtranxf_dbg_log('qtranxf_init_language: QTRANS_INIT: url_info: ',$q_config['url_info']);
@@ -465,38 +465,17 @@ function qtranxf_load_option_qtrans_compatibility(){
 	require_once(dirname(__FILE__).'/qtranslate_compatibility.php');
 }
 
-/** Is in use by 3rd-party plugins (for example, alo_easymail) to test q-X presence,
- * which they should have done by testing "if ( defined( 'QTRANSLATE_FILE' )"
+/**
+ * Response to action 'init', which runs after user is authenticated.
+ * Currently unused.
+ * Is in use by 3rd-party plugins (for example, alo_easymail) to test q-X presence,
+ * which they should have done by testing "if ( defined( 'QTRANSLATE_FILE' )" instead.
  * @since 3.4
  */
 function qtranxf_init() {
-	//qtranxf_dbg_log('"init": qtranxf_init: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
+	//qtranxf_dbg_log('3.qtranxf_init:');
 }
 add_action('init', 'qtranxf_init',2);//user is authenticated
-
-/* //use action 'init' in front-end and/or action 'admin_init' admin-end accordingly
- * Response to action 'init', which runs after user is authenticated
- * /
-function qtranxf_init() {
-	global $q_config;
-
-	do_action('qtranslate_init_begin');
-
-	//// Check for WP Secret Key Mismatch
-	//global $wp_default_secret_key;
-	//if(strpos($q_config['url_info']['url'],'wp-login.php')!==false && defined('AUTH_KEY') && isset($wp_default_secret_key) && $wp_default_secret_key != AUTH_KEY) {
-	//	global $error;
-	//	$error = __('Your $wp_default_secret_key is mismatching with your AUTH_KEY. This might cause you not to be able to login anymore.', 'qtranslate');
-	//}
-
-
-	//if($q_config['url_info']['doing_front_end']){
-	//	do_action('qtranslate_init_front');
-	//}
-	//allow other plugins to initialize whatever they need for qTranslate
-	do_action('qtranslate_init');
-}
-*/
 
 function qtranxf_front_header_css_default(){
 	global $q_config;

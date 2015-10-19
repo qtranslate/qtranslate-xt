@@ -610,17 +610,27 @@ function qtranxf_parse_post_type_excluded() {
 
 function qtranxf_updateSettings(){
 	global $qtranslate_options, $q_config;
-	//$errors = array();
+
 	$errors = &$q_config['url_info']['errors'];
+
 	// update front settings
 
+	/**
+	 * Opportunity to prepare special custom settings update on sub-plugins
+	 */
 	do_action('qtranslate_update_settings_pre');
+
+	// special cases handling for front options
 
 	qtranxf_updateSetting('default_language', QTX_LANGUAGE);
 	//enabled_languages are not changed at this place
 
 	qtranxf_updateSettingFlagLocation('flag_location');
 	qtranxf_updateSettingIgnoreFileTypes('ignore_file_types');
+
+	$_POST['language_name_case'] = isset($_POST['camel_case']) ? '0' : '1';
+
+	// special cases handling for front options - end
 
 	foreach($qtranslate_options['front']['int'] as $nm => $def){
 		qtranxf_updateSetting($nm, QTX_INTEGER, $def);
@@ -667,7 +677,7 @@ function qtranxf_updateSettings(){
 
 	// update admin settings
 
-	//special cases handling
+	//special cases handling for admin options
 
 	if(isset($_POST['json_config_files'])){
 		//verify that files are loadable
@@ -721,6 +731,8 @@ function qtranxf_updateSettings(){
 
 	qtranxf_parse_post_type_excluded();
 
+	//special cases handling for admin options - end
+
 	do_action('qtranslate_update_settings_admin');
 
 	foreach($qtranslate_options['admin']['int'] as $nm => $def){
@@ -746,15 +758,11 @@ function qtranxf_updateSettings(){
 	if(empty($_POST['json_config_files']))//only update if config files parsed successfully
 		qtranxf_update_i18n_config();
 
-/*
-	if(isset($q_config['url_info']['errors'])){
-		foreach($q_config['url_info']['errors'] as $msg){
-			$errors[] = $msg;
-		}
-		unset($q_config['url_info']['errors']);//todo error handling needs to be cleaned up
-	}
-	return $errors;
-*/
+	$q_config['i18n-cache'] = array();//clear i18n-config cache
+
+	/**
+	 * Opportunity to update special custom settings on sub-plugins
+	 */
 	do_action('qtranslate_update_settings');
 }
 

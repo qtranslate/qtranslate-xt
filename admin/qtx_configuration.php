@@ -322,6 +322,13 @@ echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 
 				</td>
 			</tr>
 			<tr valign="top">
+				<th scope="row"><?php _e('Language Names', 'qtranslate') ?></th>
+				<td>
+					<label for="camel_case"><input type="checkbox" name="camel_case" id="camel_case" value="1"<?php checked(!isset($q_config['language_name_case']) || !$q_config['language_name_case']) ?>/> <?php _e('Show language names in "Camel Case".', 'qtranslate') ?></label>
+					<p class="qtranxs_notes"><?php printf(__('Define how to display translated language names, whenever languages need to be listed, for example, in "%s" statement.', 'qtranslate'), __('Not Available Message', 'qtranslate')) ?></p>
+				</td>
+			</tr>
+			<tr valign="top">
 				<th scope="row"><?php _e('Detect Browser Language', 'qtranslate') ?></th>
 				<td>
 					<label for="detect_browser_language"><input type="checkbox" name="detect_browser_language" id="detect_browser_language" value="1"<?php checked($q_config['detect_browser_language']) ?>/> <?php _e('Detect the language of the browser and redirect accordingly.', 'qtranslate') ?></label>

@@ -64,6 +64,7 @@ function qtranxf_set_default_options(&$ops)
 		'url_mode' => QTX_URL_PATH,// sets default url mode
 		'use_strftime' => QTX_DATE,// strftime usage (backward compability)
 		'filter_options_mode' => QTX_FILTER_OPTIONS_ALL,
+		'language_name_case' => 0 //Camel Case
 	);
 
 	$ops['front']['bool']=array(

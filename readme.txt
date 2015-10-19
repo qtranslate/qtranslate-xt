@@ -95,6 +95,9 @@ Developers: please drop new topics here, the text will be moved to [qTranslate-X
 
 ## Upgrade Notice ##
 
+### 3.4.6.5 ###
+Fix: Handling the lack of PHP function `mb_convert_case`, as PHP module `mbstring` may not be installed by default.
+
 ### 3.4.6.4 ###
 Fix: A fix for Internal Server Error 500 under some circumstances.
 
@@ -107,6 +110,9 @@ This version recovers translation of parent of a category on category edit page.
 2. Language Management Interface
 
 ## Changelog ##
+
+### 3.4.6.5 ###
+* Improvement: Option 'Show language names in "Camel Case"' has been added on Settings/Languages page `/wp-admin/options-general.php?page=qtranslate-x#general` in order to handle absence of function `mb_convert_case`, as PHP module `mbstring` may not be installed by default: [WP Topic](https://wordpress.org/support/topic/qtranslate_utilsphp-on-line-504).
 
 ### 3.4.6.4 ###
 * Enhancement: The list of avalable languages in "Not Available Message" and alternative language shown now follow the order of languges defined on configuration page, ignoring the default language. For example, if the first language in the order is English, the second is your native and the default, then English translation will be preferably shown as alternative language. Most sites are expected to be unaffected, since the first language in the order is normally the default langauge. However, it may make sense to first try to show most common language (like English in this example), instead of the default language. Now this is possible with putting the most common language to be the first in the order of languages. The order affects language menu, widget and language shown when translation is not available, as well as any other place where languages need to be listed in an order.
