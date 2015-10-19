@@ -113,19 +113,20 @@ This version recovers translation of parent of a category on category edit page.
 
 ### 3.4.6.5 ###
 * Improvement: Option 'Show language names in "Camel Case"' has been added on Settings/Languages page `/wp-admin/options-general.php?page=qtranslate-x#general` in order to handle absence of function `mb_convert_case`, as PHP module `mbstring` may not be installed by default: [WP Topic](https://wordpress.org/support/topic/qtranslate_utilsphp-on-line-504).
+* Fix: regular expression to detect `lang=xx` in line `preg_match('/(^|&|&amp;|&#038;|\?)lang=([a-z]{2})/i',$url_info['query'],$match)` of file `qtranslate_core.php`: [Issue #288](https://github.com/qTranslate-Team/qtranslate-x/issues/288).
 
-### 3.4.6.4 ###
+### 3.4.6.4 release ###
 * Enhancement: The list of avalable languages in "Not Available Message" and alternative language shown now follow the order of languges defined on configuration page, ignoring the default language. For example, if the first language in the order is English, the second is your native and the default, then English translation will be preferably shown as alternative language. Most sites are expected to be unaffected, since the first language in the order is normally the default langauge. However, it may make sense to first try to show most common language (like English in this example), instead of the default language. Now this is possible with putting the most common language to be the first in the order of languages. The order affects language menu, widget and language shown when translation is not available, as well as any other place where languages need to be listed in an order.
 * Fix: `home_url()` on admin side is now only filtered on `/wp-admin/customize.php` page, otherwise it created a few problems, for example, wrong overwriting of `.htaccess` file in some cases, causing Internal Server Error 500 with infinite redirection loop: [WP Topic](https://wordpress.org/support/topic/internal-server-error-500-after-346-update).
 * Fix: consistency and caching of meta data translations. Known affected theme: [Sahifa](http://themeforest.net/item/sahifa-responsive-wordpress-news-magazine-blog-theme/2819356). [WP Issue](https://wordpress.org/support/topic/qtranslate-x-not-working-with-sahifa-custom-sliders).
 
-### 3.4.6.2 stable ###
+### 3.4.6.2 release ###
 * Fix: recovered translation of parent of a category on category edit page.
 
-### 3.4.6.1 stable ###
+### 3.4.6.1 release ###
 * Fix: Call of `qtranxf_get_admin_page_config` is moved after all integrating plugins loaded their `*-admin.php`, otherwise i18n configuration is loaded only partially, which broke "Woocommerce & qTranslate-X". [Issue #277](https://github.com/qTranslate-Team/qtranslate-x/issues/277).
 
-### 3.4.6 stable ###
+### 3.4.6 release ###
 * All issues after version 3.4.4
 
 ### 3.4.5.4 ###
@@ -161,24 +162,24 @@ This version recovers translation of parent of a category on category edit page.
 * Enhancement: choice 'css_only' for $style argument in `qtranxf_generateLanguageSelectCode`: [Issue #259](https://github.com/qTranslate-Team/qtranslate-x/issues/259).
 * Enhancement: [Handle the CSRF vulnerability](https://github.com/qTranslate-Team/qtranslate-x/pull/230).
 
-### 3.4.4 stable ###
+### 3.4.4 release ###
 * Fix: link 'View Page': [WP Topic](https://wordpress.org/support/topic/wpadminbar-view-page-returns-to-home-page).
 * Fix: security exploit found by WordPress for vulnerable parameters `json_config_files` and `json_custom_i18n_config`: [report](https://qtranslatexteam.wordpress.com/2015/09/03/why-qtranslate-x-disappeared-from-wordpress-repository).
 
-### 3.4.3 stable ###
+### 3.4.3 release ###
 * Fix: qtranxf_trim_words defined at front and admin side: [Issue #201](https://github.com/qTranslate-Team/qtranslate-x/issues/201).
 * Fix: [BugTraq issue 139](http://seclists.org/bugtraq/2015/Jul/139) reported for old qTranslate was assumed to be applicable to qTranlstae-X too, causing WP to ban the plugin temporarily.
 * Improvement: WP_CLI compatibility.
 * Translation: a lot of thanks to all translators contributed.
 
-### 3.4.2 stable ###
+### 3.4.2 release ###
 * Fix: i18n configuration loading on the first installation, [WP Topic](https://wordpress.org/support/topic/update-that-makes-one-see-the-site-only-a-blank-page).
 * Fix for qtranxf_updateGettextDatabases.
 
-### 3.4.1 stable ###
+### 3.4.1 release ###
 * Fix: i18n configuration loading for integrated plugins.
 
-### 3.4 stable ###
+### 3.4 release ###
 * Includes all changes after version 3.3. Please, review [Release Notes](https://qtranslatexteam.wordpress.com/2015/05/15/release-notes-3-4/).
 * Major new feature: [Integration Framework](https://qtranslatexteam.wordpress.com/integration/) is finalized in its first edition.
 * Translation: a lot of thanks to all translators contributed.
@@ -240,7 +241,7 @@ This version recovers translation of parent of a category on category edit page.
 * Fix: pagination of posts under Query Mode of URL Modification (filter 'get_pagenum_link'): [Issue #155](https://github.com/qTranslate-Team/qtranslate-x/issues/155), [WP Topic](https://wordpress.org/support/topic/pagination-does-not-work-if-query-mode-used) and [WP Topic](https://wordpress.org/support/topic/navigation-problem-20).
 * Fix: locale 'ja_JP' changed back to 'ja' as this is what WordPress uses. Files lang/qtranslate-ja_JP.mo/po renamed to qtranslate-ja.mo/po.
 
-### 3.3 stable ###
+### 3.3 release ###
 * Includes all changes after version 3.2.9. Please, review [Release Notes](https://qtranslatexteam.wordpress.com/2015/03/30/release-notes-3-3).
 * Translation: a lot of thanks to all translators contributed.
 
@@ -369,7 +370,7 @@ This version recovers translation of parent of a category on category edit page.
 * Translation: Arabic (ar) po/mo files updated. Thanks to Nedal Elghamry.
 * Translation: Dutch (nl_NL) po/mo files updated. Thanks to Marius Siroen.
 
-### 3.2.9 stable ###
+### 3.2.9 release ###
 * Improvement: function `convertURL` has been re-designed to take into account scheme, user, password and fragment correctly.
 * Improvement: added "x-default" link `<link hreflang="x-default" rel="alternate" />` as suggested by [Google](https://support.google.com/webmasters/answer/189077).
 * Feature: added exclusions to `qtranxf_convertFormat` for language-neutral date formats 'Z', 'c' and 'r' in addition to 'U' [[Issue #76](https://github.com/qTranslate-Team/qtranslate-x/issues/76)]
@@ -388,7 +389,7 @@ This version recovers translation of parent of a category on category edit page.
 * Fix: custom menu item query 'setlang=no': [[Issue #80](https://github.com/qTranslate-Team/qtranslate-x/issues/80)]
 
 
-### 3.2.7 stable ###
+### 3.2.7 release ###
 * Includes all changes after version 3.2.2.
 * Improvement: added `removeContentHook` in `admin/js/common.js`. Thanks to [Tim Robertson](https://github.com/funkjedi): [[GitHub Issue #69](https://github.com/qTranslate-Team/qtranslate-x/pull/69)]
 * Improvement: use of `nodeValue` instead of `innerHTML` in `addDisplayHook` of `admin/js/common.js`.
@@ -410,17 +411,17 @@ This version recovers translation of parent of a category on category edit page.
 ### 3.2.3 ###
 * Improvement: auto-translation of metadata at front-end, filter `qtranxf_filter_postmeta`. [[Ticket](https://wordpress.org/support/topic/qtranslate-x-hero-header)]
 
-### 3.2.2 stable ###
+### 3.2.2 release ###
 * Translation: Dutch (nl_NL) po/mo updated, thanks to Marius Siroen.
 * Improvement: common.js modifications needed for plugin [All in One SEO Pack & qTranslate-X](https://wordpress.org/plugins/all-in-one-seo-pack-qtranslate-x/).
 * Fix: non-standard host port handling. Thanks to Christophe. [[Ticket](https://github.com/qTranslate-Team/qtranslate-x/pull/59)]
 
-### 3.2.1 stable ###
+### 3.2.1 release ###
 * Feature: added option "Hide Title Colon" for widget "qTanslate Language Chooser". [[Ticket](https://wordpress.org/support/topic/semicolon-is-being-added-to-the-widget-title)]
 * Improvement: disabled browser redirection for WP_CLI. [[Ticket](https://github.com/qTranslate-Team/qtranslate-x/pull/57)]
 * Fix: wp-admin/nav-menus.php: new menu items for pages get added with title already translated.
 
-### 3.2 stable ###
+### 3.2 release ###
 * Includes all changes after version 3.1.
 * Translation: Dutch (nl_NL) po/mo updated, thanks to Marius Siroen.
 * Improvement: `add_filter('term_description')` at front-end. Thanks to [josk79](https://github.com/qTranslate-Team/qtranslate-x/pull/39).
@@ -444,7 +445,7 @@ This version recovers translation of parent of a category on category edit page.
 * Improvement: updated "Compatibility Functions" option with `qtrans_split`.
 * Fix: dealing with https and port 443.
 
-### 3.1 stable ###
+### 3.1 release ###
 * Includes all changes after version 3.0.
 * Maintenance: 'Translate Service' feature has been disabled, as the vast majority of people [surveyed](http://www.marius-siroen.com/qTranslate-X/TranslateServices/) declined it. Thanks to [Gunu (Marius Siroen)](https://profiles.wordpress.org/grafcom) who made this survey possible.
 
@@ -474,7 +475,7 @@ This version recovers translation of parent of a category on category edit page.
 * Feature: more on framework for integration with other plugins and themes.
 * Fix: import from [mqTranslate](https://wordpress.org/support/plugin/mqtranslate) (thanks to [Christophe](https://github.com/xhaleera)).
 
-### 3.0 stable ###
+### 3.0 release ###
 * Includes all changes after version 2.9.6.
 * Please, do not forget to respond to [survey on 'Translate Service' feature](http://www.marius-siroen.com/qTranslate-X/TranslateServices/) by courtesy of [Gunu (Marius Siroen)](https://profiles.wordpress.org/grafcom), whose continuous help is much appreciated.
 * Feature:  framework for integration with other plugins and themes.
@@ -545,7 +546,7 @@ This version recovers translation of parent of a category on category edit page.
 * fix for option [Hide Untranslated Content](https://wordpress.org/support/topic/cant-hide-the-non-existent-language-posts).
 * compatibility with plugin [Groups](https://wordpress.org/plugins/groups/), [issue](https://wordpress.org/support/topic/dropdown-doesnt-display-while-plugin-groups-is-active)
 
-### 2.9.6 stable ###
+### 2.9.6 release ###
 * more fixes for `<!--more-->` and `<!--nextpage-->` tags and parsing multilingual texts.
 
 ### 2.9.5 ###

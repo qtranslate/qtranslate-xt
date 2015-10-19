@@ -299,7 +299,7 @@ function qtranxf_parse_language_info(&$url_info, $link=false) {
 			$lang = qtranxf_resolveLangCase($_POST['lang'],$doredirect);
 			if($lang) $url_info['lang_query_post'] = $lang;//todo excessive?
 		}
-	}elseif( !empty($url_info['query']) && preg_match('/(&|&amp;|&#038;|\?)lang=([a-z]{2})/i',$url_info['query'],$match) ) {
+	}elseif( !empty($url_info['query']) && preg_match('/(^|&|&amp;|&#038;|\?)lang=([a-z]{2})/i',$url_info['query'],$match) ) { //rx is changed in 3.4.6.5: https://github.com/qTranslate-Team/qtranslate-x/issues/288
 		$lang = qtranxf_resolveLangCase($match[2],$doredirect);
 		if($lang) $url_info['lang_query_link'] = $lang;//todo excessive?
 	}
