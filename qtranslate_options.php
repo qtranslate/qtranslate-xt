@@ -180,6 +180,7 @@ function qtranxf_default_language_name()
 	$cfg['eu'] = 'Euskera';
 	$cfg['el'] = 'Ελληνικά';
 	$cfg['ua'] = 'Українська';
+	$cfg['cy'] = 'Cymraeg';// Oct 22 2015
 	//$cfg['tw'] = '中文';
 	return $cfg;
 }
@@ -217,6 +218,7 @@ function qtranxf_default_locale()
 	$cfg['eu'] = 'eu_ES';
 	$cfg['el'] = 'el_GR';
 	$cfg['ua'] = 'uk';
+	$cfg['cy'] = 'cy';// not 'cy_GB'
 	//$cfg['tw'] = 'zh_TW';
 	return $cfg;
 }
@@ -227,7 +229,8 @@ function qtranxf_default_locale()
  */
 function qtranxf_default_locale_html(){
 	//HTML locales for languages are not provided by default
-	return array();
+	$cfg = array();
+	return $cfg;
 }
 
 /**
@@ -239,11 +242,12 @@ function qtranxf_default_not_available()
 	// %LANG:<normal_separator>:<last_separator>% generates a list of languages separated by <normal_separator> except for the last one, where <last_separator> will be used instead.
 	$cfg = array();
 	//Sorry, this entry is only available in "%LANG:, :" and "%".
-	$cfg['de'] = 'Leider ist der Eintrag nur auf %LANG:, : und % verfügbar.';//nq
-	$cfg['en'] = 'Sorry, this entry is only available in %LANG:, : and %.';//nq
+	$cfg['de'] = 'Leider ist der Eintrag nur auf %LANG:, : und % verfügbar.';//ok
+	$cfg['en'] = 'Sorry, this entry is only available in %LANG:, : and %.';//ok
 	$cfg['zh'] = '对不起，此内容只适用于%LANG:，:和%。';
-	$cfg['ru'] = 'Извините, этот техт доступен только в &ldquo;%LANG:&rdquo;, &ldquo;:&rdquo; и &ldquo;%&rdquo;.';
-	$cfg['fi'] = 'Anteeksi, mutta tämä kirjoitus on saatavana ainoastaan näillä kielillä: %LANG:, : ja %.';
+	$cfg['ru'] = 'Извините, этот техт доступен только в &ldquo;%LANG:&rdquo;, &ldquo;:&rdquo; и &ldquo;%&rdquo;.';//ok
+	//$cfg['fi'] = 'Anteeksi, mutta tämä kirjoitus on saatavana ainoastaan näillä kielillä: %LANG:, : ja %.';
+	$cfg['fi'] = 'Tämä teksti on valitettavasti saatavilla vain kielillä: %LANG:, : ja %.';//Jyrki Vanamo, Oct 20 2015, 3.4.6.5
 	$cfg['fr'] = 'Désolé, cet article est seulement disponible en %LANG:, : et %.';
 	$cfg['nl'] = 'Onze verontschuldigingen, dit bericht is alleen beschikbaar in %LANG:, : en %.';
 	$cfg['sv'] = 'Tyvärr är denna artikel enbart tillgänglig på %LANG:, : och %.';
@@ -263,7 +267,8 @@ function qtranxf_default_not_available()
 	$cfg['hr'] = 'Žao nam je, ne postoji prijevod na raspolaganju za ovaj proizvod još %LANG:, : i %.';
 	$cfg['eu'] = 'Sentitzen dugu, baina sarrera hau %LANG-z:, : eta % bakarrik dago.';
 	$cfg['el'] = 'Συγγνώμη,αυτή η εγγραφή είναι διαθέσιμη μόνο στα %LANG:, : και %.';
-	$cfg['ua'] = 'Вибачте цей текст доступний тільки в &ldquo;%LANG:&rdquo;, &ldquo;: і &ldquo;%&rdquo;.';
+	$cfg['ua'] = 'Вибачте цей текст доступний тільки в &ldquo;%LANG:&rdquo;, &ldquo;: і &ldquo;%&rdquo;.';//ok
+	$cfg['cy'] = 'Mae&#8217;n ddrwg gen i, mae\'r cofnod hwn dim ond ar gael mewn %LANG:, : a %.';//ok
 	//$cfg['tw'] = '对不起，此内容只适用于%LANG:，:和%。';
 	return $cfg;
 }
@@ -279,7 +284,8 @@ function qtranxf_default_date_format()
 	$cfg['de'] = '%A, \d\e\r %e. %B %Y';
 	$cfg['zh'] = '%x %A';
 	$cfg['ru'] = '%A %B %e%q, %Y';
-	$cfg['fi'] = '%e.&m.%C';
+	//$cfg['fi'] = '%e.&m.%C';
+	$cfg['fi'] = '%d.%m.%Y';//Jyrki Vanamo, Oct 20 2015, 3.4.6.5
 	$cfg['fr'] = '%A %e %B %Y';
 	$cfg['nl'] = '%d/%m/%y';
 	$cfg['sv'] = '%Y-%m-%d';
@@ -300,6 +306,7 @@ function qtranxf_default_date_format()
 	$cfg['eu'] = '%Y %B %e, %A';
 	$cfg['el'] = '%d/%m/%y';
 	$cfg['ua'] = '%A %B %e%q, %Y';
+	$cfg['cy'] = '%A %B %e%q, %Y';//not verified
 	//$cfg['tw'] = '%x %A';
 	return $cfg;
 }
@@ -336,6 +343,7 @@ function qtranxf_default_time_format()
 	$cfg['eu'] = '%H:%M';
 	$cfg['el'] = '%H:%M';
 	$cfg['ua'] = '%H:%M';
+	$cfg['cy'] = '%I:%M %p';//not verified
 	//$cfg['tw'] = '%I:%M%p';
 	return $cfg;
 }
@@ -373,6 +381,7 @@ function qtranxf_default_flag()
 	$cfg['eu'] = 'eu_ES.png';
 	$cfg['el'] = 'gr.png';
 	$cfg['ua'] = 'ua.png';
+	$cfg['cy'] = 'cy_GB.png';
 	//$cfg['tw'] = 'tw.png';
 	return $cfg;
 }

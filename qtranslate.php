@@ -53,9 +53,10 @@ GitHub Branch: master
 	=============================
 	ar by Mohamed Magdy
 	de by Qian Qin
+	cy by Marc Heatley <marc@properdesign.co.uk>
 	es by June
 	eu by Xabier Arrabal
-	fi by Tatu Siltanen
+	fi by Tatu Siltanen, Jyrki Vanamo <jyrki.vanamo@steep.fi> https://github.com/jvanamo
 	fr by Damien Choizit
 	gl by Andrés Bott
 	it by Lorenzo De Tomasi
