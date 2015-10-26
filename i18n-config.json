@@ -18,7 +18,8 @@
 		},
 		"wpbody-content":{
 			"fields":{
-				"wrap-h2":{"jquery":".wrap>h2", "encode":"display"}
+				"wrap-h1":{"jquery":".wrap h1", "encode":"display"},
+				"wrap-h2":{"jquery":".wrap h2", "encode":"display"}
 			}
 		}
 	},
