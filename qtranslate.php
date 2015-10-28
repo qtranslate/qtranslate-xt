@@ -53,7 +53,7 @@ GitHub Branch: master
 	=============================
 	ar by Mohamed Magdy
 	de by Qian Qin
-	cy by Marc Heatley <marc@properdesign.co.uk>
+	cy by Marc Heatley - properdesign.rs
 	es by June
 	eu by Xabier Arrabal
 	fi by Tatu Siltanen, Jyrki Vanamo <jyrki.vanamo@steep.fi> https://github.com/jvanamo
@@ -135,8 +135,8 @@ if(is_admin() ){ // && !(defined('DOING_AJAX') && DOING_AJAX) //todo cleanup
 
 // load additional functionalities
 
-if(file_exists(QTRANSLATE_DIR.'/slugs'))
-	require_once(QTRANSLATE_DIR.'/slugs/qtx_slug.php');
+//if(file_exists(QTRANSLATE_DIR.'/slugs'))
+//	require_once(QTRANSLATE_DIR.'/slugs/qtx_slug.php');
 
 // load qTranslate Services if available // disabled since 3.1
 //if(file_exists(QTRANSLATE_DIR.'/qtranslate_services.php'))
