@@ -550,7 +550,7 @@ msgstr "Edició Idioma"
 
 #: admin/qtx_configuration.php:154
 msgid "Save Changes &raquo;"
-msgstr "Desar Cambis &raquo;"
+msgstr "Desar Canvis &raquo;"
 
 #: admin/qtx_configuration.php:156 admin/qtx_configuration.php:183
 #: admin/qtx_configuration.php:190
