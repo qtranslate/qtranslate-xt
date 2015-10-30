@@ -3,15 +3,15 @@ msgstr ""
 "Project-Id-Version: qTranslate-X 3.4.5.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-08 21:10-0600\n"
-"PO-Revision-Date: 2011-02-22 02:55+0100\n"
+"PO-Revision-Date: 2015-10-30 08:58-0700\n"
 "Last-Translator: Carlos Sanz <carlos.sanz@gmail.com>\n"
 "Language-Team: Carlos A Sanz García <carlos.sanz@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Catalan\n"
-"X-Poedit-Country: CATALÀ\n"
 "X-Poedit-SourceCharset: utf-8\n"
+"Language: ca\n"
+"X-Generator: Poedit 1.8.6\n"
 
 #: admin/qtx_activation_hook.php:90 admin/qtx_activation_hook.php:104
 #: admin/qtx_activation_hook.php:107 admin/qtx_activation_hook.php:641
@@ -306,8 +306,7 @@ msgstr "L'idioma ha de tenir un Local!"
 msgid "The Language must have a name!"
 msgstr "L'idioma ha de tenir un nom!"
 
-#: admin/qtx_admin_options_update.php:46
-#: admin/qtx_admin_options_update.php:155
+#: admin/qtx_admin_options_update.php:46 admin/qtx_admin_options_update.php:155
 msgid "Language Code has to be 2 characters long!"
 msgstr "El Codi d'Idioma ha de tenir 2 caràcters de longitud!"
 
