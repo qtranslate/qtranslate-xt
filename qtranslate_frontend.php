@@ -581,7 +581,7 @@ function qtranxf_excludeUntranslatedAdjacentPosts($where) {
 }
 
 function qtranxf_excludeUntranslatedPosts($where,&$query) {//WP_Query
-	//qtranxf_dbg_echo('qtranxf_excludeUntranslatedPosts: post_type: ',$query->query_vars['post_type']);
+	//qtranxf_dbg_log('qtranxf_excludeUntranslatedPosts: post_type: ',$query->query_vars['post_type']);
 	switch($query->query_vars['post_type']){
 		//known not to filter
 		case 'nav_menu_item':
@@ -593,17 +593,17 @@ function qtranxf_excludeUntranslatedPosts($where,&$query) {//WP_Query
 		case 'post':
 		default: break;
 	}
-	//qtranxf_dbg_echo('qtranxf_excludeUntranslatedPosts: post_type is empty: $query: ',$query, true);
-	//qtranxf_dbg_echo('qtranxf_excludeUntranslatedPosts: $where: ',$where);
-	//qtranxf_dbg_echo('qtranxf_excludeUntranslatedPosts: is_singular(): ',is_singular());
+	//qtranxf_dbg_log('qtranxf_excludeUntranslatedPosts: post_type is empty: $query: ',$query, true);
+	//qtranxf_dbg_log('qtranxf_excludeUntranslatedPosts: $where: ',$where);
+	//qtranxf_dbg_log('qtranxf_excludeUntranslatedPosts: is_singular(): ',is_singular());
 	$single_post_query=$query->is_singular();//since 3.1 instead of top is_singular()
-	if($single_post_query){
+	while(!$single_post_query){
 		$single_post_query = preg_match('/ID\s*=\s*[\'"]*(\d+)[\'"]*/i',$where,$matches)==1;
-		//qtranxf_dbg_echo('qtranxf_excludeUntranslatedPosts: $single_post_query: ',$single_post_query);
-		//if($single_post_query){
-		//	//qtranxf_dbg_echo('qtranxf_excludeUntranslatedPosts: $matches[1]:',$matches[1]);
-		//}
+		if($single_post_query) break;
+		$single_post_query = preg_match('/post_name\s*=\s*[^\s]+/i',$where,$matches)==1;
+		break;
 	}
+	//qtranxf_dbg_log('qtranxf_excludeUntranslatedPosts: $single_post_query: ',$single_post_query);
 	if(!$single_post_query){
 		global $wpdb;
 		$lang = qtranxf_getLanguage();
