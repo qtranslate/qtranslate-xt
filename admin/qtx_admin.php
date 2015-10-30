@@ -421,8 +421,6 @@ function qtranxf_add_admin_footer_js ( $enqueue_script=false ) {
 }
 
 function qtranxf_add_admin_head_js ($enqueue_script=true) {
-	global $q_config;
-	if(strpos($_SERVER['REQUEST_URI'],'page=qtranslate-x') === FALSE) return;
 	if($enqueue_script){
 		//wp_register_script( 'qtranslate-admin-options', plugins_url( 'js/options.min.js', __FILE__ ), array(), QTX_VERSION );
 		wp_enqueue_script( 'qtranslate-admin-options', plugins_url( 'js/options.min.js', __FILE__ ), array(), QTX_VERSION );
@@ -522,7 +520,12 @@ function qtranxf_admin_head() {
 	//wp_enqueue_script( 'jquery' );
 	//qtranxf_add_css();//Since 3.2.5 no longer needed
 	qtranxf_add_admin_css();
-	qtranxf_add_admin_head_js();
+	global $q_config;
+	//if(strpos($_SERVER['REQUEST_URI'],'page=qtranslate-x') !== FALSE)
+	if(isset($q_config['url_info']['query']) && strpos($q_config['url_info']['query'],'page=qtranslate-x') !== FALSE){
+		//$enqueue_script = (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG);
+		qtranxf_add_admin_head_js(true);
+	}
 }
 add_action('admin_head', 'qtranxf_admin_head');
 
