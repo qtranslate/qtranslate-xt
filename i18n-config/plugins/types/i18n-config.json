@@ -7,7 +7,8 @@
 			"fields":{
 				"name-plural":{},
 				"name-singular":{},
-				"textarea-1":{}
+				"textareas":{"jquery":"textarea[id^='textarea-']"},
+				"textfields":{"jquery":"input[id^='textfield-']"}
 			}
 		}
 	}
