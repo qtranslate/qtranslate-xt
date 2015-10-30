@@ -111,6 +111,9 @@ This version recovers translation of parent of a category on category edit page.
 
 ## Changelog ##
 
+### 3.4.7 ###
+* Enhancement: Handling of slugs in qTranslate-X native way, instead of semi-integrated plugin "[Qtranslate Slug](https://wordpress.org/plugins/qtranslate-slug/)".
+
 ### 3.4.6.5 ###
 * Improvement: Option 'Show language names in "Camel Case"' has been added on Settings/Languages page `/wp-admin/options-general.php?page=qtranslate-x#general` in order to handle absence of function `mb_convert_case`, as PHP module `mbstring` may not be installed by default: [WP Topic](https://wordpress.org/support/topic/qtranslate_utilsphp-on-line-504).
 * Enhancement: added preset for Welsh (Cymraeg, 'cy') language.

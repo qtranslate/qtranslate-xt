@@ -18,6 +18,26 @@
 */
 if ( !defined( 'ABSPATH' ) ) exit;
 
+/**
+ * Apply translations of slugs to all $wp->query_vars
+*/
+function qtranxf_slug_parse_request(&$wp){//calss WP
+	//qtranxf_dbg_log('qtranxf_slug_parse_request: $wp: ',$wp);
+	//qtranxf_dbg_log('qtranxf_slug_parse_request: query_vars: ',$wp->query_vars);
+	//qtranxf_dbg_log('qtranxf_slug_parse_request: query_string: ',$wp->query_string);
+	//qtranxf_dbg_log('qtranxf_slug_parse_request: request: ',$wp->request);
+	//qtranxf_dbg_log('qtranxf_slug_parse_request: matched_rule: ',$wp->matched_rule);
+	//qtranxf_dbg_log('qtranxf_slug_parse_request: matched_query: ',$wp->matched_query);
+	//qtranxf_dbg_log('qtranxf_slug_parse_request: did_permalink: ',$wp->did_permalink);
+	foreach($wp->query_vars as $k => $v){
+		$info = qtranxf_slug_translation($v);
+		if(!isset($info['name'])) continue;
+		$wp->query_vars[$k] = $info['name'];
+	}
+}
+add_action( 'parse_request', 'qtranxf_slug_parse_request' );
+
+/*
 function qtranxf_slug_sanitize_title($title, $raw_title = '', $context = 'save') {
 	switch($context) {
 		case 'query':{
@@ -29,3 +49,4 @@ function qtranxf_slug_sanitize_title($title, $raw_title = '', $context = 'save')
 	return $title;
 }
 add_filter('sanitize_title', 'qtranxf_slug_sanitize_title', 5, 3);
+*/

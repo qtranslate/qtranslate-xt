@@ -5,6 +5,11 @@ if(WP_DEBUG){
 	if(!function_exists('qtranxf_dbg_log')){
 		function qtranxf_dbg_log($msg,$var='novar',$bt=false,$exit=false){
 			global $pagenow, $wp_current_filter;
+			switch($pagenow){
+				case 'admin-ajax.php':
+				case 'wp-cron.php':
+					//return;
+			}
 			if(isset($_SERVER['REQUEST_TIME_FLOAT'])) $h = $_SERVER['REQUEST_TIME_FLOAT'];
 			if(!empty($pagenow)) $h = $h.'('.$pagenow.')';
 			if(!empty($wp_current_filter)){

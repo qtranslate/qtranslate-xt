@@ -234,6 +234,8 @@ function qtranxf_copy_url_info($urlinfo) {
 	if(isset($urlinfo['query'])) $r['query'] = $urlinfo['query'];
 	if(isset($urlinfo['fragment'])) $r['fragment'] = $urlinfo['fragment'];
 	if(isset($urlinfo['query_amp'])) $r['query_amp'] = $urlinfo['query_amp'];
+	if(isset($urlinfo['wp-path-slugs'])) $r['wp-path-slugs'] = $urlinfo['wp-path-slugs'];
+	if(isset($urlinfo['wp-paths'])) $r['wp-paths'] = $urlinfo['wp-paths'];
 	return $r;
 }
 

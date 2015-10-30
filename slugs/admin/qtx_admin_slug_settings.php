@@ -5,11 +5,35 @@ require_once(QTXSLUGS_DIR.'/admin/qtx_admin_slug.php');
 
 {// configuration
 
+add_filter('qtranslate_admin_sections','qtranxf_slug_admin_sections');
+function qtranxf_slug_admin_sections($sections){
+	global $q_config;
+	$sections['slugs'] = __('Slugs', 'qtranslate');
+	if(isset($q_config['slugs']) && $q_config['slugs']){
+		//todo add_action('qtranslate_url_mode_choices','qtranxf_slug_url_mode_choices', 10, 2);
+	}
+	return $sections;
+}
+
+function qtranxf_slug_url_mode_choices($permalink_is_query,$url_mode){
+?>
+<label title="Slug Mode"><input type="radio" name="url_mode" value="<?php echo QTX_URL_SLUG; ?>" <?php checked($url_mode,QTX_URL_SLUG); disabled($permalink_is_query) ?> /> <?php echo __('Use Slug Mode.', 'qtranslate').' '.__('SEO friendly.', 'qtranslate') ?></label>
+<p class="qtranxs_notes"><?php _e('Whenever it is possible, the language is determined by a localized URL slug, otherwise Pre-Path method is used.', 'qtranslate') ?></p><br/>
+<?php
+}
+
+add_action('qtranslate_configuration', 'qtranxf_slug_config');
 function qtranxf_slug_config($request_uri) {
 	global $q_config;
+	$nopermalinks = qtranxf_is_permalink_structure_query();
 	qtranxf_admin_section_start('slugs');
 ?>
 <table class="form-table" id="qtranxf_slug_config">
+<?php if($nopermalinks){ ?>
+	<tr>
+		<th scope="row" colspan="2"><?php printf(__('You have to use pretty %spermalinks%s in order to take advantage of multilingual slugs.', 'qtranslate'), '<a href="'.admin_url('options-permalink.php').'">', '</a>') ?></th>
+	</tr>
+<?php }else{ ?>
 	<tr>
 		<th scope="row"><?php _e('Translate Slugs', 'qtranslate') ?></th>
 		<td><input type="checkbox" name="slugs" id="qtranxs_slugs"<?php checked(!empty($q_config['slugs'])) ?>  value="1"><label for="qtranxs_slugs" class="qtranxs_explanation"><?php printf(__('Enable multilingual URL slugs for posts, pages, categories, post types, tags, etc.', 'qtranslate')) ?></label>
@@ -21,6 +45,7 @@ function qtranxf_slug_config($request_uri) {
 	if(!empty($q_config['slugs'])){
 
 	$objects = get_taxonomies( array( 'public' => true, 'show_ui' => true, '_builtin' => true ), 'object' ); 
+	$objects = qtranxf_slug_admin_filter_types($objects);
 	if(!empty($objects)){
 ?>
 	<tr>
@@ -31,10 +56,12 @@ function qtranxf_slug_config($request_uri) {
 <?php
 		//qtranxf_slug_admin_field('taxonomy', qtranxf_translate_wp('Category base'), 'taxonomy_category');
 		//qtranxf_slug_admin_field('taxonomy', qtranxf_translate_wp('Tag base'), 'taxonomy_post_tag');
-		qtranxf_slug_admin_fields($objects,'taxonomy');
+		qtranxf_slug_admin_fields($objects,'taxonomy_builtin');
 	}
 
+	//global $wp_taxonomies; $objects = $wp_taxonomies;
 	$objects = get_taxonomies( array( 'public' => true, 'show_ui' => true, '_builtin' => false ), 'object' );
+	$objects = qtranxf_slug_admin_filter_types($objects);
 	if(!empty($objects)){
 ?>
 	<tr>
@@ -46,8 +73,22 @@ function qtranxf_slug_config($request_uri) {
 		qtranxf_slug_admin_fields($objects,'taxonomy');
 	}
 
+	$objects = get_post_types( array('_builtin' => true, 'public' => true ), 'objects');
+	$objects = qtranxf_slug_admin_filter_types($objects);
+	if(!empty($objects)){
+?>
+	<tr>
+		<th scope="row" class="qtranxs_option_group"><?php _e('Built-in Post Types', 'qtranslate') ?></th>
+		<td><p class="qtranxs_explanation"><?php printf(__('Multilingual slug for WordPress built-in post types. The default value is defined by %sWordPress%s.', 'qtranslate'), '<a href="https://codex.wordpress.org/Post_Types" target="_blank">', '</a>') ?></p>
+		</td>
+	</tr>
+<?php
+		qtranxf_slug_admin_fields($objects,'post_type_builtin');
+	}
+
 	//$objects = get_post_types( array('publicly_queryable' => true) );
 	$objects = get_post_types( array('_builtin' => false, 'public' => true ), 'objects');
+	$objects = qtranxf_slug_admin_filter_types($objects);
 	if(!empty($objects)){
 ?>
 	<tr>
@@ -60,27 +101,59 @@ function qtranxf_slug_config($request_uri) {
 	}
 ?>
 	<tr><td colspan="2" id="qtranxf_slug_lsb_bottom"></td></tr>
-<?php }//if(!empty($q_config['slugs'])) ?>
+<?php
+	}//if(!empty($q_config['slugs']))
+	}//if(pretty permalinks)
+?>
 </table>
 <?php 
-	qtranxf_admin_section_end('slugs');
+	qtranxf_admin_section_end('slugs', $nopermalinks?null:'');
+}
+
+function qtranxf_slug_admin_filter_types($objects){
+	foreach($objects as $k => $o){
+		if(isset($o->rewrite['slug'])) continue;
+		unset($objects[$k]);
+	}
+	return $objects;
 }
 
 function qtranxf_slug_admin_fields($objects, $type){
-	foreach ($objects as $o){
+	$group = 'slugs_'.$type;
+	foreach($objects as $key => $o){
+		//qtranxf_dbg_log('qtranxf_slug_admin_fields: term '.$group.'['.$key.']: ',$o);
 		$label = $o->labels->singular_name;
 		//$label = apply_filters('translate_text', $label);
-		$slug = $o->name;
-		qtranxf_slug_admin_field($type, $label, $slug);
+		//$key = $o->name;//the same
+		//if(!isset($o->rewrite['slug'])) continue;//already fitered
+		$slug = $o->rewrite['slug'];
+		if(!empty($q_config['slugs_opt']['mv']['terms'][$group]['values'][$key])){
+			$value_org = $q_config['slugs_opt']['mv']['terms'][$group]['values'][$key]['value_org'];
+			$value_new = $q_config['slugs_opt']['mv']['terms'][$group]['values'][$key]['value_new'];
+			if($slug == $value_new){
+				unset($q_config['slugs_opt']['mv']['terms'][$group]['values'][$key]);
+				if(empty($q_config['slugs_opt']['mv']['terms'][$group]['values'])) unset($q_config['slugs_opt']['mv']['terms'][$group]);
+				if(empty($q_config['slugs_opt']['mv']['terms'])) unset($q_config['slugs_opt']['mv']['terms']);
+				if(empty($q_config['slugs_opt']['mv'])) unset($q_config['slugs_opt']['mv']);
+				if(empty($q_config['slugs_opt'])) delete_option('qtranslate_slugs_opt');
+				else update_option('qtranslate_slugs_opt', $q_config['slugs_opt']);
+			}else{
+				if($slug != $value_org){
+					$q_config['slugs_opt']['mv']['terms'][$group]['values'][$key]['value_org'] = $slug;
+					update_option('qtranslate_slugs_opt',$q_config['slugs_opt']);
+				}
+				$slug = $value_new;
+			}
+		}
+		qtranxf_slug_admin_field($type, $label, $key, $slug);
 	}
 }
 
-function qtranxf_slug_admin_field($type, $label, $slug){
+function qtranxf_slug_admin_field($type, $label, $key, $slug){
 	global $q_config;
-	$opnm = 'slugs_'.$type;
-	$name = $opnm.'['.$slug.']';
-	$val = qtranxf_slug_multilingual($slug);
-	$id = 'qtranxs_'.$type.'_'.$slug;
+	$name = 'slugs_'.$type.'['.$key.']';
+	$val = qtranxf_slug_multilingual_base($slug);
+	$id = 'qtranxs_'.$type.'_'.$key;
 ?>
 	<tr>
 		<th scope="row" style="text-align: right"><label for="<?php echo $id ?>" class="i18n-multilingual-display"><?php echo $label ?></label></th>
@@ -91,44 +164,180 @@ function qtranxf_slug_admin_field($type, $label, $slug){
 }// configuration
 
 {// options update
+//function qtranxf_slug_sanitize_base($s){ return preg_replace('#/+#', '/', '/' . str_replace( '#', '', $s ) ); }
 
-function qtranxf_slug_update_translations_of($group, $group_name, $default_lang, &$wp_group){
-	foreach($_POST['qtranslate-slugs'][$group] as $name_old => &$qfields){
-		//$name_old = $qfields['qtranslate-original-value'];
-		$name = sanitize_key($qfields[$default_lang]);
-		//qtranxf_dbg_log('qtranxf_slug_update_translations_of: new: $wp_group['.$name.']: ', $wp_group[$name]);
-		//qtranxf_dbg_log('qtranxf_slug_update_translations_of: old: $wp_group['.$name_old.']: ', $wp_group[$name_old]);
-		if($name != $name_old){
-			if(isset($wp_group[$name_old])){
-				qtranxf_add_warning(sprintf(__('The slug for %s "%s" for default language cannot be changed to "%s" on this page, because it is not known here which tool created it and for what purpose. Please, update this slug on the page where it is originated from. It may be required then to come back here to update the translations, unless the other plugin or theme is %sintegrated%s with %s.', 'qtranslate'), $group_name, $name_old, $name, '<a href="https://qtranslatexteam.wordpress.com/integration/" target="_blank">', '</a>', 'qTranslate&#8209;X'));
-				$qfields[$default_lang] = $name = $name_old;
-			}else{
-				$slugs_old = qtranxf_slug_get_translations($name_old);
-				//qtranxf_dbg_log('qtranxf_slug_update_translations_of: $slugs_old: ', $slugs_old);
-				if(!empty($slugs_old)) qtranxf_slug_del_translations($name_old);
-			}
-		}
-		if(isset($wp_group[$name])){
-			qtranxf_slug_update_translations($name, $qfields, $default_lang );
-		}else{
-			qtranxf_add_error(sprintf(__('Translations cannot be updated for unknown %s "%s".', 'qtranslate'), $group_name, $name));
+function qtranxf_slug_is_permastruct($s){ return preg_match('#[^a-z0-9_\-]#',$s); }
+
+function qtranxf_slug_sanitize($s, &$is_permastruct){
+	$is_permastruct = qtranxf_slug_is_permastruct($s);
+	$s = str_replace( '#', '', $s );
+	if($is_permastruct) return preg_replace('#/+#', '/', '/' . $s );
+	return sanitize_key($s);
+}
+
+function qtranxf_slug_split_permastruct($s){
+	$blocks = preg_split('#([^a-z0-9_\-%]+|(?:%[^%/]+%)+)#',$s,null,PREG_SPLIT_NO_EMPTY|PREG_SPLIT_DELIM_CAPTURE);
+	$info = array('blocks' => $blocks, 'slugs' => array());
+	$slugs = &$info['slugs'];
+	if(count($blocks) == 1){
+		$slugs[] = $blocks[0];
+	}else{
+		foreach($blocks as $k => $v){
+			if(qtranxf_slug_is_permastruct($v)) continue;
+			$blocks[$k] = $v = sanitize_key($v);
+			$slugs[] = $v;
 		}
 	}
+	return $info;
+}
+
+function qtranxf_slug_del_translations_permastruct($s){
+	$info = qtranxf_slug_split_permastruct($s);
+	//qtranxf_dbg_log('qtranxf_slug_del_translations_permastruct: $info: ', $info);
+	foreach($info['slugs'] as $name){
+		qtranxf_slug_del_translations($name);
+	}
+}
+
+function qtranxf_slug_update_translations_of($group, $group_name, $default_lang, &$wp_group){
+	global $q_config;
+	foreach($_POST['qtranslate-slugs'][$group] as $key => &$qfields){
+		if(!isset($wp_group[$key])){
+			qtranxf_add_error(sprintf(__('Translations of "%s" cannot be updated for unknown term "%s".', 'qtranslate'), $group_name, $key));
+			continue;
+		}
+		$is_permastruct;
+		$value_new = qtranxf_slug_sanitize($qfields[$default_lang],$is_permastruct);
+		//qtranxf_dbg_log('qtranxf_slug_update_translations_of: $value_new: ', $value_new);
+		if(isset($qfields['qtranslate-original-value'])){
+			$value_org = $qfields['qtranslate-original-value'];
+			if($value_org != $value_new){
+				//qtranxf_dbg_log('qtranxf_slug_update_translations_of: $value_org: ', $value_org);
+				if(!isset($q_config['slugs_opt']['mv'])) $q_config['slugs_opt']['mv'] = array();
+				if(!isset($q_config['slugs_opt']['mv']['terms'])) $q_config['slugs_opt']['mv']['terms'] = array();
+				if(!isset($q_config['slugs_opt']['mv']['terms'][$group])) $q_config['slugs_opt']['mv']['terms'][$group] = array( 'group_name' => $group_name, 'values' => array());
+				if(!isset($q_config['slugs_opt']['mv']['terms'][$group]['values'][$key])){
+					$q_config['slugs_opt']['mv']['terms'][$group]['values'][$key] = array();
+					$q_config['slugs_opt']['mv']['terms'][$group]['values'][$key]['value_org'] = $value_org;
+				}
+				$q_config['slugs_opt']['mv']['terms'][$group]['values'][$key]['value_new'] = $value_new;
+			}
+			qtranxf_slug_del_translations_permastruct($value_org);
+			$qfields = qtranxf_slug_replace($value_org, $value_new, $qfields);
+		}
+		$info_def = qtranxf_slug_split_permastruct($value_new);
+		//qtranxf_dbg_log('qtranxf_slug_update_translations_of: $info_def: ', $info_def);
+		$cnt = count($info_def['slugs']);
+		//qtranxf_dbg_log('qtranxf_slug_update_translations_of: $cnt: ', $cnt);
+		if($is_permastruct){
+			$names = array();
+			foreach($info_def['slugs'] as $name) $names[$name] = array();
+			foreach($qfields as $lng => $val){
+				if(empty($val)) continue; //default will be used
+				$info_lng = qtranxf_slug_split_permastruct($val);
+				if(count($info_lng['slugs']) != $cnt){
+					qtranxf_add_error(sprintf(__('Translation of term "%s" for language code "%s", "%s" -> "%s", is inconsistent. Translation has to have matching structire. Please, correct it and try saving the configuration again.', 'qtranslate'), $group_name, $lng, $value_new, $val));
+					continue;
+				}
+				foreach($info_lng['slugs'] as $k => $s){
+					$name = $info_def['slugs'][$k];
+					$names[$name][$lng] = $s;
+				}
+			}
+			//qtranxf_dbg_log('qtranxf_slug_update_translations_of: $names: ', $names);
+			foreach($names as $name => $slugs){
+				qtranxf_slug_update_translations($name, $slugs, $default_lang);
+			}
+		}else{
+			//qtranxf_dbg_log('qtranxf_slug_update_translations_of: ok $value_new: ', $value_new);
+			qtranxf_slug_update_translations($value_new, $qfields, $default_lang);
+		}
+	}
+/*
+	if(!empty($q_config['slugs_opt']['mv']['terms'][$group]['values'])){
+		$msg = '<br/>'.PHP_EOL;
+		foreach($q_config['slugs_opt']['mv']['terms'][$group]['values'] as $key => $info){
+			$name_org = $info['value_org'];
+			$name_new = $info['value_new'];
+			$msg .= '"'.$name_org.'" -> "'.$name_new.'"<br/>'.PHP_EOL;
+		}
+		qtranxf_add_warning(sprintf(__('The following default language slugs for custom %s have been renamed: %s Those custom types are created by the theme or by some 3rd-party plugins, which have not yet been fully %sintegrated%s with %s. Thefore you have to change the default language slug of those types using their custom tools. Make sure to change them to the same value as shown above, otherwise you will need to re-enter the translations of those strings again on this configuration page.', 'qtranslate'), $group_name, $msg, '<a href="https://qtranslatexteam.wordpress.com/integration/" target="_blank">', '</a>', 'qTranslate&#8209;X'));
+	}
+	//qtranxf_add_warning(sprintf(__('The slug for %s "%s" for default language cannot be changed to "%s" on this page, because it is not known here which tool created it and for what purpose. Please, update this slug on the page where it is originated from. It may be required then to come back here to update the translations, unless the other plugin or theme is %sintegrated%s with %s.', 'qtranslate'), $group_name, $name_old, $name, '<a href="https://qtranslatexteam.wordpress.com/integration/" target="_blank">', '</a>', 'qTranslate&#8209;X'));
+*/
 	qtranxf_slug_clean_request($group);
 }
 
+function qtranxf_slug_replace($value_org, $value_new, $slugs){
+	foreach($slugs as $k => $v){
+		if($v == $value_org) $slugs[$k] = $value_new;
+	}
+	qtranxf_slug_replace_rewrite_structs($value_org, $value_new);
+	return $slugs;
+}
+
+function qtranxf_slug_default_base_value($key, $default_name, &$qpost, $blog_prefix, $default_lang){
+	// mimic code from /wp-admin/options-permalink.php
+	//preg_replace('#/+#', '/', '/' . str_replace( '#', '', $s ) );
+	$value_new = $qpost[$key][$default_lang];
+	$value_new = preg_replace('#/+#', '/', str_replace( '#', '', $value_new ) );
+	$value_org = $qpost[$key]['qtranslate-original-value'];
+	if($value_org != $value_new){
+		qtranxf_slug_del_translations_permastruct($value_org);
+		$qpost[$key] = qtranxf_slug_replace($value_org, $value_new, $qpost[$key]);
+		global $wp_taxonomies;
+		if(isset($wp_taxonomies[$key]) && isset($wp_taxonomies[$key]->rewrite['slug'])){
+			$wp_taxonomies[$key]->rewrite['slug'] = $value_new;
+		}
+	}
+	unset($qpost[$key]['qtranslate-original-value']);
+	if($value_new == $default_name) return '';
+	return $blog_prefix . preg_replace('#/+#', '/', '/' . $value_new);
+}
+
 function qtranxf_slug_update_settings(){
+	global $wp_rewrite;
+	//qtranxf_dbg_log('4.qtranxf_slug_update_settings: $_POST[qtranslate-slugs]: ', $_POST['qtranslate-slugs']);
 	if(!isset($_POST['qtranslate-slugs'])) return;
+	global $wp_taxonomies, $wp_post_types;
 	$default_lang = qtranxf_getLanguageDefault();
-	if(isset($_POST['qtranslate-slugs']['slugs_post_type'])){
-		global $wp_post_types;
-		qtranxf_slug_update_translations_of('slugs_post_type', '<code>post_type</code>', $default_lang, $wp_post_types);
+	if(isset($_POST['slugs_taxonomy_builtin'])){
+		// mimic code from /wp-admin/options-permalink.php
+		$blog_prefix = is_multisite() && !is_subdomain_install() && is_main_site() ? '/blog' : '';// /wp-admin/options-permalink.php:78
+		if(isset($_POST['slugs_taxonomy_builtin']['category'])){
+			$slug_base = qtranxf_slug_default_base_value('category', 'category', $_POST['qtranslate-slugs']['slugs_taxonomy_builtin'], $blog_prefix, $default_lang);
+			$wp_rewrite->set_category_base( $slug_base );
+		}
+		if(isset($_POST['slugs_taxonomy_builtin']['post_tag'])){
+			$slug_base = qtranxf_slug_default_base_value('post_tag', 'tag', $_POST['qtranslate-slugs']['slugs_taxonomy_builtin'], $blog_prefix, $default_lang);
+			$wp_rewrite->set_tag_base( $slug_base );
+		}
+		qtranxf_slug_update_translations_of('slugs_taxonomy_builtin', '<code>taxonomy</code>', $default_lang, $wp_taxonomies);
+		//qtranxf_dbg_log('qtranxf_slug_update_settings: $wp_rewrite: ', $wp_rewrite);
 	}
 	if(isset($_POST['slugs_taxonomy'])){
-		global $wp_taxonomies;
 		qtranxf_slug_update_translations_of('slugs_taxonomy', '<code>taxonomy</code>', $default_lang, $wp_taxonomies);
 	}
+	if(isset($_POST['slugs_post_type'])){
+		qtranxf_slug_update_translations_of('slugs_post_type', '<code>post_type</code>', $default_lang, $wp_post_types);
+	}
+	$wp_rewrite->flush_rules(false);
 }
+
+function qtranxf_slug_replace_rewrite_structs($value_org, $value_new){
+	global $wp_rewrite;
+	if(empty($wp_rewrite->extra_permastructs)) return;
+	foreach($wp_rewrite->extra_permastructs as $k => $v){
+		if(empty($v['struct'])) continue;
+		$wp_rewrite->extra_permastructs[$k]['struct'] = preg_replace('#(?:[^a-z0-9_\-%]|^)'.$value_org.'(?:[^a-z0-9_\-%]|$)#',$value_new,$v['struct']);
+	}
+}
+
+//function qtranxf_slug_replace_callback($matches){
+//	global $q_config;
+//	$q_config['slugs_cache']
+//	return qtranxf_slug_translate_name
+//}
 }// options update
 
 {// Import/Export
@@ -139,6 +348,11 @@ function qtranxf_slug_get_plugin_name($nm, $slug){
 		default: return $nm;
 	}
 } */
+
+add_action('qtranslate_add_row_migrate','qtranxf_slug_add_row_migrate');
+function qtranxf_slug_add_row_migrate(){
+	qtranxf_add_row_migrate('Qtranslate Slug', 'qtranslate-slug', array('note' => __('These options get auto-migrated on activation of plugin if applicable. Migration utilities are provided here for the sake of completeness.','qtranslate')));
+}
 
 function qtranxf_migrate_import_qtranslate_slug(){
 	global $q_config, $wpdb;

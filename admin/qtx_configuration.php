@@ -115,11 +115,13 @@ function qtranxf_admin_section_start($nm) {
 	echo '<div id="tab-'.$nm.'" class="hidden">'.PHP_EOL;
 }
 
-function qtranxf_admin_section_end($nm, $button_name=null, $button_class='button-primary') {
-	if(!$button_name) $button_name = __('Save Changes', 'qtranslate');
-	echo '<p class="submit"><input type="submit" name="submit"';
-	if($button_class) echo ' class="'.$button_class.'"';
-	echo ' value="'.$button_name.'" /></p>';
+function qtranxf_admin_section_end($nm, $button_name='', $button_class='button-primary') {
+	if(!is_null($button_name)){
+		if($button_name === '') $button_name = __('Save Changes', 'qtranslate');
+		echo '<p class="submit"><input type="submit" name="submit"';
+		if($button_class) echo ' class="'.$button_class.'"';
+		echo ' value="'.$button_name.'" /></p>';
+	}
 	echo '</div>'.PHP_EOL; //'<!-- id="tab-'.$nm.'" -->';
 }
 
@@ -266,8 +268,11 @@ echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 
 			<tr valign="top">
 				<th scope="row"><?php _e('URL Modification Mode', 'qtranslate') ?></th>
 				<td>
+					<?php if($permalink_is_query){ ?>
+					<p><?php printf(__('Use one of the pretty %spermalinks%s, if the desirable mode is disabled.', 'qtranslate'), '<a href="'.admin_url('options-permalink.php').'">', '</a>') ?></p>
+					<?php } ?>
 					<fieldset><legend class="hidden"><?php _e('URL Modification Mode', 'qtranslate') ?></legend>
-						<label title="Query Mode"><input type="radio" name="url_mode" value="<?php echo QTX_URL_QUERY; ?>" <?php checked($url_mode,QTX_URL_QUERY) ?> /> <?php echo __('Use Query Mode (?lang=en)', 'qtranslate').'. '.__('Most SEO unfriendly, not recommended.', 'qtranslate') ?></label><br/>
+						<label title="Query Mode"><input type="radio" name="url_mode" value="<?php echo QTX_URL_QUERY; ?>" <?php checked($url_mode,QTX_URL_QUERY) ?> /> <?php echo __('Use Query Mode (?lang=en)', 'qtranslate').'. '.__('Most SEO unfriendly, not recommended.', 'qtranslate') ?></label><br/><br/>
 					<?php /*
 							if($permalink_is_query) {
 								echo '<br/>'.PHP_EOL;
@@ -280,11 +285,11 @@ echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 
 						<p class="qtranxs_notes"><?php _e('Pre-Path and Pre-Domain mode will only work with mod_rewrite/pretty permalinks. Additional Configuration is needed for Pre-Domain mode or Per-Domain mode.', 'qtranslate') ?></p><br/><br/>
 							} */
 					?>
-						<label for="hide_default_language"><input type="checkbox" name="hide_default_language" id="hide_default_language" value="1"<?php checked($q_config['hide_default_language']) ?>/> <?php _e('Hide URL language information for default language.', 'qtranslate') ?></label>
-						<p class="qtranxs_notes"><?php _e('This is only applicable to Pre-Path and Pre-Domain mode.', 'qtranslate') ?></p>
+						<label for="hide_default_language">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="hide_default_language" id="hide_default_language" value="1"<?php checked($q_config['hide_default_language']) ?>/> <?php _e('Hide URL language information for default language.', 'qtranslate') ?></label>
+						<p class="qtranxs_notes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php _e('This is only applicable to Pre-Path and Pre-Domain mode.', 'qtranslate') ?></p><br>
 					<?php
 						//if(!$permalink_is_query) {
-							do_action('qtranslate_url_mode_choices',$permalink_is_query);
+							do_action('qtranslate_url_mode_choices',$permalink_is_query,$url_mode);
 					?>
 						<label title="Per-Domain Mode"><input type="radio" name="url_mode" value="<?php echo QTX_URL_DOMAINS; ?>" <?php checked($url_mode,QTX_URL_DOMAINS) ?> /> <?php echo __('Use Per-Domain mode: specify separate user-defined domain for each language.', 'qtranslate') ?></label>
 					<?php //} ?>
