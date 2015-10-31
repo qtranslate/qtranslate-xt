@@ -34,10 +34,12 @@ function qtranxf_slug_parse_request(&$wp){//calss WP
 		if(!isset($info['name'])) continue;
 		$wp->query_vars[$k] = $info['name'];
 	}
+	//qtranxf_dbg_log('qtranxf_slug_parse_request: done: query_vars: ',$wp->query_vars);
+	//global $wp_rewrite;
+	//qtranxf_dbg_log('qtranxf_slug_parse_request: wp_rewrite: ',$wp_rewrite);
 }
 add_action( 'parse_request', 'qtranxf_slug_parse_request' );
 
-/*
 function qtranxf_slug_sanitize_title($title, $raw_title = '', $context = 'save') {
 	switch($context) {
 		case 'query':{
@@ -49,4 +51,3 @@ function qtranxf_slug_sanitize_title($title, $raw_title = '', $context = 'save')
 	return $title;
 }
 add_filter('sanitize_title', 'qtranxf_slug_sanitize_title', 5, 3);
-*/
