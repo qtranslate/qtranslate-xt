@@ -26,13 +26,13 @@ msgstr "Servei de configuració"
 #: admin/qtx_activation_hook.php:90
 #, php-format
 msgid "Could not find file \"%s\" listed in option \"%s\"."
-msgstr ""
+msgstr "No s'ha pogut trobar l'arxiu \"%s\" que apareix en l'opció \"%s\"."
 
 #: admin/qtx_activation_hook.php:90 admin/qtx_activation_hook.php:104
 #: admin/qtx_activation_hook.php:107
 #, php-format
 msgid "Once the problem is fixed, re-save the configuration by pressing button \"%s\" on plugin %ssettings page%s."
-msgstr ""
+msgstr "Una vegada que el problema s'ha resolt, torna a desar la configuració prement el botó \"%s\" en el plugin %ssettings page%s."
 
 #: admin/qtx_activation_hook.php:90
 msgid "Please, either put file in place or update the option."
@@ -46,20 +46,20 @@ msgstr "Desa els canvis"
 #: admin/qtx_activation_hook.php:104
 #, php-format
 msgid "Could not parse %s file \"%s\" listed in option \"%s\"."
-msgstr ""
+msgstr "No s'ha pogut analitzar l'arxiu %s \"%s\" que apareix en l'opció \"%s\"."
 
 #: admin/qtx_activation_hook.php:104
 msgid "Please, correct the syntax error in the file."
-msgstr ""
+msgstr "Sisplau, corregeix l'error de sixtaxi a l'arxiu."
 
 #: admin/qtx_activation_hook.php:107
 #, php-format
 msgid "Could not load file \"%s\" listed in option \"%s\"."
-msgstr ""
+msgstr "No s'ha pogut carregar l'arxiu \"%s\" que apareix en l'opció \"%s\"."
 
 #: admin/qtx_activation_hook.php:107
 msgid "Please, make sure the file is accessible and readable."
-msgstr ""
+msgstr "Sisplau, assegurat que l'arxiu és accessible i llegible."
 
 #: admin/qtx_activation_hook.php:546
 #, php-format
@@ -78,12 +78,12 @@ msgstr ""
 
 #: admin/qtx_activation_hook.php:646
 msgid "Read Integration Guide"
-msgstr ""
+msgstr "Llegir la guia d'integració"
 
 #: admin/qtx_activation_hook.php:647 admin/qtx_activation_hook.php:661
 #: admin/qtx_activation_hook.php:927 admin/qtx_activation_hook.php:987
 msgid "I have already done it, dismiss this message."
-msgstr ""
+msgstr "Ja ho he fet, descarta aquest missatge."
 
 #: admin/qtx_activation_hook.php:657
 #, php-format
