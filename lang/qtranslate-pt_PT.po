@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qTranslate-X 3.4.5.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-08 21:10-0600\n"
-"PO-Revision-Date: 2015-10-12 10:56+0100\n"
+"PO-Revision-Date: 2015-11-04 14:46+0000\n"
 "Last-Translator: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "Language-Team: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Language: pt_PT\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.8.5\n"
+"X-Generator: Poedit 1.8.6\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -329,25 +329,25 @@ msgstr "Nenhuma entrada da da base de dados foi afectada ao processar este pedid
 #: admin/qtx_admin_options_update.php:142
 #, php-format
 msgid "%d pages have been processed to set the default language."
-msgstr "%d páginas foram processadas para definir o idioma padrão."
+msgstr "%d páginas foram processadas para definir o idioma por omissão."
 
 #: admin/qtx_admin_options_update.php:143
 msgid "No initially untranslated pages found to set the default language"
-msgstr "Não foram encontradas quaisquer páginas inicialmente sem tradução para definir o idioma padrão."
+msgstr "Não foram encontradas quaisquer páginas inicialmente sem tradução para definir o idioma por omissão."
 
 #: admin/qtx_admin_options_update.php:145
 #, php-format
 msgid "%d posts have been processed to set the default language."
-msgstr "%d artigos foram processados para definir o idioma padrão."
+msgstr "%d artigos foram processados para definir o idioma por omissão."
 
 #: admin/qtx_admin_options_update.php:146
 msgid "No initially untranslated posts found to set the default language."
-msgstr "Não foram encontrados quaisquer artigos inicialmente sem tradução para definir o idioma padrão."
+msgstr "Não foram encontrados quaisquer artigos inicialmente sem tradução para definir o idioma por omissão."
 
 #: admin/qtx_admin_options_update.php:148
 #, php-format
 msgid "Post types other than \"post\" or \"page\", as well as unpublished entries, will have to be adjusted manually as needed, since there is no common way to automate setting the default language otherwise. It can be done with a custom script though. You may request a %spaid support%s for this."
-msgstr "Tipos de artigos além de \"artigo\" ou \"página\", tal como itens não publicados, terão que ser ajustados manualmente conforme necessário, uma vez que não há um sistema comum para automaticamente definir o idioma padrão. No entanto poderá ser feito com um script personalizado. Pode fazer um pedido de %ssuporte pago%s para este efeito."
+msgstr "Tipos de artigos além de \"artigo\" ou \"página\", tal como itens não publicados, terão que ser ajustados manualmente conforme necessário, uma vez que não há um sistema comum para automaticamente definir o idioma por omissão. No entanto poderá ser feito com um script personalizado. Pode fazer um pedido de %ssuporte pago%s para este efeito."
 
 #: admin/qtx_admin_options_update.php:184
 msgid "Language is already enabled or invalid!"
@@ -749,7 +749,7 @@ msgstr "Caminho para a imagem da bandeira"
 #: admin/qtx_configuration.php:326
 #, php-format
 msgid "Path to the flag images under wp-content, with trailing slash. (Default: %s, clear the value above to reset it to the default)"
-msgstr "Caminho para as imagens das bandeiras dentro da pasta wp-content, incluindo a barra invertida no fim. (Por omissão: %s, limpe o valor acima para repor o valor padrão)"
+msgstr "Caminho para as imagens das bandeiras dentro da pasta wp-content, incluindo a barra invertida no fim. (Por omissão: %s, limpe o valor acima para repor o valor por omissão)"
 
 #: admin/qtx_configuration.php:330
 msgid "Ignore Links"
@@ -865,7 +865,7 @@ msgstr "Traduzir apenas as opções listadas abaixo (apenas para utilizadores ex
 #: admin/qtx_configuration.php:387
 #, php-format
 msgid "By default, all options are filtered to be translated at front-end for the sake of simplicity of configuration. However, for a developed site, this may cause a considerable performance degradation. Normally, there are very few options, which actually need a translation. You may simply list them above to minimize the performance impact, while still getting translations needed. Options names must match the field \"%s\" of table \"%s\" of WordPress database. A minimum common set of option, normally needed a translation, is already entered in the list above as a default example. Option names in the list may contain wildcard with symbol \"%s\"."
-msgstr "Por defeito, todas as opções são filtradas para serem traduzidas na frente do site, em benefício da simplicidade da configuração. No entanto, para um site já desenvolvido isto pode causar uma degradação considerável da performance. Normalmente há muito poucas opções que realmente precisam de tradução. Poderá simplesmente listá-las acima para minimizar o impacto na performance, ao mesmo tempo que garante as traduções necessárias. Os nomes das opções têm que corresponder ao campo \"%s\" da tabela \"%s\" da base de dados do WordPress. Há um conjunto mínimo de opções que normalmente precisa de tradução, já está incluído na lista acima como exemplo padrão. Os nomes das opções na lista podem conter um caractere genérico com o símbolo \"%s\"."
+msgstr "Por omissão, todas as opções são filtradas para serem traduzidas na frente do site, em benefício da simplicidade da configuração. No entanto, para um site já desenvolvido isto pode causar uma degradação considerável da performance. Normalmente há muito poucas opções que realmente precisam de tradução. Poderá simplesmente listá-las acima para minimizar o impacto na performance, ao mesmo tempo que garante as traduções necessárias. Os nomes das opções têm que corresponder ao campo \"%s\" da tabela \"%s\" da base de dados do WordPress. Há um conjunto mínimo de opções que normalmente precisa de tradução, já está incluído na lista acima como exemplo por omissão. Os nomes das opções na lista podem conter um caractere genérico com o símbolo \"%s\"."
 
 #: admin/qtx_configuration.php:391
 msgid "Editor Mode"
@@ -881,7 +881,7 @@ msgstr "As páginas com campos que podem ser traduzidos têm Botões de Selecç�
 
 #: admin/qtx_configuration.php:394
 msgid "This is the default mode."
-msgstr "Este é o modo padrão."
+msgstr "Este é o modo por omissão."
 
 #: admin/qtx_configuration.php:395
 msgid "Do not use Language Switching Buttons to edit multi-language text entries."
@@ -909,7 +909,7 @@ msgstr "O idioma a editar não pode ser mudado sem recarregar a página. Experim
 
 #: admin/qtx_configuration.php:398
 msgid "One may find convenient to use the default Editor Mode, while remembering not to switch edit languages on custom advanced translatable fields, where LSB do not work."
-msgstr "Poderá ser conveniente utilizar o modo de editor padrão, desde que se lembre de não mudar o idioma de edição em campos avançados que podem ser traduzidos, onde os BSI não funcionem."
+msgstr "Poderá ser conveniente utilizar o modo de editor por omissão, desde que se lembre de não mudar o idioma de edição em campos avançados que podem ser traduzidos, onde os BSI não funcionem."
 
 #: admin/qtx_configuration.php:410
 msgid "Choose CSS style for how Language Switching Buttons are rendered:"
@@ -1194,7 +1194,7 @@ msgstr "Converter a base de dados para o estilo \"apenas parênteses rectos\"."
 #: admin/qtx_import_export.php:195
 #, php-format
 msgid "The square bracket language tag %s only will be used as opposite to dual-tag (%s and %s) %s legacy database format. All string options and standard post and page fields will be uniformly encoded like %s."
-msgstr "A linguagem de etiquetas de parênteses rectos %s apenas será utilizada em substituição do formato de dupla etiquetagem (%s e %s) da base de dados do antigo %s. Todas as opções, campos de artigos e de páginas padrão serão uniformemente codificados como %s."
+msgstr "A linguagem de etiquetas de parênteses rectos %s apenas será utilizada em substituição do formato de dupla etiquetagem (%s e %s) da base de dados do antigo %s. Todas as opções, campos de artigos e de páginas normais serão uniformemente codificados como %s."
 
 #: admin/qtx_import_export.php:196
 msgid "Convert database back to the legacy \"dual language tag\" style."
@@ -1202,7 +1202,7 @@ msgstr "Converter a base de dados para o antigo estilo de \"dupla etiquetagem de
 
 #: admin/qtx_import_export.php:197
 msgid "Note, that only string options and standard post and page fields are affected."
-msgstr "Note que, serão afectados apenas as opções, campos de artigos e de páginas padrão."
+msgstr "Note que, serão afectados apenas as opções, campos de artigos e de páginas normais."
 
 #: admin/qtx_import_export.php:204
 #, php-format
