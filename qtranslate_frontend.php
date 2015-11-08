@@ -465,6 +465,59 @@ function qtranxf_filter_options(){
 }
 qtranxf_filter_options();
 
+/**
+ * @since 3.4.6.5
+*/
+function qtranxf_translate_post($post,$lang) {
+	foreach(get_object_vars($post) as $key => $txt) {
+		switch($key){//the quickest way to proceed
+			//known to skip
+			case 'ID'://int
+			case 'post_author':
+			case 'post_date':
+			case 'post_date_gmt':
+			case 'post_status':
+			case 'comment_status':
+			case 'ping_status':
+			case 'post_password':
+			case 'post_name': //slug!
+			case 'to_ping':
+			case 'pinged':
+			case 'post_modified':
+			case 'post_modified_gmt':
+			case 'post_parent': //int
+			case 'guid':
+			case 'menu_order': //int
+			case 'post_type':
+			case 'post_mime_type':
+			case 'comment_count':
+			case 'filter':
+				continue;
+			//known to translate
+			case 'post_content': $post->$key = qtranxf_use_language($lang, $txt, true); break;
+			case 'post_title':
+			case 'post_excerpt':
+			case 'post_content_filtered'://not sure how this is in use
+			{
+				$blocks = qtranxf_get_language_blocks($txt);
+				if(count($blocks)>1){//value is multilingual
+					$key_ml = $key.'_ml';
+					$post->$key_ml = $txt;
+					$langs = array();
+					$content = qtranxf_split_blocks($blocks,$langs);
+					$post->$key = qtranxf_use_content($lang, $content, $langs, false);
+					//$post->$key = qtranxf_use_block($lang, $blocks, false);
+					$key_langs = $key.'_langs';
+					$post->$key_langs = $langs;
+				}
+			} break;
+			//other maybe, if it is a string, most likely it never comes here
+			default:
+				$post->$key = qtranxf_use($lang, $txt, false);
+		}
+	}
+}
+
 function qtranxf_postsFilter($posts,&$query) {//WP_Query
 	global $q_config;
 	//qtranxf_dbg_log('qtranxf_postsFilter: $posts: ',$posts);
@@ -481,48 +534,7 @@ function qtranxf_postsFilter($posts,&$query) {//WP_Query
 	foreach($posts as $post) {//post is an object derived from WP_Post
 		//if($post->filter == 'raw') continue;//@since 3.4.5 - makes 'get_the_exerpts' to return raw, breaks "more" tags in 'the_content', etc.
 		//qtranxf_dbg_log('qtranxf_postsFilter: ID='.$post->ID.'; post_type='.$post->post_type.'; $post->filter: ',$post->filter);
-		foreach(get_object_vars($post) as $key => $txt) {
-			switch($key){//the quickest way to proceed
-				//known to skip
-				case 'ID'://int
-				case 'post_author':
-				case 'post_date':
-				case 'post_date_gmt':
-				case 'post_status':
-				case 'comment_status':
-				case 'ping_status':
-				case 'post_password':
-				case 'post_name': //slug!
-				case 'to_ping':
-				case 'pinged':
-				case 'post_modified':
-				case 'post_modified_gmt':
-				case 'post_parent': //int
-				case 'guid':
-				case 'menu_order': //int
-				case 'post_type':
-				case 'post_mime_type':
-				case 'comment_count':
-				case 'filter':
-					continue;
-				//known to translate
-				case 'post_content': $post->$key = qtranxf_use_language($lang, $txt, true); break;
-				case 'post_title':
-				case 'post_excerpt':
-				case 'post_content_filtered'://not sure how this is in use
-				{
-					$blocks = qtranxf_get_language_blocks($txt);
-					if(count($blocks)>1){//value is multilingual
-						$key_ml = $key.'_ml';
-						$post->$key_ml = $txt;
-						$post->$key = qtranxf_use_block($lang, $blocks, false);
-					}
-				} break;
-				//other maybe, if it is a string, most likely it never comes here
-				default:
-					$post->$key = qtranxf_use($lang, $txt, false);
-			}
-		}
+		qtranxf_translate_post($post,$lang);
 	}
 	return $posts;
 }

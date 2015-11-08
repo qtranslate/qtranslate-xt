@@ -1338,7 +1338,7 @@ function qtranxf_join_byseparator($texts,$rx_sep) {
 		$ln = array();
 		$sep = '';
 		foreach($lines as $lang => $txts){
-			$t = current($txts);
+			$t = next($txts);
 			if ( $t === false ) continue;
 			if(preg_match($rx_sep,$t)){
 				$sep = $t;
@@ -1346,7 +1346,6 @@ function qtranxf_join_byseparator($texts,$rx_sep) {
 			}
 			$done = false;
 			$ln[$lang] = $t;
-			next($txts);
 		}
 		if( $done ) break;
 		$text .= qtranxf_join_b($ln).$sep;
@@ -1420,25 +1419,21 @@ function qtranxf_use_language($lang, $text, $show_available=false, $show_empty=f
 }
 
 function qtranxf_use_block($lang, $blocks, $show_available=false, $show_empty=false) {
-	global $q_config;
-	//qtranxf_dbg_log('qtranxf_use_language('.$lang.') $text: ', $text);
-	//qtranxf_dbg_log('qtranxf_use_language: $blocks: ', $blocks);
+	//qtranxf_dbg_log('qtranxf_use_block:('.$lang.') $blocks: ', $blocks);
 	$available_langs = array();
 	$content = qtranxf_split_blocks($blocks,$available_langs);
 	//qtranxf_dbg_log('qtranxf_use_block: $content: ',$content);
 	//qtranxf_dbg_log('qtranxf_use_block: $available_langs: ',$available_langs);
+	return qtranxf_use_content($lang, $content, $available_langs, $show_available, $show_empty);
+}
 
+function qtranxf_use_content($lang, $content, $available_langs, $show_available=false, $show_empty=false) {
+	global $q_config;
 	// if content is available show the content in the requested language
 	if(!empty($available_langs[$lang])) return $content[$lang];
 	elseif($show_empty) return '';
 
 	// content is not available in requested language (bad!!) what now?
-
-	//remove available languages that are not enabled and sort them in the order of enabled languages
-	//foreach($available_langs as $language => $b) {
-	//	if(qtranxf_isEnabled($language)) continue;
-	//	unset($available_langs[$language]);
-	//}
 	$alangs = array();
 	foreach($q_config['enabled_languages'] as $language) {
 		if(empty($available_langs[$language])) continue;
@@ -1451,21 +1446,6 @@ function qtranxf_use_block($lang, $blocks, $show_available=false, $show_empty=fa
 	$alt_lang = current($available_langs);
 	$alt_content = $content[$alt_lang];
 	$alt_lang_is_default = $alt_lang == $q_config['default_language'];
-	//if(empty($available_langs[$q_config['default_language']])){
-	//	$alt_lang = null;
-	//	$alt_content = null;
-	//		$alt_lang_is_default = false;
-	//	foreach($available_langs as $language) {
-	//		$alt_lang = $language;
-	//		$alt_content = $content[$language];
-	//		break;
-	//	}
-	//}else{
-	//	$alt_lang = $q_config['default_language'];
-	//	$alt_content = $content[$alt_lang];
-	//	$alt_lang_is_default = true;
-	//}
-	//if(!$alt_lang) return '';
 
 	if(!$show_available){
 		if ($q_config['show_displayed_language_prefix'])
@@ -1517,7 +1497,8 @@ function qtranxf_use_block($lang, $blocks, $show_available=false, $show_empty=fa
 	}
 
 	$output = '<p class="qtranxs-available-languages-message qtranxs-available-languages-message-'.$lang.'">'.preg_replace('/%LANG:([^:]*):([^%]*)%/', $language_list, $q_config['not_available'][$lang]).$altlanguagecontent;
-	/* todo documentation
+	/*
+	 * Chance to customize $output
 	*/
 	return apply_filters('i18n_content_translation_not_available', $output, $lang, $language_list, $alt_lang, $alt_content, $msg, $q_config);
 }
