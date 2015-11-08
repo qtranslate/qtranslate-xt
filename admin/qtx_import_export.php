@@ -165,9 +165,10 @@ function qtranxf_add_row_migrate($nm,$plugin,$args=null) {
 		<label for="<?php echo $plugin; ?>_no_migration"><input type="radio" name="<?php echo $plugin; ?>-migration" id="<?php echo $plugin; ?>_no_migration" value="none" checked /> <?php _e('Do not migrate any setting', 'qtranslate') ?></label>
 		<br/>
 		<label for="<?php echo $plugin; ?>_import_migration"><input type="radio" name="<?php echo $plugin; ?>-migration" id="<?php echo $plugin; ?>_import_migration" value="import" /> <?php echo __('Import settings from ', 'qtranslate').$nm; ?></label>
+<?php if(empty($args['no_export'])){ ?>
 		<br/>
 		<label for="<?php echo $plugin; ?>_export_migration"><input type="radio" name="<?php echo $plugin; ?>-migration" id="<?php echo $plugin; ?>_export_migration" value="export" /> <?php echo __('Export settings to ', 'qtranslate').$nm; ?></label>
-<?php //break;
+<?php }
 	}
 	if(!empty($args['note'])){
 		echo '<p class="qtranxs_notes">'.$args['note'].'</p>';
