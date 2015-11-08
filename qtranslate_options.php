@@ -18,7 +18,7 @@ define('QTX_URL_DOMAINS', 4);// domain per language
 
 define('QTX_STRFTIME_OVERRIDE',	1);
 define('QTX_DATE_OVERRIDE',	2);
-define('QTX_DATE',	3);
+define('QTX_DATE',	3);// default
 define('QTX_STRFTIME',	4);
 
 define('QTX_FILTER_OPTIONS_ALL', 0);
@@ -154,35 +154,37 @@ function qtranxf_set_default_options(&$ops)
  */
 function qtranxf_default_language_name()
 {
-	$cfg = array();
-	$cfg['de'] = 'Deutsch';
-	$cfg['en'] = 'English';
-	$cfg['zh'] = '中文';
-	$cfg['ru'] = 'Русский';
-	$cfg['fi'] = 'suomi';
-	$cfg['fr'] = 'Français';
-	$cfg['nl'] = 'Nederlands';
-	$cfg['sv'] = 'Svenska';
-	$cfg['it'] = 'Italiano';
-	$cfg['ro'] = 'Română';
-	$cfg['hu'] = 'Magyar';
-	$cfg['ja'] = '日本語';
-	$cfg['es'] = 'Español';
-	$cfg['vi'] = 'Tiếng Việt';
-	$cfg['ar'] = 'العربية';
-	$cfg['pt'] = 'Português';
-	$cfg['pb'] = 'Português do Brasil';
-	$cfg['pl'] = 'Polski';
-	$cfg['gl'] = 'galego';
-	$cfg['tr'] = 'Turkish';
-	$cfg['et'] = 'Eesti';
-	$cfg['hr'] = 'Hrvatski';
-	$cfg['eu'] = 'Euskera';
-	$cfg['el'] = 'Ελληνικά';
-	$cfg['ua'] = 'Українська';
-	$cfg['cy'] = 'Cymraeg';// Oct 22 2015
-	//$cfg['tw'] = '中文';
-	return $cfg;
+	//Native Name
+	$nnm = array();
+	$nnm['de'] = 'Deutsch';
+	$nnm['en'] = 'English';
+	$nnm['zh'] = '中文';
+	$nnm['ru'] = 'Русский';
+	$nnm['fi'] = 'suomi';
+	$nnm['fr'] = 'Français';
+	$nnm['nl'] = 'Nederlands';
+	$nnm['sv'] = 'Svenska';
+	$nnm['it'] = 'Italiano';
+	$nnm['ro'] = 'Română';
+	$nnm['hu'] = 'Magyar';
+	$nnm['ja'] = '日本語';
+	$nnm['es'] = 'Español';
+	$nnm['vi'] = 'Tiếng Việt';
+	$nnm['ar'] = 'العربية';
+	$nnm['pt'] = 'Português';
+	$nnm['pb'] = 'Português do Brasil';
+	$nnm['pl'] = 'Polski';
+	$nnm['gl'] = 'galego';
+	$nnm['tr'] = 'Turkish';
+	$nnm['et'] = 'Eesti';
+	$nnm['hr'] = 'Hrvatski';
+	$nnm['eu'] = 'Euskera';
+	$nnm['el'] = 'Ελληνικά';
+	$nnm['ua'] = 'Українська';
+	$nnm['cy'] = 'Cymraeg';// Oct 22 2015
+	$nnm['ca'] = 'Català';//Nov 6 2015
+	//$nnm['tw'] = '中文';
+	return $nnm;
 }
 
 /**
@@ -192,35 +194,36 @@ function qtranxf_default_language_name()
 function qtranxf_default_locale()
 {
 	// see locale -a for available locales
-	$cfg = array();
-	$cfg['de'] = 'de_DE';
-	$cfg['en'] = 'en_US';
-	$cfg['zh'] = 'zh_CN';
-	$cfg['ru'] = 'ru_RU';
-	$cfg['fi'] = 'fi_FI';
-	$cfg['fr'] = 'fr_FR';
-	$cfg['nl'] = 'nl_NL';
-	$cfg['sv'] = 'sv_SE';
-	$cfg['it'] = 'it_IT';
-	$cfg['ro'] = 'ro_RO';
-	$cfg['hu'] = 'hu_HU';
-	$cfg['ja'] = 'ja';
-	$cfg['es'] = 'es_ES';
-	$cfg['vi'] = 'vi';
-	$cfg['ar'] = 'ar';
-	$cfg['pt'] = 'pt_PT';
-	$cfg['pb'] = 'pt_BR';
-	$cfg['pl'] = 'pl_PL';
-	$cfg['gl'] = 'gl_ES';
-	$cfg['tr'] = 'tr_TR';
-	$cfg['et'] = 'et_EE';
-	$cfg['hr'] = 'hr_HR';
-	$cfg['eu'] = 'eu_ES';
-	$cfg['el'] = 'el_GR';
-	$cfg['ua'] = 'uk';
-	$cfg['cy'] = 'cy';// not 'cy_GB'
-	//$cfg['tw'] = 'zh_TW';
-	return $cfg;
+	$loc = array();
+	$loc['de'] = 'de_DE';
+	$loc['en'] = 'en_US';
+	$loc['zh'] = 'zh_CN';
+	$loc['ru'] = 'ru_RU';
+	$loc['fi'] = 'fi_FI';
+	$loc['fr'] = 'fr_FR';
+	$loc['nl'] = 'nl_NL';
+	$loc['sv'] = 'sv_SE';
+	$loc['it'] = 'it_IT';
+	$loc['ro'] = 'ro_RO';
+	$loc['hu'] = 'hu_HU';
+	$loc['ja'] = 'ja';
+	$loc['es'] = 'es_ES';
+	$loc['vi'] = 'vi';
+	$loc['ar'] = 'ar';
+	$loc['pt'] = 'pt_PT';
+	$loc['pb'] = 'pt_BR';
+	$loc['pl'] = 'pl_PL';
+	$loc['gl'] = 'gl_ES';
+	$loc['tr'] = 'tr_TR';
+	$loc['et'] = 'et_EE';
+	$loc['hr'] = 'hr_HR';
+	$loc['eu'] = 'eu_ES';
+	$loc['el'] = 'el_GR';
+	$loc['ua'] = 'uk';
+	$loc['cy'] = 'cy';// not 'cy_GB'
+	$loc['ca'] = 'ca';
+	//$loc['tw'] = 'zh_TW';
+	return $loc;
 }
 
 /**
@@ -240,37 +243,39 @@ function qtranxf_default_locale_html(){
 function qtranxf_default_not_available()
 {
 	// %LANG:<normal_separator>:<last_separator>% generates a list of languages separated by <normal_separator> except for the last one, where <last_separator> will be used instead.
-	$cfg = array();
+	//Not Available Message
+	$nam = array();
 	//Sorry, this entry is only available in "%LANG:, :" and "%".
-	$cfg['de'] = 'Leider ist der Eintrag nur auf %LANG:, : und % verfügbar.';//ok
-	$cfg['en'] = 'Sorry, this entry is only available in %LANG:, : and %.';//ok
-	$cfg['zh'] = '对不起，此内容只适用于%LANG:，:和%。';
-	$cfg['ru'] = 'Извините, этот техт доступен только в &ldquo;%LANG:&rdquo;, &ldquo;:&rdquo; и &ldquo;%&rdquo;.';//ok
-	//$cfg['fi'] = 'Anteeksi, mutta tämä kirjoitus on saatavana ainoastaan näillä kielillä: %LANG:, : ja %.';
-	$cfg['fi'] = 'Tämä teksti on valitettavasti saatavilla vain kielillä: %LANG:, : ja %.';//Jyrki Vanamo, Oct 20 2015, 3.4.6.5
-	$cfg['fr'] = 'Désolé, cet article est seulement disponible en %LANG:, : et %.';
-	$cfg['nl'] = 'Onze verontschuldigingen, dit bericht is alleen beschikbaar in %LANG:, : en %.';
-	$cfg['sv'] = 'Tyvärr är denna artikel enbart tillgänglig på %LANG:, : och %.';
-	$cfg['it'] = 'Ci spiace, ma questo articolo è disponibile soltanto in %LANG:, : e %.';
-	$cfg['ro'] = 'Din păcate acest articol este disponibil doar în %LANG:, : și %.';
-	$cfg['hu'] = 'Sajnos ennek a bejegyzésnek csak %LANG:, : és % nyelvű változata van.';
-	$cfg['ja'] = '申し訳ありません、このコンテンツはただ今　%LANG:、 :と %　のみです。';
-	$cfg['es'] = 'Disculpa, pero esta entrada está disponible sólo en %LANG:, : y %.';
-	$cfg['vi'] = 'Rất tiếc, mục này chỉ tồn tại ở %LANG:, : và %.';
-	$cfg['ar'] = 'عفوا، هذه المدخلة موجودة فقط في %LANG:, : و %.';
-	$cfg['pt'] = 'Desculpe, este conteúdo só está disponível em %LANG:, : e %.';
-	$cfg['pb'] = 'Desculpe-nos, mas este texto está apenas disponível em %LANG:, : y %.';
-	$cfg['pl'] = 'Przepraszamy, ten wpis jest dostępny tylko w języku %LANG:, : i %.';
-	$cfg['gl'] = 'Sentímolo moito, ista entrada atopase unicamente en %LANG;,: e %.';
-	$cfg['tr'] = 'Sorry, this entry is only available in %LANG:, : and %.';
-	$cfg['et'] = 'Vabandame, see kanne on saadaval ainult %LANG : ja %.';
-	$cfg['hr'] = 'Žao nam je, ne postoji prijevod na raspolaganju za ovaj proizvod još %LANG:, : i %.';
-	$cfg['eu'] = 'Sentitzen dugu, baina sarrera hau %LANG-z:, : eta % bakarrik dago.';
-	$cfg['el'] = 'Συγγνώμη,αυτή η εγγραφή είναι διαθέσιμη μόνο στα %LANG:, : και %.';
-	$cfg['ua'] = 'Вибачте цей текст доступний тільки в &ldquo;%LANG:&rdquo;, &ldquo;: і &ldquo;%&rdquo;.';//ok
-	$cfg['cy'] = 'Mae&#8217;n ddrwg gen i, mae\'r cofnod hwn dim ond ar gael mewn %LANG:, : a %.';//ok
-	//$cfg['tw'] = '对不起，此内容只适用于%LANG:，:和%。';
-	return $cfg;
+	$nam['de'] = 'Leider ist der Eintrag nur auf %LANG:, : und % verfügbar.';//ok
+	$nam['en'] = 'Sorry, this entry is only available in %LANG:, : and %.';//ok
+	$nam['zh'] = '对不起，此内容只适用于%LANG:，:和%。';
+	$nam['ru'] = 'Извините, этот техт доступен только в &ldquo;%LANG:&rdquo;, &ldquo;:&rdquo; и &ldquo;%&rdquo;.';//ok
+	//$nam['fi'] = 'Anteeksi, mutta tämä kirjoitus on saatavana ainoastaan näillä kielillä: %LANG:, : ja %.';
+	$nam['fi'] = 'Tämä teksti on valitettavasti saatavilla vain kielillä: %LANG:, : ja %.';//Jyrki Vanamo, Oct 20 2015, 3.4.6.5
+	$nam['fr'] = 'Désolé, cet article est seulement disponible en %LANG:, : et %.';
+	$nam['nl'] = 'Onze verontschuldigingen, dit bericht is alleen beschikbaar in %LANG:, : en %.';
+	$nam['sv'] = 'Tyvärr är denna artikel enbart tillgänglig på %LANG:, : och %.';
+	$nam['it'] = 'Ci spiace, ma questo articolo è disponibile soltanto in %LANG:, : e %.';
+	$nam['ro'] = 'Din păcate acest articol este disponibil doar în %LANG:, : și %.';
+	$nam['hu'] = 'Sajnos ennek a bejegyzésnek csak %LANG:, : és % nyelvű változata van.';
+	$nam['ja'] = '申し訳ありません、このコンテンツはただ今　%LANG:、 :と %　のみです。';
+	$nam['es'] = 'Disculpa, pero esta entrada está disponible sólo en %LANG:, : y %.';
+	$nam['vi'] = 'Rất tiếc, mục này chỉ tồn tại ở %LANG:, : và %.';
+	$nam['ar'] = 'عفوا، هذه المدخلة موجودة فقط في %LANG:, : و %.';
+	$nam['pt'] = 'Desculpe, este conteúdo só está disponível em %LANG:, : e %.';
+	$nam['pb'] = 'Desculpe-nos, mas este texto está apenas disponível em %LANG:, : y %.';
+	$nam['pl'] = 'Przepraszamy, ten wpis jest dostępny tylko w języku %LANG:, : i %.';
+	$nam['gl'] = 'Sentímolo moito, ista entrada atopase unicamente en %LANG;,: e %.';
+	$nam['tr'] = 'Sorry, this entry is only available in %LANG:, : and %.';
+	$nam['et'] = 'Vabandame, see kanne on saadaval ainult %LANG : ja %.';
+	$nam['hr'] = 'Žao nam je, ne postoji prijevod na raspolaganju za ovaj proizvod još %LANG:, : i %.';
+	$nam['eu'] = 'Sentitzen dugu, baina sarrera hau %LANG-z:, : eta % bakarrik dago.';
+	$nam['el'] = 'Συγγνώμη,αυτή η εγγραφή είναι διαθέσιμη μόνο στα %LANG:, : και %.';
+	$nam['ua'] = 'Вибачте цей текст доступний тільки в &ldquo;%LANG:&rdquo;, &ldquo;: і &ldquo;%&rdquo;.';//ok
+	$nam['cy'] = 'Mae&#8217;n ddrwg gen i, mae\'r cofnod hwn dim ond ar gael mewn %LANG:, : a %.';//ok
+	$nam['ca'] = 'Ho sentim, aquesta entrada es troba disponible únicament en %LANG:, : i %.';//ok
+	//$nam['tw'] = '对不起，此内容只适用于%LANG:，:和%。';
+	return $nam;
 }
 
 /**
@@ -279,36 +284,37 @@ function qtranxf_default_not_available()
  */
 function qtranxf_default_date_format()
 {
-	$cfg = array();
-	$cfg['en'] = '%A %B %e%q, %Y';
-	$cfg['de'] = '%A, \d\e\r %e. %B %Y';
-	$cfg['zh'] = '%x %A';
-	$cfg['ru'] = '%A %B %e%q, %Y';
-	//$cfg['fi'] = '%e.&m.%C';
-	$cfg['fi'] = '%d.%m.%Y';//Jyrki Vanamo, Oct 20 2015, 3.4.6.5
-	$cfg['fr'] = '%A %e %B %Y';
-	$cfg['nl'] = '%d/%m/%y';
-	$cfg['sv'] = '%Y-%m-%d';
-	$cfg['it'] = '%e %B %Y';
-	$cfg['ro'] = '%A, %e %B %Y';
-	$cfg['hu'] = '%Y %B %e, %A';
-	$cfg['ja'] = '%Y年%m月%d日';
-	$cfg['es'] = '%d \d\e %B \d\e %Y';
-	$cfg['vi'] = '%d/%m/%Y';
-	$cfg['ar'] = '%d/%m/%Y';
-	$cfg['pt'] = '%A, %e \d\e %B \d\e %Y';
-	$cfg['pb'] = '%d \d\e %B \d\e %Y';
-	$cfg['pl'] = '%d/%m/%y';
-	$cfg['gl'] = '%d \d\e %B \d\e %Y';
-	$cfg['tr'] = '%A %B %e%q, %Y';
-	$cfg['et'] = '%A %B %e%q, %Y';
-	$cfg['hr'] = '%d/%m/%Y';
-	$cfg['eu'] = '%Y %B %e, %A';
-	$cfg['el'] = '%d/%m/%y';
-	$cfg['ua'] = '%A %B %e%q, %Y';
-	$cfg['cy'] = '%A %B %e%q, %Y';//not verified
-	//$cfg['tw'] = '%x %A';
-	return $cfg;
+	$dtf = array();
+	$dtf['en'] = '%A %B %e%q, %Y';
+	$dtf['de'] = '%A, \d\e\r %e. %B %Y';
+	$dtf['zh'] = '%x %A';
+	$dtf['ru'] = '%A %B %e%q, %Y';
+	//$dtf['fi'] = '%e.&m.%C';
+	$dtf['fi'] = '%d.%m.%Y';//Jyrki Vanamo, Oct 20 2015, 3.4.6.5
+	$dtf['fr'] = '%A %e %B %Y';
+	$dtf['nl'] = '%d/%m/%y';
+	$dtf['sv'] = '%Y-%m-%d';
+	$dtf['it'] = '%e %B %Y';
+	$dtf['ro'] = '%A, %e %B %Y';
+	$dtf['hu'] = '%Y %B %e, %A';
+	$dtf['ja'] = '%Y年%m月%d日';
+	$dtf['es'] = '%d \d\e %B \d\e %Y';
+	$dtf['vi'] = '%d/%m/%Y';
+	$dtf['ar'] = '%d/%m/%Y';
+	$dtf['pt'] = '%A, %e \d\e %B \d\e %Y';
+	$dtf['pb'] = '%d \d\e %B \d\e %Y';
+	$dtf['pl'] = '%d/%m/%y';
+	$dtf['gl'] = '%d \d\e %B \d\e %Y';
+	$dtf['tr'] = '%A %B %e%q, %Y';
+	$dtf['et'] = '%A %B %e%q, %Y';
+	$dtf['hr'] = '%d/%m/%Y';
+	$dtf['eu'] = '%Y %B %e, %A';
+	$dtf['el'] = '%d/%m/%y';
+	$dtf['ua'] = '%A %B %e%q, %Y';
+	$dtf['cy'] = '%A %B %e%q, %Y';//not verified
+	$dtf['ca'] = 'j F, Y';
+	//$dtf['tw'] = '%x %A';
+	return $dtf;
 }
 
 /**
@@ -317,35 +323,36 @@ function qtranxf_default_date_format()
  */
 function qtranxf_default_time_format()
 {
-	$cfg = array();
-	$cfg['en'] = '%I:%M %p';
-	$cfg['de'] = '%H:%M';
-	$cfg['zh'] = '%I:%M%p';
-	$cfg['ru'] = '%H:%M';
-	$cfg['fi'] = '%H:%M';
-	$cfg['fr'] = '%H:%M';
-	$cfg['nl'] = '%H:%M';
-	$cfg['sv'] = '%H:%M';
-	$cfg['it'] = '%H:%M';
-	$cfg['ro'] = '%H:%M';
-	$cfg['hu'] = '%H:%M';
-	$cfg['ja'] = '%H:%M';
-	$cfg['es'] = '%H:%M hrs.';
-	$cfg['vi'] = '%H:%M';
-	$cfg['ar'] = '%H:%M';
-	$cfg['pt'] = '%H:%M';
-	$cfg['pb'] = '%H:%M hrs.';
-	$cfg['pl'] = '%H:%M';
-	$cfg['gl'] = '%H:%M hrs.';
-	$cfg['tr'] = '%H:%M';
-	$cfg['et'] = '%H:%M';
-	$cfg['hr'] = '%H:%M';
-	$cfg['eu'] = '%H:%M';
-	$cfg['el'] = '%H:%M';
-	$cfg['ua'] = '%H:%M';
-	$cfg['cy'] = '%I:%M %p';//not verified
-	//$cfg['tw'] = '%I:%M%p';
-	return $cfg;
+	$tmf = array();
+	$tmf['en'] = '%I:%M %p';
+	$tmf['de'] = '%H:%M';
+	$tmf['zh'] = '%I:%M%p';
+	$tmf['ru'] = '%H:%M';
+	$tmf['fi'] = '%H:%M';
+	$tmf['fr'] = '%H:%M';
+	$tmf['nl'] = '%H:%M';
+	$tmf['sv'] = '%H:%M';
+	$tmf['it'] = '%H:%M';
+	$tmf['ro'] = '%H:%M';
+	$tmf['hu'] = '%H:%M';
+	$tmf['ja'] = '%H:%M';
+	$tmf['es'] = '%H:%M hrs.';
+	$tmf['vi'] = '%H:%M';
+	$tmf['ar'] = '%H:%M';
+	$tmf['pt'] = '%H:%M';
+	$tmf['pb'] = '%H:%M hrs.';
+	$tmf['pl'] = '%H:%M';
+	$tmf['gl'] = '%H:%M hrs.';
+	$tmf['tr'] = '%H:%M';
+	$tmf['et'] = '%H:%M';
+	$tmf['hr'] = '%H:%M';
+	$tmf['eu'] = '%H:%M';
+	$tmf['el'] = '%H:%M';
+	$tmf['ua'] = '%H:%M';
+	$tmf['cy'] = '%I:%M %p';//not verified
+	$tmf['ca'] = 'G:i';
+	//$tmf['tw'] = '%I:%M%p';
+	return $tmf;
 }
 
 /**
@@ -355,35 +362,36 @@ function qtranxf_default_time_format()
  */
 function qtranxf_default_flag()
 {
-	$cfg = array();
-	$cfg['en'] = 'gb.png';
-	$cfg['de'] = 'de.png';
-	$cfg['zh'] = 'cn.png';
-	$cfg['ru'] = 'ru.png';
-	$cfg['fi'] = 'fi.png';
-	$cfg['fr'] = 'fr.png';
-	$cfg['nl'] = 'nl.png';
-	$cfg['sv'] = 'se.png';
-	$cfg['it'] = 'it.png';
-	$cfg['ro'] = 'ro.png';
-	$cfg['hu'] = 'hu.png';
-	$cfg['ja'] = 'jp.png';
-	$cfg['es'] = 'es.png';
-	$cfg['vi'] = 'vn.png';
-	$cfg['ar'] = 'arle.png';
-	$cfg['pt'] = 'pt.png';
-	$cfg['pb'] = 'br.png';
-	$cfg['pl'] = 'pl.png';
-	$cfg['gl'] = 'galego.png';
-	$cfg['tr'] = 'tr.png';
-	$cfg['et'] = 'ee.png';
-	$cfg['hr'] = 'hr.png';
-	$cfg['eu'] = 'eu_ES.png';
-	$cfg['el'] = 'gr.png';
-	$cfg['ua'] = 'ua.png';
-	$cfg['cy'] = 'cy_GB.png';
-	//$cfg['tw'] = 'tw.png';
-	return $cfg;
+	$flg = array();
+	$flg['en'] = 'gb.png';
+	$flg['de'] = 'de.png';
+	$flg['zh'] = 'cn.png';
+	$flg['ru'] = 'ru.png';
+	$flg['fi'] = 'fi.png';
+	$flg['fr'] = 'fr.png';
+	$flg['nl'] = 'nl.png';
+	$flg['sv'] = 'se.png';
+	$flg['it'] = 'it.png';
+	$flg['ro'] = 'ro.png';
+	$flg['hu'] = 'hu.png';
+	$flg['ja'] = 'jp.png';
+	$flg['es'] = 'es.png';
+	$flg['vi'] = 'vn.png';
+	$flg['ar'] = 'arle.png';
+	$flg['pt'] = 'pt.png';
+	$flg['pb'] = 'br.png';
+	$flg['pl'] = 'pl.png';
+	$flg['gl'] = 'galego.png';
+	$flg['tr'] = 'tr.png';
+	$flg['et'] = 'ee.png';
+	$flg['hr'] = 'hr.png';
+	$flg['eu'] = 'eu_ES.png';
+	$flg['el'] = 'gr.png';
+	$flg['ua'] = 'ua.png';
+	$flg['cy'] = 'cy_GB.png';
+	$flg['ca'] = 'catala.png';
+	//$flg['tw'] = 'tw.png';
+	return $flg;
 }
 
 /**
@@ -392,173 +400,174 @@ function qtranxf_default_flag()
  */
 function qtranxf_default_windows_locale()
 {
-	$cfg = array();
-	$cfg['aa'] = "Afar";
-	$cfg['ab'] = "Abkhazian";
-	$cfg['ae'] = "Avestan";
-	$cfg['af'] = "Afrikaans";
-	$cfg['am'] = "Amharic";
-	$cfg['ar'] = "Arabic";
-	$cfg['as'] = "Assamese";
-	$cfg['ay'] = "Aymara";
-	$cfg['az'] = "Azerbaijani";
-	$cfg['ba'] = "Bashkir";
-	$cfg['be'] = "Belarusian";
-	$cfg['bg'] = "Bulgarian";
-	$cfg['bh'] = "Bihari";
-	$cfg['bi'] = "Bislama";
-	$cfg['bn'] = "Bengali";
-	$cfg['bo'] = "Tibetan";
-	$cfg['br'] = "Breton";
-	$cfg['bs'] = "Bosnian";
-	$cfg['ca'] = "Catalan";
-	$cfg['ce'] = "Chechen";
-	$cfg['ch'] = "Chamorro";
-	$cfg['co'] = "Corsican";
-	$cfg['cs'] = "Czech";
-	$cfg['cu'] = "Church Slavic";
-	$cfg['cv'] = "Chuvash";
-	$cfg['cy'] = "Welsh";
-	$cfg['da'] = "Danish";
-	$cfg['de'] = "German";
-	$cfg['dz'] = "Dzongkha";
-	$cfg['el'] = "Greek";
-	$cfg['en'] = "English";
-	$cfg['eo'] = "Esperanto";
-	$cfg['es'] = "Spanish";
-	$cfg['et'] = "Estonian";
-	$cfg['eu'] = "Basque";
-	$cfg['fa'] = "Persian";
-	$cfg['fi'] = "Finnish";
-	$cfg['fj'] = "Fijian";
-	$cfg['fo'] = "Faeroese";
-	$cfg['fr'] = "French";
-	$cfg['fy'] = "Frisian";
-	$cfg['ga'] = "Irish";
-	$cfg['gd'] = "Gaelic (Scots)";
-	$cfg['gl'] = "Gallegan";
-	$cfg['gn'] = "Guarani";
-	$cfg['gu'] = "Gujarati";
-	$cfg['gv'] = "Manx";
-	$cfg['ha'] = "Hausa";
-	$cfg['he'] = "Hebrew";
-	$cfg['hi'] = "Hindi";
-	$cfg['ho'] = "Hiri Motu";
-	$cfg['hr'] = "Croatian";
-	$cfg['hu'] = "Hungarian";
-	$cfg['hy'] = "Armenian";
-	$cfg['hz'] = "Herero";
-	$cfg['ia'] = "Interlingua";
-	$cfg['id'] = "Indonesian";
-	$cfg['ie'] = "Interlingue";
-	$cfg['ik'] = "Inupiaq";
-	$cfg['is'] = "Icelandic";
-	$cfg['it'] = "Italian";
-	$cfg['iu'] = "Inuktitut";
-	$cfg['ja'] = "Japanese";
-	$cfg['jw'] = "Javanese";
-	$cfg['ka'] = "Georgian";
-	$cfg['ki'] = "Kikuyu";
-	$cfg['kj'] = "Kuanyama";
-	$cfg['kk'] = "Kazakh";
-	$cfg['kl'] = "Kalaallisut";
-	$cfg['km'] = "Khmer";
-	$cfg['kn'] = "Kannada";
-	$cfg['ko'] = "Korean";
-	$cfg['ks'] = "Kashmiri";
-	$cfg['ku'] = "Kurdish";
-	$cfg['kv'] = "Komi";
-	$cfg['kw'] = "Cornish";
-	$cfg['ky'] = "Kirghiz";
-	$cfg['la'] = "Latin";
-	$cfg['lb'] = "Letzeburgesch";
-	$cfg['ln'] = "Lingala";
-	$cfg['lo'] = "Lao";
-	$cfg['lt'] = "Lithuanian";
-	$cfg['lv'] = "Latvian";
-	$cfg['mg'] = "Malagasy";
-	$cfg['mh'] = "Marshall";
-	$cfg['mi'] = "Maori";
-	$cfg['mk'] = "Macedonian";
-	$cfg['ml'] = "Malayalam";
-	$cfg['mn'] = "Mongolian";
-	$cfg['mo'] = "Moldavian";
-	$cfg['mr'] = "Marathi";
-	$cfg['ms'] = "Malay";
-	$cfg['mt'] = "Maltese";
-	$cfg['my'] = "Burmese";
-	$cfg['na'] = "Nauru";
-	$cfg['nb'] = "Norwegian Bokmal";
-	$cfg['nd'] = "Ndebele, North";
-	$cfg['ne'] = "Nepali";
-	$cfg['ng'] = "Ndonga";
-	$cfg['nl'] = "Dutch";
-	$cfg['nn'] = "Norwegian Nynorsk";
-	$cfg['no'] = "Norwegian";
-	$cfg['nr'] = "Ndebele, South";
-	$cfg['nv'] = "Navajo";
-	$cfg['ny'] = "Chichewa; Nyanja";
-	$cfg['oc'] = "Occitan (post 1500)";
-	$cfg['om'] = "Oromo";
-	$cfg['or'] = "Oriya";
-	$cfg['os'] = "Ossetian; Ossetic";
-	$cfg['pa'] = "Panjabi";
-	$cfg['pi'] = "Pali";
-	$cfg['pl'] = "Polish";
-	$cfg['ps'] = "Pushto";
-	$cfg['pt'] = "Portuguese";
-	$cfg['pb'] = "Brazilian Portuguese";
-	$cfg['qu'] = "Quechua";
-	$cfg['rm'] = "Rhaeto-Romance";
-	$cfg['rn'] = "Rundi";
-	$cfg['ro'] = "Romanian";
-	$cfg['ru'] = "Russian";
-	$cfg['rw'] = "Kinyarwanda";
-	$cfg['sa'] = "Sanskrit";
-	$cfg['sc'] = "Sardinian";
-	$cfg['sd'] = "Sindhi";
-	$cfg['se'] = "Sami";
-	$cfg['sg'] = "Sango";
-	$cfg['si'] = "Sinhalese";
-	$cfg['sk'] = "Slovak";
-	$cfg['sl'] = "Slovenian";
-	$cfg['sm'] = "Samoan";
-	$cfg['sn'] = "Shona";
-	$cfg['so'] = "Somali";
-	$cfg['sq'] = "Albanian";
-	$cfg['sr'] = "Serbian";
-	$cfg['ss'] = "Swati";
-	$cfg['st'] = "Sotho";
-	$cfg['su'] = "Sundanese";
-	$cfg['sv'] = "Swedish";
-	$cfg['sw'] = "Swahili";
-	$cfg['ta'] = "Tamil";
-	$cfg['te'] = "Telugu";
-	$cfg['tg'] = "Tajik";
-	$cfg['th'] = "Thai";
-	$cfg['ti'] = "Tigrinya";
-	$cfg['tk'] = "Turkmen";
-	$cfg['tl'] = "Tagalog";
-	$cfg['tn'] = "Tswana";
-	$cfg['to'] = "Tonga";
-	$cfg['tr'] = "Turkish";
-	$cfg['ts'] = "Tsonga";
-	$cfg['tt'] = "Tatar";
-	$cfg['tw'] = "Twi";
-	$cfg['ug'] = "Uighur";
-	$cfg['uk'] = "Ukrainian";
-	$cfg['ur'] = "Urdu";
-	$cfg['uz'] = "Uzbek";
-	$cfg['vi'] = "Vietnamese";
-	$cfg['vo'] = "Volapuk";
-	$cfg['wo'] = "Wolof";
-	$cfg['xh'] = "Xhosa";
-	$cfg['yi'] = "Yiddish";
-	$cfg['yo'] = "Yoruba";
-	$cfg['za'] = "Zhuang";
-	$cfg['zh'] = "Chinese";
-	$cfg['zu'] = "Zulu";
-	return $cfg;
+	//English Name
+	$enm = array();
+	$enm['aa'] = "Afar";
+	$enm['ab'] = "Abkhazian";
+	$enm['ae'] = "Avestan";
+	$enm['af'] = "Afrikaans";
+	$enm['am'] = "Amharic";
+	$enm['ar'] = "Arabic";
+	$enm['as'] = "Assamese";
+	$enm['ay'] = "Aymara";
+	$enm['az'] = "Azerbaijani";
+	$enm['ba'] = "Bashkir";
+	$enm['be'] = "Belarusian";
+	$enm['bg'] = "Bulgarian";
+	$enm['bh'] = "Bihari";
+	$enm['bi'] = "Bislama";
+	$enm['bn'] = "Bengali";
+	$enm['bo'] = "Tibetan";
+	$enm['br'] = "Breton";
+	$enm['bs'] = "Bosnian";
+	$enm['ca'] = "Catalan";
+	$enm['ce'] = "Chechen";
+	$enm['ch'] = "Chamorro";
+	$enm['co'] = "Corsican";
+	$enm['cs'] = "Czech";
+	$enm['cu'] = "Church Slavic";
+	$enm['cv'] = "Chuvash";
+	$enm['cy'] = "Welsh";
+	$enm['da'] = "Danish";
+	$enm['de'] = "German";
+	$enm['dz'] = "Dzongkha";
+	$enm['el'] = "Greek";
+	$enm['en'] = "English";
+	$enm['eo'] = "Esperanto";
+	$enm['es'] = "Spanish";
+	$enm['et'] = "Estonian";
+	$enm['eu'] = "Basque";
+	$enm['fa'] = "Persian";
+	$enm['fi'] = "Finnish";
+	$enm['fj'] = "Fijian";
+	$enm['fo'] = "Faeroese";
+	$enm['fr'] = "French";
+	$enm['fy'] = "Frisian";
+	$enm['ga'] = "Irish";
+	$enm['gd'] = "Gaelic (Scots)";
+	$enm['gl'] = "Gallegan";
+	$enm['gn'] = "Guarani";
+	$enm['gu'] = "Gujarati";
+	$enm['gv'] = "Manx";
+	$enm['ha'] = "Hausa";
+	$enm['he'] = "Hebrew";
+	$enm['hi'] = "Hindi";
+	$enm['ho'] = "Hiri Motu";
+	$enm['hr'] = "Croatian";
+	$enm['hu'] = "Hungarian";
+	$enm['hy'] = "Armenian";
+	$enm['hz'] = "Herero";
+	$enm['ia'] = "Interlingua";
+	$enm['id'] = "Indonesian";
+	$enm['ie'] = "Interlingue";
+	$enm['ik'] = "Inupiaq";
+	$enm['is'] = "Icelandic";
+	$enm['it'] = "Italian";
+	$enm['iu'] = "Inuktitut";
+	$enm['ja'] = "Japanese";
+	$enm['jw'] = "Javanese";
+	$enm['ka'] = "Georgian";
+	$enm['ki'] = "Kikuyu";
+	$enm['kj'] = "Kuanyama";
+	$enm['kk'] = "Kazakh";
+	$enm['kl'] = "Kalaallisut";
+	$enm['km'] = "Khmer";
+	$enm['kn'] = "Kannada";
+	$enm['ko'] = "Korean";
+	$enm['ks'] = "Kashmiri";
+	$enm['ku'] = "Kurdish";
+	$enm['kv'] = "Komi";
+	$enm['kw'] = "Cornish";
+	$enm['ky'] = "Kirghiz";
+	$enm['la'] = "Latin";
+	$enm['lb'] = "Letzeburgesch";
+	$enm['ln'] = "Lingala";
+	$enm['lo'] = "Lao";
+	$enm['lt'] = "Lithuanian";
+	$enm['lv'] = "Latvian";
+	$enm['mg'] = "Malagasy";
+	$enm['mh'] = "Marshall";
+	$enm['mi'] = "Maori";
+	$enm['mk'] = "Macedonian";
+	$enm['ml'] = "Malayalam";
+	$enm['mn'] = "Mongolian";
+	$enm['mo'] = "Moldavian";
+	$enm['mr'] = "Marathi";
+	$enm['ms'] = "Malay";
+	$enm['mt'] = "Maltese";
+	$enm['my'] = "Burmese";
+	$enm['na'] = "Nauru";
+	$enm['nb'] = "Norwegian Bokmal";
+	$enm['nd'] = "Ndebele, North";
+	$enm['ne'] = "Nepali";
+	$enm['ng'] = "Ndonga";
+	$enm['nl'] = "Dutch";
+	$enm['nn'] = "Norwegian Nynorsk";
+	$enm['no'] = "Norwegian";
+	$enm['nr'] = "Ndebele, South";
+	$enm['nv'] = "Navajo";
+	$enm['ny'] = "Chichewa; Nyanja";
+	$enm['oc'] = "Occitan (post 1500)";
+	$enm['om'] = "Oromo";
+	$enm['or'] = "Oriya";
+	$enm['os'] = "Ossetian; Ossetic";
+	$enm['pa'] = "Panjabi";
+	$enm['pi'] = "Pali";
+	$enm['pl'] = "Polish";
+	$enm['ps'] = "Pushto";
+	$enm['pt'] = "Portuguese";
+	$enm['pb'] = "Brazilian Portuguese";
+	$enm['qu'] = "Quechua";
+	$enm['rm'] = "Rhaeto-Romance";
+	$enm['rn'] = "Rundi";
+	$enm['ro'] = "Romanian";
+	$enm['ru'] = "Russian";
+	$enm['rw'] = "Kinyarwanda";
+	$enm['sa'] = "Sanskrit";
+	$enm['sc'] = "Sardinian";
+	$enm['sd'] = "Sindhi";
+	$enm['se'] = "Sami";
+	$enm['sg'] = "Sango";
+	$enm['si'] = "Sinhalese";
+	$enm['sk'] = "Slovak";
+	$enm['sl'] = "Slovenian";
+	$enm['sm'] = "Samoan";
+	$enm['sn'] = "Shona";
+	$enm['so'] = "Somali";
+	$enm['sq'] = "Albanian";
+	$enm['sr'] = "Serbian";
+	$enm['ss'] = "Swati";
+	$enm['st'] = "Sotho";
+	$enm['su'] = "Sundanese";
+	$enm['sv'] = "Swedish";
+	$enm['sw'] = "Swahili";
+	$enm['ta'] = "Tamil";
+	$enm['te'] = "Telugu";
+	$enm['tg'] = "Tajik";
+	$enm['th'] = "Thai";
+	$enm['ti'] = "Tigrinya";
+	$enm['tk'] = "Turkmen";
+	$enm['tl'] = "Tagalog";
+	$enm['tn'] = "Tswana";
+	$enm['to'] = "Tonga";
+	$enm['tr'] = "Turkish";
+	$enm['ts'] = "Tsonga";
+	$enm['tt'] = "Tatar";
+	$enm['tw'] = "Twi";
+	$enm['ug'] = "Uighur";
+	$enm['uk'] = "Ukrainian";
+	$enm['ur'] = "Urdu";
+	$enm['uz'] = "Uzbek";
+	$enm['vi'] = "Vietnamese";
+	$enm['vo'] = "Volapuk";
+	$enm['wo'] = "Wolof";
+	$enm['xh'] = "Xhosa";
+	$enm['yi'] = "Yiddish";
+	$enm['yo'] = "Yoruba";
+	$enm['za'] = "Zhuang";
+	$enm['zh'] = "Chinese";
+	$enm['zu'] = "Zulu";
+	return $enm;
 }
 
 function qtranxf_language_predefined($lang)
