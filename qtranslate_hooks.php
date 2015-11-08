@@ -253,20 +253,20 @@ add_filter('_wp_post_revision_field_post_excerpt', 'qtranxf_showAllSeparated', 0
 
 /* moved to i18n-config.json for front-end only
 // Hooks (execution time non-critical filters) 
-add_filter('author_feed_link', 'qtranxf_convertURL');
-add_filter('author_link', 'qtranxf_convertURL');
-add_filter('day_link', 'qtranxf_convertURL');
-add_filter('get_comment_author_url_link', 'qtranxf_convertURL');
-add_filter('month_link', 'qtranxf_convertURL');
-add_filter('page_link', 'qtranxf_convertURL');
-add_filter('post_link', 'qtranxf_convertURL');
-add_filter('year_link', 'qtranxf_convertURL');
-add_filter('category_feed_link', 'qtranxf_convertURL');
-add_filter('category_link', 'qtranxf_convertURL');
-add_filter('tag_link', 'qtranxf_convertURL');
-add_filter('term_link', 'qtranxf_convertURL');
-add_filter('the_permalink', 'qtranxf_convertURL');
-add_filter('feed_link', 'qtranxf_convertURL');
-add_filter('post_comments_feed_link', 'qtranxf_convertURL');
-add_filter('tag_feed_link', 'qtranxf_convertURL');
+//add_filter('author_feed_link', 'qtranxf_convertURL');
+//add_filter('author_link', 'qtranxf_convertURL');
+//add_filter('day_link', 'qtranxf_convertURL');
+//add_filter('get_comment_author_url_link', 'qtranxf_convertURL');
+//add_filter('month_link', 'qtranxf_convertURL');
+//add_filter('page_link', 'qtranxf_convertURL');
+//add_filter('post_link', 'qtranxf_convertURL');
+//add_filter('year_link', 'qtranxf_convertURL');
+//add_filter('category_feed_link', 'qtranxf_convertURL');
+//add_filter('category_link', 'qtranxf_convertURL');
+//add_filter('tag_link', 'qtranxf_convertURL');
+//add_filter('term_link', 'qtranxf_convertURL');
+//add_filter('the_permalink', 'qtranxf_convertURL');
+//add_filter('feed_link', 'qtranxf_convertURL');
+//add_filter('post_comments_feed_link', 'qtranxf_convertURL');
+//add_filter('tag_feed_link', 'qtranxf_convertURL');
 */
