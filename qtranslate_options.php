@@ -218,7 +218,7 @@ function qtranxf_default_locale()
 	$loc['et'] = 'et_EE';
 	$loc['hr'] = 'hr_HR';
 	$loc['eu'] = 'eu_ES';
-	$loc['el'] = 'el_GR';
+	$loc['el'] = 'el';//corrected from el_GR on Nov 10 2015 http://qtranslate-x.com/support/index.php?topic=27
 	$loc['ua'] = 'uk';
 	$loc['cy'] = 'cy';// not 'cy_GB'
 	$loc['ca'] = 'ca';
