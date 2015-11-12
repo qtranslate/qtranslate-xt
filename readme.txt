@@ -112,7 +112,14 @@ This version recovers translation of parent of a category on category edit page.
 ## Changelog ##
 
 ### 3.4.7 ###
-* Enhancement: Handling of slugs in qTranslate-X native way, instead of semi-integrated plugin "[Qtranslate Slug](https://wordpress.org/plugins/qtranslate-slug/)".
+* Fix: Predefined locales are changed to match [WordPress locales](https://make.wordpress.org/polyglots/teams/):<br>
+Estonian (Eesti) 'et_EE' renamed to 'et',<br>
+Basque (Euskera, in native alphabet, Euskara, in WordPress, both correct) eu_ES renamed to 'eu',<br>
+Greek (Ελληνικά) 'el_GR' renamed to 'el',<br>
+Finnish (Suomi) 'fi_FI' renamed to 'fi',<br>
+Croatian (Hrvatski) 'hr_HR' renamed to 'hr'.<br>
+Old *.mo files are kept in order not to break the sites that may be currently using them, but they should now switch the locale appropriately. This emerged from [Topic #27](http://qtranslate-x.com/support/index.php?topic=27).
+* Enhancement: Handling of slugs in qTranslate-X native way, instead of semi-integrated plugin "[Qtranslate Slug](https://wordpress.org/plugins/qtranslate-slug/)" - removed later, it needs more work.
 
 ### 3.4.6.5 ###
 * Improvement: Option 'Show language names in "Camel Case"' has been added on Settings/Languages page `/wp-admin/options-general.php?page=qtranslate-x#general` in order to handle absence of function `mb_convert_case`, as PHP module `mbstring` may not be installed by default: [WP Topic](https://wordpress.org/support/topic/qtranslate_utilsphp-on-line-504).
