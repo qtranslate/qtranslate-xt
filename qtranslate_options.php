@@ -16,10 +16,11 @@ define('QTX_URL_PATH'   , 2);// pre path: domain.com/en
 define('QTX_URL_DOMAIN' , 3);// pre domain: en.domain.com
 define('QTX_URL_DOMAINS', 4);// domain per language
 
-define('QTX_STRFTIME_OVERRIDE',	1);
-define('QTX_DATE_OVERRIDE',	2);
-define('QTX_DATE',	3);// default
-define('QTX_STRFTIME',	4);
+define('QTX_WP_DATE', 0);// default
+define('QTX_STRFTIME_OVERRIDE', 1);
+define('QTX_DATE_OVERRIDE', 2);
+define('QTX_DATE', 3);// old default
+define('QTX_STRFTIME', 4);
 
 define('QTX_FILTER_OPTIONS_ALL', 0);
 define('QTX_FILTER_OPTIONS_LIST', 1);
@@ -158,7 +159,7 @@ function qtranxf_default_language_name()
 	$nnm = array();
 	$nnm['de'] = 'Deutsch';
 	$nnm['en'] = 'English';
-	$nnm['zh'] = '中文';
+	$nnm['zh'] = '中文';// 简体中文
 	$nnm['ru'] = 'Русский';
 	$nnm['fi'] = 'suomi';
 	$nnm['fr'] = 'Français';
@@ -183,7 +184,7 @@ function qtranxf_default_language_name()
 	$nnm['ua'] = 'Українська';
 	$nnm['cy'] = 'Cymraeg';// Oct 22 2015
 	$nnm['ca'] = 'Català';//Nov 6 2015
-	//$nnm['tw'] = '中文';
+	//$nnm['tw'] = '繁體中文';
 	return $nnm;
 }
 
@@ -199,7 +200,7 @@ function qtranxf_default_locale()
 	$loc['en'] = 'en_US';
 	$loc['zh'] = 'zh_CN';
 	$loc['ru'] = 'ru_RU';
-	$loc['fi'] = 'fi_FI';
+	$loc['fi'] = 'fi';//changed from fi_FI on Nov 10 2015 to match WordPress locale
 	$loc['fr'] = 'fr_FR';
 	$loc['nl'] = 'nl_NL';
 	$loc['sv'] = 'sv_SE';
@@ -215,9 +216,9 @@ function qtranxf_default_locale()
 	$loc['pl'] = 'pl_PL';
 	$loc['gl'] = 'gl_ES';
 	$loc['tr'] = 'tr_TR';
-	$loc['et'] = 'et_EE';
-	$loc['hr'] = 'hr_HR';
-	$loc['eu'] = 'eu_ES';
+	$loc['et'] = 'et';//changed from et_EE on Nov 10 2015 to match WordPress locale
+	$loc['hr'] = 'hr';//changed from hr_HR on Nov 10 2015 to match WordPress locale
+	$loc['eu'] = 'eu';//changed from eu_ES on Nov 10 2015 to match WordPress locale
 	$loc['el'] = 'el';//corrected from el_GR on Nov 10 2015 http://qtranslate-x.com/support/index.php?topic=27
 	$loc['ua'] = 'uk';
 	$loc['cy'] = 'cy';// not 'cy_GB'
