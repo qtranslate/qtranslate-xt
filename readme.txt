@@ -127,6 +127,7 @@ Greek (Ελληνικά) 'el_GR' renamed to 'el',<br>
 Finnish (Suomi) 'fi_FI' renamed to 'fi',<br>
 Croatian (Hrvatski) 'hr_HR' renamed to 'hr'.<br>
 Old *.mo files are kept in order not to break the sites that may be currently using them, but they should now switch the locale appropriately. This emerged from [Topic #27](http://qtranslate-x.com/support/index.php?topic=27).
+* Languages: Slovak (sk_SK) language preset has been added. Thanks to Andrej Leitner.
 
 ### 3.4.6.4 release ###
 * Enhancement: The list of avalable languages in "Not Available Message" and alternative language shown now follow the order of languges defined on configuration page, ignoring the default language. For example, if the first language in the order is English, the second is your native and the default, then English translation will be preferably shown as alternative language. Most sites are expected to be unaffected, since the first language in the order is normally the default langauge. However, it may make sense to first try to show most common language (like English in this example), instead of the default language. Now this is possible with putting the most common language to be the first in the order of languages. The order affects language menu, widget and language shown when translation is not available, as well as any other place where languages need to be listed in an order.

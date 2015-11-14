@@ -16,7 +16,8 @@ define('QTX_URL_PATH'   , 2);// pre path: domain.com/en
 define('QTX_URL_DOMAIN' , 3);// pre domain: en.domain.com
 define('QTX_URL_DOMAINS', 4);// domain per language
 
-define('QTX_WP_DATE', 0);// default
+define('QTX_DATE_WP', 0);// default
+// strftime usage (backward compability)
 define('QTX_STRFTIME_OVERRIDE', 1);
 define('QTX_DATE_OVERRIDE', 2);
 define('QTX_DATE', 3);// old default
@@ -184,6 +185,7 @@ function qtranxf_default_language_name()
 	$nnm['ua'] = 'Українська';
 	$nnm['cy'] = 'Cymraeg';// Oct 22 2015
 	$nnm['ca'] = 'Català';//Nov 6 2015
+	$nnm['sk'] = 'Slovenčina';//Nov 12 2015
 	//$nnm['tw'] = '繁體中文';
 	return $nnm;
 }
@@ -223,6 +225,7 @@ function qtranxf_default_locale()
 	$loc['ua'] = 'uk';
 	$loc['cy'] = 'cy';// not 'cy_GB'
 	$loc['ca'] = 'ca';
+	$loc['sk'] = 'sk_SK';
 	//$loc['tw'] = 'zh_TW';
 	return $loc;
 }
@@ -275,6 +278,7 @@ function qtranxf_default_not_available()
 	$nam['ua'] = 'Вибачте цей текст доступний тільки в &ldquo;%LANG:&rdquo;, &ldquo;: і &ldquo;%&rdquo;.';//ok
 	$nam['cy'] = 'Mae&#8217;n ddrwg gen i, mae\'r cofnod hwn dim ond ar gael mewn %LANG:, : a %.';//ok
 	$nam['ca'] = 'Ho sentim, aquesta entrada es troba disponible únicament en %LANG:, : i %.';//ok
+	$nam['sk'] = 'Ľutujeme, táto stránka je dostupná len v %LANG:, : a %.';//ok
 	//$nam['tw'] = '对不起，此内容只适用于%LANG:，:和%。';
 	return $nam;
 }
@@ -314,6 +318,7 @@ function qtranxf_default_date_format()
 	$dtf['ua'] = '%A %B %e%q, %Y';
 	$dtf['cy'] = '%A %B %e%q, %Y';//not verified
 	$dtf['ca'] = 'j F, Y';
+	$dtf['sk'] = 'j.F Y';
 	//$dtf['tw'] = '%x %A';
 	return $dtf;
 }
@@ -352,6 +357,7 @@ function qtranxf_default_time_format()
 	$tmf['ua'] = '%H:%M';
 	$tmf['cy'] = '%I:%M %p';//not verified
 	$tmf['ca'] = 'G:i';
+	$tmf['sk'] = 'G:i';
 	//$tmf['tw'] = '%I:%M%p';
 	return $tmf;
 }
@@ -391,6 +397,7 @@ function qtranxf_default_flag()
 	$flg['ua'] = 'ua.png';
 	$flg['cy'] = 'cy_GB.png';
 	$flg['ca'] = 'catala.png';
+	$flg['sk'] = 'sk.png';
 	//$flg['tw'] = 'tw.png';
 	return $flg;
 }

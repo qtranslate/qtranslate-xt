@@ -65,7 +65,8 @@ GitHub Branch: master
 	'nl' by RobV
 	'pt'(pt_PT) by netolazaro, Pedro Mendonça
 	'pb'(pt_BR) by Pedro Mendonça
-	'ro' hu by Jani Monoses
+	'ro'(hu) by Jani Monoses
+	'sk' by Andrej Leitner <andrej.leitner@gmail.com>
 	'sv' by bear3556, johdah
 	'vi' by hathhai
 	'zh'(zh_CN) by Junyan Chen
