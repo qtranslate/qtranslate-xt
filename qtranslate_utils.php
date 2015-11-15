@@ -879,3 +879,77 @@ function qtranxf_match_language_locale($locale){
 		if( $locale_code == $lang ) return $lang;
 	}
 }
+
+{// BEGIN DATE TIME FUNCTIONS
+/**
+ * Mapping to convert date format to strftime format and vice-versa.
+*/
+function qtranxf_date_strftime_mapping() {
+	static $mapping;
+	if(!$mapping)
+	$mapping = array(
+		'd' => '%d',
+		'D' => '%a',
+		'j' => '%e',//'%E',
+		'l' => '%A',
+		'N' => '%u',
+		'S' => '%q',
+		'w' => '%f',
+		'z' => '%F',
+		'W' => '%V',
+		'F' => '%B',
+		'm' => '%m',
+		'M' => '%b',
+		'n' => '%i',
+		't' => '%J',
+		'L' => '%k',
+		'o' => '%G',
+		'Y' => '%Y',
+		'y' => '%y',
+		'a' => '%P',
+		'A' => '%p',
+		'B' => '%K',
+		'g' => '%l',
+		'G' => '%L',
+		'h' => '%I',
+		'H' => '%H',
+		'i' => '%M',
+		's' => '%S',
+		'u' => '%N',
+		'e' => '%Q',
+		'I' => '%o',
+		'O' => '%O',
+		'P' => '%s',
+		'T' => '%v',
+		'Z' => '%1',
+		'c' => '%2',
+		'r' => '%3',
+		'U' => '%4'
+	);
+	return $mapping;
+}
+
+function qtranxf_convert_date2strftime($format) {
+	$mappings = qtranxf_date_strftime_mapping();
+	$d = array(); $s = array();
+	$d[] = '#%#'; $s[] = '%%';
+	foreach($mappings as $df => $sf) {
+		$d[] = '#([^%\\]?)'.$df.'#'; $s[] = '${1}'.$sf;
+	}
+	$format = preg_replace($d, $s, $format);
+	return $format;
+}
+
+function qtranxf_convert_strftime2date($format) {
+	$mappings = qtranxf_date_strftime_mapping();
+	$d = array(); $s = array();
+	foreach($mappings as $df => $sf) {
+		$d[] = $df; $s[] = $sf;
+	}
+	$d[] = '%%'; $s[] = '%';
+	$format = str_replace($s, $d, $format);
+	//$d[] = '#(\\[a-zA-Z]?)#'; $s[] = '${1}';
+	$format = preg_replace('#(\\\\[a-zA-Z]?)#', '${1}', $format);
+	return $format;
+}
+}// END DATE TIME FUNCTIONS
