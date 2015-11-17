@@ -362,6 +362,13 @@ echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 
 				</td>
 			</tr>
 			<tr valign="top">
+				<th scope="row"><?php _e('Translation saving', 'qtranslate') ?></th>
+				<td>
+					<label for="force_markers"><input type="checkbox" name="force_markers" id="force_markers" value="1"<?php checked($q_config['force_markers']); ?> /> <?php echo __('Always keep language markers', 'qtranslate') ?></label>
+					<p class="qtranxs_notes"><?php echo __('By default qTranslate-X removes the language markers (e.g. "[:en]") if all languages are identical for a certain field. With this option, you can force the language markers to be kept, which in some cases might be necessary to prevent sorting problems.', 'qtranslate') ?></p>
+				</td>
+			</tr>
+			<tr valign="top">
 				<th scope="row"><?php _e('Flag Image Path', 'qtranslate') ?></th>
 				<td>
 					<?php echo trailingslashit(content_url()) ?><input type="text" name="flag_location" id="flag_location" value="<?php echo $q_config['flag_location']; ?>" style="width:100%"/>

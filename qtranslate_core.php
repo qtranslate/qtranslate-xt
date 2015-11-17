@@ -1241,7 +1241,19 @@ function qtranxf_split_languages($blocks) {
 //	qtranxf_join_c($texts);
 //}
 
+/**
+ * Check if all the given translations are identical.
+ * If yes, reduce them to a single text.
+ * Otherwise, return null.
+ * This behaviour can be deactivated using $q_config['force_markers']
+ * 
+ * @param $texts
+ * @return null|string
+ */
 function qtranxf_allthesame($texts) {
+	global $q_config;
+	if($q_config['force_markers']) return null;
+
 	$text = null;
 	//take first not empty
 	foreach($texts as $lang => $t){
