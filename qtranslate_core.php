@@ -1498,7 +1498,7 @@ function qtranxf_use_content($lang, $content, $available_langs, $show_available=
 		if(sizeof($available_langs) > 1){
 			if($alt_lang_is_default){
 				//$fmt = __('For the sake of viewer convenience, the content is shown below in this site default language %s.', 'qtranslate');
-				$msg = __('For the sake of viewer convenience, the content is shown below in this site default language.', 'qtranslate');
+				$msg = __('For the sake of viewer convenience, the content is shown below in this site\'s default language.', 'qtranslate');
 			}else{
 				//$fmt = __('For the sake of viewer convenience, the content is shown below in an available alternative language %s.', 'qtranslate');
 				$msg = __('For the sake of viewer convenience, the content is shown below in one of the available alternative languages.', 'qtranslate');
