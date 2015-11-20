@@ -1272,7 +1272,7 @@ msgid "The way the translatable fields are highlighted is configured with global
 msgstr "A fordítható mezők kiemelésének módját ez az opció határozza meg: %s."
 
 #: qtranslate_core.php:1463
-msgid "For the sake of viewer convenience, the content is shown below in this site default language."
+msgid "For the sake of viewer convenience, the content is shown below in this site's default language."
 msgstr "A megtekintő kényelméért az alábbi tartalom a weboldal alapértelmezett nyelvén jelenik meg."
 
 #: qtranslate_core.php:1466
