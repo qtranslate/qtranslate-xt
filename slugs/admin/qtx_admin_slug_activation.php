@@ -24,7 +24,8 @@ function qtranxf_slug_activate(){
 	qtranxf_slug_add_tables();
 	$qts_active = is_plugin_active( 'qtranslate-slug/qtranslate-slug.php' );
 	if($qts_active || file_exists(WP_PLUGIN_DIR.'/qtranslate-slug/qtranslate-slug.php')){
-		qtranxf_migrate_import_qtranslate_slug();
+		$default_language = get_option('qtranslate_default_language');
+		qtranxf_migrate_import_qtranslate_slug($default_language);
 	}
 	if ( $qts_active ){
 		qtranxf_admin_notice_deactivate_plugin('Qtranslate Slug', 'qtranslate-slug/qtranslate-slug.php');
@@ -64,7 +65,8 @@ function qtranxf_slug_add_tables() {
 	global $wpdb;
 	//qtranxf_dbg_log('qtranxf_slug_add_tables: $wpdb: ', $wpdb);
 	$tbl = $wpdb->prefix.'i18n_slugs';
-	if(!empty($wpdb->get_var( 'SHOW TABLES LIKE \''.$tbl.'\';')))
+	$res = $wpdb->get_var( 'SHOW TABLES LIKE \''.$tbl.'\';');
+	if(!empty($res))
 		return false;
 
 	$collate = '';

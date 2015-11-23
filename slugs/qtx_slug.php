@@ -46,6 +46,23 @@ function qtranxf_slug_loadConfig()
 	$q_config['slugs-cache'] = array('names' => array(), 'slugs' => array());
 }
 
+function qtranxf_slug_registered_taxonomy($taxonomy, $object_type, $args){
+	global $wp_taxonomies;
+	//qtranxf_dbg_log('qtranxf_slug_registered_taxonomy: $taxonomy='.$taxonomy.'; $object_type: ', $object_type);
+	//qtranxf_dbg_log('qtranxf_slug_registered_taxonomy: $args: ', $args);
+	if(!isset($wp_taxonomies[$taxonomy])) return;
+	//qtranxf_dbg_log('qtranxf_slug_registered_taxonomy: $wp_taxonomies['.$taxonomy.']: ', $wp_taxonomies[$taxonomy]);
+}
+add_action('registered_taxonomy', 'qtranxf_slug_registered_taxonomy', 10, 3);
+
+function qtranxf_slug_registered_post_type($post_type, $args){
+	global $wp_post_types;
+	//qtranxf_dbg_log('qtranxf_slug_registered_post_type: $post_type='.$post_type.', $args: ', $args);
+	if(!isset($wp_post_types[$post_type])) return;
+	//qtranxf_dbg_log('qtranxf_slug_registered_post_type: $wp_post_types['.$post_type.']: ', $wp_post_types[$post_type]);
+}
+add_action( 'registered_post_type', 'qtranxf_slug_registered_post_type', 10, 2);
+
 function qtranxf_slug_detect_language($lang, &$urlinfo){
 	global $q_config;
 	//qtranxf_dbg_log('qtranxf_slug_detect_language: $urlinfo: ', $urlinfo);
@@ -182,6 +199,9 @@ if(is_admin()){
 
 {//utilities
 
+/**
+ * @param (string) $name - rawurlencoded post name or other slug.
+*/
 function qtranxf_slug_get_translations($name) {
 	global $q_config, $wpdb;
 	if(isset($q_config['slugs-cache']['names'][$name])) return $q_config['slugs-cache']['names'][$name];
@@ -197,6 +217,10 @@ function qtranxf_slug_get_translations($name) {
 	return $names;
 }
 
+/**
+ * @param (string) $slug - rawurlencoded slug.
+ * @return array - ( 'lang' => [two-letter language code], 'name' => [rawurlencoded default language slug] ) or empty array, if translation does not exist.
+*/
 function qtranxf_slug_translation($slug) {
 	global $q_config, $wpdb;
 	if(isset($q_config['slugs-cache']['slugs'][$slug])) return $q_config['slugs-cache']['slugs'][$slug];
@@ -206,6 +230,10 @@ function qtranxf_slug_translation($slug) {
 	return $q_config['slugs-cache']['slugs'][$slug] = is_array($row) ? $row : array();
 }
 
+/**
+ * @param (string) $slug - rawurlencoded slug.
+ * @return string - rawurlencoded default language slug.
+*/
 function qtranxf_slug_get_name($slug) {
 	$info = qtranxf_slug_translation($slug);
 	if(isset($info['name'])) return $info['name'];
@@ -213,6 +241,11 @@ function qtranxf_slug_get_name($slug) {
 	return null;
 }
 
+/**
+ * @param (string) $name - rawurlencoded post name or other slug.
+ * @param (string) $lang - two-letter language code.
+ * @return string - rawurlencoded slug for language $lang.
+*/
 function qtranxf_slug_translate_name($name,$lang) {
 	$slugs = qtranxf_slug_get_translations($name);
 	//qtranxf_dbg_log('qtranxf_slug_translate_name('.$name.', '.$lang.'): slugs: ', $slugs);
@@ -220,6 +253,11 @@ function qtranxf_slug_translate_name($name,$lang) {
 	return null;
 }
 
+/**
+ * @param (string) $slug - rawurlencoded slug of unknown arbitrary language.
+ * @param (string) $lang - two-letter language code.
+ * @return string - rawurlencoded slug for language $lang.
+*/
 function qtranxf_slug_translate($slug, $lang) {
 	$name = qtranxf_slug_get_name($slug);
 	if(!$name) return $slug;
@@ -228,10 +266,26 @@ function qtranxf_slug_translate($slug, $lang) {
 	return $slug;
 }
 
+function qtranxf_slug_encode($s){ return qtranxf_slug_encode_raw(urldecode($s)); }
+
+function qtranxf_slug_encode_raw($s){
+	$s = rawurlencode($s);
+	$s = str_replace('%2F', '/', $s);
+	$s = str_replace('%20', ' ', $s);
+	$s = str_replace('%7E', '~', $s);
+	$s = str_replace('%25', '%', $s);
+	return $s;
+}
+
+/**
+ * @param (string) $path - arbitrary url.
+ * @return array - subsequent rawurlencoded parts of $path between '/'.
+*/
 function qtranxf_slug_split_path($path) {
-	$path = rawurlencode(urldecode($path));
-	$path = str_replace('%2F', '/', $path);
-	$path = str_replace('%20', ' ', $path);
+	$path = qtranxf_slug_encode($path);
+	//$path = rawurlencode(urldecode($path));
+	//$path = str_replace('%2F', '/', $path);
+	//$path = str_replace('%20', ' ', $path);
 	$slugs = explode('/', $path);
 	//foreach($slugs as $k => $v){
 	//	if(empty($v)) unset($slugs[$k]);
@@ -239,6 +293,11 @@ function qtranxf_slug_split_path($path) {
 	return $slugs;
 }
 
+/* *
+ * @param (string) $path - arbitrary url.
+ * @param (string) $lang - two-letter language code.
+ * @return string - translated and urldecoded path.
+* /
 function qtranxf_slug_translate_path($path, $lang) {
 	$slugs = qtranxf_slug_split_path($path);
 	//qtranxf_dbg_log('qtranxf_slug_translate_path('.$path.', '.$lang.'): $slugs: ', $slugs);
@@ -246,9 +305,10 @@ function qtranxf_slug_translate_path($path, $lang) {
 		if(empty($slug)) continue;
 		$slugs[$k] = qtranxf_slug_translate($slug, $lang);
 	}
-	$path = implode('/', $slugs);
+	$path = urldecode(implode('/', $slugs));
 	//qtranxf_dbg_log('qtranxf_slug_translate_path: $path: ', $path);
 	return $path;
 }
+*/
 
 }//utilities
