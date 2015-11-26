@@ -70,7 +70,7 @@ function qtranxf_updateGettextDatabasesEx($force = false, $only_for_language = '
 		if(!isset($translations[$loc])) continue;
 		$mo = WP_LANG_DIR.'/'.$loc.'.mo';
 		$mo_ok = file_exists($mo);
-		qtranxf_dbg_log('qtranxf_updateGettextDatabasesEx: $mo_ok for '.$mo.': ',$mo_ok);
+		//qtranxf_dbg_log('qtranxf_updateGettextDatabasesEx: $mo_ok for '.$mo.': ',$mo_ok);
 		if($mo_ok) continue;//WP now takes care of translations updates on its own
 		$translation = (object) $translations[$loc];
 		$skin              = new Automatic_Upgrader_Skin;
