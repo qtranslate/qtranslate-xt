@@ -752,6 +752,7 @@ class QTX_LanguageList extends WP_List_Table
 
 	public function get_columns() {
 		return array(
+			'locale' => __('Locale', 'qtranslate'),
 			'code' => _x('Code', 'Two-letter Language Code meant.', 'qtranslate'),
 			'flag' => __('Flag', 'qtranslate'),
 			'name' => __('Name', 'qtranslate'),
@@ -763,6 +764,7 @@ class QTX_LanguageList extends WP_List_Table
 
 	public function get_sortable_columns() {
 		return array(
+			'locale' => array('locale',false),
 			'code' => array('code',false),
 			'flag' => array('flag',false),
 			'name' => array('name',true), //true means it's already sorted
@@ -799,18 +801,20 @@ class QTX_LanguageList extends WP_List_Table
 		$clean_uri = $this->_clean_uri;
 		$data = array();
 		foreach($langs_config as $lang => $props){
+			$locale = $props['locale'];
 			$flag = $props['flag'];//$flags[$lang];
 			if(file_exists($flag_location_dir.$flag)){
 				$flag_url = $flag_location_url.$flag;
 			}else{
 				$flag_url = $flag_location_url_def.$flag;
 			}
-			$lang_name = $props['language_name'];
-			$admin_name = qtranxf_getLanguageName($lang,$props['locale'],$lang_name);//name translated to admin language
+			$lang_name = $props['language_name'];//native name
+			$admin_name = qtranxf_getLanguageName($lang,$locale,$lang_name);//name translated to admin language
 			$action = qtranxf_isEnabled($lang) ? ($q_config['default_language']==$lang ? __('Default', 'qtranslate') : __('Disable', 'qtranslate')) : __('Enable', 'qtranslate');
 			$stored = empty($props['stored']) ? __('Pre-Defined', 'qtranslate') : (isset($langs_preset[$lang]) ? __('Reset', 'qtranslate') : __('Delete', 'qtranslate'));
 			switch($this->_orderby){
 				default:
+				case 'locale': $orderby = $locale; break;
 				case 'code': $orderby = $lang; break;
 				case 'flag': $orderby = $lang_name; break;
 				case 'name': $orderby = $admin_name; break;
@@ -818,8 +822,9 @@ class QTX_LanguageList extends WP_List_Table
 				case 'stored': $orderby = $stored; break;
 			}
 			$edit_url = $clean_uri.'&edit='.$lang;
-			$atitle = __('Edit', 'qtranslate').' '.$lang_name.' ('.$props['locale'].')';
+			$atitle = __('Edit', 'qtranslate').' '.$lang_name.' ('.$locale.')';
 			$data[] = array(
+				'locale' => $locale,
 				'code' => $lang,
 				'flag' => '<a href="'.$edit_url.'" title="'.$atitle.'"><img src="'.$flag_url.'" alt="'.sprintf(__('%s Flag', 'qtranslate'), $lang_name).'"></a>',
 				'name' => '<a href="'.$edit_url.'" title="'.$atitle.'">'.$admin_name.'</a>',
