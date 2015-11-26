@@ -65,6 +65,9 @@ function qtranxf_detect_admin_language($url_info) {
 }
 add_filter('qtranslate_detect_admin_language','qtranxf_detect_admin_language');
 
+/**
+ * @return bool true if $a and $b are equal.
+ */
 function qtranxf_array_compare($a,$b) {
 	if( !is_array($a) || !is_array($b) ) return false;
 	if(count($a) != count($b)) return false;
@@ -80,9 +83,11 @@ function qtranxf_array_compare($a,$b) {
 
 function qtranxf_join_texts($texts,$sep) {
 	switch($sep){
-		//case '<': return qtranxf_join_c($texts);//no longer in use
+		//case '[':// default case
 		case 'byline': return qtranxf_join_byline($texts);
-		case '{': return qtranxf_join_s($texts);
+		case 'printf': return qtranxf_join_byseparator($texts,'/(%(?:\d+\$)?[+-]?(?:[0]|\.)?-?\d*(?:\.\d+)?[bcdeEufFgGosxX])/');
+		case '{': return qtranxf_join_s($texts);//seems to be most compatible way, which may become the default
+		case '<': return qtranxf_join_c($texts);//original way, rarely in use now
 		default: return qtranxf_join_b($texts);
 	}
 }

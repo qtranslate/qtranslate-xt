@@ -133,7 +133,7 @@ function qtranxf_slug_admin_fields($objects, $type){
 		//$key = $o->name;//the same
 		//if(!isset($o->rewrite['slug'])) continue;//already fitered
 		$slug = $o->rewrite['slug'];
-		qtranxf_dbg_log('qtranxf_slug_admin_fields: term: '.$group.'['.$key.']: slug: ',$slug);
+		//qtranxf_dbg_log('qtranxf_slug_admin_fields: term: '.$group.'['.$key.']: slug: ',$slug);
 		if(!empty($q_config['slugs_opt']['mv']['terms'][$group]['values'][$key])){
 			$value_org = $q_config['slugs_opt']['mv']['terms'][$group]['values'][$key]['value_org'];
 			$value_new = $q_config['slugs_opt']['mv']['terms'][$group]['values'][$key]['value_new'];
@@ -388,7 +388,7 @@ function qtranxf_migrate_import_qtranslate_slug($default_language){
 
 	$qts_options = get_option('qts_options');
 	if(!empty($qts_options)){
-		qtranxf_dbg_log('qtranxf_migrate_import_qtranslate_slug: $qts_options: ', $qts_options);
+		//qtranxf_dbg_log('qtranxf_migrate_import_qtranslate_slug: $qts_options: ', $qts_options);
 		if(is_array($qts_options)){
 			foreach($qts_options as $k => $v){
 			}
@@ -416,7 +416,7 @@ function qtranxf_migrate_import_qtranslate_slug($default_language){
 		$lang = substr($row->meta_key,-2);
 		if($lang != $default_language) continue;
 		if($slug == $name) continue;
-		qtranxf_dbg_log('qtranxf_migrate_import_qtranslate_slug: default language $slug('.$slug.') != $name('.$name.')');
+		//qtranxf_dbg_log('qtranxf_migrate_import_qtranslate_slug: default language $slug('.$slug.') != $name('.$name.')');
 		$slug = wp_unique_post_slug( $slug, $row->ID, 'publish', $row->post_type, $row->post_parent );
 		$wpdb->query($wpdb->prepare('UPDATE '.$wpdb->posts.' SET post_name = %s WHERE ID = %d', $slug, $row->ID));
 		$row->post_name = $row->meta_value = $slug;
@@ -449,7 +449,7 @@ function qtranxf_migrate_import_qtranslate_slug($default_language){
 	}
 	//if(!empty($lst))){
 		$upload_dir = wp_upload_dir();
-		qtranxf_dbg_log('qtranxf_migrate_import_qtranslate_slug: upload_dir: ',$upload_dir);
+		//qtranxf_dbg_log('qtranxf_migrate_import_qtranslate_slug: upload_dir: ',$upload_dir);
 		$fnm = '/qts-qtx-report-of-renamed.log';
 		$fn = $upload_dir['basedir'].$fnm;
 		//[01-Nov-2015 02:21:57 UTC]
