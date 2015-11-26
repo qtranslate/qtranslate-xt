@@ -1063,7 +1063,9 @@ var qTranslateX=function(pg)
 	addMultilingualHooks(jQuery);
 
 	//co('displayHookNodes.length=',displayHookNodes.length);
+	//co('displayHookNodes: ',displayHookNodes);
 	//co('displayHookAttrs.length=',displayHookAttrs.length);
+	//co('contentHooks: ',contentHooks);
 	if(!displayHookNodes.length && !displayHookAttrs.length){
 		var ok = false;
 		for(var key in contentHooks){ ok = true; break; }
@@ -1177,27 +1179,32 @@ var qTranslateX=function(pg)
 		//create sets of LSB
 		var anchors=[];
 		if(qTranslateConfig.page_config && qTranslateConfig.page_config.anchors){
-			//for(var i=0; i < qTranslateConfig.page_config.anchors.length; ++i){
-			//	var anchor = qTranslateConfig.page_config.anchors[i];
-			//	var f = document.getElementById(anchor.id);
 			for(var id in qTranslateConfig.page_config.anchors){
-				var f = document.getElementById(id);
-				if(!f) continue;
 				var anchor = qTranslateConfig.page_config.anchors[id];
-				anchor.id = id;
-				anchor.f = f;
-				anchors.push(anchor);
+				//co('anchor: ', anchor);
+				var f = document.getElementById(id);
+				if(f){
+					anchors.push({f:f, where:anchor.where});
+				}else if(anchor.jquery){
+					var list = jQuery(anchor.jquery);
+					for(var i=0; i < list.length; ++i){
+						var f = list[i];
+						anchors.push({f:f, where:anchor.where});
+					}
+				}
 			}
 		}
+		//co('anchors: ', anchors);
 		if(!anchors.length){
 			var f=pg.langSwitchWrapAnchor;
 			if(!f){
 				f = getWrapForm();
 			}
-			if(f) anchors.push({ f:f, where: 'before'});
+			if(f) anchors.push({f:f, where:'before'});
 		}
 		for(var i=0; i < anchors.length; ++i){
 			var anchor = anchors[i];
+			//co('anchor['+i+']: ', anchor);
 			if( !anchor.where || anchor.where.indexOf('before') >= 0 ){
 				//var langSwitchWrap=qtranxj_ce('ul', {className: qTranslateConfig.lsb_style_wrap_class});
 				//var languageSwitch = new qtranxj_LanguageSwitch(langSwitchWrap);
