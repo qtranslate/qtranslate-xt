@@ -1134,7 +1134,19 @@ function qtranxf_split_languages($blocks) {
 //	qtranxf_join_c($texts);
 //}
 
+/**
+ * Check if all the given translations are identical.
+ * If yes, reduce them to a single text.
+ * Otherwise, return null.
+ * This behaviour can be deactivated using $q_config['force_markers']
+ * 
+ * @param $texts
+ * @return null|string
+ */
 function qtranxf_allthesame($texts) {
+	global $q_config;
+	if($q_config['force_markers']) return null;
+
 	$text = null;
 	//take first not empty
 	foreach($texts as $lang => $t){
@@ -1389,7 +1401,7 @@ function qtranxf_use_content($lang, $content, $available_langs, $show_available=
 		if(sizeof($available_langs) > 1){
 			if($alt_lang_is_default){
 				//$fmt = __('For the sake of viewer convenience, the content is shown below in this site default language %s.', 'qtranslate');
-				$msg = __('For the sake of viewer convenience, the content is shown below in this site default language.', 'qtranslate');
+				$msg = __('For the sake of viewer convenience, the content is shown below in this site\'s default language.', 'qtranslate');
 			}else{
 				//$fmt = __('For the sake of viewer convenience, the content is shown below in an available alternative language %s.', 'qtranslate');
 				$msg = __('For the sake of viewer convenience, the content is shown below in one of the available alternative languages.', 'qtranslate');

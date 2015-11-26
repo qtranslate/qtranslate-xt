@@ -76,7 +76,8 @@ function qtranxf_set_default_options(&$ops){
 		'show_alternative_content' => false,
 		'hide_default_language' => true,// hide language tag for default language in urls
 		'use_secure_cookie' => false,
-		'header_css_on' => true
+		'header_css_on' => true,
+		'force_markers' => false,// always keep language markers, even if the translations are all identical
 	);
 
 	//single line options
