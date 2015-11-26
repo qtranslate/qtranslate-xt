@@ -8,7 +8,7 @@ if(WP_DEBUG){
 			switch($pagenow){
 				case 'admin-ajax.php':
 				case 'wp-cron.php':
-					//return;
+					return;
 			}
 			if(isset($_SERVER['REQUEST_TIME_FLOAT'])) $h = $_SERVER['REQUEST_TIME_FLOAT'];
 			if(!empty($pagenow)) $h = $h.'('.$pagenow.')';

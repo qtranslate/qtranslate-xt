@@ -8,28 +8,12 @@ function qtranxf_version_int() {
 }
 
 /**
- * Save language properties from configuration $cfg to database
- * @since 3.3
- */
-function qtranxf_save_languages($cfg){
-	global $qtranslate_options;
-	foreach($qtranslate_options['languages'] as $nm => $opn){
-		if(is_array($cfg[$nm])){
-			foreach($cfg[$nm] as $k => $v){
-				if(empty($v)) unset($cfg[$nm][$k]);
-			}
-		}
-		if(empty($cfg[$nm])) delete_option($opn);
-		else update_option($opn,$cfg[$nm]);
-	}
-	return $cfg;
-}
-
-/**
  * since 3.2.9.2
  */
 function qtranxf_default_enabled_languages(){
-	//$locale = defined('WPLANG') ? WPLANG : get_option('WPLANG','en_US');
+	//$languages = get_available_languages();
+	//qtranxf_dbg_log('qtranxf_default_enabled_languages: count(languages): ',count($languages));
+	//qtranxf_dbg_log('qtranxf_default_enabled_languages: get_available_languages: ',$languages);
 	$locale = get_locale();
 	if(!$locale) $locale = 'en_US';
 	$lang = null;
@@ -39,30 +23,63 @@ function qtranxf_default_enabled_languages(){
 		$lang = $ln;
 		break;
 	}
-	if(!$lang) $lang = substr($locale,0,2);
-	if(!qtranxf_language_predefined($lang)){
-		$langs = array();
-		$langs['language_name'][$lang] = 'Unknown';
-		$langs['flag'][$lang] = 'us.png';
-		$langs['locale'][$lang] = $locale;
-		$langs['date_format'][$lang] = '%A %B %e%q, %Y';
-		$langs['time_format'][$lang] = '%I:%M %p';
-		$langs['not_available'][$lang] = 'Sorry, this entry is only available in %LANG:, : and %.';
-		qtranxf_save_languages($langs);
+	if(!$lang){
+		require_once( ABSPATH . 'wp-admin/includes/translation-install.php' );
+		$translations = wp_get_available_translations();
+		//qtranxf_dbg_log('qtranxf_default_enabled_languages: count(available_translations): ',count($translations));
+		//qtranxf_dbg_log('qtranxf_default_enabled_languages: wp_get_available_translations: ',$translations);
+		if(empty($translations[$locale])){
+			$lang = substr($locale,0,2);
+			$name = 'Unknown';
+		}else{
+			$translation = $translations[$locale];
+			$lang = current($translation['iso']);
+			if(!$lang) $lang = substr($locale,0,2);
+			$name = empty($translation['native_name']) ? 'Unknown' : $translation['native_name'];
+		}
+		$flag_location = WP_CONTENT_DIR.'/'.qtranxf_flag_location_default();
+		do{
+			$p = strpos($locale,'_');
+			if($p > 0){ 
+				$fn = strtolower(substr($locale,$p,2));
+				$flag = $fn.'.png'; if(file_exists($flag_location.$flag)) break;
+				$flag = $fn.'.gpg'; if(file_exists($flag_location.$flag)) break;
+			}
+			$fn = strtolower(substr($locale,0,2));
+			$flag = $fn.'.png'; if(file_exists($flag_location.$flag)) break;
+			$flag = $fn.'.gpg'; if(file_exists($flag_location.$flag)) break;
+			$flag = 'aa.png';
+		}while(false);
+		$props = array(
+			'language_name' => $name,
+			'flag' => $flag,
+			'locale' => $locale,
+			'date_format' => __('F j, Y'),
+			'time_format' => __('g:i a'),
+			'not_available' => 'Sorry, this entry is only available in %LANG:, : and %.'
+		);
+		qtranxf_set_default_options($qtranslate_options);
+		qtranxf_save_languages(array($lang => $props),$qtranslate_options);
+		//qtranxf_dbg_log('qtranxf_default_enabled_languages: $props: ',$props);
 	}
-	//qtranxf_dbg_log('qtranxf_default_enabled_languages: $lang='.$lang.' $locale:',$locale);
-	return array($lang, $lang != 'en' ? 'en' : 'de');
-	//return array( 'de', 'en', 'zh' );
+	$enabled_languages = array($lang);
+	if($lang != 'en') $enabled_languages[] = 'en';
+	//qtranxf_dbg_log('qtranxf_default_enabled_languages: $lang="'.$lang.'"; $locale="'.$locale.'"; $enabled_languages: ',$enabled_languages);
+	return $enabled_languages;
 }
 
 /**
  * since 3.2.9.2
  */
 function qtranxf_default_default_language(){
+	global $q_config;
 	$enabled_languages = qtranxf_default_enabled_languages();
 	$default_language = $enabled_languages[0];
 	update_option('qtranslate_enabled_languages',$enabled_languages);
 	update_option('qtranslate_default_language',$default_language);
+	$q_config['language'] = $q_config['default_language'] = $default_language;
+	$q_config['enabled_languages'] = $enabled_languages;
+	//qtranxf_updateGettextDatabases(true);
 	return $default_language;
 }
 
@@ -288,9 +305,9 @@ function qtranxf_load_config_all($json_files, $custom_config){
 /**
  * @since 3.4
  */
-function qtranxf_update_config_options($config_files){
+function qtranxf_update_config_options($config_files, $changed = true){
 	//qtranxf_dbg_log('qtranxf_update_config_options: $config_files: ', $config_files);
-	update_option('qtranslate_config_files',$config_files);
+	if($changed) update_option('qtranslate_config_files',$config_files);
 	$custom_config = get_option('qtranslate_custom_i18n_config', array());
 	$cfg = qtranxf_load_config_all($config_files, $custom_config);
 	update_option('qtranslate_admin_config', $cfg['admin-config']);
@@ -421,7 +438,8 @@ function qtranxf_del_config_files(&$config_files, $found){
 function qtranxf_update_config_files(){
 	$config_files = qtranxf_get_option_config_files();
 	$found = qtranxf_search_config_files();
-	if(!qtranxf_add_config_files($config_files, $found)) return;
+	$changed = qtranxf_add_config_files($config_files, $found);
+	//if(!qtranxf_add_config_files($config_files, $found)) return;
 	//qtranxf_dbg_log('qtranxf_update_config_files: $config_files: ',$config_files);
 	qtranxf_update_config_options($config_files);
 }
@@ -504,8 +522,7 @@ function qtranxf_adjust_config_files($fn_add, $fn_del){
 	qtranxf_update_config_options($config_files);
 }
 
-function qtranxf_on_activate_plugin($plugin, $network_wide = false)
-{
+function qtranxf_on_activate_plugin($plugin, $network_wide = false){
 	//qtranxf_dbg_log('qtranxf_on_activate_plugin: $plugin: ',$plugin);
 	$bnm = dirname($plugin);
 	$qtx = qtranxf_plugin_dirname();
@@ -516,8 +533,7 @@ function qtranxf_on_activate_plugin($plugin, $network_wide = false)
 }
 add_action( 'activate_plugin', 'qtranxf_on_activate_plugin' );
 
-function qtranxf_on_deactivate_plugin($plugin, $network_deactivating = false)
-{
+function qtranxf_on_deactivate_plugin($plugin, $network_deactivating = false){
 	//qtranxf_dbg_log('qtranxf_on_deactivate_plugin: $plugin: ',$plugin);
 	$bnm = dirname($plugin);
 	$qtx = qtranxf_plugin_dirname();
@@ -534,10 +550,33 @@ function qtranxf_on_deactivate_plugin($plugin, $network_deactivating = false)
 }
 add_action( 'deactivate_plugin', 'qtranxf_on_deactivate_plugin' );
 
-function qtranxf_activation_hook()
-{
+function qtranxf_clear_debug_log(){
+	//clear file debug-qtranslate.log
+	$f=WP_CONTENT_DIR.'/debug-qtranslate.log';
+	if(file_exists($f)){
+		if(WP_DEBUG){
+			$fh = fopen($f, "a+");
+			ftruncate($fh,0);
+			fclose($fh);
+		}else{
+			unlink($f);
+		}
+	}
+}
+
+function qtranxf_sync_language_config(){
+	global $q_config, $qtranslate_options;
+	qtranxf_set_default_options($qtranslate_options);
+	if(!isset($q_config['enabled_languages'])){
+		$q_config['enabled_languages'] = get_option('qtranslate_enabled_languages');
+	}
+	qtranxf_load_language_props();
+	qtranxf_sync_date_i18n_config();
+}
+
+function qtranxf_activation_hook(){
+	qtranxf_clear_debug_log();
 	//qtranxf_dbg_log('qtranxf_activation_hook: ', __FILE__);
-	//global $q_config;
 	if(version_compare(PHP_VERSION, '5.2.0') < 0){
 		// Deactivate ourself
 		$plugin_dir = qtranxf_plugin_dirname();
@@ -548,8 +587,7 @@ function qtranxf_activation_hook()
 		wp_die( $msg );
 	}
 
-	require_once(QTRANSLATE_DIR.'/admin/qtx_admin_options.php');
-	require_once(QTRANSLATE_DIR.'/admin/qtx_import_export.php');
+	require_once(QTRANSLATE_DIR.'/admin/qtx_admin_options_update.php');
 
 	// Check if other qTranslate forks are activated.
 	if ( is_plugin_active( 'mqtranslate/mqtranslate.php' ) )
@@ -566,30 +604,40 @@ function qtranxf_activation_hook()
 	if ( is_plugin_active( 'ztranslate/ztranslate.php' ) )
 		qtranxf_admin_notice_deactivate_plugin('zTranslate', 'ztranslate/ztranslate.php');
 
+	$ts = time();
 	$next_thanks = get_option('qtranslate_next_thanks');
 	$check_qtranslate_forks = $next_thanks === false;
-	if($next_thanks !== false && $next_thanks < time()+7*24*60*60){
-		$next_thanks = time() + rand(10,20)*24*60*60;
+	if($next_thanks !== false && $next_thanks < $ts+7*24*60*60){
+		$next_thanks = $ts + rand(10,20)*24*60*60;
 		update_option('qtranslate_next_thanks', $next_thanks);
 	}
 	$messages = qtranxf_update_admin_notice('next_thanks');
 
 	$default_language = get_option('qtranslate_default_language');
+	$ver_cur = qtranxf_version_int();
 	$first_install = $default_language===false;
 	if($first_install){
 		qtranxf_default_default_language();
-		$ver = qtranxf_version_int();
-		update_option('qtranslate_version_previous', $ver);
+		update_option('qtranslate_version_previous', $ver_cur);
 		$check_qtranslate_forks = true;
+		if(isset($messages['initial-install'])){
+			$messages = qtranxf_update_option_admin_notices($messages,'initial-install');
+		}
 	}else{
-		$ver = get_option('qtranslate_version_previous');
-		if(!$ver) update_option('qtranslate_version_previous', 29000);
+		$ver_prv = get_option('qtranslate_version_previous');
+		if(!$ver_prv) update_option('qtranslate_version_previous', 29000);
 
 		if(!isset($messages['initial-install'])){
 			$messages = qtranxf_update_option_admin_notices($messages,'initial-install');
 		}
-
 	}
+
+	$vers = get_option('qtranslate_versions', array());
+	if(!isset($vers[$ver_cur])) $vers[$ver_cur] = $ts;
+	$vers['l'] = $ts;
+	update_option('qtranslate_versions',$vers);
+
+	qtranxf_sync_language_config();
 
 	// @since 3.3.7
 	if($check_qtranslate_forks){ // possibly first install after a fork
@@ -603,20 +651,8 @@ function qtranxf_activation_hook()
 		}
 	}
 
-	//clear file debug-qtranslate.log
-	//$f=null; //qtranxf_dbg
-	$f=WP_CONTENT_DIR.'/debug-qtranslate.log';
-	if(file_exists($f)){
-		if(WP_DEBUG){
-			$fh = fopen($f, "a+");
-			ftruncate($fh,0);
-			fclose($fh);
-		}else{
-			unlink($f);
-		}
-	}
-
 	/**
+	 * A chance to execute activation actions specifically for this plugin.
 	 * @since 3.4
 	*/
 	do_action('qtranslate_activation_hook');
@@ -629,6 +665,19 @@ function qtranxf_activation_hook()
 */
 function qtranxf_deactivation_hook(){
 	//qtranxf_dbg_log('qtranxf_deactivation_hook: ', __FILE__);
+	$vers = get_option('qtranslate_versions', array());
+	$ts = time();
+	if(isset($vers['l'])){ $t=$ts-$vers['l']; if($t<0) $t=0; } else{ $t=0; }
+	if($t > 0){
+		if(!isset($vers['t'])) $vers['t'] = 0;
+		$vers['t'] += $t;
+	}
+	$vers['p'] = $ts;
+	update_option('qtranslate_versions',$vers);
+
+	/**
+	 * A chance to execute deactivation actions specifically for this plugin.
+	*/
 	do_action('qtranslate_deactivation_hook');
 }
 
@@ -653,10 +702,29 @@ function qtranxf_admin_notice_first_install(){
 	$messages = get_option('qtranslate_admin_notices');
 	if(isset($messages['initial-install'])) return;
 	qtranxf_admin_notice_dismiss_script();
+	require_once( QTRANSLATE_DIR. '/admin/qtx_languages.php');
+	$langs_preset = qtranxf_langs_preset();
+	$langs_stored = qtranxf_langs_stored($langs_preset);
+	$lang = null;
+	$lang_props = null;
+	$lang_edit_url = null;
+	foreach($langs_stored as $lng => $props){
+		if(isset($langs_preset[$lng])) continue;
+		$lang = $lng;
+		$lang_props = $props;
+		$lang_edit_url = admin_url('options-general.php?page=qtranslate-x&edit='.$lang);
+		break;
+	}
 	echo '<div class="updated notice is-dismissible" id="qtranxs-initial-install"><p style="font-size: larger;">';// text-align: center;
 	printf(__('Are you new to plugin %s?', 'qtranslate'), '<a href="https://wordpress.org/plugins/qtranslate-x/" style="color:blue" target="_blank">qTranslate&#8209;X</a>');
-	echo '<br/>';
-	echo '</p><p><a class="button" href="https://qtranslatexteam.wordpress.com/startup-guide/" target="_blank">';
+	if($lang_edit_url){
+		echo ' '.sprintf(__('The language "%s" is currently not in the pre-defined set of languages of plugin %s, and it has been added to the configuration with the best-guessed attributes. You need to finalize its properties using %sthe language editor%s.', 'qtranslate'), $lang_props['language_name'], 'qTranslate&#8209;X', '<a href="'.$lang_edit_url.'">', '</a>');
+	}
+	echo '<br/></p><p>';
+	if($lang_edit_url){
+		echo '<a class="button" href="'.$lang_edit_url.'">' . sprintf(__('Edit Configuration of Language "%s"', 'qtranslate'), $lang_props['language_name']) . '</a>&nbsp;&nbsp;&nbsp;';
+	}
+	echo '<a class="button" href="https://qtranslatexteam.wordpress.com/startup-guide/" target="_blank">';
 	echo __('Read Startup Guide', 'qtranslate');
 	echo '</a>&nbsp;&nbsp;&nbsp;<a class="button" href="javascript:qtranxj_dismiss_admin_notice(\'initial-install\');">'.__('I have already done it, dismiss this message.', 'qtranslate');
 	echo '</a></p></div>';
@@ -793,9 +861,26 @@ function qtranxf_get_plugin_link(){
 	return '<a href="https://wordpress.org/plugins/qtranslate-x/" style="color:blue" target="_blank">qTranslate&#8209;X</a>';
 }
 
-function qtranxf_admin_notice_plugin_integration($plugin,$integr_title,$integr_plugin){
-	if(!is_plugin_active($plugin)) return 0;
+function qtranxf_get_plugin_location_wpbvc($plugin){
+	global $vc_manager;
+	if(is_plugin_active($plugin)) return $plugin;
+	if(!$vc_manager) return false;
+	if(!method_exists($vc_manager,'path')) return false;
+	$plugin = $vc_manager->path('APP_DIR',basename($plugin));
+	//qtranxf_dbg_log('qtranxf_get_plugin_location_wpbvc: $plugin: ', $plugin);
+	return $plugin;
+}
+
+function qtranxf_get_plugin_location($plugin){
+	if(!is_plugin_active($plugin)) return false;
+	return $plugin;
+}
+
+function qtranxf_admin_notice_plugin_integration($plugin, $integr_title, $integr_plugin, $get_plugin_location = 'qtranxf_get_plugin_location'){
 	if(is_plugin_active($integr_plugin)) return 0;
+	//if(!is_plugin_active($plugin)) return 0;
+	$plugin = call_user_func($get_plugin_location,$plugin);
+	if(!$plugin) return 0;
 
 	$integr_bnm = dirname($integr_plugin);//
 	$messages = get_option('qtranslate_admin_notices');
@@ -865,7 +950,7 @@ function qtranxf_admin_notices_plugin_integration(){
 
 	$cnt += qtranxf_admin_notice_plugin_integration('wordpress-seo/wp-seo.php', 'Yoast SEO & qTranslate&#8209;X', 'wp-seo-qtranslate-x/wordpress-seo-qtranslate-x.php');
 
-	$cnt += qtranxf_admin_notice_plugin_integration('js_composer/js_composer.php', 'WPBakery Visual Composer & qTranslate&#8209;X', 'js-composer-qtranslate-x/js-composer-qtranslate-x.php');
+	$cnt += qtranxf_admin_notice_plugin_integration('js_composer/js_composer.php', 'WPBakery Visual Composer & qTranslate&#8209;X', 'js-composer-qtranslate-x/js-composer-qtranslate-x.php', 'qtranxf_get_plugin_location_wpbvc');
 
 	if($cnt>0){
 		qtranxf_admin_notice_dismiss_script();

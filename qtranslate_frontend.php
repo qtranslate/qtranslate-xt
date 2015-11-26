@@ -1034,11 +1034,71 @@ function qtranxf_pagenum_link($url) {
 }
 add_filter('get_pagenum_link', 'qtranxf_pagenum_link');
 
+function qtranxf_option_dt_format($fmt)
+{
+	static $c;
+	if(!empty($c[$fmt])){
+		//qtranxf_dbg_log('qtranxf_option_dt_format: cached: '.$fmt.' => ', $c[$fmt]);
+		return $c[$fmt];
+	}
+	global $q_config;
+	$lang = $q_config['language'];
+	//qtranxf_dbg_log('qtranxf_option_dt_format: $lang='.$lang.'; $fmt: ',$fmt);
+	$fmt_req = $fmt;
+	if(!empty($q_config['date_i18n'][$fmt][$lang])){
+		$fmt = $q_config['date_i18n'][$fmt][$lang];
+		//qtranxf_dbg_log('qtranxf_option_dt_format: $fmt_lang: ', $fmt);
+	}
+	if(!isset($c)) $c = array();
+	return $c[$fmt_req] = $fmt;
+}
+
+function qtranxf_date_i18n( $j, $req_format, $i, $gmt ){
+	static $level = 0;
+	if($level){
+		//qtranxf_dbg_log('qtranxf_date_i18n: $level="'.$level.'" $i='.$i.'; $req_format="'.$req_format.'"; $gmt="'.$gmt.'"; $j: ', $j);
+		return $j;//to prevent infinite loop just in case user configured it wrong.
+	}
+	//static $c;
+	//if(isset($c[$req_format][$gmt][$i])){
+	//	return $c[$req_format][$gmt][$i];
+	//}
+ 	//qtranxf_dbg_log('qtranxf_date_i18n: $i='.$i.'; $req_format="'.$req_format.'"; $gmt="'.$gmt.'"; $j: ', $j);
+	global $q_config;
+	$lang = $q_config['language'];
+	if(!empty($q_config['date_i18n'][$req_format][$lang])){
+		$fmt_lang = $q_config['date_i18n'][$req_format][$lang];
+		if($fmt_lang != $req_format){
+			$level = 1;
+			$j = date_i18n($fmt_lang,$i,$gmt);//causes recursive call
+			$level = 0;
+			//qtranxf_dbg_log('qtranxf_date_i18n: $fmt_lang="'.$fmt_lang.'"; $j: ', $j);
+		}
+	}
+	//$c[$req_format][$gmt][$i] = $j;
+ 	//qtranxf_dbg_log('qtranxf_date_i18n: $c: ', $c);
+	return $j;
+}
+
 /**
  * @since 3.3.7
  */
 function qtranxf_add_front_filters(){
 	global $q_config;
+
+	// date/time filters
+	switch($q_config['use_strftime']){
+		case QTX_DATE_WP:
+			add_filter('option_date_format', 'qtranxf_option_dt_format', 5);
+			add_filter('option_time_format', 'qtranxf_option_dt_format', 5);
+			add_filter( 'date_i18n', 'qtranxf_date_i18n', 5, 4);
+		break;
+		case QTX_DATE:
+		case QTX_DATE_OVERRIDE:
+		case QTX_STRFTIME:
+		case QTX_STRFTIME_OVERRIDE:
+		default: require_once(QTRANSLATE_DIR.'/inc/qtx_date_time.php'); break;
+	}
 
 	if($q_config['hide_untranslated']){
 		add_filter('wp_list_pages_excludes', 'qtranxf_excludePages');//moved here from _hooks.php since 3.2.8

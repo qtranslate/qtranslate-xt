@@ -40,6 +40,11 @@
 	}
 }
 ,
+"options-general-languages":{
+	"pages":{"options-general.php":"page=qtranslate-x"},
+	"anchors":{"lsb":{"jquery":".i18n-anchor-lsb", "where":"first"}}
+}
+,
 "widgets":{
 	"pages":{"widgets.php":""},
 	"anchors":{"widgets-right":{"where":"before after"}},

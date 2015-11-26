@@ -8,7 +8,10 @@ if ( !defined( 'ABSPATH' ) ) exit;
  */
 function qtranxf_localeForCurrentLanguage($locale){
 	static $locale_lang;//cache
-	if(!empty($locale_lang)) return $locale_lang;
+	if(!empty($locale_lang)){
+		//qtranxf_dbg_log('qtranxf_localeForCurrentLanguage: cached $locale_lang: ', $locale_lang);
+		return $locale_lang;
+	}
 	global $q_config;
 	$lang = $q_config['language'];
 	$locale_lang = $q_config['locale'][$lang];
@@ -18,12 +21,18 @@ function qtranxf_localeForCurrentLanguage($locale){
 	$lc[] = $locale_lang.'.utf8';
 	$lc[] = $locale_lang.'@euro';
 	$lc[] = $locale_lang;
-	$windows_locale = qtranxf_default_windows_locale();
-	if(isset($windows_locale[$lang])) $lc[] = $windows_locale[$lang];
+	if (qtranxf_windows_os()) {
+		$windows_locale = qtranxf_default_windows_locale();
+		if(isset($windows_locale[$lang])){
+			$wl = $windows_locale[$lang];
+			$lc[] = $wl;
+		}
+	}
 	$lc[] = $lang;
 
 	// return the correct locale and most importantly set it (wordpress doesn't, which is bad)
 	// only set LC_TIME as everything else doesn't seem to work with windows
+	//qtranxf_dbg_log('qtranxf_localeForCurrentLanguage: $lc: ', $lc);
 	$loc = setlocale(LC_TIME, $lc);
 	if(!$loc){
 		$lc2 = array();
@@ -32,6 +41,7 @@ function qtranxf_localeForCurrentLanguage($locale){
 			$loc = $locale_lang.'_'.strtoupper($lang); if(!in_array($loc,$lc2)) $lc2[] = $loc;
 		}
 		$loc = $lang.'_'.strtoupper($lang); if(!in_array($loc,$lc2)) $lc2[] = $loc;
+		//qtranxf_dbg_log('qtranxf_localeForCurrentLanguage: $lc2: ', $lc2);
 		$loc = setlocale(LC_TIME, $lc2);
 		//if(!$loc) qtranxf_error_log(sprintf('Could not set locale with setlocale(LC_TIME, %s).', json_encode(array_merge($lc, $lc2))));
 	}
@@ -205,13 +215,6 @@ add_filter('comment_moderation_text', 'qtranxf_useDefaultLanguage',0);
 add_filter('the_content', 'qtranxf_useCurrentLanguageIfNotFoundShowAvailable', 100);// since 3.1 changed priority from 0 to 100, since other plugins, like https://wordpress.org/plugins/siteorigin-panels generate additional content, which also needs to be translated.
 add_filter('the_excerpt', 'qtranxf_useCurrentLanguageIfNotFoundShowAvailable', 0);
 add_filter('the_excerpt_rss', 'qtranxf_useCurrentLanguageIfNotFoundShowAvailable', 0);
-
-add_filter('get_comment_date', 'qtranxf_dateFromCommentForCurrentLanguage',0,3);
-add_filter('get_comment_time', 'qtranxf_timeFromCommentForCurrentLanguage',0,5);
-add_filter('get_post_modified_time', 'qtranxf_timeModifiedFromPostForCurrentLanguage',0,3);
-add_filter('get_the_time', 'qtranxf_timeFromPostForCurrentLanguage',0,3);
-add_filter('get_the_date', 'qtranxf_dateFromPostForCurrentLanguage',0,3);
-add_filter('get_the_modified_date', 'qtranxf_dateModifiedFromPostForCurrentLanguage',0,2);
 
 add_filter('locale', 'qtranxf_localeForCurrentLanguage',99);
 add_filter('core_version_check_locale', 'qtranxf_versionLocale');

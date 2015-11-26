@@ -480,29 +480,28 @@ function qtranxf_getLanguageNameNative($lang = ''){
 /**
  * @since 3.4.5.4 - return language name in active language, if available, otherwise the name in native language.
 */
-function qtranxf_getLanguageName($lang = '', $locales = null, $native_names = null){
+function qtranxf_getLanguageName($lang = '', $locale = null, $native_name = null){
 	global $q_config, $l10n;
 	if(empty($lang)) return $q_config['language_name'][$q_config['language']];
 	if(isset($q_config['language-names'][$lang])) return $q_config['language-names'][$lang];
-	if(!$locales) $locales = $q_config['locale'];
 	if(!isset($l10n['language-names'])){//is not loaded by default, since this place should not be hit frequently
-		$locale = $locales[$q_config['language']];
-		if(!load_textdomain( 'language-names', QTRANSLATE_DIR . '/lang/language-names/language-'.$locale.'.mo' )){
-			if($locale[2] == '_'){
-				$locale = substr($locale,0,2);
-				load_textdomain( 'language-names', QTRANSLATE_DIR . '/lang/language-names/language-'.$locale.'.mo' );
+		$loc = $q_config['locale'][$q_config['language']];
+		if(!load_textdomain( 'language-names', QTRANSLATE_DIR . '/lang/language-names/language-'.$loc.'.mo' )){
+			if($loc[2] == '_'){
+				$loc = substr($loc,0,2);
+				load_textdomain( 'language-names', QTRANSLATE_DIR . '/lang/language-names/language-'.$loc.'.mo' );
 			}
 		}
 	}
 	$translations = get_translations_for_domain('language-names');
-	$locale = $locales[$lang];
+	if(!$locale) $locale = $q_config['locale'][$lang];
 	while(!isset($translations->entries[$locale])){
 		if($locale[2] == '_'){
 			$locale = substr($locale,0,2);
 			if(isset($translations->entries[$locale])) break;
 		}
-		if(!$native_names) $native_names = $q_config['language_name'];
-		return $q_config['language-names'][$lang] = $native_names[$lang];
+		if(!$native_name) $native_name = $q_config['language_name'][$lang];
+		return $q_config['language-names'][$lang] = $native_name;
 	}
 	$n = $translations->entries[$locale]->translations[0];
 	if(empty($q_config['language_name_case'])){//Camel Case by default
@@ -880,6 +879,14 @@ function qtranxf_match_language_locale($locale){
 	}
 }
 
+function qtranxf_windows_os(){
+	static $windows_os;
+	if(!isset($windows_os)){
+		$windows_os = strtoupper(substr(PHP_OS,0,3)) === 'WIN';
+	}
+	return $windows_os;
+}
+
 {// BEGIN DATE TIME FUNCTIONS
 /**
  * Mapping to convert date format to strftime format and vice-versa.
@@ -941,15 +948,15 @@ function qtranxf_convert_date2strftime($format) {
 }
 
 function qtranxf_convert_strftime2date($format) {
+	if(strpos($format,'%')===false) return $format;
 	$mappings = qtranxf_date_strftime_mapping();
 	$d = array(); $s = array();
 	foreach($mappings as $df => $sf) {
 		$d[] = $df; $s[] = $sf;
 	}
 	$d[] = '%%'; $s[] = '%';
+	$format = str_replace('%x', 'm/d/y', $format);//for 'zh'
 	$format = str_replace($s, $d, $format);
-	//$d[] = '#(\\[a-zA-Z]?)#'; $s[] = '${1}';
-	$format = preg_replace('#(\\\\[a-zA-Z]?)#', '${1}', $format);
 	return $format;
 }
 }// END DATE TIME FUNCTIONS

@@ -2,7 +2,11 @@
 if ( !defined( 'ABSPATH' ) ) exit;
 
 require_once(QTRANSLATE_DIR.'/admin/qtx_admin_options.php');
+require_once(QTRANSLATE_DIR.'/admin/qtx_languages.php');
 require_once(QTRANSLATE_DIR.'/admin/qtx_import_export.php');
+
+function qtranxf_get_option_name($nm){ return 'qtranslate_'.$nm; }
+function qtranxf_update_option_value($nm,$value) { update_option(qtranxf_get_option_name($nm),$value); }
 
 function qtranxf_editConfig(){
 	global $q_config;
@@ -40,26 +44,50 @@ function qtranxf_editConfig(){
 		// validate form input
 		$original_lang = sanitize_text_field($_POST['original_lang']);
 		$lang = sanitize_text_field($_POST['language_code']);
-		if($_POST['language_na_message']=='') $errors[] = __('The Language must have a Not-Available Message!', 'qtranslate');
-		if(strlen($_POST['language_locale'])<2) $errors[] = __('The Language must have a Locale!', 'qtranslate');
-		if($_POST['language_name']=='') $errors[] = __('The Language must have a name!', 'qtranslate');
+
+		$lang_props['language_name'] = sanitize_text_field($_POST['language_name']);
+		$lang_props['flag'] = sanitize_text_field($_POST['language_flag']);
+		$lang_props['locale'] = sanitize_text_field($_POST['language_locale']);
+
 		if(strlen($lang)!=2) $errors[] = __('Language Code has to be 2 characters long!', 'qtranslate');
-		$langs=array(); qtranxf_load_languages($langs);
-		$language_names = $langs['language_name'];
+		if(empty($lang_props['language_name'])) $errors[] = __('The Language must have a name!', 'qtranslate');
+		if(strlen($lang_props['locale'])<2) $errors[] = __('The Language must have a Locale!', 'qtranslate');
+
+		if($original_lang){
+			$lang_props['locale_html'] = sanitize_text_field($_POST['language_locale_html']);
+			$lang_props['date_format'] = sanitize_text_field(stripslashes($_POST['language_date_format']));
+			$lang_props['time_format'] = sanitize_text_field(stripslashes($_POST['language_time_format']));
+			$nam = wp_kses_post(stripslashes($_POST['language_na_message']));//allow valid HTML
+			$nam = htmlentities(html_entity_decode($nam));//standardize HTML entities
+			$lang_props['not_available'] = $nam;
+
+			if(empty($lang_props['date_format'])){
+				$errors[] = sprintf(__('Option "%s" must not be empty.', 'qtranslate'), qtranxf_translate_wp('Date Format')).' '.sprintf(__('It has now been pre-filled with a default value as entered on page %s, which you may wish to adjust for this language.', 'qtranslate'), '<a href="' .admin_url('options-general.php').'" target="_blank">'.qtranxf_translate_wp('General Settings').'</a>');
+				$lang_props['date_format'] = qtranxf_translate_dt_format('date_format',$lang);
+			}
+			if(empty($lang_props['time_format'])){
+				$errors[] = sprintf(__('Option "%s" must not be empty.', 'qtranslate'), qtranxf_translate_wp('Time Format')).' '.sprintf(__('It has now been pre-filled with a default value as entered on page %s, which you may wish to adjust for this language.', 'qtranslate'), '<a href="'.admin_url('options-general.php').'" target="_blank">'.qtranxf_translate_wp('General Settings').'</a>');
+				$lang_props['time_format'] = qtranxf_translate_dt_format('time_format',$lang);
+			}
+			if(empty($lang_props['not_available'])) $errors[] = __('The Language must have a Not-Available Message!', 'qtranslate');
+		}
+		$langs_preset = qtranxf_langs_preset();
+		$langs_stored = qtranxf_langs_stored($langs_preset);
 		if(empty($errors)){
 			if(empty($original_lang)) {
 				// new language
-				if(isset($language_names[$lang])) {
+				if(isset($langs_stored[$lang])) {
 					$errors[] = __('There is already a language with the same Language Code!', 'qtranslate');
 				} 
 			}else{
 				// language update
-				if($lang!=$original_lang&&isset($language_names[$lang])) {
+				if($lang!=$original_lang&&isset($langs_stored[$lang])) {
 					$errors[] = __('There is already a language with the same Language Code!', 'qtranslate');
 				} else {
 					if($lang!=$original_lang){
 						// remove old language
-						qtranxf_unsetLanguage($langs,$original_lang);
+						//qtranxf_unsetLanguage($langs,$original_lang);
+						unset($langs_stored[$original_lang]);
 						qtranxf_unsetLanguage($q_config,$original_lang);
 						// if was enabled, set modified one to enabled too
 						foreach($q_config['enabled_languages'] as $k => $lng) {
@@ -78,27 +106,20 @@ function qtranxf_editConfig(){
 				}
 			}
 		}
-
-		$lang_props['language_name'] = sanitize_text_field($_POST['language_name']);
-		$lang_props['flag'] = sanitize_text_field($_POST['language_flag']);
-		$lang_props['locale'] = sanitize_text_field($_POST['language_locale']);
-		$lang_props['locale_html'] = sanitize_text_field($_POST['language_locale_html']);
-		$lang_props['date_format'] = sanitize_text_field(stripslashes($_POST['language_date_format']));
-		$lang_props['time_format'] = sanitize_text_field(stripslashes($_POST['language_time_format']));
-		$lang_props['not_available'] = wp_kses_post(stripslashes($_POST['language_na_message']));//allow valid HTML
 		if(empty($errors)) {
 			// everything is fine, insert language
 			foreach($lang_props as $k => $v){
 				$q_config[$k][$lang] = $v;
+				if(empty($v) || (!empty($langs_preset[$lang][$k]) && $langs_preset[$lang][$k] == $v)) unset($langs_stored[$lang][$k]);
+				else $langs_stored[$lang][$k] = $v;
 			}
-			qtranxf_copyLanguage($langs, $q_config, $lang);
-			qtranxf_save_languages($langs);
+			qtranxf_set_date_i18n_formats($q_config,$lang);
+			qtranxf_save_languages($langs_stored);
 			qtranxf_enableLanguage($lang);
-			//qtranxf_update_config_header_css();
 
-			$original_lang = $lang;
-			$s = 'Custom Language Properties Used';
+			$s = 'Custom Language Properties Used for "'.$lang.'"';
 			$b = 'I use the following language properties for '.$lang.':'.PHP_EOL .PHP_EOL;
+			$b .= 'Language Code: '.$lang.PHP_EOL;
 			foreach($lang_props as $k => $v){
 				$b .= $k.': '.$v.PHP_EOL;
 			}
@@ -107,9 +128,19 @@ function qtranxf_editConfig(){
 			$u = 'qtranslateteam@gmail.com?subject='.rawurlencode($s).'&body='.rawurlencode($b);
 			$messages[] = sprintf(__('The new language properties have been saved. If you think these properties should be the preset default, please %ssend email%s to the development team.', 'qtranslate'),'<a href="mailto:'.$u.'"><strong>','</strong></a>');
 		}
+		//qtranxf_dbg_log('$lang: ',$lang);
 		if(!empty($errors)||isset($_GET['edit'])) {
+			if(empty($errors) && $original_lang != $lang){
+				$target = admin_url('options-general.php?page=qtranslate-x&edit='.$lang);
+				wp_redirect($target);
+				exit;
+			}
 			// get old values in the form
 			$language_code = $lang;
+		}else if(empty($original_lang)){
+			$target = admin_url('options-general.php?page=qtranslate-x&edit='.$lang.'&msg=new');
+			wp_redirect($target);
+			exit;
 		}else{
 			//reset form for new language
 			$lang_props = array();
@@ -171,15 +202,16 @@ function qtranxf_editConfig(){
 		}
 		$original_lang = $lang;
 		$language_code = $lang;
-		//$langs = $q_config;
-		$langs = array(); qtranxf_languages_configured($langs);
-		$lang_props['language_name'] = isset($langs['language_name'][$lang])?$langs['language_name'][$lang]:'';
-		$lang_props['locale'] = isset($langs['locale'][$lang])?$langs['locale'][$lang]:'';
-		$lang_props['locale_html'] = isset($langs['locale_html'][$lang])?$langs['locale_html'][$lang]:'';
-		$lang_props['date_format'] = isset($langs['date_format'][$lang])?$langs['date_format'][$lang]:'';
-		$lang_props['time_format'] = isset($langs['time_format'][$lang])?$langs['time_format'][$lang]:'';
-		$lang_props['not_available'] = isset($langs['not_available'][$lang])?$langs['not_available'][$lang]:'';
-		$lang_props['flag'] = isset($langs['flag'][$lang])?$langs['flag'][$lang]:'';
+		//$langs = array(); qtranxf_langs_config($langs);
+		//$lang_props['language_name'] = isset($langs['language_name'][$lang])?$langs['language_name'][$lang]:'';
+		//$lang_props['locale'] = isset($langs['locale'][$lang])?$langs['locale'][$lang]:'';
+		//$lang_props['locale_html'] = isset($langs['locale_html'][$lang])?$langs['locale_html'][$lang]:'';
+		//$lang_props['date_format'] = isset($langs['date_format'][$lang])?$langs['date_format'][$lang]:'';
+		//$lang_props['time_format'] = isset($langs['time_format'][$lang])?$langs['time_format'][$lang]:'';
+		//$lang_props['not_available'] = isset($langs['not_available'][$lang])?$langs['not_available'][$lang]:'';
+		//$lang_props['flag'] = isset($langs['flag'][$lang])?$langs['flag'][$lang]:'';
+		$langs = qtranxf_langs_config();
+		$lang_props = isset($langs[$lang]) ? $langs[$lang] : array();
 	}
 	elseif(isset($_GET['delete'])){
 		$lang = sanitize_text_field($_GET['delete']);
@@ -317,24 +349,29 @@ add_action('qtranslate_saveConfig','qtranxf_resetConfig',20);
 
 function qtranxf_update_option( $nm, $default_value=null ) {
 	global $q_config;
-	if( !isset($q_config[$nm]) || ( !is_integer($q_config[$nm]) && empty($q_config[$nm]) ) ){
-		delete_option('qtranslate_'.$nm);
+	qtranxf_update_qoption($q_config, $nm, $default_value );
+}
+
+function qtranxf_update_qoption($cfg, $nm, $default_value=null ) {
+	$opnm = qtranxf_get_option_name($nm);
+	if( !isset($cfg[$nm]) || ( !is_integer($cfg[$nm]) && empty($cfg[$nm]) ) ){
+		delete_option($opnm);
 		return;
 	}
 	if(!is_null($default_value)){
 		if(is_string($default_value)){
 			if(function_exists($default_value)){
 				$default_value = call_user_func($default_value);
-			}elseif(is_array($q_config[$nm])){
+			}elseif(is_array($cfg[$nm])){
 				$default_value = preg_split('/[\s,]+/',$default_value,null,PREG_SPLIT_NO_EMPTY);
 			}
 		}
-		if( $default_value===$q_config[$nm] ){
-			delete_option('qtranslate_'.$nm);
+		if( $default_value===$cfg[$nm] ){
+			delete_option($opnm);
 			return;
 		}
 	}
-	update_option('qtranslate_'.$nm, $q_config[$nm]);
+	update_option($opnm, $cfg[$nm]);
 }
 
 function qtranxf_update_option_bool( $nm, $default_value=null ) {
@@ -608,6 +645,86 @@ function qtranxf_parse_post_type_excluded() {
 	//qtranxf_dbg_log('qtranxf_parse_post_type_excluded: $_POST[post_type_excluded]: ',$_POST['post_type_excluded']);
 }
 
+function qtranxf_updateLanguageDateTimeFormats($date_i18n,$enabled_languages,$prop,$format){
+	$opnm = 'qtranslate_'.$prop.'s';
+	$dbs_formats = get_option($opnm,array());
+	$def_formats = call_user_func('qtranxf_default_'.$prop);
+	//qtranxf_dbg_log('qtranxf_updateLanguageDateTimeFormats('.$prop.'): $def_formats: ',$def_formats);
+	//qtranxf_dbg_log('qtranxf_updateLanguageDateTimeFormats('.$prop.'): $dbs_formats: ',$dbs_formats);
+	//qtranxf_dbg_log('qtranxf_updateLanguageDateTimeFormats('.$prop.'): $date_i18n: ',$date_i18n);
+	$dbs_changed = empty($dbs_formats);//to erase option if it stays empty
+	foreach($enabled_languages as $lang){
+		$fmt = empty($date_i18n[$format][$lang]) ? $format : $date_i18n[$format][$lang];
+		//qtranxf_dbg_log('qtranxf_updateLanguageDateTimeFormats: $fmt: ',$fmt);
+		if(!empty($def_formats[$lang])){
+			$def_fmt = qtranxf_convert_strftime2date($def_formats[$lang]);
+			//qtranxf_dbg_log('qtranxf_updateLanguageDateTimeFormats: $def_fmt: ',$def_fmt);
+			if($def_fmt == $fmt){
+				if(isset($dbs_formats[$lang])){
+					unset($dbs_formats[$lang]);
+					$dbs_changed = true;
+				}
+				continue;
+			}
+		}
+		if(!empty($dbs_formats[$lang])){
+			$dbs_fmt = qtranxf_convert_strftime2date($dbs_formats[$lang]);
+			//qtranxf_dbg_log('qtranxf_updateLanguageDateTimeFormats: $dbs_fmt: ',$dbs_fmt);
+			if($dbs_fmt == $fmt) continue;
+		}
+		$dbs_formats[$lang] = $fmt;
+		$dbs_changed = true;
+	}
+	//qtranxf_dbg_log('qtranxf_updateLanguageDateTimeFormats('.$prop.'): $dbs_changed: ',$dbs_changed);
+	if(!$dbs_changed) return;
+	//qtranxf_dbg_log('qtranxf_updateLanguageDateTimeFormats('.$prop.'): $dbs_formats: ',$dbs_formats);
+	if(empty($dbs_formats)) delete_option($opnm);
+	else update_option($opnm,$dbs_formats);
+}
+
+function qtranxf_updateSettingDateI18N($nm){
+	global $q_config;
+	if(!isset($_POST['submit'])) return;
+	$nm_fmt = $nm.'_fmt';
+	if(!isset($_POST[$nm]) || !isset($_POST[$nm_fmt])) return;
+	if(!is_array($_POST[$nm]) || !is_array($_POST[$nm_fmt])) return;
+	//qtranxf_dbg_log('qtranxf_updateSettingDateI18N: $_POST['.$nm.']: ',$_POST[$nm]);
+	//qtranxf_dbg_log('qtranxf_updateSettingDateI18N: $_POST['.$nm_fmt.']: ',$_POST[$nm_fmt]);
+	if(!isset($q_config[$nm]) || !is_array($q_config[$nm])) $q_config[$nm] = array();
+	$date_i18n = array();
+	qtranxf_get_date_time_formats($date_format,$time_format);
+	//qtranxf_dbg_log('qtranxf_updateSettingDateI18N: $date_format: ',$date_format);
+	//qtranxf_dbg_log('qtranxf_updateSettingDateI18N: $time_format: ',$time_format);
+	$date_i18n['date_format'] = $date_format;
+	$date_i18n['time_format'] = $time_format;
+	$_POST[$nm] = wp_unslash($_POST[$nm]);
+	$_POST[$nm_fmt] = wp_unslash($_POST[$nm_fmt]);
+	foreach($_POST[$nm] as $k => $v){
+		if(!isset($_POST[$nm_fmt][$k])) continue;
+		$f = sanitize_text_field($_POST[$nm_fmt][$k]);
+		if(empty($f)) continue;
+		$v = sanitize_text_field($v);
+		if(empty($v)) continue;
+		$v = qtranxf_split($v);
+		foreach($v as $lang => $fmt){
+			if($fmt == $f || empty($fmt)) unset($v[$lang]);
+		}
+		if(empty($v)) continue;
+		$date_i18n[$f] = $v;
+	}
+	unset($_POST[$nm]);
+	unset($_POST[$nm_fmt]);
+	if(!qtranxf_array_compare($q_config[$nm],$date_i18n)){
+		$q_config[$nm] = $date_i18n;
+		qtranxf_update_option_value($nm,$date_i18n);
+	}
+	//qtranxf_dbg_log('qtranxf_updateSettingDateI18N: $q_config['.$nm.']: ',$q_config[$nm]);
+	if($q_config['use_strftime'] == QTX_DATE_WP){
+		qtranxf_updateLanguageDateTimeFormats($date_i18n,$q_config['enabled_languages'],'date_format',$date_format);
+		qtranxf_updateLanguageDateTimeFormats($date_i18n,$q_config['enabled_languages'],'time_format',$time_format);
+	}
+}
+
 function qtranxf_updateSettings(){
 	global $qtranslate_options, $q_config;
 
@@ -635,6 +752,7 @@ function qtranxf_updateSettings(){
 	foreach($qtranslate_options['front']['int'] as $nm => $def){
 		qtranxf_updateSetting($nm, QTX_INTEGER, $def);
 	}
+	qtranxf_updateSettingDateI18N('date_i18n');
 
 	foreach($qtranslate_options['front']['bool'] as $nm => $def){
 		qtranxf_updateSetting($nm, QTX_BOOLEAN, $def);
@@ -785,8 +903,101 @@ function qtranxf_executeOnUpdate() {
 	}
 }
 
-//function qtranxf_updateLanguage() {
-//}
+function qtranxf_translate_dt_format($fmt,$lang=null){
+	global $q_config;
+	if(empty($lang)) $lang = $q_config['language'];
+	switch($fmt){
+		case 'date_format': $fmt = 'F j, Y'; break;
+		case 'time_format': $fmt = 'g:i a'; break;
+		case 'date_time_format': $fmt = 'F j, Y g:i a'; break;
+	}
+	if(empty($q_config['locale'][$lang])){
+		$locales = qtranxf_language_configured('locale');
+		if(empty($locales[$lang])) return $fmt;
+		$loc = $locales[$lang];
+	}else{
+		$loc = $q_config['locale'][$lang];
+	}
+	$text_domain = 'locale-'.$loc;
+	if(!isset($l10n[$text_domain])){
+		$mo = WP_LANG_DIR.'/'.$loc.'.mo';
+		if(!load_textdomain($text_domain,$mo)){
+			qtranxf_updateGettextDatabases(true,$lang);
+			load_textdomain($text_domain,$mo);
+		}
+	}
+	$translations = get_translations_for_domain($text_domain);
+	if(isset($translations->entries[$fmt])){
+		$fmt = $translations->entries[$fmt]->translations[0];
+	}
+	return $fmt;
+}
+
+function qtranxf_get_date_time_formats(&$date_format,&$time_format){
+	if(!$date_format) $date_format = get_option('date_format');
+	if(!$time_format) $time_format = get_option('time_format');
+}
+
+function qtranxf_set_default_date_i18n(&$cfg,$enabled_languages,$date_format=null,$time_format=null){
+	qtranxf_get_date_time_formats($date_format,$time_format);
+	$changed = false;
+	foreach($enabled_languages as $lang){
+		if(qtranxf_set_date_i18n_formats($cfg,$lang,$date_format,$time_format)) $changed = true;
+	}
+	//qtranxf_dbg_log('qtranxf_set_date_i18n_formats: $cfg[date_i18n]: ',$cfg['date_i18n']);
+	return $changed;
+}
+
+function qtranxf_set_date_i18n_formats(&$cfg, $lang, $date_format=null, $time_format=null){
+	qtranxf_get_date_time_formats($date_format,$time_format);
+	$changed = !isset($cfg['date_i18n']) || !is_array($cfg['date_i18n']);
+	if($changed) $cfg['date_i18n'] = array();
+	if(qtranxf_set_date_i18n_format($cfg, $lang, 'date_format', $date_format)) $changed = true;
+	if(qtranxf_set_date_i18n_format($cfg, $lang, 'time_format', $time_format)) $changed = true;;
+	return $changed;
+}
+
+function qtranxf_set_date_i18n_format(&$cfg, $lang, $name, $format){
+	$changed = false;
+	$date_i18n = &$cfg['date_i18n'];
+	if(!empty($date_i18n[$name]) && $format != $date_i18n[$name]){
+		$f = $date_i18n[$name];
+		$fmts = $date_i18n[$f];
+		$date_i18n[$format] = $fmts;
+		unset($date_i18n[$f]);
+		$changed = true;
+	}
+	if(empty($date_i18n[$name]) || $date_i18n[$name] != $format){
+		$date_i18n[$name] = $format;
+		$changed = true;
+	}
+	if(empty($cfg[$name][$lang])){
+		$lng_format = qtranxf_translate_dt_format($name,$lang);
+	}else{
+		$lng_format = qtranxf_convert_strftime2date($cfg[$name][$lang]);
+	}
+	if(empty($lng_format) || $lng_format == $format){
+		if(isset($date_i18n[$format][$lang])){
+			unset($date_i18n[$format][$lang]);
+			$changed = true;
+		}
+	}else{
+		if((empty($date_i18n[$format][$lang]) || $date_i18n[$format][$lang] != $lng_format)){
+			$date_i18n[$format][$lang] = $lng_format;
+			$changed = true;
+		}
+	}
+	return $changed;
+}
+
+function qtranxf_sync_date_i18n_config($date_format=null, $time_format=null){
+	global $q_config;
+	qtranxf_get_date_time_formats($date_format,$time_format);
+	$date_i18n = get_option('qtranslate_date_i18n');
+	if(is_array($date_i18n)) $q_config['date_i18n'] = $date_i18n;
+	if(qtranxf_set_default_date_i18n($q_config,$q_config['enabled_languages'],$date_format,$time_format))
+		update_option('qtranslate_date_i18n',$q_config['date_i18n']);
+}
 
 /**
  * Allow 3rd-party to include additional code here

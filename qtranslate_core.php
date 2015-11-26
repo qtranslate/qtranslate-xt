@@ -4,7 +4,6 @@ if ( !defined( 'ABSPATH' ) ) exit;
 function qtranxf_init_language() {
 	global $q_config, $pagenow;
 	//qtranxf_dbg_log('1.qtranxf_init_language:');
-
 	//if(defined('QTRANS_INIT')){
 	//	//qtranxf_dbg_log('qtranxf_init_language: QTRANS_INIT: url_info: ',$q_config['url_info']);
 	//	return;
@@ -605,11 +604,16 @@ function qtranxf_loadConfig() {
 	qtranxf_load_option_array('enabled_languages');
 
 	qtranxf_load_option_flag_location('flag_location');
-	qtranxf_load_languages_enabled();
 
 	foreach($qtranslate_options['front']['int'] as $nm => $def){
 		qtranxf_load_option($nm, $def);
 	}
+
+	//qtranxf_dbg_log('qtranxf_loadConfig: $q_config[use_strftime]: ',$q_config['use_strftime']);
+	if($q_config['use_strftime'] != QTX_DATE_WP && qtranxf_windows_os()){
+		$q_config['use_strftime'] = QTX_DATE_WP;
+	}
+	qtranxf_load_languages_enabled();
 
 	foreach($qtranslate_options['front']['bool'] as $nm => $def){
 		qtranxf_load_option_bool($nm,$def);
@@ -692,117 +696,6 @@ function qtranxf_loadConfig() {
 	 */
 	do_action('qtranslate_loadConfig');
 }
-
-/* BEGIN DATE TIME FUNCTIONS */
-
-function qtranxf_strftime($format, $date, $default = '', $before = '', $after = '') {
-	// don't do anything if format is not given
-	if($format=='') return $default;
-	// add date suffix ability (%q) to strftime
-	$day = intval(ltrim(strftime("%d",$date),'0'));
-	$search = array();
-	$replace = array();
-	
-	// date S
-	$search[] = '/(([^%])%q|^%q)/';
-	if($day==1||$day==21||$day==31) { 
-		$replace[] = '$2st';
-	} elseif($day==2||$day==22) {
-		$replace[] = '$2nd';
-	} elseif($day==3||$day==23) {
-		$replace[] = '$2rd';
-	} else {
-		$replace[] = '$2th';
-	}
-	
-	$search[] = '/(([^%])%E|^%E)/'; $replace[] = '${2}'.$day; // date j
-	$search[] = '/(([^%])%f|^%f)/'; $replace[] = '${2}'.date('w',$date); // date w
-	$search[] = '/(([^%])%F|^%F)/'; $replace[] = '${2}'.date('z',$date); // date z
-	$search[] = '/(([^%])%i|^%i)/'; $replace[] = '${2}'.date('n',$date); // date i
-	$search[] = '/(([^%])%J|^%J)/'; $replace[] = '${2}'.date('t',$date); // date t
-	$search[] = '/(([^%])%k|^%k)/'; $replace[] = '${2}'.date('L',$date); // date L
-	$search[] = '/(([^%])%K|^%K)/'; $replace[] = '${2}'.date('B',$date); // date B
-	$search[] = '/(([^%])%l|^%l)/'; $replace[] = '${2}'.date('g',$date); // date g
-	$search[] = '/(([^%])%L|^%L)/'; $replace[] = '${2}'.date('G',$date); // date G
-	$search[] = '/(([^%])%N|^%N)/'; $replace[] = '${2}'.date('u',$date); // date u
-	$search[] = '/(([^%])%Q|^%Q)/'; $replace[] = '${2}'.date('e',$date); // date e
-	$search[] = '/(([^%])%o|^%o)/'; $replace[] = '${2}'.date('I',$date); // date I
-	$search[] = '/(([^%])%O|^%O)/'; $replace[] = '${2}'.date('O',$date); // date O
-	$search[] = '/(([^%])%s|^%s)/'; $replace[] = '${2}'.date('P',$date); // date P
-	$search[] = '/(([^%])%v|^%v)/'; $replace[] = '${2}'.date('T',$date); // date T
-	$search[] = '/(([^%])%1|^%1)/'; $replace[] = '${2}'.date('Z',$date); // date Z
-	$search[] = '/(([^%])%2|^%2)/'; $replace[] = '${2}'.date('c',$date); // date c
-	$search[] = '/(([^%])%3|^%3)/'; $replace[] = '${2}'.date('r',$date); // date r
-	$search[] = '/(([^%])%4|^%4)/'; $replace[] = '${2}'.$date; // date U
-	$format = preg_replace($search,$replace,$format);
-	//qtranxf_dbg_log('qtranxf_strftime: $format='.$format.'; $date=',$date);
-	return $before.strftime($format, $date).$after;
-}
-
-/**
- * @since 3.2.8 time functions adjusted
- */
-function qtranxf_format_date($format, $mysq_time, $default, $before = '', $after = '') {
-	global $q_config;
-	$ts = mysql2date('U', $mysq_time);
-	if($format == 'U') return $ts;
-	$format = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($format);
-	if (!empty($format) && $q_config['use_strftime'] == QTX_STRFTIME)
-		$format = qtranxf_convertDateFormatToStrftimeFormat($format);
-	return qtranxf_strftime(qtranxf_convertDateFormat($format), $ts, $default, $before, $after);
-}
-
-function qtranxf_format_time($format, $mysq_time, $default, $before = '', $after = '') {
-	global $q_config;
-	$ts = mysql2date('U', $mysq_time);
-	if($format == 'U') return $ts;
-	$format = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($format);
-	if (!empty($format) && $q_config['use_strftime'] == QTX_STRFTIME)
-		$format = qtranxf_convertDateFormatToStrftimeFormat($format);
-	return qtranxf_strftime(qtranxf_convertTimeFormat($format), $ts, $default, $before, $after);
-}
-
-function qtranxf_dateFromPostForCurrentLanguage($old_date, $format = '', $post = null) {
-	$post = get_post($post); if(!$post) return $old_date;
-	return qtranxf_format_date($format, $post->post_date, $old_date);
-}
-
-function qtranxf_dateModifiedFromPostForCurrentLanguage($old_date, $format = '') {
-	global $post; if(!$post) return $old_date;
-	return qtranxf_format_date($format, $post->post_modified, $old_date);
-}
-
-function qtranxf_timeFromPostForCurrentLanguage($old_date, $format = '', $post = null, $gmt = false) {
-	$post = get_post($post); if(!$post) return $old_date;
-	$post_date = $gmt? $post->post_date_gmt : $post->post_date;
-	return qtranxf_format_time($format, $post_date, $old_date);
-	//return qtranxf_strftime(qtranxf_convertTimeFormat($format), mysql2date('U',$post_date), $old_date);
-}
-
-function qtranxf_timeModifiedFromPostForCurrentLanguage($old_date, $format = '', $gmt = false) {
-	global $post; if(!$post) return $old_date;
-	$post_date = $gmt? $post->post_modified_gmt : $post->post_modified;
-	return qtranxf_format_time($format, $post_date, $old_date);
-	//return qtranxf_strftime(qtranxf_convertTimeFormat($format), mysql2date('U',$post_date), $old_date);
-}
-
-function qtranxf_dateFromCommentForCurrentLanguage($old_date, $format, $comment = null) {
-	if(!$comment){ global $comment; }//compatibility with older WP
-	if(!$comment) return $old_date;
-	return qtranxf_format_date($format, $comment->comment_date, $old_date);
-	//return qtranxf_strftime(qtranxf_convertDateFormat($format), mysql2date('U',$comment->comment_date), $old_date);
-}
-
-function qtranxf_timeFromCommentForCurrentLanguage($old_date, $format = '', $gmt = false, $translate = true, $comment = null) {
-	if(!$translate) return $old_date;
-	if(!$comment){ global $comment; }//compatibility with older WP
-	if(!$comment) return $old_date;
-	$comment_date = $gmt? $comment->comment_date_gmt : $comment->comment_date;
-	return qtranxf_format_time($format, $comment_date, $old_date);
-	//return qtranxf_strftime(qtranxf_convertTimeFormat($format), mysql2date('U',$comment_date), $old_date);
-}
-
-/* END DATE TIME FUNCTIONS */
 
 /**
  * @since 3.4
@@ -1328,35 +1221,45 @@ function qtranxf_join_s($texts) {
 
 /**
  * Prepares multilingual text leaving text that matches $rx_sep outside of language tags.
+ * @param $rx_sep (string) - regular expression to match language-neutral text.
+ * @return string - multilingual encoded string with text matching $rx_sep outside of language tags.
+ * Example:
+ *   $rx_sep = '/%s/';
+ *   $text = array( 'en' => 'English %s text.', 'xx' => 'Other language %s entry.');
+ *   return '[:en]English [:xx]Other language [:]%s[:en] text.[:xx] entry.[:]';
  * @since 3.4.6.2
 */
 function qtranxf_join_byseparator($texts,$rx_sep) {
 	$text = qtranxf_allthesame($texts);
 	if(!is_null($text)) return $text;
+	//qtranxf_dbg_log('qtranxf_join_byseparator: $texts: ',$texts);
 
-	$lines=array();
+	$blocks=array();
 	foreach($texts as $lang => $text){
-		$lines[$lang] = preg_split($rx_sep,$text,null,PREG_SPLIT_DELIM_CAPTURE);
+		$blocks[$lang] = preg_split($rx_sep,$text,-1,PREG_SPLIT_DELIM_CAPTURE);
 	}
+	//qtranxf_dbg_log('qtranxf_join_byseparator: $blocks: ',$blocks);
 
 	$text = '';
 	while(true){
-		$done = true;
 		$ln = array();
 		$sep = '';
-		foreach($lines as $lang => $txts){
+		foreach($blocks as $lang => &$txts){
+			//qtranxf_dbg_log('qtranxf_join_byseparator: $txts: ',$txts);
 			$t = next($txts);
+			//qtranxf_dbg_log('qtranxf_join_byseparator: $t: ',$t);
 			if ( $t === false ) continue;
-			if(preg_match($rx_sep,$t)){
-				$sep = $t;
+			while(preg_match($rx_sep,$t)){
+				if(empty($sep)) $sep .= $t;
 				$t = next($txts);
 			}
-			$done = false;
 			$ln[$lang] = $t;
 		}
-		if( $done ) break;
-		$text .= qtranxf_join_b($ln).$sep;
+		//qtranxf_dbg_log('qtranxf_join_byseparator: $ln: ',$ln);
+		if( empty($ln) ) break;
+		$text .= $sep.qtranxf_join_b($ln);
 	}
+	//qtranxf_dbg_log('qtranxf_join_byseparator: $text: ',$text);
 	return $text;
 }
 
