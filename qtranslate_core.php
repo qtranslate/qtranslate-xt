@@ -1369,7 +1369,7 @@ function qtranxf_use_content($lang, $content, $available_langs, $show_available=
 	$alt_content = $content[$alt_lang];
 	$alt_lang_is_default = $alt_lang == $q_config['default_language'];
 
-	if(!$show_available){
+	if(!$show_available || !$q_config['show_alternative_content_message']){
 		if ($q_config['show_displayed_language_prefix'])
 			return '('.$q_config['language_name'][$alt_lang].') '.$alt_content;
 		else
