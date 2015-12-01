@@ -291,7 +291,7 @@ var qTranslateX=function(pg)
 			case 'TEXTAREA': break;
 			case 'INPUT':
 				//co('addContentHook: inpField.type=',inpField.type);
-				if(inpField.type != 'text') return false;
+				if(inpField.type.match(/(button|checkbox|password|radio|submit)/)) return false;
 				break;
 			default: return false;
 		}
