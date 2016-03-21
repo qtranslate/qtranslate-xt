@@ -29,7 +29,7 @@ transition: 1s ease opacity;
 
 class qTranslateXWidget extends WP_Widget {
 
-	function qTranslateXWidget() {
+	function __construct() {
 		$widget_ops = array('classname' => 'qtranxs_widget', 'description' => __('Allows your visitors to choose a Language.', 'qtranslate') );
 		parent::__construct('qtranslate', __('qTranslate Language Chooser', 'qtranslate'), $widget_ops);
 	}
