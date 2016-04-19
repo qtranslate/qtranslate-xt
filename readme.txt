@@ -3,8 +3,8 @@ Developed by: qTranslate Team based on original code by Qian Qin
 Contributors: johnclause, chineseleper, Vavooon, grafcom
 Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, translation
 Requires at least: 3.9
-Tested up to: 4.4
-Stable tag: 3.4.6.4
+Tested up to: 4.5
+Stable tag: 3.4.6.5
 License: GPLv3 or later
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QEXEK3HX8AR6U
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -96,7 +96,7 @@ Developers: please drop new topics here, the text will be moved to [qTranslate-X
 ## Upgrade Notice ##
 
 ### 3.4.6.5 ###
-Fix: Handling the lack of PHP function `mb_convert_case`, as PHP module `mbstring` may not be installed by default.
+Compatibility issues with WP 4.5
 
 ### 3.4.6.4 ###
 Fix: A fix for Internal Server Error 500 under some circumstances.
@@ -117,6 +117,7 @@ This version recovers translation of parent of a category on category edit page.
 * Fix: regular expression to detect `lang=xx` in line `preg_match('/(^|&|&amp;|&#038;|\?)lang=([a-z]{2})/i',$url_info['query'],$match)` of file `qtranslate_core.php`: [Issue #288](https://github.com/qTranslate-Team/qtranslate-x/issues/288).
 * Fix: smooth run of wp-cron.php from command line: [WP Topic](https://wordpress.org/support/topic/messy-wp-cronphp-command-line-output).
 * Fix: consistency of option "Hide Content ..." to show single post without 404 error, like it is with single page: [Issue #297](https://github.com/qTranslate-Team/qtranslate-x/issues/297).
+* Fix: LSB on term adit page in WP45: [Issue #342](https://github.com/qTranslate-Team/qtranslate-x/issues/342)
 
 ### 3.4.6.4 release ###
 * Enhancement: The list of avalable languages in "Not Available Message" and alternative language shown now follow the order of languges defined on configuration page, ignoring the default language. For example, if the first language in the order is English, the second is your native and the default, then English translation will be preferably shown as alternative language. Most sites are expected to be unaffected, since the first language in the order is normally the default langauge. However, it may make sense to first try to show most common language (like English in this example), instead of the default language. Now this is possible with putting the most common language to be the first in the order of languages. The order affects language menu, widget and language shown when translation is not available, as well as any other place where languages need to be listed in an order.
