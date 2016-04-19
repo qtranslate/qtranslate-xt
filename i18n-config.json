@@ -61,7 +61,7 @@
 }
 ,
 "edit-tag":{
-	"pages":{"edit-tags.php":"action=edit"},
+	"pages":{"term.php":"","edit-tags.php":"action=edit"},
 	"forms":{
 		"edittag":{
 			"fields":{

@@ -374,6 +374,7 @@ function qtranxf_useAdminTermLibJoin($obj, $taxonomies=null, $args=null) {
 	switch($pagenow){
 		case 'nav-menus.php':
 		case 'edit-tags.php':
+		case 'term.php':
 		case 'edit.php':
 			return qtranxf_get_terms_joined($obj);
 		default: return qtranxf_useTermLib($obj);
@@ -385,8 +386,8 @@ add_filter('get_terms', 'qtranxf_useAdminTermLibJoin', 5, 3);
 //does someone use it?
 function qtranxf_useAdminTermLib($obj) {
 	//qtranxf_dbg_echo('qtranxf_useAdminTermLib: $obj: ',$obj,true);
-	if ($script_name==='/wp-admin/edit-tags.php' &&
-		strstr($_SERVER['QUERY_STRING'], 'action=edit' )!==FALSE)
+	if ($script_name==='/wp-admin/term.php' || ($script_name==='/wp-admin/edit-tags.php' &&
+		strstr($_SERVER['QUERY_STRING'], 'action=edit' )!==FALSE))
 	{
 		return $obj;
 	}
@@ -603,6 +604,7 @@ function qtranxf_admin_list_cats($text) {
 	//qtranxf_dbg_echo('qtranxf_admin_list_cats: $text',$text);
 	switch($pagenow){
 		case 'edit-tags.php':
+		case 'term.php':
 			//replace [:] with <:>
 			$blocks = qtranxf_get_language_blocks($text);
 			if(count($blocks)<=1) return $text;
@@ -620,6 +622,7 @@ function qtranxf_admin_dropdown_cats($text) {
 	//qtranxf_dbg_echo('qtranxf_admin_list_cats: $text',$text);
 	switch($pagenow){
 		case 'edit-tags.php':
+		case 'term.php':
 			return $text;
 		default: return qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($text);
 	}
@@ -629,6 +632,7 @@ add_filter('wp_dropdown_cats', 'qtranxf_admin_dropdown_cats',0);
 function qtranxf_admin_category_description($text) {
 	global $pagenow;
 	switch($pagenow){
+		case 'term.php':
 		case 'edit-tags.php':
 			return $text;
 		default: return qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($text);
@@ -639,6 +643,7 @@ add_filter('category_description', 'qtranxf_admin_category_description',0);
 function qtranxf_admin_the_title($title) {
 	global $pagenow;
 	switch($pagenow){
+		//case 'term.php':
 		//case 'edit-tags.php':
 		case 'nav-menus.php':
 			return $title;
