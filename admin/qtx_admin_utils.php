@@ -842,6 +842,53 @@ function qtranxf_verify_nonce($nonce_name, $nonce_field = '_wpnonce') {
 	return empty( $_POST ) || check_admin_referer( $nonce_name, $nonce_field );
 }
 
+/**
+ * @since 3.4.6.5
+ */
+function qtranxf_decode_name_value_pair(&$a,$nam,$val) {
+	if(preg_match( '#([^\[]*)\[([^\]]+)\](.*)#', $nam, $matches )) {
+		$n = $matches[1];
+		$k = $matches[2];
+		$s = $matches[3];
+		if(is_numeric($n)) $n = (int)$n;
+		if(is_numeric($k)) $k = (int)$k;
+		if(empty($a[$n])) $a[$n] = array();
+		if(empty($s)){
+			$a[$n][$k] = $val;
+		}else{
+			qtranxf_decode_name_value_pair($a[$n],$k.$s,$val);//recursive call
+		}
+	}else{
+		$a[$nam] = $val;
+	}
+}
+
+/**
+ * @since 3.4.6.5
+ */
+function qtranxf_decode_name_value($data) {
+	$a = array();
+	foreach ( $data as $nv ) {
+		qtranxf_decode_name_value_pair($a,$nv->name,wp_slash($nv->value));
+/*
+		if ( preg_match( '#(.*)\[(\w+)\]#', $nv->name, $matches ) ) {
+			$nm = $matches[1];
+			if ( empty( $a[ $nm ] ) ) {
+				$a[ $nm ] = array();
+			}
+			$key = $matches[2];
+			if ( is_numeric( $key ) ) {
+				$key = (int) $key;
+			}
+			$a[ $nm ][ $key ] = wp_slash( $nv->value );
+		} else {
+			$a[ $nv->name ] = wp_slash( $nv->value );
+		}
+*/
+	}
+	return $a;
+}
+
 add_filter('manage_posts_columns', 'qtranxf_languageColumnHeader');
 add_filter('manage_posts_custom_column', 'qtranxf_languageColumn');
 add_filter('manage_pages_columns', 'qtranxf_languageColumnHeader');
