@@ -137,13 +137,6 @@ if(is_admin() ){ // && !(defined('DOING_AJAX') && DOING_AJAX) //todo cleanup
 
 // load additional functionalities
 
-<<<<<<< HEAD
-=======
-/**
- * Load 'Slugs' functionality.
- * @since 3.4.7
-*/
->>>>>>> c692691... Catalan language preset
 //if(file_exists(QTRANSLATE_DIR.'/slugs'))
 //	require_once(QTRANSLATE_DIR.'/slugs/qtx_slug.php');
 
