@@ -61,6 +61,16 @@ function qtranxf_regroup_translations_for( $type, $edit_lang, $default_lang ) {
 	}
 }
 
+/**
+ * @since 3.4.6.5
+ */
+function qtranxf_decode_json_name_value($val) {
+	if(strpos($val,'qtranslate-fields') === false) return;
+	$nv = json_decode(stripslashes($val));
+	if(is_null($nv)) return;
+	return qtranxf_decode_name_value($nv);
+}
+
 function qtranxf_collect_translations_posted() {
 	//qtranxf_dbg_log('qtranxf_collect_translations_posted: REQUEST: ', $_REQUEST);
 	//qtranxf_dbg_log('qtranxf_collect_translations_posted: POST: ', $_POST);
@@ -112,6 +122,23 @@ function qtranxf_collect_translations_posted() {
 		$default_lang = qtranxf_getLanguage();
 		qtranxf_regroup_translations_for('qtranslate-terms', $edit_lang, $default_lang);
 		qtranxf_regroup_translations_for('qtranslate-slugs', $edit_lang, $default_lang);
+	}
+
+	//quick fix, there must be a better way
+	if ( isset( $_POST['nav-menu-data'] ) ) {
+		$r = qtranxf_decode_json_name_value(stripslashes( $_POST['nav-menu-data'] ));
+		//qtranxf_dbg_log('qtranxf_collect_translations_posted: $r: ', $r);
+		if(!empty($r['qtranslate-fields'])){
+			if(!$edit_lang) $edit_lang = qtranxf_getLanguageEdit();
+			qtranxf_collect_translations($r['qtranslate-fields'],$r,$edit_lang);
+			unset($r['qtranslate-fields']);
+			//qtranxf_dbg_log('qtranxf_collect_translations_posted: collected $r: ', $r);
+			foreach($r as $k => $v){
+				$_POST[$k] = $v;
+			}
+			unset($_POST['nav-menu-data']);
+			//qtranxf_dbg_log('qtranxf_collect_translations_posted: nav-menu-data decoded $_POST: ', $_POST);
+		}
 	}
 }
 add_action('plugins_loaded', 'qtranxf_collect_translations_posted', 5);
