@@ -184,9 +184,11 @@ function qtranxf_conf() {
 ?>
 <h2><?php _e('Language Management (qTranslate Configuration)', 'qtranslate') ?></h2>
 <p class="qtranxs_heading" style="font-size: small"><?php printf(__('For help on how to configure qTranslate correctly, take a look at the <a href="%1$s">qTranslate FAQ</a> and the <a href="%2$s">Support Forum</a>.', 'qtranslate')
-  , 'https://qtranslatexteam.wordpress.com/faq/'
+	, 'https://qtranslatexteam.wordpress.com/faq/'
 //, 'https://wordpress.org/plugins/qtranslate-x/faq/'
-  , 'https://wordpress.org/support/plugin/qtranslate-x');
+	, 'http://qtranslate-x.com/support/'
+//, 'https://wordpress.org/support/plugin/qtranslate-x'
+	);
 	echo '<br><small><em>';
 	printf(__('Plugin development is supported through your %sdonations to the development team%s.','qtranslate'),'<a href="https://qtranslatexteam.wordpress.com/donations/" target="_blank">', '</a>') ?></em></small></p>
 <?php if(isset($_GET['config_inspector'])) {
