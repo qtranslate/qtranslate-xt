@@ -117,9 +117,6 @@ This version recovers translation of parent of a category on category edit page.
 * Fix: regular expression to detect `lang=xx` in line `preg_match('/(^|&|&amp;|&#038;|\?)lang=([a-z]{2})/i',$url_info['query'],$match)` of file `qtranslate_core.php`: [Issue #288](https://github.com/qTranslate-Team/qtranslate-x/issues/288).
 * Fix: smooth run of wp-cron.php from command line: [WP Topic](https://wordpress.org/support/topic/messy-wp-cronphp-command-line-output).
 * Fix: consistency of option "Hide Content ..." to show single post without 404 error, like it is with single page: [Issue #297](https://github.com/qTranslate-Team/qtranslate-x/issues/297).
-* Fix: WP45, LSB on term adit page '/wp-admin/term.php': [Issue #342](https://github.com/qTranslate-Team/qtranslate-x/issues/342)
-* Fix: WP45, menu update problem '/wp-admin/nav-menus.php': [Issue #347](https://github.com/qTranslate-Team/qtranslate-x/issues/374).
-* Fix: PHP7, Warning 'Deprecated: Methods with the same name as their class will not be constructors in a future version of PHP': [Issue #](https://github.com/qTranslate-Team/qtranslate-x/issues/359).
 * Fix: Predefined locales are changed to match [WordPress locales](https://make.wordpress.org/polyglots/teams/):<br>
 Estonian (Eesti) 'et_EE' renamed to 'et',<br>
 Basque (Euskera, in native alphabet, Euskara, in WordPress, both correct) eu_ES renamed to 'eu',<br>
@@ -128,6 +125,9 @@ Finnish (Suomi) 'fi_FI' renamed to 'fi',<br>
 Croatian (Hrvatski) 'hr_HR' renamed to 'hr'.<br>
 Old *.mo files are kept in order not to break the sites that may be currently using them, but they should now switch the locale appropriately. This emerged from [Topic #27](http://qtranslate-x.com/support/index.php?topic=27).
 * Languages: Slovak (sk_SK) language preset has been added. Thanks to Andrej Leitner.
+* Fix: WP45, LSB on term adit page '/wp-admin/term.php': [Issue #342](https://github.com/qTranslate-Team/qtranslate-x/issues/342)
+* Fix: WP45, menu update problem '/wp-admin/nav-menus.php': [Issue #347](https://github.com/qTranslate-Team/qtranslate-x/issues/374).
+* Fix: PHP7, Warning 'Deprecated: Methods with the same name as their class will not be constructors in a future version of PHP': [Issue #](https://github.com/qTranslate-Team/qtranslate-x/issues/359).
 
 ### 3.4.6.4 release ###
 * Enhancement: The list of avalable languages in "Not Available Message" and alternative language shown now follow the order of languges defined on configuration page, ignoring the default language. For example, if the first language in the order is English, the second is your native and the default, then English translation will be preferably shown as alternative language. Most sites are expected to be unaffected, since the first language in the order is normally the default langauge. However, it may make sense to first try to show most common language (like English in this example), instead of the default language. Now this is possible with putting the most common language to be the first in the order of languages. The order affects language menu, widget and language shown when translation is not available, as well as any other place where languages need to be listed in an order.
