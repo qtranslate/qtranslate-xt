@@ -106,8 +106,13 @@ This version recovers translation of parent of a category on category edit page.
 
 ## Screenshots ##
 
-1. Editing screen showing the buttons to switch the languages. Pressing a button does not make a call to the server, the editing happens locally, until "Update" button is pressed, the same way as it is for one language.
-2. Language Management Interface
+1. Editing screen showing the Language Switching Buttons (LSB). Pressing a button does not make a call to the server, the editing happens locally in browser, until "Update" button is pressed, the same way as it is for one language. Multilingual Fields (MLF) are decorated with a color bar on the left to make it easier to distinct them. The way MLF is marked is customizable. Note, that only the fields configured to be multilingual respond to LSB, while regular fields are not affected and keep the same value for each language.
+2. Language Management Console - tab "General". Read [Startup Guide](https://qtranslatexteam.wordpress.com/startup-guide/ "Startup Guide") for more information.
+3. Language Management Console - tab "Advanced". Read [Startup Guide](https://qtranslatexteam.wordpress.com/startup-guide/ "Startup Guide") and [FAQ](https://qtranslatexteam.wordpress.com/faq/ "qTranslate-X FAQ") for more information.
+4. Language Management Console - tab "Integration". These are the options to configure custom Multilingual Fields (MLF). Read [Integration Guide](https://qtranslatexteam.wordpress.com/integration/ "Integration Guide") for more information.
+5. Language Management Console - tab "Import/Export". Read [Migration Guide](https://qtranslatexteam.wordpress.com/migration/ "Migration Guide: Step-by-Step Instructions.") for more information.
+6. Language Management Console - tab "Languages". Read [Startup Guide](https://qtranslatexteam.wordpress.com/startup-guide/ "Startup Guide") for more information.
+7. Language Management Console - page "Configuration Inspector". This page allows to review the combined resulting JSON-encoded configuration of qTranslate-X. Read [Integration Guide](https://qtranslatexteam.wordpress.com/integration/ "Integration Guide") for more information.
 
 ## Changelog ##
 
