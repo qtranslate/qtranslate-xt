@@ -97,7 +97,7 @@ Developers: please drop new topics here, the text will be moved to [qTranslate-X
 
 ## Upgrade Notice ##
 
-### 3.4.6.5 ###
+### 3.4.6.6 ###
 Compatibility issues with WP 4.5
 
 ### 3.4.6.4 ###
