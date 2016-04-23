@@ -312,11 +312,7 @@ function qtranxf_update_config_options($config_files, $changed = true){
 	$cfg = qtranxf_load_config_all($config_files, $custom_config);
 	update_option('qtranslate_admin_config', $cfg['admin-config']);
 	update_option('qtranslate_front_config', $cfg['front-config']);
-	//notify admin
-	$messages = get_option('qtranslate_admin_notices');
-	if(!is_array($messages)) $messages = array();
-	$messages['config-files-changed'] = time();
-	update_option('qtranslate_admin_notices',$messages);
+	qtranxf_update_option_admin_notices_id('config-files-changed');//notify admin
 }
 
 /**
@@ -439,9 +435,8 @@ function qtranxf_update_config_files(){
 	$config_files = qtranxf_get_option_config_files();
 	$found = qtranxf_search_config_files();
 	$changed = qtranxf_add_config_files($config_files, $found);
-	//if(!qtranxf_add_config_files($config_files, $found)) return;
 	//qtranxf_dbg_log('qtranxf_update_config_files: $config_files: ',$config_files);
-	qtranxf_update_config_options($config_files);
+	qtranxf_update_config_options($config_files,$changed);
 }
 
 function qtranxf_find_plugin_file($fp){
@@ -1025,12 +1020,17 @@ function qtranxf_admin_notices_errors(){
 }
 add_action('admin_notices', 'qtranxf_admin_notices_errors');
 
-function qtranxf_update_option_admin_notices($messages, $id){
+function qtranxf_update_option_admin_notices($messages, $id, $toggle=true){
 	if(!is_array($messages)) $messages = array();
-	if(isset($messages[$id])) unset($messages[$id]);
+	if($toggle && isset($messages[$id])) unset($messages[$id]);
 	else $messages[$id] = time();
 	update_option('qtranslate_admin_notices',$messages);
 	return $messages;
+}
+
+function qtranxf_update_option_admin_notices_id($id){
+	$messages = get_option('qtranslate_admin_notices',array());
+	return qtranxf_update_option_admin_notices($messages, $id, false);
 }
 
 function qtranxf_update_admin_notice($id){
