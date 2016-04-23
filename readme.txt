@@ -118,6 +118,9 @@ This version recovers translation of parent of a category on category edit page.
 
 ## Changelog ##
 
+### 3.4.6.6 ###
+* Fix: WP45, '/wp-admin/nav-menus.php': title of newly added menu item kept one language only.
+
 ### 3.4.6.5 ###
 * Improvement: Option 'Show language names in "Camel Case"' has been added on Settings/Languages page `/wp-admin/options-general.php?page=qtranslate-x#general` in order to handle absence of function `mb_convert_case`, as PHP module `mbstring` may not be installed by default: [WP Topic](https://wordpress.org/support/topic/qtranslate_utilsphp-on-line-504).
 * Enhancement: added preset for Welsh (Cymraeg, 'cy') language.

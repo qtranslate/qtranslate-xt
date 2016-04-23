@@ -636,6 +636,9 @@ function qtranxf_admin_category_description($text) {
 add_filter('category_description', 'qtranxf_admin_category_description',0);
 
 function qtranxf_admin_the_title($title) {
+	//todo this filter should not be used in admin area at all?
+	if(defined('DOING_AJAX') && DOING_AJAX)//nav-menus.php#752
+		return $title;
 	global $pagenow;
 	switch($pagenow){
 		//case 'term.php':
