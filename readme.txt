@@ -130,7 +130,11 @@ Basque (Euskera, in native alphabet, Euskara, in WordPress, both correct) eu_ES 
 Greek (Ελληνικά) 'el_GR' renamed to 'el',<br>
 Finnish (Suomi) 'fi_FI' renamed to 'fi',<br>
 Croatian (Hrvatski) 'hr_HR' renamed to 'hr'.<br>
-Old *.mo files are kept in order not to break the sites that may be currently using them, but they should now switch the locale appropriately. This emerged from [Topic #27](http://qtranslate-x.com/support/index.php?topic=27).
+Old *.mo files are kept in order not to break the sites that may be currently using them, but they should now switch the locale appropriately.
+qtranslate-el_GR.* renamed to qtranslate-el.*<br>
+qtranslate-es_CA.* renamed to qtranslate-ca.*<br>
+qtranslate-hr_HR.* renamed to qtranslate-hr.*<br>
+This emerged from [Topic #27](http://qtranslate-x.com/support/index.php?topic=27).
 * Languages: Slovak (sk_SK) language preset has been added. Thanks to Andrej Leitner.
 * Fix: WP45, LSB on term adit page '/wp-admin/term.php': [Issue #342](https://github.com/qTranslate-Team/qtranslate-x/issues/342)
 * Fix: WP45, menu update problem '/wp-admin/nav-menus.php': [Issue #347](https://github.com/qTranslate-Team/qtranslate-x/issues/374).
