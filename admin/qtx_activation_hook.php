@@ -971,7 +971,7 @@ function qtranxf_admin_notices_next_thanks(){
 </script>
 <?php
 	$tnx=sprintf(__('Thank you for using %s plugin!', 'qtranslate'), 'qTranslate&#8209;X');
-	echo '<div class="updated notice is-dismissible" id="qtranxs-next_thanks"><table><tr><td style="width: 0%"><img src="'.plugins_url('admin/img/Puss_in_Boots.png',QTRANSLATE_FILE).'" title="'.$tnx.'" alt="'.$tnx.'"></td><td style="width: 100%">';
+	echo '<div class="updated notice is-dismissible" id="qtranxs-next_thanks"><table><tr><td style="width: 0%"><img src="'.plugins_url('admin/img/qtxlogo.png',QTRANSLATE_FILE).'" title="'.$tnx.'" alt="'.$tnx.'"></td><td style="width: 100%">';
 	echo '<p>';// style="" text-align: center; font-size: larger;
 	printf(__('Thank you for using %s plugin!', 'qtranslate'), '<a href="https://wordpress.org/plugins/qtranslate-x/" style="color:blue" target="_blank">qTranslate&#8209;X</a>');
 	//echo '</p><p>';
