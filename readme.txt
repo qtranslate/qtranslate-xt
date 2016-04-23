@@ -65,6 +65,8 @@ We thank our sponsors for persistent help and support:
 * [Pedro Mendonça](https://github.com/pedro-mendonca)
 * [pictibe Werbeagentur](http://www.pictibe.de "pictibe Werbeagentur Köln Webdesign")
 
+This plugin is not free in terms of money, the users, who start using it on permanent basis, should signup for <strong>[DONATION PLAN](https://qtranslatexteam.wordpress.com/donations/)</strong>.
+
 ## Installation ##
 
 **Important**: Read [migration instructions](https://qtranslatexteam.wordpress.com/migration/), if you previously used other multilingual plugin, otherwise initial installation of this plugin is no different from any other standard plugin:
