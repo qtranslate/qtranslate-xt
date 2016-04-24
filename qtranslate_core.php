@@ -1397,6 +1397,7 @@ function qtranxf_use($lang, $text, $show_available=false, $show_empty=false) {
 
 	if( is_object($text) || $text instanceof __PHP_Incomplete_Class ) {//since 3.2-b1 instead of @get_class($text) == '__PHP_Incomplete_Class'
 		foreach(get_object_vars($text) as $key => $t) {
+			if(!isset($text->$key)) continue;
 			$text->$key = qtranxf_use($lang,$text->$key,$show_available,$show_empty);
 		}
 		return $text;
