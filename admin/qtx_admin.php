@@ -119,18 +119,20 @@ function qtranxf_collect_translations_posted() {
 		//multilingual slug/term values will be processed later
 		if(!$edit_lang) $edit_lang = qtranxf_getLanguageEdit();
 		global $q_config;
-		$default_language = $q_config['default_language'];
 		$default_lang = qtranxf_getLanguage();
 		qtranxf_regroup_translations_for('qtranslate-terms', $edit_lang, $default_lang);
 		qtranxf_regroup_translations_for('qtranslate-slugs', $edit_lang, $default_lang);
 	}
+}
+add_action('plugins_loaded', 'qtranxf_collect_translations_posted', 5);
 
+function qtranxf_decode_translations_posted(){
 	//quick fix, there must be a better way
-	if ( isset( $_POST['nav-menu-data'] ) ) {
-		$r = qtranxf_decode_json_name_value(stripslashes( $_POST['nav-menu-data'] ));
+	if(isset($_POST['nav-menu-data'])){
+		$r = qtranxf_decode_json_name_value($_POST['nav-menu-data']);
 		//qtranxf_dbg_log('qtranxf_collect_translations_posted: $r: ', $r);
 		if(!empty($r['qtranslate-fields'])){
-			if(!$edit_lang) $edit_lang = qtranxf_getLanguageEdit();
+			$edit_lang = qtranxf_getLanguageEdit();
 			qtranxf_collect_translations($r['qtranslate-fields'],$r,$edit_lang);
 			unset($r['qtranslate-fields']);
 			//qtranxf_dbg_log('qtranxf_collect_translations_posted: collected $r: ', $r);
@@ -142,7 +144,7 @@ function qtranxf_collect_translations_posted() {
 		}
 	}
 }
-add_action('plugins_loaded', 'qtranxf_collect_translations_posted', 5);
+add_action('sanitize_comment_cookies', 'qtranxf_decode_translations_posted', 5);//after POST & GET are set, and before all WP objects are created, alternatively can use action 'setup_theme' instead.
 
 function qtranxf_admin_load()
 {
