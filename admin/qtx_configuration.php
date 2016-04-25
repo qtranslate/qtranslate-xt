@@ -248,8 +248,8 @@ echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 
 						echo '<td><label title="' . $q_config['language_name'][$language] . '"><input type="radio" name="default_language" value="' . $language . '"';
 						checked($language,$q_config['default_language']);
 						echo ' />';
-						echo ' <a href="'.add_query_arg('moveup', $language, $clean_uri).'"><img src="'.$pluginurl.'arrowup.png" alt="up" /></a>';
-						echo ' <a href="'.add_query_arg('movedown', $language, $clean_uri).'"><img src="'.$pluginurl.'arrowdown.png" alt="down" /></a>';
+						echo ' <a href="'.add_query_arg('moveup', $language, $clean_uri).'"><img src="'.$pluginurl.'img/arrowup.png" alt="up" /></a>';
+						echo ' <a href="'.add_query_arg('movedown', $language, $clean_uri).'"><img src="'.$pluginurl.'img/arrowdown.png" alt="down" /></a>';
 						echo ' <img src="' . $flag_location.$q_config['flag'][$language] . '" alt="' . $q_config['language_name'][$language] . '" /> ';
 						echo ' '.$q_config['language_name'][$language];
 						echo '</label></td>';
