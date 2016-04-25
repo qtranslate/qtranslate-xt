@@ -112,8 +112,9 @@ function qtranxf_wp_get_nav_menu_items( $items, $menu, $args ){
 					switch($item->type){
 						case 'post_type':
 							$p = get_post($item->object_id);
-							if($p && isset($p->post_title_ml)){
-								$item_title=qtranxf_use_language($language, $p->post_title_ml, false, true);
+							if($p){
+								$post_title_ml = isset($p->post_title_ml) ? $p->post_title_ml : $p->post_title;
+								$item_title=qtranxf_use_language($language, $post_title_ml, false, true);
 							}
 						break;
 						case 'taxonomy':
