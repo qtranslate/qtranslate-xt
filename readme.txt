@@ -146,6 +146,10 @@ This emerged from [Topic #27](http://qtranslate-x.com/support/index.php?topic=27
 * Languages: Slovak (sk_SK) language preset has been added. Thanks to Andrej Leitner.
 * Enhancement: Handling of slugs in qTranslate-X native way, instead of semi-integrated plugin "[Qtranslate Slug](https://wordpress.org/plugins/qtranslate-slug/)" - removed later, it needs more work.
 
+### 3.4.6.7 ###
+* Fix: for `/wp-login/` and `/login/`. Thanks to [extremecarver](http://qtranslate-x.com/support/index.php?action=profile;u=373).
+* Fix: unexpected menu behaviour for empty menu label when option "Hide Content which is not available for the selected language" is on: [WP Topic](https://wordpress.org/support/topic/menu-visible-despite-empty-label).
+
 ### 3.4.6.6 ###
 * Fix: WP45, '/wp-admin/nav-menus.php': title of newly added menu item kept one language only.
 * Fix: WP45, '/wp-admin/nav-menus.php': double quotation mark in menu label.
