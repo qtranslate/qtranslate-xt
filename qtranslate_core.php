@@ -859,7 +859,7 @@ function qtranxf_language_neutral_path($path) {
 		return $language_neutral_path_cache[$path];
 	}
 	//if(preg_match('#^/(wp-.*\.php|wp-admin/|xmlrpc.php|.*sitemap.*|robots.txt|oauth/)#', $path)){//sitemap.hml works ok without it
-	if(preg_match('#^/(wp-.*\.php|wp-admin/|xmlrpc.php|robots.txt|oauth/)#', $path)){
+	if(preg_match('#^/(wp-.*\.php|wp-login/|wp-admin/|xmlrpc.php|robots.txt|oauth/)#', $path)){
 		$language_neutral_path_cache[$path] = true;
 		//qtranxf_dbg_log('qtranxf_language_neutral_path: preg_match: path='.$path);
 		return true;

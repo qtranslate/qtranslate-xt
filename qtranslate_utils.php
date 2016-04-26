@@ -200,17 +200,21 @@ function qtranxf_parseURL($url) {
 function qtranxf_buildURL($urlinfo,$homeinfo) {
 	//qtranxf_dbg_log('qtranxf_buildURL: $urlinfo:',$urlinfo);
 	//qtranxf_dbg_log('qtranxf_buildURL: $homeinfo:',$homeinfo);
-	$url = (empty($urlinfo['scheme']) ? $homeinfo['scheme'] : $urlinfo['scheme']).'://';
-	if(!empty($urlinfo['user'])){
-		$url .= $urlinfo['user'];
-		if(!empty($urlinfo['pass'])) $url .= ':'.$urlinfo['pass'];
-		$url .= '@';
-	}elseif(!empty($homeinfo['user'])){
-		$url .= $homeinfo['user'];
-		if(!empty($homeinfo['pass'])) $url .= ':'.$homeinfo['pass'];
-		$url .= '@';
+	if(empty($urlinfo['host'])){//relative path stays relative
+		$url = '';
+	}else{
+		$url = (empty($urlinfo['scheme']) ? $homeinfo['scheme'] : $urlinfo['scheme']).'://';
+		if(!empty($urlinfo['user'])){
+			$url .= $urlinfo['user'];
+			if(!empty($urlinfo['pass'])) $url .= ':'.$urlinfo['pass'];
+			$url .= '@';
+		}elseif(!empty($homeinfo['user'])){
+			$url .= $homeinfo['user'];
+			if(!empty($homeinfo['pass'])) $url .= ':'.$homeinfo['pass'];
+			$url .= '@';
+		}
+		$url .= empty($urlinfo['host']) ? $homeinfo['host'] : $urlinfo['host'];
 	}
-	$url .= empty($urlinfo['host']) ? $homeinfo['host'] : $urlinfo['host'];
 	if(!empty($urlinfo['path-base'])) $url .= $urlinfo['path-base'];
 	if(!empty($urlinfo['wp-path'])) $url .= $urlinfo['wp-path'];
 	if(!empty($urlinfo['query'])) $url .= '?'.$urlinfo['query'];
