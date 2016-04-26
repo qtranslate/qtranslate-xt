@@ -1,0 +1,37 @@
+/* Language Switching Buttons as Simple Horizontal Block */
+
+ul.qtranxs-lang-switch-wrap{
+                position: fixed;
+                top: 31px;
+                right: 320px;
+                z-index: 1000;
+            }
+            li.qtranxs-lang-switch{
+                /*border-radius: 0px 0px 5px 5px;*/
+                font-size: 10px;
+                padding: 7px 4px 2px 9px !important;
+                background: #e4e4e4 !important;
+                color: #999 !important;
+                border: 1px solid #999 !important;
+                height: 19px;
+            }
+            li.qtranxs-lang-switch img{
+                filter: grayscale(100%);
+                -webkit-filter: grayscale(100%);
+                -moz-filter: grayscale(100%);
+                -o-filter: grayscale(100%);
+                -ms-filter: grayscale(100%);
+            }
+            li.qtranxs-lang-switch.active{
+                color: #000 !important;
+                background: #f1f1f1 !important;
+                opacity: 1;
+                border-color: #bbb !important;
+            }
+            li.qtranxs-lang-switch.active img{
+                filter: grayscale(0%);
+                -webkit-filter: grayscale(0%);
+                -moz-filter: grayscale(0%);
+                -o-filter: grayscale(0%);
+                -ms-filter: grayscale(0%);
+            }
