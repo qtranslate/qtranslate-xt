@@ -72,6 +72,7 @@ function qtranxf_array_compare($a,$b) {
 	if( !is_array($a) || !is_array($b) ) return false;
 	if(count($a) != count($b)) return false;
 	foreach($a as $k => $v){
+		if(!isset($b[$k])) return false;
 		if(is_array($v)){
 			if(!qtranxf_array_compare($v,$b[$k])) return false;
 		}else{
