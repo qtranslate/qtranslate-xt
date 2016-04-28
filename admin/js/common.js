@@ -35,8 +35,7 @@ function co(t,o){ ++cc; console.log('== '+cc+': '+t+'%o',o); }
 /**
  * since 3.2.7
  */
-qtranxj_get_split_blocks = function(text)
-{
+qtranxj_get_split_blocks = function(text) {
 	var split_regex = /(<!--:[a-z]{2}-->|<!--:-->|\[:[a-z]{2}\]|\[:\]|\{:[a-z]{2}\}|\{:\})/gi; // @since 3.3.6 swirly brackets
 	return text.xsplit(split_regex);
 }
@@ -44,8 +43,7 @@ qtranxj_get_split_blocks = function(text)
 /**
  * since 3.2.7
  */
-qtranxj_split = function(text)
-{
+qtranxj_split = function(text) {
 	var blocks = qtranxj_get_split_blocks(text);
 	return qtranxj_split_blocks(blocks);
 }
@@ -53,12 +51,10 @@ qtranxj_split = function(text)
 /**
  * since 3.1-b1 - closing tag [:]
  */
-qtranxj_split_blocks = function(blocks)
-{
+qtranxj_split_blocks = function(blocks) {
 	var result = new Object;
 	//for(var i=0; i<qTranslateConfig.enabled_languages.length; ++i)
-	for(var lang in qTranslateConfig.language_config)
-	{
+	for(var lang in qTranslateConfig.language_config) {
 		//var lang=qTranslateConfig.enabled_languages[i];
 		result[lang] = '';
 	}
@@ -114,8 +110,7 @@ qtranxj_split_blocks = function(blocks)
 	return result;
 }
 
-function qtranxj_get_cookie(cname)
-{
+function qtranxj_get_cookie(cname) {
 	var nm = cname + "=";
 	var ca = document.cookie.split(';');
 	//c('ca='+ca);
@@ -152,13 +147,10 @@ String.prototype.xsplit = function(_regEx){
 
 //Since 3.2.7 removed: function qtranxj_isArray(obj){ return obj.constructor.toString().indexOf('Array') >= 0; }
 
-function qtranxj_ce(tagName, props, pNode, isFirst)
-{
+function qtranxj_ce(tagName, props, pNode, isFirst) {
 	var el= document.createElement(tagName);
-	if (props)
-	{
-		for(prop in props)
-		{
+	if (props) {
+		for(prop in props) {
 			//try
 			{
 				el[prop]=props[prop];
@@ -169,22 +161,18 @@ function qtranxj_ce(tagName, props, pNode, isFirst)
 			}
 		}
 	}
-	if (pNode)
-	{
-		if (isFirst && pNode.firstChild)
-		{
+	if (pNode) {
+		if (isFirst && pNode.firstChild) {
 			pNode.insertBefore(el, pNode.firstChild);
 		}
-		else
-		{
+		else {
 			pNode.appendChild(el);
 		}
 	}
 	return el;
 }
 
-var qTranslateX=function(pg)
-{
+var qTranslateX=function(pg) {
 	var qtx = this;
 	qTranslateConfig.qtx = this;
 
@@ -259,8 +247,7 @@ var qTranslateX=function(pg)
 	var contentHooks={};
 	var contentHookId = 0;
 
-	var updateFusedValueH=function(id,value)
-	{
+	var updateFusedValueH=function(id,value) {
 		var h = contentHooks[id];
 		var text = value.trim();
 		//c('updateFusedValueH['+id+'] lang='+h.lang+'; text:'+text);
@@ -281,8 +268,7 @@ var qTranslateX=function(pg)
 	 *
 	 * @since 3.3.2
 	 */
-	this.addContentHook=function(inpField,encode,field_name)
-	{
+	this.addContentHook=function(inpField,encode,field_name) {
 		//co('addContentHook: inpField:',inpField);
 		//co('addContentHook: encode:',encode);
 		//co('addContentHook: field_name:',field_name);
@@ -291,7 +277,15 @@ var qTranslateX=function(pg)
 			case 'TEXTAREA': break;
 			case 'INPUT':
 				//co('addContentHook: inpField.type=',inpField.type);
-				if(inpField.type.match(/(button|checkbox|password|radio|submit)/)) return false;
+				//reject the types which cannot be multilingual
+				switch (inpField.type) {
+					case 'button':
+					case 'checkbox':
+					case 'password':
+					case 'radio':
+					case 'submit': return false;
+				}
+				//if(inpField.type.match(/(button|checkbox|password|radio|submit)/)) return false;
 				break;
 			default: return false;
 		}
@@ -403,8 +397,7 @@ var qTranslateX=function(pg)
 	this.addContentHookB=function(inpField) { return qtx.addContentHook(inpField,'['); }
 
 	this.addContentHookById=function(id,sep,nm) { return qtx.addContentHook(document.getElementById(id),sep,nm); }
-	this.addContentHookByIdName=function(nm)
-	{
+	this.addContentHookByIdName=function(nm) {
 		var sep;
 		//if(nm.indexOf('<')==0 || nm.indexOf('[')==0){
 		switch(nm[0]){
@@ -426,23 +419,20 @@ var qTranslateX=function(pg)
 	 *
 	 * @since 3.1-b2
 	*/
-	this.addContentHooks=function(fields,sep,field_name)
-	{
+	this.addContentHooks=function(fields,sep,field_name) {
 		for(var i=0; i<fields.length; ++i){
 			var field = fields[i];
 			qtx.addContentHook(field,sep,field_name);
 		}
 	}
 
-	var addContentHooksByClassName=function(nm,container,sep)
-	{
+	var addContentHooksByClassName=function(nm,container,sep) {
 		if(!container) container=document;
 		var fields=container.getElementsByClassName(nm);
 		qtx.addContentHooks(fields,sep);
 	}
 
-	this.addContentHooksByClass=function(nm,container)
-	{
+	this.addContentHooksByClass=function(nm,container) {
 		var sep;
 		if(nm.indexOf('<')==0 || nm.indexOf('[')==0){
 			sep=nm.substring(0,1);
@@ -457,8 +447,7 @@ var qTranslateX=function(pg)
 	 *
 	 * @since 3.3.2
 	 */
-	this.addContentHooksByTagInClass=function(nm,tag,container)
-	{
+	this.addContentHooksByTagInClass=function(nm,tag,container) {
 		var elems=container.getElementsByClassName(nm);
 		for(var i=0; i<elems.length; ++i){
 			var elem=elems[i];
@@ -467,8 +456,7 @@ var qTranslateX=function(pg)
 		}
 	}
 
-	var removeContentHookH=function(h)
-	{
+	var removeContentHookH=function(h) {
 		if(!h) return false;
 		if(h.sepfield) jQuery(h.sepfield).remove();
 		for(var lang in h.fields){
@@ -484,8 +472,7 @@ var qTranslateX=function(pg)
 	 *
 	 * @since 3.3
 	 */
-	this.removeContentHook=function(inpField)
-	{
+	this.removeContentHook=function(inpField) {
 		if( !inpField ) return false;
 		if( !inpField.id ) return false;
 		if( !contentHooks[inpField.id] ) return false;
@@ -506,8 +493,7 @@ var qTranslateX=function(pg)
 	 * https://qtranslatexteam.wordpress.com/integration/
 	 * Re-create a hook, after a piece of HTML is dynamically replaced with a custom Java script.
 	 */
-	this.refreshContentHook=function(inpField)
-	{
+	this.refreshContentHook=function(inpField) {
 		if( !inpField ) return false;
 		if( !inpField.id ) return false;
 		var h = contentHooks[inpField.id];
@@ -519,8 +505,7 @@ var qTranslateX=function(pg)
 	 * @since 3.2.7
 	 */
 	var displayHookNodes=[];
-	var addDisplayHookNode=function(nd)
-	{
+	var addDisplayHookNode = function (nd) {
 		if(!nd.nodeValue) return 0;
 		var blocks = qtranxj_get_split_blocks(nd.nodeValue);
 		if( !blocks || !blocks.length || blocks.length == 1 ) return 0;
@@ -541,8 +526,7 @@ var qTranslateX=function(pg)
 	 * @since 3.2.7
 	 */
 	var displayHookAttrs=[];
-	var addDisplayHookAttr=function(nd)
-	{
+	var addDisplayHookAttr = function (nd) {
 		if(!nd.value) return 0;
 		var blocks = qtranxj_get_split_blocks(nd.value);
 		if( !blocks || !blocks.length || blocks.length == 1 ) return 0;
@@ -561,8 +545,7 @@ var qTranslateX=function(pg)
 	 *
 	 * @since 3.2.7 switched to use of nodeValue instead of innerHTML.
 	 */
-	this.addDisplayHook=function(elem)
-	{
+	this.addDisplayHook = function (elem) {
 		//co('addDisplayHook: this: ',this);
 		if(!elem || !elem.tagName) return 0;
 		switch(elem.tagName){
@@ -602,8 +585,7 @@ var qTranslateX=function(pg)
 	 */
 	this.addDisplayHookById=function(id) { return qtx.addDisplayHook(document.getElementById(id)); }
 
-	var updateTinyMCE=function(h)
-	{
+	var updateTinyMCE = function (h) {
 		text = h.contentField.value;
 		//co('updateTinyMCE: window.switchEditors: ',window.switchEditors);
 		//c('updateTinyMCE: text:'+text);
@@ -615,8 +597,7 @@ var qTranslateX=function(pg)
 		h.mce.setContent(text,{format: 'html'});
 	}
 
-	var onTabSwitch=function(lang)
-	{
+	var onTabSwitch = function (lang) {
 		//var qtx = this;
 		setLangCookie(lang);
 		for(var i = displayHookNodes.length; --i >= 0; ){
@@ -669,8 +650,7 @@ var qTranslateX=function(pg)
 	 *
 	 * @since 3.0
 	 */
-	this.addDisplayHooks=function(elems)
-	{
+	this.addDisplayHooks = function (elems) {
 		//c('addDisplayHooks: elems.length='+elems.length);
 		for(var i=0; i<elems.length; ++i){
 			var e=elems[i];
@@ -686,8 +666,7 @@ var qTranslateX=function(pg)
 	 *
 	 * @since 3.3
 	 */
-	this.addDisplayHooksByClass=function(nm,container)
-	{
+	this.addDisplayHooksByClass = function (nm, container) {
 		//co('addDisplayHooksByClass: container:',container);
 		var elems=container.getElementsByClassName(nm);
 		//co('addDisplayHooksByClass: elems('+nm+'):',elems);
@@ -701,8 +680,7 @@ var qTranslateX=function(pg)
 	 *
 	 * @since 3.3
 	 */
-	this.addDisplayHooksByTagInClass=function(nm,tag,container)
-	{
+	this.addDisplayHooksByTagInClass = function (nm, tag, container) {
 		var elems=container.getElementsByClassName(nm);
 		//c('addDisplayHooksByClass: elems.length='+elems.length);
 		for(var i=0; i<elems.length; ++i){
@@ -718,8 +696,7 @@ var qTranslateX=function(pg)
 	 * @since 3.1-b2 - renamed to addCustomContentHooks, since addContentHooks used in qTranslateConfig.js
 	 * @since 3.0 - addContentHooks
 	*/
-	this.addCustomContentHooks=function()
-	{
+	this.addCustomContentHooks = function () {
 		//c('qTranslateConfig.custom_fields.length='+qTranslateConfig.custom_fields.length);
 		for(var i=0; i<qTranslateConfig.custom_fields.length; ++i){
 			var nm=qTranslateConfig.custom_fields[i];
@@ -742,8 +719,7 @@ var qTranslateX=function(pg)
 	 * i18n-multilingual-display
 	 * @since 3.4
 	*/
-	var addMultilingualHooks=function($)
-	{
+	var addMultilingualHooks = function ($) {
 		$('.i18n-multilingual').each(function(i,e){ qtx.addContentHook(e,'['); });
 		$('.i18n-multilingual-curly').each(function(i,e){ qtx.addContentHook(e,'{'); });
 		$('.i18n-multilingual-term').each(function(i,e){ qtx.addContentHook(e,'term'); });
@@ -755,8 +731,7 @@ var qTranslateX=function(pg)
 	 * Parses page configuration, loaded in qtranxf_get_admin_page_config_post_type.
 	 * @since 3.1-b2
 	*/
-	var addPageHooks=function(page_config_forms)
-	{
+	var addPageHooks = function (page_config_forms) {
 		for(var form_id in page_config_forms){
 			var frm = page_config_forms[form_id];
 			var form;
@@ -843,10 +818,8 @@ var qTranslateX=function(pg)
 		}
 	}
 
-	var addContentHooksTinyMCE=function()
-	{
-		function setEditorHooks(ed)
-		{
+	var addContentHooksTinyMCE = function () {
+		function setEditorHooks(ed) {
 			var id = ed.id;
 			if (!id) return;
 			var h=contentHooks[id];
@@ -902,8 +875,7 @@ var qTranslateX=function(pg)
 		}
 
 		/** Sets hooks on HTML-loaded TinyMCE editors via tinyMCEPreInit.mceInit. */
-		setTinyMceInit=function()
-		{
+		setTinyMceInit = function () {
 			//co('setTinyMceInit: this: ', this);
 			if (!window.tinyMCE) return;
 			for(var key in contentHooks){
@@ -934,8 +906,7 @@ var qTranslateX=function(pg)
 		setTinyMceInit();
 
 		/** Adds more TinyMCE editors, which may have been initialized dynamically. */
-		loadTinyMceHooks=function()
-		{
+		loadTinyMceHooks = function () {
 			if (!window.tinyMCE) return;
 			if (!tinyMCE.editors) return;
 			for(var i=0; i<tinyMCE.editors.length; ++i){
@@ -1071,7 +1042,9 @@ var qTranslateX=function(pg)
 	addMultilingualHooks(jQuery);
 
 	//co('displayHookNodes.length=',displayHookNodes.length);
+	//co('displayHookNodes: ',displayHookNodes);
 	//co('displayHookAttrs.length=',displayHookAttrs.length);
+	//co('contentHooks: ',contentHooks);
 	if(!displayHookNodes.length && !displayHookAttrs.length){
 		var ok = false;
 		for(var key in contentHooks){ ok = true; break; }
@@ -1084,8 +1057,7 @@ var qTranslateX=function(pg)
 	 * former switchTab
 	 * @since 3.3.2
 	 */
-	this.switchActiveLanguage = function()
-	{
+	this.switchActiveLanguage = function () {
 		//co('switchActiveLanguage: this=',this);
 		var tabSwitch = this;
 		var lang = tabSwitch.lang;
@@ -1096,12 +1068,10 @@ var qTranslateX=function(pg)
 		if ( qTranslateConfig.activeLanguage === lang ){
 			return;
 		}
-		if (qTranslateConfig.activeLanguage)
-		{
+		if (qTranslateConfig.activeLanguage) {
 			var ok2switch = true;
 			var onTabSwitchFunctionsSave = qTranslateConfig.onTabSwitchFunctionsSave;
-			for(var i=0; i<onTabSwitchFunctionsSave.length; ++i)
-			{
+			for (var i = 0; i < onTabSwitchFunctionsSave.length; ++i) {
 				var ok = onTabSwitchFunctionsSave[i].call(qTranslateConfig.qtx,qTranslateConfig.activeLanguage,lang);
 				if(ok === false) ok2switch = false;
 			}
@@ -1126,13 +1096,11 @@ var qTranslateX=function(pg)
 			}
 		}
 		var onTabSwitchFunctions = qTranslateConfig.onTabSwitchFunctions;
-		for(var i=0; i<onTabSwitchFunctions.length; ++i)
-		{
+		for (var i = 0; i < onTabSwitchFunctions.length; ++i) {
 			onTabSwitchFunctions[i].call(qTranslateConfig.qtx,lang,langFrom);
 		}
 		var onTabSwitchFunctionsLoad = qTranslateConfig.onTabSwitchFunctionsLoad;
-		for(var i=0; i<onTabSwitchFunctionsLoad.length; ++i)
-		{
+		for (var i = 0; i < onTabSwitchFunctionsLoad.length; ++i) {
 			onTabSwitchFunctionsLoad[i].call(qTranslateConfig.qtx,lang,langFrom);
 		}
 	}
@@ -1141,13 +1109,11 @@ var qTranslateX=function(pg)
 	 * former switchTab
 	 * @since 3.3.2
 	 */
-	var createSetOfLSB = function()
-	{
+	var createSetOfLSB = function () {
 		var langSwitchWrap=qtranxj_ce('ul', {className: qTranslateConfig.lsb_style_wrap_class});
 		var langs=qTranslateConfig.language_config;
 		if(!qTranslateConfig.tabSwitches) qTranslateConfig.tabSwitches={};
-		for(var lang in langs)
-		{
+		for (var lang in langs) {
 			var lang_conf = langs[lang];
 			var flag_location=qTranslateConfig.flag_location;
 			var tabSwitch=qtranxj_ce ('li', {lang: lang, className: 'qtranxs-lang-switch', onclick: qTranslateConfig.qtx.switchActiveLanguage }, langSwitchWrap );
@@ -1185,18 +1151,22 @@ var qTranslateX=function(pg)
 		//create sets of LSB
 		var anchors=[];
 		if(qTranslateConfig.page_config && qTranslateConfig.page_config.anchors){
-			//for(var i=0; i < qTranslateConfig.page_config.anchors.length; ++i){
-			//	var anchor = qTranslateConfig.page_config.anchors[i];
-			//	var f = document.getElementById(anchor.id);
 			for(var id in qTranslateConfig.page_config.anchors){
-				var f = document.getElementById(id);
-				if(!f) continue;
 				var anchor = qTranslateConfig.page_config.anchors[id];
-				anchor.id = id;
-				anchor.f = f;
-				anchors.push(anchor);
+				//co('anchor: ', anchor);
+				var f = document.getElementById(id);
+				if (f) {
+					anchors.push({ f: f, where: anchor.where });
+				} else if (anchor.jquery) {
+					var list = jQuery(anchor.jquery);
+					for (var i = 0; i < list.length; ++i) {
+						var f = list[i];
+						anchors.push({ f: f, where: anchor.where });
+					}
+				}
 			}
 		}
+		//co('anchors: ', anchors);
 		if(!anchors.length){
 			var f=pg.langSwitchWrapAnchor;
 			if(!f){
@@ -1206,6 +1176,7 @@ var qTranslateX=function(pg)
 		}
 		for(var i=0; i < anchors.length; ++i){
 			var anchor = anchors[i];
+			//co('anchor['+i+']: ', anchor);
 			if( !anchor.where || anchor.where.indexOf('before') >= 0 ){
 				//var langSwitchWrap=qtranxj_ce('ul', {className: qTranslateConfig.lsb_style_wrap_class});
 				//var languageSwitch = new qtranxj_LanguageSwitch(langSwitchWrap);
