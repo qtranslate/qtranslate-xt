@@ -65,6 +65,9 @@ function qtranxf_detect_admin_language($url_info) {
 }
 add_filter('qtranslate_detect_admin_language','qtranxf_detect_admin_language');
 
+/**
+ * @return bool true if $a and $b are equal.
+ */
 function qtranxf_array_compare($a,$b) {
 	if( !is_array($a) || !is_array($b) ) return false;
 	if(count($a) != count($b)) return false;
@@ -637,6 +640,7 @@ function qtranxf_admin_category_description($text) {
 add_filter('category_description', 'qtranxf_admin_category_description',0);
 
 function qtranxf_admin_the_title($title) {
+	global $pagenow;
 	//todo this filter should not be used in admin area at all?
 	if(defined('DOING_AJAX') && DOING_AJAX)//nav-menus.php#752
 		return $title;

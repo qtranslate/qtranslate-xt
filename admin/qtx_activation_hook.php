@@ -59,10 +59,14 @@ function qtranxf_default_enabled_languages(){
  * since 3.2.9.2
  */
 function qtranxf_default_default_language(){
+	global $q_config;
 	$enabled_languages = qtranxf_default_enabled_languages();
 	$default_language = $enabled_languages[0];
 	update_option('qtranslate_enabled_languages',$enabled_languages);
 	update_option('qtranslate_default_language',$default_language);
+	$q_config['language'] = $q_config['default_language'] = $default_language;
+	$q_config['enabled_languages'] = $enabled_languages;
+	//qtranxf_updateGettextDatabases(true);
 	return $default_language;
 }
 

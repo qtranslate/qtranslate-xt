@@ -739,7 +739,7 @@ function qtranxf_add_language_menu( $wp_admin_bar ){
 }
 
 function qtranxf_links($links, $file, $plugin_data, $context){
-	$settings_link = '<a href="options-general.php?page=qtranslate-x">' . __('Settings', 'qtranslate') . '</a>';
+	$settings_link = '<a href="options-general.php?page=qtranslate-x">' . qtranxf_translate('Settings') . '</a>';
 	array_unshift( $links, $settings_link ); // before other links
 	return $links;
 }
@@ -754,13 +754,13 @@ function qtranxf_admin_notices_config() {
 
 	if(isset($q_config['url_info']['errors']) && is_array($q_config['url_info']['errors'])){
 		foreach($q_config['url_info']['errors'] as $key => $msg){
-			echo '<div class="error notice is-dismissible" id="qtranxs_error_'.$key.'"><p>'.$link.'<strong><span style="color: red;">'.qtranxf_translate_wp('Error').'</span></strong>:&nbsp;'.$msg.'</p></div>';
+			echo '<div class="error notice is-dismissible" id="qtranxs_error_'.$key.'"><p>'.$link.'<strong><span style="color: red;">'.qtranxf_translate('Error').'</span></strong>:&nbsp;'.$msg.'</p></div>';
 		}
 		unset($q_config['url_info']['errors']);
 	}
 	if(isset($q_config['url_info']['warnings']) && is_array($q_config['url_info']['warnings'])){
 		foreach($q_config['url_info']['warnings'] as $key => $msg){
-			echo '<div class="update-nag notice is-dismissible" id="qtranxs_warning_'.$key.'"><p>'.$link.'<strong><span style="color: blue;">'.qtranxf_translate_wp('Warning').'</span></strong>:&nbsp;'.$msg.'</p></div>';
+			echo '<div class="update-nag notice is-dismissible" id="qtranxs_warning_'.$key.'"><p>'.$link.'<strong><span style="color: blue;">'.qtranxf_translate('Warning').'</span></strong>:&nbsp;'.$msg.'</p></div>';
 		}
 		unset($q_config['url_info']['warnings']);
 	}
@@ -799,8 +799,7 @@ add_filter('get_terms_args', 'qtranxf_get_terms_args');
  * Encode front end language on home_url, since, on admin side, it is mostly in use to create links to a preview pages.
  * @since 3.4.5
 */
-function qtranxf_admin_home_url($url, $path, $orig_scheme, $blog_id)
-{
+function qtranxf_admin_home_url($url, $path, $orig_scheme, $blog_id){
 	global $q_config;
 	//qtranxf_dbg_log('qtranxf_admin_home_url: $_COOKIE: ', $_COOKIE);
 	if(isset($_COOKIE[QTX_COOKIE_NAME_FRONT]))
