@@ -24,7 +24,7 @@ function qtranxf_init_language() {
 
 	if(WP_DEBUG){
 		$url_info['pagenow'] = $pagenow;
-		$url_info['REQUEST_METHOD'] = $_SERVER['REQUEST_METHOD'];
+		$url_info['REQUEST_METHOD'] = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : '';
 		if(defined('WP_ADMIN')&&WP_ADMIN) $url_info['WP_ADMIN'] = true;
 		if(defined('DOING_AJAX')) $url_info['DOING_AJAX_POST'] = $_POST;
 		if(defined('DOING_CRON')) $url_info['DOING_CRON_POST'] = $_POST;
@@ -32,7 +32,7 @@ function qtranxf_init_language() {
 
 	//fill $url_info the same way as _parseURL does
 	$url_info['scheme'] = is_ssl() ? 'https' : 'http';
-	$url_info['host'] = $_SERVER['HTTP_HOST'];
+	$url_info['host'] = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : ''; //https://wordpress.org/support/topic/messy-wp-cronphp-command-line-output
 
 	if(empty($_SERVER['REQUEST_URI'])){
 		$url_info['path'] = '';
@@ -63,9 +63,8 @@ function qtranxf_init_language() {
 
 	//qtranxf_dbg_log('qtranxf_init_language: SERVER: ',$_SERVER);
 	$url_info['language'] = qtranxf_detect_language($url_info);
-	//qtranxf_dbg_log('qtranxf_init_language: detected: url_info: ',$url_info);
-
 	$q_config['language'] = apply_filters('qtranslate_language', $url_info['language'], $url_info);
+	//qtranxf_dbg_log('qtranxf_init_language: detected: url_info: ',$url_info);
 
 	if( $q_config['url_info']['doing_front_end'] && qtranxf_can_redirect() ){
 		$lang = $q_config['language'];
@@ -76,8 +75,8 @@ function qtranxf_init_language() {
 		}
 		if(isset($url_info['doredirect'])){
 			$target = apply_filters('qtranslate_language_detect_redirect', $url_lang, $url_orig, $url_info);
+			//qtranxf_dbg_log('qtranxf_init_language: doredirect to '.$lang.PHP_EOL .'urlorg:'.$url_orig.PHP_EOL .'target:'.$target.PHP_EOL .'url_info: ',$url_info);
 			if($target!==false && $target != $url_orig){
-				//qtranxf_dbg_log('qtranxf_init_language: doredirect to '.$lang.PHP_EOL .'urlorg:'.$url_orig.PHP_EOL .'target:'.$target.PHP_EOL .'url_info: ',$url_info);
 				wp_redirect($target);
 				//header('Location: '.$target);
 				exit();
@@ -952,7 +951,7 @@ function qtranxf_url_set_language($urlinfo,$lang,$showLanguage) {
 
 
 	// see if cookies are activated
-	if( !$showLanguage//there still no language information in the converted URL
+	if( !$showLanguage//there still is no language information in the converted URL
 		&& !$q_config['url_info']['cookie_enabled']// there will be no way to take language from the cookie
 		//&& empty($urlinfo['path']) //why this was here?
 		//&& !isset($q_config['url_info']['internal_referer'])//three below replace this one?
@@ -1009,7 +1008,8 @@ function qtranxf_get_url_for_language($url, $lang, $showLanguage=true) {
 				return $complete;
 			}
 
-		}else{
+		}
+		else{
 			$urlinfo = qtranxf_get_url_info($url);
 
 			// check if it's an external link
@@ -1390,7 +1390,7 @@ function qtranxf_use($lang, $text, $show_available=false, $show_empty=false) {
 	if(is_array($text)) {
 		// handle arrays recursively
 		foreach($text as $key => $t) {
-			$text[$key] = qtranxf_use($lang,$text[$key],$show_available,$show_empty);
+			$text[$key] = qtranxf_use($lang,$t,$show_available,$show_empty);
 		}
 		return $text;
 	}
@@ -1398,7 +1398,7 @@ function qtranxf_use($lang, $text, $show_available=false, $show_empty=false) {
 	if( is_object($text) || $text instanceof __PHP_Incomplete_Class ) {//since 3.2-b1 instead of @get_class($text) == '__PHP_Incomplete_Class'
 		foreach(get_object_vars($text) as $key => $t) {
 			if(!isset($text->$key)) continue;
-			$text->$key = qtranxf_use($lang,$text->$key,$show_available,$show_empty);
+			$text->$key = qtranxf_use($lang,$t,$show_available,$show_empty);
 		}
 		return $text;
 	}
