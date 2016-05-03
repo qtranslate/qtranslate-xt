@@ -121,6 +121,9 @@ This version recovers translation of parent of a category on category edit page.
 
 ## Changelog ##
 
+### 3.4.6.8 ###
+* Imrovement: translation of taxonomies on page `/wp-admin/edit.php`.
+
 ### 3.4.6.7 ###
 * Fix: for `/wp-login/` and `/login/`. Thanks to [extremecarver](http://qtranslate-x.com/support/index.php?action=profile;u=373).
 * Fix: unexpected menu behaviour for empty menu label when option "Hide Content which is not available for the selected language" is on: [WP Topic](https://wordpress.org/support/topic/menu-visible-despite-empty-label).

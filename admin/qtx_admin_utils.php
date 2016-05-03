@@ -382,6 +382,19 @@ function qtranxf_useAdminTermLibJoin($obj, $taxonomies=null, $args=null) {
 add_filter('get_term', 'qtranxf_useAdminTermLibJoin', 5, 2);
 add_filter('get_terms', 'qtranxf_useAdminTermLibJoin', 5, 3);
 
+/*
+ * @since 3.4.6.8
+ */
+function qtranxf_admin_term_name($value, $term_id, $taxonomy, $context){
+	global $pagenow;
+	if($pagenow == 'edit.php')
+	switch($context){
+		case 'display': return qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($value);
+	}
+	return $value;
+}
+add_filter('term_name', 'qtranxf_admin_term_name', 5, 4);//used in function sanitize_term_field
+
 //does someone use it?
 function qtranxf_useAdminTermLib($obj) {
 	//qtranxf_dbg_echo('qtranxf_useAdminTermLib: $obj: ',$obj,true);

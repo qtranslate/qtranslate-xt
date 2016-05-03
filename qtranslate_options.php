@@ -186,6 +186,7 @@ function qtranxf_default_language_name()
 	$nnm['cy'] = 'Cymraeg';// Oct 22 2015
 	$nnm['ca'] = 'Català';//Nov 6 2015
 	$nnm['sk'] = 'Slovenčina';//Nov 12 2015
+	$nnm['lt'] = 'Lietuvių';//May 3 2016
 	//$nnm['tw'] = '繁體中文';
 	return $nnm;
 }
@@ -226,6 +227,7 @@ function qtranxf_default_locale()
 	$loc['cy'] = 'cy';// not 'cy_GB'
 	$loc['ca'] = 'ca';
 	$loc['sk'] = 'sk_SK';
+	$loc['lt'] = 'lt_LT';
 	//$loc['tw'] = 'zh_TW';
 	return $loc;
 }
@@ -279,6 +281,7 @@ function qtranxf_default_not_available()
 	$nam['cy'] = 'Mae&#8217;n ddrwg gen i, mae\'r cofnod hwn dim ond ar gael mewn %LANG:, : a %.';//ok
 	$nam['ca'] = 'Ho sentim, aquesta entrada es troba disponible únicament en %LANG:, : i %.';//ok
 	$nam['sk'] = 'Ľutujeme, táto stránka je dostupná len v %LANG:, : a %.';//ok
+	$nam['lt'] = 'Atsiprašome, šis puslapis galimas tik %LANG:, : ir %.';
 	//$nam['tw'] = '对不起，此内容只适用于%LANG:，:和%。';
 	return $nam;
 }
@@ -319,6 +322,7 @@ function qtranxf_default_date_format()
 	$dtf['cy'] = '%A %B %e%q, %Y';//not verified
 	$dtf['ca'] = 'j F, Y';
 	$dtf['sk'] = 'j.F Y';
+	$dtf['lt'] = '%Y.%m.%d';
 	//$dtf['tw'] = '%x %A';
 	return $dtf;
 }
@@ -358,6 +362,7 @@ function qtranxf_default_time_format()
 	$tmf['cy'] = '%I:%M %p';//not verified
 	$tmf['ca'] = 'G:i';
 	$tmf['sk'] = 'G:i';
+	$tmf['lt'] = '%H:%M';
 	//$tmf['tw'] = '%I:%M%p';
 	return $tmf;
 }
@@ -398,6 +403,7 @@ function qtranxf_default_flag()
 	$flg['cy'] = 'cy_GB.png';
 	$flg['ca'] = 'catala.png';
 	$flg['sk'] = 'sk.png';
+	$flg['lt'] = 'lt.png';
 	//$flg['tw'] = 'tw.png';
 	return $flg;
 }
