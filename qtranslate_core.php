@@ -20,6 +20,10 @@ function qtranxf_init_language() {
 
 	$url_info = &$q_config['url_info'];
 	$url_info['cookie_enabled'] = isset($_COOKIE[QTX_COOKIE_NAME_FRONT]) || isset($_COOKIE[QTX_COOKIE_NAME_ADMIN]);
+	if($url_info['cookie_enabled']){
+		if(isset($_COOKIE[QTX_COOKIE_NAME_FRONT])) $url_info['cookie_lang_front'] = $_COOKIE[QTX_COOKIE_NAME_FRONT];
+		if(isset($_COOKIE[QTX_COOKIE_NAME_ADMIN])) $url_info['cookie_lang_admin'] = $_COOKIE[QTX_COOKIE_NAME_ADMIN];
+	}
 
 
 	if(WP_DEBUG){
@@ -77,8 +81,10 @@ function qtranxf_init_language() {
 			$target = apply_filters('qtranslate_language_detect_redirect', $url_lang, $url_orig, $url_info);
 			//qtranxf_dbg_log('qtranxf_init_language: doredirect to '.$lang.PHP_EOL .'urlorg:'.$url_orig.PHP_EOL .'target:'.$target.PHP_EOL .'url_info: ',$url_info);
 			if($target!==false && $target != $url_orig){
-				wp_redirect($target);
-				//header('Location: '.$target);
+				//wp_redirect($target);
+				//prevent browser from caching redirection
+				header("cache-control: must-revalidate, max-age=0, no-cache");
+				header('Location: '.$target, true, 302);
 				exit();
 			}else{
 				//neutral path
