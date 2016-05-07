@@ -385,9 +385,9 @@ add_filter('get_terms', 'qtranxf_useAdminTermLibJoin', 5, 3);
 /*
  * @since 3.4.6.8
  */
-function qtranxf_admin_term_name($value, $term_id, $taxonomy, $context){
+function qtranxf_admin_term_name($value, $term_id, $taxonomy = null, $context = null){
 	global $pagenow;
-	if($pagenow == 'edit.php')
+	if( !empty($context) && $pagenow == 'edit.php' )
 	switch($context){
 		case 'display': return qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($value);
 	}
