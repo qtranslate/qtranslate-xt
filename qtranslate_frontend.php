@@ -389,6 +389,7 @@ function qtranxf_translate_deep($value,$lang){
 		}
 	}else if(is_object($value) || $value instanceof __PHP_Incomplete_Class){
 		foreach(get_object_vars($value) as $k => $v) {
+			if(!isset($value->$k)) continue;
 			$value->$k = qtranxf_translate_deep($v,$lang);
 		}
 	}
