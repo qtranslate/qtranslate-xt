@@ -123,6 +123,7 @@ This version recovers translation of parent of a category on category edit page.
 
 ### 3.4.6.8 ###
 * Imrovement: translation of taxonomies on page `/wp-admin/edit.php`.
+* Fix: proper tag editing on page `post.php` [Issue #366](https://github.com/qTranslate-Team/qtranslate-x/issues/366).
 
 ### 3.4.6.7 ###
 * Fix: for `/wp-login/` and `/login/`. Thanks to [extremecarver](http://qtranslate-x.com/support/index.php?action=profile;u=373).

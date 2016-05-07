@@ -351,6 +351,46 @@ function qtranxf_get_term_joined($obj,$taxonomy=null) {
 	return $obj;
 }
 
+/**
+ * @since 3.4.6.8
+ * @return string default language name of term $nm in langulage $lang
+ * @param string $lang two-letter language code to search for $nm
+ * @param string $nm name of term in language $lang
+ * @param string $taxonomy
+ */
+function qtranxf_find_term($lang, $term, $taxonomy=null) {
+	global $q_config;
+	if($lang != $q_config['default_language']){
+		foreach($q_config['term_name'] as $nm => $ts){
+			if(empty($ts[$lang])) continue;
+			if( $ts[$lang] == $term ) return $nm;
+		}
+	}
+	return $term;
+}
+
+/*
+ * @since 3.4.6.8
+ * @return string default language name of term $nm in langulage $lang
+ * @param string $lang two-letter language code to search for $nm
+ * @param string $nm name of term in language $lang
+ * @param string $taxonomy
+ *
+function qtranxf_find_term_like($lang, $s, $taxonomy=null) {
+	global $q_config;
+	if($lang != $q_config['default_language']){
+		foreach($q_config['term_name'] as $nm => $ts){
+			if(empty($ts[$lang])) continue;
+			if(function_exists('mb_stripos'))
+				$p = stripos($ts[$lang],$s);
+			else
+				$p = stripos($ts[$lang],$s);
+			if( $p !== false) return $nm;
+		}
+	}
+	return $s;
+} */
+
 function qtranxf_get_terms_joined($terms, $taxonomy=null, $args=null) {
 	global $q_config;
 	if(is_array($terms)){

@@ -777,7 +777,7 @@ function qtranxf_admin_notices_config() {
  * A term name containing '&' is stored in database with '&amp;' instead of '&',
  * but search in get_terms is done on raw '&' coming from $_POST variable.
  */
-function qtranxf_get_terms_args($args) {
+function qtranxf_get_terms_args($args, $taxonomies=null) {
 	if(!empty($args['name'])){
 		$p = 0;
 		while(($p = strpos($args['name'],'&',$p)) !== false){
@@ -789,10 +789,33 @@ function qtranxf_get_terms_args($args) {
 				$p += 4;
 			}
 		}
+		global $q_config;
+		$lang = $q_config['language'];
+		if($lang != $q_config['default_language']){
+			$args['name'] = qtranxf_find_term($lang, $args['name']);
+		}
+	}
+	if(!empty($args['name__like'])){
+		global $q_config;
+		$lang = $q_config['language'];
+		if($lang != $q_config['default_language']){
+			$s = $args['name__like'];
+			foreach($q_config['term_name'] as $nm => $ts){
+				if(empty($ts[$lang])) continue;
+				$t = $ts[$lang];
+				if(function_exists('mb_stripos'))
+					$p = mb_stripos($t,$s);
+				else
+					$p = stripos($t,$s);
+				if($p === false) continue;
+				$args['name__like'] = $nm;
+				break;
+			}
+		}
 	}
 	return $args;
 }
-add_filter('get_terms_args', 'qtranxf_get_terms_args');
+add_filter('get_terms_args', 'qtranxf_get_terms_args', 5, 2);
 //apply_filters( 'get_terms_args', $args, $taxonomies );
 
 /**
