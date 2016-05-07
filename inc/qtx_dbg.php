@@ -5,7 +5,7 @@ if(WP_DEBUG){
 	if(!function_exists('qtranxf_dbg_log')){
 		function qtranxf_dbg_log($msg,$var='novar',$bt=false,$exit=false){
 			global $pagenow, $wp_current_filter;
-			if(isset($_SERVER['REQUEST_TIME_FLOAT'])) $h = $_SERVER['REQUEST_TIME_FLOAT'];
+			$h = isset($_SERVER['REQUEST_TIME_FLOAT']) ? $_SERVER['REQUEST_TIME_FLOAT'] : '';
 			if(!empty($pagenow)) $h = $h.'('.$pagenow.')';
 			if(!empty($wp_current_filter)){
 				$cf = end($wp_current_filter);
