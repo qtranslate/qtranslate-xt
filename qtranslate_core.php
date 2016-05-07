@@ -565,8 +565,23 @@ function qtranxf_load_option_bool( $nm, $default_value=null ) {
 	global $q_config;
 	$val = get_option('qtranslate_'.$nm);
 	if($val===FALSE){ if(!is_null($default_value)) $q_config[$nm] = $default_value; }
-	elseif($val==='0') $q_config[$nm] = false;
-	elseif($val==='1') $q_config[$nm] = true;
+	else{
+		switch($val){
+			case '0': $q_config[$nm] = false; break;
+			case '1': $q_config[$nm] = true; break;
+			default: $val = strtolower($val);
+				switch($val){
+					case 'n':
+					case 'no': $q_config[$nm] = false; break;
+					case 'y':
+					case 'yes': $q_config[$nm] = true; break;
+					default: $q_config[$nm] == !empty($val); break;
+				}
+				break;
+		}
+	}
+	//elseif($val==='0') $q_config[$nm] = false;
+	//elseif($val==='1') $q_config[$nm] = true;
 }
 
 function qtranxf_load_option_func($nm, $opn=null, $func=null) {
