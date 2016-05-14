@@ -34,13 +34,13 @@ Default Language Contributors
 'eu' by Xabier Arrabal
 'fi' by Tatu Siltanen, Jyrki Vanamo <jyrki.vanamo@steep.fi> https://github.com/jvanamo
 'fr' by Damien Choizit
-'gl' by AndrÈs Bott
+'gl' by Andr√©s Bott
 'it' by Lorenzo De Tomasi
 'ja' by Brian Parker
 'lt' by Vytas M.
 'nl' by RobV
-'pt'(pt_PT) by netolazaro, Pedro MendonÁa
-'pb'(pt_BR) by Pedro MendonÁa
+'pt'(pt_PT) by netolazaro, Pedro Mendon√ßa
+'pb'(pt_BR) by Pedro Mendon√ßa
 'ro'(hu) by Jani Monoses
 'sk' by Andrej Leitner <andrej.leitner@gmail.com>
 'sv' by bear3556, johdah
@@ -62,7 +62,7 @@ Plugin Translation Contributors
 'es_CA' by Carlos Sanz
 'es_ES' by Alejandro Urrutia
 'fr_FR' by eriath, Florent
-'hu_HU' by NÈmeth Bal·zs
+'hu_HU' by N√©meth Bal√°zs
 'id_ID' by Masino Sinaga
 'it_IT' by Simone Montrucchio, Maurizio Omissoni, shecky
 'ja'    by dapperdanman1400
@@ -71,7 +71,7 @@ Plugin Translation Contributors
 'nl_NL' by Marius Siroen, BlackDex
 'pl_PL' by Bronislaw Gracz
 'pt_BR' by Marcelo Paoli
-'pt_PT' by Pedro MendonÁa, claudiotereso
+'pt_PT' by Pedro Mendon√ßa, claudiotereso
 'ro_RO' by Puiu Ionut, ipuiu
 'ru_RU' by Denis K, Dimitri Don, viaestvita
 'sr_RS' by Borisa Djuraskovic
