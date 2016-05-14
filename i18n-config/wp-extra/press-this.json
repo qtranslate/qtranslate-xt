@@ -1,0 +1,15 @@
+{"vendor":{"wp-extra/press-this":"1.0"},
+"admin-config": {
+	"press-this": {
+		"pages": { "press-this.php": "" },
+		"anchors": { "pressthis-form": { "where": "before" } },
+		"forms": {
+			"pressthis-form": {
+				"fields": {
+					"pressthis":{}
+				}
+			}
+		}
+	}
+}
+}
