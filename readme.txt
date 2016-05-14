@@ -4,7 +4,7 @@ Contributors: johnclause, chineseleper, Vavooon, grafcom
 Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, translation
 Requires at least: 3.9
 Tested up to: 4.5
-Stable tag: 3.4.6.7
+Stable tag: 3.4.6.8
 License: GPLv3 or later
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QEXEK3HX8AR6U
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -123,6 +123,7 @@ This version recovers translation of parent of a category on category edit page.
 
 ### 3.4.6.8 ###
 * Imrovement: translation of taxonomies on page `/wp-admin/edit.php`.
+* Improvement: disable browsing caching before redirection based on languge [Issue #306](https://github.com/qTranslate-Team/qtranslate-x/issues/306).
 * Fix: proper tag editing on page `post.php` [Issue #366](https://github.com/qTranslate-Team/qtranslate-x/issues/366).
 
 ### 3.4.6.7 ###
