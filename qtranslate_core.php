@@ -73,6 +73,13 @@ function qtranxf_init_language() {
 			$url_info['doredirect'] = '$url_orig != $url_lang';
 		}
 		if(isset($url_info['doredirect'])){
+			/**
+			 * Filter provides a chance to alter redirect behaviour.
+			 * @param string $url_lang proposed target URL for the active language to redirect to.
+			 * @param string $url_orig original URL supplied to browser, which needs to be standardized.
+			 * @param array $url_info a hash of various information parsed from original URL, coockies and other site configuration. The key names should be self-explanatory.
+			 * @return mixed A new URL to be redirected to instead of $url_lang or "false" to cancel redirection.
+			 */
 			$target = apply_filters('qtranslate_language_detect_redirect', $url_lang, $url_orig, $url_info);
 			//qtranxf_dbg_log('qtranxf_init_language: doredirect to '.$lang.PHP_EOL .'urlorg:'.$url_orig.PHP_EOL .'target:'.$target.PHP_EOL .'url_info: ',$url_info);
 			if($target!==false && $target != $url_orig){
