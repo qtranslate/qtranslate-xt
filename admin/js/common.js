@@ -308,7 +308,7 @@ var qTranslateX=function(pg) {
 			do {
 				++idx;
 				inpField.id = field_name + idx;
-			} while (contentHooks[field_name]);
+			} while (contentHooks[inpField.id]);
 			//jQuery(inpField).uniqueId();//does not work
 			//jQuery(inpField).each(function (i,e) { e.uniqueId(); });//does not work
 		}
