@@ -321,7 +321,9 @@ var qTranslateX=function(pg) {
 		h.lang = qTranslateConfig.activeLanguage;
 		var contents = qtranxj_split(inpField.value);//keep neutral text from older times, just in case.
 		                        //inpField.tagName
-		inpField.value = contents[h.lang];
+		if (!qTranslateConfig.RAW) {
+			inpField.value = contents[h.lang];
+		}
 		var qtx_prefix;
 		if(encode){
 			switch(encode){
