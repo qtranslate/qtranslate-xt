@@ -211,7 +211,6 @@ var qTranslateX=function(pg) {
 
 	var setLangCookie=function(lang) { document.cookie='qtrans_edit_language='+lang; }
 
-	qTranslateConfig.activeLanguage;
 	if(qTranslateConfig.LSB){
 		qTranslateConfig.activeLanguage = qtranxj_get_cookie('qtrans_edit_language');
 		if(!qTranslateConfig.activeLanguage || !this.isLanguageEnabled(qTranslateConfig.activeLanguage)){
@@ -504,6 +503,34 @@ var qTranslateX=function(pg) {
 	}
 
 	/**
+	 * @since 3.4.6.9
+	 */
+	var getDisplayContentDefaultValue = function(contents){
+		if(contents[qTranslateConfig.language])
+			return '(' + qTranslateConfig.language + ') ' + contents[qTranslateConfig.language];
+		if(contents[qTranslateConfig.default_language])
+			return '(' + qTranslateConfig.default_language + ') ' + contents[qTranslateConfig.default_language];
+		var default_value = null;
+		for(var lang in contents){
+			if(!contents[lang]) continue;
+			return '(' + lang + ') ' + contents[lang];
+		}
+		return '';
+	}
+
+	/**
+	 * @since 3.4.6.9
+	 */
+	var completeDisplayContent = function(contents){
+		var default_value = null;
+		for(var lang in contents){
+			if(contents[lang]) continue;
+			if(!default_value) default_value = getDisplayContentDefaultValue(contents);
+			contents[lang] = default_value;
+		}
+	}
+
+	/**
 	 * @since 3.2.7
 	 */
 	var displayHookNodes=[];
@@ -519,6 +546,7 @@ var qTranslateX=function(pg) {
 		//c('addDisplayHookNode: nodeValue: "'+nd.nodeValue+'"');
 		//c('addDisplayHookNode: content='+content);
 		h.contents = qtranxj_split_blocks(blocks);
+		completeDisplayContent(h.contents);
 		nd.nodeValue=h.contents[qTranslateConfig.activeLanguage];
 		displayHookNodes.push(h);
 		return 1;
@@ -536,6 +564,7 @@ var qTranslateX=function(pg) {
 		var h={};
 		h.nd=nd;
 		h.contents = qtranxj_split_blocks(blocks);
+		completeDisplayContent(h.contents);
 		nd.value=h.contents[qTranslateConfig.activeLanguage];
 		displayHookAttrs.push(h);
 		return 1;
