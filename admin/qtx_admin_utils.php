@@ -6,6 +6,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
  * @since 3.3.2
  */
 function qtranxf_loadfiles_js($jss, $enqueue_script) {
+	$dbg = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG;
 	$cnt = 0;
 	$deps = array();
 	foreach($jss as $k => $js){
@@ -13,6 +14,7 @@ function qtranxf_loadfiles_js($jss, $enqueue_script) {
 			echo $js['javascript'];
 		}else if(isset($js['src'])){
 			$src = $js['src'];
+			if($dbg) $src = str_replace('.min', '', $src);
 			if($enqueue_script){
 				$handle = isset($js['handle']) ? $js['handle'] : (is_string($k) ? $k : 'qtranslate-admin-js-'.(++$cnt) );
 				$ver = isset($js['ver']) ? $js['ver'] : QTX_VERSION;

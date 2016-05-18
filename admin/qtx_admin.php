@@ -450,13 +450,18 @@ function qtranxf_add_admin_footer_js ( $enqueue_script=false ) {
 }
 
 function qtranxf_add_admin_head_js ($enqueue_script=true) {
+	if(defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG){
+		$js_options = 'js/options.js';
+	}else{
+		$js_options = 'js/options.min.js';
+	}
 	if($enqueue_script){
-		//wp_register_script( 'qtranslate-admin-options', plugins_url( 'js/options.min.js', __FILE__ ), array(), QTX_VERSION );
-		wp_enqueue_script( 'qtranslate-admin-options', plugins_url( 'js/options.min.js', __FILE__ ), array(), QTX_VERSION );
+		//wp_register_script( 'qtranslate-admin-options', plugins_url( $js_options, __FILE__ ), array(), QTX_VERSION );
+		wp_enqueue_script( 'qtranslate-admin-options', plugins_url( $js_options, __FILE__ ), array(), QTX_VERSION );
 	}else{
 		echo '<script type="text/javascript">'.PHP_EOL .'// <![CDATA['.PHP_EOL;
 		$plugin_dir_path=plugin_dir_path(__FILE__);
-		readfile($plugin_dir_path.'js/options.min.js');
+		readfile($plugin_dir_path.$js_options);
 		echo '//]]>'.PHP_EOL .'</script>'.PHP_EOL;
 	}
 }
