@@ -785,6 +785,21 @@ function qtranxf_executeOnUpdate() {
 	}
 }
 
+function qtranxf_mark_default($text) {
+	global $q_config;
+	$blocks = qtranxf_get_language_blocks($text);
+	if( count($blocks) > 1 ) return $text;//already have other languages.
+	$content=array();
+	foreach($q_config['enabled_languages'] as $language) {
+		if($language == $q_config['default_language']) {
+			$content[$language] = $text;
+		}else{
+			$content[$language] = '';
+		}
+	}
+	return qtranxf_join_b($content);
+}
+
 //function qtranxf_updateLanguage() {
 //}
 
