@@ -825,12 +825,12 @@ function qtranxf_timeFromCommentForCurrentLanguage($old_date, $format = '', $gmt
 /**
  * @since 3.4
  */
-function qtranxf_use_term($lang, $obj, $taxonomy) {
+function qtranxf_term_use($lang, $obj, $taxonomy) {
 	global $q_config;
 	if(is_array($obj)) {
 		// handle arrays recursively
 		foreach($obj as $key => $t) {
-			$obj[$key] = qtranxf_use_term($lang, $obj[$key], $taxonomy);
+			$obj[$key] = qtranxf_term_use($lang, $obj[$key], $taxonomy);
 		}
 		return $obj;
 	}
@@ -849,7 +849,7 @@ function qtranxf_use_term($lang, $obj, $taxonomy) {
 
 function qtranxf_useTermLib($obj) {
 	global $q_config;
-	return qtranxf_use_term($q_config['language'], $obj, null);
+	return qtranxf_term_use($q_config['language'], $obj, null);
 }
 
 // check if it is a link to an ignored file type

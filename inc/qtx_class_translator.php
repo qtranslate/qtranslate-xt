@@ -53,7 +53,7 @@ class QTX_Translator implements WP_Translator
 	public function translate_term($term, $lang=null, $taxonomy=null) {
 		global $q_config;
 		if(!$lang) $lang = $q_config['language'];
-		return qtranxf_use_term($lang, $term, $taxonomy);
+		return qtranxf_term_use($lang, $term, $taxonomy);
 	}
 
 	public function translate_url($url, $lang=null) {
