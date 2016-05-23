@@ -780,6 +780,7 @@ function qtranxf_executeOnUpdate() {
 	// ==== import/export msg was here
 
 	if(isset($_POST['convert_database'])){
+		require_once(QTRANSLATE_DIR.'/admin/qtx_admin_utils_db.php');
 		$msg = qtranxf_convert_database($_POST['convert_database']);
 		if($msg) $messages[] = $msg;
 	}

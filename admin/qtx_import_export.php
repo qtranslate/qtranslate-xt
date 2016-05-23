@@ -181,6 +181,7 @@ function qtranxf_add_row_migrate($nm,$plugin,$args=null) {
 
 function qtranxf_admin_section_import_export($request_uri)
 {
+	global $q_config;
 	//echo '<div class="tabs-content">';
 	qtranxf_admin_section_start('import');
 ?>
@@ -192,10 +193,16 @@ function qtranxf_admin_section_import_export($request_uri)
 				<?php printf(__('If you have installed qTranslate for the first time on a Wordpress with existing posts, you can either go through all your posts manually and save them in the correct language or <a href="%s">click here</a> to mark all existing posts as written in the default language.', 'qtranslate'), $request_uri.'&markdefault=true#import') ?>
 				<?php _e('Both processes are <b>irreversible</b>! Be sure to make a full database backup before clicking one of the links.', 'qtranslate') ?><br/><br/>
 				<label for="qtranxs_convert_database_none"><input type="radio" name="convert_database" id="qtranxs_convert_database_none" value="none" checked />&nbsp;<?php _e('Do not convert database', 'qtranslate') ?></label><br/><br/>
-				<label for="qtranxs_convert_database_to_b_only"><input type="radio" name="convert_database" id="qtranxs_convert_database_to_b_only" value="b_only" />&nbsp;<?php echo __('Convert database to the "square bracket only" style.', 'qtranslate') ?></label><br/>
-				<small><?php printf(__('The square bracket language tag %s only will be used as opposite to dual-tag (%s and %s) %s legacy database format. All string options and standard post and page fields will be uniformly encoded like %s.','qtranslate'),'[:]',esc_html('<!--:-->'),'[:]','qTranslate','"[:en]English[:de]Deutsch[:]"') ?></small><br/><br/>
-				<label for="qtranxs_convert_database_to_c_dual"><input type="radio" name="convert_database" id="qtranxs_convert_database_to_c_dual" value="c_dual" />&nbsp;<?php echo __('Convert database back to the legacy "dual language tag" style.', 'qtranslate') ?></label><br/>
-				<small><?php _e('Note, that only string options and standard post and page fields are affected.','qtranslate') ?></small>
+				<label for="qtranxs_convert_database_to_b_only"><input type="radio" name="convert_database" id="qtranxs_convert_database_to_b_only" value="b_only" />&nbsp;<?php echo __('Convert database to the "square bracket only" style.', 'qtranslate') ?><br/>
+				<small><?php printf(__('The square bracket language tag %s only will be used as opposite to dual-tag (%s and %s) %s legacy database format. All string options and standard post and page fields will be uniformly encoded like %s.','qtranslate'),'[:]',esc_html('<!--:-->'),'[:]','qTranslate','"[:en]English[:de]Deutsch[:]"') ?></small></label><br/><br/>
+				<label for="qtranxs_convert_database_to_c_dual"><input type="radio" name="convert_database" id="qtranxs_convert_database_to_c_dual" value="c_dual" />&nbsp;<?php echo __('Convert database back to the legacy "dual language tag" style.', 'qtranslate') ?><br/>
+				<small><?php _e('Note, that only string options and standard post and page fields are affected.','qtranslate') ?></small></label><br/><br/>
+				<label for="qtranxs_db_clean_terms"><input type="radio" name="convert_database" id="qtranxs_db_clean_terms" value="db_clean_terms" />&nbsp;<?php echo __('Clean Legacy Term Names', 'qtranslate') ?><br/>
+				<small><?php _e('Clean the inconsistencies of the q-original way to store term names. Translations for some tags, categories or other terms may get lost and may need to be re-entered after this operation. The term names should stay consistent in the future.','qtranslate') ?></small></label><br/><br/>
+				<label for="qtranxs_db_split"><input type="radio" name="convert_database" id="qtranxs_db_split" value="db_split" />&nbsp;<?php echo __('Split database file by languages.', 'qtranslate') ?>&nbsp;
+				<?php echo sprintf(__('Provide full file path to the input multilingual %s database file (the resulting %s files, named with language-based suffix, are saved in the same folder, where the input file is):', 'qtranslate'), '.sql', '.sql') ?><br/><input type="text" class="widefat" name="db_file" id="qtranxs_db_file" value="<?php if(!empty($q_config['db_file'])) echo $q_config['db_file']; ?>" /><br/>
+				<?php echo __('Specify which languages to keep in the main output file (provide comma-separated list of two-letter code of languages to keep):', 'qtranslate') ?><br/><input type="text" class="widefat" name="db_langs" id="qtranxs_db_langs" value="<?php if(!empty($q_config['db_langs'])) echo $q_config['db_langs']; ?>" /><br/>
+				<small><?php echo sprintf(__('In order to remove one or more languages from entire database, you may dump the database into a %s file, then run this procedure and upload one of the new clean %s files back to the server. A separate clean database will also be saved fir each excluded language.', 'qtranslate'), '.sql', '.sql')//.sprintf(__('%sRead more%s.', 'qtranslate'), '&nbsp;<a href="">', '</a>') ?></small></label>
 			</td>
 		</tr>
 		<?php qtranxf_add_row_migrate('qTranslate','qtranslate', array('compatible' => true)) ?>
