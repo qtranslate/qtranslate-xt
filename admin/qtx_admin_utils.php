@@ -218,14 +218,22 @@ function qtranxf_get_term_joined($obj,$taxonomy=null) {
 	global $q_config;
 	if(is_object($obj)) {
 		// object conversion
-		if(isset($q_config['term_name'][$obj->name])) {
-			//'[:'.$q_config['language'].']'.$obj->name
-			$obj->name = qtranxf_join_b($q_config['term_name'][$obj->name]);
-			//qtranxf_dbg_log('qtranxf_get_term_joined: object:',$obj);
+		if(isset($obj->name) && !isset($obj->name_i18n)){
+			$default_language = $q_config['default_language'];
+			if(isset($q_config['term_name'][$obj->name])){
+				//qtranxf_dbg_dbg('qtranxf_get_term_joined: object: ',$obj,true);
+				$ts = $q_config['term_name'][$obj->name];
+				$ts[$default_language] = $obj->name;
+				$ml = qtranxf_join_b($q_config['term_name'][$obj->name]);
+				$obj->name_i18n = array( 'ts' => $ts, 'ml' => $ml );
+				$obj->name = $ml;
+			}else{
+				$ts = array( $default_language => $obj->name );
+				$obj->name_i18n = array('ts' => $ts, 'ml' => $obj->name);
+			}
 		}
 	}elseif(isset($q_config['term_name'][$obj])) {
 		$obj = qtranxf_join_b($q_config['term_name'][$obj]);
-		//'[:'.$q_config['language'].']'.$obj.
 		//qtranxf_dbg_echo('qtranxf_get_term_joined: string:',$obj,true);//never fired, we probably do not need it
 	}
 	return $obj;

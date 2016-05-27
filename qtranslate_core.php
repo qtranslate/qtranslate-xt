@@ -836,10 +836,19 @@ function qtranxf_term_use($lang, $obj, $taxonomy) {
 	}
 	if(is_object($obj)) {
 		// object conversion
-		if(isset($q_config['term_name'][$obj->name][$lang])) {
-			//qtranxf_dbg_echo('qtranxf_translate_term: object: ',$obj,true);
-			$obj->name = $q_config['term_name'][$obj->name][$lang];
-		} 
+		if(isset($obj->name) && !isset($obj->name_i18n)){
+			$default_language = $q_config['default_language'];
+			if(isset($q_config['term_name'][$obj->name])){
+				//qtranxf_dbg_echo('qtranxf_translate_term: object: ',$obj,true);
+				$ts = $q_config['term_name'][$obj->name];
+				$ts[$default_language] = $obj->name;
+				if(isset($q_config['term_name'][$obj->name][$lang]))
+					$obj->name = $q_config['term_name'][$obj->name][$lang];
+			}else{
+				$ts = array($default_language => $obj->name);
+			}
+			$obj->name_i18n = array( 'ts' => $ts );
+		}
 	} elseif(isset($q_config['term_name'][$obj][$lang])) {
 		//qtranxf_dbg_echo('qtranxf_translate_term: string: ',$obj,true);
 		$obj = $q_config['term_name'][$obj][$lang];
