@@ -399,6 +399,48 @@ function qtranxf_clean_request_of($type,$nm){
 	if(empty($_REQUEST[$type])) unset($_REQUEST[$type]);
 }
 
+/*
+ * @since 3.4.6.9
+ * /
+function qtranxf_term_update_translations_for( $name, &$qfields, $default_lang ) {
+	if(isset($qfields['qtranslate-original-value'])){
+		global $q_config;
+		if(empty($qfields[$default_lang])) return;
+		$qfields = stripslashes_deep($qfields);
+		$term_name = &$q_config['term_name'];
+		$original_value = $qfields['qtranslate-original-value'];
+		$default_value = $qfields[$default_lang];
+		if(!isset($term_name[$default_value])) $term_name[$default_value] = array();
+		if($original_value != $default_value && isset($term_name[$original_value])){
+			$term_name[$default_value] = array_merge($term_name[$default_value],$term_name[$original_value]);
+			unset($term_name[$original_value]);
+		}
+		unset($qfields['qtranslate-original-value']);
+		$term_name[$default_value] = array_merge($term_name[$default_value],$qfields);
+	}else{
+		foreach($qfields as $nm => &$vals){
+			qtranxf_term_update_translations_for( $nm, $vals, $default_lang ); // recursive call
+		}
+	}
+}
+
+/*
+ * @since 3.4.6.9
+ * Updates translations of term names from REQUEST, which were not handled in a WP standard way.
+ * @return void
+ * /
+function qtranxf_term_update_translations(){
+	if(!isset($_REQUEST['qtranslate-terms'])) return;
+	qtranxf_term_admin_remove_filters();
+	global $q_config;
+	$default_lang = $q_config['default_language'];
+	foreach($_REQUEST['qtranslate-terms'] as $name => &$qfields){
+		qtranxf_term_update_translations_for( $name, $qfields, $default_lang );
+	}
+	update_option('qtranslate_term_name',$q_config['term_name']);
+	qtranxf_clean_request('qtranslate-terms');
+	qtranxf_term_admin_add_filters();
+}// */
 function qtranxf_updateTermLibraryJoin() {
 	global $q_config;
 	if(!isset($_POST['action'])) return;
