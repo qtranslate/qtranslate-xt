@@ -14,7 +14,7 @@ function qtranxf_loadfiles_js($jss, $enqueue_script) {
 			echo $js['javascript'];
 		}else if(isset($js['src'])){
 			$src = $js['src'];
-			if($dbg) $src = str_replace('.min', '', $src);
+			if($dbg) $src = str_replace('.min.js', '.js', $src);
 			if($enqueue_script){
 				$handle = isset($js['handle']) ? $js['handle'] : (is_string($k) ? $k : 'qtranslate-admin-js-'.(++$cnt) );
 				$ver = isset($js['ver']) ? $js['ver'] : QTX_VERSION;
