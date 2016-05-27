@@ -87,9 +87,7 @@ function qtranxf_collect_translations_posted() {
 			if(isset($_POST[$nm])) $_POST[$nm] = $_REQUEST[$nm];
 			if(isset($_GET[$nm])) $_GET[$nm] = $_REQUEST[$nm];
 		}
-		unset($_REQUEST['qtranslate-fields']);
-		unset($_POST['qtranslate-fields']);
-		unset($_GET['qtranslate-fields']);
+		qtranxf_clean_request('qtranslate-fields');
 	}
 
 	if(defined('DOING_AJAX') && DOING_AJAX){

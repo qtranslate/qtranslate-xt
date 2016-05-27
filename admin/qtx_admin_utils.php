@@ -378,6 +378,27 @@ function qtranxf_stripSlashesIfNecessary($str) {
 	return $str;
 }
 
+/**
+ * @since 3.4.6.9
+ */
+function qtranxf_clean_request($nm){
+	unset($_GET[$nm]);
+	unset($_POST[$nm]);
+	unset($_REQUEST[$nm]);
+}
+
+/**
+ * @since 3.4.6.9
+ */
+function qtranxf_clean_request_of($type,$nm){
+	unset($_GET[$type][$nm]);
+	unset($_POST[$type][$nm]);
+	unset($_REQUEST[$type][$nm]);
+	if(empty($_GET[$type])) unset($_GET[$type]);
+	if(empty($_POST[$type])) unset($_POST[$type]);
+	if(empty($_REQUEST[$type])) unset($_REQUEST[$type]);
+}
+
 function qtranxf_updateTermLibraryJoin() {
 	global $q_config;
 	if(!isset($_POST['action'])) return;

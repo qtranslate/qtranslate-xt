@@ -36,12 +36,15 @@ function qtranxf_slug_update_translations( $name, &$qfields, $default_lang ) {
 }
 
 function qtranxf_slug_clean_request($nm){
+	qtranxf_clean_request_of('qtranslate-slugs',$nm);
+/*
 	unset($_GET['qtranslate-slugs'][$nm]);
 	unset($_POST['qtranslate-slugs'][$nm]);
 	unset($_REQUEST['qtranslate-slugs'][$nm]);
 	if(empty($_GET['qtranslate-slugs'])) unset($_GET['qtranslate-slugs']);
 	if(empty($_POST['qtranslate-slugs'])) unset($_POST['qtranslate-slugs']);
 	if(empty($_REQUEST['qtranslate-slugs'])) unset($_REQUEST['qtranslate-slugs']);
+*/
 }
 
 function qtranxf_slug_has_post_name($post_type,$post_status){
@@ -326,7 +329,7 @@ function qtranxf_slug_update_translations_for( $name, &$qfields, $default_lang )
 
 function qtranxf_slug_update_translations_left(){
 	if(!isset($_REQUEST['qtranslate-slugs'])) return;
-	$default_lang = qtranxf_getLanguage();
+	$default_lang = qtranxf_getLanguageDefault();
 	foreach($_REQUEST['qtranslate-slugs'] as $name => &$qfields){
 		qtranxf_slug_update_translations_for( $name, $qfields, $default_lang );
 		qtranxf_slug_clean_request($name);
