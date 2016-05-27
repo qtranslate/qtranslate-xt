@@ -834,6 +834,7 @@ function qtranxf_get_terms_args($args, $taxonomies=null) {
 		global $q_config;
 		$lang = $q_config['language'];
 		if($lang != $q_config['default_language']){
+			$nms = array();
 			$s = $args['name__like'];
 			foreach($q_config['term_name'] as $nm => $ts){
 				if(empty($ts[$lang])) continue;
@@ -843,8 +844,13 @@ function qtranxf_get_terms_args($args, $taxonomies=null) {
 				else
 					$p = stripos($t,$s);
 				if($p === false) continue;
-				$args['name__like'] = $nm;
-				break;
+				$nms[] = $nm;
+				//$args['name__like'] = $nm;
+				//break;
+			}
+			if(!empty($nms)){
+				$args['name'] = $nms;
+				$args['name__like'] = '';
 			}
 		}
 	}
