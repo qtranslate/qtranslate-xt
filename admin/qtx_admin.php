@@ -25,8 +25,16 @@ function qtranxf_collect_translations( &$qfields, &$request, $edit_lang ) {
 	if(isset($qfields['qtranslate-separator'])){
 		$sep = $qfields['qtranslate-separator'];
 		unset($qfields['qtranslate-separator']);
-		$qfields[$edit_lang] = $request;
-		$request = qtranxf_collect_translations_deep($qfields,$sep);
+		if(!qtranxf_isMultilingual($request)){
+			//convert $request to an ML value
+			$qfields[$edit_lang] = $request;
+			$request = qtranxf_collect_translations_deep($qfields,$sep);
+		}else{
+			//raw mode, or user mistakenly put ML value
+			//leave $request as user entered it
+			//$qfields = qtranxf_split($request);
+			return;
+		}
 	}else{
 		foreach($qfields as $nm => &$vals){
 			qtranxf_collect_translations($vals,$request[$nm],$edit_lang); // recursive call
@@ -36,10 +44,35 @@ function qtranxf_collect_translations( &$qfields, &$request, $edit_lang ) {
 
 function qtranxf_regroup_translations( &$qfields, &$request, $edit_lang, $default_lang ) {
 	if(isset($qfields['qtranslate-original-value'])){
-		$qfields[$edit_lang] = $request;
-		if($default_lang != $edit_lang){
-			$request = $qfields[$default_lang];
+		$original_value = $qfields['qtranslate-original-value'];
+		if(qtranxf_isMultilingual($original_value)){
+			$langs = qtranxf_split($original_value);
+			$original_value = $langs[$default_lang];
+			$qfields['qtranslate-original-value'] =  $original_value;
 		}
+		if(qtranxf_isMultilingual($request)){
+			$qfields = qtranxf_split($request);
+			$qfields['qtranslate-original-value'] =  $original_value;
+		}else{
+			//$request = trim($request);
+			$qfields[$edit_lang] = $request;
+			//foreach($qfields as $lang => $v){
+			//	$qfields[$lang] = trim($v);
+			//}
+		}
+		// make sure the default language value is provided
+		while(empty($qfields[$default_lang])){
+			$qfields[$default_lang] = $original_value;
+			if(!empty($qfields[$default_lang])) break;
+			global $q_config;
+			foreach($q_config['enabled_languages'] as $lang){
+				if(empty($qfields[$lang])) continue;
+				$qfields[$default_lang] = $qfields[$lang];
+				break;
+			}
+			break;
+		}
+		$request = $qfields[$edit_lang];
 	}else{
 		foreach($qfields as $nm => &$vals){
 			qtranxf_regroup_translations($vals,$request[$nm],$edit_lang,$default_lang); // recursive call
@@ -116,8 +149,7 @@ function qtranxf_collect_translations_posted() {
 		//ensure REQUEST has the value of the default language
 		//multilingual slug/term values will be processed later
 		if(!$edit_lang) $edit_lang = qtranxf_getLanguageEdit();
-		global $q_config;
-		$default_lang = qtranxf_getLanguage();
+		$default_lang = qtranxf_getLanguageDefault();
 		qtranxf_regroup_translations_for('qtranslate-terms', $edit_lang, $default_lang);
 		qtranxf_regroup_translations_for('qtranslate-slugs', $edit_lang, $default_lang);
 	}
