@@ -27,7 +27,8 @@ function qtranxf_convert_database($action){
 				$q_config['enabled_languages'] = $enabled_languages;
 				$q_config['default_language'] = $default_language;
 				return $msg;
-			}
+			} break;
+		case 'db_clean_terms': return gtranxf_db_clean_terms();
 		default: break;
 	}
 	switch($action){
@@ -289,4 +290,127 @@ function qtranxf_extract_languages($text,$lang2keep) {
 		}
 	}
 	return $s;
+}
+
+function gtranxf_db_clean_terms(){
+	global $wpdb, $q_config;
+	$errors = &$q_config['url_info']['errors'];
+	$wpdb->show_errors(); @set_time_limit(0);
+	$result = $wpdb->get_results('SELECT * FROM '.$wpdb->terms);
+	if(!$result){
+		$errors[] = __('Could not fetch the list of terms from database.', 'qtranslate');		
+		return '';
+	}
+	qtranxf_term_admin_remove_filters();
+	$default_langauge = $q_config['default_language'];
+	$term_name_cur = $q_config['term_name'];
+	$term_name = array();
+	//$terms = get_terms();
+	$msgs = array();
+	foreach($result as $row){
+		$id = $row->term_id;
+		$nm = $row->name;
+		$term = get_term($id);
+		if( ! ( $term instanceof WP_Term ) ){
+			if($term instanceof WP_Error){
+				$errs = $term->get_error_messages();
+			}else{
+				$errs = array( __('Term configuration is inconsistent.', 'qtranslate') );
+			}
+			//wp_delete_term($id,'');//does not work with empty taxonomy
+			$ok = true;
+			$q = $wpdb->prepare('DELETE FROM '.$wpdb->terms.' WHERE term_id=%d',$id);
+			if($wpdb->query($q) === false) $ok = false;
+			if(!empty($wpdb->termmeta)){
+				$q = $wpdb->prepare('DELETE FROM '.$wpdb->termmeta.' WHERE term_id=%d',$id);
+				if($wpdb->query($q) === false) $ok = false;
+			}
+			$tt_ids = $wpdb->get_results($wpdb->prepare('SELECT term_taxonomy_id FROM '.$wpdb->term_taxonomy.' WHERE term_id=%d',$id));
+			foreach($tt_ids as $row){
+				$tt_id = $row->term_taxonomy_id;
+				$q = $wpdb->prepare('DELETE FROM '.$wpdb->term_taxonomy.' WHERE term_taxonomy_id=%d',$tt_id);
+				if($wpdb->query($q) === false) $ok = false;
+				$q = $wpdb->prepare('DELETE FROM '.$wpdb->term_relationships.' WHERE term_taxonomy_id=%d',$tt_id);
+				if($wpdb->query($q) === false) $ok = false;
+			}
+			if($ok){
+				$msg = __('This term has been removed.', 'qtranslate');
+			}else{
+				$msg = __('Some errors occurred while trying to remove it. Please, cleanup this term manually.', 'qtranslate');
+			}
+			$errors[] = sprintf(__('Term "%s" (id=%d) cannot be loaded. Error message:%s', 'qtranslate'), $nm, $id, '<br/>'.PHP_EOL.'"'.implode('"<br/>"'.PHP_EOL, $errs).'"') . '<br/>' . $msg;
+			continue;
+		}
+		$taxonomy = $term->taxonomy;
+		if($taxonomy == 'nav_menu')
+			continue;
+		$ts = array();
+		if(qtranxf_isMultilingual($nm)){
+			$ts = qtranxf_split($nm);
+			if(empty($ts[$default_langauge])){
+				foreach( $q_config['enabled_languages'] as $lng ){
+					$v = trim($ts[$lng]);
+					$ts[$lng] = $v;
+					if(empty($v)) continue;
+					$ts[$default_langauge] = $v;
+					break;
+				}
+			}
+		}else if(isset($term_name_cur[$nm]) && is_array($term_name_cur[$nm]) && !empty($term_name_cur[$nm])){
+			//$ts = array_merge($ts,$term_name_cur[$nm]);
+			$ts = $term_name_cur[$nm];
+		}else{
+			continue;
+		}
+		$nm_cur = $nm;
+		$ts_cur = empty($term_name_cur[$nm]) ? array() : $term_name_cur[$nm];
+
+		foreach( $ts as $lng => $val ){
+			$val = trim($val);
+			$val = addslashes($val);
+			$val = apply_filters('pre_term_name',$val);
+			$val = stripcslashes($val);
+			$ts[$lng] = $val;
+		}
+		$ok = !empty($ts[$default_langauge]);
+		if(!$ok){
+			$ts[$default_langauge] = $nm;
+		}
+		$ok = ($ts[$default_langauge] == $nm);
+		if( !$ok ){
+			$nm = $ts[$default_langauge];
+			wp_update_term( $id, $taxonomy, array('name' => $nm) );
+		}
+		$term_name[$nm] = $ts;
+		if($ok && !empty($ts_cur)){
+			$ok = qtranxf_array_compare($ts,$ts_cur);
+		}
+		if($ok)
+			$ok = ($nm == $nm_cur);
+		if(!$ok){
+			$ts_old = array();
+			foreach($ts_cur as $lng => $val){
+				$ts_old[] = $lng.' => "'.esc_html($val).'"';
+			}
+			$ts_new = array();
+			foreach($ts as $lng => $val){
+				$ts_new[] = $lng.' => "'.esc_html($val).'"';
+			}
+			$msgs[] = sprintf(__('Term "%s" (id=%d) has been modified from:%sto:%s', 'qtranslate'), esc_html($nm), $id
+			, '<br/>'.PHP_EOL . '"' . esc_html($nm_cur) . '" => { ' . implode(', ', $ts_old) . ' }<br/>'.PHP_EOL
+			, '<br/>'.PHP_EOL . '"' . esc_html($nm    ) . '" => { ' . implode(', ', $ts_new) . ' }<br/>'.PHP_EOL
+			);
+		}
+	}
+
+	$q_config['term_name'] = $term_name;
+	//update_option('qtranslate_term_name',$term_name);
+	qtranxf_term_admin_add_filters();
+	if(empty($msgs)){
+		$msg = __('No term has been modified. All terms are already in a consistent state.', 'qtranslate');
+	}else{
+		$msg = join( '<br/>'.PHP_EOL, $msgs);
+		$msg .= '<br/>'.PHP_EOL . __('Save this report for further analysis, if necessary.', 'qtranslate');
+	}
+	return __('Legacy term names have been cleaned up:', 'qtranslate') . '<br/>'.PHP_EOL . $msg;
 }
