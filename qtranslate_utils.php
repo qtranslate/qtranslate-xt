@@ -984,6 +984,38 @@ function qtranxf_add_filters($filters){
 }
 
 /**
+ * @since 3.4.6.9
+ */
+function qtranxf_remove_filters($filters){
+	global $q_config;
+	//qtranxf_dbg_log('qtranxf_add_filters: $filters: ', $filters);
+	if(!empty($filters['text'])){
+		//qtranxf_dbg_log('$filters[text]: ', $filters['text']);
+		foreach($filters['text'] as $nm => $pr){
+			if($pr === '') continue;
+			//qtranxf_dbg_log('$filters[text]['.$nm.']: ', $pr);
+			remove_filter($nm, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', $pr);
+		}
+	}
+	if(!empty($filters['url'])){
+		//qtranxf_dbg_log('$filters[url]: ',$filters['url']);
+		foreach($filters['url'] as $nm => $pr){
+			if($pr === '') continue;
+			//qtranxf_dbg_log('$filters[url]['.$nm.']: ', $pr);
+			remove_filter($nm, 'qtranxf_convertURL', $pr);
+		}
+	}
+	if(!empty($filters['term'])){
+		//qtranxf_dbg_log('$filters[term]: ',$filters['term']);
+		foreach($filters['term'] as $nm => $pr){
+			if($pr === '') continue;
+			//qtranxf_dbg_log('$filters[term]['.$nm.']: ', $pr);
+			remove_filter($nm, 'qtranxf_useTermLib', $pr);
+		}
+	}
+}
+
+/**
  * @since 3.4
  */
 function qtranxf_html_locale($locale){
