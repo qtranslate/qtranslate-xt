@@ -187,6 +187,7 @@ function qtranxf_default_language_name()
 	$nnm['ca'] = 'Català';//Nov 6 2015
 	$nnm['sk'] = 'Slovenčina';//Nov 12 2015
 	$nnm['lt'] = 'Lietuvių';//May 3 2016
+	$nnm['kk'] = 'Қазақ тілі';//May 27 2016
 	//$nnm['tw'] = '繁體中文';
 	return $nnm;
 }
@@ -228,6 +229,8 @@ function qtranxf_default_locale()
 	$loc['ca'] = 'ca';
 	$loc['sk'] = 'sk_SK';
 	$loc['lt'] = 'lt_LT';
+	$loc['kk'] = 'kk';
+	//$loc['md'] = 'ro_RO';
 	//$loc['tw'] = 'zh_TW';
 	return $loc;
 }
@@ -255,7 +258,7 @@ function qtranxf_default_not_available()
 	$nam['de'] = 'Leider ist der Eintrag nur auf %LANG:, : und % verfügbar.';//ok
 	$nam['en'] = 'Sorry, this entry is only available in %LANG:, : and %.';//ok
 	$nam['zh'] = '对不起，此内容只适用于%LANG:，:和%。';
-	$nam['ru'] = 'Извините, этот техт доступен только в &ldquo;%LANG:&rdquo;, &ldquo;:&rdquo; и &ldquo;%&rdquo;.';//ok
+	$nam['ru'] = 'Извините, этот текст доступен только на &ldquo;%LANG:&rdquo;, &ldquo;:&rdquo; и &ldquo;%&rdquo;.';//ok
 	//$nam['fi'] = 'Anteeksi, mutta tämä kirjoitus on saatavana ainoastaan näillä kielillä: %LANG:, : ja %.';
 	$nam['fi'] = 'Tämä teksti on valitettavasti saatavilla vain kielillä: %LANG:, : ja %.';//Jyrki Vanamo, Oct 20 2015, 3.4.6.5
 	$nam['fr'] = 'Désolé, cet article est seulement disponible en %LANG:, : et %.';
@@ -282,6 +285,7 @@ function qtranxf_default_not_available()
 	$nam['ca'] = 'Ho sentim, aquesta entrada es troba disponible únicament en %LANG:, : i %.';//ok
 	$nam['sk'] = 'Ľutujeme, táto stránka je dostupná len v %LANG:, : a %.';//ok
 	$nam['lt'] = 'Atsiprašome, šis puslapis galimas tik %LANG:, : ir %.';
+	$nam['kk'] = 'Кешіріңіз, бұл кіріс тек %LANG:, : және % тілінде ғана қол жетімді.';
 	//$nam['tw'] = '对不起，此内容只适用于%LANG:，:和%。';
 	return $nam;
 }
@@ -323,6 +327,7 @@ function qtranxf_default_date_format()
 	$dtf['ca'] = 'j F, Y';
 	$dtf['sk'] = 'j.F Y';
 	$dtf['lt'] = '%Y.%m.%d';
+	$dtf['kk'] = '%A, \d\e\r %e. %B %Y';
 	//$dtf['tw'] = '%x %A';
 	return $dtf;
 }
@@ -363,6 +368,7 @@ function qtranxf_default_time_format()
 	$tmf['ca'] = 'G:i';
 	$tmf['sk'] = 'G:i';
 	$tmf['lt'] = '%H:%M';
+	$tmf['kk'] = '%H:%M';
 	//$tmf['tw'] = '%I:%M%p';
 	return $tmf;
 }
@@ -404,6 +410,7 @@ function qtranxf_default_flag()
 	$flg['ca'] = 'catala.png';
 	$flg['sk'] = 'sk.png';
 	$flg['lt'] = 'lt.png';
+	$flg['kk'] = 'kz.png';
 	//$flg['tw'] = 'tw.png';
 	return $flg;
 }

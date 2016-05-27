@@ -37,6 +37,7 @@ Default Language Contributors
 'gl' by Andrés Bott
 'it' by Lorenzo De Tomasi
 'ja' by Brian Parker
+'kk' by Azamat Jauysh
 'lt' by Vytas M.
 'nl' by RobV
 'pt'(pt_PT) by netolazaro, Pedro Mendonça
