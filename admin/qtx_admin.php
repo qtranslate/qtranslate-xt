@@ -273,11 +273,6 @@ function qtranxf_get_admin_page_config_post_type($post_type) {
 		//qtranxf_dbg_log('qtranxf_get_admin_page_config_post_type: cached: '.$pagenow.'; post_type: ', $post_type);
 		return $page_config;
 	}
-	if( $q_config['editor_mode'] == QTX_EDITOR_MODE_RAW){
-		//qtranxf_dbg_log('qtranxf_get_admin_page_config_post_type: QTX_EDITOR_MODE_RAW: '.$pagenow.'; post_type: ', $post_type);
-		$page_config = array();
-		return $page_config;
-	}
 	if(!empty($q_config['post_type_excluded'])){
 		switch($pagenow){
 			case 'post.php':
@@ -459,6 +454,7 @@ function qtranxf_add_admin_footer_js ( $enqueue_script=false ) {
 	}
 
 	$config['LSB'] = $q_config['editor_mode'] == QTX_EDITOR_MODE_LSB;
+	$config['RAW'] = $q_config['editor_mode'] == QTX_EDITOR_MODE_RAW;
 	/**
 	 * Last chance to customize Java script variable qTranslateConfig.
 	 */
