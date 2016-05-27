@@ -845,45 +845,48 @@ function qtranxf_parse_page_config($config, $url_path, $url_query) {
 
 		foreach($pgcfg as $key => $cfg){
 			if(empty($cfg)) continue;
-			if( $key === 'anchors' ){
-				//Anchor elements are defined by id only.
-				//Merge unique id values only:
-				foreach($cfg as $k => $anchor){
-					$id = qtranxf_standardize_config_anchor($anchor);
-					if(is_null($id)) continue;
-					if(!is_string($id)) $id = $k;
-					if( !isset($page_config['anchors']) ) $page_config['anchors'] = array();
-					$page_config['anchors'][$id] = $anchor;
-				}
-			}else
-			if( $key === 'forms' ){
-				if( !isset($page_config['forms']) ) $page_config['forms'] = array();
-				foreach($cfg as $form_id => $pgcfg_form){
-					if(!isset($pgcfg_form['fields'])) continue;
-					// convert obsolete format for 'fields'
-					foreach($pgcfg_form['fields'] as $k => $f){
-						if(!isset($f['id'])) continue;
-						$id = $f['id'];
-						unset($f['id']);
-						$pgcfg_form['fields'][$id] = $f;
-						if($id !== $k) unset($pgcfg_form['fields'][$k]);
+			switch($key){
+				case 'anchors': {
+						//Anchor elements are defined by id only.
+						//Merge unique id values only:
+						foreach($cfg as $k => $anchor) {
+							$id = qtranxf_standardize_config_anchor($anchor);
+							if(is_null($id)) continue;
+							if(!is_string($id)) $id = $k;
+							if( !isset($page_config['anchors']) ) $page_config['anchors'] = array();
+							$page_config['anchors'][$id] = $anchor;
+						}
+					} break;
+				case 'forms':{
+						if( !isset($page_config['forms']) ) $page_config['forms'] = array();
+						foreach($cfg as $form_id => $pgcfg_form) {
+							if(!isset($pgcfg_form['fields'])) continue;
+							// convert obsolete format for 'fields'
+							foreach($pgcfg_form['fields'] as $k => $f){
+								if(!isset($f['id'])) continue;
+								$id = $f['id'];
+								unset($f['id']);
+								$pgcfg_form['fields'][$id] = $f;
+								if($id !== $k) unset($pgcfg_form['fields'][$k]);
+							}
+							//figure out obsolete id of form/collection
+							if(is_string($form_id)){
+								$id = $form_id;
+							}else if(isset($pgcfg_form['form']['id'])){
+								$id = $pgcfg_form['form']['id'];
+								unset($pgcfg_form['form']['id']);
+								if(empty($pgcfg_form['form'])) unset($pgcfg_form['form']);
+							}else{
+								$id = '';
+							}
+							if(!isset($page_config['forms'][$id])) $page_config['forms'][$id] = $pgcfg_form;
+							else $page_config['forms'][$id] = qtranxf_merge_config($page_config['forms'][$id],$pgcfg_form);
+						}
+					} break;
+				default:{
+						if( !isset($page_config[$key]) ) $page_config[$key] = $cfg;
+						else $page_config[$key] = qtranxf_merge_config($page_config[$key],$cfg);
 					}
-					//figure out obsolete id of form/collection
-					if(is_string($form_id)){
-						$id = $form_id;
-					}else if(isset($pgcfg_form['form']['id'])){
-						$id = $pgcfg_form['form']['id'];
-						unset($pgcfg_form['form']['id']);
-						if(empty($pgcfg_form['form'])) unset($pgcfg_form['form']);
-					}else{
-						$id = '';
-					}
-					if(!isset($page_config['forms'][$id])) $page_config['forms'][$id] = $pgcfg_form;
-					else $page_config['forms'][$id] = qtranxf_merge_config($page_config['forms'][$id],$pgcfg_form);
-				}
-			}else{
-				if( !isset($page_config[$key]) ) $page_config[$key] = $cfg;
-				else $page_config[$key] = qtranxf_merge_config($page_config[$key],$cfg);
 			}
 		}
 	}
