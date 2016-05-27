@@ -1,4 +1,4 @@
-{"vendor":{"plugins/bbpress":"1.0"},
+{"vendor":{"plugins/buddypress":"1.0"},
 "front-config":{
 "all-pages": {
 	"filters": {
