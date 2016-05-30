@@ -5,7 +5,10 @@ require_once(QTRANSLATE_DIR.'/admin/qtx_admin_options.php');
 require_once(QTRANSLATE_DIR.'/admin/qtx_languages.php');
 require_once(QTRANSLATE_DIR.'/admin/qtx_admin_class_translator.php');
 require_once(QTRANSLATE_DIR.'/admin/qtx_user_options.php');
+require_once(QTRANSLATE_DIR.'/admin/qtx_admin_taxonomy.php');
 
+/** see help notes for function 'qtranxf_collect_translations'
+ */
 function qtranxf_collect_translations_deep( $qfields, $sep ) {
 	$content = reset($qfields);
 	//qtranxf_dbg_log('qtranxf_collect_translations_deep: $content: ',$content);
@@ -21,6 +24,15 @@ function qtranxf_collect_translations_deep( $qfields, $sep ) {
 	return $result;
 }
 
+/**
+ * Collect translations of all ML fileds posted in $_REQUEST into Raw ML values.
+ * Called in response to action 'plugins_loaded'.
+ * All data is yet unslashed when action 'plugins_loaded' is executed.
+ * @param array $qfields a sub-tree of $_REQUEST['qtranslate-fields'], which contains translations for field $request.
+ * @param array|string $request an ML field of $_REQUEST.
+ * @param string $edit_lang language of the active LSB at the time of sending the request.
+ * @return void
+ */
 function qtranxf_collect_translations( &$qfields, &$request, $edit_lang ) {
 	if(isset($qfields['qtranslate-separator'])){
 		$sep = $qfields['qtranslate-separator'];
@@ -30,7 +42,7 @@ function qtranxf_collect_translations( &$qfields, &$request, $edit_lang ) {
 			$qfields[$edit_lang] = $request;
 			$request = qtranxf_collect_translations_deep($qfields,$sep);
 		}else{
-			//raw mode, or user mistakenly put ML value
+			//raw mode, or user mistakenly put ML value into an LSB-controlled field
 			//leave $request as user entered it
 			//$qfields = qtranxf_split($request);
 			return;
@@ -38,59 +50,6 @@ function qtranxf_collect_translations( &$qfields, &$request, $edit_lang ) {
 	}else{
 		foreach($qfields as $nm => &$vals){
 			qtranxf_collect_translations($vals,$request[$nm],$edit_lang); // recursive call
-		}
-	}
-}
-
-function qtranxf_regroup_translations( &$qfields, &$request, $edit_lang, $default_lang ) {
-	if(isset($qfields['qtranslate-original-value'])){
-		$original_value = $qfields['qtranslate-original-value'];
-		if(qtranxf_isMultilingual($original_value)){
-			$langs = qtranxf_split($original_value);
-			$original_value = $langs[$default_lang];
-			$qfields['qtranslate-original-value'] =  $original_value;
-		}
-		if(qtranxf_isMultilingual($request)){
-			$qfields = qtranxf_split($request);
-			$qfields['qtranslate-original-value'] =  $original_value;
-		}else{
-			//$request = trim($request);
-			$qfields[$edit_lang] = $request;
-			//foreach($qfields as $lang => $v){
-			//	$qfields[$lang] = trim($v);
-			//}
-		}
-		// make sure the default language value is provided
-		while(empty($qfields[$default_lang])){
-			$qfields[$default_lang] = $original_value;
-			if(!empty($qfields[$default_lang])) break;
-			global $q_config;
-			foreach($q_config['enabled_languages'] as $lang){
-				if(empty($qfields[$lang])) continue;
-				$qfields[$default_lang] = $qfields[$lang];
-				break;
-			}
-			break;
-		}
-		$request = $qfields[$edit_lang];
-	}else{
-		foreach($qfields as $nm => &$vals){
-			qtranxf_regroup_translations($vals,$request[$nm],$edit_lang,$default_lang); // recursive call
-		}
-	}
-}
-
-function qtranxf_regroup_translations_for( $type, $edit_lang, $default_lang ) {
-	if(!isset($_REQUEST[$type])) return;
-	foreach($_REQUEST[$type] as $nm => &$qfields){
-		qtranxf_regroup_translations($qfields,$_REQUEST[$nm],$edit_lang,$default_lang);
-		if(isset($_POST[$nm])){
-			$_POST[$nm] = $_REQUEST[$nm];
-			$_POST[$type][$nm] = $_REQUEST[$type][$nm];
-		}
-		if(isset($_GET[$nm])){
-			$_GET[$nm] = $_REQUEST[$nm];
-			$_GET[$type][$nm] = $_REQUEST[$type][$nm];
 		}
 	}
 }
@@ -105,6 +64,8 @@ function qtranxf_decode_json_name_value($val) {
 	return qtranxf_decode_name_value($nv);
 }
 
+/** see help notes for function 'qtranxf_collect_translations'
+ */
 function qtranxf_collect_translations_posted() {
 	//qtranxf_dbg_log('qtranxf_collect_translations_posted: REQUEST: ', $_REQUEST);
 	//qtranxf_dbg_log('qtranxf_collect_translations_posted: POST: ', $_POST);
@@ -143,15 +104,6 @@ function qtranxf_collect_translations_posted() {
 			if(isset($_POST[$nm])) $_POST[$nm] = $q;
 			if(isset($_GET[$nm]) ) $_GET [$nm] = $q;
 		}
-	}
-
-	if(isset($_REQUEST['qtranslate-slugs']) || isset($_REQUEST['qtranslate-terms'])){
-		//ensure REQUEST has the value of the default language
-		//multilingual slug/term values will be processed later
-		if(!$edit_lang) $edit_lang = qtranxf_getLanguageEdit();
-		$default_lang = qtranxf_getLanguageDefault();
-		qtranxf_regroup_translations_for('qtranslate-terms', $edit_lang, $default_lang);
-		qtranxf_regroup_translations_for('qtranslate-slugs', $edit_lang, $default_lang);
 	}
 }
 add_action('plugins_loaded', 'qtranxf_collect_translations_posted', 5);
@@ -229,13 +181,6 @@ function qtranxf_admin_init(){
 
 	if($q_config['auto_update_mo']){
 		qtranxf_updateGettextDatabases();
-	}
-
-	// update definitions if necessary
-	if(current_user_can('manage_categories')){
-		//qtranxf_updateTermLibrary();
-		qtranxf_updateTermLibraryJoin();
-		//qtranxf_updateSlug();
 	}
 }
 add_action('admin_init','qtranxf_admin_init',2);
@@ -802,58 +747,6 @@ function qtranxf_admin_notices_config() {
 		unset($q_config['url_info']['messages']);
 	}
 }
-
-/** A workaround for seems to be an overlook in WordPress core.
- * Dealing with '&' in term name.
- * A term name containing '&' is stored in database with '&amp;' instead of '&',
- * but search in get_terms is done on raw '&' coming from $_POST variable.
- */
-function qtranxf_get_terms_args($args, $taxonomies=null) {
-	if(!empty($args['name'])){
-		$p = 0;
-		while(($p = strpos($args['name'],'&',$p)) !== false){
-			if(substr($args['name'],$p,5) == '&amp;'){
-				$p += 5;
-			}else{
-				++$p;
-				$args['name'] = substr($args['name'],0,$p).'amp;'.substr($args['name'],$p);
-				$p += 4;
-			}
-		}
-		global $q_config;
-		$lang = $q_config['language'];
-		if($lang != $q_config['default_language']){
-			$args['name'] = qtranxf_find_term($lang, $args['name']);
-		}
-	}
-	if(!empty($args['name__like'])){
-		global $q_config;
-		$lang = $q_config['language'];
-		if($lang != $q_config['default_language']){
-			$nms = array();
-			$s = $args['name__like'];
-			foreach($q_config['term_name'] as $nm => $ts){
-				if(empty($ts[$lang])) continue;
-				$t = $ts[$lang];
-				if(function_exists('mb_stripos'))
-					$p = mb_stripos($t,$s);
-				else
-					$p = stripos($t,$s);
-				if($p === false) continue;
-				$nms[] = $nm;
-				//$args['name__like'] = $nm;
-				//break;
-			}
-			if(!empty($nms)){
-				$args['name'] = $nms;
-				$args['name__like'] = '';
-			}
-		}
-	}
-	return $args;
-}
-add_filter('get_terms_args', 'qtranxf_get_terms_args', 5, 2);
-//apply_filters( 'get_terms_args', $args, $taxonomies );
 
 /**
  * Encode front end language on home_url, since, on admin side, it is mostly in use to create links to a preview pages.

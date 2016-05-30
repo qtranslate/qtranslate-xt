@@ -40,6 +40,119 @@ function qtranxf_convert_database($action){
 	}
 }
 
+function qtranxf_convert_to_b($text) {
+	$blocks = qtranxf_get_language_blocks($text);
+	if( count($blocks) > 1 ){
+		foreach($blocks as $key => $b){
+			if(empty($b)) unset($blocks[$key]);
+		}
+	}
+	if( count($blocks) <= 1 )
+		return $text;
+
+	$text='';
+	$lang = false;
+	$lang_closed = true;
+	foreach($blocks as $block) {
+		if(preg_match("#^<!--:([a-z]{2})-->$#ism", $block, $matches)) {
+			$lang_closed = false;
+			$lang = $matches[1];
+			$text .= '[:'.$lang.']';
+			continue;
+		} elseif(preg_match("#^\[:([a-z]{2})\]$#ism", $block, $matches)) {
+			$lang_closed = false;
+			$lang = $matches[1];
+			$text .= '[:'.$lang.']';
+			continue;
+		}
+		switch($block){
+			case '[:]':
+			case '<!--:-->':
+				$lang = false;
+				break;
+			default:
+				if( !$lang && !$lang_closed ){
+					$text .= '[:]';
+					$lang_closed = true;
+				}
+				$text .= $block;
+				break;
+		}
+	}
+	$text .= '[:]';
+	return $text;
+}
+
+function qtranxf_convert_to_b_no_closing($text) {
+	$blocks = qtranxf_get_language_blocks($text);
+	if( count($blocks) > 1 ){
+		foreach($blocks as $key => $b){
+			if(empty($b)) unset($blocks[$key]);
+		}
+	}
+	if( count($blocks) > 1 ){
+		$texts = qtranxf_split_blocks($blocks);
+		$text = qtranxf_join_b_no_closing($texts);
+	}
+	return $text;
+}
+
+function qtranxf_convert_to_c($text) {
+	$blocks = qtranxf_get_language_blocks($text);
+	if( count($blocks) > 1 ){
+		foreach($blocks as $key => $b){
+			if(empty($b)) unset($blocks[$key]);
+		}
+	}
+	if( count($blocks) > 1 ){
+		$texts = qtranxf_split_blocks($blocks);
+		$text = qtranxf_join_c($texts);
+	}
+	return $text;
+}
+
+function qtranxf_convert_to_b_deep($text) {
+	if(is_array($text)) {
+		foreach($text as $key => $t) {
+			$text[$key] = qtranxf_convert_to_b_deep($t);
+		}
+		return $text;
+	}
+
+	if( is_object($text) || $text instanceof __PHP_Incomplete_Class ) {
+		foreach(get_object_vars($text) as $key => $t) {
+			$text->$key = qtranxf_convert_to_b_deep($t);
+		}
+		return $text;
+	}
+
+	if(!is_string($text) || empty($text))
+		return $text;
+
+	return qtranxf_convert_to_b($text);
+}
+
+function qtranxf_convert_to_b_no_closing_deep($text) {
+	if(is_array($text)) {
+		foreach($text as $key => $t) {
+			$text[$key] = qtranxf_convert_to_b_no_closing_deep($t);
+		}
+		return $text;
+	}
+
+	if( is_object($text) || $text instanceof __PHP_Incomplete_Class ) {
+		foreach(get_object_vars($text) as $key => $t) {
+			$text->$key = qtranxf_convert_to_b_no_closing_deep($t);
+		}
+		return $text;
+	}
+
+	if(!is_string($text) || empty($text))
+		return $text;
+
+	return qtranxf_convert_to_b_no_closing($text);
+}
+
 function qtranxf_convert_database_options($action){
 	global $wpdb;
 	$wpdb->show_errors();
@@ -365,8 +478,8 @@ function gtranxf_db_clean_terms(){
 		$nm_cur = $nm;
 		$ts_cur = empty($term_name_cur[$nm]) ? array() : $term_name_cur[$nm];
 
-		foreach( $ts as $lng => $val ){
-			$val = trim($val);
+		foreach( $ts as $lng => $v){
+			$val = trim($v);
 			$val = addslashes($val);
 			$val = apply_filters('pre_term_name',$val);
 			$val = stripcslashes($val);
@@ -409,8 +522,8 @@ function gtranxf_db_clean_terms(){
 	if(empty($msgs)){
 		$msg = __('No term has been modified. All terms are already in a consistent state.', 'qtranslate');
 	}else{
-		$msg = join( '<br/>'.PHP_EOL, $msgs);
-		$msg .= '<br/>'.PHP_EOL . __('Save this report for further analysis, if necessary.', 'qtranslate');
+		$msg = '<ol>'.PHP_EOL.'<li>'.join( '</li>'.PHP_EOL.'<li>', $msgs).'</li>'.PHP_EOL.'</ol>' .PHP_EOL;
+		$msg .= __('Save this report for further analysis, if necessary.', 'qtranslate');
 	}
-	return __('Legacy term names have been cleaned up:', 'qtranslate') . '<br/>'.PHP_EOL . $msg;
+	return __('Legacy term names have been cleaned up:', 'qtranslate') . '<br/>'.PHP_EOL . $msg .PHP_EOL;
 }

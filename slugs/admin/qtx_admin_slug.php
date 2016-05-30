@@ -1,6 +1,58 @@
 <?php
 if ( !defined( 'WP_ADMIN' ) ) exit;
 
+function qtranxf_regroup_translations( &$qfields, &$request, $edit_lang, $default_lang ) {
+	if(isset($qfields['qtranslate-original-value'])){
+		global $q_config;
+		$original_value = $qfields['qtranslate-original-value'];
+		if(qtranxf_isMultilingual($original_value)){
+			$langs = qtranxf_split($original_value);
+			$original_value = $langs[$default_lang];
+			$qfields['qtranslate-original-value'] =  $original_value;
+		}
+		if(qtranxf_isMultilingual($request)){
+			$qfields = qtranxf_split($request);
+			$qfields['qtranslate-original-value'] =  $original_value;
+		}else{
+			$qfields[$edit_lang] = $request;
+		}
+		// make sure the default language value is provided
+		qtranxf_ensure_language_set( $qfields, $default_lang, $original_value);
+		$request = $qfields[$edit_lang];
+		//$request = qtranxf_join_b($qfields);
+	}else{
+		foreach($qfields as $nm => &$vals){
+			qtranxf_regroup_translations($vals,$request[$nm],$edit_lang,$default_lang); // recursive call
+		}
+	}
+}
+
+function qtranxf_regroup_translations_for( $type, $edit_lang, $default_lang ) {
+	if(!isset($_REQUEST[$type])) return;
+	foreach($_REQUEST[$type] as $nm => &$qfields){
+		qtranxf_regroup_translations($qfields,$_REQUEST[$nm],$edit_lang,$default_lang);
+		if(isset($_POST[$nm])){
+			$_POST[$nm] = $_REQUEST[$nm];
+			$_POST[$type][$nm] = $_REQUEST[$type][$nm];
+		}
+		if(isset($_GET[$nm])){
+			$_GET[$nm] = $_REQUEST[$nm];
+			$_GET[$type][$nm] = $_REQUEST[$type][$nm];
+		}
+	}
+}// */
+
+function qtranxf_slug_collect_translations_posted() {
+	if(isset($_REQUEST['qtranslate-slugs']))){
+		//ensure REQUEST has the value of the default language
+		//multilingual slug/term values will be processed later
+		$edit_lang = qtranxf_getLanguageEdit();
+		$default_lang = qtranxf_getLanguageDefault();
+		qtranxf_regroup_translations_for('qtranslate-slugs', $edit_lang, $default_lang);
+	}
+}
+add_action('plugins_loaded', 'qtranxf_slug_collect_translations_posted', 6);
+
 function qtranxf_slug_update_translations( $name, &$qfields, $default_lang ) {
 	global $wpdb;
 

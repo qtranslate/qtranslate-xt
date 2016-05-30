@@ -55,18 +55,17 @@
 	"js-exec":{"widgets-exec":{"src":"./admin/js/widgets-exec.min.js"}}
 }
 ,
-"edit-tag":{
+"edit-term":{
 	"pages":{"term.php":"","edit-tags.php":"action=edit"},
 	"forms":{
 		"edittag":{
 			"fields":{
 				"name":{},
 				"description":{},
-				"parent":{ "encode":"display" }
+				"parent":{"encode":"display"}
 			}
 		}
-	},
-	"js-exec":{"edit-tag-exec":{"src":"./admin/js/edit-tag-exec.min.js"}}
+	}
 }
 ,
 "edit-tags":{

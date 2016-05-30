@@ -1037,3 +1037,18 @@ function qtranxf_match_language_locale($locale){
 		if( $locale_code == $lang ) return $lang;
 	}
 }
+
+function qtranxf_get_page_referer(){
+	if(defined('DOING_AJAX')){
+		global $q_config;
+		if(isset($q_config['url_info']['page_referer']))
+			return $q_config['url_info']['page_referer'];
+		if(!empty($q_config['url_info']['http_referer'])){
+			$page = basename($q_config['url_info']['http_referer']);
+			$q_config['url_info']['page_referer'] = $page;
+			return $page;
+		}
+	}
+	global $pagenow;
+	return $pagenow;
+}

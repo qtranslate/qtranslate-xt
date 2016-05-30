@@ -822,45 +822,6 @@ function qtranxf_timeFromCommentForCurrentLanguage($old_date, $format = '', $gmt
 
 /* END DATE TIME FUNCTIONS */
 
-/**
- * @since 3.4
- */
-function qtranxf_term_use($lang, $obj, $taxonomy) {
-	global $q_config;
-	if(is_array($obj)) {
-		// handle arrays recursively
-		foreach($obj as $key => $t) {
-			$obj[$key] = qtranxf_term_use($lang, $obj[$key], $taxonomy);
-		}
-		return $obj;
-	}
-	if(is_object($obj)) {
-		// object conversion
-		if(isset($obj->name) && !isset($obj->name_i18n)){
-			$default_language = $q_config['default_language'];
-			if(isset($q_config['term_name'][$obj->name])){
-				//qtranxf_dbg_echo('qtranxf_translate_term: object: ',$obj,true);
-				$ts = $q_config['term_name'][$obj->name];
-				$ts[$default_language] = $obj->name;
-				if(isset($q_config['term_name'][$obj->name][$lang]))
-					$obj->name = $q_config['term_name'][$obj->name][$lang];
-			}else{
-				$ts = array($default_language => $obj->name);
-			}
-			$obj->name_i18n = array( 'ts' => $ts );
-		}
-	} elseif(isset($q_config['term_name'][$obj][$lang])) {
-		//qtranxf_dbg_echo('qtranxf_translate_term: string: ',$obj,true);
-		$obj = $q_config['term_name'][$obj][$lang];
-	}
-	return $obj;
-}
-
-function qtranxf_useTermLib($obj) {
-	global $q_config;
-	return qtranxf_term_use($q_config['language'], $obj, null);
-}
-
 // check if it is a link to an ignored file type
 function qtranxf_ignored_file_type($path) {
 	global $q_config;
