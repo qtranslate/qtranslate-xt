@@ -121,10 +121,18 @@ This version recovers translation of parent of a category on category edit page.
 
 ## Changelog ##
 
+### 3.4.6.9 ###
+* Improvement: Consistent term framework.
+* Improvement: editing of categoris and tags in Raw Editor Mode [WP Topic](https://wordpress.org/support/topic/taxonomy-term-translate-filter-in-editor-raw-mode-in-admin)
+* Improvement: using now native code for editing of terms. Script `edit-tag-exec.js` is no longer needed.
+* Improvement: ML fields are now also highlighted with a color bar in Raw Editor Mode.
+* Informaton: Translators acknowledgement section has been moved from qtranslate.php to /lang/translators-notes.txt to keep all translation-related updates in one folder.
+* Language: Kazakh, 'kk', language preset.
+
 ### 3.4.6.8 ###
 * Imrovement: translation of taxonomies on page `/wp-admin/edit.php`.
 * Improvement: disable browsing caching before redirection based on languge [Issue #306](https://github.com/qTranslate-Team/qtranslate-x/issues/306).
-* Fix: proper tag editing on page `post.php` [Issue #366](https://github.com/qTranslate-Team/qtranslate-x/issues/366).
+* Fix: proper tag editing on page `post.php` under non-default language [Issue #366](https://github.com/qTranslate-Team/qtranslate-x/issues/366).
 
 ### 3.4.6.7 ###
 * Fix: for `/wp-login/` and `/login/`. Thanks to [extremecarver](http://qtranslate-x.com/support/index.php?action=profile;u=373).
