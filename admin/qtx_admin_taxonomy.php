@@ -37,22 +37,24 @@ function qtranxf_get_term_joined($obj,$taxonomy=null) {
  */
 function qtranxf_term_find_translations($lang, $default_lang, $term, $taxonomy=null) {
 	global $q_config;
-	if(empty($lang)) $lang = $q_config['language'];
 	if(empty($default_lang)) $default_lang = $q_config['default_language'];
 	$term_name = &$q_config['term_name'];
-	if($lang != $default_lang){
-		foreach($term_name as $nm => $ts){
-			if(empty($ts[$lang])) continue;
-			if( $ts[$lang] != $term ) continue;
-			$term = $nm;
-			break;
+	while(!isset($term_name[$term])){
+		if(empty($lang)) $lang = $q_config['language'];
+		if($lang != $default_lang){
+			foreach($term_name as $nm => $ts){
+				if(empty($ts[$lang])) continue;
+				if( $ts[$lang] != $term ) continue;
+				$term = $nm;
+				break 2;
+			}
 		}
-	}
-	if(!isset($term_name[$term]))
 		return null;
-	if(!isset($term_name[$term][$default_lang]))
-		$term_name[$term][$default_lang] = $term;
-	return $term_name[$term];
+	}
+	$ts = &$term_name[$term];
+	if(!isset($ts[$default_lang]))
+		$ts[$default_lang] = $term;
+	return $ts;
 }
 
 function qtranxf_get_terms_joined($terms, $taxonomy=null, $args=null) {
