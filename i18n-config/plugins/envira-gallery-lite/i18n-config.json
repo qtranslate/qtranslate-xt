@@ -1,0 +1,14 @@
+{"vendor":{"plugins/envira-gallery-lite":"1.0"},
+"admin-config": {
+"post":{
+	"pages":{"post.php":"", "post-new.php":""},
+	"forms":{
+		"post":{
+				"fields":{
+					"envira-config-title":{}
+				}
+			}
+		}
+	}
+}
+}
