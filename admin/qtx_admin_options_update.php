@@ -687,17 +687,18 @@ function qtranxf_updateSettings(){
 			$_POST['config_files'] = array();
 			unset($_POST['json_config_files']);
 		}else{
+			$json_config_files = implode(PHP_EOL,$json_files);
+			$_POST['json_config_files'] = $json_config_files;
 			$nerr = isset($q_config['url_info']['errors']) ? count($q_config['url_info']['errors']) : 0;
 			$cfg = qtranxf_load_config_files($json_files);
 			if(!empty($q_config['url_info']['errors']) && $nerr != count($q_config['url_info']['errors'])){//new errors occurred
-				$_POST['json_config_files'] = implode(PHP_EOL,$json_files);
 				remove_action('admin_notices', 'qtranxf_admin_notices_errors');
 				if($json_files == $q_config['config_files']){
 					//option is not changed, apparently something happened to files, then make the error permanent
 					update_option('qtranslate_config_errors',array_slice($q_config['url_info']['errors'],$nerr));
 				}
 			}else{
-				$_POST['config_files'] = implode(PHP_EOL,$json_files);
+				$_POST['config_files'] = $json_config_files;
 				unset($_POST['json_config_files']);
 				delete_option('qtranslate_config_errors');
 			}
