@@ -168,6 +168,7 @@ function qtranxf_default_language_name()
 	$nnm['sv'] = 'Svenska';
 	$nnm['it'] = 'Italiano';
 	$nnm['ro'] = 'Română';
+	$nnm['md'] = 'Moldovenească';//June 1 2016
 	$nnm['hu'] = 'Magyar';
 	$nnm['ja'] = '日本語';
 	$nnm['es'] = 'Español';
@@ -210,6 +211,7 @@ function qtranxf_default_locale()
 	$loc['sv'] = 'sv_SE';
 	$loc['it'] = 'it_IT';
 	$loc['ro'] = 'ro_RO';
+	$loc['md'] = 'ro_RO';
 	$loc['hu'] = 'hu_HU';
 	$loc['ja'] = 'ja';
 	$loc['es'] = 'es_ES';
@@ -230,7 +232,6 @@ function qtranxf_default_locale()
 	$loc['sk'] = 'sk_SK';
 	$loc['lt'] = 'lt_LT';
 	$loc['kk'] = 'kk';
-	//$loc['md'] = 'ro_RO';
 	//$loc['tw'] = 'zh_TW';
 	return $loc;
 }
@@ -266,6 +267,7 @@ function qtranxf_default_not_available()
 	$nam['sv'] = 'Tyvärr är denna artikel enbart tillgänglig på %LANG:, : och %.';
 	$nam['it'] = 'Ci spiace, ma questo articolo è disponibile soltanto in %LANG:, : e %.';
 	$nam['ro'] = 'Din păcate acest articol este disponibil doar în %LANG:, : și %.';
+	$nam['md'] = 'Ne pare rău, acest articol este disponibil numai în %LANG:, : şi  %.';
 	$nam['hu'] = 'Sajnos ennek a bejegyzésnek csak %LANG:, : és % nyelvű változata van.';
 	$nam['ja'] = '申し訳ありません、このコンテンツはただ今　%LANG:、 :と %　のみです。';
 	$nam['es'] = 'Disculpa, pero esta entrada está disponible sólo en %LANG:, : y %.';
@@ -308,6 +310,7 @@ function qtranxf_default_date_format()
 	$dtf['sv'] = '%Y-%m-%d';
 	$dtf['it'] = '%e %B %Y';
 	$dtf['ro'] = '%A, %e %B %Y';
+	$dtf['md'] = '%A, %e %B %Y';
 	$dtf['hu'] = '%Y %B %e, %A';
 	$dtf['ja'] = '%Y年%m月%d日';
 	$dtf['es'] = '%d \d\e %B \d\e %Y';
@@ -349,6 +352,7 @@ function qtranxf_default_time_format()
 	$tmf['sv'] = '%H:%M';
 	$tmf['it'] = '%H:%M';
 	$tmf['ro'] = '%H:%M';
+	$tmf['md'] = '%H:%M';
 	$tmf['hu'] = '%H:%M';
 	$tmf['ja'] = '%H:%M';
 	$tmf['es'] = '%H:%M hrs.';
@@ -391,6 +395,7 @@ function qtranxf_default_flag()
 	$flg['sv'] = 'se.png';
 	$flg['it'] = 'it.png';
 	$flg['ro'] = 'ro.png';
+	$flg['md'] = 'md.png';
 	$flg['hu'] = 'hu.png';
 	$flg['ja'] = 'jp.png';
 	$flg['es'] = 'es.png';
