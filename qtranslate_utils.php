@@ -1045,6 +1045,7 @@ function qtranxf_get_page_referer(){
 			return $q_config['url_info']['page_referer'];
 		if(!empty($q_config['url_info']['http_referer'])){
 			$page = basename($q_config['url_info']['http_referer']);
+			$page = explode('?',$page)[0];
 			$q_config['url_info']['page_referer'] = $page;
 			return $page;
 		}
