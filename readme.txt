@@ -128,7 +128,8 @@ This version recovers translation of parent of a category on category edit page.
 * Improvement: ML fields are now also highlighted with a color bar in Raw Editor Mode.
 * Information: Translators acknowledgement section has been moved from qtranslate.php to /lang/translators-notes.txt to keep all translation-related updates in one folder.
 * New Tool: Database operation "Split database file by languages" on page `/wp-admin/options-general.php?page=qtranslate-x#import`.
-* Language preset: locale 'kk' (Kazakh, Қазақ тілі).
+* Language preset 'kk': locale 'kk' (Kazakh, Қазақ тілі).
+* Language preset 'md': locale 'ro_RO' (Moldovan, Moldovenească).
 
 ### 3.4.6.8 ###
 * Improvement: translation of taxonomies on page `/wp-admin/edit.php`.
