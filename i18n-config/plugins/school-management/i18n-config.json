@@ -1,0 +1,51 @@
+{"vendor":{"plugins/school-management":"1.0"},
+"admin-config": {
+	"smgt_all": {
+		"pages": { "admin.php":"page=smgt_" },
+		"anchors": {"main-wrapper":{"where":"first,last"}},
+		"forms": {
+			"wpbody-content":{
+				"fields":{
+					"page-title":{"jquery":"div.page-title h3", "encode":"display" },
+					"tag-td":{"jquery":"td","encode":"display"},
+					"tag-option":{"jquery":"option","encode":"display"}
+				}
+			}
+		}
+	},
+	"smgt_student": {
+		"pages": { "admin.php":"page=smgt_student" },
+		"forms": {
+			"student_form":{
+				"fields":{
+					"first_name":{},
+					"middle_name":{},
+					"last_name":{},
+					"address":{}
+				}
+			}
+		}
+	},
+	"smgt_class": {
+		"pages": { "admin.php":"page=smgt_class" },
+		"forms": {
+			"class_form":{
+				"fields":{
+					"class_name":{},
+					"class_section":{}
+				}
+			}
+		}
+	},
+	"smgt_gnrl_settings": {
+		"pages": { "admin.php":"page=smgt_gnrl_settings" },
+		"forms": {
+			"setting_form":{
+				"fields":{
+					"smgt_school_name":{}
+				}
+			}
+		}
+	}
+}
+}
