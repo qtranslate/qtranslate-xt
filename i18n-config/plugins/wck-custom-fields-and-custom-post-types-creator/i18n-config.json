@@ -1,0 +1,15 @@
+{"vendor":{"plugins/wck-custom-fields-and-custom-post-types-creator":"1.0"},
+"admin-config": {
+"wck-admin-cptc-page": {
+	"pages": { "admin.php":"page=cptc-page" },
+	"anchors": {"option_page":{"where":"before,after"}},
+	"forms":{
+		"main":{
+			"fields":{
+				"description":{}
+			}
+		}
+	}
+}
+}
+}
