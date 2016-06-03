@@ -394,7 +394,7 @@ function qtranxf_meta_box_LSB()
 	printf(__('This is a set of "%s" from %s. Click any blank space between the buttons and drag it to a place where you would need it the most. Click the handle at the top-right corner of this widget to hide this message.', 'qtranslate'), __('Language Switching Buttons','qtranslate'), '<a href="https://wordpress.org/plugins/qtranslate-x/" target="_blank">qTranslate&#8209;X</a>');
 }
 
-function qtranxf_add_meta_box_LSB($post_type, $post)
+function qtranxf_add_meta_box_LSB($post_type, $post=null)
 {
 	global $q_config, $pagenow;
 	if( $q_config['editor_mode'] != QTX_EDITOR_MODE_LSB) return;
