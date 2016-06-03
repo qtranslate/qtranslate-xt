@@ -468,8 +468,24 @@ function qtranxf_filter_options(){
 qtranxf_filter_options();
 
 /**
+ * @since 3.4.7
+ */
+function qtranxf_translate_object_property( $lang, $txt, $key, $post, $show_available, $show_empty) {
+	$blocks = qtranxf_get_language_blocks($txt);
+	if( count($blocks) <= 1 )
+		return; //value is not multilingual
+	$key_ml = $key.'_ml';
+	$post->$key_ml = $txt;
+	$langs = array();
+	$content = qtranxf_split_blocks($blocks,$langs);
+	$post->$key = qtranxf_use_content($lang, $content, $langs, $show_available, $show_empty);
+	$key_langs = $key.'_langs';
+	$post->$key_langs = $langs;
+}
+
+/**
  * @since 3.4.6.5
-*/
+ */
 function qtranxf_translate_post($post,$lang) {
 	foreach(get_object_vars($post) as $key => $txt) {
 		switch($key){//the quickest way to proceed
@@ -496,10 +512,12 @@ function qtranxf_translate_post($post,$lang) {
 			case 'filter':
 				continue;
 			//known to translate
-			case 'post_content': $post->$key = qtranxf_use_language($lang, $txt, true); break;
-			case 'post_title':
+			case 'post_content': qtranxf_translate_object_property($lang,$txt,$key,$post,true,false); break;
+				// $post->$key = qtranxf_use_language($lang, $txt, true); break;
 			case 'post_excerpt':
 			case 'post_content_filtered'://not sure how this is in use
+			case 'post_title': qtranxf_translate_object_property($lang,$txt,$key,$post,false,false); break;
+/*
 			{
 				$blocks = qtranxf_get_language_blocks($txt);
 				if(count($blocks)>1){//value is multilingual
@@ -513,6 +531,7 @@ function qtranxf_translate_post($post,$lang) {
 					$post->$key_langs = $langs;
 				}
 			} break;
+*/
 			//other maybe, if it is a string, most likely it never comes here
 			default:
 				$post->$key = qtranxf_use($lang, $txt, false);
