@@ -121,6 +121,10 @@ This version recovers translation of parent of a category on category edit page.
 
 ## Changelog ##
 
+### 3.4.7 ###
+* Improvement: chached values of raw ML fields in WP_Post object, function `qtranxf_translate_object_property` [Topic #426](http://qtranslate-x.com/support/index.php?topic=426).
+* Language preset 'md': locale 'ro_RO' (Moldovan, Moldovenească).
+
 ### 3.4.6.9 ###
 * Improvement: Consistent term framework. Database operation "Clean Legacy Term Names" (at plugin settings page `/wp-admin/options-general.php?page=qtranslate-x#import`), which cleans up old imperfections of taxonomy framework.
 * Improvement: editing of categories and tags in Raw Editor Mode [WP Topic](https://wordpress.org/support/topic/taxonomy-term-translate-filter-in-editor-raw-mode-in-admin)
@@ -129,7 +133,6 @@ This version recovers translation of parent of a category on category edit page.
 * Information: Translators acknowledgement section has been moved from qtranslate.php to /lang/translators-notes.txt to keep all translation-related updates in one folder.
 * New Tool: Database operation "Split database file by languages" on page `/wp-admin/options-general.php?page=qtranslate-x#import`.
 * Language preset 'kk': locale 'kk' (Kazakh, Қазақ тілі).
-* Language preset 'md': locale 'ro_RO' (Moldovan, Moldovenească).
 
 ### 3.4.6.8 ###
 * Improvement: translation of taxonomies on page `/wp-admin/edit.php`.
