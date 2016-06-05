@@ -370,7 +370,7 @@ function qts_config_hook($request_uri) {
 	global $q_config;
 	qtranxf_admin_section_start('service');
 ?>
-<table class="form-table">
+<table class="form-table qtranxs-form-table" id="qtranxs_services_config">
 	<tr>
 		<th scope="row"><?php _e('qTranslate Services', 'qtranslate') ?></th>
 		<td>
@@ -386,7 +386,7 @@ function qts_config_hook($request_uri) {
 		$services = qts_queryQS(QTS_GET_SERVICES);
 		$orders = get_option('qts_orders');
 ?>
-	<tr valign="top">
+	<tr>
 		<th scope="row"><h4><?php _e('Open Orders', 'qtranslate') ?></h4></th>
 		<td>
 <?php if(is_array($orders) && sizeof($orders)>0) { ?>
@@ -445,7 +445,7 @@ function qts_config_hook($request_uri) {
 				}
 			if($showservices){
 ?>
-	<tr valign="top">
+	<tr>
 		<th scope="row" colspan="2">
 			<h4><?php _e('Service Configuration', 'qtranslate') ?></h4>
 			<p class="description"><?php _e('Below, you will find configuration settings for qTranslate Service Providers, which are required for them to operate.', 'qtranslate') ?></p>
@@ -455,7 +455,7 @@ function qts_config_hook($request_uri) {
 		foreach($services as $service) {
 			if(sizeof($service['service_required_fields'])>0) {
 ?>
-	<tr valign="top">
+	<tr>
 		<th scope="row" colspan="2">
 			<h5><?php _e($service['service_name']) ?> ( <a name="qts_service_<?php echo $service['service_id']; ?>" href="<?php echo $service['service_url']; ?>"><?php _e('Website', 'qtranslate') ?></a> )</h5>
 			<p class="description"><?php _e($service['service_description']) ?></p>
@@ -464,7 +464,7 @@ function qts_config_hook($request_uri) {
 <?php
 				foreach($service['service_required_fields'] as $field) {
 ?>
-	<tr valign="top">
+	<tr>
 		<th scope="row"><?php echo $field['title']; ?></th>
 		<td>
 			<input type="<?php echo ($field['name']=='password')?'password':'text';?>" name="<?php echo 'qts_'.$service['service_id']."_".$field['name']; ?>" value="<?php echo (isset($service_settings[$service['service_id']][$field['name']])&&$field['name']!='password')?$service_settings[$service['service_id']][$field['name']]:''; ?>" style="width:100%"/>

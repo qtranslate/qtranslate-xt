@@ -4,6 +4,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 require_once(QTRANSLATE_DIR.'/inc/i18n-interface.php');
 require_once(QTRANSLATE_DIR.'/qtranslate_options.php');
 require_once(QTRANSLATE_DIR.'/qtranslate_utils.php');
+require_once(QTRANSLATE_DIR.'/inc/qtx_init.php');
 require_once(QTRANSLATE_DIR.'/qtranslate_core.php');
 require_once(QTRANSLATE_DIR.'/inc/qtx_taxonomy.php');
 

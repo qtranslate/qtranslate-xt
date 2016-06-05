@@ -91,12 +91,16 @@
 
 /*
 .form-table, .form-table td, .form-table td p, .form-table th, .form-wrap label
-.qtranxs_notes, .form-table td p.qtranxs_notes{
+.qtranxs-notes, .form-table td p.qtranxs-notes{
 */
-.qtranxs_notes, .form-table td p.qtranxs_notes, .form-wrap p.qtranxs_notes{
+.qtranxs-notes, .form-table td p.qtranxs-notes, .form-wrap p.qtranxs-notes{
 	font-size: smaller;
 }
 
-.qtranxs_option_group {
+.qtranxs-option-group {
 	text-decoration: underline;
+}
+
+.qtranxs-form-table th, .qtranxs-form-table td {
+	vertical-align: top;
 }
