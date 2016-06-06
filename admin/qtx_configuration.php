@@ -117,12 +117,65 @@ function qtranxf_language_form($form_action, $button_name, $nonce_action) {
 <?php
 }
 
-function qtranxf_license_form($form_action, $button_name, $nonce_action) {
-	global $q_config;
+function qtranxf_license_message($linf) {
+	switch($linf['type']){
+		case LIC_TYPE_PRODUCTION: $ltype = _x('production', 'Type of license used in a phrase like "The %1$s license key will expire ..."', 'qtranslate'); break;
+		default: $ltype = _x('trial', 'Type of license used in a phrase like "The %1$s license key will expire ..."', 'qtranslate'); break;
+	}
+	if( $linf['exp_in'] > 0 ){
+		// translators: %1$s is a type of license, either "trial" or "production". %3$s is a translated date.
+		$msg = __('The %1$s license key will expire in %d days on %3$s. Please, make sure to %supdate the license key%s on time.', 'qtranslate');
+	}else{
+		// translators: %1$s is a type of license, either "trial" or "production". %3$s is a translated date.
+		$msg = __('The %1$s license key has expired %d days ago on %3$s. Please, %supdate the license key%s in order to enable language switching at front end.', 'qtranslate');
+		if(empty($linf['disabled'])){
+			$msg .= ' '.__('It might be still working at front end due to grace period, but you should provide license key as soon as possible.', 'qtranslate');
+		}
+	}
+	return sprintf($msg, $ltype, absint($linf['exp_in']), $linf['exp_on'], '<a href="'.$linf['url_lic'].'" target="_blank">', '</a>');
+}
+
+function qtranxf_license_form($form_action, $nonce_action) {
+	$linf = qtranxf_license_info();
+	$localhost = !empty($linf['localhost']);
+	$lic_url = empty($_POST['lic_url']) ? $linf['url'] : $_POST['lic_url'];
+	$lic_key = empty($_POST['lic_key']) ? $linf['key'] : $_POST['lic_key'];
+	$ahref = '<a href="'.$linf['url_lic'].'" target="_blank">';
+	/* <div class="form-wrap"> */
 ?>
-<div class="form-wrap"><form action="<?php echo $form_action ?>" id="qtranxs-edit-license" method="post" class="">
-<input type="hidden" id="edit_license_wpnonce" name="_wpnonce" value="<?php echo wp_create_nonce( $nonce_action ) ?>" />
+<div><form action="<?php echo $form_action ?>" id="qtranxs-edit-license" method="post" class="">
+<input type="hidden" id="qtranxs-edit-license-wpnonce" name="_wpnonce" value="<?php echo wp_create_nonce( $nonce_action ) ?>" />
 <?php wp_referer_field() ?>
+<table class="form-table qtranxs-form-table" id="qtranxs_license_config"><tbody>
+	<tr>
+		<td colspan="2">
+<?php
+	if($localhost){
+		echo '<p>' . sprintf(__('License are not required while running on %s. However, you may still %sregister the license%s for the server where this test installation will eventually run.', 'qtranslate'), '<em>localhost</em>', $ahref, '</a>') . '</p>' . PHP_EOL;
+	}
+	if($linf['type'] != LIC_TYPE_TRIAL || !$localhost){
+		$msg = qtranxf_license_message($linf);
+		echo '<p>' . $msg . '</p>' . PHP_EOL;
+	}
+	$SiteAddressURL = qtranxf_translate_wp('Site Address (URL)');
+	$button_name = __('Save Changes &raquo;', 'qtranslate');
+?>
+		</td>
+	</tr>
+	<tr class="form-field form-required">
+		<th scope="row"><label for="qtranxs_lic_url"><?php echo $SiteAddressURL ?></label></th>
+		<td><input name="lic_url" type="text" id="qtranxs_lic_url" value="<?php echo $lic_url ?>"<?php if( !empty($lic_url) && !$localhost ) echo ' readonly' ?> />
+			<p class="qtranxs-notes"><?php printf(__('The URL, for which license key is registered. The same as it is entered in "%s" on page "%s".', 'qtranslate'), $SiteAddressURL, '<a href="' . admin_url('options-general.php') . '" target="_blank">' . qtranxf_translate_wp('General Settings') . '</a>') ?></p>
+		</td>
+	</tr>
+	<tr class="form-field form-required">
+		<th scope="row"><label for="qtranxs_lic_key"><?php _e( 'License Key' ) ?></label></th>
+		<td><input name="lic_key" type="text" id="qtranxs_lic_key" value="<?php echo $lic_key ?>" />
+			<p class="qtranxs-notes"><?php printf(__('In order to obtain or renew the lisence key, please visit %1$sthe license site%2$s. If "%3$s" is already registered at %1$sthe license site%2$s, then you may simply press button "%4$s" in order to import the license key here.', 'qtranslate'), $ahref, '</a>', $SiteAddressURL, $button_name) ?></p>
+		</td>
+	</tr>
+</tbody></table>
+<?php	qtranxf_admin_section_button($button_name); ?>
 </form></div>
 <?php
 }
@@ -160,8 +213,12 @@ function qtranxf_get_admin_sections() {
 
 	$admin_sections['integration'] = __('Integration', 'qtranslate');//Custom Integration
 	$admin_sections['import'] = __('Import', 'qtranslate').'/'.__('Export', 'qtranslate');
-	$admin_sections['languages'] = __('Languages', 'qtranslate');
-	//$admin_sections['license'] = __('License', 'qtranslate');//always last section
+	$admin_sections['languages'] = __('Languages', 'qtranslate');//always last section before 'License'
+
+	$linf = qtranxf_license_info();
+	if($linf['exp_in'] < LIC_WARN1)
+		$admin_sections['license'] = __('License', 'qtranslate');
+
 	return $admin_sections;
 }
 
@@ -759,20 +816,20 @@ class QTX_LanguageList extends WP_List_Table
 </div></div></div></div>
 <?php
 		if(!empty($admin_sections['license']))
-			qtranxf_qtranxf_license_tab( $clean_uri, $nonce_action );
+			qtranxf_license_tab( $clean_uri, $nonce_action );
 	}
 ?>
 </div>
 <?php
 }
 
-function qtranxf_qtranxf_license_tab($clean_uri, $nonce_action)
+function qtranxf_license_tab($clean_uri, $nonce_action)
 {
 ?>
 <div class="tabs-content">
 <?php
 	qtranxf_admin_section_start('license');
-	qtranxf_license_form($clean_uri, __('Save Changes &raquo;', 'qtranslate'), $nonce_action);
+	qtranxf_license_form($clean_uri.'#license', $nonce_action);
 	qtranxf_admin_section_end('license', false);
 ?>
 </div>
