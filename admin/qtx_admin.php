@@ -765,6 +765,16 @@ function qtranxf_admin_home_url($url, $path, $orig_scheme, $blog_id){
 	return $url;
 }
 
+function qtranxf_admin_footer_text($text)
+{
+	global $pagenow;
+	if($pagenow == 'options-general.php' && !empty(strstr($_SERVER['QUERY_STRING'], 'page=qtranslate-x'))){
+		$text = '<span id="footer-thankyou">' . sprintf( __( 'If you like %s please leave us a %s&#9733;&#9733;&#9733;&#9733;&#9733;%s rating. A huge thank you from %sqTranslate Team%s in advance!', 'qtranslate' ), '<a href="https://wordpress.org/plugins/qtranslate-x/" target="_blank"><strong>qTranslate&#8209;X</strong></a>', '<a href="https://wordpress.org/support/view/plugin-reviews/qtranslate-x?filter=5#postform" target="_blank">', '</a>', '<a href="https://qtranslatexteam.wordpress.com/about/" target="_blank">', '</a>' ) . '</span>';
+	}
+	return $text;
+}
+add_filter( 'admin_footer_text', 'qtranxf_admin_footer_text', 5 );
+
 function qtranxf_add_admin_filters()
 {
 	global $q_config, $pagenow;
