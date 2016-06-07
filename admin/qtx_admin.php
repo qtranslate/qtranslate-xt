@@ -147,16 +147,28 @@ function qtranxf_load_admin_page_config(){
 	}
 }
 
+/**
+ * @since 3.4.7
+ * @return bool true is we are on qtx configuration page.
+ */
+function qtranxf_admin_is_config_page(){
+	static $is_config_page;
+	if(!$is_config_page){
+		global $q_config, $pagenow;
+		$is_config_page = $pagenow == 'options-general.php'
+			&& isset($q_config['url_info']['query'])
+			&& strpos($q_config['url_info']['query'], 'page=qtranslate-x') !== false;
+	}
+	return $is_config_page;
+}
+
 function qtranxf_admin_init(){
 	global $q_config, $pagenow;
 	//qtranxf_dbg_log('5.qtranxf_admin_init:');
 
 	add_action('admin_notices', 'qtranxf_admin_notices_config');
 
-	if ( current_user_can('manage_options')
-		&& $pagenow == 'options-general.php'
-		&& isset($q_config['url_info']['query'])
-		&& strpos($q_config['url_info']['query'], 'page=qtranslate-x') !== false
+	if ( current_user_can('manage_options') && qtranxf_admin_is_config_page()
 		//&& !empty($_POST) //todo run this only if one of the forms or actions submitted
 	){
 		$q_config['url_info']['qtranslate-settings-url'] = admin_url('options-general.php?page=qtranslate-x');
@@ -767,13 +779,32 @@ function qtranxf_admin_home_url($url, $path, $orig_scheme, $blog_id){
 
 function qtranxf_admin_footer_text($text)
 {
-	global $pagenow;
-	if($pagenow == 'options-general.php' && !empty(strstr($_SERVER['QUERY_STRING'], 'page=qtranslate-x'))){
-		$text = '<span id="footer-thankyou">' . sprintf( __( 'If you like %s please leave us a %s&#9733;&#9733;&#9733;&#9733;&#9733;%s rating. A huge thank you from %sqTranslate Team%s in advance!', 'qtranslate' ), '<a href="https://wordpress.org/plugins/qtranslate-x/" target="_blank"><strong>qTranslate&#8209;X</strong></a>', '<a href="https://wordpress.org/support/view/plugin-reviews/qtranslate-x?filter=5#postform" target="_blank">', '</a>', '<a href="https://qtranslatexteam.wordpress.com/about/" target="_blank">', '</a>' ) . '</span>';
+	if(qtranxf_admin_is_config_page()){
+		$text = '<span id="footer-thankyou">' . sprintf( __( 'If you like %s please leave us a %s&#9733;&#9733;&#9733;&#9733;&#9733;%s rating. A huge thank you from %sqTranslate Team%s in advance!', 'qtranslate' ), '<a href="https://wordpress.org/plugins/qtranslate-x/" target="_blank"><strong>qTranslate&#8209;X</strong></a>', '<a href="https://wordpress.org/support/view/plugin-reviews/qtranslate-x?filter=5#postform" target="_blank">', '</a>', '<a href="https://qtranslatexteam.wordpress.com/donations/" target="_blank">', '</a>' ) . '</span>';
 	}
 	return $text;
 }
-add_filter( 'admin_footer_text', 'qtranxf_admin_footer_text', 5 );
+add_filter( 'admin_footer_text', 'qtranxf_admin_footer_text', 99 );
+
+function qtranxf_admin_footer_update($text)
+{
+	if(qtranxf_admin_is_config_page()){
+		$text = sprintf( __('Plugin Version %s', 'qtranslate'), QTX_VERSION );
+		$current = get_site_transient( 'update_plugins' );
+		$plugin_file = qtranxf_plugin_basename();
+		if ( isset( $current->response[ $plugin_file ] ) ){
+			$data = $current->response[ $plugin_file ];
+			if(is_plugin_active_for_network($plugin_file)){
+				$url = network_admin_url( 'update-core.php' );
+			}else{
+				$url = admin_url( 'update-core.php' );
+			}
+			$text .= '&nbsp;<strong><a href="' . $url . '">' . sprintf(_x( 'Get %s', '%s is a version number of a plugin. It is a shortcut for "Get version %s of such a such plugin."', 'qtranslate'), $data->new_version ) . '</a></strong>';
+		}
+	}
+	return $text;
+}
+add_filter( 'update_footer', 'qtranxf_admin_footer_update', 99 );
 
 function qtranxf_add_admin_filters()
 {
