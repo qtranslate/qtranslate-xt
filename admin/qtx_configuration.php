@@ -119,7 +119,7 @@ function qtranxf_language_form($form_action, $button_name, $nonce_action) {
 
 function qtranxf_license_message($linf) {
 	switch($linf['type']){
-		case LIC_TYPE_PRODUCTION: $ltype = _x('production', 'Type of license used in a phrase like "The %1$s license key will expire ..."', 'qtranslate'); break;
+		case QTX_LIC_TYPE_PRODUCTION: $ltype = _x('production', 'Type of license used in a phrase like "The %1$s license key will expire ..."', 'qtranslate'); break;
 		default: $ltype = _x('trial', 'Type of license used in a phrase like "The %1$s license key will expire ..."', 'qtranslate'); break;
 	}
 	if( $linf['exp_in'] > 0 ){
@@ -153,7 +153,7 @@ function qtranxf_license_form($form_action, $nonce_action) {
 	if($localhost){
 		echo '<p>' . sprintf(__('License are not required while running on %s. However, you may still %sregister the license%s for the server where this test installation will eventually run.', 'qtranslate'), '<em>localhost</em>', $ahref, '</a>') . '</p>' . PHP_EOL;
 	}
-	if($linf['type'] != LIC_TYPE_TRIAL || !$localhost){
+	if($linf['type'] != QTX_LIC_TYPE_TRIAL || !$localhost){
 		$msg = qtranxf_license_message($linf);
 		echo '<p>' . $msg . '</p>' . PHP_EOL;
 	}
@@ -216,7 +216,7 @@ function qtranxf_get_admin_sections() {
 	$admin_sections['languages'] = __('Languages', 'qtranslate');//always last section before 'License'
 
 	$linf = qtranxf_license_info();
-	if($linf['exp_in'] < LIC_WARN1)
+	if($linf['exp_in'] < QTX_LIC_WARN1)
 		$admin_sections['license'] = __('License', 'qtranslate');
 
 	return $admin_sections;

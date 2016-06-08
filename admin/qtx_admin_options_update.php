@@ -125,13 +125,12 @@ function qtranxf_editConfig(){
 			$errors[] = __('License Key cannot be empty.', 'qtranslate');
 		}elseif(empty($lic_url)){
 			$errors[] = __('License URL cannot be empty.', 'qtranslate');
-		}elseif(qtranxf_is_localhost($lic_url)){
-			$errors[] = sprintf(__('It does not make sense to register license for %s. Please, enter a URL where this the plugin will run after testing is finished.', 'qtranslate'), '<em>localhost</em>');
 		}else{
 			$code = qtranxf_license_update( $lic_url, $lic_key );
 			switch($code){
-				case LIC_TYPE_PRODUCTION: $messages[] = __('License has been successfully imported.', 'qtranslate'); break;
-				case LIC_TYPE_INVALID:
+				case QTX_LIC_TYPE_PRODUCTION: $messages[] = __('License has been successfully imported.', 'qtranslate'); break;
+				case QTX_LIC_TYPE_LOCALHOST: $errors[] = sprintf(__('It does not make sense to register license for %s. Please, enter a URL where this the plugin will run after testing is finished.', 'qtranslate'), '<em>localhost</em>'); break;
+				case QTX_LIC_TYPE_INVALID:
 				default: $errors[] = sprintf(__('License cannot be validated for URL "%s". Please, try again.', 'qtranslate'), $lic_url); break;
 			}
 		}
