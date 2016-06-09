@@ -556,16 +556,19 @@ var qTranslateX=function(pg) {
 	 * @since 3.2.7
 	 */
 	var displayHookAttrs=[];
-	var addDisplayHookAttr = function (nd) {
-		if(!nd.value) return 0;
-		var blocks = qtranxj_get_split_blocks(nd.value);
+	var addDisplayHookAttr = function (nd, attr) {
+		if(!nd.hasAttribute(attr)) return 0;
+		var value = nd.getAttribute(attr);
+		var blocks = qtranxj_get_split_blocks(value);
 		if( !blocks || !blocks.length || blocks.length == 1 ) return 0;
 		//co('addDisplayHookAttr: nd: ',nd);
 		var h={};
 		h.nd=nd;
+		h.attr = attr;
 		h.contents = qtranxj_split_blocks(blocks);
 		completeDisplayContent(h.contents);
-		nd.value=h.contents[qTranslateConfig.activeLanguage];
+		//nd.value=h.contents[qTranslateConfig.activeLanguage];
+		nd.setAttribute(attr, h.contents[qTranslateConfig.activeLanguage]);
 		displayHookAttrs.push(h);
 		return 1;
 	}
@@ -583,7 +586,7 @@ var qTranslateX=function(pg) {
 			case 'TEXTAREA': return 0;
 			case 'INPUT':
 				switch(elem.type){
-					case 'submit': if(elem.value) return addDisplayHookAttr(elem);
+					case 'submit': if(elem.value) return addDisplayHookAttr(elem, 'value');
 					default: return 0;
 				}
 			default: break;
@@ -642,7 +645,7 @@ var qTranslateX=function(pg) {
 		for(var i = displayHookAttrs.length; --i >= 0;){
 			var h=displayHookAttrs[i];
 			if(h.nd.parentNode){
-				h.nd.value = h.contents[lang];
+				h.nd.setAttribute(h.attr, h.contents[lang]);
 			}else{
 				displayHookAttrs.splice(i,1);//node was removed by some other function
 			}
@@ -688,6 +691,32 @@ var qTranslateX=function(pg) {
 			//co('addDisplayHooks: e=',e);
 			//co('addDisplayHooks: e.tagName=',e.tagName);
 			qtx.addDisplayHook(e);
+		}
+	}
+
+	/**
+	* Designed as interface for other plugin integration. The documentation is available at
+	* https://qtranslatexteam.wordpress.com/integration/
+	*
+	* @since 3.4.7
+	*/
+	this.addDisplayHookAttrs = function (elem, attrs) {
+		for (var j = 0; j < attrs.length; ++j) {
+			var a = attrs[j];
+			addDisplayHookAttr(elem,a);
+		}
+	}
+
+	/**
+	* Designed as interface for other plugin integration. The documentation is available at
+	* https://qtranslatexteam.wordpress.com/integration/
+	*
+	* @since 3.4.7
+	*/
+	this.addDisplayHooksAttrs = function (elems, attrs) {
+		for (var i = 0; i < elems.length; ++i) {
+			var e = elems[i];
+			qtx.addDisplayHookAttrs(e,attrs);
 		}
 	}
 
@@ -816,12 +845,21 @@ var qTranslateX=function(pg) {
 								//$(container).find(fld.jquery).each(function(i,e){qtx.addDisplayHook(e);});//also ok
 								var fields = jQuery(container).find(fld.jquery);
 								//co('addPageHooks:display: jquery='+fld.jquery+': fields.length=',fields.length);
-								qtx.addDisplayHooks(fields);
+								if(fld.attrs){
+									qtx.addDisplayHooksAttrs(fields,fld.attrs);
+								}else{
+									qtx.addDisplayHooks(fields);
+								}
 							}
 						}else{
 							var id = fld.id ? fld.id : handle;
 							//co('addPageHooks:display: id=',id);
-							qtx.addDisplayHook(document.getElementById(id));
+							var field = document.getElementById(id);
+							if(fld.attrs){
+								qtx.addDisplayHookAttrs(field,fld.attrs);
+							}else{
+								qtx.addDisplayHook(field);
+							}
 						}
 						break;
 					case '['://b - bracket
