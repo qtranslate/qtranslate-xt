@@ -8,9 +8,9 @@
 			"wpbody-content":{
 				"fields":{
 					"page-title":{"jquery":"div.page-title h3", "encode":"display" },
-					"tag-td":{"jquery":"td","encode":"display"},
-					"tag-option":{"jquery":"option","encode":"display"},
-					"tag-optgroup":{"jquery":"optgroup","encode":"display"}
+					"tag-td":{"jquery":"td", "encode":"display"},
+					"tag-option":{"jquery":"option", "encode":"display"},
+					"tag-optgroup":{"jquery":"optgroup", "attrs":["label"], "encode":"display"}
 				}
 			}
 		}
