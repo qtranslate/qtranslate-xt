@@ -10,7 +10,8 @@
 					"page-title":{"jquery":"div.page-title h3", "encode":"display" },
 					"tag-td":{"jquery":"td", "encode":"display"},
 					"tag-option":{"jquery":"option", "encode":"display"},
-					"tag-optgroup":{"jquery":"optgroup", "attrs":["label"], "encode":"display"}
+					"tag-optgroup":{"jquery":"optgroup", "attrs":["label"], "encode":"display"},
+					"data-toggle":{"jquery":"a[data-toggle='collapse']", "encode":"display"}
 				}
 			}
 		}
@@ -179,6 +180,17 @@
 		}
 	},
 
+"smgt_message": {
+		"pages": { "admin.php":"page=smgt_message" },
+		"forms": {
+			"notice_form":{
+				"fields":{
+					"subject":{}, 
+					"message_body":{}
+				}
+			}
+		}
+	},
 
 "smgt_hall": {
 		"pages": { "admin.php":"page=smgt_hall" },
@@ -241,8 +253,22 @@
 				}
 			}
 		}
-	}
+	},
 
+"smgt_email_template": {
+		"pages": { "admin.php":"page=smgt_email_template" },
+		"forms": {
+			"email_template_form":{
+				"fields":{
+					"registration_title":{},
+					"registratoin_mailtemplate_content":{"jquery":"textarea[name='registratoin_mailtemplate_content']"},
+					"student_activation_title":{},
+					"activation_mailcontent":{},
+					"fee_payment_mailcontent":{}
+				}
+			}
+		}
+	}
 
 }
 }
