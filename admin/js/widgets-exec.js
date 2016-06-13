@@ -3,6 +3,9 @@
 */
 jQuery(document).ready(
 function($){
+	//if(typeof wpWidgets === 'undefined') return;
+	if(!window.wpWidgets) return;
+
 	var qtx = qTranslateConfig.js.get_qtx();
 
 	var onWidgetUpdate = function( evt, widget ){
@@ -11,10 +14,8 @@ function($){
 		widget.find("textarea[id^='widget-text-'][id$='-text']").each(function(i,e){qtx.refreshContentHook(e);});
 	}
 
-	if(wpWidgets){
-		$( document ).on( 'widget-added', onWidgetUpdate );
-		$( document ).on( 'widget-updated', onWidgetUpdate );
-	}
+	$( document ).on( 'widget-added', onWidgetUpdate );
+	$( document ).on( 'widget-updated', onWidgetUpdate );
 
 	var onLanguageSwitchAfter = function(){
 		jQuery('#widgets-right .widget').each(function(){ wpWidgets.appendTitle(this); });
