@@ -19,15 +19,15 @@
 				"content": {
 					"encode": "<"
 				},
-				"event_page_title_format": [],
-				"event_single_event_format": [],
-				"event_contactperson_email_body": [],
-				"event_registration_recorded_ok_html": [],
-				"event_registration_updated_email_body": [],
-				"event_cancel_form_format": [],
-				"event_registration_form_format": [],
-				"event_respondent_email_body": [],
-				"event_registration_pending_email_body": []
+				"event_page_title_format": {},
+				"event_single_event_format": {},
+				"event_contactperson_email_body": {},
+				"event_registration_recorded_ok_html": {},
+				"event_registration_updated_email_body": {},
+				"event_cancel_form_format": {},
+				"event_registration_form_format": {},
+				"event_respondent_email_body": {},
+				"event_registration_pending_email_body": {}
 			}
 		}
 	}
@@ -45,10 +45,10 @@
 	"forms": {
 		"editloc": {
 			"fields": {
-				"title": [],
-				"content": [],
-				"location_address": [],
-				"location_town": []
+				"title": {},
+				"content": {},
+				"location_address": {},
+				"location_town": {}
 			}
 		}
 	}
@@ -63,8 +63,8 @@
 	"forms": {
 		"add": {
 			"fields": {
-				"category_name": [],
-				"description": []
+				"category_name": {},
+				"description": {}
 			}
 		}
 	}
@@ -79,8 +79,8 @@
 	"forms": {
 		"edit_category": {
 			"fields": {
-				"category_name": [],
-				"description": []
+				"category_name": {},
+				"description": {}
 			}
 		}
 	}
@@ -95,8 +95,8 @@
 	"forms": {
 		"edit_template": {
 			"fields": {
-				"description": [],
-				"format": []
+				"description": {},
+				"format": {}
 			}
 		}
 	}
@@ -111,9 +111,9 @@
 	"forms": {
 		"edit_formfield": {
 			"fields": {
-				"field_name": [],
-				"field_info": [],
-				"field_tags": []
+				"field_name": {},
+				"field_info": {},
+				"field_tags": {}
 			}
 		}
 	}
@@ -128,8 +128,8 @@
 	"forms": {
 		"send_mail": {
 			"fields": {
-				"mail_subject": [],
-				"mail_message": []
+				"mail_subject": {},
+				"mail_message": {}
 			}
 		}
 	}
@@ -139,15 +139,15 @@
 	"forms": {
 		"eme_options_form": {
 			"fields": {
-				"eme_event_list_item_format_header": [],
-				"eme_event_list_item_format": [],
-				"eme_event_list_item_format_footer": [],
-				"eme_event_page_title_format": [],
-				"eme_event_html_title_format": [],
-				"eme_single_event_format": [],
-				"eme_events_page_title": [],
-				"eme_no_events_message": [],
-				"eme_filter_form_format": []
+				"eme_event_list_item_format_header": {},
+				"eme_event_list_item_format": {},
+				"eme_event_list_item_format_footer": {},
+				"eme_event_page_title_format": {},
+				"eme_event_html_title_format": {},
+				"eme_single_event_format": {},
+				"eme_events_page_title": {},
+				"eme_no_events_message": {},
+				"eme_filter_form_format": {}
 			}
 		}
 	}
@@ -157,15 +157,15 @@
 	"forms": {
 		"eme_options_form": {
 			"fields": {
-				"eme_location_list_format_header": [],
-				"eme_location_list_format_item": [],
-				"eme_location_list_format_footer": [],
-				"eme_location_page_title_format": [],
-				"eme_location_html_title_format": [],
-				"eme_single_location_format": [],
-				"eme_location_baloon_format": [],
-				"eme_location_event_list_item_format": [],
-				"eme_location_no_events_message": []
+				"eme_location_list_format_header": {},
+				"eme_location_list_format_item": {},
+				"eme_location_list_format_footer": {},
+				"eme_location_page_title_format": {},
+				"eme_location_html_title_format": {},
+				"eme_single_location_format": {},
+				"eme_location_baloon_format": {},
+				"eme_location_event_list_item_format": {},
+				"eme_location_no_events_message": {}
 			}
 		}
 	}
@@ -175,8 +175,8 @@
 	"forms": {
 		"eme_options_form": {
 			"fields": {
-				"eme_small_calendar_event_title_format": [],
-				"eme_full_calendar_event_format": []
+				"eme_small_calendar_event_title_format": {},
+				"eme_full_calendar_event_format": {}
 			}
 		}
 	}
@@ -186,12 +186,12 @@
 	"forms": {
 		"eme_options_form": {
 			"fields": {
-				"eme_rss_main_title": [],
-				"eme_rss_main_description": [],
-				"eme_rss_title_format": [],
-				"eme_rss_description_format": [],
-				"eme_ical_title_format": [],
-				"eme_ical_description_format": []
+				"eme_rss_main_title": {},
+				"eme_rss_main_description": {},
+				"eme_rss_title_format": {},
+				"eme_rss_description_format": {},
+				"eme_ical_title_format": {},
+				"eme_ical_description_format": {}
 			}
 		}
 	}
@@ -201,15 +201,15 @@
 	"forms": {
 		"eme_options_form": {
 			"fields": {
-				"eme_rsvp_addbooking_submit_string": [],
-				"eme_rsvp_delbooking_submit_string": [],
-				"eme_attendees_list_format": [],
-				"eme_bookings_list_header_format": [],
-				"eme_bookings_list_format": [],
-				"eme_bookings_list_footer_format": [],
-				"eme_registration_recorded_ok_html": [],
-				"eme_registration_form_format": [],
-				"eme_cancel_form_format": []
+				"eme_rsvp_addbooking_submit_string": {},
+				"eme_rsvp_delbooking_submit_string": {},
+				"eme_attendees_list_format": {},
+				"eme_bookings_list_header_format": {},
+				"eme_bookings_list_format": {},
+				"eme_bookings_list_footer_format": {},
+				"eme_registration_recorded_ok_html": {},
+				"eme_registration_form_format": {},
+				"eme_cancel_form_format": {}
 			}
 		}
 	}
@@ -219,22 +219,22 @@
 	"forms": {
 		"eme_options_form": {
 			"fields": {
-				"eme_contactperson_email_subject": [],
-				"eme_contactperson_email_body": [],
-				"eme_contactperson_cancelled_email_subject": [],
-				"eme_contactperson_cancelled_email_body": [],
-				"eme_contactperson_pending_email_subject": [],
-				"eme_contactperson_pending_email_body": [],
-				"eme_respondent_email_subject": [],
-				"eme_respondent_email_body": [],
-				"eme_registration_pending_email_subject": [],
-				"eme_registration_pending_email_body": [],
-				"eme_registration_cancelled_email_subject": [],
-				"eme_registration_cancelled_email_body": [],
-				"eme_registration_denied_email_subject": [],
-				"eme_registration_denied_email_body": [],
-				"eme_registration_updated_email_subject": [],
-				"eme_registration_updated_email_body": []
+				"eme_contactperson_email_subject": {},
+				"eme_contactperson_email_body": {},
+				"eme_contactperson_cancelled_email_subject": {},
+				"eme_contactperson_cancelled_email_body": {},
+				"eme_contactperson_pending_email_subject": {},
+				"eme_contactperson_pending_email_body": {},
+				"eme_respondent_email_subject": {},
+				"eme_respondent_email_body": {},
+				"eme_registration_pending_email_subject": {},
+				"eme_registration_pending_email_body": {},
+				"eme_registration_cancelled_email_subject": {},
+				"eme_registration_cancelled_email_body": {},
+				"eme_registration_denied_email_subject": {},
+				"eme_registration_denied_email_body": {},
+				"eme_registration_updated_email_subject": {},
+				"eme_registration_updated_email_body": {}
 			}
 		}
 	}
@@ -244,29 +244,29 @@
 	"forms": {
 		"eme_options_form": {
 			"fields": {
-				"eme_payment_form_header_format": [],
-				"eme_payment_form_footer_format": [],
-				"eme_multipayment_form_header_format": [],
-				"eme_multipayment_form_footer_format": [],
-				"eme_payment_fail_format": [],
-				"eme_paypal_button_label": [],
-				"eme_paypal_button_above": [],
-				"eme_paypal_button_below": [],
-				"eme_2co_button_label": [],
-				"eme_2co_button_above": [],
-				"eme_2co_button_below": [],
-				"eme_webmoney_button_label": [],
-				"eme_webmoney_button_above": [],
-				"eme_webmoney_button_below": [],
-				"eme_fdgg_button_label": [],
-				"eme_fdgg_button_above": [],
-				"eme_fdgg_button_below": [],
-				"eme_mollie_button_label": [],
-				"eme_mollie_button_above": [],
-				"eme_mollie_button_below": [],
-				"eme_sagepay_button_label": [],
-				"eme_sagepay_button_above": [],
-				"eme_sagepay_button_below": []
+				"eme_payment_form_header_format": {},
+				"eme_payment_form_footer_format": {},
+				"eme_multipayment_form_header_format": {},
+				"eme_multipayment_form_footer_format": {},
+				"eme_payment_fail_format": {},
+				"eme_paypal_button_label": {},
+				"eme_paypal_button_above": {},
+				"eme_paypal_button_below": {},
+				"eme_2co_button_label": {},
+				"eme_2co_button_above": {},
+				"eme_2co_button_below": {},
+				"eme_webmoney_button_label": {},
+				"eme_webmoney_button_above": {},
+				"eme_webmoney_button_below": {},
+				"eme_fdgg_button_label": {},
+				"eme_fdgg_button_above": {},
+				"eme_fdgg_button_below": {},
+				"eme_mollie_button_label": {},
+				"eme_mollie_button_above": {},
+				"eme_mollie_button_below": {},
+				"eme_sagepay_button_label": {},
+				"eme_sagepay_button_above": {},
+				"eme_sagepay_button_below": {}
 			}
 		}
 	}
