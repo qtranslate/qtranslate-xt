@@ -215,9 +215,9 @@ function qtranxf_get_admin_sections() {
 	$admin_sections['import'] = __('Import', 'qtranslate').'/'.__('Export', 'qtranslate');
 	$admin_sections['languages'] = __('Languages', 'qtranslate');//always last section before 'License'
 
-	$linf = qtranxf_license_info();
-	if($linf['exp_in'] < QTX_LIC_WARN1)
-		$admin_sections['license'] = __('License', 'qtranslate');
+	//$linf = qtranxf_license_info();
+	//if($linf['exp_in'] < QTX_LIC_WARN1)
+	//$admin_sections['license'] = __('License', 'qtranslate');
 
 	return $admin_sections;
 }
