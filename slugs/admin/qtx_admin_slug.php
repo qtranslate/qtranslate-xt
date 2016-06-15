@@ -22,6 +22,10 @@ function qtranxf_regroup_translations( &$qfields, &$request, $edit_lang, $defaul
 		//$request = qtranxf_join_b($qfields);
 	}else{
 		foreach($qfields as $nm => &$vals){
+			if(!isset($request[$nm])){
+				unset($qfields[$nm]);
+				continue;
+			}
 			qtranxf_regroup_translations($vals,$request[$nm],$edit_lang,$default_lang); // recursive call
 		}
 	}
@@ -30,6 +34,10 @@ function qtranxf_regroup_translations( &$qfields, &$request, $edit_lang, $defaul
 function qtranxf_regroup_translations_for( $type, $edit_lang, $default_lang ) {
 	if(!isset($_REQUEST[$type])) return;
 	foreach($_REQUEST[$type] as $nm => &$qfields){
+		if(!isset($_REQUEST[$nm])){
+			unset($_REQUEST[$type][$nm]);
+			continue;
+		}
 		qtranxf_regroup_translations($qfields,$_REQUEST[$nm],$edit_lang,$default_lang);
 		if(isset($_POST[$nm])){
 			$_POST[$nm] = $_REQUEST[$nm];
