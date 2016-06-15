@@ -49,6 +49,10 @@ function qtranxf_collect_translations( &$qfields, &$request, $edit_lang ) {
 		}
 	}else{
 		foreach($qfields as $nm => &$vals){
+			if(!isset($request[$nm])){
+				unset($qfields[$nm]);
+				continue;
+			}
 			qtranxf_collect_translations($vals,$request[$nm],$edit_lang); // recursive call
 		}
 	}
@@ -76,6 +80,10 @@ function qtranxf_collect_translations_posted() {
 		$edit_lang = qtranxf_getLanguageEdit();
 		foreach($_REQUEST['qtranslate-fields'] as $nm => &$qfields){
 			//qtranxf_dbg_log('qtranxf_collect_translations_posted: REQUEST[qtranslate-fields]['.$nm.']: ',$qfields);
+			if(!isset($_REQUEST[$nm])){
+				unset($_REQUEST['qtranslate-fields'][$nm]);
+				continue;
+			}
 			qtranxf_collect_translations($qfields,$_REQUEST[$nm],$edit_lang);
 			//qtranxf_dbg_log('qtranxf_collect_translations_posted: collected REQUEST['.$nm.']: ',$_REQUEST[$nm]);
 			if(isset($_POST[$nm])) $_POST[$nm] = $_REQUEST[$nm];
