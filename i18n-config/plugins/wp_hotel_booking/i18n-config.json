@@ -1,0 +1,14 @@
+{"vendor":{"plugins/wp_hotel_booking":"1.0"},
+"admin-config": {
+"types-admin": {
+	"pages":{"post.php":"", "post-new.php":""},
+	"forms":{
+		"main":{
+			"fields":{
+				"checkbox-label":{"jquery":".cs-checkbox label", "encode":"display"}
+			}
+		}
+	}
+}
+}
+}
