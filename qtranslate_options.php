@@ -2,6 +2,8 @@
 if ( !defined( 'ABSPATH' ) ) exit;
 
 /* There is no need to edit anything here! */
+define('QTX_DB_VERSION', 34700);
+
 define('QTX_STRING',	1);
 define('QTX_BOOLEAN',	2);
 define('QTX_INTEGER',	3);
@@ -183,7 +185,8 @@ function qtranxf_default_language_name()
 	$nnm['hr'] = 'Hrvatski';
 	$nnm['eu'] = 'Euskera';
 	$nnm['el'] = 'Ελληνικά';
-	$nnm['ua'] = 'Українська';
+	$nnm['uk'] = 'Українська';
+	$nnm['ua'] = $nnm['uk'];
 	$nnm['cy'] = 'Cymraeg';// Oct 22 2015
 	$nnm['ca'] = 'Català';//Nov 6 2015
 	$nnm['sk'] = 'Slovenčina';//Nov 12 2015
@@ -226,7 +229,8 @@ function qtranxf_default_locale()
 	$loc['hr'] = 'hr';//changed from hr_HR on Nov 10 2015 to match WordPress locale
 	$loc['eu'] = 'eu';//changed from eu_ES on Nov 10 2015 to match WordPress locale
 	$loc['el'] = 'el';//corrected from el_GR on Nov 10 2015 http://qtranslate-x.com/support/index.php?topic=27
-	$loc['ua'] = 'uk';
+	$loc['uk'] = 'uk';
+	$loc['ua'] = $loc['uk'];
 	$loc['cy'] = 'cy';// not 'cy_GB'
 	$loc['ca'] = 'ca';
 	$loc['sk'] = 'sk_SK';
@@ -282,7 +286,8 @@ function qtranxf_default_not_available()
 	$nam['hr'] = 'Žao nam je, ne postoji prijevod na raspolaganju za ovaj proizvod još %LANG:, : i %.';
 	$nam['eu'] = 'Sentitzen dugu, baina sarrera hau %LANG-z:, : eta % bakarrik dago.';
 	$nam['el'] = 'Συγγνώμη,αυτή η εγγραφή είναι διαθέσιμη μόνο στα %LANG:, : και %.';
-	$nam['ua'] = 'Вибачте цей текст доступний тільки в &ldquo;%LANG:&rdquo;, &ldquo;: і &ldquo;%&rdquo;.';//ok
+	$nam['uk'] = 'Вибачте цей текст доступний тільки в &ldquo;%LANG:&rdquo;, &ldquo;: і &ldquo;%&rdquo;.';//ok
+	$nam['ua'] = $nam['uk'];
 	$nam['cy'] = 'Mae&#8217;n ddrwg gen i, mae\'r cofnod hwn dim ond ar gael mewn %LANG:, : a %.';//ok
 	$nam['ca'] = 'Ho sentim, aquesta entrada es troba disponible únicament en %LANG:, : i %.';//ok
 	$nam['sk'] = 'Ľutujeme, táto stránka je dostupná len v %LANG:, : a %.';//ok
@@ -325,7 +330,8 @@ function qtranxf_default_date_format()
 	$dtf['hr'] = '%d/%m/%Y';
 	$dtf['eu'] = '%Y %B %e, %A';
 	$dtf['el'] = '%d/%m/%y';
-	$dtf['ua'] = '%A %B %e%q, %Y';
+	$dtf['uk'] = '%A %B %e%q, %Y';
+	$dtf['ua'] = $dtf['uk'];
 	$dtf['cy'] = '%A %B %e%q, %Y';//not verified
 	$dtf['ca'] = 'j F, Y';
 	$dtf['sk'] = 'j.F Y';
@@ -367,7 +373,8 @@ function qtranxf_default_time_format()
 	$tmf['hr'] = '%H:%M';
 	$tmf['eu'] = '%H:%M';
 	$tmf['el'] = '%H:%M';
-	$tmf['ua'] = '%H:%M';
+	$tmf['uk'] = '%H:%M';
+	$tmf['ua'] = $tmf['uk'];
 	$tmf['cy'] = '%I:%M %p';//not verified
 	$tmf['ca'] = 'G:i';
 	$tmf['sk'] = 'G:i';
@@ -410,7 +417,8 @@ function qtranxf_default_flag()
 	$flg['hr'] = 'hr.png';
 	$flg['eu'] = 'eu_ES.png';
 	$flg['el'] = 'gr.png';
-	$flg['ua'] = 'ua.png';
+	$flg['uk'] = 'ua.png';
+	$flg['ua'] = $flg['uk'];
 	$flg['cy'] = 'cy_GB.png';
 	$flg['ca'] = 'catala.png';
 	$flg['sk'] = 'sk.png';
@@ -582,6 +590,7 @@ function qtranxf_default_windows_locale()
 	$enm['tw'] = "Twi";
 	$enm['ug'] = "Uighur";
 	$enm['uk'] = "Ukrainian";
+	$enm['ua'] = $enm['uk'];
 	$enm['ur'] = "Urdu";
 	$enm['uz'] = "Uzbek";
 	$enm['vi'] = "Vietnamese";
