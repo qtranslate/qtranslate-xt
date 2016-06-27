@@ -247,6 +247,8 @@ var qTranslateX=function(pg) {
 	var contentHookId = 0;
 
 	var updateFusedValueH=function(id,value) {
+		if (qTranslateConfig.RAW)
+			return;
 		var h = contentHooks[id];
 		var text = value.trim();
 		//c('updateFusedValueH['+id+'] lang='+h.lang+'; text:'+text);
@@ -288,6 +290,13 @@ var qTranslateX=function(pg) {
 				break;
 			default: return false;
 		}
+
+		/**
+		 * Highlighting the translatable fields
+		 * @since 3.2-b3
+		*/
+		inpField.className += ' qtranxs-translatable';
+
 		if(!field_name){
 			if( !inpField.name ) return false;
 			field_name = inpField.name;
@@ -318,11 +327,7 @@ var qTranslateX=function(pg) {
 		h.contentField=inpField;
 		//c('addContentHook: inpField.value='+inpField.value);
 		h.lang = qTranslateConfig.activeLanguage;
-		var contents = qtranxj_split(inpField.value);//keep neutral text from older times, just in case.
-		                        //inpField.tagName
-		if (!qTranslateConfig.RAW) {
-			inpField.value = contents[h.lang];
-		}
+
 		var qtx_prefix;
 		if(encode){
 			switch(encode){
@@ -338,6 +343,8 @@ var qTranslateX=function(pg) {
 			qtx_prefix = 'qtranslate-fields[';
 		}
 
+		h.encode=encode;
+
 		var bfnm, sfnm, p = h.name.indexOf('[');
 		if(p<0){
 			bfnm = qtx_prefix + h.name+']';
@@ -351,32 +358,41 @@ var qTranslateX=function(pg) {
 				sfnm = '[]';
 			}
 		}
+
+		var contents;
+
 		h.fields={};
-		for(var lang in contents){
-			var text = contents[lang];
-			var fnm = bfnm+'['+lang+']';
-			if(sfnm) fnm += sfnm;
-			var f = qtranxj_ce('input', {name: fnm, type: 'hidden', className: 'hidden', value: text});
-			h.fields[lang] = f;
-			inpField.parentNode.insertBefore(f,inpField);
+		if (!qTranslateConfig.RAW) {
+			contents = qtranxj_split(inpField.value);
+			inpField.value = contents[h.lang];
+			for(var lang in contents){
+				var text = contents[lang];
+				var fnm = bfnm+'['+lang+']';
+				if(sfnm) fnm += sfnm;
+				var f = qtranxj_ce('input', {name: fnm, type: 'hidden', className: 'hidden', value: text});
+				h.fields[lang] = f;
+				inpField.parentNode.insertBefore(f,inpField);
+			}
 		}
-		
+
 		// since 3.2.9.8 - h.contents -> h.fields
 		// since 3.3.8.7 - slug & term
 		switch(encode){
 			case 'slug':
-			case 'term':
-				h.sepfield = qtranxj_ce('input', {name: bfnm+'[qtranslate-original-value]', type: 'hidden', className: 'hidden', value: contents[qTranslateConfig.default_language] }); break;
-			default: h.sepfield = qtranxj_ce('input', {name: bfnm+'[qtranslate-separator]', type: 'hidden', className: 'hidden', value: encode }); break;
+			case 'term':{
+				if (qTranslateConfig.RAW)
+					contents = qtranxj_split(inpField.value);
+				h.sepfield = qtranxj_ce('input', {name: bfnm+'[qtranslate-original-value]', type: 'hidden', className: 'hidden', value: contents[qTranslateConfig.default_language] });
+			} break;
+			default:{
+				if (!qTranslateConfig.RAW){
+					h.sepfield = qtranxj_ce('input', {name: bfnm+'[qtranslate-separator]', type: 'hidden', className: 'hidden', value: encode });
+				}
+			} break;
 		}
-		inpField.parentNode.insertBefore(h.sepfield,inpField);
-		h.encode=encode;
 
-		/**
-		 * Highlighting the translatable fields
-		 * @since 3.2-b3
-		*/
-		inpField.className += ' qtranxs-translatable';
+		if(h.sepfield)
+			inpField.parentNode.insertBefore(h.sepfield,inpField);
 
 		/*
 		if(window.tinyMCE){
@@ -650,6 +666,8 @@ var qTranslateX=function(pg) {
 				displayHookAttrs.splice(i,1);//node was removed by some other function
 			}
 		}
+		if (qTranslateConfig.RAW)
+			return;
 		for(var key in contentHooks){
 			var h=contentHooks[key];
 			var mce = h.mce && !h.mce.hidden;
