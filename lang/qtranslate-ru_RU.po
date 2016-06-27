@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qTranslate-X 3.4.6.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-04-23 02:27-0600\n"
-"PO-Revision-Date: 2015-10-28 16:25+0200\n"
+"PO-Revision-Date: 2016-06-26 17:16-0700\n"
 "Last-Translator: \n"
 "Language-Team: qTranslate Team Translators\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Language: ru_RU\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
-"X-Generator: Poedit 1.8.6\n"
+"X-Generator: Poedit 1.8.8\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -295,8 +295,7 @@ msgstr "Язык должен иметь локаль!"
 msgid "The Language must have a name!"
 msgstr "Язык должен иметь название!"
 
-#: admin/qtx_admin_options_update.php:46
-#: admin/qtx_admin_options_update.php:170
+#: admin/qtx_admin_options_update.php:46 admin/qtx_admin_options_update.php:170
 msgid "Language Code has to be 2 characters long!"
 msgstr "Код языка должен быть из 2-х символов!"
 
@@ -1322,23 +1321,23 @@ msgstr ""
 
 #: qtranslate_core.php:1482
 msgid "For the sake of viewer convenience, the content is shown below in this site default language."
-msgstr ""
+msgstr "Для вашего удобства, содержание ниже показано на языке по умолчанию."
 
 #: qtranslate_core.php:1485
 msgid "For the sake of viewer convenience, the content is shown below in one of the available alternative languages."
-msgstr ""
+msgstr "Для вашего удобства, содержание ниже показано на одном из доступных языков."
 
 #: qtranslate_core.php:1488
 msgid "You may click one of the links to switch the site language to another available language."
-msgstr ""
+msgstr "Вы можете нажать на одну из ссылок, чтобы изменить язык всего сайта."
 
 #: qtranslate_core.php:1490
 msgid "For the sake of viewer convenience, the content is shown below in the alternative language."
-msgstr ""
+msgstr "Для вашего удобства, содержание ниже показано на доступном языке."
 
 #: qtranslate_core.php:1491
 msgid "You may click the link to switch the active language."
-msgstr ""
+msgstr "Вы можете нажать на ссылку, чтобы изменить язык всего сайта."
 
 #: qtranslate_frontend.php:264
 msgctxt "Colon after a title. For example, in top item of Language Menu."
