@@ -119,8 +119,6 @@ function qtranxf_editConfig(){
 	elseif(isset($_POST['lic_key'])){
 		$lic_key = sanitize_text_field(stripslashes($_POST['lic_key']));
 		$lic_url = sanitize_text_field(stripslashes($_POST['lic_url']));
-		$_POST['lic_key'] = $lic_key;
-		$_POST['lic_url'] = $lic_url;
 		if(empty($lic_key)){
 			$errors[] = __('License Key cannot be empty.', 'qtranslate');
 		}elseif(empty($lic_url)){
@@ -134,6 +132,8 @@ function qtranxf_editConfig(){
 				default: $errors[] = sprintf(__('License cannot be validated for URL "%s". Please, try again.', 'qtranslate'), $lic_url); break;
 			}
 		}
+		$_POST['lic_key'] = $lic_key;
+		$_POST['lic_url'] = $lic_url;
 	}
 	elseif(isset($_GET['convert'])){
 		// update language tags
