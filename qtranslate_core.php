@@ -1497,7 +1497,7 @@ function qtranxf_use_content($lang, $content, $available_langs, $show_available=
 		if(sizeof($available_langs) > 1){
 			if($alt_lang_is_default){
 					// translators: this message is shown to user, when a translation is not available for the active language, but there are multiple other translations available, and post content is shown in the default language of the site.
-				$msg = __('For the sake of viewer convenience, the content is shown below in this site default language.', 'qtranslate');
+				$msg = __('For the sake of viewer convenience, the content is shown below in the default language of this site.', 'qtranslate');
 			}else{
 					// translators: this message is shown to user, when a translation is not available neither for the active language nor for default one, but there are multiple other translations available, and post content is shown in the first available language.
 				$msg = __('For the sake of viewer convenience, the content is shown below in one of the available alternative languages.', 'qtranslate');

@@ -1581,7 +1581,7 @@ msgstr "Il modo in cui i campi traducibili sono evidenziati è configurato nell'
 
 # @ qtranslate
 #: qtranslate_core.php:1482
-msgid "For the sake of viewer convenience, the content is shown below in this site default language."
+msgid "For the sake of viewer convenience, the content is shown below in the default language of this site."
 msgstr "Per ragioni di convenienza del visitatore, il contenuto è mostrato sotto nella lingua principale di questo sito."
 
 # @ qtranslate

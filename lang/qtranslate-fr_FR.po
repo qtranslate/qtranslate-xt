@@ -1295,7 +1295,7 @@ msgid "The way the translatable fields are highlighted is configured with global
 msgstr "La façon dont les champs traduisibles sont mis en valeur est configurée avec l’option globale %s."
 
 #: qtranslate_core.php:1482
-msgid "For the sake of viewer convenience, the content is shown below in this site default language."
+msgid "For the sake of viewer convenience, the content is shown below in the default language of this site."
 msgstr "Pour le confort de l’utilisateur, le contenu est affiché ci-dessous dans la langue par défaut du site."
 
 #: qtranslate_core.php:1485
