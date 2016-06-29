@@ -1036,6 +1036,7 @@ function qtranxf_translate_otput($output){
  */
 function qtranxf_start_buffering(){
 	//qtranxf_dbg_log('qtranxf_start_buffering: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
+	ob_start('qtranxf_translate_otput');
 }
 add_action( 'template_redirect', 'qtranxf_start_buffering', 5 );
 
