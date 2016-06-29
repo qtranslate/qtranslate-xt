@@ -165,7 +165,7 @@ msgstr "Das ist mir bewusst, Nachricht ausblenden"
 #: admin/qtx_activation_hook.php:913 admin/qtx_activation_hook.php:916
 #: admin/qtx_activation_hook.php:942
 #, php-format
-msgid "Thank you for using %s plugin!"
+msgid "Thank you for using plugin %s!"
 msgstr "Danke für die Nutzung von %s!"
 
 #: admin/qtx_activation_hook.php:919

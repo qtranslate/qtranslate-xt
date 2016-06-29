@@ -193,7 +193,7 @@ msgstr "Sono consapevole di questo, rimuovi questo messaggio."
 #: admin/qtx_activation_hook.php:913 admin/qtx_activation_hook.php:916
 #: admin/qtx_activation_hook.php:942
 #, php-format
-msgid "Thank you for using %s plugin!"
+msgid "Thank you for using plugin %s!"
 msgstr "Grazie per usare il plugin %s!"
 
 # @ qtranslate

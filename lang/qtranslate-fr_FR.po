@@ -160,7 +160,7 @@ msgstr "Je suis au courant, masquez ce message."
 #: admin/qtx_activation_hook.php:913 admin/qtx_activation_hook.php:916
 #: admin/qtx_activation_hook.php:942
 #, php-format
-msgid "Thank you for using %s plugin!"
+msgid "Thank you for using plugin %s!"
 msgstr "Merci d’utiliser l’extension %s !"
 
 #: admin/qtx_activation_hook.php:919

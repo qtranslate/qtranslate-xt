@@ -169,7 +169,7 @@ msgstr "Estou consciente disto, descartar esta mensagem."
 #: admin/qtx_activation_hook.php:913 admin/qtx_activation_hook.php:916
 #: admin/qtx_activation_hook.php:942
 #, php-format
-msgid "Thank you for using %s plugin!"
+msgid "Thank you for using plugin %s!"
 msgstr "Obrigado por utilizar o plugin %s!"
 
 #: admin/qtx_activation_hook.php:919

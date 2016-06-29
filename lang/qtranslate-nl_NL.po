@@ -166,7 +166,7 @@ msgstr "Ik ben mij hiervan bewust, verberg deze boodschap."
 #: admin/qtx_activation_hook.php:913 admin/qtx_activation_hook.php:916
 #: admin/qtx_activation_hook.php:942
 #, php-format
-msgid "Thank you for using %s plugin!"
+msgid "Thank you for using plugin %s!"
 msgstr "Dank voor het gebruik van de %s plugin"
 
 #: admin/qtx_activation_hook.php:919
