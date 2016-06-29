@@ -408,17 +408,18 @@ function qtranxf_extract_languages($text,$lang2keep) {
 function gtranxf_db_clean_terms(){
 	global $wpdb, $q_config;
 	$errors = &$q_config['url_info']['errors'];
+	$messages = &$q_config['url_info']['messages'];
 	$wpdb->show_errors(); @set_time_limit(0);
 	$result = $wpdb->get_results('SELECT * FROM '.$wpdb->terms);
 	if(!$result){
-		$errors[] = __('Could not fetch the list of terms from database.', 'qtranslate');		
-		return '';
+		$errors[] = __('Could not fetch the list of terms from database.', 'qtranslate');
+		return __('Nothing has been altered.', 'qtranslate');
 	}
 	qtranxf_term_admin_remove_filters();
 	$default_langauge = $q_config['default_language'];
 	$term_name_cur = $q_config['term_name'];
+	$q_config['term_name'] = array();//to exclude any possible alternations of term names via filters.
 	$term_name = array();
-	//$terms = get_terms();
 	$msgs = array();
 	foreach($result as $row){
 		$id = $row->term_id;
@@ -430,6 +431,8 @@ function gtranxf_db_clean_terms(){
 			}else{
 				$errs = array( __('Term configuration is inconsistent.', 'qtranslate') );
 			}
+			//qtranxf_dbg_log('gtranxf_db_clean_terms: invalid term $id='.$id.', name='.$nm.' Error:', $errs);
+/*
 			//wp_delete_term($id,'');//does not work with empty taxonomy
 			$ok = true;
 			$q = $wpdb->prepare('DELETE FROM '.$wpdb->terms.' WHERE term_id=%d',$id);
@@ -452,9 +455,12 @@ function gtranxf_db_clean_terms(){
 				$msg = __('Some errors occurred while trying to remove it. Please, cleanup this term manually.', 'qtranslate');
 			}
 			$errors[] = sprintf(__('Term "%s" (id=%d) cannot be loaded. Error message:%s', 'qtranslate'), $nm, $id, '<br/>'.PHP_EOL.'"'.implode('"<br/>"'.PHP_EOL, $errs).'"') . '<br/>' . $msg;
+*/
+			$messages[] = sprintf(__('Term "%s" (id=%d) cannot be loaded and is left untouched. Error message on load was:%s', 'qtranslate'), $nm, $id, '<br/>'.PHP_EOL.'"'.implode('"<br/>"'.PHP_EOL, $errs).'"') . '<br/>' . $msg;
 			continue;
+		}else{
+			$taxonomy = $term->taxonomy;
 		}
-		$taxonomy = $term->taxonomy;
 		if($taxonomy == 'nav_menu')
 			continue;
 		$ts = array();
@@ -470,7 +476,6 @@ function gtranxf_db_clean_terms(){
 				}
 			}
 		}else if(isset($term_name_cur[$nm]) && is_array($term_name_cur[$nm]) && !empty($term_name_cur[$nm])){
-			//$ts = array_merge($ts,$term_name_cur[$nm]);
 			$ts = $term_name_cur[$nm];
 		}else{
 			continue;
@@ -487,11 +492,13 @@ function gtranxf_db_clean_terms(){
 		}
 		$ok = !empty($ts[$default_langauge]);
 		if(!$ok){
-			$ts[$default_langauge] = $nm;
+			$ts[$default_langauge] = $nm_cur;
+		}else{
+			$ok = ($ts[$default_langauge] == $nm_cur);
 		}
-		$ok = ($ts[$default_langauge] == $nm);
 		if( !$ok ){
 			$nm = $ts[$default_langauge];
+			//qtranxf_dbg_log('gtranxf_db_clean_terms: term $id='.$id.', name='.$nm_cur.' is replaced with ', $nm);
 			wp_update_term( $id, $taxonomy, array('name' => $nm) );
 		}
 		$term_name[$nm] = $ts;
@@ -500,24 +507,29 @@ function gtranxf_db_clean_terms(){
 		}
 		if($ok)
 			$ok = ($nm == $nm_cur);
-		if(!$ok){
-			$ts_old = array();
-			foreach($ts_cur as $lng => $val){
-				$ts_old[] = $lng.' => "'.esc_html($val).'"';
-			}
-			$ts_new = array();
-			foreach($ts as $lng => $val){
-				$ts_new[] = $lng.' => "'.esc_html($val).'"';
-			}
-			$msgs[] = sprintf(__('Term "%s" (id=%d) has been modified from:%sto:%s', 'qtranslate'), esc_html($nm), $id
-			, '<br/>'.PHP_EOL . '"' . esc_html($nm_cur) . '" => { ' . implode(', ', $ts_old) . ' }<br/>'.PHP_EOL
-			, '<br/>'.PHP_EOL . '"' . esc_html($nm    ) . '" => { ' . implode(', ', $ts_new) . ' }<br/>'.PHP_EOL
-			);
+		if($ok)
+			continue;
+		//report the change
+		$ts_old = array();
+		foreach($ts_cur as $lng => $val){
+			$ts_old[] = $lng.' => "'.esc_html($val).'"';
 		}
+		$ts_new = array();
+		foreach($ts as $lng => $val){
+			$ts_new[] = $lng.' => "'.esc_html($val).'"';
+		}
+		$msgs[] = sprintf(__('Term "%s" (id=%d) has been modified from:%sto:%s', 'qtranslate'), esc_html($nm), $id
+		, '<br/>'.PHP_EOL . '"' . esc_html($nm_cur) . '" => { ' . implode(', ', $ts_old) . ' }<br/>'.PHP_EOL
+		, '<br/>'.PHP_EOL . '"' . esc_html($nm    ) . '" => { ' . implode(', ', $ts_new) . ' }<br/>'.PHP_EOL
+		);
 	}
 
+	if(!qtranxf_array_compare($term_name_cur,$term_name)){
+		//qtranxf_dbg_log('gtranxf_db_clean_terms: old $term_name: ', $term_name_cur);
+		//qtranxf_dbg_log('gtranxf_db_clean_terms: new $term_name: ', $term_name);
+		update_option('qtranslate_term_name', $term_name);
+	}
 	$q_config['term_name'] = $term_name;
-	//update_option('qtranslate_term_name',$term_name);
 	qtranxf_term_admin_add_filters();
 	if(empty($msgs)){
 		$msg = __('No term has been modified. All terms are already in a consistent state.', 'qtranslate');

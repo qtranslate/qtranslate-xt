@@ -1,13 +1,18 @@
 <?php
 if ( !defined( 'ABSPATH' ) ) exit;
 
-/* function qtranxf_term_name_encoded($name) {
+/**
+ * Used in Woocommerce
+ * @param string $name 
+ * @return string Raw ML string
+ */
+function qtranxf_term_name_encoded($name) {
 	global $q_config;
 	if(isset($q_config['term_name'][$name])) {
 		$name = qtranxf_join_b($q_config['term_name'][$name]);
 	}
 	return $name;
-}// */
+}
 
 function qtranxf_get_term_joined($obj,$taxonomy=null) {
 	global $q_config;
