@@ -113,9 +113,8 @@ function qtranxf_init_language() {
 	require_once(dirname(__FILE__).'/qtranslate_hooks.php');//common hooks moved here from qtranslate.php since 3.2.9.2, because they all need language already detected
 
 	// load plugin translations
-	// since 3.2-b3 moved it here as https://codex.wordpress.org/Function_Reference/load_plugin_textdomain seem to recommend to run load_plugin_textdomain in 'plugins_loaded' action, which is this function respond to
-	$lang_dir = qtranxf_plugin_dirname().'/lang';
-	load_plugin_textdomain('qtranslate', false, $lang_dir);
+	// since 3.2-b3 moved it here as https://codex.wordpress.org/Function_Reference/load_plugin_textdomain seem to recommend to run load_plugin_textdomain in 'plugins_loaded' action, which is this function responds to
+	qtranxf_load_plugin_textdomain();
 
 	/**
 	 * allow other plugins to initialize whatever they need before the fork between front and admin.
@@ -392,6 +391,10 @@ function qtranxf_detect_language_front(&$url_info) {
 
 function qtranxf_setcookie_language($lang, $cookie_name, $cookie_path, $cookie_domain = NULL, $secure = false){
 	//qtranxf_dbg_log('qtranxf_setcookie_language: lang='.$lang.'; cookie_name='.$cookie_name.'; cookie_path='.$cookie_path);
+	//if(headers_sent($file,$line)){
+	//	doing_it_wrong('qtranxf_setcookie_language', 'Headers are already sent, which should not be a case within action "plugins_loaded"', 'any');
+	//	return;
+	//}
 	setcookie($cookie_name, $lang, time()+31536000, $cookie_path, $cookie_domain, $secure);//one year
 	//two weeks 1209600
 }
@@ -474,6 +477,22 @@ function qtranxf_load_option_qtrans_compatibility(){
 	$q_config['qtrans_compatibility'] = apply_filters('qtranslate_compatibility', $q_config['qtrans_compatibility']);
 	if( !isset($q_config['qtrans_compatibility']) || !$q_config['qtrans_compatibility'] ) return;
 	require_once(dirname(__FILE__).'/qtranslate_compatibility.php');
+}
+
+function qtranxf_load_plugin_textdomain() {
+	$domain = 'qtranslate';
+/*
+	$locale = get_locale();
+
+	$mofile = 'qtranslate-x-' . $locale . '.mo';
+	$mopath = WP_LANG_DIR . '/plugins/' . $mofile;
+	if(load_textdomain( $domain, $mopath ))
+		return true;
+*/
+	$lang_dir = qtranxf_plugin_dirname().'/lang';
+	if(load_plugin_textdomain($domain, false, $lang_dir))
+		return true;
+	return false;
 }
 
 /**
@@ -661,6 +680,7 @@ function qtranxf_loadConfig() {
 			default: $q_config['url_mode'] = $url_mode = QTX_URL_QUERY; break;
 		}
 	}
+	qtranxf_load('cXRyYW54Zl9saWNlbnNlX2xvYWQoKTs==');
 
 	switch($url_mode){
 		case QTX_URL_DOMAINS:
@@ -1476,16 +1496,18 @@ function qtranxf_use_content($lang, $content, $available_langs, $show_available=
 		// show content in  alternative language
 		if(sizeof($available_langs) > 1){
 			if($alt_lang_is_default){
-				//$fmt = __('For the sake of viewer convenience, the content is shown below in this site default language %s.', 'qtranslate');
+					// translators: this message is shown to user, when a translation is not available for the active language, but there are multiple other translations available, and post content is shown in the default language of the site.
 				$msg = __('For the sake of viewer convenience, the content is shown below in this site default language.', 'qtranslate');
 			}else{
-				//$fmt = __('For the sake of viewer convenience, the content is shown below in an available alternative language %s.', 'qtranslate');
+					// translators: this message is shown to user, when a translation is not available neither for the active language nor for default one, but there are multiple other translations available, and post content is shown in the first available language.
 				$msg = __('For the sake of viewer convenience, the content is shown below in one of the available alternative languages.', 'qtranslate');
 			}
-			//$msg = sprintf($fmt, '<a href="'.qtranxf_convertURL('', $language, false, true).'">'.$q_config['language_name'][$alt_lang].'</a>');
+				// translators: this message is appended to one of the two messages above.
 			$msg .= ' '.__('You may click one of the links to switch the site language to another available language.', 'qtranslate');
 		}else{
+				// translators: this message is shown to user, when a translation is not available for the active language, and there is only one other availabe language.
 			$msg = __('For the sake of viewer convenience, the content is shown below in the alternative language.', 'qtranslate');
+				// translators: this message is appended to the message above.
 			$msg .= ' '.__('You may click the link to switch the active language.', 'qtranslate');
 		}
 		$altlanguagecontent = ' '.$msg.'</p>'.$alt_content;
