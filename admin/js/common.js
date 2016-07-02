@@ -291,12 +291,6 @@ var qTranslateX=function(pg) {
 			default: return false;
 		}
 
-		/**
-		 * Highlighting the translatable fields
-		 * @since 3.2-b3
-		*/
-		inpField.className += ' qtranxs-translatable';
-
 		if(!field_name){
 			if( !inpField.name ) return false;
 			field_name = inpField.name;
@@ -320,6 +314,13 @@ var qTranslateX=function(pg) {
 			//jQuery(inpField).uniqueId();//does not work
 			//jQuery(inpField).each(function (i,e) { e.uniqueId(); });//does not work
 		}
+
+		/**
+		 * Highlighting the translatable fields
+		 * @since 3.2-b3
+		*/
+		inpField.className += ' qtranxs-translatable';
+
 		//co('addContentHook: id=',inpField.id);
 		var h = contentHooks[inpField.id]={};
 		//h.id = inpField.id;
