@@ -915,7 +915,6 @@ function qtranxf_ajax_qtranslate_admin_notice(){
 		return;
 	$id = sanitize_text_field($_POST['notice_id']);
 	$set = empty($_POST['notice_action']);
-	//$set = substr($id,0,4) !== 'set-';
 	qtranxf_update_admin_notice($id,$set);
 }
 add_action('wp_ajax_qtranslate_admin_notice', 'qtranxf_ajax_qtranslate_admin_notice');
