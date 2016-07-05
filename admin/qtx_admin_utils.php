@@ -15,17 +15,20 @@ function qtranxf_loadfiles_js($jss, $enqueue_script) {
 		}else if(isset($js['src'])){
 			$src = $js['src'];
 			if($dbg) $src = str_replace('.min.js', '.js', $src);
-			if($enqueue_script){
+			//if($enqueue_script){
 				$handle = isset($js['handle']) ? $js['handle'] : (is_string($k) ? $k : 'qtranslate-admin-js-'.(++$cnt) );
 				$ver = isset($js['ver']) ? $js['ver'] : QTX_VERSION;
 				$url = content_url($src);
+				if(isset($js['deps'])){
+					$deps = array_merge($deps,$js['deps']);
+				}
 				wp_register_script( $handle, $url, $deps, $ver, true);
 				wp_enqueue_script( $handle );
 				$deps[] = $handle;
-			}else{
-				$fp = WP_CONTENT_DIR . '/' . $src;
-				readfile($fp);
-			}
+			//}else{
+			//	$fp = WP_CONTENT_DIR . '/' . $src;
+			//	readfile($fp);
+			//}
 		}
 	}
 }
