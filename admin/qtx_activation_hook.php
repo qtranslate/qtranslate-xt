@@ -882,7 +882,7 @@ function qtranxf_admin_notices_errors(){
 	$msgs = get_option('qtranslate_config_errors');
 	if(!is_array($msgs)) return;
 	foreach($msgs as $key => $msg){
-		echo '<div class="error notice is-dismissible" id="qtranxs_config_error_'.$key.'"><p><a href="'.admin_url('options-general.php?page=qtranslate-x').'" style="color:magenta">qTranslate&#8209;X</a>:&nbsp;<strong><span style="color: red;">'.__('Error', 'qtranslate').'</span></strong>:&nbsp;'.$msg.'</p></div>';
+		echo '<div class="error notice is-dismissible" id="qtranxs_config_error_'.$key.'"><p><a href="'.admin_url('options-general.php?page=qtranslate-x').'" style="color:magenta">qTranslate&#8209;X</a>:&nbsp;<strong><span style="color: red;">'.qtranxf_translate('Error').'</span></strong>:&nbsp;'.$msg.'</p></div>';
 	}
 }
 add_action('admin_notices', 'qtranxf_admin_notices_errors');
