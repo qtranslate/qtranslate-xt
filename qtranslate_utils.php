@@ -92,10 +92,12 @@ function qtranxf_plugin_dirname(){
 }
 
 /**
- * Return path to plugin folder relative to WP_CONTENT_DIR. Works for plugin paths only.
- * No trailing slash in the return string.
+ * Compose path to a plugin folder relative to WP_CONTENT_DIR.
+ * Takes into account linked folders in the path.
+ * Works for plugin paths only. No trailing slash in the return string.
  * It may return absolute path to plugin folder in case content and plugin directories are on different devices.
- * $plugin is path to plugin file, like the one coming from __FILE__.
+ * @param string $plugin is path to plugin file, like the one coming from __FILE__.
+ * @return string path to plugin folder relative to WP_CONTENT_DIR. 
  * @since 3.4.5
  */
 function qtranxf_dir_from_wp_content($plugin){
