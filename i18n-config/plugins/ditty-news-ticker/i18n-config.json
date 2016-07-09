@@ -1,0 +1,14 @@
+{"vendor":{"plugins/ditty-news-ticker":"1.0"},
+"admin-config": {
+"post":{
+	"pages":{"post.php":"", "post-new.php":""},
+	"forms":{
+		"post":{
+				"fields":{
+					"mtphr_dnt_ticks":{"jquery":"textarea[name^=_mtphr_dnt_ticks]"}
+				}
+			}
+		}
+	}
+}
+}
