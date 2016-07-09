@@ -192,6 +192,7 @@ function qtranxf_default_language_name()
 	$nnm['sk'] = 'Slovenčina';//Nov 12 2015
 	$nnm['lt'] = 'Lietuvių';//May 3 2016
 	$nnm['kk'] = 'Қазақ тілі';//May 27 2016
+	$nnm['cs'] = 'Čeština';//July 9 2016
 	//$nnm['tw'] = '繁體中文';
 	return $nnm;
 }
@@ -236,6 +237,7 @@ function qtranxf_default_locale()
 	$loc['sk'] = 'sk_SK';
 	$loc['lt'] = 'lt_LT';
 	$loc['kk'] = 'kk';
+	$loc['cs'] = 'cs_CZ';
 	//$loc['tw'] = 'zh_TW';
 	return $loc;
 }
@@ -293,6 +295,7 @@ function qtranxf_default_not_available()
 	$nam['sk'] = 'Ľutujeme, táto stránka je dostupná len v %LANG:, : a %.';//ok
 	$nam['lt'] = 'Atsiprašome, šis puslapis galimas tik %LANG:, : ir %.';
 	$nam['kk'] = 'Кешіріңіз, бұл кіріс тек %LANG:, : және % тілінде ғана қол жетімді.';
+	$nam['cs'] = 'Omlouváme se, tato položka je k dispozici pouze v %LANG:, : a %.';
 	//$nam['tw'] = '对不起，此内容只适用于%LANG:，:和%。';
 	return $nam;
 }
@@ -337,6 +340,7 @@ function qtranxf_default_date_format()
 	$dtf['sk'] = 'j.F Y';
 	$dtf['lt'] = '%Y.%m.%d';
 	$dtf['kk'] = '%A, \d\e\r %e. %B %Y';
+	$dtf['cs'] = '%e. %m. %Y';
 	//$dtf['tw'] = '%x %A';
 	return $dtf;
 }
@@ -380,6 +384,7 @@ function qtranxf_default_time_format()
 	$tmf['sk'] = 'G:i';
 	$tmf['lt'] = '%H:%M';
 	$tmf['kk'] = '%H:%M';
+	$tmf['cs'] = '%H : %m';
 	//$tmf['tw'] = '%I:%M%p';
 	return $tmf;
 }
@@ -424,6 +429,7 @@ function qtranxf_default_flag()
 	$flg['sk'] = 'sk.png';
 	$flg['lt'] = 'lt.png';
 	$flg['kk'] = 'kz.png';
+	$flg['cs'] = 'cz.png';
 	//$flg['tw'] = 'tw.png';
 	return $flg;
 }
