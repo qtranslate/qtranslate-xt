@@ -661,9 +661,9 @@ function qtranxf_admin_notice_config_files_changed(){
 	qtranxf_admin_notice_dismiss_script();
 	$url = admin_url('options-general.php?page=qtranslate-x#integration');
 	echo '<div class="update-nag qtranxs-notice-ajax notice is-dismissible" id="qtranxs-config-files-changed" action="unset"><p>';
-	printf(__('Option "%s" for plugin %s has been auto-adjusted after recent changes in the site configuration. It might be a good idea to %sreview the changes%s in the list of configuration files.', 'qtranslate'), '<a class="qtranxs-notice-dismiss" href="'.$url.'">'.__('Configuration Files', 'qtranslate').'</a>', '<a href="https://wordpress.org/plugins/qtranslate-x/" style="color:blue" target="_blank">qTranslate&#8209;X</a>', '<a class="qtranxs-notice-dismiss" href="'.$url.'">', '</a>');
+	printf(__('Option "%s" for plugin %s has been auto-adjusted after recent changes in the site configuration. It might be a good idea to %sreview the changes%s in the list of configuration files.', 'qtranslate'), '<a href="'.$url.'">'.__('Configuration Files', 'qtranslate').'</a>', '<a href="https://wordpress.org/plugins/qtranslate-x/" style="color:blue" target="_blank">qTranslate&#8209;X</a>', '<a href="'.$url.'">', '</a>');
 	echo '<br/></p><p>';
-	echo '<a class="button qtranxs-notice-dismiss" href="'.$url.'">';
+	echo '<a class="button" href="'.$url.'">';
 	printf(__('Review Option "%s"', 'qtranslate'), __('Configuration Files', 'qtranslate'));
 	echo '</a>&nbsp;&nbsp;&nbsp;<a class="button" href="https://qtranslatexteam.wordpress.com/integration/" target="_blank">';
 	echo __('Read Integration Guide', 'qtranslate');
