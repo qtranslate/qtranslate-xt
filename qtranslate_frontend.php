@@ -771,10 +771,10 @@ function qtranxf_translate_metadata($meta_type, $original_value, $object_id, $me
 	global $q_config;
 	static $meta_cache_unserialized = array();
 	if(!isset($q_config['url_info'])){
-		//qtranxf_dbg_log('qtranxf_filter_postmeta: too early: $object_id='.$object_id.'; $meta_key',$meta_key,true);
+		//qtranxf_dbg_log('qtranxf_translate_metadata: too early: $object_id='.$object_id.'; $meta_key',$meta_key,true);
 		return $original_value;
 	}
-	//qtranxf_dbg_log('qtranxf_filter_postmeta: $object_id='.$object_id.'; $meta_key=',$meta_key);
+	//qtranxf_dbg_log('qtranxf_translate_metadata: $object_id='.$object_id.'; $meta_key=',$meta_key);
 
 	//$meta_type = 'post';
 	$lang = $q_config['language'];
@@ -803,7 +803,7 @@ function qtranxf_translate_metadata($meta_type, $original_value, $object_id, $me
 			$meta_cache = $meta_cache[$object_id];
 		}
 		$meta_unserialized = array();//clear this cache if we are re-doing meta_cache
-		//qtranxf_dbg_log('qtranxf_filter_postmeta: $object_id='.$object_id.'; $meta_cache before:',$meta_cache);
+		//qtranxf_dbg_log('qtranxf_translate_metadata: $object_id='.$object_id.'; $meta_cache before:',$meta_cache);
 		foreach($meta_cache as $mkey => $mval){
 			$meta_unserialized[$mkey] = array();
 			if(strpos($mkey,'_url') !== false){
@@ -832,7 +832,7 @@ function qtranxf_translate_metadata($meta_type, $original_value, $object_id, $me
 				}
 			}
 		}
-		//qtranxf_dbg_log('qtranxf_filter_postmeta: $object_id='.$object_id.'; $meta_cache  after:',$meta_cache);
+		//qtranxf_dbg_log('qtranxf_translate_metadata: $object_id='.$object_id.'; $meta_cache  after:',$meta_cache);
 		wp_cache_set( $object_id, $meta_cache, $cache_key_lang );
 	}
 
