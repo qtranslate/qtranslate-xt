@@ -13,7 +13,8 @@
 				"view-post-btn":{"encode":"display"},
 				"wp-editor-area":{"jquery":".wp-editor-area"},
 				"gallery-caption":{"jquery":".gallery-caption", "encode":"none"},
-				"wp-caption-text":{"jquery":".wp-caption-text", "encode":"display"}
+				"wp-caption-text":{"jquery":".wp-caption-text", "encode":"display"},
+				"img-alt":{"jquery":"img", "attrs":["alt"], "encode":"display"}
 			}
 		},
 		"wpbody-content":{
