@@ -14,6 +14,7 @@ function qtranxf_admin_set_default_options(&$ops){
 
 	$ops['admin']['bool']=array(
 		'auto_update_mo' => true,// automatically update .mo files
+		'hide_lsb_copy_content' => false
 	);
 
 	//single line options
@@ -53,8 +54,8 @@ function qtranxf_admin_set_default_options(&$ops){
 function qtranxf_default_lsb_style_wrap_class(){
 	global $q_config;
 	switch($q_config['lsb_style']){
-		case 'Tabs_in_Block.css': return 'qtranxs-lang-switch-wrap wp-ui-primary';
-		default: return 'qtranxs-lang-switch-wrap';
+		case 'Tabs_in_Block.css': return 'qtranxs-lang-switch-wrap widefat wp-ui-primary';
+		default: return 'qtranxs-lang-switch-wrap widefat';
 	}
 }
 

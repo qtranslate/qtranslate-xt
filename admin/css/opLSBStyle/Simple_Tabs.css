@@ -50,3 +50,34 @@
 .qtranxs-lang-switch img {
 	margin-right: 4px;
 }
+
+
+/*
+	Button "Copy From"
+*/
+
+span.qtranxs-lang-copy{
+	background-color: #eee;
+	margin-left: 10px;
+	border: 2px solid #UserColor2;
+	border-radius: 12px;
+	padding: 0px 4px 3px 8px;
+}
+
+span.qtranxs-lang-copy-button {
+	font-size: smaller;
+	vertical-align: middle;
+	cursor: pointer;
+}
+
+span.qtranxs-lang-copy-button:hover {
+	text-decoration: underline;
+}
+
+#wpbody select.qtranxs-lang-copy-select {
+	border-radius: 12px;
+	font-size: smaller;
+	height: initial;
+	vertical-align: middle;
+	padding: 0px 0px 0px 0px;
+}

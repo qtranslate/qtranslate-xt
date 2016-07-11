@@ -515,6 +515,7 @@ echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 
 							echo '<option value="custom"'.selected('custom',$q_config['lsb_style'],false).'>'.__('Use custom CSS', 'qtranslate').'</option>';
 						?></select>
 						<p class="qtranxs-notes"><?php printf(__('Choice "%s" disables this option and allows one to use its own custom CSS provided by other means.', 'qtranslate'),__('Use custom CSS', 'qtranslate')) ?></p>
+						<br/><input type="checkbox" name="hide_lsb_copy_content" id="hide_lsb_copy_content" value="1"<?php checked(!empty($q_config['hide_lsb_copy_content']))?> ><label for="hide_lsb_copy_content"><?php _e('Hide button "Copy From", which allows to copy multilingual content from other language.', 'qtranslate') ?></label>
 					</fieldset>
 				</td>
 			</tr>

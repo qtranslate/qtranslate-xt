@@ -210,6 +210,7 @@ var qTranslateX=function(pg) {
 	this.isLanguageEnabled=function(lang){ return !!qTranslateConfig.language_config[lang]; }
 
 	var setLangCookie=function(lang) { document.cookie='qtrans_edit_language='+lang; }
+	var setCopyFromLangCookie=function(lang) { document.cookie='qtrans_copy_language='+lang; }
 
 	if(qTranslateConfig.LSB){
 		qTranslateConfig.activeLanguage = qtranxj_get_cookie('qtrans_edit_language');
@@ -220,6 +221,11 @@ var qTranslateX=function(pg) {
 			}else{//no languages are enabled
 				qTranslateConfig.LSB = false;
 			}
+		}
+		qTranslateConfig.CopyFromLang = qtranxj_get_cookie('qtrans_copy_language');
+		if(!qTranslateConfig.CopyFromLang || !this.isLanguageEnabled(qTranslateConfig.CopyFromLang)){
+			qTranslateConfig.CopyFromLang = qTranslateConfig.default_language;
+			setCopyFromLangCookie(qTranslateConfig.CopyFromLang);
 		}
 	}else{
 		qTranslateConfig.activeLanguage = qTranslateConfig.language;
@@ -1141,6 +1147,13 @@ var qTranslateX=function(pg) {
 		}
 	}
 
+	this.onLoadLanguage = function (lang, langFrom) {
+		var onTabSwitchFunctionsLoad = qTranslateConfig.onTabSwitchFunctionsLoad;
+		for (var i = 0; i < onTabSwitchFunctionsLoad.length; ++i) {
+			onTabSwitchFunctionsLoad[i].call(qTranslateConfig.qtx,lang,langFrom);
+		}
+	}
+
 	/**
 	 * former switchTab
 	 * @since 3.3.2
@@ -1187,30 +1200,58 @@ var qTranslateX=function(pg) {
 		for (var i = 0; i < onTabSwitchFunctions.length; ++i) {
 			onTabSwitchFunctions[i].call(qTranslateConfig.qtx,lang,langFrom);
 		}
-		var onTabSwitchFunctionsLoad = qTranslateConfig.onTabSwitchFunctionsLoad;
-		for (var i = 0; i < onTabSwitchFunctionsLoad.length; ++i) {
-			onTabSwitchFunctionsLoad[i].call(qTranslateConfig.qtx,lang,langFrom);
+		qtx.onLoadLanguage(lang,langFrom);
+	}
+
+
+	this.CopyContentFrom = function() {
+		var lang = qTranslateConfig.activeLanguage;
+		var langFrom = qTranslateConfig.CopyFromLang;
+		for(var key in contentHooks){
+			var h=contentHooks[key];
+			var value = h.fields[langFrom].value;
+			h.contentField.value = value;
 		}
+		qtx.onLoadLanguage(lang,langFrom);
+	}
+
+	this.ChooseLangToCopy = function() {
+		qTranslateConfig.CopyFromLang = this.value;
+		jQuery('.qtranxs-lang-copy-select').each( function() { if(this.value != qTranslateConfig.CopyFromLang) this.value = qTranslateConfig.CopyFromLang; } );
+		setCopyFromLangCookie(qTranslateConfig.CopyFromLang);
 	}
 
 	/**
 	 * former switchTab
 	 * @since 3.3.2
 	 */
-	var createSetOfLSB = function () {
-		var langSwitchWrap=qtranxj_ce('ul', {className: qTranslateConfig.lsb_style_wrap_class});
-		var langs=qTranslateConfig.language_config;
-		if(!qTranslateConfig.tabSwitches) qTranslateConfig.tabSwitches={};
-		for (var lang in langs) {
+	var createSetOfLSB = function() {
+		var langSwitchWrap = qtranxj_ce('ul', { className: qTranslateConfig.lsb_style_wrap_class });
+		var langs = qTranslateConfig.language_config;
+		if(!qTranslateConfig.tabSwitches) qTranslateConfig.tabSwitches = {};
+		for(var lang in langs) {
 			var lang_conf = langs[lang];
-			var flag_location=qTranslateConfig.flag_location;
-			var tabSwitch=qtranxj_ce ('li', {lang: lang, className: 'qtranxs-lang-switch', onclick: qTranslateConfig.qtx.switchActiveLanguage }, langSwitchWrap );
-			qtranxj_ce('img', {src: flag_location+lang_conf.flag}, tabSwitch);
-			qtranxj_ce('span', {innerHTML: lang_conf.name}, tabSwitch);
-			if ( qTranslateConfig.activeLanguage == lang )
+			var flag_location = qTranslateConfig.flag_location;
+			var li_title = qTranslateConfig.strings.ShowIn + lang_conf.admin_name + ' [:' + lang + ']';
+			var tabSwitch = qtranxj_ce('li', { lang: lang, className: 'qtranxs-lang-switch qtranxs-lang-switch-' + lang, title: li_title, onclick: qtx.switchActiveLanguage }, langSwitchWrap);
+			qtranxj_ce('img', { src: flag_location + lang_conf.flag }, tabSwitch);
+			qtranxj_ce('span', { innerHTML: lang_conf.name }, tabSwitch);
+			if(qTranslateConfig.activeLanguage == lang)
 				tabSwitch.classList.add(qTranslateConfig.lsb_style_active_class);
 			if(!qTranslateConfig.tabSwitches[lang]) qTranslateConfig.tabSwitches[lang] = [];
 			qTranslateConfig.tabSwitches[lang].push(tabSwitch);
+		}
+		if(!qTranslateConfig.hide_lsb_copy_content) {
+			var tab = qtranxj_ce('span', { className: 'qtranxs-lang-copy' }, langSwitchWrap);
+			var html = qTranslateConfig.strings.CopyFrom + '&nbsp;';
+			qtranxj_ce('span', { className: 'qtranxs-lang-copy-button', onclick: qtx.CopyContentFrom, title: qTranslateConfig.strings.CopyFromAlt, innerHTML: html }, tab);
+			html = '';
+			for(var lang in langs) {
+				var lang_conf = langs[lang];
+				html += '<option value="' + lang + '">' + lang_conf.name + '</option>';
+			}
+			var s = qtranxj_ce('select', { className: 'qtranxs-lang-copy-select', onchange: qtx.ChooseLangToCopy, title: qTranslateConfig.strings.ChooseLangToCopy, innerHTML: html }, tab);
+			s.value = qTranslateConfig.CopyFromLang;
 		}
 		return langSwitchWrap;
 	}

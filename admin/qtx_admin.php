@@ -402,16 +402,22 @@ function qtranxf_add_admin_footer_js ( $enqueue_script=false ) {
 	$config['js']=array();
 	//$config['flag']=array();//deprecated since 3.2.9.9.0
 	//$config['language_name']=array();//deprecated since 3.2.9.9.0
+
+	$config['strings'] = array();//since 3.4.7
+	//translators: The begining of the prompt on hover over an LSB. This string is appended with a edit-language name in admin language, so that the space at the end matters.
+	$config['strings']['ShowIn'] = __('Show multilingual content in ', 'qtranslate');
+
 	$config['language_config']=array();
+	$language_config = &$config['language_config'];
 	foreach($q_config['enabled_languages'] as $lang)
 	{
-		//$config['flag'][$lang]=$q_config['flag'][$lang];
-		//$config['language_name'][$lang]=$q_config['language_name'][$lang];
-		$config['language_config'][$lang]=array();
-		$config['language_config'][$lang]['flag'] = $q_config['flag'][$lang];
-		$config['language_config'][$lang]['name'] = $q_config['language_name'][$lang];
-		$config['language_config'][$lang]['locale'] = $q_config['locale'][$lang];
-		$config['language_config'][$lang]['locale_html'] = !empty($q_config['locale_html'][$lang]) ? $q_config['locale_html'][$lang] : $lang;
+		$language_config[$lang]=array();
+		$lang_cfg = &$language_config[$lang];
+		$lang_cfg['flag'] = $q_config['flag'][$lang];
+		$lang_cfg['name'] = $q_config['language_name'][$lang];
+		$lang_cfg['locale'] = $q_config['locale'][$lang];
+		$lang_cfg['locale_html'] = !empty($q_config['locale_html'][$lang]) ? $q_config['locale_html'][$lang] : $lang;
+		$lang_cfg['admin_name'] = qtranxf_getLanguageName($lang);
 	}
 	if(!empty($page_config)){
 		$config['page_config'] = $page_config;
@@ -421,6 +427,18 @@ function qtranxf_add_admin_footer_js ( $enqueue_script=false ) {
 
 	$config['LSB'] = $q_config['editor_mode'] == QTX_EDITOR_MODE_LSB;
 	$config['RAW'] = $q_config['editor_mode'] == QTX_EDITOR_MODE_RAW;
+
+	if(empty($q_config['hide_lsb_copy_content'])){
+		//translators: Prompt on hover over button "Copy From" to copy content from other language
+		$config['strings']['CopyFromAlt'] = __('Copy multilinual content from other language', 'qtranslate');
+		//translators: Prompt on hover over select-element to choose the language to copy content from
+		$config['strings']['ChooseLangToCopy'] = __('Choose language to copy multilinual content from', 'qtranslate');
+		//translators: Title of button to copy content from otrher language
+		$config['strings']['CopyFrom'] = __('Copy from:', 'qtranslate');
+	}else{
+		$config['hide_lsb_copy_content'] = true;
+	}
+
 	/**
 	 * Last chance to customize Java script variable qTranslateConfig.
 	 */
@@ -477,34 +495,31 @@ function qtranxf_add_admin_lang_icons ()
 function qtranxf_add_admin_highlight_css() {
 	global $q_config;
 	if ( $q_config['highlight_mode'] == QTX_HIGHLIGHT_MODE_NONE || get_the_author_meta( 'qtranslate_highlight_disabled', get_current_user_id() )) {
-		return;
+		return '';
 	}
-	echo '<style type="text/css">' . PHP_EOL;
 	$highlight_mode = $q_config['highlight_mode'];
 	switch ( $highlight_mode ) {
-		case QTX_HIGHLIGHT_MODE_CUSTOM_CSS: echo $q_config['highlight_mode_custom_css']; break;
-		default: echo qtranxf_get_admin_highlight_css($highlight_mode);
+		case QTX_HIGHLIGHT_MODE_CUSTOM_CSS: $css = $q_config['highlight_mode_custom_css']; break;
+		default: $css = qtranxf_get_admin_highlight_css($highlight_mode);
 	}
-	echo '</style>' . PHP_EOL;
+	return $css;
 }
 
 function qtranxf_get_admin_highlight_css($highlight_mode) {
 	global $q_config;
-	$current_color_scheme = qtranxf_get_user_admin_color();
-	$clr = $current_color_scheme[2];
 	$css = 'input.qtranxs-translatable, textarea.qtranxs-translatable, div.qtranxs-translatable {' . PHP_EOL;
 	switch ( $highlight_mode ) {
 		case QTX_HIGHLIGHT_MODE_BORDER_LEFT:// v3
-			$css .= 'border-left: 3px solid ' . $clr .  ' !important;' . PHP_EOL;
+			$css .= 'border-left: 3px solid #UserColor2 !important;' . PHP_EOL;
 			break;
 		case QTX_HIGHLIGHT_MODE_BORDER:// v2
-			$css .= 'border: 1px solid ' . $clr .  ' !important;' . PHP_EOL;
+			$css .= 'border: 1px solid #UserColor2 !important;' . PHP_EOL;
 			break;
 		case QTX_HIGHLIGHT_MODE_LEFT_SHADOW: // v1
-			$css .= 'box-shadow: -3px 0 ' . $clr . ' !important;' . PHP_EOL;
+			$css .= 'box-shadow: -3px 0 #UserColor2 !important;' . PHP_EOL;
 			break;
 		case QTX_HIGHLIGHT_MODE_OUTLINE:// v1
-			$css .= 'outline: 2px solid ' . $clr . ' !important;' . PHP_EOL;
+			$css .= 'outline: 2px solid #UserColor2 !important;' . PHP_EOL;
 			//$css .= 'div.qtranxs-translatable div.mce-panel {' . PHP_EOL;
 			//$css .= 'margin-top: 2px' . PHP_EOL;
 			break;
@@ -518,24 +533,20 @@ function qtranxf_add_admin_css () {
 	wp_register_style( 'qtranslate-admin-style', plugins_url('css/qtranslate_configuration.css', __FILE__), array(), QTX_VERSION );
 	wp_enqueue_style( 'qtranslate-admin-style' );
 	qtranxf_add_admin_lang_icons();
-	qtranxf_add_admin_highlight_css();
-	echo '<style type="text/css" media="screen">'.PHP_EOL;
+	$css = qtranxf_add_admin_highlight_css();
 	$fn = QTRANSLATE_DIR.'/admin/css/opLSBStyle/'.$q_config['lsb_style'];
-	if(file_exists($fn)) readfile($fn);
-/*
-	echo ".qtranxs_title_input { border:0pt none; font-size:1.7em; outline-color:invert; outline-style:none; outline-width:medium; padding:0pt; width:100%; }\n";
-	echo ".qtranxs_title_wrap { border-color:#CCCCCC; border-style:solid; border-width:1px; padding:2px 3px; }\n";
-	echo "#qtranxs_textarea_content { padding:6px; border:0 none; line-height:150%; outline: none; margin:0pt; width:100%; -moz-box-sizing: border-box;";
-	echo	"-webkit-box-sizing: border-box; -khtml-box-sizing: border-box; box-sizing: border-box; }\n";
-	echo ".qtranxs_title { -moz-border-radius: 6px 6px 0 0;";
-	echo	"-webkit-border-top-right-radius: 6px; -webkit-border-top-left-radius: 6px; -khtml-border-top-right-radius: 6px; -khtml-border-top-left-radius: 6px;";
-	echo	"border-top-right-radius: 6px; border-top-left-radius: 6px; }\n";
-	echo ".hide-if-no-js.wp-switch-editor.switch-tmce { margin-left:6px !important;}";
-	echo "#postexcerpt textarea { height:4em; margin:0; width:98% }";
-	echo ".qtranxs_lang_div { float:right; height:12px; width:18px; padding:6px 5px 8px 5px; cursor:pointer }";
-	echo ".qtranxs_lang_div.active { background: #DFDFDF; border-left:1px solid #D0D0D0; border-right: 1px solid #F7F7F7; padding:6px 4px 8px 4px }";
-*/
-	//echo "#qtranxs_debug { width:100%; height:200px }";
+	if(file_exists($fn)){
+		$css .= file_get_contents($fn);
+	}
+	$css = preg_replace('!/\\*.*?\\*/!ms', '', $css);
+	$css = preg_replace('!//.*?$!m', '', $css);
+	$css = preg_replace('/\\n\\s*\\n/m', "\n", $css);
+	$current_color_scheme = qtranxf_get_user_admin_color();
+	foreach($current_color_scheme as $k => $clr){
+		$css = preg_replace('/#UserColor'.$k.'/m', $clr, $css);
+	}
+	echo '<style type="text/css" media="screen">'.PHP_EOL;
+	echo $css;
 	do_action('qtranslate_admin_css');
 	do_action('qtranslate_css');//should not be used
 	echo '</style>'.PHP_EOL;

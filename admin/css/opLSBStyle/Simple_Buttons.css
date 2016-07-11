@@ -35,3 +35,36 @@
 .qtranxs-lang-switch-wrap li.qtranxs-lang-switch:hover{
 	text-decoration: underline;
 }
+
+
+
+/*
+	Button "Copy From"
+*/
+
+span.qtranxs-lang-copy{
+	background-image: linear-gradient(to top,#e5e5e5,#f4f4f4);
+	margin-left: 10px;
+	border: 2px solid #UserColor2;
+	border-radius: 12px;
+	//vertical-align: middle;
+	padding: 0px 4px 3px 8px;
+}
+
+span.qtranxs-lang-copy-button {
+	font-size: smaller;
+	vertical-align: middle;
+	cursor: pointer;
+}
+
+span.qtranxs-lang-copy-button:hover {
+	text-decoration: underline;
+}
+
+#wpbody select.qtranxs-lang-copy-select {
+	border-radius: 12px;
+	font-size: smaller;
+	height: initial;
+	vertical-align: middle;
+	padding: 0px 0px 0px 0px;
+}
