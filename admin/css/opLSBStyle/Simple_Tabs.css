@@ -31,14 +31,15 @@
 	display: inline-block;
 }
 
-.qtranxs-lang-switch-wrap li.qtranxs-lang-switch:hover{
+.qtranxs-lang-switch-wrap li.qtranxs-lang-switch:not(.qtranxs-lang-copy-li):hover {
 	background: #e0e0e0;
 	opacity: 1;
 }
 
 .qtranxs-lang-switch-wrap li.qtranxs-lang-switch.active,
 .qtranxs-lang-switch-wrap li.qtranxs-lang-switch.active:focus,
-.qtranxs-lang-switch-wrap li.qtranxs-lang-switch.active:hover {
+.qtranxs-lang-switch-wrap li.qtranxs-lang-switch.active:hover
+{
 	color: #555;
 	cursor: default;
 	background-color: #f1f1f1;
@@ -56,12 +57,14 @@
 	Button "Copy From"
 */
 
-span.qtranxs-lang-copy{
+span.qtranxs-lang-copy {
 	background-color: #eee;
 	margin-left: 10px;
 	border: 2px solid #UserColor2;
 	border-radius: 12px;
+	vertical-align: +1px;
 	padding: 0px 4px 3px 8px;
+	white-space: nowrap;
 }
 
 span.qtranxs-lang-copy-button {

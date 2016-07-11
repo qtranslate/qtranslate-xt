@@ -1242,15 +1242,16 @@ var qTranslateX=function(pg) {
 			qTranslateConfig.tabSwitches[lang].push(tabSwitch);
 		}
 		if(!qTranslateConfig.hide_lsb_copy_content) {
-			var tab = qtranxj_ce('span', { className: 'qtranxs-lang-copy' }, langSwitchWrap);
+			var tab = qtranxj_ce('li', { className: 'qtranxs-lang-switch qtranxs-lang-copy-li' }, langSwitchWrap);
+			var spn = qtranxj_ce('span', { className: 'qtranxs-lang-copy' }, tab);
 			var html = qTranslateConfig.strings.CopyFrom + '&nbsp;';
-			qtranxj_ce('span', { className: 'qtranxs-lang-copy-button', onclick: qtx.CopyContentFrom, title: qTranslateConfig.strings.CopyFromAlt, innerHTML: html }, tab);
+			qtranxj_ce('span', { className: 'qtranxs-lang-copy-button', onclick: qtx.CopyContentFrom, title: qTranslateConfig.strings.CopyFromAlt, innerHTML: html }, spn);
 			html = '';
 			for(var lang in langs) {
 				var lang_conf = langs[lang];
 				html += '<option value="' + lang + '">' + lang_conf.name + '</option>';
 			}
-			var s = qtranxj_ce('select', { className: 'qtranxs-lang-copy-select', onchange: qtx.ChooseLangToCopy, title: qTranslateConfig.strings.ChooseLangToCopy, innerHTML: html }, tab);
+			var s = qtranxj_ce('select', { className: 'qtranxs-lang-copy-select', onchange: qtx.ChooseLangToCopy, title: qTranslateConfig.strings.ChooseLangToCopy, innerHTML: html }, spn);
 			s.value = qTranslateConfig.CopyFromLang;
 		}
 		return langSwitchWrap;

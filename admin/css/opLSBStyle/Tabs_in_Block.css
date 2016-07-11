@@ -16,7 +16,7 @@
 {
 	cursor: pointer;
 }
- 
+
 .qtranxs-lang-switch>*
 {
 	vertical-align: middle;
@@ -28,6 +28,10 @@
 	vertical-align: middle;
 }
 
+.qtranxs-lang-switch-wrap li.qtranxs-lang-switch:hover {
+	text-decoration: underline;
+}
+
 .qtranxs-lang-switch img {
 	margin-right: 4px;
 }
@@ -37,13 +41,14 @@
 	Button "Copy From"
 */
 
-span.qtranxs-lang-copy{
+span.qtranxs-lang-copy {
 	//background-color: #UserColor2;
 	margin-left: 10px;
 	border: 2px solid #UserColor3;
 	border-radius: 12px;
-	//vertical-align: middle;
+	vertical-align: +1px;
 	padding: 0px 4px 3px 8px;
+	white-space: nowrap;
 }
 
 span.qtranxs-lang-copy-button {
