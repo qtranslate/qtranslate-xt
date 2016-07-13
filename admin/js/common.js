@@ -1211,6 +1211,9 @@ var qTranslateX=function(pg) {
 			var h=contentHooks[key];
 			var value = h.fields[langFrom].value;
 			h.contentField.value = value;
+			var mce = h.mce && !h.mce.hidden;
+			if(mce)
+				updateTinyMCE(h);
 		}
 		qtx.onLoadLanguage(lang,langFrom);
 	}
