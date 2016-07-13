@@ -384,16 +384,6 @@ function qtranxf_get_user_admin_color() {
 
 function qtranxf_meta_box_LSB()
 {
-	/*
-	global $q_config;
-	$flag_location=qtranxf_flag_location();
-	$lsb = '<ul class="'.$q_config['lsb_style_wrap_class'].' qtranxs-meta-box-lsb">';
-	foreach($q_config['enabled_languages'] as $lang){
-		$lsb .= '<li lang="'.$lang.'" class="qtranxs-lang-switch" onclick="qTranslateConfig.qtx.switchActiveLanguage"><img src="'.$flag_location.$q_config['flag'][$lang].'"><span>'.$q_config['language_name'][$lang].'</span></li>';
-	}
-	$lsb .= '</ul>';
-	echo $lsb;
-	*/
 	printf(__('This is a set of "%s" from %s. Click any blank space between the buttons and drag it to a place where you would need it the most. Click the handle at the top-right corner of this widget to hide this message.', 'qtranslate'), __('Language Switching Buttons','qtranslate'), '<a href="https://wordpress.org/plugins/qtranslate-x/" target="_blank">qTranslate&#8209;X</a>');
 }
 

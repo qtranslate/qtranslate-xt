@@ -1225,11 +1225,17 @@ var qTranslateX=function(pg) {
 	}
 
 	/**
-	 * former switchTab
-	 * @since 3.3.2
+	 * @since 3.4.8
 	 */
 	var createSetOfLSB = function() {
-		var langSwitchWrap = qtranxj_ce('ul', { className: qTranslateConfig.lsb_style_wrap_class });
+		return createSetOfLSBwith(qTranslateConfig.lsb_style_wrap_class + ' widefat');
+	}
+
+	/**
+	 * @since 3.3.2
+	 */
+	var createSetOfLSBwith = function(lsb_style_wrap_class) {
+		var langSwitchWrap = qtranxj_ce('ul', { className: lsb_style_wrap_class });
 		var langs = qTranslateConfig.language_config;
 		if(!qTranslateConfig.tabSwitches) qTranslateConfig.tabSwitches = {};
 		for(var lang in langs) {
@@ -1270,7 +1276,9 @@ var qTranslateX=function(pg) {
 		var sp = document.createElement('span');
 		mb.insertBefore(sp, inside_elems[0]);
 		sp.className = 'hndle ui-sortable-handle';
-		var langSwitchWrap = createSetOfLSB();
+		//var lsb_style_wrap_class = qTranslateConfig.lsb_style_wrap_class.replace('widefat','');
+		//var langSwitchWrap = createSetOfLSBwith(lsb_style_wrap_class);
+		var langSwitchWrap = createSetOfLSBwith(qTranslateConfig.lsb_style_wrap_class);
 		sp.appendChild(langSwitchWrap);
 		$(function($){$('#qtranxs-meta-box-lsb .hndle').unbind('click.postboxes');});
 	}
@@ -1311,14 +1319,10 @@ var qTranslateX=function(pg) {
 			var anchor = anchors[i];
 			//co('anchor['+i+']: ', anchor);
 			if( !anchor.where || anchor.where.indexOf('before') >= 0 ){
-				//var langSwitchWrap=qtranxj_ce('ul', {className: qTranslateConfig.lsb_style_wrap_class});
-				//var languageSwitch = new qtranxj_LanguageSwitch(langSwitchWrap);
 				var langSwitchWrap = createSetOfLSB();
 				anchor.f.parentNode.insertBefore( langSwitchWrap, anchor.f );
 			}
 			if( anchor.where && anchor.where.indexOf('after') >= 0 ){
-				//var langSwitchWrap=qtranxj_ce('ul', {className: qTranslateConfig.lsb_style_wrap_class});
-				//var languageSwitch = new qtranxj_LanguageSwitch(langSwitchWrap);
 				var langSwitchWrap = createSetOfLSB();
 				anchor.f.parentNode.insertBefore( langSwitchWrap, anchor.f.nextSibling );
 			}

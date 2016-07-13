@@ -54,8 +54,8 @@ function qtranxf_admin_set_default_options(&$ops){
 function qtranxf_default_lsb_style_wrap_class(){
 	global $q_config;
 	switch($q_config['lsb_style']){
-		case 'Tabs_in_Block.css': return 'qtranxs-lang-switch-wrap widefat wp-ui-primary';
-		default: return 'qtranxs-lang-switch-wrap widefat';
+		case 'Tabs_in_Block.css': return 'qtranxs-lang-switch-wrap wp-ui-primary';
+		default: return 'qtranxs-lang-switch-wrap';
 	}
 }
 
