@@ -1207,15 +1207,23 @@ var qTranslateX=function(pg) {
 	this.CopyContentFrom = function() {
 		var lang = qTranslateConfig.activeLanguage;
 		var langFrom = qTranslateConfig.CopyFromLang;
+		var changed = false;
 		for(var key in contentHooks){
-			var h=contentHooks[key];
-			var value = h.fields[langFrom].value;
-			h.contentField.value = value;
+			var h = contentHooks[key];
 			var mce = h.mce && !h.mce.hidden;
+			var value = mce ? h.mce.getContent({format: 'html'}) : h.contentField.value;
+			if(value)
+				continue;//do not overwrite existent content
+			value = h.fields[langFrom].value;
+			if(!value)
+				continue;//there is nothing to copy
+			h.contentField.value = value;
 			if(mce)
 				updateTinyMCE(h);
+			changed = true;
 		}
-		qtx.onLoadLanguage(lang,langFrom);
+		if(changed)
+			qtx.onLoadLanguage(lang,langFrom);
 	}
 
 	this.ChooseLangToCopy = function() {

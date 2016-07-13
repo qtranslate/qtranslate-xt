@@ -430,9 +430,9 @@ function qtranxf_add_admin_footer_js ( $enqueue_script=false ) {
 
 	if(empty($q_config['hide_lsb_copy_content'])){
 		//translators: Prompt on hover over button "Copy From" to copy content from other language
-		$config['strings']['CopyFromAlt'] = __('Copy multilinual content from other language', 'qtranslate');
+		$config['strings']['CopyFromAlt'] = __('Fill empty multilingual fields with content from other language', 'qtranslate');
 		//translators: Prompt on hover over select-element to choose the language to copy content from
-		$config['strings']['ChooseLangToCopy'] = __('Choose language to copy multilinual content from', 'qtranslate');
+		$config['strings']['ChooseLangToCopy'] = __('Choose language to copy multilingual content from', 'qtranslate');
 		//translators: Title of button to copy content from otrher language
 		$config['strings']['CopyFrom'] = __('Copy from:', 'qtranslate');
 	}else{
