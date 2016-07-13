@@ -146,7 +146,7 @@ function qtranxf_license_form($form_action, $nonce_action) {
 	</tr>
 	<tr class="form-field form-required">
 		<th scope="row"><label for="qtranxs_lic_url"><?php echo $TitleLicURL ?></label></th>
-		<td><input name="lic_url" type="text" id="qtranxs_lic_url" value="<?php echo $lic_url ?>"<?php if( !empty($lic_url) && !$localhost ) echo ' readonly' ?> />
+		<td><input name="lic_url" type="text" id="qtranxs_lic_url" value="<?php echo empty($lic_url) && !$localhost ? get_bloginfo('wpurl') : $lic_url; ?>"<?php if( !empty($lic_url) && !$localhost ) echo ' readonly' ?> />
 			<p class="qtranxs-notes"><?php printf(__('The URL, for which license key is registered. The same as it is entered in "%s" on page "%s".', 'qtranslate'), $TitleLicURL, '<a href="' . admin_url('options-general.php') . '" target="_blank">' . qtranxf_translate_wp('General Settings') . '</a>') ?></p>
 		</td>
 	</tr>
