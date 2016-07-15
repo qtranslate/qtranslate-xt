@@ -912,7 +912,7 @@ var qTranslateX=function(pg) {
 		}
 	}
 
-	var addContentHooksTinyMCE = function () {
+	this.addContentHooksTinyMCE = function () {
 		function setEditorHooks(ed) {
 			var id = ed.id;
 			if (!id) return;
@@ -1294,7 +1294,7 @@ var qTranslateX=function(pg) {
 	//co('qTranslateConfig.LSB=',qTranslateConfig.LSB);
 	if(qTranslateConfig.LSB){
 		//additional initialization
-		addContentHooksTinyMCE();
+		this.addContentHooksTinyMCE();
 		setupMetaBoxLSB(jQuery);
 
 		//create sets of LSB
