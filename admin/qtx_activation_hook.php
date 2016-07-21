@@ -871,6 +871,18 @@ function qtranxf_admin_notices_next_thanks(){
 //add_action('admin_notices', 'qtranxf_admin_notices_next_thanks');
 
 function qtranxf_admin_notices_survey_request(){
+	if(qtranxf_check_admin_notice('survey-2016-07'))
+		return;
+	qtranxf_admin_notice_dismiss_script();
+	echo '<div class="updated qtranxs-notice-ajax notice is-dismissible" id="qtranxs-survey-2016-07"><p style="font-size: larger;">';// text-align: center;
+	printf(__('Thank you for using plugin %s!', 'qtranslate'), '<a href="https://wordpress.org/plugins/qtranslate-x/" style="color:blue" target="_blank">qTranslate&#8209;X</a>');
+	echo '<br/>';
+	echo __('Please, help us to figure out the best way to proceed with plugin development with answering a short survey, press the button below.', 'qtranslate');
+	echo '</p><p><a class="button" href="https://docs.google.com/forms/d/e/1FAIpQLSfr7zi3i7BAJWl8x7SyBf-MXM-2qOqHd6gddBkKAgFuoOcvng/viewform" target="_blank">';
+	printf(__('Go to Survey on the Future of %s', 'qtranslate'), 'qTranslate&#8209;X');
+	echo '</a>&nbsp;&nbsp;&nbsp;<a class="button qtranxs-notice-dismiss" href="javascript:void(0);">'.__('I have already done it, dismiss this message.', 'qtranslate');
+	echo '</a></p></div>';
+/*
 	if(qtranxf_check_admin_notice('survey-translation-service'))
 		return;
 	qtranxf_admin_notice_dismiss_script();
@@ -882,6 +894,7 @@ function qtranxf_admin_notices_survey_request(){
 	printf(__('Survey on "%s" feature', 'qtranslate'), __('Translation Service', 'qtranslate'));
 	echo '</a>&nbsp;&nbsp;&nbsp;<a class="button qtranxs-notice-dismiss" href="javascript:void(0);">'.__('I have already done it, dismiss this message.', 'qtranslate');
 	echo '</a></p></div>';
+*/
 }
 add_action('admin_notices', 'qtranxf_admin_notices_survey_request');
 
