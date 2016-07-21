@@ -679,7 +679,7 @@ function qtranxf_admin_notice_first_install(){
 	echo '<div class="updated qtranxs-notice-ajax notice is-dismissible" id="qtranxs-initial-install"><p style="font-size: larger;">';// text-align: center;
 	printf(__('Are you new to plugin %s?', 'qtranslate'), '<a href="https://wordpress.org/plugins/qtranslate-x/" style="color:blue" target="_blank">qTranslate&#8209;X</a>');
 	echo '<br/>';
-	echo '</p><p><a class="button qtranxs-notice-dismiss" href="https://qtranslatexteam.wordpress.com/startup-guide/" target="_blank">';
+	echo '</p><p><a class="button" href="https://qtranslatexteam.wordpress.com/startup-guide/" target="_blank">';
 	echo __('Read Startup Guide', 'qtranslate');
 	echo '</a>&nbsp;&nbsp;&nbsp;<a class="button qtranxs-notice-dismiss" href="javascript:void(0);">'.__('I have already done it, dismiss this message.', 'qtranslate');
 	echo '</a></p></div>';
@@ -715,7 +715,7 @@ function qtranxf_admin_notice_deactivate_plugin($nm, $plugin){
 	wp_die('<p>'.$msg.'</p>');
 }
 
-function qtranxf_admin_notices_new_options($nms,$ver,$url){
+function qtranxf_admin_notices_new_options($nms,$ver,$url,$conf_url=null){
 	$id='new-options-ver-'.str_replace('.','',$ver);
 	if(qtranxf_check_admin_notice($id))
 		return;
@@ -727,10 +727,14 @@ function qtranxf_admin_notices_new_options($nms,$ver,$url){
 		$opns = '';
 		foreach($nms as $nm){
 			if(!empty($opns)) $opns .= ', ';
-			$opns .= '"'.__($nm, 'qtranslate').'"';
+			$opnm = __($nm, 'qtranslate');
+			if(strpos($opnm,'"') === false)
+				$opns .= '"'.$opnm.'"';
+			else
+				$opns .= $opnm;
 		}
 		echo '<p>';
-		printf(__('The latest version of plugin %s has a number of new options, for example, %s, which may change the look of some pages. Please, review the help text of new options on %sconfiguration page%s.','qtranslate'), $me, $opns, '<a href="'.admin_url('options-general.php?page=qtranslate-x').'">','</a>');
+		printf(__('The latest version of plugin %s has a number of new options, for example, %s, which may change the look of some pages. Please, review the help text of new options on %sconfiguration page%s.','qtranslate'), $me, $opns, '<a href="' . (empty($conf_url) ? admin_url('options-general.php?page=qtranslate-x') : $conf_url) .'">','</a>');
 		echo '</p>';
 	}
 	if(!empty($url)){
@@ -747,9 +751,12 @@ function qtranxf_admin_notices_version(){
 	$ver_prv = get_option('qtranslate_version_previous',$ver_cur);
 	if($ver_cur == $ver_prv) return;
 
-	if($ver_prv < 33000 && $ver_cur >= 32980) qtranxf_admin_notices_new_options(array(__('Highlight Style', 'qtranslate'),__('LSB Style', 'qtranslate')),'3.3','https://qtranslatexteam.wordpress.com/2015/03/30/release-notes-3-3');
+	//translators: 'Hide button "Copy From"' is a title of an option, embrased in appropriate HTML tags defined by %s. Format %$3s is replaced with previously translated option group name "LSB Style".
+	if($ver_prv < 35000 && $ver_cur >= 34000) qtranxf_admin_notices_new_options(array(sprintf(__('%sHide button "Copy From"%s under advanced option group "%3$s"', 'qtranslate'), '<a href="'.admin_url('options-general.php?page=qtranslate-x#advanced').'">', '</a>', __('LSB Style', 'qtranslate'))), '3.5', 'https://qtranslatexteam.wordpress.com/2016/07/15/release-notes-3-5-0/', admin_url('options-general.php?page=qtranslate-x#advanced'));
 
 	if($ver_prv < 34000 && $ver_cur >= 32980) qtranxf_admin_notices_new_options(array('<a href="'.admin_url('options-general.php?page=qtranslate-x#integration').'">'.__('Configuration Files', 'qtranslate').'</a>'),'3.4','https://qtranslatexteam.wordpress.com/2015/05/15/release-notes-3-4/');
+
+	if($ver_prv < 33000 && $ver_cur >= 32980) qtranxf_admin_notices_new_options(array(__('Highlight Style', 'qtranslate'),__('LSB Style', 'qtranslate')),'3.3','https://qtranslatexteam.wordpress.com/2015/03/30/release-notes-3-3');
 }
 add_action('admin_notices', 'qtranxf_admin_notices_version');
 
@@ -870,7 +877,7 @@ function qtranxf_admin_notices_survey_request(){
 	printf(__('Thank you for using plugin %s!', 'qtranslate'), '<a href="https://wordpress.org/plugins/qtranslate-x/" style="color:blue" target="_blank">qTranslate&#8209;X</a>');
 	echo '<br/>';
 	printf(__('Please, help us to make a decision on "%s" feature, press the button below.', 'qtranslate'), __('Translation Service', 'qtranslate'));
-	echo '</p><p><a class="button qtranxs-notice-dismiss" href="http://www.marius-siroen.com/qTranslate-X/TranslateServices/" target="_blank">';
+	echo '</p><p><a class="button" href="http://www.marius-siroen.com/qTranslate-X/TranslateServices/" target="_blank">';
 	printf(__('Survey on "%s" feature', 'qtranslate'), __('Translation Service', 'qtranslate'));
 	echo '</a>&nbsp;&nbsp;&nbsp;<a class="button qtranxs-notice-dismiss" href="javascript:void(0);">'.__('I have already done it, dismiss this message.', 'qtranslate');
 	echo '</a></p></div>';
