@@ -2,9 +2,10 @@
 if( ! defined( 'ABSPATH' ) ) exit;
 
 /**
- * Strings to put in .pot file.
+ * Strings to keep in .pot file.
  * The strings listed are expected to also be translated in the default WP domain.
  * In local .po files they may be overwritten if desired.
+ * The strings which may be in use in other integrating plugins are aslo kept here.
  * This function is for gettext processing uilities, it is never loaded or executed.
  */
 function qtranxf_add_to_po(){
@@ -38,4 +39,15 @@ function qtranxf_add_to_po(){
 	__('An error occurred during the database update.');
 	__('The database update has finished successfully.');
 	__('The database update has not finished. Please, refresh this page and run the update again.');
+
+	//translators: An error message after communication with a server.
+	__('A meaningless response has been received.', 'qtranslate');
+	__('The response received is not an array.');
+
+	__('Thank you for using plugin %s!', 'qtranslate');
+	__('Please, help us to make a decision on "%s" feature, press the button below.', 'qtranslate');
+	__('Translation Service', 'qtranslate');
+	__('Survey on "%s" feature', 'qtranslate');
+	__('I have already done it, dismiss this message.', 'qtranslate');
 }
+
