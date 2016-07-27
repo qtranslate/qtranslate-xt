@@ -1,0 +1,9 @@
+{"vendor":{"plugins/imaginem-builder-r2":"1.0"},
+"admin-config":{
+"aqpb-post":{
+	"pages":{"post.php":"", "post-new.php":""},
+	"anchors":{"aq-page-builder":{"where":"after"}},
+	"js-exec":{"aqpb-post-exec":{"src":"./i18n-config-post-exec.min.js"}}
+}
+}
+}
