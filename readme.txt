@@ -1,17 +1,21 @@
-# qTranslate X #
-Developed by: qTranslate Team based on original code by Qian Qin
-Contributors: johnclause, chineseleper, Vavooon, grafcom
-Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, translation
-Requires at least: 4.0
-Tested up to: 4.5
-Stable tag: 3.4.6.8
-License: GPLv3 or later
-Donate link: https://qtranslatexteam.wordpress.com/donations/
-License URI: http://www.gnu.org/licenses/gpl-3.0.html
+# qTranslate-XT (eXTended) #
+Developed by: qTranslate community, from qTranslate-X by John Clause and qTranslate by Qian Qin  
+Contributors: herrvigg, johnclause, chineseleper, Vavooon, grafcom  
+Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, translation  
+Requires at least: 4.0  
+Tested up to: 4.9.7  
+Stable tag: 3.4.8  
+License: GPLv3 or later  
+License URI: http://www.gnu.org/licenses/gpl-3.0.html  
 
 Adds a user-friendly multilingual dynamic content management.
 
 ## Description ##
+
+The qTranslate-XT plugin is an eXTended version of qTranslate-X revived by the community, as the original plugin was abandoned in 2016.
+Our first goal is to maintain the basic features of this plugin with the last Wordpress and PHP updates. We cannot guarantee that all the functionalites will be preserved and the installation is at your own responsibility. Be sure to save your database regularly.
+
+Legacy description (qTranslate-X):
 
 The plugin offers a way to maintain dynamic multilingual content on a WordPress site. While static localization is already excellently implemented and offered by WordPress framework through [po/mo file framework](https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/), it is still impossible to maintain dynamic multilingual content without an additional specialized plugin, a kind of which qTranslate-X belongs to. For example, what if you need to make title, content and excerpt of a page to be multilingual? In theory, it could be handled by po/mo files, but in an insanely inconvenient way.
 
@@ -54,7 +58,7 @@ You may still find some useful information through reading [qTranslate](https://
 
 We organized an anonymous entity [qTranslate Team](https://github.com/qTranslate-Team) to maintain a joint authority of all qTranslate-ish plugins. Anyone is welcome to join with a contribution. Participating plugin authors should share the support efforts for each other.
 
-GitHub repository is available: [https://github.com/qTranslate-Team/qtranslate-x.git](https://github.com/qTranslate-Team/qtranslate-x).
+GitHub repository is available: [https://github.com/qTranslate-Team/qtranslate-x.git](https://github.com/qTranslate/qtranslate-xt).
 
 We thank our sponsors for persistent help and support:
 
@@ -75,7 +79,7 @@ This plugin is not free in terms of money, the users, who start using it on perm
 
 Otherwise the installation is similar to any other WordPress plugin:
 
-1. Download the plugin from [WordPress](http://wordpress.org/plugins/qtranslate-x/ "qTranslate-X") or take the latest development version from [GitHub](https://github.com/qTranslate-Team/qtranslate-x).
+1. Download the plugin from [WordPress](http://wordpress.org/plugins/qtranslate-x/ "qTranslate-X") or take the latest development version from [GitHub](https://github.com/qTranslate/qtranslate-xt).
 1. Use WordPress `/wp-admin/plugin-install.php` page to install a plugin or extract all the files and upload everything (keeping the directory structure) to the `/wp-content/plugins/` directory.
 1. Deactivate plugin qTranslate, mqTranslate, qTranslate Plus, zTranslate or any other multilingual plugin, if you are running any.
 1. Activate qTranslate-X through the 'Plugins' (`/wp-admin/plugins.php`) configuration page in WordPress.
