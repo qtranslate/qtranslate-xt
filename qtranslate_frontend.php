@@ -539,7 +539,7 @@ function qtranxf_translate_post($post,$lang) {
 	}
 }
 
-function qtranxf_postsFilter($posts,&$query) {//WP_Query
+function qtranxf_postsFilter($posts,$query) {//WP_Query
 	global $q_config;
 	//qtranxf_dbg_log('qtranxf_postsFilter: $posts: ',$posts);
 	//$post->post_content = qtranxf_useCurrentLanguageIfNotFoundShowAvailable($post->post_content);
@@ -562,7 +562,7 @@ function qtranxf_postsFilter($posts,&$query) {//WP_Query
 add_filter('the_posts', 'qtranxf_postsFilter', 5, 2);
 
 /** allow all filters within WP_Query - many other add_filters may not be needed now? */
-function qtranxf_pre_get_posts( &$query ) {//WP_Query
+function qtranxf_pre_get_posts( $query ) {//WP_Query
 	//qtranxf_dbg_log('qtranxf_pre_get_posts: $query: ',$query);
 	//'post_type'
 	if(isset($query->query_vars['post_type'])){
@@ -613,7 +613,7 @@ function qtranxf_excludeUntranslatedAdjacentPosts($where) {
 	return $where;
 }
 
-function qtranxf_excludeUntranslatedPosts($where,&$query) {//WP_Query
+function qtranxf_excludeUntranslatedPosts($where,$query) {//WP_Query
 	//qtranxf_dbg_log('qtranxf_excludeUntranslatedPosts: post_type: ',$query->query_vars['post_type']);
 	switch($query->query_vars['post_type']){
 		//known not to filter
@@ -645,7 +645,7 @@ function qtranxf_excludeUntranslatedPosts($where,&$query) {//WP_Query
 	return $where;
 }
 
-function qtranxf_excludeUntranslatedPostComments($clauses, &$q/*WP_Comment_Query*/) {
+function qtranxf_excludeUntranslatedPostComments($clauses, $q/*WP_Comment_Query*/) {
 	global $wpdb;
 
 	//qtranxf_dbg_log('qtranxf_excludeUntranslatedPostComments: $clauses: ',$clauses);
