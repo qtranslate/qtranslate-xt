@@ -768,57 +768,6 @@ function qtranxf_admin_mail_fromname($name){
 	return __('WordPress (No-Reply)', 'qtranslate');
 }
 
-function qtranxf_license_admin_email($msg=null) {
-	$to = get_bloginfo('admin_email');
-	if(empty($to)){
-		if(!current_user_can('manage_options'))
-			return;
-		$user = wp_get_current_user();
-		if(empty($user->user_email))
-			return;
-		$to = $user->user_email;
-	}
-	if(!$msg)
-		$msg = qtranxf_license_message();
-	$qadmin = admin_url('options-general.php?page=qtranslate-x');
-	$qtx_link = '<a href="https://wordpress.org/plugins/qtranslate-x/">qTranslate&#8209;X</a>';
-	$wpurl = get_bloginfo('wpurl');
-	$site_title = get_bloginfo('name','display');
-	//translators: Used in email subject: %1$s is a plugin name, %2$s is a site URL.
-	$ms = sprintf( __('License status for plugin %1$s at your site %2$s', 'qtranslate'), 'qTranslate-X', $wpurl);
-	$mb = '<p>'.sprintf( __('Hello! This message has been auto-sent from your website %2$s as a reminder about the status of license key for plugin %1$s:', 'qtranslate'), $qtx_link, '<a href="'.$wpurl.'">'.$site_title.'</a>') . '</p>' . PHP_EOL;
-	$mb .= '<p style="color:red"><em>' . $msg . '</em></p>' . PHP_EOL;
-	$mb .= '<p>' . sprintf( __('Please visit website %s in order to get a license key, and then enter it on admin page %sSettings/Languages%s.', 'qtranslate'), QTX_LIC_SRV, '<a href="'.$qadmin.'#license">', '</a>') . '</p>' . PHP_EOL;
-	$mb .= '<p>' . sprintf( __('Thank you very much for using plugin %s!', 'qtranslate'), $qtx_link) . '</p>' . PHP_EOL;
-	$mb .= '<p>-----<br/><small>' . __('Do not reply to this e-mail.', 'qtranslate') . ' '. sprintf( __('You are receiving this e-mail because your e-mail address is listed for admin purposes on page %sSettings/General%s of your WordPress site.', 'qtranslate'), '<a href="'.admin_url('options-general.php').'">', '</a>') . '</small></p>' . PHP_EOL;
-	add_filter('wp_mail_from_name', 'qtranxf_admin_mail_fromname', 999);
-	$res = wp_mail( $to, $ms, $mb, array('MIME-Version: 1.0', 'Content-Type: text/html') );
-	remove_filter('wp_mail_from_name', 'qtranxf_admin_mail_fromname', 999);
-	if($res)
-		set_transient('qtx_admin_email_warning',time());
-}
-
-function qtranxf_license_message($linf=null, $link=null) {
-	if(!$linf) $linf = qtranxf_license_info();
-	if(!$link) $link = QTX_LIC_SRV;
-	switch($linf['type']){
-		// translators: words "trial" and/or "production" in context "type of license" used in a phrase like "The %1$s license key expires ..."
-		case QTX_LIC_TYPE_PRODUCTION: $ltype = _x('production', 'type of license"', 'qtranslate'); break;
-		default: $ltype = _x('trial', 'type of license"', 'qtranslate'); break;
-	}
-	if( $linf['exp_in'] > 0 ){
-		// translators: %1$s is a type of license, either "trial" or "production", which are translated above. Item %3$s is a translated date.
-		$msg = __('The %1$s license key expires in %2$d days on %3$s. Please, make sure to %4$supdate the license key%5$s on time.', 'qtranslate');
-	}else{
-		// translators: %1$s is a type of license, either "trial" or "production", which are translated above.
-		$msg = __('The %1$s license key has expired. Please, %4$supdate the license key%5$s in order to enable language switching at front end.', 'qtranslate');
-		if(empty($linf['disabled'])){
-			$msg .= ' '.__('It might be still working at front end due to a grace period, but you should provide license key as soon as possible.', 'qtranslate');
-		}
-	}
-	return sprintf($msg, $ltype, absint($linf['exp_in']), $linf['exp_on'], '<a class="qtranxs-notice-dismiss" href="'.$link.'"><span style="text-decoration:underlined">', '</span></a>');
-}
-
 function qtranxf_admin_notices_config() {
 	global $q_config;
 	if(empty($q_config['url_info']['errors']) && empty($q_config['url_info']['warnings']) && empty($q_config['url_info']['messages']) && empty($q_config['lic']['wrn']) )
@@ -826,7 +775,6 @@ function qtranxf_admin_notices_config() {
 
 	$screen = get_current_screen();
 	if(isset($screen->id) && $screen->id == 'settings_page_qtranslate-x'){
-		$qlink = QTX_LIC_SRV;
 		$qtitle = '';
 	}else{
 		$qlink = admin_url('options-general.php?page=qtranslate-x');
@@ -834,18 +782,6 @@ function qtranxf_admin_notices_config() {
 	}
 	$colon = qtranxf_translate(':');
 	$fmt = '<div class="%1$s notice is-dismissible" id="qtranxs-%2$s-%1$s"><p>' . $qtitle . '%3$s</p></div>' . PHP_EOL;
-
-	if(!empty($q_config['lic']['wrn'])){
-		qtranxf_admin_notice_dismiss_script();
-		$linf = qtranxf_license_info();
-		$hdr = '<strong><span style="color: blue;">'.qtranxf_translate('Warning').'</span>&nbsp;(<span style="color: red; text-decoration: blink;">'.qtranxf_translate('Important!').'</span>)</strong>'.$colon.'&nbsp;';
-		$msg = qtranxf_license_message( $linf, $qlink );
-		$msg .= '<br/></p><p><a class="button qtranxs-notice-dismiss" href="'.QTX_LIC_SRV.'">' . __('Get License Key', 'qtranslate');
-		$msg .= '</a>&nbsp;&nbsp;&nbsp;<a class="button qtranxs-notice-dismiss" href="javascript:void(0);">' . __('I have already done it, dismiss this message.', 'qtranslate') . '</a>';
-		printf( $fmt, 'update-nag', 'lic', $hdr . $msg );
-		if(!empty($linf['eml']))
-			qtranxf_license_admin_email($msg);
-	}
 
 	if(isset($q_config['url_info']['errors'])){
 		if(is_array($q_config['url_info']['errors'])){
@@ -890,11 +826,6 @@ function qtranxf_admin_home_url($url, $path, $orig_scheme, $blog_id){
 	$url = qtranxf_get_url_for_language($url, $lang, !$q_config['hide_default_language'] || $lang != $q_config['default_language']);
 	//qtranxf_dbg_log('qtranxf_admin_home_url: url='.$url.'; lang='.$lang);
 	return $url;
-}
-
-function qtranxf_admin_message_update()
-{
-	return sprintf(__('To enable updates, please enter your %slicense key%s on the plugin %sconfiguration page%s.', 'qtranslate'), '<a href="' . QTX_LIC_SRV . '" target="_blank">', '</a>', '<a href="' . admin_url('options-general.php?page=qtranslate-x#license') . '">', '</a>');
 }
 
 function qtranxf_admin_footer_text($text)

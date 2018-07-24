@@ -680,7 +680,6 @@ function qtranxf_loadConfig() {
 			default: $q_config['url_mode'] = $url_mode = QTX_URL_QUERY; break;
 		}
 	}
-	qtranxf_load('cXRyYW54Zl9saWNlbnNlX2xvYWQoKTs==');
 
 	switch($url_mode){
 		case QTX_URL_DOMAINS:
