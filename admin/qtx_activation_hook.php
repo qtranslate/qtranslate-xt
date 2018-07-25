@@ -1,6 +1,12 @@
 <?php
 if ( !defined( 'ABSPATH' ) ) exit;
 
+function qtranxf_version_int() {
+	$ver = str_replace('.','',QTX_VERSION);
+	while(strlen($ver) < 5) $ver.='0';
+	return intval($ver);
+}
+
 /**
  * Save language properties from configuration $cfg to database
  * @since 3.3
@@ -585,11 +591,6 @@ function qtranxf_activation_hook(){
 
 	$default_language = get_option('qtranslate_default_language');
 	$ver_cur = qtranxf_version_int();
-	$ver_db = qtranxf_version_db();
-	if($ver_db != QTX_DB_VERSION){
-		//todo
-		//qtranxf_upgrade_db($ver_db);
-	}
 	$first_install = $default_language===false;
 	if($first_install){
 		qtranxf_default_default_language();

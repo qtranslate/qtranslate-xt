@@ -2,8 +2,6 @@
 if ( !defined( 'ABSPATH' ) ) exit;
 
 /* There is no need to edit anything here! */
-define('QTX_DB_VERSION', 34700);
-
 define('QTX_STRING',	1);
 define('QTX_BOOLEAN',	2);
 define('QTX_INTEGER',	3);
