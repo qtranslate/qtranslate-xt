@@ -27,3 +27,11 @@
 *.PDF	 diff=astextplain
 *.rtf	 diff=astextplain
 *.RTF	 diff=astextplain
+
+# Exclude from git archive (tarball releases)
+dev export-ignore
+lang/.tx export-ignore
+*.po export-ignore
+*.pot export-ignore
+.gitattributes export-ignore
+.gitignore export-ignore
