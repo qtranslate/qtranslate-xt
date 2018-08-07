@@ -13,9 +13,11 @@ Adds a user-friendly multilingual dynamic content management.
 ## Description ##
 
 The qTranslate-XT plugin is an eXTended version of qTranslate-X revived by the community, as the original plugin was abandoned in 2016.
-Our first goal is to maintain the basic features of this plugin with the last Wordpress and PHP updates. We cannot guarantee that all the functionalites will be preserved and the installation is at your own responsibility. Be sure to save your database regularly.
+Our first goal is to maintain the main features of this plugin with the last Wordpress and PHP updates, before we can clarify how it evolves. The migration to Gutenberg will definitely be critical. We cannot guarantee that all the functionalites are preserved and the installation is at your own responsibility. Be sure to save your database regularly. **A double installation X / XT is possible but keep only one active at a time!**
 
-Legacy description (qTranslate-X):
+*Disclaimer: in many sections of the documentation and admin messages, the plugin is still named qTranslate-X and not qTranslate-XT so don't be confused and be sure which version you are using (double check the active one). Please check the installation section for more.*
+
+Legacy description:
 
 The plugin offers a way to maintain dynamic multilingual content on a WordPress site. While static localization is already excellently implemented and offered by WordPress framework through [po/mo file framework](https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/), it is still impossible to maintain dynamic multilingual content without an additional specialized plugin, a kind of which qTranslate-X belongs to. For example, what if you need to make title, content and excerpt of a page to be multilingual? In theory, it could be handled by po/mo files, but in an insanely inconvenient way.
 
@@ -73,21 +75,43 @@ This plugin is not free in terms of money, the users, who start using it on perm
 
 ## Installation ##
 
+**NEW XT - Important**: the XT version is not an official plugin so it is not available at Wordpress.org. The initial installation must be done manually so you need the permissions to access the `plugins` folder of your Wordpress installation. Contact your system administrator if needed.
+
+**NEW XT - Very Important !!!**: currently you can have both qTranslate-X and qTranslate-XT installed in the plugins folder for experimentations, but you should have at most one active at any time. **BOTH X AND XT SHARE THE SAME OPTIONS!** So if you change some options in one and switch between the plugins, the last changes will remain valid for the other one.
+
 **Important**: Read [migration instructions](https://qtranslatexteam.wordpress.com/migration/), if you previously used other multilingual plugin, otherwise initial installation of this plugin is no different from any other standard plugin:
 
-**Very Important**: Whenever you update the plugin, make sure to deactivate the previous version and then activate the new one. Normal WordPress update does that, and should be sufficient, but if you overwrote plugin files manually, be sure to execute deactivation/activation cycle, otherwise you will miss the execution of activation hooks and some options may become misconfigured. For the sake of performance, plugin is not programmed to run all the necessary checks every time it is loaded, since activation hook is an expensive operation. That is why it is important to execute deactivation/activation cycle.
+# Initial installation #
 
-Otherwise the installation is similar to any other WordPress plugin:
+**NEW XT** - Instructions for the initial installation:
 
-1. Download the plugin from [WordPress](http://wordpress.org/plugins/qtranslate-x/ "qTranslate-X") or take the latest development version from [GitHub](https://github.com/qTranslate/qtranslate-xt).
-1. Use WordPress `/wp-admin/plugin-install.php` page to install a plugin or extract all the files and upload everything (keeping the directory structure) to the `/wp-content/plugins/` directory.
-1. Deactivate plugin qTranslate, mqTranslate, qTranslate Plus, zTranslate or any other multilingual plugin, if you are running any.
-1. Activate qTranslate-X through the 'Plugins' (`/wp-admin/plugins.php`) configuration page in WordPress.
+1. Download the last release from [GitHub](https://github.com/qTranslate/qtranslate-xt/releases), taking the archive either in zip or tar.gz format (usually zip for Windows users). Alternatively, most for for developers, you can `git clone` the new repo.
+1. Uncompress the archive in your plugin folder (`/wp-content/plugins`) to extract all the files (keeping the directory structure) to the `/wp-content/plugins/` directory.
+1. Deactivate plugin qTranslate-X, qTranslate, mqTranslate, qTranslate Plus, zTranslate or any other multilingual plugin, if you are running any.
+1. Activate qTranslate-XT through the 'Plugins' (`/wp-admin/plugins.php`) configuration page in WordPress.
+
+Then proceed with the initial setup as for qTranslate-X:
+
 1. Open Settings->Languages configuration page and add/delete/disable any languages you need.
 1. Add the "qTranslate Language Chooser" widget or "Language Switcher" menu item to let your visitors switch the language.
 1. For the new installers, it may be useful to read [Startup Guide](https://qtranslatexteam.wordpress.com/startup-guide/).
 1. Configure theme or other plugins custom fields to be translatable if needed (Settings -> Languages: "Integration").
 1. If your theme shows [multilingual fields](https://qtranslatexteam.wordpress.com/multilingual-fields/) in raw format, then read [Integration Guide](https://qtranslatexteam.wordpress.com/integration/).
+
+# Updates #
+
+**NEW XT** - Optional instructions for automatic updates with GitHub Updater:
+
+1. qTranslate-XT supports the plugin `GitHub Updater`. This can be installed from [GitHub](https://github.com/afragen/github-updater).
+2. This plugin checks regularly the last release available in github (from the tags). If a new release is available you will be given the possibility to update your plugin similarly as a regular plugin from Wordpress.
+
+**Very Important**: you can also delete the current folder and repeat the initial installation. Make sure to deactivate the previous version and then activate the new one. Normal GHU update should do that, but if you overwrote plugin files manually, be sure to execute deactivation/activation cycle, otherwise you will miss the execution of activation hooks and some options may become misconfigured. 
+
+*Note for developers*:
+- since GitHub Updater deploys the archive (tarball) you may lose your current git project if you installed through `git clone`. If you want to use a cloned version in production you should not update through GHU but rather `git pull`.
+- old releases may contain legacy headers that can become problematic. Be very cautious if you customize the updates for given branches!
+- ask us on github if any doubt.
+
 
 ## Frequently Asked Questions ##
 
