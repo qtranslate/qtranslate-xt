@@ -1,3 +1,9 @@
+### 3.5.0 ###
+* **First release** of **qTranslate-XT**! Read carefully the new instructions, FAQ and changelog.
+* Reorganize project structure for releases through git archives with support of GitHub Updater (see FAQ).
+* Fix PHP 7.1+ warnings (expected references)
+* Re-package the pending pre-releases (3.4.6.9, 3.4.7, 3.4.8) that were never distributed to wordpress.org (!): new feature "Copy From" and many other changes. Note the last official release of qTranslate-X is 3.4.6.8. Check the changelog for more details.
+
 ### 3.4.8 ###
 * Feature: Button "Copy From", which allows to copy multilingual content from other language. Option 'Hide button "Copy From"' on page `/wp-admin/options-general.php?page=qtranslate-x#advanced` to turn this feature off is also provided.
 * Workaround: added `addContentHooksTinyMCE` back to `qTranslateConfig.qtx` namespace in order to recover compatibility with outdated code of plugin [ACF qTranslate](https://wordpress.org/plugins/acf-qtranslate/).

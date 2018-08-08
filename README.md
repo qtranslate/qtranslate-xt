@@ -22,8 +22,8 @@ GitHub repository of the new repo: [https://github.com/qtranslate/qtranslate-xt.
 
 Since the -XT version is not officially available at Wordpress.org the initial installation must be done *manually*. You require the permissions to access the `plugins` folder of your Wordpress installation. Contact your system administrator if needed.
 
-1. Download the [last release from GitHub](https://github.com/qTranslate/qtranslate-xt/releases) in zip or tar.gz format (usually zip for Windows users). Alternatively, for developers and those familiar with git, you can `git clone` the new repo.
-1. Uncompress the archive in your plugin folder (`/wp-content/plugins`). You should now have a folder `/wp-content/plugins/qtranslate-xt` with the files of this repo.
+1. Download the [last release from GitHub](https://github.com/qTranslate/qtranslate-xt/releases) in zip or tar.gz format (usually zip for Windows users). Alternatively, for developers and those familiar with git, you can `git clone` the new repo and work on the current branch.
+1. Uncompress the archive in your plugins folder. You should now have a folder `/wp-content/plugins/qtranslate-xt` containing the files of this repo.
 1. Deactivate plugin qTranslate-X, qTranslate, mqTranslate, qTranslate Plus, zTranslate or any other multilingual plugin, if you are running any.
 1. Activate qTranslate-XT through the 'Plugins' (`/wp-admin/plugins.php`) configuration page in WordPress.
 
@@ -37,10 +37,10 @@ Check the FAQ for further instructions.
 ## Frequently Asked Questions ##
 
 ### Why is qTranslate-X not maintained anymore? ###
-The previous qTranslate-Team was only one person. We tried to contact the author many times but we got [no answer since 2016](https://github.com/qTranslate-Team/qtranslate-x/issues/579). Our goal is to build up a real team and make this plugin available again for the whole community. There are still many questions about the future. It is still not clear yet if we will go on with the qTranslate name, but for now we should focus on new releases.
+The previous qTranslate-Team was only one person. We tried to contact the author many times but we got [no answer since 2016](https://github.com/qTranslate-Team/qtranslate-x/issues/579).Our goal is to build up a real team and make this plugin available again for the whole community. We can't update the official plugin yet. It is still not clear either if we should go on with the qTranslate name, but for now we should focus on new releases. The -XT version can be seen for the least as a "bridge" project.
 
 ### I'm still using qTranslate-X, can I test qTranslate-XT? ###
-Yes and it's very easy! Currently you can have both qTranslate-X and qTranslate-XT installed in the plugins folder for experimentations, but you should have at most one active at any time! **BOTH -X AND -XT SHARE THE SAME OPTIONS!** So if you change some options in one and switch between the plugins, the last changes will remain valid for the other one. Note that even if you uninstall one of those, the options are not erased! The plugin can actually re-adapt its configuration after a switch, in the general case you have nothing to do. If you have some incompatible options you should see some warnings. 
+Yes and it's very easy! Currently you can have both qTranslate-X and qTranslate-XT installed in the plugins folder for experimentations, but you should have at most one active at any time! **BOTH -X AND -XT SHARE THE SAME OPTIONS!** So if you change some options and switch between the plugins, the last changes will remain valid. The plugin can actually re-adapt its configuration after a switch, in the general case you have nothing to do. If you have some incompatible options you should see some warnings. Note that even if you uninstall either -X or -XT, the options are *not* erased!
 
 *Disclaimer: we cannot guarantee that all the functionalites are preserved and the installation is at your own responsibility. Be sure to backup your database regularly.*
 
@@ -56,7 +56,7 @@ Check the legacy website:
 * The legacy FAQ is available at "qTranslate-X explained" website: [https://qtranslatexteam.wordpress.com/faq/](https://qtranslatexteam.wordpress.com/faq/ "qTranslate-X explained FAQ").
 
 ### How to update qTranslate-XT with the last release? ###
-Since this plugin is not available at wordpress.org yet, we recommend you to install [GitHub Updater](https://github.com/afragen/github-updater). This is is an awesome tool to update plugins from a git repo (with many other features). It checks regularly the last release available in github (from the `git tags`) and compares it to your current version (defined in the header of `qtranslate.php`). If a new release is available an update link will appear as for a regular plugin from Wordpress. The check is performed even if the plugin is deactivated.
+Since the -XT version is not available at wordpress.org, we recommend you to install [GitHub Updater](https://github.com/afragen/github-updater). This is is an awesome tool to update plugins from a git repo (with many other features). It checks regularly the last release available in github (from the `git tags`) and compares it to your current version (defined in the header of `qtranslate.php`). If a new release is available an update link will appear as for a regular plugin from Wordpress. The check is performed even if the plugin is deactivated.
 
 Alternatively you can delete the current folder and repeat the installation from the last archive. Make sure to deactivate the previous version and then activate the new one, otherwise you will miss the execution of activation hooks and some options may become misconfigured. 
 
@@ -67,7 +67,8 @@ Note for developers:
 
 ## Upgrade Notice ##
 
-Please check the FAQ. 
+### 3.5.0 ###
+This is the first official release of qTranslate-XT! Please check the CHANGELOG and FAQ. 
 
 ## Screenshots ##
 
@@ -75,11 +76,13 @@ See [original plugin](https://wordpress.org/plugins/qtranslate-x/).
 
 ## Changelog ##
 
-### Next ###
+Check the CHANGELOG.md for the full history.
+
+### 3.5.0 ###
+* **First release** of **qTranslate-XT**! Read carefully the new instructions, FAQ and changelog.
+* Reorganize project structure for releases through git archives with support of GitHub Updater (see FAQ).
 * Fix PHP 7.1+ warnings (expected references)
-* Reorganize project structure for releases through git archives with support of GitHub Updater (see FAQ)
-* Reorganize readme, new instructions and changelog
-* Merge pre-releases 3.4.6.9, 3.4.7, 3.4.8 (never distributed to wordpress.org!): new feature "Copy From" and many other changes
+* Re-package the pending pre-releases (3.4.6.9, 3.4.7, 3.4.8) that were never distributed to wordpress.org (!): new feature "Copy From" and many other changes. Note the last official release of qTranslate-X is 3.4.6.8. Check the changelog for more details.
 
 ### 3.4.8 ###
 * Feature: Button "Copy From", which allows to copy multilingual content from other language. Option 'Hide button "Copy From"' on page `/wp-admin/options-general.php?page=qtranslate-x#advanced` to turn this feature off is also provided.
