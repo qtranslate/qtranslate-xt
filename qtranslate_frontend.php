@@ -1015,31 +1015,6 @@ function qtranxf_updated_usermeta( $meta_id, $object_id, $meta_key, $meta_value 
 }
 add_action('updated_usermeta', 'qtranxf_updated_usermeta', 5, 4);
 
-/**
- * Callback for qtranxf_start_buffering
- */
-function qtranxf_translate_otput($output){
-	//qtranxf_dbg_log('qtranxf_translate_otput: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
-	$blocks = qtranxf_get_language_blocks($output);
-	if(count($blocks)<=1)//no language is encoded in the $output, the most frequent case
-		return $output;
-	global $q_config;
-	$lang = $q_config['language'];
-	$translated = qtranxf_use_block($lang, $blocks, false, true);
-	//$translated = qtranxf_use_language($q_config['language'], $output, true, true);
-	//$translated = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($output);
-	return $translated;
-}
-
-/**
- * Buffer the whole output in order to translate it at the end.
- */
-function qtranxf_start_buffering(){
-	//qtranxf_dbg_log('qtranxf_start_buffering: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
-	ob_start('qtranxf_translate_otput');
-}
-add_action( 'template_redirect', 'qtranxf_start_buffering', 5 );
-
 function qtranxf_checkCanonical($redirect_url, $requested_url) {
 	global $q_config;
 	//if(!qtranxf_can_redirect()) return $redirect_url;// WP already check this

@@ -1,3 +1,6 @@
+### Current
+* Removed unlimited output buffering introduced in pre-release 3.4.8.
+
 ### 3.5.0 ###
 * **First release** of **qTranslate-XT**! Read carefully the new instructions, FAQ and changelog.
 * Reorganize project structure for releases through git archives with support of GitHub Updater (see FAQ).
