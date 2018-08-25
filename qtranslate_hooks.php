@@ -39,15 +39,6 @@ function qtranxf_localeForCurrentLanguage($locale){
 	return $locale_lang;
 }
 
-//add_action('after_setup_theme', 'qtranxf_after_theme_setup');
-//function qtranxf_after_theme_setup(){
-//	global $q_config;
-//	$locale = get_locale();
-//qtranxf_dbg_log('after_setup_theme: $q_config[language]: ',$q_config['language']);
-//qtranxf_dbg_log('after_setup_theme: $locale: ',$locale);
-//	//load_theme_textdomain('my_theme', get_template_directory() . '/languages');
-//}
-
 function qtranxf_useCurrentLanguageIfNotFoundShowEmpty($content) {
 	global $q_config;
 	return qtranxf_use($q_config['language'], $content, false, true);
@@ -113,81 +104,15 @@ function qtranxf_ngettext($translated_text) {
 	return qtranxf_use($q_config['language'], $translated_text, false);
 }
 
-/* function qtranxf_template_redirect() {
-	//qtranxf_dbg_log('"template_redirect": qtranxf_template_redirect: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
-}
-add_action('template_redirect','qtranxf_template_redirect');
-*/
-/* //'get_search_form' no longer needed since we adjusted home_url()
-function qtranxf_fixSearchForm($form) {
-	$form = preg_replace('#action="[^"]*"#','action="'.trailingslashit(qtranxf_convertURL(get_home_url())).'"',$form);
-	return $form;
-}
-add_filter('get_search_form', 'qtranxf_fixSearchForm', 10, 1);
-*/
-/* // action 'wp' fires at front-end only
-function qtranxf_on_wp()
-{
-	//qtranxf_dbg_log('qtranxf_on_wp:');
-}
-add_action( 'wp', 'qtranxf_on_wp');
-*/
-/*
-function qtranxf_on_posts_selection($selection)
-{
-	//qtranxf_dbg_log('qtranxf_on_posts_selection:', $selection);
-}
-add_action( 'posts_selection', 'qtranxf_on_posts_selection');
-*/
-
-// Hooks for Plugin compatibility
-/* //no need any more since $_SERVER['REQUEST_URI'] is no longer modified.
-function qtranxf_supercache_dir($uri) {
-	global $q_config;
-	if(isset($q_config['url_info']['original_url'])) {
-		$uri = $q_config['url_info']['original_url'];
-	} else {
-		$uri = $_SERVER['REQUEST_URI'];
-	}
-	$uri = preg_replace('/[ <>\'\"\r\n\t\(\)]/', '', str_replace( '/index.php', '/', str_replace( '..', '', preg_replace("/(\?.*)?$/", '', $uri ) ) ) );
-	$uri = str_replace( '\\', '', $uri );
-	$uri = strtolower(preg_replace('/:.*$/', '',  $_SERVER["HTTP_HOST"])) . $uri; // To avoid XSS attacks
-	return $uri;
-}
-add_filter('supercache_dir', 'qtranxf_supercache_dir',0);
-*/
-/* //it was a test
-function qtranxf_wpseo_replacements($replacements){
-	foreach($replacements as $key => $s) {
-		$replacements[$key]=__($s);
-	}
-	return $replacements;
-}
-*/
-
 // Hooks defined differently in admin and frontend
 add_filter( 'wp_trim_words', 'qtranxf_trim_words', 0, 4);
 
 
 // Hooks (Actions)
-/* // obsolete from qTranslate
-add_action('category_edit_form', 'qtranxf_modifyTermFormFor');
-//add_action('post_tag_edit_form', 'qtranxf_modifyTermFormFor');
-add_action('link_category_edit_form', 'qtranxf_modifyTermFormFor');
-add_action('category_add_form', 'qtranxf_modifyTermFormFor');
-add_action('post_tag_add_form', 'qtranxf_modifyTermFormFor');
-add_action('link_category_add_form', 'qtranxf_modifyTermFormFor');
-*/
 add_action('widgets_init', 'qtranxf_widget_init');
 
 
 // Hooks (execution time critical filters)
-
-/* // since 3.2.9.9.4 gettext* filters moved to frontend.php
-	//they should not be needed on admin side and they, in particular, broke WPBakery Visual Composer in raw Editor Mode.
-//add_filter('gettext', 'qtranxf_gettext',0);
-//add_filter('gettext_with_context', 'qtranxf_gettext_with_context',0);
-*/
 
 //function qtranxf_blogname($nm)
 //{
@@ -250,23 +175,3 @@ add_filter('pre_option_rss_language', 'qtranxf_getLanguage',0);
 add_filter('_wp_post_revision_field_post_title', 'qtranxf_showAllSeparated', 0);
 add_filter('_wp_post_revision_field_post_content', 'qtranxf_showAllSeparated', 0);
 add_filter('_wp_post_revision_field_post_excerpt', 'qtranxf_showAllSeparated', 0);
-
-/* moved to i18n-config.json for front-end only
-// Hooks (execution time non-critical filters) 
-//add_filter('author_feed_link', 'qtranxf_convertURL');
-//add_filter('author_link', 'qtranxf_convertURL');
-//add_filter('day_link', 'qtranxf_convertURL');
-//add_filter('get_comment_author_url_link', 'qtranxf_convertURL');
-//add_filter('month_link', 'qtranxf_convertURL');
-//add_filter('page_link', 'qtranxf_convertURL');
-//add_filter('post_link', 'qtranxf_convertURL');
-//add_filter('year_link', 'qtranxf_convertURL');
-//add_filter('category_feed_link', 'qtranxf_convertURL');
-//add_filter('category_link', 'qtranxf_convertURL');
-//add_filter('tag_link', 'qtranxf_convertURL');
-//add_filter('term_link', 'qtranxf_convertURL');
-//add_filter('the_permalink', 'qtranxf_convertURL');
-//add_filter('feed_link', 'qtranxf_convertURL');
-//add_filter('post_comments_feed_link', 'qtranxf_convertURL');
-//add_filter('tag_feed_link', 'qtranxf_convertURL');
-*/

@@ -400,8 +400,6 @@ function qtranxf_add_admin_footer_js ( $enqueue_script=false ) {
 	$config['home_url_path']=parse_url(home_url('/'),PHP_URL_PATH);//todo optimize
 	$config['flag_location']=qtranxf_flag_location();
 	$config['js']=array();
-	//$config['flag']=array();//deprecated since 3.2.9.9.0
-	//$config['language_name']=array();//deprecated since 3.2.9.9.0
 
 	$config['strings'] = array();//since 3.4.7
 	//translators: The begining of the prompt on hover over an LSB. This string is appended with a edit-language name in admin language, so that the space at the end matters.
@@ -572,7 +570,6 @@ function qtranxf_admin_footer() {
 	//$enqueue_script = false;
 	qtranxf_add_admin_footer_js( $enqueue_script );
 }
-//add_action('admin_print_footer_scripts', 'qtranxf_admin_footer',999);
 add_action('admin_footer', 'qtranxf_admin_footer',999);
 
 function qtranxf_customize_allowed_urls($urls) {
@@ -587,12 +584,6 @@ function qtranxf_customize_allowed_urls($urls) {
 	return $urls;
 }
 add_filter( 'customize_allowed_urls', 'qtranxf_customize_allowed_urls' );
-
-function qtranxf_customize_controls_print_footer_scripts() {
-	qtranxf_add_admin_footer_js(false);
-}
-//add_action( 'customize_controls_print_footer_scripts', 'qtranxf_customize_controls_print_footer_scripts',999);
-//add_action( 'customize_controls_print_styles', 'qtranxf_add_admin_css');
 
 /** @since 3.4 */
 function qtranxf_settings_page() {
@@ -664,22 +655,6 @@ function qtranxf_nav_menu_metabox( $object ){
 	}
 
 	$walker = new Walker_Nav_Menu_Checklist();
-/* Language menu items - not used anymore
-.qtranxs-lang-menu
-{
-	//background-position: top left;
-	background-position-y: 8px;
-	padding-left: 22px;
-}
-
-.qtranxs-lang-menu-item
-{
-	background-position: center left;
-	//background-position-x: 5px;
-	//background-position-y:50%;
-	padding-left: 22px;
-}
-*/
 ?>
 <div id="qtranxs-langsw" class="qtranxslangswdiv">
 	<div id="tabs-panel-qtranxs-langsw-all" class="tabs-panel tabs-panel-view-all tabs-panel-active">
@@ -726,8 +701,6 @@ function qtranxf_add_language_menu( $wp_admin_bar ){
 	$wp_admin_bar->add_menu( array(
 			'id'   => 'language',
 			'parent' => 'top-secondary',
-			//'href' => 'http://example.com',
-			//'meta' => array('class'),
 			'title' => $title
 		)
 	);
@@ -873,4 +846,3 @@ add_action('admin_head-nav-menus.php', 'qtranxf_add_nav_menu_metabox');
 add_action('admin_menu', 'qtranxf_admin_menu', 999);
 add_action('admin_bar_menu', 'qtranxf_add_language_menu', 999);
 add_action('wp_before_admin_bar_render', 'qtranxf_before_admin_bar_render');
-//add_action('wp_after_admin_bar_render', 'qtranxf_after_admin_bar_render' );

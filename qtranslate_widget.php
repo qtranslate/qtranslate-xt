@@ -105,7 +105,6 @@ class qTranslateXWidget extends WP_Widget {
 <p><label for="<?php echo $this->get_field_id('type') ?>-custom"><input type="radio" name="<?php echo $this->get_field_name('type') ?>" id="<?php echo $this->get_field_id('type') ?>-custom" value="custom"<?php checked($type=='custom') ?>/> <?php _e('Custom list item format:', 'qtranslate') ?></label></p><p>
 <label for="<?php echo $this->get_field_id('format') ?>-format"><input type="text" class="widefat" name="<?php echo $this->get_field_name('format') ?>" id="<?php echo $this->get_field_id('format') ?>-format" value="<?php echo esc_html($format) ?>" /></label>
 <br ><?php
-//printf(__('Accepted format arguments:%s - Flag Image HTML, "%s"%s - Flag Image URL%s - Language Native Name%s - Language Name in Active Language%s - Language 2-Letter Code%s', 'qtranslate'), '<ul><li>%f', '&lt;img ... /&gt;', '</li><li>%s', '</li><li>%n', '</li><li>%a', '</li><li>%c', '</ul>')
 	echo __('Accepted format arguments:','qtranslate').'<ul>'.PHP_EOL;
 	echo '<li>%f - '.__('Flag Image HTML','qtranslate').'</li>'.PHP_EOL;
 	echo '<li>%s - '.__('Flag Image URL','qtranslate').'</li>'.PHP_EOL;
@@ -119,9 +118,6 @@ class qTranslateXWidget extends WP_Widget {
 </p>
 <p><label for="<?php echo $this->get_field_id('widget-css') ?>"><input type="checkbox" id="<?php echo $this->get_field_id('widget-css-on') ?>" name="<?php echo $this->get_field_name('widget-css-on') ?>" <?php checked($widget_css_on) ?>/><?php echo __('Widget CSS:', 'qtranslate') ?></label><br/><textarea class="widefat" rows="6" name="<?php echo $this->get_field_name('widget-css') ?>" id="<?php echo $this->get_field_id('widget-css') ?>"><?php echo esc_attr($widget_css) ?></textarea><br/><small><?php echo __('To reset to default, clear the text.', 'qtranslate').' '.__('To disable this inline CSS, clear the check box.', 'qtranslate').' '.sprintf(__('Other common CSS block for flag classes "%s" is loaded in the head of HTML and can be controlled with option "%s".', 'qtranslate'), 'qtranxs_flag_xx', __('Head inline CSS','qtranslate')) ?></small></p>
 <?php
-/*
-<p><label for="<?php echo $this->get_field_id('type') ?>-short"><input type="radio" name="<?php echo $this->get_field_name('type') ?>" id="<?php echo $this->get_field_id('type') ?>-short" value="short"<?php echo ($type=='short')?' checked="checked"':'' ?>/> <?php _e('2-Letter Language Code', 'qtranslate') ?></label></p>
-*/
 	}
 }
 

@@ -348,25 +348,6 @@ function qtranxf_remove_detached_children(&$items,&$itemsremoved)
 	}while($more);
 }
 
-/*
-function qtranxf_wp_setup_nav_menu_item($menu_item) {
-	global $q_config;
-	if($menu_item->title==='test'){
-		//echo "qtranxf_wp_setup_nav_menu_item: '$text'<br/>\n";
-		//qtranxf_dbg_echo('menu_item:',$menu_item,true);
-		//qtranxf_dbg_echo('menu_item->title:'.$menu_item->title);
-		//$menu_item->title='test';//is in use
-		//$menu_item->post_title='';//not in use in menu
-		//$menu_item->title='';
-		//unset($menu_item);
-	}
-	//return $menu_item;
-	return qtranxf_use($q_config['language'], $menu_item, false, true);
-	//return qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($menu_item);
-}
-add_filter('wp_setup_nav_menu_item', 'qtranxf_wp_setup_nav_menu_item');
-*/
-
 /**
  * @since 3.3.8.9
  * @param (mixed) $value to translate, which may be array, object or string
@@ -405,28 +386,6 @@ function qtranxf_translate_option($value, $lang=null){
 	if(!$lang) $lang = $q_config['language'];
 	return qtranxf_translate_deep($value,$lang);
 }
-
-/*
-function qtranxf_split_languages_option($value, $nm, $lang){
-	$value_cached = wp_cache_get($nm, 'qtranxc_options');
-	if(isset($value_cached[0])) return $value_cached[0];//no translation needed
-	//global $q_config; if(!$lang) $lang = $q_config['language'];
-	if(isset($value_cached[$lang])) return $value_cached[$lang];
-
-	if(qtranxf_is_multilingual_deep($value)){
-		$s = is_serialized( $value );
-		if($s) $value = unserialize($value);
-		$values = qtranxf_split_languages($value);
-		if($s) foreach($values as $lng => $v){
-			$values[$lng] = serialize($v);
-		}
-		wp_cache_add($nm, $values, 'qtranxc_options');
-		return $values[$lang];
-	}else{
-		wp_cache_add($nm, array($value), 'qtranxc_options');
-		return $value;
-	}
-}// */
 
 /**
  * Filter all options for language tags
@@ -513,25 +472,9 @@ function qtranxf_translate_post($post,$lang) {
 				continue;
 			//known to translate
 			case 'post_content': qtranxf_translate_object_property($lang,$txt,$key,$post,true,false); break;
-				// $post->$key = qtranxf_use_language($lang, $txt, true); break;
 			case 'post_excerpt':
 			case 'post_content_filtered'://not sure how this is in use
 			case 'post_title': qtranxf_translate_object_property($lang,$txt,$key,$post,false,false); break;
-/*
-			{
-				$blocks = qtranxf_get_language_blocks($txt);
-				if(count($blocks)>1){//value is multilingual
-					$key_ml = $key.'_ml';
-					$post->$key_ml = $txt;
-					$langs = array();
-					$content = qtranxf_split_blocks($blocks,$langs);
-					$post->$key = qtranxf_use_content($lang, $content, $langs, false);
-					//$post->$key = qtranxf_use_block($lang, $blocks, false);
-					$key_langs = $key.'_langs';
-					$post->$key_langs = $langs;
-				}
-			} break;
-*/
 			//other maybe, if it is a string, most likely it never comes here
 			default:
 				$post->$key = qtranxf_use($lang, $txt, false);
@@ -704,16 +647,6 @@ function qtranxf_get_attachment_image_attributes($attr, $attachment=null, $size=
 }
 add_filter('wp_get_attachment_image_attributes', 'qtranxf_get_attachment_image_attributes',5,3);
 
-/*
-function qtranxf_get_attachment_link( $link, $id=null, $size=null, $permalink=null, $icon=null, $text=null )
-{
-	global $q_config;
-	$lang = $q_config['language'];
-	return qtranxf_use_language($lang,$link,false,true);
-}
-add_filter( 'wp_get_attachment_link', 'qtranxf_get_attachment_link', 5, 6);
-*/
-
 function qtranxf_home_url($url, $path, $orig_scheme, $blog_id)
 {
 	global $q_config;
@@ -838,27 +771,6 @@ function qtranxf_translate_metadata($meta_type, $original_value, $object_id, $me
 
 	if(!$meta_key){
 		if($single){
-	/**
-	  @since 3.2.9.9.7
-	  The code executed after a call to this filter in /wp-includes/meta.php,
-	  in function get_metadata, is apparently designed having non-empty $meta_key in mind:
-
-	  	if ( $single && is_array( $check ) ){
-	  		return $check[0];
-	  	}else
-	  		return $check;
-
-	  Following the logic of the code "if ( !$meta_key ) return $meta_cache;",
-		a few lines below in the same function, the code above rather have to be:
-
-	  	if ( $meta_key && $single && is_array( $check ) ){
-	  		return $check[0];
-	  	}else
-	  		return $check;
-
-	  WP assumes that, if $meta_key is empty, then $single must be 'false', but developers sometimes put 'true' anyway, as it is ignored in the original function. The line below offsets this imperfection.
-	  If WP ever fixes that place, this block of code can be removed.
-	 */
 			return array($meta_cache);
 		}
 		return $meta_cache;
@@ -882,102 +794,6 @@ function qtranxf_translate_metadata($meta_type, $original_value, $object_id, $me
 	else
 		return array();
 }
-/* // code before 3.4.6.4
-function qtranxf_translate_metadata($meta_type, $original_value, $object_id, $meta_key = '', $single = false){
-	global $q_config;
-	if(!isset($q_config['url_info'])){
-		//qtranxf_dbg_log('qtranxf_filter_postmeta: too early: $object_id='.$object_id.'; $meta_key',$meta_key,true);
-		return $original_value;
-	}
-	//qtranxf_dbg_log('qtranxf_filter_postmeta: $object_id='.$object_id.'; $meta_key=',$meta_key);
-
-	//$meta_type = 'post';
-	$lang = $q_config['language'];
-	$cache_key = $meta_type . '_meta';
-	$cache_key_lang = $cache_key . $lang;
-
-	$meta_cache_wp = wp_cache_get($object_id, $cache_key);
-	if($meta_cache_wp){
-		//if there is wp cache, then we check if there is qtx cache
-		$meta_cache = wp_cache_get( $object_id, $cache_key_lang );
-	}else{
-		//reset qtx cache, since it would not be valid in the absence of wp cache
-		qtranxf_cache_delete_metadata($meta_type, $object_id);
-		$meta_cache = null;
-	}
-	if( !$meta_cache ){
-		if ( $meta_cache_wp ) {
-			$meta_cache = $meta_cache_wp;
-		}else{
-			$meta_cache = update_meta_cache( $meta_type, array( $object_id ) );
-			$meta_cache = $meta_cache[$object_id];
-		}
-
-		//qtranxf_dbg_log('qtranxf_filter_postmeta: $object_id='.$object_id.'; $meta_cache before:',$meta_cache);
-		foreach($meta_cache as $mkey => $mval){
-			if(strpos($mkey,'_url') !== false){
-				$val = array_map('maybe_unserialize', $mval);
-				switch($mkey){
-					case '_menu_item_url': break; // function qtranxf_wp_get_nav_menu_items takes care of this later
-					default:
-						//qtranxf_dbg_log('qtranxf_filter_postmeta: $object_id='.$object_id.'; $meta_cache['.$mkey.'] url before:',$val);
-						$val = qtranxf_convertURLs($val,$lang);
-						//qtranxf_dbg_log('qtranxf_filter_postmeta: $object_id='.$object_id.'; $meta_cache['.$mkey.'] url  after:',$val);
-					break;
-				}
-			}else{
-				$val = array();
-				foreach($mval as $k => $v){
-					$ml = qtranxf_isMultilingual($v);
-					$v = maybe_unserialize($v);
-					if($ml) $v = qtranxf_use($lang, $v, false, false);
-					$val[$k] = $v;
-				}
-			}
-			$meta_cache[$mkey] = $val;
-		}
-		//qtranxf_dbg_log('qtranxf_filter_postmeta: $object_id='.$object_id.'; $meta_cache  after:',$meta_cache);
-
-		wp_cache_set( $object_id, $meta_cache, $cache_key_lang );
-	}
-
-	if(!$meta_key){
-		if($single){
-	/**
-	  @since 3.2.9.9.7
-	  The code executed after a call to this filter in /wp-includes/meta.php,
-	  in function get_metadata, is apparently designed having non-empty $meta_key in mind:
-
-	  	if ( $single && is_array( $check ) ){
-	  		return $check[0];
-	  	}else
-	  		return $check;
-
-	  Following the logic of the code "if ( !$meta_key ) return $meta_cache;",
-		a few lines below in the same function, the code above rather have to be:
-
-	  	if ( $meta_key && $single && is_array( $check ) ){
-	  		return $check[0];
-	  	}else
-	  		return $check;
-
-	  The line below offsets this imperfection.
-	  If WP ever fixes that place, this block of code will have to be removed.
-	 * /
-			return array($meta_cache);
-		}
-		return $meta_cache;
-	}
-
-	if(isset($meta_cache[$meta_key]))
-		return $meta_cache[$meta_key];
-
-	if ($single)
-		return '';
-	else
-		return array();
-}
-*/
 
 /**
  * @since 3.2.3 translation of postmeta
@@ -1087,49 +903,10 @@ function qtranxf_add_front_filters(){
 	}
 
 	// Hooks (execution time critical filters)
+	// since 3.2.9.9.4 gettext* filters moved to frontend.php
+	// they should not be needed on admin side and they, in particular, broke WPBakery Visual Composer in raw Editor Mode.
 	add_filter('gettext', 'qtranxf_gettext',0);
 	add_filter('gettext_with_context', 'qtranxf_gettext_with_context',0);
 	add_filter('ngettext', 'qtranxf_ngettext',0);
 }
 qtranxf_add_front_filters();
-
-//qtranxf_optionFilter();
-//add_filter('wp_head', 'qtranxf_add_css');
-
-/* //moved to i18n-config.json
-// Compability with Default Widgets
-add_filter('widget_title', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
-add_filter('widget_text', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
-add_filter('the_title', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', 0);//WP: fires for display purposes only
-add_filter('category_description', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
-add_filter('list_cats', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
-add_filter('wp_dropdown_cats', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
-add_filter('term_name', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
-add_filter('get_comment_author', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
-add_filter('the_author', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
-add_filter('tml_title', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
-
-/ **
- * @since 3.2
- * wp-includes\category-template.php:1230 calls:
- * $description = get_term_field( 'description', $term, $taxonomy );
- *
- * which calls wp-includes\taxonomy.php:1503
- * return sanitize_term_field($field, $term->$field, $term->term_id, $taxonomy, $context);
- *
- * which calls wp-includes\taxonomy.php:2276:
- * apply_filters( "term_{$field}", $value, $term_id, $taxonomy, $context );
-* /
-add_filter('term_description', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
-
-// translate terms
-add_filter('cat_row', 'qtranxf_useTermLib',0);
-add_filter('cat_rows', 'qtranxf_useTermLib',0);
-add_filter('wp_get_object_terms', 'qtranxf_useTermLib',0);
-add_filter('single_tag_title', 'qtranxf_useTermLib',0);
-add_filter('single_cat_title', 'qtranxf_useTermLib',0);
-add_filter('the_category', 'qtranxf_useTermLib',0);
-add_filter('get_term', 'qtranxf_useTermLib',0);
-add_filter('get_terms', 'qtranxf_useTermLib',0);
-add_filter('get_category', 'qtranxf_useTermLib',0);
-// */

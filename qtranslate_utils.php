@@ -161,43 +161,7 @@ function qtranxf_parseURL($url) {
 	if(!empty($out[6])) $result['path'] = $out[6];
 	if(!empty($out[7])) $result['query'] = $out[7];
 	if(!empty($out[8])) $result['fragment'] = $out[8];
-	/*
-	//new code since 3.2-b2, older version produces warnings in the debugger
-	$result = @array(
-	'scheme' => isset($out[1]) ? $out[1] : '',
-	'user' => isset($out[2]) ? $out[2] : '',
-	'pass' => isset($out[3]) ? $out[3] : '',
-	'host' => isset($out[4]) ? $out[4] : '',
-	'path' => isset($out[6]) ? $out[6] : '',
-	'query' => isset($out[7]) ? $out[7] : '',
-	'fragment' => isset($out[8]) ? $out[8] : ''
-	);
-	 */
 	if(!empty($out[5])) $result['host'] .= ':'.$out[5];
-	/*
-	//this older version produce warnings in the debugger
-	$result = @array(
-	"scheme" => $out[1],
-	"host" => $out[4].(($out[5]=='')?'':':'.$out[5]),
-	"user" => $out[2],
-	"pass" => $out[3],
-	"path" => $out[6],
-	"query" => $out[7],
-	"fragment" => $out[8]
-	);
-	 */
-	/* not the same as above for relative url without host like 'path/1/2/3'
-	$result = parse_url($url) + array(
-	'scheme' => '',
-	'host' => '',
-	'user' => '',
-	'pass' => '',
-	'path' => '',
-	'query' => '',
-	'fragment' => ''
-	);
-	isset($result['port']) and $result['host'] .= ':'. $result['port'];
-	 */
 	return $result;
 }
 
@@ -711,12 +675,6 @@ function qtranxf_formatPostModifiedDateTime($format) {
 	global $post;
 	return qtranxf_strftime(qtranxf_convertFormat($format, $format), mysql2date('U',$post->post_modified), '');
 }
-
-//not in use
-//function qtranxf_realURL($url = '') {
-//	global $q_config;
-//	return $q_config['url_info']['original_url'];
-//}
 
 function qtranxf_getSortedLanguages($reverse = false) {
 	global $q_config;

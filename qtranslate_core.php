@@ -5,12 +5,6 @@ function qtranxf_init_language() {
 	global $q_config, $pagenow;
 	//qtranxf_dbg_log('1.qtranxf_init_language:');
 
-	//if(defined('QTRANS_INIT')){
-	//	//qtranxf_dbg_log('qtranxf_init_language: QTRANS_INIT: url_info: ',$q_config['url_info']);
-	//	return;
-	//}
-	//define('QTRANS_INIT',true);
-
 	qtranxf_loadConfig();
 
 	//'url_info' hash is not for external use, it is subject to change at any time.
@@ -481,14 +475,6 @@ function qtranxf_load_option_qtrans_compatibility(){
 
 function qtranxf_load_plugin_textdomain() {
 	$domain = 'qtranslate';
-/*
-	$locale = get_locale();
-
-	$mofile = 'qtranslate-x-' . $locale . '.mo';
-	$mopath = WP_LANG_DIR . '/plugins/' . $mofile;
-	if(load_textdomain( $domain, $mopath ))
-		return true;
-*/
 	$lang_dir = qtranxf_plugin_dirname().'/lang';
 	if(load_plugin_textdomain($domain, false, $lang_dir))
 		return true;
@@ -611,8 +597,6 @@ function qtranxf_load_option_bool( $nm, $default_value=null ) {
 				break;
 		}
 	}
-	//elseif($val==='0') $q_config[$nm] = false;
-	//elseif($val==='1') $q_config[$nm] = true;
 }
 
 function qtranxf_load_option_func($nm, $opn=null, $func=null) {
@@ -1532,38 +1516,3 @@ function qtranxf_showAllSeparated($text) {
 	}
 	return $result;
 }
-
-/* @since 3.2.5 qtranslate.css is not actually needed
-function qtranxf_add_css ()
-{
-	global $q_config;
-	if (is_admin() || $q_config['header_css_on'])
-	{
-		wp_register_style( 'qtranslate-style', plugins_url('qtranslate.css', __FILE__), array(), QTX_VERSION );
-		wp_enqueue_style( 'qtranslate-style' );
-	}
-}
-*/
-/* since 3.2.7 - removed
-function qtranxf_optionFilter($do='enable') {//do we need it?
-	//qtranxf_dbg_echo('qtranxf_optionFilter: do='.$do);
-	$options = array(	'option_widget_pages',
-						'option_widget_archives',
-						'option_widget_meta',
-						'option_widget_calendar',
-						'option_widget_text',
-						'option_widget_categories',
-						'option_widget_recent_entries',
-						'option_widget_recent_comments',
-						'option_widget_rss',
-						'option_widget_tag_cloud'
-					);
-	if($do!='disable'){//this needs to be optimized if this function needed at all.
-		foreach($options as $option)
-			add_filter($option, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
-	}else{
-		foreach($options as $option)
-			remove_filter($option, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
-	}
-}
-*/

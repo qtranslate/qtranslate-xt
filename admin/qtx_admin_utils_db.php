@@ -209,7 +209,6 @@ function qtranxf_convert_database_posts($action){
 				if( $title==$row->post_title && $content==$row->post_content && $excerpt==$row->post_excerpt ) continue;
 				//Since 3.2-b3: Replaced mysql_real_escape_string with $wpdb->prepare
 				$wpdb->query($wpdb->prepare('UPDATE '.$wpdb->posts.' set post_content = %s, post_title = %s, post_excerpt = %s WHERE ID = %d',$content, $title, $excerpt, $row->ID));
-				//$wpdb->query('UPDATE '.$wpdb->posts.' set post_content = "'.mysql_real_escape_string($content).'", post_title = "'.mysql_real_escape_string($title).'", post_excerpt = "'.mysql_real_escape_string($excerpt).'" WHERE ID='.$row->ID);
 			}
 			break;
 		default: break;
@@ -302,11 +301,8 @@ function qtranxf_split_database_file($ifp,$languages_to_keep){
 					$q_config['enabled_languages'][] = $lang;
 					$lfp = $fld.'/'.$bnm.'-'.$lang.'.sql';
 					fflush($dfh);
-					//$pos = ftell($dfh);
-					//fclose($dfh); unset($files[$default_language]['fh']);
 					copy($dfp,$lfp);
 					$lfh = fopen($lfp,'a+');
-					//$dfh = fopen($dfp,'a+');
 					if(!$lfh || !$dfh){
 						fclose($ifh);
 						foreach($files as $lang => &$file){
@@ -319,7 +315,6 @@ function qtranxf_split_database_file($ifp,$languages_to_keep){
 							$errors[] = sprintf(__('Failed to re-open output database file "%s"','qtranslate'), $dfp);
 						return '';
 					}
-					//$files[$default_language]['fh'] = $dfh;
 					$files[$lang] = array('fp' => $lfp, 'fh' => $lfh);
 				}
 			}
@@ -432,30 +427,6 @@ function gtranxf_db_clean_terms(){
 				$errs = array( __('Term configuration is inconsistent.', 'qtranslate') );
 			}
 			//qtranxf_dbg_log('gtranxf_db_clean_terms: invalid term $id='.$id.', name='.$nm.' Error:', $errs);
-/*
-			//wp_delete_term($id,'');//does not work with empty taxonomy
-			$ok = true;
-			$q = $wpdb->prepare('DELETE FROM '.$wpdb->terms.' WHERE term_id=%d',$id);
-			if($wpdb->query($q) === false) $ok = false;
-			if(!empty($wpdb->termmeta)){
-				$q = $wpdb->prepare('DELETE FROM '.$wpdb->termmeta.' WHERE term_id=%d',$id);
-				if($wpdb->query($q) === false) $ok = false;
-			}
-			$tt_ids = $wpdb->get_results($wpdb->prepare('SELECT term_taxonomy_id FROM '.$wpdb->term_taxonomy.' WHERE term_id=%d',$id));
-			foreach($tt_ids as $row){
-				$tt_id = $row->term_taxonomy_id;
-				$q = $wpdb->prepare('DELETE FROM '.$wpdb->term_taxonomy.' WHERE term_taxonomy_id=%d',$tt_id);
-				if($wpdb->query($q) === false) $ok = false;
-				$q = $wpdb->prepare('DELETE FROM '.$wpdb->term_relationships.' WHERE term_taxonomy_id=%d',$tt_id);
-				if($wpdb->query($q) === false) $ok = false;
-			}
-			if($ok){
-				$msg = __('This term has been removed.', 'qtranslate');
-			}else{
-				$msg = __('Some errors occurred while trying to remove it. Please, cleanup this term manually.', 'qtranslate');
-			}
-			$errors[] = sprintf(__('Term "%s" (id=%d) cannot be loaded. Error message:%s', 'qtranslate'), $nm, $id, '<br/>'.PHP_EOL.'"'.implode('"<br/>"'.PHP_EOL, $errs).'"') . '<br/>' . $msg;
-*/
 			$messages[] = sprintf(__('Term "%s" (id=%d) cannot be loaded and is left untouched. Error message on load was:%s', 'qtranslate'), $nm, $id, '<br/>'.PHP_EOL.'"'.implode('"<br/>"'.PHP_EOL, $errs).'"') . '<br/>' . $msg;
 			continue;
 		}else{

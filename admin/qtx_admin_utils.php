@@ -15,20 +15,15 @@ function qtranxf_loadfiles_js($jss, $enqueue_script) {
 		}else if(isset($js['src'])){
 			$src = $js['src'];
 			if($dbg) $src = str_replace('.min.js', '.js', $src);
-			//if($enqueue_script){
-				$handle = isset($js['handle']) ? $js['handle'] : (is_string($k) ? $k : 'qtranslate-admin-js-'.(++$cnt) );
-				$ver = isset($js['ver']) ? $js['ver'] : QTX_VERSION;
-				$url = content_url($src);
-				if(isset($js['deps'])){
-					$deps = array_merge($deps,$js['deps']);
-				}
-				wp_register_script( $handle, $url, $deps, $ver, true);
-				wp_enqueue_script( $handle );
-				$deps[] = $handle;
-			//}else{
-			//	$fp = WP_CONTENT_DIR . '/' . $src;
-			//	readfile($fp);
-			//}
+			$handle = isset($js['handle']) ? $js['handle'] : (is_string($k) ? $k : 'qtranslate-admin-js-'.(++$cnt) );
+			$ver = isset($js['ver']) ? $js['ver'] : QTX_VERSION;
+			$url = content_url($src);
+			if(isset($js['deps'])){
+				$deps = array_merge($deps,$js['deps']);
+			}
+			wp_register_script( $handle, $url, $deps, $ver, true);
+			wp_enqueue_script( $handle );
+			$deps[] = $handle;
 		}
 	}
 }
@@ -100,9 +95,7 @@ function qtranxf_stripSlashesIfNecessary($str) {
 	/**
 	 * @since 3.2.9.8.4 WordPress now always supplies slashed data
 	 */
-	//if(1==get_magic_quotes_gpc()) {
-		$str = stripslashes($str);
-	//}
+	$str = stripslashes($str);
 	return $str;
 }
 
@@ -145,20 +138,6 @@ function qtranxf_getLanguageEdit() {
 	global $q_config;
 	return isset($_COOKIE['qtrans_edit_language']) ? $_COOKIE['qtrans_edit_language'] : $q_config['language'];
 }
-
-/*
-function qtranxf_language_columns($columns) {
-	return array(
-		'code' => _x('Code', 'Two-letter Language Code meant.', 'qtranslate'),
-		'flag' => __('Flag', 'qtranslate'),
-		'name' => __('Name', 'qtranslate'),
-		'status' => __('Action', 'qtranslate'),
-		'status2' => __('Edit', 'qtranslate'),
-		'status3' => __('Stored', 'qtranslate')
-	);
-}
-add_filter('manage_language_columns', 'qtranxf_language_columns');
-*/
 
 function qtranxf_languageColumnHeader($columns){
 	$new_columns = array();
@@ -239,10 +218,6 @@ function qtranxf_before_admin_bar_render() {
 	}
 	//qtranxf_dbg_log('qtranxf_before_admin_bar_render: $wp_admin_bar:', $wp_admin_bar);
 }
-
-//function qtranxf_after_admin_bar_render() {
-//	global $wp_admin_bar;
-//}
 
 function qtranxf_admin_the_title($title) {
 	global $pagenow;
@@ -472,21 +447,6 @@ function qtranxf_decode_name_value($data) {
 	$a = array();
 	foreach ( $data as $nv ) {
 		qtranxf_decode_name_value_pair($a,$nv->name,wp_slash($nv->value));
-/*
-		if ( preg_match( '#(.*)\[(\w+)\]#', $nv->name, $matches ) ) {
-			$nm = $matches[1];
-			if ( empty( $a[ $nm ] ) ) {
-				$a[ $nm ] = array();
-			}
-			$key = $matches[2];
-			if ( is_numeric( $key ) ) {
-				$key = (int) $key;
-			}
-			$a[ $nm ][ $key ] = wp_slash( $nv->value );
-		} else {
-			$a[ $nv->name ] = wp_slash( $nv->value );
-		}
-*/
 	}
 	return $a;
 }

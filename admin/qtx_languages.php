@@ -55,7 +55,6 @@ function qtranxf_copyLanguage(&$langs, $cfg, $lang) {
 	$langs['date_format'][$lang] = $cfg['date_format'][$lang];
 	$langs['time_format'][$lang] = $cfg['time_format'][$lang];
 	$langs['not_available'][$lang] = $cfg['not_available'][$lang];
-	//$langs['languages'][$lang] = $cfg['languages'][$lang];
 }
 
 function qtranxf_update_config_header_css() {
@@ -111,7 +110,6 @@ function qtranxf_deleteLanguage($lang) {
 	global $q_config;
 	if( !qtranxf_language_predefined($lang) ){
 		if( $q_config['default_language'] == $lang ){
-			//if(!isset($q_config['language_name'][$lang])||strtolower($lang)=='code') $error = __('No such language!', 'qtranslate');
 			return __('Cannot delete Default Language!', 'qtranslate');
 		}
 		qtranxf_disableLanguage($lang);
