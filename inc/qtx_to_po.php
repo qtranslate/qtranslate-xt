@@ -30,24 +30,4 @@ function qtranxf_add_to_po(){
 
 	//translators: A mark for an important message.
 	__('Important!', 'qtranslate');
-
-	__('Plugin %s needs to perform an update of the database in order to function correctly.', 'qtranslate');
-	__('The number of database entries to be updated is equal to %d.', 'qtranslate');
-	__('You should make sure to have a recent enough backup of the database, just in case something goes wrong during the update. When ready, please press the button below to start the update.', 'qtranslate');
-	//translators: This is a title of a button.
-	__('Run the Database Update Now', 'qtranslate');
-	__('An error occurred during the database update.');
-	__('The database update has finished successfully.');
-	__('The database update has not finished. Please, refresh this page and run the update again.');
-
-	//translators: An error message after communication with a server.
-	__('A meaningless response has been received.', 'qtranslate');
-	__('The response received is not an array.');
-
-	__('Thank you for using plugin %s!', 'qtranslate');
-	__('Please, help us to make a decision on "%s" feature, press the button below.', 'qtranslate');
-	__('Translation Service', 'qtranslate');
-	__('Survey on "%s" feature', 'qtranslate');
-	__('I have already done it, dismiss this message.', 'qtranslate');
 }
-
