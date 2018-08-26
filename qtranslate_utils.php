@@ -51,24 +51,6 @@ function qtranxf_add_admin_notice($msg, $kind) {
 function qtranxf_translate_wp($s) { return __($s); }
 
 /**
- * Looks up a translation in domain 'qtranslate', and if it is not there, uses the default WordPress domain to translate.
- * @since 3.4.5.5
- */
-function qtranxf_translate($s)
-{
-	static $trs = array();
-	if(!isset($trs[$s])){
-		$t = get_translations_for_domain( 'qtranslate' );
-		if(isset($t->entries[$s]) && !empty($t->entries[$s]->translations)){
-			$trs[$s] = $t->entries[$s]->translations[0];
-		}else{
-			$trs[$s] = qtranxf_translate_wp($s);
-		}
-	}
-	return $trs[$s];
-}
-
-/**
  * @since 3.3.8.8
  */
 function qtranxf_plugin_basename(){

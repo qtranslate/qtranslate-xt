@@ -720,25 +720,9 @@ function qtranxf_add_language_menu( $wp_admin_bar ){
 }
 
 function qtranxf_links($links, $file, $plugin_data, $context){
-	$settings_link = '<a href="options-general.php?page=qtranslate-x">' . qtranxf_translate('Settings') . '</a>';
+	$settings_link = '<a href="options-general.php?page=qtranslate-x">' . qtranxf_translate_wp('Settings') . '</a>';	//translators: expected in WordPress default textdomain
 	array_unshift( $links, $settings_link ); // before other links
 	return $links;
-}
-
-/*
-function qtranxf_admin_mail_from($email){
-	// Get the site domain and get rid of www.
-	$sitename = strtolower( $_SERVER['SERVER_NAME'] );
-	if ( substr( $sitename, 0, 4 ) == 'www.' ) {
-		$sitename = substr( $sitename, 4 );
-	}
-	return '<no-reply@'.$sitename.'>';
-}
-*/
-
-function qtranxf_admin_mail_fromname($name){
-	//translators: Title of email address in "from" field of e-mails sent for admin purpose.
-	return __('WordPress (No-Reply)', 'qtranslate');
 }
 
 function qtranxf_admin_notices_config() {
@@ -753,12 +737,12 @@ function qtranxf_admin_notices_config() {
 		$qlink = admin_url('options-general.php?page=qtranslate-x');
 		$qtitle = '<a href="'.$qlink.'" style="color:magenta">qTranslate&#8209;X</a>:&nbsp;';
 	}
-	$colon = qtranxf_translate(':');
 	$fmt = '<div class="%1$s notice is-dismissible" id="qtranxs-%2$s-%1$s"><p>' . $qtitle . '%3$s</p></div>' . PHP_EOL;
 
 	if(isset($q_config['url_info']['errors'])){
 		if(is_array($q_config['url_info']['errors'])){
-			$hdr = '<strong><span style="color: red;">'.qtranxf_translate('Error').'</span></strong>'.$colon.'&nbsp;';
+			//translators: Colon after a title. Template reused from language menu item.
+			$hdr = sprintf(__('%s:', 'qtranslate'), '<strong><span style="color: red;">' . __('Error', 'qtranslate') . '</span></strong>') . '&nbsp;';
 			foreach($q_config['url_info']['errors'] as $key => $msg){
 				printf( $fmt, 'error', $key, $hdr . $msg );
 			}
@@ -767,7 +751,8 @@ function qtranxf_admin_notices_config() {
 	}
 	if(isset($q_config['url_info']['warnings'])){
 		if(is_array($q_config['url_info']['warnings'])){
-			$hdr = '<strong><span style="color: blue;">'.qtranxf_translate('Warning').'</span></strong>'.$colon.'&nbsp;';
+			//translators: Colon after a title. Template reused from language menu item.
+			$hdr = sprintf(__('%s:', 'qtranslate'), '<strong><span style="color: blue;">' . __('Warning', 'qtranslate') . '</span></strong>') . '&nbsp;';
 			foreach($q_config['url_info']['warnings'] as $key => $msg){
 				printf( $fmt, 'update-nag', $key, $hdr . $msg );
 			}

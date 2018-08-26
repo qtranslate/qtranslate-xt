@@ -47,9 +47,9 @@ class qTranslateXWidget extends WP_Widget {
 		if(empty($instance['hide-title'])) {
 			$title = $instance['title'];
 			if(empty($title))
-				$title=__('Language', 'qtranslate');
+				$title = qtranxf_translate_wp('Language');	//translators: expected in WordPress default textdomain
 			if(empty($instance['hide-title-colon']))
-				$title .= ':';
+				$title = sprintf(__('%s:', 'qtranslate'), $title);	//translators: Colon after a title.
 			$title=apply_filters('qtranslate_widget_title',$title,$this);
 			echo $before_title . $title . $after_title;
 		}

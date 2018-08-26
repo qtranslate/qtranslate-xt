@@ -253,7 +253,7 @@ function qtranxf_add_language_menu_item(&$items, &$menu_order, &$itemid, $key, $
 		}else{
 			$blocks = qtranxf_get_language_blocks($item->title);
 			if(count($blocks)<=1){//no customization is done
-				$item->title = qtranxf_translate('Language');
+				$item->title = qtranxf_translate_wp('Language');	//translators: expected in WordPress default textdomain
 			}else{
 				$item->title = qtranxf_use_block($language, $blocks);
 			}
@@ -262,8 +262,8 @@ function qtranxf_add_language_menu_item(&$items, &$menu_order, &$itemid, $key, $
 	}
 	if($topflag){
 		if(!empty($item->title)){
-			if($colon) $item->title .= qtranxf_translate(':');
-			$item->title.='&nbsp;';
+			if($colon) $item->title = sprintf(__('%s:', 'qtranslate'), $item->title);	//translators: Colon after a title. For example, in top item of Language Menu.
+			$item->title .= '&nbsp;';
 		}
 		$item->title.='<img src="'.$flag_location.$q_config['flag'][$toplang].'" alt="'.$q_config['language_name'][$toplang].'" />';//.' '.__('Flag', 'qtranslate')
 	}
