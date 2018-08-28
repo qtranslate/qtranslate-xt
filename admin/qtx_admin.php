@@ -789,8 +789,7 @@ function qtranxf_admin_home_url($url, $path, $orig_scheme, $blog_id){
 function qtranxf_admin_footer_text($text)
 {
 	if(qtranxf_admin_is_config_page()){
-		//$msg = sprintf( __( 'If you like %s please leave us a %s&#9733;&#9733;&#9733;&#9733;&#9733;%s rating. A huge thank you from %sqTranslate Team%s in advance!', 'qtranslate' ), '<a href="https://wordpress.org/plugins/qtranslate-x/" target="_blank"><strong>qTranslate&#8209;X</strong></a>', '<a href="https://wordpress.org/support/view/plugin-reviews/qtranslate-x?filter=5#postform" target="_blank">', '</a>', '<a href="https://qtranslatexteam.wordpress.com/donations/" target="_blank">', '</a>' );
-		$msg = sprintf( __( 'Thank you for using plugin %s!', 'qtranslate' ), '<a href="https://qtranslatexteam.wordpress.com/donations/" target="_blank"><strong>qTranslate&#8209;X</strong></a>&nbsp;' );
+		$msg = sprintf( __( 'Thank you for using plugin %s!', 'qtranslate' ), '<strong>qTranslate&#8209;X</strong>' );
 		$text = '<span id="footer-thankyou">' . $msg . '</span>';
 	}
 	return $text;

@@ -192,13 +192,8 @@ function qtranxf_conf() {
 <h2><?php _e('Language Management (qTranslate Configuration)', 'qtranslate') ?></h2>
 <p class="qtranxs_heading" style="font-size: small"><?php printf(__('For help on how to configure qTranslate correctly, take a look at the <a href="%1$s">qTranslate FAQ</a> and the <a href="%2$s">Support Forum</a>.', 'qtranslate')
 	, 'https://qtranslatexteam.wordpress.com/faq/'
-//, 'https://wordpress.org/plugins/qtranslate-x/faq/'
-	, 'http://qtranslate-x.com/support/'
-//, 'https://wordpress.org/support/plugin/qtranslate-x'
+	, 'https://github.com/qTranslate/qtranslate-xt/issues'
 	);
-	echo '<br><small><em>';
-	printf(__('Plugin development is supported through your %sdonations to the development team%s.','qtranslate'),'<a href="https://qtranslatexteam.wordpress.com/donations/" target="_blank">', '</a>');
-	echo '</em></small>';
 ?></p>
 <?php if(isset($_GET['config_inspector'])) {
 
@@ -521,7 +516,7 @@ echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 
 			<tr>
 				<th scope="row"><?php _e('Debugging Information', 'qtranslate') ?></th>
 				<td>
-					<p class="qtranxs_explanation"><?php printf(__('If you encounter any problems and you are unable to solve them yourself, you can visit the <a href="%s">Support Forum</a>. Posting the following Content will help other detect any misconfigurations.', 'qtranslate'), 'https://wordpress.org/support/plugin/qtranslate-x') ?></p>
+					<p class="qtranxs_explanation"><?php printf(__('If you encounter any problems and you are unable to solve them yourself, you can visit the <a href="%s">Support Forum</a>. Posting the following Content will help other detect any misconfigurations.', 'qtranslate'), 'https://github.com/qTranslate/qtranslate-xt/issues') ?></p>
 					<textarea readonly="readonly" id="qtranxs_debug"><?php
 						$q_config_copy = $q_config;
 						// remove information to keep data anonymous and other not needed things
@@ -580,7 +575,7 @@ echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 
 				<th scope="row" style="text-align: right">class</th>
 				<td><label for="qtranxs_custom_field_classes" class="qtranxs_explanation">
 					<input type="text" name="custom_field_classes" id="qtranxs_custom_field_classes" value="<?php echo implode(' ',$q_config['custom_field_classes']) ?>" style="width:100%"></label>
-					<p class="qtranxs-notes"><?php printf(__('All the fields of specified classes will respond to Language Switching Buttons. Be careful not to include a class, which would affect language-neutral fields. If you cannot uniquely identify a field needed neither by %s, nor by %s attribute, report the issue on %sSupport Forum%s', 'qtranslate'),'"id"', '"class"', '<a href="https://wordpress.org/support/plugin/qtranslate-x">','</a>') ?></p>
+					<p class="qtranxs-notes"><?php printf(__('All the fields of specified classes will respond to Language Switching Buttons. Be careful not to include a class, which would affect language-neutral fields. If you cannot uniquely identify a field needed neither by %s, nor by %s attribute, report the issue on %sSupport Forum%s', 'qtranslate'),'"id"', '"class"', '<a href="https://github.com/qTranslate/qtranslate-xt/issues">','</a>') ?></p>
 				</td>
 			</tr>
 			<tr>

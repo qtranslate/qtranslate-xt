@@ -849,14 +849,13 @@ function qtranxf_admin_notices_next_thanks(){
 		return;
 	qtranxf_admin_notice_dismiss_script();
 	$tnx=sprintf(__('Thank you for using plugin %s!', 'qtranslate'), 'qTranslate&#8209;X');
-	echo '<div class="updated qtranxs-notice-ajax notice is-dismissible" id="qtranxs-next_thanks" action="unset"><table><tr><td style="width: 0%"><img src="'.plugins_url('admin/img/qtxlogo.png',QTRANSLATE_FILE).'" title="'.$tnx.'" alt="'.$tnx.'"></td><td style="width: 100%">';
-	echo '<p>';// style="" text-align: center; font-size: larger;
+	echo '<div class="updated qtranxs-notice-ajax notice is-dismissible" id="qtranxs-next_thanks" action="unset">';
+	echo '<p>';
 	printf(__('Thank you for using plugin %s!', 'qtranslate'), '<a href="https://wordpress.org/plugins/qtranslate-x/" style="color:blue" target="_blank">qTranslate&#8209;X</a>');
-	//echo '</p><p>';
 	echo '<br/>';
 	echo __('Our team would greatly appreciate any feedback:', 'qtranslate');
 	echo '<ul style="list-style: square; list-style-position: inside;"><li>';
-	printf(__('%sUse Support Forum%s to ask a question.', 'qtranslate'), '<a href="https://wordpress.org/support/plugin/qtranslate-x" target="_blank">', '</a>');
+	printf(__('%sUse Support Forum%s to ask a question.', 'qtranslate'), '<a href="https://github.com/qTranslate/qtranslate-xt/issues" target="_blank">', '</a>');
 	echo '</li><li>';
 	printf(__('%sVisit%s %s website.', 'qtranslate'), '<a href="https://qtranslatexteam.wordpress.com/" target="_blank">', '</a>', '"<a href="https://qtranslatexteam.wordpress.com/about/" target="_blank">qTranslate-X explained</a>"');
 	echo '</li><li>';
@@ -865,9 +864,9 @@ function qtranxf_admin_notices_next_thanks(){
 	printf(__('%sReview the plugin%s at WordPress site.', 'qtranslate'), '<a href="https://wordpress.org/support/view/plugin-reviews/qtranslate-x?rate=5#postform" target="_blank">', '</a>');
 	echo '</ul>';
 	echo '</p><p>&nbsp;';
-	echo '<a class="button qtranxs-notice-dismiss" href="https://qtranslatexteam.wordpress.com/donations/">'.__('Thank me again in a few months!', 'qtranslate').'</a>';
+	echo '<a class="button qtranxs-notice-dismiss" href="javascript:void(0);">' . __('I am aware of that, dismiss this message.', 'qtranslate') . '</a>';
 	echo '</p>';
-	echo '</td></tr></table></div>';
+	echo '</div>';
 }
 //add_action('admin_notices', 'qtranxf_admin_notices_next_thanks');
 
