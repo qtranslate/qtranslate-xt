@@ -840,8 +840,6 @@ var qTranslateX=function(pg) {
 					var elms = document.getElementsByName(frm.form.name);
 					if(elms && elms.length){
 						form = elms[0];
-					//}else{
-					//	alert('qTranslate-X misconfiguraton: form with name "'+frm.form.name+'" is not found.');
 					}
 				}
 			}else{

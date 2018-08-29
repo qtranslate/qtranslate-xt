@@ -359,7 +359,7 @@ function qtranxf_get_user_admin_color() {
 
 function qtranxf_meta_box_LSB()
 {
-	printf(__('This is a set of "%s" from %s. Click any blank space between the buttons and drag it to a place where you would need it the most. Click the handle at the top-right corner of this widget to hide this message.', 'qtranslate'), __('Language Switching Buttons','qtranslate'), '<a href="https://wordpress.org/plugins/qtranslate-x/" target="_blank">qTranslate&#8209;X</a>');
+	printf(__('This is a set of "%s" from %s. Click any blank space between the buttons and drag it to a place where you would need it the most. Click the handle at the top-right corner of this widget to hide this message.', 'qtranslate'), __('Language Switching Buttons','qtranslate'), '<a href="https://github.com/qTranslate/qtranslate-xt/" target="_blank">qTranslate&#8209;XT</a>');
 }
 
 function qtranxf_add_meta_box_LSB($post_type, $post=null)

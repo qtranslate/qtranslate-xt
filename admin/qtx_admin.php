@@ -165,7 +165,7 @@ function qtranxf_admin_is_config_page(){
 		global $q_config, $pagenow;
 		$is_config_page = $pagenow == 'options-general.php'
 			&& isset($q_config['url_info']['query'])
-			&& strpos($q_config['url_info']['query'], 'page=qtranslate-x') !== false;
+			&& strpos($q_config['url_info']['query'], 'page=qtranslate-xt') !== false;
 	}
 	return $is_config_page;
 }
@@ -180,7 +180,7 @@ function qtranxf_admin_init(){
 	if ( current_user_can('manage_options') && qtranxf_admin_is_config_page()
 		//&& !empty($_POST) //todo run this only if one of the forms or actions submitted
 	){
-		$q_config['url_info']['qtranslate-settings-url'] = admin_url('options-general.php?page=qtranslate-x');
+		$q_config['url_info']['qtranslate-settings-url'] = admin_url('options-general.php?page=qtranslate-xt');
 		require_once(QTRANSLATE_DIR.'/admin/qtx_admin_options_update.php');
 		//call_user_func('qtranxf_editConfig');
 		qtranxf_editConfig();
@@ -556,8 +556,7 @@ function qtranxf_admin_head() {
 	//qtranxf_add_css();//Since 3.2.5 no longer needed
 	qtranxf_add_admin_css();
 	global $q_config;
-	//if(strpos($_SERVER['REQUEST_URI'],'page=qtranslate-x') !== FALSE)
-	if(isset($q_config['url_info']['query']) && strpos($q_config['url_info']['query'],'page=qtranslate-x') !== FALSE){
+	if(isset($q_config['url_info']['query']) && strpos($q_config['url_info']['query'],'page=qtranslate-xt') !== FALSE){
 		//$enqueue_script = (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG);
 		qtranxf_add_admin_head_js(true);
 	}
@@ -604,7 +603,7 @@ function qtranxf_translate_menu(&$m) {
 }
 
 /**
- * Adds qTranslate-X Management Interface and translates admin menu.
+ * Adds Management Interface and translates admin menu.
  */
 function qtranxf_admin_menu() {
 	global $menu, $submenu;
@@ -619,7 +618,7 @@ function qtranxf_admin_menu() {
 	}
 	//qtranxf_dbg_log('"admin_menu": qtranxf_admin_menu: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
 	// Configuration Page
-	add_options_page(__('Language Management', 'qtranslate'), __('Languages', 'qtranslate'), 'manage_options', 'qtranslate-x', 'qtranxf_settings_page'); // returns 'settings_page_qtranslate-x'
+	add_options_page(__('Language Management', 'qtranslate'), __('Languages', 'qtranslate'), 'manage_options', 'qtranslate-xt', 'qtranxf_settings_page'); // returns 'settings_page_qtranslate-x'
 	//qtranxf_dbg_log('qtranxf_admin_menu: $menu: ', $menu);
 	//qtranxf_dbg_log('qtranxf_admin_menu: $submenu: ', $submenu);
 }
@@ -720,7 +719,7 @@ function qtranxf_add_language_menu( $wp_admin_bar ){
 }
 
 function qtranxf_links($links, $file, $plugin_data, $context){
-	$settings_link = '<a href="options-general.php?page=qtranslate-x">' . qtranxf_translate_wp('Settings') . '</a>';	//translators: expected in WordPress default textdomain
+	$settings_link = '<a href="options-general.php?page=qtranslate-xt">' . qtranxf_translate_wp('Settings') . '</a>';	//translators: expected in WordPress default textdomain
 	array_unshift( $links, $settings_link ); // before other links
 	return $links;
 }
@@ -734,8 +733,8 @@ function qtranxf_admin_notices_config() {
 	if(isset($screen->id) && $screen->id == 'settings_page_qtranslate-x'){
 		$qtitle = '';
 	}else{
-		$qlink = admin_url('options-general.php?page=qtranslate-x');
-		$qtitle = '<a href="'.$qlink.'" style="color:magenta">qTranslate&#8209;X</a>:&nbsp;';
+		$qlink = admin_url('options-general.php?page=qtranslate-xt');
+		$qtitle = '<a href="'.$qlink.'" style="color:magenta">qTranslate&#8209;XT</a>:&nbsp;';
 	}
 	$fmt = '<div class="%1$s notice is-dismissible" id="qtranxs-%2$s-%1$s"><p>' . $qtitle . '%3$s</p></div>' . PHP_EOL;
 

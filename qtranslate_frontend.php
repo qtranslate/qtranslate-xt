@@ -78,7 +78,7 @@ add_action('wp_head', 'qtranxf_wp_head');
  * @since 3.4.5.4
 */
 function qtranxf_wp_head_meta_generator(){
-	echo '<meta name="generator" content="qTranslate-X '.QTX_VERSION.'" />'.PHP_EOL;
+	echo '<meta name="generator" content="qTranslate-XT '.QTX_VERSION.'" />'.PHP_EOL;
 }
 add_action('wp_head', 'qtranxf_wp_head_meta_generator');
 

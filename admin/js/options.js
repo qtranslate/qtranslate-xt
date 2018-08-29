@@ -1,5 +1,5 @@
 /* executed for
- /wp-admin/options-general.php?page=qtranslate-x
+ /wp-admin/options-general.php
 */
 jQuery(document).ready(
 function($){

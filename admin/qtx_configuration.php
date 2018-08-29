@@ -108,7 +108,7 @@ function qtranxf_language_form($form_action, $button_name, $nonce_action) {
 	<?php _e('Message to display if post is not available in the requested language. (Example: Sorry, this entry is only available in %LANG:, : and %.)', 'qtranslate') ?><br/>
 	<?php _e('%LANG:&lt;normal_separator&gt;:&lt;last_separator&gt;% generates a list of languages separated by &lt;normal_separator&gt; except for the last one, where &lt;last_separator&gt; will be used instead.', 'qtranslate');
 		echo ' ';
-		printf(__('The language names substituted into the list of available languages are shown translated in the active language. The nominative form of language names is used as it is fetched from %s may not fit the grammar rules of your language. It is then advisable to include quotes in this message like this "%s". Alternatively you may modify "%s" files in folder "%s" with names that fit your grammar rules. Please, %scontact the development team%s, if you decide to modify "%s" files.', 'qtranslate'), '<a href="http://unicode.org/Public/cldr/latest" title="Unicode Common Locale Data Repository" target="_blank" tabindex="-1">CLDR</a>', 'Sorry, this entry is only available in "%LANG:", ":" and "%".', '.po', '<a href="https://github.com/qTranslate-Team/qtranslate-x/tree/master/lang/language-names" target="_blank" tabindex="-1">/lang/language-names/</a>', '<a href="https://qtranslatexteam.wordpress.com/contact-us/" target="_blank" tabindex="-1">', '</a>', '.po');
+		printf(__('The language names substituted into the list of available languages are shown translated in the active language. The nominative form of language names is used as it is fetched from %s may not fit the grammar rules of your language. It is then advisable to include quotes in this message like this "%s". Alternatively you may modify "%s" files in folder "%s" with names that fit your grammar rules. Please, %scontact the development team%s, if you decide to modify "%s" files.', 'qtranslate'), '<a href="http://unicode.org/Public/cldr/latest" title="Unicode Common Locale Data Repository" target="_blank" tabindex="-1">CLDR</a>', 'Sorry, this entry is only available in "%LANG:", ":" and "%".', '.po', '<a href="https://github.com/qtranslate/qtranslate-xt/tree/master/lang/language-names" target="_blank" tabindex="-1">/lang/language-names/</a>', '<a href="https://github.com/qtranslate/qtranslate-xt/issues" target="_blank" tabindex="-1">', '</a>', '.po');
 	?>
 	</p>
 </div>
@@ -185,7 +185,7 @@ function qtranxf_conf() {
 <?php if(isset($_GET['edit'])) { ?>
 <h2><?php _e('Edit Language', 'qtranslate') ?></h2>
 <?php qtranxf_language_form('#', __('Save Changes &raquo;', 'qtranslate'), $nonce_action) ?>
-<p class="qtranxs-notes"><a href="<?php echo admin_url('options-general.php?page=qtranslate-x#languages') ?>"><?php _e('back to configuration page', 'qtranslate') ?></a></p>
+<p class="qtranxs-notes"><a href="<?php echo admin_url('options-general.php?page=qtranslate-xt#languages') ?>"><?php _e('back to configuration page', 'qtranslate') ?></a></p>
 <?php
 	} else {
 ?>
@@ -211,14 +211,14 @@ function qtranxf_conf() {
 
 	$configs = qtranxf_standardize_i18n_config($configs);
 ?>
-<p class="qtranxs-notes"><a href="<?php echo admin_url('options-general.php?page=qtranslate-x#integration') ?>"><?php _e('back to configuration page', 'qtranslate') ?></a></p>
+<p class="qtranxs-notes"><a href="<?php echo admin_url('options-general.php?page=qtranslate-xt#integration') ?>"><?php _e('back to configuration page', 'qtranslate') ?></a></p>
 <h3 class="heading"><?php _e('Configuration Inspector', 'qtranslate') ?></h3>
 <p class="qtranxs_explanation">
 <?php printf(__('Review a combined JSON-encoded configuration as loaded from options %s and %s, as well as from the theme and other plugins via filters %s and %s.', 'qtranslate'), '"'.__('Configuration Files', 'qtranslate').'"', '"'.__('Custom Configuration', 'qtranslate').'"', '"i18n_admin_config"', '"i18n_front_config"');
 echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 'qtranslate'), '<a href="https://qtranslatexteam.wordpress.com/integration/" target="_blank">', '</a>'); ?></p>
 <p class="qtranxs_explanation"><textarea class="widefat" rows="30"><?php echo esc_textarea(str_replace('[]', '{}', qtranxf_json_encode($configs))); ?></textarea></p>
 <p class="qtranxs-notes"><?php printf(__('Note to developers: ensure that front-end filter %s is also active on admin side, otherwise the changes it makes will not show up here. Having this filter active on admin side does not affect admin pages functionality, except this field.', 'qtranslate'), '"i18n_front_config"') ?></p>
-<p class="qtranxs-notes"><a href="<?php echo admin_url('options-general.php?page=qtranslate-x#integration') ?>"><?php _e('back to configuration page', 'qtranslate') ?></a></p>
+<p class="qtranxs-notes"><a href="<?php echo admin_url('options-general.php?page=qtranslate-xt#integration') ?>"><?php _e('back to configuration page', 'qtranslate') ?></a></p>
 <?php }else{
 	// Set Navigation Tabs
 	$admin_sections = qtranxf_get_admin_sections();
@@ -391,7 +391,7 @@ echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 
 					<label for="disable_client_cookies"><input type="checkbox" name="disable_client_cookies" id="disable_client_cookies" value="1"<?php checked($q_config['disable_client_cookies']); disabled( $url_mode==QTX_URL_DOMAIN || $url_mode==QTX_URL_DOMAINS) ?> /> <?php printf(__('Disable language client cookie "%s" (not recommended).', 'qtranslate'),QTX_COOKIE_NAME_FRONT) ?></label>
 					<p class="qtranxs-notes"><?php echo sprintf(__('Language cookie is auto-disabled for "%s" "Pre-Domain" and "Per-Domain", as language is always unambiguously defined by a url in those modes.','qtranslate'), __('URL Modification Mode', 'qtranslate')).' '.sprintf(__('Otherwise, use this option with a caution, for simple enough sites only. If checked, the user choice of browsing language will not be saved between sessions and some AJAX calls may deliver unexpected language, as well as some undesired language switching during browsing may occur under certain themes (%sRead More%s).', 'qtranslate'),'<a href="https://qtranslatexteam.wordpress.com/2015/02/26/browser-redirection-based-on-language/" target="_blank">','</a>') ?></p>
 					<br />
-					<label for="use_secure_cookie"><input type="checkbox" name="use_secure_cookie" id="use_secure_cookie" value="1"<?php checked($q_config['use_secure_cookie']) ?> /><?php printf(__('Make %s cookies available only through HTTPS connections.', 'qtranslate'),'qTranslate&#8209;X') ?></label>
+					<label for="use_secure_cookie"><input type="checkbox" name="use_secure_cookie" id="use_secure_cookie" value="1"<?php checked($q_config['use_secure_cookie']) ?> /><?php printf(__('Make %s cookies available only through HTTPS connections.', 'qtranslate'),'qTranslate&#8209;XT') ?></label>
 					<p class="qtranxs-notes"><?php _e("Don't check this if you don't know what you're doing!", 'qtranslate') ?></p>
 				</td>
 			</tr>
@@ -535,26 +535,29 @@ echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 
 	<?php qtranxf_admin_section_start('integration') ?>
 		<table class="form-table qtranxs-form-table" id="qtranxs_integration_config">
 			<tr>
-				<td colspan="2"><p class="heading"><?php printf(__('If your theme or some plugins are not fully integrated with %s, suggest their authors to review the %sIntegration Guide%s. In many cases they would only need to create a simple text file in order to be fully compatible with %s. Alternatively, you may create such a file for them and for yourselves.', 'qtranslate'), 'qTranslate&#8209;X', '<a href="https://qtranslatexteam.wordpress.com/integration/" target="_blank">', '</a>', 'qTranslate&#8209;X');
-				echo ' '; printf(__('Read %sIntegration Guide%s for more information on how to customize the configuration of %s.', 'qtranslate'), '<a href="https://qtranslatexteam.wordpress.com/integration/" target="_blank">', '</a>', 'qTranslate&#8209;X'); ?></p></td>
+				<td colspan="2"><p class="heading">
+				<?php printf(__('If your theme or some plugins are not fully integrated with %s, suggest their authors to review the %sIntegration Guide%s. In many cases they would only need to create a simple text file in order to be fully compatible with %s. Alternatively, you may create such a file for them and for yourselves.', 'qtranslate'), 'qTranslate&#8209;XT', '<a href="https://qtranslatexteam.wordpress.com/integration/" target="_blank">', '</a>', 'qTranslate&#8209;XT');
+				echo ' ';
+				printf(__('Read %sIntegration Guide%s for more information on how to customize the configuration of %s.', 'qtranslate'), '<a href="https://qtranslatexteam.wordpress.com/integration/" target="_blank">', '</a>', 'qTranslate&#8209;XT'); ?>
+				</p></td>
 			</tr>
 			<tr>
 				<th scope="row"><?php _e('Configuration Files', 'qtranslate') ?></th>
 				<td><label for="qtranxs_config_files" class="qtranxs_explanation"><?php printf(__('List of configuration files. Unless prefixed with "%s", paths are relative to %s variable: %s. Absolute paths are also acceptable.', 'qtranslate'), './', 'WP_CONTENT_DIR', trailingslashit(WP_CONTENT_DIR)) ?></label>
 				<br/><textarea name="json_config_files" id="qtranxs_config_files" rows="4" style="width:100%"><?php echo isset($_POST['json_config_files']) ? $_POST['json_config_files'] /* already sanitized */ : implode(PHP_EOL,$q_config['config_files']) ?></textarea>
 				<p class="qtranxs-notes"><?php printf(__('The list gets auto-updated on a 3rd-party integrated plugin activation/deactivation. You may also add your own custom files for your theme or plugins. File "%s" is the default configuration loaded from this plugin folder. It is not recommended to modify any configuration file from other authors, but you may alter any configuration item through your own custom file appended to the end of this list.', 'qtranslate'), './i18n-config.json');
-				echo ' '; printf(__('Use "%s" to review the resulting combined configuration from all "%s" and this option.', 'qtranslate'), '<a href="'.admin_url('options-general.php?page=qtranslate-x&config_inspector=show').'">'.__('Configuration Inspector', 'qtranslate').'</a>', __('Custom Configuration', 'qtranslate'));
+				echo ' '; printf(__('Use "%s" to review the resulting combined configuration from all "%s" and this option.', 'qtranslate'), '<a href="'.admin_url('options-general.php?page=qtranslate-xt&config_inspector=show').'">'.__('Configuration Inspector', 'qtranslate').'</a>', __('Custom Configuration', 'qtranslate'));
 				echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 'qtranslate'), '<a href="https://qtranslatexteam.wordpress.com/integration/" target="_blank">', '</a>');
 				echo ' '.__('To reset to default, clear the text.', 'qtranslate') ?></p>
 				</td>
 			</tr>
 			<tr>
 				<th scope="row"><?php _e('Custom Configuration', 'qtranslate') ?></th>
-				<td><label for="qtranxs_json_custom_i18n_config" class="qtranxs_explanation"><?php printf(__('Additional custom JSON-encoded configuration of %s for all admin pages. It is processed after all files from option "%s" are loaded, providing opportunity to add or to override configuration tokens as necessary.', 'qtranslate'), 'qTranslate&#8209;X', __('Configuration Files', 'qtranslate')); ?></label>
+				<td><label for="qtranxs_json_custom_i18n_config" class="qtranxs_explanation"><?php printf(__('Additional custom JSON-encoded configuration of %s for all admin pages. It is processed after all files from option "%s" are loaded, providing opportunity to add or to override configuration tokens as necessary.', 'qtranslate'), 'qTranslate&#8209;XT', __('Configuration Files', 'qtranslate')); ?></label>
 				<br/><textarea name="json_custom_i18n_config" id="qtranxs_json_custom_i18n_config" rows="4" style="width:100%"><?php if(isset($_POST['json_custom_i18n_config'])) echo sanitize_text_field(stripslashes($_POST['json_custom_i18n_config'])); else if(!empty($q_config['custom_i18n_config'])) echo qtranxf_json_encode($q_config['custom_i18n_config']) ?></textarea>
 				<p class="qtranxs-notes"><?php printf(__('It would make no difference, if the content of this field is stored in a file, which name is listed last in option "%s". Therefore, this field only provides flexibility for the sake of convenience.', 'qtranslate'), __('Configuration Files', 'qtranslate'));
 				echo ' '; printf(__('Please, read %sIntegration Guide%s for more information.', 'qtranslate'), '<a href="https://qtranslatexteam.wordpress.com/integration/" target="_blank">', '</a>');
-				echo ' '; printf(__('Use "%s" to review the resulting combined configuration from all "%s" and this option.', 'qtranslate'), '<a href="'.admin_url('options-general.php?page=qtranslate-x&config_inspector=show').'">'.__('Configuration Inspector', 'qtranslate').'</a>', __('Configuration Files', 'qtranslate'));
+				echo ' '; printf(__('Use "%s" to review the resulting combined configuration from all "%s" and this option.', 'qtranslate'), '<a href="'.admin_url('options-general.php?page=qtranslate-xt&config_inspector=show').'">'.__('Configuration Inspector', 'qtranslate').'</a>', __('Configuration Files', 'qtranslate'));
 				?></p>
 				</td>
 			</tr>
