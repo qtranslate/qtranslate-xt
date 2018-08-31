@@ -441,12 +441,13 @@ function qtranxf_add_admin_footer_js ( $enqueue_script=false ) {
 	 * Last chance to customize Java script variable qTranslateConfig.
 	 */
 	$config = apply_filters('qtranslate_admin_page_config', $config);
+
+	qtranxf_loadfiles_js($page_config['js'], $enqueue_script);
 ?>
 <script type="text/javascript">
 // <![CDATA[
 <?php
 	echo 'var qTranslateConfig='.json_encode($config).';'.PHP_EOL;
-	qtranxf_loadfiles_js($page_config['js'], $enqueue_script);
 	if($q_config['qtrans_compatibility']){
 		echo 'qtrans_use = function(lang, text) { var result = qtranxj_split(text); return result[lang]; }'.PHP_EOL;
 	}

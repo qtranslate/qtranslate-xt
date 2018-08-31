@@ -17,6 +17,10 @@ function qtranxf_loadfiles_js($jss, $enqueue_script) {
 			if($dbg) $src = str_replace('.min.js', '.js', $src);
 			$handle = isset($js['handle']) ? $js['handle'] : (is_string($k) ? $k : 'qtranslate-admin-js-'.(++$cnt) );
 			$ver = isset($js['ver']) ? $js['ver'] : QTX_VERSION;
+			if ($dbg) {
+				// prevent cache issues in debug mode (.js file changes for same version)
+				$ver .= '.' . filemtime( WP_CONTENT_DIR . '/' . $src );
+			}
 			$url = content_url($src);
 			if(isset($js['deps'])){
 				$deps = array_merge($deps,$js['deps']);
