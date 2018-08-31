@@ -2,24 +2,21 @@
 if ( !defined( 'ABSPATH' ) ) exit;
 
 /**
- * Read or enqueue Java script files listed in $jss.
- * @since 3.3.2
+ * Enqueue Javascript files listed in $jss.
+ * @since 3.5.1
  */
-function qtranxf_loadfiles_js($jss, $enqueue_script) {
+function qtranxf_enqueue_scripts($jss) {
 	$dbg = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG;
 	$cnt = 0;
 	$deps = array();
 	foreach($jss as $k => $js){
-		if(isset($js['javascript']) && !empty($js['javascript'])){
-			echo $js['javascript'];
-		}else if(isset($js['src'])){
-			$src = $js['src'];
-			if($dbg) $src = str_replace('.min.js', '.js', $src);
+		if(isset($js['src'])){
 			$handle = isset($js['handle']) ? $js['handle'] : (is_string($k) ? $k : 'qtranslate-admin-js-'.(++$cnt) );
+			$src = $js['src'];
 			$ver = isset($js['ver']) ? $js['ver'] : QTX_VERSION;
 			if ($dbg) {
-				// prevent cache issues in debug mode (.js file changes for same version)
-				$ver .= '.' . filemtime( WP_CONTENT_DIR . '/' . $src );
+				$src = str_replace('.min.js', '.js', $src);
+				$ver .= '.' . filemtime( WP_CONTENT_DIR . '/' . $src );	// prevent cache issues in debug mode (.js file changes for same version)
 			}
 			$url = content_url($src);
 			if(isset($js['deps'])){

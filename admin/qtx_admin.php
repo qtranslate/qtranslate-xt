@@ -374,7 +374,7 @@ function qtranxf_get_admin_page_config_post_type($post_type) {
 	return $page_config;
 }
 
-function qtranxf_add_admin_footer_js ( $enqueue_script=false ) {
+function qtranxf_add_admin_footer_js() {
 	global $q_config;
 	$post_type = qtranxf_post_type();
 	$page_config = qtranxf_get_admin_page_config_post_type($post_type);
@@ -442,12 +442,18 @@ function qtranxf_add_admin_footer_js ( $enqueue_script=false ) {
 	 */
 	$config = apply_filters('qtranslate_admin_page_config', $config);
 
-	qtranxf_loadfiles_js($page_config['js'], $enqueue_script);
+	qtranxf_enqueue_scripts($page_config['js']);
 ?>
 <script type="text/javascript">
 // <![CDATA[
 <?php
 	echo 'var qTranslateConfig='.json_encode($config).';'.PHP_EOL;
+	// each script entry may define javascript code to be injected
+	foreach ($page_config['js'] as $k => $js) {
+		if (isset($js['javascript']) && !empty($js['javascript'])) {
+			echo $js['javascript'];
+		}
+	}
 	if($q_config['qtrans_compatibility']){
 		echo 'qtrans_use = function(lang, text) { var result = qtranxj_split(text); return result[lang]; }'.PHP_EOL;
 	}
@@ -566,9 +572,7 @@ add_action('admin_head', 'qtranxf_admin_head');
 
 function qtranxf_admin_footer() {
 	//qtranxf_dbg_log('18.qtranxf_admin_footer:');
-	$enqueue_script = (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG);
-	//$enqueue_script = false;
-	qtranxf_add_admin_footer_js( $enqueue_script );
+	qtranxf_add_admin_footer_js();
 }
 add_action('admin_footer', 'qtranxf_admin_footer',999);
 
