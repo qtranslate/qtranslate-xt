@@ -1,70 +1,54 @@
 /* Language Switching Buttons as Tabs in Black Block */
 
-.qtranxs-lang-switch-wrap
-{
+.qtranxs-lang-switch-wrap {
 	margin: 0;
 }
 
-.qtranxs-lang-switch
-{
-	padding: 3px 8px 5px 8px;
-	margin: 6px 4px 0 4px;
+.qtranxs-lang-switch {
+	padding: 6px 8px;
+	margin: 0px 4px;
 	display: inline-block;
-}
-
-.qtranxs-lang-switch
-{
 	cursor: pointer;
 }
 
-.qtranxs-lang-switch>*
-{
-	vertical-align: middle;
-	margin-right: 4px;
+.qtranxs-lang-copy {
+	margin: 0;
+	display: inline-block;
 }
 
-.qtranxs-lang-switch *
-{
-	vertical-align: middle;
-}
-
-.qtranxs-lang-switch-wrap li.qtranxs-lang-switch:hover {
-	text-decoration: underline;
+.qtranxs-lang-switch-wrap .qtranxs-lang-switch:not(.wp-ui-highlight):hover {
+	color: #00a0d2;
 }
 
 .qtranxs-lang-switch img {
 	margin-right: 4px;
 }
 
-
-/*
-	Button "Copy From"
-*/
-
-span.qtranxs-lang-copy {
-	//background-color: #UserColor2;
-	margin-left: 10px;
-	border: 2px solid #UserColor3;
+.qtranxs-lang-copy .button {
+	height: auto;
+	line-height: 10px;	
+	margin-left: 20px;
+	font-size: 10px;
 	border-radius: 12px;
-	vertical-align: +1px;
-	padding: 0px 4px 3px 8px;
+	padding: 4px 8px;
 	white-space: nowrap;
+	vertical-align: 1px;
 }
 
-span.qtranxs-lang-copy-button {
-	font-size: smaller;
-	vertical-align: middle;
-	cursor: pointer;
+.qtranxs-lang-copy .dashicons {
+	vertical-align: initial;
+	font-size: 12px;
 }
 
-span.qtranxs-lang-copy-button:hover {
+.qtranxs-lang-switch-wrap.copying .qtranxs-lang-switch:not(.wp-ui-highlight) {
+	cursor: copy;
 	text-decoration: underline;
 }
 
-#wpbody select.qtranxs-lang-copy-select {
-	border-radius: 12px;
-	font-size: smaller;
-	height: initial;
-	vertical-align: middle;
-	padding: 0px 0px 0px 0px;
+.qtranxs-lang-switch-wrap.copying .qtranxs-lang-switch.wp-ui-highlight {
+	cursor: default;
+}
+
+.qtranxs-lang-switch-wrap.copying .qtranxs-lang-copy .button {
+	cursor: copy;
 }

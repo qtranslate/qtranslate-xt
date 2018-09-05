@@ -1,74 +1,46 @@
 /* Language Switching Buttons as Simple Horizontal Block */
 
-.qtranxs-lang-switch-wrap
-{
-	margin: 1px 0;
-	/* margin: 0; */
+.qtranxs-lang-switch-wrap {
+	margin: 8px 0 4px;
 }
 
-.qtranxs-lang-switch
-{
-	padding: 1px 0 2px 4px;
-	margin: 2px 4px 1px 0;
-	cursor: default;
+.qtranxs-lang-switch, .qtranxs-lang-copy {
+	margin: 1px 2px 1px 0;
 	display: inline-block;
 }
 
-.qtranxs-lang-switch:not(.qtranxs-lang-copy-li)
-{
-	border: 1px solid  #ccc;
-	background-image: linear-gradient(to top,#e5e5e5,#f4f4f4);
+.qtranxs-lang-switch-wrap .button {
+	height: auto;
+	padding: 0 6px;
+	vertical-align: initial;
+	white-space: nowrap	
 }
 
-.qtranxs-lang-switch.active
-{
-	border-color: #888;
-	background-image: none;
-	background-color: #bbb;
-	color: #555;
-}
-
-.qtranxs-lang-switch>*
-{
+.qtranxs-lang-switch img {
 	vertical-align: middle;
 	margin-right: 4px;
+	margin-bottom: 2px;
 }
 
-.qtranxs-lang-switch-wrap li.qtranxs-lang-switch:hover {
-	text-decoration: underline;
-}
-
-
-
-/*
-	Button "Copy From"
-*/
-
-span.qtranxs-lang-copy {
-	background-image: linear-gradient(to top,#e5e5e5,#f4f4f4);
-	margin-top: 1px;
-	margin-left: 10px;
-	border: 2px solid #UserColor2;
+.qtranxs-lang-copy .button {
+	margin-left: 20px;
+	line-height: 10px;	
+	font-size: 10px;
 	border-radius: 12px;
-	vertical-align: +1px;
-	padding: 0px 4px 3px 8px;
+	padding: 4px 8px;
 	white-space: nowrap;
 }
 
-span.qtranxs-lang-copy-button {
-	font-size: smaller;
-	vertical-align: middle;
-	cursor: pointer;
+.qtranxs-lang-switch-wrap.copying .qtranxs-lang-switch:not(.active) .button {
+	cursor: copy;
+	border: dashed 1px #0085ba;
 }
 
-span.qtranxs-lang-copy-button:hover {
-	text-decoration: underline;
+.qtranxs-lang-switch-wrap.copying .qtranxs-lang-switch.active .button {
+	cursor: default;
+	border: double 1px #0085ba;
 }
 
-#wpbody select.qtranxs-lang-copy-select {
-	border-radius: 12px;
-	font-size: smaller;
-	height: initial;
-	vertical-align: middle;
-	padding: 0px 0px 0px 0px;
+.qtranxs-lang-switch-wrap.copying .qtranxs-lang-copy .button {
+	cursor: copy;
 }

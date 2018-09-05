@@ -388,8 +388,10 @@ function qtranxf_add_admin_footer_js() {
 	// since 3.2.9.9.0 'enabled_languages' is replaced with 'language_config' structure
 	$keys=array('default_language', 'language', 'url_mode', 'lsb_style_wrap_class', 'lsb_style_active_class', 'hide_default_language'); // ,'term_name'
 	foreach($keys as $key){
-		$config[$key]=$q_config[$key];
+		$config[$key] = $q_config[$key];
 	}
+	$config['lsb_style_subitem'] = ($q_config['lsb_style'] == 'Simple_Buttons.css') ? 'button' : '';
+
 	$config['custom_fields'] = apply_filters('qtranslate_custom_fields', $q_config['custom_fields']);
 	$config['custom_field_classes'] = apply_filters('qtranslate_custom_field_classes', $q_config['custom_field_classes']);
 	if($q_config['url_mode']==QTX_URL_DOMAINS){
@@ -432,7 +434,7 @@ function qtranxf_add_admin_footer_js() {
 		//translators: Prompt on hover over select-element to choose the language to copy content from
 		$config['strings']['ChooseLangToCopy'] = __('Choose language to copy multilingual content from', 'qtranslate');
 		//translators: Title of button to copy content from otrher language
-		$config['strings']['CopyFrom'] = __('Copy from:', 'qtranslate');
+		$config['strings']['CopyFrom'] = __('Copy from', 'qtranslate');
 	}else{
 		$config['hide_lsb_copy_content'] = true;
 	}
