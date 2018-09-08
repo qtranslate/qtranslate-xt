@@ -1,5 +1,7 @@
 <?php
-if ( !defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * return 'true', if no update needed,
@@ -7,65 +9,76 @@ if ( !defined( 'ABSPATH' ) ) exit;
  * or 0, if all languages were updated successfully,
  * or positive integer number of errors occurred on languages update.
  */
-function qtranxf_updateGettextDatabasesEx($force = false, $only_for_language = '') {
+function qtranxf_updateGettextDatabasesEx( $force = false, $only_for_language = '' ) {
 	global $q_config;
 
-	if($only_for_language && !qtranxf_isEnabled($only_for_language)){
+	if ( $only_for_language && ! qtranxf_isEnabled( $only_for_language ) ) {
 		return false;
 	}
 
-	if(!is_dir(WP_LANG_DIR)) {
-		if(!@mkdir(WP_LANG_DIR))
+	if ( ! is_dir( WP_LANG_DIR ) ) {
+		if ( ! @mkdir( WP_LANG_DIR ) ) {
 			return false;
+		}
 	}
 
-	if(!$only_for_language){
-		$next_update = get_option('qtranslate_next_update_mo');
-		if(time() < $next_update && !$force) return true;
-		$d = random_int(7,14);
-		update_option('qtranslate_next_update_mo', time() + $d*24*60*60);
+	if ( ! $only_for_language ) {
+		$next_update = get_option( 'qtranslate_next_update_mo' );
+		if ( time() < $next_update && ! $force ) {
+			return true;
+		}
+		$d = random_int( 7, 14 );
+		update_option( 'qtranslate_next_update_mo', time() + $d * 24 * 60 * 60 );
 	}
 
 	require_once ABSPATH . 'wp-admin/includes/translation-install.php';
 	require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
 	require_once ABSPATH . 'wp-admin/includes/file.php';
 	include( ABSPATH . WPINC . '/version.php' ); // include an unmodified $wp_version
-	$result = translations_api( 'core', array( 'version' => $wp_version ));
+	$result = translations_api( 'core', array( 'version' => $wp_version ) );
 
-	if ( is_wp_error( $result ) ){
-		qtranxf_add_warning(__( 'Gettext databases <strong>not</strong> updated:', 'qtranslate' ) . ' ' . $result->get_error_message());
+	if ( is_wp_error( $result ) ) {
+		qtranxf_add_warning( __( 'Gettext databases <strong>not</strong> updated:', 'qtranslate' ) . ' ' . $result->get_error_message() );
+
 		return false;
 	}
 
-	set_time_limit(300);
+	set_time_limit( 300 );
 
-	$langs = empty($only_for_language) ? $q_config['enabled_languages'] : array($only_for_language);
+	$langs   = empty( $only_for_language ) ? $q_config['enabled_languages'] : array( $only_for_language );
 	$locales = $q_config['locale'];
-	$errcnt = 0;
+	$errcnt  = 0;
 	foreach ( $result['translations'] as $translation ) {
 		$locale = $translation['language'];
-		$lang = null;
-		foreach($langs as $lng) {
-			if(!isset($locales[$lng])){
-				$locales = qtranxf_language_configured('locale');
-				if(!isset($locales[$lng])) continue;
+		$lang   = null;
+		foreach ( $langs as $lng ) {
+			if ( ! isset( $locales[ $lng ] ) ) {
+				$locales = qtranxf_language_configured( 'locale' );
+				if ( ! isset( $locales[ $lng ] ) ) {
+					continue;
+				}
 			}
-			if($locales[$lng] != $locale) continue;
+			if ( $locales[ $lng ] != $locale ) {
+				continue;
+			}
 			$lang = $lng;
 			break;
 		}
-		if(!$lang) continue;
+		if ( ! $lang ) {
+			continue;
+		}
 
-		$translation = (object) $translation;
+		$translation       = (object) $translation;
 		$skin              = new Automatic_Upgrader_Skin;
 		$upgrader          = new Language_Pack_Upgrader( $skin );
 		$translation->type = 'core';
-		$res               = $upgrader->upgrade( $translation, array( 'clear_update_cache' => false ));
+		$res               = $upgrader->upgrade( $translation, array( 'clear_update_cache' => false ) );
 
-		if ( is_wp_error( $res ) ){
-			qtranxf_add_warning(sprintf(__( 'Failed to update gettext database for "%s": %s', 'qtranslate' ), $q_config['language_name'][$lang], $res->get_error_message()));
-			++$errcnt;
+		if ( is_wp_error( $res ) ) {
+			qtranxf_add_warning( sprintf( __( 'Failed to update gettext database for "%s": %s', 'qtranslate' ), $q_config['language_name'][ $lang ], $res->get_error_message() ) );
+			++ $errcnt;
 		}
 	}
+
 	return $errcnt;
 }
