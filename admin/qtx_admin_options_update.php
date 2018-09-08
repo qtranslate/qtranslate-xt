@@ -459,7 +459,9 @@ function qtranxf_updateSetting($var, $type = QTX_STRING, $def = null) {
 			if($type == QTX_URL) $val = trailingslashit($val);
 			else if($type == QTX_LANGUAGE && !qtranxf_isEnabled($val)) return false;
 			if(isset($q_config[$var])){
-				if($q_config[$var] === $val) return false;
+                // empty val means reset so we shouldn't skip the default value that could be different
+				if(!empty($val) && $q_config[$var] === $val)
+				    return false;
 			}elseif(!is_null($def)){
 				if(empty($val) || $def === $val) return false;
 			}
@@ -478,7 +480,9 @@ function qtranxf_updateSetting($var, $type = QTX_STRING, $def = null) {
 			//qtranxf_dbg_log('qtranxf_updateSetting:QTX_TEXT: $_POST[$var]:'.PHP_EOL, $_POST[$var]);
 			//qtranxf_dbg_log('qtranxf_updateSetting:QTX_TEXT: $val:'.PHP_EOL, $val);
 			if(isset($q_config[$var])){
-				if($q_config[$var] === $val) return false;
+                // empty val means reset so we shouldn't skip the default value that could be different
+                if(!empty($val) && $q_config[$var] === $val)
+                    return false;
 			}elseif(!is_null($def)){
 				if(empty($val) || $def === $val) return false;
 			}

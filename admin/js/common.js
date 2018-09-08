@@ -1258,8 +1258,8 @@ var qTranslateX=function(pg) {
 	/**
 	 * @since 3.3.2
 	 */
-	this.createSetOfLSBwith = function(lsb_style_wrap_class) {
-		var langSwitchWrap = qtranxj_ce('ul', { className: lsb_style_wrap_class });
+	this.createSetOfLSBwith = function(lsb_style_extra_wrap_classes) {
+		var langSwitchWrap = qtranxj_ce('ul', { className: 'qtranxs-lang-switch-wrap ' + lsb_style_extra_wrap_classes });
 		var langs = qTranslateConfig.language_config;
 		if(!qTranslateConfig.tabSwitches) qTranslateConfig.tabSwitches = {};
 		for(var lang in langs) {
