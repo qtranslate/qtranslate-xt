@@ -21,9 +21,7 @@ function qtranxf_admin_set_default_options( &$ops ) {
 
 	//single line options
 	$ops['admin']['str'] = array(
-		'lsb_style'              => 'Simple_Buttons.css',
-		'lsb_style_wrap_class'   => 'qtranxf_default_lsb_style_wrap_class',
-		'lsb_style_active_class' => 'qtranxf_default_lsb_style_active_class',
+		'lsb_style'              => 'Simple_Buttons.css'
 	);
 
 	//multi-line options
@@ -47,34 +45,6 @@ function qtranxf_admin_set_default_options( &$ops ) {
 	 * A chance to add additional options
 	 */
 	$ops = apply_filters( 'qtranslate_option_config_admin', $ops );
-}
-
-/**
- * Load enabled languages properties from  database
- * @since 3.3
- */
-function qtranxf_default_lsb_style_wrap_class() {
-	global $q_config;
-	switch ( $q_config['lsb_style'] ) {
-		case 'Tabs_in_Block.css':
-			return 'wp-ui-primary';
-		default:
-			return '';
-	}
-}
-
-/**
- * Load enabled languages properties from  database
- * @since 3.3
- */
-function qtranxf_default_lsb_style_active_class() {
-	global $q_config;
-	switch ( $q_config['lsb_style'] ) {
-		case 'Tabs_in_Block.css':
-			return 'wp-ui-highlight';
-		default:
-			return 'active';
-	}
 }
 
 function qtranxf_admin_loadConfig() {

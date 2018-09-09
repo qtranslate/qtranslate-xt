@@ -451,14 +451,14 @@ function qtranxf_add_admin_footer_js() {
 		'default_language',
 		'language',
 		'url_mode',
-		'lsb_style_wrap_class',
-		'lsb_style_active_class',
 		'hide_default_language'
 	); // ,'term_name'
 	foreach ( $keys as $key ) {
 		$config[ $key ] = $q_config[ $key ];
 	}
 	$config['lsb_style_subitem'] = ( $q_config['lsb_style'] == 'Simple_Buttons.css' ) ? 'button' : '';
+	$config['lsb_style_active_class'] = ( $q_config['lsb_style'] == 'Tabs_in_Block.css' ) ? 'wp-ui-highlight' : 'active';
+	$config['lsb_style_wrap_class'] = ( $q_config['lsb_style'] == 'Tabs_in_Block.css' ) ? 'wp-ui-primary' : '';
 
 	$config['custom_fields']        = apply_filters( 'qtranslate_custom_fields', $q_config['custom_fields'] );
 	$config['custom_field_classes'] = apply_filters( 'qtranslate_custom_field_classes', $q_config['custom_field_classes'] );

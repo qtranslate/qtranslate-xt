@@ -844,10 +844,6 @@ function qtranxf_updateSettings() {
 	if ( $_POST['highlight_mode'] != QTX_HIGHLIGHT_MODE_CUSTOM_CSS ) {
 		$_POST['highlight_mode_custom_css'] = '';
 	}
-	if ( $_POST['lsb_style'] != $q_config['lsb_style'] ) {
-		$_POST['lsb_style_wrap_class']   = '';
-		$_POST['lsb_style_active_class'] = '';
-	}
 
 	qtranxf_parse_post_type_excluded();
 

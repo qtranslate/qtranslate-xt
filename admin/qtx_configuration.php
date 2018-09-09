@@ -578,17 +578,7 @@ function qtranxf_conf() {
                                     <fieldset>
                                         <legend class="hidden"><?php _e( 'LSB Style', 'qtranslate' ) ?></legend>
                                         <label><?php printf( __( 'Choose CSS style for how Language Switching Buttons are rendered:', 'qtranslate' ) ) ?></label>
-                                        <br/><?php printf( __( 'Additional LSB %s-wrap classes:', 'qtranslate' ), 'ul' ) ?>
-                                        &nbsp;<input type="text" name="lsb_style_wrap_class" id="lsb_style_wrap_class"
-                                                     value="<?php echo $q_config['lsb_style_wrap_class']; ?>" size="50">
-                                        <br/><?php _e( 'Active button class:', 'qtranslate' ) ?>&nbsp;<input type="text"
-                                                                                                             name="lsb_style_active_class"
-                                                                                                             id="lsb_style_active_class"
-                                                                                                             value="<?php echo $q_config['lsb_style_active_class']; ?>"
-                                                                                                             size="40">
-                                        <p class="qtranxs-notes"><?php _e( 'The above is reset to an appropriate default, if the below is changed.', 'qtranslate' ) ?></p>
-                                        <br/><?php _e( 'CSS set:', 'qtranslate' ) ?>&nbsp;<select name="lsb_style"
-                                                                                                  id="lsb_style"><?php
+                                        <br/><select name="lsb_style" id="lsb_style"><?php
 											foreach ( $options as $nm => $val ) {
 												echo '<option value="' . $val . '"' . selected( $val, $q_config['lsb_style'], false ) . '>' . $nm . '</option>';
 											}

@@ -42,8 +42,6 @@ function qtranxf_migrate_options_copy( $nm_to, $nm_from ) {
 			case 'qtranslate_highlight_mode':
 			case 'qtranslate_highlight_mode_custom_css':
 			case 'qtranslate_lsb_style':
-			case 'qtranslate_lsb_style_wrap_class':
-			case 'qtranslate_lsb_style_active_class':
 			case 'qtranslate_custom_i18n_config':
 			case 'qtranslate_config_files':
 			case 'qtranslate_page_configs':
