@@ -32,14 +32,14 @@ transition: 1s ease opacity;
 class qTranslateXWidget extends WP_Widget {
 
 	function __construct() {
-		$widget_ops = array( 'classname'   => 'qtranxs_widget',
-		                     'description' => __( 'Allows your visitors to choose a Language.', 'qtranslate' )
+		$widget_ops = array(
+			'classname'   => 'qtranxs_widget',
+			'description' => __( 'Allows your visitors to choose a Language.', 'qtranslate' )
 		);
 		parent::__construct( 'qtranslate', __( 'qTranslate Language Chooser', 'qtranslate' ), $widget_ops );
 	}
 
 	function widget( $args, $instance ) {
-		extract( $args );
 		//qtranxf_dbg_log('widget: $this: ',$this);
 		//qtranxf_dbg_log('widget: $instance: ',$instance);
 		if ( ! isset( $instance['widget-css-off'] ) ) {
@@ -47,7 +47,7 @@ class qTranslateXWidget extends WP_Widget {
 			echo empty( $instance['widget-css'] ) ? QTX_WIDGET_CSS : $instance['widget-css'];
 			echo '</style>' . PHP_EOL;
 		}
-		echo $before_widget;
+		echo $args['before_widget'];
 		if ( empty( $instance['hide-title'] ) ) {
 			$title = $instance['title'];
 			if ( empty( $title ) ) {
@@ -57,10 +57,10 @@ class qTranslateXWidget extends WP_Widget {
 				$title = sprintf( __( '%s:', 'qtranslate' ), $title );
 			}    //translators: Colon after a title.
 			$title = apply_filters( 'qtranslate_widget_title', $title, $this );
-			echo $before_title . $title . $after_title;
+			echo $args['before_title'] . $title . $args['after_title'];
 		}
 		qtranxf_generateLanguageSelectCode( $instance, $this->id );
-		echo $after_widget;
+		echo $args['after_widget'];
 	}
 
 	function update( $new_instance, $old_instance ) {
