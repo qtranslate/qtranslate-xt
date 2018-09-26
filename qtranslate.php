@@ -69,6 +69,8 @@ if ( is_admin() ) { // && !(defined('DOING_AJAX') && DOING_AJAX) //todo cleanup
 }
 
 // load additional functionalities
-
-//if(file_exists(QTRANSLATE_DIR.'/dev/slugs'))
-//	require_once(QTRANSLATE_DIR.'/dev/slugs/qtx_slug.php');
+if ( is_plugin_active('woocommerce/woocommerce.php') ) {
+	if ( file_exists( QTRANSLATE_DIR . '/modules/woo-commerce/qwc.php' ) ) {
+		require_once( QTRANSLATE_DIR . '/modules/woo-commerce/qwc.php' );
+	}
+}
