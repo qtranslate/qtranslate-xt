@@ -68,7 +68,27 @@ if ( is_admin() ) { // && !(defined('DOING_AJAX') && DOING_AJAX) //todo cleanup
 	qtranxf_register_activation_hooks();
 }
 
-// load additional functionalities
-
-//if(file_exists(QTRANSLATE_DIR.'/dev/slugs'))
-//	require_once(QTRANSLATE_DIR.'/dev/slugs/qtx_slug.php');
+// load optional modules
+if ( file_exists( QTRANSLATE_DIR . '/modules/gravity-forms/gravity-forms.php' ) ) {
+  if ( is_plugin_active('gravityforms/gravityform.php') ) {
+    define( 'QTX_GRAVITYFORMS_PLUGIN_FILE', 'wordpress-qtranslate-support-for-gravityforms/qtranslate-support-for-gravityforms.php' );
+    if ( is_plugin_active( QTX_GRAVITYFORMS_PLUGIN_FILE ) ) {
+      deactivate_plugins( QTX_GRAVITYFORMS_PLUGIN_FILE  );
+      add_action( 'admin_notices', function () {
+        if ( is_plugin_active( QTX_GRAVITYFORMS_PLUGIN_FILE  ) ) :
+          $plugin_data = get_plugin_data( WP_PLUGIN_DIR . '/' . QTX_GRAVITYFORMS_PLUGIN_FILE , false, true );
+          $plugin_name = $plugin_data['Name'];
+          $url_deactivate = esc_url( wp_nonce_url( admin_url( 'plugins.php?action=deactivate&plugin=' . urlencode( QTX_GRAVITYFORMS_PLUGIN_FILE  ) ), 'deactivate-plugin_' . QTX_GRAVITYFORMS_PLUGIN_FILE  ) );
+          ?>
+            <div class="notice notice-error is-dismissible">
+                <p><?php printf( __( '[%s] Incompatible plugin detected: "%s". Please disable it.', 'qtranslate' ), 'qTranslate&#8209;XT', $plugin_name ); ?></p>
+                <p><a class="button" href="<?php echo $url_deactivate ?>"><strong><?php printf( __( 'Deactivate plugin %s', 'qtranslate' ), $plugin_name ) ?></strong></a>
+            </div>
+        <?php
+        endif;
+      } );
+    } else {
+      require_once( QTRANSLATE_DIR . '/modules/gravity-forms/gravity-forms.php' );
+    }
+  }
+}
