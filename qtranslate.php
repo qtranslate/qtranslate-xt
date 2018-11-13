@@ -67,26 +67,3 @@ if ( is_admin() ) { // && !(defined('DOING_AJAX') && DOING_AJAX) //todo cleanup
 	require_once( QTRANSLATE_DIR . '/admin/qtx_activation_hook.php' );
 	qtranxf_register_activation_hooks();
 }
-
-// load additional functionalities
-if ( is_plugin_active('woocommerce/woocommerce.php') ) {
-	define( 'QTX_QWC_PLUGIN_FILE', 'woocommerce-qtranslate-x/woocommerce-qtranslate-x.php' );
-	if ( is_plugin_active(QTX_QWC_PLUGIN_FILE) ) {
-        deactivate_plugins(QTX_QWC_PLUGIN_FILE );
-		add_action( 'admin_notices', function() {
-            if ( is_plugin_active(QTX_QWC_PLUGIN_FILE) ) :
-              $pluginData = get_plugin_data( WP_PLUGIN_DIR . '/' . QTX_QWC_PLUGIN_FILE, false, true );
-			  $pluginName = $pluginData['Name'];
-			?>
-			<div class="notice notice-error is-dismissible">
-				<p><?php printf( __('[%s] Incompatible plugin detected: "%s". Please disable it.', 'qtranslate' ), 'qTranslate&#8209;XT', $pluginName); ?></p>
-				<p><a class="button" href="<?php echo esc_url( wp_nonce_url( admin_url( 'plugins.php?action=deactivate&plugin=' . urlencode( QTX_QWC_PLUGIN_FILE ) ), 'deactivate-plugin_' . QTX_QWC_PLUGIN_FILE ) ) ?>"><strong><?php printf( __( 'Deactivate plugin %s', 'qtranslate' ), $pluginName ) ?></strong></a>
-			</div>
-			<?php
-            endif;
-		} );
-	}
-	elseif ( file_exists( QTRANSLATE_DIR . '/modules/woo-commerce/qwc.php' ) ) {
-		require_once( QTRANSLATE_DIR . '/modules/woo-commerce/qwc.php' );
-	}
-}
