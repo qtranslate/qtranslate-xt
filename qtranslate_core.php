@@ -140,6 +140,8 @@ function qtranxf_init_language() {
 
 	qtranxf_load_option_qtrans_compatibility();
 
+	qtranxf_load_integration_modules();
+
 	/**
 	 * allow other plugins to initialize whatever they need for language
 	 */
@@ -1815,4 +1817,15 @@ function qtranxf_showAllSeparated( $text ) {
 	}
 
 	return $result;
+}
+
+/**
+ * Loads modules previously validated for plugin integration on server-side.
+ * @see qtranxf_admin_validate_integration_modules
+ */
+function qtranxf_load_integration_modules() {
+	$modules = get_option( 'qtranslate_modules', array());
+	foreach ($modules as $module) {
+		require_once( QTRANSLATE_DIR . '/modules/' . $module );
+	}
 }

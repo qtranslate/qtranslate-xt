@@ -167,6 +167,61 @@ function qtranxf_decode_translations_posted() {
 
 add_action( 'sanitize_comment_cookies', 'qtranxf_decode_translations_posted', 5 );//after POST & GET are set, and before all WP objects are created, alternatively can use action 'setup_theme' instead.
 
+/**
+ * Check if a plugin is active and if no legacy plugin prevents its integration.
+
+ * @param string $plugin plugin file to be checked for integration
+ * @param string $legacy_plugin legacy plugin that is incompatible and must be deactivated for module integration
+ *
+ * @return bool
+ */
+function qtranxf_admin_check_plugin( $plugin, $legacy_plugin ) {
+	if ( is_plugin_active( $plugin ) ) {
+		if ( isset($legacy_plugin) && is_plugin_active( $legacy_plugin ) ) {
+			deactivate_plugins( $legacy_plugin );
+			add_action( 'admin_notices', function () use ($legacy_plugin) {
+                $plugin_data = get_plugin_data( WP_PLUGIN_DIR . '/' . $legacy_plugin, false, true );
+                $plugin_name = $plugin_data['Name'];
+				if ( is_plugin_active( $legacy_plugin ) ) :
+					?>
+                    <div class="notice notice-error is-dismissible">
+                        <p><?php printf( __( '[%s] Incompatible plugin detected: "%s". Please disable it.', 'qtranslate' ), 'qTranslate&#8209;XT', $plugin_name ); ?></p>
+                        <p><a class="button"
+                              href="<?php echo esc_url( wp_nonce_url( admin_url( 'plugins.php?action=deactivate&plugin=' . urlencode( $legacy_plugin ) ), 'deactivate-plugin_' . $legacy_plugin ) ) ?>"><strong><?php printf( __( 'Deactivate plugin %s', 'qtranslate' ), $plugin_name ) ?></strong></a>
+                    </div>
+				<?php
+                else:
+	                ?>
+                    <div class="notice notice-warning is-dismissible">
+                        <p><?php printf( __( '[%s] Incompatible plugin detected: "%s". This plugin has been deactivated.', 'qtranslate' ), 'qTranslate&#8209;XT', $plugin_name ); ?></p>
+                    </div>
+                <?php
+				endif;
+			} );
+			return false;
+		} else {
+			return true;
+		}
+	}
+	return false;
+}
+
+/**
+ * Validate the list of modules to be loaded for plugin integration on server side.
+ * Note each module can enable hooks both for admin and front requests.
+ * The valid modules are stored in the 'qtranslate_modules' option.
+ */
+function qtranxf_admin_validate_integration_modules() {
+	require_once(ABSPATH . 'wp-admin/includes/plugin.php');
+
+	$modules = array();
+	if (qtranxf_admin_check_plugin('woocommerce/woocommerce.php', 'woocommerce-qtranslate-x/woocommerce-qtranslate-x.php')) {
+	    $modules[] = 'woo-commerce/qwc.php';
+	}
+
+	update_option( 'qtranslate_modules', $modules);
+}
+
 function qtranxf_admin_load() {
 	//qtranxf_dbg_log('1.4.qtranxf_admin_load:');
 	qtranxf_admin_loadConfig();
@@ -174,6 +229,7 @@ function qtranxf_admin_load() {
 	add_filter( 'plugin_action_links_' . $bnm, 'qtranxf_links', 10, 4 );
 	add_action( 'qtranslate_init_language', 'qtranxf_load_admin_page_config', 20 );//should be excuted after all plugins loaded their *-admin.php
 	qtranxf_add_admin_filters();
+	qtranxf_admin_validate_integration_modules();
 }
 
 qtranxf_admin_load();
