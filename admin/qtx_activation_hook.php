@@ -694,12 +694,12 @@ function qtranxf_clear_debug_log() {
 function qtranxf_activation_hook() {
 	qtranxf_clear_debug_log();
 	//qtranxf_dbg_log('qtranxf_activation_hook: ', __FILE__);
-	if ( version_compare( PHP_VERSION, '5.2.0' ) < 0 ) {
+	if ( version_compare( PHP_VERSION, '5.3.0' ) < 0 ) {
 		// Deactivate ourself
 		$plugin_dir = qtranxf_plugin_dirname();
 		$lang_dir   = $plugin_dir . '/lang';
 		load_plugin_textdomain( 'qtranslate', false, $lang_dir );
-		$msg = sprintf( __( 'Plugin %s requires PHP version %s at least. This server instance runs PHP version %s. A PHP version %s or higher is recommended. The plugin has not been activated.', 'qtranslate' ), qtranxf_get_plugin_link(), '5.2.0', PHP_VERSION, '5.4.0' );
+		$msg = sprintf( __( 'Plugin %s requires PHP version %s at least. This server instance runs PHP version %s. A PHP version %s or higher is recommended. The plugin has not been activated.', 'qtranslate' ), qtranxf_get_plugin_link(), '5.3.0', PHP_VERSION, '7.2' );
 		deactivate_plugins( $plugin_dir . '/qtranslate.php' );
 		wp_die( $msg );
 	}
