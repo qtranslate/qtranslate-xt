@@ -51,7 +51,7 @@ function qtranxf_regroup_translations_for( $type, $edit_lang, $default_lang ) {
 }// */
 
 function qtranxf_slug_collect_translations_posted() {
-	if(isset($_REQUEST['qtranslate-slugs']))){
+	if(isset($_REQUEST['qtranslate-slugs'])){
 		//ensure REQUEST has the value of the default language
 		//multilingual slug/term values will be processed later
 		$edit_lang = qtranxf_getLanguageEdit();
