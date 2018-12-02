@@ -170,6 +170,14 @@ function qtranxf_detect_language( &$url_info ) {
 
 	$lang = qtranxf_parse_language_info( $url_info );
 
+  if ( qtranxf_is_rest_request_expected() ) {
+    if ( ! isset( $lang ) ) {
+      $lang = $q_config['default_language'];
+    }
+    $url_info['language'] = $lang;
+    return $lang;
+  }
+
 	if ( ( ! $lang || ! isset( $url_info['doing_front_end'] ) )
 	     && ( defined( 'DOING_AJAX' ) || ! $url_info['cookie_enabled'] )
 	     && isset( $_SERVER['HTTP_REFERER'] )

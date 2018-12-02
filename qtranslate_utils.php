@@ -837,8 +837,18 @@ function qtranxf_getSortedLanguages( $reverse = false ) {
 	return $clean_languages;
 }
 
+/**
+ * Evaluates if the request URI leads to a REST request.
+ * This is only a prediction based on REST prefix, but no strict guarantee the REST request will be processed.
+ * @return bool
+ */
+function qtranxf_is_rest_request_expected() {
+  return stripos( $_SERVER['REQUEST_URI'], '/' . rest_get_url_prefix() . '/' ) !== false;
+}
+
 function qtranxf_can_redirect() {
 	return ! defined( 'WP_ADMIN' ) && ! defined( 'DOING_AJAX' ) && ! defined( 'WP_CLI' ) && ! defined( 'DOING_CRON' ) && empty( $_POST )
+         && ( ! qtranxf_is_rest_request_expected() )
 	       //'REDIRECT_*' needs more testing
 	       //&& !isset($_SERVER['REDIRECT_URL'])
 	       && ( ! isset( $_SERVER['REDIRECT_STATUS'] ) || $_SERVER['REDIRECT_STATUS'] == '200' );
