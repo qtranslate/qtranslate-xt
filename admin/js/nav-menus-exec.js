@@ -1,7 +1,7 @@
 /* executed for
  /wp-admin/nav-menus.php
 */
-(function ($) {
+jQuery(function ($) {
 	var qtx = qTranslateConfig.js.get_qtx();
 
 	var addMenuItemHooks = function (li) {

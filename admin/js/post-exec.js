@@ -2,7 +2,7 @@
  /wp-admin/post.php
  /wp-admin/post-new.php
 */
-(function ($) {
+jQuery(function ($) {
 	var qtx = qTranslateConfig.js.get_qtx();
 	//co('post.php: qtx: ',qtx);
 	// Slug
@@ -33,7 +33,7 @@
 				url.host = qTranslateConfig.domains[lang];
 				break;
 		}
-	}
+	};
 
 	var btnViewPostA; //a node of 'View Page/Post' link.
 	var origUrl, langUrl, origUrlQ;

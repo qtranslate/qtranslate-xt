@@ -183,8 +183,7 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 	return el;
 }
 
-(function ($) {
-
+jQuery(function($) {
 	var qTranslateX = function (pg) {
 		var qtx = this;
 

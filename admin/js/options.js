@@ -1,7 +1,7 @@
 /* executed for
  /wp-admin/options-general.php
 */
-(function ($) {
+jQuery(function ($) {
 	var getcookie = function (cname) {
 		var nm = cname + "=";
 		var ca = document.cookie.split(';');

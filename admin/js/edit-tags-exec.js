@@ -2,7 +2,7 @@
  /wp-admin/edit-tags.php (without action=edit)
 */
 
-(function ($) {
+jQuery(function ($) {
 	var qtx = qTranslateConfig.js.get_qtx();
 
 	var addDisplayHook = function (i, o) {

@@ -1,4 +1,4 @@
-(function ($) {
+jQuery(function ($) {
 	$('.notice-dismiss, .qtranxs-notice-dismiss').each(
 		function () {
 			var q = $(this);

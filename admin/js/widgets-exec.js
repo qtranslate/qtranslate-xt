@@ -1,7 +1,7 @@
 /* executed for
  /wp-admin/widgets.php
 */
-(function ($) {
+jQuery(function ($) {
 	//if(typeof wpWidgets === 'undefined') return;
 	if (!window.wpWidgets)
 		return;
