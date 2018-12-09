@@ -13,6 +13,7 @@ class qTranslateSupportForGravityforms {
     add_filter( 'gform_pre_submission_filter', array( $this, 'gform_pre_render' ) );
     add_filter( 'gform_polls_form_pre_results', array( $this, 'gform_pre_render' ) );
     add_filter( 'gform_form_tag', array( $this, 'gform_form_tag' ) );
+    add_filter( 'gform_savecontinue_link', array($this, "gform_savecontinue_link"), 10, 2 );
     add_filter( "gform_confirmation", array( $this, "gform_confirmation" ), 10, 4 );
     add_filter( "gform_pre_send_email", array( $this, "gform_pre_send_email" ) );
   }
@@ -120,6 +121,14 @@ class qTranslateSupportForGravityforms {
     $tag = preg_replace_callback( "|action='([^']+)'|", array( &$this, 'gform_form_action_attribute' ), $tag );
 
     return $tag;
+  }
+  
+  public function gform_savecontinue_link( $save_button, $form ) {
+    if ( ! $this->isEnabled() ) {
+      return $save_button;
+    }
+    $save_button = $this->translate( $save_button );
+    return $save_button;
   }
 
   public function gform_confirmation( $confirmation, $form, $lead, $ajax ) {
