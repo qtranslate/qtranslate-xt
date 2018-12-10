@@ -219,6 +219,10 @@ function qtranxf_admin_validate_integration_modules() {
 	    $modules[] = 'woo-commerce/qwc.php';
 	}
 
+	if (qtranxf_admin_check_plugin('gravityforms/gravityforms.php', 'qtranslate-support-for-gravityforms/qtranslate-support-for-gravityforms.php')) {
+	    $modules[] = 'gravity-forms/gravity-forms.php';
+	}
+
 	update_option( 'qtranslate_modules', $modules);
 }
 
