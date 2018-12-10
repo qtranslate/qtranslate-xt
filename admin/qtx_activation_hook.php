@@ -767,9 +767,9 @@ function qtranxf_activation_hook() {
 		if ( get_option( 'qtranslate_qtrans_compatibility' ) === false ) {
 			//to prevent most of fatal errors on upgrade
 			if ( file_exists( WP_PLUGIN_DIR . '/qtranslate/qtranslate.php' )
-			     || file_exists( WP_PLUGIN_DIR . '/mqtranslate/mqtranslate.php' )
-			     || file_exists( WP_PLUGIN_DIR . '/ztranslate/ztranslate.php' )
-			     || file_exists( WP_PLUGIN_DIR . '/qtranslate-xp/ppqtranslate.php' )
+				 || file_exists( WP_PLUGIN_DIR . '/mqtranslate/mqtranslate.php' )
+				 || file_exists( WP_PLUGIN_DIR . '/ztranslate/ztranslate.php' )
+				 || file_exists( WP_PLUGIN_DIR . '/qtranslate-xp/ppqtranslate.php' )
 			) {
 				update_option( 'qtranslate_qtrans_compatibility', '1' );
 			}
@@ -1030,6 +1030,20 @@ function qtranxf_admin_notices_plugin_integration() {
 }
 
 add_action( 'admin_notices', 'qtranxf_admin_notices_plugin_integration' );
+
+function qtranxf_admin_notices_block_editor() {
+	global $wp_version;
+	if ( version_compare( $wp_version, '5.0' ) >= 0 && ! class_exists( 'Classic_Editor' )) {
+        $link = "https://wordpress.org/plugins/classic-editor/";
+        ?>
+        <div class="notice notice-error">
+            <p><?php printf( __( 'Block editor (Gutenberg) not supported in %s yet! Please install and activate the <a href="%s"> Classic Editor</a> plugin.', 'qtranslate' ), 'qTranslate&#8209;XT', $link ); ?></p>
+        </div>
+        <?php
+	}
+}
+
+add_action( 'admin_notices', 'qtranxf_admin_notices_block_editor' );
 
 function qtranxf_admin_notices_next_thanks() {
 	if ( ! qtranxf_check_admin_notice( 'next_thanks' ) ) {
