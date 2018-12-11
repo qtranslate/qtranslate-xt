@@ -215,13 +215,11 @@ function qtranxf_admin_validate_integration_modules() {
 
 	$modules = array();
 	if (qtranxf_admin_check_plugin('woocommerce/woocommerce.php', 'woocommerce-qtranslate-x/woocommerce-qtranslate-x.php')) {
-	    $modules[] = 'woo-commerce/qwc.php';
+	    $modules[] = 'woo-commerce';
 	}
-
 	if (qtranxf_admin_check_plugin('gravityforms/gravityforms.php', 'qtranslate-support-for-gravityforms/qtranslate-support-for-gravityforms.php')) {
-	    $modules[] = 'gravity-forms/gravity-forms.php';
+	    $modules[] = 'gravity-forms';
 	}
-
 	update_option( 'qtranslate_modules', $modules);
 }
 

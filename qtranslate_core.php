@@ -1836,7 +1836,7 @@ function qtranxf_showAllSeparated( $text ) {
 function qtranxf_load_integration_modules() {
 	$modules = get_option( 'qtranslate_modules', array());
 	foreach ($modules as $module) {
-		require_once( QTRANSLATE_DIR . '/modules/' . $module );
+		require_once( QTRANSLATE_DIR . '/modules/' . $module . '/' . $module . '.php' );
 	}
 }
 
