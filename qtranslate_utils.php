@@ -412,25 +412,21 @@ function qtranxf_add_query_arg( &$query, $key_value ) {
  * @since 3.2.8
  */
 function qtranxf_del_query_arg( &$query, $key ) {
-	//$key_value;
-	$match;
-	while ( preg_match( '/(&|&amp;|&#038;|^)(' . $key . '=[^&]+)(&|&amp;|&#038;|$)/i', $query, $match ) ) {
-		//$key_value = $match[2];
-		$p = strpos( $query, $match[2] );
-		$n = strlen( $match[2] );
-		if ( ! empty( $match[1] ) ) {
-			$l = strlen( $match[1] );
+	while ( preg_match( '/(&|&amp;|&#038;|^)(' . $key . '=[^&]+)(&|&amp;|&#038;|$)/i', $query, $matches ) ) {
+		$p = strpos( $query, $matches[2] );
+		$n = strlen( $matches[2] );
+		if ( ! empty( $matches[1] ) ) {
+			$l = strlen( $matches[1] );
 			$p -= $l;
 			$n += $l;
-		} elseif ( ! empty( $match[3] ) ) {
-			$l = strlen( $match[3] );
+		} elseif ( ! empty( $matches[3] ) ) {
+			$l = strlen( $matches[3] );
 			$n += $l;
 		}
 		//qtranxf_dbg_log('qtranxf_del_query_arg: query: '.$query.'; p='.$p.'; n=',$n);
 		$query = substr_replace( $query, '', $p, $n );
 		//qtranxf_dbg_log('qtranxf_del_query_arg: query: ',$query);
 	}
-	//return $key_value;
 }
 
 /*
@@ -439,7 +435,6 @@ function qtranxf_del_query_arg( &$query, $key ) {
 function qtranxf_sanitize_url( $url ) {
 	$url   = preg_replace( '|[^a-z0-9-~+_.?#=!&;,/:%@$\|*\'()\[\]\\x80-\\xff]|i', '', $url );
 	$strip = array( '%0d', '%0a', '%0D', '%0A' );
-	$count;
 	do {
 		$url = str_replace( $strip, '', $url, $count );
 	} while ( $count );
