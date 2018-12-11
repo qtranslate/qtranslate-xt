@@ -1020,7 +1020,6 @@ function qtranxf_admin_notices_plugin_integration() {
 	$cnt += qtranxf_admin_notice_plugin_integration( 'advanced-custom-fields-pro/acf.php', 'ACF qTranslate', 'acf-qtranslate/acf-qtranslate.php' );
 	$cnt += qtranxf_admin_notice_plugin_integration( 'all-in-one-seo-pack/all_in_one_seo_pack.php', 'All in One SEO Pack & qTranslate&#8209;X', 'all-in-one-seo-pack-qtranslate-x/qaioseop.php' );
 	//$cnt += qtranxf_admin_notice_plugin_integration('events-made-easy/events-manager.php', 'Events Made Easy & qTranslate&#8209;X', 'events-made-easy-qtranslate-x/events-made-easy-qtranslate-x.php');
-	$cnt += qtranxf_admin_notice_plugin_integration( 'woocommerce/woocommerce.php', 'WooCommerce & qTranslate&#8209;X', 'woocommerce-qtranslate-x/woocommerce-qtranslate-x.php' );
 	$cnt += qtranxf_admin_notice_plugin_integration( 'wordpress-seo/wp-seo.php', 'Integration: Yoast SEO & qTranslate&#8209;X', 'wp-seo-qtranslate-x/wordpress-seo-qtranslate-x.php' );
 	$cnt += qtranxf_admin_notice_plugin_integration( 'js_composer/js_composer.php', 'WPBakery Visual Composer & qTranslate&#8209;X', 'js-composer-qtranslate-x/js-composer-qtranslate-x.php' );
 	$cnt += qtranxf_admin_notice_plugin_integration( 'fusion-core/fusion-core.php', 'Fusion Core & qTranslate&#8209;X', 'fusion-core-qtranslate-x/fusion-core-qtranslate-x.php' );
