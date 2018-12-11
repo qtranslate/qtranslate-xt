@@ -1,3 +1,8 @@
+### 3.5.2
+* Add admin notice for WP5.0: "Gutenberg" block editor not supported, install Classic Editor plugin.
+* Fix unresolved variables and unused PHP syntax error in dev code.
+* Fix deprecated jQuery.ready JS handler, refactor jQuery wrapper/closure functions and standard coding style.
+
 ### 3.5.1
 * Cleanup: reformat all PHP code with WordPress coding style, remove lots of commented code for better clarity. Breathe again!
 * Redesign admin Language Switching Buttons (built-in LSB styles) and 'Copy From' button with new ergonomics.

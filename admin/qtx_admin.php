@@ -117,7 +117,6 @@ function qtranxf_collect_translations_posted() {
 			if ( strpos( $val, 'qtranslate-fields' ) === false ) {
 				continue;
 			}
-			$r;
 			parse_str( $val, $r );
 			//qtranxf_dbg_log('qtranxf_collect_translations_posted: REQUEST['.$nm.'] $r: ', $r);
 			//qtranxf_dbg_log('qtranxf_collect_translations_posted: REQUEST['.$nm.']: ', $val);

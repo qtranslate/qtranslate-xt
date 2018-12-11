@@ -172,9 +172,19 @@ function qtranxf_detect_language( &$url_info ) {
 
 	$lang = qtranxf_parse_language_info( $url_info );
 
+	// REST calls should be deterministic (stateless), no special language detection e.g. based on cookie
+	if ( qtranxf_is_rest_request_expected() ) {
+		if ( ! isset( $lang ) ) {
+			$lang = $q_config['default_language'];
+		}
+		$url_info['language'] = $lang;
+
+		return $lang;
+	}
+
 	if ( ( ! $lang || ! isset( $url_info['doing_front_end'] ) )
-	     && ( defined( 'DOING_AJAX' ) || ! $url_info['cookie_enabled'] )
-	     && isset( $_SERVER['HTTP_REFERER'] )
+		 && ( defined( 'DOING_AJAX' ) || ! $url_info['cookie_enabled'] )
+		 && isset( $_SERVER['HTTP_REFERER'] )
 	) {
 		//get language from HTTP_REFERER, if needed, and detect front- vs back-end
 		$http_referer             = $_SERVER['HTTP_REFERER'];
@@ -205,7 +215,7 @@ function qtranxf_detect_language( &$url_info ) {
 				}
 			}
 			if ( ! $lang && $q_config['hide_default_language']
-			     && isset( $url_info['doing_front_end'] ) && $url_info['doing_front_end'] ) {
+				 && isset( $url_info['doing_front_end'] ) && $url_info['doing_front_end'] ) {
 				$lang = $q_config['default_language'];
 			}
 		}
@@ -415,8 +425,8 @@ function qtranxf_detect_language_front( &$url_info ) {
 		}
 
 		if ( $q_config['detect_browser_language']
-		     && ( ! isset( $_SERVER['HTTP_REFERER'] ) || strpos( $_SERVER['HTTP_REFERER'], $url_info['host'] ) === false )//external referrer or no referrer
-		     && ( empty( $url_info['wp-path'] ) || $url_info['wp-path'] == '/' )// home page is requested
+			 && ( ! isset( $_SERVER['HTTP_REFERER'] ) || strpos( $_SERVER['HTTP_REFERER'], $url_info['host'] ) === false )//external referrer or no referrer
+			 && ( empty( $url_info['wp-path'] ) || $url_info['wp-path'] == '/' )// home page is requested
 		) {
 			$lang                     = qtranxf_http_negotiate_language();
 			$url_info['lang_browser'] = $lang;
@@ -429,7 +439,7 @@ function qtranxf_detect_language_front( &$url_info ) {
 		break;
 	}
 	if ( ! isset( $url_info['doredirect'] )
-	     && ( ! $q_config['hide_default_language'] || $lang != $q_config['default_language'] )
+		 && ( ! $q_config['hide_default_language'] || $lang != $q_config['default_language'] )
 		//&& !$url_info['language_neutral_path']//already so
 	) {
 		$url_info['doredirect'] = 'language needs to be shown in url';
@@ -1140,12 +1150,12 @@ function qtranxf_url_set_language( $urlinfo, $lang, $showLanguage ) {
 
 	// see if cookies are activated
 	if ( ! $showLanguage//there still is no language information in the converted URL
-	     && ! $q_config['url_info']['cookie_enabled']// there will be no way to take language from the cookie
-	     //&& empty($urlinfo['path']) //why this was here?
-	     //&& !isset($q_config['url_info']['internal_referer'])//three below replace this one?
-	     && $q_config['language'] != $q_config['default_language']//we need to be able to get language other than default
-	     && empty( $q_config['url_info']['lang_url'] )//we will not be able to get language from referrer path
-	     && empty( $q_config['url_info']['lang_query_get'] )//we will not be able to get language from referrer query
+		 && ! $q_config['url_info']['cookie_enabled']// there will be no way to take language from the cookie
+		 //&& empty($urlinfo['path']) //why this was here?
+		 //&& !isset($q_config['url_info']['internal_referer'])//three below replace this one?
+		 && $q_config['language'] != $q_config['default_language']//we need to be able to get language other than default
+		 && empty( $q_config['url_info']['lang_url'] )//we will not be able to get language from referrer path
+		 && empty( $q_config['url_info']['lang_query_get'] )//we will not be able to get language from referrer query
 	) {
 		// :( now we have to make unpretty URLs
 		qtranxf_add_query_arg( $urlinfo['query'], 'lang=' . $lang );
@@ -1829,3 +1839,32 @@ function qtranxf_load_integration_modules() {
 		require_once( QTRANSLATE_DIR . '/modules/' . $module );
 	}
 }
+
+/**
+ * Add specific rewrites to handle API REST for the default language, when hidden in QTX_URL_PATH mode.
+ * Most of the requests don't need this, as they are handled through custom home_url with the language.
+ * Note: to make it work you have to flush your rewrite rules by saving the permalink structures from the admin page!
+ *
+ * Example with 'en' as default language and hidden option enabled:
+ *   /wp-json/wp/...    -> home_url = '/' (default, hidden)
+ *   /fr/wp-json/wp/... -> home_url = '/fr'
+ *   /en/wp-json/wp/... -> home_url = '/' (default, hidden but requested) -> fails with standard rewrites (404)
+ * This function allows to handle specifically this last case.
+ *
+ * @see rest_api_register_rewrites in wp_includes/rest-api.php
+ */
+function qtranxf_rest_api_register_rewrites() {
+	global $q_config;
+	if ( ! $q_config['hide_default_language'] || $q_config['url_mode'] !== QTX_URL_PATH ) {
+		return;
+	}
+
+	global $wp_rewrite;
+	$default_lang = $q_config['default_language'];
+	add_rewrite_rule( '^' . $default_lang . '/' . rest_get_url_prefix() . '/?$', 'index.php?rest_route=/', 'top' );
+	add_rewrite_rule( '^' . $default_lang . '/' . rest_get_url_prefix() . '/(.*)?', 'index.php?rest_route=/$matches[1]', 'top' );
+	add_rewrite_rule( '^' . $default_lang . '/' . $wp_rewrite->index . '/' . rest_get_url_prefix() . '/?$', 'index.php?rest_route=/', 'top' );
+	add_rewrite_rule( '^' . $default_lang . '/' . $wp_rewrite->index . '/' . rest_get_url_prefix() . '/(.*)?', 'index.php?rest_route=/$matches[1]', 'top' );
+}
+
+add_action( 'init', 'qtranxf_rest_api_register_rewrites', 11 );
