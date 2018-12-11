@@ -34,7 +34,8 @@ function qtranxf_updateGettextDatabasesEx( $force = false, $only_for_language = 
 	require_once ABSPATH . 'wp-admin/includes/translation-install.php';
 	require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
 	require_once ABSPATH . 'wp-admin/includes/file.php';
-	include( ABSPATH . WPINC . '/version.php' ); // include an unmodified $wp_version
+	$wp_version = '';
+	include( ABSPATH . WPINC . '/version.php' ); // include an unmodified $wp_version - not sure why we need this?!
 	$result = translations_api( 'core', array( 'version' => $wp_version ) );
 
 	if ( is_wp_error( $result ) ) {

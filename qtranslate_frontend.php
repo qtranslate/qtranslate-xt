@@ -450,7 +450,6 @@ function qtranxf_translate_option( $value, $lang = null ) {
  */
 function qtranxf_filter_options() {
 	global $q_config, $wpdb;
-	$where;
 	switch ( $q_config['filter_options_mode'] ) {
 		case QTX_FILTER_OPTIONS_ALL:
 			$where = ' WHERE autoload=\'yes\' AND (option_value LIKE \'%![:__!]%\' ESCAPE \'!\' OR option_value LIKE \'%{:__}%\' OR option_value LIKE \'%<!--:__-->%\')';

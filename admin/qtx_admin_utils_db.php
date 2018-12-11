@@ -509,7 +509,7 @@ function gtranxf_db_clean_terms() {
 				$errs = array( __( 'Term configuration is inconsistent.', 'qtranslate' ) );
 			}
 			//qtranxf_dbg_log('gtranxf_db_clean_terms: invalid term $id='.$id.', name='.$nm.' Error:', $errs);
-			$messages[] = sprintf( __( 'Term "%s" (id=%d) cannot be loaded and is left untouched. Error message on load was:%s', 'qtranslate' ), $nm, $id, '<br/>' . PHP_EOL . '"' . implode( '"<br/>"' . PHP_EOL, $errs ) . '"' ) . '<br/>' . $msg;
+			$messages[] = sprintf( __( 'Term "%s" (id=%d) cannot be loaded and is left untouched. Error message on load was:%s', 'qtranslate' ), $nm, $id, '<br/>' . PHP_EOL . '"' . implode( '"<br/>"' . PHP_EOL, $errs ) . '"' ) . '<br/>';
 			continue;
 		} else {
 			$taxonomy = $term->taxonomy;
