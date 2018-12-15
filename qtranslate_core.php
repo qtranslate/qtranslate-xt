@@ -1783,7 +1783,7 @@ function qtranxf_use_content( $lang, $content, $available_langs, $show_available
 	if ( ! empty( $q_config['show_alternative_content'] ) && $q_config['show_alternative_content'] ) {
 		// show content in  alternative language
 		if ( sizeof( $available_langs ) > 1 ) {
-			if ( $alt_lang_is_default ) {
+			if ( $alt_lang_is_default && $q_config['show_alternative_content'] ) {
 				// translators: this message is shown to user, when a translation is not available for the active language, but there are multiple other translations available, and post content is shown in the default language of the site.
 				$msg = __( 'For the sake of viewer convenience, the content is shown below in the default language of this site.', 'qtranslate' );
 			} else {
@@ -1792,7 +1792,7 @@ function qtranxf_use_content( $lang, $content, $available_langs, $show_available
 			}
 			// translators: this message is appended to one of the two messages above.
 			$msg .= ' ' . __( 'You may click one of the links to switch the site language to another available language.', 'qtranslate' );
-		} else {
+		} else if ($q_config['show_alternative_content_prefix']) {
 			// translators: this message is shown to user, when a translation is not available for the active language, and there is only one other availabe language.
 			$msg = __( 'For the sake of viewer convenience, the content is shown below in the alternative language.', 'qtranslate' );
 			// translators: this message is appended to the message above.
