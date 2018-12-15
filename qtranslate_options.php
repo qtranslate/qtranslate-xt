@@ -75,6 +75,7 @@ function qtranxf_set_default_options( &$ops ) {
 		'hide_untranslated'              => false,// hide pages without content
 		'show_displayed_language_prefix' => true,
 		'show_alternative_content'       => false,
+		'show_alternative_content_prefix'=> false,
 		'hide_default_language'          => true,// hide language tag for default language in urls
 		'use_secure_cookie'              => false,
 		'header_css_on'                  => true,
