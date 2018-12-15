@@ -385,6 +385,13 @@ function qtranxf_conf() {
                                                                              value="1"<?php checked( $q_config['show_alternative_content'] ) ?>/> <?php _e( 'Show content in an alternative language when translation is not available for the selected language.', 'qtranslate' ) ?>
                                 </label>
                                 <p class="qtranxs-notes"><?php printf( __( 'When a page or a post with an untranslated content is viewed, a message with a list of other available languages is displayed, in which languages are ordered as defined by option "%s". If this option is on, then the content of the first available language will also be shown, instead of the expected language, for the sake of user convenience.', 'qtranslate' ), __( 'Default Language / Order', 'qtranslate' ) ) ?></p>
+				<br />
+                                <label for="show_alternative_content_prefix"><input type="checkbox"
+                                                                             name="show_alternative_content_prefix"
+                                                                             id="show_alternative_content_prefix"
+                                                                             value="1"<?php checked( $q_config['show_alternative_content_prefix'] ) ?>/> <?php _e( 'Show alternative content language prefix.', 'qtranslate' ) ?>
+                                </label>
+                                <p class="qtranxs-notes"><?php printf( __( 'When alternate content is activacted, show the prefix text "for the sake of user convenience.', 'qtranslate' ), __( 'Default Language / Order', 'qtranslate' ) ) ?></p>
                             </td>
                         </tr>
                         <tr>
