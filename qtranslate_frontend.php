@@ -533,7 +533,7 @@ function qtranxf_translate_post( $post, $lang ) {
 			case 'post_mime_type':
 			case 'comment_count':
 			case 'filter':
-				continue;
+				break;
 			//known to translate
 			case 'post_content':
 				qtranxf_translate_object_property( $lang, $txt, $key, $post, true, false );
