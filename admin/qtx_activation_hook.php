@@ -1032,13 +1032,16 @@ add_action( 'admin_notices', 'qtranxf_admin_notices_plugin_integration' );
 
 function qtranxf_admin_notices_block_editor() {
 	global $wp_version;
-	if ( version_compare( $wp_version, '5.0' ) >= 0 && ! class_exists( 'Classic_Editor' )) {
-        $link = "https://wordpress.org/plugins/classic-editor/";
-        ?>
+	if ( version_compare( $wp_version, '5.0' ) >= 0 &&
+		 ! ( class_exists( 'Classic_Editor' ) ||
+			 is_plugin_active( 'disable-gutenberg/disable-gutenberg.php' ) ||
+			 is_plugin_active( 'no-gutenberg/no-gutenberg.php' ) ) ) {
+		$link = "https://wordpress.org/plugins/classic-editor/";
+		?>
         <div class="notice notice-error">
             <p><?php printf( __( 'Block editor (Gutenberg) not supported in %s yet! Please install and activate the <a href="%s"> Classic Editor</a> plugin.', 'qtranslate' ), 'qTranslate&#8209;XT', $link ); ?></p>
         </div>
-        <?php
+		<?php
 	}
 }
 
