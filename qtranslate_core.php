@@ -1265,7 +1265,7 @@ function qtranxf_get_url_for_language( $url, $lang, $showLanguage = true ) {
 	}
 
 	$urlinfo_lang = qtranxf_url_set_language( $urlinfo, $lang, $showLanguage );
-	$complete     = qtranxf_buildURL( $urlinfo_lang, $homeinfo );
+	$complete     = qtranxf_sanitize_url(qtranxf_buildURL( $urlinfo_lang, $homeinfo ));
 	//$complete = apply_filters('qtranslate_url_for_language',$complete,$lang,$urlinfo_lang,$homeinfo);
 	if ( $showLanguage ) {
 		$urlinfo[ $lang ] = $complete;
