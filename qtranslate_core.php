@@ -1127,6 +1127,14 @@ function qtranxf_url_set_language( $urlinfo, $lang, $showLanguage ) {
 			case QTX_URL_PATH: // pre-path
 				//qtranxf_dbg_log_if(!isset($urlinfo['wp-path']),'qtranxf_url_set_language: wp-path not set $urlinfo:',$urlinfo,true);
 				$urlinfo['wp-path'] = '/' . $lang . $urlinfo['wp-path'];
+
+				// fix potential bug with AMP sites which leads to broken links like `/en/amp/en/...
+				// do this by replacing `/en/amp/en/` by `/en/amp/`
+				$ampIssueString = "/${lang}/amp/${lang}/";
+				if(strpos($urlinfo['wp-path'], $ampIssueString) !== false) {
+					$ampFixedString = "/${lang}/amp/";
+					$urlinfo['wp-path'] = str_replace($ampIssueString, $ampFixedString, $urlinfo['wp-path']);
+				}
 				break;
 			case QTX_URL_DOMAIN: // pre-domain
 				$urlinfo['host'] = $lang . '.' . $urlinfo['host'];
