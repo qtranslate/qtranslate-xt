@@ -23,27 +23,28 @@ function qtranxf_migrate_options_copy( $nm_to, $nm_from ) {
 	global $wpdb;
 	$options = $wpdb->get_results( "SELECT option_name, option_value FROM {$wpdb->options} WHERE `option_name` LIKE '$nm_from\_%'" );
 
-	$skip_options[] = 'qtranslate_flag_location';
-	$skip_options[] = 'qtranslate_admin_notices';
-	$skip_options[] = 'qtranslate_domains';
-	$skip_options[] = 'qtranslate_editor_mode';
-	$skip_options[] = 'qtranslate_custom_fields';
-	$skip_options[] = 'qtranslate_custom_field_classes';
-	$skip_options[] = 'qtranslate_text_field_filters';
-	$skip_options[] = 'qtranslate_qtrans_compatibility';
-	$skip_options[] = 'qtranslate_header_css_on';
-	$skip_options[] = 'qtranslate_header_css';
-	$skip_options[] = 'qtranslate_filter_options_mode';
-	$skip_options[] = 'qtranslate_filter_options';
-	$skip_options[] = 'qtranslate_highlight_mode';
-	$skip_options[] = 'qtranslate_highlight_mode_custom_css';
-	$skip_options[] = 'qtranslate_lsb_style';
-	$skip_options[] = 'qtranslate_custom_i18n_config';
-	$skip_options[] = 'qtranslate_config_files';
-	$skip_options[] = 'qtranslate_page_configs';
-	$skip_options[] = 'qtranslate_admin_config';
-	$skip_options[] = 'qtranslate_front_config';
-
+	$skip_options = [
+		'qtranslate_flag_location',
+		'qtranslate_admin_notices',
+		'qtranslate_domains',
+		'qtranslate_editor_mode',
+		'qtranslate_custom_fields',
+		'qtranslate_custom_field_classes',
+		'qtranslate_text_field_filters',
+		'qtranslate_qtrans_compatibility',
+		'qtranslate_header_css_on',
+		'qtranslate_header_css',
+		'qtranslate_filter_options_mode',
+		'qtranslate_filter_options',
+		'qtranslate_highlight_mode',
+		'qtranslate_highlight_mode_custom_css',
+		'qtranslate_lsb_style',
+		'qtranslate_custom_i18n_config',
+		'qtranslate_config_files',
+		'qtranslate_page_configs',
+		'qtranslate_admin_config',
+		'qtranslate_front_config',
+	];
 	foreach ( $options as $option ) {
 		$name = $option->option_name;
 		//skip new specific options
