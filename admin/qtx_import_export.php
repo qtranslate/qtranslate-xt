@@ -22,42 +22,36 @@ function qtranxf_migrate_options_update( $nm_to, $nm_from ) {
 function qtranxf_migrate_options_copy( $nm_to, $nm_from ) {
 	global $wpdb;
 	$options = $wpdb->get_results( "SELECT option_name, option_value FROM {$wpdb->options} WHERE `option_name` LIKE '$nm_from\_%'" );
+
+	$skip_options = [
+		'qtranslate_flag_location',
+		'qtranslate_admin_notices',
+		'qtranslate_domains',
+		'qtranslate_editor_mode',
+		'qtranslate_custom_fields',
+		'qtranslate_custom_field_classes',
+		'qtranslate_text_field_filters',
+		'qtranslate_qtrans_compatibility',
+		'qtranslate_header_css_on',
+		'qtranslate_header_css',
+		'qtranslate_filter_options_mode',
+		'qtranslate_filter_options',
+		'qtranslate_highlight_mode',
+		'qtranslate_highlight_mode_custom_css',
+		'qtranslate_lsb_style',
+		'qtranslate_custom_i18n_config',
+		'qtranslate_config_files',
+		'qtranslate_page_configs',
+		'qtranslate_admin_config',
+		'qtranslate_front_config',
+	];
 	foreach ( $options as $option ) {
 		$name = $option->option_name;
-		//skip new specific options
-		// It is now easier to list options which need to be copied, instead.
-		switch ( $name ) {
-			case 'qtranslate_flag_location':
-			case 'qtranslate_admin_notices':
-			case 'qtranslate_domains':
-			case 'qtranslate_editor_mode':
-			case 'qtranslate_custom_fields':
-			case 'qtranslate_custom_field_classes':
-			case 'qtranslate_text_field_filters':
-			case 'qtranslate_qtrans_compatibility':
-			case 'qtranslate_header_css_on':
-			case 'qtranslate_header_css':
-			case 'qtranslate_filter_options_mode':
-			case 'qtranslate_filter_options':
-			case 'qtranslate_highlight_mode':
-			case 'qtranslate_highlight_mode_custom_css':
-			case 'qtranslate_lsb_style':
-			case 'qtranslate_custom_i18n_config':
-			case 'qtranslate_config_files':
-			case 'qtranslate_page_configs':
-			case 'qtranslate_admin_config':
-			case 'qtranslate_front_config':
-				continue;
-			default:
-				break;
+		if ( ! in_array( $name, $skip_options ) and ! strpos( $name, '_flag_location' ) ) {
+			$value = maybe_unserialize( $option->option_value );
+			$nm    = str_replace( $nm_from, $nm_to, $name );
+			update_option( $nm, $value );
 		}
-		//if(strpos($name,'_flag_location')>0) continue;
-		$value = maybe_unserialize( $option->option_value );
-		if ( strpos( $name, '_flag_location' ) > 0 ) {
-			continue;
-		}
-		$nm = str_replace( $nm_from, $nm_to, $name );
-		update_option( $nm, $value );
 	}
 	//save enabled languages
 	global $q_config, $qtranslate_options;
