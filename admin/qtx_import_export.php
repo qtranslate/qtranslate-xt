@@ -47,11 +47,9 @@ function qtranxf_migrate_options_copy( $nm_to, $nm_from ) {
 	];
 	foreach ( $options as $option ) {
 		$name = $option->option_name;
-		//skip new specific options
-		// It is now easier to list options which need to be copied, instead.
-		if (!in_array($name, $skip_options) and !strpos($name, '_flag_location')) {
+		if ( ! in_array( $name, $skip_options ) and ! strpos( $name, '_flag_location' ) ) {
 			$value = maybe_unserialize( $option->option_value );
-			$nm = str_replace( $nm_from, $nm_to, $name );
+			$nm    = str_replace( $nm_from, $nm_to, $name );
 			update_option( $nm, $value );
 		}
 	}
