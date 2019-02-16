@@ -3,7 +3,7 @@ Developed by: new qTranslate community, from qTranslate-X by John Clause and qTr
 Contributors: herrvigg, johnclause, chineseleper, Vavooon, grafcom  
 Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, translation  
 Requires: 4.0  
-Tested up to: 4.9.7  
+Tested up to: 5.0.3  
 Stable tag: N/A  
 License: GPLv3 or later  
 License URI: http://www.gnu.org/licenses/gpl-3.0.html  
@@ -56,7 +56,7 @@ Check the legacy website:
 ### How to update qTranslate-XT with the last release?
 Since the -XT version is not available at wordpress.org, we recommend you to install [GitHub Updater](https://github.com/afragen/github-updater). This is is an awesome tool to update plugins from a git repo (with many other features). It checks regularly the last release available in github (from the `git tags`) and compares it to your current version (defined in the header of `qtranslate.php`). If a new release is available an update link will appear as for a regular plugin from Wordpress. The check is performed even if the plugin is deactivated.
 
-Alternatively you can delete the current folder and repeat the installation from the last archive. Make sure to deactivate the previous version and then activate the new one, otherwise you will miss the execution of activation hooks and some options may become misconfigured. 
+Alternatively you can delete the current folder and repeat the installation from the last archive. Make sure to deactivate the previous version and then activate the new one, otherwise you will miss the execution of activation hooks and some options may become misconfigured.
 
 Note for developers:
 
@@ -65,8 +65,11 @@ Note for developers:
 
 ## Upgrade Notice
 
+### 3.5.3
+Fix REST API: no redirect allowed. Your rewrite rules should be updated by saving the permalink structures from the admin page.
+
 ### 3.5.0
-This is the first official release of qTranslate-XT! Please check the CHANGELOG and FAQ. 
+This is the first official release of qTranslate-XT! Please check the CHANGELOG and FAQ.
 
 ## Screenshots
 
@@ -76,46 +79,6 @@ See [original plugin](https://wordpress.org/plugins/qtranslate-x/).
 
 Check the CHANGELOG.md for the full history.
 
-### 3.5.2
-* Add admin notice for WP5.0: "Gutenberg" block editor not supported, install Classic Editor plugin.
-* Fix unresolved variables and unused PHP syntax error in dev code.
-* Fix deprecated jQuery.ready JS handler, refactor jQuery wrapper/closure functions and standard coding style.
-
-### 3.5.1
-* Cleanup: reformat all PHP code with WordPress coding style, remove lots of commented code for better clarity. Breathe again!
-* Redesign admin Language Switching Buttons (built-in LSB styles) and 'Copy From' button with new ergonomics.
-* Remove admin options `lsb_style_wrap_class` & `lsb_style_active_class`. No impact for built-in LSB styles, please make a request if further custom CSS needed.
-* Remove `qtranxf_loadfiles_js` now replaced with `qtranxf_enqueue_scripts`. Neither should be used by other plugins.
-* Fix: prevent cache issues with non-minified Javascript when using `SCRIPT_DEBUG` (for developers).
-* Fix: remove unlimited output buffering introduced with pre-release patch 3.4.8.
-* Cleanup: rename `qTranslate-X` to `qTranslate-XT` as plugin name and for options pages. Replace obsolete links in admin pages, now redirecting to github.
-* Localization: update 'fr_FR'.
-
-### 3.5.0
-* **First release** of **qTranslate-XT**! Read carefully the new instructions, FAQ and changelog.
-* Reorganize project structure for releases through git archives with support of GitHub Updater (see FAQ).
-* Fix PHP 7.1+ warnings (expected references)
-* Re-package the pending pre-releases (3.4.6.9, 3.4.7, 3.4.8) that were never distributed to wordpress.org (!): new feature "Copy From" and many other changes. Note the last official release of qTranslate-X is 3.4.6.8. Check the changelog for more details.
-
-### 3.4.8
-* Feature: Button "Copy From", which allows to copy multilingual content from other language. Option 'Hide button "Copy From"' on page `/wp-admin/options-general.php?page=qtranslate-x#advanced` to turn this feature off is also provided.
-* Workaround: added `addContentHooksTinyMCE` back to `qTranslateConfig.qtx` namespace in order to recover compatibility with outdated code of plugin [ACF qTranslate](https://wordpress.org/plugins/acf-qtranslate/).
-
-### 3.4.7
-* Improvement: cached values of raw ML fields in WP_Post object, function `qtranxf_translate_object_property` [Topic #426](http://qtranslate-x.com/support/index.php?topic=426).
-* Language preset 'md': locale 'ro_RO' (Moldovan, Moldovenească).
-* Language preset 'cs': locale 'cs_CZ' (Czech, Čeština).
-* Fix: "Invalid argument supplied for foreach() ... on line 14": [Issue #392](https://github.com/qTranslate-Team/qtranslate-x/issues/392).
-
-### 3.4.6.9
-* Improvement: Consistent term framework. Database operation "Clean Legacy Term Names" (at plugin settings page `/wp-admin/options-general.php?page=qtranslate-x#import`), which cleans up old imperfections of taxonomy framework.
-* Improvement: editing of categories and tags in Raw Editor Mode [WP Topic](https://wordpress.org/support/topic/taxonomy-term-translate-filter-in-editor-raw-mode-in-admin)
-* Improvement: using now native code for editing of terms. Script `edit-tag-exec.js` is no longer needed.
-* Improvement: ML fields are now also highlighted with a color bar in Raw Editor Mode.
-* Information: Translators acknowledgement section has been moved from qtranslate.php to /lang/translators-notes.txt to keep all translation-related updates in one folder.
-* New Tool: Database operation "Split database file by languages" on page `/wp-admin/options-general.php?page=qtranslate-x#import`.
-* Language preset 'kk': locale 'kk' (Kazakh, Қазақ тілі).
-
 ## Known Issues
 
 The previous issues have been duplicated to our new git repository. Please check the [git issues](https://github.com/qTranslate/qtranslate-xt/issues) before creating new ones.
@@ -124,8 +87,8 @@ The [legacy issues](https://qtranslatexteam.wordpress.com/known-issues/) should 
 
 ## Credentials
 
-* Thank you to all people motivated to make this plugin live again!  
-* Thank you to the authors of the legacy versions, first of all qTranslate-X by John Clause, qTranslate by Qian Qin and all the previous contributors.  
+* Thank you to all people motivated to make this plugin live again!
+* Thank you to the authors of the legacy versions, first of all qTranslate-X by John Clause, qTranslate by Qian Qin and all the previous contributors.
 
 ## Desirable Unimplemented Features
 
