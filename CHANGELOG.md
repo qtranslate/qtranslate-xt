@@ -1,3 +1,9 @@
+### 3.5.3
+* Fix REST API: no redirect allowed (PR #621, issues #609, #575, #528, #489, #427). NOTE: your rewrite rules should be updated by saving the permalink structures from the admin page.
+* Fix warning PHP 7.3
+* Fix migration DB: skipped options, warning PHP 7.3 (PR #633)
+* Disable admin notice for unsupported block editor with plugins disable-gutenberg, no-gutenberg
+
 ### 3.5.2
 * Add admin notice for WP5.0: "Gutenberg" block editor not supported, install Classic Editor plugin.
 * Fix unresolved variables and unused PHP syntax error in dev code.
