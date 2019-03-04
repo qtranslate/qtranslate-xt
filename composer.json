@@ -1,0 +1,22 @@
+{
+    "name": "cheplv/qtranslate-x",
+    "version": "3.5.3",
+    "description": "Dynamic multilingual plugin for Wordpress",
+    "type": "wordpress-plugin",
+    "license": "GPL-3.0-or-later",
+    "homepage": "https://wordpress.org/plugins/qtranslate-x/",
+    "authors": [
+        {
+            "name": "Yuri Tcherepanov",
+            "email": "cheplv@gmail.com"
+        },
+        {
+            "name": "Gasim Gasimzada",
+            "email": "gasim@appristas.io"
+        },
+        {
+            "name": "johnclause"
+        }
+    ],
+    "require": {}
+}
