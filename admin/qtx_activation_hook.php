@@ -728,8 +728,8 @@ function qtranxf_activation_hook() {
 	$ts                     = time();
 	$next_thanks            = get_option( 'qtranslate_next_thanks' );
 	$check_qtranslate_forks = $next_thanks === false;
-	if ( $next_thanks !== false && $next_thanks < $ts + 7 * 24 * 60 * 60 ) {
-		$next_thanks = $ts + rand( 10, 20 ) * 24 * 60 * 60;
+	if ( $next_thanks !== false && $next_thanks < strtotime( '+7days', $ts ) ) {
+		$next_thanks = strtotime( '+' . rand( 10, 20 ) . 'days' );
 		update_option( 'qtranslate_next_thanks', $next_thanks );
 	}
 	$messages = qtranxf_update_admin_notice( 'next_thanks', true );

@@ -286,7 +286,7 @@ function qtranxf_admin_init() {
 		$next_thanks = false;
 	}
 	if ( $next_thanks === false ) {
-		$next_thanks = time() + rand( 100, 300 ) * 24 * 60 * 60;
+		$next_thanks = strtotime( '+' . rand( 100, 300 ) . 'days' );
 		update_option( 'qtranslate_next_thanks', $next_thanks );
 	}
 
