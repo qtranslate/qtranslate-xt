@@ -452,7 +452,7 @@ function qtranxf_setcookie_language( $lang, $cookie_name, $cookie_path, $cookie_
 	//	doing_it_wrong('qtranxf_setcookie_language', 'Headers are already sent, which should not be a case within action "plugins_loaded"', 'any');
 	//	return;
 	//}
-	setcookie( $cookie_name, $lang, time() + 31536000, $cookie_path, $cookie_domain, $secure );//one year
+	setcookie( $cookie_name, $lang, strtotime( '+1year' ), $cookie_path, $cookie_domain, $secure );//one year
 	//two weeks 1209600
 }
 

@@ -27,7 +27,7 @@ function qtranxf_updateGettextDatabasesEx( $force = false, $only_for_language = 
 		if ( time() < $next_update && ! $force ) {
 			return true;
 		}
-		update_option( 'qtranslate_next_update_mo', time() + 7 * 24 * 60 * 60 );
+		update_option( 'qtranslate_next_update_mo', strtotime('+7days') );
 	}
 
 	require_once ABSPATH . 'wp-admin/includes/translation-install.php';
