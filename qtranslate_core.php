@@ -1747,7 +1747,6 @@ function qtranxf_use_content( $lang, $content, $available_langs, $show_available
 	// set alternative language to the first available in the order of enabled languages
 	$alt_lang            = current( $available_langs );
 	$alt_content         = $content[ $alt_lang ];
-	$alt_lang_is_default = $alt_lang == $q_config['default_language'];
 
 	if ( ! $show_available ) {
 		if ( $q_config['show_displayed_language_prefix'] ) {
@@ -1779,37 +1778,17 @@ function qtranxf_use_content( $lang, $content, $available_langs, $show_available
 	}
 	//qtranxf_dbg_log('$language_list=',$language_list);
 
-	$msg = '';
 	if ( ! empty( $q_config['show_alternative_content'] ) && $q_config['show_alternative_content'] ) {
-		// show content in  alternative language
-		if ( sizeof( $available_langs ) > 1 ) {
-			if ( $alt_lang_is_default ) {
-				// translators: this message is shown to user, when a translation is not available for the active language, but there are multiple other translations available, and post content is shown in the default language of the site.
-				$msg = __( 'For the sake of viewer convenience, the content is shown below in the default language of this site.', 'qtranslate' );
-			} else {
-				// translators: this message is shown to user, when a translation is not available neither for the active language nor for default one, but there are multiple other translations available, and post content is shown in the first available language.
-				$msg = __( 'For the sake of viewer convenience, the content is shown below in one of the available alternative languages.', 'qtranslate' );
-			}
-			// translators: this message is appended to one of the two messages above.
-			$msg .= ' ' . __( 'You may click one of the links to switch the site language to another available language.', 'qtranslate' );
-		} else {
-			// translators: this message is shown to user, when a translation is not available for the active language, and there is only one other availabe language.
-			$msg = __( 'For the sake of viewer convenience, the content is shown below in the alternative language.', 'qtranslate' );
-			// translators: this message is appended to the message above.
-			$msg .= ' ' . __( 'You may click the link to switch the active language.', 'qtranslate' );
-		}
-		$altlanguagecontent = ' ' . $msg . '</p>' . $alt_content;
+		$altlanguagecontent = '</p>' . $alt_content;
 	} else {
-		//by default, do not show alternative content
 		$altlanguagecontent = '</p>';
 	}
 
 	$output = '<p class="qtranxs-available-languages-message qtranxs-available-languages-message-' . $lang . '">' . preg_replace( '/%LANG:([^:]*):([^%]*)%/', $language_list, $q_config['not_available'][ $lang ] ) . $altlanguagecontent;
 
-	/*
-	 * Chance to customize $output
-	*/
-
+	// chance to customize $output
+	// TODO refactor this filter, legacy $msg kept for retro-compatibility
+	$msg = 'Deprecated message.';
 	return apply_filters( 'i18n_content_translation_not_available', $output, $lang, $language_list, $alt_lang, $alt_content, $msg, $q_config );
 }
 
