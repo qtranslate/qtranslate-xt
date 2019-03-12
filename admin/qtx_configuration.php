@@ -364,27 +364,27 @@ function qtranxf_conf() {
                                 <br/>
                                 <label for="hide_untranslated"><input type="checkbox" name="hide_untranslated"
                                                                       id="hide_untranslated"
-                                                                      value="1"<?php checked( $q_config['hide_untranslated'] ) ?>/> <?php _e( 'Hide Content which is not available for the selected language.', 'qtranslate' ) ?>
+                                                                      value="1"<?php checked( $q_config['hide_untranslated'] ) ?>/> <?php _e( 'Hide posts which content is not available for the selected language.', 'qtranslate' ) ?>
                                 </label>
                                 <br/>
                                 <p class="qtranxs-notes"><?php _e( 'When checked, posts will be hidden if the content is not available for the selected language. If unchecked, a message will appear showing all the languages the content is available in.', 'qtranslate' ) ?>
 									<?php _e( 'The message about available languages for the content of a post or a page may also appear if a single post display with an untranslated content if viewed directly.', 'qtranslate' ) ?>
 									<?php printf( __( 'This function will not work correctly if you installed %s on a blog with existing entries. In this case you will need to take a look at option "%s" under "%s" section.', 'qtranslate' ), 'qTranslate', __( 'Convert Database', 'qtranslate' ), __( 'Import', 'qtranslate' ) . '/' . __( 'Export', 'qtranslate' ) ) ?></p>
                                 <br/>
-                                <label for="show_displayed_language_prefix"><input type="checkbox"
-                                                                                   name="show_displayed_language_prefix"
-                                                                                   id="show_displayed_language_prefix"
-                                                                                   value="1"<?php checked( $q_config['show_displayed_language_prefix'] ) ?>/> <?php _e( 'Show displayed language prefix when content is not available for the selected language.', 'qtranslate' ) ?>
-                                </label>
-                                <br/>
-                                <p class="qtranxs-notes"><?php _e( 'This is relevant to all fields other than the main content of posts and pages. Such untranslated fields are always shown in an alternative available language, and will be prefixed with the language name in parentheses, if this option is on.', 'qtranslate' ) ?></p>
-                                <br/>
                                 <label for="show_alternative_content"><input type="checkbox"
                                                                              name="show_alternative_content"
                                                                              id="show_alternative_content"
-                                                                             value="1"<?php checked( $q_config['show_alternative_content'] ) ?>/> <?php _e( 'Show content in an alternative language when translation is not available for the selected language.', 'qtranslate' ) ?>
+                                                                             value="1"<?php checked( $q_config['show_alternative_content'] ) ?>/> <?php _e( 'Show post content in an alternative language when translation is not available for the selected language.', 'qtranslate' ) ?>
                                 </label>
                                 <p class="qtranxs-notes"><?php printf( __( 'When a page or a post with an untranslated content is viewed, a message with a list of other available languages is displayed, in which languages are ordered as defined by option "%s". If this option is on, then the content of the first available language will also be shown, instead of the expected language, for the sake of user convenience.', 'qtranslate' ), __( 'Default Language / Order', 'qtranslate' ) ) ?></p>
+                                <br/>
+                                <label for="show_displayed_language_prefix"><input type="checkbox"
+                                                                                   name="show_displayed_language_prefix"
+                                                                                   id="show_displayed_language_prefix"
+                                                                                   value="1"<?php checked( $q_config['show_displayed_language_prefix'] ) ?>/> <?php _e( 'Show displayed language prefix when field content is not available for the selected language.', 'qtranslate' ) ?>
+                                </label>
+                                <br/>
+                                <p class="qtranxs-notes"><?php _e( 'This is relevant to all fields other than the main content of posts and pages. Such untranslated fields are always shown in an alternative available language, and will be prefixed with the language name in parentheses, if this option is on.', 'qtranslate' ) ?></p>
                             </td>
                         </tr>
                         <tr>
