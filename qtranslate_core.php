@@ -1778,17 +1778,12 @@ function qtranxf_use_content( $lang, $content, $available_langs, $show_available
 	}
 	//qtranxf_dbg_log('$language_list=',$language_list);
 
+	$msg = preg_replace( '/%LANG:([^:]*):([^%]*)%/', $language_list, $q_config['not_available'][ $lang ] );
+	$output = '<p class="qtranxs-available-languages-message qtranxs-available-languages-message-' . $lang . '">' . $msg . '</p>';
 	if ( ! empty( $q_config['show_alternative_content'] ) && $q_config['show_alternative_content'] ) {
-		$altlanguagecontent = '</p>' . $alt_content;
-	} else {
-		$altlanguagecontent = '</p>';
+		$output .= $alt_content;
 	}
 
-	$output = '<p class="qtranxs-available-languages-message qtranxs-available-languages-message-' . $lang . '">' . preg_replace( '/%LANG:([^:]*):([^%]*)%/', $language_list, $q_config['not_available'][ $lang ] ) . $altlanguagecontent;
-
-	// chance to customize $output
-	// TODO refactor this filter, legacy $msg kept for retro-compatibility
-	$msg = 'Deprecated message.';
 	return apply_filters( 'i18n_content_translation_not_available', $output, $lang, $language_list, $alt_lang, $alt_content, $msg, $q_config );
 }
 
