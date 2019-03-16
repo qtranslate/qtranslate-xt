@@ -1063,7 +1063,9 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 			/** Sets hooks on HTML-loaded TinyMCE editors via tinyMCEPreInit.mceInit. */
 			setTinyMceInit = function () {
 				//co('setTinyMceInit: this: ', this);
-				if (!window.tinyMCE) return;
+				if (!window.tinyMCEPreInit || !window.tinyMCE) {
+					return;
+				}
 				for (var key in contentHooks) {
 					var h = contentHooks[key];
 					if (h.contentField.tagName !== 'TEXTAREA' || h.mce || h.mceInit || !tinyMCEPreInit.mceInit[key])
@@ -1103,7 +1105,7 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 					var ed = tinyMCE.editors[i];
 					setEditorHooks(ed);
 				}
-			}
+			};
 			window.addEventListener('load', loadTinyMceHooks);
 		};
 
