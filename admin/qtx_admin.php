@@ -220,6 +220,9 @@ function qtranxf_admin_validate_integration_modules() {
 	if (qtranxf_admin_check_plugin('gravityforms/gravityforms.php', 'qtranslate-support-for-gravityforms/qtranslate-support-for-gravityforms.php')) {
 	    $modules[] = 'gravity-forms';
 	}
+	if (qtranxf_admin_check_plugin('wordpress-seo/wp-seo.php', 'wp-seo-qtranslate-x/wordpress-seo-qtranslate-x.php')) {
+	    $modules[] = 'wp-seo';
+	}
 	update_option( 'qtranslate_modules', $modules);
 }
 
