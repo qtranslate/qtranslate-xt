@@ -2,6 +2,13 @@
     "name":"qtranslate/qtranslate-xt",
     "description":"qTranslate-XT (eXTended): Adds a user-friendly multilingual dynamic content management.",
     "type":"wordpress-plugin",
+    "keywords": [
+        "wordpress",
+        "wordpress-plugin",
+        "qtranslate-x",
+        "i18n"
+    ],
+    "homepage":"https://github.com/qtranslate/qtranslate-xt",
     "license":"GPL-2.0-or-later",
     "authors": [
         {
@@ -20,6 +27,10 @@
             "name":"grafcom"
         }
     ],
+    "support": {
+        "issues":"https://github.com/qtranslate/qtranslate-xt/issues",
+        "source":"https://github.com/qtranslate/qtranslate-xt"
+    },
     "require": {
         "composer/installers":"~1.0"
     },
