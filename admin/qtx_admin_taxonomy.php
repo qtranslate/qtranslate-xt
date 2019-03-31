@@ -81,7 +81,6 @@ function qtranxf_term_find_translations( $lang, $default_lang, $term, $taxonomy 
 }
 
 function qtranxf_get_terms_joined( $terms, $taxonomy = null, $args = null ) {
-	global $q_config;
 	if ( is_array( $terms ) ) {
 		// handle arrays recursively
 		foreach ( $terms as $key => $term ) {
@@ -194,7 +193,6 @@ function qtranxf_term_sanitize_name_db( $term, $taxonomy = null ) {
  */
 function qtranxf_term_get_args( $args, $taxonomies = null ) {
 	if ( ! empty( $args['name'] ) ) {//expected in default language after applying sanitize_term_field
-		global $q_config;
 		$nms = $args['name'];
 		if ( is_array( $nms ) ) {
 			foreach ( $nms as $k => $nm ) {
@@ -203,6 +201,7 @@ function qtranxf_term_get_args( $args, $taxonomies = null ) {
 		} else {
 			$nms = qtranxf_term_sanitize_name_unslashed( $nms );
 		}
+		$args['name'] = $nms;
 	}
 	if ( ! empty( $args['name__like'] ) ) {
 		global $q_config;

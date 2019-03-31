@@ -76,7 +76,6 @@ function qtranxf_slug_admin_fields($objects, $type){
 }
 
 function qtranxf_slug_admin_field($type, $label, $slug){
-	global $q_config;
 	$opnm = 'slugs_'.$type;
 	$name = $opnm.'['.$slug.']';
 	$val = qtranxf_slug_multilingual($slug);
@@ -161,20 +160,21 @@ function qtranxf_migrate_import_qtranslate_slug(){
 		//$sql = 'INSERT INTO '.$wpdb->prefix.'posts_i18n (ID, lang, slug) VALUES (%s, %s, %s)';
 		$sql = 'INSERT INTO '.$wpdb->prefix.'i18n_slugs (slug, lang, name) VALUES (%s, %s, %s)';
 		foreach($result as $row) {
-			$slug = $row->meta_value;
+			// todo
+			// $slug = $row->meta_value;
 			$lang = substr($row->meta_key,-2);
 			$name = $row->post_name;
-			if($lang == $default_language){
-				if($slug != $name){
-	//qtranxf_dbg_log('qtranxf_migrate_import_qtranslate_slug: $slug('.$slug.') != $name('.$name.')');
-					//todo
-				}
-			}else{
+//			if($lang == $default_language){
+//				if($slug != $name){
+//	                //qtranxf_dbg_log('qtranxf_migrate_import_qtranslate_slug: $slug('.$slug.') != $name('.$name.')');
+//				}
+//			}
+			if($lang != $default_language){
 				$slug = qtranxf_slug_unique($row->meta_value,$lang,$name);
-				if($slug != $row->meta_value){
-					//todo report
-				}
-	//qtranxf_dbg_log('qtranxf_migrate_import_qtranslate_slug: $lang='.$lang.'; row: ', $row);
+				// todo report
+//				if($slug != $row->meta_value){
+//				}
+	            //qtranxf_dbg_log('qtranxf_migrate_import_qtranslate_slug: $lang='.$lang.'; row: ', $row);
 				//$query = $wpdb->prepare($sql, $row->post_id, $lang, $row->meta_value);
 				$query = $wpdb->prepare($sql, $slug, $lang, $row->post_name );
 				$wpdb->query($query);

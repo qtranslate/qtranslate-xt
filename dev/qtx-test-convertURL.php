@@ -8,20 +8,15 @@ function qtranxf_check_url( $url_converted, $url_expected ) {
 }
 
 function qtranxf_test_convertURL( $url_mode_name, $urls, $lang, $showLanguage ) {
-	$cnt = 0;
 	foreach ( $urls as $url => $url_expected ) {
 		//$url_converted = qtranxf_convertURL($url, false, true);
 		$url_converted = qtranxf_get_url_for_language( $url, $lang, $showLanguage );
 		//qtranxf_tst_log('test convertURL('.$url.'): ', $url_converted);
 		if ( ! qtranxf_check_url( $url_converted, $url_expected ) ) {
-			++ $cnt;
 			qtranxf_tst_log( 'qtranxf_test_convertURL(' . $url_mode_name . '): exit on the first error for url: ', $url );
 			exit();
 		}
 	}
-
-	//qtranxf_tst_log('qtranxf_test_convertURL('.$url_mode_name.'): '.($showLanguage?'show':'hide').' language lang='.$lang.'; #errors=', $cnt);
-	return $cnt;
 }
 
 function qtranxf_run_test_convertURL( $url_mode, $lang ) {
@@ -46,8 +41,8 @@ function qtranxf_run_test_convertURL( $url_mode, $lang ) {
 		'http://external.domain.com#tag'         => 'http://external.domain.com#tag',
 		'http://external.domain.com/#tag'        => 'http://external.domain.com/#tag',
 	);
-	$cnt  = qtranxf_test_convertURL( 'Common', $urls, $lang, true );
-	$cnt  = qtranxf_test_convertURL( 'Common', $urls, $lang, false );
+	qtranxf_test_convertURL( 'Common', $urls, $lang, true );
+	qtranxf_test_convertURL( 'Common', $urls, $lang, false );
 
 	$q_config['url_mode'] = $url_mode;
 	switch ( $url_mode ) {
@@ -66,7 +61,7 @@ function qtranxf_run_test_convertURL( $url_mode, $lang ) {
 				$b . '?page_id=123&lang=fr&tab=tab3'     => $h . '/?page_id=123&tab=tab3&lang=' . $lang . '',
 				$h . '?page_id=123&lang=fr&tab=tab3#tag' => $h . '?page_id=123&tab=tab3&lang=' . $lang . '#tag',
 			);
-			$cnt  = qtranxf_test_convertURL( 'QTX_URL_QUERY', $urls, $lang, true );
+			qtranxf_test_convertURL( 'QTX_URL_QUERY', $urls, $lang, true );
 			$urls = array(
 				$b . '?lang=fr'                          => $h . '/',
 				$b . '#'                                 => $h . '/',
@@ -79,7 +74,7 @@ function qtranxf_run_test_convertURL( $url_mode, $lang ) {
 				$b . '?page_id=123&lang=fr&tab=tab3'     => $h . '/?page_id=123&tab=tab3',
 				$h . '?page_id=123&lang=fr&tab=tab3#tag' => $h . '?page_id=123&tab=tab3#tag',
 			);
-			$cnt  = qtranxf_test_convertURL( 'QTX_URL_QUERY', $urls, $lang, false );
+			qtranxf_test_convertURL( 'QTX_URL_QUERY', $urls, $lang, false );
 			break;
 
 		case QTX_URL_PATH:
@@ -101,7 +96,7 @@ function qtranxf_run_test_convertURL( $url_mode, $lang ) {
 				$b . '?page_id=123&lang=fr&tab=tab3'                 => $hp . '/?page_id=123&tab=tab3',
 				$h . '/fr/?page_id=123&lang=fr&lang=xx&tab=tab3#tag' => $hp . '/?page_id=123&tab=tab3#tag',
 			);
-			$cnt  = qtranxf_test_convertURL( 'QTX_URL_PATH', $urls, $lang, true );
+			qtranxf_test_convertURL( 'QTX_URL_PATH', $urls, $lang, true );
 			$urls = array(
 				$b . 'fr'                                    => $h . '',
 				$h . '/fr'                                   => $h . '',
@@ -119,7 +114,7 @@ function qtranxf_run_test_convertURL( $url_mode, $lang ) {
 				$b . 'fr/?page_id=123&lang=fr&tab=tab3'      => $h . '/?page_id=123&tab=tab3',
 				$h . '/fr/?page_id=123&lang=fr&tab=tab3#tag' => $h . '/?page_id=123&tab=tab3#tag',
 			);
-			$cnt  = qtranxf_test_convertURL( 'QTX_URL_PATH', $urls, $lang, false );
+			qtranxf_test_convertURL( 'QTX_URL_PATH', $urls, $lang, false );
 			break;
 		case QTX_URL_DOMAIN:
 			//qtranxf_tst_log('qtx-test-convertURL: $url_mode=QTX_URL_DOMAIN');
@@ -134,7 +129,7 @@ function qtranxf_run_test_convertURL( $url_mode, $lang ) {
 				$b . '?page_id=123&lang=fr&tab=tab3'     => $hp . '/?page_id=123&tab=tab3',
 				$h . '?page_id=123&lang=fr&tab=tab3#tag' => $hp . '?page_id=123&tab=tab3#tag',
 			);
-			$cnt  = qtranxf_test_convertURL( 'QTX_URL_DOMAIN', $urls, $lang, true );
+			qtranxf_test_convertURL( 'QTX_URL_DOMAIN', $urls, $lang, true );
 			$urls = array(
 				$b . '?lang=fr'                          => $h . '/',
 				$b . '#'                                 => $h . '/',
@@ -145,7 +140,7 @@ function qtranxf_run_test_convertURL( $url_mode, $lang ) {
 				$b . '?page_id=123&lang=fr&tab=tab3'     => $h . '/?page_id=123&tab=tab3',
 				$h . '?page_id=123&lang=fr&tab=tab3#tag' => $h . '?page_id=123&tab=tab3#tag',
 			);
-			$cnt  = qtranxf_test_convertURL( 'QTX_URL_DOMAIN', $urls, $lang, false );
+			qtranxf_test_convertURL( 'QTX_URL_DOMAIN', $urls, $lang, false );
 			break;
 		case QTX_URL_DOMAINS:
 			//qtranxf_tst_log('qtx-test-convertURL: $url_mode=QTX_URL_DOMAINS');
@@ -161,7 +156,7 @@ function qtranxf_run_test_convertURL( $url_mode, $lang ) {
 				$b . '?page_id=123&lang=fr&tab=tab3'     => $hp . '/?page_id=123&tab=tab3',
 				$h . '?page_id=123&lang=fr&tab=tab3#tag' => $hp . '?page_id=123&tab=tab3#tag',
 			);
-			$cnt  = qtranxf_test_convertURL( 'QTX_URL_DOMAINS', $urls, $lang, true );
+			qtranxf_test_convertURL( 'QTX_URL_DOMAINS', $urls, $lang, true );
 			$urls = array(
 				$b . '?lang=fr'                          => $h . '/',
 				$b . '#'                                 => $h . '/',
@@ -172,12 +167,11 @@ function qtranxf_run_test_convertURL( $url_mode, $lang ) {
 				$b . '?page_id=123&lang=fr&tab=tab3'     => $h . '/?page_id=123&tab=tab3',
 				$h . '?page_id=123&lang=fr&tab=tab3#tag' => $h . '?page_id=123&tab=tab3#tag',
 			);
-			$cnt  = qtranxf_test_convertURL( 'QTX_URL_DOMAINS', $urls, $lang, false );
+			qtranxf_test_convertURL( 'QTX_URL_DOMAINS', $urls, $lang, false );
 			break;
 		default:
 			qtranxf_tst_log( 'qtx-test-convertURL: unknown $url_mode=', $url_mode );
-
-			return;
+			break;
 	}
 }
 

@@ -361,7 +361,7 @@ function qtranxf_split_database_file( $ifp, $languages_to_keep ) {
 					$lfh = fopen( $lfp, 'a+' );
 					if ( ! $lfh || ! $dfh ) {
 						fclose( $ifh );
-						foreach ( $files as $lang => &$file ) {
+						foreach ( $files as $lang_file => &$file ) {
 							if ( ! isset( $file['fh'] ) ) {
 								continue;
 							}
@@ -517,7 +517,6 @@ function gtranxf_db_clean_terms() {
 		if ( $taxonomy == 'nav_menu' ) {
 			continue;
 		}
-		$ts = array();
 		if ( qtranxf_isMultilingual( $nm ) ) {
 			$ts = qtranxf_split( $nm );
 			if ( empty( $ts[ $default_langauge ] ) ) {

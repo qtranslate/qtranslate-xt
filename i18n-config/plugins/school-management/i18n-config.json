@@ -1,274 +1,291 @@
-{"vendor":{"plugins/school-management":"1.0"},
-"admin-config": {
-
-	"smgt_all": {
-		"pages": { "admin.php":"page=smgt_" },
-		"anchors": {"main-wrapper":{"where":"first,last"}},
-		"forms": {
-			"wpbody-content":{
-				"fields":{
-					"page-title":{"jquery":"div.page-title h3", "encode":"display" },
-					"tag-td":{"jquery":"td", "encode":"display"},
-					"tag-option":{"jquery":"option", "encode":"display"},
-					"tag-optgroup":{"jquery":"optgroup", "attrs":["label"], "encode":"display"},
-					"data-toggle":{"jquery":"a[data-toggle='collapse']", "encode":"display"}
-				}
-			}
-		}
-	},
-
-
-	"smgt_student": {
-		"pages": { "admin.php":"page=smgt_student" },
-		"forms": {
-			"student_form":{
-				"fields":{
-					"first_name":{},
-					"middle_name":{},
-					"last_name":{},
-					"address":{}
-				}
-			}
-		}
-	},
-
-
-	"smgt_teacher": {
-		"pages": { "admin.php":"page=smgt_teacher" },
-		"forms": {
-			"teacher_form":{
-				"fields":{
-					"first_name":{},
-					"middle_name":{},
-					"last_name":{},
-					"address":{},
-					"city_name":{},
-					"state_name":{},
-					"possition":{}
-				}
-			}
-		}
-	},
-
-
-	"smgt_class": {
-		"pages": { "admin.php":"page=smgt_class" },
-		"forms": {
-			"class_form":{
-				"fields":{
-					"class_name":{},
-					"class_section":{}
-				}
-			}
-		}
-	},
-
-
-	"smgt_gnrl_settings": {
-		"pages": { "admin.php":"page=smgt_gnrl_settings" },
-		"forms": {
-			"setting_form":{
-				"fields":{
-					"smgt_school_name":{},
-					"smgt_school_address":{}
-				}
-			}
-		}
-	},
-
-
-"smgt_supportstaff": {
-		"pages": { "admin.php":"page=smgt_supportstaff" },
-		"forms": {
-			"teacher_form":{
-				"fields":{
-					"first_name":{}, 
-					"middle_name":{},
-					"last_name":{}, 
-					"address":{},
-					"city_name":{},
-					"state_name":{},
-					"possition":{}
-				}
-			}
-		}
-	},
-
-
-"smgt_parent": {
-		"pages": { "admin.php":"page=smgt_parent" },
-		"forms": {
-			"parent_form":{
-				"fields":{
-					"first_name":{}, 
-					"middle_name":{},
-					"last_name":{},
-					"address":{},
-					"city_name":{}
-				}
-			}
-		}
-	},
-
-
-"smgt_Subject": {
-		"pages": { "admin.php":"page=smgt_Subject" },
-		"forms": {
-			"subject_form":{
-				"fields":{
-					"subject_name":{},
-					"subject_edition":{}, 
-					"subject_author":{}
-				}
-			}
-		}
-	},
-
-
-"smgt_exam": {
-		"pages": { "admin.php":"page=smgt_exam" },
-		"forms": {
-			"exam_form":{
-				"fields":{
-					"exam_name":{}, 
-					"exam_comment":{}
-				}
-			}
-		}
-	},
-
-
-"smgt_grade": {
-		"pages": { "admin.php":"page=smgt_grade" },
-		"forms": {
-			"grade_form":{
-				"fields":{
-					"grade_name":{}, 
-					"grade_comment":{}
-				}
-			}
-		}
-	},
-
-
-"smgt_transport": {
-		"pages": { "admin.php":"smgt_transport" },
-		"forms": {
-			"transport_form":{
-				"fields":{
-					"route_name":{}, 
-					"number_of_vehicle":{},
-					"vehicle_reg_num":{},
-					"driver_name":{}, 
-					"driver_address":{},
-					"route_description":{}
-				}
-			}
-		}
-	},
-
-
-"smgt_notice": {
-		"pages": { "admin.php":"page=smgt_notice" },
-		"forms": {
-			"notice_form":{
-				"fields":{
-					"notice_title":{}, 
-					"notice_content":{}
-				}
-			}
-		}
-	},
-
-"smgt_message": {
-		"pages": { "admin.php":"page=smgt_message" },
-		"forms": {
-			"notice_form":{
-				"fields":{
-					"subject":{}, 
-					"message_body":{}
-				}
-			}
-		}
-	},
-
-"smgt_hall": {
-		"pages": { "admin.php":"page=smgt_hall" },
-		"forms": {
-			"hall_form":{
-				"fields":{
-					"hall_name":{},
-					"description":{}
-				}
-			}
-		}
-	},
-
-
-"smgt_hall": {
-		"pages": { "admin.php":"page=smgt_hall" },
-		"forms": {
-			"hall_form":{
-				"fields":{
-					"hall_name":{},
-					"description":{}
-				}
-			}
-		}
-	},
-
-
-"smgt_fees": {
-		"pages": { "admin.php":"page=smgt_fees" },
-		"forms": {
-			"expense_form":{
-				"fields":{
-					"description":{}
-				}
-			}
-		}
-	},
-
-
-"smgt_fees_payment": {
-		"pages": { "admin.php":"page=smgt_fees_payment" },
-		"forms": {
-			"expense_form":{
-				"fields":{
-					"fees_title_id":{},
-					"description":{}
-				}
-			}
-		}
-	},
-
-
-"smgt_holiday": {
-		"pages": { "admin.php":"page=smgt_holiday" },
-		"forms": {
-			"holiday_form":{
-				"fields":{
-					"holiday_title":{},
-					"description":{}
-				}
-			}
-		}
-	},
-
-"smgt_email_template": {
-		"pages": { "admin.php":"page=smgt_email_template" },
-		"forms": {
-			"email_template_form":{
-				"fields":{
-					"registration_title":{},
-					"registratoin_mailtemplate_content":{"jquery":"textarea[name='registratoin_mailtemplate_content']"},
-					"student_activation_title":{},
-					"activation_mailcontent":{},
-					"fee_payment_mailcontent":{}
-				}
-			}
-		}
-	}
-
-}
+{
+  "vendor": {
+    "plugins/school-management": "1.0"
+  },
+  "admin-config": {
+    "smgt_all": {
+      "pages": {
+        "admin.php": "page=smgt_"
+      },
+      "anchors": {
+        "main-wrapper": {
+          "where": "first,last"
+        }
+      },
+      "forms": {
+        "wpbody-content": {
+          "fields": {
+            "page-title": {
+              "jquery": "div.page-title h3",
+              "encode": "display"
+            },
+            "tag-td": {
+              "jquery": "td",
+              "encode": "display"
+            },
+            "tag-option": {
+              "jquery": "option",
+              "encode": "display"
+            },
+            "tag-optgroup": {
+              "jquery": "optgroup",
+              "attrs": [
+                "label"
+              ],
+              "encode": "display"
+            },
+            "data-toggle": {
+              "jquery": "a[data-toggle='collapse']",
+              "encode": "display"
+            }
+          }
+        }
+      }
+    },
+    "smgt_student": {
+      "pages": {
+        "admin.php": "page=smgt_student"
+      },
+      "forms": {
+        "student_form": {
+          "fields": {
+            "first_name": {},
+            "middle_name": {},
+            "last_name": {},
+            "address": {}
+          }
+        }
+      }
+    },
+    "smgt_teacher": {
+      "pages": {
+        "admin.php": "page=smgt_teacher"
+      },
+      "forms": {
+        "teacher_form": {
+          "fields": {
+            "first_name": {},
+            "middle_name": {},
+            "last_name": {},
+            "address": {},
+            "city_name": {},
+            "state_name": {},
+            "possition": {}
+          }
+        }
+      }
+    },
+    "smgt_class": {
+      "pages": {
+        "admin.php": "page=smgt_class"
+      },
+      "forms": {
+        "class_form": {
+          "fields": {
+            "class_name": {},
+            "class_section": {}
+          }
+        }
+      }
+    },
+    "smgt_gnrl_settings": {
+      "pages": {
+        "admin.php": "page=smgt_gnrl_settings"
+      },
+      "forms": {
+        "setting_form": {
+          "fields": {
+            "smgt_school_name": {},
+            "smgt_school_address": {}
+          }
+        }
+      }
+    },
+    "smgt_supportstaff": {
+      "pages": {
+        "admin.php": "page=smgt_supportstaff"
+      },
+      "forms": {
+        "teacher_form": {
+          "fields": {
+            "first_name": {},
+            "middle_name": {},
+            "last_name": {},
+            "address": {},
+            "city_name": {},
+            "state_name": {},
+            "possition": {}
+          }
+        }
+      }
+    },
+    "smgt_parent": {
+      "pages": {
+        "admin.php": "page=smgt_parent"
+      },
+      "forms": {
+        "parent_form": {
+          "fields": {
+            "first_name": {},
+            "middle_name": {},
+            "last_name": {},
+            "address": {},
+            "city_name": {}
+          }
+        }
+      }
+    },
+    "smgt_Subject": {
+      "pages": {
+        "admin.php": "page=smgt_Subject"
+      },
+      "forms": {
+        "subject_form": {
+          "fields": {
+            "subject_name": {},
+            "subject_edition": {},
+            "subject_author": {}
+          }
+        }
+      }
+    },
+    "smgt_exam": {
+      "pages": {
+        "admin.php": "page=smgt_exam"
+      },
+      "forms": {
+        "exam_form": {
+          "fields": {
+            "exam_name": {},
+            "exam_comment": {}
+          }
+        }
+      }
+    },
+    "smgt_grade": {
+      "pages": {
+        "admin.php": "page=smgt_grade"
+      },
+      "forms": {
+        "grade_form": {
+          "fields": {
+            "grade_name": {},
+            "grade_comment": {}
+          }
+        }
+      }
+    },
+    "smgt_transport": {
+      "pages": {
+        "admin.php": "smgt_transport"
+      },
+      "forms": {
+        "transport_form": {
+          "fields": {
+            "route_name": {},
+            "number_of_vehicle": {},
+            "vehicle_reg_num": {},
+            "driver_name": {},
+            "driver_address": {},
+            "route_description": {}
+          }
+        }
+      }
+    },
+    "smgt_notice": {
+      "pages": {
+        "admin.php": "page=smgt_notice"
+      },
+      "forms": {
+        "notice_form": {
+          "fields": {
+            "notice_title": {},
+            "notice_content": {}
+          }
+        }
+      }
+    },
+    "smgt_message": {
+      "pages": {
+        "admin.php": "page=smgt_message"
+      },
+      "forms": {
+        "notice_form": {
+          "fields": {
+            "subject": {},
+            "message_body": {}
+          }
+        }
+      }
+    },
+    "smgt_hall": {
+      "pages": {
+        "admin.php": "page=smgt_hall"
+      },
+      "forms": {
+        "hall_form": {
+          "fields": {
+            "hall_name": {},
+            "description": {}
+          }
+        }
+      }
+    },
+    "smgt_fees": {
+      "pages": {
+        "admin.php": "page=smgt_fees"
+      },
+      "forms": {
+        "expense_form": {
+          "fields": {
+            "description": {}
+          }
+        }
+      }
+    },
+    "smgt_fees_payment": {
+      "pages": {
+        "admin.php": "page=smgt_fees_payment"
+      },
+      "forms": {
+        "expense_form": {
+          "fields": {
+            "fees_title_id": {},
+            "description": {}
+          }
+        }
+      }
+    },
+    "smgt_holiday": {
+      "pages": {
+        "admin.php": "page=smgt_holiday"
+      },
+      "forms": {
+        "holiday_form": {
+          "fields": {
+            "holiday_title": {},
+            "description": {}
+          }
+        }
+      }
+    },
+    "smgt_email_template": {
+      "pages": {
+        "admin.php": "page=smgt_email_template"
+      },
+      "forms": {
+        "email_template_form": {
+          "fields": {
+            "registration_title": {},
+            "registratoin_mailtemplate_content": {
+              "jquery": "textarea[name='registratoin_mailtemplate_content']"
+            },
+            "student_activation_title": {},
+            "activation_mailcontent": {},
+            "fee_payment_mailcontent": {}
+          }
+        }
+      }
+    }
+  }
 }

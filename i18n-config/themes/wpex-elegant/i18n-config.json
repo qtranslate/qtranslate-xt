@@ -1,13 +1,16 @@
-{"vendor":{"themes/wpex-elegant":"1.0"},
-"admin-config":{
-"post":{
-	"forms":{
-		"post":{
-			"fields":{
-				"wpex_slide_caption":{}
-			}
-		}
-	}
-}
-}
+{
+  "vendor": {
+    "themes/wpex-elegant": "1.0"
+  },
+  "admin-config": {
+    "post": {
+      "forms": {
+        "post": {
+          "fields": {
+            "wpex_slide_caption": {}
+          }
+        }
+      }
+    }
+  }
 }

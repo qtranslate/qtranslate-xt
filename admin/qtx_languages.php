@@ -78,7 +78,6 @@ function qtranxf_disableLanguage( $lang ) {
 	if ( ! qtranxf_isEnabled( $lang ) ) {
 		return false;
 	}
-	$new_enabled = array();
 	foreach ( $q_config['enabled_languages'] as $k => $l ) {
 		if ( $l != $lang ) {
 			continue;

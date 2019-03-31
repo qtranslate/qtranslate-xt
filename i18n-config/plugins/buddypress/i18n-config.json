@@ -1,13 +1,16 @@
-{"vendor":{"plugins/buddypress":"1.0"},
-"front-config":{
-"all-pages": {
-	"filters": {
-		"text": {
-			"bp_get_activity_action":"20",
-			"bp_get_activity_content_body":"20",
-			"bp_get_activity_content":"20"
-		}
-	}
-}
-}
+{
+  "vendor": {
+    "plugins/buddypress": "1.0"
+  },
+  "front-config": {
+    "all-pages": {
+      "filters": {
+        "text": {
+          "bp_get_activity_action": "20",
+          "bp_get_activity_content_body": "20",
+          "bp_get_activity_content": "20"
+        }
+      }
+    }
+  }
 }

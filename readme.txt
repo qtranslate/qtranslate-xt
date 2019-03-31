@@ -12,7 +12,7 @@ Adds a user-friendly multilingual dynamic content management.
 
 ## Description
 
-The qTranslate-XT plugin is an *eXTended* version of qTranslate-X that we are trying to revive through a new community, since the [original plugin](https://wordpress.org/plugins/qtranslate-x/) is abandoned by its author. Our first goal is to maintain the essential features of this plugin with the last Wordpress and PHP updates. The migration to Gutenberg will be a critical milestone for the survival of this plugin. We are currently building a [new organization](https://github.com/qtranslate) to give qTranslate a new life. Let's try together, anyone is welcome to participate!
+The qTranslate-XT plugin is an *eXTended* version of qTranslate-X that we are reviving with a new community, since the [original plugin](https://wordpress.org/plugins/qtranslate-x/) is abandoned by its author. Our first goal is to maintain the essential features of this plugin with the last Wordpress and PHP updates. The migration to Gutenberg will be a critical milestone for the survival of this plugin. We are currently building a [new organization](https://github.com/qtranslate) to give qTranslate a new life. Let's try together, anyone is welcome to participate!
 
 GitHub repository of the new repo: [https://github.com/qtranslate/qtranslate-xt.git](https://github.com/qtranslate/qtranslate-xt).
 
@@ -92,8 +92,10 @@ The [legacy issues](https://qtranslatexteam.wordpress.com/known-issues/) should 
 
 ## Desirable Unimplemented Features
 
-* support for Gutenberg (!!)
-* support for translatable slugs (!)
-* support for WooCommerce (revive the add-on!)
+* refactor custom integration without json files (i18n-config.json)
+* support for built-in integration with main plugins (WooCommerce, Yoast SEO, ...)
+* support for Gutenberg
+* support for translatable slugs
 * unit/integration tests
+* utilities for DB maintenance (audit, cleanup)
 * legacy of [desirable features](https://qtranslatexteam.wordpress.com/desirable/).

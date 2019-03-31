@@ -719,6 +719,7 @@ function qtranxf_parse_post_type_excluded() {
 	unset( $_POST['post_types_all'] );
 	$_POST['post_type_excluded'] = $post_type_excluded;
 	//qtranxf_dbg_log('qtranxf_parse_post_type_excluded: $_POST[post_type_excluded]: ',$_POST['post_type_excluded']);
+	return true;
 }
 
 function qtranxf_updateSettings() {
@@ -809,7 +810,7 @@ function qtranxf_updateSettings() {
 			$json_config_files          = implode( PHP_EOL, $json_files );
 			$_POST['json_config_files'] = $json_config_files;
 			$nerr                       = isset( $q_config['url_info']['errors'] ) ? count( $q_config['url_info']['errors'] ) : 0;
-			$cfg                        = qtranxf_load_config_files( $json_files );
+			qtranxf_load_config_files( $json_files );
 			if ( ! empty( $q_config['url_info']['errors'] ) && $nerr != count( $q_config['url_info']['errors'] ) ) {//new errors occurred
 				remove_action( 'admin_notices', 'qtranxf_admin_notices_errors' );
 				if ( $json_files == $q_config['config_files'] ) {
