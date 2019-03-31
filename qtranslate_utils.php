@@ -474,6 +474,7 @@ function qtranxf_get_domain_language( $host ) {
 			return $lang;
 		}
 	}
+	return null;
 }
 
 function qtranxf_external_host_ex( $host, $homeinfo ) {
@@ -494,6 +495,7 @@ function qtranxf_external_host_ex( $host, $homeinfo ) {
 			if ( $homeinfo['host'] == $host ) {
 				return false;
 			}
+			return true;
 		default:
 			return true;
 	}
@@ -1279,6 +1281,7 @@ function qtranxf_match_language_locale( $locale ) {
 			return $lang;
 		}
 	}
+	return null;
 }
 
 function qtranxf_get_page_referer() {

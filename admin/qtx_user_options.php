@@ -44,4 +44,5 @@ function qtranxf_save_extra_profile_fields( $user_id ) {
 			update_user_meta( $user_id, 'qtranslate_highlight_disabled', true );
 		}
 	}
+	return true;
 }

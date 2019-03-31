@@ -361,7 +361,7 @@ function qtranxf_split_database_file( $ifp, $languages_to_keep ) {
 					$lfh = fopen( $lfp, 'a+' );
 					if ( ! $lfh || ! $dfh ) {
 						fclose( $ifh );
-						foreach ( $files as $lang => &$file ) {
+						foreach ( $files as $lang_file => &$file ) {
 							if ( ! isset( $file['fh'] ) ) {
 								continue;
 							}

@@ -249,7 +249,7 @@ foreach ( $translations as $lang => $words ) {
 	$po_content = 'msgid ""' . "\n";
 	$po_content .= 'msgstr ""' . "\n";
 	$po_content .= '"Content-Type: text/plain; charset=UTF-8\n"' . "\n";
-	$po_content .= '"Language: ' . $langcode . '\n"' . "\n\n";
+	$po_content .= '"Language: ' . $lang . '\n"' . "\n\n";
 	foreach ( $words as $key => $translation ) {
 		$po_content .= 'msgid "' . $key . '"' . "\n";
 		$po_content .= 'msgstr "' . $translation . '"' . "\n";
@@ -257,6 +257,3 @@ foreach ( $translations as $lang => $words ) {
 	}
 	file_put_contents( $po_dir . '/language-' . $lang . '.po', $po_content );
 }
-
-
-?>

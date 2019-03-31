@@ -13,7 +13,7 @@ if ( ! function_exists( 'qtrans_convertURL' ) ) {
 }
 if ( ! function_exists( 'qtrans_generateLanguageSelectCode' ) ) {
 	function qtrans_generateLanguageSelectCode( $style = '', $id = '' ) {
-		return qtranxf_generateLanguageSelectCode( $style, $id );
+		qtranxf_generateLanguageSelectCode( $style, $id );
 	}
 }
 

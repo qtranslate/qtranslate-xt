@@ -707,7 +707,7 @@ function qtranxf_load_option_bool( $nm, $default_value = null ) {
 						$q_config[ $nm ] = true;
 						break;
 					default:
-						$q_config[ $nm ] == ! empty( $val );
+						$q_config[ $nm ] = ! empty( $val );
 						break;
 				}
 				break;

@@ -304,14 +304,14 @@ function qtranxf_standardize_admin_config( $configs ) {
 			if ( empty( $config ) ) {
 				unset( $configs['anchors'] );
 			} else {
-				foreach ( $configs['anchors'] as $k => $anchor ) {
+				foreach ( $configs['anchors'] as $k_anchor => $anchor ) {
 					$id = qtranxf_standardize_config_anchor( $anchor );
 					if ( is_null( $id ) ) {
-						unset( $configs['anchors'][ $k ] );
+						unset( $configs['anchors'][ $k_anchor ] );
 					} else if ( is_string( $id ) ) {
 						$configs['anchors'][ $id ] = $anchor;
-						if ( $id !== $k ) {
-							unset( $configs['anchors'][ $k ] );
+						if ( $id !== $k_anchor ) {
+							unset( $configs['anchors'][ $k_anchor ] );
 						}
 					}
 				}
@@ -434,6 +434,7 @@ function qtranxf_find_plugin_by_foder( $fld, $plugins ) {
 			return $plugin;
 		}
 	}
+	return null;
 }
 
 /**
@@ -548,7 +549,7 @@ function qtranxf_find_plugin_file( $fp ) {
 			break;
 		}
 
-		return;
+		return null;
 	}
 	$found = array( $fn );
 	$found = qtranxf_normalize_config_files( $found );
