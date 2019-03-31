@@ -1,3 +1,11 @@
+### 3.5.5
+* Adds support for Composer (#659)
+* Fix no LSB on categories (#643): this issue occurred with NextGen Gallery but there might be other plugins concerned.
+* Code cleanup: fix potential minor bugs with variables overwritten in loops, fix missing returns, undefined variables, unused local variables, reformat json
+* Fix potential minor bug with the terms names (get_term_args)
+* Revert to legacy suffix for integration config files (searched in "-qtranslate-x" folders instead of "-qtranslate-xt") for consistency with legacy online documentation
+* Fix typo in qtranxf_find_plugin_by_folder (deprecate old version with errated name)
+
 ### 3.5.4
 * Shorten front-end message for alternative content (#655). The long part "For the sake of convenience... " is removed, for sake of convenience. Only the first part with the available languages is kept, also sent in the 'i18n_content_translation_not_available' filter.
 * Disambiguate the admin options for untranslated content: clarify descriptions, reorder by relevance.
