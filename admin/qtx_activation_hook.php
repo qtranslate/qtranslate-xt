@@ -427,6 +427,14 @@ function qtranxf_normalize_config_files( $found ) {
  * @since 3.4
  */
 function qtranxf_find_plugin_by_foder( $fld, $plugins ) {
+	_deprecated_function( __FUNCTION__, '3.5.5', 'qtranxf_find_plugin_by_folder()' );
+	return qtranxf_find_plugin_by_folder ( $fld, $plugins );
+}
+
+/**
+ * @since 3.5.5
+ */
+function qtranxf_find_plugin_by_folder( $fld, $plugins ) {
 	foreach ( $plugins as $plugin ) {
 		$dir = dirname( $plugin );
 		$bnm = basename( $dir );
@@ -464,7 +472,7 @@ function qtranxf_search_config_files() {
 				continue;
 			}
 			// TODO update legacy suffix (still not -qtranslate-xt) in new plugin with new documentation
-			if ( qtranxf_find_plugin_by_foder( $bnm . '-qtranslate-x', $plugins ) ) {
+			if ( qtranxf_find_plugin_by_folder( $bnm . '-qtranslate-x', $plugins ) ) {
 				continue;
 			}
 		}
@@ -592,7 +600,7 @@ function qtranxf_find_plugin_config_files( &$fn_bnm, &$fn_qtx, $bnm ) {
 	$plugins = wp_get_active_and_valid_plugins();
 	$fn_bnm  = null;
 	// TODO update legacy suffix (still not -qtranslate-xt) in new plugin with new documentation
-	if ( ! qtranxf_find_plugin_by_foder( $bnm . '-qtranslate-x', $plugins ) ) {
+	if ( ! qtranxf_find_plugin_by_folder( $bnm . '-qtranslate-x', $plugins ) ) {
 		$fn_bnm = qtranxf_find_plugin_file( $bnm . '/i18n-config.json' );
 		while ( ! $fn_bnm ) {
 			$fn_bnm = qtranxf_plugin_dirname() . '/i18n-config/plugins/' . $bnm . '/i18n-config.json';
