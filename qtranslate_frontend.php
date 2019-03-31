@@ -267,6 +267,7 @@ function qtranxf_add_language_menu_item( &$items, &$menu_order, &$itemid, $key, 
 			$flags = true;
 		}
 	}
+	$toplang = $language;
 	if ( $type == 'AL' ) {
 		foreach ( $q_config['enabled_languages'] as $lang ) {
 			if ( $lang == $language ) {
@@ -279,7 +280,6 @@ function qtranxf_add_language_menu_item( &$items, &$menu_order, &$itemid, $key, 
 		$item->title = empty( $title ) ? '' : $q_config['language_name'][ $toplang ];
 		$item->url   = qtranxf_convertURL( $url, $altlang, false, true );
 	} else {
-		$toplang = $language;
 		if ( empty( $title ) ) {
 			$item->title = '';
 		} elseif ( stripos( $title, 'Current' ) !== false ) {
