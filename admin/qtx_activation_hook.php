@@ -434,6 +434,7 @@ function qtranxf_find_plugin_by_foder( $fld, $plugins ) {
 			return $plugin;
 		}
 	}
+
 	return null;
 }
 
@@ -462,7 +463,8 @@ function qtranxf_search_config_files() {
 			if ( ! file_exists( $fn ) ) {
 				continue;
 			}
-			if ( qtranxf_find_plugin_by_foder( $bnm . '-qtranslate-xt', $plugins ) ) {
+			// TODO update legacy suffix (still not -qtranslate-xt) in new plugin with new documentation
+			if ( qtranxf_find_plugin_by_foder( $bnm . '-qtranslate-x', $plugins ) ) {
 				continue;
 			}
 		}
@@ -582,10 +584,15 @@ function qtranxf_on_switch_theme( $new_name, $new_theme ) {
 
 add_action( 'switch_theme', 'qtranxf_on_switch_theme', 10, 2 );
 
+/**
+ * Search for i18n-config.json files
+ * see https://qtranslatexteam.wordpress.com/integration/
+ */
 function qtranxf_find_plugin_config_files( &$fn_bnm, &$fn_qtx, $bnm ) {
 	$plugins = wp_get_active_and_valid_plugins();
 	$fn_bnm  = null;
-	if ( ! qtranxf_find_plugin_by_foder( $bnm . '-qtranslate-xt', $plugins ) ) {
+	// TODO update legacy suffix (still not -qtranslate-xt) in new plugin with new documentation
+	if ( ! qtranxf_find_plugin_by_foder( $bnm . '-qtranslate-x', $plugins ) ) {
 		$fn_bnm = qtranxf_find_plugin_file( $bnm . '/i18n-config.json' );
 		while ( ! $fn_bnm ) {
 			$fn_bnm = qtranxf_plugin_dirname() . '/i18n-config/plugins/' . $bnm . '/i18n-config.json';
@@ -599,8 +606,8 @@ function qtranxf_find_plugin_config_files( &$fn_bnm, &$fn_qtx, $bnm ) {
 		}
 	}
 	$fn_qtx = null;
-	while ( qtranxf_endsWith( $bnm, '-qtranslate-xt' ) ) {
-	    // todo potentially missed config files here, double check this
+	// TODO update legacy suffix (still not -qtranslate-xt) in new plugin with new documentation
+	while ( qtranxf_endsWith( $bnm, '-qtranslate-x' ) ) {
 		$bnm_qtx = substr( $bnm, 0, - 13 );
 		$fn_qtx  = qtranxf_plugin_dirname() . '/i18n-config/plugins/' . $bnm_qtx . '/i18n-config.json';
 		$fn_qtx  = qtranxf_find_plugin_file( $fn_qtx );
@@ -768,9 +775,9 @@ function qtranxf_activation_hook() {
 		if ( get_option( 'qtranslate_qtrans_compatibility' ) === false ) {
 			//to prevent most of fatal errors on upgrade
 			if ( file_exists( WP_PLUGIN_DIR . '/qtranslate/qtranslate.php' )
-				 || file_exists( WP_PLUGIN_DIR . '/mqtranslate/mqtranslate.php' )
-				 || file_exists( WP_PLUGIN_DIR . '/ztranslate/ztranslate.php' )
-				 || file_exists( WP_PLUGIN_DIR . '/qtranslate-xp/ppqtranslate.php' )
+			     || file_exists( WP_PLUGIN_DIR . '/mqtranslate/mqtranslate.php' )
+			     || file_exists( WP_PLUGIN_DIR . '/ztranslate/ztranslate.php' )
+			     || file_exists( WP_PLUGIN_DIR . '/qtranslate-xp/ppqtranslate.php' )
 			) {
 				update_option( 'qtranslate_qtrans_compatibility', '1' );
 			}
@@ -1036,9 +1043,9 @@ add_action( 'admin_notices', 'qtranxf_admin_notices_plugin_integration' );
 function qtranxf_admin_notices_block_editor() {
 	global $wp_version;
 	if ( version_compare( $wp_version, '5.0' ) >= 0 &&
-		 ! ( class_exists( 'Classic_Editor' ) ||
-			 is_plugin_active( 'disable-gutenberg/disable-gutenberg.php' ) ||
-			 is_plugin_active( 'no-gutenberg/no-gutenberg.php' ) ) ) {
+	     ! ( class_exists( 'Classic_Editor' ) ||
+	         is_plugin_active( 'disable-gutenberg/disable-gutenberg.php' ) ||
+	         is_plugin_active( 'no-gutenberg/no-gutenberg.php' ) ) ) {
 		$link = "https://wordpress.org/plugins/classic-editor/";
 		?>
         <div class="notice notice-error">
