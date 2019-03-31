@@ -965,7 +965,6 @@ add_filter( 'redirect_canonical', 'qtranxf_checkCanonical', 10, 2 );
  * @since 3.2.8 moved here from _hooks.php
  */
 function qtranxf_convertBlogInfoURL( $url, $what ) {
-	global $q_config;
 	switch ( $what ) {
 		case 'stylesheet_url':
 		case 'template_url':

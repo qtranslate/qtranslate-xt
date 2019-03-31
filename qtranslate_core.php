@@ -329,9 +329,6 @@ function qtranxf_parse_language_info( &$url_info, $link = false ) {
 				 * $url_info['path'] - convert to language neutral or default
 				 */
 				$url_info = apply_filters( 'qtranslate_parse_language_info_mode', $url_info, $q_config['url_mode'] );
-				if ( isset( $url_info['lang_url'] ) ) {
-					$lang = $url_info['lang_url'];
-				}
 				break;
 		}
 	}
@@ -1422,7 +1419,6 @@ function qtranxf_split_blocks( $blocks, &$found = array() ) {
  * gets only part with encoded languages
  */
 function qtranxf_split_languages( $blocks ) {
-	global $q_config;
 	$result           = array();
 	$current_language = false;
 	foreach ( $blocks as $block ) {

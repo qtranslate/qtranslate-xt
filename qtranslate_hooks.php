@@ -44,7 +44,7 @@ function qtranxf_localeForCurrentLanguage( $locale ) {
 		if ( ! in_array( $loc, $lc2 ) ) {
 			$lc2[] = $loc;
 		}
-		$loc = setlocale( LC_TIME, $lc2 );
+		setlocale( LC_TIME, $lc2 );
 		//if(!$loc) qtranxf_error_log(sprintf('Could not set locale with setlocale(LC_TIME, %s).', json_encode(array_merge($lc, $lc2))));
 	}
 

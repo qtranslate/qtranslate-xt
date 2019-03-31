@@ -1183,7 +1183,6 @@ function qtranxf_write_config_log( $config, $sfx = '', $url_path = null, $url_qu
  * @since 3.4
  */
 function qtranxf_add_filters( $filters ) {
-	global $q_config;
 	//qtranxf_dbg_log('qtranxf_add_filters: $filters: ', $filters);
 	if ( ! empty( $filters['text'] ) ) {
 		//qtranxf_dbg_log('$filters[text]: ', $filters['text']);
@@ -1221,7 +1220,6 @@ function qtranxf_add_filters( $filters ) {
  * @since 3.4.6.9
  */
 function qtranxf_remove_filters( $filters ) {
-	global $q_config;
 	//qtranxf_dbg_log('qtranxf_add_filters: $filters: ', $filters);
 	if ( ! empty( $filters['text'] ) ) {
 		//qtranxf_dbg_log('$filters[text]: ', $filters['text']);

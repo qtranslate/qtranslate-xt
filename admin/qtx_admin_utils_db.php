@@ -517,7 +517,6 @@ function gtranxf_db_clean_terms() {
 		if ( $taxonomy == 'nav_menu' ) {
 			continue;
 		}
-		$ts = array();
 		if ( qtranxf_isMultilingual( $nm ) ) {
 			$ts = qtranxf_split( $nm );
 			if ( empty( $ts[ $default_langauge ] ) ) {

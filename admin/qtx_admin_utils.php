@@ -281,7 +281,6 @@ function qtranxf_before_admin_bar_render() {
 }
 
 function qtranxf_admin_the_title( $title ) {
-	global $pagenow;
 	//todo this filter should not be used in admin area at all?
 	if ( defined( 'DOING_AJAX' ) && DOING_AJAX )//nav-menus.php#752
 	{
@@ -303,7 +302,6 @@ add_filter( 'the_title', 'qtranxf_admin_the_title', 0 );//WP: fires for display 
 //filter added in qtranslate_hooks.php
 if ( ! function_exists( 'qtranxf_trim_words' ) ) {
 	function qtranxf_trim_words( $text, $num_words, $more, $original_text ) {
-		global $q_config;
 		//qtranxf_dbg_log('qtranxf_trim_words: $text: ',$text);
 		//qtranxf_dbg_log('qtranxf_trim_words: $original_text: ',$original_text);
 		$blocks = qtranxf_get_language_blocks( $original_text );
@@ -311,7 +309,6 @@ if ( ! function_exists( 'qtranxf_trim_words' ) ) {
 		if ( count( $blocks ) <= 1 ) {
 			return $text;
 		}
-		$lang  = $q_config['language'];
 		$texts = qtranxf_split_blocks( $blocks );
 		foreach ( $texts as $key => $txt ) {
 			$texts[ $key ] = wp_trim_words( $txt, $num_words, $more );
@@ -406,7 +403,6 @@ function qtranxf_add_conf_filters() {
 }
 
 function qtranxf_del_conf_filters() {
-	global $q_config;
 	remove_filter( 'gettext', 'qtranxf_gettext', 0 );
 	remove_filter( 'gettext_with_context', 'qtranxf_gettext_with_context', 0 );
 	remove_filter( 'ngettext', 'qtranxf_ngettext', 0 );

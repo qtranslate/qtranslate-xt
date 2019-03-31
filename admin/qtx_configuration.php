@@ -177,7 +177,7 @@ function qtranxf_get_admin_sections() {
 }
 
 function qtranxf_conf() {
-	global $q_config, $qtranslate_options, $wpdb;
+	global $q_config;
 	//qtranxf_dbg_log('qtranxf_conf: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
 	//qtranxf_dbg_log('qtranxf_conf: POST: ',$_POST);
 	//qtranxf_dbg_log('qtranxf_conf: GET: ',$_GET);

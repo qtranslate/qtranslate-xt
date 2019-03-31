@@ -3,7 +3,6 @@ if ( !defined( 'WP_ADMIN' ) ) exit;
 
 function qtranxf_regroup_translations( &$qfields, &$request, $edit_lang, $default_lang ) {
 	if(isset($qfields['qtranslate-original-value'])){
-		global $q_config;
 		$original_value = $qfields['qtranslate-original-value'];
 		if(qtranxf_isMultilingual($original_value)){
 			$langs = qtranxf_split($original_value);
@@ -118,7 +117,6 @@ function qtranxf_slug_has_post_name($post_type,$post_status){
 
 function qtranxf_slug_save_post(&$qfields, $post_ID, $post){
 	global $wpdb;
-	$post_parent = $post->post_parent;
 	$name = $post->post_name;
 	$name_old = $qfields['qtranslate-original-value'];
 	if($name != $name_old){

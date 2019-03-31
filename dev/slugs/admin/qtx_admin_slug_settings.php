@@ -76,7 +76,6 @@ function qtranxf_slug_admin_fields($objects, $type){
 }
 
 function qtranxf_slug_admin_field($type, $label, $slug){
-	global $q_config;
 	$opnm = 'slugs_'.$type;
 	$name = $opnm.'['.$slug.']';
 	$val = qtranxf_slug_multilingual($slug);

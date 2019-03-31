@@ -202,7 +202,7 @@ function qtranxf_admin_is_config_page() {
 }
 
 function qtranxf_admin_init() {
-	global $q_config, $pagenow;
+	global $q_config;
 	//qtranxf_dbg_log('5.qtranxf_admin_init:');
 
 	if ( current_user_can( 'manage_options' ) ) {
@@ -582,7 +582,6 @@ function qtranxf_add_admin_highlight_css() {
 }
 
 function qtranxf_get_admin_highlight_css( $highlight_mode ) {
-	global $q_config;
 	$css = 'input.qtranxs-translatable, textarea.qtranxs-translatable, div.qtranxs-translatable {' . PHP_EOL;
 	switch ( $highlight_mode ) {
 		case QTX_HIGHLIGHT_MODE_BORDER_LEFT:// v3

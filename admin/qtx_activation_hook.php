@@ -600,8 +600,8 @@ function qtranxf_find_plugin_config_files( &$fn_bnm, &$fn_qtx, $bnm ) {
 	}
 	$fn_qtx = null;
 	while ( qtranxf_endsWith( $bnm, '-qtranslate-xt' ) ) {
+	    // todo potentially missed config files here, double check this
 		$bnm_qtx = substr( $bnm, 0, - 13 );
-		$plugins = wp_get_active_and_valid_plugins();
 		$fn_qtx  = qtranxf_plugin_dirname() . '/i18n-config/plugins/' . $bnm_qtx . '/i18n-config.json';
 		$fn_qtx  = qtranxf_find_plugin_file( $fn_qtx );
 		if ( $fn_qtx ) {
@@ -743,7 +743,7 @@ function qtranxf_activation_hook() {
 		update_option( 'qtranslate_version_previous', $ver_cur );
 		$check_qtranslate_forks = true;
 		if ( isset( $messages['initial-install'] ) ) {
-			$messages = qtranxf_update_option_admin_notices( $messages, 'initial-install' );
+			qtranxf_update_option_admin_notices( $messages, 'initial-install' );
 		}
 	} else {
 		$ver_prv = get_option( 'qtranslate_version_previous' );
@@ -752,7 +752,7 @@ function qtranxf_activation_hook() {
 		}
 
 		if ( ! isset( $messages['initial-install'] ) ) {
-			$messages = qtranxf_update_option_admin_notices( $messages, 'initial-install' );
+			qtranxf_update_option_admin_notices( $messages, 'initial-install' );
 		}
 	}
 
