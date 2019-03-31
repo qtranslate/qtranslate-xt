@@ -201,7 +201,7 @@ function qtranxf_term_get_args( $args, $taxonomies = null ) {
 		} else {
 			$nms = qtranxf_term_sanitize_name_unslashed( $nms );
 		}
-		// todo $nms never used here! Maybe $args['name'] = $nms ?
+		$args['name'] = $nms;
 	}
 	if ( ! empty( $args['name__like'] ) ) {
 		global $q_config;
