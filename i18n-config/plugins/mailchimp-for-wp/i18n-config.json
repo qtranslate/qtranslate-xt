@@ -1,13 +1,16 @@
-{"vendor":{"plugins/mailchimp-for-wp":"1.0"},
-"front-config":{
-	"all-pages":{
-		"filters":{
-			"text":{
-				"mc4wp_form_before_fields":"20",
-				"mc4wp_form_after_fields":"20",
-				"mc4wp_form_content":"20"
-			}
-		}
-	}
-}
+{
+  "vendor": {
+    "plugins/mailchimp-for-wp": "1.0"
+  },
+  "front-config": {
+    "all-pages": {
+      "filters": {
+        "text": {
+          "mc4wp_form_before_fields": "20",
+          "mc4wp_form_after_fields": "20",
+          "mc4wp_form_content": "20"
+        }
+      }
+    }
+  }
 }

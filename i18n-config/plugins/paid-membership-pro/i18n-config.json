@@ -1,25 +1,36 @@
-{"vendor":{"plugins/paid-membership-pro":"1.0"},
-"admin-config": {
-	"pmpro-membershiplevels": {
-		"pages": { "admin.php":"page=pmpro-membershiplevels" },
-		"forms": {
-			"main":{
-				"fields":{
-					"name": { "jquery": "input[name='name']" },
-					"description": { "jquery": "textarea[name='description']" },
-					"confirmation": { "jquery": "textarea[name='confirmation']" }
-				}
-			}
-		}
-	}
-},
-"front-config":{
-	"all-pages": {
-		"filters": {
-			"text": {
-				"pmpro_email_filter":"20"
-			}
-		}
-	}
-}
+{
+  "vendor": {
+    "plugins/paid-membership-pro": "1.0"
+  },
+  "admin-config": {
+    "pmpro-membershiplevels": {
+      "pages": {
+        "admin.php": "page=pmpro-membershiplevels"
+      },
+      "forms": {
+        "main": {
+          "fields": {
+            "name": {
+              "jquery": "input[name='name']"
+            },
+            "description": {
+              "jquery": "textarea[name='description']"
+            },
+            "confirmation": {
+              "jquery": "textarea[name='confirmation']"
+            }
+          }
+        }
+      }
+    }
+  },
+  "front-config": {
+    "all-pages": {
+      "filters": {
+        "text": {
+          "pmpro_email_filter": "20"
+        }
+      }
+    }
+  }
 }
