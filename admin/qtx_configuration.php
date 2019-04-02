@@ -678,6 +678,36 @@ function qtranxf_conf() {
                                 </p></td>
                         </tr>
                         <tr>
+                            <th scope="row"><?php _e( 'Built-in modules', 'qtranslate' ) ?></th>
+                            <td>
+                                <table class="widefat">
+                                    <thead>
+                                        <tr>
+                                            <th class="row-title">Plugin</th>
+                                            <th>Detected</th>
+                                            <th>Module</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php
+                                    $def_modules  = qtranxf_admin_get_integration_modules();
+                                    $options_modules = get_option( 'qtranslate_modules', array());
+                                    foreach ($def_modules as $def_module):
+                                        if (! array_key_exists($def_module['id'], $options_modules))
+                                            continue;
+                                        $options_module = $options_modules[$def_module['id']];
+                                        ?>
+                                        <tr>
+                                            <td><?php echo $def_module['name']; ?></td>
+                                            <td><?php echo $options_module['detected'] ? __( 'Yes', 'qtranslate' ) : __( 'No', 'qtranslate' ); ?></td>
+                                            <td><?php echo $options_module['active'] ? __( 'Active', 'qtranslate' ) : ($options_module['detected'] ? __( 'Incompatible', 'qtranslate' ) : __( 'Inactive', 'qtranslate' )); ?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
                             <th scope="row"><?php _e( 'Configuration Files', 'qtranslate' ) ?></th>
                             <td><label for="qtranxs_config_files"
                                        class="qtranxs_explanation"><?php printf( __( 'List of configuration files. Unless prefixed with "%s", paths are relative to %s variable: %s. Absolute paths are also acceptable.', 'qtranslate' ), './', 'WP_CONTENT_DIR', trailingslashit( WP_CONTENT_DIR ) ) ?></label>
@@ -762,7 +792,7 @@ function qtranxf_conf() {
                             </td>
                         </tr>
                     </table>
-					<?php qtranxf_admin_section_end( 'integration' );
+                    <?php qtranxf_admin_section_end( 'integration' ); ?>
 					// Allow to load additional services
 					do_action( 'qtranslate_configuration', $clean_uri );
 					?>

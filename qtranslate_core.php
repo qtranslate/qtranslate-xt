@@ -1799,9 +1799,15 @@ function qtranxf_showAllSeparated( $text ) {
  * @see qtranxf_admin_validate_integration_modules
  */
 function qtranxf_load_integration_modules() {
-	$modules = get_option( 'qtranslate_modules', array());
-	foreach ($modules as $module) {
-		require_once( QTRANSLATE_DIR . '/modules/' . $module . '/' . $module . '.php' );
+	$def_modules  = qtranxf_admin_get_integration_modules();
+	$options_modules = get_option( 'qtranslate_modules', array());
+	foreach ($def_modules as $def_module) {
+		if (! array_key_exists($def_module['id'], $options_modules))
+			continue;
+		$options_module = $options_modules[$def_module['id']];
+		if ($options_module['active']) {
+			require_once( QTRANSLATE_DIR . '/modules/' . $def_module['id'] . '/' . $def_module['id'] . '.php' );
+		}
 	}
 }
 

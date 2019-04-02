@@ -104,3 +104,7 @@
 .qtranxs-form-table th, .qtranxs-form-table td {
 	vertical-align: top;
 }
+
+.qtranxs-form-table .widefat th, .qtranxs-form-table .widefat td {
+	padding: 8px 10px;
+}

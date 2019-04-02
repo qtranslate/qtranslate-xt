@@ -167,63 +167,84 @@ function qtranxf_decode_translations_posted() {
 add_action( 'sanitize_comment_cookies', 'qtranxf_decode_translations_posted', 5 );//after POST & GET are set, and before all WP objects are created, alternatively can use action 'setup_theme' instead.
 
 /**
- * Check if a plugin is active and if no legacy plugin prevents its integration.
-
- * @param string $plugin plugin file to be checked for integration
- * @param string $legacy_plugin legacy plugin that is incompatible and must be deactivated for module integration
+ * Check if an integration module can be activated:
+ * - if the linked plugin to be integrated is active
+ * - if no incompatible plugin (legacy) prevents it. In that case, an admin notice is displayed.
  *
- * @return bool
+ * @param string $integration_plugin plugin file to be checked for integration
+ * @param string $incompatible_plugin legacy plugin that is incompatible and must be deactivated for module integration
+ *
+ * @return array with the module status
  */
-function qtranxf_admin_check_plugin( $plugin, $legacy_plugin ) {
-	if ( is_plugin_active( $plugin ) ) {
-		if ( isset($legacy_plugin) && is_plugin_active( $legacy_plugin ) ) {
-			deactivate_plugins( $legacy_plugin );
-			add_action( 'admin_notices', function () use ($legacy_plugin) {
-                $plugin_data = get_plugin_data( WP_PLUGIN_DIR . '/' . $legacy_plugin, false, true );
-                $plugin_name = $plugin_data['Name'];
-				if ( is_plugin_active( $legacy_plugin ) ) :
+function qtranxf_admin_check_module( $integration_plugin, $incompatible_plugin ) {
+	$module_status = array(
+		'detected' => false,
+		'active'   => false
+	);
+	if ( is_plugin_active( $integration_plugin ) ) {
+		$module_status['detected'] = true;
+		$module_status['active']   = true;
+
+		if ( isset( $incompatible_plugin ) && is_plugin_active( $incompatible_plugin ) ) {
+			$module['active'] = false;
+			add_action( 'admin_notices', function () use ( $incompatible_plugin ) {
+				$plugin_data = get_plugin_data( WP_PLUGIN_DIR . '/' . $incompatible_plugin, false, true );
+				$plugin_name = $plugin_data['Name'];
+				if ( is_plugin_active( $incompatible_plugin ) ) :
 					?>
                     <div class="notice notice-error is-dismissible">
                         <p><?php printf( __( '[%s] Incompatible plugin detected: "%s". Please disable it.', 'qtranslate' ), 'qTranslate&#8209;XT', $plugin_name ); ?></p>
                         <p><a class="button"
-                              href="<?php echo esc_url( wp_nonce_url( admin_url( 'plugins.php?action=deactivate&plugin=' . urlencode( $legacy_plugin ) ), 'deactivate-plugin_' . $legacy_plugin ) ) ?>"><strong><?php printf( __( 'Deactivate plugin %s', 'qtranslate' ), $plugin_name ) ?></strong></a>
+                              href="<?php echo esc_url( wp_nonce_url( admin_url( 'plugins.php?action=deactivate&plugin=' . urlencode( $incompatible_plugin ) ), 'deactivate-plugin_' . $incompatible_plugin ) ) ?>"><strong><?php printf( __( 'Deactivate plugin %s', 'qtranslate' ), $plugin_name ) ?></strong></a>
                     </div>
 				<?php
-                else:
-	                ?>
-                    <div class="notice notice-warning is-dismissible">
-                        <p><?php printf( __( '[%s] Incompatible plugin detected: "%s". This plugin has been deactivated.', 'qtranslate' ), 'qTranslate&#8209;XT', $plugin_name ); ?></p>
-                    </div>
-                <?php
 				endif;
 			} );
-			return false;
-		} else {
-			return true;
 		}
 	}
-	return false;
+	return $module_status;
 }
 
 /**
- * Validate the list of modules to be loaded for plugin integration on server side.
+ * Retrieve the definitions of the integration modules.
+ */
+function qtranxf_admin_get_integration_modules() {
+	return array(
+		array(
+			'id'           => 'gravity-forms',
+			'name'         => 'Gravity Forms',
+			'plugin'       => 'gravityforms/gravityforms.php',
+			'incompatible' => 'qtranslate-support-for-gravityforms/qtranslate-support-for-gravityforms.php'
+		),
+		array(
+			'id'           => 'woo-commerce',
+			'name'         => 'WooCommerce',
+			'plugin'       => 'woocommerce/woocommerce.php',
+			'incompatible' => 'woocommerce-qtranslate-x/woocommerce-qtranslate-x.php'
+		),
+		array(
+			'id'           => 'wp-seo',
+			'name'         => 'Yoast',
+			'plugin'       => 'wordpress-seo/wp-seo.php',
+			'incompatible' => 'wp-seo-qtranslate-x/wordpress-seo-qtranslate-x.php'
+		)
+	);
+}
+
+/**
+ * Update the modules to be loaded for plugin integration.
  * Note each module can enable hooks both for admin and front requests.
  * The valid modules are stored in the 'qtranslate_modules' option.
  */
-function qtranxf_admin_validate_integration_modules() {
-	require_once(ABSPATH . 'wp-admin/includes/plugin.php');
+function qtranxf_admin_update_modules_option() {
+	require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
-	$modules = array();
-	if (qtranxf_admin_check_plugin('woocommerce/woocommerce.php', 'woocommerce-qtranslate-x/woocommerce-qtranslate-x.php')) {
-	    $modules[] = 'woo-commerce';
+	$def_modules    = qtranxf_admin_get_integration_modules();
+	$option_modules = array();
+	foreach ( $def_modules as $module ) {
+		$option_modules[ $module['id'] ] = qtranxf_admin_check_module( $module['plugin'], $module['incompatible'] );
 	}
-	if (qtranxf_admin_check_plugin('gravityforms/gravityforms.php', 'qtranslate-support-for-gravityforms/qtranslate-support-for-gravityforms.php')) {
-	    $modules[] = 'gravity-forms';
-	}
-	if (qtranxf_admin_check_plugin('wordpress-seo/wp-seo.php', 'wp-seo-qtranslate-x/wordpress-seo-qtranslate-x.php')) {
-	    $modules[] = 'wp-seo';
-	}
-	update_option( 'qtranslate_modules', $modules);
+	update_option( 'qtranslate_modules', $option_modules );
 }
 
 function qtranxf_admin_load() {
@@ -233,7 +254,7 @@ function qtranxf_admin_load() {
 	add_filter( 'plugin_action_links_' . $bnm, 'qtranxf_links', 10, 4 );
 	add_action( 'qtranslate_init_language', 'qtranxf_load_admin_page_config', 20 );//should be excuted after all plugins loaded their *-admin.php
 	qtranxf_add_admin_filters();
-	qtranxf_admin_validate_integration_modules();
+	qtranxf_admin_update_modules_option();
 }
 
 qtranxf_admin_load();
@@ -247,8 +268,8 @@ function qtranxf_load_admin_page_config() {
 }
 
 /**
- * @since 3.4.7
  * @return bool true is we are on qtx configuration page.
+ * @since 3.4.7
  */
 function qtranxf_admin_is_config_page() {
 	static $is_config_page;
@@ -517,9 +538,9 @@ function qtranxf_add_admin_footer_js() {
 	foreach ( $keys as $key ) {
 		$config[ $key ] = $q_config[ $key ];
 	}
-	$config['lsb_style_subitem'] = ( $q_config['lsb_style'] == 'Simple_Buttons.css' ) ? 'button' : '';
+	$config['lsb_style_subitem']      = ( $q_config['lsb_style'] == 'Simple_Buttons.css' ) ? 'button' : '';
 	$config['lsb_style_active_class'] = ( $q_config['lsb_style'] == 'Tabs_in_Block.css' ) ? 'wp-ui-highlight' : 'active';
-	$config['lsb_style_wrap_class'] = ( $q_config['lsb_style'] == 'Tabs_in_Block.css' ) ? 'wp-ui-primary' : '';
+	$config['lsb_style_wrap_class']   = ( $q_config['lsb_style'] == 'Tabs_in_Block.css' ) ? 'wp-ui-primary' : '';
 
 	$config['custom_fields']        = apply_filters( 'qtranslate_custom_fields', $q_config['custom_fields'] );
 	$config['custom_field_classes'] = apply_filters( 'qtranslate_custom_field_classes', $q_config['custom_field_classes'] );
@@ -575,7 +596,7 @@ function qtranxf_add_admin_footer_js() {
 	qtranxf_enqueue_scripts( $page_config['js'] );
 	?>
     <script type="text/javascript">
-        // <![CDATA[
+		// <![CDATA[
 		<?php
 		echo 'var qTranslateConfig=' . json_encode( $config ) . ';' . PHP_EOL;
 		// each script entry may define javascript code to be injected
@@ -589,7 +610,7 @@ function qtranxf_add_admin_footer_js() {
 		}
 		do_action( 'qtranslate_add_admin_footer_js' );
 		?>
-        //]]>
+		//]]>
     </script>
 	<?php
 }
