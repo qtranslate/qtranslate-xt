@@ -18,12 +18,12 @@ class QTX_Modules_Handler {
 				'plugin'       => 'woocommerce/woocommerce.php',
 				'incompatible' => 'woocommerce-qtranslate-x/woocommerce-qtranslate-x.php'
 			),
-//			array(
-//				'id'           => 'wp-seo',
-//				'name'         => 'Yoast',
-//				'plugin'       => 'wordpress-seo/wp-seo.php',
-//				'incompatible' => 'wp-seo-qtranslate-x/wordpress-seo-qtranslate-x.php'
-//			)
+			array(
+				'id'           => 'wp-seo',
+				'name'         => 'Yoast',
+				'plugin'       => 'wordpress-seo/wp-seo.php',
+				'incompatible' => 'wp-seo-qtranslate-x/wordpress-seo-qtranslate-x.php'
+			)
 		);
 	}
 
