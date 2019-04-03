@@ -795,10 +795,10 @@ function qtranxf_conf() {
                             </td>
                         </tr>
                     </table>
-					<?php qtranxf_admin_section_end( 'integration' ); ?>
-                    // Allow to load additional services
-                    do_action( 'qtranslate_configuration', $clean_uri );
-                    ?>
+					<?php qtranxf_admin_section_end( 'integration' );
+					// Allow to load additional services
+					do_action( 'qtranslate_configuration', $clean_uri );
+					?>
                 </div><?php //<!-- /tabs-container --> ?>
             </form>
 		<?php } ?>
