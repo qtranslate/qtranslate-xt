@@ -70,14 +70,14 @@ function qtranxf_language_form( $form_action, $button_name, $nonce_action ) {
                 <p class="qtranxs-notes"><?php _e( 'Choose the corresponding country flag for language. (Example: gb.png)', 'qtranslate' ) ?></p>
             </div>
             <script type="text/javascript">
-                //<![CDATA[
-                function switch_flag(url) {
-                    document.getElementById('preview_flag').style.display = "inline";
-                    document.getElementById('preview_flag').src = "<?php echo qtranxf_flag_location() ?>" + url;
-                }
+				//<![CDATA[
+				function switch_flag(url) {
+					document.getElementById('preview_flag').style.display = "inline";
+					document.getElementById('preview_flag').src = "<?php echo qtranxf_flag_location() ?>" + url;
+				}
 
-                switch_flag(document.getElementById('language_flag').value);
-                //]]>
+				switch_flag(document.getElementById('language_flag').value);
+				//]]>
             </script>
             <div class="form-field">
                 <label for="language_name"><?php _e( 'Name', 'qtranslate' );
@@ -530,13 +530,13 @@ function qtranxf_conf() {
                                 <label for="filter_options_mode_all"><input type="radio" name="filter_options_mode"
                                                                             id="filter_options_mode_all"
                                                                             value=<?php echo '"' . QTX_FILTER_OPTIONS_ALL . '"';
-								                                            checked( $q_config['filter_options_mode'], QTX_FILTER_OPTIONS_ALL ) ?>/> <?php _e( 'Filter all WordPress options for translation at front-end. It may hurt performance of the site, but ensures that all options are translated.', 'qtranslate' ) ?> <?php _e( 'Starting from version 3.2.5, only options with multilingual content get filtered, which should help on performance issues.', 'qtranslate' ) ?>
+									checked( $q_config['filter_options_mode'], QTX_FILTER_OPTIONS_ALL ) ?>/> <?php _e( 'Filter all WordPress options for translation at front-end. It may hurt performance of the site, but ensures that all options are translated.', 'qtranslate' ) ?> <?php _e( 'Starting from version 3.2.5, only options with multilingual content get filtered, which should help on performance issues.', 'qtranslate' ) ?>
                                 </label>
                                 <br/>
                                 <label for="filter_options_mode_list"><input type="radio" name="filter_options_mode"
                                                                              id="filter_options_mode_list"
                                                                              value=<?php echo '"' . QTX_FILTER_OPTIONS_LIST . '"';
-								                                             checked( $q_config['filter_options_mode'], QTX_FILTER_OPTIONS_LIST ) ?>/> <?php _e( 'Translate only options listed below (for experts only):', 'qtranslate' ) ?>
+									checked( $q_config['filter_options_mode'], QTX_FILTER_OPTIONS_LIST ) ?>/> <?php _e( 'Translate only options listed below (for experts only):', 'qtranslate' ) ?>
                                 </label>
                                 <br/>
                                 <input type="text" name="filter_options" id="qtranxs_filter_options"

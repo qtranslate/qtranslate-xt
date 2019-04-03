@@ -21,7 +21,7 @@ function qtranxf_admin_set_default_options( &$ops ) {
 
 	//single line options
 	$ops['admin']['str'] = array(
-		'lsb_style'              => 'Simple_Buttons.css'
+		'lsb_style' => 'Simple_Buttons.css'
 	);
 
 	//multi-line options

@@ -459,8 +459,8 @@ function qtranxf_add_meta_box_LSB( $post_type, $post = null ) {
 add_action( 'add_meta_boxes', 'qtranxf_add_meta_box_LSB', 10, 2 );
 
 /**
- * @since 3.3
  * @return true if post type is listed in option 'Post Types'.
+ * @since 3.3
  */
 function qtranxf_post_type_optional( $post_type ) {
 	switch ( $post_type ) {
@@ -493,14 +493,14 @@ function qtranxf_config_add_form( &$page_config, $nm ) {
 }
 
 /**
- * @since 3.4.5
- * check the WP Nonce - OK if POST is empty
- * @link https://codex.wordpress.org/Function_Reference/wp_nonce_field#Examples
- *
- * @param  string $nonce_name Name specified when generating the nonce
- * @param  string $nonce_field Form input name for the nonce
+ * @param string $nonce_name Name specified when generating the nonce
+ * @param string $nonce_field Form input name for the nonce
  *
  * @return boolean             True if the nonce is ok
+ * @link https://codex.wordpress.org/Function_Reference/wp_nonce_field#Examples
+ *
+ * @since 3.4.5
+ * check the WP Nonce - OK if POST is empty
  */
 function qtranxf_verify_nonce( $nonce_name, $nonce_field = '_wpnonce' ) {
 	return empty( $_POST ) || check_admin_referer( $nonce_name, $nonce_field );

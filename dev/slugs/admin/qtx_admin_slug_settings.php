@@ -162,7 +162,7 @@ function qtranxf_migrate_import_qtranslate_slug(){
 		foreach($result as $row) {
 			// todo
 			// $slug = $row->meta_value;
-			$lang = substr($row->meta_key,-2);
+			$lang = substr( $row->meta_key,-2);
 			$name = $row->post_name;
 //			if($lang == $default_language){
 //				if($slug != $name){

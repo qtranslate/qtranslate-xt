@@ -718,6 +718,7 @@ function qtranxf_parse_post_type_excluded() {
 	unset( $_POST['post_types'] );
 	unset( $_POST['post_types_all'] );
 	$_POST['post_type_excluded'] = $post_type_excluded;
+
 	//qtranxf_dbg_log('qtranxf_parse_post_type_excluded: $_POST[post_type_excluded]: ',$_POST['post_type_excluded']);
 	return true;
 }

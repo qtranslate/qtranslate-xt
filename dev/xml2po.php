@@ -40,8 +40,9 @@ foreach ( $languages as $lang_code => $language ) {
 		if ( ! isset( $languages[ $lang_code ]['translations'][ $matches[1] ] ) ) {
 			$languages[ $lang_code ]['translations'][ $matches[1] ] = $matches[5];
 		} else {
-			$languages[ $lang_code ]['translation_alernatives'][ $matches[1] ][] = array( 'type'        => $matches[4],
-			                                                                              'translation' => $matches[5]
+			$languages[ $lang_code ]['translation_alernatives'][ $matches[1] ][] = array(
+				'type'        => $matches[4],
+				'translation' => $matches[5]
 			);
 		}
 

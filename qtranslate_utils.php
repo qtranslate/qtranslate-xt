@@ -474,6 +474,7 @@ function qtranxf_get_domain_language( $host ) {
 			return $lang;
 		}
 	}
+
 	return null;
 }
 
@@ -495,6 +496,7 @@ function qtranxf_external_host_ex( $host, $homeinfo ) {
 			if ( $homeinfo['host'] == $host ) {
 				return false;
 			}
+
 			return true;
 		default:
 			return true;
@@ -843,9 +845,9 @@ function qtranxf_getSortedLanguages( $reverse = false ) {
  * Evaluate if the request URI leads to a REST call.
  * This is only a prediction based on REST prefix, but no strict guarantee the REST request will be processed as such.
  *
- * @see rest_api_register_rewrites in wp_includes/rest-api.php for the REST rewrite rules using query_var = rest_route
- * @see parse_request in wp_includes/class-wp.php for the final processing of REQUEST_URI
  * @return bool
+ * @see parse_request in wp_includes/class-wp.php for the final processing of REQUEST_URI
+ * @see rest_api_register_rewrites in wp_includes/rest-api.php for the REST rewrite rules using query_var = rest_route
  */
 function qtranxf_is_rest_request_expected() {
 	return stripos( $_SERVER['REQUEST_URI'], '/' . rest_get_url_prefix() . '/' ) !== false;
@@ -859,10 +861,10 @@ function qtranxf_is_rest_request_expected() {
  */
 function qtranxf_can_redirect() {
 	return ! defined( 'WP_ADMIN' ) && ! defined( 'DOING_AJAX' ) && ! defined( 'WP_CLI' ) && ! defined( 'DOING_CRON' ) && empty( $_POST )
-		   && ( ! qtranxf_is_rest_request_expected() )
-		   //'REDIRECT_*' needs more testing
-		   //&& !isset($_SERVER['REDIRECT_URL'])
-		   && ( ! isset( $_SERVER['REDIRECT_STATUS'] ) || $_SERVER['REDIRECT_STATUS'] == '200' );
+	       && ( ! qtranxf_is_rest_request_expected() )
+	       //'REDIRECT_*' needs more testing
+	       //&& !isset($_SERVER['REDIRECT_URL'])
+	       && ( ! isset( $_SERVER['REDIRECT_STATUS'] ) || $_SERVER['REDIRECT_STATUS'] == '200' );
 }
 
 /**
@@ -1279,6 +1281,7 @@ function qtranxf_match_language_locale( $locale ) {
 			return $lang;
 		}
 	}
+
 	return null;
 }
 

@@ -52,17 +52,17 @@ interface WP_Translator {
 	public static function get_translator();
 
 	/**
-	 * @since 3.4.6.9
 	 * @return string two-letter code of active language.
+	 * @since 3.4.6.9
 	 */
 	public function get_language();
 
 	/**
-	 * @since 3.4.6.9
-	 *
 	 * @param string $lang two-letter code of language to be set as active. Further translations will be to this language unless desired languge is specified.
 	 *
 	 * @return string two-letter code of new active language.
+	 * @since 3.4.6.9
+	 *
 	 */
 	public function set_language( $lang );
 

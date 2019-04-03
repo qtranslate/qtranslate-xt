@@ -4,9 +4,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * @param WP_Term $term
+ *
  * @since 3.4.6.9
  *
- * @param WP_Term $term
  */
 function qtranxf_term_set_i18n_config( $term ) {
 	$term->i18n_config = array();
@@ -68,11 +69,11 @@ function qtranxf_useTermLib( $obj ) {
 }
 
 /**
- * @since 3.4.6.9
- *
  * @param WP_Term $term
  *
  * @return string term name in default language.
+ * @since 3.4.6.9
+ *
  */
 function qtranxf_term_name_in( $lang, $term ) {
 	if ( isset( $term->i18n_config['name']['ts'][ $lang ] ) ) {

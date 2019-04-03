@@ -186,8 +186,8 @@ function qtranxf_load_admin_page_config() {
 }
 
 /**
- * @since 3.4.7
  * @return bool true is we are on qtx configuration page.
+ * @since 3.4.7
  */
 function qtranxf_admin_is_config_page() {
 	static $is_config_page;
@@ -456,9 +456,9 @@ function qtranxf_add_admin_footer_js() {
 	foreach ( $keys as $key ) {
 		$config[ $key ] = $q_config[ $key ];
 	}
-	$config['lsb_style_subitem'] = ( $q_config['lsb_style'] == 'Simple_Buttons.css' ) ? 'button' : '';
+	$config['lsb_style_subitem']      = ( $q_config['lsb_style'] == 'Simple_Buttons.css' ) ? 'button' : '';
 	$config['lsb_style_active_class'] = ( $q_config['lsb_style'] == 'Tabs_in_Block.css' ) ? 'wp-ui-highlight' : 'active';
-	$config['lsb_style_wrap_class'] = ( $q_config['lsb_style'] == 'Tabs_in_Block.css' ) ? 'wp-ui-primary' : '';
+	$config['lsb_style_wrap_class']   = ( $q_config['lsb_style'] == 'Tabs_in_Block.css' ) ? 'wp-ui-primary' : '';
 
 	$config['custom_fields']        = apply_filters( 'qtranslate_custom_fields', $q_config['custom_fields'] );
 	$config['custom_field_classes'] = apply_filters( 'qtranslate_custom_field_classes', $q_config['custom_field_classes'] );
@@ -514,7 +514,7 @@ function qtranxf_add_admin_footer_js() {
 	qtranxf_enqueue_scripts( $page_config['js'] );
 	?>
     <script type="text/javascript">
-        // <![CDATA[
+		// <![CDATA[
 		<?php
 		echo 'var qTranslateConfig=' . json_encode( $config ) . ';' . PHP_EOL;
 		// each script entry may define javascript code to be injected
@@ -528,7 +528,7 @@ function qtranxf_add_admin_footer_js() {
 		}
 		do_action( 'qtranslate_add_admin_footer_js' );
 		?>
-        //]]>
+		//]]>
     </script>
 	<?php
 }
