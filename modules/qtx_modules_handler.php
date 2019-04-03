@@ -6,12 +6,12 @@ class QTX_Modules_Handler {
 	 */
 	public static function get_modules_defs() {
 		return array(
-//			array(
-//				'id'           => 'gravity-forms',
-//				'name'         => 'Gravity Forms',
-//				'plugin'       => 'gravityforms/gravityforms.php',
-//				'incompatible' => 'qtranslate-support-for-gravityforms/qtranslate-support-for-gravityforms.php'
-//			),
+			array(
+				'id'           => 'gravity-forms',
+				'name'         => 'Gravity Forms',
+				'plugin'       => 'gravityforms/gravityforms.php',
+				'incompatible' => 'qtranslate-support-for-gravityforms/qtranslate-support-for-gravityforms.php'
+			),
 //			array(
 //				'id'           => 'woo-commerce',
 //				'name'         => 'WooCommerce',
