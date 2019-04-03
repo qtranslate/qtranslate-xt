@@ -428,7 +428,8 @@ function qtranxf_normalize_config_files( $found ) {
  */
 function qtranxf_find_plugin_by_foder( $fld, $plugins ) {
 	_deprecated_function( __FUNCTION__, '3.5.5', 'qtranxf_find_plugin_by_folder()' );
-	return qtranxf_find_plugin_by_folder ( $fld, $plugins );
+
+	return qtranxf_find_plugin_by_folder( $fld, $plugins );
 }
 
 /**

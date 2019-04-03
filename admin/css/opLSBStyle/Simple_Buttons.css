@@ -1,46 +1,46 @@
 /* Language Switching Buttons as Simple Horizontal Block */
 
 .qtranxs-lang-switch-wrap {
-	margin: 8px 0 4px;
+    margin: 8px 0 4px;
 }
 
 .qtranxs-lang-switch, .qtranxs-lang-copy {
-	margin: 1px 2px 1px 0;
-	display: inline-block;
+    margin: 1px 2px 1px 0;
+    display: inline-block;
 }
 
 .qtranxs-lang-switch-wrap .button {
-	height: auto;
-	padding: 0 6px;
-	vertical-align: initial;
-	white-space: nowrap	
+    height: auto;
+    padding: 0 6px;
+    vertical-align: initial;
+    white-space: nowrap
 }
 
 .qtranxs-lang-switch img {
-	vertical-align: middle;
-	margin-right: 4px;
-	margin-bottom: 2px;
+    vertical-align: middle;
+    margin-right: 4px;
+    margin-bottom: 2px;
 }
 
 .qtranxs-lang-copy .button {
-	margin-left: 20px;
-	line-height: 10px;	
-	font-size: 10px;
-	border-radius: 12px;
-	padding: 4px 8px;
-	white-space: nowrap;
+    margin-left: 20px;
+    line-height: 10px;
+    font-size: 10px;
+    border-radius: 12px;
+    padding: 4px 8px;
+    white-space: nowrap;
 }
 
 .qtranxs-lang-switch-wrap.copying .qtranxs-lang-switch:not(.active) .button {
-	cursor: copy;
-	border: dashed 1px #0085ba;
+    cursor: copy;
+    border: dashed 1px #0085ba;
 }
 
 .qtranxs-lang-switch-wrap.copying .qtranxs-lang-switch.active .button {
-	cursor: default;
-	border: double 1px #0085ba;
+    cursor: default;
+    border: double 1px #0085ba;
 }
 
 .qtranxs-lang-switch-wrap.copying .qtranxs-lang-copy .button {
-	cursor: copy;
+    cursor: copy;
 }

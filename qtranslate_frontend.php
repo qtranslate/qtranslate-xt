@@ -397,10 +397,11 @@ function qtranxf_remove_detached_children( &$items, &$itemsremoved ) {
 }
 
 /**
- * @since 3.3.8.9
- *
  * @param (mixed) $value to translate, which may be array, object or string
  *                and may have serialized parts with embedded multilingual values.
+ *
+ * @since 3.3.8.9
+ *
  */
 function qtranxf_translate_deep( $value, $lang ) {
 	if ( is_string( $value ) ) {

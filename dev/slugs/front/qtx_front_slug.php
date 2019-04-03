@@ -16,16 +16,23 @@
 	along with this program; if not, write to the Free Software
 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 */
-if ( !defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
-function qtranxf_slug_sanitize_title($title, $raw_title = '', $context = 'save') {
-	switch($context) {
-		case 'query':{
-			$name = qtranxf_slug_get_name($title);
-			if($name) return $name;
-		} break;
-		default: break;
+function qtranxf_slug_sanitize_title( $title, $raw_title = '', $context = 'save' ) {
+	switch ( $context ) {
+		case 'query':
+			$name = qtranxf_slug_get_name( $title );
+			if ( $name ) {
+				return $name;
+			}
+			break;
+		default:
+			break;
 	}
+
 	return $title;
 }
-add_filter('sanitize_title', 'qtranxf_slug_sanitize_title', 5, 3);
+
+add_filter( 'sanitize_title', 'qtranxf_slug_sanitize_title', 5, 3 );

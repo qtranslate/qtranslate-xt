@@ -1,41 +1,41 @@
 {
-    "name":"qtranslate/qtranslate-xt",
-    "description":"qTranslate-XT (eXTended): Adds a user-friendly multilingual dynamic content management.",
-    "type":"wordpress-plugin",
-    "keywords": [
-        "wordpress",
-        "wordpress-plugin",
-        "qtranslate-x",
-        "qtranslate-xt",
-        "i18n"
-    ],
-    "homepage":"https://github.com/qtranslate/qtranslate-xt",
-    "license":"GPL-3.0-or-later",
-    "authors": [
-        {
-            "name":"herrvigg"
-        },
-        {
-            "name":"johnclause"
-        },
-        {
-            "name":"chineseleper"
-        },
-        {
-            "name":"Vavooon"
-        },
-        {
-            "name":"grafcom"
-        }
-    ],
-    "support": {
-        "issues":"https://github.com/qtranslate/qtranslate-xt/issues",
-        "source":"https://github.com/qtranslate/qtranslate-xt"
+  "name": "qtranslate/qtranslate-xt",
+  "description": "qTranslate-XT (eXTended): Adds a user-friendly multilingual dynamic content management.",
+  "type": "wordpress-plugin",
+  "keywords": [
+    "wordpress",
+    "wordpress-plugin",
+    "qtranslate-x",
+    "qtranslate-xt",
+    "i18n"
+  ],
+  "homepage": "https://github.com/qtranslate/qtranslate-xt",
+  "license": "GPL-3.0-or-later",
+  "authors": [
+    {
+      "name": "herrvigg"
     },
-    "require": {
-        "composer/installers":"~1.0"
+    {
+      "name": "johnclause"
     },
-    "extra": {
-        "installer-name":"qtranslate-xt"
+    {
+      "name": "chineseleper"
+    },
+    {
+      "name": "Vavooon"
+    },
+    {
+      "name": "grafcom"
     }
+  ],
+  "support": {
+    "issues": "https://github.com/qtranslate/qtranslate-xt/issues",
+    "source": "https://github.com/qtranslate/qtranslate-xt"
+  },
+  "require": {
+    "composer/installers": "~1.0"
+  },
+  "extra": {
+    "installer-name": "qtranslate-xt"
+  }
 }

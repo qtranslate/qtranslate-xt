@@ -10,7 +10,7 @@ function qtranxf_migrate_options_update( $nm_to, $nm_from ) {
 		if ( strpos( $name, '_flag_location' ) > 0 ) {
 			continue;
 		}
-		$nm = str_replace( $nm_to, $nm_from, $name );
+		$nm    = str_replace( $nm_to, $nm_from, $name );
 		$value = get_option( $nm );
 		if ( $value === false ) {
 			continue;

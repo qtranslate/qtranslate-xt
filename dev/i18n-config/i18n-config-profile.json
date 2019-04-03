@@ -1,16 +1,25 @@
-{"vendor":{"plugins/qtranslate-x":"1.0"},
-"admin-config":{
-	"profile":{
-		"pages":{"profile.php":""},
-		"anchors":{"description":{"where":"before"}},
-		"forms":{
-			"main":{
-				"fields":{
-					"nickname":{},
-					"description":{}
-				}
-			}
-		}
-	}
-}
+{
+  "vendor": {
+    "plugins/qtranslate-x": "1.0"
+  },
+  "admin-config": {
+    "profile": {
+      "pages": {
+        "profile.php": ""
+      },
+      "anchors": {
+        "description": {
+          "where": "before"
+        }
+      },
+      "forms": {
+        "main": {
+          "fields": {
+            "nickname": {},
+            "description": {}
+          }
+        }
+      }
+    }
+  }
 }

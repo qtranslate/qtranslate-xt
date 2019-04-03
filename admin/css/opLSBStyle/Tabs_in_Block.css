@@ -1,54 +1,54 @@
 /* Language Switching Buttons as Tabs in Black Block */
 
 .qtranxs-lang-switch-wrap {
-	margin: 0;
+    margin: 0;
 }
 
 .qtranxs-lang-switch {
-	padding: 6px 8px;
-	margin: 0px 4px;
-	display: inline-block;
-	cursor: pointer;
+    padding: 6px 8px;
+    margin: 0px 4px;
+    display: inline-block;
+    cursor: pointer;
 }
 
 .qtranxs-lang-copy {
-	margin: 0;
-	display: inline-block;
+    margin: 0;
+    display: inline-block;
 }
 
 .qtranxs-lang-switch-wrap .qtranxs-lang-switch:not(.wp-ui-highlight):hover {
-	color: #00a0d2;
+    color: #00a0d2;
 }
 
 .qtranxs-lang-switch img {
-	margin-right: 4px;
+    margin-right: 4px;
 }
 
 .qtranxs-lang-copy .button {
-	height: auto;
-	line-height: 10px;	
-	margin-left: 20px;
-	font-size: 10px;
-	border-radius: 12px;
-	padding: 4px 8px;
-	white-space: nowrap;
-	vertical-align: 1px;
+    height: auto;
+    line-height: 10px;
+    margin-left: 20px;
+    font-size: 10px;
+    border-radius: 12px;
+    padding: 4px 8px;
+    white-space: nowrap;
+    vertical-align: 1px;
 }
 
 .qtranxs-lang-copy .dashicons {
-	vertical-align: initial;
-	font-size: 12px;
+    vertical-align: initial;
+    font-size: 12px;
 }
 
 .qtranxs-lang-switch-wrap.copying .qtranxs-lang-switch:not(.wp-ui-highlight) {
-	cursor: copy;
-	text-decoration: underline;
+    cursor: copy;
+    text-decoration: underline;
 }
 
 .qtranxs-lang-switch-wrap.copying .qtranxs-lang-switch.wp-ui-highlight {
-	cursor: default;
+    cursor: default;
 }
 
 .qtranxs-lang-switch-wrap.copying .qtranxs-lang-copy .button {
-	cursor: copy;
+    cursor: copy;
 }
