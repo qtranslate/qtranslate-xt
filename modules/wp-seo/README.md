@@ -2,6 +2,8 @@
 
 ## Description
 
+Enables multilingual framework for plugin [Yoast SEO](https://wordpress.org/plugins/wordpress-seo/).
+
 This module was converted from the legacy plugin [Integration: Yoast SEO & qTranslate-X](https://github.com/qTranslate-Team/wp-seo-qtranslate-x).
 
 ## Frequently Asked Questions ##
@@ -10,11 +12,9 @@ This module was converted from the legacy plugin [Integration: Yoast SEO & qTran
 
 Most likely you deactivated "Yoast SEO" plugin and then activated it again. When XML Sitemaps are enabled on Yoast "XML Sitemaps" configuration page `/wp-admin/admin.php?page=wpseo_xml` and Yoast plugin is deactivated, it clears rewrite rules needed for sitemap to function. On next activation of Yoast plugin, sitemaps no longer function until their functionality is deactivated and then activated again on Yoast configuration page "XML Sitemaps".
 
-### Something does not work right, is it me? ###
-
-Please, review section "[Known Issues](https://wordpress.org/plugins/wp-seo-qtranslate-x/other_notes/)".
-
 ## Upgrade Notice ##
+
+Note: the following versions correspond to the legacy plugin and not this repo.
 
 ### 1.2 ###
 * Fixer for whatever got broken after Yoast has re-designed his plugin in version 3.0
@@ -23,6 +23,8 @@ Please, review section "[Known Issues](https://wordpress.org/plugins/wp-seo-qtra
 * Change of plugin name "Yoast SEO & qTranslate-X" to "Integration: Yoast SEO & qTranslate-X" to satisfy [WordPress trademark guideline #17](https://developer.wordpress.org/plugins/wordpress-org/detailed-plugin-guidelines/): no plugin name should start with other plugin name. Sorry, there is no any functionality-wise improvement.
 
 ## Changelog ##
+
+Note: the following versions correspond to the legacy plugin and not this repo.
 
 ### 1.2 ###
 * Fix: the functionality after Yoast has re-designed his plugin in version 3.0.

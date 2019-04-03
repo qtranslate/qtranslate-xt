@@ -1,3 +1,6 @@
+### 3.6.0.dev
+* New feature: the provided **built-in modules** replace the legacy integration plugins. See [README.md](https://github.com/qtranslate/qtranslate-xt/blob/master/modules/README.md) in modules for more info.
+
 ### 3.5.5
 * Adds support for Composer (#659)
 * Fix no LSB on categories (#643): this issue occurred with NextGen Gallery but there might be other plugins concerned.

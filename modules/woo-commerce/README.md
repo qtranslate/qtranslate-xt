@@ -2,9 +2,13 @@
 
 ## Description
 
+Enables multilingual framework for plugin [WooCommerce](https://wordpress.org/plugins/woocommerce/).
+
 This module was converted from the legacy plugin [WooCommerce & qTranslate-X](https://github.com/qTranslate-Team/woocommerce-qtranslate-x).
 
 ## Changelog ##
+
+Note: the following versions correspond to the legacy plugin and not this repo.
 
 ### 1.4 ###
 * Improvement: Mini-Cart cached in browser now changes the display language, when user changes the active language. Other browser's tabs will now also show mini-cart in new language regardless to what language they were originally displayed. Woocommerce shares single mini-cart object between all the tabs of browser in the same session. That is why mini-cart will be shown the same on all tabs in the last language chosen by user.

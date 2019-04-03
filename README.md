@@ -42,8 +42,14 @@ Yes and it's very easy! Currently you can have both qTranslate-X and qTranslate-
 
 *Disclaimer: we cannot guarantee that all the functionalites are preserved and the installation is at your own responsibility. Be sure to backup your database regularly.*
 
+### Is the block editor (Gutenberg) supported? ###
+Not yet. Some work is in progress but don't expect this soon.
+
 ### Is WooCommerce supported? ###
-WooCommerce was supported in qTranslate-X through a separate [add-on](https://github.com/qTranslate-Team/woocommerce-qtranslate-x). Since it is quite a small plugin it should definitely be possible to make it work well with qTranslate-XT. Here we need developers who are able to test it properly!
+WooCommerce is now supported with a built-in module. Developers able to test it properly are much welcome! Please send PR for bug fixes.
+
+### Is any plugin/themes supported? ###
+Some major plugins are now supported with the built-in modules. For other plugins you need to provide custom integration through i18n configuration (json) and/or code (PHP/JS). A major refactoring is needed to make this easier.
 
 ### I'm new to qTranslate, where can I find detailed instructions for startup?
 Check the legacy website:
@@ -64,6 +70,9 @@ Note for developers:
 * old releases may contain legacy headers that can become problematic. Be very cautious if you customize the updates for given branches!
 
 ## Upgrade Notice
+
+### 3.6.0
+New feature! The built-in modules replace the legacy plugins for integration. See [README.md](https://github.com/qtranslate/qtranslate-xt/blob/master/modules/README.md) in modules for more info.
 
 ### 3.5.3
 Fix REST API: no redirect allowed. Your rewrite rules should be updated by saving the permalink structures from the admin page.
@@ -93,7 +102,6 @@ The [legacy issues](https://qtranslatexteam.wordpress.com/known-issues/) should 
 ## Desirable Unimplemented Features
 
 * refactor custom integration without json files (i18n-config.json)
-* support for built-in integration with main plugins (WooCommerce, Yoast SEO, ...)
 * support for Gutenberg
 * support for translatable slugs
 * unit/integration tests
