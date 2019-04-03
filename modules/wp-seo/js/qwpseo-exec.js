@@ -58,7 +58,7 @@
 			}
 		};
 
-//saveSnippetData
+		// saveSnippetData
 
 		qtx.addLanguageSwitchAfterListener(
 			function (lang) {
@@ -79,18 +79,19 @@
 
 				//app.showLoadingDialog();
 
-				focuskw_edit.val(focuskw_input.val());//temporary unil Yoast notice their error with duplicated entry in db and fix it
+				focuskw_edit.val(focuskw_input.val());//temporary until Yoast notice their error with duplicated entry in db and fix it
 				app.rawData = app.callbacks.getData();
 
 				//focuskw_edit.val(app.rawData.keyword);
 				metadesc_edit.val(app.rawData.snippetMeta);
 				title_edit.val(app.rawData.snippetTitle);
 
-				app.snippetPreview.data.title = app.rawData.snippetTitle;
-				//app.snippetPreview.data.urlPath = app.rawData.snippetCite;
-				app.snippetPreview.data.metaDesc = app.rawData.snippetMeta;
-				//app.snippetPreview.data = {};
-				//app.runAnalyzer();
+				// TODO this doesn't work anymore: app.snippetPreview is undefined!! Pretty much all JS code needs to be reviewed.
+				// app.snippetPreview.data.title = app.rawData.snippetTitle;
+				// //app.snippetPreview.data.urlPath = app.rawData.snippetCite;
+				// app.snippetPreview.data.metaDesc = app.rawData.snippetMeta;
+				// //app.snippetPreview.data = {};
+				// //app.runAnalyzer();
 
 				//app.getData();
 				//app._pureRefresh();
