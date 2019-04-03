@@ -678,6 +678,39 @@ function qtranxf_conf() {
                                 </p></td>
                         </tr>
                         <tr>
+                            <th scope="row"><?php _e( 'Built-in Modules', 'qtranslate' ) ?></th>
+                            <td>
+                                <label for="qtranxs_modules"
+                                       class="qtranxs_explanation"><?php _e( 'The built-in integration modules are automatically enabled if the related plugin is active and no incompatible plugin (e.g. legacy integration plugin) prevents them to be loaded.', 'qtranslate' ); ?></label>
+                                <br/>
+                                <table id="qtranxs_modules" class="widefat">
+                                    <thead>
+                                    <tr>
+                                        <th class="row-title">Name</th>
+                                        <th>Plugin</th>
+                                        <th>Module</th>
+                                        <th>Status</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+									<?php
+									$modules = QTX_Admin_Modules::get_modules_infos();
+									foreach ( $modules as $module ):
+										?>
+                                        <tr>
+                                            <td><?php echo $module['name']; ?></td>
+                                            <td><?php echo $module['active'] ? __( 'Active', 'qtranslate' ) : __( 'Inactive', 'qtranslate' ) ?></td>
+                                            <td><?php echo $module['active'] ? ( $module['status'] ? __( 'Enabled', 'qtranslate' ) : __( 'Blocked', 'qtranslate' ) ) : __( 'Disabled', 'qtranslate' ) ?></td>
+                                            <td style="color: <? echo $module['active'] ? ( $module['status'] ? "green" : "orange" ) : "" ?>">
+                                                <span class="dashicons <? echo $module['active'] ? ( $module['status'] ? "dashicons-yes" : "dashicons-warning" ) : "dashicons-no-alt" ?>"></span>
+                                            </td>
+                                        </tr>
+									<?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
                             <th scope="row"><?php _e( 'Configuration Files', 'qtranslate' ) ?></th>
                             <td><label for="qtranxs_config_files"
                                        class="qtranxs_explanation"><?php printf( __( 'List of configuration files. Unless prefixed with "%s", paths are relative to %s variable: %s. Absolute paths are also acceptable.', 'qtranslate' ), './', 'WP_CONTENT_DIR', trailingslashit( WP_CONTENT_DIR ) ) ?></label>
@@ -762,10 +795,10 @@ function qtranxf_conf() {
                             </td>
                         </tr>
                     </table>
-					<?php qtranxf_admin_section_end( 'integration' );
-					// Allow to load additional services
-					do_action( 'qtranslate_configuration', $clean_uri );
-					?>
+					<?php qtranxf_admin_section_end( 'integration' ); ?>
+                    // Allow to load additional services
+                    do_action( 'qtranslate_configuration', $clean_uri );
+                    ?>
                 </div><?php //<!-- /tabs-container --> ?>
             </form>
 		<?php } ?>

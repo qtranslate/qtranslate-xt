@@ -3,6 +3,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+require_once( QTRANSLATE_DIR . '/modules/qtx_modules_handler.php' );
+
 function qtranxf_init_language() {
 	global $q_config, $pagenow;
 	//qtranxf_dbg_log('1.qtranxf_init_language:');
@@ -140,8 +142,10 @@ function qtranxf_init_language() {
 
 	qtranxf_load_option_qtrans_compatibility();
 
+	QTX_Modules_Handler::load_modules_enabled();
+
 	/**
-	 * allow other plugins to initialize whatever they need for language
+	 * allow other plugins and modules to initialize whatever they need for language
 	 */
 	do_action( 'qtranslate_init_language', $url_info );
 	//qtranxf_dbg_log('qtranxf_init_language: done: url_info: ',$url_info);
@@ -1777,7 +1781,6 @@ function qtranxf_use_content( $lang, $content, $available_langs, $show_available
 
 	return apply_filters( 'i18n_content_translation_not_available', $output, $lang, $language_list, $alt_lang, $alt_content, $msg, $q_config );
 }
-
 
 function qtranxf_showAllSeparated( $text ) {
 	if ( empty( $text ) ) {

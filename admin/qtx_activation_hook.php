@@ -711,12 +711,12 @@ function qtranxf_clear_debug_log() {
 function qtranxf_activation_hook() {
 	qtranxf_clear_debug_log();
 	//qtranxf_dbg_log('qtranxf_activation_hook: ', __FILE__);
-	if ( version_compare( PHP_VERSION, '5.2.0' ) < 0 ) {
+	if ( version_compare( PHP_VERSION, '5.3.0' ) < 0 ) {
 		// Deactivate ourself
 		$plugin_dir = qtranxf_plugin_dirname();
 		$lang_dir   = $plugin_dir . '/lang';
 		load_plugin_textdomain( 'qtranslate', false, $lang_dir );
-		$msg = sprintf( __( 'Plugin %s requires PHP version %s at least. This server instance runs PHP version %s. A PHP version %s or higher is recommended. The plugin has not been activated.', 'qtranslate' ), qtranxf_get_plugin_link(), '5.2.0', PHP_VERSION, '5.4.0' );
+		$msg = sprintf( __( 'Plugin %s requires PHP version %s at least. This server instance runs PHP version %s. A PHP version %s or higher is recommended. The plugin has not been activated.', 'qtranslate' ), qtranxf_get_plugin_link(), '5.3.0', PHP_VERSION, '7.2' );
 		deactivate_plugins( $plugin_dir . '/qtranslate.php' );
 		wp_die( $msg );
 	}
@@ -1037,9 +1037,6 @@ function qtranxf_admin_notices_plugin_integration() {
 	$cnt += qtranxf_admin_notice_plugin_integration( 'advanced-custom-fields-pro/acf.php', 'ACF qTranslate', 'acf-qtranslate/acf-qtranslate.php' );
 	$cnt += qtranxf_admin_notice_plugin_integration( 'all-in-one-seo-pack/all_in_one_seo_pack.php', 'All in One SEO Pack & qTranslate&#8209;X', 'all-in-one-seo-pack-qtranslate-x/qaioseop.php' );
 	//$cnt += qtranxf_admin_notice_plugin_integration('events-made-easy/events-manager.php', 'Events Made Easy & qTranslate&#8209;X', 'events-made-easy-qtranslate-x/events-made-easy-qtranslate-x.php');
-	$cnt += qtranxf_admin_notice_plugin_integration( 'gravity-forms-addons/gravity-forms-addons.php', 'qTranslate support for GravityForms', 'qtranslate-support-for-gravityforms/qtranslate-support-for-gravityforms.php' );
-	$cnt += qtranxf_admin_notice_plugin_integration( 'woocommerce/woocommerce.php', 'WooCommerce & qTranslate&#8209;X', 'woocommerce-qtranslate-x/woocommerce-qtranslate-x.php' );
-	$cnt += qtranxf_admin_notice_plugin_integration( 'wordpress-seo/wp-seo.php', 'Integration: Yoast SEO & qTranslate&#8209;X', 'wp-seo-qtranslate-x/wordpress-seo-qtranslate-x.php' );
 	$cnt += qtranxf_admin_notice_plugin_integration( 'js_composer/js_composer.php', 'WPBakery Visual Composer & qTranslate&#8209;X', 'js-composer-qtranslate-x/js-composer-qtranslate-x.php' );
 	$cnt += qtranxf_admin_notice_plugin_integration( 'fusion-core/fusion-core.php', 'Fusion Core & qTranslate&#8209;X', 'fusion-core-qtranslate-x/fusion-core-qtranslate-x.php' );
 	if ( $cnt > 0 ) {
