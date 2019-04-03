@@ -12,12 +12,12 @@ class QTX_Modules_Handler {
 				'plugin'       => 'gravityforms/gravityforms.php',
 				'incompatible' => 'qtranslate-support-for-gravityforms/qtranslate-support-for-gravityforms.php'
 			),
-//			array(
-//				'id'           => 'woo-commerce',
-//				'name'         => 'WooCommerce',
-//				'plugin'       => 'woocommerce/woocommerce.php',
-//				'incompatible' => 'woocommerce-qtranslate-x/woocommerce-qtranslate-x.php'
-//			),
+			array(
+				'id'           => 'woo-commerce',
+				'name'         => 'WooCommerce',
+				'plugin'       => 'woocommerce/woocommerce.php',
+				'incompatible' => 'woocommerce-qtranslate-x/woocommerce-qtranslate-x.php'
+			),
 //			array(
 //				'id'           => 'wp-seo',
 //				'name'         => 'Yoast',
