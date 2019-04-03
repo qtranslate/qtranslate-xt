@@ -7,6 +7,12 @@ class QTX_Modules_Handler {
 	public static function get_modules_defs() {
 		return array(
 			array(
+				'id'           => 'all-in-one-seo-pack',
+				'name'         => 'All in One SEO Pack',
+				'plugin'       => 'all-in-one-seo-pack/all_in_one_seo_pack.php',
+				'incompatible' => 'all-in-one-seo-pack-qtranslate-x/qaioseop.php'
+			),
+			array(
 				'id'           => 'gravity-forms',
 				'name'         => 'Gravity Forms',
 				'plugin'       => 'gravityforms/gravityforms.php',
@@ -20,7 +26,7 @@ class QTX_Modules_Handler {
 			),
 			array(
 				'id'           => 'wp-seo',
-				'name'         => 'Yoast',
+				'name'         => 'Yoast SEO',
 				'plugin'       => 'wordpress-seo/wp-seo.php',
 				'incompatible' => 'wp-seo-qtranslate-x/wordpress-seo-qtranslate-x.php'
 			)
