@@ -8,6 +8,7 @@ require_once( QTRANSLATE_DIR . '/admin/qtx_languages.php' );
 require_once( QTRANSLATE_DIR . '/admin/qtx_admin_class_translator.php' );
 require_once( QTRANSLATE_DIR . '/admin/qtx_user_options.php' );
 require_once( QTRANSLATE_DIR . '/admin/qtx_admin_taxonomy.php' );
+require_once( QTRANSLATE_DIR . '/admin/qtx_admin_modules.php' );
 
 /** see help notes for function 'qtranxf_collect_translations'
  */
@@ -166,87 +167,6 @@ function qtranxf_decode_translations_posted() {
 
 add_action( 'sanitize_comment_cookies', 'qtranxf_decode_translations_posted', 5 );//after POST & GET are set, and before all WP objects are created, alternatively can use action 'setup_theme' instead.
 
-/**
- * Check if an integration module can be activated:
- * - if the linked plugin to be integrated is active
- * - if no incompatible plugin (legacy) prevents it. In that case, an admin notice is displayed.
- *
- * @param string $integration_plugin plugin file to be checked for integration
- * @param string $incompatible_plugin legacy plugin that is incompatible and must be deactivated for module integration
- *
- * @return array with the module status
- */
-function qtranxf_admin_check_module( $integration_plugin, $incompatible_plugin ) {
-	$module_status = array(
-		'detected' => false,
-		'active'   => false
-	);
-	if ( is_plugin_active( $integration_plugin ) ) {
-		$module_status['detected'] = true;
-		$module_status['active']   = true;
-
-		if ( isset( $incompatible_plugin ) && is_plugin_active( $incompatible_plugin ) ) {
-			$module['active'] = false;
-			add_action( 'admin_notices', function () use ( $incompatible_plugin ) {
-				$plugin_data = get_plugin_data( WP_PLUGIN_DIR . '/' . $incompatible_plugin, false, true );
-				$plugin_name = $plugin_data['Name'];
-				if ( is_plugin_active( $incompatible_plugin ) ) :
-					?>
-                    <div class="notice notice-error is-dismissible">
-                        <p><?php printf( __( '[%s] Incompatible plugin detected: "%s". Please disable it.', 'qtranslate' ), 'qTranslate&#8209;XT', $plugin_name ); ?></p>
-                        <p><a class="button"
-                              href="<?php echo esc_url( wp_nonce_url( admin_url( 'plugins.php?action=deactivate&plugin=' . urlencode( $incompatible_plugin ) ), 'deactivate-plugin_' . $incompatible_plugin ) ) ?>"><strong><?php printf( __( 'Deactivate plugin %s', 'qtranslate' ), $plugin_name ) ?></strong></a>
-                    </div>
-				<?php
-				endif;
-			} );
-		}
-	}
-	return $module_status;
-}
-
-/**
- * Retrieve the definitions of the integration modules.
- */
-function qtranxf_admin_get_integration_modules() {
-	return array(
-		array(
-			'id'           => 'gravity-forms',
-			'name'         => 'Gravity Forms',
-			'plugin'       => 'gravityforms/gravityforms.php',
-			'incompatible' => 'qtranslate-support-for-gravityforms/qtranslate-support-for-gravityforms.php'
-		),
-		array(
-			'id'           => 'woo-commerce',
-			'name'         => 'WooCommerce',
-			'plugin'       => 'woocommerce/woocommerce.php',
-			'incompatible' => 'woocommerce-qtranslate-x/woocommerce-qtranslate-x.php'
-		),
-		array(
-			'id'           => 'wp-seo',
-			'name'         => 'Yoast',
-			'plugin'       => 'wordpress-seo/wp-seo.php',
-			'incompatible' => 'wp-seo-qtranslate-x/wordpress-seo-qtranslate-x.php'
-		)
-	);
-}
-
-/**
- * Update the modules to be loaded for plugin integration.
- * Note each module can enable hooks both for admin and front requests.
- * The valid modules are stored in the 'qtranslate_modules' option.
- */
-function qtranxf_admin_update_modules_option() {
-	require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-
-	$def_modules    = qtranxf_admin_get_integration_modules();
-	$option_modules = array();
-	foreach ( $def_modules as $module ) {
-		$option_modules[ $module['id'] ] = qtranxf_admin_check_module( $module['plugin'], $module['incompatible'] );
-	}
-	update_option( 'qtranslate_modules', $option_modules );
-}
-
 function qtranxf_admin_load() {
 	//qtranxf_dbg_log('1.4.qtranxf_admin_load:');
 	qtranxf_admin_loadConfig();
@@ -254,7 +174,7 @@ function qtranxf_admin_load() {
 	add_filter( 'plugin_action_links_' . $bnm, 'qtranxf_links', 10, 4 );
 	add_action( 'qtranslate_init_language', 'qtranxf_load_admin_page_config', 20 );//should be excuted after all plugins loaded their *-admin.php
 	qtranxf_add_admin_filters();
-	qtranxf_admin_update_modules_option();
+	QTX_Admin_Modules::update_modules_option();
 }
 
 qtranxf_admin_load();

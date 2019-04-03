@@ -70,14 +70,14 @@ function qtranxf_language_form( $form_action, $button_name, $nonce_action ) {
                 <p class="qtranxs-notes"><?php _e( 'Choose the corresponding country flag for language. (Example: gb.png)', 'qtranslate' ) ?></p>
             </div>
             <script type="text/javascript">
-                //<![CDATA[
-                function switch_flag(url) {
-                    document.getElementById('preview_flag').style.display = "inline";
-                    document.getElementById('preview_flag').src = "<?php echo qtranxf_flag_location() ?>" + url;
-                }
+				//<![CDATA[
+				function switch_flag(url) {
+					document.getElementById('preview_flag').style.display = "inline";
+					document.getElementById('preview_flag').src = "<?php echo qtranxf_flag_location() ?>" + url;
+				}
 
-                switch_flag(document.getElementById('language_flag').value);
-                //]]>
+				switch_flag(document.getElementById('language_flag').value);
+				//]]>
             </script>
             <div class="form-field">
                 <label for="language_name"><?php _e( 'Name', 'qtranslate' );
@@ -530,13 +530,13 @@ function qtranxf_conf() {
                                 <label for="filter_options_mode_all"><input type="radio" name="filter_options_mode"
                                                                             id="filter_options_mode_all"
                                                                             value=<?php echo '"' . QTX_FILTER_OPTIONS_ALL . '"';
-								                                            checked( $q_config['filter_options_mode'], QTX_FILTER_OPTIONS_ALL ) ?>/> <?php _e( 'Filter all WordPress options for translation at front-end. It may hurt performance of the site, but ensures that all options are translated.', 'qtranslate' ) ?> <?php _e( 'Starting from version 3.2.5, only options with multilingual content get filtered, which should help on performance issues.', 'qtranslate' ) ?>
+									checked( $q_config['filter_options_mode'], QTX_FILTER_OPTIONS_ALL ) ?>/> <?php _e( 'Filter all WordPress options for translation at front-end. It may hurt performance of the site, but ensures that all options are translated.', 'qtranslate' ) ?> <?php _e( 'Starting from version 3.2.5, only options with multilingual content get filtered, which should help on performance issues.', 'qtranslate' ) ?>
                                 </label>
                                 <br/>
                                 <label for="filter_options_mode_list"><input type="radio" name="filter_options_mode"
                                                                              id="filter_options_mode_list"
                                                                              value=<?php echo '"' . QTX_FILTER_OPTIONS_LIST . '"';
-								                                             checked( $q_config['filter_options_mode'], QTX_FILTER_OPTIONS_LIST ) ?>/> <?php _e( 'Translate only options listed below (for experts only):', 'qtranslate' ) ?>
+									checked( $q_config['filter_options_mode'], QTX_FILTER_OPTIONS_LIST ) ?>/> <?php _e( 'Translate only options listed below (for experts only):', 'qtranslate' ) ?>
                                 </label>
                                 <br/>
                                 <input type="text" name="filter_options" id="qtranxs_filter_options"
@@ -678,31 +678,34 @@ function qtranxf_conf() {
                                 </p></td>
                         </tr>
                         <tr>
-                            <th scope="row"><?php _e( 'Built-in modules', 'qtranslate' ) ?></th>
+                            <th scope="row"><?php _e( 'Built-in Modules', 'qtranslate' ) ?></th>
                             <td>
-                                <table class="widefat">
+                                <label for="qtranxs_modules"
+                                       class="qtranxs_explanation"><?php _e( 'The built-in integration modules are automatically enabled if the related plugin is active and no incompatible plugin (e.g. legacy integration plugin) prevents them to be loaded.', 'qtranslate' ); ?></label>
+                                <br/>
+                                <table id="qtranxs_modules" class="widefat">
                                     <thead>
-                                        <tr>
-                                            <th class="row-title">Plugin</th>
-                                            <th>Detected</th>
-                                            <th>Module</th>
-                                        </tr>
+                                    <tr>
+                                        <th class="row-title">Name</th>
+                                        <th>Plugin</th>
+                                        <th>Module</th>
+                                        <th>Status</th>
+                                    </tr>
                                     </thead>
                                     <tbody>
-                                    <?php
-                                    $def_modules  = qtranxf_admin_get_integration_modules();
-                                    $options_modules = get_option( 'qtranslate_modules', array());
-                                    foreach ($def_modules as $def_module):
-                                        if (! array_key_exists($def_module['id'], $options_modules))
-                                            continue;
-                                        $options_module = $options_modules[$def_module['id']];
-                                        ?>
+									<?php
+									$modules = QTX_Admin_Modules::get_modules_infos();
+									foreach ( $modules as $module ):
+										?>
                                         <tr>
-                                            <td><?php echo $def_module['name']; ?></td>
-                                            <td><?php echo $options_module['detected'] ? __( 'Yes', 'qtranslate' ) : __( 'No', 'qtranslate' ); ?></td>
-                                            <td><?php echo $options_module['active'] ? __( 'Active', 'qtranslate' ) : ($options_module['detected'] ? __( 'Incompatible', 'qtranslate' ) : __( 'Inactive', 'qtranslate' )); ?></td>
+                                            <td><?php echo $module['name']; ?></td>
+                                            <td><?php echo $module['active'] ? __( 'Active', 'qtranslate' ) : __( 'Inactive', 'qtranslate' ) ?></td>
+                                            <td><?php echo $module['active'] ? ( $module['status'] ? __( 'Enabled', 'qtranslate' ) : __( 'Blocked', 'qtranslate' ) ) : __( 'Disabled', 'qtranslate' ) ?></td>
+                                            <td style="color: <? echo $module['active'] ? ( $module['status'] ? "green" : "orange" ) : "" ?>">
+                                                <span class="dashicons <? echo $module['active'] ? ( $module['status'] ? "dashicons-yes" : "dashicons-warning" ) : "dashicons-no-alt" ?>"></span>
+                                            </td>
                                         </tr>
-                                    <?php endforeach; ?>
+									<?php endforeach; ?>
                                     </tbody>
                                 </table>
                             </td>
@@ -792,10 +795,10 @@ function qtranxf_conf() {
                             </td>
                         </tr>
                     </table>
-                    <?php qtranxf_admin_section_end( 'integration' ); ?>
-					// Allow to load additional services
-					do_action( 'qtranslate_configuration', $clean_uri );
-					?>
+					<?php qtranxf_admin_section_end( 'integration' ); ?>
+                    // Allow to load additional services
+                    do_action( 'qtranslate_configuration', $clean_uri );
+                    ?>
                 </div><?php //<!-- /tabs-container --> ?>
             </form>
 		<?php } ?>
