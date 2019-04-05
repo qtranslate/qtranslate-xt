@@ -7,6 +7,12 @@ class QTX_Modules_Handler {
 	public static function get_modules_defs() {
 		return array(
 			array(
+				'id'           => 'acf',
+				'name'         => 'ACF',
+				'plugin'       => 'advanced-custom-fields/acf.php',
+				'incompatible' => 'acf-qtranslate/acf-qtranslate.php'
+			),
+			array(
 				'id'           => 'all-in-one-seo-pack',
 				'name'         => 'All in One SEO Pack',
 				'plugin'       => 'all-in-one-seo-pack/all_in_one_seo_pack.php',
