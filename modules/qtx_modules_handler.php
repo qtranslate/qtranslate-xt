@@ -13,6 +13,12 @@ class QTX_Modules_Handler {
 				'incompatible' => 'all-in-one-seo-pack-qtranslate-x/qaioseop.php'
 			),
 			array(
+				'id'           => 'events-made-easy',
+				'name'         => 'Events Made Easy',
+				'plugin'       => 'events-made-easy/events-manager.php',
+				'incompatible' => 'events-made-easy-qtranslate-x/events-made-easy-qtranslate-x.php'
+			),
+			array(
 				'id'           => 'gravity-forms',
 				'name'         => 'Gravity Forms',
 				'plugin'       => 'gravityforms/gravityforms.php',
