@@ -824,18 +824,18 @@ function qtranxf_admin_notices_config() {
 	}
 
 	$screen = get_current_screen();
-	if ( isset( $screen->id ) && $screen->id == 'settings_page_qtranslate-x' ) {
+	if ( isset( $screen->id ) && $screen->id == 'settings_page_qtranslate-xt' ) {
 		$qtitle = '';
 	} else {
 		$qlink  = admin_url( 'options-general.php?page=qtranslate-xt' );
-		$qtitle = '<a href="' . $qlink . '" style="color:magenta">qTranslate&#8209;XT</a>:&nbsp;';
+		$qtitle = '<a href="' . $qlink . '">qTranslate&#8209;XT</a>:&nbsp;';
 	}
-	$fmt = '<div class="%1$s notice is-dismissible" id="qtranxs-%2$s-%1$s"><p>' . $qtitle . '%3$s</p></div>' . PHP_EOL;
+	$fmt = '<div class="notice notice-%1$s is-dismissible" id="qtranxs-%2$s-%1$s"><p>' . $qtitle . '%3$s</p></div>' . PHP_EOL;
 
 	if ( isset( $q_config['url_info']['errors'] ) ) {
 		if ( is_array( $q_config['url_info']['errors'] ) ) {
-			//translators: Colon after a title. Template reused from language menu item.
-			$hdr = sprintf( __( '%s:', 'qtranslate' ), '<strong><span style="color: red;">' . __( 'Error', 'qtranslate' ) . '</span></strong>' ) . '&nbsp;';
+			// translators: Colon after a title. Template reused from language menu item.
+			$hdr = sprintf( __( '%s:', 'qtranslate' ), '<strong>' . __( 'Error', 'qtranslate' ) . '</strong>' ) . '&nbsp;';
 			foreach ( $q_config['url_info']['errors'] as $key => $msg ) {
 				printf( $fmt, 'error', $key, $hdr . $msg );
 			}
@@ -844,10 +844,10 @@ function qtranxf_admin_notices_config() {
 	}
 	if ( isset( $q_config['url_info']['warnings'] ) ) {
 		if ( is_array( $q_config['url_info']['warnings'] ) ) {
-			//translators: Colon after a title. Template reused from language menu item.
-			$hdr = sprintf( __( '%s:', 'qtranslate' ), '<strong><span style="color: blue;">' . __( 'Warning', 'qtranslate' ) . '</span></strong>' ) . '&nbsp;';
+			// translators: Colon after a title. Template reused from language menu item.
+			$hdr = sprintf( __( '%s:', 'qtranslate' ), '<strong>' . __( 'Warning', 'qtranslate' ) . '</strong>' ) . '&nbsp;';
 			foreach ( $q_config['url_info']['warnings'] as $key => $msg ) {
-				printf( $fmt, 'update-nag', $key, $hdr . $msg );
+				printf( $fmt, 'warning', $key, $hdr . $msg );
 			}
 		}
 		unset( $q_config['url_info']['warnings'] );
@@ -855,7 +855,7 @@ function qtranxf_admin_notices_config() {
 	if ( isset( $q_config['url_info']['messages'] ) ) {
 		if ( is_array( $q_config['url_info']['messages'] ) ) {
 			foreach ( $q_config['url_info']['messages'] as $key => $msg ) {
-				printf( $fmt, 'updated', $key, $msg );
+				printf( $fmt, 'info', $key, $msg );
 			}
 		}
 		unset( $q_config['url_info']['messages'] );

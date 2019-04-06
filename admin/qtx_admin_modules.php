@@ -49,13 +49,13 @@ class QTX_Admin_Modules {
 			$incompatible_plugin = $module_def['incompatible'];
 			if ( isset( $incompatible_plugin ) && is_plugin_active( $incompatible_plugin ) ) {
 				$module_status = false;
-				add_action( 'admin_notices', function () use ( $incompatible_plugin ) {
+				add_action( 'admin_notices', function () use ( $incompatible_plugin, $module_def ) {
 					$plugin_data = get_plugin_data( WP_PLUGIN_DIR . '/' . $incompatible_plugin, false, true );
 					$plugin_name = $plugin_data['Name'];
 					if ( is_plugin_active( $incompatible_plugin ) ) :
 						?>
-                        <div class="notice notice-error is-dismissible">
-                            <p><?php printf( __( '[%s] Incompatible plugin detected: "%s". Please disable it.', 'qtranslate' ), 'qTranslate&#8209;XT', $plugin_name ); ?></p>
+                        <div class="notice notice-warning is-dismissible">
+                            <p><?php printf( __( 'The plugin "%s" is incompatible with the module "%s" of %s. Please disable it.', 'qtranslate' ), $plugin_name, $module_def['name'], 'qTranslate&#8209;XT' ); ?></p>
                             <p><a class="button"
                                   href="<?php echo esc_url( wp_nonce_url( admin_url( 'plugins.php?action=deactivate&plugin=' . urlencode( $incompatible_plugin ) ), 'deactivate-plugin_' . $incompatible_plugin ) ) ?>"><strong><?php printf( __( 'Deactivate plugin %s', 'qtranslate' ), $plugin_name ) ?></strong></a>
                         </div>
