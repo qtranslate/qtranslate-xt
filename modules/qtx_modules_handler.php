@@ -2,14 +2,41 @@
 
 class QTX_Modules_Handler {
 	/**
-	 * Retrieve the definitions of the integration modules.
+	 * Loads modules previously enabled in the options after validation for plugin integration on admin-side.
+	 * Note these should be loaded before "qtranslate_init_language" is triggered.
+	 *
+	 * @see QTX_Admin_Modules::update_modules_option()
+	 */
+	public static function load_modules_enabled() {
+		$def_modules     = self::get_modules_defs();
+		$options_modules = get_option( 'qtranslate_modules', array() );
+		foreach ( $def_modules as $def_module ) {
+			if ( ! array_key_exists( $def_module['id'], $options_modules ) ) {
+				continue;
+			}
+			$options_module = $options_modules[ $def_module['id'] ];
+			if ( $options_module ) {
+				require_once( QTRANSLATE_DIR . '/modules/' . $def_module['id'] . '/' . $def_module['id'] . '.php' );
+			}
+		}
+	}
+
+	/**
+	 * Retrieve the definitions of the built-in integration modules.
+	 * Each module is defined by:
+	 * - id: key used to identify the module, also used in options
+	 * - name: for user display
+	 * - plugin (mixed): WP identifier of plugin to be integrated, or array of plugin identifiers
+	 * - incompatible: WP identifier of plugin incompatible with the module
+	 *
+	 * @return array ordered by name
 	 */
 	public static function get_modules_defs() {
 		return array(
 			array(
 				'id'           => 'acf',
-				'name'         => 'ACF',
-				'plugin'       => 'advanced-custom-fields/acf.php',
+				'name'         => 'ACF (free / PRO)',
+				'plugin'       => array( 'advanced-custom-fields/acf.php', 'advanced-custom-fields-pro/acf.php' ),
 				'incompatible' => 'acf-qtranslate/acf-qtranslate.php'
 			),
 			array(
@@ -46,22 +73,4 @@ class QTX_Modules_Handler {
 		);
 	}
 
-	/**
-	 * Loads modules previously enabled in the options after validation for plugin integration on admin-side.
-	 * Note these should be loaded before "qtranslate_init_language" is triggered.
-	 *
-	 * @see QTX_Admin_Modules::update_modules_option()
-	 */
-	public static function load_modules_enabled() {
-		$def_modules  = self::get_modules_defs();
-		$options_modules = get_option( 'qtranslate_modules', array());
-		foreach ($def_modules as $def_module) {
-			if (! array_key_exists($def_module['id'], $options_modules))
-				continue;
-			$options_module = $options_modules[$def_module['id']];
-			if ($options_module) {
-				require_once( QTRANSLATE_DIR . '/modules/' . $def_module['id'] . '/' . $def_module['id'] . '.php' );
-			}
-		}
-	}
 }

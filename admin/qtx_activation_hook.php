@@ -1033,7 +1033,6 @@ function qtranxf_admin_notices_plugin_integration() {
 		return;
 	}
 	$cnt = 0;
-	$cnt += qtranxf_admin_notice_plugin_integration( 'advanced-custom-fields-pro/acf.php', 'ACF qTranslate', 'acf-qtranslate/acf-qtranslate.php' );
 	$cnt += qtranxf_admin_notice_plugin_integration( 'js_composer/js_composer.php', 'WPBakery Visual Composer & qTranslate&#8209;X', 'js-composer-qtranslate-x/js-composer-qtranslate-x.php' );
 	$cnt += qtranxf_admin_notice_plugin_integration( 'fusion-core/fusion-core.php', 'Fusion Core & qTranslate&#8209;X', 'fusion-core-qtranslate-x/fusion-core-qtranslate-x.php' );
 	if ( $cnt > 0 ) {

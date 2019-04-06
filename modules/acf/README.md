@@ -2,7 +2,7 @@
 
 ## Description
 
-Enables multilingual framework for plugin [ACF](https://wordpress.org/plugins/advanced-custom-fields/) and [ACF Pro](http://www.advancedcustomfields.com/pro/).
+Enables multilingual framework for plugin [ACF](https://wordpress.org/plugins/advanced-custom-fields/) and [ACF PRO](http://www.advancedcustomfields.com/pro/).
 
 This module was converted from the legacy plugin [ACF qTranslate](https://github.com/funkjedi/acf-qtranslate).
 
