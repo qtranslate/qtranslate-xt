@@ -985,63 +985,6 @@ function qtranxf_get_plugin_link() {
 	return '<a href="https://github.com/qTranslate/qtranslate-xt/" style="color:blue" target="_blank">qTranslate&#8209;XT</a>';
 }
 
-function qtranxf_admin_notice_plugin_integration( $plugin, $integr_title, $integr_plugin ) {
-	if ( ! is_plugin_active( $plugin ) ) {
-		return 0;
-	}
-	if ( is_plugin_active( $integr_plugin ) ) {
-		return 0;
-	}
-
-	$integr_bnm = dirname( $integr_plugin );
-	if ( qtranxf_check_admin_notice( 'integration-' . $integr_bnm ) ) {
-		return 0;
-	}
-
-	$plugin_file = qtranxf_find_plugin_file( $plugin );
-	if ( ! $plugin_file ) {
-		return 0;
-	}
-	$pd         = get_plugin_data( WP_CONTENT_DIR . '/' . $plugin_file, false, true );
-	$pluginName = $pd['Name'];
-	$pluginURI  = $pd['PluginURI'];
-
-	$me          = qtranxf_get_plugin_link();
-	$plugin_link = '<a href="' . $pluginURI . '/" style="color:blue" target="_blank">' . $pluginName . '</a>';
-	$integr_link = '<a href="https://wordpress.org/plugins/' . $integr_bnm . '/" style="color:magenta" target="_blank">' . $integr_title . '</a>';
-
-	echo '<div class="update-nag qtranxs-notice-ajax notice is-dismissible" id="qtranxs-integration-' . $integr_bnm . '"><p style="font-size: larger">';
-	printf( __( 'Plugin %s may be integrated with multilingual plugin %s with a help of plugin %s.', 'qtranslate' ), $plugin_link, $me, $integr_link );
-	echo ' ';
-	echo __( 'Please, press an appropriate button below.', 'qtranslate' );
-
-	$integr_file = qtranxf_find_plugin_file( $integr_plugin );
-	if ( $integr_file ) {
-		echo '</p><p> &nbsp; &nbsp; &nbsp; &nbsp;<a class="button" href="' . esc_url( wp_nonce_url( admin_url( 'plugins.php?action=activate&plugin=' . urlencode( $integr_plugin ) ), 'activate-plugin_' . $integr_plugin ) ) . '"><strong>' . sprintf( __( 'Activate plugin %s', 'qtranslate' ), '<span style="color:magenta">' . $integr_title . '</span>' ) . '</strong></a>';
-	} else {
-		echo '</p><p> &nbsp; &nbsp; &nbsp; &nbsp;<a class="button" href="' . esc_url( wp_nonce_url( admin_url( 'update.php?action=install-plugin&plugin=' . urlencode( $integr_bnm ) ), 'install-plugin_' . $integr_bnm ) ) . '"><strong>' . sprintf( __( 'Install plugin %s', 'qtranslate' ), '<span style="color:magenta">' . $integr_title . '</span>' ) . '</strong></a>';
-	}
-	echo '&nbsp;&nbsp;&nbsp;<a class="button qtranxs-notice-dismiss" href="javascript:void(0);">' . __( 'I am aware of that, dismiss this message.', 'qtranslate' );
-	echo '</a></p></div>';
-
-	return 1;
-}
-
-function qtranxf_admin_notices_plugin_integration() {
-	global $pagenow;
-	if ( $pagenow == 'update.php' ) {
-		return;
-	}
-	$cnt = 0;
-	$cnt += qtranxf_admin_notice_plugin_integration( 'js_composer/js_composer.php', 'WPBakery Visual Composer & qTranslate&#8209;X', 'js-composer-qtranslate-x/js-composer-qtranslate-x.php' );
-	$cnt += qtranxf_admin_notice_plugin_integration( 'fusion-core/fusion-core.php', 'Fusion Core & qTranslate&#8209;X', 'fusion-core-qtranslate-x/fusion-core-qtranslate-x.php' );
-	if ( $cnt > 0 ) {
-		qtranxf_admin_notice_dismiss_script();
-	}
-}
-
-add_action( 'admin_notices', 'qtranxf_admin_notices_plugin_integration' );
-
 function qtranxf_admin_notices_block_editor() {
 	global $wp_version;
 	if ( version_compare( $wp_version, '5.0' ) >= 0 &&
