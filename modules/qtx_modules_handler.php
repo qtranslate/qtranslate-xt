@@ -1,22 +1,28 @@
 <?php
 
+define( 'QTX_MODULE_STATUS_ACTIVE', 0 );
+define( 'QTX_MODULE_STATUS_INCOMPATIBLE', 1 );
+
 class QTX_Modules_Handler {
 	/**
 	 * Loads modules previously enabled in the options after validation for plugin integration on admin-side.
 	 * Note these should be loaded before "qtranslate_init_language" is triggered.
 	 *
-	 * @see QTX_Admin_Modules::update_modules_option()
+	 * @see QTX_Admin_Modules::update_modules_status()
 	 */
 	public static function load_modules_enabled() {
 		$def_modules     = self::get_modules_defs();
 		$options_modules = get_option( 'qtranslate_modules', array() );
+		if (! is_array($options_modules) ) {
+			return null;
+		}
 		foreach ( $def_modules as $def_module ) {
 			if ( ! array_key_exists( $def_module['id'], $options_modules ) ) {
 				continue;
 			}
 			$options_module = $options_modules[ $def_module['id'] ];
-			if ( $options_module ) {
-				require_once( QTRANSLATE_DIR . '/modules/' . $def_module['id'] . '/' . $def_module['id'] . '.php' );
+			if ( $options_module === QTX_MODULE_STATUS_ACTIVE ) {
+				include_once( QTRANSLATE_DIR . '/modules/' . $def_module['id'] . '/' . $def_module['id'] . '.php' );
 			}
 		}
 	}

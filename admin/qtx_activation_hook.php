@@ -3,6 +3,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+require_once( QTRANSLATE_DIR . '/admin/qtx_admin_modules.php' );
+
 function qtranxf_version_int() {
 	$ver = str_replace( '.', '', QTX_VERSION );
 	while ( strlen( $ver ) < 5 ) {
@@ -793,6 +795,8 @@ function qtranxf_activation_hook() {
 		}
 	}
 
+	QTX_Admin_Modules::update_modules_status();
+
 	/**
 	 * A chance to execute activation actions specifically for this plugin.
 	 * @since 3.4
@@ -1101,4 +1105,5 @@ function qtranxf_register_activation_hooks() {
 	$qtx_plugin_basename = qtranxf_plugin_basename();
 	register_activation_hook( $qtx_plugin_basename, 'qtranxf_activation_hook' );
 	register_deactivation_hook( $qtx_plugin_basename, 'qtranxf_deactivation_hook' );
+	QTX_Admin_Modules::register_hooks();
 }

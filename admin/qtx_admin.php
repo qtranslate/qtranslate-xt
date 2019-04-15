@@ -8,7 +8,6 @@ require_once( QTRANSLATE_DIR . '/admin/qtx_languages.php' );
 require_once( QTRANSLATE_DIR . '/admin/qtx_admin_class_translator.php' );
 require_once( QTRANSLATE_DIR . '/admin/qtx_user_options.php' );
 require_once( QTRANSLATE_DIR . '/admin/qtx_admin_taxonomy.php' );
-require_once( QTRANSLATE_DIR . '/admin/qtx_admin_modules.php' );
 
 /** see help notes for function 'qtranxf_collect_translations'
  */
@@ -174,7 +173,6 @@ function qtranxf_admin_load() {
 	add_filter( 'plugin_action_links_' . $bnm, 'qtranxf_links', 10, 4 );
 	add_action( 'qtranslate_init_language', 'qtranxf_load_admin_page_config', 20 );//should be excuted after all plugins loaded their *-admin.php
 	qtranxf_add_admin_filters();
-	QTX_Admin_Modules::update_modules_option();
 }
 
 qtranxf_admin_load();
