@@ -347,14 +347,12 @@ function qtranxf_resetConfig() {
 	delete_option( 'qtranslate_plugin_js_composer_off' );
 	delete_option( 'qtranslate_widget_css' );
 	delete_option( 'qtranslate_version' );
+	delete_option( 'qtranslate_version_previous');
+	delete_option( 'qtranslate_versions');
 	delete_option( 'qtranslate_disable_header_css' );
 
 	if ( isset( $_POST['qtranslate_reset3'] ) ) {
 		delete_option( 'qtranslate_term_name' );
-		if ( isset( $_POST['qtranslate_reset4'] ) ) {//not implemented yet
-			delete_option( 'qtranslate_version_previous' );
-			//and delete translations in posts
-		}
 	}
 
 	remove_filter( 'locale', 'qtranxf_localeForCurrentLanguage', 99 );

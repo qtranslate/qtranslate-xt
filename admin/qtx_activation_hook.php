@@ -5,15 +5,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once( QTRANSLATE_DIR . '/admin/qtx_admin_modules.php' );
 
-function qtranxf_version_int() {
-	$ver = str_replace( '.', '', QTX_VERSION );
-	while ( strlen( $ver ) < 5 ) {
-		$ver .= '0';
-	}
-
-	return intval( $ver );
-}
-
 /**
  * Save language properties from configuration $cfg to database
  * @since 3.3
@@ -678,11 +669,6 @@ function qtranxf_on_deactivate_plugin( $plugin, $network_deactivating = false ) 
 	$bnm = dirname( $plugin );
 	$qtx = qtranxf_plugin_dirname();
 	if ( $bnm == $qtx ) {
-		if ( $bnm == 'qtranslate-xt' ) {//not testing version
-			$ver_cur = qtranxf_version_int();
-			update_option( 'qtranslate_version_previous', $ver_cur );
-		}
-
 		return;
 	}
 	$fn_add = null;
@@ -754,32 +740,18 @@ function qtranxf_activation_hook() {
 	$messages = qtranxf_update_admin_notice( 'next_thanks', true );
 
 	$default_language = get_option( 'qtranslate_default_language' );
-	$ver_cur          = qtranxf_version_int();
 	$first_install    = $default_language === false;
 	if ( $first_install ) {
 		qtranxf_default_default_language();
-		update_option( 'qtranslate_version_previous', $ver_cur );
 		$check_qtranslate_forks = true;
 		if ( isset( $messages['initial-install'] ) ) {
 			qtranxf_update_option_admin_notices( $messages, 'initial-install' );
 		}
 	} else {
-		$ver_prv = get_option( 'qtranslate_version_previous' );
-		if ( ! $ver_prv ) {
-			update_option( 'qtranslate_version_previous', 29000 );
-		}
-
 		if ( ! isset( $messages['initial-install'] ) ) {
 			qtranxf_update_option_admin_notices( $messages, 'initial-install' );
 		}
 	}
-
-	$vers = get_option( 'qtranslate_versions', array() );
-	if ( ! isset( $vers[ $ver_cur ] ) ) {
-		$vers[ $ver_cur ] = $ts;
-	}
-	$vers['l'] = $ts;
-	update_option( 'qtranslate_versions', $vers );
 
 	// @since 3.3.7
 	if ( $check_qtranslate_forks ) { // possibly first install after a fork
@@ -811,20 +783,6 @@ function qtranxf_activation_hook() {
  */
 function qtranxf_deactivation_hook() {
 	//qtranxf_dbg_log('qtranxf_deactivation_hook: ', __FILE__);
-	$vers = get_option( 'qtranslate_versions', array() );
-	$ts   = time();
-	$t    = 0;
-	if ( isset( $vers['l'] ) ) {
-		$t = $ts - $vers['l'];
-	}
-	if ( $t > 0 ) {
-		if ( ! isset( $vers['t'] ) ) {
-			$vers['t'] = 0;
-		}
-		$vers['t'] += $t;
-	}
-	$vers['p'] = $ts;
-	update_option( 'qtranslate_versions', $vers );
 
 	/**
 	 * A chance to execute deactivation actions specifically for this plugin.
@@ -895,67 +853,6 @@ function qtranxf_admin_notice_deactivate_plugin( $nm, $plugin ) {
 	//$msg=sprintf(__('Activation of plugin %s deactivated plugin %s since they cannot run simultaneously. You may import compatible settings from %s to %s on Settings/%sLanguages%s configuration page, once %s is running.%sContinue%s','qtranslate'),$qtxlink,$link,$nm,$qtxnm,'<a href="'.admin_url('/options-general.php?page=qtranslate-xt').'">','</a>',$qtxnm,'</p><p><a  class="button" href="">','</a>');
 	wp_die( '<p>' . $msg . '</p>' );
 }
-
-function qtranxf_admin_notices_new_options( $nms, $ver, $url, $conf_url = null ) {
-	$id = 'new-options-ver-' . str_replace( '.', '', $ver );
-	if ( qtranxf_check_admin_notice( $id ) ) {
-		return;
-	}
-	$me = qtranxf_get_plugin_link();
-	qtranxf_admin_notice_dismiss_script();
-	echo '<div class="notice notice-info qtranxs-notice-ajax is-dismissible" id="qtranxs-' . $id . '">';
-	if ( ! empty( $nms ) ) {
-		$opns = '';
-		foreach ( $nms as $nm ) {
-			if ( ! empty( $opns ) ) {
-				$opns .= ', ';
-			}
-			$opnm = __( $nm, 'qtranslate' );
-			if ( strpos( $opnm, '"' ) === false ) {
-				$opns .= '"' . $opnm . '"';
-			} else {
-				$opns .= $opnm;
-			}
-		}
-		echo '<p>';
-		printf( __( 'The latest version of plugin %s has a number of new options, for example, %s, which may change the look of some pages. Please, review the help text of new options on %sconfiguration page%s.', 'qtranslate' ), $me, $opns, '<a href="' . ( empty( $conf_url ) ? admin_url( 'options-general.php?page=qtranslate-xt' ) : $conf_url ) . '">', '</a>' );
-		echo '</p>';
-	}
-	if ( ! empty( $url ) ) {
-		echo '<p>';
-		printf( __( 'It is recommended to review %sRelease Notes%s for this new version of %s before making any further changes.', 'qtranslate' ), '<a href="' . $url . '" target="_blank">', '</a>', $me );
-		echo '</p>';
-	}
-	echo '<p>&nbsp;&nbsp;&nbsp;<a class="button qtranxs-notice-dismiss" href="javascript:void(0);">' . __( 'I have already done it, dismiss this message.', 'qtranslate' );
-	echo '</a></p></div>';
-}
-
-function qtranxf_admin_notices_version() {
-	$ver_cur = qtranxf_version_int();
-	$ver_prv = get_option( 'qtranslate_version_previous', $ver_cur );
-	if ( $ver_cur == $ver_prv ) {
-		return;
-	}
-
-	//translators: 'Hide button "Copy From"' is a title of an option, embrased in appropriate HTML tags defined by %s. Format %$3s is replaced with previously translated option group name "LSB Style".
-	if ( $ver_prv < 35000 && $ver_cur >= 34000 ) {
-		qtranxf_admin_notices_new_options( array( sprintf( __( '%sHide button "Copy From"%s under advanced option group "%3$s"', 'qtranslate' ), '<a href="' . admin_url( 'options-general.php?page=qtranslate-xt#advanced' ) . '">', '</a>', __( 'LSB Style', 'qtranslate' ) ) ), '3.5', 'https://qtranslatexteam.wordpress.com/2016/07/15/release-notes-3-5-0/', admin_url( 'options-general.php?page=qtranslate-xt#advanced' ) );
-	}
-
-	if ( $ver_prv < 34000 && $ver_cur >= 32980 ) {
-		qtranxf_admin_notices_new_options( array( '<a href="' . admin_url( 'options-general.php?page=qtranslate-xt#integration' ) . '">' . __( 'Configuration Files', 'qtranslate' ) . '</a>' ), '3.4', 'https://qtranslatexteam.wordpress.com/2015/05/15/release-notes-3-4/' );
-	}
-
-	if ( $ver_prv < 33000 && $ver_cur >= 32980 ) {
-		qtranxf_admin_notices_new_options( array(
-			__( 'Highlight Style', 'qtranslate' ),
-			__( 'LSB Style', 'qtranslate' )
-		), '3.3', 'https://qtranslatexteam.wordpress.com/2015/03/30/release-notes-3-3' );
-	}
-}
-
-add_action( 'admin_notices', 'qtranxf_admin_notices_version' );
-
 
 function qtranxf_admin_notice_plugin_conflict( $title, $plugin ) {
 	if ( ! is_plugin_active( $plugin ) ) {
