@@ -1,7 +1,9 @@
 <?php
 
-define( 'QTX_MODULE_STATUS_ACTIVE', 0 );
-define( 'QTX_MODULE_STATUS_INCOMPATIBLE', 1 );
+define( 'QTX_MODULE_STATUS_UNDEFINED', 0 );
+define( 'QTX_MODULE_STATUS_ACTIVE', 1 );
+define( 'QTX_MODULE_STATUS_INACTIVE', 2 );
+define( 'QTX_MODULE_STATUS_INCOMPATIBLE', 3 );
 
 class QTX_Modules_Handler {
 	/**
@@ -20,8 +22,8 @@ class QTX_Modules_Handler {
 			if ( ! array_key_exists( $def_module['id'], $options_modules ) ) {
 				continue;
 			}
-			$options_module = $options_modules[ $def_module['id'] ];
-			if ( $options_module === QTX_MODULE_STATUS_ACTIVE ) {
+			$module_status = $options_modules[ $def_module['id'] ];
+			if ( $module_status === QTX_MODULE_STATUS_ACTIVE ) {
 				include_once( QTRANSLATE_DIR . '/modules/' . $def_module['id'] . '/' . $def_module['id'] . '.php' );
 			}
 		}
@@ -69,7 +71,7 @@ class QTX_Modules_Handler {
 				'plugin'       => 'woocommerce/woocommerce.php',
 				'incompatible' => 'woocommerce-qtranslate-x/woocommerce-qtranslate-x.php'
 			),
-//          TODO obsolete Yoast SEO module - needs to be reviewed before re-activation, especially the JS part
+//          TODO obsolete Yoast SEO module - needs to be reviewed before reactivation, especially the JS part
 //			array(
 //				'id'           => 'wp-seo',
 //				'name'         => 'Yoast SEO',

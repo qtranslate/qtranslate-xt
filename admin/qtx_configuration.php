@@ -698,11 +698,11 @@ function qtranxf_conf() {
 									foreach ( $modules as $module ):
 										?>
                                         <tr>
-                                            <td><?php echo $module['name']; ?></td>
-                                            <td><?php echo $module['active'] ? __( 'Active', 'qtranslate' ) : __( 'Inactive', 'qtranslate' ) ?></td>
-                                            <td><?php echo $module['active'] ? ( $module['status'] ? __( 'Enabled', 'qtranslate' ) : __( 'Blocked', 'qtranslate' ) ) : __( 'Disabled', 'qtranslate' ) ?></td>
-                                            <td style="color: <?php echo $module['active'] ? ( $module['status'] ? 'green' : 'orange' ) : '' ?>">
-                                                <span class="dashicons <?php echo $module['active'] ? ( $module['status'] ? 'dashicons-yes' : 'dashicons-warning' ) : 'dashicons-no-alt' ?>"></span>
+                                            <td><?php echo $module['name'] ?></td>
+                                            <td><?php echo $module['plugin'] ?></td>
+                                            <td><?php echo $module['module'] ?></td>
+                                            <td style="color: <?php echo $module['color'] ?>">
+                                                <span class="dashicons <?php echo $module['icon'] ?>"></span>
                                             </td>
                                         </tr>
 									<?php endforeach; ?>

@@ -48,10 +48,10 @@ class QTX_Admin_Modules {
 	 * @param array $module_def
 	 * @param callable $func_is_active callback to evaluate if a plugin is active
 	 *
-	 * @return integer module status or null if inactive
+	 * @return integer module status
 	 */
 	public static function check_module( $module_def, $func_is_active = 'is_plugin_active' ) {
-		$module_status = null;
+		$module_status = QTX_MODULE_STATUS_INACTIVE;
 
 		// TODO the call_user_func should be replaced by direct calls from PHP7
 		$integration_plugin = $module_def['plugin'];
@@ -106,16 +106,24 @@ class QTX_Admin_Modules {
 	}
 
 	public static function admin_notices() {
-		$module_defs     = QTX_Modules_Handler::get_modules_defs();
 		$options_modules = get_option( 'qtranslate_modules', array() );
-		$active_modules  = array();
+		if ( empty( $options_modules ) ) {
+			$msg   = '<p>' . sprintf( __( 'Modules status undefined in %s. Please deactivate it and reactivate it again from the plugins page.', 'qtranslate' ), 'qTranslate&#8209;XT' ) . '</p>';
+			$nonce = wp_create_nonce( 'deactivate-plugin_qtranslate-xt/qtranslate.php' );
+			$msg   .= '<p><a class="button" href="' . admin_url( 'plugins.php?action=deactivate&plugin=' . urlencode( 'qtranslate-xt/qtranslate.php' ) . '&plugin_status=all&paged=1&s&_wpnonce=' . $nonce ) . '"><strong>' . sprintf( __( 'Deactivate %s', 'qtranslate' ), 'qTranslate&#8209;XT' ) . '</strong></a></p>';
+			echo '<div class="notice notice-warning is-dismissible">' . $msg . '</div>';
+
+			return;
+		}
+
+		$module_defs    = QTX_Modules_Handler::get_modules_defs();
+		$active_modules = array();
 		foreach ( $module_defs as $module_def ) {
 			if ( ! array_key_exists( $module_def['id'], $options_modules ) ) {
 				continue;
 			}
 
 			switch ( $options_modules[ $module_def['id'] ] ) {
-
 				case QTX_MODULE_STATUS_INCOMPATIBLE:
 					$incompatible_plugin = $module_def['incompatible'];
 					$plugin_data         = get_plugin_data( WP_PLUGIN_DIR . '/' . $incompatible_plugin, false, true );
@@ -125,7 +133,6 @@ class QTX_Admin_Modules {
 					$msg                 .= '<p><a class="button" href="' . $url_deactivate . '"><strong>' . sprintf( __( 'Deactivate plugin %s', 'qtranslate' ), $plugin_name ) . '</strong></a>';
 					echo '<div class="notice notice-warning is-dismissible">' . $msg . '</div>';
 					break;
-
 				case QTX_MODULE_STATUS_ACTIVE:
 					$active_modules[] = $module_def['name'];
 					break;
@@ -150,13 +157,35 @@ class QTX_Admin_Modules {
 		foreach ( $module_defs as $module_def ) {
 			$info         = array();
 			$info['name'] = $module_def['name'];
-			if ( array_key_exists( $module_def['id'], $options_modules ) ) {
-				$info['active'] = true;
-				$info['status'] = $options_modules[ $module_def['id'] ] === QTX_MODULE_STATUS_ACTIVE;
-			} else {
-				$info['active'] = false;
-				$info['status'] = false;
+			$status       = array_key_exists( $module_def['id'], $options_modules ) ? $options_modules[ $module_def['id'] ] : QTX_MODULE_STATUS_UNDEFINED;
+			switch ( $status ) {
+				case QTX_MODULE_STATUS_ACTIVE:
+					$info['plugin'] = __( 'Active', 'qtranslate' );
+					$info['module'] = __( 'Enabled', 'qtranslate' );
+					$info['icon']   = 'dashicons-yes';
+					$info['color']  = 'green';
+					break;
+				case QTX_MODULE_STATUS_INACTIVE:
+					$info['plugin'] = __( 'Inactive', 'qtranslate' );
+					$info['module'] = __( 'Disabled', 'qtranslate' );
+					$info['icon']   = 'dashicons-no-alt';
+					$info['color']  = '';
+					break;
+				case QTX_MODULE_STATUS_INCOMPATIBLE:
+					$info['plugin'] = __( 'Active', 'qtranslate' );
+					$info['module'] = __( 'Disabled', 'qtranslate' );
+					$info['icon']   = 'dashicons-warning';
+					$info['color']  = 'orange';
+					break;
+				case QTX_MODULE_STATUS_UNDEFINED:
+				default:
+					$info['plugin'] = __( 'Unknown', 'qtranslate' );
+					$info['module'] = __( 'Disabled', 'qtranslate' );
+					$info['icon']   = 'dashicons-editor-help';
+					$info['color']  = '';
+					break;
 			}
+
 			array_push( $infos, $info );
 		}
 
