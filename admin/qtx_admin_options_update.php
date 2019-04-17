@@ -340,6 +340,7 @@ function qtranxf_resetConfig() {
 	// internal private options not loaded by default
 	delete_option( 'qtranslate_next_update_mo' );
 	delete_option( 'qtranslate_next_thanks' );
+	delete_option( 'qtranslate_modules' );
 
 	// obsolete options
 	delete_option( 'qtranslate_custom_pages' );
@@ -355,9 +356,12 @@ function qtranxf_resetConfig() {
 			//and delete translations in posts
 		}
 	}
+
 	remove_filter( 'locale', 'qtranxf_localeForCurrentLanguage', 99 );
 	qtranxf_reloadConfig();
 	add_filter( 'locale', 'qtranxf_localeForCurrentLanguage', 99 );
+
+	QTX_Admin_Modules::update_modules_status();
 }
 
 add_action( 'qtranslate_saveConfig', 'qtranxf_resetConfig', 20 );
