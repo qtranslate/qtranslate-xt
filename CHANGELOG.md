@@ -1,5 +1,8 @@
 ### 3.6.0.dev
-* New feature: the provided **built-in modules** replace the legacy integration plugins. See [README.md](https://github.com/qtranslate/qtranslate-xt/blob/master/modules/README.md) in modules for more info.
+* New feature: the built-in **modules** replace the legacy integration plugins. See the integration tab and the main modules [README](https://github.com/qtranslate/qtranslate-xt/blob/master/modules/README.md) for more info.
+* New modules: ACF, ACF PRO, All in One SEO Pack, Events Made Easy, Gravity Forms, WooCommerce. Note: these modules have been converted from the last available versions of the legacy plugins, but they still remain the same. See each module README for more info.
+* Fix CSS admin notices (#664)
+* Cleanup obsolete admin version notices. The version options become obsolete (`qtranslate_version_previous, qtranslate_versions`).
 
 ### 3.5.5
 * Adds support for Composer (#659)

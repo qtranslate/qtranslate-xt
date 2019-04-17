@@ -70,7 +70,7 @@ class QTX_Admin_Modules {
 		if ( $active ) {
 			$incompatible_plugin = $module_def['incompatible'];
 			if ( isset( $incompatible_plugin ) && call_user_func( $func_is_active, $incompatible_plugin ) ) {
-				$module_status = QTX_MODULE_STATUS_INCOMPATIBLE;
+				$module_status = QTX_MODULE_STATUS_BLOCKED;
 			} else {
 				$module_status = QTX_MODULE_STATUS_ACTIVE;
 			}
@@ -124,7 +124,7 @@ class QTX_Admin_Modules {
 			}
 
 			switch ( $options_modules[ $module_def['id'] ] ) {
-				case QTX_MODULE_STATUS_INCOMPATIBLE:
+				case QTX_MODULE_STATUS_BLOCKED:
 					$incompatible_plugin = $module_def['incompatible'];
 					$plugin_data         = get_plugin_data( WP_PLUGIN_DIR . '/' . $incompatible_plugin, false, true );
 					$plugin_name         = $plugin_data['Name'];
@@ -161,26 +161,26 @@ class QTX_Admin_Modules {
 			switch ( $status ) {
 				case QTX_MODULE_STATUS_ACTIVE:
 					$info['plugin'] = __( 'Active', 'qtranslate' );
-					$info['module'] = __( 'Enabled', 'qtranslate' );
+					$info['module'] = __( 'Active', 'qtranslate' );
 					$info['icon']   = 'dashicons-yes';
 					$info['color']  = 'green';
 					break;
 				case QTX_MODULE_STATUS_INACTIVE:
 					$info['plugin'] = __( 'Inactive', 'qtranslate' );
-					$info['module'] = __( 'Disabled', 'qtranslate' );
+					$info['module'] = __( 'Inactive', 'qtranslate' );
 					$info['icon']   = 'dashicons-no-alt';
 					$info['color']  = '';
 					break;
-				case QTX_MODULE_STATUS_INCOMPATIBLE:
+				case QTX_MODULE_STATUS_BLOCKED:
 					$info['plugin'] = __( 'Active', 'qtranslate' );
-					$info['module'] = __( 'Disabled', 'qtranslate' );
+					$info['module'] = __( 'Blocked', 'qtranslate' );
 					$info['icon']   = 'dashicons-warning';
 					$info['color']  = 'orange';
 					break;
 				case QTX_MODULE_STATUS_UNDEFINED:
 				default:
 					$info['plugin'] = __( 'Unknown', 'qtranslate' );
-					$info['module'] = __( 'Disabled', 'qtranslate' );
+					$info['module'] = __( 'Inactive', 'qtranslate' );
 					$info['icon']   = 'dashicons-editor-help';
 					$info['color']  = '';
 					break;
