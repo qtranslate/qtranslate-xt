@@ -15,7 +15,7 @@ class QTX_Modules_Handler {
 	public static function load_modules_enabled() {
 		$def_modules     = self::get_modules_defs();
 		$options_modules = get_option( 'qtranslate_modules', array() );
-		if (! is_array($options_modules) ) {
+		if ( ! is_array( $options_modules ) ) {
 			return null;
 		}
 		foreach ( $def_modules as $def_module ) {
@@ -43,14 +43,17 @@ class QTX_Modules_Handler {
 		return array(
 			array(
 				'id'           => 'acf',
-				'name'         => 'ACF (free / PRO)',
+				'name'         => 'ACF',
 				'plugin'       => array( 'advanced-custom-fields/acf.php', 'advanced-custom-fields-pro/acf.php' ),
 				'incompatible' => 'acf-qtranslate/acf-qtranslate.php'
 			),
 			array(
 				'id'           => 'all-in-one-seo-pack',
 				'name'         => 'All in One SEO Pack',
-				'plugin'       => 'all-in-one-seo-pack/all_in_one_seo_pack.php',
+				'plugin'       => array(
+					'all-in-one-seo-pack/all_in_one_seo_pack.php',
+					'all-in-one-seo-pack-pro/all_in_one_seo_pack.php'
+				),
 				'incompatible' => 'all-in-one-seo-pack-qtranslate-x/qaioseop.php'
 			),
 			array(
