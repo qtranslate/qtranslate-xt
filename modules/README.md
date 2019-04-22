@@ -1,6 +1,6 @@
 # Modules
 
-The built-in **modules** provided in this folder replace the legacy integration plugins.
+The built-in **modules** provided in this folder replace the legacy integration plugins. Those become obsolete and incompatible with the modules.
 
 The new engine is generic and works as follows:
 * the status of the modules is handled through the `qtranslate_modules` option. If this option is not set, the status of the modules is _undefined_ and they are not loaded.

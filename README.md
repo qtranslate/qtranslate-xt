@@ -8,7 +8,7 @@ Stable tag: N/A
 License: GPLv3 or later  
 License URI: http://www.gnu.org/licenses/gpl-3.0.html  
 
-Adds a user-friendly multilingual dynamic content management.
+Adds user-friendly multilingual content support, stored in single post.
 
 ## Description
 
@@ -49,7 +49,7 @@ Not yet. Some work is in progress but don't expect this soon.
 WooCommerce is now supported with a built-in module. Developers able to test it properly are much welcome! Please send PR for bug fixes.
 
 ### Is any plugin/themes supported? ###
-Some major plugins are now supported with the built-in modules. For other plugins you need to provide custom integration through i18n configuration (json) and/or code (PHP/JS). A major refactoring is needed to make this easier.
+Some major plugins are now supported with the built-in modules. Some plugins are also supported with built-in i18n configurations. For other plugins you need to provide custom integration through i18n configuration (json) and/or code (PHP/JS). A major refactoring is needed to make this easier.
 
 ### I'm new to qTranslate, where can I find detailed instructions for startup?
 Check the legacy website:
@@ -72,7 +72,7 @@ Note for developers:
 ## Upgrade Notice
 
 ### 3.6.0
-New feature! The built-in modules replace the legacy plugins for integration. See [README.md](https://github.com/qtranslate/qtranslate-xt/blob/master/modules/README.md) in modules for more info.
+New feature! The built-in modules replace the legacy plugins for integration. You have to **deactivate/reactivate qTranslate-XT** to detect the active modules. See [README.md](https://github.com/qtranslate/qtranslate-xt/blob/master/modules/README.md) in modules for more info.
 
 ### 3.5.3
 Fix REST API: no redirect allowed. Your rewrite rules should be updated by saving the permalink structures from the admin page.
@@ -101,7 +101,7 @@ The [legacy issues](https://qtranslatexteam.wordpress.com/known-issues/) should 
 
 ## Desirable Unimplemented Features
 
-* refactor custom integration without json files (i18n-config.json)
+* refactor custom integration, possibly without json files (i18n-config.json)
 * support for Gutenberg
 * support for translatable slugs
 * unit/integration tests
