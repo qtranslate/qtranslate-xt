@@ -200,8 +200,4 @@ add_filter( '_wp_post_revision_field_post_title', 'qtranxf_showAllSeparated', 0 
 add_filter( '_wp_post_revision_field_post_content', 'qtranxf_showAllSeparated', 0 );
 add_filter( '_wp_post_revision_field_post_excerpt', 'qtranxf_showAllSeparated', 0 );
 
-add_filter( 'oembed_response_data', function ($data) {
-    global $q_config;
-    $data['title'] = qtranxf_split( $data['title'] )[$q_config['language']];
-    return $data;
-} );
+add_filter( 'oembed_response_data', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage' );
