@@ -282,7 +282,7 @@ function qtranxf_before_admin_bar_render() {
 
 function qtranxf_admin_the_title( $title ) {
 	//todo this filter should not be used in admin area at all?
-	if ( defined( 'DOING_AJAX' ) && DOING_AJAX )//nav-menus.php#752
+	if ( defined( 'DOING_AJAX' ) && DOING_AJAX && !is_admin())//nav-menus.php#752
 	{
 		return $title;
 	}
