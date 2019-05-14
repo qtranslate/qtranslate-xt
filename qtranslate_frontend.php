@@ -212,7 +212,7 @@ function qtranxf_wp_get_nav_menu_items( $items, $menu, $args ) {
 
 add_filter( 'wp_get_nav_menu_items', 'qtranxf_wp_get_nav_menu_items', 20, 3 );
 
-function qtranxf_add_language_menu_item( &$items, &$menu_order, &$itemid, $key, $language ) {
+function qtranxf_add_language_menu_item( $items, $menu_order, $itemid, $key, $language ) {
 	global $q_config;
 	//qtranxf_dbg_log('qtranxf_add_language_menu_item: $key: ',$key);
 	$item          = $items[ $key ];
@@ -378,7 +378,7 @@ function qtranxf_add_language_menu_item( &$items, &$menu_order, &$itemid, $key, 
 	}
 }
 
-function qtranxf_remove_detached_children( &$items, &$itemsremoved ) {
+function qtranxf_remove_detached_children( $items, $itemsremoved ) {
 	do {
 		$more = false;
 		foreach ( $items as $key => $item ) {
@@ -702,7 +702,7 @@ function qtranxf_excludeUntranslatedPostComments( $clauses, $q/*WP_Comment_Query
 
 /*
 //todo in response to https://github.com/qTranslate-Team/qtranslate-x/issues/17
-function qtranxf_add_query_language(&$query) //WP_Comment_Query &$this
+function qtranxf_add_query_language($query) //WP_Comment_Query $this
 {
 	global $q_config;
 	//$query->query_vars[QTX_COOKIE_NAME_FRONT] = qtranxf_getLanguage();//this does not help, since they cut additional query_vars before generating cache key
@@ -819,7 +819,7 @@ function qtranxf_translate_metadata( $meta_type, $original_value, $object_id, $m
 	if ( ! isset( $meta_cache_unserialized[ $meta_type ][ $object_id ] ) ) {
 		$meta_cache_unserialized[ $meta_type ][ $object_id ] = array();
 	}
-	$meta_unserialized = &$meta_cache_unserialized[ $meta_type ][ $object_id ];
+	$meta_unserialized = $meta_cache_unserialized[ $meta_type ][ $object_id ];
 
 	if ( ! $meta_cache ) {
 		if ( $meta_cache_wp ) {
@@ -883,7 +883,7 @@ function qtranxf_translate_metadata( $meta_type, $original_value, $object_id, $m
 
 	if ( isset( $meta_cache[ $meta_key ] ) ) {
 		//cache unserialized values, just for the sake of performance.
-		$meta_key_unserialized = &$meta_unserialized[ $meta_key ];
+		$meta_key_unserialized = (isset($meta_unserialized[$meta_key])) ? $meta_unserialized[$meta_key] : array();
 		if ( $single ) {
 			if ( ! isset( $meta_key_unserialized[0] ) ) {
 				$meta_key_unserialized[0] = maybe_unserialize( $meta_cache[ $meta_key ][0] );
