@@ -43,7 +43,7 @@ function qwc_add_filters_front() {
 		'woocommerce_gateway_icon'                    => 20,
 		'woocommerce_order_item_name'                 => 20,
 		'woocommerce_order_shipping_to_display'       => 20,
-		'woocommerce_order_tax_totals'                => 20,
+		'woocommerce_order_get_tax_totals'            => 20,
 		'woocommerce_product_title'                   => 20,
 		'woocommerce_rate_label'                      => 20,
 
@@ -66,7 +66,7 @@ function qwc_add_filters_front() {
 	}
 
 	add_filter( 'woocommerce_paypal_args', 'qwc_paypal_args' );
-	add_filter( 'woocommerce_get_product_attributes', 'qwc_get_product_attributes', 5 );
+	add_filter( 'woocommerce_product_get_attributes', 'qwc_product_get_attributes', 5 );
 	//no need add_filter( 'woocommerce_product_default_attributes', 'qwc_product_default_attributes', 5 );
 
 	//below do not seem to need
@@ -120,7 +120,7 @@ function save_post_qwc_store_language( $order_id ) {
 	add_post_meta( $order_id, '_user_language', $q_config['language'], true );
 }
 
-function qwc_get_product_attributes( $attributes ) {
+function qwc_product_get_attributes( $attributes ) {
 	//only 'value' needs to be translated at front end
 	foreach ( $attributes as $key => $attribute ) {
 		if ( ! isset( $attribute['value'] ) ) {
