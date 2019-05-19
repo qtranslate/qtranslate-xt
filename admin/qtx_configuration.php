@@ -686,10 +686,10 @@ function qtranxf_conf() {
                                 <table id="qtranxs_modules" class="widefat">
                                     <thead>
                                     <tr>
-                                        <th class="row-title">Name</th>
-                                        <th>Plugin</th>
-                                        <th>Module</th>
-                                        <th>Status</th>
+                                        <th class="row-title"><?php _ex( 'Name', 'Modules table header', 'qtranslate' ); ?></th>
+                                        <th><?php _ex( 'Plugin', 'Modules table header', 'qtranslate' ); ?></th>
+                                        <th><?php _ex( 'Module', 'Modules table header', 'qtranslate' ); ?></th>
+                                        <th><?php _ex( 'Status', 'Modules table header', 'qtranslate' ); ?></th>
                                     </tr>
                                     </thead>
                                     <tbody>
