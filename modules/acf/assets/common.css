@@ -21,6 +21,7 @@
 
 .multi-language-field {
 	margin-top: -38px;
+	height: auto;
 }
 
 .acf-table .multi-language-field,
