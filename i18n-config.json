@@ -1,6 +1,6 @@
 {
   "vendor": {
-    "plugins/qtranslate-x": "3.4"
+    "plugins/qtranslate-xt": "3.4"
   },
   "admin-config": {
     "post": {
