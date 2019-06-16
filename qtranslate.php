@@ -52,7 +52,7 @@ if ( ! function_exists( 'add_filter' ) ) {
 /**
  * The constants defined below are
  * Designed as interface for other plugin integration. The documentation is available at
- * https://qtranslatexteam.wordpress.com/integration/
+ * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide/
  */
 define( 'QTX_VERSION', '3.6.0' );
 

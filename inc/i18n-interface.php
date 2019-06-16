@@ -8,7 +8,7 @@ define( 'TRANSLATE_SHOW_EMPTY', 4 );
  * Interface WP_Translator
  *
  * Designed as interface for other plugin integration. The documentation is available at
- * https://qtranslatexteam.wordpress.com/integration/
+ * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
  *
  * It is recommended to only use the functions listed here when developing a 3rd-party integration.
  * It is not recommended to access global variables directly.

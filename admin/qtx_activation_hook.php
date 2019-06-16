@@ -588,7 +588,7 @@ add_action( 'switch_theme', 'qtranxf_on_switch_theme', 10, 2 );
 
 /**
  * Search for i18n-config.json files
- * see https://qtranslatexteam.wordpress.com/integration/
+ * see https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide/
  */
 function qtranxf_find_plugin_config_files( &$fn_bnm, &$fn_qtx, $bnm ) {
 	$plugins = wp_get_active_and_valid_plugins();
@@ -801,7 +801,7 @@ function qtranxf_admin_notice_config_files_changed() {
 	echo '<br/></p><p>';
 	echo '<a class="button" href="' . $url . '">';
 	printf( __( 'Review Option "%s"', 'qtranslate' ), __( 'Configuration Files', 'qtranslate' ) );
-	echo '</a>&nbsp;&nbsp;&nbsp;<a class="button" href="https://qtranslatexteam.wordpress.com/integration/" target="_blank">';
+	echo '</a>&nbsp;&nbsp;&nbsp;<a class="button" href="https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide/" target="_blank">';
 	echo __( 'Read Integration Guide', 'qtranslate' );
 	echo '</a>&nbsp;&nbsp;&nbsp;<a class="button qtranxs-notice-dismiss" href="javascript:void(0);">' . __( 'I have already done it, dismiss this message.', 'qtranslate' );
 	echo '</a></p></div>';
@@ -817,7 +817,7 @@ function qtranxf_admin_notice_first_install() {
 	echo '<div class="notice notice-info qtranxs-notice-ajax notice is-dismissible" id="qtranxs-initial-install"><p>';
 	printf( __( 'Are you new to plugin %s?', 'qtranslate' ), qtranxf_get_plugin_link() );
 	echo '<br/>';
-	echo '</p><p><a class="button" href="https://qtranslatexteam.wordpress.com/startup-guide/" target="_blank">';
+	echo '</p><p><a class="button" href="https://github.com/qtranslate/qtranslate-xt/wiki/Startup-Guide/" target="_blank">';
 	echo __( 'Read Startup Guide', 'qtranslate' );
 	echo '</a>&nbsp;&nbsp;&nbsp;<a class="button qtranxs-notice-dismiss" href="javascript:void(0);">' . __( 'I have already done it, dismiss this message.', 'qtranslate' );
 	echo '</a></p></div>';
@@ -841,7 +841,7 @@ function qtranxf_admin_notice_deactivate_plugin( $nm, $plugin ) {
 			$imported = true;
 		}
 	}
-	$s   = '</p><p>' . sprintf( __( 'It might be a good idea to review %smigration instructions%s, if you have not yet done so.', 'qtranslate' ), '<a href="https://qtranslatexteam.wordpress.com/migration/" target="_blank">', '</a>' ) . '</p><p><a class="button" href="">';
+	$s   = '</p><p>' . sprintf( __( 'It might be a good idea to review %smigration instructions%s, if you have not yet done so.', 'qtranslate' ), '<a href="https://github.com/qtranslate/qtranslate-xt/wiki/Migration-Guide/" target="_blank">', '</a>' ) . '</p><p><a class="button" href="">';
 	$msg = sprintf( __( 'Activation of plugin %s deactivated plugin %s since they cannot run simultaneously.', 'qtranslate' ), $qtxlink, $link ) . ' ';
 	if ( $imported ) {
 		$msg .= sprintf( __( 'The compatible settings from %s have been imported to %s. Further tuning, import, export and reset of options can be done at Settings/Languages configuration page, once %s is running.%sContinue%s', 'qtranslate' ), $nm, $qtxnm, $qtxnm, $s, '</a>' );
@@ -863,7 +863,7 @@ function qtranxf_admin_notice_plugin_conflict( $title, $plugin ) {
 	echo '<div class="notice notice-error is-dismissible"><p>';
 	printf( __( '%sError:%s plugin %s cannot run concurrently with plugin %s. You may import and export compatible settings between %s and %s on Settings/<a href="%s">Languages</a> configuration page. Then you have to deactivate one of the plugins to continue.', 'qtranslate' ), '<strong>', '</strong>', $me, $link, 'qTranslate&#8209;XT', $title, admin_url( 'options-general.php?page=qtranslate-xt' ), 'qtranslate' );
 	echo ' ';
-	printf( __( 'It might be a good idea to review %smigration instructions%s, if you have not yet done so.', 'qtranslate' ), '<a href="https://qtranslatexteam.wordpress.com/migration/" target="_blank">', '</a>' );
+	printf( __( 'It might be a good idea to review %smigration instructions%s, if you have not yet done so.', 'qtranslate' ), '<a href="https://github.com/qtranslate/qtranslate-xt/wiki/Migration-Guide/" target="_blank">', '</a>' );
 
 	$nonce = wp_create_nonce( 'deactivate-plugin_' . $plugin );
 	echo '</p><p> &nbsp; &nbsp; &nbsp; &nbsp;<a class="button" href="' . admin_url( 'plugins.php?action=deactivate&plugin=' . urlencode( $plugin ) . '&plugin_status=all&paged=1&s&_wpnonce=' . $nonce ) . '"><strong>' . sprintf( __( 'Deactivate %s', 'qtranslate' ), $title ) . '</strong></a>';
@@ -915,14 +915,13 @@ function qtranxf_admin_notices_next_thanks() {
 	echo '<br/>';
 	echo __( 'Our team would greatly appreciate any feedback:', 'qtranslate' );
 	echo '<ul style="list-style: square; list-style-position: inside;"><li>';
-	printf( __( '%sUse Support Forum%s to ask a question.', 'qtranslate' ), '<a href="https://github.com/qTranslate/qtranslate-xt/issues" target="_blank">', '</a>' );
+	printf( __( '%sCheck the github ticket%s to help us with the current issues, report a bug or discuss about new features.', 'qtranslate' ), '<a href="https://github.com/qTranslate/qtranslate-xt/issues/" target="_blank">', '</a>' );
 	echo '</li><li>';
-	printf( __( '%sVisit%s %s website.', 'qtranslate' ), '<a href="https://qtranslatexteam.wordpress.com/" target="_blank">', '</a>', '"<a href="https://qtranslatexteam.wordpress.com/about/" target="_blank">qTranslate-X explained</a>"' );
-	echo '</li><li>';
-	printf( __( '%sShare a new idea%s with our community.', 'qtranslate' ), '<a href="https://qtranslatexteam.wordpress.com/contact-us/"  target="_blank">', '</a>' );
-	echo '</li><li>';
-	printf( __( '%sReview the plugin%s at WordPress site.', 'qtranslate' ), '<a href="https://wordpress.org/support/view/plugin-reviews/qtranslate-x?rate=5#postform" target="_blank">', '</a>' );
-	echo '</ul>';
+	printf( __( '%sSubmit a Pull Request%s for bug fixes and new features.', 'qtranslate' ), '<a href="https://github.com/qtranslate/qtranslate-xt/pulls/" target="_blank">', '</a>' );
+	// TODO restore when new plugin available at wordpress.org
+	// echo '</li><li>';
+	// printf( __( '%sReview the plugin%s at WordPress site.', 'qtranslate' ), '<a href="https://wordpress.org/support/view/plugin-reviews/qtranslate-x?rate=5#postform" target="_blank">', '</a>' );
+	echo '</li></ul>';
 	echo '</p><p>&nbsp;';
 	echo '<a class="button qtranxs-notice-dismiss" href="javascript:void(0);">' . __( 'I am aware of that, dismiss this message.', 'qtranslate' ) . '</a>';
 	echo '</p>';

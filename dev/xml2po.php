@@ -1,4 +1,4 @@
-<?
+<?php
 /*
 	This file can be used to convert xml files from http://unicode.org/Public/cldr/latest to the .po format.
 */

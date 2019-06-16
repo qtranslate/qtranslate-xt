@@ -22,7 +22,7 @@
  * Single global variable 'qTranslateConfig' is an entry point to the interface.
  * - qTranslateConfig.qtx - is a shorthand reference to the only global object of type 'qTranslateX'.
  * - qTranslateConfig.js - is a place where custom Java script functions are stored, if needed.
- * Read Integration Guide, https://qtranslatexteam.wordpress.com/integration/, for more information.
+ * Read Integration Guide: https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide for more information.
  */
 /*
 // debugging tools, do not check in
@@ -189,7 +189,7 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 
 		/**
 		 * Designed as interface for other plugin integration. The documentation is available at
-		 * https://qtranslatexteam.wordpress.com/integration/
+		 * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
 		 * return array keyed by two-letter language code. Example of usage:
 		 * var langs = getLanguages();
 		 * for(var lang_code in langs){
@@ -209,7 +209,7 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 
 		/**
 		 * Designed as interface for other plugin integration. The documentation is available at
-		 * https://qtranslatexteam.wordpress.com/integration/
+		 * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
 		 * return URL to folder with flag images.
 		 */
 		this.getFlagLocation = function () {
@@ -218,7 +218,7 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 
 		/**
 		 * Designed as interface for other plugin integration. The documentation is available at
-		 * https://qtranslatexteam.wordpress.com/integration/
+		 * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
 		 * return true if 'lang' is in the hash of enabled languages.
 		 * This function maybe needed, as function qtranxj_split may return languages,
 		 * which are not enabled, in case they were previously enabled and had some data.
@@ -249,7 +249,7 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 
 		/**
 		 * Designed as interface for other plugin integration. The documentation is available at
-		 * https://qtranslatexteam.wordpress.com/integration/
+		 * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
 		 *
 		 * @since 3.3
 		 */
@@ -272,7 +272,7 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 
 		/**
 		 * Designed as interface for other plugin integration. The documentation is available at
-		 * https://qtranslatexteam.wordpress.com/integration/
+		 * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
 		 *
 		 * @since 3.3.4
 		 */
@@ -282,7 +282,7 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 
 		/**
 		 * Designed as interface for other plugin integration. The documentation is available at
-		 * https://qtranslatexteam.wordpress.com/integration/
+		 * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
 		 *
 		 * @since 3.3.2
 		 */
@@ -484,7 +484,7 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 
 		/**
 		 * Designed as interface for other plugin integration. The documentation is available at
-		 * https://qtranslatexteam.wordpress.com/integration/
+		 * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
 		 *
 		 * @since 3.1-b2
 		 */
@@ -513,7 +513,7 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 
 		/**
 		 * Designed as interface for other plugin integration. The documentation is available at
-		 * https://qtranslatexteam.wordpress.com/integration/
+		 * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
 		 *
 		 * @since 3.3.2
 		 */
@@ -544,7 +544,7 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 
 		/**
 		 * Designed as interface for other plugin integration. The documentation is available at
-		 * https://qtranslatexteam.wordpress.com/integration/
+		 * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
 		 *
 		 * @since 3.3
 		 */
@@ -565,7 +565,7 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 
 		/**
 		 * Designed as interface for other plugin integration. The documentation is available at
-		 * https://qtranslatexteam.wordpress.com/integration/
+		 * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
 		 * Re-create a hook, after a piece of HTML is dynamically replaced with a custom Java script.
 		 */
 		this.refreshContentHook = function (inpField) {
@@ -655,7 +655,7 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 
 		/**
 		 * Designed as interface for other plugin integration. The documentation is available at
-		 * https://qtranslatexteam.wordpress.com/integration/
+		 * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
 		 *
 		 * @since 3.2.7 switched to use of nodeValue instead of innerHTML.
 		 */
@@ -700,7 +700,7 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 
 		/**
 		 * Designed as interface for other plugin integration. The documentation is available at
-		 * https://qtranslatexteam.wordpress.com/integration/
+		 * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
 		 *
 		 * @since 3.0
 		 */
@@ -784,7 +784,7 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 
 		/**
 		 * Designed as interface for other plugin integration. The documentation is available at
-		 * https://qtranslatexteam.wordpress.com/integration/
+		 * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
 		 *
 		 * @since 3.0
 		 */
@@ -800,7 +800,7 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 
 		/**
 		 * Designed as interface for other plugin integration. The documentation is available at
-		 * https://qtranslatexteam.wordpress.com/integration/
+		 * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
 		 *
 		 * @since 3.4.7
 		 */
@@ -813,7 +813,7 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 
 		/**
 		 * Designed as interface for other plugin integration. The documentation is available at
-		 * https://qtranslatexteam.wordpress.com/integration/
+		 * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
 		 *
 		 * @since 3.4.7
 		 */
@@ -826,7 +826,7 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 
 		/**
 		 * Designed as interface for other plugin integration. The documentation is available at
-		 * https://qtranslatexteam.wordpress.com/integration/
+		 * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
 		 *
 		 * @since 3.3
 		 */
@@ -840,7 +840,7 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 
 		/**
 		 * Designed as interface for other plugin integration. The documentation is available at
-		 * https://qtranslatexteam.wordpress.com/integration/
+		 * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
 		 *
 		 * @since 3.3
 		 */
@@ -1123,7 +1123,7 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 		/**
 		 * @since 3.2.9.8.6
 		 * Designed as interface for other plugin integration. The documentation is available at
-		 * https://qtranslatexteam.wordpress.com/integration/
+		 * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
 		 * The function passed will be called when user presses one of the Language Switching Buttons
 		 * before the content of all fields hooked is replaced with an appropriate language.
 		 * Two arguments are supplied:
@@ -1138,7 +1138,7 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 		/**
 		 * @since 3.3.2
 		 * Designed as interface for other plugin integration. The documentation is available at
-		 * https://qtranslatexteam.wordpress.com/integration/
+		 * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
 		 * Delete handler previously added by function addLanguageSwitchBeforeListener.
 		 */
 		this.delLanguageSwitchBeforeListener = function (func) {
@@ -1154,7 +1154,7 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 		/**
 		 * @since 3.2.9.8.6
 		 * Designed as interface for other plugin integration. The documentation is available at
-		 * https://qtranslatexteam.wordpress.com/integration/
+		 * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
 		 * The function passed will be called when user presses one of the Language Switching Buttons
 		 * after the content of all fields hooked is replaced with an appropriate language.
 		 * Two arguments are supplied:
@@ -1169,7 +1169,7 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 		/**
 		 * @since 3.3.2
 		 * Designed as interface for other plugin integration. The documentation is available at
-		 * https://qtranslatexteam.wordpress.com/integration/
+		 * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
 		 * Delete handler previously added by function addLanguageSwitchAfterListener.
 		 */
 		this.delLanguageSwitchAfterListener = function (func) {
@@ -1185,7 +1185,7 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 		/**
 		 * @since 3.2.9.8.9
 		 * Designed as interface for other plugin integration. The documentation is available at
-		 * https://qtranslatexteam.wordpress.com/integration/
+		 * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
 		 *
 		 */
 		this.enableLanguageSwitchingButtons = function (on) {
@@ -1509,7 +1509,7 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 
 	/**
 	 * Designed as interface for other plugin integration. The documentation is available at
-	 * https://qtranslatexteam.wordpress.com/integration/
+	 * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
 	 *
 	 * qTranslateX instance is saved in global variable qTranslateConfig.qtx,
 	 * which can be used by theme or plugins to dynamically change content hooks.

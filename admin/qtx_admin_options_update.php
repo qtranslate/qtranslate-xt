@@ -193,7 +193,7 @@ function qtranxf_editConfig() {
 				$messages[] = __( 'No initially untranslated posts found to set the default language.', 'qtranslate' );
 			}
 
-			$messages[] = sprintf( __( 'Post types other than "post" or "page", as well as unpublished entries, will have to be adjusted manually as needed, since there is no common way to automate setting the default language otherwise. It can be done with a custom script though. You may request a %spaid support%s for this.', 'qtranslate' ), '<a href="https://qtranslatexteam.wordpress.com/contact-us/">', '</a>' );
+			$messages[] = __( 'Post types other than "post" or "page", as well as unpublished entries, will have to be adjusted manually as needed, since there is no common way to automate setting the default language otherwise.', 'qtranslate' );
 		}
 	} elseif ( isset( $_GET['edit'] ) ) {
 		$lang = sanitize_text_field( $_GET['edit'] );
