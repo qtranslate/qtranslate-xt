@@ -63,6 +63,11 @@ class QTX_Modules_Handler {
 				'incompatible' => 'events-made-easy-qtranslate-x/events-made-easy-qtranslate-x.php'
 			),
 			array(
+				'id'           => 'jetpack',
+				'name'         => 'Jetpack',
+				'plugin'       => 'jetpack/jetpack.php'
+			),
+			array(
 				'id'           => 'gravity-forms',
 				'name'         => 'Gravity Forms',
 				'plugin'       => 'gravityforms/gravityforms.php',
