@@ -205,7 +205,7 @@ function qwpseo_xmlsitemaps_config() {
 	if ( empty( $options['enablexmlsitemap'] ) ) {
 		return;
 	}
-	printf( __( '%sNotes from %s' . PHP_EOL ), '<h3>', 'qTranslate&#8209;X</h3>' );
+	printf( __( '%sNotes from %s' . PHP_EOL ), '<h3>', 'qTranslate&#8209;XT</h3>' );
 	echo '<p>' . PHP_EOL;
 	echo __( 'In addition to main XML Sitemap, you may also view sitemaps for each individual language:' ) . PHP_EOL;
 	echo '<ul>' . PHP_EOL;

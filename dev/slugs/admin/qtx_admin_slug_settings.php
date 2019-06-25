@@ -99,7 +99,7 @@ function qtranxf_slug_update_translations_of($group, $group_name, $default_lang,
 		//qtranxf_dbg_log('qtranxf_slug_update_translations_of: old: $wp_group['.$name_old.']: ', $wp_group[$name_old]);
 		if($name != $name_old){
 			if(isset($wp_group[$name_old])){
-				qtranxf_add_warning(sprintf(__('The slug for %s "%s" for default language cannot be changed to "%s" on this page, because it is not known here which tool created it and for what purpose. Please, update this slug on the page where it is originated from. It may be required then to come back here to update the translations, unless the other plugin or theme is %sintegrated%s with %s.', 'qtranslate'), $group_name, $name_old, $name, '<a href="https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide" target="_blank">', '</a>', 'qTranslate&#8209;X'));
+				qtranxf_add_warning(sprintf(__('The slug for %s "%s" for default language cannot be changed to "%s" on this page, because it is not known here which tool created it and for what purpose. Please, update this slug on the page where it is originated from. It may be required then to come back here to update the translations, unless the other plugin or theme is %sintegrated%s with %s.', 'qtranslate'), $group_name, $name_old, $name, '<a href="https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide" target="_blank">', '</a>', 'qTranslate&#8209;XT'));
 				$qfields[$default_lang] = $name = $name_old;
 			}else{
 				$slugs_old = qtranxf_slug_get_translations($name_old);

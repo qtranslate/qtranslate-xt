@@ -1,20 +1,24 @@
 General instructions for translators:
-https://qtranslatexteam.wordpress.com/translators/
+https://github.com/qtranslate/qtranslate-xt/wiki/Plugin-Translation
 
 PO files can be downloaded from:
-https://github.com/qTranslate-Team/qtranslate-x/tree/master/lang
+https://github.com/qTranslate/qtranslate-xt/tree/master/lang
+
+------------------------------------------------------------------------------------------------------------------------
+[TODO] The following links need to be restored once the project has become a new official plugin
 
 Translators may use WordPress translation service:
-https://translate.wordpress.org/projects/wp-plugins/qtranslate-x
+# [TODO] https://translate.wordpress.org/projects/wp-plugins/xxx
 
 Translators may also use Transifex:
-https://www.transifex.com/qtranslatexteam/qtranslate-x/
+# [TODO] https://www.transifex.com/
 
 Subfolder 'language-names' contains translations of other language names, which are in used in "Not Available Message".
 You may wish to modify the translations of foreign language names to fit the grammar rules of your language in "Not Available Message".
-Please, contact [qTranslate Team](https://qtranslatexteam.wordpress.com/contact-us/) then to report which modifications should be made.
+Please contact us to [report](https://github.com/qtranslate/qtranslate-xt/issues) which modifications should be made.
 
 For developers, to integrate Transifex: http://docs.transifex.com/client/
+------------------------------------------------------------------------------------------------------------------------
 
 ACKNOWLEDGEMENTS
 
