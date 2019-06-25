@@ -903,33 +903,6 @@ function qtranxf_admin_notices_block_editor() {
 
 add_action( 'admin_notices', 'qtranxf_admin_notices_block_editor' );
 
-function qtranxf_admin_notices_next_thanks() {
-	if ( ! qtranxf_check_admin_notice( 'next_thanks' ) ) {
-		return;
-	}
-	qtranxf_admin_notice_dismiss_script();
-	// note for qTranslate-XT: this section is obsolete but it is not displayed. We keep it visible for gettext/Poedit because we may re-use the existing translations in the future.
-	echo '<div class="updated qtranxs-notice-ajax notice is-dismissible" id="qtranxs-next_thanks" action="unset">';
-	echo '<p>';
-	printf( __( 'Thank you for using plugin %s!', 'qtranslate' ), qtranxf_get_plugin_link() );
-	echo '<br/>';
-	echo __( 'Our team would greatly appreciate any feedback:', 'qtranslate' );
-	echo '<ul style="list-style: square; list-style-position: inside;"><li>';
-	printf( __( '%sCheck the github ticket%s to help us with the current issues, report a bug or discuss about new features.', 'qtranslate' ), '<a href="https://github.com/qTranslate/qtranslate-xt/issues/" target="_blank">', '</a>' );
-	echo '</li><li>';
-	printf( __( '%sSubmit a Pull Request%s for bug fixes and new features.', 'qtranslate' ), '<a href="https://github.com/qtranslate/qtranslate-xt/pulls/" target="_blank">', '</a>' );
-	// TODO restore when new plugin available at wordpress.org
-	// echo '</li><li>';
-	// printf( __( '%sReview the plugin%s at WordPress site.', 'qtranslate' ), '<a href="https://wordpress.org/support/view/plugin-reviews/qtranslate-x?rate=5#postform" target="_blank">', '</a>' );
-	echo '</li></ul>';
-	echo '</p><p>&nbsp;';
-	echo '<a class="button qtranxs-notice-dismiss" href="javascript:void(0);">' . __( 'I am aware of that, dismiss this message.', 'qtranslate' ) . '</a>';
-	echo '</p>';
-	echo '</div>';
-}
-
-// add_action('admin_notices', 'qtranxf_admin_notices_next_thanks');
-
 function qtranxf_admin_notices_errors() {
 	//qtranxf_dbg_log('14.qtranxf_admin_notices_errors:');
 	$msgs = get_option( 'qtranslate_config_errors' );
