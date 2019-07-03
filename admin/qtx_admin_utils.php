@@ -281,23 +281,24 @@ function qtranxf_before_admin_bar_render() {
 }
 
 function qtranxf_admin_the_title( $title ) {
-	//todo this filter should not be used in admin area at all?
-	if ( defined( 'DOING_AJAX' ) && DOING_AJAX && !is_admin())//nav-menus.php#752
-	{
+	// For nav menus, keep the raw value as the languages are handled client-side (LSB)
+	if ( defined( 'DOING_AJAX' ) && DOING_AJAX && isset($_REQUEST['action']) && $_REQUEST['action'] == 'add-menu-item' ) {
+		// When a nav menu is being added it is first handled by AJAX, see "wp_ajax_add_menu_item" in ajax-actions.php
+		// For the call to the filter "the_title", see "wp_setup_nav_menu_item" in nav-menus.php
 		return $title;
 	}
 	global $pagenow;
 	switch ( $pagenow ) {
-		//case 'term.php':
-		//case 'edit-tags.php':
 		case 'nav-menus.php':
+			// When the nav menu is updated, keep the raw value.
 			return $title;
 		default:
+			// For general display purposes only
 			return qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage( $title );
 	}
 }
 
-add_filter( 'the_title', 'qtranxf_admin_the_title', 0 );//WP: fires for display purposes only
+add_filter( 'the_title', 'qtranxf_admin_the_title', 0 );
 
 //filter added in qtranslate_hooks.php
 if ( ! function_exists( 'qtranxf_trim_words' ) ) {
