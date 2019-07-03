@@ -214,12 +214,14 @@ add_action( 'woocommerce_set_cart_cookies', 'qwc_set_cart_cookies' );
 
 /**
  * Dealing with mini-cart cache in internal browser storage.
- * Response to action 'woocommerce_add_to_cart_hash', which overwrites the default WC cart hash and cookies.
+ * Response to action 'woocommerce_cart_hash' which overwrites the default WC cart hash and cookies.
  *
  * @param string $hash default WC hash.
  * @param array $cart wc variable holding contents of the cart without language information.
+ *
+ * @return string cart hash with language information
  */
-function qwc_add_to_cart_hash( $hash, $cart ) {
+function qwc_cart_hash( $hash, $cart ) {
 	$hash = qwc_get_cart_hash( $cart );
 	if ( ! headers_sent() ) {
 		wc_setcookie( 'woocommerce_cart_hash', $hash );
@@ -228,4 +230,4 @@ function qwc_add_to_cart_hash( $hash, $cart ) {
 	return $hash;
 }
 
-add_filter( 'woocommerce_add_to_cart_hash', 'qwc_add_to_cart_hash', 5, 2 );
+add_filter( 'woocommerce_cart_hash', 'qwc_cart_hash', 5, 2 );
