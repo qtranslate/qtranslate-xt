@@ -178,7 +178,7 @@ class QTX_Admin_Modules {
 					break;
 				case QTX_MODULE_STATUS_UNDEFINED:
 				default:
-					$info['plugin'] = __( 'Unknown', 'qtranslate' );
+					$info['plugin'] = __( 'Undefined', 'qtranslate' );
 					$info['module'] = __( 'Inactive', 'qtranslate' );
 					$info['icon']   = 'dashicons-editor-help';
 					$info['color']  = '';

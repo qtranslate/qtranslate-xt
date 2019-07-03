@@ -756,7 +756,7 @@ function qtranxf_nav_menu_metabox( $object ) {
 				echo ' ';
 				printf( __( 'The rendered menu items have CSS classes %s and %s ("%s" is a language code), which can be defined in theme style, if desired. The label of language menu can also be customized via field "%s" in the menu configuration.', 'qtranslate' ), '.qtranxs-lang-menu, .qtranxs-lang-menu-xx, .qtranxs-lang-menu-item', '.qtranxs-lang-menu-item-xx', 'xx', qtranxf_translate_wp( 'Navigation Label' ) );
 				echo ' ';
-				printf( __( 'The field "%s" of inserted menu item allows additional configuration described in %sWiki%s.', 'qtranslate' ), qtranxf_translate_wp( 'URL' ), '<a href="https://github.com/qtranslate/qtranslate-xt/wiki/Front-language-switching#language-switcher-menu" target="_blank">', '</a>' ) ?></p>
+				printf( __( 'The field "%s" of inserted menu item allows additional configuration described in our %sWiki%s.', 'qtranslate' ), qtranxf_translate_wp( 'URL' ), '<a href="https://github.com/qtranslate/qtranslate-xt/wiki/Front-language-switching#language-switcher-menu" target="_blank">', '</a>' ) ?></p>
 		</span>
 	</span>
         <p class="button-controls">

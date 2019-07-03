@@ -1,3 +1,14 @@
+### 3.6.1
+
+* New [Wiki pages](https://github.com/qtranslate/qtranslate-xt/wiki)! Help and doc hyperlinks now point to our internal Wiki.
+* Fix Jetpack: translate related post titles (#699), with a new module for Jetpack
+* Fix deprecated WC filters: product attributes (#686), woocommerce_add_cart_hash
+* Fix ACF post object titles not translated (#678)
+* Fix CSS for ACF admin field (#697)
+* Fix translation embedded content (#673), for fields given by oembed_response_data
+* Update vendor info in i18n-config.json (#702)
+* Update Hungarian localization to 3.6.0 (#692)
+
 ### 3.6.0
 * New feature: the built-in **modules** replace the legacy integration plugins. You have to **deactivate/reactivate qTranslate-XT** to detect the active modules. See the integration tab and the main modules [README](https://github.com/qtranslate/qtranslate-xt/blob/master/modules/README.md) for more info.
 * New modules: ACF, All in One SEO Pack, Events Made Easy, Gravity Forms, WooCommerce. Note: these modules have been converted from the last available versions of the legacy plugins, but they still remain the same. See each module README for more info.
