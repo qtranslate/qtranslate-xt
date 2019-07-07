@@ -158,30 +158,31 @@ class acf_qtranslate_acf_5_image extends acf_field_image {
 
 			?>
 			<div <?php acf_esc_attr_e( $div ); ?>>
-				<div class="acf-hidden">
-					<?php acf_hidden_input(array( 'name' => $field['name'], 'value' => $field['value'] )); ?>
+				<?php acf_hidden_input(array( 'name' => $field['name'], 'value' => $field['value'] )); ?>
+				<div class="show-if-value image-wrap" <?php if( $size['width'] ): ?>style="<?php echo esc_attr('max-width: '.$size['width'].'px'); ?>"<?php endif; ?>>
+					<img data-name="image" src="<?php echo esc_url($url); ?>" alt="<?php echo esc_attr($alt); ?>"/>
+					<div class="acf-actions -hover">
+						<?php
+						if( $uploader != 'basic' ):
+							?><a class="acf-icon -pencil dark" data-name="edit" href="#" title="<?php _e('Edit', 'acf'); ?>"></a><?php
+						endif;
+						?><a class="acf-icon -cancel dark" data-name="remove" href="#" title="<?php _e('Remove', 'acf'); ?>"></a>
+					</div>
 				</div>
-				<div class="view show-if-value acf-soh" <?php if( $size['width'] ) echo 'style="max-width: '.$size['width'].'px"'; ?>>
-					<img data-name="image" src="<?php echo $url; ?>" alt="<?php echo $alt; ?>"/>
-					<ul class="acf-hl acf-soh-target">
-						<?php if( $uploader != 'basic' ): ?>
-							<li><a class="acf-icon -pencil dark" data-name="edit" href="#" title="<?php _e('Edit', 'acf'); ?>"></a></li>
-						<?php endif; ?>
-						<li><a class="acf-icon -cancel dark" data-name="remove" href="#" title="<?php _e('Remove', 'acf'); ?>"></a></li>
-					</ul>
-				</div>
-				<div class="view hide-if-value">
+				<div class="hide-if-value">
 					<?php if( $uploader == 'basic' ): ?>
 
 						<?php if( $field['value'] && !is_numeric($field['value']) ): ?>
-							<div class="acf-error-message"><p><?php echo $field['value']; ?></p></div>
+							<div class="acf-error-message"><p><?php echo acf_esc_html($field['value']); ?></p></div>
 						<?php endif; ?>
 
-						<input type="file" name="<?php echo $field['name']; ?>" id="<?php echo $field['id']; ?>" />
+						<label class="acf-basic-uploader">
+							<?php acf_file_input(array( 'name' => $field['name'], 'id' => $field['id'] )); ?>
+						</label>
 
 					<?php else: ?>
 
-						<p style="margin:0;"><?php _e('No image selected','acf'); ?> <a data-name="add" class="acf-button button" href="#"><?php _e('Add Image','acf'); ?></a></p>
+						<p><?php _e('No image selected','acf'); ?> <a data-name="add" class="acf-button button" href="#"><?php _e('Add Image','acf'); ?></a></p>
 
 					<?php endif; ?>
 				</div>
