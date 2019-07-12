@@ -322,4 +322,56 @@ class acf_qtranslate_plugin {
 		<?php
 	}
 
+	/**
+	 *  validate_language_values
+	 *
+	 *  Validates all the form values for a given field, by iterating over the multi-lang array values as strings:
+	 *  - check the required property
+	 *  - call the original ACF method for every language string.
+	 *
+	 * @param object $field_object corresponding to the qtranslate ACF field item
+	 * @param bool|string $valid
+	 * @param array $values holding a string value per language
+	 * @param string $field
+	 * @param string $input
+	 *
+	 * @return    bool|string
+	 * @see acf_validation::acf_validate_value
+	 */
+	public function validate_language_values( $field_object, $valid, $values, $field, $input ) {
+		global $q_config;
+
+		// retrieve the original ACF validation method for that field (cumbersome, but we can't change acf_field base class)
+		$parent_class = get_parent_class( $field_object );
+		if ( method_exists( $parent_class, 'validate_value' ) ) {
+			try {
+				$validation_method = new ReflectionMethod( $parent_class, 'validate_value' );
+			} catch ( ReflectionException $exception ) {
+				return $exception->getMessage();
+			}
+		}
+
+		// validate every language value as string
+		foreach ( $values as $key_language => $value_language ) {
+			// validate properly the required value (see: acf_validate_value in acf_validation)
+			if ( $field['required'] && empty( $value_language ) ) {
+				return '(' . $q_config['language_name'][ $key_language ] . ') ' . sprintf( __( '%s value is required', 'acf' ), $field['label'] );
+			}
+			// validate with original ACF method
+			if ( isset( $validation_method ) ) {
+				$valid_language = $validation_method->invokeArgs( $field_object, array(
+					$valid,
+					$value_language,
+					$field,
+					$input
+				) );
+				if ( ! empty( $valid_language ) && is_string( $valid_language ) ) {
+					return '(' . $q_config['language_name'][ $key_language ] . ') ' . $valid_language;
+				}
+			}
+		}
+
+		return $valid;
+	}
+
 }

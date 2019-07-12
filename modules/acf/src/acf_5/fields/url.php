@@ -148,7 +148,7 @@ class acf_qtranslate_acf_5_url extends acf_field_url {
 	/**
 	 *  validate_value
 	 *
-	 *  Overrides sub-class validation to handle the value formatted to a multi-lang array instead of string.
+	 *  Overrides ACF validation to handle the value formatted to a multi-lang array instead of string.
 	 *
 	 * @param bool|string $valid
 	 * @param array $value containing values per language
@@ -156,24 +156,14 @@ class acf_qtranslate_acf_5_url extends acf_field_url {
 	 * @param string $input
 	 *
 	 * @return    bool|string
+	 * @see acf_validation::acf_validate_value
 	 */
 	function validate_value( $valid, $value, $field, $input ) {
 		if ( is_array( $value ) ) {
-			global $q_config;
-			foreach ( $value as $key_language => $value_language ) {
-				// the empty case has not been checked properly as it was only considering a string (see: acf_validate_value)
-				if ( $field['required'] && empty( $value_language ) ) {
-					return '(' . $q_config['language_name'][ $key_language ] . ') ' . sprintf( __( '%s value is required', 'acf' ), $field['label'] );
-				}
-
-				// now call the sub-class validation for every language as string
-				$valid_item = acf_field_url::validate_value( $valid, $value_language, $field, $input );
-				if ( ! empty( $valid_item ) && is_string( $valid_item ) ) {
-					return '(' . $q_config['language_name'][ $key_language ] . ') ' . $valid_item;
-				}
-			}
+			$valid = $this->plugin->validate_language_values( $this, $valid, $value, $field, $input);
 		}
 
 		return $valid;
 	}
+
 }

@@ -161,4 +161,25 @@ class acf_qtranslate_acf_5_post_object extends acf_field_post_object {
 		return qtrans_join($values);
 	}
 
+	/**
+	 *  validate_value
+	 *
+	 *  Overrides ACF validation to handle the value formatted to a multi-lang array instead of string.
+	 *
+	 * @param bool|string $valid
+	 * @param array $value containing values per language
+	 * @param string $field
+	 * @param string $input
+	 *
+	 * @return    bool|string
+	 * @see acf_validation::acf_validate_value
+	 */
+	function validate_value( $valid, $value, $field, $input ) {
+		if ( is_array( $value ) ) {
+			$valid = $this->plugin->validate_language_values( $this, $valid, $value, $field, $input);
+		}
+
+		return $valid;
+	}
+
 }
