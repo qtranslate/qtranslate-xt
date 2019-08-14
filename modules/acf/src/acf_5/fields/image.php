@@ -71,8 +71,11 @@ class acf_qtranslate_acf_5_image extends acf_field_image {
 
 
 		// filters
-		add_filter('get_media_item_args',				array($this, 'get_media_item_args'));
-		add_filter('wp_prepare_attachment_for_js',		array($this, 'wp_prepare_attachment_for_js'), 10, 3);
+		add_filter('get_media_item_args', array($this, 'get_media_item_args'));
+		// removed from ACF 5.8.3
+		if (method_exists($this, 'wp_prepare_attachment_for_js')) {
+			add_filter('wp_prepare_attachment_for_js', array($this, 'wp_prepare_attachment_for_js'), 10, 3);
+		}
 
 	}
 
