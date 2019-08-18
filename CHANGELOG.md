@@ -1,3 +1,9 @@
+### 3.6.2
+* Fix media library broken with ACF 5.8.3 (#718)
+* Fix ACF language values not validated (#710)
+* Fix ACF image field rendering (#708)
+* Fix ACF validation of url field (#703)
+
 ### 3.6.1
 
 * New [Wiki pages](https://github.com/qtranslate/qtranslate-xt/wiki)! Help and doc hyperlinks now point to our internal Wiki.
