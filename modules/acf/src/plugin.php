@@ -34,12 +34,6 @@ class acf_qtranslate_plugin {
 
 		if (!$plugin_loaded && $this->acf_enabled() && $this->qtranslatex_enabled()) {
 
-			// setup qtranslate fields for ACF 4
-			if ($this->acf_major_version() === 4) {
-				require_once ACF_QTRANSLATE_PLUGIN_DIR . 'src/acf_4/acf.php';
-				$this->acf = new acf_qtranslate_acf_4($this);
-			}
-
 			// setup qtranslate fields for ACF 5
 			if ($this->acf_major_version() === 5) {
 				require_once ACF_QTRANSLATE_PLUGIN_DIR . 'src/acf_5/acf.php';
@@ -61,7 +55,7 @@ class acf_qtranslate_plugin {
 	 */
 	public function acf_enabled() {
 		if (function_exists('acf')) {
-			return $this->acf_major_version() === 4 || $this->acf_major_version() === 5;
+			return $this->acf_major_version() === 5;
 		}
 		return false;
 	}
