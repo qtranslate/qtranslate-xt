@@ -45,7 +45,6 @@ function qtranxf_localeForCurrentLanguage( $locale ) {
 			$lc2[] = $loc;
 		}
 		setlocale( LC_TIME, $lc2 );
-		//if(!$loc) qtranxf_error_log(sprintf('Could not set locale with setlocale(LC_TIME, %s).', json_encode(array_merge($lc, $lc2))));
 	}
 
 	//qtranxf_dbg_log('qtranxf_localeForCurrentLanguage: $locale='.$locale.'; return: '.$locale_lang.'; Set to ', $loc);
@@ -98,29 +97,20 @@ function qtranxf_useRawTitle( $title, $raw_title = '', $context = 'save' ) {
 	return $title;
 }
 
-//function qtranxf_gettext($translated_text, $text, $domain) {
 function qtranxf_gettext( $translated_text ) {
 	//same as qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage
 	global $q_config;
-	//if(!isset($q_config['language'])){
-	//	//qtranxf_dbg_log('$q_config[language] is not set:',debug_backtrace());
-	//	return $translated_text;
-	//}
+
 	return qtranxf_use( $q_config['language'], $translated_text, false );
 }
 
-//function qtranxf_gettext_with_context($translated_text, $text, $context, $domain) {
 function qtranxf_gettext_with_context( $translated_text ) {
 	//same as qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage
 	global $q_config;
-	//if(!isset($q_config['language'])){
-	//	//qtranxf_dbg_log('$q_config[language] is not set:',debug_backtrace());
-	//	return $translated_text;
-	//}
+
 	return qtranxf_use( $q_config['language'], $translated_text, false );
 }
 
-//function qtranxf_ngettext($translation, $single, $plural, $number, $domain) {
 function qtranxf_ngettext( $translated_text ) {
 	//same as qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage
 	global $q_config;
@@ -137,21 +127,14 @@ add_action( 'widgets_init', 'qtranxf_widget_init' );
 
 
 // Hooks (execution time critical filters)
-
-//function qtranxf_blogname($nm)
-//{
-//	//qtranxf_dbg_log(!empty($_POST),'qtranxf_blogname: $nm: ',$nm);
-//	return qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($nm);
-//}
-//add_filter('option_blogname', 'qtranxf_blogname',5);
-
 add_filter( 'sanitize_title', 'qtranxf_useRawTitle', 0, 3 );
 
 add_filter( 'comment_moderation_subject', 'qtranxf_useDefaultLanguage', 0 );
 add_filter( 'comment_moderation_text', 'qtranxf_useDefaultLanguage', 0 );
 
-//add_filter('the_content', 'qtranxf_useCurrentLanguageIfNotFoundShowAvailable', 0);
-add_filter( 'the_content', 'qtranxf_useCurrentLanguageIfNotFoundShowAvailable', 100 );// since 3.1 changed priority from 0 to 100, since other plugins, like https://wordpress.org/plugins/siteorigin-panels generate additional content, which also needs to be translated.
+// since 3.1 changed priority from 0 to 100, since other plugins,
+// like https://wordpress.org/plugins/siteorigin-panels generate additional content, which also needs to be translated.
+add_filter( 'the_content', 'qtranxf_useCurrentLanguageIfNotFoundShowAvailable', 100 );
 add_filter( 'the_excerpt', 'qtranxf_useCurrentLanguageIfNotFoundShowAvailable', 0 );
 add_filter( 'the_excerpt_rss', 'qtranxf_useCurrentLanguageIfNotFoundShowAvailable', 0 );
 
@@ -165,12 +148,9 @@ add_filter( 'get_the_modified_date', 'qtranxf_dateModifiedFromPostForCurrentLang
 add_filter( 'locale', 'qtranxf_localeForCurrentLanguage', 99 );
 add_filter( 'core_version_check_locale', 'qtranxf_versionLocale' );
 
-//add_filter('the_title', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', 0);//WP: fires for display purposes only
 add_filter( 'post_title', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', 0 );
 add_filter( 'tag_rows', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', 0 );
-//add_filter('list_cats', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
 add_filter( 'wp_list_categories', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', 0 );
-//add_filter('wp_dropdown_cats', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
 add_filter( 'wp_title', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', 0 );
 add_filter( 'single_post_title', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', 0 );
 add_filter( 'bloginfo', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', 0 );
@@ -181,10 +161,8 @@ add_filter( 'wp_title_rss', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLangu
 add_filter( 'the_title_rss', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', 0 );
 add_filter( 'the_content_rss', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', 0 );
 add_filter( 'get_pages', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', 0 );
-//add_filter('category_description', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
 add_filter( 'bloginfo_rss', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', 0 );
 add_filter( 'the_category_rss', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', 0 );
-//add_filter('wp_generate_tag_cloud', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage',0);
 add_filter( 'term_links-post_tag', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', 0 );
 add_filter( 'link_name', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', 0 );
 add_filter( 'link_description', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', 0 );

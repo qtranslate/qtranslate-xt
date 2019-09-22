@@ -11,12 +11,16 @@ define( 'QTX_URL', 4 );
 define( 'QTX_LANGUAGE', 5 );
 define( 'QTX_ARRAY', 6 );
 define( 'QTX_BOOLEAN_SET', 7 );
-define( 'QTX_TEXT', 8 );//multi-line string
+define( 'QTX_TEXT', 8 ); // multi-line string
 
-define( 'QTX_URL_QUERY', 1 );// query: domain.com?lang=en
-define( 'QTX_URL_PATH', 2 );// pre path: domain.com/en
-define( 'QTX_URL_DOMAIN', 3 );// pre domain: en.domain.com
-define( 'QTX_URL_DOMAINS', 4 );// domain per language
+// query: domain.com?lang=en
+define( 'QTX_URL_QUERY', 1 );
+// pre path: domain.com/en
+define( 'QTX_URL_PATH', 2 );
+// pre domain: en.domain.com
+define( 'QTX_URL_DOMAIN', 3 );
+// domain per language
+define( 'QTX_URL_DOMAINS', 4 );
 
 define( 'QTX_DATE_WP', 0 );// default
 // strftime usage (backward compability)
@@ -31,7 +35,7 @@ define( 'QTX_FILTER_OPTIONS_DEFAULT', 'blogname blogdescription widget_%' );
 
 define( 'QTX_EX_DATE_FORMATS_DEFAULT', '\'U\'' );
 
-define( 'QTX_EDITOR_MODE_LSB', 0 );//Language Switching Buttons
+define( 'QTX_EDITOR_MODE_LSB', 0 ); // Language Switching Buttons
 define( 'QTX_EDITOR_MODE_RAW', 1 );
 define( 'QTX_EDITOR_MODE_SINGLGE', 2 );
 
@@ -60,30 +64,30 @@ global $qtranslate_options;
 function qtranxf_set_default_options( &$ops ) {
 	$ops = array();
 
-	//options processed in a standardized way
+	// options processed in a standardized way
 	$ops['front'] = array();
 
 	$ops['front']['int'] = array(
-		'url_mode'            => QTX_URL_PATH,// sets default url mode
-		'use_strftime'        => QTX_DATE,// strftime usage (backward compability)
+		'url_mode'            => QTX_URL_PATH,  // sets default url mode
+		'use_strftime'        => QTX_DATE,  // strftime usage (backward compability)
 		'filter_options_mode' => QTX_FILTER_OPTIONS_ALL,
-		'language_name_case'  => 0 //Camel Case
+		'language_name_case'  => 0  //Camel Case
 	);
 
 	$ops['front']['bool'] = array(
-		'detect_browser_language'        => true,// enables browser language detection
-		'hide_untranslated'              => false,// hide pages without content
+		'detect_browser_language'        => true,   // enables browser language detection
+		'hide_untranslated'              => false,  // hide pages without content
 		'show_displayed_language_prefix' => true,
 		'show_alternative_content'       => false,
-		'hide_default_language'          => true,// hide language tag for default language in urls
+		'hide_default_language'          => true,   // hide language tag for default language in urls
 		'use_secure_cookie'              => false,
 		'header_css_on'                  => true,
 	);
 
-	//single line options
+	// single line options
 	$ops['front']['str'] = array();
 
-	//multi-line options
+	// multi-line options
 	$ops['front']['text'] = array(
 		'header_css' => 'qtranxf_front_header_css_default',
 	);
@@ -94,21 +98,21 @@ function qtranxf_set_default_options( &$ops ) {
 		'front_config'       => array(),
 	);
 
-	//options processed in a special way
+	// options processed in a special way
 
 	// store other default values of specially handled options
 	$ops['default_value'] = array(
-		'default_language'       => null,//string
-		'enabled_languages'      => null,//array
-		'qtrans_compatibility'   => false,//enables compatibility with former qtrans_* functions
-		'disable_client_cookies' => false,//bool
-		'flag_location'          => null,//string
-		'filter_options'         => QTX_FILTER_OPTIONS_DEFAULT,//array
-		'ignore_file_types'      => QTX_IGNORE_FILE_TYPES,//array
-		'domains'                => null,//array
+		'default_language'       => null,   // string
+		'enabled_languages'      => null,   // array
+		'qtrans_compatibility'   => false,  // enables compatibility with former qtrans_* functions
+		'disable_client_cookies' => false,  // bool
+		'flag_location'          => null,   // string
+		'filter_options'         => QTX_FILTER_OPTIONS_DEFAULT, // array
+		'ignore_file_types'      => QTX_IGNORE_FILE_TYPES,  // array
+		'domains'                => null,   // array
 	);
 
-	//must have function 'qtranxf_default_option_name()' which returns a default value for option 'option_name'.
+	// must have function 'qtranxf_default_option_name()' which returns a default value for option 'option_name'.
 	$ops['languages'] = array(
 		'language_name' => 'qtranslate_language_names',
 		'locale'        => 'qtranslate_locales',
@@ -117,7 +121,6 @@ function qtranxf_set_default_options( &$ops ) {
 		'date_format'   => 'qtranslate_date_formats',
 		'time_format'   => 'qtranslate_time_formats',
 		'flag'          => 'qtranslate_flags',
-		//'windows_locale' => null,//this property is not stored
 	);
 
 	/**
@@ -126,36 +129,12 @@ function qtranxf_set_default_options( &$ops ) {
 	$ops = apply_filters( 'qtranslate_option_config', $ops );
 }
 
-/* pre-Domain Endings - for future use
-	$cfg['pre_domain'] = array();
-	$cfg['pre_domain']['de'] = 'de';
-	$cfg['pre_domain']['en'] = 'en';
-	$cfg['pre_domain']['zh'] = 'zh';
-	$cfg['pre_domain']['ru'] = 'ru';
-	$cfg['pre_domain']['fi'] = 'fs';
-	$cfg['pre_domain']['fr'] = 'fr';
-	$cfg['pre_domain']['nl'] = 'nl';
-	$cfg['pre_domain']['sv'] = 'sv';
-	$cfg['pre_domain']['it'] = 'it';
-	$cfg['pre_domain']['ro'] = 'ro';
-	$cfg['pre_domain']['hu'] = 'hu';
-	$cfg['pre_domain']['ja'] = 'ja';
-	$cfg['pre_domain']['es'] = 'es';
-	$cfg['pre_domain']['vi'] = 'vi';
-	$cfg['pre_domain']['ar'] = 'ar';
-	$cfg['pre_domain']['pt'] = 'pt';
-	$cfg['pre_domain']['pb'] = 'pb';
-	$cfg['pre_domain']['pl'] = 'pl';
-	$cfg['pre_domain']['gl'] = 'gl';
-	$cfg['pre_domain']['tr'] = 'tr';
-*/
-
 /**
  * Names for languages in the corresponding language, add more if needed
  * @since 3.3
  */
 function qtranxf_default_language_name() {
-	//Native Name
+	// Native Name
 	$nnm       = array();
 	$nnm['de'] = 'Deutsch';
 	$nnm['en'] = 'English';
@@ -184,13 +163,14 @@ function qtranxf_default_language_name() {
 	$nnm['el'] = 'Ελληνικά';
 	$nnm['uk'] = 'Українська';
 	$nnm['ua'] = $nnm['uk'];
-	$nnm['cy'] = 'Cymraeg';// Oct 22 2015
-	$nnm['ca'] = 'Català';//Nov 6 2015
-	$nnm['sk'] = 'Slovenčina';//Nov 12 2015
-	$nnm['lt'] = 'Lietuvių';//May 3 2016
-	$nnm['kk'] = 'Қазақ тілі';//May 27 2016
-	$nnm['cs'] = 'Čeština';//July 9 2016
-	//$nnm['tw'] = '繁體中文';
+	$nnm['cy'] = 'Cymraeg'; // Oct 22 2015
+	$nnm['ca'] = 'Català';  // Nov 6 2015
+	$nnm['sk'] = 'Slovenčina';  // Nov 12 2015
+	$nnm['lt'] = 'Lietuvių';    // May 3 2016
+	$nnm['kk'] = 'Қазақ тілі';  // May 27 2016
+	$nnm['cs'] = 'Čeština'; // July 9 2016
+
+	// $nnm['tw'] = '繁體中文';
 	return $nnm;
 }
 
@@ -205,7 +185,7 @@ function qtranxf_default_locale() {
 	$loc['en'] = 'en_US';
 	$loc['zh'] = 'zh_CN';
 	$loc['ru'] = 'ru_RU';
-	$loc['fi'] = 'fi';//changed from fi_FI on Nov 10 2015 to match WordPress locale
+	$loc['fi'] = 'fi';  // changed from fi_FI on Nov 10 2015 to match WordPress locale
 	$loc['fr'] = 'fr_FR';
 	$loc['nl'] = 'nl_NL';
 	$loc['sv'] = 'sv_SE';
@@ -222,20 +202,20 @@ function qtranxf_default_locale() {
 	$loc['pl'] = 'pl_PL';
 	$loc['gl'] = 'gl_ES';
 	$loc['tr'] = 'tr_TR';
-	$loc['et'] = 'et';//changed from et_EE on Nov 10 2015 to match WordPress locale
-	$loc['hr'] = 'hr';//changed from hr_HR on Nov 10 2015 to match WordPress locale
-	$loc['eu'] = 'eu';//changed from eu_ES on Nov 10 2015 to match WordPress locale
-	$loc['el'] = 'el';//corrected from el_GR on Nov 10 2015 http://qtranslate-x.com/support/index.php?topic=27
+	$loc['et'] = 'et';  // changed from et_EE on Nov 10 2015 to match WordPress locale
+	$loc['hr'] = 'hr';  // changed from hr_HR on Nov 10 2015 to match WordPress locale
+	$loc['eu'] = 'eu';  // changed from eu_ES on Nov 10 2015 to match WordPress locale
+	$loc['el'] = 'el';  // corrected from el_GR on Nov 10 2015 http://qtranslate-x.com/support/index.php?topic=27
 	$loc['uk'] = 'uk';
 	$loc['ua'] = $loc['uk'];
-	$loc['cy'] = 'cy';// not 'cy_GB'
+	$loc['cy'] = 'cy';  // not 'cy_GB'
 	$loc['ca'] = 'ca';
 	$loc['sk'] = 'sk_SK';
 	$loc['lt'] = 'lt_LT';
 	$loc['kk'] = 'kk';
 	$loc['cs'] = 'cs_CZ';
 
-	//$loc['tw'] = 'zh_TW';
+	// $loc['tw'] = 'zh_TW';
 	return $loc;
 }
 
@@ -255,15 +235,15 @@ function qtranxf_default_locale_html() {
  * @since 3.3
  */
 function qtranxf_default_not_available() {
-	// %LANG:<normal_separator>:<last_separator>% generates a list of languages separated by <normal_separator> except for the last one, where <last_separator> will be used instead.
-	//Not Available Message
+	// %LANG:<normal_separator>:<last_separator>% generates a list of languages separated by <normal_separator>
+	// except for the last one, where <last_separator> will be used instead.
+	// Not Available Message
 	$nam = array();
-	//Sorry, this entry is only available in "%LANG:, :" and "%".
+	// Sorry, this entry is only available in "%LANG:, :" and "%".
 	$nam['de'] = 'Leider ist der Eintrag nur auf %LANG:, : und % verfügbar.';//ok
 	$nam['en'] = 'Sorry, this entry is only available in %LANG:, : and %.';//ok
 	$nam['zh'] = '对不起，此内容只适用于%LANG:，:和%。';
 	$nam['ru'] = 'Извините, этот текст доступен только на &ldquo;%LANG:&rdquo;, &ldquo;:&rdquo; и &ldquo;%&rdquo;.';//ok
-	//$nam['fi'] = 'Anteeksi, mutta tämä kirjoitus on saatavana ainoastaan näillä kielillä: %LANG:, : ja %.';
 	$nam['fi'] = 'Tämä teksti on valitettavasti saatavilla vain kielillä: %LANG:, : ja %.';//Jyrki Vanamo, Oct 20 2015, 3.4.6.5
 	$nam['fr'] = 'Désolé, cet article est seulement disponible en %LANG:, : et %.';
 	$nam['nl'] = 'Onze verontschuldigingen, dit bericht is alleen beschikbaar in %LANG:, : en %.';
@@ -294,7 +274,7 @@ function qtranxf_default_not_available() {
 	$nam['kk'] = 'Кешіріңіз, бұл кіріс тек %LANG:, : және % тілінде ғана қол жетімді.';
 	$nam['cs'] = 'Omlouváme se, tato položka je k dispozici pouze v %LANG:, : a %.';
 
-	//$nam['tw'] = '对不起，此内容只适用于%LANG:，:和%。';
+	// $nam['tw'] = '对不起，此内容只适用于%LANG:，:和%。';
 	return $nam;
 }
 
@@ -339,7 +319,7 @@ function qtranxf_default_date_format() {
 	$dtf['kk'] = '%A, \d\e\r %e. %B %Y';
 	$dtf['cs'] = '%e. %m. %Y';
 
-	//$dtf['tw'] = '%x %A';
+	// $dtf['tw'] = '%x %A';
 	return $dtf;
 }
 
@@ -643,7 +623,6 @@ function qtranxf_languages_configured( &$cfg ) {
 		$cfg[ $nm ] = qtranxf_language_configured( $nm, $opn );
 	}
 
-	//$cfg['windows_locale'] = qtranxf_language_configured('windows_locale');
 	return $cfg;
 }
 
@@ -670,8 +649,4 @@ function qtranxf_load_languages_enabled() {
 		}
 		$q_config[ $nm ] = $val;
 	}
-	//$locales = qtranxf_default_windows_locale();
-	//foreach($q_config['enabled_languages'] as $lang){
-	//	$q_config['windows_locale'][$lang] = $locales[$lang];
-	//}
 }

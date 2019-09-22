@@ -392,7 +392,7 @@ function qtranxf_complete_url_info_path( &$urlinfo ) {
 			}
 		}
 	}
-	//$urlinfo['wp-path'] is not set, means url does not belong to this WP installation
+	// 'wp-path' not set means url does not belong to this WP installation
 }
 
 /**
@@ -463,12 +463,7 @@ function qtranxf_insertDropDownElement( $language, $url, $id ) {
 
 function qtranxf_get_domain_language( $host ) {
 	global $q_config;
-	//todo should have hash host->lang
-	//foreach($q_config['enabled_languages'] as $lang){
-	//	if(!isset($q_config['domains'][$lang])) continue;
-	//	if($q_config['domains'][$lang] != $host) continue;
-	//	return $lang;
-	//}
+	// TODO should have hash host->lang
 	foreach ( $q_config['domains'] as $lang => $h ) {
 		if ( $h == $host ) {
 			return $lang;
@@ -480,7 +475,7 @@ function qtranxf_get_domain_language( $host ) {
 
 function qtranxf_external_host_ex( $host, $homeinfo ) {
 	global $q_config;
-	//$homehost = qtranxf_get_home_info()['host'];
+
 	switch ( $q_config['url_mode'] ) {
 		case QTX_URL_QUERY:
 		case QTX_URL_PATH:
@@ -518,14 +513,14 @@ function qtranxf_is_multilingual_deep( $value ) {
 		return qtranxf_isMultilingual( $value );
 	} else if ( is_array( $value ) ) {
 		foreach ( $value as $k => $v ) {
-			if ( qtranxf_is_multilingual_deep( $v ) )//recursive call
+			if ( qtranxf_is_multilingual_deep( $v ) )
 			{
 				return true;
 			}
 		}
 	} else if ( is_object( $value ) || $value instanceof __PHP_Incomplete_Class ) {
 		foreach ( get_object_vars( $value ) as $k => $v ) {
-			if ( qtranxf_is_multilingual_deep( $v ) )//recursive call
+			if ( qtranxf_is_multilingual_deep( $v ) )
 			{
 				return true;
 			}
@@ -592,8 +587,10 @@ function qtranxf_getLanguageName( $lang = '' ) {
 		return $q_config['language-names'][ $lang ] = $q_config['language_name'][ $lang ];
 	}
 	$n = $translations->entries[ $locale ]->translations[0];
-	if ( empty( $q_config['language_name_case'] ) ) {//Camel Case by default
-		if ( function_exists( 'mb_convert_case' ) ) {// module 'mbstring' may not be installed by default: https://wordpress.org/support/topic/qtranslate_utilsphp-on-line-504
+	if ( empty( $q_config['language_name_case'] ) ) {
+		// Camel Case by default
+		if ( function_exists( 'mb_convert_case' ) ) {
+			// module 'mbstring' may not be installed by default: https://wordpress.org/support/topic/qtranslate_utilsphp-on-line-504
 			$n = mb_convert_case( $n, MB_CASE_TITLE );
 		} else {
 			$msg = 'qTranslate-XT: Enable PHP module "mbstring" to get names of languages printed in "Camel Case" or disable option \'Show language names in "Camel Case"\' on admin page ' . admin_url( 'options-general.php?page=qtranslate-xt#general' ) . '. You may find more information at http://php.net/manual/en/mbstring.installation.php, or search for PHP installation options on control panel of your server provider.';
@@ -607,8 +604,8 @@ function qtranxf_getLanguageName( $lang = '' ) {
 function qtranxf_isEnabled( $lang ) {
 	global $q_config;
 
-	return isset( $q_config['locale'][ $lang ] );//only available languages are loaded, this will work quiker
-	//return in_array($lang, $q_config['enabled_languages']);
+	// only available languages are loaded, works quicker
+	return isset( $q_config['locale'][ $lang ] );
 }
 
 /**
@@ -625,7 +622,6 @@ function qtranxf_startsWith( $s, $n ) {
 		}
 	}
 
-	//if($n == substr($s,0,strlen($n))) return true;
 	return true;
 }
 
@@ -653,8 +649,8 @@ function qtranxf_getAvailableLanguages( $text ) {
 	global $q_config;
 	$blocks = qtranxf_get_language_blocks( $text );
 	if ( count( $blocks ) <= 1 ) {
-		return false;
-	}// no languages set
+		return false; // no languages set
+	}
 	$result  = array();
 	$content = qtranxf_split_languages( $blocks );
 	foreach ( $content as $language => $lang_text ) {
@@ -862,8 +858,7 @@ function qtranxf_is_rest_request_expected() {
 function qtranxf_can_redirect() {
 	return ! defined( 'WP_ADMIN' ) && ! defined( 'DOING_AJAX' ) && ! defined( 'WP_CLI' ) && ! defined( 'DOING_CRON' ) && empty( $_POST )
 	       && ( ! qtranxf_is_rest_request_expected() )
-	       //'REDIRECT_*' needs more testing
-	       //&& !isset($_SERVER['REDIRECT_URL'])
+	       // TODO clarify: 'REDIRECT_*' needs more testing --> && !isset($_SERVER['REDIRECT_URL'])
 	       && ( ! isset( $_SERVER['REDIRECT_STATUS'] ) || $_SERVER['REDIRECT_STATUS'] == '200' );
 }
 
@@ -925,10 +920,7 @@ function qtranxf_match_post_type( $cfg_post_type, $post_type ) {
 
 	if ( isset( $cfg_post_type['exclude'] ) ) {
 		if ( preg_match( $cfg_post_type['exclude'], $post_type ) === 1 ) {
-			//$exclude = apply_filters('i18n_page_match_exclude_post_type', true, $cfg, $url_path, $url_query, $post_type);
-			//if($exclude){// means not to provide any configuration for this post type on this page.
 			return null;
-			//}
 		}
 	}
 
@@ -939,7 +931,6 @@ function qtranxf_match_post_type( $cfg_post_type, $post_type ) {
  * @since 3.3.2
  */
 function qtranxf_merge_config( $cfg_all, $cfg ) {
-	//return array_merge_recursive($cfg_all,$cfg);
 	foreach ( $cfg as $k => $v ) {
 		if ( is_array( $v ) && isset( $cfg_all[ $k ] ) ) {
 			$cfg_all[ $k ] = qtranxf_merge_config( $cfg_all[ $k ], $v );
@@ -957,7 +948,6 @@ function qtranxf_merge_config( $cfg_all, $cfg ) {
 function qtranxf_parse_page_config( $config, $url_path, $url_query ) {
 	global $q_config;
 
-	//$q_config['i18n-log-dir'] = WP_CONTENT_DIR.'/i18n-config'; //qtranxf_dbg
 	if ( isset( $q_config['i18n-log-dir'] ) ) {
 		if ( ! file_exists( $q_config['i18n-log-dir'] ) ) {
 			if ( ! mkdir( $q_config['i18n-log-dir'] ) ) {
@@ -1005,8 +995,8 @@ function qtranxf_parse_page_config( $config, $url_path, $url_query ) {
 			switch ( $key ) {
 				case 'anchors':
 					{
-						//Anchor elements are defined by id only.
-						//Merge unique id values only:
+						// Anchor elements are defined by id only.
+						// Merge unique id values only:
 						foreach (
 							$cfg
 							as $k => $anchor
@@ -1052,7 +1042,7 @@ function qtranxf_parse_page_config( $config, $url_path, $url_query ) {
 									unset( $pgcfg_form['fields'][ $k ] );
 								}
 							}
-							//figure out obsolete id of form/collection
+							// figure out obsolete id of form/collection
 							if ( is_string( $form_id ) ) {
 								$id = $form_id;
 							} else if ( isset( $pgcfg_form['form']['id'] ) ) {
@@ -1086,10 +1076,9 @@ function qtranxf_parse_page_config( $config, $url_path, $url_query ) {
 
 	//qtranxf_dbg_log('qtranxf_parse_page_config: $page_configs: ', $page_configs);
 	foreach ( $page_configs as $post_type_key => &$page_config ) {
-		//if(!empty($post_type_key))
 		//qtranxf_dbg_log('qtranxf_parse_page_config: $post_type_key="'.$post_type_key.'"; page_config: ', $page_config);
 		if ( ! empty( $page_config ) ) {
-			//clean up 'fields'
+			// clean up 'fields'
 			if ( ! empty( $page_config['forms'] ) ) {
 				foreach ( $page_config['forms'] as $form_id => $frm ) {
 					if ( ! isset( $frm['fields'] ) ) {

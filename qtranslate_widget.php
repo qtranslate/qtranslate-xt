@@ -255,7 +255,7 @@ function qtranxf_generateLanguageSelectCode( $args = array(), $id = '' ) {
 					echo ' title="' . $alt . '"';
 					if ( $type == 'image' ) {
 						echo ' class="qtranxs_image qtranxs_image_' . $language . '"';
-					} //	echo ' class="qtranxs_flag qtranxs_flag_'.$language.'"';
+					}
                     elseif ( $type == 'text' ) {
 						echo ' class="qtranxs_text qtranxs_text_' . $language . '"';
 					} elseif ( $type == 'css_only' )// to be removed
@@ -273,7 +273,7 @@ function qtranxf_generateLanguageSelectCode( $args = array(), $id = '' ) {
 					echo '>' . $q_config['language_name'][ $language ] . '</span>';
 					echo '</a></li>' . PHP_EOL;
 				}
-				//echo '</ul><div class="qtranxs_widget_end"></div>'.PHP_EOL;
+
 				if ( $type == 'dropdown' ) {
 					echo '<script type="text/javascript">' . PHP_EOL . '// <![CDATA[' . PHP_EOL;
 					echo "var lc = document.getElementById('" . $id . "');" . PHP_EOL;
@@ -301,13 +301,13 @@ function qtranxf_generateLanguageSelectCode( $args = array(), $id = '' ) {
 					}
 					echo '><a href="' . qtranxf_convertURL( $url, $language, false, true ) . '"';
 					echo ' class="qtranxs_flag_' . $language . ' qtranxs_flag_and_text" title="' . $alt . '">';
-					//echo '<img src="'.$flag_location.$q_config['flag'][$language].'"></img>';
 					echo '<span>' . $q_config['language_name'][ $language ] . '</span></a></li>' . PHP_EOL;
 				}
 			}
 			break;
 		case 'short':
-			{// undocumented, to be removed
+			{
+				// TODO undocumented, to be removed
 				foreach ( qtranxf_getSortedLanguages() as $language ) {
 					$alt = $q_config['language_name'][ $language ] . ' (' . $language . ')';
 					echo '<li';
