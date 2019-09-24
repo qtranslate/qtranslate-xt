@@ -22,8 +22,7 @@ function qtranxf_editConfig() {
 		$q_config['url_info']['messages'] = array();
 	}
 
-	$errors = &$q_config['url_info']['errors'];
-	//$warnings = &$q_config['url_info']['warnings'];
+	$errors   = &$q_config['url_info']['errors'];
 	$messages = &$q_config['url_info']['messages'];
 
 	$q_config['posted']                  = array();
@@ -42,7 +41,7 @@ function qtranxf_editConfig() {
 
 		qtranxf_updateSettings();
 
-		//execute actions
+		// execute actions
 		qtranxf_executeOnUpdate();
 	}
 
@@ -80,7 +79,7 @@ function qtranxf_editConfig() {
 						// remove old language
 						qtranxf_unsetLanguage( $langs, $original_lang );
 						qtranxf_unsetLanguage( $q_config, $original_lang );
-						// if was enabled, set modified one to enabled too
+						// if language was enabled, set modified one to enabled too
 						foreach ( $q_config['enabled_languages'] as $k => $lng ) {
 							if ( $lng != $original_lang ) {
 								continue;
@@ -132,7 +131,7 @@ function qtranxf_editConfig() {
 			// get old values in the form
 			$language_code = $lang;
 		} else {
-			//reset form for new language
+			// reset form for new language
 			$lang_props    = array();
 			$original_lang = '';
 		}
@@ -142,7 +141,7 @@ function qtranxf_editConfig() {
 		$wpdb->show_errors();
 		@set_time_limit( 0 );
 		$cnt = 0;
-		//this will not work correctly if set of languages is different
+		// this will not work correctly if set of languages is different
 		foreach ( $q_config['enabled_languages'] as $lang ) {
 			$cnt +=
 				$wpdb->query( 'UPDATE ' . $wpdb->posts . ' set post_title = REPLACE(post_title, "[lang_' . $lang . ']","[:' . $lang . ']"),  post_content = REPLACE(post_content, "[lang_' . $lang . ']","[:' . $lang . ']")' );
@@ -203,7 +202,7 @@ function qtranxf_editConfig() {
 		}
 		$original_lang = $lang;
 		$language_code = $lang;
-		//$langs = $q_config;
+
 		$langs = array();
 		qtranxf_languages_configured( $langs );
 		$lang_props['language_name'] = isset( $langs['language_name'][ $lang ] ) ? $langs['language_name'][ $lang ] : '';
@@ -347,8 +346,8 @@ function qtranxf_resetConfig() {
 	delete_option( 'qtranslate_plugin_js_composer_off' );
 	delete_option( 'qtranslate_widget_css' );
 	delete_option( 'qtranslate_version' );
-	delete_option( 'qtranslate_version_previous');
-	delete_option( 'qtranslate_versions');
+	delete_option( 'qtranslate_version_previous' );
+	delete_option( 'qtranslate_versions' );
 	delete_option( 'qtranslate_disable_header_css' );
 
 	if ( isset( $_POST['qtranslate_reset3'] ) ) {
@@ -445,16 +444,11 @@ function qtranxf_saveConfig() {
 
 	qtranxf_update_option( 'flag_location', qtranxf_flag_location_default() );
 
-	//if($q_config['filter_options_mode'] == QTX_FILTER_OPTIONS_LIST)
 	qtranxf_update_option( 'filter_options', explode( ' ', QTX_FILTER_OPTIONS_DEFAULT ) );
-
-	//$qtranslate_options['languages'] are updated in a special way: look for _GET['edit'], $_GET['delete'], $_GET['enable'], $_GET['disable']
 
 	qtranxf_update_option( 'term_name' );//uniquely special case
 
-
-	//save admin options
-
+	// save admin options
 	foreach ( $qtranslate_options['admin']['int'] as $nm => $def ) {
 		qtranxf_update_option( $nm, $def );
 	}
@@ -542,7 +536,7 @@ function qtranxf_updateSetting( $var, $type = QTX_STRING, $def = null ) {
 			return true;
 		case QTX_TEXT:
 			$val = $_POST[ $var ];
-			//standardize multi-line string
+			// standardize multi-line string
 			$lns = preg_split( '/\r?\n\r?/', $val );
 			foreach ( $lns as $key => $ln ) {
 				$lns[ $key ] = sanitize_text_field( $ln );
@@ -732,21 +726,15 @@ function qtranxf_updateSettings() {
 
 	// update front settings
 
-	/**
-	 * Opportunity to prepare special custom settings update on sub-plugins
-	 */
+	// opportunity to prepare special custom settings update on sub-plugins
 	do_action( 'qtranslate_update_settings_pre' );
 
 	// special cases handling for front options
-
 	qtranxf_updateSetting( 'default_language', QTX_LANGUAGE );
-	//enabled_languages are not changed at this place
-
+	// enabled_languages are not changed at this place
 	qtranxf_updateSettingFlagLocation( 'flag_location' );
 	qtranxf_updateSettingIgnoreFileTypes( 'ignore_file_types' );
-
 	$_POST['language_name_case'] = isset( $_POST['camel_case'] ) ? '0' : '1';
-
 	// special cases handling for front options - end
 
 	foreach ( $qtranslate_options['front']['int'] as $nm => $def ) {
@@ -800,8 +788,7 @@ function qtranxf_updateSettings() {
 
 	// update admin settings
 
-	//special cases handling for admin options
-
+	// special cases handling for admin options
 	if ( isset( $_POST['json_config_files'] ) ) {
 		//verify that files are loadable
 		$json_config_files_post = sanitize_text_field( stripslashes( $_POST['json_config_files'] ) );
@@ -850,8 +837,7 @@ function qtranxf_updateSettings() {
 	}
 
 	qtranxf_parse_post_type_excluded();
-
-	//special cases handling for admin options - end
+	// special cases handling for admin options - end
 
 	do_action( 'qtranslate_update_settings_admin' );
 
@@ -875,16 +861,13 @@ function qtranxf_updateSettings() {
 		qtranxf_updateSetting( $nm, QTX_ARRAY, $def );
 	}
 
-	if ( empty( $_POST['json_config_files'] ) )//only update if config files parsed successfully
-	{
-		qtranxf_update_i18n_config();
+	if ( empty( $_POST['json_config_files'] ) ) {
+		qtranxf_update_i18n_config(); // only update if config files parsed successfully
 	}
 
-	$q_config['i18n-cache'] = array();//clear i18n-config cache
+	$q_config['i18n-cache'] = array(); // clear i18n-config cache
 
-	/**
-	 * Opportunity to update special custom settings on sub-plugins
-	 */
+	// opportunity to update special custom settings on sub-plugins
 	do_action( 'qtranslate_update_settings' );
 }
 
@@ -900,7 +883,6 @@ function qtranxf_executeOnUpdate() {
 	}
 
 	// ==== import/export msg was here
-
 	if ( isset( $_POST['convert_database'] ) ) {
 		require_once( QTRANSLATE_DIR . '/admin/qtx_admin_utils_db.php' );
 		$msg = qtranxf_convert_database( $_POST['convert_database'] );
@@ -914,8 +896,8 @@ function qtranxf_mark_default( $text ) {
 	global $q_config;
 	$blocks = qtranxf_get_language_blocks( $text );
 	if ( count( $blocks ) > 1 ) {
-		return $text;
-	}//already have other languages.
+		return $text; // already has other languages
+	}
 	$content = array();
 	foreach ( $q_config['enabled_languages'] as $language ) {
 		if ( $language == $q_config['default_language'] ) {
@@ -928,7 +910,5 @@ function qtranxf_mark_default( $text ) {
 	return qtranxf_join_b( $content );
 }
 
-/**
- * Allow 3rd-party to include additional code here
- */
+// Allow 3rd-party to include additional code here
 do_action( 'qtranslate_admin_options_update.php' );

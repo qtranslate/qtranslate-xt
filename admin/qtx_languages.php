@@ -18,7 +18,7 @@ function qtranxf_load_languages( &$cfg ) {
 	return $cfg;
 }
 
-//function qtranxf_save_languages($cfg) is in qtx_activation_hook.php as it is in use there
+// function qtranxf_save_languages($cfg) is in qtx_activation_hook.php as it is in use there
 
 /**
  * Remove language $lang properties from hash $langs.
@@ -40,6 +40,7 @@ function qtranxf_unsetLanguage( &$langs, $lang ) {
  */
 function qtranxf_setLanguageAdmin( $lang ) {
 	global $q_config;
+
 	$q_config['language'] = $lang;
 	qtranxf_set_language_cookie( $lang );
 }
@@ -64,6 +65,7 @@ function qtranxf_copyLanguage( &$langs, $cfg, $lang ) {
 
 function qtranxf_update_config_header_css() {
 	global $q_config;
+
 	$header_css = get_option( 'qtranslate_header_css' );
 	if ( $header_css === false ) {
 		$q_config['header_css'] = qtranxf_front_header_css_default();
@@ -75,6 +77,7 @@ function qtranxf_update_config_header_css() {
 
 function qtranxf_disableLanguage( $lang ) {
 	global $q_config;
+
 	if ( ! qtranxf_isEnabled( $lang ) ) {
 		return false;
 	}
@@ -96,6 +99,7 @@ function qtranxf_disableLanguage( $lang ) {
 
 function qtranxf_enableLanguage( $lang ) {
 	global $q_config;
+
 	if ( qtranxf_isEnabled( $lang ) ) {
 		return false;
 	}
@@ -118,6 +122,7 @@ function qtranxf_enableLanguage( $lang ) {
  */
 function qtranxf_deleteLanguage( $lang ) {
 	global $q_config;
+
 	if ( ! qtranxf_language_predefined( $lang ) ) {
 		if ( $q_config['default_language'] == $lang ) {
 			return __( 'Cannot delete Default Language!', 'qtranslate' );

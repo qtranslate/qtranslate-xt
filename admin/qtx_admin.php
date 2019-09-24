@@ -49,9 +49,8 @@ function qtranxf_collect_translations( &$qfields, &$request, $edit_lang ) {
 			$qfields[ $edit_lang ] = $request;
 			$request               = qtranxf_collect_translations_deep( $qfields, $sep );
 		} else {
-			//raw mode, or user mistakenly put ML value into an LSB-controlled field
-			//leave $request as user entered it
-			//$qfields = qtranxf_split($request);
+			// raw mode, or user mistakenly put ML value into an LSB-controlled field
+			// leave $request as user entered it
 			return;
 		}
 	} else {
@@ -88,7 +87,6 @@ function qtranxf_collect_translations_posted() {
 	//qtranxf_dbg_log('qtranxf_collect_translations_posted: count(REQUEST): ', count($_REQUEST, COUNT_RECURSIVE));
 	$edit_lang = null;
 	if ( isset( $_REQUEST['qtranslate-fields'] ) ) {
-		//$edit_lang = isset($_COOKIE['qtrans_edit_language']) ? $_COOKIE['qtrans_edit_language'] : qtranxf_getLanguage();
 		$edit_lang = qtranxf_getLanguageEdit();
 		foreach ( $_REQUEST['qtranslate-fields'] as $nm => &$qfields ) {
 			//qtranxf_dbg_log('qtranxf_collect_translations_posted: REQUEST[qtranslate-fields]['.$nm.']: ',$qfields);
@@ -146,7 +144,7 @@ function qtranxf_collect_translations_posted() {
 add_action( 'plugins_loaded', 'qtranxf_collect_translations_posted', 5 );
 
 function qtranxf_decode_translations_posted() {
-	//quick fix, there must be a better way
+	// quick fix, there must be a better way
 	if ( isset( $_POST['nav-menu-data'] ) ) {
 		$r = qtranxf_decode_json_name_value( $_POST['nav-menu-data'] );
 		//qtranxf_dbg_log('qtranxf_collect_translations_posted: $r: ', $r);
@@ -210,11 +208,10 @@ function qtranxf_admin_init() {
 	}
 
 	if ( current_user_can( 'manage_options' ) && qtranxf_admin_is_config_page()
-		//&& !empty($_POST) //todo run this only if one of the forms or actions submitted
+		// TODO run this only if one of the forms or actions submitted --> && !empty($_POST)
 	) {
 		$q_config['url_info']['qtranslate-settings-url'] = admin_url( 'options-general.php?page=qtranslate-xt' );
 		require_once( QTRANSLATE_DIR . '/admin/qtx_admin_options_update.php' );
-		//call_user_func('qtranxf_editConfig');
 		qtranxf_editConfig();
 	}
 
@@ -250,7 +247,7 @@ function qtranxf_get_admin_page_config() {
 	}
 	$admin_config = $q_config['admin_config'];
 	//qtranxf_dbg_log('qtranxf_get_admin_page_config: $admin_config: raw: ',qtranxf_json_encode($admin_config));
-	$admin_config = apply_filters( 'qtranslate_load_admin_page_config', $admin_config );//obsolete
+	$admin_config = apply_filters( 'qtranslate_load_admin_page_config', $admin_config ); // obsolete
 	$url_query    = isset( $q_config['url_info']['query'] ) ? $q_config['url_info']['query'] : '';
 	/**
 	 * Customize the admin configuration for all pages.
@@ -291,7 +288,6 @@ function qtranxf_get_admin_page_config_post_type( $post_type ) {
 	}
 	//qtranxf_dbg_log('qtranxf_get_admin_page_config_post_type: pagenow: '.$pagenow.'; post_type: ', $post_type);
 	$page_configs = qtranxf_get_admin_page_config();
-	//$page_configs = apply_filters('i18n_admin_config_post_type', $page_configs, $post_type);
 
 	//qtranxf_dbg_log('qtranxf_get_admin_page_config_post_type: $page_configs: ', $page_configs);
 	$page_config = isset( $page_configs[''] ) ? $page_configs[''] : array();
@@ -324,7 +320,7 @@ function qtranxf_get_admin_page_config_post_type( $post_type ) {
 	unset( $page_config['filters'] );
 
 	if ( ! empty( $page_config ) ) {
-		//clean up empty items
+		// clean up empty items
 		if ( ! empty( $page_config['forms'] ) ) {
 			foreach ( $page_config['forms'] as $form_id => &$frm ) {
 				if ( ! isset( $frm['fields'] ) ) {
@@ -332,7 +328,6 @@ function qtranxf_get_admin_page_config_post_type( $post_type ) {
 				}
 				foreach ( $frm['fields'] as $k => $f ) {
 					if ( isset( $f['encode'] ) && $f['encode'] == 'none' ) {
-						//unset($page_config['forms'][$form_id]['fields'][$k]);
 						unset( $frm['fields'][ $k ] );
 					}
 					if ( $post_type && ! empty( $f['post-type-excluded'] ) && preg_match( '/' . $f['post-type-excluded'] . '/', $post_type ) ) {
@@ -380,8 +375,7 @@ function qtranxf_get_admin_page_config_post_type( $post_type ) {
 			unset( $page_config['js-exec'] );
 		}
 
-		//make src to be relative to WP_CONTENT_DIR
-		//$bnm = 'plugins/'.qtranxf_plugin_dirname();
+		// make src to be relative to WP_CONTENT_DIR
 		$bnm         = qtranxf_plugin_dirname_from_wp_content();
 		$content_dir = trailingslashit( WP_CONTENT_DIR );
 		foreach ( $page_config['js'] as $k => $js ) {
@@ -394,19 +388,20 @@ function qtranxf_get_admin_page_config_post_type( $post_type ) {
 				$page_config['js'][ $k ]['src'] = $bnm . substr( $src, 1 );
 			} else {
 				if ( file_exists( $content_dir . $src ) ) {
-					continue;
-				}  //from WP_CONTENT_DIR as expected
-				$fp = dirname( $bnm ) . '/' . $src;  //from 'plugins' folder
+					continue; // from WP_CONTENT_DIR as expected
+				}
+				$fp = dirname( $bnm ) . '/' . $src;  // from 'plugins' folder
 				if ( file_exists( $content_dir . $fp ) ) {
 					$page_config['js'][ $k ]['src'] = $fp;
 					continue;
 				}
-				$fp = $bnm . '/' . $src; //from this plugin folder
+				$fp = $bnm . '/' . $src; // from this plugin folder
 				if ( file_exists( $content_dir . $fp ) ) {
 					$page_config['js'][ $k ]['src'] = $fp;
 					continue;
 				}
-				if ( file_exists( $src ) ) { //absolute path was given
+				if ( file_exists( $src ) ) {
+					// absolute path was given
 					if ( qtranxf_startsWith( $src, $content_dir ) ) {
 						$fp                             = substr( $src, strlen( $content_dir ) );
 						$page_config['js'][ $k ]['src'] = $fp;
@@ -419,15 +414,6 @@ function qtranxf_get_admin_page_config_post_type( $post_type ) {
 		}
 	}
 
-	/*
-	 * Customize the $page_config for this admin request.
-	 * @param (array) $page_config 'admin_config', filtered for the current page.
-	 * @param (string) $pagenow value of WordPress global variable $pagenow.
-	 * @param (string) $url_query query part of URL without '?', sanitized version of $_SERVER['QUERY_STRING'].
-	 * @param (string) $post_type type of post serving on the current page, or null if not applicable.
-	 */
-	//$page_config = apply_filters('i18n_admin_page_config', $page_config, $pagenow, $url_query, $post_type);
-	//qtranxf_dbg_log('qtranxf_get_admin_page_config_post_type: $pagenow='.$pagenow.'; $url_query='.$q_config['url_info']['query'].'; $post_type='.$post_type.'; $page_config: ',qtranxf_json_encode($page_config));
 	qtranxf_write_config_log( $page_config, '', $pagenow, '', $post_type );
 
 	return $page_config;
@@ -442,8 +428,9 @@ function qtranxf_add_admin_footer_js() {
 		return;
 	}
 
+	// autosave script saves the active language only and messes it up later in a hard way
 	wp_dequeue_script( 'autosave' );
-	wp_deregister_script( 'autosave' );//autosave script saves the active language only and messes it up later in a hard way
+	wp_deregister_script( 'autosave' );
 
 	$config = array();
 	// since 3.2.9.9.0 'enabled_languages' is replaced with 'language_config' structure
@@ -472,7 +459,7 @@ function qtranxf_add_admin_footer_js() {
 	$config['js']            = array();
 
 	$config['strings'] = array();//since 3.4.7
-	//translators: The begining of the prompt on hover over an LSB. This string is appended with a edit-language name in admin language, so that the space at the end matters.
+	// translators: The begining of the prompt on hover over an LSB. This string is appended with a edit-language name in admin language, so that the space at the end matters.
 	$config['strings']['ShowIn'] = __( 'Show multilingual content in ', 'qtranslate' );
 
 	$config['language_config'] = array();
@@ -488,7 +475,7 @@ function qtranxf_add_admin_footer_js() {
 	}
 	if ( ! empty( $page_config ) ) {
 		$config['page_config'] = $page_config;
-		//no need for javascript:
+		// no need for javascript
 		unset( $config['page_config']['js'] );
 	}
 
@@ -496,25 +483,23 @@ function qtranxf_add_admin_footer_js() {
 	$config['RAW'] = $q_config['editor_mode'] == QTX_EDITOR_MODE_RAW;
 
 	if ( empty( $q_config['hide_lsb_copy_content'] ) ) {
-		//translators: Prompt on hover over button "Copy From" to copy content from other language
+		// translators: Prompt on hover over button "Copy From" to copy content from other language
 		$config['strings']['CopyFromAlt'] = __( 'Fill empty multilingual fields with content from other language', 'qtranslate' );
-		//translators: Prompt on hover over select-element to choose the language to copy content from
+		// translators: Prompt on hover over select-element to choose the language to copy content from
 		$config['strings']['ChooseLangToCopy'] = __( 'Choose language to copy multilingual content from', 'qtranslate' );
-		//translators: Title of button to copy content from otrher language
+		// translators: Title of button to copy content from otrher language
 		$config['strings']['CopyFrom'] = __( 'Copy from', 'qtranslate' );
 	} else {
 		$config['hide_lsb_copy_content'] = true;
 	}
 
-	/**
-	 * Last chance to customize Java script variable qTranslateConfig.
-	 */
+	// Last chance to customize Java script variable qTranslateConfig
 	$config = apply_filters( 'qtranslate_admin_page_config', $config );
 
 	qtranxf_enqueue_scripts( $page_config['js'] );
 	?>
     <script type="text/javascript">
-		// <![CDATA[
+        // <![CDATA[
 		<?php
 		echo 'var qTranslateConfig=' . json_encode( $config ) . ';' . PHP_EOL;
 		// each script entry may define javascript code to be injected
@@ -528,7 +513,7 @@ function qtranxf_add_admin_footer_js() {
 		}
 		do_action( 'qtranslate_add_admin_footer_js' );
 		?>
-		//]]>
+        //]]>
     </script>
 	<?php
 }
@@ -540,7 +525,6 @@ function qtranxf_add_admin_head_js( $enqueue_script = true ) {
 		$js_options = 'js/options.min.js';
 	}
 	if ( $enqueue_script ) {
-		//wp_register_script( 'qtranslate-admin-options', plugins_url( $js_options, __FILE__ ), array(), QTX_VERSION );
 		wp_enqueue_script( 'qtranslate-admin-options', plugins_url( $js_options, __FILE__ ), array(), QTX_VERSION );
 	} else {
 		echo '<script type="text/javascript">' . PHP_EOL . '// <![CDATA[' . PHP_EOL;
@@ -552,6 +536,7 @@ function qtranxf_add_admin_head_js( $enqueue_script = true ) {
 
 function qtranxf_add_admin_lang_icons() {
 	global $q_config;
+
 	$flag_location = qtranxf_flag_location();
 	echo '<style type="text/css">' . PHP_EOL;
 	echo "#wpadminbar #wp-admin-bar-language>div.ab-item{ background-size: 0;";
@@ -566,6 +551,7 @@ function qtranxf_add_admin_lang_icons() {
  * Add CSS code to highlight the translatable fields */
 function qtranxf_add_admin_highlight_css() {
 	global $q_config;
+
 	if ( $q_config['highlight_mode'] == QTX_HIGHLIGHT_MODE_NONE || get_the_author_meta( 'qtranslate_highlight_disabled', get_current_user_id() ) ) {
 		return '';
 	}
@@ -584,19 +570,17 @@ function qtranxf_add_admin_highlight_css() {
 function qtranxf_get_admin_highlight_css( $highlight_mode ) {
 	$css = 'input.qtranxs-translatable, textarea.qtranxs-translatable, div.qtranxs-translatable {' . PHP_EOL;
 	switch ( $highlight_mode ) {
-		case QTX_HIGHLIGHT_MODE_BORDER_LEFT:// v3
+		case QTX_HIGHLIGHT_MODE_BORDER_LEFT:
 			$css .= 'border-left: 3px solid #UserColor2 !important;' . PHP_EOL;
 			break;
-		case QTX_HIGHLIGHT_MODE_BORDER:// v2
+		case QTX_HIGHLIGHT_MODE_BORDER:
 			$css .= 'border: 1px solid #UserColor2 !important;' . PHP_EOL;
 			break;
-		case QTX_HIGHLIGHT_MODE_LEFT_SHADOW: // v1
+		case QTX_HIGHLIGHT_MODE_LEFT_SHADOW:
 			$css .= 'box-shadow: -3px 0 #UserColor2 !important;' . PHP_EOL;
 			break;
-		case QTX_HIGHLIGHT_MODE_OUTLINE:// v1
+		case QTX_HIGHLIGHT_MODE_OUTLINE:
 			$css .= 'outline: 2px solid #UserColor2 !important;' . PHP_EOL;
-			//$css .= 'div.qtranxs-translatable div.mce-panel {' . PHP_EOL;
-			//$css .= 'margin-top: 2px' . PHP_EOL;
 			break;
 	}
 	$css .= '}' . PHP_EOL;
@@ -606,6 +590,7 @@ function qtranxf_get_admin_highlight_css( $highlight_mode ) {
 
 function qtranxf_add_admin_css() {
 	global $q_config;
+
 	wp_register_style( 'qtranslate-admin-style', plugins_url( 'css/qtranslate_configuration.css', __FILE__ ), array(), QTX_VERSION );
 	wp_enqueue_style( 'qtranslate-admin-style' );
 	qtranxf_add_admin_lang_icons();
@@ -630,8 +615,6 @@ function qtranxf_add_admin_css() {
 
 function qtranxf_admin_head() {
 	//qtranxf_dbg_log('11.qtranxf_admin_head:');
-	//wp_enqueue_script( 'jquery' );
-	//qtranxf_add_css();//Since 3.2.5 no longer needed
 	qtranxf_add_admin_css();
 	global $q_config;
 	if ( isset( $q_config['url_info']['query'] ) && strpos( $q_config['url_info']['query'], 'page=qtranslate-xt' ) !== false ) {
@@ -651,6 +634,7 @@ add_action( 'admin_footer', 'qtranxf_admin_footer', 999 );
 
 function qtranxf_customize_allowed_urls( $urls ) {
 	global $q_config;
+
 	$home   = home_url( '/', is_ssl() ? 'https' : 'http' );
 	$urls[] = $home;
 	foreach ( $q_config['enabled_languages'] as $lang ) {
@@ -913,7 +897,7 @@ add_filter( 'update_footer', 'qtranxf_admin_footer_update', 99 );
 
 function qtranxf_add_admin_filters() {
 	global $q_config, $pagenow;
-	if ( $q_config['url_mode'] != QTX_URL_QUERY //otherwise '?' may interfere with WP code
+	if ( $q_config['url_mode'] != QTX_URL_QUERY // otherwise '?' may interfere with WP code
 	     && $pagenow == 'customize.php'
 	) {
 		add_filter( 'home_url', 'qtranxf_admin_home_url', 5, 4 );

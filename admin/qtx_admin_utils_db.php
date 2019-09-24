@@ -179,6 +179,7 @@ function qtranxf_convert_to_b_no_closing_deep( $text ) {
 
 function qtranxf_convert_database_options( $action ) {
 	global $wpdb;
+
 	$wpdb->show_errors();
 	$result = $wpdb->get_results( 'SELECT option_id, option_value FROM ' . $wpdb->options );
 	if ( ! $result ) {
@@ -196,7 +197,7 @@ function qtranxf_convert_database_options( $action ) {
 				if ( $value_serialized === $row->option_value ) {
 					continue;
 				}
-				//Since 3.2-b3: Replaced mysql_real_escape_string with $wpdb->prepare
+				// Since 3.2-b3: Replaced mysql_real_escape_string with $wpdb->prepare
 				$wpdb->query( $wpdb->prepare( 'UPDATE ' . $wpdb->options . ' set option_value = %s WHERE option_id = %d', $value_serialized, $row->option_id ) );
 			}
 			break;
@@ -211,7 +212,7 @@ function qtranxf_convert_database_options( $action ) {
 				if ( $value_serialized === $row->option_value ) {
 					continue;
 				}
-				//Since 3.2-b3: Replaced mysql_real_escape_string with $wpdb->prepare
+				// Since 3.2-b3: Replaced mysql_real_escape_string with $wpdb->prepare
 				$wpdb->query( $wpdb->prepare( 'UPDATE ' . $wpdb->options . ' set option_value = %s WHERE option_id = %d', $value_serialized, $row->option_id ) );
 			}
 			break;
@@ -222,6 +223,7 @@ function qtranxf_convert_database_options( $action ) {
 
 function qtranxf_convert_database_posts( $action ) {
 	global $wpdb;
+
 	$result = $wpdb->get_results( 'SELECT ID, post_title, post_content, post_excerpt FROM ' . $wpdb->posts );
 	if ( ! $result ) {
 		return;
@@ -235,9 +237,8 @@ function qtranxf_convert_database_posts( $action ) {
 				if ( $title == $row->post_title && $content == $row->post_content && $excerpt == $row->post_excerpt ) {
 					continue;
 				}
-				//Since 3.2-b3: Replaced mysql_real_escape_string with $wpdb->prepare
+				// Since 3.2-b3: Replaced mysql_real_escape_string with $wpdb->prepare
 				$wpdb->query( $wpdb->prepare( 'UPDATE ' . $wpdb->posts . ' set post_content = %s, post_title = %s, post_excerpt = %s WHERE ID = %d', $content, $title, $excerpt, $row->ID ) );
-				//$wpdb->query('UPDATE '.$wpdb->posts.' set post_content = "'.mysql_real_escape_string($content).'", post_title = "'.mysql_real_escape_string($title).'", post_excerpt = "'.mysql_real_escape_string($excerpt).'" WHERE ID='.$row->ID);
 			}
 			break;
 		case 'c_dual':
@@ -248,7 +249,7 @@ function qtranxf_convert_database_posts( $action ) {
 				if ( $title == $row->post_title && $content == $row->post_content && $excerpt == $row->post_excerpt ) {
 					continue;
 				}
-				//Since 3.2-b3: Replaced mysql_real_escape_string with $wpdb->prepare
+				// Since 3.2-b3: Replaced mysql_real_escape_string with $wpdb->prepare
 				$wpdb->query( $wpdb->prepare( 'UPDATE ' . $wpdb->posts . ' set post_content = %s, post_title = %s, post_excerpt = %s WHERE ID = %d', $content, $title, $excerpt, $row->ID ) );
 			}
 			break;

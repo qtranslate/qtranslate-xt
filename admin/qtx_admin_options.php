@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 require_once( QTRANSLATE_DIR . '/admin/qtx_admin_utils.php' );
 
 function qtranxf_admin_set_default_options( &$ops ) {
-	//options processed in a standardized way
+	// options processed in a standardized way
 	$ops['admin'] = array();
 
 	$ops['admin']['int'] = array(
@@ -15,16 +15,16 @@ function qtranxf_admin_set_default_options( &$ops ) {
 	);
 
 	$ops['admin']['bool'] = array(
-		'auto_update_mo'        => true,// automatically update .mo files
+		'auto_update_mo'        => true, // automatically update .mo files
 		'hide_lsb_copy_content' => false
 	);
 
-	//single line options
+	// single line options
 	$ops['admin']['str'] = array(
 		'lsb_style' => 'Simple_Buttons.css'
 	);
 
-	//multi-line options
+	// multi-line options
 	$ops['admin']['text'] = array(
 		'highlight_mode_custom_css' => null, // qtranxf_get_admin_highlight_css
 	);
@@ -35,15 +35,10 @@ function qtranxf_admin_set_default_options( &$ops ) {
 		'custom_i18n_config'   => array(),
 		'custom_fields'        => array(),
 		'custom_field_classes' => array(),
-		//'custom_pages' => array(),
 		'post_type_excluded'   => array(),
 	);
 
-	//options processed in a special way
-
-	/**
-	 * A chance to add additional options
-	 */
+	// options processed in a special way
 	$ops = apply_filters( 'qtranslate_option_config_admin', $ops );
 }
 
@@ -76,9 +71,7 @@ function qtranxf_admin_loadConfig() {
 		qtranxf_update_i18n_config();
 	}
 
-	/**
-	 * Opportunity to load additional admin features.
-	 */
+	// opportunity to load additional admin features
 	do_action( 'qtranslate_admin_loadConfig' );
 
 	qtranxf_add_conf_filters();

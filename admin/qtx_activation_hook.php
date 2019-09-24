@@ -33,7 +33,6 @@ function qtranxf_save_languages( $cfg ) {
  * since 3.2.9.2
  */
 function qtranxf_default_enabled_languages() {
-	//$locale = defined('WPLANG') ? WPLANG : get_option('WPLANG','en_US');
 	$locale = get_locale();
 	if ( ! $locale ) {
 		$locale = 'en_US';
@@ -63,7 +62,6 @@ function qtranxf_default_enabled_languages() {
 
 	//qtranxf_dbg_log('qtranxf_default_enabled_languages: $lang='.$lang.' $locale:',$locale);
 	return array( $lang, $lang != 'en' ? 'en' : 'de' );
-	//return array( 'de', 'en', 'zh' );
 }
 
 /**
@@ -78,7 +76,6 @@ function qtranxf_default_default_language() {
 	$q_config['language']          = $q_config['default_language'] = $default_language;
 	$q_config['enabled_languages'] = $enabled_languages;
 
-	//qtranxf_updateGettextDatabases(true);
 	return $default_language;
 }
 
@@ -89,7 +86,6 @@ function qtranxf_load_config_files( $json_files ) {
 	$content_dir = null;
 	$qtransx_dir = null;
 	foreach ( $json_files as $k => $fnm ) {
-		//$fnm = trim($v,'/\\');
 		if ( file_exists( $fnm ) ) {
 			continue;
 		}
@@ -117,7 +113,6 @@ function qtranxf_load_config_files( $json_files ) {
 	$cfg_all = array();
 	foreach ( $json_files as $fnm ) {
 		$cfg_json = file_get_contents( $fnm );
-		//$cfg_json=php_strip_whitespace($fnm);
 		if ( $cfg_json ) {
 			$cfg = json_decode( $cfg_json, true );
 			if ( ! empty( $cfg ) && is_array( $cfg ) ) {
@@ -215,7 +210,7 @@ function qtranxf_standardize_config_anchor( &$anchor ) {
 			case '':
 			case 'post':
 			case 'postexcerpt':
-				return null; //do not allow these, to offset obsolete configurations
+				return null; // do not allow these, to offset obsolete configurations
 			default:
 				$id = $anchor;
 				break;
@@ -236,7 +231,7 @@ function qtranxf_standardize_config_anchor( &$anchor ) {
  * @since 3.4
  */
 function qtranxf_standardize_front_config( $cfg_front ) {
-	//remove filters with empty priorities
+	// remove filters with empty priorities
 	foreach ( $cfg_front as $k => $cfg ) {
 		if ( ! isset( $cfg['filters'] ) ) {
 			continue;
@@ -345,7 +340,8 @@ function qtranxf_load_config_all( $json_files, $custom_config ) {
 	$cfg  = qtranxf_standardize_i18n_config( $cfg );
 	// store the errors permanently until an admin fixes them,
 	// otherwise admin may not realise that not all configurations are loaded.
-	if ( ! empty( $q_config['url_info']['errors'] ) && $nerr != count( $q_config['url_info']['errors'] ) ) {//new errors occurred
+	if ( ! empty( $q_config['url_info']['errors'] ) && $nerr != count( $q_config['url_info']['errors'] ) ) {
+	    // new errors occurred
 		$errs = array_slice( $q_config['url_info']['errors'], $nerr );
 		update_option( 'qtranslate_config_errors', $errs );
 	} else {
@@ -394,7 +390,8 @@ function qtranxf_search_config_files_theme( $theme = null, $found = null ) {
 	$parent_theme = $theme->parent();
 	if ( ! empty( $parent_theme ) ) {
 		return qtranxf_search_config_files_theme( $parent_theme, $found );
-	}//recursive call
+	}
+
 	return $found;
 }
 
@@ -848,9 +845,6 @@ function qtranxf_admin_notice_deactivate_plugin( $nm, $plugin ) {
 	} else {
 		$msg .= sprintf( __( 'You may import/export compatible settings from %s to %s on Settings/Languages configuration page, once %s is running.%sContinue%s', 'qtranslate' ), $nm, $qtxnm, $qtxnm, $s, '</a>' );
 	}
-	//$nonce=wp_create_nonce('deactivate-plugin_'.$plugin);
-	//$msg=sprintf(__('Plugin %s cannot run concurrently with %s, please %sdeactivate %s%s. You may import compatible settings from %s to %s on Settings/Languages configuration page, once %s is running.','qtranslate'),$qtxlink,$link,'<a href="'.admin_url('plugins.php?action=deactivate&plugin='.encode($plugin).'&plugin_status=all&paged=1&s&_wpnonce='.$nonce.'">',$nm,'</a>',$nm,$qtxnm,$qtxnm);
-	//$msg=sprintf(__('Activation of plugin %s deactivated plugin %s since they cannot run simultaneously. You may import compatible settings from %s to %s on Settings/%sLanguages%s configuration page, once %s is running.%sContinue%s','qtranslate'),$qtxlink,$link,$nm,$qtxnm,'<a href="'.admin_url('/options-general.php?page=qtranslate-xt').'">','</a>',$qtxnm,'</p><p><a  class="button" href="">','</a>');
 	wp_die( '<p>' . $msg . '</p>' );
 }
 
@@ -911,7 +905,7 @@ function qtranxf_admin_notices_errors() {
 	}
 	foreach ( $msgs as $key => $msg ) {
 		echo '<div class="notice notice-error is-dismissible" id="qtranxs_config_error_' . $key . '"><p><a href="' . admin_url( 'options-general.php?page=qtranslate-xt' ) . '">qTranslate&#8209;XT</a>:&nbsp;';
-		//translators: Colon after a title. Template reused from language menu item.
+		// translators: Colon after a title. Template reused from language menu item.
 		echo sprintf( __( '%s:', 'qtranslate' ), '<strong>' . __( 'Error', 'qtranslate' ) . '</strong>' );
 		echo '&nbsp;' . $msg . '</p></div>';
 	}

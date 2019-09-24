@@ -104,7 +104,6 @@ function qtranxf_array_compare( $a, $b ) {
 
 function qtranxf_join_texts( $texts, $sep ) {
 	switch ( $sep ) {
-		//case '<': return qtranxf_join_c($texts);//no longer in use
 		case 'byline':
 			return qtranxf_join_byline( $texts );
 		case '{':
@@ -273,7 +272,6 @@ function qtranxf_before_admin_bar_render() {
 	}//sometimes $nodes is NULL
 	$lang = $q_config['language'];
 	foreach ( $nodes as $node ) {
-		//$nd = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($node);
 		$nd = qtranxf_use( $lang, $node );
 		$wp_admin_bar->add_node( $nd );
 	}
@@ -282,7 +280,7 @@ function qtranxf_before_admin_bar_render() {
 
 function qtranxf_admin_the_title( $title ) {
 	// For nav menus, keep the raw value as the languages are handled client-side (LSB)
-	if ( defined( 'DOING_AJAX' ) && DOING_AJAX && isset($_REQUEST['action']) && $_REQUEST['action'] == 'add-menu-item' ) {
+	if ( defined( 'DOING_AJAX' ) && DOING_AJAX && isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'add-menu-item' ) {
 		// When a nav menu is being added it is first handled by AJAX, see "wp_ajax_add_menu_item" in ajax-actions.php
 		// For the call to the filter "the_title", see "wp_setup_nav_menu_item" in nav-menus.php
 		return $title;
@@ -300,7 +298,6 @@ function qtranxf_admin_the_title( $title ) {
 
 add_filter( 'the_title', 'qtranxf_admin_the_title', 0 );
 
-//filter added in qtranslate_hooks.php
 if ( ! function_exists( 'qtranxf_trim_words' ) ) {
 	function qtranxf_trim_words( $text, $num_words, $more, $original_text ) {
 		//qtranxf_dbg_log('qtranxf_trim_words: $text: ',$text);
@@ -315,7 +312,8 @@ if ( ! function_exists( 'qtranxf_trim_words' ) ) {
 			$texts[ $key ] = wp_trim_words( $txt, $num_words, $more );
 		}
 
-		return qtranxf_join_b( $texts );//has to be 'b', because 'c' gets stripped in /wp-admin/includes/nav-menu.php:182: esc_html( $item->description )
+		// has to be 'b', because 'c' gets stripped in /wp-admin/includes/nav-menu.php:182: esc_html( $item->description )
+		return qtranxf_join_b( $texts );
 	}
 }
 
@@ -330,8 +328,9 @@ if ( ! function_exists( 'qtranxf_trim_words' ) ) {
 if ( ! function_exists( 'qtranxf_htmledit_pre' ) ) {
 	function qtranxf_htmledit_pre( $output ) {
 		if ( ! empty( $output ) ) {
+			// convert only < > &
 			$output = htmlspecialchars( $output, ENT_NOQUOTES, get_option( 'blog_charset' ), false );
-		} // convert only < > &
+		}
 
 		return apply_filters( 'htmledit_pre', $output );
 	}
@@ -369,22 +368,6 @@ function qtranxf_updateGettextDatabases( $force = false, $only_for_language = ''
 
 	return qtranxf_updateGettextDatabasesEx( $force, $only_for_language );
 }
-
-/* this did not work, need more investigation
-function qtranxf_enable_blog_title_filters($name)
-{
-	add_filter('option_blogname', 'qtranxf_filter_options_general');
-	add_filter('option_blogdescription', 'qtranxf_filter_options_general');
-}
-add_action( 'get_header', 'qtranxf_enable_blog_title_filters' );
-
-function qtranxf_disable_blog_title_filters($name)
-{
-	remove_filter('option_blogname', 'qtranxf_filter_options_general');
-	remove_filter('option_blogdescription', 'qtranxf_filter_options_general');
-}
-add_action( 'wp_head', 'qtranxf_disable_blog_title_filters' );
-*/
 
 function qtranxf_add_conf_filters() {
 	global $q_config;
@@ -453,7 +436,7 @@ function qtranxf_add_meta_box_LSB( $post_type, $post = null ) {
 	if ( empty( $page_config ) ) {
 		return;
 	}
-	//translators: expected in WordPress default textdomain
+	// translators: expected in WordPress default textdomain
 	add_meta_box( 'qtranxs-meta-box-lsb', qtranxf_translate_wp( 'Language' ), 'qtranxf_meta_box_LSB', $post_type, 'normal', 'low' );
 }
 
@@ -467,7 +450,7 @@ function qtranxf_post_type_optional( $post_type ) {
 	switch ( $post_type ) {
 		case 'revision':
 		case 'nav_menu_item':
-			return false; //no option for this type
+			return false; // no option for this type
 		default:
 			return true;
 	}
@@ -527,7 +510,7 @@ function qtranxf_decode_name_value_pair( &$a, $nam, $val ) {
 		if ( empty( $s ) ) {
 			$a[ $n ][ $k ] = $val;
 		} else {
-			qtranxf_decode_name_value_pair( $a[ $n ], $k . $s, $val );//recursive call
+			qtranxf_decode_name_value_pair( $a[ $n ], $k . $s, $val );
 		}
 	} else {
 		$a[ $nam ] = $val;

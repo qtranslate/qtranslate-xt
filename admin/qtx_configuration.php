@@ -70,14 +70,14 @@ function qtranxf_language_form( $form_action, $button_name, $nonce_action ) {
                 <p class="qtranxs-notes"><?php _e( 'Choose the corresponding country flag for language. (Example: gb.png)', 'qtranslate' ) ?></p>
             </div>
             <script type="text/javascript">
-				//<![CDATA[
-				function switch_flag(url) {
-					document.getElementById('preview_flag').style.display = "inline";
-					document.getElementById('preview_flag').src = "<?php echo qtranxf_flag_location() ?>" + url;
-				}
+                //<![CDATA[
+                function switch_flag(url) {
+                    document.getElementById('preview_flag').style.display = "inline";
+                    document.getElementById('preview_flag').src = "<?php echo qtranxf_flag_location() ?>" + url;
+                }
 
-				switch_flag(document.getElementById('language_flag').value);
-				//]]>
+                switch_flag(document.getElementById('language_flag').value);
+                //]]>
             </script>
             <div class="form-field">
                 <label for="language_name"><?php _e( 'Name', 'qtranslate' );
@@ -150,7 +150,6 @@ function qtranxf_admin_section_end( $nm, $button_name = null ) {
 
 function qtranxf_admin_section_button( $button_name ) {
 	echo '<p class="submit"><input type="submit" name="submit" class="button-primary"';
-	//if($button_class) echo ' class="'.$button_class.'"';
 	echo ' value="' . $button_name . '" /></p>' . PHP_EOL;
 }
 
@@ -158,8 +157,6 @@ function qtranxf_admin_section_button( $button_name ) {
  * Set Admin Sections Names
  */
 function qtranxf_get_admin_sections() {
-	//$q_config['admin_sections'] = array();
-	//$admin_sections = &$q_config['admin_sections'];
 	$admin_sections             = array();
 	$admin_sections['general']  = __( 'General', 'qtranslate' );//General Settings
 	$admin_sections['advanced'] = __( 'Advanced', 'qtranslate' );//Advanced Settings
@@ -312,12 +309,6 @@ function qtranxf_conf() {
                                     <label title="Query Mode"><input type="radio" name="url_mode"
                                                                      value="<?php echo QTX_URL_QUERY; ?>" <?php checked( $url_mode, QTX_URL_QUERY ) ?> /> <?php echo __( 'Use Query Mode (?lang=en)', 'qtranslate' ) . '. ' . __( 'Most SEO unfriendly, not recommended.', 'qtranslate' ) ?>
                                     </label><br/>
-									<?php /*
-							if($permalink_is_query) {
-								echo '<br/>'.PHP_EOL;
-								printf(__('No other URL Modification Modes are available if permalink structure is set to "Default" on configuration page %sPermalink Setting%s. It is SEO advantageous to use some other permalink mode, which will enable more URL Modification Modes here as well.', 'qtranslate'),'<a href="'.admin_url('options-permalink.php').'">', '</a>');
-								echo PHP_EOL.'<br/><br/>'.PHP_EOL;
-							}else{ */ ?>
                                     <label title="Pre-Path Mode"><input type="radio" name="url_mode"
                                                                         value="<?php echo QTX_URL_PATH; ?>" <?php checked( $url_mode, QTX_URL_PATH );
 										disabled( $permalink_is_query ) ?> /> <?php echo __( 'Use Pre-Path Mode (Default, puts /en/ in front of URL)', 'qtranslate' ) . '. ' . __( 'SEO friendly.', 'qtranslate' ) ?>
@@ -325,10 +316,6 @@ function qtranxf_conf() {
                                     <label title="Pre-Domain Mode"><input type="radio" name="url_mode"
                                                                           value="<?php echo QTX_URL_DOMAIN; ?>" <?php checked( $url_mode, QTX_URL_DOMAIN ) ?> /> <?php echo __( 'Use Pre-Domain Mode (uses http://en.yoursite.com)', 'qtranslate' ) . '. ' . __( 'You will need to configure DNS sub-domains on your site.', 'qtranslate' ) ?>
                                     </label><br/>
-									<?php /*
-						<p class="qtranxs-notes"><?php _e('Pre-Path and Pre-Domain mode will only work with mod_rewrite/pretty permalinks. Additional Configuration is needed for Pre-Domain mode or Per-Domain mode.', 'qtranslate') ?></p><br/><br/>
-							} */
-									?>
                                     <label for="hide_default_language"><input type="checkbox"
                                                                               name="hide_default_language"
                                                                               id="hide_default_language"
@@ -336,20 +323,18 @@ function qtranxf_conf() {
                                     </label>
                                     <p class="qtranxs-notes"><?php _e( 'This is only applicable to Pre-Path and Pre-Domain mode.', 'qtranslate' ) ?></p>
 									<?php
-									//if(!$permalink_is_query) {
 									do_action( 'qtranslate_url_mode_choices', $permalink_is_query );
 									?>
                                     <label title="Per-Domain Mode"><input type="radio" name="url_mode"
                                                                           value="<?php echo QTX_URL_DOMAINS; ?>" <?php checked( $url_mode, QTX_URL_DOMAINS ) ?> /> <?php echo __( 'Use Per-Domain mode: specify separate user-defined domain for each language.', 'qtranslate' ) ?>
                                     </label>
-									<?php //} ?>
                                 </fieldset>
                             </td>
                         </tr>
 						<?php
 						if ( $url_mode == QTX_URL_DOMAINS ) {
 							$homeinfo  = qtranxf_get_home_info();
-							$home_host = $homeinfo['host']; //parse_url(get_option('home'),PHP_URL_HOST);
+							$home_host = $homeinfo['host']; // parse_url(get_option('home'),PHP_URL_HOST);
 							foreach ( $q_config['enabled_languages'] as $lang ) {
 								$id     = 'language_domain_' . $lang;
 								$domain = isset( $q_config['domains'][ $lang ] ) ? $q_config['domains'][ $lang ] : $lang . '.' . $home_host;
@@ -517,11 +502,6 @@ function qtranxf_conf() {
                                               value="<?php echo QTX_STRFTIME_OVERRIDE; ?>" <?php checked( $q_config['use_strftime'], QTX_STRFTIME_OVERRIDE ) ?>/> <?php _e( 'Use strftime instead of date and replace formats with the predefined formats for each language.', 'qtranslate' ) ?>
                                 </label>
                                 <p class="qtranxs-notes"><?php _e( 'Depending on the mode selected, additional customizations of the theme may be needed.', 'qtranslate' ) ?></p>
-								<?php /*
-					<br/><br/>
-					<label><?php _e('If one of the above options "... replace formats with the predefined formats for each language" is in use, then exclude the following formats from being overridden:', 'qtranslate') ?></label><br/>
-					<input type="text" name="ex_date_formats" id="qtranxs_ex_date_formats" value="<?php echo isset($q_config['ex_date_formats']) ? implode(' ',$q_config['ex_date_formats']) : QTX_EX_DATE_FORMATS_DEFAULT; ?>" style="width:100%"><br/>
-					*/ ?>
                             </td>
                         </tr>
                         <tr>
@@ -648,7 +628,9 @@ function qtranxf_conf() {
 									printf( __( 'The color in use is taken from your profile option %s, the third color.', 'qtranslate' ), '"<a href="' . admin_url( '/profile.php' ) . '">' . qtranxf_translate_wp( 'Admin Color Scheme' ) . '</a>"' ) ?></p>
                             </td>
                         </tr>
-						<?php /*
+						<?php
+						// TODO refactor debug info feature or remove entirely
+						/*
 			<tr>
 				<th scope="row"><?php _e('Debugging Information', 'qtranslate') ?></th>
 				<td>
@@ -775,14 +757,6 @@ function qtranxf_conf() {
                                 <p class="qtranxs-notes"><?php printf( __( 'Names of filters (which are enabled on theme or other plugins via %s function) to add translation to. For more information, read %sFAQ%s.', 'qtranslate' ), 'apply_filters()', '<a href="https://github.com/qtranslate/qtranslate-xt/wiki/FAQ#custom-fields">', '</a>' ) ?></p>
                             </td>
                         </tr>
-						<?php /* ?>
-			<tr>
-				<th scope="row"><?php _e('Custom Admin Pages', 'qtranslate') ?></th>
-				<td><label for="qtranxs_custom_pages" class="qtranxs_explanation"><input type="text" name="custom_pages" id="qtranxs_custom_pages" value="<?php echo implode(' ',$q_config['custom_pages']) ?>" style="width:100%"></label>
-					<p class="qtranxs-notes"><?php printf(__('List the custom admin page paths for which you wish Language Switching Buttons to show up. The Buttons will then control fields configured in "Custom Fields" section. You may only include part of the full URL after %s, including a distinctive query string if needed. As many as desired pages can be listed space/comma separated. For more information, read %sFAQ%s.', 'qtranslate'),'/wp-admin/','<a href="https://github.com/qtranslate/qtranslate-xt/wiki/FAQ">','</a>') ?></p>
-				</td>
-			</tr>
-			<?php */ ?>
                         <tr>
                             <th scope="row"><?php _e( 'Compatibility Functions', 'qtranslate' ) ?></th>
                             <td>
@@ -799,7 +773,7 @@ function qtranxf_conf() {
 					// Allow to load additional services
 					do_action( 'qtranslate_configuration', $clean_uri );
 					?>
-                </div><?php //<!-- /tabs-container --> ?>
+                </div>
             </form>
 		<?php } ?>
         </div><!-- /wrap -->
@@ -830,13 +804,6 @@ function qtranxf_conf() {
 					);
 				}
 
-				/* public function get_sortable_columns() {
-					return array(
-						'code' => array('code',false),
-						'name' => array('name',true) //true means it's already sorted
-					);
-				}*/
-
 				protected function column_default( $item, $column_name ) {
 					return $item[ $column_name ];
 				}
@@ -854,15 +821,15 @@ function qtranxf_conf() {
 
 				public function prepare_items() {
 					global $q_config;
+
 					$flags                 = qtranxf_language_configured( 'flag' );
 					$languages_stored      = get_option( 'qtranslate_language_names', array() );
 					$languages_predef      = qtranxf_default_language_name();
 					$flag_location_url     = qtranxf_flag_location();
 					$flag_location_dir     = trailingslashit( WP_CONTENT_DIR ) . $q_config['flag_location'];
 					$flag_location_url_def = content_url( qtranxf_flag_location_default() );
-					//trailingslashit(content_url()).'/plugins/'.basename(dirname(QTRANSLATE_FILE)).'/flags/';
-					$clean_uri = $this->_clean_uri;
-					$data      = array();
+					$clean_uri             = $this->_clean_uri;
+					$data                  = array();
 					foreach ( $this->_language_names as $lang => $language ) {
 						if ( $lang == 'code' ) {
 							continue;
@@ -906,39 +873,7 @@ function qtranxf_conf() {
 						$tbl = new QTX_LanguageList( $language_names, $clean_uri );
 						$tbl->prepare_items();
 						$tbl->display();
-						/* ?>
-						<table class="widefat">
-							<thead><tr><?php $tbl->print_column_headers(true) ?></tr></thead>
-							<tbody id="the-list" class="qtranxs-language-list" class="list:cat">
-						<?php
-							$flags = qtranxf_language_configured('flag');
-							$languages_stored = get_option('qtranslate_language_names',array());
-							$languages_predef = qtranxf_default_language_name();
-							$flag_location_url = qtranxf_flag_location();
-							$flag_location_dir = trailingslashit(WP_CONTENT_DIR).$q_config['flag_location'];
-							$flag_location_url_def = content_url(qtranxf_flag_location_default());
-							//trailingslashit(content_url()).'/plugins/'.basename(dirname(QTRANSLATE_FILE)).'/flags/';
-							foreach($language_names as $lang => $language){ if($lang=='code') continue;
-								$flag = $flags[$lang];
-								if(file_exists($flag_location_dir.$flag)){
-									$flag_url = $flag_location_url.$flag;
-								}else{
-									$flag_url = $flag_location_url_def.$flag;
-								}
 						?>
-							<tr>
-								<td><?php echo $lang; ?></td>
-								<td><img src="<?php echo $flag_url; ?>" alt="<?php echo sprintf(__('%s Flag', 'qtranslate'), $language) ?>"></td>
-								<td><?php echo $language; ?></td>
-								<td><?php if(in_array($lang,$q_config['enabled_languages'])) { if($q_config['default_language']==$lang){ _e('Default', 'qtranslate'); } else{ ?><a class="edit" href="<?php echo $clean_uri; ?>&disable=<?php echo $lang; ?>#languages"><?php _e('Disable', 'qtranslate') ?></a><?php } } else { ?><a class="edit" href="<?php echo $clean_uri; ?>&enable=<?php echo $lang; ?>#languages"><?php _e('Enable', 'qtranslate') ?></a><?php } ?></td>
-								<td><a class="edit" href="<?php echo $clean_uri; ?>&edit=<?php echo $lang; ?>"><?php _e('Edit', 'qtranslate') ?></a></td>
-								<td><?php if(!isset($languages_stored[$lang])){ _e('Pre-Defined', 'qtranslate'); } else { ?><a class="delete" href="<?php echo $clean_uri; ?>&delete=<?php echo $lang; ?>#languages"><?php if(isset($languages_predef[$lang])) _e('Reset', 'qtranslate'); else _e('Delete', 'qtranslate') ?></a><?php } ?></td>
-							</tr>
-						<?php } ?>
-							</tbody>
-							<tfoot><tr><?php $tbl->print_column_headers(false) ?></tr></tfoot>
-						</table>
-						<?php */ ?>
                         <p class="qtranxs-notes"><?php _e( 'Enabling a language will cause qTranslate to update the Gettext-Database for the language, which can take a while depending on your server\'s connection speed.', 'qtranslate' ) ?></p>
                     </div>
                 </div>
@@ -947,9 +882,6 @@ function qtranxf_conf() {
                     <div class="col-wrap">
                         <h3><?php _e( 'Add Language', 'qtranslate' ) ?></h3>
 						<?php
-						/*
-						<form action="<?php echo $clean_uri ?>" name="addlang" id="addlang" method="post" class="add:the-list: validate">
-						*/
 						qtranxf_language_form( $clean_uri, __( 'Add Language &raquo;', 'qtranslate' ), $nonce_action );
 						qtranxf_admin_section_end( 'languages', false );
 						?>
