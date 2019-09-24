@@ -17,8 +17,6 @@ function qtranxf_term_set_i18n_config( $term ) {
 		if ( isset( $q_config['term_name'][ $term->name ] ) ) {
 			$ts                      = $q_config['term_name'][ $term->name ];
 			$ts[ $default_language ] = $term->name;
-			//$ml = qtranxf_join_b($q_config['term_name'][$term->name]);
-			//$term->i18n_config['name'] = array( 'ts' => $ts, 'ml' => $ml );
 		} else {
 			$ts = array( $default_language => $term->name );
 		}
@@ -55,7 +53,6 @@ function qtranxf_term_use( $lang, $obj, $taxonomy ) {
 			}
 		}
 	} elseif ( isset( $q_config['term_name'][ $obj ][ $lang ] ) ) {
-		//qtranxf_dbg_echo('qtranxf_translate_term: string: ',$obj,true);
 		$obj = $q_config['term_name'][ $obj ][ $lang ];
 	}
 

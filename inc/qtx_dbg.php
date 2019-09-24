@@ -26,15 +26,10 @@ if ( ! function_exists( 'qtranxf_dbg_log' ) ) {
 		}
 		if ( $var !== 'novar' ) {
 			$msg .= var_export( $var, true );
-			//$msg .= print_r($var,true);
 		}
 		if ( $bt ) {
-			//$msg .= PHP_EOL.'backtrace:'.PHP_EOL.var_export(debug_backtrace(),true);
 			$msg .= PHP_EOL . 'backtrace:' . PHP_EOL . print_r( debug_backtrace(), true );
 		}
-		//$d=ABSPATH.'/wp-logs';
-		//if(!file_exists($d)) mkdir($d);
-		//$f=$d.'/qtranslate.log';
 		$f = WP_CONTENT_DIR . '/debug-qtranslate.log';
 		error_log( $msg . PHP_EOL, 3, $f );
 		if ( $exit ) {
@@ -68,13 +63,3 @@ if ( ! function_exists( 'qtranxf_dbg_log' ) ) {
 	}
 }
 assert_options( ASSERT_BAIL, true );
-
-/*
-function qtranxf_do_tests(){
-	//qtranxf_dbg
-	$dir = dirname(__FILE__);
-	if(file_exists($dir.'/../dev/qtx-tests.php'))
-		require_once($dir.'/../dev/qtx-tests.php');
-}
-add_action('qtranslate_init_language','qtranxf_do_tests');
-// */
