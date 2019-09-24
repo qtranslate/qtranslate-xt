@@ -8,10 +8,9 @@
     var addMenuItemHooks = function (li) {
       qtx.addContentHooksByClass('edit-menu-item-title', li);
       qtx.addContentHooksByClass('edit-menu-item-attr-title', li);
-      qtx.addContentHooksByClass('[edit-menu-item-description', li); //must use '[:]' separator style
+      qtx.addContentHooksByClass('[edit-menu-item-description', li); // must use '[:]' separator style
 
       qtx.addDisplayHooksByClass('menu-item-title', li);
-      //qtx.addDisplayHooksByClass('item-title',li);
       qtx.addDisplayHooksByTagInClass('link-to-original', 'A', li);
     };
 

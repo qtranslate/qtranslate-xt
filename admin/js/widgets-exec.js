@@ -3,7 +3,6 @@
 */
 (function($) {
   $(function() {
-    //if(typeof wpWidgets === 'undefined') return;
     if (!window.wpWidgets)
       return;
 

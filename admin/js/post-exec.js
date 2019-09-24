@@ -5,8 +5,6 @@
 (function($) {
   $(function() {
     var qtx = qTranslateConfig.js.get_qtx();
-    //co('post.php: qtx: ',qtx);
-    // Slug
     var convertURL = function (url, lang) {
       switch (qTranslateConfig.url_mode.toString()) {
         case '1':
@@ -17,15 +15,13 @@
           }
           break;
         case '2':
-          //if( !qTranslateConfig.hide_default_language || qTranslateConfig.default_language != lang){
           var homepath = qTranslateConfig.home_url_path;
           var p = url.pathname;
           if (p[0] != '/')
-            p = '/' + p; //to deal with IE imperfection: http://stackoverflow.com/questions/956233/javascript-pathname-ie-quirk
+            p = '/' + p; // to deal with IE imperfection: http://stackoverflow.com/questions/956233/javascript-pathname-ie-quirk
           var i = p.indexOf(homepath);
           if (i >= 0)
             url.pathname = qTranslateConfig.homeinfo_path + lang + p.substring(i + homepath.length - 1);
-          //}
           break;
         case '3':
           url.host = lang + '.' + url.host;
@@ -36,9 +32,9 @@
       }
     };
 
-    var btnViewPostA; //a node of 'View Page/Post' link.
+    var btnViewPostA; // a node of 'View Page/Post' link.
     var origUrl, langUrl, origUrlQ;
-    var slugSamplePermalink; //'sample-permalink' node
+    var slugSamplePermalink; // 'sample-permalink' node
     var origSamplePermalink;
     var view_link;
     var permalink_query_field;
@@ -64,13 +60,13 @@
         btnPreviewAction.children[0].href = langUrl.href;
       }
 
-      if (qTranslateConfig.url_mode != 1) { // !QTX_URL_QUERY
+      if (qTranslateConfig.url_mode != 1) {
+        // !QTX_URL_QUERY
         if (!slugSamplePermalink) {
           var slugEl = document.getElementById('sample-permalink');
           if (slugEl && slugEl.offsetHeight > 0 && slugEl.childNodes.length) {
-            slugSamplePermalink = slugEl.childNodes[0];//span
+            slugSamplePermalink = slugEl.childNodes[0]; // span
             origSamplePermalink = slugSamplePermalink.nodeValue;
-            //var slugEdit=document.getElementById('editable-post-name');
           }
         }
         if (slugSamplePermalink) {
@@ -78,7 +74,8 @@
           convertURL(langUrl, lang);
           slugSamplePermalink.nodeValue = langUrl.href;
         }
-      } else { // QTX_URL_QUERY
+      } else {
+        // QTX_URL_QUERY
         if (!permalink_query_field) {
           $('#sample-permalink').append('<span id="sample-permalink-lang-query"></span>');
           permalink_query_field = $('#sample-permalink-lang-query');
@@ -94,22 +91,19 @@
       }
     };
 
-    //handle prompt text of empty field 'title', not important
+    // handle prompt text of empty field 'title', not important
     var field_title = $('#title');
     var title_label = $('#title-prompt-text');
     var hide_title_prompt_text = function (lang) {
       var value = field_title.attr('value');
-      //co('hide_title_prompt_text: title.value: ',value);
       if (value) {
         title_label.addClass('screen-reader-text');
       } else {
         title_label.removeClass('screen-reader-text');
       }
-      //jQuery('#title-prompt-text').remove();//ok
-      //this.delLanguageSwitchAfterListener(hide_title_prompt_text);//ok
     };
 
-    qtx.addCustomContentHooks();//handles values of option 'Custom Fields'
+    qtx.addCustomContentHooks(); // handles values of option 'Custom Fields'
     setSlugLanguage(qtx.getActiveLanguage());
 
     qtx.addLanguageSwitchAfterListener(setSlugLanguage);
