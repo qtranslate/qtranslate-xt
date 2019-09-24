@@ -42,37 +42,27 @@ function qtranxf_init_language() {
 		}
 	}
 
-	// fill $url_info the same way as _parseURL does
+	// fill url_info similarly to qtranxf_parseURL
 	$url_info['scheme'] = is_ssl() ? 'https' : 'http';
 	// see https://wordpress.org/support/topic/messy-wp-cronphp-command-line-output
-	$url_info['host']   = isset( $_SERVER['HTTP_HOST'] ) ? $_SERVER['HTTP_HOST'] : '';
+	$url_info['host'] = isset( $_SERVER['HTTP_HOST'] ) ? $_SERVER['HTTP_HOST'] : '';
+	$url_info['path'] = strtok( $_SERVER['REQUEST_URI'], '?' );
+	if ( ! empty ( $_SERVER['QUERY_STRING'] ) ) {
+		$url_info['query'] = qtranxf_sanitize_url( $_SERVER['QUERY_STRING'] ); // to prevent xss
 
-	if ( empty( $_SERVER['REQUEST_URI'] ) ) {
-		$url_info['path'] = '';
-	} else {
-		$url_info['path'] = $_SERVER['REQUEST_URI'];
-		$p                = strpos( $url_info['path'], '?' );
-		if ( $p ) {
-			$url_info['path'] = substr( $url_info['path'], 0, $p );
-			if ( empty( $_SERVER['QUERY_STRING'] ) ) {
-				$url_info['query'] = substr( $url_info['path'], $p + 1 );
-			} else {
-				$url_info['query'] = $_SERVER['QUERY_STRING'];
-			}
-			$url_info['query'] = qtranxf_sanitize_url( $url_info['query'] ); // to prevent xss
-			if ( strpos( $url_info['query'], 'qtranslate-mode=raw' ) !== false ) {
-				$url_info['qtranslate-mode']      = 'raw';
-				$url_info['doing_front_end']      = true;
-				$q_config['url_info']             = $url_info;
-				$q_config['url_info']['language'] = $q_config['default_language'];
-				$q_config['language']             = $q_config['default_language'];
+		if ( isset( $_GET['qtranslate-mode'] ) && $_GET['qtranslate-mode'] == 'raw' ) {
+			$url_info['qtranslate-mode']      = 'raw';
+			$url_info['doing_front_end']      = true;
+			$q_config['url_info']             = $url_info;
+			$q_config['url_info']['language'] = $q_config['default_language'];
+			$q_config['language']             = $q_config['default_language'];
 
-				return;
-			}
+			return;
 		}
 	}
 
-	$url_info['original_url'] = $_SERVER['REQUEST_URI']; // used by qtranslate-slug, here for debugging purpose only
+	// TODO fix qtranslate-slug still using 'original_url' field and remove it from here, this has no sense!
+	$url_info['original_url'] = $_SERVER['REQUEST_URI'];
 
 	//qtranxf_dbg_log('qtranxf_init_language: SERVER: ',$_SERVER);
 	$url_info['language'] = qtranxf_detect_language( $url_info );
