@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-/* qTranslate-X Hooks */
+require_once( QTRANSLATE_DIR . '/qtranslate_date_time.php' );
 
 /**
  * locale for current language and set it on PHP.
