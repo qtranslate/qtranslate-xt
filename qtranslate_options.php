@@ -619,8 +619,8 @@ function qtranxf_language_configured( $prop, $opn = null ) {
  */
 function qtranxf_languages_configured( &$cfg ) {
 	global $qtranslate_options;
-	foreach ( $qtranslate_options['languages'] as $nm => $opn ) {
-		$cfg[ $nm ] = qtranxf_language_configured( $nm, $opn );
+	foreach ( $qtranslate_options['languages'] as $name => $option ) {
+		$cfg[ $name ] = qtranxf_language_configured( $name, $option );
 	}
 
 	return $cfg;
@@ -632,21 +632,21 @@ function qtranxf_languages_configured( &$cfg ) {
  */
 function qtranxf_load_languages_enabled() {
 	global $q_config, $qtranslate_options;
-	foreach ( $qtranslate_options['languages'] as $nm => $opn ) {
-		$f = 'qtranxf_default_' . $nm;
-		qtranxf_load_option_func( $nm, $opn, $f );
+	foreach ( $qtranslate_options['languages'] as $name => $option ) {
+		$func = 'qtranxf_default_' . $name;
+		qtranxf_load_option_func( $name, $option, $func );
 		$val = array();
 		$def = null;
 		foreach ( $q_config['enabled_languages'] as $lang ) {
-			if ( isset( $q_config[ $nm ][ $lang ] ) ) {
-				$val[ $lang ] = $q_config[ $nm ][ $lang ];
+			if ( isset( $q_config[ $name ][ $lang ] ) ) {
+				$val[ $lang ] = $q_config[ $name ][ $lang ];
 			} else {
-				if ( is_null( $def ) && function_exists( $f ) ) {
-					$def = call_user_func( $f );
+				if ( is_null( $def ) && function_exists( $func ) ) {
+					$def = call_user_func( $func );
 				}
 				$val[ $lang ] = isset( $def[ $lang ] ) ? $def[ $lang ] : '';
 			}
 		}
-		$q_config[ $nm ] = $val;
+		$q_config[ $name ] = $val;
 	}
 }

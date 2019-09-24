@@ -595,15 +595,15 @@ function qtranxf_validateBool( $var, $default_value ) {
 	}
 }
 
-function qtranxf_load_option( $nm, $default_value = null ) {
+function qtranxf_load_option( $name, $default_value = null ) {
 	global $q_config, $qtranslate_options;
-	$val = get_option( 'qtranslate_' . $nm );
+	$val = get_option( 'qtranslate_' . $name );
 	if ( $val === false ) {
 		if ( is_null( $default_value ) ) {
-			if ( ! isset( $qtranslate_options['default_value'][ $nm ] ) ) {
+			if ( ! isset( $qtranslate_options['default_value'][ $name ] ) ) {
 				return;
 			}
-			$default_value = $qtranslate_options['default_value'][ $nm ];
+			$default_value = $qtranslate_options['default_value'][ $name ];
 		}
 		if ( is_string( $default_value ) && function_exists( $default_value ) ) {
 			$val = call_user_func( $default_value );
@@ -611,12 +611,12 @@ function qtranxf_load_option( $nm, $default_value = null ) {
 			$val = $default_value;
 		}
 	}
-	$q_config[ $nm ] = $val;
+	$q_config[ $name ] = $val;
 }
 
-function qtranxf_load_option_array( $nm, $default_value = null ) {
+function qtranxf_load_option_array( $name, $default_value = null ) {
 	global $q_config;
-	$vals = get_option( 'qtranslate_' . $nm );
+	$vals = get_option( 'qtranslate_' . $name );
 	if ( $vals === false ) {
 		if ( is_null( $default_value ) ) {
 			return;
@@ -644,40 +644,40 @@ function qtranxf_load_option_array( $nm, $default_value = null ) {
 		if ( ! empty( $vals ) ) {
 			continue;
 		}
-		delete_option( 'qtranslate_' . $nm );
+		delete_option( 'qtranslate_' . $name );
 		break;
 	}
-	$q_config[ $nm ] = $vals;
+	$q_config[ $name ] = $vals;
 }
 
-function qtranxf_load_option_bool( $nm, $default_value = null ) {
+function qtranxf_load_option_bool( $name, $default_value = null ) {
 	global $q_config;
-	$val = get_option( 'qtranslate_' . $nm );
+	$val = get_option( 'qtranslate_' . $name );
 	if ( $val === false ) {
 		if ( ! is_null( $default_value ) ) {
-			$q_config[ $nm ] = $default_value;
+			$q_config[ $name ] = $default_value;
 		}
 	} else {
 		switch ( $val ) {
 			case '0':
-				$q_config[ $nm ] = false;
+				$q_config[ $name ] = false;
 				break;
 			case '1':
-				$q_config[ $nm ] = true;
+				$q_config[ $name ] = true;
 				break;
 			default:
 				$val = strtolower( $val );
 				switch ( $val ) {
 					case 'n':
 					case 'no':
-						$q_config[ $nm ] = false;
+						$q_config[ $name ] = false;
 						break;
 					case 'y':
 					case 'yes':
-						$q_config[ $nm ] = true;
+						$q_config[ $name ] = true;
 						break;
 					default:
-						$q_config[ $nm ] = ! empty( $val );
+						$q_config[ $name ] = ! empty( $val );
 						break;
 				}
 				break;
@@ -685,19 +685,19 @@ function qtranxf_load_option_bool( $nm, $default_value = null ) {
 	}
 }
 
-function qtranxf_load_option_func( $nm, $opn = null, $func = null ) {
+function qtranxf_load_option_func( $name, $opn = null, $func = null ) {
 	global $q_config;
 	if ( ! $opn ) {
-		$opn = 'qtranslate_' . $nm;
+		$opn = 'qtranslate_' . $name;
 	}
 	$val = get_option( $opn );
 	if ( $val === false ) {
 		if ( ! $func ) {
-			$func = 'qtranxf_default_' . $nm;
+			$func = 'qtranxf_default_' . $name;
 		}
 		$val = call_user_func( $func );
 	}
-	$q_config[ $nm ] = $val;
+	$q_config[ $name ] = $val;
 }
 
 function qtranxf_is_permalink_structure_query() {
@@ -719,24 +719,24 @@ function qtranxf_loadConfig() {
 	qtranxf_load_option_flag_location( 'flag_location' );
 	qtranxf_load_languages_enabled();
 
-	foreach ( $qtranslate_options['front']['int'] as $nm => $def ) {
-		qtranxf_load_option( $nm, $def );
+	foreach ( $qtranslate_options['front']['int'] as $name => $def ) {
+		qtranxf_load_option( $name, $def );
 	}
 
-	foreach ( $qtranslate_options['front']['bool'] as $nm => $def ) {
-		qtranxf_load_option_bool( $nm, $def );
+	foreach ( $qtranslate_options['front']['bool'] as $name => $def ) {
+		qtranxf_load_option_bool( $name, $def );
 	}
 
-	foreach ( $qtranslate_options['front']['str'] as $nm => $def ) {
-		qtranxf_load_option( $nm, $def );
+	foreach ( $qtranslate_options['front']['str'] as $name => $def ) {
+		qtranxf_load_option( $name, $def );
 	}
 
-	foreach ( $qtranslate_options['front']['text'] as $nm => $def ) {
-		qtranxf_load_option( $nm, $def );
+	foreach ( $qtranslate_options['front']['text'] as $name => $def ) {
+		qtranxf_load_option( $name, $def );
 	}
 
-	foreach ( $qtranslate_options['front']['array'] as $nm => $def ) {
-		qtranxf_load_option_array( $nm, $def );
+	foreach ( $qtranslate_options['front']['array'] as $name => $def ) {
+		qtranxf_load_option_array( $name, $def );
 	}
 
 	qtranxf_load_option_array( 'term_name', array() );
@@ -1130,8 +1130,8 @@ function qtranxf_convertURLs( $url, $lang = '', $forceadmin = false, $showDefaul
 		$lang = $q_config['language'];
 	}
 	if ( is_array( $url ) ) {
-		foreach ( $url as $k => $v ) {
-			$url[ $k ] = qtranxf_convertURLs( $v, $lang, $forceadmin, $showDefaultLanguage );
+		foreach ( $url as $k => $value ) {
+			$url[ $k ] = qtranxf_convertURLs( $value, $lang, $forceadmin, $showDefaultLanguage );
 		}
 
 		return $url;
@@ -1262,18 +1262,18 @@ function qtranxf_split_languages( $blocks ) {
 function qtranxf_allthesame( $texts ) {
 	$text = null;
 	// take first not empty
-	foreach ( $texts as $lang => $t ) {
-		if ( ! $t || $t == '' ) {
+	foreach ( $texts as $lang => $lang_text ) {
+		if ( ! $lang_text || $lang_text == '' ) {
 			continue;
 		}
-		$text = $t;
+		$text = $lang_text;
 		break;
 	}
 	if ( empty( $text ) ) {
 		return '';
 	}
-	foreach ( $texts as $lang => $t ) {
-		if ( $t != $text ) {
+	foreach ( $texts as $lang => $lang_text ) {
+		if ( $lang_text != $text ) {
 			return null;
 		}
 	}
@@ -1355,41 +1355,41 @@ function qtranxf_join_s( $texts ) {
 }
 
 /**
- * Prepares multilingual text leaving text that matches $rx_sep outside of language tags.
+ * Prepares multilingual text leaving text that matches $regex_sep outside of language tags.
  * @since 3.4.6.2
  */
-function qtranxf_join_byseparator( $texts, $rx_sep ) {
+function qtranxf_join_byseparator( $texts, $regex_sep ) {
 	$text = qtranxf_allthesame( $texts );
 	if ( ! is_null( $text ) ) {
 		return $text;
 	}
 
 	$lines = array();
-	foreach ( $texts as $lang => $text ) {
-		$lines[ $lang ] = preg_split( $rx_sep, $text, null, PREG_SPLIT_DELIM_CAPTURE );
+	foreach ( $texts as $lang => $lang_text ) {
+		$lines[ $lang ] = preg_split( $regex_sep, $lang_text, null, PREG_SPLIT_DELIM_CAPTURE );
 	}
 
 	$text = '';
 	while ( true ) {
-		$done = true;
-		$ln   = array();
-		$sep  = '';
-		foreach ( $lines as $lang => $txts ) {
-			$t = next( $txts );
+		$done    = true;
+		$to_join = array();
+		$sep     = '';
+		foreach ( $lines as $lang => $lang_lines ) {
+			$t = next( $lang_lines );
 			if ( $t === false ) {
 				continue;
 			}
-			if ( preg_match( $rx_sep, $t ) ) {
+			if ( preg_match( $regex_sep, $t ) ) {
 				$sep = $t;
-				$t   = next( $txts );
+				$t   = next( $lang_lines );
 			}
-			$done        = false;
-			$ln[ $lang ] = $t;
+			$done             = false;
+			$to_join[ $lang ] = $t;
 		}
 		if ( $done ) {
 			break;
 		}
-		$text .= qtranxf_join_b( $ln ) . $sep;
+		$text .= qtranxf_join_b( $to_join ) . $sep;
 	}
 
 	return $text;
@@ -1411,30 +1411,29 @@ function qtranxf_join_byline( $texts ) {
 
 	$text = '';
 	for ( $i = 0; true; ++ $i ) {
-		$done = true;
-		$ln   = array();
-		foreach ( $lines as $lang => $txts ) {
-			if ( sizeof( $txts ) <= $i ) {
+		$done    = true;
+		$to_join = array();
+		foreach ( $lines as $lang => $lang_lines ) {
+			if ( sizeof( $lang_lines ) <= $i ) {
 				continue;
 			}
 			$done = false;
-			$t    = $txts[ $i ];
-			if ( ! $t || $t == '' ) {
+			$line = $lang_lines[ $i ];
+			if ( ! $line || $line == '' ) {
 				continue;
 			}
-			$ln[ $lang ] = $t;
+			$to_join[ $lang ] = $line;
 		}
 		if ( $done ) {
 			break;
 		}
-		$text .= qtranxf_join_b( $ln ) . PHP_EOL;
+		$text .= qtranxf_join_b( $to_join ) . PHP_EOL;
 	}
 
 	return $text;
 }
 
 function qtranxf_use( $lang, $text, $show_available = false, $show_empty = false ) {
-	//global $q_config;
 	// return full string if language is not enabled
 	if ( is_array( $text ) ) {
 		// handle arrays recursively
@@ -1445,7 +1444,7 @@ function qtranxf_use( $lang, $text, $show_available = false, $show_empty = false
 		return $text;
 	}
 
-	if ( is_object( $text ) || $text instanceof __PHP_Incomplete_Class ) {//since 3.2-b1 instead of @get_class($text) == '__PHP_Incomplete_Class'
+	if ( is_object( $text ) || $text instanceof __PHP_Incomplete_Class ) {
 		foreach ( get_object_vars( $text ) as $key => $t ) {
 			if ( ! isset( $text->$key ) ) {
 				continue;
@@ -1457,8 +1456,7 @@ function qtranxf_use( $lang, $text, $show_available = false, $show_empty = false
 	}
 
 	// prevent filtering weird data types and save some resources
-	if ( ! is_string( $text ) || empty( $text ) )//|| $text) == ''
-	{
+	if ( ! is_string( $text ) || empty( $text ) ) {
 		return $text;
 	}
 
