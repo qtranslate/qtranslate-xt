@@ -5,23 +5,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( WP_DEBUG ) {
 	require_once( QTRANSLATE_DIR . '/inc/qtx_dbg.php' );
-} else {
-	if ( ! function_exists( 'qtranxf_dbg_log' ) ) {
-		function qtranxf_dbg_log( $msg, $var = null, $bt = false, $exit = false ) {
-		}
-
-		function qtranxf_dbg_echo( $msg, $var = null, $bt = false, $exit = false ) {
-		}
-
-		function qtranxf_dbg_log_if( $condition, $msg, $var = null, $bt = false, $exit = false ) {
-		}
-
-		function qtranxf_dbg_echo_if( $condition, $msg, $var = null, $bt = false, $exit = false ) {
-		}
-	}
-	//assert_options(ASSERT_ACTIVE,false);
-	//assert_options(ASSERT_WARNING,false);
-	//assert_options(ASSERT_QUIET_EVAL,true);
 }
 
 /**
@@ -130,8 +113,8 @@ function qtranxf_dir_from_wp_content( $plugin ) {
 		return substr( $d, $c_len );
 	}
 	if ( $i == 0 ) {
-		return $d;
-	}//return absolute path then
+		return $d; // absolute path
+	}
 	$c = substr( $c, $i );
 	$d = substr( $d, $i );
 	for ( $i = substr_count( $c, '/' ); -- $i >= 0; ) {
@@ -150,16 +133,17 @@ function qtranxf_dir_from_wp_content( $plugin ) {
 function qtranxf_plugin_dirname_from_wp_content() {
 	static $s;
 	if ( ! $s ) {
-		//qtranxf_dbg_log('__FILE__: ', __FILE__);//links are resolved
-		//qtranxf_dbg_log('wp_normalize_path(__FILE__): ', wp_normalize_path(__FILE__));//links are resolved, same as __FILE__
-		//qtranxf_dbg_log('plugin_dir_path: ', plugin_dir_path( __FILE__ ));//links are resolved, with trailing slash
-		//qtranxf_dbg_log('plugin_basename: ', plugin_basename( __FILE__ ));//no links resolved
-		//qtranxf_dbg_log('WP_CONTENT_DIR: ', WP_CONTENT_DIR);//no links resolved
-		//qtranxf_dbg_log('wp_content_dir(): ', wp_content_dir());//no links resolved
-		//qtranxf_dbg_log('WP_PLUGIN_DIR: ', WP_PLUGIN_DIR);//no links resolved
-		//qtranxf_dbg_log('WP_MU_PLUGIN_DIR: ', WPMU_PLUGIN_DIR);//no links resolved
-		//qtranxf_dbg_log('plugin_dir_url: ', plugin_dir_url( __FILE__ ));//no links, naturally
-		//qtranxf_dbg_log('content_url: ', content_url());//no links either
+		// TODO refactor debug info, this does not look like the right place
+		//qtranxf_dbg_log('__FILE__: ', __FILE__); // links are resolved
+		//qtranxf_dbg_log('wp_normalize_path(__FILE__): ', wp_normalize_path(__FILE__)); // links are resolved, same as __FILE__
+		//qtranxf_dbg_log('plugin_dir_path: ', plugin_dir_path( __FILE__ )); // links are resolved, with trailing slash
+		//qtranxf_dbg_log('plugin_basename: ', plugin_basename( __FILE__ )); // no links resolved
+		//qtranxf_dbg_log('WP_CONTENT_DIR: ', WP_CONTENT_DIR); // no links resolved
+		//qtranxf_dbg_log('wp_content_dir(): ', wp_content_dir()); // no links resolved
+		//qtranxf_dbg_log('WP_PLUGIN_DIR: ', WP_PLUGIN_DIR); // no links resolved
+		//qtranxf_dbg_log('WP_MU_PLUGIN_DIR: ', WPMU_PLUGIN_DIR); // no links resolved
+		//qtranxf_dbg_log('plugin_dir_url: ', plugin_dir_url( __FILE__ )); // no links, naturally
+		//qtranxf_dbg_log('content_url: ', content_url()); // no links either
 		$s = qtranxf_dir_from_wp_content( QTRANSLATE_FILE );
 	}
 
@@ -167,12 +151,10 @@ function qtranxf_plugin_dirname_from_wp_content() {
 }
 
 function qtranxf_parseURL( $url ) {
-	//this is not the same as native parse_url and so it is in use
-	//it should also work quicker than native parse_url, so we should keep it?
-	//preg_match('!(?:(\w+)://)?(?:(\w+)\:(\w+)@)?([^/:]+)?(?:\:(\d*))?([^#?]+)?(?:\?([^#]+))?(?:#(.+$))?!',$url,$out);
+	// this is not the same as native parse_url and so it is in use
+	// it should also work quicker than native parse_url, so we should keep it?
 	preg_match( '!(?:(\w+)://)?(?:(\w+)\:(\w+)@)?([^/:?#]+)?(?:\:(\d*))?([^#?]+)?(?:\?([^#]+))?(?:#(.+$))?!', $url, $out );
 	//qtranxf_dbg_log('qtranxf_parseURL('.$url.'): out:',$out);
-	//new code since 3.2.8 - performance improvement
 	$result = array();
 	if ( ! empty( $out[1] ) ) {
 		$result['scheme'] = $out[1];
@@ -298,8 +280,7 @@ function qtranxf_get_address_info( $url ) {
 function qtranxf_get_home_info() {
 	static $home_info;
 	if ( ! $home_info ) {
-		//$url = defined('WP_HOME') ? WP_HOME : get_option('home');
-		$url       = get_option( 'home' );//WP does take care of WP_HOME
+		$url       = get_option( 'home' );
 		$home_info = qtranxf_get_address_info( $url );
 	}
 
@@ -309,8 +290,7 @@ function qtranxf_get_home_info() {
 function qtranxf_get_site_info() {
 	static $site_info;
 	if ( ! $site_info ) {
-		//$url = defined('WP_SITEURL') ? WP_SITEURL : get_option('siteurl');
-		$url       = get_option( 'siteurl' );//WP does take care of WP_SITEURL
+		$url       = get_option( 'siteurl' );
 		$site_info = qtranxf_get_address_info( $url );
 	}
 
@@ -1284,7 +1264,6 @@ function qtranxf_get_page_referer() {
 			$page  = basename( $q_config['url_info']['http_referer'] );
 			$epage = explode( '?', $page );
 			$page  = $epage[0];
-			//$page = explode('?',$page)[0];//does not work in older PHP
 			$q_config['url_info']['page_referer'] = $page;
 
 			return $page;

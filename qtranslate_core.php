@@ -67,7 +67,6 @@ function qtranxf_init_language() {
 				$q_config['url_info']['language'] = $q_config['default_language'];
 				$q_config['language']             = $q_config['default_language'];
 
-				//qtranxf_load_option_qtrans_compatibility();
 				return;
 			}
 		}
@@ -117,7 +116,7 @@ function qtranxf_init_language() {
 		//qtranxf_dbg_log('qtranxf_init_language: doredirect canceled: $url_info: ',$url_info);
 	}
 
-	// fix url to prevent xss - how does this prevents xss?
+	// TODO clarify fix url to prevent xss - how does this prevents xss?
 	// $q_config['url_info']['url'] = qtranxf_convertURL(add_query_arg('lang',$q_config['default_language'],$q_config['url_info']['url']));
 
 	// qtranslate_hooks.php has to go before load_plugin_textdomain()
@@ -384,7 +383,7 @@ function qtranxf_parse_language_info( &$url_info, $link = false ) {
 	 * Hook for possible other methods
 	 * Set $url_info['language'] with the result
 	 */
-	$url_info = apply_filters( 'qtranslate_parse_language_info', $url_info, $link );//slug?
+	$url_info = apply_filters( 'qtranslate_parse_language_info', $url_info, $link ); // slug?
 
 	if ( isset( $url_info['language'] ) ) {
 		$lang = $url_info['language'];
@@ -402,7 +401,7 @@ function qtranxf_detect_language_admin( &$url_info ) {
 
 function qtranxf_detect_language_front( &$url_info ) {
 	global $q_config;
-	//assert($url_info['doing_front_end']);
+
 	$lang = null;
 	if ( isset( $_COOKIE[ QTX_COOKIE_NAME_FRONT ] ) ) {
 		$cs                            = null;
@@ -424,7 +423,6 @@ function qtranxf_detect_language_front( &$url_info ) {
 
 	if ( ! isset( $url_info['doredirect'] )
 	     && ( ! $q_config['hide_default_language'] || $lang != $q_config['default_language'] )
-		//&& !$url_info['language_neutral_path']//already so
 	) {
 		$url_info['doredirect'] = 'language needs to be shown in url';
 	}
@@ -483,7 +481,7 @@ function qtranxf_http_negotiate_language() {
 	if ( function_exists( 'http_negotiate_language' ) ) {
 		$default_language = $q_config['default_language'];
 		$supported        = array();
-		$supported[]      = qtranxf_html_locale( $q_config['locale'][ $default_language ] );//needs to be the first
+		$supported[]      = qtranxf_html_locale( $q_config['locale'][ $default_language ] ); // needs to be the first
 		if ( ! empty( $q_config['locale_html'][ $default_language ] ) ) {
 			$supported[] = $q_config['locale_html'][ $default_language ];
 		}
@@ -551,11 +549,12 @@ function qtranxf_load_plugin_textdomain() {
  * which they should have done by testing "if ( defined( 'QTRANSLATE_FILE' )" instead.
  * @since 3.4
  */
+// TODO this function should be removed but some legacy plugins might still use this to check if q-XT is enabled...
 function qtranxf_init() {
 	//qtranxf_dbg_log('3.qtranxf_init:');
 }
 
-add_action( 'init', 'qtranxf_init', 2 );//user is authenticated
+add_action( 'init', 'qtranxf_init', 2 ); // user is authenticated
 
 function qtranxf_front_header_css_default() {
 	global $q_config;
@@ -646,7 +645,7 @@ function qtranxf_load_option_array( $nm, $default_value = null ) {
 		return;
 	}
 
-	//clean up array due to previous configuration imperfections
+	// clean up array due to previous configuration imperfections
 	foreach ( $vals as $key => $val ) {
 		if ( ! empty( $val ) ) {
 			continue;
@@ -813,7 +812,7 @@ function qtranxf_loadConfig() {
 	$q_config['ignore_file_types'] = $val;
 
 	if ( empty( $q_config['front_config'] ) ) {
-		//todo this should be granulated to load only what is needed
+		// TODO this should be granulated to load only what is needed
 		require_once( QTRANSLATE_DIR . '/admin/qtx_activation_hook.php' );
 		require_once( QTRANSLATE_DIR . '/admin/qtx_admin_options_update.php' );
 		qtranxf_update_i18n_config();
@@ -825,8 +824,7 @@ function qtranxf_loadConfig() {
 	do_action( 'qtranslate_loadConfig' );
 }
 
-/* BEGIN DATE TIME FUNCTIONS */
-
+// TODO move date and time functions elsewhere
 function qtranxf_strftime( $format, $date, $default = '', $before = '', $after = '' ) {
 	// don't do anything if format is not given
 	if ( $format == '' ) {
@@ -978,8 +976,8 @@ function qtranxf_timeFromCommentForCurrentLanguage( $old_date, $format = '', $gm
 		return $old_date;
 	}
 	if ( ! $comment ) {
-		global $comment;
-	}//compatibility with older WP
+		global $comment; // TODO drop obsolete compatibility with older WP
+	}
 	if ( ! $comment ) {
 		return $old_date;
 	}
@@ -987,8 +985,6 @@ function qtranxf_timeFromCommentForCurrentLanguage( $old_date, $format = '', $gm
 
 	return qtranxf_format_time( $format, $comment_date, $old_date );
 }
-
-/* END DATE TIME FUNCTIONS */
 
 // check if it is a link to an ignored file type
 function qtranxf_ignored_file_type( $path ) {
@@ -1437,7 +1433,7 @@ function qtranxf_split_languages( $blocks ) {
 
 function qtranxf_allthesame( $texts ) {
 	$text = null;
-	//take first not empty
+	// take first not empty
 	foreach ( $texts as $lang => $t ) {
 		if ( ! $t || $t == '' ) {
 			continue;
@@ -1469,27 +1465,6 @@ function qtranxf_join_c( $texts ) {
 		}
 		$text .= '<!--:' . $lang . '-->' . $lang_text . '<!--:-->';
 	}
-
-	/*
-		//should join all available, not only enabled?
-		global $q_config;
-		$split_regex = "#<!--more-->#ism";
-		$max = 0;
-		foreach($q_config['enabled_languages'] as $language) {
-			$texts[$language] = preg_split($split_regex, $texts[$language]);
-			if(sizeof($texts[$language]) > $max) $max = sizeof($texts[$language]);
-		}
-		for($i=0;$i<$max;$i++) {
-			if($i>=1) {
-				$text .= '<!--more-->';
-			}
-			foreach($q_config['enabled_languages'] as $language) {
-				if(isset($texts[$language][$i]) && $texts[$language][$i] !== '') {
-					$text .= '<!--:'.$language.'-->'.$texts[$language][$i].'<!--:-->';
-				}
-			}
-		}
-	*/
 
 	return $text;
 }
@@ -1684,7 +1659,7 @@ function qtranxf_use_block( $lang, $blocks, $show_available = false, $show_empty
 
 function qtranxf_use_content( $lang, $content, $available_langs, $show_available = false, $show_empty = false ) {
 	global $q_config;
-	// if content is available show the content in the requested language
+	// show the content in the requested language, if available
 	if ( ! empty( $available_langs[ $lang ] ) ) {
 		return $content[ $lang ];
 	} elseif ( $show_empty ) {
