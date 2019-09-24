@@ -9,9 +9,7 @@ function qtranxf_check_url( $url_converted, $url_expected ) {
 
 function qtranxf_test_convertURL( $url_mode_name, $urls, $lang, $showLanguage ) {
 	foreach ( $urls as $url => $url_expected ) {
-		//$url_converted = qtranxf_convertURL($url, false, true);
 		$url_converted = qtranxf_get_url_for_language( $url, $lang, $showLanguage );
-		//qtranxf_tst_log('test convertURL('.$url.'): ', $url_converted);
 		if ( ! qtranxf_check_url( $url_converted, $url_expected ) ) {
 			qtranxf_tst_log( 'qtranxf_test_convertURL(' . $url_mode_name . '): exit on the first error for url: ', $url );
 			exit();
@@ -26,9 +24,8 @@ function qtranxf_run_test_convertURL( $url_mode, $lang ) {
 	$p        = $homeinfo['path'];
 	$h        = $homeinfo['scheme'] . '://' . $homeinfo['host'] . $p;
 	$b        = trailingslashit( $p );
-	//$lang = qtranxf_getLanguage();
 
-	//common tests
+	// common tests
 	$urls = array(
 		'#'                                      => '#',
 		'#tag'                                   => '#tag',
@@ -187,7 +184,8 @@ function qtranxf_run_tests_convertURL() {
 	}
 	$url_mode = $q_config['url_mode'];
 	qtranxf_run_test_convertURL( $url_mode, $lang );
-	//cache breaks tests, need to run one at a time
+	// TODO clarify how to run these tests
+	// cache breaks tests, need to run one at a time
 	//qtranxf_run_test_convertURL(QTX_URL_QUERY, $lang);
 	//qtranxf_run_test_convertURL(QTX_URL_PATH, $lang);
 	//qtranxf_run_test_convertURL(QTX_URL_DOMAIN, $lang);

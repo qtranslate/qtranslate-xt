@@ -8,7 +8,6 @@ function qtranxf_test_date( $ds ) {
 	foreach ( $ds as $fmt => $date_expected ) {
 		$post = get_post( 1 );
 		$d    = get_the_date( $fmt, $post );
-		//$md = get_the_modified_date($fmt);
 		get_post_modified_time( $fmt, false, $post, true );
 		qtranxf_tst_log( 'qtranxf_test_date: get_the_date(' . $fmt . '): ', $d );
 		if ( ! qtranxf_check_test( $d, $date_expected, basename( __FILE__ ) ) ) {
