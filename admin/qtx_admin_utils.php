@@ -4,6 +4,46 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * @since 3.3.8.4
+ */
+function qtranxf_add_admin_notice( $msg, $kind ) {
+	global $q_config;
+	if ( isset( $q_config['url_info'][ $kind ] ) ) {
+		if ( ! in_array( $msg, $q_config['url_info'][ $kind ] ) ) {
+			$q_config['url_info'][ $kind ][] = $msg;
+		}
+	} else {
+		if ( ! isset( $q_config['url_info'] ) ) {
+			$q_config['url_info'] = array();
+		}
+		$q_config['url_info'][ $kind ] = array( $msg );
+	}
+}
+
+/**
+ * @since 3.3.7
+ */
+function qtranxf_add_error( $msg ) {
+	qtranxf_add_admin_notice( $msg, 'errors' );
+}
+
+function qtranxf_add_warning( $msg ) {
+	qtranxf_add_admin_notice( $msg, 'warnings' );
+}
+
+function qtranxf_add_message( $msg ) {
+	qtranxf_add_admin_notice( $msg, 'messages' );
+}
+
+/**
+ * @since 3.3.1
+ */
+function qtranxf_error_log( $msg ) {
+	qtranxf_add_error( $msg );
+	error_log( 'qTranslate-X: ' . strip_tags( $msg ) );
+}
+
+/**
  * Enqueue Javascript files listed in $jss.
  * @since 3.5.1
  */
