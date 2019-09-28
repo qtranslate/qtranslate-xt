@@ -37,11 +37,6 @@ function qtranxf_test_interface() {
 	qtranxf_tst_log( 'qtranxf_test_interface: $mlterm: ', $mlterm );
 }
 
-function qtranxf_test_next_posts_link() {
-	$npl = next_posts_link();
-	qtranxf_tst_log( 'qtranxf_test_next_posts_link: ', $npl );
-}
-
 function qtranxf_test_meta_cache() {
 	global $post;
 	if ( ! is_singular() || ! $post || 'post' != $post->post_type ) {
