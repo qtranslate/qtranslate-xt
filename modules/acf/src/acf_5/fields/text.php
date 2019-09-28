@@ -116,7 +116,7 @@ class acf_qtranslate_acf_5_text extends acf_field_text {
 			$atts['name'] = $field['name'] . "[$language]";
 			$atts['value'] = $values[$language];
 			$atts['data-language'] = $language;
-			$e .= '<input ' . acf_esc_attr( $atts ) . ' />';
+			$e .= '<input ' . acf_esc_attrs( $atts ) . ' />';
 		}
 
 		$e .= '</div>';

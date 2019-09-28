@@ -154,7 +154,7 @@ class acf_qtranslate_acf_5_file extends acf_field_file {
 			}
 
 			?>
-			<div <?php acf_esc_attr_e($div); ?>>
+			<div <?php echo acf_esc_attrs($div); ?>>
 				<div class="acf-hidden">
 					<?php acf_hidden_input(array( 'name' => $field['name'], 'value' => $field['value'], 'data-name' => 'id' )); ?>
 				</div>

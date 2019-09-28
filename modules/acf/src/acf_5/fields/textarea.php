@@ -119,7 +119,7 @@ class acf_qtranslate_acf_5_textarea extends acf_field_textarea {
 			}
 			$atts['name'] = $field['name'] . "[$language]";
 			$atts['data-language'] = $language;
-			$e .= '<textarea ' . acf_esc_attr( $atts ) . ' >';
+			$e .= '<textarea ' . acf_esc_attrs( $atts ) . ' >';
 			$e .= esc_textarea( $values[$language] );
 			$e .= '</textarea>';
 		}

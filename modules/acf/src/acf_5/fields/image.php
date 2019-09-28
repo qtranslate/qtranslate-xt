@@ -160,7 +160,7 @@ class acf_qtranslate_acf_5_image extends acf_field_image {
 			}
 
 			?>
-			<div <?php acf_esc_attr_e( $div ); ?>>
+			<div <?php echo acf_esc_attrs( $div ); ?>>
 				<?php acf_hidden_input(array( 'name' => $field['name'], 'value' => $field['value'] )); ?>
 				<div class="show-if-value image-wrap" <?php if( $size['width'] ): ?>style="<?php echo esc_attr('max-width: '.$size['width'].'px'); ?>"<?php endif; ?>>
 					<img data-name="image" src="<?php echo esc_url($url); ?>" alt="<?php echo esc_attr($alt); ?>"/>
