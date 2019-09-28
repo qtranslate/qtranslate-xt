@@ -153,15 +153,6 @@ function qtranxf_join_texts( $texts, $sep ) {
 	}
 }
 
-function qtranxf_stripSlashesIfNecessary( $str ) {
-	/**
-	 * @since 3.2.9.8.4 WordPress now always supplies slashed data
-	 */
-	$str = stripslashes( $str );
-
-	return $str;
-}
-
 /**
  * @since 3.4.6.9
  */

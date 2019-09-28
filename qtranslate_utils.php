@@ -405,18 +405,6 @@ function qtranxf_insertDropDownElement( $language, $url, $id ) {
 	return $html;
 }
 
-function qtranxf_get_domain_language( $host ) {
-	global $q_config;
-	// TODO should have hash host->lang
-	foreach ( $q_config['domains'] as $lang => $host_item ) {
-		if ( $host_item == $host ) {
-			return $lang;
-		}
-	}
-
-	return null;
-}
-
 function qtranxf_external_host_ex( $host, $homeinfo ) {
 	global $q_config;
 
@@ -606,25 +594,6 @@ function qtranxf_getAvailableLanguages( $text ) {
 	}
 
 	return $result;
-}
-
-function qtranxf_isAvailableIn( $post_id, $lang = '' ) {
-	global $q_config;
-	if ( empty( $lang ) ) {
-		$lang = $q_config['default_language'];
-	}
-	global $wpdb;
-	$post_content = $wpdb->get_var( $wpdb->prepare( "SELECT post_content FROM $wpdb->posts WHERE ID = %d", $post_id ) );
-	//qtranxf_dbg_log('qtranxf_isAvailableIn: $post_content: ', $post_content);
-	if ( empty( $post_content ) ) {
-		return false;
-	}
-	$languages = qtranxf_getAvailableLanguages( $post_content );
-	if ( $languages === false ) {
-		return $lang == $q_config['default_language'];
-	}
-
-	return in_array( $lang, $languages );
 }
 
 function qtranxf_getSortedLanguages( $reverse = false ) {
