@@ -116,21 +116,11 @@ function qtranxf_useAdminTermLibJoin( $obj, $taxonomies = null, $args = null ) {
  */
 function qtranxf_term_sanitize_name( $value, $term, $taxonomy = null, $context = null ) {
 	global $pagenow;
-	if ( empty( $context ) ) {
-		return $value;
+	if ( $context == 'display' && $pagenow == 'edit.php' ) {
+		return qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage( $value );
 	}
-	switch ( $context ) {
-		case 'display':
-			if ( $pagenow == 'edit.php' ) {
-				return qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage( $value );
-			} else {
-				return $value;
-			}
-		case 'db':
-			return $value;
-		default:
-			return $value;
-	}
+
+	return $value;
 }
 
 add_filter( 'term_name', 'qtranxf_term_sanitize_name', 5, 4 );//used in function sanitize_term_field called from function sanitize_term with default context like 'display'
