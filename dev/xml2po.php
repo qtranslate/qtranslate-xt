@@ -30,13 +30,13 @@ foreach ( $languages as $lang_code => $language ) {
 		return '';
 	}, $xml );
 
-	preg_replace_callback( "/[<](.+)\s+type[=][\"](([^\"]+)(?:[_]([^\"]+))?)[\"][^\<>]*[>]([^<>]+)/iu", function ( $matches ) use ( &$languages, &$lang_code ) {
+	preg_replace_callback( "/[<](.+)\s+type[=][\"](([^\"]+)(?:[_]([^\"]+))?)[\"][^<>]*[>]([^<>]+)/iu", function ( $matches ) use ( &$languages, &$lang_code ) {
 		$languages[ $lang_code ][ $matches[1] ] = $matches[2];
 
 		return '';
 	}, $infos['identity'] );
 
-	preg_replace_callback( "/[<]language\s+type[=][\"](([^\"]+)(?:[_]([^\"]+))?)[\"](?:\s+alt[=][\"]([^\"]+)[\"])?[^\<>]*[>]([^<>]+)/iu", function ( $matches ) use ( &$languages, &$lang_code ) {
+	preg_replace_callback( "/[<]language\s+type[=][\"](([^\"]+)(?:[_]([^\"]+))?)[\"](?:\s+alt[=][\"]([^\"]+)[\"])?[^<>]*[>]([^<>]+)/iu", function ( $matches ) use ( &$languages, &$lang_code ) {
 		if ( ! isset( $languages[ $lang_code ]['translations'][ $matches[1] ] ) ) {
 			$languages[ $lang_code ]['translations'][ $matches[1] ] = $matches[5];
 		} else {

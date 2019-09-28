@@ -116,7 +116,7 @@ function qtranxf_plugin_dirname_from_wp_content() {
 function qtranxf_parseURL( $url ) {
 	// this is not the same as native parse_url and so it is in use
 	// it should also work quicker than native parse_url, so we should keep it?
-	preg_match( '!(?:(\w+)://)?(?:(\w+)\:(\w+)@)?([^/:?#]+)?(?:\:(\d*))?([^#?]+)?(?:\?([^#]+))?(?:#(.+$))?!', $url, $out );
+	preg_match( '!(?:(\w+)://)?(?:(\w+):(\w+)@)?([^/:?#]+)?(?::(\d*))?([^#?]+)?(?:\?([^#]+))?(?:#(.+$))?!', $url, $out );
 	//qtranxf_dbg_log('qtranxf_parseURL('.$url.'): out:',$out);
 	$result = array();
 	if ( ! empty( $out[1] ) ) {
@@ -437,7 +437,7 @@ function qtranxf_external_host( $host ) {
 }
 
 function qtranxf_isMultilingual( $str ) {
-	return preg_match( '/<!--:[a-z]{2}-->|\[:[a-z]{2}\]|\{:[a-z]{2}\}/im', $str );
+	return preg_match( '/<!--:[a-z]{2}-->|\[:[a-z]{2}]|{:[a-z]{2}}/im', $str );
 }
 
 function qtranxf_is_multilingual_deep( $value ) {
@@ -894,10 +894,10 @@ function qtranxf_write_config_log( $config, $suffix = '', $url_path = null, $url
 
 	$name = '';
 	if ( ! empty( $url_path ) ) {
-		$name = preg_replace( '![/?&=#\.]+!', '-', trim( $url_path, '/' ) );
+		$name = preg_replace( '![/?&=#.]+!', '-', trim( $url_path, '/' ) );
 	}
 	if ( ! empty( $url_query ) ) {
-		$name .= '-' . preg_replace( '![/?&=#\.]+!', '-', $url_query );
+		$name .= '-' . preg_replace( '![/?&=#.]+!', '-', $url_query );
 	}
 	if ( empty( $name ) && ! is_null( $url_path ) ) {
 		$name = 'fronthome';

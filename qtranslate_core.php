@@ -440,7 +440,7 @@ function qtranxf_get_browser_language() {
 	if ( ! isset( $_SERVER["HTTP_ACCEPT_LANGUAGE"] ) ) {
 		return null;
 	}
-	if ( ! preg_match_all( "#([^;,]+)(;[^,0-9]*([0-9\.]+)[^,]*)?#i", $_SERVER["HTTP_ACCEPT_LANGUAGE"], $matches, PREG_SET_ORDER ) ) {
+	if ( ! preg_match_all( "#([^;,]+)(;[^,0-9]*([0-9.]+)[^,]*)?#i", $_SERVER["HTTP_ACCEPT_LANGUAGE"], $matches, PREG_SET_ORDER ) ) {
 		return null;
 	}
 	$prefered_languages = array();
@@ -1174,11 +1174,11 @@ function qtranxf_split_blocks( $blocks, &$found = array() ) {
 			$current_language = $matches[1];
 			continue;
 			// detect b-tags
-		} elseif ( preg_match( "#^\[:([a-z]{2})\]$#ism", $block, $matches ) ) {
+		} elseif ( preg_match( "#^\[:([a-z]{2})]$#ism", $block, $matches ) ) {
 			$current_language = $matches[1];
 			continue;
 			// detect s-tags @since 3.3.6 swirly bracket encoding added
-		} elseif ( preg_match( "#^\{:([a-z]{2})\}$#ism", $block, $matches ) ) {
+		} elseif ( preg_match( "#^{:([a-z]{2})}$#ism", $block, $matches ) ) {
 			$current_language = $matches[1];
 			continue;
 		}
@@ -1225,11 +1225,11 @@ function qtranxf_split_languages( $blocks ) {
 			$current_language = $matches[1];
 			continue;
 			// detect b-tags
-		} elseif ( preg_match( "#^\[:([a-z]{2})\]$#ism", $block, $matches ) ) {
+		} elseif ( preg_match( "#^\[:([a-z]{2})]$#ism", $block, $matches ) ) {
 			$current_language = $matches[1];
 			continue;
 			// detect s-tags @since 3.3.6 swirly bracket encoding added
-		} elseif ( preg_match( "#^\{:([a-z]{2})\}$#ism", $block, $matches ) ) {
+		} elseif ( preg_match( "#^{:([a-z]{2})}$#ism", $block, $matches ) ) {
 			$current_language = $matches[1];
 			continue;
 		}

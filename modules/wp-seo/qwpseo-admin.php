@@ -236,7 +236,7 @@ add_action( 'wpseo_xmlsitemaps_config', 'qwpseo_xmlsitemaps_config' );
  */
 function qwpseo_encode_swirly( $value ) {
 	//qtranxf_dbg_log('qwpseo_encode_swirly: $value: ',$value);
-	$value = preg_replace( '#\[:([a-z]{2}|)\]#i', '{:$1}', $value );
+	$value = preg_replace( '#\[:([a-z]{2}|)]#i', '{:$1}', $value );
 
 	return $value;
 }

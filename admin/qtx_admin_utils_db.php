@@ -70,7 +70,7 @@ function qtranxf_convert_to_b( $text ) {
 			$lang        = $matches[1];
 			$text        .= '[:' . $lang . ']';
 			continue;
-		} elseif ( preg_match( "#^\[:([a-z]{2})\]$#ism", $block, $matches ) ) {
+		} elseif ( preg_match( "#^\[:([a-z]{2})]$#ism", $block, $matches ) ) {
 			$lang_closed = false;
 			$lang        = $matches[1];
 			$text        .= '[:' . $lang . ']';
@@ -438,7 +438,7 @@ function qtranxf_extract_languages( $text, $lang2keep ) {
 			}
 			continue;
 			// detect b-tags
-		} elseif ( preg_match( "#^\[:([a-z]{2})\]$#ism", $block, $matches ) ) {
+		} elseif ( preg_match( "#^\[:([a-z]{2})]$#ism", $block, $matches ) ) {
 			$current_language = $matches[1];
 			if ( isset( $lang2keep[ $current_language ] ) ) {
 				$s   .= $block;
@@ -446,7 +446,7 @@ function qtranxf_extract_languages( $text, $lang2keep ) {
 			}
 			continue;
 			// detect s-tags @since 3.3.6 swirly bracket encoding added
-		} elseif ( preg_match( "#^\{:([a-z]{2})\}$#ism", $block, $matches ) ) {
+		} elseif ( preg_match( "#^{:([a-z]{2})}$#ism", $block, $matches ) ) {
 			$current_language = $matches[1];
 			if ( isset( $lang2keep[ $current_language ] ) ) {
 				$s   .= $block;

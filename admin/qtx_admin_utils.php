@@ -525,7 +525,7 @@ function qtranxf_verify_nonce( $nonce_name, $nonce_field = '_wpnonce' ) {
  * @since 3.4.6.5
  */
 function qtranxf_decode_name_value_pair( &$a, $nam, $val ) {
-	if ( preg_match( '#([^\[]*)\[([^\]]+)\](.*)#', $nam, $matches ) ) {
+	if ( preg_match( '#([^\[]*)\[([^]]+)](.*)#', $nam, $matches ) ) {
 		$n = $matches[1];
 		$k = $matches[2];
 		$s = $matches[3];
