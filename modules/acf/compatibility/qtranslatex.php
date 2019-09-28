@@ -19,7 +19,7 @@ if (function_exists('qtrans_join') === false):
 		// qtranxf_join_c doesn't handle non-array values to
 		// maintain compatibility with qtrans_join we must handle it here
 		if (is_array($texts) === false) {
-			$texts = qtranxf_split($texts, false);
+			$texts = qtranxf_split($texts);
 		}
 		return qtranxf_join_c($texts);
 	}
@@ -27,7 +27,7 @@ endif;
 
 if (function_exists('qtrans_split') === false):
 	function qtrans_split($text, $quicktags = true) {
-		return qtranxf_split($text, $quicktags);
+		return qtranxf_split($text);
 	}
 endif;
 
