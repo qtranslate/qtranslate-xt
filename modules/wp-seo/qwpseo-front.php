@@ -13,7 +13,7 @@ function qwpseo_add_front_page_config( $page_configs ) {
 	return $page_configs;
 }
 
-/* moved to i18n-config.json
+/* TODO check if this is missing, supposedly moved to i18n-config.json but not used!
 function qwpseo_add_filters_front() {
 	$use_filters = array(
 		//'wpseo_opengraph_title' => 20,//comes already translated
@@ -32,7 +32,6 @@ function qwpseo_add_filters_front() {
 qwpseo_add_filters_front();
 */
 
-// sitemaps handling
 /**
  * Remove duplicated images and translates image attributes.
  * @since 1.0.3
@@ -63,63 +62,13 @@ function qwpseo_sitemap_urlimages( $images, $id ) {
 add_filter( 'wpseo_sitemap_urlimages', 'qwpseo_sitemap_urlimages', 999, 2 );
 
 /**
- * Generate top level index for hierarchical sitemaps.
- * @since 1.0.3
- *
- * function qwpseo_sitemap_index( $sm )
- * {
- * global $q_config, $wpseo_sitemaps;
- * if(isset($q_config['sitemap-type'])) return '';
- * //qtranxf_dbg_log('qwpseo_sitemap_index: $wpseo_sitemaps: ', $wpseo_sitemaps);
- * ob_start();
- * $wpseo_sitemaps->output();
- * $content = ob_get_contents();
- * ob_end_clean();
- * //qtranxf_dbg_log('qwpseo_sitemap_index: $content: ', $content);
- * $matches;
- * $lastmod = '';
- * $p = 0;
- * $sitemaps = array();
- * while(($p = strpos($content,'<sitemap>',$p))!==false){
- * if(($e = strpos($content,'</sitemap>',$p)) !== false){
- * $len = $e - $p + strlen('</sitemap>');
- * $s = substr($content, $p, $len);
- * //qtranxf_dbg_log('qwpseo_sitemap_index: $s: ', $s);
- * $p += $len;
- * $sitemaps[] = $s;
- * if(preg_match('!<lastmod>\\s*([^\\s<]+)\\s*</lastmod>!s',$s,$matches)){
- * if(empty($lastmod) || strcmp($lastmod,$matches[1])<0) $lastmod = $matches[1];
- * }
- * }else{
- * $p += strlen('<sitemap>');
- * }
- * }
- * if(preg_match('/<sitemapindex[^>]*>/',$content,$matches))
- * $sm = $matches[0];
- * else
- * $sm = '';
- * //qtranxf_dbg_log('qwpseo_sitemap_index: $sitemapindex: ', $sm);
- * $wpseo_sitemaps->set_sitemap($sm);
- * $url = home_url('i18n-index-sitemap.xml');
- * $sm = '';
- * foreach($q_config['enabled_languages'] as $lang){
- * $sm .= '<sitemap>'.PHP_EOL;
- * $sm .= '<loc>'.esc_url(qtranxf_convertURL($url,$lang,true,true)).'</loc>'.PHP_EOL;
- * if(!empty($lastmod)) $sm .= '<lastmod>'.$lastmod.'</lastmod>'.PHP_EOL;
- * $sm .= '</sitemap>'.PHP_EOL;
- * }
- * //qtranxf_dbg_log('qwpseo_sitemap_index: $sm: ', $sm);
- * return $sm;
- * } //*/
-
-/*
  * Adds other language sitemaps to the sitemap_index.xml
  * @since 1.0.3
-*/
+ */
 function qwpseo_sitemap_index( $sm ) {
 	global $q_config, $wpseo_sitemaps;
 	if ( isset( $q_config['sitemap-type'] ) ) {
-		return;
+		return '';
 	}
 	//qtranxf_dbg_log('qwpseo_sitemap_index: $wpseo_sitemaps: ', $wpseo_sitemaps);
 	ob_start();
@@ -142,11 +91,9 @@ function qwpseo_sitemap_index( $sm ) {
 	}
 	$sm = '';
 	foreach ( $q_config['enabled_languages'] as $lang ) {
-		//if($lang == $q_config['default_language']) continue;
 		if ( $lang == $q_config['language'] ) {
 			continue;
 		}
-		//$sm .= preg_replace('!<loc>(.*)/([^/]+)</loc>!','<loc>$1/'.$lang.'-$2</loc>',$s);
 		foreach ( $sitemaps as $s ) {
 			if ( preg_match( '!<loc>([^<]+)</loc>!', $s, $matches ) ) {
 				$loc = $matches[1];
@@ -191,14 +138,12 @@ add_filter( 'wpseo_enable_xml_sitemap_transient_caching', 'qwpseo_enable_xml_sit
  */
 function qwpseo_build_sitemap_post_type( $type ) {
 	//qtranxf_dbg_log('qwpseo_build_sitemap_post_type: $type: ', $type);
-	switch ( $type ) {
-		case 'i18n-index':
-			global $q_config;
-			//root map for single language
-			$q_config['sitemap-type'] = $type;
+	if ( $type == 'i18n-index' ) {
+		global $q_config;
+		//root map for single language
+		$q_config['sitemap-type'] = $type;
 
-			return '1';
-		//case '1': return $type;
+		return '1';
 	}
 
 	return $type;
@@ -212,13 +157,13 @@ add_filter( 'wpseo_build_sitemap_post_type', 'qwpseo_build_sitemap_post_type', 5
  */
 function qwpseo_stylesheet_url( $stylesheet ) {
 	if ( isset( $_SERVER['REQUEST_URI'] ) && strpos( $_SERVER['REQUEST_URI'], 'sitemap_index.xml' ) !== false ) {
-		$pefix = 'index-';
+		$prefix = 'index-';
 	} elseif ( isset( $_SERVER['HTTP_REFERER'] ) && strpos( $_SERVER['HTTP_REFERER'], 'i18n-index-sitemap' ) !== false ) {
-		$pefix = 'qtx-';
+		$prefix = 'qtx-';
 	} else {
-		$pefix = 'qwp-';
+		$prefix = 'qwp-';
 	}
-	$stylesheet = str_replace( 'main-', $pefix, $stylesheet );
+	$stylesheet = str_replace( 'main-', $prefix, $stylesheet );
 
 	return $stylesheet;
 }
@@ -292,7 +237,7 @@ function qwpseo_xsl_qtx( $callback ) {
 
 add_action( 'wpseo_xsl_qtx', 'qwpseo_xsl_qtx', 20 );
 
-/*
+/* TODO clean this, keep or remove?
 function qwpseo_register_xsl_i18n()
 {
 	//qtranxf_dbg_log('qwpseo_register_xsl_i18n:');
