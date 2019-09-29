@@ -8,5 +8,4 @@ interface acf_qtranslate_acf_interface {
 	 * @return array
 	 */
 	public function get_visible_acf_fields();
-
 }
