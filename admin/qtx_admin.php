@@ -9,7 +9,8 @@ require_once( QTRANSLATE_DIR . '/admin/qtx_admin_class_translator.php' );
 require_once( QTRANSLATE_DIR . '/admin/qtx_user_options.php' );
 require_once( QTRANSLATE_DIR . '/admin/qtx_admin_taxonomy.php' );
 
-/** see help notes for function 'qtranxf_collect_translations'
+/**
+ * @see qtranxf_collect_translations
  */
 function qtranxf_collect_translations_deep( $qfields, $sep ) {
 	$content = reset( $qfields );
@@ -18,48 +19,47 @@ function qtranxf_collect_translations_deep( $qfields, $sep ) {
 		return qtranxf_join_texts( $qfields, $sep );
 	}
 	$result = array();
+	// collect recursively
 	foreach ( $content as $f => $r ) {
 		$texts = array();
 		foreach ( $qfields as $lang => &$vals ) {
 			$texts[ $lang ] = $vals[ $f ];
 		}
-		$result[ $f ] = qtranxf_collect_translations_deep( $texts, $sep ); // recursive call
+		$result[ $f ] = qtranxf_collect_translations_deep( $texts, $sep );
 	}
 
 	return $result;
 }
 
 /**
- * Collect translations of all ML fileds posted in $_REQUEST into Raw ML values.
+ * Collect translations of all ML fields posted in $_REQUEST into Raw ML values, recursively.
  * Called in response to action 'plugins_loaded'.
  * All data is yet unslashed when action 'plugins_loaded' is executed.
  *
  * @param array $qfields a sub-tree of $_REQUEST['qtranslate-fields'], which contains translations for field $request.
  * @param array|string $request an ML field of $_REQUEST.
  * @param string $edit_lang language of the active LSB at the time of sending the request.
- *
- * @return void
  */
 function qtranxf_collect_translations( &$qfields, &$request, $edit_lang ) {
 	if ( isset( $qfields['qtranslate-separator'] ) ) {
 		$sep = $qfields['qtranslate-separator'];
 		unset( $qfields['qtranslate-separator'] );
 		if ( ! qtranxf_isMultilingual( $request ) ) {
-			//convert $request to an ML value
+			// convert to ML value
 			$qfields[ $edit_lang ] = $request;
 			$request               = qtranxf_collect_translations_deep( $qfields, $sep );
 		} else {
 			// raw mode, or user mistakenly put ML value into an LSB-controlled field
-			// leave $request as user entered it
+			// leave request as user entered it
 			return;
 		}
 	} else {
-		foreach ( $qfields as $nm => &$vals ) {
-			if ( ! isset( $request[ $nm ] ) ) {
-				unset( $qfields[ $nm ] );
+		foreach ( $qfields as $name => &$values ) {
+			if ( ! isset( $request[ $name ] ) ) {
+				unset( $qfields[ $name ] );
 				continue;
 			}
-			qtranxf_collect_translations( $vals, $request[ $nm ], $edit_lang ); // recursive call
+			qtranxf_collect_translations( $values, $request[ $name ], $edit_lang );
 		}
 	}
 }
@@ -67,19 +67,22 @@ function qtranxf_collect_translations( &$qfields, &$request, $edit_lang ) {
 /**
  * @since 3.4.6.5
  */
-function qtranxf_decode_json_name_value( $val ) {
-	if ( strpos( $val, 'qtranslate-fields' ) === false ) {
-		return null;
-	}
-	$nv = json_decode( stripslashes( $val ) );
-	if ( is_null( $nv ) ) {
+function qtranxf_decode_json_name_value( $value ) {
+	if ( strpos( $value, 'qtranslate-fields' ) === false ) {
 		return null;
 	}
 
-	return qtranxf_decode_name_value( $nv );
+    $name_value = json_decode( stripslashes( $value ) );
+	if ( is_null( $name_value ) ) {
+		return null;
+	}
+
+	// TODO this looks unnecessary, it might be possible to use json_decode directly with right options
+	return qtranxf_decode_name_value( $name_value );
 }
 
-/** see help notes for function 'qtranxf_collect_translations'
+/**
+ * @see qtranxf_collect_translations
  */
 function qtranxf_collect_translations_posted() {
 	//qtranxf_dbg_log('qtranxf_collect_translations_posted: REQUEST: ', $_REQUEST);
@@ -88,54 +91,54 @@ function qtranxf_collect_translations_posted() {
 	$edit_lang = null;
 	if ( isset( $_REQUEST['qtranslate-fields'] ) ) {
 		$edit_lang = qtranxf_getLanguageEdit();
-		foreach ( $_REQUEST['qtranslate-fields'] as $nm => &$qfields ) {
-			//qtranxf_dbg_log('qtranxf_collect_translations_posted: REQUEST[qtranslate-fields]['.$nm.']: ',$qfields);
-			if ( ! isset( $_REQUEST[ $nm ] ) ) {
-				unset( $_REQUEST['qtranslate-fields'][ $nm ] );
+		foreach ( $_REQUEST['qtranslate-fields'] as $name => &$qfields ) {
+			//qtranxf_dbg_log('qtranxf_collect_translations_posted: REQUEST[qtranslate-fields]['.$name.']: ',$qfields);
+			if ( ! isset( $_REQUEST[ $name ] ) ) {
+				unset( $_REQUEST['qtranslate-fields'][ $name ] );
 				continue;
 			}
-			qtranxf_collect_translations( $qfields, $_REQUEST[ $nm ], $edit_lang );
-			//qtranxf_dbg_log('qtranxf_collect_translations_posted: collected REQUEST['.$nm.']: ',$_REQUEST[$nm]);
-			if ( isset( $_POST[ $nm ] ) ) {
-				$_POST[ $nm ] = $_REQUEST[ $nm ];
+			qtranxf_collect_translations( $qfields, $_REQUEST[ $name ], $edit_lang );
+			//qtranxf_dbg_log('qtranxf_collect_translations_posted: collected REQUEST['.$name.']: ',$_REQUEST[$name]);
+			if ( isset( $_POST[ $name ] ) ) {
+				$_POST[ $name ] = $_REQUEST[ $name ];
 			}
-			if ( isset( $_GET[ $nm ] ) ) {
-				$_GET[ $nm ] = $_REQUEST[ $nm ];
+			if ( isset( $_GET[ $name ] ) ) {
+				$_GET[ $name ] = $_REQUEST[ $name ];
 			}
 		}
 		qtranxf_clean_request( 'qtranslate-fields' );
 	}
 
 	if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
-		//parse variables collected as a query string in an option
-		foreach ( $_REQUEST as $nm => $val ) {
-			if ( ! is_string( $val ) ) {
+		// parse variables collected as a query string in an option
+		foreach ( $_REQUEST as $name => $value ) {
+			if ( ! is_string( $value ) ) {
 				continue;
 			}
-			if ( strpos( $val, 'qtranslate-fields' ) === false ) {
+			if ( strpos( $value, 'qtranslate-fields' ) === false ) {
 				continue;
 			}
-			parse_str( $val, $r );
-			//qtranxf_dbg_log('qtranxf_collect_translations_posted: REQUEST['.$nm.'] $r: ', $r);
-			//qtranxf_dbg_log('qtranxf_collect_translations_posted: REQUEST['.$nm.']: ', $val);
-			if ( empty( $r['qtranslate-fields'] ) ) {
+			parse_str( $value, $request );
+			//qtranxf_dbg_log('qtranxf_collect_translations_posted: REQUEST['.$name.'] $request: ', $request);
+			//qtranxf_dbg_log('qtranxf_collect_translations_posted: REQUEST['.$name.']: ', $value);
+			if ( empty( $request['qtranslate-fields'] ) ) {
 				continue;
 			}
 			if ( ! $edit_lang ) {
 				$edit_lang = qtranxf_getLanguageEdit();
 			}
-			qtranxf_collect_translations( $r['qtranslate-fields'], $r, $edit_lang );
-			unset( $r['qtranslate-fields'] );
-			//qtranxf_dbg_log('qtranxf_collect_translations_posted: $r parsed: ', $r);
-			$q = http_build_query( $r );
-			//qtranxf_dbg_log('qtranxf_collect_translations_posted: $q: ', $q);
-			//qtranxf_dbg_log('qtranxf_collect_translations_posted: $v: ', $val);
-			$_REQUEST[ $nm ] = $q;
-			if ( isset( $_POST[ $nm ] ) ) {
-				$_POST[ $nm ] = $q;
+			qtranxf_collect_translations( $request['qtranslate-fields'], $request, $edit_lang );
+			unset( $request['qtranslate-fields'] );
+			//qtranxf_dbg_log('qtranxf_collect_translations_posted: $request parsed: ', $request);
+			$url_encoded = http_build_query( $request );
+			//qtranxf_dbg_log('qtranxf_collect_translations_posted: $url_encoded: ', $url_encoded);
+			//qtranxf_dbg_log('qtranxf_collect_translations_posted: $value: ', $value);
+			$_REQUEST[ $name ] = $url_encoded;
+			if ( isset( $_POST[ $name ] ) ) {
+				$_POST[ $name ] = $url_encoded;
 			}
-			if ( isset( $_GET[ $nm ] ) ) {
-				$_GET [ $nm ] = $q;
+			if ( isset( $_GET[ $name ] ) ) {
+				$_GET [ $name ] = $url_encoded;
 			}
 		}
 	}
@@ -146,15 +149,15 @@ add_action( 'plugins_loaded', 'qtranxf_collect_translations_posted', 5 );
 function qtranxf_decode_translations_posted() {
 	// quick fix, there must be a better way
 	if ( isset( $_POST['nav-menu-data'] ) ) {
-		$r = qtranxf_decode_json_name_value( $_POST['nav-menu-data'] );
-		//qtranxf_dbg_log('qtranxf_collect_translations_posted: $r: ', $r);
-		if ( ! empty( $r['qtranslate-fields'] ) ) {
+		$request = qtranxf_decode_json_name_value( $_POST['nav-menu-data'] );
+		//qtranxf_dbg_log('qtranxf_collect_translations_posted: $request: ', $request);
+		if ( ! empty( $request['qtranslate-fields'] ) ) {
 			$edit_lang = qtranxf_getLanguageEdit();
-			qtranxf_collect_translations( $r['qtranslate-fields'], $r, $edit_lang );
-			unset( $r['qtranslate-fields'] );
-			//qtranxf_dbg_log('qtranxf_collect_translations_posted: collected $r: ', $r);
-			foreach ( $r as $k => $v ) {
-				$_POST[ $k ] = $v;
+			qtranxf_collect_translations( $request['qtranslate-fields'], $request, $edit_lang );
+			unset( $request['qtranslate-fields'] );
+			//qtranxf_dbg_log('qtranxf_collect_translations_posted: collected $request: ', $request);
+			foreach ( $request as $k => $value ) {
+				$_POST[ $k ] = $value;
 			}
 			unset( $_POST['nav-menu-data'] );
 			//qtranxf_dbg_log('qtranxf_collect_translations_posted: nav-menu-data decoded $_POST: ', $_POST);
@@ -162,14 +165,16 @@ function qtranxf_decode_translations_posted() {
 	}
 }
 
-add_action( 'sanitize_comment_cookies', 'qtranxf_decode_translations_posted', 5 );//after POST & GET are set, and before all WP objects are created, alternatively can use action 'setup_theme' instead.
+// after POST & GET are set, and before all WP objects are created, alternatively can use action 'setup_theme' instead.
+add_action( 'sanitize_comment_cookies', 'qtranxf_decode_translations_posted', 5 );
 
 function qtranxf_admin_load() {
 	//qtranxf_dbg_log('1.4.qtranxf_admin_load:');
 	qtranxf_admin_loadConfig();
-	$bnm = qtranxf_plugin_basename();
-	add_filter( 'plugin_action_links_' . $bnm, 'qtranxf_links', 10, 4 );
-	add_action( 'qtranslate_init_language', 'qtranxf_load_admin_page_config', 20 );//should be excuted after all plugins loaded their *-admin.php
+	$basename = qtranxf_plugin_basename();
+	add_filter( 'plugin_action_links_' . $basename, 'qtranxf_links', 10, 4 );
+	// should be executed after all plugins loaded their *-admin.php
+	add_action( 'qtranslate_init_language', 'qtranxf_load_admin_page_config', 20 );
 	qtranxf_add_admin_filters();
 }
 
@@ -247,7 +252,8 @@ function qtranxf_get_admin_page_config() {
 	}
 	$admin_config = $q_config['admin_config'];
 	//qtranxf_dbg_log('qtranxf_get_admin_page_config: $admin_config: raw: ',qtranxf_json_encode($admin_config));
-	$admin_config = apply_filters( 'qtranslate_load_admin_page_config', $admin_config ); // obsolete
+	// TODO obsolete filter?
+	$admin_config = apply_filters( 'qtranslate_load_admin_page_config', $admin_config );
 	$url_query    = isset( $q_config['url_info']['query'] ) ? $q_config['url_info']['query'] : '';
 	/**
 	 * Customize the admin configuration for all pages.
@@ -433,13 +439,13 @@ function qtranxf_add_admin_footer_js() {
 	wp_deregister_script( 'autosave' );
 
 	$config = array();
-	// since 3.2.9.9.0 'enabled_languages' is replaced with 'language_config' structure
+	// TODO missing 'term_name' ?
 	$keys = array(
 		'default_language',
 		'language',
 		'url_mode',
 		'hide_default_language'
-	); // ,'term_name'
+	);
 	foreach ( $keys as $key ) {
 		$config[ $key ] = $q_config[ $key ];
 	}
@@ -454,12 +460,12 @@ function qtranxf_add_admin_footer_js() {
 	}
 	$homeinfo                = qtranxf_get_home_info();
 	$config['homeinfo_path'] = trailingslashit( $homeinfo['path'] );
-	$config['home_url_path'] = parse_url( home_url( '/' ), PHP_URL_PATH );//todo optimize
+	$config['home_url_path'] = parse_url( home_url( '/' ), PHP_URL_PATH ); // TODO optimize
 	$config['flag_location'] = qtranxf_flag_location();
 	$config['js']            = array();
 
-	$config['strings'] = array();//since 3.4.7
-	// translators: The begining of the prompt on hover over an LSB. This string is appended with a edit-language name in admin language, so that the space at the end matters.
+	$config['strings'] = array();
+	// translators: The beginning of the prompt on hover over an LSB. This string is appended with a edit-language name in admin language, so that the space at the end matters.
 	$config['strings']['ShowIn'] = __( 'Show multilingual content in ', 'qtranslate' );
 
 	$config['language_config'] = array();
@@ -548,7 +554,8 @@ function qtranxf_add_admin_lang_icons() {
 }
 
 /**
- * Add CSS code to highlight the translatable fields */
+ * Add CSS code to highlight the translatable fields
+ */
 function qtranxf_add_admin_highlight_css() {
 	global $q_config;
 
@@ -603,8 +610,8 @@ function qtranxf_add_admin_css() {
 	$css                  = preg_replace( '!//.*?$!m', '', $css );
 	$css                  = preg_replace( '/\\n\\s*\\n/m', "\n", $css );
 	$current_color_scheme = qtranxf_get_user_admin_color();
-	foreach ( $current_color_scheme as $k => $clr ) {
-		$css = preg_replace( '/#UserColor' . $k . '/m', $clr, $css );
+	foreach ( $current_color_scheme as $k => $color ) {
+		$css = preg_replace( '/#UserColor' . $k . '/m', $color, $css );
 	}
 	echo '<style type="text/css" media="screen">' . PHP_EOL;
 	echo $css;
@@ -617,7 +624,6 @@ function qtranxf_admin_head() {
 	qtranxf_add_admin_css();
 	global $q_config;
 	if ( isset( $q_config['url_info']['query'] ) && strpos( $q_config['url_info']['query'], 'page=qtranslate-xt' ) !== false ) {
-		//$enqueue_script = (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG);
 		qtranxf_add_admin_head_js( true );
 	}
 }
@@ -658,10 +664,10 @@ function qtranxf_settings_page() {
 /**
  * @since 3.3.8.7
  */
-function qtranxf_translate_menu( &$m ) {
+function qtranxf_translate_menu( &$menu ) {
 	global $q_config;
 	$lang = $q_config['language'];
-	foreach ( $m as $k => &$item ) {
+	foreach ( $menu as $k => &$item ) {
 		if ( empty( $item[0] ) ) {
 			continue;
 		}
@@ -693,8 +699,8 @@ function qtranxf_admin_menu() {
 /* Add a metabox in admin menu page */
 function qtranxf_nav_menu_metabox( $object ) {
 	global $nav_menu_selected_id;
-	$nm    = __( 'Language Menu', 'qtranslate' );
-	$elems = array( '#qtransLangSwLM#' => $nm );
+
+	$elems = array( '#qtransLangSwLM#' => __( 'Language Menu', 'qtranslate' ) );
 
 	class qtranxcLangSwItems {
 		public $db_id = 0;
@@ -792,7 +798,8 @@ function qtranxf_add_language_menu( $wp_admin_bar ) {
 }
 
 function qtranxf_links( $links, $file, $plugin_data, $context ) {
-	$settings_link = '<a href="options-general.php?page=qtranslate-xt">' . qtranxf_translate_wp( 'Settings' ) . '</a>';    //translators: expected in WordPress default textdomain
+	// translators: expected in WordPress default textdomain
+	$settings_link = '<a href="options-general.php?page=qtranslate-xt">' . qtranxf_translate_wp( 'Settings' ) . '</a>';
 	array_unshift( $links, $settings_link ); // before other links
 
 	return $links;
@@ -800,7 +807,10 @@ function qtranxf_links( $links, $file, $plugin_data, $context ) {
 
 function qtranxf_admin_notices_config() {
 	global $q_config;
-	if ( empty( $q_config['url_info']['errors'] ) && empty( $q_config['url_info']['warnings'] ) && empty( $q_config['url_info']['messages'] ) && empty( $q_config['lic']['wrn'] ) ) {
+	if ( empty( $q_config['url_info']['errors'] ) &&
+         empty( $q_config['url_info']['warnings'] ) &&
+         empty( $q_config['url_info']['messages'] ) &&
+         empty( $q_config['lic']['wrn'] ) ) {
 		return;
 	}
 
@@ -885,7 +895,9 @@ function qtranxf_admin_footer_update( $text ) {
 			} else {
 				$url = admin_url( 'update-core.php' );
 			}
-			$text .= '&nbsp;<strong><a href="' . $url . '">' . sprintf( _x( 'Get %s', '%s is a version number of a plugin. It is a shortcut for "Get version %s of such a such plugin."', 'qtranslate' ), $data->new_version ) . '</a></strong>';
+			$text .= '&nbsp;<strong><a href="' . $url . '">';
+			$text .= sprintf( _x( 'Get %s', '%s is a version number of a plugin. It is a shortcut for "Get version %s of such a such plugin."', 'qtranslate' ), $data->new_version );
+			$text .= '</a></strong>';
 		}
 	}
 

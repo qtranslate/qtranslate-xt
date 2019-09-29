@@ -156,19 +156,19 @@ function qtranxf_join_texts( $texts, $sep ) {
 /**
  * @since 3.4.6.9
  */
-function qtranxf_clean_request( $nm ) {
-	unset( $_GET[ $nm ] );
-	unset( $_POST[ $nm ] );
-	unset( $_REQUEST[ $nm ] );
+function qtranxf_clean_request( $name ) {
+	unset( $_GET[ $name ] );
+	unset( $_POST[ $name ] );
+	unset( $_REQUEST[ $name ] );
 }
 
 /**
  * @since 3.4.6.9
  */
-function qtranxf_clean_request_of( $type, $nm ) {
-	unset( $_GET[ $type ][ $nm ] );
-	unset( $_POST[ $type ][ $nm ] );
-	unset( $_REQUEST[ $type ][ $nm ] );
+function qtranxf_clean_request_of( $type, $name ) {
+	unset( $_GET[ $type ][ $name ] );
+	unset( $_POST[ $type ][ $name ] );
+	unset( $_REQUEST[ $type ][ $name ] );
 	if ( empty( $_GET[ $type ] ) ) {
 		unset( $_GET[ $type ] );
 	}
@@ -288,9 +288,6 @@ function qtranxf_fetch_file_selection( $dir, $suffix = '.css' ) {
 	return $files;
 }
 
-/**
- * former qtranxf_fixAdminBar($wp_admin_bar)
- */
 function qtranxf_before_admin_bar_render() {
 	global $wp_admin_bar, $q_config;
 	if ( ! isset( $wp_admin_bar ) ) {
@@ -403,6 +400,7 @@ function qtranxf_updateGettextDatabases( $force = false, $only_for_language = ''
 function qtranxf_add_conf_filters() {
 	global $q_config;
 	switch ( $q_config['editor_mode'] ) {
+		// TODO fix that ugly typo!
 		case QTX_EDITOR_MODE_SINGLGE:
 		case QTX_EDITOR_MODE_RAW:
 			add_filter( 'gettext', 'qtranxf_gettext', 0 );
@@ -411,7 +409,7 @@ function qtranxf_add_conf_filters() {
 			break;
 		case QTX_EDITOR_MODE_LSB:
 		default:
-			//applied in /wp-includes/class-wp-editor.php
+			// applied in /wp-includes/class-wp-editor.php
 			add_filter( 'the_editor', 'qtranxf_the_editor' );
 			break;
 	}
@@ -522,10 +520,11 @@ function qtranxf_verify_nonce( $nonce_name, $nonce_field = '_wpnonce' ) {
 }
 
 /**
+ * TODO this looks unnecessary, it might be possible to use json_decode directly with right options
  * @since 3.4.6.5
  */
-function qtranxf_decode_name_value_pair( &$a, $nam, $val ) {
-	if ( preg_match( '#([^\[]*)\[([^]]+)](.*)#', $nam, $matches ) ) {
+function qtranxf_decode_name_value_pair( &$a, $name, $value ) {
+	if ( preg_match( '#([^\[]*)\[([^]]+)](.*)#', $name, $matches ) ) {
 		$n = $matches[1];
 		$k = $matches[2];
 		$s = $matches[3];
@@ -539,25 +538,26 @@ function qtranxf_decode_name_value_pair( &$a, $nam, $val ) {
 			$a[ $n ] = array();
 		}
 		if ( empty( $s ) ) {
-			$a[ $n ][ $k ] = $val;
+			$a[ $n ][ $k ] = $value;
 		} else {
-			qtranxf_decode_name_value_pair( $a[ $n ], $k . $s, $val );
+			qtranxf_decode_name_value_pair( $a[ $n ], $k . $s, $value );
 		}
 	} else {
-		$a[ $nam ] = $val;
+		$a[ $name ] = $value;
 	}
 }
 
 /**
+ * TODO this looks unnecessary, it might be possible to use json_decode directly with right options
  * @since 3.4.6.5
  */
-function qtranxf_decode_name_value( $data ) {
-	$a = array();
-	foreach ( $data as $nv ) {
-		qtranxf_decode_name_value_pair( $a, $nv->name, wp_slash( $nv->value ) );
+function qtranxf_decode_name_value( $name_values ) {
+	$decoded = array();
+	foreach ( $name_values as $name_value ) {
+		qtranxf_decode_name_value_pair( $decoded, $name_value->name, wp_slash( $name_value->value ) );
 	}
 
-	return $a;
+	return $decoded;
 }
 
 add_filter( 'manage_posts_columns', 'qtranxf_languageColumnHeader' );
