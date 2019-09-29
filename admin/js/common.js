@@ -107,17 +107,13 @@ qtranxj_split_blocks = function (blocks) {
 	return result;
 };
 
-function qtranxj_get_cookie(cname) {
-	var nm = cname + "=";
-	var ca = document.cookie.split(';');
-	for (var i = 0; i < ca.length; ++i) {
-		var s = ca[i];
-		var sa = s.split('=');
-		if (sa[0].trim() !== cname)
+function qtranxj_get_cookie(cookieName) {
+	var cookies = document.cookie.split(';');
+	for (var i = 0; i < cookies.length; ++i) {
+		var pair = cookies[i].split('=');
+		if (pair.length < 2 || pair[0].trim() !== cookieName)
 			continue;
-		if (ca.length < 2)
-			continue;
-		return sa[1].trim();
+		return pair[1].trim();
 	}
 	return '';
 }
