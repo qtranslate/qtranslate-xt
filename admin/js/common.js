@@ -25,6 +25,9 @@
  * Read Integration Guide: https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide for more information.
  */
 
+// global config
+var qTranslateConfig = window.qTranslateConfig;
+
 /**
  * since 3.2.7
  */
@@ -66,7 +69,8 @@ qtranxj_split_blocks = function (blocks) {
 	var matches;
 	for (var i = 0; i < blocks.length; ++i) {
 		var b = blocks[i];
-		if (!b.length) continue;
+		if (!b.length)
+			continue;
 		matches = clang_regex.exec(b);
 		clang_regex.lastIndex = 0;
 		if (matches != null) {
@@ -531,7 +535,8 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 			if (contents[qTranslateConfig.default_language])
 				return '(' + qTranslateConfig.default_language + ') ' + contents[qTranslateConfig.default_language];
 			for (var lang in contents) {
-				if (!contents[lang]) continue;
+				if (!contents[lang])
+					continue;
 				return '(' + lang + ') ' + contents[lang];
 			}
 			return '';
@@ -603,13 +608,10 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 				case 'TEXTAREA':
 					return 0;
 				case 'INPUT':
-					switch (elem.type) {
-						case 'submit':
-							if (elem.value)
-								return addDisplayHookAttr(elem, 'value');
-						default:
-							return 0;
+					if (elem.type === 'submit' && elem.value) {
+						return addDisplayHookAttr(elem, 'value');
 					}
+					return 0;
 				default:
 					break;
 			}
@@ -621,7 +623,7 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 					switch (nd.nodeType) {
 						// http://www.w3.org/TR/REC-DOM-Level-1/level-one-core.html#ID-1950641247
 						case 1: // ELEMENT_NODE
-							cnt += qtx.addDisplayHook(nd);//recursive call
+							cnt += qtx.addDisplayHook(nd);
 							break;
 						case 2: // ATTRIBUTE_NODE
 						case 3: // TEXT_NODE
@@ -688,7 +690,8 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 					h.fields[h.lang].value = text;
 					h.lang = lang;
 					var value = h.fields[h.lang].value;
-					if (h.contentField.placeholder && value !== '') {//since 3.2.7
+					if (h.contentField.placeholder && value !== '') {
+						// since 3.2.7
 						h.contentField.placeholder = '';
 					}
 					h.contentField.value = value;
@@ -779,12 +782,12 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 		 */
 		this.addCustomContentHooks = function () {
 			for (var i = 0; i < qTranslateConfig.custom_fields.length; ++i) {
-				var nm = qTranslateConfig.custom_fields[i];
-				qtx.addContentHookByIdName(nm);
+				var fieldName = qTranslateConfig.custom_fields[i];
+				qtx.addContentHookByIdName(fieldName);
 			}
 			for (var i = 0; i < qTranslateConfig.custom_field_classes.length; ++i) {
-				var nm = qTranslateConfig.custom_field_classes[i];
-				qtx.addContentHooksByClass(nm);
+				var className = qTranslateConfig.custom_field_classes[i];
+				qtx.addContentHooksByClass(className);
 			}
 			if (qTranslateConfig.LSB)
 				setTinyMceInit();
@@ -1094,7 +1097,6 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 			for (var lang in qTranslateConfig.tabSwitches) {
 				var tabSwitches = qTranslateConfig.tabSwitches[lang];
 				for (var i = 0; i < tabSwitches.length; ++i) {
-					var tabSwitch = tabSwitches[i];
 					var tabSwitchParent = tabSwitches[i].parentElement;
 					tabSwitchParent.style.display = display;
 					break;
