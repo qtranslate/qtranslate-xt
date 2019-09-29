@@ -87,7 +87,7 @@ class acf_qtranslate_plugin {
 	 * Get the active language.
 	 */
 	public function get_active_language() {
-		return apply_filters('acf_qtranslate_get_active_language', qtrans_getLanguage());
+		return apply_filters('acf_qtranslate_get_active_language', qtranxf_getLanguage());
 	}
 
 	/**
@@ -314,6 +314,25 @@ class acf_qtranslate_plugin {
 		<textarea name="acf_qtranslate[show_on_pages]" style="max-width:500px;width:100%;height:200px;padding-top:6px" placeholder="post.php"><?= esc_html($this->get_plugin_setting('show_on_pages')) ?></textarea><br>
 		<small>Enter each page on it's own line</small>
 		<?php
+	}
+
+	/**
+     * Encode a multi-language array into a string with bracket tags
+	 * @param array $values
+     * @return string
+	 */
+	public function encode_language_values($values) {
+	    assert( is_array($values) );
+	    return qtranxf_join_b($values);
+    }
+
+	/**
+	 * Decode a multi-language string to an array
+	 * @param string $values
+	 * @return array
+	 */
+	public function decode_language_values($values) {
+		return qtranxf_split($values);
 	}
 
 	/**

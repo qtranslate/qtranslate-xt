@@ -78,8 +78,9 @@ class acf_qtranslate_acf_5_post_object extends acf_field_post_object {
 	 */
 	function render_field($field) {
 		global $q_config;
-		$languages = qtrans_getSortedLanguages(true);
-		$values = array_map('maybe_unserialize', qtrans_split($field['value'], $quicktags = true));
+		$languages = qtranxf_getSortedLanguages(true);
+		$decoded = $this->plugin->decode_language_values($field['value']);
+		$values = array_map('maybe_unserialize', $decoded);
 		$currentLanguage = $this->plugin->get_active_language();
 
 		// populate atts
@@ -127,7 +128,7 @@ class acf_qtranslate_acf_5_post_object extends acf_field_post_object {
 	 *  @return	$value (mixed) the modified value
 	 */
 	function format_value($value, $post_id, $field) {
-		$value = qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage($value);
+		$value = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($value);
 		$value = maybe_unserialize($value);
 
 		return parent::format_value($value, $post_id, $field);
@@ -149,8 +150,9 @@ class acf_qtranslate_acf_5_post_object extends acf_field_post_object {
 	 *  @return	$value - the modified value
 	 */
 	function update_value($values, $post_id, $field) {
+		assert( is_array($values) );
 
-		// validate
+		// TODO validation seems unnecessary here, keep until assert has been used for some time
 		if ( !is_array($values) ) return false;
 
 		foreach ($values as &$value) {
@@ -158,7 +160,7 @@ class acf_qtranslate_acf_5_post_object extends acf_field_post_object {
 			$value = maybe_serialize($value);
 		}
 
-		return qtrans_join($values);
+		return $this->plugin->encode_language_values($values);
 	}
 
 	/**

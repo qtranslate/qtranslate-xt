@@ -83,8 +83,8 @@ class acf_qtranslate_acf_5_file extends acf_field_file {
 	function render_field($field) {
 		global $q_config;
 
-		$languages = qtrans_getSortedLanguages(true);
-		$values = qtrans_split($field['value'], $quicktags = true);
+		$languages = qtranxf_getSortedLanguages(true);
+		$values = $this->plugin->decode_language_values($field['value']);
 		$currentLanguage = $this->plugin->get_active_language();
 
 		// vars
@@ -222,8 +222,9 @@ class acf_qtranslate_acf_5_file extends acf_field_file {
 	 *  @return	$value - the modified value
 	 */
 	function update_value($values, $post_id, $field) {
+		assert( is_array($values) );
 
-		// validate
+		// TODO validation seems unnecessary here, keep until assert has been used for some time
 		if ( !is_array($values) ) return false;
 
 		if (function_exists('acf_connect_attachment_to_post')) {
@@ -238,7 +239,7 @@ class acf_qtranslate_acf_5_file extends acf_field_file {
 			}
 		}
 
-		return qtrans_join($values);
+		return $this->plugin->encode_language_values($values);
 	}
 
 	/**

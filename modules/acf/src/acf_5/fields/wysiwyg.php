@@ -162,8 +162,8 @@ class acf_qtranslate_acf_5_wysiwyg extends acf_field_wysiwyg {
 
 		global $q_config;
 
-		$languages = qtrans_getSortedLanguages(true);
-		$values = qtrans_split($field['value'], $quicktags = true);
+		$languages = qtranxf_getSortedLanguages(true);
+		$values = $this->plugin->decode_language_values($field['value']);
 		$currentLanguage = $this->plugin->get_active_language();
 
 		echo '<div class="multi-language-field multi-language-field-wysiwyg">';
@@ -234,7 +234,7 @@ class acf_qtranslate_acf_5_wysiwyg extends acf_field_wysiwyg {
 	 *  @return	$value - the modified value
 	 */
 	function update_value($value, $post_id, $field) {
-		return qtrans_join($value);
+		return $this->plugin->encode_language_values($value);
 	}
 
 	/**

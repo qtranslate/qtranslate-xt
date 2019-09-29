@@ -57,7 +57,7 @@ class acf_qtranslate_acf_5 implements acf_qtranslate_acf_interface {
 	 */
 	public function format_value($value) {
 		if (is_string($value)) {
-			$value = qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage($value);
+			$value = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($value);
 			$value = maybe_unserialize($value);
 		}
 

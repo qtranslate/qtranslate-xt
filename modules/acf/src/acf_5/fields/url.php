@@ -69,8 +69,8 @@ class acf_qtranslate_acf_5_url extends acf_field_url {
 	 */
 	function render_field($field) {
 		global $q_config;
-		$languages = qtrans_getSortedLanguages(true);
-		$values = qtrans_split($field['value'], $quicktags = true);
+		$languages = qtranxf_getSortedLanguages(true);
+		$values = $this->plugin->decode_language_values($field['value']);
 		$currentLanguage = $this->plugin->get_active_language();
 
 		// vars
@@ -142,7 +142,7 @@ class acf_qtranslate_acf_5_url extends acf_field_url {
 	 *  @return	$value - the modified value
 	 */
 	function update_value($value, $post_id, $field) {
-		return qtrans_join($value);
+		return $this->plugin->encode_language_values($value);
 	}
 
 	/**

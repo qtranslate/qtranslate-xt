@@ -25,9 +25,6 @@ class acf_qtranslate_qtranslatex {
 		$this->acf = $acf;
 		$this->plugin = $plugin;
 
-		// include compatibility functions
-		require_once ACF_QTRANSLATE_PLUGIN_DIR . 'compatibility/qtranslatex.php';
-
 		add_action('admin_head',                         array($this, 'admin_head'));
 		add_filter('acf_qtranslate_get_active_language', array($this, 'get_active_language'));
 		add_action('acf/input/admin_enqueue_scripts',    array($this, 'admin_enqueue_scripts'));
@@ -71,8 +68,9 @@ class acf_qtranslate_qtranslatex {
 	 * Get the active language.
 	 */
 	public function get_active_language($language) {
+	    // TODO module should not read this cookie directly
 		if (empty($_COOKIE['qtrans_edit_language']) === false) {
-			$enabledLanguages = qtrans_getSortedLanguages();
+			$enabledLanguages = qtranxf_getSortedLanguages();
 			if (in_array($_COOKIE['qtrans_edit_language'], $enabledLanguages)) {
 				$language = $_COOKIE['qtrans_edit_language'];
 			}
