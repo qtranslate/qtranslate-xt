@@ -609,7 +609,6 @@ function qtranxf_add_admin_css() {
 	echo '<style type="text/css" media="screen">' . PHP_EOL;
 	echo $css;
 	do_action( 'qtranslate_admin_css' );
-	do_action( 'qtranslate_css' );//should not be used
 	echo '</style>' . PHP_EOL;
 }
 
