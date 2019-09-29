@@ -27,8 +27,6 @@ class acf_qtranslate_acf_5_textarea extends acf_field_textarea {
 	 * Setup the field type data
 	 */
 	function initialize() {
-
-		// vars
 		$this->name = 'qtranslate_textarea';
 		$this->label = __("Text Area (qTranslate)",'acf');
 		$this->category = __("qTranslate",'acf');
@@ -39,7 +37,6 @@ class acf_qtranslate_acf_5_textarea extends acf_field_textarea {
 			'placeholder'	=> '',
 			'rows'			=> ''
 		);
-
 	}
 
 	/**
@@ -53,40 +50,32 @@ class acf_qtranslate_acf_5_textarea extends acf_field_textarea {
 		$values = $this->plugin->decode_language_values($field['value']);
 		$currentLanguage = $this->plugin->get_active_language();
 
-		// vars
-		$o = array( 'id', 'class', 'name', 'placeholder', 'rows' );
-		$s = array( 'readonly', 'disabled' );
-		$e = '';
-
-		// maxlength
-		if( $field['maxlength'] !== '' ) {
-			$o[] = 'maxlength';
-		}
-
-		// rows
 		if( empty($field['rows']) ) {
 			$field['rows'] = 8;
 		}
 
-		// populate atts
 		$atts = array();
-		foreach( $o as $k ) {
+
+		$keys = array( 'id', 'class', 'name', 'placeholder', 'rows' );
+		if( $field['maxlength'] !== '' ) {
+			$keys[] = 'maxlength';
+		}
+		foreach( $keys as $k ) {
 			$atts[ $k ] = $field[ $k ];
 		}
 
-		// special atts
-		foreach( $s as $k ) {
+		$special_keys = array( 'readonly', 'disabled' );
+		foreach( $special_keys as $k ) {
 			if( isset($field[ $k ]) && $field[ $k ] ) {
 				$atts[ $k ] = $k;
 			}
 		}
 
-		// render
-		$e .= '<div class="acf-input-wrap multi-language-field">';
+		echo '<div class="acf-input-wrap multi-language-field">';
 
 		foreach ($languages as $language) {
 			$class = ($language === $currentLanguage) ? 'wp-switch-editor current-language' : 'wp-switch-editor';
-			$e .= '<a class="' . $class . '" data-language="' . $language . '">' . $q_config['language_name'][$language] . '</a>';
+			echo '<a class="' . $class . '" data-language="' . $language . '">' . $q_config['language_name'][$language] . '</a>';
 		}
 
 		foreach ($languages as $language) {
@@ -96,15 +85,12 @@ class acf_qtranslate_acf_5_textarea extends acf_field_textarea {
 			}
 			$atts['name'] = $field['name'] . "[$language]";
 			$atts['data-language'] = $language;
-			$e .= '<textarea ' . acf_esc_attrs( $atts ) . ' >';
-			$e .= esc_textarea( $values[$language] );
-			$e .= '</textarea>';
+			echo '<textarea ' . acf_esc_attrs( $atts ) . ' >';
+			echo esc_textarea( $values[$language] );
+			echo '</textarea>';
 		}
 
-		$e .= '</div>';
-
-		// return
-		echo $e;
+		echo'</div>';
 	}
 
 	/**

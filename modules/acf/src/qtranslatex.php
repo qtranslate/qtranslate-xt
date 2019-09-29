@@ -16,7 +16,6 @@ class acf_qtranslate_qtranslatex {
 	 */
 	protected $plugin;
 
-
 	/**
 	 * Constructor
 	 *

@@ -27,8 +27,6 @@ class acf_qtranslate_acf_5_post_object extends acf_field_post_object {
 	 *  Setup the field type data
 	 */
 	function initialize() {
-
-		// vars
 		$this->name = 'qtranslate_post_object';
 		$this->label = __("Post Object (qTranslate)",'acf');
 		$this->category = 'qTranslate';
@@ -41,11 +39,8 @@ class acf_qtranslate_acf_5_post_object extends acf_field_post_object {
 			'ui'			=> 1,
 		);
 
-
-		// extra
 		add_action('wp_ajax_acf/fields/qtranslate_post_object/query',			array($this, 'ajax_query'));
 		add_action('wp_ajax_nopriv_acf/fields/qtranslate_post_object/query',	array($this, 'ajax_query'));
-
 	}
 
 	/**
@@ -60,13 +55,11 @@ class acf_qtranslate_acf_5_post_object extends acf_field_post_object {
 		$values = array_map('maybe_unserialize', $decoded);
 		$currentLanguage = $this->plugin->get_active_language();
 
-		// populate atts
 		$atts = array(
 			'id' => $field['id'],
 			'name' => $field['name'],
 		);
 
-		// render
 		echo '<div class="multi-language-field multi-language-field-post-object">';
 
 		foreach ($languages as $language) {
@@ -85,7 +78,6 @@ class acf_qtranslate_acf_5_post_object extends acf_field_post_object {
 			echo '</div>';
 		}
 
-		// return
 		echo '</div>';
 	}
 
@@ -121,7 +113,9 @@ class acf_qtranslate_acf_5_post_object extends acf_field_post_object {
 		assert( is_array($values) );
 
 		// TODO validation seems unnecessary here, keep until assert has been used for some time
-		if ( !is_array($values) ) return false;
+		if ( !is_array($values) ) {
+			return false;
+		}
 
 		foreach ($values as &$value) {
 			$value = parent::update_value($value, $post_id, $field);

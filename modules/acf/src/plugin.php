@@ -8,7 +8,6 @@ class acf_qtranslate_plugin {
 	 */
 	protected $acf;
 
-
 	/**
 	 * Constructor
 	 */
@@ -33,7 +32,6 @@ class acf_qtranslate_plugin {
 		static $plugin_loaded;
 
 		if (!$plugin_loaded && $this->acf_enabled() && $this->qtranslatex_enabled()) {
-
 			// setup qtranslate fields for ACF 5
 			if ($this->acf_major_version() === 5) {
 				require_once ACF_QTRANSLATE_PLUGIN_DIR . 'src/acf_5/acf.php';
@@ -45,7 +43,6 @@ class acf_qtranslate_plugin {
 			new acf_qtranslate_qtranslatex($this, $this->acf);
 
 			$plugin_loaded = true;
-
 		}
 	}
 
@@ -147,7 +144,6 @@ class acf_qtranslate_plugin {
 	public function qtranslate_load_admin_page_config($config)
 	{
 		$pages = array(
-			//'post.php' => '',
 			'admin.php' => 'page=',
 		);
 
@@ -284,12 +280,12 @@ class acf_qtranslate_plugin {
 	}
 
 	/**
-	 * Render the qTranslate-X section
+	 * Render the qTranslate-XT section
 	 */
 	function render_section_qtranslatex() {
 		?>
 		The following options represent additional functionality that is available when
-		using qTranslate-X. These functionality is off by default and must be enabled below.
+		using qTranslate-XT. This functionality is off by default and must be enabled below.
 		<?php
 	}
 

@@ -10,7 +10,6 @@ class acf_qtranslate_acf_5 implements acf_qtranslate_acf_interface {
 	 */
 	protected $plugin;
 
-
 	/**
 	 * Constructor
 	 *

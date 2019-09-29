@@ -27,8 +27,6 @@ class acf_qtranslate_acf_5_url extends acf_field_url {
 	 * Setup the field type data
 	 */
 	function initialize() {
-
-		// vars
 		$this->name = 'qtranslate_url';
 		$this->label = __("Url (qTranslate)",'acf');
 		$this->category = __("qTranslate",'acf');
@@ -36,7 +34,6 @@ class acf_qtranslate_acf_5_url extends acf_field_url {
 			'default_value'	=> '',
 			'placeholder'	=> '',
 		);
-
 	}
 
 	/**
@@ -50,39 +47,34 @@ class acf_qtranslate_acf_5_url extends acf_field_url {
 		$values = $this->plugin->decode_language_values($field['value']);
 		$currentLanguage = $this->plugin->get_active_language();
 
-		// vars
 		$atts = array();
+
 		$keys = array( 'type', 'id', 'class', 'name', 'value', 'placeholder', 'pattern' );
-		$keys2 = array( 'readonly', 'disabled', 'required' );
-		$html = '';
-
-
-		// atts (value="123")
 		foreach( $keys as $k ) {
-			if( isset($field[ $k ]) ) $atts[ $k ] = $field[ $k ];
+			if( isset($field[ $k ]) ) {
+				$atts[ $k ] = $field[ $k ];
+			}
 		}
 
-
-		// atts2 (disabled="disabled")
-		foreach( $keys2 as $k ) {
-			if( !empty($field[ $k ]) ) $atts[ $k ] = $k;
+		$special_keys = array( 'readonly', 'disabled', 'required' );
+		foreach( $special_keys as $k ) {
+			if( !empty($field[ $k ]) ) {
+				$atts[ $k ] = $k;
+			}
 		}
-
 
 		// remove empty atts
 		$atts = acf_clean_atts( $atts );
 
-
-		// render
-		$html .= '<div class="acf-input-wrap multi-language-field">';
+		echo '<div class="acf-input-wrap multi-language-field">';
 
 		foreach ($languages as $language) {
 			$class = ($language === $currentLanguage) ? 'wp-switch-editor current-language' : 'wp-switch-editor';
-			$html .= '<a class="' . $class . '" data-language="' . $language . '">' . $q_config['language_name'][$language] . '</a>';
+			echo '<a class="' . $class . '" data-language="' . $language . '">' . $q_config['language_name'][$language] . '</a>';
 		}
 
-		$html .= '<div class="acf-url">';
-		$html .= '<i class="acf-icon -globe -small"></i>';
+		echo '<div class="acf-url">';
+		echo '<i class="acf-icon -globe -small"></i>';
 
 		foreach ($languages as $language) {
 			$atts['class'] = $field['class'];
@@ -93,14 +85,11 @@ class acf_qtranslate_acf_5_url extends acf_field_url {
 			$atts['name'] = $field['name'] . "[$language]";
 			$atts['value'] = $values[$language];
 			$atts['data-language'] = $language;
-			$html .= acf_get_text_input( $atts );
+			echo acf_get_text_input( $atts );
 		}
 
-		$html .= '</div>';
-		$html .= '</div>';
-
-		// return
-		echo $html;
+		echo '</div>';
+		echo '</div>';
 	}
 
 	/**

@@ -27,8 +27,6 @@ class acf_qtranslate_acf_5_file extends acf_field_file {
 	 * Setup the field type data
 	 */
 	function initialize() {
-
-		// vars
 		$this->name = 'qtranslate_file';
 		$this->label = __("File (qTranslate)",'acf');
 		$this->category = __("qTranslate", 'acf');
@@ -46,10 +44,7 @@ class acf_qtranslate_acf_5_file extends acf_field_file {
 			'uploadedTo'	=> __("Uploaded to this post",'acf'),
 		);
 
-
-		// filters
 		add_filter('get_media_item_args',			array($this, 'get_media_item_args'));
-
 	}
 
 	/**
@@ -64,16 +59,12 @@ class acf_qtranslate_acf_5_file extends acf_field_file {
 		$values = $this->plugin->decode_language_values($field['value']);
 		$currentLanguage = $this->plugin->get_active_language();
 
-		// vars
 		$uploader = acf_get_setting('uploader');
-
-		// enqueue
 		if( $uploader == 'wp' ) {
 			acf_enqueue_uploader();
 		}
 
-		// vars
-		$o = array(
+		$atts = array(
 			'icon'		=> '',
 			'title'		=> '',
 			'url'		=> '',
@@ -101,27 +92,25 @@ class acf_qtranslate_acf_5_file extends acf_field_file {
 		$field_name = $field['name'];
 
 		foreach ($languages as $language):
-
 			$field['name'] = $field_name . '[' . $language . ']';
 			$field['value'] = $values[$language];
 			$div['data-language'] = $language;
 			$div['class'] = 'acf-file-uploader acf-cf';
 
-			// has value?
 			if( $field['value'] ) {
 				$file = get_post( $field['value'] );
 				if( $file ) {
-					$o['icon'] = wp_mime_type_icon( $file->ID );
-					$o['title']	= $file->post_title;
-					$o['filesize'] = @size_format(filesize( get_attached_file( $file->ID ) ));
-					$o['url'] = wp_get_attachment_url( $file->ID );
+					$atts['icon'] = wp_mime_type_icon( $file->ID );
+					$atts['title']	= $file->post_title;
+					$atts['filesize'] = @size_format(filesize( get_attached_file( $file->ID ) ));
+					$atts['url'] = wp_get_attachment_url( $file->ID );
 
-					$explode = explode('/', $o['url']);
-					$o['filename'] = end( $explode );
+					$explode = explode('/', $atts['url']);
+					$atts['filename'] = end( $explode );
 				}
 
 				// url exists
-				if( $o['url'] ) {
+				if( $atts['url'] ) {
 					$div['class'] .= ' has-value';
 				}
 			}
@@ -133,23 +122,26 @@ class acf_qtranslate_acf_5_file extends acf_field_file {
 			?>
 			<div <?php echo acf_esc_attrs($div); ?>>
 				<div class="acf-hidden">
-					<?php acf_hidden_input(array( 'name' => $field['name'], 'value' => $field['value'], 'data-name' => 'id' )); ?>
+					<?php acf_hidden_input(array(
+					        'name' => $field['name'],
+                            'value' => $field['value'],
+                            'data-name' => 'id' )); ?>
 				</div>
 				<div class="show-if-value file-wrap acf-soh">
 					<div class="file-icon">
-						<img data-name="icon" src="<?php echo $o['icon']; ?>" alt=""/>
+						<img data-name="icon" src="<?php echo $atts['icon']; ?>" alt=""/>
 					</div>
 					<div class="file-info">
 						<p>
-							<strong data-name="title"><?php echo $o['title']; ?></strong>
+							<strong data-name="title"><?php echo $atts['title']; ?></strong>
 						</p>
 						<p>
 							<strong><?php _e('File name', 'acf'); ?>:</strong>
-							<a data-name="filename" href="<?php echo $o['url']; ?>" target="_blank"><?php echo $o['filename']; ?></a>
+							<a data-name="filename" href="<?php echo $atts['url']; ?>" target="_blank"><?php echo $atts['filename']; ?></a>
 						</p>
 						<p>
 							<strong><?php _e('File size', 'acf'); ?>:</strong>
-							<span data-name="filesize"><?php echo $o['filesize']; ?></span>
+							<span data-name="filesize"><?php echo $atts['filesize']; ?></span>
 						</p>
 
 						<ul class="acf-hl acf-soh-target">
@@ -196,17 +188,19 @@ class acf_qtranslate_acf_5_file extends acf_field_file {
 		assert( is_array($values) );
 
 		// TODO validation seems unnecessary here, keep until assert has been used for some time
-		if ( !is_array($values) ) return false;
+		if ( !is_array($values) ) {
+			return false;
+		}
 
 		if (function_exists('acf_connect_attachment_to_post')) {
 			foreach ($values as $value) {
-
 				// bail early if not attachment ID
-				if( !$value || !is_numeric($value) ) continue;
+				if( !$value || !is_numeric($value) ) {
+					continue;
+				}
 
-				// maybe connect attacments to post
+				// maybe connect attachments to post
 				acf_connect_attachment_to_post( (int) $value, $post_id );
-
 			}
 		}
 

@@ -27,8 +27,6 @@ class acf_qtranslate_acf_5_image extends acf_field_image {
 	 *  Setup the field type data
 	 */
 	function initialize() {
-
-		// vars
 		$this->name = 'qtranslate_image';
 		$this->label = __("Image (qTranslate)",'acf');
 		$this->category = __("qTranslate", 'acf');
@@ -52,14 +50,11 @@ class acf_qtranslate_acf_5_image extends acf_field_image {
 			'all'			=> __("All images",'acf'),
 		);
 
-
-		// filters
 		add_filter('get_media_item_args', array($this, 'get_media_item_args'));
 		// removed from ACF 5.8.3
 		if (method_exists($this, 'wp_prepare_attachment_for_js')) {
 			add_filter('wp_prepare_attachment_for_js', array($this, 'wp_prepare_attachment_for_js'), 10, 3);
 		}
-
 	}
 
 	/**
@@ -74,16 +69,11 @@ class acf_qtranslate_acf_5_image extends acf_field_image {
 		$values = $this->plugin->decode_language_values($field['value']);
 		$currentLanguage = $this->plugin->get_active_language();
 
-
-		// vars
 		$uploader = acf_get_setting('uploader');
-
-		// enqueue
 		if( $uploader == 'wp' ) {
 			acf_enqueue_uploader();
 		}
 
-		// vars
 		$url = '';
 		$alt = '';
 		$div = array(
@@ -94,9 +84,7 @@ class acf_qtranslate_acf_5_image extends acf_field_image {
 			'data-uploader'			=> $uploader
 		);
 
-		// get size of preview value
 		$size = acf_get_image_size($field['preview_size']);
-
 
 		echo '<div class="multi-language-field multi-language-field-image">';
 
@@ -117,16 +105,14 @@ class acf_qtranslate_acf_5_image extends acf_field_image {
 			$div['data-language'] = $language;
 			$div['class'] = 'acf-image-uploader acf-cf';
 
-			// has value?
 			if( $field['value'] ) {
-				// update vars
 				$url = wp_get_attachment_image_src($field['value'], $field['preview_size']);
 				$alt = get_post_meta($field['value'], '_wp_attachment_image_alt', true);
-
 				// url exists
-				if( $url ) $url = $url[0];
-
-				// url exists
+				if( $url ) {
+				    // TODO clarify this
+					$url = $url[0];
+                }
 				if( $url ) {
 					$div['class'] .= ' has-value';
 				}

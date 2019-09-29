@@ -27,8 +27,6 @@ class acf_qtranslate_acf_5_text extends acf_field_text {
 	 *  Setup the field type data
 	 */
 	function initialize() {
-
-		// vars
 		$this->name = 'qtranslate_text';
 		$this->label = __("Text (qTranslate)",'acf');
 		$this->category = __("qTranslate",'acf');
@@ -39,7 +37,6 @@ class acf_qtranslate_acf_5_text extends acf_field_text {
 			'prepend'		=> '',
 			'append'		=> ''
 		);
-
 	}
 
 	/**
@@ -53,35 +50,28 @@ class acf_qtranslate_acf_5_text extends acf_field_text {
 		$values = $this->plugin->decode_language_values($field['value']);
 		$currentLanguage = $this->plugin->get_active_language();
 
-		// vars
-		$o = array( 'type', 'id', 'class', 'name', 'value', 'placeholder' );
-		$s = array( 'readonly', 'disabled' );
-		$e = '';
-
-		// maxlength
-		if( $field['maxlength'] !== "" ) {
-			$o[] = 'maxlength';
-		}
-
-		// populate atts
 		$atts = array();
-		foreach( $o as $k ) {
+
+		$keys = array( 'type', 'id', 'class', 'name', 'value', 'placeholder' );
+		if( $field['maxlength'] !== "" ) {
+			$keys[] = 'maxlength';
+		}
+		foreach( $keys as $k ) {
 			$atts[ $k ] = $field[ $k ];
 		}
 
-		// special atts
-		foreach( $s as $k ) {
+		$special_keys = array( 'readonly', 'disabled' );
+		foreach( $special_keys as $k ) {
 			if( isset($field[ $k ]) && $field[ $k ] ) {
 				$atts[ $k ] = $k;
 			}
 		}
 
-		// render
-		$e .= '<div class="acf-input-wrap multi-language-field">';
+		echo '<div class="acf-input-wrap multi-language-field">';
 
 		foreach ($languages as $language) {
 			$class = ($language === $currentLanguage) ? 'wp-switch-editor current-language' : 'wp-switch-editor';
-			$e .= '<a class="' . $class . '" data-language="' . $language . '">' . $q_config['language_name'][$language] . '</a>';
+			echo '<a class="' . $class . '" data-language="' . $language . '">' . $q_config['language_name'][$language] . '</a>';
 		}
 
 		foreach ($languages as $language) {
@@ -93,13 +83,10 @@ class acf_qtranslate_acf_5_text extends acf_field_text {
 			$atts['name'] = $field['name'] . "[$language]";
 			$atts['value'] = $values[$language];
 			$atts['data-language'] = $language;
-			$e .= '<input ' . acf_esc_attrs( $atts ) . ' />';
+			echo '<input ' . acf_esc_attrs( $atts ) . ' />';
 		}
 
-		$e .= '</div>';
-
-		// return
-		echo $e;
+		echo '</div>';
 	}
 
 	/**
