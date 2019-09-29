@@ -17,7 +17,7 @@
         case '2':
           var homepath = qTranslateConfig.home_url_path;
           var p = url.pathname;
-          if (p[0] != '/')
+          if (p[0] !== '/')
             p = '/' + p; // to deal with IE imperfection: http://stackoverflow.com/questions/956233/javascript-pathname-ie-quirk
           var i = p.indexOf(homepath);
           if (i >= 0)
@@ -44,7 +44,7 @@
         if (!btnViewPost || !btnViewPost.children.length)
           return;
         btnViewPostA = btnViewPost.children[0];
-        if (btnViewPostA.tagName != 'A')
+        if (btnViewPostA.tagName !== 'A')
           return;
         origUrl = btnViewPostA.href;
         langUrl = qtranxj_ce('a', {});
@@ -60,7 +60,8 @@
         btnPreviewAction.children[0].href = langUrl.href;
       }
 
-      if (qTranslateConfig.url_mode != 1) {
+      // TODO define proper constants
+      if (qTranslateConfig.url_mode !== 1) {
         // !QTX_URL_QUERY
         if (!slugSamplePermalink) {
           var slugEl = document.getElementById('sample-permalink');

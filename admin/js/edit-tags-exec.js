@@ -21,7 +21,7 @@
 
     var onRowAdd = function () {
       var trs = the_list.children();
-      if (rcnt == trs.length)
+      if (rcnt === trs.length)
         return false;
       var ok = rcnt > trs.length;
       rcnt = trs.length;

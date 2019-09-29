@@ -51,7 +51,7 @@ qtranxj_split_blocks = function (blocks) {
 	}
 	if (!blocks || !blocks.length)
 		return result;
-	if (blocks.length == 1) {
+	if (blocks.length === 1) {
 		// no language separator found, enter it to all languages
 		var b = blocks[0];
 		for (var lang in qTranslateConfig.language_config) {
@@ -85,7 +85,7 @@ qtranxj_split_blocks = function (blocks) {
 			lang = matches[1];
 			continue;
 		}
-		if (b == '<!--:-->' || b == '[:]' || b == '{:}') {
+		if (b === '<!--:-->' || b === '[:]' || b === '{:}') {
 			lang = false;
 			continue;
 		}
@@ -109,7 +109,7 @@ function qtranxj_get_cookie(cname) {
 	for (var i = 0; i < ca.length; ++i) {
 		var s = ca[i];
 		var sa = s.split('=');
-		if (sa[0].trim() != cname)
+		if (sa[0].trim() !== cname)
 			continue;
 		if (ca.length < 2)
 			continue;
@@ -140,7 +140,7 @@ String.prototype.xsplit = function (_regEx) {
 	}
 	if (start < this.length)
 		arr.push(this.slice(start));
-	if (start == this.length)
+	if (start === this.length)
 		arr.push(''); // delim at the end
 	return arr;
 };
@@ -239,7 +239,6 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 		};
 
 		var contentHooks = {};
-		var contentHookId = 0;
 
 		var updateFusedValueH = function (id, value) {
 			if (qTranslateConfig.RAW)
@@ -455,7 +454,7 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 
 		this.addContentHooksByClass = function (nm, container) {
 			var sep;
-			if (nm.indexOf('<') == 0 || nm.indexOf('[') == 0) {
+			if (nm.indexOf('<') === 0 || nm.indexOf('[') === 0) {
 				sep = nm.substring(0, 1);
 				nm = nm.substring(1);
 			}
@@ -531,7 +530,6 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 				return '(' + qTranslateConfig.language + ') ' + contents[qTranslateConfig.language];
 			if (contents[qTranslateConfig.default_language])
 				return '(' + qTranslateConfig.default_language + ') ' + contents[qTranslateConfig.default_language];
-			var default_value = null;
 			for (var lang in contents) {
 				if (!contents[lang]) continue;
 				return '(' + lang + ') ' + contents[lang];
@@ -561,7 +559,7 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 			if (!nd.nodeValue)
 				return 0;
 			var blocks = qtranxj_get_split_blocks(nd.nodeValue);
-			if (!blocks || !blocks.length || blocks.length == 1)
+			if (!blocks || !blocks.length || blocks.length === 1)
 				return 0;
 			var h = {};
 			h.nd = nd;
@@ -580,7 +578,7 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 			if (!nd.hasAttribute(attr)) return 0;
 			var value = nd.getAttribute(attr);
 			var blocks = qtranxj_get_split_blocks(value);
-			if (!blocks || !blocks.length || blocks.length == 1)
+			if (!blocks || !blocks.length || blocks.length === 1)
 				return 0;
 			var h = {};
 			h.nd = nd;
@@ -653,7 +651,7 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 				text = window.switchEditors.wpautop(text);
 			}
 			h.mce.setContent(text, {format: 'html'});
-		}
+		};
 
 		var onTabSwitch = function (lang) {
 			//var qtx = this;
@@ -690,7 +688,7 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 					h.fields[h.lang].value = text;
 					h.lang = lang;
 					var value = h.fields[h.lang].value;
-					if (h.contentField.placeholder && value != '') {//since 3.2.7
+					if (h.contentField.placeholder && value !== '') {//since 3.2.7
 						h.contentField.placeholder = '';
 					}
 					h.contentField.value = value;
@@ -957,7 +955,7 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 					 *
 					 * If somebody finds out a better way, please let us know at qtranslateteam@gmail.com.
 					 */
-					updateTinyMCEonInit = text_e != text_h;
+					updateTinyMCEonInit = text_e !== text_h;
 				}
 				if (updateTinyMCEonInit) {
 					updateTinyMCE(h);
@@ -1047,7 +1045,7 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 		this.delLanguageSwitchBeforeListener = function (func) {
 			for (var i = 0; i < qTranslateConfig.onTabSwitchFunctionsSave.length; ++i) {
 				var f = qTranslateConfig.onTabSwitchFunctionsSave[i];
-				if (f != func)
+				if (f !== func)
 					continue;
 				qTranslateConfig.onTabSwitchFunctionsSave.splice(i, 1);
 				return;
@@ -1067,7 +1065,7 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 		 */
 		this.addLanguageSwitchAfterListener = function (func) {
 			qTranslateConfig.onTabSwitchFunctionsLoad.push(func);
-		}
+		};
 
 		/**
 		 * @since 3.3.2
@@ -1078,7 +1076,7 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 		this.delLanguageSwitchAfterListener = function (func) {
 			for (var i = 0; i < qTranslateConfig.onTabSwitchFunctionsLoad.length; ++i) {
 				var f = qTranslateConfig.onTabSwitchFunctionsLoad[i];
-				if (f != func)
+				if (f !== func)
 					continue;
 				qTranslateConfig.onTabSwitchFunctionsLoad.splice(i, 1);
 				return;
@@ -1234,7 +1232,7 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 			if ($('.qtranxs-lang-switch-wrap').hasClass('copying')) {
 				$('.qtranxs-lang-switch').each(function () {
 					$(this).attr('orig-title', $(this).attr('title'));
-					if ($(this).attr('lang') == qTranslateConfig.activeLanguage)
+					if ($(this).attr('lang') === qTranslateConfig.activeLanguage)
 						$(this).attr('title', qTranslateConfig.strings.CopyFromAlt);
 					else
 						$(this).attr('title', qTranslateConfig.strings.CopyFrom + ' [:' + $(this).attr('lang') + ']');
@@ -1287,13 +1285,13 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 					onclick: qtx.clickSwitchLanguage
 				}, langSwitchWrap);
 				var tabItem = tabSwitch;
-				if (qTranslateConfig.lsb_style_subitem == 'button') {
+				if (qTranslateConfig.lsb_style_subitem === 'button') {
 					// reuse WordPress secondary button
 					tabItem = qtranxj_ce('button', {className: 'button button-secondary', type: 'button'}, tabSwitch);
 				}
 				qtranxj_ce('img', {src: flag_location + lang_conf.flag}, tabItem);
 				qtranxj_ce('span', {innerHTML: lang_conf.name}, tabItem);
-				if (qTranslateConfig.activeLanguage == lang) {
+				if (qTranslateConfig.activeLanguage === lang) {
 					tabSwitch.classList.add(qTranslateConfig.lsb_style_active_class);
 					$(tabSwitch).find('.button').addClass('active');
 				}
