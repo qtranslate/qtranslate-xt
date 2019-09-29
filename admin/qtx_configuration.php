@@ -543,7 +543,7 @@ function qtranxf_conf() {
                                 <br/>
                                 <label for="qtranxs_editor_mode_single"><input type="radio" name="editor_mode"
                                                                                id="qtranxs_editor_mode_single"
-                                                                               value="<?php echo QTX_EDITOR_MODE_SINGLGE; ?>"<?php checked( $q_config['editor_mode'], QTX_EDITOR_MODE_SINGLGE ) ?>/>&nbsp;<?php echo __( 'Single Language Mode.', 'qtranslate' ) . ' ' . __( 'The language edited is the same as admin language.', 'qtranslate' ) ?>
+                                                                               value="<?php echo QTX_EDITOR_MODE_SINGLE; ?>"<?php checked( $q_config['editor_mode'], QTX_EDITOR_MODE_SINGLE ) ?>/>&nbsp;<?php echo __( 'Single Language Mode.', 'qtranslate' ) . ' ' . __( 'The language edited is the same as admin language.', 'qtranslate' ) ?>
                                 </label>
                                 <p class="qtranxs-notes"><?php echo __( 'Edit language cannot be switched without page re-loading. Try this mode, if some of the advanced translatable fields do not properly respond to the Language Switching Buttons due to incompatibility with a plugin, which severely alters the default WP behaviour. This mode is the most compatible with other themes and plugins.', 'qtranslate' ) . ' ' . __( 'One may find convenient to use the default Editor Mode, while remembering not to switch edit languages on custom advanced translatable fields, where LSB do not work.', 'qtranslate' ) ?></p>
                             </td>

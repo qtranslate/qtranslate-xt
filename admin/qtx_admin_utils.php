@@ -400,8 +400,7 @@ function qtranxf_updateGettextDatabases( $force = false, $only_for_language = ''
 function qtranxf_add_conf_filters() {
 	global $q_config;
 	switch ( $q_config['editor_mode'] ) {
-		// TODO fix that ugly typo!
-		case QTX_EDITOR_MODE_SINGLGE:
+		case QTX_EDITOR_MODE_SINGLE:
 		case QTX_EDITOR_MODE_RAW:
 			add_filter( 'gettext', 'qtranxf_gettext', 0 );
 			add_filter( 'gettext_with_context', 'qtranxf_gettext_with_context', 0 );

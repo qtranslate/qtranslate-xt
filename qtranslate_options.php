@@ -37,7 +37,7 @@ define( 'QTX_EX_DATE_FORMATS_DEFAULT', '\'U\'' );
 
 define( 'QTX_EDITOR_MODE_LSB', 0 ); // Language Switching Buttons
 define( 'QTX_EDITOR_MODE_RAW', 1 );
-define( 'QTX_EDITOR_MODE_SINGLGE', 2 );
+define( 'QTX_EDITOR_MODE_SINGLE', 2 );
 
 define( 'QTX_HIGHLIGHT_MODE_NONE', 0 );
 define( 'QTX_HIGHLIGHT_MODE_BORDER_LEFT', 1 );
