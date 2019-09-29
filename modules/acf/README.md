@@ -6,7 +6,7 @@ Enables multilingual framework for plugin [ACF](https://wordpress.org/plugins/ad
 
 This module was converted from the legacy plugin [ACF qTranslate](https://github.com/funkjedi/acf-qtranslate).
 
-This plugin provides qTranslate-XT compatible ACF4 and ACF5PRO field types for Text, Text Area, WYSIWYG, Image and File. When adding a field to a field group these new field types will be listed under the qTranslate category in the Field Type dropdown.
+This plugin provides qTranslate-XT compatible ACF5 field types for Text, Text Area, WYSIWYG, Image and File. When adding a field to a field group these new field types will be listed under the qTranslate category in the Field Type dropdown.
 
 Contributors: funkjedi, asedano
 

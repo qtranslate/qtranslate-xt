@@ -166,10 +166,6 @@ class acf_qtranslate_plugin {
 							'jquery' => '#acf-qtranslate-lsb-shim',
 							'encode' => 'display',
 						),
-						'acf4-field-group-handle' => array(
-							'jquery' => '.acf_postbox h2 span,.acf_postbox h3 span',
-							'encode' => 'display',
-						),
 						'acf5-field-group-handle' => array(
 							'jquery' => '.acf-postbox h2 span,.acf-postbox h3 span',
 							'encode' => 'display',
