@@ -35,7 +35,6 @@ function qtranxf_wp_head() {
 	if ( $q_config['header_css_on'] ) {
 		echo '<style type="text/css">' . PHP_EOL . $q_config['header_css'] . '</style>' . PHP_EOL;
 	}
-	do_action( 'qtranslate_head_add_css' );//not really needed?
 
 	if ( is_404() ) {
 		return;
