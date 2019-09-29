@@ -3,23 +3,15 @@
 class acf_qtranslate_acf_5_text extends acf_field_text {
 
 	/**
-	 * The plugin instance.
-	 * @var \acf_qtranslate_plugin
+	 * The plugin instance
+	 * @var acf_qtranslate_plugin
 	 */
 	protected $plugin;
 
-
-	/*
-	 *  __construct
+	/**
+	 * Constructor
 	 *
-	 *  This function will setup the field type data
-	 *
-	 *  @type	function
-	 *  @date	5/03/2014
-	 *  @since	5.0.0
-	 *
-	 *  @param	n/a
-	 *  @return	n/a
+	 * @param acf_qtranslate_plugin $plugin
 	 */
 	function __construct($plugin) {
 		$this->plugin = $plugin;
@@ -31,17 +23,8 @@ class acf_qtranslate_acf_5_text extends acf_field_text {
 		acf_field::__construct();
 	}
 
-	/*
-	 *  initialize
-	 *
-	 *  This function will setup the field type data
-	 *
-	 *  @type	function
-	 *  @date	5/03/2014
-	 *  @since	5.0.0
-	 *
-	 *  @param	n/a
-	 *  @return	n/a
+	/**
+	 *  Setup the field type data
 	 */
 	function initialize() {
 
@@ -59,16 +42,10 @@ class acf_qtranslate_acf_5_text extends acf_field_text {
 
 	}
 
-	/*
-	 *  render_field()
+	/**
+	 * Hook/override ACF render_field to create the HTML interface
 	 *
-	 *  Create the HTML interface for your field
-	 *
-	 *  @param	$field - an array holding all the field's data
-	 *
-	 *  @type	action
-	 *  @since	3.6
-	 *  @date	23/01/13
+	 *  @param array $field
 	 */
 	function render_field($field) {
 		global $q_config;
@@ -125,17 +102,10 @@ class acf_qtranslate_acf_5_text extends acf_field_text {
 		echo $e;
 	}
 
-	/*
-	 *  render_field_settings()
+	/**
+	 * Hook/override for ACF render_field_settings
 	 *
-	 *  Create extra options for your field. This is rendered when editing a field.
-	 *  The value of $field['name'] can be used (like bellow) to save extra data to the $field
-	 *
-	 *  @param	$field	- an array holding all the field's data
-	 *
-	 *  @type	action
-	 *  @since	3.6
-	 *  @date	23/01/13
+	 * @param array $field
 	 */
 	function render_field_settings($field) {
 		// default_value
@@ -163,36 +133,29 @@ class acf_qtranslate_acf_5_text extends acf_field_text {
 		));
 	}
 
-	/*
-	 *  update_value()
+	/**
+	 * Hook/override ACF update_value
 	 *
-	 *  This filter is appied to the $value before it is updated in the db
+	 * @param array $values - the values to save in database
+	 * @param int $post_id - the post_id of which the value will be saved
+	 * @param array $field - the field array holding all the field options
 	 *
-	 *  @type	filter
-	 *  @since	3.6
-	 *  @date	23/01/13
-	 *
-	 *  @param	$value - the value which will be saved in the database
-	 *  @param	$post_id - the $post_id of which the value will be saved
-	 *  @param	$field - the field array holding all the field options
-	 *
-	 *  @return	$value - the modified value
+	 * @return string - the modified value
+	 * @see acf_field_text::update_value
 	 */
-	function update_value($value, $post_id, $field) {
-		return $this->plugin->encode_language_values($value);
+	function update_value($values, $post_id, $field) {
+		return $this->plugin->encode_language_values($values);
 	}
 
 	/**
-	 *  validate_value
-	 *
-	 *  Overrides ACF validation to handle the value formatted to a multi-lang array instead of string.
+	 *  Hook/override ACF validation to handle the value formatted to a multi-lang array instead of string
 	 *
 	 * @param bool|string $valid
 	 * @param array $value containing values per language
 	 * @param string $field
 	 * @param string $input
 	 *
-	 * @return    bool|string
+	 * @return bool|string
 	 * @see acf_validation::acf_validate_value
 	 */
 	function validate_value( $valid, $value, $field, $input ) {

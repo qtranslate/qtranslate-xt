@@ -5,15 +5,16 @@ require_once ACF_QTRANSLATE_PLUGIN_DIR . 'src/acf_interface.php';
 class acf_qtranslate_acf_5 implements acf_qtranslate_acf_interface {
 
 	/**
-	 * The plugin instance.
-	 * @var \acf_qtranslate_plugin
+	 * The plugin instance
+	 * @var acf_qtranslate_plugin
 	 */
 	protected $plugin;
 
 
-	/*
-	 * Create an instance.
-	 * @return void
+	/**
+	 * Constructor
+	 *
+	 * @param acf_qtranslate_plugin $plugin
 	 */
 	public function __construct($plugin) {
 		$this->plugin = $plugin;
@@ -24,7 +25,7 @@ class acf_qtranslate_acf_5 implements acf_qtranslate_acf_interface {
 	}
 
 	/**
-	 * Load javascript and stylesheets on admin pages.
+	 * Load javascript and stylesheets on admin pages
 	 */
 	public function include_fields() {
 		require_once ACF_QTRANSLATE_PLUGIN_DIR . 'src/acf_5/fields/file.php';
@@ -45,15 +46,21 @@ class acf_qtranslate_acf_5 implements acf_qtranslate_acf_interface {
 	}
 
 	/**
-	 * Load javascript and stylesheets on admin pages.
+	 * Load javascript and stylesheets on admin pages
 	 */
 	public function admin_enqueue_scripts() {
 		wp_enqueue_script('acf_qtranslate_main',   plugins_url('/assets/acf_5/main.js', ACF_QTRANSLATE_PLUGIN), array('acf-input','underscore'));
 	}
 
 	/**
+	 * Hook/override ACF format_value
+	 *
 	 * This filter is applied to the $value after it is loaded from the db and
 	 * before it is returned to the template via functions such as get_field().
+	 *
+	 * @param $value
+	 *
+	 * @return array|mixed|string|void
 	 */
 	public function format_value($value) {
 		if (is_string($value)) {
@@ -65,7 +72,10 @@ class acf_qtranslate_acf_5 implements acf_qtranslate_acf_interface {
 	}
 
 	/**
-	 * Get the visible ACF fields.
+	 * Get the visible ACF fields
+	 *
+	 * @param null $widget_id
+	 *
 	 * @return array
 	 */
 	public function get_visible_acf_fields($widget_id = null) {

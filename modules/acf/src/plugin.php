@@ -4,14 +4,13 @@ class acf_qtranslate_plugin {
 
 	/**
 	 * An ACF instance.
-	 * @var \acf_qtranslate_acf_interface
+	 * @var acf_qtranslate_acf_interface
 	 */
 	protected $acf;
 
 
 	/**
-	 * Create an instance.
-	 * @return void
+	 * Constructor
 	 */
 	public function __construct() {
 		add_action('plugins_loaded',                  array($this, 'init'), 3);
@@ -26,7 +25,8 @@ class acf_qtranslate_plugin {
 	}
 
 	/**
-	 * Setup plugin if Advanced Custom Fields is enabled.
+	 * Setup plugin if Advanced Custom Fields is enabled
+     *
 	 * @return void
 	 */
 	public function init() {
@@ -50,7 +50,8 @@ class acf_qtranslate_plugin {
 	}
 
 	/**
-	 * Check if Advanced Custom Fields is enabled.
+	 * Check if Advanced Custom Fields is enabled
+     *
 	 * @return boolean
 	 */
 	public function acf_enabled() {
@@ -61,7 +62,8 @@ class acf_qtranslate_plugin {
 	}
 
 	/**
-	 * Return the major version number for Advanced Custom Fields.
+	 * Return the major version number for Advanced Custom Fields
+     *
 	 * @return int
 	 */
 	public function acf_version() {
@@ -69,7 +71,8 @@ class acf_qtranslate_plugin {
 	}
 
 	/**
-	 * Return the major version number for Advanced Custom Fields.
+	 * Return the major version number for Advanced Custom Fields
+     *
 	 * @return int
 	 */
 	public function acf_major_version() {
@@ -77,21 +80,21 @@ class acf_qtranslate_plugin {
 	}
 
 	/**
-	 * Check if qTranslate-X is enabled.
+	 * Check if qTranslate-X is enabled
 	 */
 	public function qtranslatex_enabled() {
 		return function_exists('qtranxf_getLanguage');
 	}
 
 	/**
-	 * Get the active language.
+	 * Get the active language
 	 */
 	public function get_active_language() {
 		return apply_filters('acf_qtranslate_get_active_language', qtranxf_getLanguage());
 	}
 
 	/**
-	 * Load javascript and stylesheets on admin pages.
+	 * Load javascript and stylesheets on admin pages
 	 */
 	public function admin_enqueue_scripts() {
 		wp_enqueue_style('acf_qtranslate_common',  plugins_url('/assets/common.css', ACF_QTRANSLATE_PLUGIN), array('acf-input'));
@@ -99,8 +102,7 @@ class acf_qtranslate_plugin {
 	}
 
 	/**
-	 * Output a hidden block that can be use to force qTranslate-X
-	 * to include the LSB.
+	 * Output a hidden block that can be use to force qTranslate-X to include the LSB
 	 */
 	public function admin_footer() {
 ?>
@@ -126,8 +128,9 @@ class acf_qtranslate_plugin {
 	}
 
 	/**
-	 * Add settings link on plugin page.
-	 * @param array
+	 * Add settings link on plugin page
+	 * @param array $links
+     *
 	 * @return array
 	 */
 	public function plugin_action_links($links) {
@@ -136,8 +139,9 @@ class acf_qtranslate_plugin {
 	}
 
 	/**
-	 * Enable the display of the LSB on ACF Options pages.
-	 * @param array
+	 * Enable the display of the LSB on ACF Options pages
+	 * @param array $config
+     *
 	 * @return array
 	 */
 	public function qtranslate_load_admin_page_config($config)
@@ -200,7 +204,12 @@ class acf_qtranslate_plugin {
 	}
 
 	/**
-	 * Retrieve the value of a plugin setting.
+	 * Retrieve the value of a plugin setting
+	 *
+	 * @param string $name
+	 * @param $default
+	 *
+	 * @return |null
 	 */
 	function get_plugin_setting($name, $default = null) {
 		$options = get_option('acf_qtranslate');
@@ -211,14 +220,14 @@ class acf_qtranslate_plugin {
 	}
 
 	/**
-	 * Register the options page with the Wordpress menu.
+	 * Register the options page with the Wordpress menu
 	 */
 	function admin_menu() {
 		add_options_page('ACF qTranslate', 'ACF qTranslate', 'manage_options', 'acf-qtranslate', array($this, 'options_page'));
 	}
 
 	/**
-	 * Register settings and default fields.
+	 * Register settings and default fields
 	 */
 	function admin_init() {
 		register_setting('acf_qtranslate', 'acf_qtranslate');
@@ -256,7 +265,7 @@ class acf_qtranslate_plugin {
 	}
 
 	/**
-	 * Render the options page.
+	 * Render the options page
 	 */
 	function options_page() {
 		?>
@@ -275,7 +284,7 @@ class acf_qtranslate_plugin {
 	}
 
 	/**
-	 * Render the qTranslate-X section.
+	 * Render the qTranslate-X section
 	 */
 	function render_section_qtranslatex() {
 		?>
@@ -285,7 +294,7 @@ class acf_qtranslate_plugin {
 	}
 
 	/**
-	 * Render setting.
+	 * Render setting
 	 */
 	function render_setting_translate_standard_field_types() {
 		?>
@@ -294,7 +303,7 @@ class acf_qtranslate_plugin {
 	}
 
 	/**
-	 * Render setting.
+	 * Render setting
 	 */
 	function render_setting_show_language_tabs() {
 		?>
@@ -303,7 +312,7 @@ class acf_qtranslate_plugin {
 	}
 
 	/**
-	 * Render setting.
+	 * Render setting
 	 */
 	function render_setting_show_on_pages() {
 		?>
@@ -315,6 +324,7 @@ class acf_qtranslate_plugin {
 	/**
      * Encode a multi-language array into a string with bracket tags
 	 * @param array $values
+     *
      * @return string
 	 */
 	public function encode_language_values($values) {
@@ -325,6 +335,7 @@ class acf_qtranslate_plugin {
 	/**
 	 * Decode a multi-language string to an array
 	 * @param string $values
+     *
 	 * @return array
 	 */
 	public function decode_language_values($values) {
@@ -332,9 +343,9 @@ class acf_qtranslate_plugin {
 	}
 
 	/**
-	 *  validate_language_values
+	 * Validate language values
 	 *
-	 *  Validates all the form values for a given field, by iterating over the multi-lang array values as strings:
+	 * Validates all the form values for a given field, by iterating over the multi-lang array values as strings:
 	 *  - check the required property
 	 *  - call the original ACF method for every language string.
 	 *

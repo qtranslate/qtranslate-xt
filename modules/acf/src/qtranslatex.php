@@ -5,21 +5,23 @@ require_once ACF_QTRANSLATE_PLUGIN_DIR . 'src/acf_interface.php';
 class acf_qtranslate_qtranslatex {
 
 	/**
-	 * An ACF instance.
-	 * @var \acf_qtranslate_acf_interface
+	 * An ACF instance
+	 * @var acf_qtranslate_acf_interface
 	 */
 	protected $acf;
 
 	/**
-	 * The plugin instance.
-	 * @var \acf_qtranslate_plugin
+	 * The plugin instance
+	 * @var acf_qtranslate_plugin
 	 */
 	protected $plugin;
 
 
 	/**
-	 * Create an instance.
-	 * @return void
+	 * Constructor
+	 *
+	 * @param acf_qtranslate_plugin $plugin
+	 * @param acf_qtranslate_acf_interface $acf
 	 */
 	public function __construct(acf_qtranslate_plugin $plugin, acf_qtranslate_acf_interface $acf) {
 		$this->acf = $acf;
@@ -31,7 +33,7 @@ class acf_qtranslate_qtranslatex {
 	}
 
 	/**
-	 * Add additional styles and scripts to head.
+	 * Add additional styles and scripts to head
 	 */
 	public function admin_head() {
 		// Hide the language tabs if they shouldn't be displayed
@@ -57,7 +59,7 @@ class acf_qtranslate_qtranslatex {
 	}
 
 	/**
-	 * Load javascript and stylesheets on admin pages.
+	 * Load javascript and stylesheets on admin pages
 	 */
 	public function admin_enqueue_scripts() {
 		$version = $this->plugin->acf_major_version();
@@ -65,10 +67,14 @@ class acf_qtranslate_qtranslatex {
 	}
 
 	/**
-	 * Get the active language.
+	 * Get the active language
+	 *
+	 * @param string $language
+	 *
+	 * @return string
 	 */
 	public function get_active_language($language) {
-	    // TODO module should not read this cookie directly
+	    // TODO modules should not read this cookie directly
 		if (empty($_COOKIE['qtrans_edit_language']) === false) {
 			$enabledLanguages = qtranxf_getSortedLanguages();
 			if (in_array($_COOKIE['qtrans_edit_language'], $enabledLanguages)) {
