@@ -1,3 +1,33 @@
+### 3.6.3
+General
+* Update minimum requirement to PHP 5.4 (#732)
+* Rename many ambiguous variables
+* Remove dead code and unnecessary comments
+* Fix dozens of code warnings: unused variables, redundant escape char in RegExp, comparison coercions, ...
+* Fix typo in define `QTX_EDITOR_MODE_SINGLE`
+
+Core
+* Remove unused action `qtranslate_head_add_css`
+* Remove unused utils functions: `qtranxf_stripSlashesIfNecessary, qtranxf_get_domain_language, qtranxf_isAvailableIn`
+* Move date/time functions to `qtranslate_date_time.php`
+* Refactor init url_info path and query
+
+Admin
+* Remove obsolete admin action `qtranslate_css`
+* Move admin notice and log functions to admin_utils
+* Fix potential bug in `qtranxj_get_cookie` (#724)
+* Fix invalid admin CSS and remove unused CSS files
+* Fix invalid HTML in admin nav menu
+
+Modules
+* Refactor ACF with native `qtranxf` functions (#736)
+* Refactor ACF code for better readability, update PHPDoc
+* Drop support of obsolete ACF 4
+* Remove obsolete `qtranslate_custom_admin_js` in ACF
+* Fix use of deprecated `acf_esc_attrs_e` in ACF
+* Fix parameter mismatch in ACF
+* Fix missing return in sitemap Yoast SEO and cleanup
+
 ### 3.6.2
 * Fix media library broken with ACF 5.8.3 (#718)
 * Fix ACF language values not validated (#710)
