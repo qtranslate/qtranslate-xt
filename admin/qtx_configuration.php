@@ -758,11 +758,20 @@ function qtranxf_conf() {
                             <td>
                                 <p class="qtranxs_explanation"><?php printf( __( 'If you encounter any problems and you are unable to solve them yourself, you can visit the <a href="%s">Support Forum</a>. Posting the following Content will help other detect any misconfigurations.', 'qtranslate' ), 'https://github.com/qTranslate/qtranslate-xt/issues' ) ?></p>
                                 <br>
-                                <input type="button" id="qtx-debug-query" class="button"
+                                <input type="button" id="qtranxs_debug_query" class="button"
                                        value="<?php _e( 'Collect information', 'qtranslate' ); ?>">
                                 <br>
-                                <textarea readonly="readonly" id="qtx-debug-info" rows="20"
-                                          style="width: 90%; margin: 20px 0; display: none">...</textarea>
+                                <div id="qtranxs_debug_info" style="display: none; margin: 20px 0;">
+                                    <p class="qtranxs_explanation"><?php _e( 'Server', 'qtranslate' ) ?></p>
+                                    <textarea readonly="readonly" id="qtranxs_debug_info_server"
+                                              rows="15"
+                                              style="width: 90%;">...</textarea>
+                                    <br>
+                                    <p class="qtranxs_explanation "><?php _e( 'Client', 'qtranslate' ) ?></p>
+                                    <textarea readonly="readonly" id="qtranxs_debug_info_client"
+                                              rows="5"
+                                              style="width: 90%;">...</textarea>
+                                </div>
                             </td>
                         </tr>
                     </table>

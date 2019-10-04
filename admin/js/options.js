@@ -74,10 +74,23 @@
 
     onHashChange('#general');
 
-    $('#qtx-debug-query').on('click', function () {
-      var $debugInfo = $('#qtx-debug-info');
-      $debugInfo.val('...');
-      $debugInfo.show();
+    $('#qtranxs_debug_query').on('click', function () {
+      var ca = document.cookie.split(';');
+      var clientInfo = {
+        'cookies': [],
+        'navigator': navigator.userAgent
+      };
+      for (var i = 0; i < ca.length; i++) {
+        var cookieStr = ca[i].trim();
+          if (cookieStr.indexOf('qtrans') === 0) {
+            clientInfo['cookies'].push(cookieStr);
+          }
+      }
+
+      $('#qtranxs_debug_info').show();
+      $('#qtranxs_debug_info_client').val(JSON.stringify(clientInfo, null, 2));
+      $('#qtranxs_debug_info_server').val('...');
+
       $.ajax({
           url: ajaxurl,
           dataType : 'json',
@@ -86,11 +99,11 @@
           },
           success: function(response) {
             console.log('debug-info', response);
-            $debugInfo.val(JSON.stringify(response, null, 2));
+            $('#qtranxs_debug_info_server').val(JSON.stringify(response, null, 2));
           },
           error: function(xhr) {
             console.error('debug-info', xhr);
-            $debugInfo.val('An error occurred: status=' + xhr.status + ' (' + xhr.statusText + ')');
+            $('#qtranxs_debug_info_server').val('An error occurred: status=' + xhr.status + ' (' + xhr.statusText + ')');
           }
       });
     })
