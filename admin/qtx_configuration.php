@@ -158,17 +158,18 @@ function qtranxf_admin_section_button( $button_name ) {
  */
 function qtranxf_get_admin_sections() {
 	$admin_sections             = array();
-	$admin_sections['general']  = __( 'General', 'qtranslate' );//General Settings
-	$admin_sections['advanced'] = __( 'Advanced', 'qtranslate' );//Advanced Settings
+	$admin_sections['general']  = __( 'General', 'qtranslate' );
+	$admin_sections['advanced'] = __( 'Advanced', 'qtranslate' );
 
 	$custom_sections = apply_filters( 'qtranslate_admin_sections', array() );
 	foreach ( $custom_sections as $k => $v ) {
 		$admin_sections[ $k ] = $v;
 	}
 
-	$admin_sections['integration'] = __( 'Integration', 'qtranslate' );//Custom Integration
-	$admin_sections['import']      = __( 'Import', 'qtranslate' ) . '/' . __( 'Export', 'qtranslate' );
-	$admin_sections['languages']   = __( 'Languages', 'qtranslate' );
+	$admin_sections['integration']     = __( 'Integration', 'qtranslate' );
+	$admin_sections['import']          = __( 'Import', 'qtranslate' ) . '/' . __( 'Export', 'qtranslate' );
+	$admin_sections['languages']       = __( 'Languages', 'qtranslate' );
+	$admin_sections['troubleshooting'] = __( 'Troubleshooting', 'qtranslate' );
 
 	return $admin_sections;
 }
@@ -628,26 +629,6 @@ function qtranxf_conf() {
 									printf( __( 'The color in use is taken from your profile option %s, the third color.', 'qtranslate' ), '"<a href="' . admin_url( '/profile.php' ) . '">' . qtranxf_translate_wp( 'Admin Color Scheme' ) . '</a>"' ) ?></p>
                             </td>
                         </tr>
-						<?php
-						// TODO refactor debug info feature or remove entirely
-						/*
-			<tr>
-				<th scope="row"><?php _e('Debugging Information', 'qtranslate') ?></th>
-				<td>
-					<p class="qtranxs_explanation"><?php printf(__('If you encounter any problems and you are unable to solve them yourself, you can visit the <a href="%s">Support Forum</a>. Posting the following Content will help other detect any misconfigurations.', 'qtranslate'), 'https://github.com/qTranslate/qtranslate-xt/issues') ?></p>
-					<textarea readonly="readonly" id="qtranxs_debug"><?php
-						$q_config_copy = $q_config;
-						// remove information to keep data anonymous and other not needed things
-						unset($q_config_copy['url_info']);
-						unset($q_config_copy['js']);
-						unset($q_config_copy['windows_locale']);
-						//unset($q_config_copy['pre_domain']);
-						unset($q_config_copy['term_name']);
-						echo htmlspecialchars(print_r($q_config_copy, true));
-					?></textarea>
-				</td>
-			</tr>
-*/ ?>
                     </table>
 					<?php qtranxf_admin_section_end( 'advanced' ) ?>
 					<?php qtranxf_admin_section_start( 'integration' ) ?>
@@ -769,7 +750,24 @@ function qtranxf_conf() {
                             </td>
                         </tr>
                     </table>
-					<?php qtranxf_admin_section_end( 'integration' );
+					<?php qtranxf_admin_section_end( 'integration' ); ?>
+					<?php qtranxf_admin_section_start( 'troubleshooting' ) ?>
+                    <table class="form-table qtranxs-form-table" id="qtranxs_troubleshooting_config">
+                        <tr>
+                            <th scope="row"><?php _e( 'Debugging Information', 'qtranslate' ) ?></th>
+                            <td>
+                                <p class="qtranxs_explanation"><?php printf( __( 'If you encounter any problems and you are unable to solve them yourself, you can visit the <a href="%s">Support Forum</a>. Posting the following Content will help other detect any misconfigurations.', 'qtranslate' ), 'https://github.com/qTranslate/qtranslate-xt/issues' ) ?></p>
+                                <br>
+                                <input type="button" id="qtx-debug-query" class="button"
+                                       value="<?php _e( 'Collect information', 'qtranslate' ); ?>">
+                                <br>
+                                <textarea readonly="readonly" id="qtx-debug-info" rows="20"
+                                          style="width: 90%; margin: 20px 0; display: none">...</textarea>
+                            </td>
+                        </tr>
+                    </table>
+					<?php qtranxf_admin_section_end( 'troubleshooting' ) ?>
+					<?php
 					// Allow to load additional services
 					do_action( 'qtranslate_configuration', $clean_uri );
 					?>
