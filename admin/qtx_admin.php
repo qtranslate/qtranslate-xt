@@ -661,7 +661,8 @@ add_filter( 'customize_allowed_urls', 'qtranxf_customize_allowed_urls' );
 /** @since 3.4 */
 function qtranxf_settings_page() {
 	require_once( QTRANSLATE_DIR . '/admin/qtx_admin_settings.php' );
-	qtranxf_conf();
+	$admin_settings = new QTX_Admin_Settings();
+	$admin_settings->display();
 }
 
 /**
