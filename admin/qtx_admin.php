@@ -660,7 +660,7 @@ add_filter( 'customize_allowed_urls', 'qtranxf_customize_allowed_urls' );
 
 /** @since 3.4 */
 function qtranxf_settings_page() {
-	require_once( QTRANSLATE_DIR . '/admin/qtx_configuration.php' );
+	require_once( QTRANSLATE_DIR . '/admin/qtx_admin_settings.php' );
 	qtranxf_conf();
 }
 
@@ -683,7 +683,6 @@ function qtranxf_translate_menu( &$menu ) {
  */
 function qtranxf_admin_menu() {
 	global $menu, $submenu;
-	//qtranxf_dbg_log('7.qtranxf_admin_menu:');
 	if ( ! empty( $menu ) ) {
 		qtranxf_translate_menu( $menu );
 	}
@@ -692,11 +691,8 @@ function qtranxf_admin_menu() {
 			qtranxf_translate_menu( $submenu[ $k ] );
 		}
 	}
-	//qtranxf_dbg_log('"admin_menu": qtranxf_admin_menu: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
-	// Configuration Page
-	add_options_page( __( 'Language Management', 'qtranslate' ), __( 'Languages', 'qtranslate' ), 'manage_options', 'qtranslate-xt', 'qtranxf_settings_page' ); // returns 'settings_page_qtranslate-x'
-	//qtranxf_dbg_log('qtranxf_admin_menu: $menu: ', $menu);
-	//qtranxf_dbg_log('qtranxf_admin_menu: $submenu: ', $submenu);
+
+	add_options_page( __( 'Language Management', 'qtranslate' ), __( 'Languages', 'qtranslate' ), 'manage_options', 'qtranslate-xt', 'qtranxf_settings_page' );
 }
 
 /* Add a metabox in admin menu page */
