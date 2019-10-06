@@ -18,8 +18,10 @@ class acf_qtranslate_acf_5 implements acf_qtranslate_acf_interface {
 	public function __construct( $plugin ) {
 		$this->plugin = $plugin;
 
-		add_filter( 'acf/format_value', array( $this, 'format_value' ) );
-		add_action( 'acf/include_fields', array( $this, 'include_fields' ) );
+		// a higher priority is needed for custom admin options (ACF PRO)
+		add_filter( 'acf/format_value', array( $this, 'format_value' ), 5 );
+		add_action( 'acf/include_fields', array( $this, 'include_fields' ), 5 );
+
 		add_action( 'acf/input/admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 	}
 
