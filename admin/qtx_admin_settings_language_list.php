@@ -1,13 +1,26 @@
 <?php
 
+/**
+ * Class QTX_Admin_Settings_Language_List
+ *
+ * Display the list of available languages in the admin options page
+ */
 class QTX_Admin_Settings_Language_List extends WP_List_Table {
-	private $clean_uri;
+
+	/**
+	 * @var string URI to the admin options page of qTranslate-XT
+	 */
+	private $options_uri;
+
+	/**
+	 * @var array names of the available languages, translated in the current admin language
+	 */
 	private $language_names;
 
-	public function __construct( $language_names, $clean_uri ) {
+	public function __construct( $language_names, $options_uri ) {
 		parent::__construct( array( 'screen' => 'language' ) );
 		$this->language_names = $language_names;
-		$this->clean_uri      = $clean_uri;
+		$this->options_uri    = $options_uri;
 	}
 
 	public function get_columns() {
@@ -30,7 +43,7 @@ class QTX_Admin_Settings_Language_List extends WP_List_Table {
 		$flag_location_url     = qtranxf_flag_location();
 		$flag_location_dir     = trailingslashit( WP_CONTENT_DIR ) . $q_config['flag_location'];
 		$flag_location_url_def = content_url( qtranxf_flag_location_default() );
-		$clean_uri             = $this->clean_uri;
+		$options_uri           = $this->options_uri;
 		$data                  = array();
 		foreach ( $this->language_names as $lang => $language ) {
 			if ( $lang == 'code' ) {
@@ -46,9 +59,9 @@ class QTX_Admin_Settings_Language_List extends WP_List_Table {
 				'code'   => $lang,
 				'flag'   => '<img src="' . $flag_url . '" alt="' . sprintf( __( '%s Flag', 'qtranslate' ), $language ) . '">',
 				'name'   => $language,
-				'action' => in_array( $lang, $q_config['enabled_languages'] ) ? ( $q_config['default_language'] == $lang ? __( 'Default', 'qtranslate' ) : '<a class="edit" href="' . $clean_uri . '&disable=' . $lang . '#languages">' . __( 'Disable', 'qtranslate' ) . '</a>' ) : '<a class="edit" href="' . $clean_uri . '&enable=' . $lang . '#languages">' . __( 'Enable', 'qtranslate' ) . '</a>',
-				'edit'   => '<a class="edit" href="' . $clean_uri . '&edit=' . $lang . '">' . __( 'Edit', 'qtranslate' ) . '</a>',
-				'stored' => ! isset( $languages_stored[ $lang ] ) ? __( 'Pre-Defined', 'qtranslate' ) : '<a class="delete" href="' . $clean_uri . '&delete=' . $lang . '#languages">' . ( isset( $languages_predef[ $lang ] ) ? __( 'Reset', 'qtranslate' ) : __( 'Delete', 'qtranslate' ) ) . '</a>'
+				'action' => in_array( $lang, $q_config['enabled_languages'] ) ? ( $q_config['default_language'] == $lang ? __( 'Default', 'qtranslate' ) : '<a class="edit" href="' . $options_uri . '&disable=' . $lang . '#languages">' . __( 'Disable', 'qtranslate' ) . '</a>' ) : '<a class="edit" href="' . $options_uri . '&enable=' . $lang . '#languages">' . __( 'Enable', 'qtranslate' ) . '</a>',
+				'edit'   => '<a class="edit" href="' . $options_uri . '&edit=' . $lang . '">' . __( 'Edit', 'qtranslate' ) . '</a>',
+				'stored' => ! isset( $languages_stored[ $lang ] ) ? __( 'Pre-Defined', 'qtranslate' ) : '<a class="delete" href="' . $options_uri . '&delete=' . $lang . '#languages">' . ( isset( $languages_predef[ $lang ] ) ? __( 'Reset', 'qtranslate' ) : __( 'Delete', 'qtranslate' ) ) . '</a>'
 			);
 		}
 		$this->items = $data;

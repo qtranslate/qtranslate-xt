@@ -215,7 +215,6 @@ function qtranxf_admin_init() {
 	if ( current_user_can( 'manage_options' ) && qtranxf_admin_is_config_page()
 		// TODO run this only if one of the forms or actions submitted --> && !empty($_POST)
 	) {
-		$q_config['url_info']['qtranslate-settings-url'] = admin_url( 'options-general.php?page=qtranslate-xt' );
 		require_once( QTRANSLATE_DIR . '/admin/qtx_admin_options_update.php' );
 		qtranxf_editConfig();
 	}
