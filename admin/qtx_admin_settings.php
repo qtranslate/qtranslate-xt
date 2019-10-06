@@ -21,7 +21,6 @@ class QTX_Admin_Settings {
 
 	public function __construct() {
 		$this->options_uri = admin_url( 'options-general.php?page=qtranslate-xt' );
-		$this->options_uri = apply_filters( 'qtranslate_clean_uri', $this->options_uri );
 	}
 
 	public static function display_section_button( $button_name ) {
@@ -49,8 +48,6 @@ class QTX_Admin_Settings {
 			return;
 		}
 
-		// Allow to prepare loading additional features
-		do_action( 'qtranslate_configuration_pre', $this->options_uri );
 		?>
         <div class="wrap">
 		<?php if ( isset( $_GET['edit'] ) ) : ?>
@@ -357,9 +354,6 @@ class QTX_Admin_Settings {
                                    value="1"<?php checked( $q_config['hide_default_language'] ) ?>/> <?php _e( 'Hide URL language information for default language.', 'qtranslate' ) ?>
                         </label>
                         <p class="qtranxs-notes"><?php _e( 'This is only applicable to Pre-Path and Pre-Domain mode.', 'qtranslate' ) ?></p>
-						<?php
-						do_action( 'qtranslate_url_mode_choices', $permalink_is_query );
-						?>
                         <label title="Per-Domain Mode">
                             <input type="radio" name="url_mode"
                                    value="<?php echo QTX_URL_DOMAINS; ?>" <?php checked( $url_mode, QTX_URL_DOMAINS ) ?> /> <?php echo __( 'Use Per-Domain mode: specify separate user-defined domain for each language.', 'qtranslate' ) ?>
