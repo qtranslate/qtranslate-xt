@@ -123,8 +123,7 @@ class QTX_Admin_Settings {
 					}
 					if ( sizeof( $files ) > 0 ) {
 						?>
-                        <select name="language_flag" id="language_flag" onchange="switch_flag(this.value);"
-                                onclick="switch_flag(this.value);" onkeypress="switch_flag(this.value);">
+                        <select name="language_flag" id="language_flag">
 							<?php
 							foreach ( $files as $file ) {
 								?>
@@ -133,7 +132,7 @@ class QTX_Admin_Settings {
 							}
 							?>
                         </select>
-                        <img src="." alt="<?php _e( 'Flag', 'qtranslate' ) ?>" id="preview_flag"
+                        <img src="." alt="<?php _e( 'Flag', 'qtranslate' ) ?>" id="preview_flag" data-flag-path="<?php echo qtranxf_flag_location() ?>"
                              style="vertical-align:middle; display:none"/>
 						<?php
 					} else {
@@ -142,16 +141,6 @@ class QTX_Admin_Settings {
 					?>
                     <p class="qtranxs-notes"><?php _e( 'Choose the corresponding country flag for language. (Example: gb.png)', 'qtranslate' ) ?></p>
                 </div>
-                <script type="text/javascript">
-                    //<![CDATA[
-                    function switch_flag(url) {
-                        document.getElementById('preview_flag').style.display = "inline";
-                        document.getElementById('preview_flag').src = "<?php echo qtranxf_flag_location() ?>" + url;
-                    }
-
-                    switch_flag(document.getElementById('language_flag').value);
-                    //]]>
-                </script>
                 <div class="form-field">
                     <label for="language_name"><?php _e( 'Name', 'qtranslate' );
 						echo ' ';

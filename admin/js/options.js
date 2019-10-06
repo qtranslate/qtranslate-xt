@@ -49,11 +49,23 @@
     switchTab(defaultHash);
   };
 
+  var onFlagChange = function(url) {
+    var $preview = $('#preview_flag');
+    $preview.css('display', 'inline');
+    $preview.attr('src', $preview.attr('data-flag-path') + url);
+  };
+
   $(function() {
     $(window).bind('hashchange', function () {
       onHashChange();
     });
     onHashChange('#general');
+
+    var $langFlag = $('#language_flag');
+    $langFlag.on('change', function() {
+      onFlagChange(this.value);
+    });
+    onFlagChange($langFlag.val());
 
     $('#qtranxs_debug_query').on('click', function () {
       var ca = document.cookie.split(';');
