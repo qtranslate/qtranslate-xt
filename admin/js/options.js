@@ -3,6 +3,7 @@
 */
 (function($) {
 
+  var keySection = 'qtranslate-xt-admin-section';
   var switchTab = function (hash) {
     if (!hash) {
       return false;
@@ -25,11 +26,11 @@
     form.attr('action', action);
 
     try {
-      sessionStorage.setItem('qtrans_admin_section', hash)
+      sessionStorage.setItem(keySection, hash)
     }
     catch (e) {
       // no big deal if this can't be stored
-      console.log('Failed to store qtrans_admin_section with sessionStorage', e);
+      console.log('Failed to store "' + keySection + '" with sessionStorage', e);
     }
 
     return true;
@@ -41,7 +42,7 @@
       return;
     }
 
-    hash = sessionStorage.getItem('qtrans_admin_section');
+    hash = sessionStorage.getItem(keySection);
     if (switchTab(hash)) {
       return;
     }
