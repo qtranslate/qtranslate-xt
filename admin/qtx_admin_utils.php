@@ -202,11 +202,15 @@ function qtranxf_ensure_language_set( &$langs, $lang, $default_value = null ) {
 function qtranxf_getLanguageEdit() {
 	global $q_config;
 
-	if (!isset($_REQUEST['qtranslate-edit-language'])) {
-		throw new UnexpectedValueException('Missing field: "qtranslate-edit-language" in $_REQUEST!');
+	if ( ! isset( $_REQUEST['qtranslate-edit-language'] ) ) {
+		throw new InvalidArgumentException( 'Missing "qtranslate-edit-language" field in $_REQUEST!' );
 	}
+
 	$lang = $_REQUEST['qtranslate-edit-language'];
-	// TODO check if lang exists in config
+	if ( ! in_array( $lang, $q_config['enabled_languages'] ) ) {
+		throw new UnexpectedValueException( 'The requested language "' . $lang . '" defined in "qtranslate-edit-language" is not enabled!' );
+	}
+
 	return $lang;
 }
 
