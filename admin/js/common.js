@@ -107,17 +107,6 @@ qtranxj_split_blocks = function (blocks) {
 	return result;
 };
 
-function qtranxj_get_cookie(cookieName) {
-	var cookies = document.cookie.split(';');
-	for (var i = 0; i < cookies.length; ++i) {
-		var pair = cookies[i].split('=');
-		if (pair.length < 2 || pair[0].trim() !== cookieName)
-			continue;
-		return pair[1].trim();
-	}
-	return '';
-}
-
 String.prototype.xsplit = function (_regEx) {
 	// Most browsers can do this properly, so let them work, they'll do it faster
 	if ('a~b'.split(/(~)/).length === 3) {
@@ -172,7 +161,7 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 		}
 		catch (e) {
 			// no big deal if this can't be stored
-			console.log('Failed to store ' + keyEditLanguage + ' with sessionStorage', e);
+			console.log('Failed to store "' + keyEditLanguage + '" with sessionStorage', e);
 		}
 	};
 
@@ -387,9 +376,6 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 							name: 'qtranslate-edit-language',
 							value: qTranslateConfig.activeLanguage
 						}, $form[0], true);
-					}
-					else {
-						console.log('input already added');
 					}
 				}
 				else {
@@ -1241,17 +1227,17 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 			var tabSwitch = $(this).hasClass('button') ? this.parentNode : this;
 			var lang = tabSwitch.lang;
 			if (!lang) {
-				alert('qTranslate-X: This should not have happened: Please, report this incident to the developers: !lang');
+				alert('qTranslate-XT: This should not have happened: Please, report this incident to the developers: !lang');
 				return;
 			}
 			if ($('.qtranxs-lang-switch-wrap').hasClass('copying')) {
 				qtx.copyContentFrom(lang);
 				$(tabSwitch).find('.button').blur();	// remove focus of source language in case of layout with button
+				$('.qtranxs-lang-switch-wrap').removeClass('copying');
+				$('.qtranxs-lang-copy .button').removeClass('active');
 			} else {
 				qtx.switchActiveLanguage(lang);
 			}
-			$('.qtranxs-lang-switch-wrap').removeClass('copying');
-			$('.qtranxs-lang-copy .button').removeClass('active');
 		};
 
 		this.toggleCopyFrom = function () {
