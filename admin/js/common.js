@@ -164,6 +164,18 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 }
 
 (function ($) {
+	// the edit language corresponds to the current LSB selection or the main admin language for single mode
+	var keyEditLanguage = 'qtranslate-xt-admin-edit-language';
+	var storeEditLanguage = function (lang) {
+		try {
+			sessionStorage.setItem(keyEditLanguage, lang);
+		}
+		catch (e) {
+			// no big deal if this can't be stored
+			console.log('Failed to store ' + keyEditLanguage + ' with sessionStorage', e);
+		}
+	};
+
 	var qTranslateX = function (pg) {
 		var qtx = this;
 
@@ -208,24 +220,21 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 			return !!qTranslateConfig.language_config[lang];
 		};
 
-		var setLangCookie = function (lang) {
-			document.cookie = 'qtrans_edit_language=' + lang;
-		};
-
 		if (qTranslateConfig.LSB) {
-			qTranslateConfig.activeLanguage = qtranxj_get_cookie('qtrans_edit_language');
+			qTranslateConfig.activeLanguage = sessionStorage.getItem(keyEditLanguage);
 			if (!qTranslateConfig.activeLanguage || !this.isLanguageEnabled(qTranslateConfig.activeLanguage)) {
 				qTranslateConfig.activeLanguage = qTranslateConfig.language;
 				if (this.isLanguageEnabled(qTranslateConfig.activeLanguage)) {
-					setLangCookie(qTranslateConfig.activeLanguage);
+					storeEditLanguage(qTranslateConfig.activeLanguage);
 				} else {
-					// no languages are enabled
+					// fallback to single mode
 					qTranslateConfig.LSB = false;
 				}
 			}
 		} else {
 			qTranslateConfig.activeLanguage = qTranslateConfig.language;
-			setLangCookie(qTranslateConfig.activeLanguage);
+			// no need to store for the current mode, but just in case the LSB are used later
+			storeEditLanguage(qTranslateConfig.activeLanguage);
 		}
 
 		/**
@@ -366,6 +375,25 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 					var f = qtranxj_ce('input', {name: fnm, type: 'hidden', className: 'hidden', value: text});
 					h.fields[lang] = f;
 					inpField.parentNode.insertBefore(f, inpField);
+				}
+
+				// insert a hidden element in the form so that the edit language is sent to the server
+				$form = $(inpField).closest('form');
+				if ($form.length) {
+					var $hidden = $form.find('input[name="qtranslate-edit-language"]');
+					if (!$hidden.length) {
+						qtranxj_ce('input', {
+							type: 'hidden',
+							name: 'qtranslate-edit-language',
+							value: qTranslateConfig.activeLanguage
+						}, $form[0], true);
+					}
+					else {
+						console.log('input already added');
+					}
+				}
+				else {
+					console.error('No form found for translatable field id=', inpField.id);
 				}
 			}
 
@@ -652,8 +680,8 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 		};
 
 		var onTabSwitch = function (lang) {
-			//var qtx = this;
-			setLangCookie(lang);
+			storeEditLanguage(lang);
+
 			for (var i = displayHookNodes.length; --i >= 0;) {
 				var h = displayHookNodes[i];
 				if (h.nd.parentNode) {
@@ -1190,8 +1218,11 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 					$(tabSwitches[i]).find('.button').removeClass('active');
 				}
 			}
+
 			var langFrom = qTranslateConfig.activeLanguage;
 			qTranslateConfig.activeLanguage = lang;
+			$('input[name="qtranslate-edit-language"]').val(lang);
+
 			{
 				var tabSwitches = qTranslateConfig.tabSwitches[qTranslateConfig.activeLanguage];
 				for (var i = 0; i < tabSwitches.length; ++i) {
