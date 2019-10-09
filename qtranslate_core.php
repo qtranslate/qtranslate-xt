@@ -420,18 +420,20 @@ function qtranxf_detect_language_front( &$url_info ) {
 	return $lang;
 }
 
-function qtranxf_setcookie_language( $lang, $cookie_name, $cookie_path, $cookie_domain = null, $secure = false ) {
+function qtranxf_setcookie_language( $lang, $cookie_name, $cookie_path ) {
+	global $q_config;
+
 	// only meant for server-side, set 'httponly' flag
-	setcookie( $cookie_name, $lang, strtotime( '+1year' ), $cookie_path, $cookie_domain, $secure, true );
+	setcookie( $cookie_name, $lang, strtotime( '+1year' ), $cookie_path, null, $q_config['use_secure_cookie'], true );
 }
 
 function qtranxf_set_language_cookie( $lang ) {
 	global $q_config;
+
 	if ( defined( 'WP_ADMIN' ) ) {
-		//qtranxf_dbg_log('qtranxf_set_language_cookie: QTX_COOKIE_NAME_ADMIN: lang=',$lang);
 		qtranxf_setcookie_language( $lang, QTX_COOKIE_NAME_ADMIN, ADMIN_COOKIE_PATH );
 	} elseif ( ! $q_config['disable_client_cookies'] ) {
-		qtranxf_setcookie_language( $lang, QTX_COOKIE_NAME_FRONT, COOKIEPATH, null, $q_config['use_secure_cookie'] );
+		qtranxf_setcookie_language( $lang, QTX_COOKIE_NAME_FRONT, COOKIEPATH );
 	}
 }
 
