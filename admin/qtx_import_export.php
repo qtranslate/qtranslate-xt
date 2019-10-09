@@ -172,7 +172,7 @@ function qtranxf_add_row_migrate( $nm, $plugin, $args = null ) {
 function qtranxf_admin_section_import_export( $request_uri ) {
 	global $q_config;
 
-	QTX_Admin_Settings::start_section( 'import' );
+	QTX_Admin_Settings::open_section( 'import' );
 	?>
     <table class="form-table qtranxs-form-table" id="qtranxs_import_config">
         <tr id="qtranslate-convert-database">
@@ -257,7 +257,7 @@ function qtranxf_admin_section_import_export( $request_uri ) {
         </tr>
     </table>
 	<?php
-	QTX_Admin_Settings::end_section( 'import' );
+	QTX_Admin_Settings::close_section( 'import' );
 }
 
 add_action( 'qtranslate_configuration', 'qtranxf_admin_section_import_export', 9 );

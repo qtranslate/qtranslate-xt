@@ -7,7 +7,7 @@ require_once(QTXSLUGS_DIR.'/admin/qtx_admin_slug.php');
 
 function qtranxf_slug_config($request_uri) {
 	global $q_config;
-	qtranxf_admin_section_start('slugs');
+	QTX_Admin_Settings::open_section('slugs');
 ?>
 <table class="form-table qtranxs-form-table" id="qtranxs_slug_config">
 	<tr>
@@ -62,8 +62,8 @@ function qtranxf_slug_config($request_uri) {
 	<tr><td colspan="2" id="qtranxf_slug_lsb_bottom"></td></tr>
 <?php }//if(!empty($q_config['slugs'])) ?>
 </table>
-<?php 
-	qtranxf_admin_section_end('slugs');
+<?php
+	QTX_Admin_Settings::close_section('slugs');
 }
 
 function qtranxf_slug_admin_fields($objects, $type){
