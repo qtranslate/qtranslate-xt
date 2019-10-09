@@ -66,8 +66,10 @@ class acf_qtranslate_qtranslatex {
 	 * Load javascript and stylesheets on admin pages
 	 */
 	public function admin_enqueue_scripts() {
-		$version = $this->plugin->acf_major_version();
-		wp_enqueue_script( 'acf_qtranslatex', plugins_url( "/assets/acf_{$version}/qtranslatex.js", ACF_QTRANSLATE_PLUGIN ), array( 'acf_qtranslate_common' ) );
+		$acf_version = $this->plugin->acf_major_version();
+		$script = "assets/acf_{$acf_version}/" . (SCRIPT_DEBUG ? "qtranslatex.js" : "qtranslatex.min.js");
+		$version = SCRIPT_DEBUG ? filemtime( ACF_QTRANSLATE_PLUGIN_DIR . $script ) : QTX_VERSION;
+		wp_enqueue_script( 'acf_qtranslatex', plugins_url( $script, ACF_QTRANSLATE_PLUGIN ), array( 'acf_qtranslate_common' ), $version );
 	}
 
 	/**

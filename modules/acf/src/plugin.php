@@ -99,10 +99,12 @@ class acf_qtranslate_plugin {
 	 */
 	public function admin_enqueue_scripts() {
 		wp_enqueue_style( 'acf_qtranslate_common', plugins_url( '/assets/common.css', ACF_QTRANSLATE_PLUGIN ), array( 'acf-input' ) );
-		wp_enqueue_script( 'acf_qtranslate_common', plugins_url( '/assets/common.js', ACF_QTRANSLATE_PLUGIN ), array(
+		$script = SCRIPT_DEBUG ? 'assets/common.js' : 'assets/common/min.js';
+		$version = SCRIPT_DEBUG ? filemtime( ACF_QTRANSLATE_PLUGIN_DIR . $script ) : QTX_VERSION;
+		wp_enqueue_script( 'acf_qtranslate_common', plugins_url( $script, ACF_QTRANSLATE_PLUGIN ), array(
 			'acf-input',
 			'underscore'
-		) );
+		), $version );
 	}
 
 	/**
