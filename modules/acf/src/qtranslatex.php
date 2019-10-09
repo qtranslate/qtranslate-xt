@@ -27,7 +27,6 @@ class acf_qtranslate_qtranslatex {
 		$this->plugin = $plugin;
 
 		add_action( 'admin_head', array( $this, 'admin_head' ) );
-		add_filter( 'acf_qtranslate_get_active_language', array( $this, 'get_active_language' ) );
 		add_action( 'acf/input/admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 	}
 
@@ -72,22 +71,4 @@ class acf_qtranslate_qtranslatex {
 		wp_enqueue_script( 'acf_qtranslatex', plugins_url( $script, ACF_QTRANSLATE_PLUGIN ), array( 'acf_qtranslate_common' ), $version );
 	}
 
-	/**
-	 * Get the active language
-	 *
-	 * @param string $language
-	 *
-	 * @return string
-	 */
-	public function get_active_language( $language ) {
-		// TODO modules should not read this cookie directly
-		if ( empty( $_COOKIE['qtrans_edit_language'] ) === false ) {
-			$enabledLanguages = qtranxf_getSortedLanguages();
-			if ( in_array( $_COOKIE['qtrans_edit_language'], $enabledLanguages ) ) {
-				$language = $_COOKIE['qtrans_edit_language'];
-			}
-		}
-
-		return $language;
-	}
 }

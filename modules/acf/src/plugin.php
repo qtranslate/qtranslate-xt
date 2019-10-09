@@ -89,9 +89,15 @@ class acf_qtranslate_plugin {
 
 	/**
 	 * Get the active language
+     *
+     * IMPORTANT!
+     * The active language should only be used for a default selection but the rendering should be "non-restrictive".
+     * In LSB mode, we should not assume which language the client is going to select eventually.
+     * Though we are likely to select the "wrong" language, the correct selection will be adjusted client-side.
+     * In single mode, the rendering should be the correct one though, as the language remains the same.
 	 */
 	public function get_active_language() {
-		return apply_filters( 'acf_qtranslate_get_active_language', qtranxf_getLanguage() );
+		return qtranxf_getLanguage();
 	}
 
 	/**

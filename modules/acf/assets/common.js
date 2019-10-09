@@ -5,11 +5,15 @@ jQuery(function ($) {
     /**
      * Sync qtranslate language switchers with qtranslatex language switchers.
      */
-    $body.on('click', '.qtranxs-lang-switch', function () {
-        var parent = $('.multi-language-field'), language = $(this).attr('lang');
+    var onLanguageSwitch = function (language) {
+        var parent = $('.multi-language-field');
         parent.find('.current-language').removeClass('current-language');
         parent.find('[data-language="' + language + '"]').addClass('current-language');
         parent.find('input[data-language="' + language + '"], textarea[data-language="' + language + '"]');
+    };
+    $body.on('click', '.qtranxs-lang-switch', function () {
+        var language = $(this).attr('lang');
+        onLanguageSwitch(language);
     });
 
     /**
@@ -20,6 +24,7 @@ jQuery(function ($) {
         parent.find('.current-language').removeClass('current-language');
         parent.find('[data-language="' + language + '"]').addClass('current-language');
         parent.find('input[data-language="' + language + '"], textarea[data-language="' + language + '"]').focus();
+        // TODO shouldn't we use qtx.switchActiveLanguage instead?
         $('.qtranxs-lang-switch[lang="' + language + '"]:first').trigger('click');
     });
 
@@ -48,6 +53,22 @@ jQuery(function ($) {
                 switchEditors.switchto(this);
             }
         });
+    });
+
+    $(function() {
+        // TODO qTranslateConfig should not be accessed here in common.js (temporary fix for LSB edit selection)
+        if (!qTranslateConfig.LSB)
+            return;
+        // select the edit tab from active language
+        var language = qTranslateConfig.qtx.getActiveLanguage();
+        if (language) {
+            // show the correct ACF fields
+            onLanguageSwitch(language);
+            // sync the switch editors
+            var $mlFields = $('.multi-language-field');
+            $mlFields.find('.current-language').removeClass('current-language');
+            $mlFields.find('[data-language="' + language + '"]').addClass('current-language');
+        }
     });
 
 });
