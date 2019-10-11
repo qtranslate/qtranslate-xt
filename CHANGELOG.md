@@ -1,3 +1,32 @@
+### 3.7.0
+General
+* Fix critical overwrite content issues due to duplicate cookies (#741, #711, #724, #739)
+* Remove session cookie `qtrans_edit_language`, replaced by sessionStorage `qtranslate-xt-admin-edit-language`
+* Introduce new hidden field `qtranslate-edit-language` in POST form to provide the active language to the server
+
+Core
+* Enable **secure** `qtrans_admin_language` cookie (#467)
+* Restrict `qtrans_admin_language`, `qtrans_front_language` cookies with **httponly** flag (#467)
+* Restrict legacy `url_info[original_url]` to qtranslate-slug for retro-compatibility only
+
+Admin
+* Add troubleshooting section in admin options
+* Refactor settings handlers (options panels)
+  * Create new class `QTX_Admin_Settings` (from `qtx_admin_configuration.php`)
+  * Create new class `QTX_Admin_Settings_Language_List` (from `QTX_LanguageList`)
+  * Remove session cookie `qtrans_admin_section`, replaced by sessionStorage `qtranslate-xt-admin-section`
+* Remove obsolete admin settings hooks
+  * filter: `qtranslate_clean_uri`
+  * action: `qtranslate_configuration_pre`
+  * action: `qtranslate_url_mode_choices`
+* Reorder URL mode options, polish domains layout
+* Cleanup configuration CSS
+
+Modules
+* Raise format priority for ACF PRO custom options (#740)
+* Add support for SCRIPT_DEBUG and minified scripts in ACF
+* Refactor ACF without `qtrans_edit_language` cookie, with a temporary fix for the initial language selection
+
 ### 3.6.3
 General
 * Update minimum requirement to PHP 5.4 (#732)
