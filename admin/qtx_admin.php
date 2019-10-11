@@ -916,7 +916,7 @@ function qtranxf_add_admin_filters() {
 
 function qtranxf_admin_debug_info() {
 	$info = array();
-	if ( current_user_can( 'administrator' ) ) {
+	if ( current_user_can( 'manage_options' ) ) {
 		global $q_config, $wp_version;
 
 		$info['configuration'] = $q_config;
