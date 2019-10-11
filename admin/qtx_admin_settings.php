@@ -324,10 +324,6 @@ class QTX_Admin_Settings {
                 <td>
                     <fieldset>
                         <legend class="hidden"><?php _e( 'URL Modification Mode', 'qtranslate' ) ?></legend>
-                        <label title="Query Mode">
-                            <input type="radio" name="url_mode"
-                                   value="<?php echo QTX_URL_QUERY; ?>" <?php checked( $url_mode, QTX_URL_QUERY ) ?> /> <?php echo __( 'Use Query Mode (?lang=en)', 'qtranslate' ) . '. ' . __( 'Most SEO unfriendly, not recommended.', 'qtranslate' ) ?>
-                        </label><br/>
                         <label title="Pre-Path Mode">
                             <input type="radio" name="url_mode"
                                    value="<?php echo QTX_URL_PATH; ?>" <?php checked( $url_mode, QTX_URL_PATH );
@@ -337,31 +333,44 @@ class QTX_Admin_Settings {
                             <input type="radio" name="url_mode"
                                    value="<?php echo QTX_URL_DOMAIN; ?>" <?php checked( $url_mode, QTX_URL_DOMAIN ) ?> /> <?php echo __( 'Use Pre-Domain Mode (uses http://en.yoursite.com)', 'qtranslate' ) . '. ' . __( 'You will need to configure DNS sub-domains on your site.', 'qtranslate' ) ?>
                         </label><br/>
-                        <label for="hide_default_language">
-                            <input type="checkbox"
-                                   name="hide_default_language"
-                                   id="hide_default_language"
-                                   value="1"<?php checked( $q_config['hide_default_language'] ) ?>/> <?php _e( 'Hide URL language information for default language.', 'qtranslate' ) ?>
-                        </label>
-                        <p class="qtranxs-notes"><?php _e( 'This is only applicable to Pre-Path and Pre-Domain mode.', 'qtranslate' ) ?></p>
                         <label title="Per-Domain Mode">
                             <input type="radio" name="url_mode"
                                    value="<?php echo QTX_URL_DOMAINS; ?>" <?php checked( $url_mode, QTX_URL_DOMAINS ) ?> /> <?php echo __( 'Use Per-Domain mode: specify separate user-defined domain for each language.', 'qtranslate' ) ?>
                         </label>
+                        <label title="Query Mode">
+                            <input type="radio" name="url_mode"
+                                   value="<?php echo QTX_URL_QUERY; ?>" <?php checked( $url_mode, QTX_URL_QUERY ) ?> /> <?php echo __( 'Use Query Mode (?lang=en)', 'qtranslate' ) . '. ' . __( 'Most SEO unfriendly, not recommended.', 'qtranslate' ) ?>
+                        </label><br/>
                     </fieldset>
+					<?php
+					if ( $url_mode == QTX_URL_DOMAINS ) : ?>
+                    <div style="margin: 10px 0">
+						<?php
+						$homeinfo  = qtranxf_get_home_info();
+						$home_host = $homeinfo['host'];
+						foreach ( $q_config['enabled_languages'] as $lang ) {
+							$id     = 'language_domain_' . $lang;
+							$domain = isset( $q_config['domains'][ $lang ] ) ? $q_config['domains'][ $lang ] : $lang . '.' . $home_host;
+							?>
+                            <a href="<?php echo $this->options_uri . '&edit=' . $lang ?>"><img src="<?php echo $flag_location . $q_config['flag'][ $lang ] ?>"
+                                                                                               alt="<?php echo $q_config['language_name'][ $lang ] ?>"/></a>
+
+                            <input type="text"  class="regular-text" name="<?php echo $id ?>" id="<?php echo $id ?>"
+                                   value="<?php echo $domain ?>" placeholder="<?php echo __( 'Domain for', 'qtranslate' ) . ' ' . $q_config['language_name'][ $lang ] . ' (' . $lang . ')' ; ?>"/><br/>
+							<?php
+						} ?>
+                    </div>
+					<?php endif; ?>
+                    <br/>
+                    <label for="hide_default_language">
+                        <input type="checkbox"
+                               name="hide_default_language"
+                               id="hide_default_language"
+                               value="1"<?php checked( $q_config['hide_default_language'] ) ?>/> <?php _e( 'Hide URL language information for default language.', 'qtranslate' ) ?>
+                    </label>
+                    <p class="qtranxs-notes"><?php _e( 'This is only applicable to Pre-Path and Pre-Domain mode.', 'qtranslate' ) ?></p>
                 </td>
             </tr>
-			<?php
-			if ( $url_mode == QTX_URL_DOMAINS ) {
-				$homeinfo  = qtranxf_get_home_info();
-				$home_host = $homeinfo['host']; // parse_url(get_option('home'),PHP_URL_HOST);
-				foreach ( $q_config['enabled_languages'] as $lang ) {
-					$id     = 'language_domain_' . $lang;
-					$domain = isset( $q_config['domains'][ $lang ] ) ? $q_config['domains'][ $lang ] : $lang . '.' . $home_host;
-					echo '<tr><td style="text-align: right">' . __( 'Domain for', 'qtranslate' ) . ' <a href="' . $this->options_uri . '&edit=' . $lang . '">' . $q_config['language_name'][ $lang ] . '</a>&nbsp;(' . $lang . '):</td><td><input type="text" name="' . $id . '" id="' . $id . '" value="' . $domain . '" style="width:100%"/></td></tr>' . PHP_EOL;
-				}
-			}
-			?>
             <tr>
                 <th scope="row"><?php _e( 'Untranslated Content', 'qtranslate' ) ?></th>
                 <td>
