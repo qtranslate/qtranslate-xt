@@ -336,7 +336,7 @@ class QTX_Admin_Settings {
                         <label title="Per-Domain Mode">
                             <input type="radio" name="url_mode"
                                    value="<?php echo QTX_URL_DOMAINS; ?>" <?php checked( $url_mode, QTX_URL_DOMAINS ) ?> /> <?php echo __( 'Use Per-Domain mode: specify separate user-defined domain for each language.', 'qtranslate' ) ?>
-                        </label>
+                        </label><br/>
                         <label title="Query Mode">
                             <input type="radio" name="url_mode"
                                    value="<?php echo QTX_URL_QUERY; ?>" <?php checked( $url_mode, QTX_URL_QUERY ) ?> /> <?php echo __( 'Use Query Mode (?lang=en)', 'qtranslate' ) . '. ' . __( 'Most SEO unfriendly, not recommended.', 'qtranslate' ) ?>
