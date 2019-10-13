@@ -270,9 +270,6 @@ function qtranxf_parse_language_info( &$url_info, $link = false ) {
 						$url_info['lang_url']        = $lang;
 						$url_info['wp-path']         = substr( $url_info['wp-path'], 3 );
 						$url_info['doing_front_end'] = true;
-						if ( WP_DEBUG ) {
-							$url_info['url_mode'] = 'pre-path';
-						}
 					}
 				}
 				break;
@@ -285,9 +282,6 @@ function qtranxf_parse_language_info( &$url_info, $link = false ) {
 							$url_info['lang_url']        = $lang;
 							$url_info['host']            = substr( $url_info['host'], 3 );
 							$url_info['doing_front_end'] = true;
-							if ( WP_DEBUG ) {
-								$url_info['url_mode'] = 'pre-domain';
-							}
 						}
 					}
 				}
@@ -305,9 +299,6 @@ function qtranxf_parse_language_info( &$url_info, $link = false ) {
 						$url_info['lang_url'] = $lang;
 						if ( $lang != $q_config['default_language'] || strpos( get_option( 'siteurl' ), $url_info['host'] ) === false ) {
 							$url_info['doing_front_end'] = true;
-						}
-						if ( WP_DEBUG ) {
-							$url_info['url_mode'] = 'per-domain';
 						}
 						break;
 					}
