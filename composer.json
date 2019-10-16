@@ -1,25 +1,30 @@
 {
   "name": "qtranslate/qtranslate-xt",
-  "description": "qTranslate-XT (eXTended): Adds a user-friendly multilingual dynamic content management.",
+  "description": "qTranslate-XT (eXTended): Adds user-friendly multilingual content support, stored in single post.",
   "type": "wordpress-plugin",
-  "keywords": [
-    "wordpress",
-    "wordpress-plugin",
-    "qtranslate-x",
-    "qtranslate-xt",
-    "i18n"
-  ],
+  "keywords": [ "wordpress", "wordpress-plugin", "qtranslate-x", "qtranslate-xt", "i18n" ],
   "homepage": "https://github.com/qtranslate/qtranslate-xt",
-  "license": "GPL-3.0-or-later",
+  "license": "GPL-2.0-or-later",
   "authors": [
     {
-      "name": "herrvigg"
+      "name": "qTranslate Community",
+      "homepage": "https://github.com/qtranslate/qtranslate-xt/graphs/contributors"
     },
     {
-      "name": "johnclause"
+      "name": "herrvigg",
+      "role": "Developer: qTranslate-XT"
     },
     {
-      "name": "chineseleper"
+      "name": "johnclause",
+      "role": "Developer: qTranslate-X"
+    },
+    {
+      "name": "Qian Qin (chineseleper)",
+      "role": "Developer: qTranslate"
+    },
+    {
+      "name": "funkjedi",
+      "role": "Developer: ACF for -X"
     },
     {
       "name": "Vavooon"
@@ -30,10 +35,12 @@
   ],
   "support": {
     "issues": "https://github.com/qtranslate/qtranslate-xt/issues",
+    "wiki": "https://github.com/qtranslate/qtranslate-xt/wiki",
     "source": "https://github.com/qtranslate/qtranslate-xt"
   },
   "require": {
-    "composer/installers": "~1.0"
+    "composer/installers": "~1.0",
+    "php" : ">=5.4"
   },
   "extra": {
     "installer-name": "qtranslate-xt"
