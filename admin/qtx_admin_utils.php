@@ -527,6 +527,22 @@ function qtranxf_verify_nonce( $nonce_name, $nonce_field = '_wpnonce' ) {
 	return empty( $_POST ) || check_admin_referer( $nonce_name, $nonce_field );
 }
 
+function qtranxf_admin_debug_info() {
+	$info = array();
+	if ( current_user_can( 'manage_options' ) ) {
+		global $q_config, $wp_version;
+
+		$info['configuration'] = $q_config;
+		$info['versions']      = array(
+			'PHP_VERSION' => PHP_VERSION,
+			'WP_VERSION'  => $wp_version,
+			'QTX_VERSION' => QTX_VERSION
+		);
+	}
+	echo json_encode( $info, JSON_UNESCAPED_SLASHES );
+	wp_die();
+}
+
 /**
  * TODO this looks unnecessary, it might be possible to use json_decode directly with right options
  * @since 3.4.6.5
