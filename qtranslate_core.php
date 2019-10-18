@@ -105,7 +105,8 @@ function qtranxf_init_language() {
 		}
 	} elseif ( isset( $url_info['doredirect'] ) ) {
 		$url_info['doredirect'] .= ' - cancelled by can_redirect';
-		//qtranxf_dbg_log('qtranxf_init_language: doredirect canceled: $url_info: ',$url_info);
+		// this should never happen! We are now in a bad state.
+		assert(false, $url_info['doredirect']);
 	}
 
 	// TODO clarify fix url to prevent xss - how does this prevents xss?
@@ -192,6 +193,7 @@ function qtranxf_detect_language( &$url_info ) {
 				// determine $ref_info['path-base']
 				qtranxf_complete_url_info( $ref_info );
 				if ( isset( $ref_info['path-base'] ) ) {
+					// TODO remove internal_refer, not used
 					$url_info['internal_referer'] = true;
 					if ( ! $lang || ! ( isset( $url_info['doing_front_end'] ) || isset( $ref_info['doing_front_end'] ) ) ) {
 						$lang = qtranxf_parse_language_info( $ref_info, true );
@@ -1074,12 +1076,14 @@ function qtranxf_get_url_for_language( $url, $lang, $showLanguage = true ) {
 /**
  * Encode URL $url with language $lang.
  *
- * @param (string) $url URL to be converted.
- * @param (string) $lang two-letter language code of the language to convert $url to.
- * @param (bool) $forceadmin $url is not converted on admin side, unless $forceadmin is set to true.
- * @param (bool) $showDefaultLanguage When set to true, $url is always encoded with a language, otherwise it senses option "Hide URL language information for default language" to keep $url consistent with the currently active language.
+ * @param string $url URL to be converted.
+ * @param string $lang two-letter language code of the language to convert $url to.
+ * @param bool $forceadmin $url is not converted on admin side, unless $forceadmin is set to true.
+ * @param bool $showDefaultLanguage When set to true, $url is always encoded with a language, otherwise it senses option "Hide URL language information for default language" to keep $url consistent with the currently active language.
  *
  * If you need a URL to switch the language, set $showDefaultLanguage=true, if you need a URL to keep the current language, set it to false.
+ *
+ * @return string
  */
 function qtranxf_convertURL( $url = '', $lang = '', $forceadmin = false, $showDefaultLanguage = false ) {
 	global $q_config;
