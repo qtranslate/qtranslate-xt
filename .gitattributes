@@ -1,8 +1,8 @@
 * text=auto
-*.php text
-*.css text
-*.js text
-*.json text
+*.php text eol=lf
+*.css text eol=lf
+*.js text eol=lf
+*.json text eol=lf
 
 *.gif binary
 *.png binary
