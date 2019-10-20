@@ -360,7 +360,7 @@ function qtranxf_parse_language_info( &$url_info, $link = false ) {
 			$parsed_lang = $query_lang;
 			// TODO can we avoid removing query args?
 			qtranxf_del_query_arg( $url_info['query'], 'lang' );
-			if ( $q_config['url_mode'] != QTX_URL_QUERY ) {
+			if ( $q_config['url_mode'] != QTX_URL_QUERY && ! is_admin() ) {
 				// force lang switch from query var
 				$doredirect = true;
 			}
