@@ -1,5 +1,5 @@
 <?php
-if ( !defined( 'WP_ADMIN' ) ) exit;
+if ( !is_admin() ) exit;
 
 require_once(QTXSLUGS_DIR.'/admin/qtx_admin_slug.php');
 require_once(QTXSLUGS_DIR.'/admin/qtx_admin_slug_settings.php');

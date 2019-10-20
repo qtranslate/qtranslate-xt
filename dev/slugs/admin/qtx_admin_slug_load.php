@@ -1,5 +1,5 @@
 <?php
-if ( ! defined( 'WP_ADMIN' ) ) {
+if ( ! is_admin() ) {
 	exit;
 }
 

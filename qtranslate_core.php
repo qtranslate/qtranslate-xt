@@ -31,7 +31,7 @@ function qtranxf_init_language() {
     if ( WP_DEBUG ) {
         $url_info['pagenow']        = $pagenow;
         $url_info['REQUEST_METHOD'] = isset( $_SERVER['REQUEST_METHOD'] ) ? $_SERVER['REQUEST_METHOD'] : '';
-        if ( defined( 'WP_ADMIN' ) && WP_ADMIN ) {
+        if ( is_admin() ) {
             $url_info['WP_ADMIN'] = true;
         }
         if ( wp_doing_ajax() ) {
@@ -145,7 +145,7 @@ function qtranxf_init_language() {
 function qtranxf_detect_language( &$url_info ) {
     global $q_config;
 
-    if ( defined( 'WP_ADMIN' ) || defined( 'WP_CLI' ) ) {
+    if ( is_admin() || defined( 'WP_CLI' ) ) {
         $siteinfo                     = qtranxf_get_site_info();
         $url_info['path-base']        = $siteinfo['path'];
         $url_info['path-base-length'] = $siteinfo['path-length'];
@@ -217,7 +217,7 @@ function qtranxf_detect_language( &$url_info ) {
     }
 
     if ( ! isset( $url_info['doing_front_end'] ) ) {
-        $url_info['doing_front_end'] = ! defined( 'WP_ADMIN' );
+        $url_info['doing_front_end'] = ! is_admin();
     }
 
     if ( ! $lang ) {
@@ -269,7 +269,7 @@ function qtranxf_parse_language_info( &$url_info, $link = false ) {
     $doredirect = false;
 
     // parse URL lang
-    if ( ! defined( 'WP_ADMIN' ) || $link ) {
+    if ( ! is_admin() || $link ) {
         $url_mode = $q_config['url_mode'];
         switch ( $url_mode ) {
             case QTX_URL_PATH:
@@ -467,7 +467,7 @@ function qtranxf_set_language_cookie( $lang ) {
     global $q_config;
 
     assert( ! qtranxf_is_rest_request_expected() );
-    if ( defined( 'WP_ADMIN' ) ) {
+    if ( is_admin() ) {
         qtranxf_setcookie_language( $lang, QTX_COOKIE_NAME_ADMIN, ADMIN_COOKIE_PATH );
     } elseif ( ! $q_config['disable_client_cookies'] ) {
         qtranxf_setcookie_language( $lang, QTX_COOKIE_NAME_FRONT, COOKIEPATH );
