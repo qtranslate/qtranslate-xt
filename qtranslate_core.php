@@ -355,7 +355,8 @@ function qtranxf_parse_language_info( &$url_info, $link = false ) {
 	if ( qtranxf_is_rest_request_expected() ) {
 		if ( isset( $url_info['lang_url'] ) ) {
 			$parsed_lang = $url_info['lang_url'];
-		} elseif ( $q_config['url_mode'] == QTX_URL_QUERY && $query_lang ) {
+		} elseif ( $query_lang && ( $q_config['url_mode'] == QTX_URL_QUERY || $link ) ) {
+			// consider query lang for query mode or fallback for referrer links (from REST)
 			$parsed_lang = $query_lang;
 		}
 		// 'hide_default_language' should also be set in query mode
