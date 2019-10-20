@@ -1,3 +1,33 @@
+### 3.7.1
+License
+* Update license to GPLv2 or later. Meant for harmonization for the WordPress community. More info in related commit.
+* *Important*: if you ever redistribute this work you should also do it under the same license.
+
+REST
+* Fix 404 and wrong redirects by disallowing lang query switch with REST (#720)
+* Allow cookie read as last fallback with REST (#720)
+* Check `HTTP_REFERER` with REST for language & doing front/admin (#744)
+
+Core
+* Use WP core functions to check globals (#747):
+  * `WP_ADMIN` -> `is_admin()`
+  * `DOING_AJAX` -> `wp_doing_ajax()` # from WP 4.7
+  * `DOING_CRON` -> `wp_doing_cron()` # from WP 4.8 (new minimum required version)
+  * `WP_CLI` -> no function but we should check the value properly
+* Disambiguate core loading setup
+
+Admin
+* Disambiguate admin loading sequence in `qtranxf_admin_load`
+  * Remove `qtranxf_add_admin_filters` which should not be called from outside
+  * Move `qtranxf_admin_debug_info` to utils
+
+Misc
+* Update license, authors and links for Composer
+* Reformat PHP and JS code with 4 spaces (#737)
+* Add debugging asserts for invalid redirects. Disclaimer: only meant for dev with WP_DEBUG, not for production mode!
+* Cleanup .gitattributes, clarify text (check-in) and EOL (check-out) conversions for source files
+* Remove irrelevant .gitignore # NB: use git global/system config for your IDE or OS crap ;)
+
 ### 3.7.0
 General
 * Fix critical overwrite content issues due to duplicate cookies (#741, #711, #724, #739)
