@@ -217,16 +217,18 @@ function qtranxf_detect_language( &$url_info ) {
 		}
 	}
 
-	$url_info['language']   = $lang;
-	$url_info['set_cookie'] = ! defined( 'DOING_AJAX' );
+	$url_info['language'] = $lang;
+
+	// REST calls should be deterministic (stateless), no special language detection e.g. based on cookie
+	$url_info['set_cookie'] = ! defined( 'DOING_AJAX' ) && ! qtranxf_is_rest_request_expected();
 
 	/**
 	 * Hook for possible other methods
 	 * Set $url_info['language'] with the result
 	 */
 	$url_info = apply_filters( 'qtranslate_detect_language', $url_info );
-	$lang     = $url_info['language'];
-	//qtranxf_dbg_log('qtranxf_detect_language: detected: url_info: ',$url_info);
+
+	$lang = $url_info['language'];
 	if ( $url_info['set_cookie'] ) {
 		qtranxf_set_language_cookie( $lang );
 	}
@@ -455,6 +457,7 @@ function qtranxf_setcookie_language( $lang, $cookie_name, $cookie_path ) {
 function qtranxf_set_language_cookie( $lang ) {
 	global $q_config;
 
+	assert( ! qtranxf_is_rest_request_expected() );
 	if ( defined( 'WP_ADMIN' ) ) {
 		qtranxf_setcookie_language( $lang, QTX_COOKIE_NAME_ADMIN, ADMIN_COOKIE_PATH );
 	} elseif ( ! $q_config['disable_client_cookies'] ) {
