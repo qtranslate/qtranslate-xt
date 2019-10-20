@@ -631,7 +631,7 @@ function qtranxf_is_rest_request_expected() {
  * @return bool
  */
 function qtranxf_can_redirect() {
-    return ! defined( 'WP_ADMIN' ) && ! defined( 'DOING_AJAX' ) && ! defined( 'WP_CLI' ) && ! wp_doing_cron() && empty( $_POST )
+    return ! defined( 'WP_ADMIN' ) && ! wp_doing_ajax() && ! defined( 'WP_CLI' ) && ! wp_doing_cron() && empty( $_POST )
            && ( ! qtranxf_is_rest_request_expected() )
            // TODO clarify: 'REDIRECT_*' needs more testing --> && !isset($_SERVER['REDIRECT_URL'])
            && ( ! isset( $_SERVER['REDIRECT_STATUS'] ) || $_SERVER['REDIRECT_STATUS'] == '200' );
@@ -1042,7 +1042,7 @@ function qtranxf_match_language_locale( $locale ) {
 }
 
 function qtranxf_get_page_referer() {
-    if ( defined( 'DOING_AJAX' ) ) {
+    if ( wp_doing_ajax() ) {
         global $q_config;
         if ( isset( $q_config['url_info']['page_referer'] ) ) {
             return $q_config['url_info']['page_referer'];

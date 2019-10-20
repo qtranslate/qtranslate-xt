@@ -110,7 +110,7 @@ function qtranxf_collect_translations_posted() {
         qtranxf_clean_request( 'qtranslate-fields' );
     }
 
-    if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
+    if ( wp_doing_ajax() ) {
         // parse variables collected as a query string in an option
         foreach ( $_REQUEST as $name => $value ) {
             if ( ! is_string( $value ) ) {
