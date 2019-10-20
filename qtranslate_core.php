@@ -210,11 +210,7 @@ function qtranxf_detect_language( &$url_info ) {
 	}
 
 	if ( ! $lang ) {
-		if ( $url_info['doing_front_end'] ) {
-			$lang = qtranxf_detect_language_front( $url_info );
-		} else {
-			$lang = qtranxf_detect_language_admin( $url_info );
-		}
+		$lang = $url_info['doing_front_end'] ? qtranxf_detect_language_front( $url_info ) : qtranxf_detect_language_admin( $url_info );
 	}
 
 	$url_info['language'] = $lang;
@@ -439,6 +435,7 @@ function qtranxf_detect_language_front( &$url_info ) {
 	}
 
 	if ( ! isset( $url_info['doredirect'] )
+	     && ( ! qtranxf_is_rest_request_expected() ) // fallback case where language can be read from cookie with REST
 	     && ( ! $q_config['hide_default_language'] || $lang != $q_config['default_language'] )
 	) {
 		$url_info['doredirect'] = 'language needs to be shown in url';
