@@ -142,8 +142,6 @@ function qtranxf_init_language() {
     //qtranxf_dbg_log('qtranxf_init_language: done: url_info: ',$url_info);
 }
 
-add_action( 'plugins_loaded', 'qtranxf_init_language', 2 ); // user is not authenticated yet
-
 function qtranxf_detect_language( &$url_info ) {
     global $q_config;
 
@@ -584,8 +582,6 @@ function qtranxf_load_plugin_textdomain() {
 function qtranxf_init() {
     //qtranxf_dbg_log('3.qtranxf_init:');
 }
-
-add_action( 'init', 'qtranxf_init', 2 ); // user is authenticated
 
 function qtranxf_front_header_css_default() {
     global $q_config;
@@ -1632,4 +1628,7 @@ function qtranxf_rest_api_register_rewrites() {
     add_rewrite_rule( '^' . $default_lang . '/' . $wp_rewrite->index . '/' . rest_get_url_prefix() . '/(.*)?', 'index.php?rest_route=/$matches[1]', 'top' );
 }
 
+// core setup
+add_action( 'plugins_loaded', 'qtranxf_init_language', 2 ); // user is not authenticated yet
+add_action( 'init', 'qtranxf_init', 2 ); // user is authenticated
 add_action( 'init', 'qtranxf_rest_api_register_rewrites', 11 );
