@@ -37,7 +37,7 @@ function qtranxf_init_language() {
         if ( defined( 'DOING_AJAX' ) ) {
             $url_info['DOING_AJAX_POST'] = $_POST;
         }
-        if ( defined( 'DOING_CRON' ) ) {
+        if ( wp_doing_cron() ) {
             $url_info['DOING_CRON_POST'] = $_POST;
         }
     }

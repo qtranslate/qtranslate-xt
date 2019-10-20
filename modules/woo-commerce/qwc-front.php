@@ -127,7 +127,7 @@ function qwc_paypal_args( $args ) {
 /**
  * Dealing with webhooks, which should always send information in Raw ML format
  */
-if ( defined( 'DOING_CRON' ) ) {
+if ( wp_doing_cron() ) {
 
     function qwc_deliver_webhook_async( $webhook_id, $arg ) {
         //qtranxf_dbg_log('qwc_deliver_webhook_async: $webhook_id=',$webhook_id);

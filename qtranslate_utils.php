@@ -631,7 +631,7 @@ function qtranxf_is_rest_request_expected() {
  * @return bool
  */
 function qtranxf_can_redirect() {
-    return ! defined( 'WP_ADMIN' ) && ! defined( 'DOING_AJAX' ) && ! defined( 'WP_CLI' ) && ! defined( 'DOING_CRON' ) && empty( $_POST )
+    return ! defined( 'WP_ADMIN' ) && ! defined( 'DOING_AJAX' ) && ! defined( 'WP_CLI' ) && ! wp_doing_cron() && empty( $_POST )
            && ( ! qtranxf_is_rest_request_expected() )
            // TODO clarify: 'REDIRECT_*' needs more testing --> && !isset($_SERVER['REDIRECT_URL'])
            && ( ! isset( $_SERVER['REDIRECT_STATUS'] ) || $_SERVER['REDIRECT_STATUS'] == '200' );
