@@ -102,7 +102,7 @@
             });
             // call the original handler
             repeaterFieldRemove.call(this, $el);
-        };
+        }
     });
 
 })();

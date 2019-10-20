@@ -180,4 +180,3 @@ acf.registerFieldType(acf.models.WysiwygField.extend({
         });
     }
 }));
-
