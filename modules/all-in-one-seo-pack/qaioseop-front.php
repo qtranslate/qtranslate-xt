@@ -1,6 +1,6 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+    exit;
 }
 /*
  * function internationalize( $in ) from all-in-one-seo-pack/aioseop_class.php

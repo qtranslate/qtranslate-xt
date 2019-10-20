@@ -1,6 +1,6 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+    exit;
 }
 
 require_once( QTRANSLATE_DIR . '/qtranslate_date_time.php' );
@@ -9,113 +9,113 @@ require_once( QTRANSLATE_DIR . '/qtranslate_date_time.php' );
  * locale for current language and set it on PHP.
  */
 function qtranxf_localeForCurrentLanguage( $locale ) {
-	static $locale_lang;//cache
-	if ( ! empty( $locale_lang ) ) {
-		return $locale_lang;
-	}
-	global $q_config;
-	$lang        = $q_config['language'];
-	$locale_lang = $q_config['locale'][ $lang ];
+    static $locale_lang;//cache
+    if ( ! empty( $locale_lang ) ) {
+        return $locale_lang;
+    }
+    global $q_config;
+    $lang        = $q_config['language'];
+    $locale_lang = $q_config['locale'][ $lang ];
 
-	// submit a few possible locales
-	$lc             = array();
-	$lc[]           = $locale_lang . '.utf8';
-	$lc[]           = $locale_lang . '@euro';
-	$lc[]           = $locale_lang;
-	$windows_locale = qtranxf_default_windows_locale();
-	if ( isset( $windows_locale[ $lang ] ) ) {
-		$lc[] = $windows_locale[ $lang ];
-	}
-	$lc[] = $lang;
+    // submit a few possible locales
+    $lc             = array();
+    $lc[]           = $locale_lang . '.utf8';
+    $lc[]           = $locale_lang . '@euro';
+    $lc[]           = $locale_lang;
+    $windows_locale = qtranxf_default_windows_locale();
+    if ( isset( $windows_locale[ $lang ] ) ) {
+        $lc[] = $windows_locale[ $lang ];
+    }
+    $lc[] = $lang;
 
-	// return the correct locale and most importantly set it (wordpress doesn't, which is bad)
-	// only set LC_TIME as everything else doesn't seem to work with windows
-	$loc = setlocale( LC_TIME, $lc );
-	if ( ! $loc ) {
-		$lc2 = array();
-		if ( strlen( $locale_lang ) == 2 ) {
-			$lc2[] = $locale_lang . '_' . strtoupper( $locale_lang );
-			$loc   = $locale_lang . '_' . strtoupper( $lang );
-			if ( ! in_array( $loc, $lc2 ) ) {
-				$lc2[] = $loc;
-			}
-		}
-		$loc = $lang . '_' . strtoupper( $lang );
-		if ( ! in_array( $loc, $lc2 ) ) {
-			$lc2[] = $loc;
-		}
-		setlocale( LC_TIME, $lc2 );
-	}
+    // return the correct locale and most importantly set it (wordpress doesn't, which is bad)
+    // only set LC_TIME as everything else doesn't seem to work with windows
+    $loc = setlocale( LC_TIME, $lc );
+    if ( ! $loc ) {
+        $lc2 = array();
+        if ( strlen( $locale_lang ) == 2 ) {
+            $lc2[] = $locale_lang . '_' . strtoupper( $locale_lang );
+            $loc   = $locale_lang . '_' . strtoupper( $lang );
+            if ( ! in_array( $loc, $lc2 ) ) {
+                $lc2[] = $loc;
+            }
+        }
+        $loc = $lang . '_' . strtoupper( $lang );
+        if ( ! in_array( $loc, $lc2 ) ) {
+            $lc2[] = $loc;
+        }
+        setlocale( LC_TIME, $lc2 );
+    }
 
-	//qtranxf_dbg_log('qtranxf_localeForCurrentLanguage: $locale='.$locale.'; return: '.$locale_lang.'; Set to ', $loc);
-	return $locale_lang;
+    //qtranxf_dbg_log('qtranxf_localeForCurrentLanguage: $locale='.$locale.'; return: '.$locale_lang.'; Set to ', $loc);
+    return $locale_lang;
 }
 
 function qtranxf_useCurrentLanguageIfNotFoundShowEmpty( $content ) {
-	global $q_config;
+    global $q_config;
 
-	return qtranxf_use( $q_config['language'], $content, false, true );
+    return qtranxf_use( $q_config['language'], $content, false, true );
 }
 
 function qtranxf_useCurrentLanguageIfNotFoundShowAvailable( $content ) {
-	global $q_config;
+    global $q_config;
 
-	return qtranxf_use( $q_config['language'], $content, true, false );
+    return qtranxf_use( $q_config['language'], $content, true, false );
 }
 
 function qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage( $content ) {
-	global $q_config;
+    global $q_config;
 
-	return qtranxf_use( $q_config['language'], $content, false, false );
+    return qtranxf_use( $q_config['language'], $content, false, false );
 }
 
 function qtranxf_useDefaultLanguage( $content ) {
-	global $q_config;
+    global $q_config;
 
-	return qtranxf_use( $q_config['default_language'], $content, false, false );
+    return qtranxf_use( $q_config['default_language'], $content, false, false );
 }
 
 function qtranxf_versionLocale() {
-	return 'en_US';
+    return 'en_US';
 }
 
 function qtranxf_useRawTitle( $title, $raw_title = '', $context = 'save' ) {
-	switch ( $context ) {
-		case 'save':
-			{
-				if ( empty( $raw_title ) ) {
-					$raw_title = $title;
-				}
-				$raw_title = qtranxf_useDefaultLanguage( $raw_title );
-				$title     = remove_accents( $raw_title );
-			}
-			break;
-		default:
-			break;
-	}
+    switch ( $context ) {
+        case 'save':
+            {
+                if ( empty( $raw_title ) ) {
+                    $raw_title = $title;
+                }
+                $raw_title = qtranxf_useDefaultLanguage( $raw_title );
+                $title     = remove_accents( $raw_title );
+            }
+            break;
+        default:
+            break;
+    }
 
-	return $title;
+    return $title;
 }
 
 function qtranxf_gettext( $translated_text ) {
-	//same as qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage
-	global $q_config;
+    //same as qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage
+    global $q_config;
 
-	return qtranxf_use( $q_config['language'], $translated_text, false );
+    return qtranxf_use( $q_config['language'], $translated_text, false );
 }
 
 function qtranxf_gettext_with_context( $translated_text ) {
-	//same as qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage
-	global $q_config;
+    //same as qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage
+    global $q_config;
 
-	return qtranxf_use( $q_config['language'], $translated_text, false );
+    return qtranxf_use( $q_config['language'], $translated_text, false );
 }
 
 function qtranxf_ngettext( $translated_text ) {
-	//same as qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage
-	global $q_config;
+    //same as qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage
+    global $q_config;
 
-	return qtranxf_use( $q_config['language'], $translated_text, false );
+    return qtranxf_use( $q_config['language'], $translated_text, false );
 }
 
 // Hooks defined differently in admin and frontend

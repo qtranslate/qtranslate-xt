@@ -1,6 +1,6 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+    exit;
 }
 
 require_once( QTRANSLATE_DIR . '/inc/i18n-interface.php' );
@@ -17,67 +17,67 @@ require_once( QTRANSLATE_DIR . '/qtranslate_widget.php' );
  * @since 3.4
  */
 class QTX_Translator implements WP_Translator {
-	public function __construct() {
-		add_filter( 'translate_text', array( $this, 'translate_text' ), 10, 3 );
-		add_filter( 'translate_term', array( $this, 'translate_term' ), 10, 3 );
-		add_filter( 'translate_url', array( $this, 'translate_url' ), 10, 2 );
-		// TODO what about 'translate_date' and 'translate_time'?
-	}
+    public function __construct() {
+        add_filter( 'translate_text', array( $this, 'translate_text' ), 10, 3 );
+        add_filter( 'translate_term', array( $this, 'translate_term' ), 10, 3 );
+        add_filter( 'translate_url', array( $this, 'translate_url' ), 10, 2 );
+        // TODO what about 'translate_date' and 'translate_time'?
+    }
 
-	public static function get_translator() {
-		global $q_config;
-		if ( ! isset( $q_config['translator'] ) ) {
-			$q_config['translator'] = new QTX_Translator;
-		}
+    public static function get_translator() {
+        global $q_config;
+        if ( ! isset( $q_config['translator'] ) ) {
+            $q_config['translator'] = new QTX_Translator;
+        }
 
-		return $q_config['translator'];
-	}
+        return $q_config['translator'];
+    }
 
-	public function get_language() {
-		global $q_config;
+    public function get_language() {
+        global $q_config;
 
-		return $q_config['language'];
-	}
+        return $q_config['language'];
+    }
 
-	public function set_language( $lang ) {
-		global $q_config;
-		$lang_curr = $q_config['language'];
-		if ( qtranxf_isEnabled( $lang ) ) {
-			$q_config['language'] = $lang;
-		}
+    public function set_language( $lang ) {
+        global $q_config;
+        $lang_curr = $q_config['language'];
+        if ( qtranxf_isEnabled( $lang ) ) {
+            $q_config['language'] = $lang;
+        }
 
-		return $lang_curr;
-	}
+        return $lang_curr;
+    }
 
-	public function translate_text( $text, $lang = null, $flags = 0 ) {
-		global $q_config;
-		if ( ! $lang ) {
-			$lang = $q_config['language'];
-		}
-		$show_available = $flags & TRANSLATE_SHOW_AVALABLE;
-		$show_empty     = $flags & TRANSLATE_SHOW_EMPTY;
+    public function translate_text( $text, $lang = null, $flags = 0 ) {
+        global $q_config;
+        if ( ! $lang ) {
+            $lang = $q_config['language'];
+        }
+        $show_available = $flags & TRANSLATE_SHOW_AVALABLE;
+        $show_empty     = $flags & TRANSLATE_SHOW_EMPTY;
 
-		return qtranxf_use( $lang, $text, $show_available, $show_empty );
-	}
+        return qtranxf_use( $lang, $text, $show_available, $show_empty );
+    }
 
-	public function translate_term( $term, $lang = null, $taxonomy = null ) {
-		global $q_config;
-		if ( ! $lang ) {
-			$lang = $q_config['language'];
-		}
+    public function translate_term( $term, $lang = null, $taxonomy = null ) {
+        global $q_config;
+        if ( ! $lang ) {
+            $lang = $q_config['language'];
+        }
 
-		return qtranxf_term_use( $lang, $term, $taxonomy );
-	}
+        return qtranxf_term_use( $lang, $term, $taxonomy );
+    }
 
-	public function translate_url( $url, $lang = null ) {
-		global $q_config;
-		if ( $lang ) {
-			$showLanguage = true;
-		} else {
-			$lang         = $q_config['language'];
-			$showLanguage = ! $q_config['hide_default_language'] || $lang != $q_config['default_language'];
-		}
+    public function translate_url( $url, $lang = null ) {
+        global $q_config;
+        if ( $lang ) {
+            $showLanguage = true;
+        } else {
+            $lang         = $q_config['language'];
+            $showLanguage = ! $q_config['hide_default_language'] || $lang != $q_config['default_language'];
+        }
 
-		return qtranxf_get_url_for_language( $url, $lang, $showLanguage );
-	}
+        return qtranxf_get_url_for_language( $url, $lang, $showLanguage );
+    }
 }

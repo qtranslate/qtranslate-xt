@@ -1,6 +1,6 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+    exit;
 }
 
 /**
@@ -10,59 +10,59 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  */
 function qtranxf_term_set_i18n_config( $term ) {
-	$term->i18n_config = array();
-	if ( isset( $term->name ) ) {
-		global $q_config;
-		$default_language = $q_config['default_language'];
-		if ( isset( $q_config['term_name'][ $term->name ] ) ) {
-			$ts                      = $q_config['term_name'][ $term->name ];
-			$ts[ $default_language ] = $term->name;
-		} else {
-			$ts = array( $default_language => $term->name );
-		}
-		$term->i18n_config['name'] = array( 'ts' => $ts );
-	}
-	if ( ! empty( $term->description ) && qtranxf_isMultilingual( $term->description ) ) {
-		$ts                               = qtranxf_split( $term->description );
-		$term->i18n_config['description'] = array( 'ts' => $ts, 'ml' => $term->description );
-	}
+    $term->i18n_config = array();
+    if ( isset( $term->name ) ) {
+        global $q_config;
+        $default_language = $q_config['default_language'];
+        if ( isset( $q_config['term_name'][ $term->name ] ) ) {
+            $ts                      = $q_config['term_name'][ $term->name ];
+            $ts[ $default_language ] = $term->name;
+        } else {
+            $ts = array( $default_language => $term->name );
+        }
+        $term->i18n_config['name'] = array( 'ts' => $ts );
+    }
+    if ( ! empty( $term->description ) && qtranxf_isMultilingual( $term->description ) ) {
+        $ts                               = qtranxf_split( $term->description );
+        $term->i18n_config['description'] = array( 'ts' => $ts, 'ml' => $term->description );
+    }
 }
 
 /**
  * @since 3.4
  */
 function qtranxf_term_use( $lang, $obj, $taxonomy ) {
-	global $q_config;
-	if ( is_array( $obj ) ) {
-		// handle arrays recursively
-		foreach ( $obj as $key => $t ) {
-			$obj[ $key ] = qtranxf_term_use( $lang, $obj[ $key ], $taxonomy );
-		}
+    global $q_config;
+    if ( is_array( $obj ) ) {
+        // handle arrays recursively
+        foreach ( $obj as $key => $t ) {
+            $obj[ $key ] = qtranxf_term_use( $lang, $obj[ $key ], $taxonomy );
+        }
 
-		return $obj;
-	}
-	if ( is_object( $obj ) ) {
-		// object conversion
-		if ( ! isset( $obj->i18n_config ) ) {
-			qtranxf_term_set_i18n_config( $obj );
-			if ( isset( $obj->i18n_config['name']['ts'][ $lang ] ) ) {
-				$obj->name = $obj->i18n_config['name']['ts'][ $lang ];
-			}
-			if ( isset( $obj->i18n_config['description']['ts'][ $lang ] ) ) {
-				$obj->description = $obj->i18n_config['description']['ts'][ $lang ];
-			}
-		}
-	} elseif ( isset( $q_config['term_name'][ $obj ][ $lang ] ) ) {
-		$obj = $q_config['term_name'][ $obj ][ $lang ];
-	}
+        return $obj;
+    }
+    if ( is_object( $obj ) ) {
+        // object conversion
+        if ( ! isset( $obj->i18n_config ) ) {
+            qtranxf_term_set_i18n_config( $obj );
+            if ( isset( $obj->i18n_config['name']['ts'][ $lang ] ) ) {
+                $obj->name = $obj->i18n_config['name']['ts'][ $lang ];
+            }
+            if ( isset( $obj->i18n_config['description']['ts'][ $lang ] ) ) {
+                $obj->description = $obj->i18n_config['description']['ts'][ $lang ];
+            }
+        }
+    } elseif ( isset( $q_config['term_name'][ $obj ][ $lang ] ) ) {
+        $obj = $q_config['term_name'][ $obj ][ $lang ];
+    }
 
-	return $obj;
+    return $obj;
 }
 
 function qtranxf_useTermLib( $obj ) {
-	global $q_config;
+    global $q_config;
 
-	return qtranxf_term_use( $q_config['language'], $obj, null );
+    return qtranxf_term_use( $q_config['language'], $obj, null );
 }
 
 /**
@@ -73,9 +73,9 @@ function qtranxf_useTermLib( $obj ) {
  *
  */
 function qtranxf_term_name_in( $lang, $term ) {
-	if ( isset( $term->i18n_config['name']['ts'][ $lang ] ) ) {
-		return $term->i18n_config['name']['ts'][ $lang ];
-	}
+    if ( isset( $term->i18n_config['name']['ts'][ $lang ] ) ) {
+        return $term->i18n_config['name']['ts'][ $lang ];
+    }
 
-	return $term->name;
+    return $term->name;
 }

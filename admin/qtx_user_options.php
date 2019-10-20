@@ -1,14 +1,14 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+    exit;
 }
 
 add_action( 'show_user_profile', 'qtranxf_show_extra_profile_fields' );
 add_action( 'edit_user_profile', 'qtranxf_show_extra_profile_fields' );
 
 function qtranxf_show_extra_profile_fields( $user ) {
-	global $q_config;
-	if ( $q_config['highlight_mode'] != QTX_HIGHLIGHT_MODE_NONE ) { ?>
+    global $q_config;
+    if ( $q_config['highlight_mode'] != QTX_HIGHLIGHT_MODE_NONE ) { ?>
         <h3><?php _e( 'Translation options', 'qtranslate' ) ?></h3>
         <table class="form-table qtranxs-form-table" id="qtranxs_user_config">
             <tr>
@@ -22,28 +22,28 @@ function qtranxf_show_extra_profile_fields( $user ) {
                 </td>
             </tr>
         </table>
-		<?php
-	}
+        <?php
+    }
 }
 
 add_action( 'personal_options_update', 'qtranxf_save_extra_profile_fields' );
 add_action( 'edit_user_profile_update', 'qtranxf_save_extra_profile_fields' );
 
 function qtranxf_save_extra_profile_fields( $user_id ) {
-	global $q_config;
+    global $q_config;
 
-	if ( ! current_user_can( 'edit_user', $user_id ) ) {
-		return false;
-	}
+    if ( ! current_user_can( 'edit_user', $user_id ) ) {
+        return false;
+    }
 
-	if ( $q_config['highlight_mode'] != QTX_HIGHLIGHT_MODE_NONE ) {
-		$enabled = isset( $_POST['qtranslate_highlight_enabled'] );
-		if ( $enabled ) {
-			delete_user_meta( $user_id, 'qtranslate_highlight_disabled' );
-		} else {
-			update_user_meta( $user_id, 'qtranslate_highlight_disabled', true );
-		}
-	}
+    if ( $q_config['highlight_mode'] != QTX_HIGHLIGHT_MODE_NONE ) {
+        $enabled = isset( $_POST['qtranslate_highlight_enabled'] );
+        if ( $enabled ) {
+            delete_user_meta( $user_id, 'qtranslate_highlight_disabled' );
+        } else {
+            update_user_meta( $user_id, 'qtranslate_highlight_disabled', true );
+        }
+    }
 
-	return true;
+    return true;
 }

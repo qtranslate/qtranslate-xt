@@ -45,9 +45,9 @@
  * Avoid accessing internal variables directly, as they are subject to be re-designed at any time.
 */
 if ( ! function_exists( 'add_filter' ) ) {
-	header( 'Status: 403 Forbidden' );
-	header( 'HTTP/1.1 403 Forbidden' );
-	exit();
+    header( 'Status: 403 Forbidden' );
+    header( 'HTTP/1.1 403 Forbidden' );
+    exit();
 }
 /**
  * The constants defined below are
@@ -57,13 +57,13 @@ if ( ! function_exists( 'add_filter' ) ) {
 define( 'QTX_VERSION', '3.7.0' );
 
 if ( ! defined( 'QTRANSLATE_FILE' ) ) {
-	define( 'QTRANSLATE_FILE', __FILE__ );
-	define( 'QTRANSLATE_DIR', dirname( __FILE__ ) );
+    define( 'QTRANSLATE_FILE', __FILE__ );
+    define( 'QTRANSLATE_DIR', dirname( __FILE__ ) );
 }
 
 require_once( QTRANSLATE_DIR . '/inc/qtx_class_translator.php' );
 
 if ( is_admin() ) {
-	require_once( QTRANSLATE_DIR . '/admin/qtx_activation_hook.php' );
-	qtranxf_register_activation_hooks();
+    require_once( QTRANSLATE_DIR . '/admin/qtx_activation_hook.php' );
+    qtranxf_register_activation_hooks();
 }
