@@ -145,7 +145,7 @@ function qtranxf_init_language() {
 function qtranxf_detect_language( &$url_info ) {
     global $q_config;
 
-    if ( is_admin() || defined( 'WP_CLI' ) ) {
+    if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
         $siteinfo                     = qtranxf_get_site_info();
         $url_info['path-base']        = $siteinfo['path'];
         $url_info['path-base-length'] = $siteinfo['path-length'];
