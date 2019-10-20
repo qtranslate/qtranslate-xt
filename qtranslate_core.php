@@ -167,7 +167,7 @@ function qtranxf_detect_language( &$url_info ) {
 
 	// REST calls should be deterministic (stateless), no special language detection e.g. based on cookie
 	if ( qtranxf_is_rest_request_expected() ) {
-		if ( ! isset( $lang ) ) {
+		if ( ! $lang ) {
 			$lang = $q_config['default_language'];
 		}
 		$url_info['language'] = $lang;
@@ -257,7 +257,7 @@ function qtranxf_detect_language( &$url_info ) {
  * @param array $url_info
  * @param bool $link true when url_info concerns internal referrer (HTTP_REFERER)
  *
- * @return bool|string|null
+ * @return bool|string
  */
 function qtranxf_parse_language_info( &$url_info, $link = false ) {
 	global $q_config;
@@ -271,7 +271,6 @@ function qtranxf_parse_language_info( &$url_info, $link = false ) {
 
 	// parse URL lang
 	if ( ! defined( 'WP_ADMIN' ) || $link ) {
-		$lang     = null;
 		$url_mode = $q_config['url_mode'];
 		switch ( $url_mode ) {
 			case QTX_URL_PATH:
@@ -349,7 +348,7 @@ function qtranxf_parse_language_info( &$url_info, $link = false ) {
 		$query_lang = qtranxf_resolveLangCase( $match[2], $doredirect );
 	}
 
-	$parsed_lang = null;
+	$parsed_lang = false;
 	if ( $query_lang ) {
 		// query overrides URL lang for a language switch
 		$parsed_lang = $query_lang;
@@ -361,6 +360,7 @@ function qtranxf_parse_language_info( &$url_info, $link = false ) {
 		}
 	} elseif ( isset( $url_info['lang_url'] ) ) {
 		$parsed_lang = $url_info['lang_url'];
+		assert( $parsed_lang !== false );
 		if ( $q_config['hide_default_language'] && $parsed_lang == $q_config['default_language'] ) {
 			// default lang should not be part of the URL when hidden
 			$doredirect = true;
@@ -392,6 +392,8 @@ function qtranxf_parse_language_info( &$url_info, $link = false ) {
 	if ( isset( $url_info['language'] ) ) {
 		$parsed_lang = $url_info['language'];
 	}
+
+	assert( isset( $parsed_lang ) );
 
 	return $parsed_lang;
 }
