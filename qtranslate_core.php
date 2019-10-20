@@ -165,16 +165,6 @@ function qtranxf_detect_language( &$url_info ) {
 
 	$lang = qtranxf_parse_language_info( $url_info );
 
-	// REST calls should be deterministic (stateless), no special language detection e.g. based on cookie
-	if ( qtranxf_is_rest_request_expected() ) {
-		if ( ! $lang ) {
-			$lang = $q_config['default_language'];
-		}
-		$url_info['language'] = $lang;
-
-		return $lang;
-	}
-
 	// parse language from HTTP_REFERER
 	if ( ( ! $lang || ! isset( $url_info['doing_front_end'] ) )
 	     && ( defined( 'DOING_AJAX' ) || ! $url_info['cookie_enabled'] )
@@ -349,21 +339,40 @@ function qtranxf_parse_language_info( &$url_info, $link = false ) {
 	}
 
 	$parsed_lang = false;
-	if ( $query_lang ) {
-		// query overrides URL lang for a language switch
-		$parsed_lang = $query_lang;
-		// TODO can we avoid removing query args?
-		qtranxf_del_query_arg( $url_info['query'], 'lang' );
-		if ( $q_config['url_mode'] != QTX_URL_QUERY ) {
-			// force lang switch from query var
-			$doredirect = true;
+
+	// don't allow query lang switch with REST request
+	if ( qtranxf_is_rest_request_expected() ) {
+		if ( isset( $url_info['lang_url'] ) ) {
+			$parsed_lang = $url_info['lang_url'];
+		} elseif ( $q_config['url_mode'] == QTX_URL_QUERY && $query_lang ) {
+			$parsed_lang = $query_lang;
 		}
-	} elseif ( isset( $url_info['lang_url'] ) ) {
-		$parsed_lang = $url_info['lang_url'];
-		assert( $parsed_lang !== false );
-		if ( $q_config['hide_default_language'] && $parsed_lang == $q_config['default_language'] ) {
-			// default lang should not be part of the URL when hidden
-			$doredirect = true;
+		// 'hide_default_language' should also be set in query mode
+		if ( ! isset( $parsed_lang ) && $q_config['hide_default_language'] ) {
+			$parsed_lang = $q_config['default_language'];
+		}
+		// TODO validate URL-case redirections
+		if ( $doredirect ) {
+			assert( isset( $parsed_lang ) );
+			$doredirect = false;
+		}
+	} else {
+		if ( $query_lang ) {
+			// query overrides URL lang for a language switch
+			$parsed_lang = $query_lang;
+			// TODO can we avoid removing query args?
+			qtranxf_del_query_arg( $url_info['query'], 'lang' );
+			if ( $q_config['url_mode'] != QTX_URL_QUERY ) {
+				// force lang switch from query var
+				$doredirect = true;
+			}
+		} elseif ( isset( $url_info['lang_url'] ) ) {
+			$parsed_lang = $url_info['lang_url'];
+			assert( $parsed_lang !== false );
+			if ( $q_config['hide_default_language'] && $parsed_lang == $q_config['default_language'] ) {
+				// default lang should not be part of the URL when hidden
+				$doredirect = true;
+			}
 		}
 	}
 
