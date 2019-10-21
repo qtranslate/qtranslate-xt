@@ -765,6 +765,9 @@ function qtranxf_add_language_menu( $wp_admin_bar ) {
             (
                 'id'     => $language,
                 'parent' => 'language',
+                'meta'   => [
+                    'rel' => $language
+                ],
                 'title'  => $q_config['language_name'][ $language ],
                 'href'   => add_query_arg( 'lang', $language )
             )

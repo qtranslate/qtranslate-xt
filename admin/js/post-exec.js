@@ -112,5 +112,29 @@
         if (title_label && field_title) {
             qtx.addLanguageSwitchAfterListener(hide_title_prompt_text);
         }
+
+        function parseQuery(queryString) {
+            var query = {};
+            var pairs = (queryString[0] === '?' ? queryString.substr(1) : queryString).split('&');
+            for (var i = 0; i < pairs.length; i++) {
+                var pair = pairs[i].split('=');
+                query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '');
+            }
+            return query;
+        }
+
+        // language menu bar handler
+        for (var lang in qtx.getLanguages()) {
+            console.log('handler', lang);
+            $('#wp-admin-bar-' + lang + ' a').on('click', function (e) {
+                e.preventDefault();
+                var params = parseQuery(window.location.search);
+                var lang = $(this).attr('rel');
+                console.log('Click lang', lang, params, window.location);
+                params['lang'] = lang;
+                window.location = window.location.origin + window.location.pathname + '?' + $.param(params);
+            })
+        }
+
     });
 })(jQuery);
