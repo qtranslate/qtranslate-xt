@@ -44,6 +44,10 @@ class QTX_Admin_Gutenberg {
     }
 
     /**
+     * Prepare the REST request for a post being edited
+     *
+     * Set the raw content and the 'qtx_editor_lang' field for the current language.
+     *
      * @param WP_REST_Response $response
      * @param WP_Post $post
      * @param WP_REST_Request $request
@@ -68,6 +72,8 @@ class QTX_Admin_Gutenberg {
     }
 
     /**
+     * Intercepts the post update and recompose the multi-language fields before being written in DB
+     *
      * @param WP_HTTP_Response $response
      * @param array $handler
      * @param WP_REST_Request $request
@@ -130,6 +136,8 @@ class QTX_Admin_Gutenberg {
     }
 
     /**
+     * Restore the raw content of the post just updated and set the 'qtx_editor_lang', as for the prepare step
+     *
      * @param WP_HTTP_Response $response
      * @param array $handler
      * @param WP_REST_Request $request
@@ -151,6 +159,9 @@ class QTX_Admin_Gutenberg {
         return $response;
     }
 
+    /**
+     * Enqueue the JS script
+     */
     public function enqueue_block_editor_assets() {
         $script_file = 'js/lib/editor-gutenberg.js';
         wp_register_script(
@@ -163,6 +174,9 @@ class QTX_Admin_Gutenberg {
         wp_enqueue_script( 'qtx-gutenberg' );
     }
 
+    /**
+     * Force configuration to single language mode
+     */
     public function load_configuration() {
         global $q_config;
 
@@ -171,6 +185,9 @@ class QTX_Admin_Gutenberg {
         }
     }
 
+    /**
+     * Show admin notice for Gutenberg
+     */
     public function admin_notices_block_editor() {
         $link = "https://wordpress.org/plugins/classic-editor/";
         ?>
@@ -181,6 +198,8 @@ class QTX_Admin_Gutenberg {
     }
 
     /**
+     * Replace the multi-language raw content with only the current language used for edition and set 'qtx_editor_lang'
+     *
      * @param WP_HTTP_Response|WP_REST_Response $response
      * @param string $editor_lang
      *
