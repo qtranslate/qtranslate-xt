@@ -19,32 +19,29 @@ class QTX_Admin_Gutenberg {
      * QTX_Admin_Gutenberg constructor
      */
     public function __construct() {
-        //add_filter( 'register_post_type_args', array($this, 'register_rest_controller'), 10, 2 );
-
-        // TODO generalize to selected post types in options
-        $post_type = 'post';
-        add_filter( "rest_prepare_{$post_type}", array( $this, 'rest_prepare' ), 99, 3 );
-        add_filter( 'rest_request_before_callbacks', array( $this, 'rest_request_before_callbacks' ), 99, 3 );
-        add_filter( 'rest_request_after_callbacks', array( $this, 'rest_request_after_callbacks' ), 99, 3 );
-
+        add_action( 'rest_api_init', array( $this, 'rest_api_init' ) );
         add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ) );
         add_action( 'qtranslate_admin_loadConfig', array( $this, 'load_configuration' ) );
         add_action( 'admin_notices', array( $this, 'admin_notices_block_editor' ) );
     }
 
-//	/**
-//	 * Set up a custom REST API controller class
-//	 *
-//	 * @param array $args The post type arguments.
-//	 * @param string $name The name of the post type.
-//	 *
-//	 * @return array $args The post type arguments, possibly modified.
-//	 */
-//	public function register_rest_controller( $args, $name ) {
-//		$args['rest_controller_class'] = 'QTX_REST_Post_Controller';
-//
-//		return $args;
-//	}
+    /**
+     * Register the REST filters
+     */
+    public function rest_api_init() {
+        global $q_config;
+
+        $post_types = get_post_types( array( 'show_in_rest' => true ) );
+        foreach ( $post_types as $post_type ) {
+            $post_type_excluded = isset( $q_config['post_type_excluded'] ) && in_array( $post_type, $q_config['post_type_excluded'] );
+            if ( ! $post_type_excluded ) {
+                add_filter( "rest_prepare_{$post_type}", array( $this, 'rest_prepare' ), 99, 3 );
+            }
+        }
+
+        add_filter( 'rest_request_before_callbacks', array( $this, 'rest_request_before_callbacks' ), 99, 3 );
+        add_filter( 'rest_request_after_callbacks', array( $this, 'rest_request_after_callbacks' ), 99, 3 );
+    }
 
     /**
      * @param WP_REST_Response $response
