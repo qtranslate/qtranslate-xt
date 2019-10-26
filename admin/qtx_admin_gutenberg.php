@@ -95,41 +95,42 @@ class QTX_Admin_Gutenberg {
 
         $fields = [ 'title', 'content', 'excerpt' ];
         foreach ( $fields as $field ) {
-
-            if ( isset( $request_body[ $field ] ) ) {
-                $new_value = $request_body[ $field ];
-
-                $original_value = $post[ 'post_' . $field ];
-                $blocks         = qtranxf_get_language_blocks( $original_value );
-                if ( count( $blocks ) > 1 ) {
-                    $split                 = qtranxf_split_languages( $blocks );
-                    $split[ $editor_lang ] = $new_value;
-                } else {
-                    global $q_config;
-                    $split = array();
-                    foreach ( $q_config['enabled_languages'] as $lang ) {
-                        if ( $lang === $editor_lang ) {
-                            continue;
-                        }
-                        if ( $field === 'title' && $post['post_status'] === 'auto-draft' ) {
-                            // remove default title for auto-draft for other languages
-                            $split[ $lang ] = '';
-                        } else {
-                            $split[ $lang ] = $original_value;
-                        }
-                    }
-                    $split[ $editor_lang ] = $new_value;
-                }
-
-                // TODO handle custom separator
-                //$sep = '[';
-                //$new_data = qtranxf_collect_translations_deep( $split, $sep );
-                //$new_data = qtranxf_join_texts( $split, $sep );
-                $new_data = qtranxf_join_b( $split );
-
-                $request->set_param( $field, $new_data );
-                //$request_body[ $field ] =  $new_data;
+            if ( ! isset( $request_body[ $field ] ) ) {
+                // only the changed fields are set in the REST request
+                continue;
             }
+            $new_value = $request_body[ $field ];
+
+            $original_value = $post[ 'post_' . $field ];
+            $blocks         = qtranxf_get_language_blocks( $original_value );
+            if ( count( $blocks ) > 1 ) {
+                $split                 = qtranxf_split_languages( $blocks );
+                $split[ $editor_lang ] = $new_value;
+            } else {
+                global $q_config;
+                $split = array();
+                foreach ( $q_config['enabled_languages'] as $lang ) {
+                    if ( $lang === $editor_lang ) {
+                        continue;
+                    }
+                    if ( $field === 'title' && $post['post_status'] === 'auto-draft' ) {
+                        // remove default title for auto-draft for other languages
+                        $split[ $lang ] = '';
+                    } else {
+                        $split[ $lang ] = $original_value;
+                    }
+                }
+                $split[ $editor_lang ] = $new_value;
+            }
+
+            // TODO handle custom separator
+            //$sep = '[';
+            //$new_data = qtranxf_collect_translations_deep( $split, $sep );
+            //$new_data = qtranxf_join_texts( $split, $sep );
+            $new_data = qtranxf_join_b( $split );
+
+            $request->set_param( $field, $new_data );
+            //$request_body[ $field ] =  $new_data;
         }
 
         return $response;
