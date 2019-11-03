@@ -395,9 +395,8 @@ function qtranxf_parse_language_info( &$url_info, $link = false ) {
     }
 
     if ( ! isset( $url_info['doing_front_end'] ) ) {
-        $language_neutral_path             = qtranxf_language_neutral_path( $url_info['wp-path'] );
-        $url_info['language_neutral_path'] = $language_neutral_path;
-        if ( ! $language_neutral_path ) {
+        $url_info['language_neutral_path'] = qtranxf_language_neutral_path( $url_info['wp-path'] );
+        if ( ! $url_info['language_neutral_path'] ) {
             $url_info['doing_front_end'] = true;
         }
     }
@@ -449,6 +448,7 @@ function qtranxf_detect_language_front( &$url_info ) {
     if ( ! isset( $url_info['doredirect'] )
          && ( ! qtranxf_is_rest_request_expected() ) // fallback case where language can be read from cookie with REST
          && ( ! $q_config['hide_default_language'] || $lang != $q_config['default_language'] )
+         && ( ! qtranxf_language_neutral_path( $url_info['wp-path'] ) )
     ) {
         $url_info['doredirect'] = 'language needs to be shown in url';
     }
