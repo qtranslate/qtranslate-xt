@@ -15,18 +15,11 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class QTX_Admin_Gutenberg {
     /**
-     * @var bool displays a warning if the single language editor mode is enforced
-     */
-    private $single_mode_enforced = false;
-
-    /**
      * QTX_Admin_Gutenberg constructor
      */
     public function __construct() {
         add_action( 'rest_api_init', array( $this, 'rest_api_init' ) );
         add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ) );
-        add_action( 'qtranslate_admin_loadConfig', array( $this, 'load_configuration' ) );
-        add_action( 'qtranslate_saveConfig', array( $this, 'save_configuration' ) );
         add_action( 'admin_notices', array( $this, 'admin_notices_block_editor' ) );
     }
 
@@ -181,49 +174,21 @@ class QTX_Admin_Gutenberg {
     }
 
     /**
-     * Force configuration to single language mode on loading
-     */
-    public function load_configuration() {
-        global $q_config;
-
-        if ( $q_config['editor_mode'] != QTX_EDITOR_MODE_SINGLE ) {
-            $q_config['editor_mode']    = QTX_EDITOR_MODE_SINGLE;
-            $this->single_mode_enforced = true;
-        }
-    }
-
-    /**
-     * Force configuration to single language mode on options update
-     */
-    public function save_configuration() {
-        global $q_config;
-
-        if ( $q_config['editor_mode'] != QTX_EDITOR_MODE_SINGLE ) {
-            $q_config['editor_mode']    = QTX_EDITOR_MODE_SINGLE;
-            $this->single_mode_enforced = true;
-        } else {
-            // cancel warning if single mode just saved
-            $this->single_mode_enforced = false;
-        }
-    }
-
-    /**
      * Show admin notice for Gutenberg
      */
     public function admin_notices_block_editor() {
-        $link_classic = "https://wordpress.org/plugins/classic-editor/";
-        $link_plugins = admin_url( 'plugins.php' );
-        ?>
-        <div class="notice notice-warning">
-            <p><?php printf( __( 'Caution! The block editor (Gutenberg) is only partially supported in %s, yet experimental. Use at your own discretion! Alternatively, install and activate the <a href="%s"> Classic Editor</a> in your <a href="%s">plugins</a>.', 'qtranslate' ), 'qTranslate&#8209;XT', $link_classic, $link_plugins ); ?></p>
-        </div>
-        <?php
-
-        if ( $this->single_mode_enforced ) {
-            $link = admin_url( 'options-general.php?page=qtranslate-xt#advanced' );
+        require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+        global $wp_version;
+        // TODO improve condition for notice display
+        if ( version_compare( $wp_version, '5.0' ) >= 0 &&
+             ! ( class_exists( 'Classic_Editor' ) ||
+                 is_plugin_active( 'disable-gutenberg/disable-gutenberg.php' ) ||
+                 is_plugin_active( 'no-gutenberg/no-gutenberg.php' ) ) ) {
+            $link_classic = "https://wordpress.org/plugins/classic-editor/";
+            $link_plugins = admin_url( 'plugins.php' );
             ?>
             <div class="notice notice-warning">
-                <p><?php printf( __( 'With the block editor (Gutenberg) only the single language mode is currently supported in %s, which has been enforced. Review and save your <a href="%s"> options</a> to remove this warning. Be sure to switch back if you turn back to the Classic Editor.', 'qtranslate' ), 'qTranslate&#8209;XT', $link ); ?></p>
+                <p><?php printf( __( 'Caution! The block editor (Gutenberg) is only partially supported in %s, yet experimental. Use at your own discretion! Alternatively, install and activate the <a href="%s"> Classic Editor</a> in your <a href="%s">plugins</a>.', 'qtranslate' ), 'qTranslate&#8209;XT', $link_classic, $link_plugins ); ?></p>
             </div>
             <?php
         }

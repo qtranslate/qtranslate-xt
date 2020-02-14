@@ -466,8 +466,16 @@ function qtranxf_add_admin_footer_js() {
         unset( $config['page_config']['js'] );
     }
 
-    $config['LSB'] = $q_config['editor_mode'] == QTX_EDITOR_MODE_LSB;
-    $config['RAW'] = $q_config['editor_mode'] == QTX_EDITOR_MODE_RAW;
+    // For Gutenberg, enforce the editor mode to QTX_EDITOR_MODE_SINGLE
+    $current_screen = get_current_screen();
+    if ($current_screen->is_block_editor()) {
+        $config['LSB'] = false;
+        $config['RAW'] = false;
+    }
+    else {
+        $config['LSB'] = $q_config['editor_mode'] == QTX_EDITOR_MODE_LSB;
+        $config['RAW'] = $q_config['editor_mode'] == QTX_EDITOR_MODE_RAW;
+    }
 
     if ( empty( $q_config['hide_lsb_copy_content'] ) ) {
         // translators: Prompt on hover over button "Copy From" to copy content from other language

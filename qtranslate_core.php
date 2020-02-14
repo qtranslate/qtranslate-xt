@@ -119,16 +119,6 @@ function qtranxf_init_language() {
     // since 3.2-b3 moved it here as https://codex.wordpress.org/Function_Reference/load_plugin_textdomain seem to recommend to run load_plugin_textdomain in 'plugins_loaded' action, which is this function responds to
     qtranxf_load_plugin_textdomain();
 
-    // TODO clarify loading sequence and for REST requests from admin section ('doing_front' should be false)
-    require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-    global $wp_version;
-    if ( version_compare( $wp_version, '5.0' ) >= 0 &&
-         ! ( class_exists( 'Classic_Editor' ) ||
-             is_plugin_active( 'disable-gutenberg/disable-gutenberg.php' ) ||
-             is_plugin_active( 'no-gutenberg/no-gutenberg.php' ) ) ) {
-        require_once( QTRANSLATE_DIR . '/admin/qtx_admin_gutenberg.php' );
-    }
-
     /**
      * allow other plugins to initialize whatever they need before the fork between front and admin.
      */
@@ -138,6 +128,7 @@ function qtranxf_init_language() {
         require_once( QTRANSLATE_DIR . '/qtranslate_frontend.php' );
     } else {
         require_once( QTRANSLATE_DIR . '/admin/qtx_admin.php' );
+        require_once( QTRANSLATE_DIR . '/admin/qtx_admin_gutenberg.php' );
     }
     apply_filters( 'wp_translator', null );//create QTX_Translator object
 

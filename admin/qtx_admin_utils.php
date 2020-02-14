@@ -408,6 +408,7 @@ function qtranxf_updateGettextDatabases( $force = false, $only_for_language = ''
 
 function qtranxf_add_conf_filters() {
     global $q_config;
+    // TODO: check impact of Gutenberg, note this hook is fired too early to check the editor in current screen
     switch ( $q_config['editor_mode'] ) {
         case QTX_EDITOR_MODE_SINGLE:
         case QTX_EDITOR_MODE_RAW:
