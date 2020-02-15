@@ -59,6 +59,10 @@ class QTX_Admin_Gutenberg {
             return $response;
         }
 
+        if ( ! use_block_editor_for_post( $post ) ) {
+            return $response;
+        }
+
         assert( ! $q_config['url_info']['doing_front_end'] );
 
         // TODO allow user to select editor lang with buttons
@@ -178,10 +182,8 @@ class QTX_Admin_Gutenberg {
      */
     public function admin_notices_block_editor() {
         require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-        global $wp_version;
         // TODO improve condition for notice display
-        if ( version_compare( $wp_version, '5.0' ) >= 0 &&
-             ! ( class_exists( 'Classic_Editor' ) ||
+        if ( ! ( class_exists( 'Classic_Editor' ) ||
                  is_plugin_active( 'disable-gutenberg/disable-gutenberg.php' ) ||
                  is_plugin_active( 'no-gutenberg/no-gutenberg.php' ) ) ) {
             $link_classic = "https://wordpress.org/plugins/classic-editor/";

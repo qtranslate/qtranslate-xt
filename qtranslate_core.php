@@ -128,7 +128,6 @@ function qtranxf_init_language() {
         require_once( QTRANSLATE_DIR . '/qtranslate_frontend.php' );
     } else {
         require_once( QTRANSLATE_DIR . '/admin/qtx_admin.php' );
-        require_once( QTRANSLATE_DIR . '/admin/qtx_admin_gutenberg.php' );
     }
     apply_filters( 'wp_translator', null );//create QTX_Translator object
 
