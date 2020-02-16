@@ -531,15 +531,23 @@ function qtranxf_admin_debug_info() {
     $info = array();
     if ( current_user_can( 'manage_options' ) ) {
         global $q_config, $wp_version;
-
         $info['configuration'] = $q_config;
-        $info['versions']      = array(
+
+        $plugins         = get_option( 'active_plugins' );
+        $plugin_versions = array();
+        foreach ( $plugins as $plugin ) {
+            $plugin_data       = get_plugin_data( WP_PLUGIN_DIR . '/' . $plugin );
+            $plugin_versions[] = $plugin_data['Name'] . ' ' . $plugin_data['Version'];
+        }
+
+        $info['versions'] = array(
             'PHP_VERSION' => PHP_VERSION,
             'WP_VERSION'  => $wp_version,
-            'QTX_VERSION' => QTX_VERSION
+            'QTX_VERSION' => QTX_VERSION,
+            'Plugins'     => $plugin_versions
         );
     }
-    echo json_encode( $info, JSON_UNESCAPED_SLASHES );
+    echo json_encode( $info, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT );
     wp_die();
 }
 

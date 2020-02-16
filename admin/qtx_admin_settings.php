@@ -826,13 +826,18 @@ class QTX_Admin_Settings {
                            value="<?php _e( 'Collect information', 'qtranslate' ); ?>">
                     <br>
                     <div id="qtranxs_debug_info" style="display: none; margin: 20px 0;">
-                        <p class="qtranxs_explanation"><?php _e( 'Server', 'qtranslate' ) ?></p>
-                        <textarea readonly="readonly" id="qtranxs_debug_info_server"
+                        <p class="qtranxs_explanation"><?php _e( 'Versions', 'qtranslate' ) ?></p>
+                        <textarea readonly="readonly" id="qtranxs_debug_info_versions"
+                                  rows="10"
+                                  style="width: 90%;">...</textarea>
+                        <br>
+                        <p class="qtranxs_explanation"><?php _e( 'Configuration', 'qtranslate' ) ?></p>
+                        <textarea readonly="readonly" id="qtranxs_debug_info_configuration"
                                   rows="15"
                                   style="width: 90%;">...</textarea>
                         <br>
-                        <p class="qtranxs_explanation "><?php _e( 'Client', 'qtranslate' ) ?></p>
-                        <textarea readonly="readonly" id="qtranxs_debug_info_client"
+                        <p class="qtranxs_explanation "><?php _e( 'Browser', 'qtranslate' ) ?></p>
+                        <textarea readonly="readonly" id="qtranxs_debug_info_browser"
                                   rows="5"
                                   style="width: 90%;">...</textarea>
                     </div>

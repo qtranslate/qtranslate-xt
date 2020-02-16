@@ -69,20 +69,21 @@
 
         $('#qtranxs_debug_query').on('click', function () {
             var ca = document.cookie.split(';');
-            var clientInfo = {
+            var browserInfo = {
                 'cookies': [],
                 'navigator': navigator.userAgent
             };
             for (var i = 0; i < ca.length; i++) {
                 var cookieStr = ca[i].trim();
                 if (cookieStr.indexOf('qtrans') === 0) {
-                    clientInfo['cookies'].push(cookieStr);
+                    browserInfo['cookies'].push(cookieStr);
                 }
             }
 
             $('#qtranxs_debug_info').show();
-            $('#qtranxs_debug_info_client').val(JSON.stringify(clientInfo, null, 2));
-            $('#qtranxs_debug_info_server').val('...');
+            $('#qtranxs_debug_info_browser').val(JSON.stringify(browserInfo, null, 2));
+            $('#qtranxs_debug_info_versions').val('...');
+            $('#qtranxs_debug_info_configuration').val('...');
 
             $.ajax({
                 url: ajaxurl,
@@ -92,11 +93,12 @@
                 },
                 success: function (response) {
                     console.log('debug-info', response);
-                    $('#qtranxs_debug_info_server').val(JSON.stringify(response, null, 2));
+                    $('#qtranxs_debug_info_versions').val(JSON.stringify(response['versions'], null, 2));
+                    $('#qtranxs_debug_info_configuration').val(JSON.stringify(response['configuration'], null, 2));
                 },
                 error: function (xhr) {
                     console.error('debug-info', xhr);
-                    $('#qtranxs_debug_info_server').val('An error occurred: status=' + xhr.status + ' (' + xhr.statusText + ')');
+                    $('#qtranxs_debug_info_versions').val('An error occurred: status=' + xhr.status + ' (' + xhr.statusText + ')');
                 }
             });
         })
