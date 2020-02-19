@@ -109,7 +109,8 @@ class acf_qtranslate_plugin {
         $version = SCRIPT_DEBUG ? filemtime( ACF_QTRANSLATE_PLUGIN_DIR . $script ) : QTX_VERSION;
         wp_enqueue_script( 'acf_qtranslate_common', plugins_url( $script, ACF_QTRANSLATE_PLUGIN ), array(
             'acf-input',
-            'underscore'
+            'underscore',
+            'qtranslate-admin-common'     // TODO remove temporary dependency (see common.js)
         ), $version );
     }
 
