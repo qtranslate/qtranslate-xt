@@ -106,7 +106,7 @@ function qtranxf_init_language() {
     } elseif ( isset( $url_info['doredirect'] ) ) {
         $url_info['doredirect'] .= ' - cancelled by can_redirect';
         // this should never happen! We are now in a bad state.
-        assert( false, $url_info['doredirect'] );
+        assert( false, $url_info['doredirect'] . ', url_info=' . json_encode( $url_info, JSON_PRETTY_PRINT ) );
     }
 
     // TODO clarify fix url to prevent xss - how does this prevents xss?
