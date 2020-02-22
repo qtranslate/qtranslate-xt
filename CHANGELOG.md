@@ -1,3 +1,13 @@
+### 3.7.2
+Core
+* No front-detect redirect on neutral path (#749)
+* Add url info in assert no redirect (#757)
+* Improve debug info with plugins
+
+ACF
+* Fix missing ACF dependency on qtranslate (#759)
+* Check SCRIPT_DEBUG properly in ACF
+
 ### 3.7.1
 License
 * Update license to GPLv2 or later. Meant for harmonization for the WordPress community. More info in related commit.
