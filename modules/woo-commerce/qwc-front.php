@@ -105,12 +105,17 @@ function save_post_qwc_store_language( $order_id ) {
 }
 
 function qwc_product_get_attributes( $attributes ) {
-    //only 'value' needs to be translated at front end
     foreach ( $attributes as $key => $attribute ) {
-        if ( ! isset( $attribute['value'] ) ) {
-            continue;
-        }
-        $attributes[ $key ]['value'] = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage( $attribute['value'] );
+		if(!empty($attribute['name'])) {
+        	$attributes[$key]['name'] = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($attribute['name']);
+		}
+		if(!empty($attribute['options'])) {
+			$options = array();
+			foreach($attribute['options'] as $option_key => $option_value) {
+				$options[$option_key] = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($option_value);
+			}
+			$attributes[$key]['options'] = $options;
+		}
     }
 
     return $attributes;
