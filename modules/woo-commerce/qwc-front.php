@@ -50,8 +50,6 @@ function qwc_add_filters_front() {
     }
 
     add_filter( 'woocommerce_paypal_args', 'qwc_paypal_args' );
-    add_filter( 'woocommerce_product_get_attributes', 'qwc_product_get_attributes', 5 );
-    //no need add_filter( 'woocommerce_product_default_attributes', 'qwc_product_default_attributes', 5 );
 
     //below do not seem to need
 
@@ -102,18 +100,6 @@ add_action( 'woocommerce_checkout_update_order_meta', 'save_post_qwc_store_langu
 function save_post_qwc_store_language( $order_id ) {
     global $q_config;
     add_post_meta( $order_id, '_user_language', $q_config['language'], true );
-}
-
-function qwc_product_get_attributes( $attributes ) {
-    //only 'value' needs to be translated at front end
-    foreach ( $attributes as $key => $attribute ) {
-        if ( ! isset( $attribute['value'] ) ) {
-            continue;
-        }
-        $attributes[ $key ]['value'] = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage( $attribute['value'] );
-    }
-
-    return $attributes;
 }
 
 function qwc_paypal_args( $args ) {
