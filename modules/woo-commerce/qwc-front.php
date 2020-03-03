@@ -49,6 +49,8 @@ function qwc_add_filters_front() {
         add_filter( $name, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', $priority );
     }
 
+    add_action( 'woocommerce_dropdown_variation_attribute_options_args', 'qwc_dropdown_variation_attribute_options_args', 10, 1 );
+
     add_filter( 'woocommerce_paypal_args', 'qwc_paypal_args' );
 
     //below do not seem to need
@@ -88,6 +90,30 @@ function qwc_filter_postmeta( $original_value, $object_id, $meta_key = '', $sing
         default:
             return qtranxf_filter_postmeta( $original_value, $object_id, $meta_key, $single );
     }
+}
+
+/**
+ * Update the list of variation attributes for use in the cart forms
+ * Only used to translate the options for custom attributes (global attributes already handled through taxonomy)
+ *
+ * Fun facts:
+ * 1) We can't use 'woocommerce_product_get_attributes' because options are discarded when the new value (translated)
+ * doesn't match exactly the raw value read from DB in 'read_variation_attributes'
+ * 2) We can't use 'woocommerce_variation_option_name' because options are removed when the new value (translated)
+ * doesn't match exactly the name (ID) in the browser, processed by the script 'add-to-cart-variations.js'
+ *
+ * @param array $args
+ *
+ * @return array
+ * @see wc_dropdown_variation_attribute_options (single-product/add-to-cart/variable.php)
+ *
+ */
+function qwc_dropdown_variation_attribute_options_args( $args ) {
+    if ( isset( $args['options'] ) ) {
+        $args['options'] = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage( $args['options'] );
+    }
+
+    return $args;
 }
 
 /**
