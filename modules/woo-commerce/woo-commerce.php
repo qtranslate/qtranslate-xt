@@ -29,9 +29,9 @@ add_action( 'qtranslate_init_language', 'qwc_init_language' );
  */
 function qwc_detect_language( $url_info ) {
     if ( isset( $url_info['cookie_lang_front'] ) && $url_info['cookie_lang_front'] != $url_info['language'] ) {
-        //language is about to switch
+        // language is about to switch
         if ( ! empty( $_GET['wc-ajax'] ) && ! empty( $url_info['doing_front_end'] ) ) {
-            //do not switch language on wc-ajax calls, rather stay with previously set language stored in cookies.
+            // do not switch language on wc-ajax calls, rather stay with previously set language stored in cookies.
             $url_info['language']     = $url_info['cookie_lang_front'];
             $url_info['lang_wc-ajax'] = $url_info['language'];
             $url_info['doredirect']   = 'wc-ajax';
