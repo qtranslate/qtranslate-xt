@@ -106,31 +106,6 @@ function qwc_add_admin_page_config( $page_configs ) {
         $page_configs[]              = $page_config;
     }
 
-    //edit-tags.php?taxonomy=xxx&post_type=product
-    {
-        $page_config          = array();
-        $page_config['pages'] = array( 'edit-tags.php' => 'post_type=product' );
-
-        $page_config['forms'] = array();
-
-        $f = array();
-
-        $f['fields'] = array();
-        $fields      = &$f['fields']; // shorthand
-
-        // all input fields are ok from default qTranslate configuration
-        $fields[]     = array( 'tag' => 'LABEL', 'container_class' => 'screen-options', 'encode' => 'display' );
-        $fields['h1'] = array( 'jquery' => 'h1', 'container_class' => 'wrap', 'encode' => 'display' );
-        $fields[]     = array( 'tag' => 'H2', 'container_class' => 'wrap', 'encode' => 'display' );
-        $fields[]     = array( 'tag' => 'H3', 'container_id' => 'col-left', 'encode' => 'display' );
-        $fields[]     = array( 'id' => 'search-submit', 'attr' => 'value', 'encode' => 'display' );
-        $fields[]     = array( 'id' => 'submit', 'attr' => 'value', 'encode' => 'display' );
-        $fields[]     = array( 'id' => 'search-submit', 'attr' => 'value', 'encode' => 'display' );
-
-        $page_config['forms'][] = $f;
-        $page_configs[]         = $page_config;
-    }
-
     // tab=tax
     {
         $page_config          = array();
