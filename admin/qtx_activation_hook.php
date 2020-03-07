@@ -574,6 +574,15 @@ function qtranxf_on_switch_theme( $new_name, $new_theme ) {
 
 add_action( 'switch_theme', 'qtranxf_on_switch_theme', 10, 2 );
 
+function qtranxf_find_plugin_config_files( &$fn_bnm, &$fn_qtx, $bnm ) {
+    _deprecated_function( __FUNCTION__, '3.7.3', 'qtranxf_find_plugin_config_file()' );
+
+    $fn_bnm = qtranxf_find_plugin_config_file( $bnm );
+    $fn_qtx = null;
+
+    return $fn_bnm;
+}
+
 /**
  * Search for i18n-config.json files
  * see https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide/
@@ -582,7 +591,7 @@ add_action( 'switch_theme', 'qtranxf_on_switch_theme', 10, 2 );
  *
  * @return string|bool
  */
-function qtranxf_find_plugin_config_files( $plugin_dir ) {
+function qtranxf_find_plugin_config_file( $plugin_dir ) {
 
     $config_path = qtranxf_find_plugin_file( $plugin_dir . '/i18n-config.json' );
     if ( $config_path ) {
@@ -633,7 +642,7 @@ function qtranxf_on_activate_plugin( $plugin, $network_wide = false ) {
     if ( $plugin_dir == $qtx_dir ) {
         return;
     }
-    $file_to_add = qtranxf_find_plugin_config_files( $plugin_dir );
+    $file_to_add = qtranxf_find_plugin_config_file( $plugin_dir );
     if ( $file_to_add ) {
         qtranxf_adjust_config_files( $file_to_add, null );
     }
@@ -648,9 +657,9 @@ function qtranxf_on_deactivate_plugin( $plugin, $network_deactivating = false ) 
     if ( $plugin_dir == $qtx_dir ) {
         return;
     }
-    $config_to_del = qtranxf_find_plugin_config_files( $plugin_dir );
-    if ( $config_to_del ) {
-        qtranxf_adjust_config_files( null, $config_to_del );
+    $file_to_del = qtranxf_find_plugin_config_file( $plugin_dir );
+    if ( $file_to_del ) {
+        qtranxf_adjust_config_files( null, $file_to_del );
     }
 }
 
