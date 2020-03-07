@@ -445,25 +445,16 @@ function qtranxf_search_config_files() {
     $plugins    = wp_get_active_and_valid_plugins();
     $plugin_bnm = qtranxf_plugin_dirname();
     $plugin_dir = WP_PLUGIN_DIR . '/' . $plugin_bnm;
-    //qtranxf_dbg_log('qtranxf_search_config_files: $plugin_dir: ', $plugin_dir);
     foreach ( $plugins as $plugin ) {
         $dir = dirname( $plugin );
         $bnm = basename( $dir );
-        //qtranxf_dbg_log('$dir='.$dir.'; $bnm: ',$bnm);
-        if ( strpos( $bnm, 'qtranslate-xt' ) === 0 ) {
-            continue;
-        }
-        if ( $bnm == $plugin_bnm ) {
+        if ( $bnm === $plugin_bnm ) {
             continue;
         }
         $fn = $dir . '/i18n-config.json';
         if ( ! file_exists( $fn ) ) {
             $fn = $plugin_dir . '/i18n-config/plugins/' . $bnm . '/i18n-config.json';
             if ( ! file_exists( $fn ) ) {
-                continue;
-            }
-            // TODO update legacy suffix (still not -qtranslate-xt) in new plugin with new documentation
-            if ( qtranxf_find_plugin_by_folder( $bnm . '-qtranslate-x', $plugins ) ) {
                 continue;
             }
         }
@@ -586,94 +577,81 @@ add_action( 'switch_theme', 'qtranxf_on_switch_theme', 10, 2 );
 /**
  * Search for i18n-config.json files
  * see https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide/
+ *
+ * @param string $plugin_dir
+ *
+ * @return string|bool
  */
-function qtranxf_find_plugin_config_files( &$fn_bnm, &$fn_qtx, $bnm ) {
-    $plugins = wp_get_active_and_valid_plugins();
-    $fn_bnm  = null;
-    // TODO update legacy suffix (still not -qtranslate-xt) in new plugin with new documentation
-    if ( ! qtranxf_find_plugin_by_folder( $bnm . '-qtranslate-x', $plugins ) ) {
-        $fn_bnm = qtranxf_find_plugin_file( $bnm . '/i18n-config.json' );
-        while ( ! $fn_bnm ) {
-            $fn_bnm = qtranxf_plugin_dirname() . '/i18n-config/plugins/' . $bnm . '/i18n-config.json';
-            $fn_bnm = qtranxf_find_plugin_file( $fn_bnm );
-            if ( $fn_bnm ) {
-                break;
-            }
-            $fn_bnm = qtranxf_plugin_dirname() . '/i18n-config/themes/' . $bnm . '/i18n-config.json';
-            $fn_bnm = qtranxf_find_plugin_file( $fn_bnm );
-            break;
-        }
-    }
-    $fn_qtx = null;
-    // TODO update legacy suffix (still not -qtranslate-xt) in new plugin with new documentation
-    while ( qtranxf_endsWith( $bnm, '-qtranslate-x' ) ) {
-        $bnm_qtx = substr( $bnm, 0, - 13 );
-        $fn_qtx  = qtranxf_plugin_dirname() . '/i18n-config/plugins/' . $bnm_qtx . '/i18n-config.json';
-        $fn_qtx  = qtranxf_find_plugin_file( $fn_qtx );
-        if ( $fn_qtx ) {
-            break;
-        }
-        $fn_qtx = qtranxf_plugin_dirname() . '/i18n-config/themes/' . $bnm_qtx . '/i18n-config.json';
-        $fn_qtx = qtranxf_find_plugin_file( $fn_qtx );
-        break;
+function qtranxf_find_plugin_config_files( $plugin_dir ) {
+
+    $config_path = qtranxf_find_plugin_file( $plugin_dir . '/i18n-config.json' );
+    if ( $config_path ) {
+        return $config_path;
     }
 
-    return $fn_bnm || $fn_qtx;
+    $config_sub_path = qtranxf_plugin_dirname() . '/i18n-config/plugins/' . $plugin_dir . '/i18n-config.json';
+    $config_path     = qtranxf_find_plugin_file( $config_sub_path );
+    if ( $config_path ) {
+        return $config_path;
+    }
+
+    $config_sub_path = qtranxf_plugin_dirname() . '/i18n-config/themes/' . $plugin_dir . '/i18n-config.json';
+    $config_path     = qtranxf_find_plugin_file( $config_sub_path );
+    if ( $config_path ) {
+        return $config_path;
+    }
+
+    return false;
 }
 
-function qtranxf_adjust_config_files( $fn_add, $fn_del ) {
+function qtranxf_adjust_config_files( $file_to_add, $file_to_del ) {
     $config_files = qtranxf_get_option_config_files();
-    if ( $fn_add ) {
-        if ( in_array( $fn_add, $config_files ) ) {
-            $fn_add = false;
+    if ( $file_to_add ) {
+        if ( in_array( $file_to_add, $config_files ) ) {
+            $file_to_add = false;
         } else {
-            $config_files = qtranxf_add_config_file( $config_files, $fn_add );
+            $config_files = qtranxf_add_config_file( $config_files, $file_to_add );
         }
     }
-    if ( $fn_del ) {
-        $i = array_search( $fn_del, $config_files );
+    if ( $file_to_del ) {
+        $i = array_search( $file_to_del, $config_files );
         if ( $i === false ) {
-            $fn_del = false;
+            $file_to_del = false;
         } else {
             unset( $config_files[ $i ] );
         }
     }
-    if ( ! $fn_add && ! $fn_del ) {
-        return;
+    if ( $file_to_add || $file_to_del ) {
+        qtranxf_update_config_options( $config_files );
     }
-    qtranxf_update_config_options( $config_files );
 }
 
 function qtranxf_on_activate_plugin( $plugin, $network_wide = false ) {
     //qtranxf_dbg_log('qtranxf_on_activate_plugin: $plugin: ',$plugin);
-    $bnm = dirname( $plugin );
-    $qtx = qtranxf_plugin_dirname();
-    if ( $bnm == $qtx ) {
+    $plugin_dir = dirname( $plugin );
+    $qtx_dir    = qtranxf_plugin_dirname();
+    if ( $plugin_dir == $qtx_dir ) {
         return;
     }
-    $fn_add = null;
-    $fn_del = null;
-    if ( ! qtranxf_find_plugin_config_files( $fn_add, $fn_del, $bnm ) ) {
-        return;
+    $file_to_add = qtranxf_find_plugin_config_files( $plugin_dir );
+    if ( $file_to_add ) {
+        qtranxf_adjust_config_files( $file_to_add, null );
     }
-    qtranxf_adjust_config_files( $fn_add, $fn_del );
 }
 
 add_action( 'activate_plugin', 'qtranxf_on_activate_plugin' );
 
 function qtranxf_on_deactivate_plugin( $plugin, $network_deactivating = false ) {
     //qtranxf_dbg_log('qtranxf_on_deactivate_plugin: $plugin: ',$plugin);
-    $bnm = dirname( $plugin );
-    $qtx = qtranxf_plugin_dirname();
-    if ( $bnm == $qtx ) {
+    $plugin_dir = dirname( $plugin );
+    $qtx_dir    = qtranxf_plugin_dirname();
+    if ( $plugin_dir == $qtx_dir ) {
         return;
     }
-    $fn_add = null;
-    $fn_del = null;
-    if ( ! qtranxf_find_plugin_config_files( $fn_del, $fn_add, $bnm ) ) {
-        return;
+    $config_to_del = qtranxf_find_plugin_config_files( $plugin_dir );
+    if ( $config_to_del ) {
+        qtranxf_adjust_config_files( null, $config_to_del );
     }
-    qtranxf_adjust_config_files( $fn_add, $fn_del );
 }
 
 add_action( 'deactivate_plugin', 'qtranxf_on_deactivate_plugin' );
