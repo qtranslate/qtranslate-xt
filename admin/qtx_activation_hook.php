@@ -382,7 +382,7 @@ function qtranxf_search_config_files_theme( $theme = null, $found = null ) {
     if ( file_exists( $fn ) ) {
         $found[] = $fn;
     } else {
-        $fn = WP_PLUGIN_DIR . '/' . qtranxf_plugin_dirname() . '/i18n-config/themes/' . $theme->stylesheet . '/i18n-config.json';
+        $fn = QTRANSLATE_DIR . '/i18n-config/themes/' . $theme->stylesheet . '/i18n-config.json';
         if ( file_exists( $fn ) ) {
             $found[] = $fn;
         }
@@ -399,11 +399,10 @@ function qtranxf_search_config_files_theme( $theme = null, $found = null ) {
  * @since 3.4
  */
 function qtranxf_normalize_config_files( $found ) {
-    $nc         = strlen( WP_CONTENT_DIR );
-    $plugin_dir = WP_PLUGIN_DIR . '/' . qtranxf_plugin_dirname();
-    $np         = strlen( $plugin_dir );
+    $nc = strlen( WP_CONTENT_DIR );
+    $np = strlen( QTRANSLATE_DIR );
     foreach ( $found as $k => $fn ) {
-        if ( substr( $fn, 0, $np ) === $plugin_dir ) {
+        if ( substr( $fn, 0, $np ) === QTRANSLATE_DIR ) {
             $found[ $k ] = '.' . substr( $fn, $np );
         } else if ( substr( $fn, 0, $nc ) === WP_CONTENT_DIR ) {
             $found[ $k ] = substr( $fn, $nc + 1 );
@@ -441,24 +440,22 @@ function qtranxf_find_plugin_by_folder( $fld, $plugins ) {
  * @since 3.4
  */
 function qtranxf_search_config_files() {
-    $found      = qtranxf_search_config_files_theme();
-    $plugins    = wp_get_active_and_valid_plugins();
-    $plugin_bnm = qtranxf_plugin_dirname();
-    $plugin_dir = WP_PLUGIN_DIR . '/' . $plugin_bnm;
+    $found   = qtranxf_search_config_files_theme();
+    $plugins = wp_get_active_and_valid_plugins();
+    // Caution: plugin files are given here in absolute paths, not relative - wrong WP PHPDoc!
     foreach ( $plugins as $plugin ) {
-        $dir = dirname( $plugin );
-        $bnm = basename( $dir );
-        if ( $bnm === $plugin_bnm ) {
+        if ( $plugin === QTRANSLATE_FILE ) {
             continue;
         }
-        $fn = $dir . '/i18n-config.json';
-        if ( ! file_exists( $fn ) ) {
-            $fn = $plugin_dir . '/i18n-config/plugins/' . $bnm . '/i18n-config.json';
-            if ( ! file_exists( $fn ) ) {
+        $plugin_dir  = dirname( $plugin );
+        $config_file = $plugin_dir . '/i18n-config.json';
+        if ( ! is_readable( $config_file ) ) {
+            $config_file = QTRANSLATE_DIR . '/i18n-config/plugins/' . basename( $plugin_dir ) . '/i18n-config.json';
+            if ( ! is_readable( $config_file ) ) {
                 continue;
             }
         }
-        $found[] = $fn;
+        $found[] = $config_file;
     }
 
     return qtranxf_normalize_config_files( $found );
@@ -587,24 +584,27 @@ function qtranxf_find_plugin_config_files( &$fn_bnm, &$fn_qtx, $bnm ) {
  * Search for i18n-config.json files
  * see https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide/
  *
- * @param string $plugin_dir
+ * @param string $plugin name as relative dir/file.php
  *
  * @return string|bool
  */
-function qtranxf_find_plugin_config_file( $plugin_dir ) {
+function qtranxf_find_plugin_config_file( $plugin ) {
+    $plugin_rel = dirname( $plugin );
 
-    $config_path = qtranxf_find_plugin_file( $plugin_dir . '/i18n-config.json' );
+    $config_path = qtranxf_find_plugin_file( $plugin_rel . '/i18n-config.json' );
     if ( $config_path ) {
         return $config_path;
     }
 
-    $config_sub_path = qtranxf_plugin_dirname() . '/i18n-config/plugins/' . $plugin_dir . '/i18n-config.json';
+    $qtx_rel = basename( QTRANSLATE_DIR );
+
+    $config_sub_path = $qtx_rel . '/i18n-config/plugins/' . $plugin_rel . '/i18n-config.json';
     $config_path     = qtranxf_find_plugin_file( $config_sub_path );
     if ( $config_path ) {
         return $config_path;
     }
 
-    $config_sub_path = qtranxf_plugin_dirname() . '/i18n-config/themes/' . $plugin_dir . '/i18n-config.json';
+    $config_sub_path = $qtx_rel . '/i18n-config/themes/' . $plugin_rel . '/i18n-config.json';
     $config_path     = qtranxf_find_plugin_file( $config_sub_path );
     if ( $config_path ) {
         return $config_path;
@@ -636,13 +636,10 @@ function qtranxf_adjust_config_files( $file_to_add, $file_to_del ) {
 }
 
 function qtranxf_on_activate_plugin( $plugin, $network_wide = false ) {
-    //qtranxf_dbg_log('qtranxf_on_activate_plugin: $plugin: ',$plugin);
-    $plugin_dir = dirname( $plugin );
-    $qtx_dir    = qtranxf_plugin_dirname();
-    if ( $plugin_dir == $qtx_dir ) {
+    if ( $plugin === plugin_basename( QTRANSLATE_FILE ) ) {
         return;
     }
-    $file_to_add = qtranxf_find_plugin_config_file( $plugin_dir );
+    $file_to_add = qtranxf_find_plugin_config_file( $plugin );
     if ( $file_to_add ) {
         qtranxf_adjust_config_files( $file_to_add, null );
     }
@@ -651,13 +648,10 @@ function qtranxf_on_activate_plugin( $plugin, $network_wide = false ) {
 add_action( 'activate_plugin', 'qtranxf_on_activate_plugin' );
 
 function qtranxf_on_deactivate_plugin( $plugin, $network_deactivating = false ) {
-    //qtranxf_dbg_log('qtranxf_on_deactivate_plugin: $plugin: ',$plugin);
-    $plugin_dir = dirname( $plugin );
-    $qtx_dir    = qtranxf_plugin_dirname();
-    if ( $plugin_dir == $qtx_dir ) {
+    if ( $plugin === plugin_basename( QTRANSLATE_FILE ) ) {
         return;
     }
-    $file_to_del = qtranxf_find_plugin_config_file( $plugin_dir );
+    $file_to_del = qtranxf_find_plugin_config_file( $plugin );
     if ( $file_to_del ) {
         qtranxf_adjust_config_files( null, $file_to_del );
     }
@@ -685,11 +679,9 @@ function qtranxf_activation_hook() {
     //qtranxf_dbg_log('qtranxf_activation_hook: ', __FILE__);
     if ( version_compare( PHP_VERSION, '5.4' ) < 0 ) {
         // Deactivate ourself
-        $plugin_dir = qtranxf_plugin_dirname();
-        $lang_dir   = $plugin_dir . '/lang';
-        load_plugin_textdomain( 'qtranslate', false, $lang_dir );
+        load_plugin_textdomain( 'qtranslate', false, basename( QTRANSLATE_DIR ) . '/lang' );
         $msg = sprintf( __( 'Plugin %s requires PHP version %s at least. This server instance runs PHP version %s. A PHP version %s or higher is recommended. The plugin has not been activated.', 'qtranslate' ), qtranxf_get_plugin_link(), '5.4', PHP_VERSION, '7.3' );
-        deactivate_plugins( $plugin_dir . '/qtranslate.php' );
+        deactivate_plugins( plugin_basename( QTRANSLATE_FILE ) );
         wp_die( $msg );
     }
 
@@ -952,7 +944,7 @@ function qtranxf_admin_notice_dismiss_script() {
 
 /** register activation/deactivation hooks */
 function qtranxf_register_activation_hooks() {
-    $qtx_plugin_basename = qtranxf_plugin_basename();
+    $qtx_plugin_basename = plugin_basename( QTRANSLATE_FILE );
     register_activation_hook( $qtx_plugin_basename, 'qtranxf_activation_hook' );
     register_deactivation_hook( $qtx_plugin_basename, 'qtranxf_deactivation_hook' );
     QTX_Admin_Modules::register_hooks();

@@ -860,7 +860,7 @@ function qtranxf_admin_footer_update( $text ) {
     if ( qtranxf_admin_is_config_page() ) {
         $text        = sprintf( __( 'Plugin Version %s', 'qtranslate' ), QTX_VERSION );
         $current     = get_site_transient( 'update_plugins' );
-        $plugin_file = qtranxf_plugin_basename();
+        $plugin_file = plugin_basename( QTRANSLATE_FILE );
         if ( isset( $current->response[ $plugin_file ] ) ) {
             $data = $current->response[ $plugin_file ];
             if ( is_plugin_active_for_network( $plugin_file ) ) {
@@ -880,7 +880,7 @@ function qtranxf_admin_footer_update( $text ) {
 function qtranxf_admin_load() {
     qtranxf_admin_loadConfig();
 
-    $basename = qtranxf_plugin_basename();
+    $basename = plugin_basename( QTRANSLATE_FILE );
     add_filter( 'plugin_action_links_' . $basename, 'qtranxf_links', 10, 4 );
     // should be executed after all plugins loaded their *-admin.php
     add_action( 'qtranslate_init_language', 'qtranxf_load_admin_page_config', 20 );

@@ -19,25 +19,18 @@ function qtranxf_translate_wp( $string ) {
  * @since 3.3.8.8
  */
 function qtranxf_plugin_basename() {
-    static $basename;
-    if ( ! $basename ) {
-        $basename = plugin_basename( wp_normalize_path( QTRANSLATE_FILE ) );
-    }
+    _deprecated_function( __FUNCTION__, '3.7.3', 'plugin_basename( QTRANSLATE_FILE )' );
 
-    return $basename;
+    return plugin_basename( QTRANSLATE_FILE );
 }
 
 /**
  * @since 3.3.2
  */
 function qtranxf_plugin_dirname() {
-    static $dirname;
-    if ( ! $dirname ) {
-        $basename = qtranxf_plugin_basename();
-        $dirname  = dirname( $basename );
-    }
+    _deprecated_function( __FUNCTION__, '3.7.3', 'dirname( QTRANSLATE_DIR )' );
 
-    return $dirname;
+    return dirname( QTRANSLATE_DIR );
 }
 
 /**

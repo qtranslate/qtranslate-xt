@@ -562,9 +562,7 @@ function qtranxf_load_option_qtrans_compatibility() {
 }
 
 function qtranxf_load_plugin_textdomain() {
-    $domain   = 'qtranslate';
-    $lang_dir = qtranxf_plugin_dirname() . '/lang';
-    if ( load_plugin_textdomain( $domain, false, $lang_dir ) ) {
+    if ( load_plugin_textdomain( 'qtranslate', false, basename( QTRANSLATE_DIR ) . '/lang' ) ) {
         return true;
     }
 
