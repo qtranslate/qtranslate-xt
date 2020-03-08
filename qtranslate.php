@@ -58,7 +58,7 @@ define( 'QTX_VERSION', '3.7.2' );
 
 if ( ! defined( 'QTRANSLATE_FILE' ) ) {
     define( 'QTRANSLATE_FILE', __FILE__ );
-    define( 'QTRANSLATE_DIR', dirname( __FILE__ ) );
+    define( 'QTRANSLATE_DIR', __DIR__ );
 }
 
 require_once( QTRANSLATE_DIR . '/inc/qtx_class_translator.php' );
