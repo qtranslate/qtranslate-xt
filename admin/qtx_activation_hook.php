@@ -522,28 +522,9 @@ function qtranxf_update_config_files() {
 }
 
 function qtranxf_find_plugin_file( $fp ) {
-    $fp = '/' . $fp;
-    $fn = WP_PLUGIN_DIR . $fp;
-    while ( ! file_exists( $fn ) ) {
-        $fn = WPMU_PLUGIN_DIR . $fp;
-        if ( file_exists( $fn ) ) {
-            break;
-        }
-        $fn = WP_CONTENT_DIR . '/plugins' . $fp;
-        if ( file_exists( $fn ) ) {
-            break;
-        }
-        $fn = WP_CONTENT_DIR . '/mu-plugins' . $fp;
-        if ( file_exists( $fn ) ) {
-            break;
-        }
+    _deprecated_function( __FUNCTION__, '3.7.3' );
 
-        return null;
-    }
-    $found = array( $fn );
-    $found = qtranxf_normalize_config_files( $found );
-
-    return $found[0];
+    return null;
 }
 
 function qtranxf_on_switch_theme( $new_name, $new_theme ) {
@@ -581,33 +562,26 @@ function qtranxf_find_plugin_config_files( &$fn_bnm, &$fn_qtx, $bnm ) {
 }
 
 /**
- * Search for i18n-config.json files
- * see https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide/
+ * Search for i18n-config.json files for regular plugins
+ * @link https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide/
  *
  * @param string $plugin name as relative dir/file.php
  *
- * @return string|bool
+ * @return string|bool path normalized for qTranslate config, false if not found
  */
 function qtranxf_find_plugin_config_file( $plugin ) {
-    $plugin_rel = dirname( $plugin );
+    $plugin_dirname = dirname( $plugin );
 
-    $config_path = qtranxf_find_plugin_file( $plugin_rel . '/i18n-config.json' );
-    if ( $config_path ) {
-        return $config_path;
+    // external configuration prevails
+    $config_file = WP_PLUGIN_DIR . '/' . $plugin_dirname . '/i18n-config.json';
+    if ( is_readable( $config_file ) ) {
+        return qtranxf_normalize_config_files( [ $config_file ] );
     }
 
-    $qtx_rel = basename( QTRANSLATE_DIR );
-
-    $config_sub_path = $qtx_rel . '/i18n-config/plugins/' . $plugin_rel . '/i18n-config.json';
-    $config_path     = qtranxf_find_plugin_file( $config_sub_path );
-    if ( $config_path ) {
-        return $config_path;
-    }
-
-    $config_sub_path = $qtx_rel . '/i18n-config/themes/' . $plugin_rel . '/i18n-config.json';
-    $config_path     = qtranxf_find_plugin_file( $config_sub_path );
-    if ( $config_path ) {
-        return $config_path;
+    // built-in configuration
+    $config_file = QTRANSLATE_DIR . '/18n-config/plugins/' . $plugin_dirname . '/i18n-config.json';
+    if ( is_readable( $config_file ) ) {
+        return qtranxf_normalize_config_files( [ $config_file ] );
     }
 
     return false;
