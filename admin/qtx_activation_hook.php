@@ -428,25 +428,10 @@ function qtranxf_normalize_config_files( $found ) {
 }
 
 /**
- * @since 3.4
- */
-function qtranxf_find_plugin_by_foder( $fld, $plugins ) {
-    _deprecated_function( __FUNCTION__, '3.5.5', 'qtranxf_find_plugin_by_folder()' );
-
-    return qtranxf_find_plugin_by_folder( $fld, $plugins );
-}
-
-/**
  * @since 3.5.5
  */
 function qtranxf_find_plugin_by_folder( $fld, $plugins ) {
-    foreach ( $plugins as $plugin ) {
-        $dir = dirname( $plugin );
-        $bnm = basename( $dir );
-        if ( $fld == $bnm ) {
-            return $plugin;
-        }
-    }
+    _deprecated_function( __FUNCTION__, '3.7.3' );
 
     return null;
 }
