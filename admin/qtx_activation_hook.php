@@ -584,7 +584,7 @@ function qtranxf_find_plugin_config_files( &$fn_bnm, &$fn_qtx, $bnm ) {
  * Search for i18n-config.json files
  * see https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide/
  *
- * @param string $plugin plugin WP name as relative dir/file.php
+ * @param string $plugin name as relative dir/file.php
  *
  * @return string|bool
  */
@@ -681,7 +681,7 @@ function qtranxf_activation_hook() {
         // Deactivate ourself
         load_plugin_textdomain( 'qtranslate', false, basename( QTRANSLATE_DIR ) . '/lang' );
         $msg = sprintf( __( 'Plugin %s requires PHP version %s at least. This server instance runs PHP version %s. A PHP version %s or higher is recommended. The plugin has not been activated.', 'qtranslate' ), qtranxf_get_plugin_link(), '5.4', PHP_VERSION, '7.3' );
-        deactivate_plugins( QTRANSLATE_FILE );
+        deactivate_plugins( plugin_basename( QTRANSLATE_FILE ) );
         wp_die( $msg );
     }
 
