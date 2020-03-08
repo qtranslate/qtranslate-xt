@@ -437,25 +437,54 @@ function qtranxf_find_plugin_by_folder( $fld, $plugins ) {
 }
 
 /**
+ * Search globally for config files:
+ * 1) themes
+ * 2) mu-plugins
+ * 3) plugins
+ *
+ * @link https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide/
+ *
  * @since 3.4
  */
 function qtranxf_search_config_files() {
-    $found   = qtranxf_search_config_files_theme();
-    $plugins = wp_get_active_and_valid_plugins();
-    // Caution: plugin files are given here in absolute paths, not relative - wrong WP PHPDoc!
-    foreach ( $plugins as $plugin ) {
-        if ( $plugin === QTRANSLATE_FILE ) {
+    $found = qtranxf_search_config_files_theme();
+
+    $mu_plugins = wp_get_mu_plugins();
+    // Caution: plugin files are given in absolute paths
+    foreach ( $mu_plugins as $plugin_file ) {
+        if ( $plugin_file === QTRANSLATE_FILE ) {
             continue;
         }
-        $plugin_dir  = dirname( $plugin );
-        $config_file = $plugin_dir . '/i18n-config.json';
-        if ( ! is_readable( $config_file ) ) {
-            $config_file = QTRANSLATE_DIR . '/i18n-config/plugins/' . basename( $plugin_dir ) . '/i18n-config.json';
-            if ( ! is_readable( $config_file ) ) {
-                continue;
-            }
+        $config_file = WPMU_PLUGIN_DIR . '/' . basename( $plugin_file, '.php' ) . '/i18n-config.json';
+        if ( is_readable( $config_file ) ) {
+            $found[] = $config_file;
+            break;
         }
-        $found[] = $config_file;
+        $config_file = QTRANSLATE_DIR . '/i18n-config/plugins/' . basename( $plugin_file, '.php' ) . '/i18n-config.json';
+        if ( is_readable( $config_file ) ) {
+            $found[] = $config_file;
+            break;
+        }
+    }
+
+    $plugins = wp_get_active_and_valid_plugins();
+    // Caution: plugin files are given here in absolute paths, not relative - wrong WP PHPDoc!
+    foreach ( $plugins as $plugin_file ) {
+        if ( $plugin_file === QTRANSLATE_FILE ) {
+            continue;
+        }
+        // absolute path to the plugin dir
+        $plugin_dir  = dirname( $plugin_file );
+        $config_file = $plugin_dir . '/i18n-config.json';
+        if ( is_readable( $config_file ) ) {
+            $found[] = $config_file;
+            break;
+        }
+        $config_file = QTRANSLATE_DIR . '/i18n-config/plugins/' . basename( $plugin_dir ) . '/i18n-config.json';
+        if ( is_readable( $config_file ) ) {
+            $found[] = $config_file;
+            break;
+        }
     }
 
     return qtranxf_normalize_config_files( $found );
