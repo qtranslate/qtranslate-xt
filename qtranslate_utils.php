@@ -19,12 +19,9 @@ function qtranxf_translate_wp( $string ) {
  * @since 3.3.8.8
  */
 function qtranxf_plugin_basename() {
-    static $basename;
-    if ( ! $basename ) {
-        $basename = plugin_basename( wp_normalize_path( QTRANSLATE_FILE ) );
-    }
+    _deprecated_function( __FUNCTION__, '3.7.3', 'plugin_basename( QTRANSLATE_FILE )' );
 
-    return $basename;
+    return plugin_basename( QTRANSLATE_FILE );
 }
 
 /**

@@ -944,7 +944,7 @@ function qtranxf_admin_notice_dismiss_script() {
 
 /** register activation/deactivation hooks */
 function qtranxf_register_activation_hooks() {
-    $qtx_plugin_basename = qtranxf_plugin_basename();
+    $qtx_plugin_basename = plugin_basename( QTRANSLATE_FILE );
     register_activation_hook( $qtx_plugin_basename, 'qtranxf_activation_hook' );
     register_deactivation_hook( $qtx_plugin_basename, 'qtranxf_deactivation_hook' );
     QTX_Admin_Modules::register_hooks();
