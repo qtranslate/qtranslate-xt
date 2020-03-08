@@ -367,35 +367,50 @@ function qtranxf_update_config_options( $config_files, $changed = true ) {
 }
 
 /**
+ * Search for theme config files, in the child and parent(s) themes
+ * @link https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide/
+ *
+ * @param WP_Theme|string $theme
+ *
+ * @return array config files in absolute paths
  * @since 3.4
  */
-function qtranxf_search_config_files_theme( $theme = null, $found = null ) {
+function qtranxf_search_config_files_theme( $theme = null ) {
     if ( ! $theme ) {
         $theme = wp_get_theme();
-    } else if ( is_string( $theme ) ) {
+    } elseif ( is_string( $theme ) ) {
         $theme = wp_get_theme( $theme );
     }
-    if ( ! $found ) {
-        $found = array();
-    }
-    $fn = $theme->theme_root . '/' . $theme->stylesheet . '/i18n-config.json';
-    if ( file_exists( $fn ) ) {
-        $found[] = $fn;
-    } else {
-        $fn = QTRANSLATE_DIR . '/i18n-config/themes/' . $theme->stylesheet . '/i18n-config.json';
-        if ( file_exists( $fn ) ) {
-            $found[] = $fn;
+
+    $found = array();
+    while ( $theme && $theme->exists() ) {
+        // external theme config
+        $config_file = $theme->theme_root . '/' . $theme->stylesheet . '/i18n-config.json';
+        if ( is_readable( $config_file ) ) {
+            $found[] = $config_file;
+        } else {
+            // built-in theme config
+            $config_file = QTRANSLATE_DIR . '/i18n-config/themes/' . $theme->stylesheet . '/i18n-config.json';
+            if ( is_readable( $config_file ) ) {
+                $found[] = $config_file;
+            }
         }
-    }
-    $parent_theme = $theme->parent();
-    if ( ! empty( $parent_theme ) ) {
-        return qtranxf_search_config_files_theme( $parent_theme, $found );
+
+        $theme = $theme->parent();
     }
 
     return $found;
 }
 
 /**
+ * Normalize qTranslate configuration files with relative paths such that:
+ *  1) files in qTranslate start with ./
+ *  2) external files are relative to WP_CONTENT_DIR (plugins, mu-plugins and themes)
+ *  3) otherwise absolute path are kept
+ *
+ * @param array $found file paths
+ *
+ * @return array
  * @since 3.4
  */
 function qtranxf_normalize_config_files( $found ) {
