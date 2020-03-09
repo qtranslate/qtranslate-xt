@@ -307,6 +307,26 @@ function qwc_add_admin_page_config( $page_configs ) {
         $page_configs[]         = $page_config;
     }
 
+    // tab=account
+    {
+        $page_config          = array();
+        $page_config['pages'] = array( 'admin.php' => 'page=wc-settings&tab=account' );
+
+        $page_config['forms'] = array();
+
+        $f         = array();
+        $f['form'] = array( 'id' => 'mainform' );
+
+        $f['fields'] = array();
+        $fields      = &$f['fields']; // shorthand
+
+        $fields[] = array( 'id' => 'woocommerce_registration_privacy_policy_text' );
+        $fields[] = array( 'id' => 'woocommerce_checkout_privacy_policy_text' );
+
+        $page_config['forms'][] = $f;
+        $page_configs[]         = $page_config;
+    }
+
     // tab=email
     {
         $page_config          = array();
