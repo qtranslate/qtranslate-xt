@@ -122,8 +122,7 @@ function qtranxf_migrate_plugins() {
 add_action( 'qtranslate_saveConfig', 'qtranxf_migrate_plugins', 30 );
 
 function qtranxf_add_row_migrate( $nm, $plugin, $args = null ) {
-    $plugin_file = qtranxf_find_plugin_file( $plugin );
-    if ( ! $plugin_file ) {
+    if ( ! file_exists( WP_PLUGIN_DIR . '/' . $plugin ) && ! file_exists( WPMU_PLUGIN_DIR . '/' . $plugin ) ) {
         return;
     }
     $href = isset( $args['href'] ) ? $args['href'] : 'https://wordpress.org/plugins/' . $plugin;
