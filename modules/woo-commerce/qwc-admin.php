@@ -48,29 +48,29 @@ qwc_add_filters_admin();
 add_filter( 'qtranslate_load_admin_page_config', 'qwc_add_admin_page_config' );
 function qwc_add_admin_page_config( $page_configs ) {
     // post.php
+    // TODO refactor append config
     if ( ! isset( $page_configs['post'] ) ) {
         $page_configs['post'] = array();
     }
-    $pgcfg = &$page_configs['post'];
-    if ( ! isset( $pgcfg['pages'] ) ) {
-        $pgcfg['pages'] = array( 'post.php' => '', 'post-new.php' => '' );
+    $post_config = &$page_configs['post'];
+    if ( ! isset( $post_config['pages'] ) ) {
+        $post_config['pages'] = array( 'post.php' => '', 'post-new.php' => '' );
     }
-    if ( ! isset( $pgcfg['anchors'] ) ) {
-        $pgcfg['anchors'] = array( 'post-body-content' => array( 'where' => 'first last' ) );
+    if ( ! isset( $post_config['anchors'] ) ) {
+        $post_config['anchors'] = array( 'post-body-content' => array( 'where' => 'first last' ) );
     }
-    $pgcfg['anchors']['woocommerce-product-data'] = array( 'where' => 'before' );
+    $post_config['anchors']['woocommerce-product-data'] = array( 'where' => 'before' );
 
-    if ( ! isset( $pgcfg['forms'] ) ) {
-        $pgcfg['forms'] = array();
+    if ( ! isset( $post_config['forms'] ) ) {
+        $post_config['forms'] = array();
     }
-    if ( ! isset( $pgcfg['forms']['post'] ) ) {
-        $pgcfg['forms']['post'] = array();
+    if ( ! isset( $post_config['forms']['post'] ) ) {
+        $post_config['forms']['post'] = array();
     }
-    if ( ! isset( $pgcfg['forms']['post']['fields'] ) ) {
-        $pgcfg['forms']['post']['fields'] = array();
+    if ( ! isset( $post_config['forms']['post']['fields'] ) ) {
+        $post_config['forms']['post']['fields'] = array();
     }
-    $fields = &$pgcfg['forms']['post']['fields'];
-
+    $fields                             = &$post_config['forms']['post']['fields'];
     $fields['inp-variable_description'] = array( 'jquery' => 'textarea[name^=variable_description]' );
     $fields['_purchase_note']           = array();
     $fields['td-attribute_name']        = array( 'jquery' => 'td.attribute_name', 'encode' => 'display' );
@@ -79,139 +79,142 @@ function qwc_add_admin_page_config( $page_configs ) {
     $fields['display_meta']             = array( 'jquery' => '.display_meta', 'encode' => 'display' );
     $fields['select-option']            = array( 'jquery' => 'select option', 'encode' => 'display' );
 
-    // edit.php?post_type=product&page=product_attributes
-    $page_config                 = array();
-    $page_config['pages']        = array( 'edit.php' => 'post_type=product&page=product_attributes' );
-    $page_config['anchors']      = array( 'col-container' );
-    $page_config['forms']        = array();
-    $f                           = array();
-    $f['fields']                 = array();
-    $fields                      = &$f['fields']; // shorthand
-    $fields['attribute_label']   = array();
-    $fields['Name']              = array( 'jquery' => 'td a', 'container_id' => 'col-right', 'encode' => 'display' );
-    $fields['Terms']             = array(
-        'jquery'       => 'td.attribute-terms',
-        'container_id' => 'col-right',
-        'encode'       => 'display'
+    $page_configs[]              = array(
+        'pages'   => array( 'edit.php' => 'post_type=product&page=product_attributes' ),
+        'anchors' => array( 'col-container' ),
+        'forms'   => array(
+            'all' => array(
+                array(
+                    'form'   => array( 'id' => 'mainform' ),
+                    'fields' => array(
+                        array( 'id' => 'attribute_label' ),
+                        array( 'jquery' => 'td a', 'container_id' => 'col-right', 'encode' => 'display' ),
+                        array(
+                            'jquery'       => 'td.attribute-terms',
+                            'container_id' => 'col-right',
+                            'encode'       => 'display'
+                        )
+                    )
+                )
+            )
+        )
     );
-    $page_config['forms']['all'] = $f;
-    $page_configs[]              = $page_config;
 
-    // tab=tax
-    $page_config                                = array();
-    $page_config['pages']                       = array( 'admin.php' => 'page=wc-settings&tab=tax' );
-    $page_config['forms']                       = array();
-    $f                                          = array();
-    $f['form']                                  = array( 'id' => 'mainform' );
-    $f['fields']                                = array();
-    $fields                                     = &$f['fields']; // shorthand
-    $fields['subsubsub']                        = array( 'jquery' => '.subsubsub', 'encode' => 'display' );
-    $fields['woocommerce_tax_classes']          = array( 'encode' => 'byline' );
-    $fields['woocommerce_price_display_suffix'] = array();
-    $page_config['forms'][]                     = $f;
-    $page_configs[]                             = $page_config;
+    $page_configs[] = array(
+        'pages' => array( 'admin.php' => 'page=wc-settings&tab=tax' ),
+        'forms' => array(
+            array(
+                'form'   => array( 'id' => 'mainform' ),
+                'fields' => array(
+                    array( 'jquery' => '.subsubsub', 'encode' => 'display' ),
+                    array( 'id' => 'woocommerce_tax_classes', 'encode' => 'byline' ),
+                    array( 'id' => 'woocommerce_price_display_suffix' )
+                )
+            )
+        )
+    );
 
-    // tab=checkout&section=bacs
-    $page_config            = array();
-    $page_config['pages']   = array( 'admin.php' => 'page=wc-settings&tab=checkout&section=bacs' );
-    $page_config['forms']   = array();
-    $f                      = array();
-    $f['form']              = array( 'id' => 'mainform' );
-    $f['fields']            = array();
-    $fields                 = &$f['fields']; // shorthand
-    $fields[]               = array( 'id' => 'woocommerce_bacs_title' );
-    $fields[]               = array( 'id' => 'woocommerce_bacs_description' );
-    $fields[]               = array( 'id' => 'woocommerce_bacs_instructions' );
-    $page_config['forms'][] = $f;
-    $page_configs[]         = $page_config;
+    $page_configs[] = array(
+        'pages' => array( 'admin.php' => 'page=wc-settings&tab=checkout&section=bacs' ),
+        'forms' => array(
+            array(
+                'form'   => array( 'id' => 'mainform' ),
+                'fields' => array(
+                    array( 'id' => 'woocommerce_bacs_title' ),
+                    array( 'id' => 'woocommerce_bacs_description' ),
+                    array( 'id' => 'woocommerce_bacs_instructions' )
+                )
+            )
+        )
+    );
 
-    // tab=checkout&section=cheque
-    $page_config            = array();
-    $page_config['pages']   = array( 'admin.php' => 'page=wc-settings&tab=checkout&section=cheque' );
-    $page_config['forms']   = array();
-    $f                      = array();
-    $f['form']              = array( 'id' => 'mainform' );
-    $f['fields']            = array();
-    $fields                 = &$f['fields']; // shorthand
-    $fields[]               = array( 'id' => 'woocommerce_cheque_title' );
-    $fields[]               = array( 'id' => 'woocommerce_cheque_description' );
-    $fields[]               = array( 'id' => 'woocommerce_cheque_instructions' );
-    $page_config['forms'][] = $f;
-    $page_configs[]         = $page_config;
+    $page_configs[] = array(
+        'pages' => array( 'admin.php' => 'page=wc-settings&tab=checkout&section=cheque' ),
+        'forms' => array(
+            array(
+                'form'   => array( 'id' => 'mainform' ),
+                'fields' => array(
+                    array( 'id' => 'woocommerce_cheque_title' ),
+                    array( 'id' => 'woocommerce_cheque_description' ),
+                    array( 'id' => 'woocommerce_cheque_instructions' )
+                )
+            )
+        )
+    );
 
-    // tab=checkout&section=cod
-    $page_config            = array();
-    $page_config['pages']   = array( 'admin.php' => 'page=wc-settings&tab=checkout&section=cod' );
-    $page_config['forms']   = array();
-    $f                      = array();
-    $f['form']              = array( 'id' => 'mainform' );
-    $f['fields']            = array();
-    $fields                 = &$f['fields']; // shorthand
-    $fields[]               = array( 'id' => 'woocommerce_cod_title' );
-    $fields[]               = array( 'id' => 'woocommerce_cod_description' );
-    $fields[]               = array( 'id' => 'woocommerce_cod_instructions' );
-    $page_config['forms'][] = $f;
-    $page_configs[]         = $page_config;
+    $page_configs[] = array(
+        'pages' => array( 'admin.php' => 'page=wc-settings&tab=checkout&section=cod' ),
+        'forms' => array(
+            array(
+                'form'   => array( 'id' => 'mainform' ),
+                'fields' => array(
+                    array( 'id' => 'woocommerce_cod_title' ),
+                    array( 'id' => 'woocommerce_cod_description' ),
+                    array( 'id' => 'woocommerce_cod_instructions' )
+                )
+            )
+        )
+    );
 
-    // tab=checkout&section=paypal
-    $page_config            = array();
-    $page_config['pages']   = array( 'admin.php' => 'page=wc-settings&tab=checkout&section=paypal' );
-    $page_config['forms']   = array();
-    $f                      = array();
-    $f['form']              = array( 'id' => 'mainform' );
-    $f['fields']            = array();
-    $fields                 = &$f['fields']; // shorthand
-    $fields[]               = array( 'id' => 'woocommerce_paypal_title' );
-    $fields[]               = array( 'id' => 'woocommerce_paypal_description' );
-    $fields[]               = array( 'id' => 'woocommerce_paypal_instructions' );
-    $page_config['forms'][] = $f;
-    $page_configs[]         = $page_config;
+    $page_configs[] = array(
+        'pages' => array( 'admin.php' => 'page=wc-settings&tab=checkout&section=paypal' ),
+        'forms' => array(
+            array(
+                'form'   => array( 'id' => 'mainform' ),
+                'fields' => array(
+                    array( 'id' => 'woocommerce_paypal_title' ),
+                    array( 'id' => 'woocommerce_paypal_description' ),
+                    array( 'id' => 'woocommerce_paypal_instructions' )
+                )
+            )
+        )
+    );
 
-    // tab=account
-    $page_config            = array();
-    $page_config['pages']   = array( 'admin.php' => 'page=wc-settings&tab=account' );
-    $page_config['forms']   = array();
-    $f                      = array();
-    $f['form']              = array( 'id' => 'mainform' );
-    $f['fields']            = array();
-    $fields                 = &$f['fields']; // shorthand
-    $fields[]               = array( 'id' => 'woocommerce_registration_privacy_policy_text' );
-    $fields[]               = array( 'id' => 'woocommerce_checkout_privacy_policy_text' );
-    $page_config['forms'][] = $f;
-    $page_configs[]         = $page_config;
+    $page_configs[] = array(
+        'pages' => array( 'admin.php' => 'page=wc-settings&tab=account' ),
+        'forms' => array(
+            array(
+                'form'   => array( 'id' => 'mainform' ),
+                'fields' => array(
+                    array( 'id' => 'woocommerce_registration_privacy_policy_text' ),
+                    array( 'id' => 'woocommerce_checkout_privacy_policy_text' )
+                )
+            )
+        )
+    );
 
-    // tab=shipping
-    // TODO these fields are not static anymore, they have to be handled dynamically in JS
+    // TODO fix tab=shipping, these fields are not static anymore, they have to be handled dynamically in JS
     // $fields[] = array( 'id' => 'woocommerce_free_shipping_title' );
     // $fields[] = array( 'id' => 'woocommerce_flat_rate_title' );
     // $fields[] = array( 'id' => 'woocommerce_international_delivery_title' );
     // $fields[] = array( 'id' => 'woocommerce_local_delivery_title' );
     // $fields[] = array( 'id' => 'woocommerce_local_pickup_title' );
 
-    // tab=email
-    $page_config            = array();
-    $page_config['pages']   = array( 'admin.php' => 'page=wc-settings&tab=email(&section=|)$' );
-    $page_config['forms']   = array();
-    $f                      = array();
-    $f['form']              = array( 'id' => 'mainform' );
-    $f['fields']            = array();
-    $fields                 = &$f['fields']; // shorthand
-    $fields[]               = array( 'id' => 'woocommerce_email_from_name' );
-    $fields[]               = array( 'id' => 'woocommerce_email_footer_text' );
-    $page_config['forms'][] = $f;
-    $page_configs[]         = $page_config;
+    $page_configs[] = array(
+        'pages' => array( 'admin.php' => 'page=wc-settings&tab=email(&section=|)$' ),
+        'forms' => array(
+            array(
+                'form'   => array( 'id' => 'mainform' ),
+                'fields' => array(
+                    array( 'id' => 'woocommerce_email_from_name' ),
+                    array( 'id' => 'woocommerce_email_footer_text' )
+                )
+            )
+        )
+    );
 
-    // tab=email&section=XXX
-    $page_config            = array();
-    $page_config['pages']   = array( 'admin.php' => 'page=wc-settings&tab=email&section=wc_email' );
-    $page_config['forms']   = array();
-    $f                      = array();
-    $f['form']              = array( 'id' => 'mainform' );
-    $f['fields']            = array();
-    $fields                 = &$f['fields']; // shorthand
-    $fields[]               = array( 'jquery' => 'input.input-text[type=text][name^=woocommerce_]' );
-    $page_config['forms'][] = $f;
-    $page_configs[]         = $page_config;
+    $page_configs[] = array(
+        'pages' => array( 'admin.php' => 'page=wc-settings&tab=email&section=wc_email' ),
+        'forms' => array(
+            array(
+                'form'   => array( 'id' => 'mainform' ),
+                'fields' => array(
+                    array( 'jquery' => 'input.input-text[type=text][name^=woocommerce_]' ),
+                    array( 'id' => 'woocommerce_email_footer_text' )
+                )
+            )
+        )
+    );
 
     return $page_configs;
 }
