@@ -1,3 +1,21 @@
+### 3.7.3
+Admin
+* Fix plugin, mu-plugin and theme config search (#797)
+* Refactor plugin dirname and basename (#796)
+* Remove legacy plugin config override (#793)
+* Set url for Classic Editor direct install (#799)
+* Deprecate functions:
+  - `qtranxf_plugin_dirname`
+  - `qtranxf_plugin_basename`
+  - `qtranxf_find_plugin_config_files`
+  - `qtranxf_find_plugin_by_folder`
+
+WooCommerce
+* Fix translation custom attributes (#612, #752)
+* Remove `woocommerce_product_get_attributes` hook to fix `cannot_implode` (#612, #707)
+* Fix translations checkout and account settings (#787)
+* Refactor admin page configs
+
 ### 3.7.2
 Core
 * No front-detect redirect on neutral path (#749)
