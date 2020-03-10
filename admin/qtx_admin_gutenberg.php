@@ -186,7 +186,7 @@ class QTX_Admin_Gutenberg {
         if ( ! ( class_exists( 'Classic_Editor' ) ||
                  is_plugin_active( 'disable-gutenberg/disable-gutenberg.php' ) ||
                  is_plugin_active( 'no-gutenberg/no-gutenberg.php' ) ) ) {
-            $link_classic = "https://wordpress.org/plugins/classic-editor/";
+            $link_classic = admin_url( 'plugin-install.php?tab=plugin-information&plugin=classic-editor' );
             $link_plugins = admin_url( 'plugins.php' );
             ?>
             <div class="notice notice-warning">
