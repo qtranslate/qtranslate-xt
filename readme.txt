@@ -42,8 +42,18 @@ Yes and it's very easy! Currently you can have both qTranslate-X and qTranslate-
 
 *Disclaimer: we cannot guarantee that all the functionalites are preserved and the installation is at your own responsibility. Be sure to backup your database regularly.*
 
-### Is the block editor (Gutenberg) supported? ###
-Not yet. Some work is in progress but don't expect this soon.
+### Is the Block Editor (Gutenberg) supported? ###
+Gutenberg is partially supported in *Single Language edit mode* only (*). It is recommended you install the [Classic Editor](https://wordpress.org/plugins/classic-editor/) to keep the usual features using the legacy TinyMCE editor. This plugin is very convenient as it allows you to select which editor to use as default or for every post.
+
+**DISCLAIMER**: this feature is only a recent addition and there might be some problems we are not aware of. Though the operations should not put your database at risk, better to always backup regularly. The main risk concerns the post being edited. Be sure to test this separately first, before using it in full production.
+
+(*) The limitation to single language mode means you have to edit every language separately, one after the other.
+If you want to publish a post with all languages at the same time:
+* edit the first language and save the content as draft
+* switch to other language, save as draft - ignore the warnings
+* finally publish the whole post with all languages.
+
+The support for Language Switching Buttons (LSB) requires much more work because of the whole different software architecture of Gutenberg. Other solutions may come later.
 
 ### Is WooCommerce, ACF, ... supported? ###
 WooCommerce, ACF and other plugins are now supported as built-in modules. Developers able to test properly are much welcome! Please send PR for bug fixes.
