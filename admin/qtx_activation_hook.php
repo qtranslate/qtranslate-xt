@@ -746,6 +746,11 @@ function qtranxf_activation_hook() {
         }
     }
 
+    // show gutenberg notice again if there is no active support for Classic or alternative
+    if ( ! qtranxf_is_classic_editor_supported() && isset( $messages['gutenberg-support'] ) ) {
+        qtranxf_update_option_admin_notices( $messages, 'gutenberg-support', false );
+    }
+
     QTX_Admin_Modules::update_modules_status();
 
     /**
@@ -755,6 +760,17 @@ function qtranxf_activation_hook() {
     do_action( 'qtranslate_activation_hook' );
 
     qtranxf_update_config_files();
+}
+
+/**
+ * Check if the Classic Editor, or alternative, is supported
+ *
+ * @return bool
+ */
+function qtranxf_is_classic_editor_supported() {
+    return class_exists( 'Classic_Editor' ) ||
+           is_plugin_active( 'disable-gutenberg/disable-gutenberg.php' ) ||
+           is_plugin_active( 'no-gutenberg/no-gutenberg.php' );
 }
 
 /**
@@ -803,6 +819,31 @@ function qtranxf_admin_notice_first_install() {
 }
 
 add_action( 'admin_notices', 'qtranxf_admin_notice_first_install' );
+
+/**
+ * Show admin notice for Gutenberg
+ */
+function qtranxf_admin_notices_gutenberg() {
+    if ( qtranxf_check_admin_notice( 'gutenberg-support' ) ) {
+        return;
+    }
+    qtranxf_admin_notice_dismiss_script();
+    ?>
+    <div class="notice notice-warning qtranxs-notice-ajax is-dismissible" id="qtranxs-gutenberg-support"">
+    <p><?php printf( __( '<b>Caution!</b> The block editor (Gutenberg) is supported only recently in %s. Use at your own discretion!', 'qtranslate' ), 'qTranslate&#8209;XT' ); ?></p>
+    <p><?php printf( __( 'Currently only the single language edit mode is supported. For more details, please read carefully our <a href="%s">README</a>.', 'qtranslate' ), 'https://github.com/qTranslate/qtranslate-xt#is-the-block-editor-gutenberg-supported' ); ?></p>
+    <?php if ( ! qtranxf_is_classic_editor_supported() ):
+        $link_classic = admin_url( 'plugin-install.php?tab=plugin-information&plugin=classic-editor' );
+        $link_plugins = admin_url( 'plugins.php' ); ?>
+        <p><?php printf( __( 'It is recommended to install the <a href="%s">%s</a> in your <a href="%s">plugins</a>.', 'qtranslate' ), $link_classic, 'Classic Editor', $link_plugins ); ?></p>
+    <?php endif; ?>
+    href="javascript:void(0);"><?php _e( 'I have already done it, dismiss this message.', 'qtranslate' ); ?></a>
+    </p>
+    </div>
+    <?php
+}
+
+add_action( 'admin_notices', 'qtranxf_admin_notices_gutenberg' );
 
 function qtranxf_admin_notice_deactivate_plugin( $nm, $plugin ) {
     deactivate_plugins( $plugin, true );

@@ -20,7 +20,6 @@ class QTX_Admin_Gutenberg {
     public function __construct() {
         add_action( 'rest_api_init', array( $this, 'rest_api_init' ) );
         add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ) );
-        add_action( 'admin_notices', array( $this, 'admin_notices_block_editor' ) );
     }
 
     /**
@@ -175,25 +174,6 @@ class QTX_Admin_Gutenberg {
             true
         );
         wp_enqueue_script( 'qtx-gutenberg' );
-    }
-
-    /**
-     * Show admin notice for Gutenberg
-     */
-    public function admin_notices_block_editor() {
-        require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-        // TODO improve condition for notice display
-        if ( ! ( class_exists( 'Classic_Editor' ) ||
-                 is_plugin_active( 'disable-gutenberg/disable-gutenberg.php' ) ||
-                 is_plugin_active( 'no-gutenberg/no-gutenberg.php' ) ) ) {
-            $link_classic = admin_url( 'plugin-install.php?tab=plugin-information&plugin=classic-editor' );
-            $link_plugins = admin_url( 'plugins.php' );
-            ?>
-            <div class="notice notice-warning">
-                <p><?php printf( __( 'Caution! The block editor (Gutenberg) is only partially supported in %s, yet experimental. Use at your own discretion! Alternatively, install and activate the <a href="%s"> Classic Editor</a> in your <a href="%s">plugins</a>.', 'qtranslate' ), 'qTranslate&#8209;XT', $link_classic, $link_plugins ); ?></p>
-            </div>
-            <?php
-        }
     }
 
     /**
