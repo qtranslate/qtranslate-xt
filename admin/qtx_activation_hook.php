@@ -831,13 +831,15 @@ function qtranxf_admin_notices_gutenberg() {
     ?>
     <div class="notice notice-warning qtranxs-notice-ajax is-dismissible" id="qtranxs-gutenberg-support"">
     <p><?php printf( __( '<b>Caution!</b> The block editor (Gutenberg) is supported only recently in %s. Use at your own discretion!', 'qtranslate' ), 'qTranslate&#8209;XT' ); ?></p>
-    <p><?php printf( __( 'Currently only the single language edit mode is supported. For more details, please read carefully our <a href="%s">README</a>.', 'qtranslate' ), 'https://github.com/qTranslate/qtranslate-xt#is-the-block-editor-gutenberg-supported' ); ?></p>
+    <p><?php printf( __( 'Currently only the single language edit mode is supported. For more details, please read carefully our <a href="%s">README</a>.', 'qtranslate' ), 'https://github.com/qtranslate/qtranslate-xt/blob/gutenberg/README.md#is-the-block-editor-gutenberg-supported' ); ?></p>
     <?php if ( ! qtranxf_is_classic_editor_supported() ):
         $link_classic = admin_url( 'plugin-install.php?tab=plugin-information&plugin=classic-editor' );
         $link_plugins = admin_url( 'plugins.php' ); ?>
         <p><?php printf( __( 'It is recommended to install the <a href="%s">%s</a> in your <a href="%s">plugins</a>.', 'qtranslate' ), $link_classic, 'Classic Editor', $link_plugins ); ?></p>
     <?php endif; ?>
-    href="javascript:void(0);"><?php _e( 'I have already done it, dismiss this message.', 'qtranslate' ); ?></a>
+    <p>
+        <a class="button qtranxs-notice-dismiss"
+           href="javascript:void(0);"><?php _e( 'I have already done it, dismiss this message.', 'qtranslate' ); ?></a>
     </p>
     </div>
     <?php
