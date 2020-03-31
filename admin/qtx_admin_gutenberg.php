@@ -97,31 +97,25 @@ class QTX_Admin_Gutenberg {
         $fields = [ 'title', 'content', 'excerpt' ];
         foreach ( $fields as $field ) {
             if ( ! isset( $request_body[ $field ] ) ) {
-                // only the changed fields are set in the REST request
-                continue;
-            }
-            $new_value = $request_body[ $field ];
+                continue; // only the changed fields are set in the REST request
 
+            }
+
+            // split original values with empty strings by default
             $original_value = $post[ 'post_' . $field ];
-            $blocks         = qtranxf_get_language_blocks( $original_value );
-            if ( count( $blocks ) > 1 ) {
-                $split                 = qtranxf_split_languages( $blocks );
-                $split[ $editor_lang ] = $new_value;
-            } else {
+            $split          = qtranxf_split( $original_value );
+
+            // replace current language with the new value
+            $split[ $editor_lang ] = $request_body[ $field ];
+
+            // remove auto-draft default title for other languages (not the correct translation)
+            if ( $field === 'title' && $post['post_status'] === 'auto-draft' ) {
                 global $q_config;
-                $split = array();
                 foreach ( $q_config['enabled_languages'] as $lang ) {
-                    if ( $lang === $editor_lang ) {
-                        continue;
-                    }
-                    if ( $field === 'title' && $post['post_status'] === 'auto-draft' ) {
-                        // remove default title for auto-draft for other languages
+                    if ( $lang !== $editor_lang ) {
                         $split[ $lang ] = '';
-                    } else {
-                        $split[ $lang ] = $original_value;
                     }
                 }
-                $split[ $editor_lang ] = $new_value;
             }
 
             // TODO handle custom separator
