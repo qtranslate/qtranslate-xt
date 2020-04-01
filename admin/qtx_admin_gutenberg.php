@@ -183,7 +183,11 @@ class QTX_Admin_Gutenberg {
         if ( isset( $response_data['content'] ) && is_array( $response_data['content'] ) && isset( $response_data['content']['raw'] ) ) {
             $response_data['title']['raw']    = qtranxf_use( $editor_lang, $response_data['title']['raw'], false, true );
             $response_data['content']['raw']  = qtranxf_use( $editor_lang, $response_data['content']['raw'], false, true );
-            $response_data['excerpt']['raw']  = qtranxf_use( $editor_lang, $response_data['excerpt']['raw'], false, true );
+
+            if ( isset( $response_data['excerpt']['raw'] ) ) {
+                $response_data['excerpt']['raw'] = qtranxf_use( $editor_lang, $response_data['excerpt']['raw'], false, true );
+            }
+
             $response_data['qtx_editor_lang'] = $editor_lang;
             $response->set_data( $response_data );
         }
