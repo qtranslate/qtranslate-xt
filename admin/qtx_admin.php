@@ -466,8 +466,15 @@ function qtranxf_add_admin_footer_js() {
         unset( $config['page_config']['js'] );
     }
 
-    $config['LSB'] = $q_config['editor_mode'] == QTX_EDITOR_MODE_LSB;
-    $config['RAW'] = $q_config['editor_mode'] == QTX_EDITOR_MODE_RAW;
+    // For Gutenberg, enforce the editor mode to QTX_EDITOR_MODE_SINGLE
+    $current_screen = get_current_screen();
+    if ( $current_screen->is_block_editor() ) {
+        $config['LSB'] = false;
+        $config['RAW'] = false;
+    } else {
+        $config['LSB'] = $q_config['editor_mode'] == QTX_EDITOR_MODE_LSB;
+        $config['RAW'] = $q_config['editor_mode'] == QTX_EDITOR_MODE_RAW;
+    }
 
     if ( empty( $q_config['hide_lsb_copy_content'] ) ) {
         // translators: Prompt on hover over button "Copy From" to copy content from other language
@@ -765,6 +772,9 @@ function qtranxf_add_language_menu( $wp_admin_bar ) {
             (
                 'id'     => $language,
                 'parent' => 'language',
+                'meta'   => [
+                    'rel' => $language
+                ],
                 'title'  => $q_config['language_name'][ $language ],
                 'href'   => add_query_arg( 'lang', $language )
             )
@@ -911,6 +921,11 @@ function qtranxf_admin_load() {
     add_action( 'wp_before_admin_bar_render', 'qtranxf_before_admin_bar_render' );
 
     add_action( 'wp_ajax_admin_debug_info', 'qtranxf_admin_debug_info' );
+
+    global $wp_version;
+    if ( version_compare( $wp_version, '5.0' ) >= 0 ) {
+        require_once( QTRANSLATE_DIR . '/admin/qtx_admin_gutenberg.php' );
+    }
 }
 
 qtranxf_admin_load();

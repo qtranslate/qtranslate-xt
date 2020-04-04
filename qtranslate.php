@@ -1,25 +1,25 @@
 <?php
 /**
  * Plugin Name: qTranslate-XT
- * Plugin URI: http://github.com/qtranslate/qtranslate-xt/
+ * Plugin URI: https://github.com/qtranslate/qtranslate-xt/
  * Description: Adds user-friendly multilingual content support, stored in single post.
- * Version: 3.7.3
+ * Version: 3.8.0.dev.6
  * Author: qTranslate Community
- * Author URI: http://github.com/qtranslate/
+ * Author URI: https://github.com/qtranslate/
  * Tags: multilingual, multi, language, admin, tinymce, Polyglot, bilingual, widget, switcher, professional, human, translation, service, qTranslate, zTranslate, mqTranslate, qTranslate Plus, WPML
  * Text Domain: qtranslate
  * Domain Path: /lang/
  * License: GPLv2 or later
- * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.txt
  * Author e-mail: herrvigg@gmail.com
  * Original Author: John Clause and Qian Qin (http://www.qianqin.de mail@qianqin.de)
  * GitHub Plugin URI: https://github.com/qtranslate/qtranslate-xt/
  */
-/* Unused keywords (as described in http://codex.wordpress.org/Writing_a_Plugin):
+/* Unused keywords (as described in https://codex.wordpress.org/Writing_a_Plugin):
  * Network: Optional. Whether the plugin can only be activated network wide. Example: true
  */
 /*
-	Copyright 2019  qTranslate Community
+	Copyright 2019-2020 qTranslate Community
 
 	The statement below within this comment block is relevant to
 	this file as well as to all files in this folder and to all files
@@ -54,7 +54,7 @@ if ( ! function_exists( 'add_filter' ) ) {
  * Designed as interface for other plugin integration. The documentation is available at
  * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide/
  */
-define( 'QTX_VERSION', '3.7.3' );
+define( 'QTX_VERSION', '3.8.0.dev.6' );
 
 if ( ! defined( 'QTRANSLATE_FILE' ) ) {
     define( 'QTRANSLATE_FILE', __FILE__ );

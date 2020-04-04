@@ -1,0 +1,30 @@
+{
+  "name": "qtranslate-xt",
+  "version": "1.0.0",
+  "description": "qTranslate-XT (eXTended)",
+  "main": "admin/js/src/index.js",
+  "private": true,
+  "scripts": {
+    "build": "babel admin/js/src -d admin/js/lib --minified --verbose",
+    "dev": "babel admin/js/src -d admin/js/lib --verbose",
+    "watch": "babel admin/js/src -d admin/js/lib --watch --verbose",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qtranslate/qtranslate-xt.git"
+  },
+  "keywords": [],
+  "author": "HerrVigg",
+  "license": "GPLv2-or-later",
+  "bugs": {
+    "url": "https://github.com/qtranslate/qtranslate-xt/issues"
+  },
+  "homepage": "https://github.com/qtranslate/qtranslate-xt#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.0"
+  },
+  "dependencies": {}
+}
