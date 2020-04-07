@@ -40,20 +40,10 @@ The previous qTranslate-Team was only one person. We tried to contact the author
 ### I'm still using qTranslate-X, can I test qTranslate-XT?
 Yes and it's very easy! Currently you can have both qTranslate-X and qTranslate-XT installed in the plugins folder for experimentations, but you should have at most one active at any time: **BOTH -X AND -XT SHARE THE SAME OPTIONS!** So if you change some options and switch between the plugins, the last changes will remain for the other. The plugin can actually re-adapt its configuration after a switch, in the general case you have nothing to do. If you have some incompatible options you should see some warnings. Note that even if you uninstall either -X or -XT, the options are *not* erased!
 
-*Disclaimer: we cannot guarantee that all the functionalites are preserved and the installation is at your own responsibility. Be sure to backup your database regularly.*
+*Disclaimer: be sure to backup your database regularly.*
 
 ### Is the Block Editor (Gutenberg) supported? ###
-Gutenberg is partially supported in *Single Language edit mode* only (*). It is recommended you install the [Classic Editor](https://wordpress.org/plugins/classic-editor/) to keep the usual features using the legacy TinyMCE editor. This plugin is very convenient as it allows you to select which editor to use as default or for every post.
-
-**DISCLAIMER**: this feature is only a recent addition and there might be some problems we are not aware of. Though the operations should not put your database at risk, better to always backup regularly. The main risk concerns the post being edited. Be sure to test this separately first, before using it in full production.
-
-(*) The limitation to single language mode means you have to edit every language separately, one after the other.
-If you want to publish a post with all languages at the same time:
-* edit the first language and save the content as draft
-* switch to other language, save as draft - ignore the warnings
-* finally publish the whole post with all languages.
-
-The support for Language Switching Buttons (LSB) requires much more work because of the whole different software architecture of Gutenberg. Other solutions may come later.
+It is partially supported, with some limitations. Read carefully our [Gutenberg FAQ](https://github.com/qtranslate/qtranslate-xt/wiki/FAQ#gutenberg) before use.
 
 ### Is WooCommerce, ACF, ... supported? ###
 WooCommerce, ACF and other plugins are now supported as built-in modules. Developers able to test properly are much welcome! Please send PR for bug fixes.
@@ -81,6 +71,9 @@ Note for developers:
 * old releases may contain legacy headers that can become problematic. Be very cautious if you customize the updates for given branches!
 
 ## Upgrade Notice
+
+### 3.8.0
+New feature! Initial support of Gutenberg, with some limitations. Read carefully our [Gutenberg FAQ](https://github.com/qtranslate/qtranslate-xt/wiki/FAQ#gutenberg) before use.
 
 ### 3.6.0
 New feature! The built-in modules replace the legacy plugins for integration. You have to **deactivate/reactivate qTranslate-XT** to detect the active modules. See [README.md](https://github.com/qtranslate/qtranslate-xt/blob/master/modules/README.md) in modules for more info.
@@ -113,9 +106,9 @@ The [legacy issues](https://github.com/qtranslate/qtranslate-xt/wiki/Known-Issue
 ## Desirable Unimplemented Features
 
 * refactor integration API, possibly without json files (i18n-config.json)
-* support for Gutenberg
 * support for translatable slugs
 * support for [localized hreflang](https://support.google.com/webmasters/answer/189077) with country/region codes (ISO 3166-1 alpha-2)
+* full support for Gutenberg (with LSB)
 * unit/integration tests, automated CI tests
 * utilities for DB maintenance (audit, cleanup)
 * legacy of [desirable features](https://github.com/qtranslate/qtranslate-xt/wiki/Legacy-Desirable-Features).

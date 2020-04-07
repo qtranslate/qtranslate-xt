@@ -830,8 +830,8 @@ function qtranxf_admin_notices_gutenberg() {
     qtranxf_admin_notice_dismiss_script();
     ?>
     <div class="notice notice-warning qtranxs-notice-ajax is-dismissible" id="qtranxs-gutenberg-support"">
-    <p><?php printf( __( '<b>Caution!</b> The block editor (Gutenberg) is supported only recently in %s. Use at your own discretion!', 'qtranslate' ), 'qTranslate&#8209;XT' ); ?></p>
-    <p><?php printf( __( 'Currently only the single language edit mode is supported. For more details, please read carefully our <a href="%s">README</a>.', 'qtranslate' ), 'https://github.com/qtranslate/qtranslate-xt/blob/gutenberg/README.md#is-the-block-editor-gutenberg-supported' ); ?></p>
+    <p><?php printf( __( '<b>Caution!</b> The block editor (Gutenberg) is supported only recently in %s with some limitations. Use at your own discretion!', 'qtranslate' ), 'qTranslate&#8209;XT' ); ?></p>
+    <p><?php printf( __( 'Currently only the single language edit mode is supported. For more details, please read carefully our <a href="%s">Gutenberg FAQ</a>.', 'qtranslate' ), 'https://github.com/qtranslate/qtranslate-xt/wiki/FAQ#gutenberg' ); ?></p>
     <?php if ( ! qtranxf_is_classic_editor_supported() ):
         $link_classic = admin_url( 'plugin-install.php?tab=plugin-information&plugin=classic-editor' );
         $link_plugins = admin_url( 'plugins.php' ); ?>

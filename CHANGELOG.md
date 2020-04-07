@@ -1,3 +1,6 @@
+### 3.8.0
+New feature! Initial support of Gutenberg, with some limitations. Read carefully our [Gutenberg FAQ](https://github.com/qtranslate/qtranslate-xt/wiki/FAQ#gutenberg) before use.
+
 ### 3.7.3
 Admin
 * Fix plugin, mu-plugin and theme config search (#797)
