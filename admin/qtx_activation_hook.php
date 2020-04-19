@@ -626,7 +626,7 @@ function qtranxf_find_plugin_config_file( $plugin ) {
     }
 
     // built-in configuration
-    $config_file = QTRANSLATE_DIR . '/18n-config/plugins/' . $plugin_dirname . '/i18n-config.json';
+    $config_file = QTRANSLATE_DIR . '/i18n-config/plugins/' . $plugin_dirname . '/i18n-config.json';
     if ( is_readable( $config_file ) ) {
         return qtranxf_normalize_config_files( [ $config_file ] )[0];
     }
