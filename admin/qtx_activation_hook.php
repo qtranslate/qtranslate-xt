@@ -11,18 +11,18 @@ require_once( QTRANSLATE_DIR . '/admin/qtx_admin_modules.php' );
  */
 function qtranxf_save_languages( $cfg ) {
     global $qtranslate_options;
-    foreach ( $qtranslate_options['languages'] as $nm => $opn ) {
-        if ( is_array( $cfg[ $nm ] ) ) {
-            foreach ( $cfg[ $nm ] as $k => $v ) {
-                if ( empty( $v ) ) {
-                    unset( $cfg[ $nm ][ $k ] );
+    foreach ( $qtranslate_options['languages'] as $key => $option ) {
+        if ( is_array( $cfg[ $key ] ) ) {
+            foreach ( $cfg[ $key ] as $language => $value ) {
+                if ( empty( $value ) ) {
+                    unset( $cfg[ $key ][ $language ] );
                 }
             }
         }
-        if ( empty( $cfg[ $nm ] ) ) {
-            delete_option( $opn );
+        if ( empty( $cfg[ $key ] ) ) {
+            delete_option( $option );
         } else {
-            update_option( $opn, $cfg[ $nm ] );
+            update_option( $option, $cfg[ $key ] );
         }
     }
 
@@ -80,48 +80,51 @@ function qtranxf_default_default_language() {
 }
 
 /**
+ * @param array $json_files normalized paths
+ *
+ * @return array configuration dictionary
  * @since 3.3.2
  */
 function qtranxf_load_config_files( $json_files ) {
     $content_dir = null;
     $qtransx_dir = null;
-    foreach ( $json_files as $k => $fnm ) {
-        if ( file_exists( $fnm ) ) {
+    foreach ( $json_files as $index => $config_file ) {
+        if ( file_exists( $config_file ) ) {
             continue;
         }
-        $ffnm = null;
-        if ( $fnm[0] == '.' && $fnm[1] == '/' ) {
+        $full_path = null;
+        if ( $config_file[0] == '.' && $config_file[1] == '/' ) {
             if ( ! $qtransx_dir ) {
                 $qtransx_dir = QTRANSLATE_DIR;
             }
-            $ffnm = $qtransx_dir . substr( $fnm, 1 );
+            $full_path = $qtransx_dir . substr( $config_file, 1 );
         }
-        if ( ! file_exists( $ffnm ) ) {
+        if ( ! file_exists( $full_path ) ) {
             if ( ! $content_dir ) {
                 $content_dir = trailingslashit( WP_CONTENT_DIR );
             }
-            $ffnm = $content_dir . $fnm;
+            $full_path = $content_dir . $config_file;
         }
-        if ( file_exists( $ffnm ) ) {
-            $json_files[ $k ] = $ffnm;
+        if ( file_exists( $full_path ) ) {
+            $json_files[ $index ] = $full_path;
         } else {
-            qtranxf_error_log( sprintf( __( 'Could not find file "%s" listed in option "%s".', 'qtranslate' ), '<strong>' . $fnm . '</strong>', '<a href="' . admin_url( 'options-general.php?page=qtranslate-xt#integration' ) . '">' . __( 'Configuration Files', 'qtranslate' ) . '</a>' ) . ' ' . __( 'Please, either put file in place or update the option.', 'qtranslate' ) . ' ' . sprintf( __( 'Once the problem is fixed, re-save the configuration by pressing button "%s" on plugin %ssettings page%s.', 'qtranslate' ), __( 'Save Changes', 'qtranslate' ), '<a href="' . admin_url( 'options-general.php?page=qtranslate-xt#integration' ) . '">', '</a>' ) );
-            unset( $json_files[ $k ] );
+            qtranxf_error_log( sprintf( __( 'Could not find file "%s" listed in option "%s".', 'qtranslate' ), '<strong>' . $config_file . '</strong>', '<a href="' . admin_url( 'options-general.php?page=qtranslate-xt#integration' ) . '">' . __( 'Configuration Files', 'qtranslate' ) . '</a>' ) . ' ' . __( 'Please, either put file in place or update the option.', 'qtranslate' ) . ' ' . sprintf( __( 'Once the problem is fixed, re-save the configuration by pressing button "%s" on plugin %ssettings page%s.', 'qtranslate' ), __( 'Save Changes', 'qtranslate' ), '<a href="' . admin_url( 'options-general.php?page=qtranslate-xt#integration' ) . '">', '</a>' ) );
+            unset( $json_files[ $index ] );
         }
     }
 
     $cfg_all = array();
-    foreach ( $json_files as $fnm ) {
-        $cfg_json = file_get_contents( $fnm );
+    foreach ( $json_files as $config_file ) {
+        $cfg_json = file_get_contents( $config_file );
         if ( $cfg_json ) {
             $cfg = json_decode( $cfg_json, true );
             if ( ! empty( $cfg ) && is_array( $cfg ) ) {
                 $cfg_all = qtranxf_merge_config( $cfg_all, $cfg );
             } else {
-                qtranxf_error_log( sprintf( __( 'Could not parse %s file "%s" listed in option "%s".', 'qtranslate' ), 'JSON', '<strong>' . $fnm . '</strong>', '<a href="' . admin_url( 'options-general.php?page=qtranslate-xt#integration' ) . '">' . __( 'Configuration Files', 'qtranslate' ) . '</a>' ) . ' ' . __( 'Please, correct the syntax error in the file.', 'qtranslate' ) . ' ' . sprintf( __( 'Once the problem is fixed, re-save the configuration by pressing button "%s" on plugin %ssettings page%s.', 'qtranslate' ), __( 'Save Changes', 'qtranslate' ), '<a href="' . admin_url( 'options-general.php?page=qtranslate-xt#integration' ) . '">', '</a>' ) );
+                qtranxf_error_log( sprintf( __( 'Could not parse %s file "%s" listed in option "%s".', 'qtranslate' ), 'JSON', '<strong>' . $config_file . '</strong>', '<a href="' . admin_url( 'options-general.php?page=qtranslate-xt#integration' ) . '">' . __( 'Configuration Files', 'qtranslate' ) . '</a>' ) . ' ' . __( 'Please, correct the syntax error in the file.', 'qtranslate' ) . ' ' . sprintf( __( 'Once the problem is fixed, re-save the configuration by pressing button "%s" on plugin %ssettings page%s.', 'qtranslate' ), __( 'Save Changes', 'qtranslate' ), '<a href="' . admin_url( 'options-general.php?page=qtranslate-xt#integration' ) . '">', '</a>' ) );
             }
         } else {
-            qtranxf_error_log( sprintf( __( 'Could not load file "%s" listed in option "%s".', 'qtranslate' ), '<strong>' . $fnm . '</strong>', '<a href="' . admin_url( 'options-general.php?page=qtranslate-xt#integration' ) . '">' . __( 'Configuration Files', 'qtranslate' ) . '</a>' ) . ' ' . __( 'Please, make sure the file is accessible and readable.', 'qtranslate' ) . ' ' . sprintf( __( 'Once the problem is fixed, re-save the configuration by pressing button "%s" on plugin %ssettings page%s.', 'qtranslate' ), __( 'Save Changes', 'qtranslate' ), '<a href="' . admin_url( 'options-general.php?page=qtranslate-xt#integration' ) . '">', '</a>' ) );
+            qtranxf_error_log( sprintf( __( 'Could not load file "%s" listed in option "%s".', 'qtranslate' ), '<strong>' . $config_file . '</strong>', '<a href="' . admin_url( 'options-general.php?page=qtranslate-xt#integration' ) . '">' . __( 'Configuration Files', 'qtranslate' ) . '</a>' ) . ' ' . __( 'Please, make sure the file is accessible and readable.', 'qtranslate' ) . ' ' . sprintf( __( 'Once the problem is fixed, re-save the configuration by pressing button "%s" on plugin %ssettings page%s.', 'qtranslate' ), __( 'Save Changes', 'qtranslate' ), '<a href="' . admin_url( 'options-general.php?page=qtranslate-xt#integration' ) . '">', '</a>' ) );
         }
     }
     if ( ! isset( $cfg_all['admin-config'] ) ) {
@@ -152,28 +155,28 @@ function qtranxf_get_option_config_files() {
 /**
  * @since 3.4
  */
-function qtranxf_set_field_jquery( &$f ) {
-    if ( isset( $f['jquery'] ) ) {
+function qtranxf_set_field_jquery( &$field ) {
+    if ( isset( $field['jquery'] ) ) {
         return false;
     }
-    if ( isset( $f['class'] ) ) {
-        $jq = '.' . $f['class'];
-        unset( $f['class'] );
+    if ( isset( $field['class'] ) ) {
+        $jq = '.' . $field['class'];
+        unset( $field['class'] );
     } else {
         $jq = '';
     }
-    if ( isset( $f['tag'] ) ) {
-        $jq = $f['tag'] . $jq;
-        unset( $f['tag'] );
+    if ( isset( $field['tag'] ) ) {
+        $jq = $field['tag'] . $jq;
+        unset( $field['tag'] );
     }
-    if ( isset( $f['name'] ) ) {
-        $jq .= '[name="' . $f['name'] . '"]';
-        unset( $f['name'] );
+    if ( isset( $field['name'] ) ) {
+        $jq .= '[name="' . $field['name'] . '"]';
+        unset( $field['name'] );
     }
     if ( empty( $jq ) ) {
         return false;
     }
-    $f['jquery'] = $jq;
+    $field['jquery'] = $jq;
 
     return true;
 }
@@ -182,19 +185,19 @@ function qtranxf_set_field_jquery( &$f ) {
  * @since 3.4
  */
 function qtranxf_standardize_config_fields( $fields ) {
-    foreach ( $fields as $k => $f ) {
-        if ( ! is_array( $f ) ) {
+    foreach ( $fields as $index => $field ) {
+        if ( ! is_array( $field ) ) {
             continue;
         }
-        if ( isset( $f['id'] ) ) {
-            $id = $f['id'];
-            unset( $f['id'] );
-            $fields[ $id ] = $f;
-            if ( $id !== $k ) {
-                unset( $fields[ $k ] );
+        if ( isset( $field['id'] ) ) {
+            $id = $field['id'];
+            unset( $field['id'] );
+            $fields[ $id ] = $field;
+            if ( $id !== $index ) {
+                unset( $fields[ $index ] );
             }
-        } else if ( qtranxf_set_field_jquery( $f ) ) {
-            $fields[ $k ] = $f;
+        } else if ( qtranxf_set_field_jquery( $field ) ) {
+            $fields[ $index ] = $field;
         }
     }
 
@@ -232,28 +235,28 @@ function qtranxf_standardize_config_anchor( &$anchor ) {
  */
 function qtranxf_standardize_front_config( $cfg_front ) {
     // remove filters with empty priorities
-    foreach ( $cfg_front as $k => $cfg ) {
+    foreach ( $cfg_front as $index => $cfg ) {
         if ( ! isset( $cfg['filters'] ) ) {
             continue;
         }
         if ( ! empty( $cfg['filters']['text'] ) ) {
             foreach ( $cfg['filters']['text'] as $nm => $pr ) {
                 if ( $pr === '' ) {
-                    unset( $cfg_front[ $k ]['filters']['text'][ $nm ] );
+                    unset( $cfg_front[ $index ]['filters']['text'][ $nm ] );
                 }
             }
         }
         if ( ! empty( $cfg['filters']['url'] ) ) {
             foreach ( $cfg['filters']['url'] as $nm => $pr ) {
                 if ( $pr === '' ) {
-                    unset( $cfg_front[ $k ]['filters']['url'][ $nm ] );
+                    unset( $cfg_front[ $index ]['filters']['url'][ $nm ] );
                 }
             }
         }
         if ( ! empty( $cfg['filters']['term'] ) ) {
             foreach ( $cfg['filters']['term'] as $nm => $pr ) {
                 if ( $pr === '' ) {
-                    unset( $cfg_front[ $k ]['filters']['term'][ $nm ] );
+                    unset( $cfg_front[ $index ]['filters']['term'][ $nm ] );
                 }
             }
         }
@@ -266,11 +269,11 @@ function qtranxf_standardize_front_config( $cfg_front ) {
  * @since 3.4
  */
 function qtranxf_standardize_admin_config( $configs ) {
-    foreach ( $configs as $k => $config ) {
+    foreach ( $configs as $index => $config ) {
         if ( ! is_array( $config ) ) {
             continue;
         }
-        if ( $k === 'forms' ) {
+        if ( $index === 'forms' ) {
             foreach ( $config as $form_id => $frm ) {
                 if ( isset( $frm['form']['id'] ) ) {
                     $id = $frm['form']['id'];
@@ -288,18 +291,18 @@ function qtranxf_standardize_admin_config( $configs ) {
                     $configs['forms'][ $form_id ]['fields'] = qtranxf_standardize_config_fields( $frm['fields'] );
                 }
             }
-        } else if ( $k === 'anchors' ) {
+        } else if ( $index === 'anchors' ) {
             if ( empty( $config ) ) {
                 unset( $configs['anchors'] );
             } else {
-                foreach ( $configs['anchors'] as $k_anchor => $anchor ) {
+                foreach ( $configs['anchors'] as $index_anchor => $anchor ) {
                     $id = qtranxf_standardize_config_anchor( $anchor );
                     if ( is_null( $id ) ) {
-                        unset( $configs['anchors'][ $k_anchor ] );
+                        unset( $configs['anchors'][ $index_anchor ] );
                     } else if ( is_string( $id ) ) {
                         $configs['anchors'][ $id ] = $anchor;
-                        if ( $id !== $k_anchor ) {
-                            unset( $configs['anchors'][ $k_anchor ] );
+                        if ( $id !== $index_anchor ) {
+                            unset( $configs['anchors'][ $index_anchor ] );
                         }
                     }
                 }
@@ -308,7 +311,7 @@ function qtranxf_standardize_admin_config( $configs ) {
                 }
             }
         } else {
-            $configs[ $k ] = qtranxf_standardize_admin_config( $config );//recursive call
+            $configs[ $index ] = qtranxf_standardize_admin_config( $config );//recursive call
         }
     }
 
@@ -408,23 +411,23 @@ function qtranxf_search_config_files_theme( $theme = null ) {
  *  2) external files are relative to WP_CONTENT_DIR (plugins, mu-plugins and themes)
  *  3) otherwise absolute path are kept
  *
- * @param array $found file paths
+ * @param array $file_paths
  *
- * @return array
+ * @return array of normalized paths
  * @since 3.4
  */
-function qtranxf_normalize_config_files( $found ) {
+function qtranxf_normalize_config_files( $file_paths ) {
     $nc = strlen( WP_CONTENT_DIR );
     $np = strlen( QTRANSLATE_DIR );
-    foreach ( $found as $k => $fn ) {
-        if ( substr( $fn, 0, $np ) === QTRANSLATE_DIR ) {
-            $found[ $k ] = '.' . substr( $fn, $np );
-        } else if ( substr( $fn, 0, $nc ) === WP_CONTENT_DIR ) {
-            $found[ $k ] = substr( $fn, $nc + 1 );
+    foreach ( $file_paths as $index => $path ) {
+        if ( substr( $path, 0, $np ) === QTRANSLATE_DIR ) {
+            $file_paths[ $index ] = '.' . substr( $path, $np );
+        } else if ( substr( $path, 0, $nc ) === WP_CONTENT_DIR ) {
+            $file_paths[ $index ] = substr( $path, $nc + 1 );
         }
     }
 
-    return $found;
+    return $file_paths;
 }
 
 /**
@@ -444,6 +447,7 @@ function qtranxf_find_plugin_by_folder( $fld, $plugins ) {
  *
  * @link https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide/
  *
+ * @return array of normalized paths
  * @since 3.4
  */
 function qtranxf_search_config_files() {
@@ -493,46 +497,60 @@ function qtranxf_search_config_files() {
 /**
  * Inserts new entry at the second position, for now.
  * Later we may need to preserve order somehow.
+ *
+ * @param array $config_files as normalized paths
+ * @param string $add_file as normalized path
+ *
+ * @return array of normalized paths
  * @since 3.4
  */
-function qtranxf_add_config_file( $config_files, $fn ) {
-    $a   = array_slice( $config_files, 0, 1 );
-    $a[] = $fn;
-    foreach ( array_slice( $config_files, 1 ) as $f ) {
-        if ( ! is_string( $f ) ) {
+function qtranxf_add_config_file( $config_files, $add_file ) {
+    $updated   = array_slice( $config_files, 0, 1 );
+    $updated[] = $add_file;
+    foreach ( array_slice( $config_files, 1 ) as $file ) {
+        if ( ! is_string( $file ) ) {
             continue;
         }
-        $a[] = $f;
+        $updated[] = $file;
     }
 
-    return $a;
+    return $updated;
 }
 
 /**
+ * Add new config files to an existing set
+ * New entries are inserted in second position
+ *
+ * @param array $config_files as normalized paths
+ * @param array $add_files as normalized paths
+ *
+ * @return bool
+ * @see qtranxf_add_config_file
+ *
  * @since 3.4
  */
-function qtranxf_add_config_files( &$config_files, $found ) {
+function qtranxf_add_config_files( &$config_files, $add_files ) {
     $changed = false;
-    foreach ( $found as $fn ) {
-        $i = array_search( $fn, $config_files );
-        if ( $i !== false ) {
+    foreach ( $add_files as $file ) {
+        $index = array_search( $file, $config_files );
+        if ( $index !== false ) {
             continue;
         }
-        $config_files = qtranxf_add_config_file( $config_files, $fn );
+        $config_files = qtranxf_add_config_file( $config_files, $file );
         $changed      = true;
     }
 
     return $changed;
 }
 
-function qtranxf_del_config_files( &$config_files, $found ) {
+function qtranxf_del_config_files( &$config_files, $del_files ) {
     $changed = false;
-    foreach ( $found as $fn ) {
-        $i = array_search( $fn, $config_files );
-        if ( $i === false ) {
+    foreach ( $del_files as $file ) {
+        $index = array_search( $file, $config_files );
+        if ( $index === false ) {
             continue;
         }
-        unset( $config_files[ $i ] );
+        unset( $config_files[ $index ] );
         $changed = true;
     }
 
@@ -664,14 +682,14 @@ add_action( 'deactivate_plugin', 'qtranxf_on_deactivate_plugin' );
 
 function qtranxf_clear_debug_log() {
     //clear file debug-qtranslate.log
-    $f = WP_CONTENT_DIR . '/debug-qtranslate.log';
-    if ( file_exists( $f ) ) {
+    $file = WP_CONTENT_DIR . '/debug-qtranslate.log';
+    if ( file_exists( $file ) ) {
         if ( WP_DEBUG ) {
-            $fh = fopen( $f, "a+" );
-            ftruncate( $fh, 0 );
-            fclose( $fh );
+            $handle = fopen( $file, "a+" );
+            ftruncate( $handle, 0 );
+            fclose( $handle );
         } else {
-            unlink( $f );
+            unlink( $file );
         }
     }
 }
@@ -854,12 +872,12 @@ function qtranxf_admin_notice_deactivate_plugin( $nm, $plugin ) {
     $qtxnm    = 'qTranslate&#8209;XT';
     $qtxlink  = qtranxf_get_plugin_link();
     $imported = false;
-    $f        = 'qtranxf_migrate_import_' . str_replace( '-', '_', dirname( $plugin ) );
-    if ( function_exists( $f ) ) {
+    $func     = 'qtranxf_migrate_import_' . str_replace( '-', '_', dirname( $plugin ) );
+    if ( function_exists( $func ) ) {
         global $wpdb;
         $options = $wpdb->get_col( "SELECT `option_name` FROM {$wpdb->options} WHERE `option_name` LIKE 'qtranslate_%'" );
         if ( empty( $options ) ) {
-            $f();
+            $func();
             $imported = true;
         }
     }
