@@ -622,13 +622,13 @@ function qtranxf_find_plugin_config_file( $plugin ) {
     // external configuration prevails
     $config_file = WP_PLUGIN_DIR . '/' . $plugin_dirname . '/i18n-config.json';
     if ( is_readable( $config_file ) ) {
-        return qtranxf_normalize_config_files( [ $config_file ] );
+        return qtranxf_normalize_config_files( [ $config_file ] )[0];
     }
 
     // built-in configuration
     $config_file = QTRANSLATE_DIR . '/18n-config/plugins/' . $plugin_dirname . '/i18n-config.json';
     if ( is_readable( $config_file ) ) {
-        return qtranxf_normalize_config_files( [ $config_file ] );
+        return qtranxf_normalize_config_files( [ $config_file ] )[0];
     }
 
     return false;
