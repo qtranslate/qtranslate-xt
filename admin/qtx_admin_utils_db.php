@@ -51,8 +51,8 @@ function qtranxf_convert_database( $action ) {
 function qtranxf_convert_to_b( $text ) {
     $blocks = qtranxf_get_language_blocks( $text );
     if ( count( $blocks ) > 1 ) {
-        foreach ( $blocks as $key => $b ) {
-            if ( empty( $b ) ) {
+        foreach ( $blocks as $key => $block ) {
+            if ( empty( $block ) ) {
                 unset( $blocks[ $key ] );
             }
         }

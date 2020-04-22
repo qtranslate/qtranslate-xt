@@ -11,8 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 function qtranxf_load_languages( &$cfg ) {
     global $qtranslate_options;
     //$cfg = array();
-    foreach ( $qtranslate_options['languages'] as $nm => $opn ) {
-        $cfg[ $nm ] = get_option( $opn, array() );
+    foreach ( $qtranslate_options['languages'] as $name => $opn ) {
+        $cfg[ $name ] = get_option( $opn, array() );
     }
 
     return $cfg;

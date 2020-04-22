@@ -243,8 +243,8 @@ class QTX_Admin_Settings {
         $admin_sections['advanced'] = __( 'Advanced', 'qtranslate' );
 
         $custom_sections = apply_filters( 'qtranslate_admin_sections', array() );
-        foreach ( $custom_sections as $k => $v ) {
-            $admin_sections[ $k ] = $v;
+        foreach ( $custom_sections as $key => $value ) {
+            $admin_sections[ $key ] = $value;
         }
 
         $admin_sections['integration']     = __( 'Integration', 'qtranslate' );
@@ -346,8 +346,8 @@ class QTX_Admin_Settings {
                     if ( $url_mode == QTX_URL_DOMAINS ) : ?>
                         <div style="margin: 10px 0">
                             <?php
-                            $homeinfo  = qtranxf_get_home_info();
-                            $home_host = $homeinfo['host'];
+                            $home_info  = qtranxf_get_home_info();
+                            $home_host = $home_info['host'];
                             foreach ( $q_config['enabled_languages'] as $lang ) {
                                 $id     = 'language_domain_' . $lang;
                                 $domain = isset( $q_config['domains'][ $lang ] ) ? $q_config['domains'][ $lang ] : $lang . '.' . $home_host;

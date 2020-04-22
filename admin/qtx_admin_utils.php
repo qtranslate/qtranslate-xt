@@ -51,9 +51,9 @@ function qtranxf_enqueue_scripts( $jss ) {
     $dbg  = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG;
     $cnt  = 0;
     $deps = array();
-    foreach ( $jss as $k => $js ) {
+    foreach ( $jss as $key => $js ) {
         if ( isset( $js['src'] ) ) {
-            $handle = isset( $js['handle'] ) ? $js['handle'] : ( is_string( $k ) ? $k : 'qtranslate-admin-js-' . ( ++ $cnt ) );
+            $handle = isset( $js['handle'] ) ? $js['handle'] : ( is_string( $key ) ? $key : 'qtranslate-admin-js-' . ( ++ $cnt ) );
             $src    = $js['src'];
             $ver    = isset( $js['ver'] ) ? $js['ver'] : QTX_VERSION;
             if ( $dbg ) {
@@ -124,16 +124,16 @@ function qtranxf_array_compare( $a, $b ) {
     if ( count( $a ) != count( $b ) ) {
         return false;
     }
-    foreach ( $a as $k => $v ) {
-        if ( ! isset( $b[ $k ] ) ) {
+    foreach ( $a as $key => $value ) {
+        if ( ! isset( $b[ $key ] ) ) {
             return false;
         }
-        if ( is_array( $v ) ) {
-            if ( ! qtranxf_array_compare( $v, $b[ $k ] ) ) {
+        if ( is_array( $value ) ) {
+            if ( ! qtranxf_array_compare( $value, $b[ $key ] ) ) {
                 return false;
             }
         } else {
-            if ( $b[ $k ] !== $v ) {
+            if ( $b[ $key ] !== $value ) {
                 return false;
             }
         }
@@ -279,16 +279,16 @@ function qtranxf_fetch_file_selection( $dir, $suffix = '.css' ) {
         if ( ! qtranxf_endsWith( $file, $suffix ) ) {
             continue;
         }
-        $nm = basename( $file, $suffix );
-        if ( ! $nm ) {
+        $name = basename( $file, $suffix );
+        if ( ! $name ) {
             continue;
         }
-        $nm = str_replace( '_', ' ', $nm );
-        if ( qtranxf_endsWith( $nm, '.min' ) ) {
-            $nm           = substr( $nm, - 4 );
-            $files[ $nm ] = $file;
-        } elseif ( ! isset( $files[ $nm ] ) ) {
-            $files[ $nm ] = $file;
+        $name = str_replace( '_', ' ', $name );
+        if ( qtranxf_endsWith( $name, '.min' ) ) {
+            $name           = substr( $name, - 4 );
+            $files[ $name ] = $file;
+        } elseif ( ! isset( $files[ $name ] ) ) {
+            $files[ $name ] = $file;
         }
     }
     ksort( $files );
@@ -504,13 +504,13 @@ function qtranxf_json_encode( $o ) {
 
 /**
  * @since 3.4
- * return reference to $page_config['forms'][$nm]['fields']
+ * return reference to $page_config['forms'][$name]['fields']
  */
-function qtranxf_config_add_form( &$page_config, $nm ) {
-    if ( ! isset( $page_config['forms'][ $nm ] ) ) {
-        $page_config['forms'][ $nm ] = array( 'fields' => array() );
-    } else if ( ! isset( $page_config['forms'][ $nm ]['fields'] ) ) {
-        $page_config['forms'][ $nm ]['fields'] = array();
+function qtranxf_config_add_form( &$page_config, $name ) {
+    if ( ! isset( $page_config['forms'][ $name ] ) ) {
+        $page_config['forms'][ $name ] = array( 'fields' => array() );
+    } else if ( ! isset( $page_config['forms'][ $name ]['fields'] ) ) {
+        $page_config['forms'][ $name ]['fields'] = array();
     }
 }
 

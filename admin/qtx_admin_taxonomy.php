@@ -32,7 +32,7 @@ function qtranxf_get_term_joined( $obj, $taxonomy = null ) {
         }
     } elseif ( isset( $q_config['term_name'][ $obj ] ) ) {
         $obj = qtranxf_join_b( $q_config['term_name'][ $obj ] );
-        //qtranxf_dbg_echo('qtranxf_get_term_joined: string:',$obj,true);//never fired, we probably do not need it
+        // TODO dead code? we probably do not need it
     }
 
     return $obj;
@@ -95,9 +95,6 @@ function qtranxf_get_terms_joined( $terms, $taxonomy = null, $args = null ) {
 }
 
 function qtranxf_useAdminTermLibJoin( $obj, $taxonomies = null, $args = null ) {
-    //qtranxf_dbg_echo('qtranxf_useAdminTermLibJoin: $obj:',$obj);
-    //qtranxf_dbg_echo('qtranxf_useAdminTermLibJoin: $taxonomies:',$taxonomies);
-    //qtranxf_dbg_echo('qtranxf_useAdminTermLibJoin: $args:',$args);
     $page = qtranxf_get_page_referer();
     switch ( $page ) {
         case 'nav-menus.php':
@@ -185,23 +182,23 @@ function qtranxf_term_sanitize_name_db( $term, $taxonomy = null ) {
 function qtranxf_term_get_args( $args, $taxonomies = null ) {
     if ( ! empty( $args['name'] ) ) {
         // expected in default language after applying sanitize_term_field
-        $nms = $args['name'];
-        if ( is_array( $nms ) ) {
-            foreach ( $nms as $k => $nm ) {
-                $nms[ $k ] = qtranxf_term_sanitize_name_unslashed( $nm );
+        $names = $args['name'];
+        if ( is_array( $names ) ) {
+            foreach ( $names as $key => $name ) {
+                $names[ $key ] = qtranxf_term_sanitize_name_unslashed( $name );
             }
         } else {
-            $nms = qtranxf_term_sanitize_name_unslashed( $nms );
+            $names = qtranxf_term_sanitize_name_unslashed( $names );
         }
-        $args['name'] = $nms;
+        $args['name'] = $names;
     }
     if ( ! empty( $args['name__like'] ) ) {
         global $q_config;
         $lang = $q_config['language'];
         if ( $lang != $q_config['default_language'] ) {
-            $nms = array();
+            $names = array();
             $s   = $args['name__like'];
-            foreach ( $q_config['term_name'] as $nm => $ts ) {
+            foreach ( $q_config['term_name'] as $name => $ts ) {
                 if ( empty( $ts[ $lang ] ) ) {
                     continue;
                 }
@@ -214,10 +211,10 @@ function qtranxf_term_get_args( $args, $taxonomies = null ) {
                 if ( $p === false ) {
                     continue;
                 }
-                $nms[] = $nm;
+                $names[] = $name;
             }
-            if ( ! empty( $nms ) ) {
-                $args['name']       = $nms;
+            if ( ! empty( $names ) ) {
+                $args['name']       = $names;
                 $args['name__like'] = '';
             }
         }
@@ -237,17 +234,17 @@ function qtranxf_term_del_translation( $term_id, $tt_id, $taxonomy ) {
     }
     global $q_config;
     $term_name = &$q_config['term_name'];
-    $nm        = $term->name;
+    $name        = $term->name;
     $changed   = false;
-    if ( isset( $term_name[ $nm ] ) ) {
-        unset( $term_name[ $nm ] );
+    if ( isset( $term_name[ $name ] ) ) {
+        unset( $term_name[ $name ] );
         $changed = true;
     }
-    if ( qtranxf_isMultilingual( $nm ) ) {
+    if ( qtranxf_isMultilingual( $name ) ) {
         $default_language = $q_config['default_language'];
-        $nm               = qtranxf_use_language( $default_language, $nm, false, true );
-        if ( isset( $term_name[ $nm ] ) ) {
-            unset( $term_name[ $nm ] );
+        $name               = qtranxf_use_language( $default_language, $name, false, true );
+        if ( isset( $term_name[ $name ] ) ) {
+            unset( $term_name[ $name ] );
             $changed = true;
         }
     }
@@ -269,12 +266,12 @@ function qtranxf_term_set_translation( $term_id, $tt_id, $taxonomy ) {
     }
     $default_language = $q_config['default_language'];
     $term             = get_term( $term_id, $taxonomy );
-    $nm               = qtranxf_term_name_in( $default_language, $term );
-    if ( ! isset( $q_config['terms_sanitized'][ $nm ] ) ) {
+    $name               = qtranxf_term_name_in( $default_language, $term );
+    if ( ! isset( $q_config['terms_sanitized'][ $name ] ) ) {
         return;
     }
-    $langs = $q_config['terms_sanitized'][ $nm ];
-    unset( $q_config['terms_sanitized'][ $nm ] );
+    $langs = $q_config['terms_sanitized'][ $name ];
+    unset( $q_config['terms_sanitized'][ $name ] );
     if ( empty( $langs ) ) {
         return;
     }
@@ -286,21 +283,21 @@ function qtranxf_term_set_translation( $term_id, $tt_id, $taxonomy ) {
         }
     }
 
-    //todo ensure unique name for each language within taxonomy
+    // TODO ensure unique name for each language within taxonomy
 
-    $langs[ $default_language ] = $nm;
+    $langs[ $default_language ] = $name;
 
     // keep enabled languages only in the order
     $ts = array();
-    foreach ( $q_config['enabled_languages'] as $lng ) {
-        if ( empty( $langs[ $lng ] ) ) {
+    foreach ( $q_config['enabled_languages'] as $lang ) {
+        if ( empty( $langs[ $lang ] ) ) {
             continue;
         }
-        $val = trim( $langs[ $lng ] );
+        $val = trim( $langs[ $lang ] );
         if ( empty( $val ) ) {
             continue;
         }
-        $ts[ $lng ] = $val;
+        $ts[ $lang ] = $val;
     }
 
     if ( count( $ts ) == 1 ) {
@@ -309,7 +306,7 @@ function qtranxf_term_set_translation( $term_id, $tt_id, $taxonomy ) {
 
     // store new translations
     $term_name        = &$q_config['term_name'];
-    $term_name[ $nm ] = $ts;
+    $term_name[ $name ] = $ts;
     update_option( 'qtranslate_term_name', $term_name );
 }
 
@@ -320,15 +317,15 @@ function qtranxf_term_delete( $term, $tt_id, $taxonomy, $deleted_term, $object_i
     global $q_config;
     if ( isset( $deleted_term->i18n_config['name'] ) ) {
         $default_language = $q_config['default_language'];
-        $nm               = $deleted_term->i18n_config['name']['ts'][ $default_language ];
+        $name               = $deleted_term->i18n_config['name']['ts'][ $default_language ];
     } else {
-        $nm = $deleted_term->name;
+        $name = $deleted_term->name;
     }
     $term_name = &$q_config['term_name'];
-    if ( ! isset( $term_name[ $nm ] ) ) {
+    if ( ! isset( $term_name[ $name ] ) ) {
         return;
     }
-    unset( $term_name[ $nm ] );
+    unset( $term_name[ $name ] );
     update_option( 'qtranslate_term_name', $term_name );
 }
 
@@ -336,7 +333,6 @@ add_action( 'delete_term', 'qtranxf_term_delete', 5, 5 );
 
 function qtranxf_admin_list_cats( $text ) {
     global $pagenow;
-    //qtranxf_dbg_echo('qtranxf_admin_list_cats: $text',$text);
     switch ( $pagenow ) {
         case 'edit-tags.php':
         case 'term.php':
@@ -358,7 +354,6 @@ add_filter( 'list_cats', 'qtranxf_admin_list_cats', 0 );
 
 function qtranxf_admin_dropdown_cats( $text ) {
     global $pagenow;
-    //qtranxf_dbg_echo('qtranxf_admin_list_cats: $text',$text);
     switch ( $pagenow ) {
         case 'edit-tags.php':
         case 'term.php':

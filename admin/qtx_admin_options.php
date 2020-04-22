@@ -5,31 +5,31 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once( QTRANSLATE_DIR . '/admin/qtx_admin_utils.php' );
 
-function qtranxf_admin_set_default_options( &$ops ) {
+function qtranxf_admin_set_default_options( &$options ) {
     // options processed in a standardized way
-    $ops['admin'] = array();
+    $options['admin'] = array();
 
-    $ops['admin']['int'] = array(
+    $options['admin']['int'] = array(
         'editor_mode'    => QTX_EDITOR_MODE_LSB,
         'highlight_mode' => QTX_HIGHLIGHT_MODE_BORDER_LEFT,
     );
 
-    $ops['admin']['bool'] = array(
+    $options['admin']['bool'] = array(
         'auto_update_mo'        => true, // automatically update .mo files
         'hide_lsb_copy_content' => false
     );
 
     // single line options
-    $ops['admin']['str'] = array(
+    $options['admin']['str'] = array(
         'lsb_style' => 'Simple_Buttons.css'
     );
 
     // multi-line options
-    $ops['admin']['text'] = array(
+    $options['admin']['text'] = array(
         'highlight_mode_custom_css' => null, // qtranxf_get_admin_highlight_css
     );
 
-    $ops['admin']['array'] = array(
+    $options['admin']['array'] = array(
         'config_files'         => array( './i18n-config.json' ),
         'admin_config'         => array(),
         'custom_i18n_config'   => array(),
@@ -39,31 +39,31 @@ function qtranxf_admin_set_default_options( &$ops ) {
     );
 
     // options processed in a special way
-    $ops = apply_filters( 'qtranslate_option_config_admin', $ops );
+    $options = apply_filters( 'qtranslate_option_config_admin', $options );
 }
 
 function qtranxf_admin_loadConfig() {
     global $q_config, $qtranslate_options;
     qtranxf_admin_set_default_options( $qtranslate_options );
 
-    foreach ( $qtranslate_options['admin']['int'] as $nm => $def ) {
-        qtranxf_load_option( $nm, $def );
+    foreach ( $qtranslate_options['admin']['int'] as $name => $default ) {
+        qtranxf_load_option( $name, $default );
     }
 
-    foreach ( $qtranslate_options['admin']['bool'] as $nm => $def ) {
-        qtranxf_load_option_bool( $nm, $def );
+    foreach ( $qtranslate_options['admin']['bool'] as $name => $default ) {
+        qtranxf_load_option_bool( $name, $default );
     }
 
-    foreach ( $qtranslate_options['admin']['str'] as $nm => $def ) {
-        qtranxf_load_option( $nm, $def );
+    foreach ( $qtranslate_options['admin']['str'] as $name => $default ) {
+        qtranxf_load_option( $name, $default );
     }
 
-    foreach ( $qtranslate_options['admin']['text'] as $nm => $def ) {
-        qtranxf_load_option( $nm, $def );
+    foreach ( $qtranslate_options['admin']['text'] as $name => $default ) {
+        qtranxf_load_option( $name, $default );
     }
 
-    foreach ( $qtranslate_options['admin']['array'] as $nm => $def ) {
-        qtranxf_load_option_array( $nm, $def );
+    foreach ( $qtranslate_options['admin']['array'] as $name => $default ) {
+        qtranxf_load_option_array( $name, $default );
     }
 
     if ( empty( $q_config['admin_config'] ) ) {

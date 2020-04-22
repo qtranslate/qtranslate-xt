@@ -6,7 +6,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 require_once( QTRANSLATE_DIR . '/admin/qtx_admin_modules.php' );
 
 /**
- * Save language properties from configuration $cfg to database
+ * Save language properties from configuration to WP options
+ *
+ * @param array $cfg dictionary
+ *
+ * @return array
  * @since 3.3
  */
 function qtranxf_save_languages( $cfg ) {
@@ -60,7 +64,6 @@ function qtranxf_default_enabled_languages() {
         qtranxf_save_languages( $langs );
     }
 
-    //qtranxf_dbg_log('qtranxf_default_enabled_languages: $lang='.$lang.' $locale:',$locale);
     return array( $lang, $lang != 'en' ? 'en' : 'de' );
 }
 
@@ -148,11 +151,13 @@ function qtranxf_get_option_config_files() {
         delete_option( 'qtranslate_config_files' );
     }
 
-    //qtranxf_dbg_log('qtranxf_get_option_config_files: $config_files: ', $config_files);
     return $config_files;
 }
 
 /**
+ * @param array $field dictionary
+ *
+ * @return bool
  * @since 3.4
  */
 function qtranxf_set_field_jquery( &$field ) {
@@ -182,10 +187,13 @@ function qtranxf_set_field_jquery( &$field ) {
 }
 
 /**
+ * @param array $fields dictionary
+ *
+ * @return array
  * @since 3.4
  */
 function qtranxf_standardize_config_fields( $fields ) {
-    foreach ( $fields as $index => $field ) {
+    foreach ( $fields as $key => $field ) {
         if ( ! is_array( $field ) ) {
             continue;
         }
@@ -193,11 +201,11 @@ function qtranxf_standardize_config_fields( $fields ) {
             $id = $field['id'];
             unset( $field['id'] );
             $fields[ $id ] = $field;
-            if ( $id !== $index ) {
-                unset( $fields[ $index ] );
+            if ( $id !== $key ) {
+                unset( $fields[ $key ] );
             }
         } else if ( qtranxf_set_field_jquery( $field ) ) {
-            $fields[ $index ] = $field;
+            $fields[ $key ] = $field;
         }
     }
 
@@ -205,6 +213,9 @@ function qtranxf_standardize_config_fields( $fields ) {
 }
 
 /**
+ * @param array|string $anchor
+ *
+ * @return bool|string
  * @since 3.4
  */
 function qtranxf_standardize_config_anchor( &$anchor ) {
@@ -231,32 +242,37 @@ function qtranxf_standardize_config_anchor( &$anchor ) {
 }
 
 /**
+ * Standardize front config (from file content)
+ * Remove filters with empty priorities
+ *
+ * @param array $cfg_front dictionary
+ *
+ * @return array
  * @since 3.4
  */
 function qtranxf_standardize_front_config( $cfg_front ) {
-    // remove filters with empty priorities
-    foreach ( $cfg_front as $index => $cfg ) {
+    foreach ( $cfg_front as $key => $cfg ) {
         if ( ! isset( $cfg['filters'] ) ) {
             continue;
         }
         if ( ! empty( $cfg['filters']['text'] ) ) {
-            foreach ( $cfg['filters']['text'] as $nm => $pr ) {
-                if ( $pr === '' ) {
-                    unset( $cfg_front[ $index ]['filters']['text'][ $nm ] );
+            foreach ( $cfg['filters']['text'] as $name => $priority ) {
+                if ( $priority === '' ) {
+                    unset( $cfg_front[ $key ]['filters']['text'][ $name ] );
                 }
             }
         }
         if ( ! empty( $cfg['filters']['url'] ) ) {
-            foreach ( $cfg['filters']['url'] as $nm => $pr ) {
-                if ( $pr === '' ) {
-                    unset( $cfg_front[ $index ]['filters']['url'][ $nm ] );
+            foreach ( $cfg['filters']['url'] as $name => $priority ) {
+                if ( $priority === '' ) {
+                    unset( $cfg_front[ $key ]['filters']['url'][ $name ] );
                 }
             }
         }
         if ( ! empty( $cfg['filters']['term'] ) ) {
-            foreach ( $cfg['filters']['term'] as $nm => $pr ) {
-                if ( $pr === '' ) {
-                    unset( $cfg_front[ $index ]['filters']['term'][ $nm ] );
+            foreach ( $cfg['filters']['term'] as $name => $priority ) {
+                if ( $priority === '' ) {
+                    unset( $cfg_front[ $key ]['filters']['term'][ $name ] );
                 }
             }
         }
@@ -266,43 +282,48 @@ function qtranxf_standardize_front_config( $cfg_front ) {
 }
 
 /**
+ *  Standardize admin config (from file content)
+ *
+ * @param array $configs dictionary
+ *
+ * @return array
  * @since 3.4
  */
 function qtranxf_standardize_admin_config( $configs ) {
-    foreach ( $configs as $index => $config ) {
+    foreach ( $configs as $key => $config ) {
         if ( ! is_array( $config ) ) {
             continue;
         }
-        if ( $index === 'forms' ) {
-            foreach ( $config as $form_id => $frm ) {
-                if ( isset( $frm['form']['id'] ) ) {
-                    $id = $frm['form']['id'];
-                    unset( $frm['form']['id'] );
-                    if ( empty( $frm['form'] ) ) {
-                        unset( $frm['form'] );
+        if ( $key === 'forms' ) {
+            foreach ( $config as $form_id => $form ) {
+                if ( isset( $form['form']['id'] ) ) {
+                    $id = $form['form']['id'];
+                    unset( $form['form']['id'] );
+                    if ( empty( $form['form'] ) ) {
+                        unset( $form['form'] );
                     }
-                    $configs['forms'][ $id ] = $frm;
+                    $configs['forms'][ $id ] = $form;
                     if ( $id !== $form_id ) {
                         unset( $configs['forms'][ $form_id ] );
                     }
                     $form_id = $id;
                 }
-                if ( isset( $frm['fields'] ) ) {
-                    $configs['forms'][ $form_id ]['fields'] = qtranxf_standardize_config_fields( $frm['fields'] );
+                if ( isset( $form['fields'] ) ) {
+                    $configs['forms'][ $form_id ]['fields'] = qtranxf_standardize_config_fields( $form['fields'] );
                 }
             }
-        } else if ( $index === 'anchors' ) {
+        } else if ( $key === 'anchors' ) {
             if ( empty( $config ) ) {
                 unset( $configs['anchors'] );
             } else {
-                foreach ( $configs['anchors'] as $index_anchor => $anchor ) {
+                foreach ( $configs['anchors'] as $key_anchor => $anchor ) {
                     $id = qtranxf_standardize_config_anchor( $anchor );
                     if ( is_null( $id ) ) {
-                        unset( $configs['anchors'][ $index_anchor ] );
+                        unset( $configs['anchors'][ $key_anchor ] );
                     } else if ( is_string( $id ) ) {
                         $configs['anchors'][ $id ] = $anchor;
-                        if ( $id !== $index_anchor ) {
-                            unset( $configs['anchors'][ $index_anchor ] );
+                        if ( $id !== $key_anchor ) {
+                            unset( $configs['anchors'][ $key_anchor ] );
                         }
                     }
                 }
@@ -311,7 +332,7 @@ function qtranxf_standardize_admin_config( $configs ) {
                 }
             }
         } else {
-            $configs[ $index ] = qtranxf_standardize_admin_config( $config );//recursive call
+            $configs[ $key ] = qtranxf_standardize_admin_config( $config ); // recursive call
         }
     }
 
@@ -319,6 +340,11 @@ function qtranxf_standardize_admin_config( $configs ) {
 }
 
 /**
+ *  Standardize admin and front configs (from file content)
+ *
+ * @param array $configs dictionary
+ *
+ * @return array
  * @since 3.4
  */
 function qtranxf_standardize_i18n_config( $configs ) {
@@ -333,6 +359,12 @@ function qtranxf_standardize_i18n_config( $configs ) {
 }
 
 /**
+ * Load the complete i18n configuration from files and custom content
+ *
+ * @param array $json_files as normalized paths
+ * @param array $custom_config dictionary
+ *
+ * @return array dictionary
  * @since 3.4
  */
 function qtranxf_load_config_all( $json_files, $custom_config ) {
@@ -355,13 +387,17 @@ function qtranxf_load_config_all( $json_files, $custom_config ) {
 }
 
 /**
+ * Update the WP options holding the admin and front configurations
+ *
+ * @param array $config_files as normalized paths
+ * @param bool $changed true if the list of config files has just changed
+ *
  * @since 3.4
  */
 function qtranxf_update_config_options( $config_files, $changed = true ) {
-    //qtranxf_dbg_log('qtranxf_update_config_options: $config_files: ', $config_files);
     if ( $changed ) {
         update_option( 'qtranslate_config_files', $config_files );
-        qtranxf_update_admin_notice( 'config-files-changed', true );//notify admin
+        qtranxf_update_admin_notice( 'config-files-changed', true ); // notify admin
     }
     $custom_config = get_option( 'qtranslate_custom_i18n_config', array() );
     $cfg           = qtranxf_load_config_all( $config_files, $custom_config );

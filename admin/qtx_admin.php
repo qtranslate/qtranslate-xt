@@ -15,7 +15,6 @@ require_once( QTRANSLATE_DIR . '/admin/qtx_admin_taxonomy.php' );
  */
 function qtranxf_collect_translations_deep( $qfields, $sep ) {
     $content = reset( $qfields );
-    //qtranxf_dbg_log('qtranxf_collect_translations_deep: $content: ',$content);
     if ( is_string( $content ) ) {
         return qtranxf_join_texts( $qfields, $sep );
     }
@@ -86,20 +85,15 @@ function qtranxf_decode_json_name_value( $value ) {
  * @see qtranxf_collect_translations
  */
 function qtranxf_collect_translations_posted() {
-    //qtranxf_dbg_log('qtranxf_collect_translations_posted: REQUEST: ', $_REQUEST);
-    //qtranxf_dbg_log('qtranxf_collect_translations_posted: POST: ', $_POST);
-    //qtranxf_dbg_log('qtranxf_collect_translations_posted: count(REQUEST): ', count($_REQUEST, COUNT_RECURSIVE));
     $edit_lang = null;
     if ( isset( $_REQUEST['qtranslate-fields'] ) ) {
         $edit_lang = qtranxf_getLanguageEdit();
         foreach ( $_REQUEST['qtranslate-fields'] as $name => &$qfields ) {
-            //qtranxf_dbg_log('qtranxf_collect_translations_posted: REQUEST[qtranslate-fields]['.$name.']: ',$qfields);
             if ( ! isset( $_REQUEST[ $name ] ) ) {
                 unset( $_REQUEST['qtranslate-fields'][ $name ] );
                 continue;
             }
             qtranxf_collect_translations( $qfields, $_REQUEST[ $name ], $edit_lang );
-            //qtranxf_dbg_log('qtranxf_collect_translations_posted: collected REQUEST['.$name.']: ',$_REQUEST[$name]);
             if ( isset( $_POST[ $name ] ) ) {
                 $_POST[ $name ] = $_REQUEST[ $name ];
             }
@@ -120,8 +114,6 @@ function qtranxf_collect_translations_posted() {
                 continue;
             }
             parse_str( $value, $request );
-            //qtranxf_dbg_log('qtranxf_collect_translations_posted: REQUEST['.$name.'] $request: ', $request);
-            //qtranxf_dbg_log('qtranxf_collect_translations_posted: REQUEST['.$name.']: ', $value);
             if ( empty( $request['qtranslate-fields'] ) ) {
                 continue;
             }
@@ -130,10 +122,7 @@ function qtranxf_collect_translations_posted() {
             }
             qtranxf_collect_translations( $request['qtranslate-fields'], $request, $edit_lang );
             unset( $request['qtranslate-fields'] );
-            //qtranxf_dbg_log('qtranxf_collect_translations_posted: $request parsed: ', $request);
             $url_encoded = http_build_query( $request );
-            //qtranxf_dbg_log('qtranxf_collect_translations_posted: $url_encoded: ', $url_encoded);
-            //qtranxf_dbg_log('qtranxf_collect_translations_posted: $value: ', $value);
             $_REQUEST[ $name ] = $url_encoded;
             if ( isset( $_POST[ $name ] ) ) {
                 $_POST[ $name ] = $url_encoded;
@@ -149,23 +138,19 @@ function qtranxf_decode_translations_posted() {
     // quick fix, there must be a better way
     if ( isset( $_POST['nav-menu-data'] ) ) {
         $request = qtranxf_decode_json_name_value( $_POST['nav-menu-data'] );
-        //qtranxf_dbg_log('qtranxf_collect_translations_posted: $request: ', $request);
         if ( ! empty( $request['qtranslate-fields'] ) ) {
             $edit_lang = qtranxf_getLanguageEdit();
             qtranxf_collect_translations( $request['qtranslate-fields'], $request, $edit_lang );
             unset( $request['qtranslate-fields'] );
-            //qtranxf_dbg_log('qtranxf_collect_translations_posted: collected $request: ', $request);
-            foreach ( $request as $k => $value ) {
-                $_POST[ $k ] = $value;
+            foreach ( $request as $key => $value ) {
+                $_POST[ $key ] = $value;
             }
             unset( $_POST['nav-menu-data'] );
-            //qtranxf_dbg_log('qtranxf_collect_translations_posted: nav-menu-data decoded $_POST: ', $_POST);
         }
     }
 }
 
 function qtranxf_load_admin_page_config() {
-    //qtranxf_dbg_log('1.8.qtranxf_load_admin_page_config:');
     $page_configs = qtranxf_get_admin_page_config();
     if ( ! empty( $page_configs['']['filters'] ) ) {
         qtranxf_add_filters( $page_configs['']['filters'] );
@@ -190,7 +175,6 @@ function qtranxf_admin_is_config_page() {
 
 function qtranxf_admin_init() {
     global $q_config;
-    //qtranxf_dbg_log('5.qtranxf_admin_init:');
 
     if ( current_user_can( 'manage_options' ) ) {
         add_action( 'admin_notices', 'qtranxf_admin_notices_config' );
@@ -228,11 +212,10 @@ function qtranxf_admin_init() {
 function qtranxf_get_admin_page_config() {
     global $q_config, $pagenow;
     if ( isset( $q_config['i18n-cache']['admin_page_configs'] ) ) {
-        //qtranxf_dbg_log('qtranxf_get_admin_page_config: $page_configs cached: ', $q_config['i18n-cache']['admin_page_configs']);
         return $q_config['i18n-cache']['admin_page_configs'];
     }
+
     $admin_config = $q_config['admin_config'];
-    //qtranxf_dbg_log('qtranxf_get_admin_page_config: $admin_config: raw: ',qtranxf_json_encode($admin_config));
     // TODO obsolete filter?
     $admin_config = apply_filters( 'qtranslate_load_admin_page_config', $admin_config );
     $url_query    = isset( $q_config['url_info']['query'] ) ? $q_config['url_info']['query'] : '';
@@ -242,10 +225,8 @@ function qtranxf_get_admin_page_config() {
      * @param (array) $admin_config token 'admin-config' of the configuration.
      */
     $admin_config = apply_filters( 'i18n_admin_config', $admin_config );
-    //qtranxf_dbg_log('qtranxf_get_admin_page_config: $admin_config: filtered: ',qtranxf_json_encode($admin_config));
 
     $page_configs = qtranxf_parse_page_config( $admin_config, $pagenow, $url_query );
-    //qtranxf_dbg_log('qtranxf_get_admin_page_config: $page_configs: ', $page_configs);
     $q_config['i18n-cache']['admin_page_configs'] = $page_configs;
 
     return $page_configs;
@@ -253,9 +234,8 @@ function qtranxf_get_admin_page_config() {
 
 function qtranxf_get_admin_page_config_post_type( $post_type ) {
     global $q_config, $pagenow;
-    static $page_config;//cache
+    static $page_config; // cache
     if ( ! is_null( $page_config ) ) {
-        //qtranxf_dbg_log('qtranxf_get_admin_page_config_post_type: cached: '.$pagenow.'; post_type: ', $post_type);
         return $page_config;
     }
     if ( ! empty( $q_config['post_type_excluded'] ) ) {
@@ -263,7 +243,6 @@ function qtranxf_get_admin_page_config_post_type( $post_type ) {
             case 'post.php':
             case 'post-new.php':
                 if ( in_array( $post_type, $q_config['post_type_excluded'] ) ) {
-                    //qtranxf_dbg_log('qtranxf_get_admin_page_config_post_type: post_type_excluded: pagenow: '.$pagenow.'; post_type: ', $post_type);
                     $page_config = array();
 
                     return $page_config;
@@ -273,25 +252,21 @@ function qtranxf_get_admin_page_config_post_type( $post_type ) {
                 break;
         }
     }
-    //qtranxf_dbg_log('qtranxf_get_admin_page_config_post_type: pagenow: '.$pagenow.'; post_type: ', $post_type);
     $page_configs = qtranxf_get_admin_page_config();
 
-    //qtranxf_dbg_log('qtranxf_get_admin_page_config_post_type: $page_configs: ', $page_configs);
     $page_config = isset( $page_configs[''] ) ? $page_configs[''] : array();
     if ( $post_type ) {
-        foreach ( $page_configs as $k => $cfg ) {
-            if ( empty( $k ) ) {
+        foreach ( $page_configs as $key => $cfg ) {
+            if ( empty( $key ) ) {
                 continue;
             }
             if ( isset( $cfg['post_type'] ) ) {
                 $cfg_post_type = $cfg['post_type'];
                 unset( $cfg['post_type'] );
             } else {
-                $cfg_post_type = $k;
+                $cfg_post_type = $key;
             }
             $matched = qtranxf_match_post_type( $cfg_post_type, $post_type );
-            //qtranxf_dbg_log('qtranxf_get_admin_page_config_post_type: $cfg: ', $cfg);
-            //qtranxf_dbg_log('qtranxf_get_admin_page_config_post_type: $matched: ', $matched);
             if ( $matched === false ) {
                 continue;
             }
@@ -302,38 +277,37 @@ function qtranxf_get_admin_page_config_post_type( $post_type ) {
             $page_config = qtranxf_merge_config( $page_config, $cfg );
         }
     }
-    //qtranxf_dbg_log('qtranxf_get_admin_page_config_post_type: $page_config: ', $page_config);
 
     unset( $page_config['filters'] );
 
     if ( ! empty( $page_config ) ) {
         // clean up empty items
         if ( ! empty( $page_config['forms'] ) ) {
-            foreach ( $page_config['forms'] as $form_id => &$frm ) {
-                if ( ! isset( $frm['fields'] ) ) {
+            foreach ( $page_config['forms'] as $form_id => &$form ) {
+                if ( ! isset( $form['fields'] ) ) {
                     continue;
                 }
-                foreach ( $frm['fields'] as $k => $f ) {
-                    if ( isset( $f['encode'] ) && $f['encode'] == 'none' ) {
-                        unset( $frm['fields'][ $k ] );
+                foreach ( $form['fields'] as $key => $field ) {
+                    if ( isset( $field['encode'] ) && $field['encode'] == 'none' ) {
+                        unset( $form['fields'][ $key ] );
                     }
-                    if ( $post_type && ! empty( $f['post-type-excluded'] ) && preg_match( '/' . $f['post-type-excluded'] . '/', $post_type ) ) {
-                        unset( $frm['fields'][ $k ] );
+                    if ( $post_type && ! empty( $field['post-type-excluded'] ) && preg_match( '/' . $field['post-type-excluded'] . '/', $post_type ) ) {
+                        unset( $form['fields'][ $key ] );
                     }
                 }
-                foreach ( $frm as $k => $token ) {
+                foreach ( $form as $key => $token ) {
                     if ( empty( $token ) ) {
-                        unset( $frm[ $k ] );
+                        unset( $form[ $key ] );
                     }
                 }
-                if ( empty( $frm ) ) {
+                if ( empty( $form ) ) {
                     unset( $page_config['forms'][ $form_id ] );
                 }
             }
         }
-        foreach ( $page_config as $k => $cfg ) {
+        foreach ( $page_config as $key => $cfg ) {
             if ( empty( $cfg ) ) {
-                unset( $page_config[ $k ] );
+                unset( $page_config[ $key ] );
             }
         }
     }
@@ -341,9 +315,9 @@ function qtranxf_get_admin_page_config_post_type( $post_type ) {
     if ( ! empty( $page_config ) ) {
         $page_config['js'] = array();
         if ( isset( $page_config['js-conf'] ) ) {
-            foreach ( $page_config['js-conf'] as $k => $js ) {
+            foreach ( $page_config['js-conf'] as $key => $js ) {
                 if ( ! isset( $js['handle'] ) ) {
-                    $js['handle'] = $k;
+                    $js['handle'] = $key;
                 }
                 $page_config['js'][] = $js;
             }
@@ -353,9 +327,9 @@ function qtranxf_get_admin_page_config_post_type( $post_type ) {
         $page_config['js'][] = array( 'handle' => 'qtranslate-admin-common', 'src' => './admin/js/common.min.js' );
 
         if ( isset( $page_config['js-exec'] ) ) {
-            foreach ( $page_config['js-exec'] as $k => $js ) {
+            foreach ( $page_config['js-exec'] as $key => $js ) {
                 if ( ! isset( $js['handle'] ) ) {
-                    $js['handle'] = $k;
+                    $js['handle'] = $key;
                 }
                 $page_config['js'][] = $js;
             }
@@ -365,37 +339,36 @@ function qtranxf_get_admin_page_config_post_type( $post_type ) {
         // make src to be relative to WP_CONTENT_DIR
         $bnm         = qtranxf_plugin_dirname_from_wp_content();
         $content_dir = trailingslashit( WP_CONTENT_DIR );
-        foreach ( $page_config['js'] as $k => $js ) {
+        foreach ( $page_config['js'] as $key => $js ) {
             if ( ! isset( $js['src'] ) ) {
                 continue;
             }
             $src = $js['src'];
-            //qtranxf_dbg_log('qtranxf_get_admin_page_config_post_type: js['.$k.']: $src: ',$src);
             if ( $src[0] == '.' && ( $src[1] == '/' || $src[1] == DIRECTORY_SEPARATOR ) ) {
-                $page_config['js'][ $k ]['src'] = $bnm . substr( $src, 1 );
+                $page_config['js'][ $key ]['src'] = $bnm . substr( $src, 1 );
             } else {
                 if ( file_exists( $content_dir . $src ) ) {
                     continue; // from WP_CONTENT_DIR as expected
                 }
                 $fp = dirname( $bnm ) . '/' . $src;  // from 'plugins' folder
                 if ( file_exists( $content_dir . $fp ) ) {
-                    $page_config['js'][ $k ]['src'] = $fp;
+                    $page_config['js'][ $key ]['src'] = $fp;
                     continue;
                 }
                 $fp = $bnm . '/' . $src; // from this plugin folder
                 if ( file_exists( $content_dir . $fp ) ) {
-                    $page_config['js'][ $k ]['src'] = $fp;
+                    $page_config['js'][ $key ]['src'] = $fp;
                     continue;
                 }
                 if ( file_exists( $src ) ) {
                     // absolute path was given
                     if ( qtranxf_startsWith( $src, $content_dir ) ) {
                         $fp                             = substr( $src, strlen( $content_dir ) );
-                        $page_config['js'][ $k ]['src'] = $fp;
+                        $page_config['js'][ $key ]['src'] = $fp;
                         continue;
                     }
                 }
-                unset( $page_config['js'][ $k ] );
+                unset( $page_config['js'][ $key ] );
                 qtranxf_error_log( sprintf( __( 'Could not find script file "%s" for handle "%s".', 'qtranslate' ), $src, $js['handle'] ) );
             }
         }
@@ -410,7 +383,6 @@ function qtranxf_add_admin_footer_js() {
     global $q_config;
     $post_type   = qtranxf_post_type();
     $page_config = qtranxf_get_admin_page_config_post_type( $post_type );
-    //qtranxf_dbg_log('qtranxf_add_admin_footer_js: $page_config: ',$page_config);
     if ( empty( $page_config ) ) {
         return;
     }
@@ -481,7 +453,7 @@ function qtranxf_add_admin_footer_js() {
         $config['strings']['CopyFromAlt'] = __( 'Fill empty multilingual fields with content from other language', 'qtranslate' );
         // translators: Prompt on hover over select-element to choose the language to copy content from
         $config['strings']['ChooseLangToCopy'] = __( 'Choose language to copy multilingual content from', 'qtranslate' );
-        // translators: Title of button to copy content from otrher language
+        // translators: Title of button to copy content from other language
         $config['strings']['CopyFrom'] = __( 'Copy from', 'qtranslate' );
     } else {
         $config['hide_lsb_copy_content'] = true;
@@ -497,7 +469,7 @@ function qtranxf_add_admin_footer_js() {
         <?php
         echo 'var qTranslateConfig=' . json_encode( $config ) . ';' . PHP_EOL;
         // each script entry may define javascript code to be injected
-        foreach ( $page_config['js'] as $k => $js ) {
+        foreach ( $page_config['js'] as $key => $js ) {
             if ( isset( $js['javascript'] ) && ! empty( $js['javascript'] ) ) {
                 echo $js['javascript'];
             }
@@ -601,8 +573,8 @@ function qtranxf_add_admin_css() {
     $css                  = preg_replace( '!//.*?$!m', '', $css );
     $css                  = preg_replace( '/\\n\\s*\\n/m', "\n", $css );
     $current_color_scheme = qtranxf_get_user_admin_color();
-    foreach ( $current_color_scheme as $k => $color ) {
-        $css = preg_replace( '/#UserColor' . $k . '/m', $color, $css );
+    foreach ( $current_color_scheme as $key => $color ) {
+        $css = preg_replace( '/#UserColor' . $key . '/m', $color, $css );
     }
     echo '<style type="text/css" media="screen">' . PHP_EOL;
     echo $css;
@@ -611,7 +583,6 @@ function qtranxf_add_admin_css() {
 }
 
 function qtranxf_admin_head() {
-    //qtranxf_dbg_log('11.qtranxf_admin_head:');
     qtranxf_add_admin_css();
     global $q_config;
     if ( isset( $q_config['url_info']['query'] ) && strpos( $q_config['url_info']['query'], 'page=qtranslate-xt' ) !== false ) {
@@ -620,7 +591,6 @@ function qtranxf_admin_head() {
 }
 
 function qtranxf_admin_footer() {
-    //qtranxf_dbg_log('18.qtranxf_admin_footer:');
     qtranxf_add_admin_footer_js();
 }
 
@@ -653,7 +623,7 @@ function qtranxf_settings_page() {
 function qtranxf_translate_menu( &$menu ) {
     global $q_config;
     $lang = $q_config['language'];
-    foreach ( $menu as $k => &$item ) {
+    foreach ( $menu as &$item ) {
         if ( empty( $item[0] ) ) {
             continue;
         }
@@ -670,8 +640,8 @@ function qtranxf_admin_menu() {
         qtranxf_translate_menu( $menu );
     }
     if ( ! empty( $submenu ) ) {
-        foreach ( $submenu as $k => $m ) {
-            qtranxf_translate_menu( $submenu[ $k ] );
+        foreach ( $submenu as $key => $item ) {
+            qtranxf_translate_menu( $submenu[ $key ] );
         }
     }
 
@@ -844,16 +814,14 @@ function qtranxf_admin_notices_config() {
  */
 function qtranxf_admin_home_url( $url, $path, $orig_scheme, $blog_id ) {
     global $q_config;
-    //qtranxf_dbg_log('qtranxf_admin_home_url: $_COOKIE: ', $_COOKIE);
+
     if ( isset( $_COOKIE[ QTX_COOKIE_NAME_FRONT ] ) ) {
         $lang = $_COOKIE[ QTX_COOKIE_NAME_FRONT ];
     } else {
         $lang = $q_config['default_language'];
     }
-    //qtranxf_dbg_log('qtranxf_admin_home_url: url='.$url.'; path='.$path.'; orig_scheme='.$orig_scheme);
     $url = qtranxf_get_url_for_language( $url, $lang, ! $q_config['hide_default_language'] || $lang != $q_config['default_language'] );
 
-    //qtranxf_dbg_log('qtranxf_admin_home_url: url='.$url.'; lang='.$lang);
     return $url;
 }
 
