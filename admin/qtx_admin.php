@@ -440,7 +440,7 @@ function qtranxf_add_admin_footer_js() {
 
     // For Gutenberg, enforce the editor mode to QTX_EDITOR_MODE_SINGLE
     $current_screen = get_current_screen();
-    if ( $current_screen->is_block_editor() ) {
+    if ( method_exists( $current_screen, 'is_block_editor' ) && $current_screen->is_block_editor() ) {
         $config['LSB'] = false;
         $config['RAW'] = false;
     } else {
