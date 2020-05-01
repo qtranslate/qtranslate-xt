@@ -1,3 +1,13 @@
+### 3.8.1
+Core
+* Fix no language buttons with WP4 (#825)
+* Fix built-in i18n config search (#824)
+* Fix plugin activation with i18n config (#823)
+* Clarify variables, PHPDoc, code cleanup
+
+WooCommerce
+* Fix translate product name in WC order admin page (#827)
+
 ### 3.8.0
 New feature! Initial support of Gutenberg, with some limitations. Read carefully our [Gutenberg FAQ](https://github.com/qtranslate/qtranslate-xt/wiki/FAQ#gutenberg) before use.
 
