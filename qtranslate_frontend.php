@@ -47,11 +47,12 @@ function qtranxf_wp_head() {
         } else {
             $hreflang = $lang;
         }
-        //if($language != qtranxf_getLanguage())//standard requires them all
-        echo '<link hreflang="' . $hreflang . '" href="' . qtranxf_convertURL( '', $lang, false, true ) . '" rel="alternate" />' . PHP_EOL;
+        $href = apply_filters( 'qtranslate_hreflang', qtranxf_convertURL( '', $lang, false, true ), $lang );
+        echo '<link hreflang="' . $hreflang . '" href="' . $href . '" rel="alternate" />' . PHP_EOL;
     }
     //https://support.google.com/webmasters/answer/189077
-    echo '<link hreflang="x-default" href="' . qtranxf_convertURL( '', $q_config['default_language'] ) . '" rel="alternate" />' . PHP_EOL;
+    $href = apply_filters( 'qtranslate_hreflang', qtranxf_convertURL( '', $q_config['default_language'] ), 'x-default' );
+    echo '<link hreflang="x-default" href="' . $href . '" rel="alternate" />' . PHP_EOL;
 }
 
 add_action( 'wp_head', 'qtranxf_wp_head' );
