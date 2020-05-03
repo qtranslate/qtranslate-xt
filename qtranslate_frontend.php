@@ -40,19 +40,20 @@ function qtranxf_wp_head() {
         return;
     }
 
-    // set links to translations of current page
+    // set links to localized versions of current page: hreflang (locale/lang) -> href
+    $hreflangs = array();
     foreach ( $q_config['enabled_languages'] as $lang ) {
-        if ( ! empty( $q_config['locale_html'][ $lang ] ) ) {
-            $hreflang = $q_config['locale_html'][ $lang ];
-        } else {
-            $hreflang = $lang;
-        }
-        $href = apply_filters( 'qtranslate_hreflang', qtranxf_convertURL( '', $lang, false, true ), $lang );
+        $hreflang = ! empty ( $q_config['locale_html'][ $lang ] ) ? $q_config['locale_html'][ $lang ] : $lang;
+        // Default language is always shown, see: https://github.com/qtranslate/qtranslate-xt/wiki/Browser-redirection
+        $hreflangs[ $hreflang ] = qtranxf_convertURL( '', $lang, false, true );
+    }
+    // Fallback for unmatched language: https://support.google.com/webmasters/answer/189077
+    $hreflangs['x-default'] = qtranxf_convertURL( '', $q_config['default_language'] );
+
+    $hreflangs = apply_filters( 'qtranslate_hreflang', $hreflangs );
+    foreach ( $hreflangs as $hreflang => $href ) {
         echo '<link hreflang="' . $hreflang . '" href="' . $href . '" rel="alternate" />' . PHP_EOL;
     }
-    //https://support.google.com/webmasters/answer/189077
-    $href = apply_filters( 'qtranslate_hreflang', qtranxf_convertURL( '', $q_config['default_language'] ), 'x-default' );
-    echo '<link hreflang="x-default" href="' . $href . '" rel="alternate" />' . PHP_EOL;
 }
 
 add_action( 'wp_head', 'qtranxf_wp_head' );
