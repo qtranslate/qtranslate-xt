@@ -40,14 +40,18 @@ function qtranxf_wp_head() {
         return;
     }
 
-    // set links to localized versions of current page: hreflang (locale/lang) -> href
+    // Set links to localized versions of the current page using for SEO (hreflang)
+    // See https://github.com/qtranslate/qtranslate-xt/wiki/Browser-redirection#localized-versions-for-seo-hreflang
     $hreflangs = array();
     foreach ( $q_config['enabled_languages'] as $lang ) {
         $hreflang = ! empty ( $q_config['locale_html'][ $lang ] ) ? $q_config['locale_html'][ $lang ] : $lang;
-        // Default language is always shown, see: https://github.com/qtranslate/qtranslate-xt/wiki/Browser-redirection
-        $hreflangs[ $hreflang ] = qtranxf_convertURL( '', $lang, false, true );
+
+        // The default URL may be deterministic or not, depending on the option for language detection by the browser
+        // If language detected, enforce default language shown to make the default URL deterministic for SEO
+        // Otherwise, allow option "Hide URL language information for default language"
+        $hreflangs[ $hreflang ] = qtranxf_convertURL( '', $lang, false, $q_config['detect_browser_language'] );
     }
-    // Fallback for unmatched language: https://support.google.com/webmasters/answer/189077
+    // Fallback for unmatched language (default hreflang for SEO)
     $hreflangs['x-default'] = qtranxf_convertURL( '', $q_config['default_language'] );
 
     $hreflangs = apply_filters( 'qtranslate_hreflang', $hreflangs );
