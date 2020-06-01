@@ -198,7 +198,6 @@ function qtranxf_strftime( $format, $date, $default = '', $before = '', $after =
     $replace[] = '${2}' . $date; // date U
     $format    = preg_replace( $search, $replace, $format );
 
-    //qtranxf_dbg_log('qtranxf_strftime: $format='.$format.'; $date=',$date);
     return $before . strftime( $format, $date ) . $after;
 }
 

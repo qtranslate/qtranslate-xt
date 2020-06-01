@@ -39,7 +39,6 @@ qwpseo_add_filters_front();
 function qwpseo_sitemap_urlimages( $images, $id ) {
     global $q_config;
     $lang = $q_config['language'];
-    //qtranxf_dbg_log('qwpseo_sitemap_urlimages('.$id.'): $images: ',$images);
     $srcs = array();
     foreach ( $images as $k => $image ) {
         $src = $image['src'];
@@ -70,19 +69,16 @@ function qwpseo_sitemap_index( $sm ) {
     if ( isset( $q_config['sitemap-type'] ) ) {
         return '';
     }
-    //qtranxf_dbg_log('qwpseo_sitemap_index: $wpseo_sitemaps: ', $wpseo_sitemaps);
     ob_start();
     $wpseo_sitemaps->output();
     $content = ob_get_contents();
     ob_end_clean();
-    //qtranxf_dbg_log('qwpseo_sitemap_index: $content: ', $content);
     $p        = 0;
     $sitemaps = array();
     while ( ( $p = strpos( $content, '<sitemap>', $p ) ) !== false ) {
         if ( ( $e = strpos( $content, '</sitemap>', $p ) ) !== false ) {
             $len = $e - $p + strlen( '</sitemap>' );
             $s   = substr( $content, $p, $len );
-            //qtranxf_dbg_log('qwpseo_sitemap_index: $s: ', $s);
             $p          += $len;
             $sitemaps[] = $s;
         } else {
@@ -102,7 +98,6 @@ function qwpseo_sitemap_index( $sm ) {
         }
     }
 
-    //qtranxf_dbg_log('qwpseo_sitemap_index: $sm: ', $sm);
     return $sm;
 }
 
@@ -114,7 +109,6 @@ add_filter( 'wpseo_sitemap_index', 'qwpseo_sitemap_index' );
 function qwpseo_enable_xml_sitemap_post_url( $loc, $p ) {
     global $q_config;
     $lang = $q_config['language'];
-    //qtranxf_dbg_log('qwpseo_enable_xml_sitemap_post_url: $sm: ', $p);
     $p->post_content = qtranxf_use_language( $lang, $p->post_content, false, true );
 
     return $loc;
@@ -137,7 +131,6 @@ add_filter( 'wpseo_enable_xml_sitemap_transient_caching', 'qwpseo_enable_xml_sit
  * @since 1.0.3
  */
 function qwpseo_build_sitemap_post_type( $type ) {
-    //qtranxf_dbg_log('qwpseo_build_sitemap_post_type: $type: ', $type);
     if ( $type == 'i18n-index' ) {
         global $q_config;
         //root map for single language
@@ -240,8 +233,6 @@ add_action( 'wpseo_xsl_qtx', 'qwpseo_xsl_qtx', 20 );
 /* TODO clean this, keep or remove?
 function qwpseo_register_xsl_i18n()
 {
-	//qtranxf_dbg_log('qwpseo_register_xsl_i18n:');
-	//qtranxf_dbg_log('qwpseo_register_xsl_i18n: $_SERVER[HTTP_REFERER]: ', $_SERVER['HTTP_REFERER']);
 	global $wpseo_sitemaps;
 	$wpseo_sitemaps->register_xsl('i18n','qwpseo_xsl_i18n',true);
 }
@@ -251,9 +242,8 @@ $wpseo_sitemaps->set_stylesheet('');
 
 function qwpseo_sitemap_entry( $url, $post_type, $p )
 {
-	//qtranxf_dbg_log('qwpseo_sitemap_entry: $post_type: '.$post_type.'; $url: ', $url);
 	global $q_config;
-	//qtranxf_dbg_log('qwpseo_sitemap_entry: $p: ', $p);
+
 	$urls = array();
 	foreach($q_config['enabled_languages'] as $lang){
 		$urls[$lang] = $url;
@@ -267,7 +257,6 @@ function qwpseo_sitemap_entry( $url, $post_type, $p )
 			}
 		}
 	}
-	//qtranxf_dbg_log('qwpseo_sitemap_entry: $urls: ', $urls);
 	$url['urls'] = $urls;
 	return $url;
 }
@@ -275,7 +264,6 @@ function qwpseo_sitemap_entry( $url, $post_type, $p )
 
 function qwpseo_test_filter( $arg )
 {
-	//qtranxf_dbg_log('qwpseo_test_filter: $arg: ', $arg);
 	return $arg;
 }
 add_filter( 'wpseo_opengraph_title', 'qwpseo_test_filter');

@@ -474,7 +474,6 @@ function qtranxf_saveConfig() {
 function qtranxf_reloadConfig() {
     global $q_config;
     $url_info = isset( $q_config['url_info'] ) ? $q_config['url_info'] : null;
-    //qtranxf_dbg_log('qtranxf_reloadConfig: $url_info: ',$url_info);
     qtranxf_del_conf_filters();
     qtranxf_loadConfig();
     qtranxf_admin_loadConfig();
@@ -486,7 +485,6 @@ function qtranxf_reloadConfig() {
         if ( ! qtranxf_isEnabled( $q_config['language'] ) ) {
             $q_config['language'] = $q_config['default_language'];
         }
-        //qtranxf_dbg_log('qtranxf_reloadConfig: $q_config[language]: ',$q_config['language']);
     }
     qtranxf_load_option_qtrans_compatibility();
 }
@@ -541,8 +539,6 @@ function qtranxf_updateSetting( $var, $type = QTX_STRING, $def = null ) {
                 $lns[ $key ] = sanitize_text_field( $ln );
             }
             $val = implode( PHP_EOL, $lns );
-            //qtranxf_dbg_log('qtranxf_updateSetting:QTX_TEXT: $_POST[$var]:'.PHP_EOL, $_POST[$var]);
-            //qtranxf_dbg_log('qtranxf_updateSetting:QTX_TEXT: $val:'.PHP_EOL, $val);
             if ( isset( $q_config[ $var ] ) ) {
                 // empty val means reset so we shouldn't skip the default value that could be different
                 if ( ! empty( $val ) && $q_config[ $var ] === $val ) {
@@ -775,7 +771,7 @@ function qtranxf_updateSettings() {
         if ( ! isset( $_POST[ $id ] ) ) {
             continue;
         }
-        $domain = preg_replace( '#^/*#', '', untrailingslashit( trim( $_POST[ $id ] ) ) );
+        $domain           = preg_replace( '#^/*#', '', untrailingslashit( trim( $_POST[ $id ] ) ) );
         $domains[ $lang ] = $domain;
     }
     if ( ! empty( $domains ) && ( ! isset( $q_config['domains'] ) || ! qtranxf_array_compare( $q_config['domains'], $domains ) ) ) {

@@ -47,7 +47,6 @@ function qtranxf_localeForCurrentLanguage( $locale ) {
         setlocale( LC_TIME, $lc2 );
     }
 
-    //qtranxf_dbg_log('qtranxf_localeForCurrentLanguage: $locale='.$locale.'; return: '.$locale_lang.'; Set to ', $loc);
     return $locale_lang;
 }
 

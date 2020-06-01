@@ -600,7 +600,6 @@ function qtranxf_update_config_files() {
     $config_files = qtranxf_get_option_config_files();
     $found        = qtranxf_search_config_files();
     $changed      = qtranxf_add_config_files( $config_files, $found );
-    //qtranxf_dbg_log('qtranxf_update_config_files: $config_files: ',$config_files);
     qtranxf_update_config_options( $config_files, $changed );
 }
 
@@ -733,7 +732,6 @@ function qtranxf_clear_debug_log() {
 
 function qtranxf_activation_hook() {
     qtranxf_clear_debug_log();
-    //qtranxf_dbg_log('qtranxf_activation_hook: ', __FILE__);
     if ( version_compare( PHP_VERSION, '5.4' ) < 0 ) {
         // Deactivate ourself
         load_plugin_textdomain( 'qtranslate', false, basename( QTRANSLATE_DIR ) . '/lang' );
@@ -831,7 +829,6 @@ function qtranxf_is_classic_editor_supported() {
  * @since 3.4
  */
 function qtranxf_deactivation_hook() {
-    //qtranxf_dbg_log('qtranxf_deactivation_hook: ', __FILE__);
 
     /**
      * A chance to execute deactivation actions specifically for this plugin.
@@ -960,7 +957,6 @@ function qtranxf_get_plugin_link() {
 }
 
 function qtranxf_admin_notices_errors() {
-    //qtranxf_dbg_log('14.qtranxf_admin_notices_errors:');
     $msgs = get_option( 'qtranslate_config_errors' );
     if ( ! is_array( $msgs ) ) {
         return;

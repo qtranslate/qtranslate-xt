@@ -175,17 +175,11 @@ function qwpseo_get_post_metadata( $original_value, $object_id, $meta_key = '', 
     if ( empty( $meta_key ) ) {
         //very ugly hack
         $trace = debug_backtrace();
-        //qtranxf_dbg_log('qwpseo_get_post_metadata: $trace: ',$trace);
-        //qtranxf_dbg_log('qwpseo_get_post_metadata: $trace[6][args][0]: ',$trace[6]['args'][0]);
-        //qtranxf_dbg_log('qwpseo_get_post_metadata: $trace[7][function]: ',$trace[7]['function']);
         if ( isset( $trace[7]['function'] ) && $trace[7]['function'] === 'calculate_results' &&
              isset( $trace[6]['args'][0] ) && $trace[6]['args'][0] === 'focuskw'
         ) {
-            //qtranxf_dbg_log('qwpseo_get_post_metadata: $object_id: ',$object_id);
-            //qtranxf_dbg_log('qwpseo_get_post_metadata: $single: ',$single);
             $key     = WPSEO_Meta::$meta_prefix . 'focuskw';
             $focuskw = get_metadata( 'post', $object_id, $key, true );
-            //qtranxf_dbg_log('qwpseo_get_post_metadata: $focuskw: ',$focuskw);
             $focuskw = qtranxf_use_language( $q_config['language'], $focuskw );
 
             return array( $key => array( $focuskw ) );
@@ -201,7 +195,6 @@ function qwpseo_get_post_metadata( $original_value, $object_id, $meta_key = '', 
 function qwpseo_xmlsitemaps_config() {
     global $q_config;
     $options = get_option( 'wpseo_xml' );
-    //qtranxf_dbg_log('qwpseo_xmlsitemaps_config: $options: ',$options);
     if ( empty( $options['enablexmlsitemap'] ) ) {
         return;
     }
@@ -235,7 +228,6 @@ add_action( 'wpseo_xmlsitemaps_config', 'qwpseo_xmlsitemaps_config' );
  * @since 1.1
  */
 function qwpseo_encode_swirly( $value ) {
-    //qtranxf_dbg_log('qwpseo_encode_swirly: $value: ',$value);
     $value = preg_replace( '#\[:([a-z]{2}|)]#i', '{:$1}', $value );
 
     return $value;

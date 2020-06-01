@@ -269,7 +269,6 @@ function qtranxf_languageColumn( $column ) {
 }
 
 function qtranxf_fetch_file_selection( $dir, $suffix = '.css' ) {
-    //qtranxf_dbg_log('qtranxf_fetch_file_selection: dir:',$dir);
     $files      = array();
     $dir_handle = @opendir( $dir );
     if ( ! $dir_handle ) {
@@ -293,7 +292,6 @@ function qtranxf_fetch_file_selection( $dir, $suffix = '.css' ) {
     }
     ksort( $files );
 
-    //qtranxf_dbg_log('qtranxf_fetch_file_selection: files:',$files);
     return $files;
 }
 
@@ -302,17 +300,17 @@ function qtranxf_before_admin_bar_render() {
     if ( ! isset( $wp_admin_bar ) ) {
         return;
     }
+
     $nodes = $wp_admin_bar->get_nodes();
-    //qtranxf_dbg_log('qtranxf_before_admin_bar_render: $nodes:', $nodes);
     if ( ! isset( $nodes ) ) {
         return;
-    }//sometimes $nodes is NULL
+    }
+
     $lang = $q_config['language'];
     foreach ( $nodes as $node ) {
         $nd = qtranxf_use( $lang, $node );
         $wp_admin_bar->add_node( $nd );
     }
-    //qtranxf_dbg_log('qtranxf_before_admin_bar_render: $wp_admin_bar:', $wp_admin_bar);
 }
 
 function qtranxf_admin_the_title( $title ) {
@@ -337,10 +335,7 @@ add_filter( 'the_title', 'qtranxf_admin_the_title', 0 );
 
 if ( ! function_exists( 'qtranxf_trim_words' ) ) {
     function qtranxf_trim_words( $text, $num_words, $more, $original_text ) {
-        //qtranxf_dbg_log('qtranxf_trim_words: $text: ',$text);
-        //qtranxf_dbg_log('qtranxf_trim_words: $original_text: ',$original_text);
         $blocks = qtranxf_get_language_blocks( $original_text );
-        //qtranxf_dbg_log('qtranxf_trim_words: $blocks: ',$blocks);
         if ( count( $blocks ) <= 1 ) {
             return $text;
         }
@@ -469,7 +464,6 @@ function qtranxf_add_meta_box_LSB( $post_type, $post = null ) {
             return;
         }
     }
-    //qtranxf_dbg_log('qtranxf_add_meta_box_LSB: $post_type: ', $post_type);//, true);
     $page_config = qtranxf_get_admin_page_config_post_type( $post_type );
     if ( empty( $page_config ) ) {
         return;

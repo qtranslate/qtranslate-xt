@@ -509,7 +509,6 @@ function gtranxf_db_clean_terms() {
             } else {
                 $errs = array( __( 'Term configuration is inconsistent.', 'qtranslate' ) );
             }
-            //qtranxf_dbg_log('gtranxf_db_clean_terms: invalid term $id='.$id.', name='.$nm.' Error:', $errs);
             $messages[] = sprintf( __( 'Term "%s" (id=%d) cannot be loaded and is left untouched. Error message on load was:%s', 'qtranslate' ), $nm, $id, '<br/>' . PHP_EOL . '"' . implode( '"<br/>"' . PHP_EOL, $errs ) . '"' ) . '<br/>';
             continue;
         } else {
@@ -554,7 +553,6 @@ function gtranxf_db_clean_terms() {
         }
         if ( ! $ok ) {
             $nm = $ts[ $default_langauge ];
-            //qtranxf_dbg_log('gtranxf_db_clean_terms: term $id='.$id.', name='.$nm_cur.' is replaced with ', $nm);
             wp_update_term( $id, $taxonomy, array( 'name' => $nm ) );
         }
         $term_name[ $nm ] = $ts;
@@ -583,8 +581,6 @@ function gtranxf_db_clean_terms() {
     }
 
     if ( ! qtranxf_array_compare( $term_name_cur, $term_name ) ) {
-        //qtranxf_dbg_log('gtranxf_db_clean_terms: old $term_name: ', $term_name_cur);
-        //qtranxf_dbg_log('gtranxf_db_clean_terms: new $term_name: ', $term_name);
         update_option( 'qtranslate_term_name', $term_name );
     }
     $q_config['term_name'] = $term_name;

@@ -89,17 +89,6 @@ function qtranxf_dir_from_wp_content( $plugin ) {
 function qtranxf_plugin_dirname_from_wp_content() {
     static $dirname;
     if ( ! $dirname ) {
-        // TODO refactor debug info, this does not look like the right place
-        //qtranxf_dbg_log('__FILE__: ', __FILE__); // links are resolved
-        //qtranxf_dbg_log('wp_normalize_path(__FILE__): ', wp_normalize_path(__FILE__)); // links are resolved, same as __FILE__
-        //qtranxf_dbg_log('plugin_dir_path: ', plugin_dir_path( __FILE__ )); // links are resolved, with trailing slash
-        //qtranxf_dbg_log('plugin_basename: ', plugin_basename( __FILE__ )); // no links resolved
-        //qtranxf_dbg_log('WP_CONTENT_DIR: ', WP_CONTENT_DIR); // no links resolved
-        //qtranxf_dbg_log('wp_content_dir(): ', wp_content_dir()); // no links resolved
-        //qtranxf_dbg_log('WP_PLUGIN_DIR: ', WP_PLUGIN_DIR); // no links resolved
-        //qtranxf_dbg_log('WP_MU_PLUGIN_DIR: ', WPMU_PLUGIN_DIR); // no links resolved
-        //qtranxf_dbg_log('plugin_dir_url: ', plugin_dir_url( __FILE__ )); // no links, naturally
-        //qtranxf_dbg_log('content_url: ', content_url()); // no links either
         $dirname = qtranxf_dir_from_wp_content( QTRANSLATE_FILE );
     }
 
@@ -110,7 +99,6 @@ function qtranxf_parseURL( $url ) {
     // this is not the same as native parse_url and so it is in use
     // it should also work quicker than native parse_url, so we should keep it?
     preg_match( '!(?:(\w+)://)?(?:(\w+):(\w+)@)?([^/:?#]+)?(?::(\d*))?([^#?]+)?(?:\?([^#]+))?(?:#(.+$))?!', $url, $out );
-    //qtranxf_dbg_log('qtranxf_parseURL('.$url.'): out:',$out);
     $result = array();
     if ( ! empty( $out[1] ) ) {
         $result['scheme'] = $out[1];
@@ -144,8 +132,6 @@ function qtranxf_parseURL( $url ) {
  * @since 3.2.8
  */
 function qtranxf_buildURL( $urlinfo, $homeinfo ) {
-    //qtranxf_dbg_log('qtranxf_buildURL: $urlinfo:',$urlinfo);
-    //qtranxf_dbg_log('qtranxf_buildURL: $homeinfo:',$homeinfo);
     if ( empty( $urlinfo['host'] ) ) {
         $url = ''; // relative path stays relative
     } else {
@@ -178,7 +164,6 @@ function qtranxf_buildURL( $urlinfo, $homeinfo ) {
         $url .= '#' . $urlinfo['fragment'];
     }
 
-    //qtranxf_dbg_log('qtranxf_buildURL: $url:',$url);
     return $url;
 }
 
@@ -319,7 +304,6 @@ function qtranxf_complete_url_info_path( &$urlinfo ) {
         if ( empty( $urlinfo['path-base'] ) ) {
             $urlinfo['wp-path'] = $urlinfo['path'];
         } elseif ( ! empty( $urlinfo['path'] ) && qtranxf_startsWith( $urlinfo['path'], $urlinfo['path-base'] ) ) {
-            //qtranxf_dbg_log('qtranxf_complete_url_info_path: urlinfo: ',$urlinfo);
             if ( isset( $urlinfo['path'][ $urlinfo['path-base-length'] ] ) ) {
                 if ( $urlinfo['path'][ $urlinfo['path-base-length'] ] == '/' ) {
                     $urlinfo['wp-path'] = substr( $urlinfo['path'], $urlinfo['path-base-length'] );
@@ -360,9 +344,7 @@ function qtranxf_del_query_arg( &$query, $key ) {
             $len   = strlen( $matches[3] );
             $count += $len;
         }
-        //qtranxf_dbg_log('qtranxf_del_query_arg: query: '.$query.'; pos='.$pos.'; count=',$count);
         $query = substr_replace( $query, '', $pos, $count );
-        //qtranxf_dbg_log('qtranxf_del_query_arg: query: ',$query);
     }
 }
 
@@ -636,23 +618,19 @@ function qtranxf_can_redirect() {
 function qtranxf_post_type() {
     global $post, $post_type;
     if ( $post_type ) {
-        //qtranxf_dbg_log('qtranxf_post_type: global $post_type=',$post_type);
         return $post_type;
     }
     if ( $post && isset( $post->post_type ) ) {
         $post_type = $post->post_type;
 
-        //qtranxf_dbg_log('qtranxf_post_type: $post->post_type=',$post_type);
         return $post_type;
     }
     if ( isset( $_REQUEST['post_type'] ) ) {
         $post_type = $_REQUEST['post_type'];
 
-        //qtranxf_dbg_log('qtranxf_post_type: REQUEST[post_type]=',$post_type);
         return $post_type;
     }
 
-    //qtranxf_dbg_log('qtranxf_post_type: null $post_type=',$post_type);
     return null;
 }
 
@@ -668,7 +646,6 @@ function qtranxf_match_page( $cfg, $url_path, $url_query, $d ) {
         if ( preg_match( $d . $page . $d, $url_path ) !== 1 ) {
             continue;
         }
-        //qtranxf_dbg_log('qtranxf_match_page: preg_match('.$d.$query.$d.', '.$url_query.')');
         if ( empty( $query ) || preg_match( $d . $query . $d, $url_query ) === 1 ) {
             return true;
         }
@@ -727,14 +704,10 @@ function qtranxf_parse_page_config( $config, $url_path, $url_query ) {
         }
     }
 
-    //qtranxf_dbg_log('qtranxf_parse_page_config: $url_path: "'.$url_path.'"; $url_query: "'.$url_query.'"');
-    //qtranxf_dbg_log('qtranxf_parse_page_config: $config: ', $config);
     $page_configs = array();
     foreach ( $config as $pgkey => $pgcfg ) {
         $delimiter = isset( $pgcfg['preg_delimiter'] ) ? $pgcfg['preg_delimiter'] : '!';
         $matched   = qtranxf_match_page( $pgcfg, $url_path, $url_query, $delimiter );
-        //qtranxf_dbg_log('qtranxf_parse_page_config: $pgcfg: ', $pgcfg);
-        //qtranxf_dbg_log('qtranxf_parse_page_config: $matched: ', $matched);
         if ( $matched === false ) {
             continue;
         }
@@ -833,9 +806,7 @@ function qtranxf_parse_page_config( $config, $url_path, $url_query ) {
         }
     }
 
-    //qtranxf_dbg_log('qtranxf_parse_page_config: $page_configs: ', $page_configs);
     foreach ( $page_configs as $post_type_key => &$page_config ) {
-        //qtranxf_dbg_log('qtranxf_parse_page_config: $post_type_key="'.$post_type_key.'"; page_config: ', $page_config);
         if ( ! empty( $page_config ) ) {
             // clean up 'fields'
             if ( ! empty( $page_config['forms'] ) ) {
@@ -934,34 +905,27 @@ function qtranxf_write_config_log( $config, $suffix = '', $url_path = null, $url
  * @since 3.4
  */
 function qtranxf_add_filters( $filters ) {
-    //qtranxf_dbg_log('qtranxf_add_filters: $filters: ', $filters);
     if ( ! empty( $filters['text'] ) ) {
-        //qtranxf_dbg_log('$filters[text]: ', $filters['text']);
         foreach ( $filters['text'] as $name => $prio ) {
             if ( $prio === '' ) {
                 continue;
             }
-            //qtranxf_dbg_log('$filters[text]['.$name.']: ', $prio);
             add_filter( $name, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', $prio );
         }
     }
     if ( ! empty( $filters['url'] ) ) {
-        //qtranxf_dbg_log('$filters[url]: ',$filters['url']);
         foreach ( $filters['url'] as $name => $prio ) {
             if ( $prio === '' ) {
                 continue;
             }
-            //qtranxf_dbg_log('$filters[url]['.$name.']: ', $prio);
             add_filter( $name, 'qtranxf_convertURL', $prio );
         }
     }
     if ( ! empty( $filters['term'] ) ) {
-        //qtranxf_dbg_log('$filters[term]: ',$filters['term']);
         foreach ( $filters['term'] as $name => $prio ) {
             if ( $prio === '' ) {
                 continue;
             }
-            //qtranxf_dbg_log('$filters[term]['.$name.']: ', $prio);
             add_filter( $name, 'qtranxf_useTermLib', $prio );
         }
     }
@@ -971,34 +935,27 @@ function qtranxf_add_filters( $filters ) {
  * @since 3.4.6.9
  */
 function qtranxf_remove_filters( $filters ) {
-    //qtranxf_dbg_log('qtranxf_add_filters: $filters: ', $filters);
     if ( ! empty( $filters['text'] ) ) {
-        //qtranxf_dbg_log('$filters[text]: ', $filters['text']);
         foreach ( $filters['text'] as $name => $prio ) {
             if ( $prio === '' ) {
                 continue;
             }
-            //qtranxf_dbg_log('$filters[text]['.$name.']: ', $prio);
             remove_filter( $name, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', $prio );
         }
     }
     if ( ! empty( $filters['url'] ) ) {
-        //qtranxf_dbg_log('$filters[url]: ',$filters['url']);
         foreach ( $filters['url'] as $name => $prio ) {
             if ( $prio === '' ) {
                 continue;
             }
-            //qtranxf_dbg_log('$filters[url]['.$name.']: ', $prio);
             remove_filter( $name, 'qtranxf_convertURL', $prio );
         }
     }
     if ( ! empty( $filters['term'] ) ) {
-        //qtranxf_dbg_log('$filters[term]: ',$filters['term']);
         foreach ( $filters['term'] as $name => $prio ) {
             if ( $prio === '' ) {
                 continue;
             }
-            //qtranxf_dbg_log('$filters[term]['.$name.']: ', $prio);
             remove_filter( $name, 'qtranxf_useTermLib', $prio );
         }
     }

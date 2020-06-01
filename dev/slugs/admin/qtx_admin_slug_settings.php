@@ -95,15 +95,12 @@ function qtranxf_slug_update_translations_of($group, $group_name, $default_lang,
 	foreach($_POST['qtranslate-slugs'][$group] as $name_old => &$qfields){
 		//$name_old = $qfields['qtranslate-original-value'];
 		$name = sanitize_key($qfields[$default_lang]);
-		//qtranxf_dbg_log('qtranxf_slug_update_translations_of: new: $wp_group['.$name.']: ', $wp_group[$name]);
-		//qtranxf_dbg_log('qtranxf_slug_update_translations_of: old: $wp_group['.$name_old.']: ', $wp_group[$name_old]);
 		if($name != $name_old){
 			if(isset($wp_group[$name_old])){
 				qtranxf_add_warning(sprintf(__('The slug for %s "%s" for default language cannot be changed to "%s" on this page, because it is not known here which tool created it and for what purpose. Please, update this slug on the page where it is originated from. It may be required then to come back here to update the translations, unless the other plugin or theme is %sintegrated%s with %s.', 'qtranslate'), $group_name, $name_old, $name, '<a href="https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide" target="_blank">', '</a>', 'qTranslate&#8209;XT'));
 				$qfields[$default_lang] = $name = $name_old;
 			}else{
 				$slugs_old = qtranxf_slug_get_translations($name_old);
-				//qtranxf_dbg_log('qtranxf_slug_update_translations_of: $slugs_old: ', $slugs_old);
 				if(!empty($slugs_old)) qtranxf_slug_del_translations($name_old);
 			}
 		}
@@ -141,7 +138,6 @@ function qtranxf_slug_get_plugin_name($nm, $slug){
 
 function qtranxf_migrate_import_qtranslate_slug(){
 	global $q_config, $wpdb;
-	//qtranxf_dbg_log('qtranxf_migrate_import_qtranslate_slug: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
 
 	$nm = '<a href="https://wordpress.org/plugins/qtranslate-slug/" target="_blank"><span style="color:blue"><strong>QTranslate Slug</strong></span></a>';
 
@@ -152,8 +148,6 @@ function qtranxf_migrate_import_qtranslate_slug(){
 	$sql .= ' AND NOT EXISTS (SELECT * FROM '.$wpdb->prefix.'i18n_slugs WHERE name = p.post_name AND lang = MID(m.meta_key,11))';
 
 	$result = $wpdb->get_results($sql);
-	//qtranxf_dbg_log('qtranxf_migrate_import_qtranslate_slug: $result: ', $result);
-	//qtranxf_dbg_log('qtranxf_migrate_import_qtranslate_slug: count($result): ', count($result));
 
 	if(is_array($result)){
 		$default_language = $q_config['default_language'];
@@ -166,7 +160,6 @@ function qtranxf_migrate_import_qtranslate_slug(){
 			$name = $row->post_name;
 //			if($lang == $default_language){
 //				if($slug != $name){
-//	                //qtranxf_dbg_log('qtranxf_migrate_import_qtranslate_slug: $slug('.$slug.') != $name('.$name.')');
 //				}
 //			}
 			if($lang != $default_language){
@@ -174,7 +167,6 @@ function qtranxf_migrate_import_qtranslate_slug(){
 				// todo report
 //				if($slug != $row->meta_value){
 //				}
-	            //qtranxf_dbg_log('qtranxf_migrate_import_qtranslate_slug: $lang='.$lang.'; row: ', $row);
 				//$query = $wpdb->prepare($sql, $row->post_id, $lang, $row->meta_value);
 				$query = $wpdb->prepare($sql, $slug, $lang, $row->post_name );
 				$wpdb->query($query);
@@ -187,7 +179,6 @@ function qtranxf_migrate_import_qtranslate_slug(){
 }
 
 function qtranxf_migrate_export_qtranslate_slug(){
-	//qtranxf_dbg_log('qtranxf_migrate_export_qtranslate_slug: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
 	$nm = '<a href="https://wordpress.org/plugins/qtranslate-slug/" target="_blank"><span style="color:blue"><strong>QTranslate Slug</strong></span></a>';
 	qtranxf_add_message(sprintf(__('Applicable options and slug data have been exported to plugin %s.', 'qtranslate'), $nm));
 }

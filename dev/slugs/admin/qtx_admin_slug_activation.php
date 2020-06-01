@@ -5,7 +5,6 @@ require_once(QTXSLUGS_DIR.'/admin/qtx_admin_slug.php');
 require_once(QTXSLUGS_DIR.'/admin/qtx_admin_slug_settings.php');
 
 function qtranxf_slug_activate(){
-	//qtranxf_dbg_log('qtranxf_slug_activate: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
 
 	qtranxf_slug_add_tables();
 
@@ -24,7 +23,6 @@ function qtranxf_slug_activate(){
 }
 
 function qtranxf_slug_deactivate() {
-	//qtranxf_dbg_log('qtranxf_slug_deactivate: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
 	// regenerate rewrite rules in db
 	//remove_action( 'generate_rewrite_rules', 'qtranxf_slug_modify_rewrite_rules');
 	//flush_rewrite_rules();
@@ -32,7 +30,6 @@ function qtranxf_slug_deactivate() {
 
 /*
 function qtranxf_slug_modify_rewrite_rules() {
-	//qtranxf_dbg_log('qtranxf_slug_modify_rewrite_rules: REQUEST_TIME_FLOAT: ', $_SERVER['REQUEST_TIME_FLOAT']);
 	return;//todo
 
 	// post types rules

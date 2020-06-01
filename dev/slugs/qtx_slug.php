@@ -93,7 +93,6 @@ define( 'QTXSLUGS_DIR', dirname( __FILE__ ) );
 		global $wpdb;
 		$sql = 'SELECT name FROM ' . $wpdb->prefix . 'i18n_slugs WHERE slug = %s';
 		$row = $wpdb->get_row( $wpdb->prepare( $sql, $slug ) );
-		//qtranxf_dbg_log('qtranxf_slug_get_name: '.$slug.' => ', $row);
 		if ( $row ) {
 			return $row->name;
 		}
@@ -128,7 +127,6 @@ define( 'QTXSLUGS_DIR', dirname( __FILE__ ) );
 		$path  = str_replace( '%2F', '/', $path );
 		$path  = str_replace( '%20', ' ', $path );
 		$slugs = explode( '/', $path );
-		//qtranxf_dbg_log('qtranxf_slug_translate_path('.$path.', '.$lang.'): $slugs: ', $slugs);
 		foreach ( $slugs as $k => $slug ) {
 			if ( empty( $slug ) ) {
 				continue;
@@ -137,7 +135,6 @@ define( 'QTXSLUGS_DIR', dirname( __FILE__ ) );
 		}
 		$path = implode( '/', $slugs );
 
-		//qtranxf_dbg_log('qtranxf_slug_translate_path: $path: ', $path);
 		return $path;
 	}
 

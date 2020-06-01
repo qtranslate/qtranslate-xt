@@ -40,8 +40,6 @@ class qTranslateXWidget extends WP_Widget {
     }
 
     function widget( $args, $instance ) {
-        //qtranxf_dbg_log('widget: $this: ',$this);
-        //qtranxf_dbg_log('widget: $instance: ',$instance);
         if ( ! isset( $instance['widget-css-off'] ) ) {
             echo '<style type="text/css">' . PHP_EOL;
             echo empty( $instance['widget-css'] ) ? QTX_WIDGET_CSS : $instance['widget-css'];
@@ -64,9 +62,7 @@ class qTranslateXWidget extends WP_Widget {
     }
 
     function update( $new_instance, $old_instance ) {
-        $instance = $old_instance;
-        //qtranxf_dbg_log('update: $new_instance: ',$new_instance);
-        //qtranxf_dbg_log('update: $old_instance: ',$old_instance);
+        $instance          = $old_instance;
         $instance['title'] = $new_instance['title'];
 
         if ( isset( $new_instance['hide-title'] ) ) {
