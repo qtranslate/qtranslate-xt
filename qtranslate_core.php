@@ -454,7 +454,7 @@ function qtranxf_setcookie_language( $lang, $cookie_name, $cookie_path ) {
     global $q_config;
 
     // only meant for server-side, set 'httponly' flag
-    setcookie( $cookie_name, $lang, strtotime( '+1year' ), $cookie_path, null, $q_config['use_secure_cookie'], true );
+    @setcookie( $cookie_name, $lang, strtotime( '+1year' ), $cookie_path, null, $q_config['use_secure_cookie'], true );
 }
 
 function qtranxf_set_language_cookie( $lang ) {
