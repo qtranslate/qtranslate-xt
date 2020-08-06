@@ -51,6 +51,8 @@ define( 'QTX_COOKIE_NAME_ADMIN', 'qtrans_admin_language' );
 
 define( 'QTX_IGNORE_FILE_TYPES', 'gif,jpg,jpeg,png,svg,pdf,swf,tif,rar,zip,7z,mpg,divx,mpeg,avi,css,js,mp3,mp4,apk' );
 
+define( 'QTX_LANG_CODE', '[a-z]{2}');
+
 
 global $q_config;
 global $qtranslate_options;

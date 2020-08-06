@@ -17,9 +17,11 @@
 
 /*
 function qwpseo_set_encoding_s($value){
+    $lang_code = QTX_LANG_CODE;
+
 	if(is_string($value)){
-		$value = preg_replace('/<!--:([a-z]{2})-->/ism', '{:$1}', $value);
-		$value = preg_replace('/\\[:([a-z]{2})\\]/ism', '{:$1}', $value);
+		$value = preg_replace('/<!--:($lang_code)-->/ism', '{:$1}', $value);
+		$value = preg_replace('/\\[:($lang_code)\\]/ism', '{:$1}', $value);
 		$value = preg_replace('/\\[:\\]|<!--:-->/ism', '{:}', $value);
 	}elseif(is_array($value)){
 		foreach($value as $k => $v){

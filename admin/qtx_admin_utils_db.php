@@ -64,13 +64,15 @@ function qtranxf_convert_to_b( $text ) {
     $text        = '';
     $lang        = false;
     $lang_closed = true;
+    $lang_code   = QTX_LANG_CODE;
+
     foreach ( $blocks as $block ) {
-        if ( preg_match( "#^<!--:([a-z]{2})-->$#ism", $block, $matches ) ) {
+        if ( preg_match( "#^<!--:($lang_code)-->$#ism", $block, $matches ) ) {
             $lang_closed = false;
             $lang        = $matches[1];
             $text        .= '[:' . $lang . ']';
             continue;
-        } elseif ( preg_match( "#^\[:([a-z]{2})]$#ism", $block, $matches ) ) {
+        } elseif ( preg_match( "#^\[:($lang_code)]$#ism", $block, $matches ) ) {
             $lang_closed = false;
             $lang        = $matches[1];
             $text        .= '[:' . $lang . ']';
@@ -428,9 +430,11 @@ function qtranxf_extract_languages( $text, $lang2keep ) {
     $s                = '';
     $current_language = false;
     $eol              = false;
+    $lang_code        = QTX_LANG_CODE;
+
     foreach ( $blocks as $block ) {
         // detect c-tags
-        if ( preg_match( "#^<!--:([a-z]{2})-->$#ism", $block, $matches ) ) {
+        if ( preg_match( "#^<!--:($lang_code)-->$#ism", $block, $matches ) ) {
             $current_language = $matches[1];
             if ( isset( $lang2keep[ $current_language ] ) ) {
                 $s   .= $block;
@@ -438,7 +442,7 @@ function qtranxf_extract_languages( $text, $lang2keep ) {
             }
             continue;
             // detect b-tags
-        } elseif ( preg_match( "#^\[:([a-z]{2})]$#ism", $block, $matches ) ) {
+        } elseif ( preg_match( "#^\[:($lang_code)]$#ism", $block, $matches ) ) {
             $current_language = $matches[1];
             if ( isset( $lang2keep[ $current_language ] ) ) {
                 $s   .= $block;
@@ -446,7 +450,7 @@ function qtranxf_extract_languages( $text, $lang2keep ) {
             }
             continue;
             // detect s-tags @since 3.3.6 swirly bracket encoding added
-        } elseif ( preg_match( "#^{:([a-z]{2})}$#ism", $block, $matches ) ) {
+        } elseif ( preg_match( "#^{:($lang_code)}$#ism", $block, $matches ) ) {
             $current_language = $matches[1];
             if ( isset( $lang2keep[ $current_language ] ) ) {
                 $s   .= $block;
