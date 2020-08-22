@@ -32,7 +32,8 @@ var qTranslateConfig = window.qTranslateConfig;
  * since 3.2.7
  */
 qtranxj_get_split_blocks = function (text) {
-    var split_regex = /(<!--:[a-z]{2}-->|<!--:-->|\[:[a-z]{2}]|\[:]|{:[a-z]{2}}|{:})/gi;
+    var regex = '(<!--:lang-->|<!--:-->|\\[:lang]|\\[:]|{:lang}|{:})'.replace(/lang/g, '[a-z]{2}');
+    var split_regex = new RegExp(regex, "gi");
 
     // Most browsers support RegExp.prototype[@@split]()... except IE
     if ('a~b'.split(/(~)/).length === 3) {
@@ -81,9 +82,10 @@ qtranxj_split_blocks = function (blocks) {
         }
         return result;
     }
-    var clang_regex = /<!--:([a-z]{2})-->/gi;
-    var blang_regex = /\[:([a-z]{2})]/gi;
-    var slang_regex = /{:([a-z]{2})}/gi; // @since 3.3.6 swirly brackets
+    var lang_code = '[a-z]{2}';
+    var clang_regex = new RegExp('<!--:(lang)-->'.replace(/lang/g, lang_code), 'gi');
+    var blang_regex = new RegExp('\\[:(lang)]'.replace(/lang/g, lang_code), 'gi');
+    var slang_regex = new RegExp('{:(lang)}'.replace(/lang/g, lang_code), 'gi');
     var lang = false;
     var matches;
     for (var i = 0; i < blocks.length; ++i) {
