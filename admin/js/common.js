@@ -33,7 +33,26 @@ var qTranslateConfig = window.qTranslateConfig;
  */
 qtranxj_get_split_blocks = function (text) {
     var split_regex = /(<!--:[a-z]{2}-->|<!--:-->|\[:[a-z]{2}]|\[:]|{:[a-z]{2}}|{:})/gi;
-    return text.split(split_regex);
+
+    // Most browsers support RegExp.prototype[@@split]()... except IE
+    if ('a~b'.split(/(~)/).length === 3) {
+        return text.split(split_regex);
+    }
+
+    // compatibility for unsupported engines
+    var start = 0, arr = [];
+    var result;
+    while ((result = split_regex.exec(text)) != null) {
+        arr.push(text.slice(start, result.index));
+        if (result.length > 1)
+            arr.push(result[1]);
+        start = split_regex.lastIndex;
+    }
+    if (start < text.length)
+        arr.push(text.slice(start));
+    if (start === text.length)
+        arr.push(''); // delimiter at the end
+    return arr;
 };
 
 /**
