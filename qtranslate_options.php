@@ -51,7 +51,11 @@ define( 'QTX_COOKIE_NAME_ADMIN', 'qtrans_admin_language' );
 
 define( 'QTX_IGNORE_FILE_TYPES', 'gif,jpg,jpeg,png,svg,pdf,swf,tif,rar,zip,7z,mpg,divx,mpeg,avi,css,js,mp3,mp4,apk' );
 
-define( 'QTX_LANG_CODE', '[a-z]{2}');
+// Language code format: language[-script][-region]
+// #1 language ISO 639-1 and 639-2: 2 or 3 alpha
+// #2 script ISO 15924: 4 Alpha
+// #3 region ISO 3166-2: 2 ALPHA or 3 digits
+define( 'QTX_LANG_CODE', '[a-z]{2,3}(?:-[A-Z][a-z]{3})?(?:-[A-Z]{2}|-\d{3})?');
 
 
 global $q_config;
