@@ -80,9 +80,11 @@ function qtranxf_detect_admin_language( $url_info ) {
      * Detect language from $_POST['WPLANG'].
      */
     if ( isset( $_POST['WPLANG'] ) ) {
-        // User is switching the language using "Site Language" field on page /wp-admin/options-general.php
+        // User is switching the language in WordPress using "Site Language" field on page /wp-admin/options-general.php
+        // The value of WPLANG corresponds to a WP locale such as fr_FR or empty for default (en_US)
         $wplang = sanitize_text_field( $_POST['WPLANG'] );
         if ( empty( $wplang ) ) {
+            // TODO check for default locale other than en_US in WordPress
             $wplang = 'en';
         }
         foreach ( $q_config['enabled_languages'] as $language ) {
@@ -93,6 +95,7 @@ function qtranxf_detect_admin_language( $url_info ) {
             break;
         }
         if ( ! $lang ) {
+            // TODO extend language code check and resolve, in case the WP locale is not enabled in qTranslate
             $lang = substr( $wplang, 0, 2 );
             $lang = qtranxf_resolveLangCase( $lang, $cs );
         }
