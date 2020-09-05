@@ -64,7 +64,7 @@ function qtranxf_convert_to_b( $text ) {
     $text        = '';
     $lang        = false;
     $lang_closed = true;
-    $lang_code   = QTX_LANG_CODE;
+    $lang_code   = QTX_LANG_CODE_FORMAT;
 
     foreach ( $blocks as $block ) {
         if ( preg_match( "#^<!--:($lang_code)-->$#ism", $block, $matches ) ) {
@@ -430,7 +430,7 @@ function qtranxf_extract_languages( $text, $lang2keep ) {
     $s                = '';
     $current_language = false;
     $eol              = false;
-    $lang_code        = QTX_LANG_CODE;
+    $lang_code        = QTX_LANG_CODE_FORMAT;
 
     foreach ( $blocks as $block ) {
         // detect c-tags

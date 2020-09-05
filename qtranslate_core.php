@@ -260,7 +260,7 @@ function qtranxf_parse_language_info( &$url_info, $link = false ) {
         return false;   // url is not from this WP installation
     }
 
-    $lang_code  = QTX_LANG_CODE;
+    $lang_code  = QTX_LANG_CODE_FORMAT;
     $doredirect = false;
 
     // parse URL lang
@@ -911,7 +911,7 @@ function qtranxf_url_del_language( &$urlinfo ) {
     switch ( $url_mode ) {
         case QTX_URL_PATH:
             // might already have language information
-            $lang_code = QTX_LANG_CODE;
+            $lang_code = QTX_LANG_CODE_FORMAT;
             if ( ! empty( $urlinfo['wp-path'] ) && preg_match( "!^/($lang_code)(/|$)!i", $urlinfo['wp-path'], $match ) ) {
                 if ( qtranxf_isEnabled( $match[1] ) ) {
                     // found language information, remove it
@@ -1156,7 +1156,7 @@ function qtranxf_convertURLs( $url, $lang = '', $forceadmin = false, $showDefaul
  * @since 3.3.6 swirly bracket encoding added
  */
 function qtranxf_get_language_blocks( $text ) {
-    $lang_code   = QTX_LANG_CODE;
+    $lang_code   = QTX_LANG_CODE_FORMAT;
     $split_regex = "#(<!--:$lang_code-->|<!--:-->|\[:$lang_code\]|\[:\]|\{:$lang_code\}|\{:\})#ism";
 
     return preg_split( $split_regex, $text, - 1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE );
@@ -1180,7 +1180,7 @@ function qtranxf_split_blocks( $blocks, &$found = array() ) {
     }
 
     $current_language = false;
-    $lang_code        = QTX_LANG_CODE;
+    $lang_code        = QTX_LANG_CODE_FORMAT;
 
     foreach ( $blocks as $block ) {
         // detect c-tags
@@ -1233,7 +1233,7 @@ function qtranxf_split_blocks( $blocks, &$found = array() ) {
 function qtranxf_split_languages( $blocks ) {
     $result           = array();
     $current_language = false;
-    $lang_code        = QTX_LANG_CODE;
+    $lang_code        = QTX_LANG_CODE_FORMAT;
 
     foreach ( $blocks as $block ) {
         // detect c-tags

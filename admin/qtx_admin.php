@@ -459,7 +459,7 @@ function qtranxf_add_admin_footer_js() {
         $config['hide_lsb_copy_content'] = true;
     }
 
-    $config['lang_code_format'] = QTX_LANG_CODE;
+    $config['lang_code_format'] = QTX_LANG_CODE_FORMAT;
 
     // Last chance to customize Java script variable qTranslateConfig
     $config = apply_filters( 'qtranslate_admin_page_config', $config );

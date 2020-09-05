@@ -228,7 +228,7 @@ add_action( 'wpseo_xmlsitemaps_config', 'qwpseo_xmlsitemaps_config' );
  * @since 1.1
  */
 function qwpseo_encode_swirly( $value ) {
-    $lang_code = QTX_LANG_CODE;
+    $lang_code = QTX_LANG_CODE_FORMAT;
     $value     = preg_replace( '#\[:($lang_code|)]#i', '{:$1}', $value );
 
     return $value;

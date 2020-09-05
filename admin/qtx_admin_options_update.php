@@ -58,7 +58,7 @@ function qtranxf_editConfig() {
         if ( $_POST['language_name'] == '' ) {
             $errors[] = __( 'The Language must have a name!', 'qtranslate' );
         }
-        if ( ! preg_match( '/^' . QTX_LANG_CODE . '$/', $lang ) ) {
+        if ( ! preg_match( '/^' . QTX_LANG_CODE_FORMAT . '$/', $lang ) ) {
             $errors[] = __( 'Invalid language code!', 'qtranslate' );
         }
         $langs = array();
@@ -195,7 +195,7 @@ function qtranxf_editConfig() {
         }
     } elseif ( isset( $_GET['edit'] ) ) {
         $lang = sanitize_text_field( $_GET['edit'] );
-        if ( ! preg_match( '/^' . QTX_LANG_CODE . '$/', $lang ) ) {
+        if ( ! preg_match( '/^' . QTX_LANG_CODE_FORMAT . '$/', $lang ) ) {
             $errors[] = __( 'Invalid language code!', 'qtranslate' );
         }
         $original_lang = $lang;

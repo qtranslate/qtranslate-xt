@@ -17,7 +17,7 @@
 
 /*
 function qwpseo_set_encoding_s($value){
-    $lang_code = QTX_LANG_CODE;
+    $lang_code = QTX_LANG_CODE_FORMAT;
 
 	if(is_string($value)){
 		$value = preg_replace('/<!--:($lang_code)-->/ism', '{:$1}', $value);
