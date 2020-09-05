@@ -32,7 +32,7 @@ var qTranslateConfig = window.qTranslateConfig;
  * since 3.2.7
  */
 qtranxj_get_split_blocks = function (text) {
-    var regex = '(<!--:lang-->|<!--:-->|\\[:lang]|\\[:]|{:lang}|{:})'.replace(/lang/g, '[a-z]{2}');
+    var regex = '(<!--:lang-->|<!--:-->|\\[:lang]|\\[:]|{:lang}|{:})'.replace(/lang/g, qTranslateConfig.lang_code_format);
     var split_regex = new RegExp(regex, "gi");
 
     // Most browsers support RegExp.prototype[@@split]()... except IE
@@ -82,10 +82,9 @@ qtranxj_split_blocks = function (blocks) {
         }
         return result;
     }
-    var lang_code = '[a-z]{2}';
-    var clang_regex = new RegExp('<!--:(lang)-->'.replace(/lang/g, lang_code), 'gi');
-    var blang_regex = new RegExp('\\[:(lang)]'.replace(/lang/g, lang_code), 'gi');
-    var slang_regex = new RegExp('{:(lang)}'.replace(/lang/g, lang_code), 'gi');
+    var clang_regex = new RegExp('<!--:(lang)-->'.replace(/lang/g, qTranslateConfig.lang_code_format), 'gi');
+    var blang_regex = new RegExp('\\[:(lang)]'.replace(/lang/g, qTranslateConfig.lang_code_format), 'gi');
+    var slang_regex = new RegExp('{:(lang)}'.replace(/lang/g, qTranslateConfig.lang_code_format), 'gi');
     var lang = false;
     var matches;
     for (var i = 0; i < blocks.length; ++i) {
