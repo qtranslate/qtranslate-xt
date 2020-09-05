@@ -272,7 +272,7 @@ function qtranxf_parse_language_info( &$url_info, $link = false ) {
                     $lang = qtranxf_resolveLangCase( $match[1], $doredirect );
                     if ( $lang ) {
                         $url_info['lang_url']        = $lang;
-                        $url_info['wp-path']         = substr( $url_info['wp-path'], 3 );
+                        $url_info['wp-path']         = substr( $url_info['wp-path'], strlen( $lang ) + 1 );
                         $url_info['doing_front_end'] = true;
                     }
                 }
@@ -284,7 +284,7 @@ function qtranxf_parse_language_info( &$url_info, $link = false ) {
                         $lang = qtranxf_resolveLangCase( $match[1], $doredirect );
                         if ( $lang ) {
                             $url_info['lang_url']        = $lang;
-                            $url_info['host']            = substr( $url_info['host'], 3 );
+                            $url_info['host']            = substr( $url_info['host'], strlen( $lang ) + 1 );
                             $url_info['doing_front_end'] = true;
                         }
                     }
