@@ -23,6 +23,7 @@ function qtranxf_editConfig() {
     }
 
     $errors   = &$q_config['url_info']['errors'];
+    $warnings = &$q_config['url_info']['warnings'];
     $messages = &$q_config['url_info']['messages'];
 
     $q_config['posted']                  = array();
@@ -58,8 +59,13 @@ function qtranxf_editConfig() {
         if ( $_POST['language_name'] == '' ) {
             $errors[] = __( 'The Language must have a name!', 'qtranslate' );
         }
-        if ( strlen( $lang ) != 2 ) {
-            $errors[] = __( 'Language Code has to be 2 characters long!', 'qtranslate' );
+        if ( ! preg_match( '/^' . QTX_LANG_CODE_FORMAT . '$/', $lang ) ) {
+            // TODO: still allow 2-letter upper case for existing values, keep only case-sensitive check once legacy fixed in DB
+            if ( ! empty ( $original_lang ) && $lang === $original_lang && preg_match( '/^[a-z]{2}$/i', $lang ) ) {
+                $warnings[] = sprintf( _( 'The 2-letter language code "%s" should be lower case (ISO 639-1). Upper case is still allowed for legacy codes but not for new entries.', 'qtranslate' ), $lang );
+            } else {
+                $errors[] = __( 'Invalid language code!', 'qtranslate' );
+            }
         }
         $langs = array();
         qtranxf_load_languages( $langs );
@@ -195,9 +201,13 @@ function qtranxf_editConfig() {
         }
     } elseif ( isset( $_GET['edit'] ) ) {
         $lang = sanitize_text_field( $_GET['edit'] );
-        $lang = preg_replace( '/[^a-z]/i', '', $lang );
-        if ( strlen( $lang ) != 2 ) {
-            $errors[] = __( 'Language Code has to be 2 characters long!', 'qtranslate' );
+        if ( ! preg_match( '/^' . QTX_LANG_CODE_FORMAT . '$/', $lang ) ) {
+            // TODO: still allow 2-letter upper case for existing values, keep only case-sensitive check once legacy fixed in DB
+            if ( preg_match( '/^[a-z]{2}$/i', $lang ) ) {
+                $warnings[] = sprintf( _( 'The 2-letter language code "%s" should be lower case (ISO 639-1). Upper case is still allowed for legacy codes but not for new entries.', 'qtranslate' ), $lang );
+            } else {
+                $errors[] = __( 'Invalid language code!', 'qtranslate' );
+            }
         }
         $original_lang = $lang;
         $language_code = $lang;

@@ -412,7 +412,9 @@ function qtranxf_external_host( $host ) {
 }
 
 function qtranxf_isMultilingual( $str ) {
-    return preg_match( '/<!--:[a-z]{2}-->|\[:[a-z]{2}]|{:[a-z]{2}}/im', $str );
+    $lang_code = QTX_LANG_CODE_FORMAT;
+
+    return preg_match( "/<!--:$lang_code-->|\[:$lang_code]|{:$lang_code}/im", $str );
 }
 
 function qtranxf_is_multilingual_deep( $value ) {

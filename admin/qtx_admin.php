@@ -122,7 +122,7 @@ function qtranxf_collect_translations_posted() {
             }
             qtranxf_collect_translations( $request['qtranslate-fields'], $request, $edit_lang );
             unset( $request['qtranslate-fields'] );
-            $url_encoded = http_build_query( $request );
+            $url_encoded       = http_build_query( $request );
             $_REQUEST[ $name ] = $url_encoded;
             if ( isset( $_POST[ $name ] ) ) {
                 $_POST[ $name ] = $url_encoded;
@@ -226,7 +226,7 @@ function qtranxf_get_admin_page_config() {
      */
     $admin_config = apply_filters( 'i18n_admin_config', $admin_config );
 
-    $page_configs = qtranxf_parse_page_config( $admin_config, $pagenow, $url_query );
+    $page_configs                                 = qtranxf_parse_page_config( $admin_config, $pagenow, $url_query );
     $q_config['i18n-cache']['admin_page_configs'] = $page_configs;
 
     return $page_configs;
@@ -363,7 +363,7 @@ function qtranxf_get_admin_page_config_post_type( $post_type ) {
                 if ( file_exists( $src ) ) {
                     // absolute path was given
                     if ( qtranxf_startsWith( $src, $content_dir ) ) {
-                        $fp                             = substr( $src, strlen( $content_dir ) );
+                        $fp                               = substr( $src, strlen( $content_dir ) );
                         $page_config['js'][ $key ]['src'] = $fp;
                         continue;
                     }
@@ -458,6 +458,8 @@ function qtranxf_add_admin_footer_js() {
     } else {
         $config['hide_lsb_copy_content'] = true;
     }
+
+    $config['lang_code_format'] = QTX_LANG_CODE_FORMAT;
 
     // Last chance to customize Java script variable qTranslateConfig
     $config = apply_filters( 'qtranslate_admin_page_config', $config );

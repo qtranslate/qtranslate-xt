@@ -882,7 +882,8 @@ function qtranxf_convertBlogInfoURL( $url, $what ) {
  * Moved here from qtranslate_hooks.php and modified.
  */
 function qtranxf_pagenum_link( $url ) {
-    $url_fixed = preg_replace( '#\?lang=[a-z]{2}/#i', '/', $url ); //kind of ugly fix for function get_pagenum_link in /wp-includes/link-template.php. Maybe we should cancel filter 'bloginfo_url' instead?
+    $lang_code = QTX_LANG_CODE_FORMAT;
+    $url_fixed = preg_replace( "#\?lang=$lang_code/#i", '/', $url ); //kind of ugly fix for function get_pagenum_link in /wp-includes/link-template.php. Maybe we should cancel filter 'bloginfo_url' instead?
 
     return qtranxf_convertURL( $url_fixed );
 }

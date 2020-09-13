@@ -260,6 +260,7 @@ function qtranxf_parse_language_info( &$url_info, $link = false ) {
         return false;   // url is not from this WP installation
     }
 
+    $lang_code  = QTX_LANG_CODE_FORMAT;
     $doredirect = false;
 
     // parse URL lang
@@ -267,11 +268,11 @@ function qtranxf_parse_language_info( &$url_info, $link = false ) {
         $url_mode = $q_config['url_mode'];
         switch ( $url_mode ) {
             case QTX_URL_PATH:
-                if ( ! empty( $url_info['wp-path'] ) && preg_match( '!^/([a-z]{2})(/|$)!i', $url_info['wp-path'], $match ) ) {
+                if ( ! empty( $url_info['wp-path'] ) && preg_match( "!^/($lang_code)(/|$)!i", $url_info['wp-path'], $match ) ) {
                     $lang = qtranxf_resolveLangCase( $match[1], $doredirect );
                     if ( $lang ) {
                         $url_info['lang_url']        = $lang;
-                        $url_info['wp-path']         = substr( $url_info['wp-path'], 3 );
+                        $url_info['wp-path']         = substr( $url_info['wp-path'], strlen( $lang ) + 1 );
                         $url_info['doing_front_end'] = true;
                     }
                 }
@@ -279,11 +280,11 @@ function qtranxf_parse_language_info( &$url_info, $link = false ) {
 
             case QTX_URL_DOMAIN:
                 if ( ! empty( $url_info['host'] ) ) {
-                    if ( preg_match( '#^([a-z]{2})\.#i', $url_info['host'], $match ) ) {
+                    if ( preg_match( "#^($lang_code)\.#i", $url_info['host'], $match ) ) {
                         $lang = qtranxf_resolveLangCase( $match[1], $doredirect );
                         if ( $lang ) {
                             $url_info['lang_url']        = $lang;
-                            $url_info['host']            = substr( $url_info['host'], 3 );
+                            $url_info['host']            = substr( $url_info['host'], strlen( $lang ) + 1 );
                             $url_info['doing_front_end'] = true;
                         }
                     }
@@ -336,7 +337,7 @@ function qtranxf_parse_language_info( &$url_info, $link = false ) {
         } else if ( isset( $_POST['lang'] ) ) {
             $query_lang = qtranxf_resolveLangCase( $_POST['lang'], $doredirect );
         }
-    } elseif ( ! empty( $url_info['query'] ) && preg_match( '/(^|&|&amp;|&#038;|\?)lang=([a-z]{2})/i', $url_info['query'], $match ) ) {
+    } elseif ( ! empty( $url_info['query'] ) && preg_match( '/(^|&|&amp;|&#038;|\?)lang=($lang_code)/i', $url_info['query'], $match ) ) {
         // checked for query mode, see https://github.com/qTranslate-Team/qtranslate-x/issues/288
         $query_lang = qtranxf_resolveLangCase( $match[2], $doredirect );
     }
@@ -910,7 +911,8 @@ function qtranxf_url_del_language( &$urlinfo ) {
     switch ( $url_mode ) {
         case QTX_URL_PATH:
             // might already have language information
-            if ( ! empty( $urlinfo['wp-path'] ) && preg_match( '!^/([a-z]{2})(/|$)!i', $urlinfo['wp-path'], $match ) ) {
+            $lang_code = QTX_LANG_CODE_FORMAT;
+            if ( ! empty( $urlinfo['wp-path'] ) && preg_match( "!^/($lang_code)(/|$)!i", $urlinfo['wp-path'], $match ) ) {
                 if ( qtranxf_isEnabled( $match[1] ) ) {
                     // found language information, remove it
                     $urlinfo['wp-path'] = substr( $urlinfo['wp-path'], 3 );
@@ -1154,7 +1156,8 @@ function qtranxf_convertURLs( $url, $lang = '', $forceadmin = false, $showDefaul
  * @since 3.3.6 swirly bracket encoding added
  */
 function qtranxf_get_language_blocks( $text ) {
-    $split_regex = "#(<!--:[a-z]{2}-->|<!--:-->|\[:[a-z]{2}\]|\[:\]|\{:[a-z]{2}\}|\{:\})#ism";
+    $lang_code   = QTX_LANG_CODE_FORMAT;
+    $split_regex = "#(<!--:$lang_code-->|<!--:-->|\[:$lang_code\]|\[:\]|\{:$lang_code\}|\{:\})#ism";
 
     return preg_split( $split_regex, $text, - 1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE );
 }
@@ -1170,22 +1173,26 @@ function qtranxf_split( $text ) {
 **/
 function qtranxf_split_blocks( $blocks, &$found = array() ) {
     global $q_config;
+
     $result = array();
     foreach ( $q_config['enabled_languages'] as $language ) {
         $result[ $language ] = '';
     }
+
     $current_language = false;
+    $lang_code        = QTX_LANG_CODE_FORMAT;
+
     foreach ( $blocks as $block ) {
         // detect c-tags
-        if ( preg_match( "#^<!--:([a-z]{2})-->$#ism", $block, $matches ) ) {
+        if ( preg_match( "#^<!--:($lang_code)-->$#ism", $block, $matches ) ) {
             $current_language = $matches[1];
             continue;
             // detect b-tags
-        } elseif ( preg_match( "#^\[:([a-z]{2})]$#ism", $block, $matches ) ) {
+        } elseif ( preg_match( "#^\[:($lang_code)]$#ism", $block, $matches ) ) {
             $current_language = $matches[1];
             continue;
             // detect s-tags @since 3.3.6 swirly bracket encoding added
-        } elseif ( preg_match( "#^{:([a-z]{2})}$#ism", $block, $matches ) ) {
+        } elseif ( preg_match( "#^{:($lang_code)}$#ism", $block, $matches ) ) {
             $current_language = $matches[1];
             continue;
         }
@@ -1226,17 +1233,19 @@ function qtranxf_split_blocks( $blocks, &$found = array() ) {
 function qtranxf_split_languages( $blocks ) {
     $result           = array();
     $current_language = false;
+    $lang_code        = QTX_LANG_CODE_FORMAT;
+
     foreach ( $blocks as $block ) {
         // detect c-tags
-        if ( preg_match( "#^<!--:([a-z]{2})-->$#ism", $block, $matches ) ) {
+        if ( preg_match( "#^<!--:($lang_code)-->$#ism", $block, $matches ) ) {
             $current_language = $matches[1];
             continue;
             // detect b-tags
-        } elseif ( preg_match( "#^\[:([a-z]{2})]$#ism", $block, $matches ) ) {
+        } elseif ( preg_match( "#^\[:($lang_code)]$#ism", $block, $matches ) ) {
             $current_language = $matches[1];
             continue;
             // detect s-tags @since 3.3.6 swirly bracket encoding added
-        } elseif ( preg_match( "#^{:([a-z]{2})}$#ism", $block, $matches ) ) {
+        } elseif ( preg_match( "#^{:($lang_code)}$#ism", $block, $matches ) ) {
             $current_language = $matches[1];
             continue;
         }
