@@ -1,3 +1,13 @@
+### 3.9.0
+Core
+* New feature: extend language code to 3-letter (ISO 639-2 and ISO 639-3), lower case (#836, #668)
+* Major refactoring with unique regex of language code for future ISO 3166 and 15924 support (#880, #668)
+* Fix hreflang default URL when browser detection disabled (#198, #819)
+* Cleanup repo, remove experimental dev slugs
+
+WooCommerce
+* Fix language column CSS in WC products (#831, #804)
+
 ### 3.8.1
 Core
 * Fix no language buttons with WP4 (#825)
