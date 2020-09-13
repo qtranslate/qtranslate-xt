@@ -27,7 +27,7 @@
 
         if ((options.path.startsWith(prefixPath) && options.method === 'PUT') ||
             (options.path.startsWith(prefixPath + '/autosaves') && options.method === 'POST')) {
-            console.log('QT-XT API: handling method=' + options.method, 'path=' + options.path, 'post=', post);
+            // console.log('QT-XT API: handling method=' + options.method, 'path=' + options.path, 'post=', post);
             if (!post.hasOwnProperty('qtx_editor_lang')) {
                 console.log('QT-XT API: missing field [qtx_editor_lang] in post id=' + post.id);
                 return next(options);
