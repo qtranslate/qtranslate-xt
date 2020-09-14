@@ -1017,7 +1017,7 @@ function qtranxf_admin_notice_dismiss_script() {
         return;
     }
     $admin_notice_dismiss_script = true;
-    wp_register_script( 'qtx_admin_notices', plugins_url( 'js/notices.js', __FILE__ ), array( 'jquery' ), QTX_VERSION );
+    wp_register_script( 'qtx_admin_notices', plugins_url( 'dist/notices.js', __FILE__ ), array( 'jquery' ), QTX_VERSION );
     wp_enqueue_script( 'qtx_admin_notices' );
 }
 

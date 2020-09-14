@@ -5,8 +5,8 @@
   "main": "admin/js/src/index.js",
   "private": true,
   "scripts": {
-    "build": "babel admin/js/src -d admin/js/lib --minified --verbose",
-    "dev": "babel admin/js/src -d admin/js/lib --verbose",
+    "build": "babel admin/js/src -d dist --minified --verbose",
+    "dev": "babel admin/js/src -d dist --verbose",
     "watch": "babel admin/js/src -d admin/js/lib --watch --verbose",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
