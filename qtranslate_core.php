@@ -25,8 +25,8 @@ function qtranxf_init_language() {
     if ( isset( $_COOKIE[ QTX_COOKIE_NAME_ADMIN ] ) ) {
         $url_info['cookie_lang_admin'] = $_COOKIE[ QTX_COOKIE_NAME_ADMIN ];
     }
-    // TODO rename 'cookie_enabled', it is ambiguous with 'disable_client_cookies'
-    $url_info['cookie_enabled'] = isset ( $url_info['cookie_lang_front'] ) || isset( $url_info['cookie_lang_admin'] );
+    // TODO this field should be removed, to be avoided as much as possible!
+    $url_info['cookie_front_or_admin_found'] = isset ( $url_info['cookie_lang_front'] ) || isset( $url_info['cookie_lang_admin'] );
 
     if ( WP_DEBUG ) {
         $url_info['pagenow']        = $pagenow;
@@ -161,7 +161,7 @@ function qtranxf_detect_language( &$url_info ) {
     // TODO check if we shouldn't generalize the referrer parsing to all cases, do we need all these limitations?
     $parse_referrer = qtranxf_is_rest_request_expected() ||
                       ( ( ! $lang || ! isset( $url_info['doing_front_end'] ) ) &&
-                        ( wp_doing_ajax() || ! $url_info['cookie_enabled'] ) );
+                        ( wp_doing_ajax() || ! $url_info['cookie_front_or_admin_found'] ) );
 
     // parse language and front info from HTTP_REFERER
     if ( isset( $_SERVER['HTTP_REFERER'] ) && $parse_referrer ) {
@@ -967,7 +967,7 @@ function qtranxf_url_set_language( $urlinfo, $lang, $showLanguage ) {
 
     // see if cookies are activated
     if ( ! $showLanguage//there still is no language information in the converted URL
-         && ! $q_config['url_info']['cookie_enabled']// there will be no way to take language from the cookie
+         && ! $q_config['url_info']['cookie_front_or_admin_found']// there will be no way to take language from the cookie
          && $q_config['language'] != $q_config['default_language']//we need to be able to get language other than default
          && empty( $q_config['url_info']['lang_url'] )//we will not be able to get language from referrer path
          && empty( $q_config['url_info']['lang_query_get'] )//we will not be able to get language from referrer query
