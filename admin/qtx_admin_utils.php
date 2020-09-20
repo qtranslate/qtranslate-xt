@@ -529,7 +529,12 @@ function qtranxf_admin_debug_info() {
     $info = array();
     if ( current_user_can( 'manage_options' ) ) {
         global $q_config, $wp_version;
+
         $info['configuration'] = $q_config;
+        // clear config information, too verbose and generally irrelevant
+        unset($info['configuration']['front_config']);
+        unset($info['configuration']['admin_config']);
+        unset($info['configuration']['i18n-cache']);
 
         $plugins         = get_option( 'active_plugins' );
         $plugin_versions = array();
