@@ -16,16 +16,17 @@ function qtranxf_init_language() {
         $q_config['url_info'] = array();
     }
 
-    $url_info                   = &$q_config['url_info'];
-    $url_info['cookie_enabled'] = isset( $_COOKIE[ QTX_COOKIE_NAME_FRONT ] ) || isset( $_COOKIE[ QTX_COOKIE_NAME_ADMIN ] );
-    if ( $url_info['cookie_enabled'] ) {
-        if ( isset( $_COOKIE[ QTX_COOKIE_NAME_FRONT ] ) ) {
-            $url_info['cookie_lang_front'] = $_COOKIE[ QTX_COOKIE_NAME_FRONT ];
-        }
-        if ( isset( $_COOKIE[ QTX_COOKIE_NAME_ADMIN ] ) ) {
-            $url_info['cookie_lang_admin'] = $_COOKIE[ QTX_COOKIE_NAME_ADMIN ];
-        }
+    $url_info = &$q_config['url_info'];
+
+    // TODO clarify url_info fields that are exposed in API
+    if ( ! $q_config['disable_client_cookies'] && isset( $_COOKIE[ QTX_COOKIE_NAME_FRONT ] ) ) {
+        $url_info['cookie_lang_front'] = $_COOKIE[ QTX_COOKIE_NAME_FRONT ];
     }
+    if ( isset( $_COOKIE[ QTX_COOKIE_NAME_ADMIN ] ) ) {
+        $url_info['cookie_lang_admin'] = $_COOKIE[ QTX_COOKIE_NAME_ADMIN ];
+    }
+    // TODO rename 'cookie_enabled', it is ambiguous with 'disable_client_cookies'
+    $url_info['cookie_enabled'] = isset ( $url_info['cookie_lang_front'] ) || isset( $url_info['cookie_lang_admin'] );
 
     if ( WP_DEBUG ) {
         $url_info['pagenow']        = $pagenow;
@@ -422,7 +423,7 @@ function qtranxf_detect_language_front( &$url_info ) {
     global $q_config;
 
     $lang = null;
-    if ( isset( $_COOKIE[ QTX_COOKIE_NAME_FRONT ] ) ) {
+    if ( ! $q_config['disable_client_cookies'] && isset( $_COOKIE[ QTX_COOKIE_NAME_FRONT ] ) ) {
         $cs                            = null;
         $lang                          = qtranxf_resolveLangCase( $_COOKIE[ QTX_COOKIE_NAME_FRONT ], $cs );
         $url_info['lang_cookie_front'] = $lang;

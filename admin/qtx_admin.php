@@ -817,7 +817,8 @@ function qtranxf_admin_notices_config() {
 function qtranxf_admin_home_url( $url, $path, $orig_scheme, $blog_id ) {
     global $q_config;
 
-    if ( isset( $_COOKIE[ QTX_COOKIE_NAME_FRONT ] ) ) {
+    // TODO clarify why don't we use QTX_COOKIE_NAME_ADMIN instead?
+    if ( ! $q_config['disable_client_cookies'] && isset( $_COOKIE[ QTX_COOKIE_NAME_FRONT ] ) ) {
         $lang = $_COOKIE[ QTX_COOKIE_NAME_FRONT ];
     } else {
         $lang = $q_config['default_language'];
