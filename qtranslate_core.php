@@ -429,8 +429,7 @@ function qtranxf_detect_language_front( &$url_info ) {
     }
 
     if ( ! $lang && $q_config['detect_browser_language']
-         && ( ! isset( $_SERVER['HTTP_REFERER'] ) || strpos( $_SERVER['HTTP_REFERER'], $url_info['host'] ) === false )//external referrer or no referrer
-         && ( empty( $url_info['wp-path'] ) || $url_info['wp-path'] == '/' ) // home page is requested
+         && ( ! isset( $_SERVER['HTTP_REFERER'] ) || strpos( $_SERVER['HTTP_REFERER'], $url_info['host'] ) === false ) // no or external referrer
     ) {
         $lang                     = qtranxf_http_negotiate_language();
         $url_info['lang_browser'] = $lang;
