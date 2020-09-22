@@ -1,7 +1,7 @@
 (function () {
 
     var windowLoadCompleted = false;
-    jQuery(window).load(function () {
+    jQuery(window).on('load', function () {
 
         // Prevent from being triggered again
         if (windowLoadCompleted) {
