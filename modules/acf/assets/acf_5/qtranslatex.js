@@ -1,21 +1,10 @@
-(function () {
-
-    var windowLoadCompleted = false;
-    jQuery(window).on('load', function () {
-
-        // Prevent from being triggered again
-        if (windowLoadCompleted) {
-            return;
-        }
-
-        windowLoadCompleted = true;
-
+(function ($) {
+    $(window).on('load', function () {
         // Only proceed if qTranslate is loaded
         if (typeof qTranslateConfig != 'object' || typeof qTranslateConfig.qtx != 'object') {
             return;
         }
 
-        // Enable the language switching buttons
         qTranslateConfig.qtx.enableLanguageSwitchingButtons('block');
 
         // Ensure that translation of standard field types is enabled
@@ -31,11 +20,11 @@
         };
 
         // Remove content hooks from ACF Fields
-        jQuery('.acf-postbox .acf-field').find('.qtranxs-translatable').each(function () {
+        $('.acf-postbox .acf-field').find('.qtranxs-translatable').each(function () {
             qTranslateConfig.qtx.removeContentHook(this);
         });
 
-        var post_type = jQuery('#post_type').val();
+        var post_type = $('#post_type').val();
 
         // Whitelist fields for translation
         function isTranslatableField(field) {
@@ -49,12 +38,12 @@
         }
 
         // Setup field types
-        jQuery.each(field_types, function (field_type, selector) {
+        $.each(field_types, function (field_type, selector) {
 
             // Add content hooks for existing fields
             acf.get_fields({type: field_type}).each(function () {
-                var form = jQuery(this).closest('form').get(0);
-                var field = jQuery(this).find(selector).get(0);
+                var form = $(this).closest('form').get(0);
+                var field = $(this).find(selector).get(0);
                 if (!isTranslatableField(field)) return;
                 qTranslateConfig.qtx.addContentHookC(field, form);
             });
@@ -66,7 +55,7 @@
                 if (!isTranslatableField(field)) return;
                 qTranslateConfig.qtx.addContentHookC(field, form);
 
-                if (jQuery(field).hasClass('wp-editor-area')) {
+                if ($(field).hasClass('wp-editor-area')) {
                     //qTranslateConfig.qtx.addContentHooksTinyMCE();
 
                     // We must manually trigger load event so that the
@@ -104,5 +93,4 @@
             repeaterFieldRemove.call(this, $el);
         }
     });
-
-})();
+})(jQuery);

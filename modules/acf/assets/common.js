@@ -1,5 +1,4 @@
-jQuery(function ($) {
-
+(function ($) {
     var $body = $('body');
 
     /**
@@ -70,5 +69,4 @@ jQuery(function ($) {
             $mlFields.find('[data-language="' + language + '"]').addClass('current-language');
         }
     });
-
-});
+})(jQuery);
