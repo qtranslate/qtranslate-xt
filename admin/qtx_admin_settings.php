@@ -105,7 +105,7 @@ class QTX_Admin_Settings {
                 <div class="form-field">
                     <label for="language_code"><?php _e( 'Language Code', 'qtranslate' ) ?><br/></label>
                     <input name="language_code" id="language_code" type="text" value="<?php echo $language_code; ?>"
-                           size="3" maxlength="3"/>
+                           size="12" maxlength="12"/>
                     <p class="qtranxs-notes"><?php
                         printf( __( 'Language %sISO 639 code%s, two-letter (ISO 639-1) or three-letter (ISO 639-2 and 639-3), lower case. (Examples: en, fr, zh, nds)', 'qtranslate' ), '<a href="https://en.wikipedia.org/wiki/ISO_639">', '</a>' );
                         echo '<br/>';
