@@ -244,42 +244,33 @@ function qtranxf_complete_url_info( &$urlinfo ) {
     if ( ! isset( $urlinfo['path'] ) ) {
         $urlinfo['path'] = '';
     }
-    $path          = &$urlinfo['path'];
-    $home_info     = qtranxf_get_home_info();
-    $site_info     = qtranxf_get_site_info();
-    $home_path     = $home_info['path'];
-    $site_path     = $site_info['path'];
-    $home_path_len = strlen( $home_path );
-    $site_path_len = strlen( $site_path );
+    $path      = $urlinfo['path'];
+    $home_info = qtranxf_get_home_info();
+    $site_info = qtranxf_get_site_info();
+    $home_path = $home_info['path'];
+    $site_path = $site_info['path'];
 
-    if ( $home_path_len > $site_path_len ) {
-        if ( qtranxf_startsWith( $path, $home_path ) ) {
-            $urlinfo['path-base']       = $home_path;
-            $urlinfo['doing_front_end'] = true;
-        } elseif ( qtranxf_startsWith( $path, $site_path ) ) {
-            $urlinfo['path-base']       = $site_path;
-            $urlinfo['doing_front_end'] = false;
-        }
-    } elseif ( $home_path_len < $site_path_len ) {
-        if ( qtranxf_startsWith( $path, $site_path ) ) {
-            $urlinfo['path-base']       = $site_path;
-            $urlinfo['doing_front_end'] = false;
-        } elseif ( qtranxf_startsWith( $path, $home_path ) ) {
-            $urlinfo['path-base']       = $home_path;
-            $urlinfo['doing_front_end'] = true;
-        }
-    } elseif ( $home_path != $site_path ) {
-        if ( qtranxf_startsWith( $path, $home_path ) ) {
-            $urlinfo['path-base']       = $home_path;
-            $urlinfo['doing_front_end'] = true;
-        } elseif ( qtranxf_startsWith( $path, $site_path ) ) {
-            $urlinfo['path-base']       = $site_path;
-            $urlinfo['doing_front_end'] = false;
-        }
-    } else {
-        // home_path == site_path
+    if ( $home_path === $site_path ) {
         if ( qtranxf_startsWith( $path, $home_path ) ) {
             $urlinfo['path-base'] = $home_path;
+        }
+    } else {
+        if ( strlen( $home_path ) < strlen( $site_path ) ) {
+            if ( qtranxf_startsWith( $path, $site_path ) ) {
+                $urlinfo['path-base']       = $site_path;
+                $urlinfo['doing_front_end'] = false;
+            } elseif ( qtranxf_startsWith( $path, $home_path ) ) {
+                $urlinfo['path-base']       = $home_path;
+                $urlinfo['doing_front_end'] = true;
+            }
+        } else {
+            if ( qtranxf_startsWith( $path, $home_path ) ) {
+                $urlinfo['path-base']       = $home_path;
+                $urlinfo['doing_front_end'] = true;
+            } elseif ( qtranxf_startsWith( $path, $site_path ) ) {
+                $urlinfo['path-base']       = $site_path;
+                $urlinfo['doing_front_end'] = false;
+            }
         }
     }
 }
