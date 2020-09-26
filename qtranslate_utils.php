@@ -240,6 +240,12 @@ function qtranxf_get_url_info( $url ) {
     return $urlinfo;
 }
 
+/**
+ * Complete urlinfo with 'path-base' according to home and site info.
+ * If they differ, 'doing_front_end' might be set.
+ *
+ * @param array $urlinfo
+ */
 function qtranxf_complete_url_info( &$urlinfo ) {
     if ( ! isset( $urlinfo['path'] ) ) {
         $urlinfo['path'] = '';
@@ -276,6 +282,11 @@ function qtranxf_complete_url_info( &$urlinfo ) {
 }
 
 /**
+ * Complete urlinfo with 'wp-path'.
+ * If 'wp-path' is not set, this means url does not belong to this WP installation.
+ *
+ * @param array $urlinfo
+ *
  * @since 3.2.8
  */
 function qtranxf_complete_url_info_path( &$urlinfo ) {
@@ -289,7 +300,6 @@ function qtranxf_complete_url_info_path( &$urlinfo ) {
             }
         }
     }
-    // 'wp-path' not set means url does not belong to this WP installation
 }
 
 /**
