@@ -187,9 +187,6 @@ function qtranxf_copy_url_info( $urlinfo ) {
     if ( isset( $urlinfo['path-base'] ) ) {
         $copy['path-base'] = $urlinfo['path-base'];
     }
-    if ( isset( $urlinfo['path-base-length'] ) ) {
-        $copy['path-base-length'] = $urlinfo['path-base-length'];
-    }
     if ( isset( $urlinfo['wp-path'] ) ) {
         $copy['wp-path'] = $urlinfo['wp-path'];
     }
@@ -208,11 +205,8 @@ function qtranxf_copy_url_info( $urlinfo ) {
 
 function qtranxf_get_address_info( $url ) {
     $info = qtranxf_parseURL( $url );
-    if ( isset( $info['path'] ) ) {
-        $info['path-length'] = strlen( $info['path'] );
-    } else {
-        $info['path']        = '';
-        $info['path-length'] = 0;
+    if ( ! isset( $info['path'] ) ) {
+        $info['path'] = '';
     }
 
     return $info;
@@ -246,57 +240,53 @@ function qtranxf_get_url_info( $url ) {
     return $urlinfo;
 }
 
+/**
+ * Complete urlinfo with 'path-base' according to home and site info.
+ * If they differ, 'doing_front_end' might be set.
+ *
+ * @param array $urlinfo
+ */
 function qtranxf_complete_url_info( &$urlinfo ) {
     if ( ! isset( $urlinfo['path'] ) ) {
         $urlinfo['path'] = '';
     }
-    $path          = &$urlinfo['path'];
-    $home_info     = qtranxf_get_home_info();
-    $site_info     = qtranxf_get_site_info();
-    $home_path     = $home_info['path'];
-    $site_path     = $site_info['path'];
-    $home_path_len = $home_info['path-length'];
-    $site_path_len = $site_info['path-length'];
-    if ( $home_path_len > $site_path_len ) {
+    $path      = $urlinfo['path'];
+    $home_info = qtranxf_get_home_info();
+    $site_info = qtranxf_get_site_info();
+    $home_path = $home_info['path'];
+    $site_path = $site_info['path'];
+
+    if ( $home_path === $site_path ) {
         if ( qtranxf_startsWith( $path, $home_path ) ) {
-            $urlinfo['path-base']        = $home_path;
-            $urlinfo['path-base-length'] = $home_path_len;
-            $urlinfo['doing_front_end']  = true;
-        } elseif ( qtranxf_startsWith( $path, $site_path ) ) {
-            $urlinfo['path-base']        = $site_path;
-            $urlinfo['path-base-length'] = $site_path_len;
-            $urlinfo['doing_front_end']  = false;
-        }
-    } elseif ( $home_path_len < $site_path_len ) {
-        if ( qtranxf_startsWith( $path, $site_path ) ) {
-            $urlinfo['path-base']        = $site_path;
-            $urlinfo['path-base-length'] = $site_path_len;
-            $urlinfo['doing_front_end']  = false;
-        } elseif ( qtranxf_startsWith( $path, $home_path ) ) {
-            $urlinfo['path-base']        = $home_path;
-            $urlinfo['path-base-length'] = $home_path_len;
-            $urlinfo['doing_front_end']  = true;
-        }
-    } elseif ( $home_path != $site_path ) {
-        if ( qtranxf_startsWith( $path, $home_path ) ) {
-            $urlinfo['path-base']        = $home_path;
-            $urlinfo['path-base-length'] = $home_path_len;
-            $urlinfo['doing_front_end']  = true;
-        } elseif ( qtranxf_startsWith( $path, $site_path ) ) {
-            $urlinfo['path-base']        = $site_path;
-            $urlinfo['path-base-length'] = $site_path_len;
-            $urlinfo['doing_front_end']  = false;
+            $urlinfo['path-base'] = $home_path;
         }
     } else {
-        // home_path == site_path
-        if ( qtranxf_startsWith( $path, $home_path ) ) {
-            $urlinfo['path-base']        = $home_path;
-            $urlinfo['path-base-length'] = $home_path_len;
+        if ( strlen( $home_path ) < strlen( $site_path ) ) {
+            if ( qtranxf_startsWith( $path, $site_path ) ) {
+                $urlinfo['path-base']       = $site_path;
+                $urlinfo['doing_front_end'] = false;
+            } elseif ( qtranxf_startsWith( $path, $home_path ) ) {
+                $urlinfo['path-base']       = $home_path;
+                $urlinfo['doing_front_end'] = true;
+            }
+        } else {
+            if ( qtranxf_startsWith( $path, $home_path ) ) {
+                $urlinfo['path-base']       = $home_path;
+                $urlinfo['doing_front_end'] = true;
+            } elseif ( qtranxf_startsWith( $path, $site_path ) ) {
+                $urlinfo['path-base']       = $site_path;
+                $urlinfo['doing_front_end'] = false;
+            }
         }
     }
 }
 
 /**
+ * Complete urlinfo with 'wp-path'.
+ * If 'wp-path' is not set, this means url does not belong to this WP installation.
+ *
+ * @param array $urlinfo
+ *
  * @since 3.2.8
  */
 function qtranxf_complete_url_info_path( &$urlinfo ) {
@@ -304,16 +294,12 @@ function qtranxf_complete_url_info_path( &$urlinfo ) {
         if ( empty( $urlinfo['path-base'] ) ) {
             $urlinfo['wp-path'] = $urlinfo['path'];
         } elseif ( ! empty( $urlinfo['path'] ) && qtranxf_startsWith( $urlinfo['path'], $urlinfo['path-base'] ) ) {
-            if ( isset( $urlinfo['path'][ $urlinfo['path-base-length'] ] ) ) {
-                if ( $urlinfo['path'][ $urlinfo['path-base-length'] ] == '/' ) {
-                    $urlinfo['wp-path'] = substr( $urlinfo['path'], $urlinfo['path-base-length'] );
-                }
-            } else {
-                $urlinfo['wp-path'] = '';
+            $base_length = strlen( $urlinfo['path-base'] );
+            if ( $urlinfo['path'][ $base_length ] === '/' ) {
+                $urlinfo['wp-path'] = substr( $urlinfo['path'], $base_length );
             }
         }
     }
-    // 'wp-path' not set means url does not belong to this WP installation
 }
 
 /**

@@ -141,9 +141,8 @@ function qtranxf_detect_language( &$url_info ) {
     global $q_config;
 
     if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
-        $siteinfo                     = qtranxf_get_site_info();
-        $url_info['path-base']        = $siteinfo['path'];
-        $url_info['path-base-length'] = $siteinfo['path-length'];
+        $siteinfo              = qtranxf_get_site_info();
+        $url_info['path-base'] = $siteinfo['path'];
     } else {
         qtranxf_complete_url_info( $url_info );
         if ( ! isset( $url_info['path-base'] ) ) {
@@ -246,7 +245,6 @@ function qtranxf_detect_language( &$url_info ) {
  * - $url_info['path']
  * - $url_info['query']
  * - $url_info['path-base']
- * - $url_info['path-base-length']
  *
  * @param array $url_info
  * @param bool $link true when url_info concerns internal referrer (HTTP_REFERER)
