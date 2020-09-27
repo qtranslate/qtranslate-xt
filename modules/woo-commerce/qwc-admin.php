@@ -47,8 +47,7 @@ qwc_add_filters_admin();
 
 add_action( 'admin_enqueue_scripts', 'qwc_add_admin_styles' );
 function qwc_add_admin_styles() {
-        wp_register_style( 'qwc_qtranslate_admin', plugins_url( '/assets/qwc-admin.css', __FILE__ ), array(), QTX_VERSION);
-        wp_enqueue_style( 'qwc_qtranslate_admin', plugins_url( '/assets/qwc-admin.css', __FILE__ ), array(), QTX_VERSION);
+    wp_enqueue_style( 'qwc_qtranslate_admin', plugins_url( '/qwc-admin.css', __FILE__ ), array(), QTX_VERSION );
 }
 
 add_filter( 'qtranslate_load_admin_page_config', 'qwc_add_admin_page_config' );
@@ -86,7 +85,7 @@ function qwc_add_admin_page_config( $page_configs ) {
     $fields['display_meta']             = array( 'jquery' => '.display_meta', 'encode' => 'display' );
     $fields['select-option']            = array( 'jquery' => 'select option', 'encode' => 'display' );
 
-    $page_configs[]              = array(
+    $page_configs[] = array(
         'pages'   => array( 'edit.php' => 'post_type=product&page=product_attributes' ),
         'anchors' => array( 'col-container' ),
         'forms'   => array(
