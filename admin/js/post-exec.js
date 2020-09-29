@@ -96,7 +96,7 @@
         var field_title = $('#title');
         var title_label = $('#title-prompt-text');
         var hide_title_prompt_text = function (lang) {
-            var value = field_title.attr('value');
+            var value = field_title.val();
             if (value) {
                 title_label.addClass('screen-reader-text');
             } else {
