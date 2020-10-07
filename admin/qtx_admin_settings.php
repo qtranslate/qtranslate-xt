@@ -107,9 +107,9 @@ class QTX_Admin_Settings {
                     <input name="language_code" id="language_code" type="text" value="<?php echo $language_code; ?>"
                            size="3" maxlength="3"/>
                     <p class="qtranxs-notes"><?php
-                        printf( _( 'Language %sISO 639 code%s, two-letter (ISO 639-1) or three-letter (ISO 639-2 and 639-3), lower case. (Examples: en, fr, zh, nds)', 'qtranslate' ), '<a href="https://en.wikipedia.org/wiki/ISO_639">', '</a>' );
+                        printf( __( 'Language %sISO 639 code%s, two-letter (ISO 639-1) or three-letter (ISO 639-2 and 639-3), lower case. (Examples: en, fr, zh, nds)', 'qtranslate' ), '<a href="https://en.wikipedia.org/wiki/ISO_639">', '</a>' );
                         echo '<br/>';
-                        echo _( 'The language code is used in language tags and in URLs. The code may be arbitrary chosen by site owner, although it is preferable to use already commonly accepted code if available. Once a language code is created and entries for this language are made, it is difficult to change it, please make a careful decision.', 'qtranslate' )
+                        echo __( 'The language code is used in language tags and in URLs. The code may be arbitrary chosen by site owner, although it is preferable to use already commonly accepted code if available. Once a language code is created and entries for this language are made, it is difficult to change it, please make a careful decision.', 'qtranslate' )
                         ?></p>
                 </div>
                 <div class="form-field">
