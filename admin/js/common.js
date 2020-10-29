@@ -649,7 +649,7 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 
         var updateTinyMCE = function (h) {
             text = h.contentField.value;
-            if (h.wpautop && window.switchEditors) {
+            if (1) {
                 text = window.switchEditors.wpautop(text);
             }
             h.mce.setContent(text, {format: 'html'});
