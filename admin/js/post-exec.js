@@ -7,14 +7,15 @@
         var qtx = qTranslateConfig.js.get_qtx();
         var convertURL = function (url, lang) {
             switch (qTranslateConfig.url_mode.toString()) {
-                case '1':
+                // TODO define proper constants
+                case '1':   // QTX_URL_QUERY
                     if (url.search) {
                         url.search += '&lang=' + lang;
                     } else {
                         url.search = '?lang=' + lang;
                     }
                     break;
-                case '2':
+                case '2': // QTX_URL_PATH
                     var homepath = qTranslateConfig.home_url_path;
                     var p = url.pathname;
                     if (p[0] !== '/')
@@ -23,10 +24,10 @@
                     if (i >= 0)
                         url.pathname = qTranslateConfig.homeinfo_path + lang + p.substring(i + homepath.length - 1);
                     break;
-                case '3':
+                case '3': // QTX_URL_DOMAIN
                     url.host = lang + '.' + url.host;
                     break;
-                case '4':
+                case '4': // QTX_URL_DOMAINS
                     url.host = qTranslateConfig.domains[lang];
                     break;
             }
@@ -125,12 +126,10 @@
 
         // language menu bar handler
         for (var lang in qtx.getLanguages()) {
-            console.log('handler', lang);
             $('#wp-admin-bar-' + lang + ' a').on('click', function (e) {
                 e.preventDefault();
                 var params = parseQuery(window.location.search);
                 var lang = $(this).attr('rel');
-                console.log('Click lang', lang, params, window.location);
                 params['lang'] = lang;
                 window.location = window.location.origin + window.location.pathname + '?' + $.param(params);
             })
