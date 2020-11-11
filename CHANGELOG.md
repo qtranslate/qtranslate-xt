@@ -1,3 +1,21 @@
+### 3.9.1
+Core
+* Fix warning in admin language tab (#900, #916)
+* Fix display title placeholder for new post (#897)
+* Fix language negociation for any path (#875)
+* Fix 'disable_client_cookies' option ignored (#886)
+* Refactoring
+  * Disambiguate 'cookie_enabled' internal field -> 'cookie_front_or_admin_found'
+  * Refactor url_info without base-path-length (#893) 
+  * Truncate front/admin config from debug info
+
+ACF
+* Fix deprecated JS code for ACF (#890)
+* Uniformize jQuery wrapper in ACF
+
+WooCommerce
+* Fix CSS path for products (#894)
+
 ### 3.9.0
 Core
 * New feature: extend language code to 3-letter (ISO 639-2 and ISO 639-3), lower case (#836, #668)
