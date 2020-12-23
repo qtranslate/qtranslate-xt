@@ -295,8 +295,12 @@ function qtranxf_complete_url_info_path( &$urlinfo ) {
             $urlinfo['wp-path'] = $urlinfo['path'];
         } elseif ( ! empty( $urlinfo['path'] ) && qtranxf_startsWith( $urlinfo['path'], $urlinfo['path-base'] ) ) {
             $base_length = strlen( $urlinfo['path-base'] );
-            if ( $urlinfo['path'][ $base_length ] === '/' ) {
-                $urlinfo['wp-path'] = substr( $urlinfo['path'], $base_length );
+            if ( isset( $urlinfo['path'][ $base_length ] ) ) {
+                if ( $urlinfo['path'][ $base_length ] === '/' ) {
+                    $urlinfo['wp-path'] = substr( $urlinfo['path'], $base_length );
+                }
+            } else {
+                $urlinfo['wp-path'] = '';
             }
         }
     }
