@@ -68,6 +68,11 @@ class QTX_Modules_Handler {
                 'plugin' => 'jetpack/jetpack.php'
             ),
             array(
+                'id'     => 'google-site-kit',
+                'name'   => 'Google Site Kit',
+                'plugin' => 'google-site-kit/google-site-kit.php'
+            ),
+            array(
                 'id'           => 'gravity-forms',
                 'name'         => 'Gravity Forms',
                 'plugin'       => 'gravityforms/gravityforms.php',
