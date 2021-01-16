@@ -89,17 +89,15 @@ function qwc_add_admin_page_config( $page_configs ) {
         'pages'   => array( 'edit.php' => 'post_type=product&page=product_attributes' ),
         'anchors' => array( 'col-container' ),
         'forms'   => array(
-            'all' => array(
-                array(
-                    'form'   => array( 'id' => 'mainform' ),
-                    'fields' => array(
-                        array( 'id' => 'attribute_label' ),
-                        array( 'jquery' => 'td a', 'container_id' => 'col-right', 'encode' => 'display' ),
-                        array(
-                            'jquery'       => 'td.attribute-terms',
-                            'container_id' => 'col-right',
-                            'encode'       => 'display'
-                        )
+            array(
+                'form'   => array( 'jquery' => 'form[action^="edit.php"]' ),
+                'fields' => array(
+                    array( 'id' => 'attribute_label' ),
+                    array( 'jquery' => 'td a', 'container_id' => 'col-right', 'encode' => 'display' ),
+                    array(
+                        'jquery'       => 'td.attribute-terms',
+                        'container_id' => 'col-right',
+                        'encode'       => 'display'
                     )
                 )
             )
