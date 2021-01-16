@@ -1,3 +1,18 @@
+### 3.9.2
+Core
+* Fix unitialized string offset in urlinfo (#928, #939, #940)
+
+Google Site Kit
+* Add support for Google Site Kit (#934)
+
+WooCommerce
+* Fix config edit attributes (#915)
+* Fix disable translations emails (#652)
+* Fix additional content not translatable (#943)
+
+AIOSEO
+* Fix AIOSEO PRO config for terms (#845)
+
 ### 3.9.1
 Core
 * Fix warning in admin language tab (#900, #916)
