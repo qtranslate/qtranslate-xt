@@ -215,6 +215,7 @@ function qwc_add_admin_page_config( $page_configs ) {
                 'fields' => array(
                     array( 'jquery' => 'input.input-text[type=text][name^=woocommerce_][name$=_subject]' ),
                     array( 'jquery' => 'input.input-text[type=text][name^=woocommerce_][name$=_heading]' ),
+                    array( 'jquery' => 'textarea[type=textarea][name^=woocommerce_][name$=_additional_content]' ),
                     array( 'id' => 'woocommerce_email_footer_text' )
                 )
             )
