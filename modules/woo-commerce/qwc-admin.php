@@ -213,7 +213,8 @@ function qwc_add_admin_page_config( $page_configs ) {
             array(
                 'form'   => array( 'id' => 'mainform' ),
                 'fields' => array(
-                    array( 'jquery' => 'input.input-text[type=text][name^=woocommerce_]' ),
+                    array( 'jquery' => 'input.input-text[type=text][name^=woocommerce_][name$=_subject]' ),
+                    array( 'jquery' => 'input.input-text[type=text][name^=woocommerce_][name$=_heading]' ),
                     array( 'id' => 'woocommerce_email_footer_text' )
                 )
             )
