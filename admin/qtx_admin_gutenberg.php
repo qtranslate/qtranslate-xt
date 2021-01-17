@@ -160,9 +160,9 @@ class QTX_Admin_Gutenberg {
         $script_file = 'dist/editor-gutenberg.js';
         wp_register_script(
             'qtx-gutenberg',
-            plugins_url( $script_file, __FILE__ ),
+            plugins_url( $script_file, QTRANSLATE_FILE ),
             array(),
-            filemtime( plugin_dir_path( __FILE__ ) . $script_file ),
+            filemtime( QTRANSLATE_DIR . '/' . $script_file ),
             true
         );
         wp_enqueue_script( 'qtx-gutenberg' );

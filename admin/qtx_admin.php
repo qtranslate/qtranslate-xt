@@ -487,10 +487,10 @@ function qtranxf_add_admin_footer_js() {
 }
 
 function qtranxf_add_admin_head_js( $enqueue_script = true ) {
-    $js_options = 'js/options.js';
-    $version    = filemtime( __DIR__ . '/' . $js_options );
+    $js_options = 'dist/options.js';
+    $version    = filemtime( QTRANSLATE_DIR . '/' . $js_options );
     if ( $enqueue_script ) {
-        wp_enqueue_script( 'qtranslate-admin-options', plugins_url( $js_options, __FILE__ ), array(), $version );
+        wp_enqueue_script( 'qtranslate-admin-options', plugins_url( $js_options, QTRANSLATE_FILE ), array(), $version );
     } else {
         echo '<script type="text/javascript">' . PHP_EOL . '// <![CDATA[' . PHP_EOL;
         $plugin_dir_path = plugin_dir_path( __FILE__ );
