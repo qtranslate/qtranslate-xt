@@ -27,6 +27,10 @@
     display: table-cell;
 }
 
+.qtranxs-language-list .disabled {
+    opacity: 40%;
+}
+
 #qtranxs-enabled-languages td {
     padding: 0 5px 0 0;
     display: table-cell;
