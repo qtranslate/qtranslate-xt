@@ -5,7 +5,7 @@
 */
 (function ($) {
     $(function () {
-        if (!window.YoastSEO.app)
+        if (!window.YoastSEO || !window.YoastSEO.app)
             return;
 
         var qtx = qTranslateConfig.js.get_qtx();
