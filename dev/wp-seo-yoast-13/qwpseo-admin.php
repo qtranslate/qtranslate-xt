@@ -43,7 +43,7 @@ function qwpseo_add_admin_page_config( $page_configs ) {
             break;
         case 'post-new.php':
         case 'post.php':
-            $deps[] = 'yoast-seo-post-scraper';
+            $deps[] = 'yoast-seo-post-edit-classic';
             break;
         default:
             $deps = array();
@@ -136,7 +136,7 @@ function qwpseo_script_deps() {
             break;
         case 'post.php':
         case 'post-new.php':
-            $handles = array( 'post-scraper' => 'qtranslate-admin-common' );
+            $handles = array( 'post-edit-classic' => 'qtranslate-admin-common' );
             break;
         default:
             return;
