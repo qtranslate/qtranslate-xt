@@ -27,6 +27,7 @@ function qwc_add_filters_front() {
         'woocommerce_order_shipping_to_display'             => 20,
         'woocommerce_order_subtotal_to_display'             => 20,
         'woocommerce_page_title'                            => 20,
+        'woocommerce_product_get_name'                      => 20,
         'woocommerce_product_title'                         => 20,
         'woocommerce_rate_label'                            => 20,
         'woocommerce_short_description'                     => 20,
