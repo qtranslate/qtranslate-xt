@@ -174,6 +174,20 @@ function qwc_add_admin_page_config( $page_configs ) {
         )
     );
 
+    // Support for WooCommerce PayPal Checkout extension
+    $page_configs[] = array(
+        'pages' => array( 'admin.php' => 'page=wc-settings&tab=checkout&section=ppec_paypal' ),
+        'forms' => array(
+            array(
+                'form'   => array( 'id' => 'mainform' ),
+                'fields' => array(
+                    array( 'id' => 'woocommerce_ppec_paypal_title' ),
+                    array( 'id' => 'woocommerce_ppec_paypal_description' ),
+                )
+            )
+        )
+    );
+
     $page_configs[] = array(
         'pages' => array( 'admin.php' => 'page=wc-settings&tab=account' ),
         'forms' => array(
