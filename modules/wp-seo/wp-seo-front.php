@@ -4,8 +4,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function qtranxf_wpseo_add_filters_front() {
+    # For reference: https://developer.yoast.com/customization/apis/metadata-api/
     $use_filters = array(
-        'wpseo_opengraph_title' => 20,
+        # Generic presenters
+        'wpseo_metadesc'            => 20,
+        'wpseo_title'               => 20,
+        # Twitter presenters
+        'wpseo_twitter_description' => 20,
+        'wpseo_twitter_title'       => 20,
+        # OpenGraph presenters
+        'wpseo_opengraph_desc'      => 20,
+        'wpseo_opengraph_title'     => 20,
     );
 
     foreach ( $use_filters as $name => $priority ) {
@@ -13,5 +22,5 @@ function qtranxf_wpseo_add_filters_front() {
     }
 }
 
-// TODO: trigger this with a proper action - i18_front_config can't be used in modules, here it's too late!
+// TODO: trigger this with a proper hook - i18n_front_config can't be used in modules, here it's too late!
 qtranxf_wpseo_add_filters_front();
