@@ -123,3 +123,17 @@
     border-color: #ddd;
     border-radius: 0;
 }
+
+/*
+* Compatibility with acf-autosize: do not use "display: none", move the non-active elements outside as a workaround
+*/
+.acf-field-qtranslate-wysiwyg .multi-language-field > .acf-editor-wrap:not(.current-language),
+.acf-field-qtranslate-textarea .multi-language-field > textarea:not(.current-language) {
+    position: absolute !important;
+    width: 100% !important;
+    top: 0 !important;
+    left: -10000px !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    display: block !important;
+}
