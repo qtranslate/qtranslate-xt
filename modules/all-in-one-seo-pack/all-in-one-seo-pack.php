@@ -6,8 +6,6 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-define( 'QAIOSEOP_VERSION', '1.0' );
-
 add_filter( 'qtranslate_compatibility', 'qaioseop_qtrans_compatibility' );
 function qaioseop_qtrans_compatibility( $compatibility ) {
     return true;

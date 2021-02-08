@@ -10,8 +10,6 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-define( 'QEME_VERSION', '1.1' );
-
 add_filter( 'qtranslate_compatibility', 'qtranxf_eme_qtrans_compatibility' );
 function qtranxf_eme_qtrans_compatibility( $compatibility ) {
     return true;
