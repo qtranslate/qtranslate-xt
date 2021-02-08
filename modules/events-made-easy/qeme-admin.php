@@ -9,8 +9,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 //	remove_action('admin_head', 'eme_admin_map_script');//for now, not sure if it is needed, but it was breaking pages
 //}
 
-add_filter( 'qtranslate_load_admin_page_config', 'qeme_add_admin_page_config' );
-function qeme_add_admin_page_config( $page_configs ) {
+add_filter( 'qtranslate_load_admin_page_config', 'qtranxf_eme_add_admin_page_config' );
+function qtranxf_eme_add_admin_page_config( $page_configs ) {
     {//admin.php?page=eme-manager
         $page_config = array();
 

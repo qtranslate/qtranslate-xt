@@ -12,15 +12,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 define( 'QEME_VERSION', '1.1' );
 
-add_filter( 'qtranslate_compatibility', 'qeme_qtrans_compatibility' );
-function qeme_qtrans_compatibility( $compatibility ) {
+add_filter( 'qtranslate_compatibility', 'qtranxf_eme_qtrans_compatibility' );
+function qtranxf_eme_qtrans_compatibility( $compatibility ) {
     return true;
 }
 
-function qeme_init_language( $url_info ) {
+function qtranxf_eme_init_language( $url_info ) {
     if ( ! $url_info['doing_front_end'] ) {
         require_once( dirname( __FILE__ ) . "/qeme-admin.php" );
     }
 }
 
-add_action( 'qtranslate_init_language', 'qeme_init_language' );
+add_action( 'qtranslate_init_language', 'qtranxf_eme_init_language' );

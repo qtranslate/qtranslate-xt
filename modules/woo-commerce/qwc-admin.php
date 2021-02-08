@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-function qwc_add_filters_admin() {
+function qtranxf_wc_add_filters_admin() {
     // priority 20 is used because in case other plugins add some untranslated content on normal priority
     // it will still hopefully then get translated.
     $email_ids = array(
@@ -43,15 +43,15 @@ function qwc_add_filters_admin() {
     }
 }
 
-qwc_add_filters_admin();
+qtranxf_wc_add_filters_admin();
 
-add_action( 'admin_enqueue_scripts', 'qwc_add_admin_styles' );
-function qwc_add_admin_styles() {
-    wp_enqueue_style( 'qwc_qtranslate_admin', plugins_url( '/qwc-admin.css', __FILE__ ), array(), QTX_VERSION );
+add_action( 'admin_enqueue_scripts', 'qtranxf_wc_add_admin_styles' );
+function qtranxf_wc_add_admin_styles() {
+    wp_enqueue_style( 'qtranxf_wc_qtranslate_admin', plugins_url( '/qwc-admin.css', __FILE__ ), array(), QTX_VERSION );
 }
 
-add_filter( 'qtranslate_load_admin_page_config', 'qwc_add_admin_page_config' );
-function qwc_add_admin_page_config( $page_configs ) {
+add_filter( 'qtranslate_load_admin_page_config', 'qtranxf_wc_add_admin_page_config' );
+function qtranxf_wc_add_admin_page_config( $page_configs ) {
     // post.php
     // TODO refactor append config
     if ( ! isset( $page_configs['post'] ) ) {
@@ -241,7 +241,7 @@ function qwc_add_admin_page_config( $page_configs ) {
     return $page_configs;
 }
 
-function qwc_email_get_option( $value_translated, $wce /* WC_Email object*/, $value = null, $key = null, $empty_value = null ) {
+function qtranxf_wc_email_get_option( $value_translated, $wce /* WC_Email object*/, $value = null, $key = null, $empty_value = null ) {
     if ( ! $value ) {
         return $value_translated; // so that older WC versions do not get nasty output
     }
@@ -249,7 +249,7 @@ function qwc_email_get_option( $value_translated, $wce /* WC_Email object*/, $va
     return $value;
 }
 
-add_filter( 'woocommerce_email_get_option', 'qwc_email_get_option', 0, 4 );
+add_filter( 'woocommerce_email_get_option', 'qtranxf_wc_email_get_option', 0, 4 );
 
 add_filter( 'woocommerce_variation_option_name', 'qtranxf_term_name_encoded', 5 );
 
@@ -261,7 +261,7 @@ add_filter( 'woocommerce_variation_option_name', 'qtranxf_term_name_encoded', 5 
  *
  * @return string
  */
-function qwc_admin_url_append_language( $url ) {
+function qtranxf_wc_admin_url_append_language( $url ) {
     if ( strpos( $url, 'action=woocommerce_mark_order_status' ) ) {
         $components = parse_url( $url );
         $params     = array();
@@ -279,7 +279,7 @@ function qwc_admin_url_append_language( $url ) {
     return $url;
 }
 
-add_filter( 'admin_url', 'qwc_admin_url_append_language' );
+add_filter( 'admin_url', 'qtranxf_wc_admin_url_append_language' );
 
 /**
  * Append the language to ajax links on the order edit page, so that mails are sent in the language the customer used
@@ -289,7 +289,7 @@ add_filter( 'admin_url', 'qwc_admin_url_append_language' );
  *
  * @return string
  */
-function qwc_admin_url_append_language_edit_page( $url ) {
+function qtranxf_wc_admin_url_append_language_edit_page( $url ) {
     if ( strpos( $url, 'admin-ajax.php' ) === false || ! isset( $_GET['action'] ) || ! isset( $_GET['post'] ) || $_GET['action'] != 'edit' ) {
         return $url;
     }
@@ -313,7 +313,7 @@ function qwc_admin_url_append_language_edit_page( $url ) {
     return $url;
 }
 
-add_filter( 'admin_url', 'qwc_admin_url_append_language_edit_page' );
+add_filter( 'admin_url', 'qtranxf_wc_admin_url_append_language_edit_page' );
 
 /**
  * Option 'woocommerce_email_from_name' needs to be translated for e-mails, and needs to stay untranslated for settings.
@@ -322,7 +322,7 @@ add_filter( 'admin_url', 'qwc_admin_url_append_language_edit_page' );
  *
  * @return array|mixed|string|void
  */
-function qwc_admin_email_option( $val ) {
+function qtranxf_wc_admin_email_option( $val ) {
     global $q_config;
     global $pagenow;
 
@@ -336,7 +336,7 @@ function qwc_admin_email_option( $val ) {
     }
 }
 
-add_filter( 'option_woocommerce_email_from_name', 'qwc_admin_email_option' );
+add_filter( 'option_woocommerce_email_from_name', 'qtranxf_wc_admin_email_option' );
 
 /**
  * This helps to use order's language on re-sent emails from post.php order edit page.
@@ -346,7 +346,7 @@ add_filter( 'option_woocommerce_email_from_name', 'qwc_admin_email_option' );
  *
  * @return array|mixed|string|void
  */
-function qwc_admin_email_translate( $content, $order = null ) {
+function qtranxf_wc_admin_email_translate( $content, $order = null ) {
     global $q_config;
 
     $lang = null;
@@ -360,7 +360,7 @@ function qwc_admin_email_translate( $content, $order = null ) {
     return qtranxf_use( $lang, $content, false, false );
 }
 
-add_filter( 'woocommerce_email_order_items_table', 'qwc_admin_email_translate', 20, 2 );
+add_filter( 'woocommerce_email_order_items_table', 'qtranxf_wc_admin_email_translate', 20, 2 );
 
 /**
  * Called to process action when button 'Save Order' pressed in /wp-admin/post.php?post=xxx&action=edit
@@ -368,7 +368,7 @@ add_filter( 'woocommerce_email_order_items_table', 'qwc_admin_email_translate', 
  *
  * @param $order
  */
-function qwc_admin_before_resend_order_emails( $order ) {
+function qtranxf_wc_admin_before_resend_order_emails( $order ) {
     if ( ! $order || ! isset( $order->id ) ) {
         return;
     }
@@ -382,19 +382,19 @@ function qwc_admin_before_resend_order_emails( $order ) {
     $q_config['language'] = $lang;
 }
 
-add_action( 'woocommerce_before_resend_order_emails', 'qwc_admin_before_resend_order_emails' );
+add_action( 'woocommerce_before_resend_order_emails', 'qtranxf_wc_admin_before_resend_order_emails' );
 
 /**
- * Undo the effect of qwc_admin_before_resend_order_emails
+ * Undo the effect of qtranxf_wc_admin_before_resend_order_emails
  */
-function qwc_admin_after_resend_order_emails( $order ) {
+function qtranxf_wc_admin_after_resend_order_emails( $order ) {
     global $q_config;
     $q_config['language'] = $q_config['url_info']['language'];
 }
 
-add_action( 'woocommerce_after_resend_order_email', 'qwc_admin_after_resend_order_emails' );
+add_action( 'woocommerce_after_resend_order_email', 'qtranxf_wc_admin_after_resend_order_emails' );
 
-function qwc_admin_filters() {
+function qtranxf_wc_admin_filters() {
     global $pagenow;
     switch ( $pagenow ) {
         case 'admin.php':
@@ -413,4 +413,4 @@ function qwc_admin_filters() {
     }
 }
 
-qwc_admin_filters();
+qtranxf_wc_admin_filters();
