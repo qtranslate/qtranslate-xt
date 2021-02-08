@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-function qwc_init_language( $url_info ) {
+function qtranxf_wc_init_language( $url_info ) {
     if ( $url_info['doing_front_end'] ) {
         require_once( dirname( __FILE__ ) . "/qwc-front.php" );
     } else {
@@ -14,7 +14,7 @@ function qwc_init_language( $url_info ) {
     }
 }
 
-add_action( 'qtranslate_init_language', 'qwc_init_language' );
+add_action( 'qtranslate_init_language', 'qtranxf_wc_init_language' );
 
 /**
  * Dealing with mini-cart cache in internal browser storage.
@@ -27,7 +27,7 @@ add_action( 'qtranslate_init_language', 'qwc_init_language' );
  *
  * @return array possibly modified $url_info.
  */
-function qwc_detect_language( $url_info ) {
+function qtranxf_wc_detect_language( $url_info ) {
     if ( isset( $url_info['cookie_lang_front'] ) && $url_info['cookie_lang_front'] != $url_info['language'] ) {
         // language is about to switch
         if ( ! empty( $_GET['wc-ajax'] ) && ! empty( $url_info['doing_front_end'] ) ) {
@@ -41,4 +41,4 @@ function qwc_detect_language( $url_info ) {
     return $url_info;
 }
 
-add_filter( 'qtranslate_detect_language', 'qwc_detect_language', 5 );
+add_filter( 'qtranslate_detect_language', 'qtranxf_wc_detect_language', 5 );
