@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: qTranslate-X 3.4.6.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-09 15:56+0600\n"
-"PO-Revision-Date: 2021-02-09 18:52+0600\n"
+"PO-Revision-Date: 2021-02-09 19:55+0600\n"
 "Last-Translator: Lenin <doctortomorrow@gmail.com>\n"
 "Language-Team: qTranslate Team Translators <nedal.elghamry@gmail.com>\n"
 "Language: bn\n"
@@ -195,23 +195,23 @@ msgstr "ত্রুটি"
 #: ../admin/qtx_admin.php:372
 #, php-format
 msgid "Could not find script file \"%s\" for handle \"%s\"."
-msgstr ""
+msgstr "স্ক্রিপ্ট ফাইল \"%s\" পাওয়া যায়নি \"%s\" হ্যান্ডলের জন্য।"
 
 #: ../admin/qtx_admin.php:422
 msgid "Show multilingual content in "
-msgstr ""
+msgstr "বহুভাষী কনটেন্ট দেখাবে"
 
 #: ../admin/qtx_admin.php:453
 msgid "Fill empty multilingual fields with content from other language"
-msgstr ""
+msgstr "বহুভাষী খালি ফিল্ডগুলো অন্যভাষার থেকে ভরবে"
 
 #: ../admin/qtx_admin.php:455
 msgid "Choose language to copy multilingual content from"
-msgstr ""
+msgstr "বহুভাষী কনটেন্ট যে ভাষা থেকে কপি করা হবে নির্বাচন করুন"
 
 #: ../admin/qtx_admin.php:457
 msgid "Copy from"
-msgstr ""
+msgstr "থেকে কপি"
 
 #: ../admin/qtx_admin.php:650
 msgid "Language Management"
