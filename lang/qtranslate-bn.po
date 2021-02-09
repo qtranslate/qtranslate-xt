@@ -2,14 +2,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: qTranslate-X 3.4.6.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-14 02:27-0600\n"
-"PO-Revision-Date: 2021-02-09 15:56+0600\n"
+"POT-Creation-Date: 2021-02-09 15:56+0600\n"
+"PO-Revision-Date: 2021-02-09 16:56+0600\n"
 "Last-Translator: Lenin <doctortomorrow@gmail.com>\n"
 "Language-Team: qTranslate Team Translators <nedal.elghamry@gmail.com>\n"
+"Language: bn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: bn\n"
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-Basepath: .\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
@@ -17,1701 +17,2350 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPath-1: ..\n"
 
-#: admin/qtx_activation_hook.php:90 admin/qtx_activation_hook.php:104
-#: admin/qtx_activation_hook.php:107 admin/qtx_activation_hook.php:661
-#: admin/qtx_activation_hook.php:664 admin/qtx_activation_hook.php:722
-#: admin/qtx_configuration.php:213 admin/qtx_configuration.php:537
-#: admin/qtx_configuration.php:548 admin/qtx_configuration.php:550
-#: admin/qtx_configuration.php:552
-msgid "Configuration Files"
-msgstr "কনফিগারেশন ফাইলসমূহ"
-
-#: admin/qtx_activation_hook.php:90
+#: ../admin/qtx_activation_hook.php:114
 #, php-format
 msgid "Could not find file \"%s\" listed in option \"%s\"."
 msgstr "ফাইল \"%s\"-টি পাওয়া যায়নি, যা \"%s\" অপশনে উল্লেখ আছে।"
 
-#: admin/qtx_activation_hook.php:90 admin/qtx_activation_hook.php:104
-#: admin/qtx_activation_hook.php:107
-#, php-format
-msgid "Once the problem is fixed, re-save the configuration by pressing button \"%s\" on plugin %ssettings page%s."
-msgstr "সমস্যা সমাধান হলে, কনফিগারেশন আবার সংরক্ষণ করতে \"%s\" চাপুন, %s প্লাগিনের %s সেটিংস পেজে।"
+#: ../admin/qtx_activation_hook.php:114 ../admin/qtx_activation_hook.php:127
+#: ../admin/qtx_activation_hook.php:130 ../admin/qtx_activation_hook.php:846
+#: ../admin/qtx_activation_hook.php:849 ../admin/qtx_admin_settings.php:227
+#: ../admin/qtx_admin_settings.php:742 ../admin/qtx_admin_settings.php:758
+#: ../admin/qtx_admin_settings.php:765 ../admin/qtx_admin_settings.php:769
+msgid "Configuration Files"
+msgstr "কনফিগারেশন ফাইলসমূহ"
 
-#: admin/qtx_activation_hook.php:90
+#: ../admin/qtx_activation_hook.php:114
 msgid "Please, either put file in place or update the option."
 msgstr "দয়া করে ঠিক জায়গায় ফাইলটি রাখুন অথবা অপশন বদলে দিন।"
 
-#: admin/qtx_activation_hook.php:90 admin/qtx_activation_hook.php:104
-#: admin/qtx_activation_hook.php:107 admin/qtx_configuration.php:119
+#: ../admin/qtx_activation_hook.php:114 ../admin/qtx_activation_hook.php:127
+#: ../admin/qtx_activation_hook.php:130
+#, php-format
+msgid ""
+"Once the problem is fixed, re-save the configuration by pressing button \"%s\" on "
+"plugin %ssettings page%s."
+msgstr ""
+"সমস্যা সমাধান হলে, কনফিগারেশন আবার সংরক্ষণ করতে \"%s\" চাপুন, %s প্লাগিনের %s সেটিংস পেজে।"
+
+#: ../admin/qtx_activation_hook.php:114 ../admin/qtx_activation_hook.php:127
+#: ../admin/qtx_activation_hook.php:130 ../admin/qtx_admin_settings.php:38
 msgid "Save Changes"
 msgstr "পরিবর্তন সংরক্ষণ করুন"
 
 # three variables to show
-#: admin/qtx_activation_hook.php:104
+#: ../admin/qtx_activation_hook.php:127
 #, php-format
 msgid "Could not parse %s file \"%s\" listed in option \"%s\"."
 msgstr "%s ফাইল \"%s\" পার্স করা যায়নি যা \"%s\" তালিকায় উল্লেখ আছে।"
 
-#: admin/qtx_activation_hook.php:104
+#: ../admin/qtx_activation_hook.php:127
 msgid "Please, correct the syntax error in the file."
 msgstr "অনুগ্রহ করে ফাইলের সিনট্যাক্স ত্রুটি ঠিক করুন।"
 
-#: admin/qtx_activation_hook.php:107
+#: ../admin/qtx_activation_hook.php:130
 #, php-format
 msgid "Could not load file \"%s\" listed in option \"%s\"."
 msgstr "ফাইল \"%s\" টি লোড করা যায়নি, যা \"%s\" অপশনে উল্লেখ আছে।"
 
-#: admin/qtx_activation_hook.php:107
+#: ../admin/qtx_activation_hook.php:130
 msgid "Please, make sure the file is accessible and readable."
 msgstr "নিশ্চিত করুন যে ফাইলটি প্রবেশযোগ্য এবং পাঠযোগ্য।"
 
-#: admin/qtx_activation_hook.php:556
+#: ../admin/qtx_activation_hook.php:738
 #, php-format
-msgid "Plugin %s requires PHP version %s at least. This server instance runs PHP version %s. A PHP version %s or higher is recommended. The plugin has not been activated."
-msgstr "প্লাগিন %s এর জন্য পিএইচপি সংস্করণ ন্যূনতম %s প্রয়োজন। এই সার্ভারে চলমান পিএইচপি সংস্করণ হলো %s। অন্ততপক্ষে %s বা উচ্চতর সংস্করণের পিএইচপি সংস্করণ সুপারিশ করা যাচ্ছে। প্লাগিনটি সক্রিয় করা হয়নি।"
+msgid ""
+"Plugin %s requires PHP version %s at least. This server instance runs PHP version %s. A "
+"PHP version %s or higher is recommended. The plugin has not been activated."
+msgstr ""
+"প্লাগিন %s এর জন্য পিএইচপি সংস্করণ ন্যূনতম %s প্রয়োজন। এই সার্ভারে চলমান পিএইচপি সংস্করণ হলো "
+"%s। অন্ততপক্ষে %s বা উচ্চতর সংস্করণের পিএইচপি সংস্করণ সুপারিশ করা যাচ্ছে। প্লাগিনটি সক্রিয় করা "
+"হয়নি।"
 
 # Unclear in the second sentence as to what it really means near "%sreview the changes%s" [maybe a hyperlink formatting which is kept non-hardcoded in the .po]
-#: admin/qtx_activation_hook.php:661
+#: ../admin/qtx_activation_hook.php:846
 #, php-format
-msgid "Option \"%s\" for plugin %s has been auto-adjusted after recent changes in the site configuration. It might be a good idea to %sreview the changes%s in the list of configuration files."
-msgstr "অপশন \"%s\" টি %s প্লাগিনের জন্য স্বয়ংক্রিয়-সমন্বয় করা হয়েছে সাইটের সাম্প্রতিক পরিবর্তনের পরে। কনফিগারেশন ফাইলে এই %sপরিবর্তনগুলো পর্যালোচনা%s করে দেখলে ভালো ধারণা পাওয়া যেতে পারে।"
+msgid ""
+"Option \"%s\" for plugin %s has been auto-adjusted after recent changes in the site "
+"configuration. It might be a good idea to %sreview the changes%s in the list of "
+"configuration files."
+msgstr ""
+"অপশন \"%s\" টি %s প্লাগিনের জন্য স্বয়ংক্রিয়-সমন্বয় করা হয়েছে সাইটের সাম্প্রতিক পরিবর্তনের পরে। "
+"কনফিগারেশন ফাইলে এই %sপরিবর্তনগুলো পর্যালোচনা%s করে দেখলে ভালো ধারণা পাওয়া যেতে পারে।"
 
-#: admin/qtx_activation_hook.php:664
+#: ../admin/qtx_activation_hook.php:849
 #, php-format
 msgid "Review Option \"%s\""
 msgstr "রিভিউ অপশন \"%s\""
 
-#: admin/qtx_activation_hook.php:666
+#: ../admin/qtx_activation_hook.php:851
 msgid "Read Integration Guide"
 msgstr "সমন্বয়করণ নির্দেশিকা পড়ুন"
 
-#: admin/qtx_activation_hook.php:667 admin/qtx_activation_hook.php:681
-#: admin/qtx_activation_hook.php:947 admin/qtx_activation_hook.php:1012
+#: ../admin/qtx_activation_hook.php:852 ../admin/qtx_activation_hook.php:868
+#: ../admin/qtx_activation_hook.php:893
 msgid "I have already done it, dismiss this message."
 msgstr "আমি ইতোমধ্যেই এটি পড়েছি, মেসেজটি বাতিল করুন।"
 
-#: admin/qtx_activation_hook.php:677
+#: ../admin/qtx_activation_hook.php:864
 #, php-format
 msgid "Are you new to plugin %s?"
 msgstr "আপনি কি প্লাগিনটিতে নতুন %s?"
 
-#: admin/qtx_activation_hook.php:680
+#: ../admin/qtx_activation_hook.php:867
 msgid "Read Startup Guide"
 msgstr "প্রারম্ভিক নির্দেশিকা পড়ুন"
 
-#: admin/qtx_activation_hook.php:702 admin/qtx_activation_hook.php:794
-#: admin/qtx_import_export.php:99
+#: ../admin/qtx_activation_hook.php:884
 #, php-format
-msgid "It might be a good idea to review %smigration instructions%s, if you have not yet done so."
+msgid ""
+"<b>Caution!</b> The block editor (Gutenberg) is supported only recently in %s with some "
+"limitations. Use at your own discretion!"
+msgstr ""
+
+#: ../admin/qtx_activation_hook.php:885
+#, php-format
+msgid ""
+"Currently only the single language edit mode is supported. For more details, please "
+"read carefully our <a href=\"%s\">Gutenberg FAQ</a>."
+msgstr ""
+
+#: ../admin/qtx_activation_hook.php:889
+#, php-format
+msgid ""
+"It is recommended to install the <a href=\"%s\">%s</a> in your <a href=\"%s\">plugins</"
+"a>."
+msgstr ""
+
+#: ../admin/qtx_activation_hook.php:917 ../admin/qtx_activation_hook.php:936
+#: ../admin/qtx_import_export.php:86
+#, php-format
+msgid ""
+"It might be a good idea to review %smigration instructions%s, if you have not yet done "
+"so."
 msgstr "যদি এখনও না করে থাকেন, তবে %sমাইগ্রেশন নির্দেশনা%s পর্যালোচনা করে দেখতে পারেন।"
 
-#: admin/qtx_activation_hook.php:703
+#: ../admin/qtx_activation_hook.php:918
 #, php-format
-msgid "Activation of plugin %s deactivated plugin %s since they cannot run simultaneously."
+msgid ""
+"Activation of plugin %s deactivated plugin %s since they cannot run simultaneously."
 msgstr "%s সক্রিয়করণের ফলে %s প্লাগিনটি নিষ্ক্রিয় করা হয়েছে যেহেতু তারা যুগপৎভাবে চলতে পারে না।"
 
-#: admin/qtx_activation_hook.php:705
+#: ../admin/qtx_activation_hook.php:920
 #, php-format
-msgid "The compatible settings from %s have been imported to %s. Further tuning, import, export and reset of options can be done at Settings/Languages configuration page, once %s is running.%sContinue%s"
-msgstr "যেসব সেটিং %s থেকে সাযুজ্যপূর্ণ সেগুলো %s এ আমদানী করা হয়েছে। একবার %s চালু হলে সেটিংস/ভাষা কনফিগারেশন পাতায় আরো টিউনিং, আমদানি, রপ্তানি এবং রিসেট করা যাবে। %sচলমান%s"
+msgid ""
+"The compatible settings from %s have been imported to %s. Further tuning, import, "
+"export and reset of options can be done at Settings/Languages configuration page, once "
+"%s is running.%sContinue%s"
+msgstr ""
+"যেসব সেটিং %s থেকে সাযুজ্যপূর্ণ সেগুলো %s এ আমদানী করা হয়েছে। একবার %s চালু হলে সেটিংস/ভাষা "
+"কনফিগারেশন পাতায় আরো টিউনিং, আমদানি, রপ্তানি এবং রিসেট করা যাবে। %sচলমান%s"
 
-#: admin/qtx_activation_hook.php:707
+#: ../admin/qtx_activation_hook.php:922
 #, php-format
-msgid "You may import/export compatible settings from %s to %s on Settings/Languages configuration page, once %s is running.%sContinue%s"
-msgstr "আপনি %s থেকে %s এ সকল সাযুজ্যপূর্ণ সেটিং আমদানি/রপ্তানি করতে পারবেন, %s একবার চালু হয়ে গেলে, এর সেটিংস/ভাষা কনফিগারেশন পাতায়। %sচলমান%s"
+msgid ""
+"You may import/export compatible settings from %s to %s on Settings/Languages "
+"configuration page, once %s is running.%sContinue%s"
+msgstr ""
+"আপনি %s থেকে %s এ সকল সাযুজ্যপূর্ণ সেটিং আমদানি/রপ্তানি করতে পারবেন, %s একবার চালু হয়ে গেলে, "
+"এর সেটিংস/ভাষা কনফিগারেশন পাতায়। %sচলমান%s"
 
-#: admin/qtx_activation_hook.php:720 admin/qtx_configuration.php:476
-#: admin/qtx_configuration.php:480 admin/qtx_user_options.php:20
-msgid "Highlight Style"
-msgstr "হাইলাইট স্টাইল"
-
-#: admin/qtx_activation_hook.php:720 admin/qtx_configuration.php:445
-#: admin/qtx_configuration.php:448
-msgid "LSB Style"
-msgstr "ভাষা সুইচ স্টাইল"
-
-#: admin/qtx_activation_hook.php:792
+#: ../admin/qtx_activation_hook.php:934
 #, fuzzy, php-format
-msgid "%sError:%s plugin %s cannot run concurrently with plugin %s. You may import and export compatible settings between %s and %s on Settings/<a href=\"%s\">Languages</a> configuration page. Then you have to deactivate one of the plugins to continue."
-msgstr "%sভুল:%s প্লাগিন %s আর %s একই সাথে চলতে পারে না। আপনি হয়তো %s এবং %s এর মধ্যে সাযুজ্যপূর্ণ সেটিংগুলো আমদানী রপ্তানি করে নিতে পারেন সেটিংস/<a href=\"%s\">ভাষা</a> থেকে। তারপর আপনাকে একটি প্লাগিনকে নিষ্ক্রিয় করে নিতে হবে।"
+msgid ""
+"%sError:%s plugin %s cannot run concurrently with plugin %s. You may import and export "
+"compatible settings between %s and %s on Settings/<a href=\"%s\">Languages</a> "
+"configuration page. Then you have to deactivate one of the plugins to continue."
+msgstr ""
+"%sভুল:%s প্লাগিন %s আর %s একই সাথে চলতে পারে না। আপনি হয়তো %s এবং %s এর মধ্যে সাযুজ্যপূর্ণ "
+"সেটিংগুলো আমদানী রপ্তানি করে নিতে পারেন সেটিংস/<a href=\"%s\">ভাষা</a> থেকে। তারপর আপনাকে "
+"একটি প্লাগিনকে নিষ্ক্রিয় করে নিতে হবে।"
 
-#: admin/qtx_activation_hook.php:797 admin/qtx_activation_hook.php:799
+#: ../admin/qtx_activation_hook.php:939 ../admin/qtx_activation_hook.php:941
+#: ../admin/qtx_admin_modules.php:112
 #, php-format
 msgid "Deactivate %s"
 msgstr "%s নিষ্ক্রিয় করুন"
 
-#: admin/qtx_activation_hook.php:835
+#: ../admin/qtx_activation_hook.php:967 ../admin/qtx_admin.php:786
+#: ../admin/qtx_admin.php:796 ../qtranslate_frontend.php:269 ../qtranslate_widget.php:55
 #, php-format
-msgid "Plugin %s may be integrated with multilingual plugin %s with a help of plugin %s."
-msgstr "প্লাগিন %s হয়তো বহুভাসী প্লাগিন %s এর সাথে %s প্লাগিনের সাহায্যে সমন্বিত।"
+msgid "%s:"
+msgstr "%s:"
 
-#: admin/qtx_activation_hook.php:837
-msgid "Please, press an appropriate button below."
-msgstr "নিচের যেকোনো উপযুক্ত বোতাম চাপুন।"
-
-#: admin/qtx_activation_hook.php:841
-#, php-format
-msgid "Activate plugin %s"
-msgstr "%s প্লাগিন সক্রিয় করুন"
-
-#: admin/qtx_activation_hook.php:843
-#, php-format
-msgid "Install plugin %s"
-msgstr "%s প্লাগিনটি ইনস্টল করুন"
-
-#: admin/qtx_activation_hook.php:845
-msgid "I am aware of that, dismiss this message."
-msgstr "আমি এসম্পর্কে জানি, মেসেজ বাতিল করো।"
-
-#: admin/qtx_activation_hook.php:913 admin/qtx_activation_hook.php:916
-#: admin/qtx_activation_hook.php:942
-#, php-format
-msgid "Thank you for using plugin %s!"
-msgstr "আপনাকে ধন্যবাদ %s প্লাগিন ব্যবহারের জন্য!"
-
-#: admin/qtx_activation_hook.php:919
-msgid "Our team would greatly appreciate any feedback:"
-msgstr "আমাদের টিম যেকোনো ফিডব্যাক সাদরে গ্রহণ করবে:"
-
-#: admin/qtx_activation_hook.php:921
-#, php-format
-msgid "%sUse Support Forum%s to ask a question."
-msgstr "প্রশ্ন জিজ্ঞেস করতে %sসাপোর্ট ফোরাম%s ব্যবহার করুন।"
-
-#: admin/qtx_activation_hook.php:923
-#, php-format
-msgid "%sVisit%s %s website."
-msgstr "%sভিজিট করুন%s %s এর ওয়েবসাইট"
-
-#: admin/qtx_activation_hook.php:925
-#, php-format
-msgid "%sShare a new idea%s with our community."
-msgstr "আমাদের কমিউনিটির সাথে %sনতুন কোনো আইডিয়া শেয়ার%s করুন।"
-
-#: admin/qtx_activation_hook.php:927
-#, php-format
-msgid "%sReview the plugin%s at WordPress site."
-msgstr "ওয়ার্ডপ্রেস সাইটে %sপ্লাগিন রিভিউ%s করুন।"
-
-#: admin/qtx_activation_hook.php:930
-msgid "Thank me again in a few months!"
-msgstr "কয়েক মাসের মধ্যেই আবার আমাকে ধন্যবাদ দেবেন!"
-
-#: admin/qtx_activation_hook.php:944
-#, php-format
-msgid "Please, help us to make a decision on \"%s\" feature, press the button below."
-msgstr "আমাদের \"%s\" ফিচারটি সম্পর্কে সিদ্ধান্ত নিতে সাহায্য করতে নিচের বোতামটি চাপুন।"
-
-#: admin/qtx_activation_hook.php:944 admin/qtx_activation_hook.php:946
-#: qtranslate_services.php:772
-msgid "Translation Service"
-msgstr "অনুবাদ পরিষেবা"
-
-#: admin/qtx_activation_hook.php:946
-#, php-format
-msgid "Survey on \"%s\" feature"
-msgstr "\"%s\" ফিচারের উপর সার্ভে"
-
-#: admin/qtx_activation_hook.php:958
+#: ../admin/qtx_activation_hook.php:967 ../admin/qtx_admin.php:786
 msgid "Error"
 msgstr "ত্রুটি"
 
-#: admin/qtx_activation_hook.php:1004
-#, php-format
-msgid "The latest version of plugin %s has a number of new options, for example, %s, which may change the look of some pages. Please, review the help text of new options on %sconfiguration page%s."
-msgstr "সর্বশেষ সংস্করণের %s প্লাগিনে বেশ ক'টি নতুন অপশন আছে, যেমন, %s, যা কিছু পাতার দৃশ্যমান পরিবর্তন ঘটাবে। অনুগ্রহপূর্বক, নতুন অপশনগুলোর সাহায্য বার্তা পাতাটি %sকনফিগার পাতায়%s দেখে নিন।"
-
-#: admin/qtx_activation_hook.php:1009
-#, php-format
-msgid "It is recommended to review %sRelease Notes%s for this new version of %s before making any further changes."
-msgstr ""
-
-#: admin/qtx_admin.php:366
+#: ../admin/qtx_admin.php:372
 #, php-format
 msgid "Could not find script file \"%s\" for handle \"%s\"."
 msgstr ""
 
-#: admin/qtx_admin.php:621
+#: ../admin/qtx_admin.php:422
+msgid "Show multilingual content in "
+msgstr ""
+
+#: ../admin/qtx_admin.php:453
+msgid "Fill empty multilingual fields with content from other language"
+msgstr ""
+
+#: ../admin/qtx_admin.php:455
+msgid "Choose language to copy multilingual content from"
+msgstr ""
+
+#: ../admin/qtx_admin.php:457
+msgid "Copy from"
+msgstr ""
+
+#: ../admin/qtx_admin.php:650
 msgid "Language Management"
 msgstr "ভাষা ব্যবস্থাপনা"
 
-#: admin/qtx_admin.php:621 admin/qtx_admin_utils.php:520
-#: admin/qtx_configuration.php:141
+#: ../admin/qtx_admin.php:650 ../admin/qtx_admin_settings.php:256
+#: ../admin/qtx_admin_utils.php:237
 msgid "Languages"
 msgstr "ভাষা"
 
-#: admin/qtx_admin.php:629
+#: ../admin/qtx_admin.php:657
 msgid "Language Menu"
 msgstr "ভাষা মেনু"
 
-#: admin/qtx_admin.php:681
+#: ../admin/qtx_admin.php:695
 msgid "Help"
 msgstr "সাহায্য"
 
-#: admin/qtx_admin.php:684
-msgid "Menu item added is replaced with a drop-down menu of available languages, when menu is rendered."
+#: ../admin/qtx_admin.php:698
+msgid ""
+"Menu item added is replaced with a drop-down menu of available languages, when menu is "
+"rendered."
 msgstr ""
 
-#: admin/qtx_admin.php:686
+#: ../admin/qtx_admin.php:700
 #, php-format
-msgid "The rendered menu items have CSS classes %s and %s (\"%s\" is a language code), which can be defined in theme style, if desired. The label of language menu can also be customized via field \"%s\" in the menu configuration."
+msgid ""
+"The rendered menu items have CSS classes %s and %s (\"%s\" is a language code), which "
+"can be defined in theme style, if desired. The label of language menu can also be "
+"customized via field \"%s\" in the menu configuration."
 msgstr ""
 
-#: admin/qtx_admin.php:688
+#: ../admin/qtx_admin.php:702
 #, php-format
-msgid "The field \"%s\" of inserted menu item allows additional configuration described in %sFAQ%s."
+msgid ""
+"The field \"%s\" of inserted menu item allows additional configuration described in our "
+"%sWiki%s."
 msgstr ""
 
-#: admin/qtx_admin.php:693
-msgid "Add to Menu"
-msgstr "মেনুতে যোগকরণ"
-
-#: admin/qtx_admin.php:702
+#: ../admin/qtx_admin.php:719
 msgid "Language Switcher"
 msgstr "ভাষা সুইচ"
 
-#: admin/qtx_admin.php:740
-msgid "Settings"
-msgstr "সেটিংস"
+#: ../admin/qtx_admin.php:796
+msgid "Warning"
+msgstr "সতর্ক"
 
-#: admin/qtx_admin_options_update.php:30
+#: ../admin/qtx_admin.php:833
+#, php-format
+msgid "Thank you for using plugin %s!"
+msgstr "আপনাকে ধন্যবাদ %s প্লাগিন ব্যবহারের জন্য!"
+
+#: ../admin/qtx_admin.php:842
+#, php-format
+msgid "Plugin Version %s"
+msgstr "প্লাগিন সংস্করণ %s"
+
+#: ../admin/qtx_admin_modules.php:110
+#, php-format
+msgid ""
+"Modules status undefined in %s. Please deactivate it and reactivate it again from the "
+"plugins page."
+msgstr ""
+
+#: ../admin/qtx_admin_modules.php:131
+#, php-format
+msgid "The plugin \"%s\" is incompatible with the module \"%s\" of %s. Please disable it."
+msgstr ""
+
+#: ../admin/qtx_admin_modules.php:132
+#, fuzzy, php-format
+#| msgid "Activate plugin %s"
+msgid "Deactivate plugin %s"
+msgstr "%s প্লাগিন সক্রিয় করুন"
+
+#: ../admin/qtx_admin_modules.php:142
+#, php-format
+msgid "The following modules are now active in %s:"
+msgstr ""
+
+#: ../admin/qtx_admin_modules.php:162 ../admin/qtx_admin_modules.php:163
+#: ../admin/qtx_admin_modules.php:174
+#, fuzzy
+#| msgid "Action"
+msgid "Active"
+msgstr "ব্যবস্থা গ্রহণ"
+
+#: ../admin/qtx_admin_modules.php:168 ../admin/qtx_admin_modules.php:169
+#: ../admin/qtx_admin_modules.php:182
+msgid "Inactive"
+msgstr ""
+
+#: ../admin/qtx_admin_modules.php:175
+msgid "Blocked"
+msgstr ""
+
+#: ../admin/qtx_admin_modules.php:181
+#, fuzzy
+#| msgid "Pre-Defined"
+msgid "Undefined"
+msgstr "পূর্ব-নির্ধারিত"
+
+#: ../admin/qtx_admin_options_update.php:40
 msgid "qTranslate has been reset."
 msgstr "কিউট্রান্সলেট রিসেট করা হয়েছে।"
 
-#: admin/qtx_admin_options_update.php:43
+#: ../admin/qtx_admin_options_update.php:54
 msgid "The Language must have a Not-Available Message!"
 msgstr "ভাষার অবশ্যই একট অপ্রাপ্যতার মেসেজ থাকতে হবে!"
 
-#: admin/qtx_admin_options_update.php:44
+#: ../admin/qtx_admin_options_update.php:57
 msgid "The Language must have a Locale!"
 msgstr "ভাষার কোনো লিপি থাকতেই হবে!"
 
-#: admin/qtx_admin_options_update.php:45
+#: ../admin/qtx_admin_options_update.php:60
 msgid "The Language must have a name!"
 msgstr "ভাষার অবশ্যই একটি নাম থাকতে হবে!"
 
-#: admin/qtx_admin_options_update.php:46 admin/qtx_admin_options_update.php:170
-msgid "Language Code has to be 2 characters long!"
-msgstr "ভাষা কোড অবশ্যই 2 ক্যারেক্টারের হতে হবে!"
+#: ../admin/qtx_admin_options_update.php:65 ../admin/qtx_admin_options_update.php:207
+#, php-format
+msgid ""
+"The 2-letter language code \"%s\" should be lower case (ISO 639-1). Upper case is still "
+"allowed for legacy codes but not for new entries."
+msgstr ""
 
-#: admin/qtx_admin_options_update.php:53 admin/qtx_admin_options_update.php:58
+#: ../admin/qtx_admin_options_update.php:67 ../admin/qtx_admin_options_update.php:209
+msgid "Invalid language code!"
+msgstr "অবৈধ ভাষা কোড!"
+
+#: ../admin/qtx_admin_options_update.php:77 ../admin/qtx_admin_options_update.php:82
 msgid "There is already a language with the same Language Code!"
 msgstr "এই ভাষা কোডে ইতোমধ্যেই আরেকটি ভাষা আছে!"
 
-#: admin/qtx_admin_options_update.php:108
+#: ../admin/qtx_admin_options_update.php:134
 #, php-format
-msgid "The new language properties have been saved. If you think these properties should be the preset default, please %ssend email%s to the development team."
+msgid ""
+"The new language properties have been saved. If you think these properties should be "
+"the preset default, please %ssend email%s to the development team."
 msgstr ""
 
-#: admin/qtx_admin_options_update.php:131
+#: ../admin/qtx_admin_options_update.php:157
 #, php-format
 msgid "%d database entries have been converted."
 msgstr "%d টি ডাটাবেজ এন্ট্রি রূপান্তর করা হয়েছে।"
 
-#: admin/qtx_admin_options_update.php:133
+#: ../admin/qtx_admin_options_update.php:159
 msgid "No database entry has been affected while processing the conversion request."
 msgstr ""
 
-#: admin/qtx_admin_options_update.php:157
+#: ../admin/qtx_admin_options_update.php:189
 #, php-format
 msgid "%d pages have been processed to set the default language."
 msgstr "%d টি পাতা ডিফল্ট ভাষা সেট করার জন্য প্রক্রিয়াজাত করা হয়েছে।"
 
-#: admin/qtx_admin_options_update.php:158
+#: ../admin/qtx_admin_options_update.php:191
 msgid "No initially untranslated pages found to set the default language"
 msgstr "প্রাথমিকভাবে অনূদিত নয় এমন পাতাগুলোকে ডিফল্ট ভাষায় সেট করা হয়েছে"
 
-#: admin/qtx_admin_options_update.php:160
+#: ../admin/qtx_admin_options_update.php:195
 #, php-format
 msgid "%d posts have been processed to set the default language."
 msgstr ""
 
-#: admin/qtx_admin_options_update.php:161
+#: ../admin/qtx_admin_options_update.php:197
 #, fuzzy
 msgid "No initially untranslated posts found to set the default language."
 msgstr "ডিফল্ট ভাষা সেট করার জন্য কোনো প্রাথমিকভাবে অন-অনূদিত কোনো পোস্ট পাওয়া যায়নি।"
 
-#: admin/qtx_admin_options_update.php:163
-#, php-format
-msgid "Post types other than \"post\" or \"page\", as well as unpublished entries, will have to be adjusted manually as needed, since there is no common way to automate setting the default language otherwise. It can be done with a custom script though. You may request a %spaid support%s for this."
+#: ../admin/qtx_admin_options_update.php:200
+msgid ""
+"Post types other than \"post\" or \"page\", as well as unpublished entries, will have "
+"to be adjusted manually as needed, since there is no common way to automate setting the "
+"default language otherwise."
 msgstr ""
 
-#: admin/qtx_admin_options_update.php:199
+#: ../admin/qtx_admin_options_update.php:234
 msgid "Language is already enabled or invalid!"
 msgstr "ভাষা ইতোমধ্যেই সক্রিয় বা অবৈধ!"
 
-#: admin/qtx_admin_options_update.php:206
+#: ../admin/qtx_admin_options_update.php:240
 msgid "Cannot disable Default Language!"
 msgstr "মূল ভাষা নিষ্ক্রিয় করা যাবে না!"
 
-#: admin/qtx_admin_options_update.php:209
-#: admin/qtx_admin_options_update.php:218
-#: admin/qtx_admin_options_update.php:237
+#: ../admin/qtx_admin_options_update.php:244 ../admin/qtx_admin_options_update.php:254
+#: ../admin/qtx_admin_options_update.php:274
 msgid "No such language!"
 msgstr "এরকম কোনো ভাষা নেই!"
 
-#: admin/qtx_admin_options_update.php:212
+#: ../admin/qtx_admin_options_update.php:249
 msgid "Language is already disabled!"
 msgstr "ভাষাটি ইতোমধ্যেই নিষ্ক্রিয়!"
 
-#: admin/qtx_admin_options_update.php:222
+#: ../admin/qtx_admin_options_update.php:260
 msgid "Language is already first!"
 msgstr "ভাষাটি প্রথমেই আছে!"
 
-#: admin/qtx_admin_options_update.php:228
-#: admin/qtx_admin_options_update.php:247
+#: ../admin/qtx_admin_options_update.php:266 ../admin/qtx_admin_options_update.php:286
 msgid "New order saved."
 msgstr "নতুন ক্রম সংরক্ষিত।"
 
-#: admin/qtx_admin_options_update.php:241
+#: ../admin/qtx_admin_options_update.php:280
 msgid "Language is already last!"
 msgstr "ভাষাটি শেষেই আছে!"
 
-#: admin/qtx_admin_options_update.php:261
+#: ../admin/qtx_admin_options_update.php:300
 msgid "Options saved."
 msgstr "অপশনসমূহ সংরক্ষিত।"
 
-#: admin/qtx_admin_options_update.php:267
+#: ../admin/qtx_admin_options_update.php:306
 #, php-format
 msgid "Could not write to \"%s\", Gettext Databases could not be downloaded!"
 msgstr "\"%s\"-তে লেখা যায়নি, গেটটেক্সট ডাটাবেজ ডাউনলোড করা যায়নি!"
 
-#: admin/qtx_admin_options_update.php:282
-msgid "Admin notices have been reset. You will see all applicable notices on admin pages and may dismiss them again."
+#: ../admin/qtx_admin_options_update.php:323
+msgid ""
+"Admin notices have been reset. You will see all applicable notices on admin pages and "
+"may dismiss them again."
 msgstr ""
 
-#: admin/qtx_admin_options_update.php:719
+#: ../admin/qtx_admin_options_update.php:833
 #, php-format
 msgid "Cannot parse JSON code in the field \"%s\"."
 msgstr "\"%s\" ফিল্ডে থাকা জেসন কোডটি পার্স করা যাচ্ছে না।"
 
-#: admin/qtx_admin_options_update.php:719 admin/qtx_configuration.php:213
-#: admin/qtx_configuration.php:541 admin/qtx_configuration.php:547
+#: ../admin/qtx_admin_options_update.php:833 ../admin/qtx_admin_settings.php:227
+#: ../admin/qtx_admin_settings.php:749 ../admin/qtx_admin_settings.php:756
 msgid "Custom Configuration"
 msgstr "নিজস্ব কনফিগারেশন"
 
-#: admin/qtx_admin_options_update.php:776
+#: ../admin/qtx_admin_options_update.php:884
 msgid "Gettext databases updated."
 msgstr "গেটটেক্সট ডাটাবেজ আপডেট করা হয়েছে।"
 
-#: admin/qtx_admin_utils.php:211
-msgid "Database has been converted to square bracket format."
-msgstr ""
-
-#: admin/qtx_admin_utils.php:211 admin/qtx_admin_utils.php:213
-msgid "Note: custom entries are not touched."
-msgstr ""
-
-#: admin/qtx_admin_utils.php:213
-msgid "Database has been converted to legacy dual-tag format."
-msgstr ""
-
-#: admin/qtx_admin_utils.php:530
-msgctxt "Appears in the column \"Languages\" on post listing pages, when content has no language tags yet."
-msgid "Languages are not set"
-msgstr "ভাষা সেট করা নেই"
-
-#: admin/qtx_admin_utils.php:540
-msgid "Unknown Language"
-msgstr "অজানা ভাষা"
-
-#: admin/qtx_admin_utils.php:541
-msgid "Not enabled"
-msgstr "সক্রিয় নয়"
-
-#: admin/qtx_admin_utils.php:785
-msgid "Language Switching Buttons"
-msgstr "ভাষা পাল্টানোর বোতাম"
-
-#: admin/qtx_admin_utils.php:785
-#, php-format
-msgid "This is a set of \"%s\" from %s. Click any blank space between the buttons and drag it to a place where you would need it the most. Click the handle at the top-right corner of this widget to hide this message."
-msgstr ""
-
-#: admin/qtx_admin_utils.php:801 qtranslate_frontend.php:255
-#: qtranslate_widget.php:50
-msgid "Language"
-msgstr "ভাষা"
-
-#: admin/qtx_configuration.php:25 admin/qtx_configuration.php:87
-msgid "Language Code"
-msgstr "ভাষার সংকেড"
-
-#: admin/qtx_configuration.php:27
-msgid "2-Letter <a href=\"http://www.w3.org/WAI/ER/IG/ert/iso639.htm#2letter\">ISO Language Code</a> for the Language you want to insert. (Example: en)"
-msgstr "2-বর্ণ <a href=\"http://www.w3.org/WAI/ER/IG/ert/iso639.htm#2letter\">ISO ভাষা সংকেত</a> আপনি যে ভাষাটি নিতে চাচ্ছেন। (উদা: en)"
-
-#: admin/qtx_configuration.php:27
-msgid "The language code is used in language tags and in URLs. It is case sensitive. Use of lower case for the language code is preferable, but not required. The code may be arbitrary chosen by site owner, although it is preferable to use already commonly accepted code if available. Once a language code is created and entries for this language are made, it is difficult to change it, please make a careful decision."
-msgstr "ভাষা কোডটি ভাষা ট্যাগ এবং ইউআরএল-এ ব্যবহৃত হয়। এটি কেস সেনসিটিভ। ভাষা কোডের জন্য লোয়ার কেসের ব্যবহার বাঞ্ছনীয় তবে আবশ্যকীয় নয়। কোডটি সাইট মালিকের ইচ্ছানুসারে চয়ন করা যেতে পারে, যদিও জানা থাকলে ইতোমধ্যে সাধারণভাবে গৃহীত কোড ব্যবহার করা ভালো। একবার কোনও ভাষা কোড তৈরি হয়ে গেলে এবং এই ভাষার জন্য এন্ট্রি করা হয়ে গেলে, এটি পরিবর্তন করা কঠিন, দয়া করে সতর্কতার সাথে সিদ্ধান্ত নিন।"
-
-#: admin/qtx_configuration.php:30 admin/qtx_configuration.php:53
-#: admin/qtx_configuration.php:626
-msgid "Flag"
-msgstr "পতাকা"
-
-#: admin/qtx_configuration.php:56
-msgid "Incorrect Flag Image Path! Please correct it!"
-msgstr "পতাকার ছবির পথ ভুল! ঠিক করে দিন!"
-
-#: admin/qtx_configuration.php:59
-msgid "Choose the corresponding country flag for language. (Example: gb.png)"
-msgstr "ভাষার সাথে সম্পর্কিত দেশের পতাকা পছন্দ করুন। (উদাহরণ: gb.png)"
-
-#: admin/qtx_configuration.php:71
-msgid "(in native alphabet)"
-msgstr "(নিজ অক্ষরে)"
-
-#: admin/qtx_configuration.php:71 admin/qtx_configuration.php:627
-msgid "Name"
-msgstr "নাম"
-
-#: admin/qtx_configuration.php:73
-msgid "The Name of the language, which will be displayed on the site. (Example: English)"
-msgstr "ভাষার নাম, যা সাইটে প্রদর্শিত হবে। (যেমন: বাংলা)"
-
-#: admin/qtx_configuration.php:76
-msgid "Locale"
-msgstr "লিপি"
-
-#: admin/qtx_configuration.php:79
-msgid "PHP and Wordpress Locale for the language. (Example: en_US)"
-msgstr "ভাষাটির জন্য পিএইচপি এবং ওয়ার্ডপ্রেসের লিপি (উদা: en_US)"
-
-#: admin/qtx_configuration.php:80
-msgid "You will need to install the .mo file for this language."
-msgstr "আপনাকে এই ভাষার জন্য .mo ফাইল যোগ করতে হবে।"
-
-#: admin/qtx_configuration.php:84
-msgid "Locale at front-end"
-msgstr "ফ্রন্টএন্ডের লিপি"
-
-#: admin/qtx_configuration.php:87
-#, php-format
-msgid "Locale to be used in browser at front-end to set %s HTML attributes to specify alternative languages on a page. If left empty, then \"%s\" is used by default."
-msgstr ""
-
-#: admin/qtx_configuration.php:91
-msgid "Date Format"
-msgstr "তারিখ ফরম্যাট"
-
-#: admin/qtx_configuration.php:93
-msgid "Depending on your Date / Time Conversion Mode, you can either enter a <a href=\"http://www.php.net/manual/function.strftime.php\">strftime</a> (use %q for day suffix (st,nd,rd,th)) or <a href=\"http://www.php.net/manual/function.date.php\">date</a> format. This field is optional. (Example: %A %B %e%q, %Y)"
-msgstr ""
-
-#: admin/qtx_configuration.php:96
-msgid "Time Format"
-msgstr "সময় ফরম্যাট"
-
-#: admin/qtx_configuration.php:98
-msgid "Depending on your Date / Time Conversion Mode, you can either enter a <a href=\"http://www.php.net/manual/function.strftime.php\">strftime</a> or <a href=\"http://www.php.net/manual/function.date.php\">date</a> format. This field is optional. (Example: %I:%M %p)"
-msgstr ""
-
-#: admin/qtx_configuration.php:101 admin/qtx_configuration.php:330
-msgid "Not Available Message"
-msgstr "অপ্রাপ্যতার বার্তা"
-
-#: admin/qtx_configuration.php:104
-msgid "Message to display if post is not available in the requested language. (Example: Sorry, this entry is only available in %LANG:, : and %.)"
-msgstr ""
-
-#: admin/qtx_configuration.php:105
-msgid "%LANG:&lt;normal_separator&gt;:&lt;last_separator&gt;% generates a list of languages separated by &lt;normal_separator&gt; except for the last one, where &lt;last_separator&gt; will be used instead."
-msgstr ""
-
-#: admin/qtx_configuration.php:107
-#, php-format
-msgid "The language names substituted into the list of available languages are shown translated in the active language. The nominative form of language names is used as it is fetched from %s may not fit the grammar rules of your language. It is then advisable to include quotes in this message like this \"%s\". Alternatively you may modify \"%s\" files in folder \"%s\" with names that fit your grammar rules. Please, %scontact the development team%s, if you decide to modify \"%s\" files."
-msgstr ""
-
-#: admin/qtx_configuration.php:133
-msgid "General"
-msgstr "সাধারণ"
-
-#: admin/qtx_configuration.php:134
-msgid "Advanced"
-msgstr "অগ্রগামী"
-
-#: admin/qtx_configuration.php:139
-msgid "Integration"
-msgstr "সমন্বয়করণ"
-
-#: admin/qtx_configuration.php:140 admin/qtx_configuration.php:316
-msgid "Export"
-msgstr "এক্সপোর্ট"
-
-#: admin/qtx_configuration.php:140 admin/qtx_configuration.php:316
-msgid "Import"
-msgstr "ইমপোর্ট"
-
-#: admin/qtx_configuration.php:153
-msgid "Switching Language"
-msgstr "ভাষা পরিবর্তন"
-
-#: admin/qtx_configuration.php:153
-#, php-format
-msgid "Switching language to %1$s... If the Dashboard isn't loading, use this <a href=\"%2$s\" title=\"Dashboard\">link</a>."
-msgstr "ভাষা পরিবর্তন করে %1$s-তে নেয়া হচ্ছে... যদি ড্যাশবোর্ড না আসে তবে এই <a href=\"%2$s\" title=\"Dashboard\">লিংকে</a>যান।"
-
-#: admin/qtx_configuration.php:173
+#: ../admin/qtx_admin_settings.php:54
 msgid "Edit Language"
 msgstr "ভাষা সম্পাদনা"
 
-#: admin/qtx_configuration.php:179
+#: ../admin/qtx_admin_settings.php:55
 msgid "Save Changes &raquo;"
 msgstr "পরিবর্তন সংরক্ষণ করুন &raquo;"
 
-#: admin/qtx_configuration.php:181 admin/qtx_configuration.php:210
-#: admin/qtx_configuration.php:217
+#: ../admin/qtx_admin_settings.php:57 ../admin/qtx_admin_settings.php:223
+#: ../admin/qtx_admin_settings.php:239
 msgid "back to configuration page"
 msgstr "কনফিগারেশন পেজে ফেরৎ"
 
-#: admin/qtx_configuration.php:185
-msgid "Language Management (qTranslate Configuration)"
+#: ../admin/qtx_admin_settings.php:60
+#, fuzzy
+#| msgid "Language Management (qTranslate Configuration)"
+msgid "Language Management (qTranslate-XT Configuration)"
 msgstr "ভাষা ব্যবস্থাপনা (কিউট্রান্সলেট কনফিগারেশন)"
 
-#: admin/qtx_configuration.php:186
-#, fuzzy, php-format
-msgid "For help on how to configure qTranslate correctly, take a look at the <a href=\"%1$s\">qTranslate FAQ</a> and the <a href=\"%2$s\">Support Forum</a>."
-msgstr "للمساعدة في تفعيل و تشغيل qTranslate بشكل صحيح, الرجاء اتباع  <a href=\"%1$s\">التعليمات</a> و <a href=\"%2$s\">الدعم الفني</a>."
-
-#: admin/qtx_configuration.php:193
+#: ../admin/qtx_admin_settings.php:62
 #, php-format
-msgid "Plugin development is supported through your %sdonations to the development team%s."
+msgid ""
+"For help on how to configure qTranslate correctly, take a look at the <a href=\"%1$s"
+"\">qTranslate FAQ</a> and the <a href=\"%2$s\">Support Forum</a>."
+msgstr ""
+"للمساعدة في تفعيل و تشغيل qTranslate بشكل صحيح, الرجاء اتباع  <a href=\"%1$s"
+"\">التعليمات</a> و <a href=\"%2$s\">الدعم الفني</a>."
+
+#: ../admin/qtx_admin_settings.php:106 ../admin/qtx_admin_settings.php:170
+msgid "Language Code"
+msgstr "ভাষার সংকেড"
+
+#: ../admin/qtx_admin_settings.php:110
+#, php-format
+msgid ""
+"Language %sISO 639 code%s, two-letter (ISO 639-1) or three-letter (ISO 639-2 and "
+"639-3), lower case. (Examples: en, fr, zh, nds)"
 msgstr ""
 
-#: admin/qtx_configuration.php:211 admin/qtx_configuration.php:541
-#: admin/qtx_configuration.php:552
+#: ../admin/qtx_admin_settings.php:112
+#, fuzzy
+#| msgid ""
+#| "The language code is used in language tags and in URLs. It is case sensitive. Use of "
+#| "lower case for the language code is preferable, but not required. The code may be "
+#| "arbitrary chosen by site owner, although it is preferable to use already commonly "
+#| "accepted code if available. Once a language code is created and entries for this "
+#| "language are made, it is difficult to change it, please make a careful decision."
+msgid ""
+"The language code is used in language tags and in URLs. The code may be arbitrary "
+"chosen by site owner, although it is preferable to use already commonly accepted code "
+"if available. Once a language code is created and entries for this language are made, "
+"it is difficult to change it, please make a careful decision."
+msgstr ""
+"ভাষা কোডটি ভাষা ট্যাগ এবং ইউআরএল-এ ব্যবহৃত হয়। এটি কেস সেনসিটিভ। ভাষা কোডের জন্য লোয়ার "
+"কেসের ব্যবহার বাঞ্ছনীয় তবে আবশ্যকীয় নয়। কোডটি সাইট মালিকের ইচ্ছানুসারে চয়ন করা যেতে পারে, "
+"যদিও জানা থাকলে ইতোমধ্যে সাধারণভাবে গৃহীত কোড ব্যবহার করা ভালো। একবার কোনও ভাষা কোড তৈরি "
+"হয়ে গেলে এবং এই ভাষার জন্য এন্ট্রি করা হয়ে গেলে, এটি পরিবর্তন করা কঠিন, দয়া করে সতর্কতার "
+"সাথে সিদ্ধান্ত নিন।"
+
+#: ../admin/qtx_admin_settings.php:116 ../admin/qtx_admin_settings.php:139
+#: ../admin/qtx_admin_settings_language_list.php:29
+msgid "Flag"
+msgstr "পতাকা"
+
+#: ../admin/qtx_admin_settings.php:144
+msgid "Incorrect Flag Image Path! Please correct it!"
+msgstr "পতাকার ছবির পথ ভুল! ঠিক করে দিন!"
+
+#: ../admin/qtx_admin_settings.php:147
+msgid "Choose the corresponding country flag for language. (Example: gb.png)"
+msgstr "ভাষার সাথে সম্পর্কিত দেশের পতাকা পছন্দ করুন। (উদাহরণ: gb.png)"
+
+#: ../admin/qtx_admin_settings.php:150 ../admin/qtx_admin_settings_language_list.php:30
+msgid "Name"
+msgstr "নাম"
+
+#: ../admin/qtx_admin_settings.php:152
+msgid "(in native alphabet)"
+msgstr "(নিজ অক্ষরে)"
+
+#: ../admin/qtx_admin_settings.php:154
+msgid "The Name of the language, which will be displayed on the site. (Example: English)"
+msgstr "ভাষার নাম, যা সাইটে প্রদর্শিত হবে। (যেমন: বাংলা)"
+
+#: ../admin/qtx_admin_settings.php:157
+msgid "Locale"
+msgstr "লিপি"
+
+#: ../admin/qtx_admin_settings.php:161
+msgid "PHP and Wordpress Locale for the language. (Example: en_US)"
+msgstr "ভাষাটির জন্য পিএইচপি এবং ওয়ার্ডপ্রেসের লিপি (উদা: en_US)"
+
+#: ../admin/qtx_admin_settings.php:162
+msgid "You will need to install the .mo file for this language."
+msgstr "আপনাকে এই ভাষার জন্য .mo ফাইল যোগ করতে হবে।"
+
+#: ../admin/qtx_admin_settings.php:166
+msgid "Locale at front-end"
+msgstr "ফ্রন্টএন্ডের লিপি"
+
+#: ../admin/qtx_admin_settings.php:170
+#, php-format
+msgid ""
+"Locale to be used in browser at front-end to set %s HTML attributes to specify "
+"alternative languages on a page. If left empty, then \"%s\" is used by default."
+msgstr ""
+
+#: ../admin/qtx_admin_settings.php:175
+msgid "Date Format"
+msgstr "তারিখ ফরম্যাট"
+
+#: ../admin/qtx_admin_settings.php:178
+msgid ""
+"Depending on your Date / Time Conversion Mode, you can either enter a <a href=\"http://"
+"www.php.net/manual/function.strftime.php\">strftime</a> (use %q for day suffix (st,nd,"
+"rd,th)) or <a href=\"http://www.php.net/manual/function.date.php\">date</a> format. "
+"This field is optional. (Example: %A %B %e%q, %Y)"
+msgstr "اختياري"
+
+#: ../admin/qtx_admin_settings.php:181
+msgid "Time Format"
+msgstr "সময় ফরম্যাট"
+
+#: ../admin/qtx_admin_settings.php:184
+msgid ""
+"Depending on your Date / Time Conversion Mode, you can either enter a <a href=\"http://"
+"www.php.net/manual/function.strftime.php\">strftime</a> or <a href=\"http://www.php.net/"
+"manual/function.date.php\">date</a> format. This field is optional. (Example: %I:%M %p)"
+msgstr "اختياري"
+
+#: ../admin/qtx_admin_settings.php:187 ../admin/qtx_admin_settings.php:420
+msgid "Not Available Message"
+msgstr "অপ্রাপ্যতার বার্তা"
+
+#: ../admin/qtx_admin_settings.php:191
+msgid ""
+"Message to display if post is not available in the requested language. (Example: Sorry, "
+"this entry is only available in %LANG:, : and %.)"
+msgstr ""
+"رسالة للعرض عن عدم توافر اللغة المطلوبة للمحتوي المعروض  (مثال: عفوا هذه اللغة غير "
+"متاحة في  %LANG:, :  و  %.)"
+
+#: ../admin/qtx_admin_settings.php:193
+msgid ""
+"%LANG:&lt;normal_separator&gt;:&lt;last_separator&gt;% generates a list of languages "
+"separated by &lt;normal_separator&gt; except for the last one, where &lt;"
+"last_separator&gt; will be used instead."
+msgstr ""
+
+#: ../admin/qtx_admin_settings.php:195
+#, php-format
+msgid ""
+"The language names substituted into the list of available languages are shown "
+"translated in the active language. The nominative form of language names is used as it "
+"is fetched from %s may not fit the grammar rules of your language. It is then advisable "
+"to include quotes in this message like this \"%s\". Alternatively you may modify \"%s\" "
+"files in folder \"%s\" with names that fit your grammar rules. Please, %scontact the "
+"development team%s, if you decide to modify \"%s\" files."
+msgstr ""
+
+#: ../admin/qtx_admin_settings.php:225 ../admin/qtx_admin_settings.php:749
+#: ../admin/qtx_admin_settings.php:769
 msgid "Configuration Inspector"
 msgstr "কনফিগারেশন পরীক্ষক"
 
-#: admin/qtx_configuration.php:213
+#: ../admin/qtx_admin_settings.php:227
 #, php-format
-msgid "Review a combined JSON-encoded configuration as loaded from options %s and %s, as well as from the theme and other plugins via filters %s and %s."
+msgid ""
+"Review a combined JSON-encoded configuration as loaded from options %s and %s, as well "
+"as from the theme and other plugins via filters %s and %s."
 msgstr ""
 
-#: admin/qtx_configuration.php:214 admin/qtx_configuration.php:542
-#: admin/qtx_configuration.php:551
+#: ../admin/qtx_admin_settings.php:229 ../admin/qtx_admin_settings.php:751
+#: ../admin/qtx_admin_settings.php:767
 #, php-format
 msgid "Please, read %sIntegration Guide%s for more information."
 msgstr "আরও তথ্য জানতে %sসমন্বয়করণ নির্দেশিকা%s পড়ুন।"
 
-#: admin/qtx_configuration.php:216
+#: ../admin/qtx_admin_settings.php:236
 #, php-format
-msgid "Note to developers: ensure that front-end filter %s is also active on admin side, otherwise the changes it makes will not show up here. Having this filter active on admin side does not affect admin pages functionality, except this field."
-msgstr "ডেভেলপারদের জন্য: নিশ্চিত করুন যেন ফ্রন্ট-এন্ড এর ফিল্টার %s যাতে অ্যাডমিন অংশেও সক্রিয় থাকে, নাহয় এর পরিবর্তনগুলো এখানে আসবে না। অ্যাডমিন অংশে এই ফিল্টার সক্রিয় থাকলে অ্যাডমিন পেজের কার্যকারিতায় প্রভাব ফেলে না, এই ফিল্ডটি ছাড়া।"
+msgid ""
+"Note to developers: ensure that front-end filter %s is also active on admin side, "
+"otherwise the changes it makes will not show up here. Having this filter active on "
+"admin side does not affect admin pages functionality, except this field."
+msgstr ""
+"ডেভেলপারদের জন্য: নিশ্চিত করুন যেন ফ্রন্ট-এন্ড এর ফিল্টার %s যাতে অ্যাডমিন অংশেও সক্রিয় থাকে, "
+"নাহয় এর পরিবর্তনগুলো এখানে আসবে না। অ্যাডমিন অংশে এই ফিল্টার সক্রিয় থাকলে অ্যাডমিন পেজের "
+"কার্যকারিতায় প্রভাব ফেলে না, এই ফিল্ডটি ছাড়া।"
 
-#: admin/qtx_configuration.php:223
+#: ../admin/qtx_admin_settings.php:246
+msgid "General"
+msgstr "সাধারণ"
+
+#: ../admin/qtx_admin_settings.php:247
+msgid "Advanced"
+msgstr "অগ্রগামী"
+
+#: ../admin/qtx_admin_settings.php:254
+msgid "Integration"
+msgstr "সমন্বয়করণ"
+
+#: ../admin/qtx_admin_settings.php:255 ../admin/qtx_admin_settings.php:393
+msgid "Import"
+msgstr "ইমপোর্ট"
+
+#: ../admin/qtx_admin_settings.php:255 ../admin/qtx_admin_settings.php:393
+msgid "Export"
+msgstr "এক্সপোর্ট"
+
+#: ../admin/qtx_admin_settings.php:257
+msgid "Troubleshooting"
+msgstr ""
+
+#: ../admin/qtx_admin_settings.php:263
 #, php-format
 msgid "Click to switch to %s"
 msgstr "ক্লিক করে %s এ বদলান"
 
-#: admin/qtx_configuration.php:237 admin/qtx_configuration.php:323
+#: ../admin/qtx_admin_settings.php:293 ../admin/qtx_admin_settings.php:401
 msgid "Default Language / Order"
 msgstr "ডিফল্ট ভাষা/ক্রম"
 
-#: admin/qtx_configuration.php:238
-msgid "Every multilingual field is expected to have a meaningful content in the \"Default Language\". Usually, it is the language of your site before it became multilingual."
+#: ../admin/qtx_admin_settings.php:295
+msgid ""
+"Every multilingual field is expected to have a meaningful content in the \"Default "
+"Language\". Usually, it is the language of your site before it became multilingual."
 msgstr ""
 
-#: admin/qtx_configuration.php:239
-msgid "Order of languages defines in which order they are listed, when languages need to be listed, otherwise it is not important."
+#: ../admin/qtx_admin_settings.php:297
+msgid ""
+"Order of languages defines in which order they are listed, when languages need to be "
+"listed, otherwise it is not important."
 msgstr ""
 
-#: admin/qtx_configuration.php:242
+#: ../admin/qtx_admin_settings.php:300
 msgid "Default Language"
 msgstr "ডিফল্ট ভাষা"
 
-#: admin/qtx_configuration.php:256 admin/qtx_configuration.php:668
-#: admin/qtx_configuration.php:686
-msgid "Disable"
-msgstr "নিষ্ক্রিয় করুন"
-
-#: admin/qtx_configuration.php:256 admin/qtx_configuration.php:629
-#: admin/qtx_configuration.php:669 admin/qtx_configuration.php:687
+#: ../admin/qtx_admin_settings.php:314 ../admin/qtx_admin_settings.php:870
+#: ../admin/qtx_admin_settings_language_list.php:32
+#: ../admin/qtx_admin_settings_language_list.php:63
+#: ../modules/acf/src/acf_5/fields/image.php:136
 msgid "Edit"
 msgstr "সম্পাদনা"
 
-#: admin/qtx_configuration.php:264
-#, fuzzy, php-format
-msgid "Choose the default language of your blog. This is the language which will be shown on %s. You can also change the order the languages by clicking on the arrows above."
-msgstr "اختر اللغة الافتراضية لموفعك. يمكنك مشاهدة اللغة من هنا %s. يمكن ايضا تغيير ترتيب اللغات عن طريق الضغط علي الاسهم بالاعلي."
+#: ../admin/qtx_admin_settings.php:314 ../admin/qtx_admin_settings.php:868
+#: ../admin/qtx_admin_settings_language_list.php:62
+msgid "Disable"
+msgstr "নিষ্ক্রিয় করুন"
 
-#: admin/qtx_configuration.php:269 admin/qtx_configuration.php:271
-#: admin/qtx_configuration.php:388
+#: ../admin/qtx_admin_settings.php:322
+#, php-format
+msgid ""
+"Choose the default language of your blog. This is the language which will be shown on "
+"%s. You can also change the order the languages by clicking on the arrows above."
+msgstr ""
+"اختر اللغة الافتراضية لموفعك. يمكنك مشاهدة اللغة من هنا %s. يمكن ايضا تغيير ترتيب "
+"اللغات عن طريق الضغط علي الاسهم بالاعلي."
+
+#: ../admin/qtx_admin_settings.php:327 ../admin/qtx_admin_settings.php:330
+#: ../admin/qtx_admin_settings.php:513
 msgid "URL Modification Mode"
 msgstr "ইউআরএল পরিবর্তন মোড"
 
-#: admin/qtx_configuration.php:272
-msgid "Most SEO unfriendly, not recommended."
-msgstr "সবচে' এসইও অবান্ধব, না করাই ভালো।"
-
-#: admin/qtx_configuration.php:272
-msgid "Use Query Mode (?lang=en)"
-msgstr "কুয়্যারি মোড ব্যবহার করুন (?lang=en)"
-
-#: admin/qtx_configuration.php:279
-msgid "SEO friendly."
-msgstr "এসইও বান্ধব।"
-
-#: admin/qtx_configuration.php:279
+#: ../admin/qtx_admin_settings.php:334
 msgid "Use Pre-Path Mode (Default, puts /en/ in front of URL)"
 msgstr "প্রি-পাথ মোড (ডিফল্ট, ইউআরএল এর সামনে /en/ বসায়)"
 
-#: admin/qtx_configuration.php:280
+#: ../admin/qtx_admin_settings.php:334
+msgid "SEO friendly."
+msgstr "এসইও বান্ধব।"
+
+#: ../admin/qtx_admin_settings.php:338
 msgid "Use Pre-Domain Mode (uses http://en.yoursite.com)"
 msgstr ""
 
-#: admin/qtx_configuration.php:280
+#: ../admin/qtx_admin_settings.php:338
 msgid "You will need to configure DNS sub-domains on your site."
 msgstr ""
 
-#: admin/qtx_configuration.php:285
-msgid "Hide URL language information for default language."
-msgstr ""
-
-#: admin/qtx_configuration.php:286
-msgid "This is only applicable to Pre-Path and Pre-Domain mode."
-msgstr ""
-
-#: admin/qtx_configuration.php:291
+#: ../admin/qtx_admin_settings.php:342
 msgid "Use Per-Domain mode: specify separate user-defined domain for each language."
 msgstr ""
 
-#: admin/qtx_configuration.php:303
+#: ../admin/qtx_admin_settings.php:346
+msgid "Use Query Mode (?lang=en)"
+msgstr "কুয়্যারি মোড ব্যবহার করুন (?lang=en)"
+
+#: ../admin/qtx_admin_settings.php:346
+msgid "Most SEO unfriendly, not recommended."
+msgstr "সবচে' এসইও অবান্ধব, না করাই ভালো।"
+
+#: ../admin/qtx_admin_settings.php:365
 msgid "Domain for"
 msgstr "এর ডোমেইন"
 
-#: admin/qtx_configuration.php:308
+#: ../admin/qtx_admin_settings.php:376
+msgid "Hide URL language information for default language."
+msgstr ""
+
+#: ../admin/qtx_admin_settings.php:378
+msgid "This is only applicable to Pre-Path and Pre-Domain mode."
+msgstr ""
+
+#: ../admin/qtx_admin_settings.php:382
 msgid "Untranslated Content"
 msgstr "অন-অনূদিত বিষয়বস্তু"
 
-#: admin/qtx_configuration.php:310
+#: ../admin/qtx_admin_settings.php:384
 #, php-format
-msgid "The choices below define how to handle untranslated content at front-end of the site. A content of a page or a post is considered untranslated if the main text (%s) is empty for a given language, regardless of other fields like title, excerpt, etc. All three options are independent of each other."
+msgid ""
+"The choices below define how to handle untranslated content at front-end of the site. A "
+"content of a page or a post is considered untranslated if the main text (%s) is empty "
+"for a given language, regardless of other fields like title, excerpt, etc. All three "
+"options are independent of each other."
 msgstr ""
 
-#: admin/qtx_configuration.php:312
+#: ../admin/qtx_admin_settings.php:388
 #, fuzzy
-msgid "Hide Content which is not available for the selected language."
+msgid "Hide posts which content is not available for the selected language."
 msgstr "اخفاء المحتوي الغير متوفر له ترجمة للغة المختارة."
 
-#: admin/qtx_configuration.php:314
-#, fuzzy
-msgid "When checked, posts will be hidden if the content is not available for the selected language. If unchecked, a message will appear showing all the languages the content is available in."
-msgstr "عند التفعيل, لن تظهر المواضيع ان لم تكن متاحة في اللغة المختارة. اذا لم يتم التفعيل ستظهر رسالة بها كل اللغات المتاحة للمحتوي المعروض."
+#: ../admin/qtx_admin_settings.php:391
+msgid ""
+"When checked, posts will be hidden if the content is not available for the selected "
+"language. If unchecked, a message will appear showing all the languages the content is "
+"available in."
+msgstr ""
+"عند التفعيل, لن تظهر المواضيع ان لم تكن متاحة في اللغة المختارة. اذا لم يتم التفعيل "
+"ستظهر رسالة بها كل اللغات المتاحة للمحتوي المعروض."
 
-#: admin/qtx_configuration.php:315
-msgid "The message about available languages for the content of a post or a page may also appear if a single post display with an untranslated content if viewed directly."
+#: ../admin/qtx_admin_settings.php:392
+msgid ""
+"The message about available languages for the content of a post or a page may also "
+"appear if a single post display with an untranslated content if viewed directly."
 msgstr ""
 
-#: admin/qtx_configuration.php:316 admin/qtx_import_export.php:101
-#: admin/qtx_import_export.php:109 admin/qtx_import_export.php:189
+#: ../admin/qtx_admin_settings.php:393
+#, php-format
+msgid ""
+"This function will not work correctly if you installed %s on a blog with existing "
+"entries. In this case you will need to take a look at option \"%s\" under \"%s\" "
+"section."
+msgstr ""
+"এই ফাংশনটি ঠিকভাবে কাজ করবে না যদি আপনি %s কে আগেই এন্ট্রি আছে এমন ব্লগে ইনস্টল করেন। "
+"সেক্ষেত্রে আপনাকে  \"%s\" অপশনটি দেখতে হবে, যা  \"%s\" সেকশনে আছে।"
+
+#: ../admin/qtx_admin_settings.php:393 ../admin/qtx_import_export.php:87
+#: ../admin/qtx_import_export.php:93 ../admin/qtx_import_export.php:178
 msgid "Convert Database"
 msgstr "ডাটাবেজ কনভার্ট করবে"
 
-#: admin/qtx_configuration.php:316
-#, php-format
-msgid "This function will not work correctly if you installed %s on a blog with existing entries. In this case you will need to take a look at option \"%s\" under \"%s\" section."
-msgstr "এই ফাংশনটি ঠিকভাবে কাজ করবে না যদি আপনি %s কে আগেই এন্ট্রি আছে এমন ব্লগে ইনস্টল করেন। সেক্ষেত্রে আপনাকে  \"%s\" অপশনটি দেখতে হবে, যা  \"%s\" সেকশনে আছে।"
-
-#: admin/qtx_configuration.php:318
-msgid "Show displayed language prefix when content is not available for the selected language."
-msgstr "প্রদর্শিত ভাষার প্রিফিক্স দেখাবে যখন নির্বাচিত ভাষায় বিষয়বস্তু পাওয়া যাবে না।"
-
-#: admin/qtx_configuration.php:320
-msgid "This is relevant to all fields other than the main content of posts and pages. Such untranslated fields are always shown in an alternative available language, and will be prefixed with the language name in parentheses, if this option is on."
-msgstr ""
-
-#: admin/qtx_configuration.php:322
-msgid "Show content in an alternative language when translation is not available for the selected language."
+#: ../admin/qtx_admin_settings.php:399
+#, fuzzy
+#| msgid ""
+#| "Show content in an alternative language when translation is not available for the "
+#| "selected language."
+msgid ""
+"Show post content in an alternative language when translation is not available for the "
+"selected language."
 msgstr "নির্বাচিত ভাষায় বিষয়বস্তু না পেলে বিকল্প ভাষারটি দেখাবে।"
 
-#: admin/qtx_configuration.php:323
+#: ../admin/qtx_admin_settings.php:401
 #, php-format
-msgid "When a page or a post with an untranslated content is viewed, a message with a list of other available languages is displayed, in which languages are ordered as defined by option \"%s\". If this option is on, then the content of the first available language will also be shown, instead of the expected language, for the sake of user convenience."
+msgid ""
+"When a page or a post with an untranslated content is viewed, a message with a list of "
+"other available languages is displayed, in which languages are ordered as defined by "
+"option \"%s\". If this option is on, then the content of the first available language "
+"will also be shown, instead of the expected language, for the sake of user convenience."
 msgstr ""
 
-#: admin/qtx_configuration.php:327
+#: ../admin/qtx_admin_settings.php:407
+#, fuzzy
+#| msgid ""
+#| "Show displayed language prefix when content is not available for the selected "
+#| "language."
+msgid ""
+"Show displayed language prefix when field content is not available for the selected "
+"language."
+msgstr "প্রদর্শিত ভাষার প্রিফিক্স দেখাবে যখন নির্বাচিত ভাষায় বিষয়বস্তু পাওয়া যাবে না।"
+
+#: ../admin/qtx_admin_settings.php:410
+msgid ""
+"This is relevant to all fields other than the main content of posts and pages. Such "
+"untranslated fields are always shown in an alternative available language, and will be "
+"prefixed with the language name in parentheses, if this option is on."
+msgstr ""
+
+#: ../admin/qtx_admin_settings.php:414
 msgid "Language Names"
 msgstr "ভাষার নাম"
 
-#: admin/qtx_configuration.php:329
+#: ../admin/qtx_admin_settings.php:418
 msgid "Show language names in \"Camel Case\"."
 msgstr "ভাষার নাম \"ক্যামেল কেস\"-এ দেখাবে।"
 
-#: admin/qtx_configuration.php:330
+#: ../admin/qtx_admin_settings.php:420
 #, php-format
-msgid "Define how to display translated language names, whenever languages need to be listed, for example, in \"%s\" statement."
+msgid ""
+"Define how to display translated language names, whenever languages need to be listed, "
+"for example, in \"%s\" statement."
 msgstr ""
 
-#: admin/qtx_configuration.php:334
+#: ../admin/qtx_admin_settings.php:424
 msgid "Detect Browser Language"
 msgstr "ব্রাউজারের ভাষা অনুযায়ী"
 
-#: admin/qtx_configuration.php:336
+#: ../admin/qtx_admin_settings.php:429
 msgid "Detect the language of the browser and redirect accordingly."
 msgstr "ব্রাউজারের ভাষা অনুধাবন করে সে অনুযায়ী চালিত হবে।"
 
-#: admin/qtx_configuration.php:337
-#, fuzzy
-msgid "When the frontpage is visited via bookmark/external link/type-in, the visitor will be forwarded to the correct URL for the language specified by his browser."
+#: ../admin/qtx_admin_settings.php:431
+msgid ""
+"When the frontpage is visited via bookmark/external link/type-in, the visitor will be "
+"forwarded to the correct URL for the language specified by his browser."
 msgstr "اذا تم زيارة الصفحة سيتم التحويل اللغة تلقائيا الي اللغة المستخدمة في المتصفح."
 
-#: admin/qtx_configuration.php:345
+#: ../admin/qtx_admin_settings.php:446
 msgid "Post Types"
 msgstr "পোস্ট টাইপসমূহ"
 
-#: admin/qtx_configuration.php:347
+#: ../admin/qtx_admin_settings.php:448
 msgid "Post types enabled for translation:"
 msgstr ""
 
-#: admin/qtx_configuration.php:358
-msgid "If a post type unchecked, no fields in a post of that type are treated as translatable on editing pages. However, the manual raw multilingual entries with language tags may still get translated in a usual way at front-end."
+#: ../admin/qtx_admin_settings.php:468
+msgid ""
+"If a post type unchecked, no fields in a post of that type are treated as translatable "
+"on editing pages. However, the manual raw multilingual entries with language tags may "
+"still get translated in a usual way at front-end."
 msgstr ""
 
-#: admin/qtx_configuration.php:362
+#: ../admin/qtx_admin_settings.php:472
 msgid "Flag Image Path"
 msgstr "পতাকার ইমেজের পাথ"
 
-#: admin/qtx_configuration.php:365
-#, fuzzy, php-format
-msgid "Path to the flag images under wp-content, with trailing slash. (Default: %s, clear the value above to reset it to the default)"
+#: ../admin/qtx_admin_settings.php:479
+#, php-format
+msgid ""
+"Path to the flag images under wp-content, with trailing slash. (Default: %s, clear the "
+"value above to reset it to the default)"
 msgstr "مسار محتوي اعلام الدول داخل wp-content (الافتراضي هو  %s )"
 
-#: admin/qtx_configuration.php:369
-#, fuzzy
+#: ../admin/qtx_admin_settings.php:483
 msgid "Ignore Links"
 msgstr "تجاهل الروابط"
 
-#: admin/qtx_configuration.php:372
+#: ../admin/qtx_admin_settings.php:488
 #, php-format
 msgid "Don't convert links to files of the given file types. (Always included: %s)"
 msgstr ""
 
-#: admin/qtx_configuration.php:376 admin/qtx_languages.php:68
-#: qtranslate_widget.php:120
+#: ../admin/qtx_admin_settings.php:492 ../admin/qtx_languages.php:74
+#: ../qtranslate_widget.php:183
 msgid "Head inline CSS"
 msgstr ""
 
-#: admin/qtx_configuration.php:378
+#: ../admin/qtx_admin_settings.php:497
 msgid "CSS code added by plugin in the head of front-end pages:"
 msgstr ""
 
-#: admin/qtx_configuration.php:381 qtranslate_widget.php:120
-msgid "To disable this inline CSS, clear the check box."
-msgstr ""
-
-#: admin/qtx_configuration.php:381 admin/qtx_configuration.php:507
-#: admin/qtx_configuration.php:543 qtranslate_widget.php:120
+#: ../admin/qtx_admin_settings.php:502 ../admin/qtx_admin_settings.php:687
+#: ../admin/qtx_admin_settings.php:752 ../qtranslate_widget.php:183
 msgid "To reset to default, clear the text."
 msgstr "ডিফল্টে ফিরে যেতে, টেক্সট মুছে দিন।"
 
-#: admin/qtx_configuration.php:385
+#: ../admin/qtx_admin_settings.php:502 ../qtranslate_widget.php:183
+msgid "To disable this inline CSS, clear the check box."
+msgstr ""
+
+#: ../admin/qtx_admin_settings.php:506
 msgid "Cookie Settings"
 msgstr "কুকি সেটিং"
 
-#: admin/qtx_configuration.php:387
+#: ../admin/qtx_admin_settings.php:511
 #, php-format
 msgid "Disable language client cookie \"%s\" (not recommended)."
 msgstr ""
 
-#: admin/qtx_configuration.php:388
+#: ../admin/qtx_admin_settings.php:513
 #, php-format
-msgid "Language cookie is auto-disabled for \"%s\" \"Pre-Domain\" and \"Per-Domain\", as language is always unambiguously defined by a url in those modes."
+msgid ""
+"Language cookie is auto-disabled for \"%s\" \"Pre-Domain\" and \"Per-Domain\", as "
+"language is always unambiguously defined by a url in those modes."
 msgstr ""
 
-#: admin/qtx_configuration.php:388
+#: ../admin/qtx_admin_settings.php:513
 #, php-format
-msgid "Otherwise, use this option with a caution, for simple enough sites only. If checked, the user choice of browsing language will not be saved between sessions and some AJAX calls may deliver unexpected language, as well as some undesired language switching during browsing may occur under certain themes (%sRead More%s)."
+msgid ""
+"Otherwise, use this option with a caution, for simple enough sites only. If checked, "
+"the user choice of browsing language will not be saved between sessions and some AJAX "
+"calls may deliver unexpected language, as well as some undesired language switching "
+"during browsing may occur under certain themes (%sRead More%s)."
 msgstr ""
 
-#: admin/qtx_configuration.php:390
+#: ../admin/qtx_admin_settings.php:518
 #, php-format
 msgid "Make %s cookies available only through HTTPS connections."
 msgstr ""
 
-#: admin/qtx_configuration.php:391
+#: ../admin/qtx_admin_settings.php:520
 msgid "Don't check this if you don't know what you're doing!"
 msgstr ""
 
-#: admin/qtx_configuration.php:395
+#: ../admin/qtx_admin_settings.php:524
 msgid "Update Gettext Databases"
 msgstr ""
 
-#: admin/qtx_configuration.php:397
+#: ../admin/qtx_admin_settings.php:529
 msgid "Automatically check for .mo-Database Updates of installed languages."
 msgstr ""
 
-#: admin/qtx_configuration.php:399
+#: ../admin/qtx_admin_settings.php:535
 msgid "Update Gettext databases now."
 msgstr ""
 
-#: admin/qtx_configuration.php:400
-msgid "qTranslate will query the Wordpress Localisation Repository every week and download the latest Gettext Databases (.mo Files)."
-msgstr "কিউট্রান্সলেট ওয়ার্ডপ্রেসের লোকালাইজেশন রিপোজিটরিতে প্রতি সপ্তাহেই খুঁজে দেখবে এবং সর্বশেষ সংস্করণের গেটটেক্সট ডাটাবেস (.mo ফাইলসমূহ) নামাবে।"
+#: ../admin/qtx_admin_settings.php:537
+msgid ""
+"qTranslate will query the Wordpress Localisation Repository every week and download the "
+"latest Gettext Databases (.mo Files)."
+msgstr ""
+"কিউট্রান্সলেট ওয়ার্ডপ্রেসের লোকালাইজেশন রিপোজিটরিতে প্রতি সপ্তাহেই খুঁজে দেখবে এবং সর্বশেষ "
+"সংস্করণের গেটটেক্সট ডাটাবেস (.mo ফাইলসমূহ) নামাবে।"
 
-#: admin/qtx_configuration.php:404
+#: ../admin/qtx_admin_settings.php:541
 msgid "Date / Time Conversion"
 msgstr "তারিখ / সময় রূপান্তর"
 
-#: admin/qtx_configuration.php:406
+#: ../admin/qtx_admin_settings.php:545
 msgid "Use emulated date function."
 msgstr "ইমুলেটেড ডেট ফাংশন ব্যবহার করবে।"
 
-#: admin/qtx_configuration.php:407
+#: ../admin/qtx_admin_settings.php:549
 #, fuzzy
-msgid "Use emulated date function and replace formats with the predefined formats for each language."
-msgstr "ইমুলেট করা তারিখের ফাংশন ব্যবহার করবে এবং প্রতিটি ভাষার জন্য আগেই সেট করে রাখা ফরম্যাটে তারিখ দেখাবে।"
+msgid ""
+"Use emulated date function and replace formats with the predefined formats for each "
+"language."
+msgstr ""
+"ইমুলেট করা তারিখের ফাংশন ব্যবহার করবে এবং প্রতিটি ভাষার জন্য আগেই সেট করে রাখা ফরম্যাটে "
+"তারিখ দেখাবে।"
 
-#: admin/qtx_configuration.php:408
+#: ../admin/qtx_admin_settings.php:553
 msgid "Use strftime instead of date."
 msgstr "date এর বদলে strftime ব্যবহার করবে।"
 
-#: admin/qtx_configuration.php:409
-msgid "Use strftime instead of date and replace formats with the predefined formats for each language."
+#: ../admin/qtx_admin_settings.php:557
+msgid ""
+"Use strftime instead of date and replace formats with the predefined formats for each "
+"language."
 msgstr ""
 
-#: admin/qtx_configuration.php:410
-msgid "Depending on the mode selected, additional customizations of the theme may be needed."
+#: ../admin/qtx_admin_settings.php:559
+msgid ""
+"Depending on the mode selected, additional customizations of the theme may be needed."
 msgstr ""
 
-#: admin/qtx_configuration.php:419
-#, fuzzy
+#: ../admin/qtx_admin_settings.php:563
 msgid "Translation of options"
-msgstr "অপশনসমূহের অনুবাদ"
+msgstr "ترجمة الخيارات"
 
-#: admin/qtx_configuration.php:421
+#: ../admin/qtx_admin_settings.php:569
 #, fuzzy
-msgid "Filter all WordPress options for translation at front-end. It may hurt performance of the site, but ensures that all options are translated."
-msgstr "ফ্রন্টএন্ডে ওয়ার্ডপ্রেসের সকল অপশন অনুবাদের জন্য ফিল্টার করবে। সাইটের কার্যকারীতা এতে একটু বিঘ্নিত হতে পারে, তবে সকল অপশন অনূদিত হওয়া নিশ্চিত করবে।"
+msgid ""
+"Filter all WordPress options for translation at front-end. It may hurt performance of "
+"the site, but ensures that all options are translated."
+msgstr ""
+"ফ্রন্টএন্ডে ওয়ার্ডপ্রেসের সকল অপশন অনুবাদের জন্য ফিল্টার করবে। সাইটের কার্যকারীতা এতে একটু বিঘ্নিত "
+"হতে পারে, তবে সকল অপশন অনূদিত হওয়া নিশ্চিত করবে।"
 
-#: admin/qtx_configuration.php:421
-msgid "Starting from version 3.2.5, only options with multilingual content get filtered, which should help on performance issues."
-msgstr "৩.২.৫ সংস্করণ থেকে শুরু হয়ে, যেসব অপশনে বহুভাষী বিষয়বস্তু আছে, সেগুলোই কেবল ফিল্টার হবে, যা সাইটের কার্যকারিতা বাড়াবে।"
+#: ../admin/qtx_admin_settings.php:569
+msgid ""
+"Starting from version 3.2.5, only options with multilingual content get filtered, which "
+"should help on performance issues."
+msgstr ""
+"৩.২.৫ সংস্করণ থেকে শুরু হয়ে, যেসব অপশনে বহুভাষী বিষয়বস্তু আছে, সেগুলোই কেবল ফিল্টার হবে, যা "
+"সাইটের কার্যকারিতা বাড়াবে।"
 
-#: admin/qtx_configuration.php:423
-#, fuzzy
+#: ../admin/qtx_admin_settings.php:576
 msgid "Translate only options listed below (for experts only):"
 msgstr "কেবল নিচের তালিকার অপশনগুলো অনুবাদ করবে (কেবল দক্ষদের জন্য):"
 
-#: admin/qtx_configuration.php:426
+#: ../admin/qtx_admin_settings.php:582
 #, php-format
-msgid "By default, all options are filtered to be translated at front-end for the sake of simplicity of configuration. However, for a developed site, this may cause a considerable performance degradation. Normally, there are very few options, which actually need a translation. You may simply list them above to minimize the performance impact, while still getting translations needed. Options names must match the field \"%s\" of table \"%s\" of WordPress database. A minimum common set of option, normally needed a translation, is already entered in the list above as a default example. Option names in the list may contain wildcard with symbol \"%s\"."
-msgstr "ডিফল্টরূপে, কনফিগারেশনের সরলতার জন্য সমস্ত অপনশনসমূহ ফ্রন্টএন্ড-এ অনুবাদের জন্য ফিল্টার হয়। তবে কোন উন্নত সাইটের জন্য এটি যথেষ্ট কার্যকারিতা হ্রাস পেতে পারে। সাধারণত, খুব কম অপশন রয়েছে, যার আসলে অনুবাদ দরকার। পারফরম্যান্স প্রভাব হ্রাস করতে আপনি সেগুলোকে উপরে তালিকাবদ্ধ করতে পারেন, তাতে যদি প্রয়োজনীয় অনুবাদগুলোর পাওয়া যায়। বিকল্পের নামগুলি অবশ্যই ওয়ার্ডপ্রেস ডাটাবেসের \"% s\" টেবিলের \"% s\" ফিল্ডের সাথে মিলতে হবে। অপশনগুলোর একটি সর্বনিম্ন সাধারণ সেট, সাধারণত একটি অনুবাদের প্রয়োজন হয়, উপরের তালিকায় একটি ডিফল্ট উদাহরণ হিসাবে ইতিমধ্যে প্রবেশ করা হয়েছে। তালিকার বিকল্পগুলির নামগুলিতে \"% s\" চিহ্ন সহ ওয়াইল্ডকার্ড থাকতে পারে।"
+msgid ""
+"By default, all options are filtered to be translated at front-end for the sake of "
+"simplicity of configuration. However, for a developed site, this may cause a "
+"considerable performance degradation. Normally, there are very few options, which "
+"actually need a translation. You may simply list them above to minimize the performance "
+"impact, while still getting translations needed. Options names must match the field \"%s"
+"\" of table \"%s\" of WordPress database. A minimum common set of option, normally "
+"needed a translation, is already entered in the list above as a default example. Option "
+"names in the list may contain wildcard with symbol \"%s\"."
+msgstr ""
+"ডিফল্টরূপে, কনফিগারেশনের সরলতার জন্য সমস্ত অপনশনসমূহ ফ্রন্টএন্ড-এ অনুবাদের জন্য ফিল্টার হয়। তবে "
+"কোন উন্নত সাইটের জন্য এটি যথেষ্ট কার্যকারিতা হ্রাস পেতে পারে। সাধারণত, খুব কম অপশন রয়েছে, যার "
+"আসলে অনুবাদ দরকার। পারফরম্যান্স প্রভাব হ্রাস করতে আপনি সেগুলোকে উপরে তালিকাবদ্ধ করতে পারেন, "
+"তাতে যদি প্রয়োজনীয় অনুবাদগুলোর পাওয়া যায়। বিকল্পের নামগুলি অবশ্যই ওয়ার্ডপ্রেস ডাটাবেসের \"% s\" "
+"টেবিলের \"% s\" ফিল্ডের সাথে মিলতে হবে। অপশনগুলোর একটি সর্বনিম্ন সাধারণ সেট, সাধারণত একটি "
+"অনুবাদের প্রয়োজন হয়, উপরের তালিকায় একটি ডিফল্ট উদাহরণ হিসাবে ইতিমধ্যে প্রবেশ করা হয়েছে। "
+"তালিকার বিকল্পগুলির নামগুলিতে \"% s\" চিহ্ন সহ ওয়াইল্ডকার্ড থাকতে পারে।"
 
-#: admin/qtx_configuration.php:430
+#: ../admin/qtx_admin_settings.php:586
 #, fuzzy
 msgid "Editor Mode"
 msgstr "এডিটর মোড"
 
-#: admin/qtx_configuration.php:432
+#: ../admin/qtx_admin_settings.php:591
 #, fuzzy
 msgid "Use Language Switching Buttons (LSB)."
 msgstr "ভাষা পাল্টাবার বোতাম (LSB) ব্যবহার করুন।"
 
-#: admin/qtx_configuration.php:433
-msgid "Pages with translatable fields have Language Switching Buttons, which control what language is being edited, while admin language stays the same."
-msgstr ""
-
-#: admin/qtx_configuration.php:433
+#: ../admin/qtx_admin_settings.php:593
 msgid "This is the default mode."
 msgstr "এটা হলো ডিফল্ট মোড।"
 
-#: admin/qtx_configuration.php:434
-msgid "Do not use Language Switching Buttons to edit multi-language text entries."
+#: ../admin/qtx_admin_settings.php:593
+msgid ""
+"Pages with translatable fields have Language Switching Buttons, which control what "
+"language is being edited, while admin language stays the same."
 msgstr ""
 
-#: admin/qtx_configuration.php:434
+#: ../admin/qtx_admin_settings.php:598
 msgid "Editor Raw Mode"
 msgstr ""
 
-#: admin/qtx_configuration.php:435
-msgid "Some people prefer to edit the raw entries containing all languages together separated by language defining tags, as they are stored in database."
+#: ../admin/qtx_admin_settings.php:599
+msgid "Do not use Language Switching Buttons to edit multi-language text entries."
 msgstr ""
 
-#: admin/qtx_configuration.php:436
+#: ../admin/qtx_admin_settings.php:601
+msgid ""
+"Some people prefer to edit the raw entries containing all languages together separated "
+"by language defining tags, as they are stored in database."
+msgstr ""
+
+#: ../admin/qtx_admin_settings.php:606
 msgid "Single Language Mode."
 msgstr "একক ভাষা মোড।"
 
-#: admin/qtx_configuration.php:436
+#: ../admin/qtx_admin_settings.php:606
 msgid "The language edited is the same as admin language."
 msgstr "সম্পাদিত ভাষা আর অ্যাডমিন ভাষা একই।"
 
-#: admin/qtx_configuration.php:437
-msgid "Edit language cannot be switched without page re-loading. Try this mode, if some of the advanced translatable fields do not properly respond to the Language Switching Buttons due to incompatibility with a plugin, which severely alters the default WP behaviour. This mode is the most compatible with other themes and plugins."
+#: ../admin/qtx_admin_settings.php:608
+msgid ""
+"Edit language cannot be switched without page re-loading. Try this mode, if some of the "
+"advanced translatable fields do not properly respond to the Language Switching Buttons "
+"due to incompatibility with a plugin, which severely alters the default WP behaviour. "
+"This mode is the most compatible with other themes and plugins."
 msgstr ""
 
-#: admin/qtx_configuration.php:437
-msgid "One may find convenient to use the default Editor Mode, while remembering not to switch edit languages on custom advanced translatable fields, where LSB do not work."
+#: ../admin/qtx_admin_settings.php:608
+msgid ""
+"One may find convenient to use the default Editor Mode, while remembering not to switch "
+"edit languages on custom advanced translatable fields, where LSB do not work."
 msgstr ""
 
-#: admin/qtx_configuration.php:449
+#: ../admin/qtx_admin_settings.php:616 ../admin/qtx_admin_settings.php:619
+msgid "LSB Style"
+msgstr "ভাষা সুইচ স্টাইল"
+
+#: ../admin/qtx_admin_settings.php:620
 msgid "Choose CSS style for how Language Switching Buttons are rendered:"
 msgstr ""
 
-#: admin/qtx_configuration.php:450
-#, php-format
-msgid "LSB %s-wrap classes:"
-msgstr ""
-
-#: admin/qtx_configuration.php:451
-msgid "Active button class:"
-msgstr ""
-
-#: admin/qtx_configuration.php:452
-msgid "The above is reset to an appropriate default, if the below is changed."
-msgstr ""
-
-#: admin/qtx_configuration.php:453
-#, fuzzy
-msgid "CSS set:"
-msgstr "CSS সেট:"
-
-#: admin/qtx_configuration.php:457 admin/qtx_configuration.php:459
-#: admin/qtx_configuration.php:501 admin/qtx_configuration.php:503
-#, fuzzy
+#: ../admin/qtx_admin_settings.php:625 ../admin/qtx_admin_settings.php:627
+#: ../admin/qtx_admin_settings.php:678 ../admin/qtx_admin_settings.php:681
 msgid "Use custom CSS"
-msgstr "কাস্টম CSS ব্যবহার"
+msgstr "CSS خاص"
 
-#: admin/qtx_configuration.php:459
+#: ../admin/qtx_admin_settings.php:627
 #, php-format
-msgid "Choice \"%s\" disables this option and allows one to use its own custom CSS provided by other means."
+msgid ""
+"Choice \"%s\" disables this option and allows one to use its own custom CSS provided by "
+"other means."
 msgstr ""
 
-#: admin/qtx_configuration.php:478
-msgid "When there are many integrated or customized translatable fields, it may become confusing to know which field has multilingual value. The highlighting of translatable fields may come handy then:"
+#: ../admin/qtx_admin_settings.php:631
+msgid ""
+"Hide button \"Copy From\", which allows to copy multilingual content from other "
+"language."
 msgstr ""
 
-#: admin/qtx_configuration.php:481 admin/qtx_configuration.php:483
+#: ../admin/qtx_admin_settings.php:648 ../admin/qtx_admin_settings.php:652
+#: ../admin/qtx_user_options.php:21
+msgid "Highlight Style"
+msgstr "হাইলাইট স্টাইল"
+
+#: ../admin/qtx_admin_settings.php:650
+msgid ""
+"When there are many integrated or customized translatable fields, it may become "
+"confusing to know which field has multilingual value. The highlighting of translatable "
+"fields may come handy then:"
+msgstr ""
+
+#: ../admin/qtx_admin_settings.php:653 ../admin/qtx_admin_settings.php:656
 msgid "Do not highlight the translatable fields."
 msgstr "অনুবাদযোগ্য ফিল্ড হাইলাইট করবে না।"
 
-#: admin/qtx_configuration.php:485 admin/qtx_configuration.php:487
+#: ../admin/qtx_admin_settings.php:658 ../admin/qtx_admin_settings.php:661
 msgid "Show a line on the left border of translatable fields."
 msgstr "অনুবাদযোগ্য ফিল্ডের বামের সীমায় একটি দাগ দেখাবে।"
 
-#: admin/qtx_configuration.php:489 admin/qtx_configuration.php:491
+#: ../admin/qtx_admin_settings.php:663 ../admin/qtx_admin_settings.php:666
 msgid "Draw a border around translatable fields."
 msgstr "অনুবাদযোগ্য ফিল্ডের চারদিকে দাগ দেখাবে।"
 
-#: admin/qtx_configuration.php:493 admin/qtx_configuration.php:495
+#: ../admin/qtx_admin_settings.php:668 ../admin/qtx_admin_settings.php:671
 #, fuzzy
 msgid "Show a shadow on the left of translatable fields."
 msgstr "عرض اشارة علي يسار الحقول المتاحة للترجمة"
 
-#: admin/qtx_configuration.php:497 admin/qtx_configuration.php:499
+#: ../admin/qtx_admin_settings.php:673 ../admin/qtx_admin_settings.php:676
 #, fuzzy
 msgid "Outline border around translatable fields."
 msgstr "رسم حدود حول الحقول المتاحة للترجمة"
 
-#: admin/qtx_configuration.php:507
-#, fuzzy, php-format
+#: ../admin/qtx_admin_settings.php:688
+#, php-format
 msgid "The color in use is taken from your profile option %s, the third color."
 msgstr "اللون المستخدم  %s مستخدم من خيار الالوان في اعدادات صفحة المستخدم"
 
-#: admin/qtx_configuration.php:533
+#: ../admin/qtx_admin_settings.php:703
 #, php-format
-msgid "If your theme or some plugins are not fully integrated with %s, suggest their authors to review the %sIntegration Guide%s. In many cases they would only need to create a simple text file in order to be fully compatible with %s. Alternatively, you may create such a file for them and for yourselves."
+msgid ""
+"If your theme or some plugins are not fully integrated with %s, suggest their authors "
+"to review the %sIntegration Guide%s. In many cases they would only need to create a "
+"simple text file in order to be fully compatible with %s. Alternatively, you may create "
+"such a file for them and for yourselves."
 msgstr ""
 
-#: admin/qtx_configuration.php:534
+#: ../admin/qtx_admin_settings.php:705
 #, php-format
-msgid "Read %sIntegration Guide%s for more information on how to customize the configuration of %s."
+msgid ""
+"Read %sIntegration Guide%s for more information on how to customize the configuration "
+"of %s."
 msgstr ""
 
-#: admin/qtx_configuration.php:538
-#, php-format
-msgid "List of configuration files. Unless prefixed with \"%s\", paths are relative to %s variable: %s. Absolute paths are also acceptable."
+#: ../admin/qtx_admin_settings.php:709
+msgid "Built-in Modules"
 msgstr ""
 
-#: admin/qtx_configuration.php:540
-#, php-format
-msgid "The list gets auto-updated on a 3rd-party integrated plugin activation/deactivation. You may also add your own custom files for your theme or plugins. File \"%s\" is the default configuration loaded from this plugin folder. It is not recommended to modify any configuration file from other authors, but you may alter any configuration item through your own custom file appended to the end of this list."
+#: ../admin/qtx_admin_settings.php:712
+msgid ""
+"The built-in integration modules are automatically enabled if the related plugin is "
+"active and no incompatible plugin (e.g. legacy integration plugin) prevents them to be "
+"loaded."
 msgstr ""
 
-#: admin/qtx_configuration.php:541 admin/qtx_configuration.php:552
+#: ../admin/qtx_admin_settings.php:744
 #, php-format
-msgid "Use \"%s\" to review the resulting combined configuration from all \"%s\" and this option."
+msgid ""
+"List of configuration files. Unless prefixed with \"%s\", paths are relative to %s "
+"variable: %s. Absolute paths are also acceptable."
 msgstr ""
 
-#: admin/qtx_configuration.php:548
+#: ../admin/qtx_admin_settings.php:747
 #, php-format
-msgid "Additional custom JSON-encoded configuration of %s for all admin pages. It is processed after all files from option \"%s\" are loaded, providing opportunity to add or to override configuration tokens as necessary."
+msgid ""
+"The list gets auto-updated on a 3rd-party integrated plugin activation/deactivation. "
+"You may also add your own custom files for your theme or plugins. File \"%s\" is the "
+"default configuration loaded from this plugin folder. It is not recommended to modify "
+"any configuration file from other authors, but you may alter any configuration item "
+"through your own custom file appended to the end of this list."
 msgstr ""
 
-#: admin/qtx_configuration.php:550
+#: ../admin/qtx_admin_settings.php:749 ../admin/qtx_admin_settings.php:769
 #, php-format
-msgid "It would make no difference, if the content of this field is stored in a file, which name is listed last in option \"%s\". Therefore, this field only provides flexibility for the sake of convenience."
+msgid ""
+"Use \"%s\" to review the resulting combined configuration from all \"%s\" and this "
+"option."
 msgstr ""
 
-#: admin/qtx_configuration.php:557
-#, fuzzy
+#: ../admin/qtx_admin_settings.php:758
+#, php-format
+msgid ""
+"Additional custom JSON-encoded configuration of %s for all admin pages. It is processed "
+"after all files from option \"%s\" are loaded, providing opportunity to add or to "
+"override configuration tokens as necessary."
+msgstr ""
+
+#: ../admin/qtx_admin_settings.php:765
+#, php-format
+msgid ""
+"It would make no difference, if the content of this field is stored in a file, which "
+"name is listed last in option \"%s\". Therefore, this field only provides flexibility "
+"for the sake of convenience."
+msgstr ""
+
+#: ../admin/qtx_admin_settings.php:774
 msgid "Custom Fields"
-msgstr "কাস্টম ফিল্ড"
+msgstr "الحقول المخصصة"
 
-#: admin/qtx_configuration.php:559
+#: ../admin/qtx_admin_settings.php:776
 #, php-format
-msgid "Enter \"%s\" or \"%s\" attribute of text fields from your theme, which you wish to translate. This applies to post, page and media editors (%s). To lookup \"%s\" or \"%s\", right-click on the field in the post or the page editor and choose \"%s\". Look for an attribute of the field named \"%s\" or \"%s\". Enter it below, as many as you need, space- or comma-separated. After saving configuration, these fields will start responding to the language switching buttons, and you can enter different text for each language. The input fields of type %s will be parsed using %s syntax, while single line text fields will use %s syntax. If you need to override this behaviour, prepend prefix %s or %s to the name of the field to specify which syntax to use. For more information, read %sFAQ%s."
+msgid ""
+"Enter \"%s\" or \"%s\" attribute of text fields from your theme, which you wish to "
+"translate. This applies to post, page and media editors (%s). To lookup \"%s\" or \"%s"
+"\", right-click on the field in the post or the page editor and choose \"%s\". Look for "
+"an attribute of the field named \"%s\" or \"%s\". Enter it below, as many as you need, "
+"space- or comma-separated. After saving configuration, these fields will start "
+"responding to the language switching buttons, and you can enter different text for each "
+"language. The input fields of type %s will be parsed using %s syntax, while single line "
+"text fields will use %s syntax. If you need to override this behaviour, prepend prefix "
+"%s or %s to the name of the field to specify which syntax to use. For more information, "
+"read %sFAQ%s."
 msgstr ""
 
-#: admin/qtx_configuration.php:559
-#, fuzzy
-msgctxt "browser option"
-msgid "Inspect Element"
-msgstr "ইনস্পেক্ট এলিমেন্ট"
-
-#: admin/qtx_configuration.php:566
-msgid "The value of \"id\" attribute is normally unique within one page, otherwise the first field found, having an id specified, is picked up."
+#: ../admin/qtx_admin_settings.php:785
+msgid ""
+"The value of \"id\" attribute is normally unique within one page, otherwise the first "
+"field found, having an id specified, is picked up."
 msgstr ""
 
-#: admin/qtx_configuration.php:573
+#: ../admin/qtx_admin_settings.php:794
 #, php-format
-msgid "All the fields of specified classes will respond to Language Switching Buttons. Be careful not to include a class, which would affect language-neutral fields. If you cannot uniquely identify a field needed neither by %s, nor by %s attribute, report the issue on %sSupport Forum%s"
+msgid ""
+"All the fields of specified classes will respond to Language Switching Buttons. Be "
+"careful not to include a class, which would affect language-neutral fields. If you "
+"cannot uniquely identify a field needed neither by %s, nor by %s attribute, report the "
+"issue on %sSupport Forum%s"
 msgstr ""
 
-#: admin/qtx_configuration.php:577
+#: ../admin/qtx_admin_settings.php:798
 #, fuzzy
 msgid "Custom Filters"
 msgstr "কাস্টম ফিল্টার"
 
-#: admin/qtx_configuration.php:580
+#: ../admin/qtx_admin_settings.php:803
 #, php-format
-msgid "Names of filters (which are enabled on theme or other plugins via %s function) to add translation to. For more information, read %sFAQ%s."
+msgid ""
+"Names of filters (which are enabled on theme or other plugins via %s function) to add "
+"translation to. For more information, read %sFAQ%s."
 msgstr ""
 
-#: admin/qtx_configuration.php:592 admin/qtx_import_export.php:84
+#: ../admin/qtx_admin_settings.php:807 ../admin/qtx_import_export.php:68
 msgid "Compatibility Functions"
 msgstr ""
 
-#: admin/qtx_configuration.php:594
+#: ../admin/qtx_admin_settings.php:812
 #, php-format
 msgid "Enable function name compatibility (%s)."
 msgstr ""
 
-#: admin/qtx_configuration.php:595
+#: ../admin/qtx_admin_settings.php:814
 #, php-format
-msgid "Some plugins and themes use direct calls to the functions listed, which are defined in former %s plugin and some of its forks. Turning this flag on will enable those function to exists, which will make the dependent plugins and themes to work. WordPress policy prohibits to define functions with the same names as in other plugins, since it generates user-unfriendly fatal errors, when two conflicting plugins are activated simultaneously. Before turning this option on, you have to make sure that there are no other plugins active, which define those functions."
+msgid ""
+"Some plugins and themes use direct calls to the functions listed, which are defined in "
+"former %s plugin and some of its forks. Turning this flag on will enable those function "
+"to exists, which will make the dependent plugins and themes to work. WordPress policy "
+"prohibits to define functions with the same names as in other plugins, since it "
+"generates user-unfriendly fatal errors, when two conflicting plugins are activated "
+"simultaneously. Before turning this option on, you have to make sure that there are no "
+"other plugins active, which define those functions."
 msgstr ""
 
-#: admin/qtx_configuration.php:625
-#, fuzzy
-msgctxt "Two-letter Language Code meant."
-msgid "Code"
-msgstr "কোড"
+#: ../admin/qtx_admin_settings.php:825
+msgid "Debugging Information"
+msgstr ""
 
-#: admin/qtx_configuration.php:628 qtranslate_services.php:365
-msgid "Action"
-msgstr "ব্যবস্থা গ্রহণ"
-
-#: admin/qtx_configuration.php:630
-msgid "Stored"
-msgstr "সঞ্চিত"
-
-#: admin/qtx_configuration.php:666
+#: ../admin/qtx_admin_settings.php:827
 #, php-format
-msgid "%s Flag"
-msgstr "পতাকা %s"
+msgid ""
+"If you encounter any problems and you are unable to solve them yourself, you can visit "
+"the <a href=\"%s\">Support Forum</a>. Posting the following Content will help other "
+"detect any misconfigurations."
+msgstr ""
 
-#: admin/qtx_configuration.php:668
-msgid "Default"
-msgstr "ডিফল্ট"
+#: ../admin/qtx_admin_settings.php:830
+#, fuzzy
+#| msgid "Additional information: %s"
+msgid "Collect information"
+msgstr "বাড়তি তথ্য: %s"
 
-#: admin/qtx_configuration.php:668 admin/qtx_configuration.php:686
-msgid "Enable"
-msgstr "চালু করুন"
+#: ../admin/qtx_admin_settings.php:833
+msgid "Versions"
+msgstr ""
 
-#: admin/qtx_configuration.php:670 admin/qtx_configuration.php:686
-msgid "Delete"
-msgstr "মুছুন"
+#: ../admin/qtx_admin_settings.php:838
+#, fuzzy
+#| msgid "Configuration Files"
+msgid "Configuration"
+msgstr "কনফিগারেশন ফাইলসমূহ"
 
-#: admin/qtx_configuration.php:670
-msgid "Pre-Defined"
-msgstr "পূর্ব-নির্ধারিত"
+#: ../admin/qtx_admin_settings.php:843
+msgid "Browser"
+msgstr ""
 
-#: admin/qtx_configuration.php:670 admin/qtx_configuration.php:686
-msgid "Reset"
-msgstr "রিসেট"
-
-#: admin/qtx_configuration.php:681
+#: ../admin/qtx_admin_settings.php:861
 msgid "List of Configured Languages"
 msgstr "কনফিগারকৃত ভাষার তালিকা"
 
-#: admin/qtx_configuration.php:684
+#: ../admin/qtx_admin_settings.php:864
 #, php-format
-msgid "Only enabled languages are loaded at front-end, while all %d configured languages are listed here."
-msgstr "কেবল সচলকৃত ভাষাগুলোই ফ্রন্ট-এন্ডে লোড হয়, তবে কনফিগারকৃত %dটি সকল ভাষা এখানে তালিকায় আছে।"
+msgid ""
+"Only enabled languages are loaded at front-end, while all %d configured languages are "
+"listed here."
+msgstr ""
+"কেবল সচলকৃত ভাষাগুলোই ফ্রন্ট-এন্ডে লোড হয়, তবে কনফিগারকৃত %dটি সকল ভাষা এখানে তালিকায় আছে।"
 
-#: admin/qtx_configuration.php:685
-msgid "The table below contains both pre-defined and manually added or modified languages."
+#: ../admin/qtx_admin_settings.php:866
+msgid ""
+"The table below contains both pre-defined and manually added or modified languages."
 msgstr "নিচের সারণীতে পূর্ব-নির্ধারিত এবং নিজে যোগকৃত অথবা পরিমার্জিত ভাষাগুলো আছে।"
 
-#: admin/qtx_configuration.php:686
+#: ../admin/qtx_admin_settings.php:868
 #, php-format
-msgid "You may %s or %s a language, or %s manually added language, or %s previous modifications of a pre-defined language."
-msgstr "আপনি কোনো ভাষাকে %s বা %s করতে পারেন, অথবা নিজে যোগ করা ভাষাকে %s করতে পারেন, অথবা পূর্ব-নির্ধারিত কোনো ভাষার আগের সংশোধনসমূহ %s করতে পারেন।"
+msgid ""
+"You may %s or %s a language, or %s manually added language, or %s previous "
+"modifications of a pre-defined language."
+msgstr ""
+"আপনি কোনো ভাষাকে %s বা %s করতে পারেন, অথবা নিজে যোগ করা ভাষাকে %s করতে পারেন, অথবা পূর্ব-"
+"নির্ধারিত কোনো ভাষার আগের সংশোধনসমূহ %s করতে পারেন।"
 
-#: admin/qtx_configuration.php:687
+#: ../admin/qtx_admin_settings.php:868 ../admin/qtx_admin_settings_language_list.php:62
+msgid "Enable"
+msgstr "চালু করুন"
+
+#: ../admin/qtx_admin_settings.php:868 ../admin/qtx_admin_settings_language_list.php:64
+msgid "Delete"
+msgstr "মুছুন"
+
+#: ../admin/qtx_admin_settings.php:868 ../admin/qtx_admin_settings_language_list.php:64
+msgid "Reset"
+msgstr "রিসেট"
+
+#: ../admin/qtx_admin_settings.php:870
 #, php-format
 msgid "Click %s to modify language properties."
 msgstr "ভাষার বৈশিষ্ট্য রদবদল করতে %s ক্লিক করুন।"
 
-#: admin/qtx_configuration.php:726
-msgid "Enabling a language will cause qTranslate to update the Gettext-Database for the language, which can take a while depending on your server's connection speed."
-msgstr "কোনো ভাষা সক্রিয় করলে কিউট্রান্সলেট সেই ভাষার গেটটেক্সট-ডাটাবেজ হালনাগাদ করবে, যা আপনার সার্ভারের সংযোগ ক্ষমতার উপর নির্ভর করে বেশ লম্বা সময় নিতে পারে।"
+#: ../admin/qtx_admin_settings.php:877
+msgid ""
+"Enabling a language will cause qTranslate to update the Gettext-Database for the "
+"language, which can take a while depending on your server's connection speed."
+msgstr ""
+"কোনো ভাষা সক্রিয় করলে কিউট্রান্সলেট সেই ভাষার গেটটেক্সট-ডাটাবেজ হালনাগাদ করবে, যা আপনার "
+"সার্ভারের সংযোগ ক্ষমতার উপর নির্ভর করে বেশ লম্বা সময় নিতে পারে।"
 
-#: admin/qtx_configuration.php:733
+#: ../admin/qtx_admin_settings.php:883
 msgid "Add Language"
 msgstr "ভাষা যোগ করুন"
 
-#: admin/qtx_configuration.php:738
+#: ../admin/qtx_admin_settings.php:885
 msgid "Add Language &raquo;"
 msgstr "ভাষা যোগ করুন &raquo;"
 
-#: admin/qtx_import_export.php:84
-#, php-format
-msgid "Option \"%s\" has also been turned on, as the most common case for importing configuration from %s. You may turn it off manually if your setup does not require it. Refer to %sFAQ%s for more information."
-msgstr "অপশন \"%s\"-টিও চালু করা হয়েছে, কারণ %s থেকে কনফিগারেশন আমদানির ক্ষেত্রে এটা সবচেয়ে সাধারণ ঘটনা। আপনার সেটাপে এর প্রয়োজন না থাকলে বন্ধ করে দিতে পারেন। আরও তথ্যের জন্য %sসচরাচর জিজ্ঞাসিত প্রশ্নোত্তর%s দেখুন।"
+#: ../admin/qtx_admin_settings_language_list.php:31
+msgid "Action"
+msgstr "ব্যবস্থা গ্রহণ"
 
-#: admin/qtx_import_export.php:99
+#: ../admin/qtx_admin_settings_language_list.php:33
+msgid "Stored"
+msgstr "সঞ্চিত"
+
+#: ../admin/qtx_admin_settings_language_list.php:60
 #, php-format
-msgid "Applicable options and taxonomy names from plugin %s have been imported. Note that the multilingual content of posts, pages and other objects has not been altered during this operation. There is no additional operation needed to import content, since its format is compatible with %s."
+msgid "%s Flag"
+msgstr "পতাকা %s"
+
+#: ../admin/qtx_admin_settings_language_list.php:62
+msgid "Default"
+msgstr "ডিফল্ট"
+
+#: ../admin/qtx_admin_settings_language_list.php:64
+msgid "Pre-Defined"
+msgstr "পূর্ব-নির্ধারিত"
+
+#: ../admin/qtx_admin_utils.php:260
+msgid "Unknown Language"
+msgstr "অজানা ভাষা"
+
+#: ../admin/qtx_admin_utils.php:261
+msgid "Not enabled"
+msgstr "সক্রিয় নয়"
+
+#: ../admin/qtx_admin_utils.php:448
+#, php-format
+msgid ""
+"This is a set of \"%s\" from %s. Click any blank space between the buttons and drag it "
+"to a place where you would need it the most. Click the handle at the top-right corner "
+"of this widget to hide this message."
 msgstr ""
 
-#: admin/qtx_import_export.php:101
-#, php-format
-msgid "%sImportant%s: Before you start making edits to post and pages, please, make sure that both, your front site and admin back-end, work under this configuration. It may help to review \"%s\" and see if any of conflicting plugins mentioned there are used here. While the current content, coming from %s, is compatible with this plugin, the newly modified posts and pages will be saved with a new square-bracket-only encoding, which has a number of advantages comparing to former %s encoding. However, the new encoding is not straightforwardly compatible with %s and you will need an additional step available under \"%s\" option if you ever decide to go back to %s. Even with this additional conversion step, the 3rd-party plugins custom-stored data will not be auto-converted, but manual editing will still work. That is why it is advisable to create a test-copy of your site before making any further changes. In case you encounter a problem, please give us a chance to improve %s, send the login information to the test-copy of your site to %s along with a detailed step-by-step description of what is not working, and continue using your main site with %s meanwhile. It would also help, if you share a success story as well, either on %sthe forum%s, or via the same e-mail as mentioned above. Thank you very much for trying %s."
+#: ../admin/qtx_admin_utils.php:448
+msgid "Language Switching Buttons"
+msgstr "ভাষা পাল্টানোর বোতাম"
+
+#: ../admin/qtx_admin_utils_db.php:43
+msgid "Database has been converted to square bracket format."
 msgstr ""
 
-#: admin/qtx_import_export.php:101
-msgid "This is a one-time message, which you will not see again, unless the same import is repeated."
+#: ../admin/qtx_admin_utils_db.php:43 ../admin/qtx_admin_utils_db.php:45
+msgid "Note: custom entries are not touched."
+msgstr ""
+
+#: ../admin/qtx_admin_utils_db.php:45
+msgid "Database has been converted to legacy dual-tag format."
+msgstr ""
+
+#: ../admin/qtx_admin_utils_db.php:310
+#, fuzzy, php-format
+#| msgid "Failed to update gettext database for \"%s\": %s"
+msgid "Failed to open input database file \"%s\""
+msgstr "গেটটেক্সট ডাটাবেজ পাওয়া যায়নি \"%s\": %s"
+
+#: ../admin/qtx_admin_utils_db.php:324 ../admin/qtx_admin_utils_db.php:341
+#: ../admin/qtx_admin_utils_db.php:374
+#, fuzzy, php-format
+#| msgid "Failed to update gettext database for \"%s\": %s"
+msgid "Failed to open output database file \"%s\""
+msgstr "গেটটেক্সট ডাটাবেজ পাওয়া যায়নি \"%s\": %s"
+
+#: ../admin/qtx_admin_utils_db.php:377
+#, fuzzy, php-format
+#| msgid "Failed to update gettext database for \"%s\": %s"
+msgid "Failed to re-open output database file \"%s\""
+msgstr "গেটটেক্সট ডাটাবেজ পাওয়া যায়নি \"%s\": %s"
+
+#: ../admin/qtx_admin_utils_db.php:425
+#, php-format
+msgid ""
+"The database file provided has been split as requested. Number of multilingual strings "
+"found is %s. The result files are:%s"
+msgstr ""
+
+#: ../admin/qtx_admin_utils_db.php:496
+msgid "Could not fetch the list of terms from database."
+msgstr ""
+
+#: ../admin/qtx_admin_utils_db.php:498
+msgid "Nothing has been altered."
+msgstr ""
+
+#: ../admin/qtx_admin_utils_db.php:514
+msgid "Term configuration is inconsistent."
+msgstr ""
+
+#: ../admin/qtx_admin_utils_db.php:516
+#, php-format
+msgid ""
+"Term \"%s\" (id=%d) cannot be loaded and is left untouched. Error message on load was:%s"
+msgstr ""
+
+#: ../admin/qtx_admin_utils_db.php:581
+#, php-format
+msgid "Term \"%s\" (id=%d) has been modified from:%sto:%s"
+msgstr ""
+
+#: ../admin/qtx_admin_utils_db.php:593
+msgid "No term has been modified. All terms are already in a consistent state."
+msgstr ""
+
+#: ../admin/qtx_admin_utils_db.php:596
+msgid "Save this report for further analysis, if necessary."
+msgstr ""
+
+#: ../admin/qtx_admin_utils_db.php:599
+msgid "Legacy term names have been cleaned up:"
+msgstr ""
+
+#: ../admin/qtx_import_export.php:68
+#, php-format
+msgid ""
+"Option \"%s\" has also been turned on, as the most common case for importing "
+"configuration from %s. You may turn it off manually if your setup does not require it. "
+"Refer to %sFAQ%s for more information."
+msgstr ""
+"অপশন \"%s\"-টিও চালু করা হয়েছে, কারণ %s থেকে কনফিগারেশন আমদানির ক্ষেত্রে এটা সবচেয়ে সাধারণ "
+"ঘটনা। আপনার সেটাপে এর প্রয়োজন না থাকলে বন্ধ করে দিতে পারেন। আরও তথ্যের জন্য %sসচরাচর "
+"জিজ্ঞাসিত প্রশ্নোত্তর%s দেখুন।"
+
+#: ../admin/qtx_import_export.php:86
+#, php-format
+msgid ""
+"Applicable options and taxonomy names from plugin %s have been imported. Note that the "
+"multilingual content of posts, pages and other objects has not been altered during this "
+"operation. There is no additional operation needed to import content, since its format "
+"is compatible with %s."
+msgstr ""
+
+#: ../admin/qtx_import_export.php:87
+#, php-format
+msgid ""
+"%sImportant%s: Before you start making edits to post and pages, please, make sure that "
+"both, your front site and admin back-end, work under this configuration. It may help to "
+"review \"%s\" and see if any of conflicting plugins mentioned there are used here. "
+"While the current content, coming from %s, is compatible with this plugin, the newly "
+"modified posts and pages will be saved with a new square-bracket-only encoding, which "
+"has a number of advantages comparing to former %s encoding. However, the new encoding "
+"is not straightforwardly compatible with %s and you will need an additional step "
+"available under \"%s\" option if you ever decide to go back to %s. Even with this "
+"additional conversion step, the 3rd-party plugins custom-stored data will not be auto-"
+"converted, but manual editing will still work. That is why it is advisable to create a "
+"test-copy of your site before making any further changes. In case you encounter a "
+"problem, please give us a chance to improve %s, send the login information to the test-"
+"copy of your site to %s along with a detailed step-by-step description of what is not "
+"working, and continue using your main site with %s meanwhile. It would also help, if "
+"you share a success story as well, either on %sthe forum%s, or via the same e-mail as "
+"mentioned above. Thank you very much for trying %s."
+msgstr ""
+
+#: ../admin/qtx_import_export.php:87
+msgid ""
+"This is a one-time message, which you will not see again, unless the same import is "
+"repeated."
 msgstr "এটা একটি এককালীন বার্তা, যা আপনি আর কখনও দেখবেন না, যদি না আবার কোনো আমদানি ঘটে।"
 
-#: admin/qtx_import_export.php:109
+#: ../admin/qtx_import_export.php:93
 #, php-format
-msgid "Applicable options have been exported to plugin %s. If you have done some post or page updates after migrating from %s, then \"%s\" operation is also required to convert the content to \"dual language tag\" style in order for plugin %s to function."
+msgid ""
+"Applicable options have been exported to plugin %s. If you have done some post or page "
+"updates after migrating from %s, then \"%s\" operation is also required to convert the "
+"content to \"dual language tag\" style in order for plugin %s to function."
 msgstr ""
 
-#: admin/qtx_import_export.php:156
+#: ../admin/qtx_import_export.php:131
 msgid "Plugin"
 msgstr "প্লাগিন"
 
-#: admin/qtx_import_export.php:160
-msgid "There is no need to migrate any setting, the database schema is compatible with this plugin."
+#: ../admin/qtx_import_export.php:136
+msgid ""
+"There is no need to migrate any setting, the database schema is compatible with this "
+"plugin."
 msgstr "কোনো সেটিং মাইগ্রেট করার প্রয়োজন নেই, ডাটাবেজ স্কিমা এই প্লাগিনের সাথে সাযু্জ্যপূর্ণ।"
 
-#: admin/qtx_import_export.php:165
+#: ../admin/qtx_import_export.php:145
 msgid "Do not migrate any setting"
 msgstr "কোনো সেটিংস মাইগ্রেট করবে না"
 
-#: admin/qtx_import_export.php:167
+#: ../admin/qtx_import_export.php:151
 msgid "Import settings from "
 msgstr "সেটিংস আমদানী করুন"
 
-#: admin/qtx_import_export.php:170
+#: ../admin/qtx_import_export.php:158
 msgid "Export settings to "
 msgstr "সেটিংস এক্সপোর্ট করুন"
 
-#: admin/qtx_import_export.php:191
+#: ../admin/qtx_import_export.php:180
 #, php-format
-msgid "If you are updating from qTranslate 1.x or Polyglot, <a href=\"%s\">click here</a> to convert posts to the new language tag format."
-msgstr "যদি আপনি কিউট্রান্সলেট ১.এক্স অথবা পলিগ্লট থেকে আপডেট করে থাকেন, তাহলে<a href=\"%s\">এখানে ক্লিক করে</a> নতুন ভাষা ট্যাগ ফরম্যাটে রূপান্তর করে নিন পোস্টসমূহকে।"
+msgid ""
+"If you are updating from qTranslate 1.x or Polyglot, <a href=\"%s\">click here</a> to "
+"convert posts to the new language tag format."
+msgstr ""
+"যদি আপনি কিউট্রান্সলেট ১.এক্স অথবা পলিগ্লট থেকে আপডেট করে থাকেন, তাহলে<a href=\"%s\">এখানে "
+"ক্লিক করে</a> নতুন ভাষা ট্যাগ ফরম্যাটে রূপান্তর করে নিন পোস্টসমূহকে।"
 
-#: admin/qtx_import_export.php:192
+#: ../admin/qtx_import_export.php:181
 #, php-format
-msgid "If you have installed qTranslate for the first time on a Wordpress with existing posts, you can either go through all your posts manually and save them in the correct language or <a href=\"%s\">click here</a> to mark all existing posts as written in the default language."
+msgid ""
+"If you have installed qTranslate for the first time on a Wordpress with existing posts, "
+"you can either go through all your posts manually and save them in the correct language "
+"or <a href=\"%s\">click here</a> to mark all existing posts as written in the default "
+"language."
 msgstr ""
 
-#: admin/qtx_import_export.php:193
-msgid "Both processes are <b>irreversible</b>! Be sure to make a full database backup before clicking one of the links."
-msgstr "উভয় প্রক্রিয়াই <b>একমুখী</b>! এই লিংকগুলো ক্লিক করার আগে পুরো ডাটাবেজের ব্যাকআপ রেখে নিতে ভুল করবেন না।"
+#: ../admin/qtx_import_export.php:182
+msgid ""
+"Both processes are <b>irreversible</b>! Be sure to make a full database backup before "
+"clicking one of the links."
+msgstr ""
+"উভয় প্রক্রিয়াই <b>একমুখী</b>! এই লিংকগুলো ক্লিক করার আগে পুরো ডাটাবেজের ব্যাকআপ রেখে নিতে ভুল "
+"করবেন না।"
 
-#: admin/qtx_import_export.php:194
+#: ../admin/qtx_import_export.php:186
 msgid "Do not convert database"
 msgstr "ডাটাবেজ রূপান্তর করবে না"
 
-#: admin/qtx_import_export.php:195
+#: ../admin/qtx_import_export.php:190
 msgid "Convert database to the \"square bracket only\" style."
 msgstr "ডাটাবেজকে \"কেবল স্কয়্যার ব্রাকেট\" স্টাইলে রূপান্তর করুন।"
 
-#: admin/qtx_import_export.php:196
+#: ../admin/qtx_import_export.php:192
 #, php-format
-msgid "The square bracket language tag %s only will be used as opposite to dual-tag (%s and %s) %s legacy database format. All string options and standard post and page fields will be uniformly encoded like %s."
+msgid ""
+"The square bracket language tag %s only will be used as opposite to dual-tag (%s and "
+"%s) %s legacy database format. All string options and standard post and page fields "
+"will be uniformly encoded like %s."
 msgstr ""
 
-#: admin/qtx_import_export.php:197
+#: ../admin/qtx_import_export.php:196
 msgid "Convert database back to the legacy \"dual language tag\" style."
 msgstr "ডাটাবেজকে পুরানো \"দুই ভাষা ট্যাগ\" স্টাইলে ফিরিয়ে নিন।"
 
-#: admin/qtx_import_export.php:198
+#: ../admin/qtx_import_export.php:198
 msgid "Note, that only string options and standard post and page fields are affected."
 msgstr "স্মরণযোগ্য, কেবল স্ট্রিং অপশন এবং সাধারণ পোস্ট এবং পেজ ফিল্ডসমূহই প্রভাবিত হবে।"
 
-#: admin/qtx_import_export.php:205
+#: ../admin/qtx_import_export.php:202
+msgid "Clean Legacy Term Names"
+msgstr ""
+
+#: ../admin/qtx_import_export.php:204
+msgid ""
+"Clean the inconsistencies of the q-original way to store term names. Translations for "
+"some tags, categories or other terms may get lost and may need to be re-entered after "
+"this operation. The term names should stay consistent in the future."
+msgstr ""
+
+#: ../admin/qtx_import_export.php:207
+msgid "Split database file by language."
+msgstr ""
+
+#: ../admin/qtx_import_export.php:209
+#, php-format
+msgid ""
+"Provide full file path to the input multilingual %s database file (the resulting %s "
+"files, named with language-based suffix, are saved in the same folder, where the input "
+"file is):"
+msgstr ""
+
+#: ../admin/qtx_import_export.php:214
+msgid ""
+"Specify which languages to keep in the main output file. Provide a comma-separated list "
+"of two-letter codes of languages to keep. If left empty, the database is split by "
+"language into a set of language-tags-free database files."
+msgstr ""
+
+#: ../admin/qtx_import_export.php:219
+#, php-format
+msgid ""
+"In order to remove one or more languages from entire database, you may dump the "
+"database into a %s file, then run this procedure and upload one of the new clean %s "
+"files back to the server. A separate clean database will also be saved fir each "
+"excluded language."
+msgstr ""
+
+#: ../admin/qtx_import_export.php:229
 #, php-format
 msgid "Use plugin %s to import data."
 msgstr "প্লাগিন %s ব্যবহার করে ডাটা ইমপোর্ট করুন।"
 
-#: admin/qtx_import_export.php:208
+#: ../admin/qtx_import_export.php:233
 msgid "Reset qTranslate"
 msgstr "কিউট্রান্সলেট রিসেট করুন"
 
-#: admin/qtx_import_export.php:210
+#: ../admin/qtx_import_export.php:236
 msgid "Check this box and click Save Changes to reset all qTranslate settings."
 msgstr "এই বক্সটি চেক করে পরিবর্তন সংরক্ষণ করে কিউট্রান্সলেট এর সমস্ত সেটিং রিসেট করুন।"
 
-#: admin/qtx_import_export.php:212
+#: ../admin/qtx_import_export.php:240
 msgid "Yes, I really want to reset qTranslate."
 msgstr "হ্যাঁ, আমি সত্যিই কিউট্রান্সলেট রিসেট করতে চাই।"
 
-#: admin/qtx_import_export.php:214
+#: ../admin/qtx_import_export.php:244
 msgid "Also delete Translations for Categories/Tags/Link Categories."
 msgstr "সাথে ক্যাটেগরি/ট্যাগ/লিংক ক্যাটেগরির অনুবাদগুলোও মুছবে।"
 
-#: admin/qtx_import_export.php:216
-msgid "If something isn't working correctly, you can always try to reset all qTranslate settings. A Reset won't delete any posts but will remove all settings (including all languages added)."
-msgstr "যদি কোনো সমস্যা হচ্ছে বলে মনে হয়, আপনি সবসময়ই কিউট্রান্সলেটকে রিসেট করতে পারেন। রিসেট করলে কোনো পোস্ট মুছবে না তবে সকল সেটিং সরিয়ে দেবে (সকল যোগকৃত ভাষা সহ)।"
+#: ../admin/qtx_import_export.php:247
+msgid ""
+"If something isn't working correctly, you can always try to reset all qTranslate "
+"settings. A Reset won't delete any posts but will remove all settings (including all "
+"languages added)."
+msgstr ""
+"যদি কোনো সমস্যা হচ্ছে বলে মনে হয়, আপনি সবসময়ই কিউট্রান্সলেটকে রিসেট করতে পারেন। রিসেট করলে "
+"কোনো পোস্ট মুছবে না তবে সকল সেটিং সরিয়ে দেবে (সকল যোগকৃত ভাষা সহ)।"
 
-#: admin/qtx_import_export.php:218
+#: ../admin/qtx_import_export.php:251
 msgid "Reset admin notices."
 msgstr "অ্যাডমিন বিজ্ঞপ্তি রিসেট করবে।"
 
-#: admin/qtx_import_export.php:220
-msgid "All previously dismissed admin notices related to this plugin will show up again on next refresh of admin pages."
+#: ../admin/qtx_import_export.php:254
+msgid ""
+"All previously dismissed admin notices related to this plugin will show up again on "
+"next refresh of admin pages."
 msgstr ""
 
-#: admin/qtx_languages.php:68
+#: ../admin/qtx_languages.php:74
 #, php-format
-msgid "A manual update to option \"%s\" or to the theme custom CSS may be needed, after some languages are changed."
+msgid ""
+"A manual update to option \"%s\" or to the theme custom CSS may be needed, after some "
+"languages are changed."
 msgstr ""
 
-#: admin/qtx_languages.php:68
-msgid "If you do not wish to customize this option, then reset it to the default by emptying its value."
+#: ../admin/qtx_languages.php:74
+msgid ""
+"If you do not wish to customize this option, then reset it to the default by emptying "
+"its value."
 msgstr ""
 
-#: admin/qtx_languages.php:113
+#: ../admin/qtx_languages.php:128
 msgid "Cannot delete Default Language!"
 msgstr "ডিফল্ট ভাষা মোছা যাবে না!"
 
-#: admin/qtx_update_gettext_db.php:33
+#: ../admin/qtx_update_gettext_db.php:41
 msgid "Gettext databases <strong>not</strong> updated:"
 msgstr "গেটটেক্সট ডাটাবেজ আপডেটেড<strong>নয়</strong>:"
 
-#: admin/qtx_update_gettext_db.php:63
+#: ../admin/qtx_update_gettext_db.php:78
 #, php-format
 msgid "Failed to update gettext database for \"%s\": %s"
 msgstr "গেটটেক্সট ডাটাবেজ পাওয়া যায়নি \"%s\": %s"
 
-#: admin/qtx_user_options.php:11
+#: ../admin/qtx_user_options.php:12
 msgid "Translation options"
 msgstr "অনুবাদ অপশনসমূহ"
 
-#: admin/qtx_user_options.php:16
+#: ../admin/qtx_user_options.php:16
 msgid "Highlight Translatable Fields"
 msgstr "অনুবাদযোগ্য ফিল্ডসমূহ হাইলাইট করবে"
 
-#: admin/qtx_user_options.php:20
+#: ../admin/qtx_user_options.php:21
 #, php-format
-msgid "The way the translatable fields are highlighted is configured with global option %s."
+msgid ""
+"The way the translatable fields are highlighted is configured with global option %s."
 msgstr ""
 
-#: qtranslate_core.php:1482
-msgid "For the sake of viewer convenience, the content is shown below in the default language of this site."
-msgstr ""
+#: ../modules/acf/src/acf_5/fields/file.php:31
+msgid "File (qTranslate)"
+msgstr "ফাইল (কিউট্রান্সলেট)"
 
-#: qtranslate_core.php:1485
-msgid "For the sake of viewer convenience, the content is shown below in one of the available alternative languages."
-msgstr ""
-
-#: qtranslate_core.php:1488
-msgid "You may click one of the links to switch the site language to another available language."
-msgstr ""
-
-#: qtranslate_core.php:1490
+#: ../modules/acf/src/acf_5/fields/file.php:32
+#: ../modules/acf/src/acf_5/fields/image.php:32
+#: ../modules/acf/src/acf_5/fields/text.php:32
+#: ../modules/acf/src/acf_5/fields/textarea.php:32
+#: ../modules/acf/src/acf_5/fields/url.php:32
+#: ../modules/acf/src/acf_5/fields/wysiwyg.php:32
 #, fuzzy
-msgid "For the sake of viewer convenience, the content is shown below in the alternative language."
-msgstr "দর্শকের সুবিধার্থে নিচের বিষয়বস্তু বিকল্প ভাষাতে দেখানো হয়েছে।"
-
-#: qtranslate_core.php:1491
-msgid "You may click the link to switch the active language."
-msgstr "আপনি লিংকে ক্লিক করে সক্রিয় ভাষাটি পরিবর্তন করতে পারেন।"
-
-# শিরোনামের পরে কোলন। যেমন, ভাষার মেনুর উপরের দিকে।
-#: qtranslate_frontend.php:264
-msgctxt "Colon after a title. For example, in top item of Language Menu."
-msgid ":"
-msgstr ":"
-
-#: qtranslate_services.php:43
-msgid "The language/s do not have a valid ISO 639-1 representation."
-msgstr "ভাষাগুলোর ISO 639-1 অনুমোদন নেই।"
-
-#: qtranslate_services.php:44
-msgid "The language/s you used are not supported by the service."
-msgstr "আপনার ব্যবহারকৃত ভাষা/গুলোর এই পরিষেবায় সমর্থন নেই।"
-
-#: qtranslate_services.php:45
-msgid "There is no such service."
-msgstr "এরকম কোনো পরিষেবা নেই।"
-
-#: qtranslate_services.php:46
-msgid "The system could not process your order."
-msgstr "সিস্টেম আপনার অর্ডার প্রসেস করতে পারছে না।"
-
-#: qtranslate_services.php:47
-msgid "There has been an error with the selected service."
-msgstr "নির্বাচিত পরিষেবাটিতে কোনো একটি সমস্যা হয়েছে।"
-
-#: qtranslate_services.php:48
-msgid "An unknown error occured with the selected service."
-msgstr "নির্বাচিত পরিষেবাটির সাথে কোনো অজানা একটি সমস্যা হয়েছে।"
-
-#: qtranslate_services.php:49
-msgid "The server returned a debugging message."
-msgstr "সার্ভার একটি ডিবাগিং মেসেজ পাঠিয়েছে।"
-
-#: qtranslate_services.php:164
-#, php-format
-msgid "<div>Translate to %s</div>"
-msgstr "<div>%s তে অনুবাদ করুন</div>"
-
-#: qtranslate_services.php:191
-msgid "qTranslate Services Settings"
-msgstr "কিউট্রান্সলেট পরিষেবা সেটিং"
-
-#: qtranslate_services.php:221 qtranslate_services.php:222
-msgid "Translate to"
+#| msgid "Translate"
+msgid "qTranslate"
 msgstr "অনুবাদ করুন"
 
-#: qtranslate_services.php:310
-msgid "Order deleted."
-msgstr "ক্রম মুছে দেয়া হয়েছে।"
+#: ../modules/acf/src/acf_5/fields/file.php:41
+msgid "Select File"
+msgstr "ফাইল নির্বাচন"
 
-#: qtranslate_services.php:314
-msgid "Status updated for all open orders."
-msgstr "সকল খোলা অর্ডারের স্ট্যাটাস হালনাগাদকৃত।"
+#: ../modules/acf/src/acf_5/fields/file.php:42
+msgid "Edit File"
+msgstr "ফাইল সম্পাদনা"
 
-#: qtranslate_services.php:333
-msgid "Please save your post first."
-msgstr "আপনার পোস্ট আগে সংরক্ষণ করুন।"
+#: ../modules/acf/src/acf_5/fields/file.php:43
+msgid "Update File"
+msgstr "ফাইল আপডেট"
 
-#: qtranslate_services.php:361
-msgid "Post Title"
-msgstr "পোস্টের শিরোনাম"
+#: ../modules/acf/src/acf_5/fields/file.php:44
+#: ../modules/acf/src/acf_5/fields/image.php:49
+msgid "Uploaded to this post"
+msgstr "এই পোস্টে আপলোড করা হয়েছে"
 
-#: qtranslate_services.php:362
-msgid "Service"
-msgstr "পরিষেবা"
+#: ../modules/acf/src/acf_5/fields/file.php:140
+msgid "File name"
+msgstr "ফাইলের নাম"
 
-#: qtranslate_services.php:363
-msgid "Source Language"
-msgstr "মূল ভাষা"
+#: ../modules/acf/src/acf_5/fields/file.php:145
+msgid "File size"
+msgstr "ফাইলের আকার"
 
-#: qtranslate_services.php:364
-msgid "Target Language"
-msgstr "লক্ষ্য ভাষা"
+#: ../modules/acf/src/acf_5/fields/file.php:168
+msgid "No file selected"
+msgstr "কোনো ফাইল নির্বাচিত নয়"
 
-#: qtranslate_services.php:375 qtranslate_services.php:660
-#: qtranslate_services.php:670 qtranslate_services.php:694
-msgid "qTranslate Services"
-msgstr "কিউট্রান্সলেট পরিষেবা"
+#: ../modules/acf/src/acf_5/fields/file.php:170
+msgid "Add File"
+msgstr "ফাইল যোগ"
 
-#: qtranslate_services.php:377
+#: ../modules/acf/src/acf_5/fields/image.php:31
+msgid "Image (qTranslate)"
+msgstr "ছবি (কিউট্রান্সলেট)"
+
+#: ../modules/acf/src/acf_5/fields/image.php:46
+msgid "Select Image"
+msgstr "ছবি নির্বাচন"
+
+#: ../modules/acf/src/acf_5/fields/image.php:47
+msgid "Edit Image"
+msgstr "ছবি সম্পাদনা"
+
+#: ../modules/acf/src/acf_5/fields/image.php:48
+msgid "Update Image"
+msgstr "ছবি আপডেট"
+
+#: ../modules/acf/src/acf_5/fields/image.php:50
+msgid "All images"
+msgstr "সব ছবি"
+
+#: ../modules/acf/src/acf_5/fields/image.php:139
+msgid "Remove"
+msgstr "সরান"
+
+#: ../modules/acf/src/acf_5/fields/image.php:155
+msgid "No image selected"
+msgstr "কোনো ছবি নির্বাচন করা হয়নি"
+
+#: ../modules/acf/src/acf_5/fields/image.php:156
+msgid "Add Image"
+msgstr "ছবি যোগ করুন"
+
+#: ../modules/acf/src/acf_5/fields/post_object.php:31
+msgid "Post Object (qTranslate)"
+msgstr "পোস্ট অবজেক্ট (কিউট্রান্সলেট)"
+
+#: ../modules/acf/src/acf_5/fields/text.php:31
+msgid "Text (qTranslate)"
+msgstr "টেক্সট কিউট্রান্সলেট"
+
+#: ../modules/acf/src/acf_5/fields/text.php:100
+msgid "Default Value"
+msgstr "ডিফল্ট মান"
+
+#: ../modules/acf/src/acf_5/fields/text.php:101
+msgid "Appears when creating a new post"
+msgstr "এটা দেখা যায় নতুন একটি পোস্ট তৈরির সময়"
+
+#: ../modules/acf/src/acf_5/fields/text.php:108
+msgid "Placeholder Text"
+msgstr "স্থানসংকুলান টেক্সট"
+
+#: ../modules/acf/src/acf_5/fields/text.php:109
+msgid "Appears within the input"
+msgstr "ইনপুটের মধ্যে আসবে"
+
+#: ../modules/acf/src/acf_5/fields/text.php:116
+msgid "Character Limit"
+msgstr "ক্যারেক্টার সীমা"
+
+#: ../modules/acf/src/acf_5/fields/text.php:117
+msgid "Leave blank for no limit"
+msgstr "কোনো সীমা না রাখতে ফাঁকা রাখুন"
+
+#: ../modules/acf/src/acf_5/fields/textarea.php:31
+#, fuzzy
+#| msgid "Reset qTranslate"
+msgid "Text Area (qTranslate)"
+msgstr "কিউট্রান্সলেট রিসেট করুন"
+
+#: ../modules/acf/src/acf_5/fields/url.php:31
+msgid "Url (qTranslate)"
+msgstr "ইউআরএল (কিউট্রান্সলেট)"
+
+#: ../modules/acf/src/acf_5/fields/wysiwyg.php:31
+msgid "Wysiwyg Editor (qTranslate)"
+msgstr "উইসিউইগ এডিটর (কিউট্রান্সলেট)"
+
+#: ../modules/acf/src/acf_5/fields/wysiwyg.php:143
+msgid "Visual"
+msgstr "ভিজুয়াল"
+
+#: ../modules/acf/src/plugin.php:407
 #, php-format
-msgid "<div id=\"message\" class=\"error fade\"><p>qTranslate Services could not load <a href=\"%s\">OpenSSL</a>!</p></div>"
-msgstr "<div id=\"message\" class=\"error fade\"><p>কিউট্রান্সলেট পরিষেবা <a href=\"%s\">ওপেনএসএসএল</a>লোড করতে পারেনি!</p></div>"
+msgid "%s value is required"
+msgstr "%s মানটি আবশ্যক"
 
-#: qtranslate_services.php:378
-msgid "Enable qTranslate Services"
-msgstr "কিউট্রান্সলেট পরিষেবা চালান"
-
-#: qtranslate_services.php:380
-msgid "With qTranslate Services, you will be able to use professional human translation services with a few clicks."
-msgstr "কিউ ট্রান্সলেট পরিষেবার সাহায্যে আপনি কয়েকটি ক্লিক করে পেশাদার মানব অনুবাদ পরিষেবা ব্যবহার করতে সক্ষম হবেন।"
-
-#: qtranslate_services.php:390
-msgid "Open Orders"
-msgstr "খোলা অর্ডার"
-
-#: qtranslate_services.php:412
+#: ../modules/wp-seo/qwpseo-admin.php:201
 #, php-format
-msgid "Edit %s"
-msgstr "সম্পাদনা করুন %s"
+msgid "%sNotes from %s"
+msgstr "%s টীকা %s এর থেকে"
 
-#: qtranslate_services.php:413 qtranslate_services.php:460
-#: qtranslate_services.php:800 qtranslate_services.php:807
-msgid "Website"
-msgstr "ওয়েবসাইট"
+#: ../modules/wp-seo/qwpseo-admin.php:203
+msgid ""
+"In addition to main XML Sitemap, you may also view sitemaps for each individual "
+"language:"
+msgstr ""
 
-#: qtranslate_services.php:423
+#: ../modules/wp-seo/qwpseo-admin.php:215
 #, php-format
-msgid "Current Status: %s"
-msgstr "বর্তমান অবস্থা :  %s"
+msgid ""
+"It is advisable to append the site's \"%s\" with the list of index sitemaps separated "
+"by language"
+msgstr ""
 
-#: qtranslate_services.php:431
-#, php-format
-msgid "qTranslate Services will automatically check every hour whether the translations are finished and update your posts accordingly. You can always <a href=\"%s\">check manually</a>."
-msgstr "কিউট্রান্সলেট পরিষেবা স্বয়ংক্রিয়ভাবে প্রতি ঘণ্টায় চেক করবে অনুবাদ হয়ে গিয়েছে কিনা এবং পোস্টগুলো সেইভাবে আপডেট করবে। আপনি সবসময়ই <a href=\"%s\">ম্যানুয়ালি চেক</a> করতে পারেন।"
-
-#: qtranslate_services.php:432
-msgid "Deleting an open order doesn't cancel it. You will have to logon to the service homepage and cancel it there."
-msgstr "খোলা অর্ডার মুছে দিলেই তা বাতিল হবে না। আপনাকে পরিষেবার হোমপেজে লগঅন করে সেখান থেকে বাতিল করতে হবে।"
-
-#: qtranslate_services.php:434
-msgid "No open orders."
-msgstr "কোনো অর্ডার ওপেন নেই।"
-
-#: qtranslate_services.php:450
-msgid "Service Configuration"
-msgstr "পরিষেবা কনফিগারেশন"
-
-#: qtranslate_services.php:451
-msgid "Below, you will find configuration settings for qTranslate Service Providers, which are required for them to operate."
-msgstr "নিচে, আপনি কিউট্রান্সলেট পরিষেবা সরবরাহকারীদের জন্য কনফিগারেশন সেটিং পাবেন, যা তাদের পরিচালনার জন্য আবশ্যক।"
-
-#: qtranslate_services.php:532
-#, php-format
-msgid "To translate a post, please go to the <a href=\"%s\">edit posts overview</a>."
-msgstr "কোনো পোস্ট অনুবাদ করতে হলে, <a href=\"%s\">পোস্ট এডিট ওভারভিউ</a> দেখুন।"
-
-#: qtranslate_services.php:548
-#, php-format
-msgid "Post with id \"%s\" not found!"
-msgstr "\"%s\" আইডির কোনো পোস্ট পাওয়া যায়নি!"
-
-#: qtranslate_services.php:559
-msgid "The requested Post has no content, no Translation possible."
-msgstr "অনুরোধকৃত পোস্টে কোনো বিষয়বস্তু নেই, অনুবাদ সম্ভব নয়।"
-
-#: qtranslate_services.php:568
-msgid "The Post already has content for the selected target language. If a translation request is send, the current text for the target language will be overwritten."
-msgstr "পোস্টে নির্বাচিত অভীষ্ট ভাষায় বিষয়বস্তু ইতোমধ্যেই আছে। যদি অনুবাদের অনুরোধ পাঠানো হয়, তবে অভীষ্ট ভাষার বর্তমান টেক্সট প্রতিস্থাপিত হবে।"
-
-#: qtranslate_services.php:639
-#, php-format
-msgid "An error occured: %s"
-msgstr "কোনো সমস্যা হয়েছে: %s"
-
-#: qtranslate_services.php:641
-#, php-format
-msgid "Additional information: %s"
-msgstr "বাড়তি তথ্য: %s"
-
-#: qtranslate_services.php:662
-#, php-format
-msgid "An serious error occured and qTranslate Services cannot proceed. For help, please visit the <a href=\"%s\">Support Forum</a>"
-msgstr "বড়সড় একটি ত্রুটি পাওয়া গেছে এবং কিউট্রান্সলেট পরিষেবা আর এগুতে পারছে না। সাহায্যের জন্য <a href=\"%s\">সাপোর্ট ফোরামে</a> যান"
-
-#: qtranslate_services.php:671
-msgid "Order successfully sent."
-msgstr "অর্ডার সফলভাবে পাঠানো হয়েছে।"
-
-#: qtranslate_services.php:672
-msgid "Your translation order has been successfully transfered to the selected service."
-msgstr "আপনার অনুবাদ অর্ডারটি সফলভাবে নির্বাচিত পরিষেবাটিতে স্থানান্তরিত হয়েছে।"
-
-#: qtranslate_services.php:676
-#, php-format
-msgid "The service returned this message: %s"
-msgstr "পরিষেবাটি এই মেসেজ পাঠিয়েছে: %s"
-
-#: qtranslate_services.php:680
-msgid "Feel free to choose an action:"
-msgstr "পছন্দমত যেকোনো অ্যাকশন পছন্দ করুন:"
-
-#: qtranslate_services.php:682
-msgid "Translate this post to another language."
-msgstr "এই পোস্টটি আরেকটি ভাষায় অনুবাদ করুন।"
-
-#: qtranslate_services.php:683
-msgid "Translate a different post."
-msgstr "অন্য একটি পোস্ট অনুবাদ করুন।"
-
-#: qtranslate_services.php:684
-msgid "View all open orders."
-msgstr "সকল খোলা অর্ডার দেখুন।"
-
-#: qtranslate_services.php:685
-msgid "Let qTranslate Services check if any open orders are finished."
-msgstr "কিউট্রান্সলেট পরিষেবাকে দেখতে দিন কোনো খোলা অর্ডার শেষ হয়েছে কিনা।"
-
-#: qtranslate_services.php:686
-msgid "View this post."
-msgstr "পোস্টটি দেখুন"
-
-#: qtranslate_services.php:711
-#, php-format
-msgid "Your article is available in multiple languages. If you do not want to translate from %1$s, you can switch to one of the following languages: %2$s"
-msgstr "আপনার আর্টিকেল একাধিক ভাষায় আছে। যদি আপনি %1$s থেকে অনুবাদ করতে না চান, তবে আপনি এই ভাষাগুলোর যেকোনো একটিতে যেতে পারেন: %2$s"
-
-#: qtranslate_services.php:719
-msgid "Please choose the language you want to translate to:"
-msgstr "যে ভাষায় অনুবাদ করতে চান তা পছন্দ করুন:"
-
-#: qtranslate_services.php:731
-msgid "Continue"
-msgstr "এগিয়ে যান"
-
-#: qtranslate_services.php:742 qtranslate_services.php:745
-msgid "Confirm Order"
-msgstr "অর্ডার নিশ্চিত"
-
-#: qtranslate_services.php:744
-msgid "Please confirm your order."
-msgstr "আপনার অর্ডার নিশ্চিত করুন।"
-
-#: qtranslate_services.php:752 qtranslate_services.php:901
-msgid "Request Translation"
-msgstr "অনুবাদের অনুরোধ"
-
-#: qtranslate_services.php:754
-msgid "Javascript is required for qTranslate Services"
-msgstr "কিউট্রান্সলেট পরিষেবার জন্য জাভাস্ক্রিপ্ট অত্যাবশ্যক"
-
-#: qtranslate_services.php:755
-msgid "Please choose a service first"
-msgstr "প্রথমে একটি সেবা পছন্দ করুন"
-
-#: qtranslate_services.php:764
-msgid "ERROR: Could not connect to qTranslate Services. Please try again later."
-msgstr "সমস্যা: কিউট্রান্সলেট পরিষেবা'র সাথে সংযোগ করা যায়নি। পরে আবার চেষ্টা করুন।"
-
-#: qtranslate_services.php:801
-#, php-format
-msgid "Cannot use this service, not all <a href=\"%s\">required fields</a> filled in for this service."
-msgstr "সেবাটি ব্যবহার করা যাচ্ছে না, সেবার অনেক <a href=\"%s\">আবশ্যকীয় ফিল্ড</a> পূরণ করা হয়নি।"
-
-#: qtranslate_services.php:817
-msgid "<p><img src=\"images/wpspin_light.gif\"> Getting Quote...</p>"
-msgstr "<p><img src=\"images/wpspin_light.gif\"> পাওয়া যাচ্ছে...</p>"
-
-#: qtranslate_services.php:838
-msgid "Click to toggle"
-msgstr "টগল করতে ক্লিক করুন"
-
-#: qtranslate_services.php:839
-msgid "Review Article"
-msgstr "আর্টিকেল রিভিউ"
-
-#: qtranslate_services.php:845
-msgid "Your article will be SSL encrypted and securly sent to qTranslate Services, which will forward your text to the chosen Translation Service. Once qTranslate Services receives the translated text, it will automatically appear on your blog."
-msgstr "আপনার নিবন্ধটি এসএসএল এনক্রিপ্ট করা হবে এবং সুরক্ষিতভাবে কিউট্রান্সলেট পরিষেবাতে পাঠানো হবে, যা আপনার টেক্সটকে পছন্দের অনুবাদ পরিষেবায় ফরোয়ার্ড পাঠাবে। কিউট্রান্সলেট পরিষেবা অনুবাদকৃত টেক্সট পাওয়ার পর, তা স্বয়ংক্রিয়ভাবে আপনার ব্লগে উপস্থিত হবে।"
-
-#: qtranslate_services.php:884 qtranslate_services.php:891
-msgid "unavailable"
-msgstr "অনুপলব্ধ"
-
-#: qtranslate_services.php:889
-msgid "free"
-msgstr "বিনামূল্যে"
-
-#: qtranslate_services.php:896
-#, php-format
-msgid "<p>Price: %1$s %2$s</p>"
-msgstr "<p>দাম: %1$s %2$s</p>"
-
-#: qtranslate_services.php:897
-#, php-format
-msgid "~ %1$s %2$s"
-msgstr "~ %1$s %2$s"
-
-#: qtranslate_services.php:904
-msgid "An error occured!"
-msgstr "কোনো ভুল হয়েছে!"
-
-#: qtranslate_services.php:922
-msgid "Translate"
-msgstr "অনুবাদ করুন"
-
-#: qtranslate_widget.php:33
+#: ../qtranslate_widget.php:37
 msgid "Allows your visitors to choose a Language."
 msgstr "আপনার ভিজিটরকে ভাষা পছন্দ করতে দেয়।"
 
-#: qtranslate_widget.php:34
+#: ../qtranslate_widget.php:39
 msgid "qTranslate Language Chooser"
 msgstr "কিউট্রান্সলেট ল্যাংগুয়েজ চুজার"
 
-#: qtranslate_widget.php:97
+#: ../qtranslate_widget.php:121
 msgid "Title:"
 msgstr "শিরোনাম:"
 
-#: qtranslate_widget.php:98
+#: ../qtranslate_widget.php:125
 msgid "Hide Title:"
 msgstr "শিরোনাম আড়াল:"
 
-#: qtranslate_widget.php:99
+#: ../qtranslate_widget.php:130
 msgid "Hide Title Colon:"
 msgstr "শিরোনামের কোলন আড়াল:"
 
-#: qtranslate_widget.php:100
+#: ../qtranslate_widget.php:134
 msgid "Display:"
 msgstr "প্রদর্শন:"
 
-#: qtranslate_widget.php:101
+#: ../qtranslate_widget.php:138
 msgid "Text only"
 msgstr "কেবল টেক্সট"
 
-#: qtranslate_widget.php:102
+#: ../qtranslate_widget.php:143
 msgid "Image only"
 msgstr "কেবল ছবি"
 
-#: qtranslate_widget.php:103 qtranslate_widget.php:117
+#: ../qtranslate_widget.php:148 ../qtranslate_widget.php:174
 msgid "Text and Image"
 msgstr "টেক্সট এবং ইমেজ"
 
-#: qtranslate_widget.php:104
+#: ../qtranslate_widget.php:153
 msgid "Dropdown Box"
 msgstr "ড্রপডাউন বক্স"
 
-#: qtranslate_widget.php:105
+#: ../qtranslate_widget.php:158
 msgid "Custom list item format:"
 msgstr "নিজস্ব তালিকার ফরম্যাট:"
 
-#: qtranslate_widget.php:109
+#: ../qtranslate_widget.php:166
 msgid "Accepted format arguments:"
 msgstr "গ্রহণীয় ফরম্যাট আর্গুমেন্ট:"
 
-#: qtranslate_widget.php:110
+#: ../qtranslate_widget.php:167
 msgid "Flag Image HTML"
 msgstr "পতাকার ছবির এইচটিএমএল"
 
-#: qtranslate_widget.php:111
+#: ../qtranslate_widget.php:168
 msgid "Flag Image URL"
 msgstr "পতাকার ছবির ইউআরএল"
 
-#: qtranslate_widget.php:112
+#: ../qtranslate_widget.php:169
 msgid "Language Native Name"
 msgstr "ভাষার নিজস্ব নাম"
 
-#: qtranslate_widget.php:113
+#: ../qtranslate_widget.php:170
 msgid "Language Name in Active Language"
 msgstr "সক্রিয় ভাষায় ভাষার নাম"
 
-#: qtranslate_widget.php:114
+#: ../qtranslate_widget.php:171
 msgid "Language 2-Letter Code"
 msgstr "2-বর্ণের ভাষা সংকেত"
 
-#: qtranslate_widget.php:117
+#: ../qtranslate_widget.php:174
 #, php-format
 msgid "For example, format \"%s\" would do the same as the choice \"%s\"."
 msgstr "যেমন, ফরম্যাট \"%s\" পছন্দ \"%s\" এর মতই করবে।"
 
-#: qtranslate_widget.php:118
+#: ../qtranslate_widget.php:176
 msgid "An appropriate custom CSS is expected to be provided in this case."
 msgstr "এক্ষেত্রে একটি ত্রুটিহীন নিজস্ব সিএসএস ব্যবহার করা হবে আশা করা যায়।"
 
-#: qtranslate_widget.php:120
-#, php-format
-msgid "Other common CSS block for flag classes \"%s\" is loaded in the head of HTML and can be controlled with option \"%s\"."
-msgstr "\"%s\" flag ক্লাসের জন্য অন্যান্য সাধারণ সিএসএস ব্লক এইচটিএমএল-এর শিরোনামে লোড হয় এবং \"%s\" বিকল্পের সাহায্যে নিয়ন্ত্রণ করা যায়।"
-
-#: qtranslate_widget.php:120
+#: ../qtranslate_widget.php:180
 msgid "Widget CSS:"
 msgstr "উইজেট সিএসএস:"
 
-#: qtranslate.php:5
-msgid "Adds user-friendly and database-friendly multilingual content support."
-msgstr "ব্যবহার-বান্ধব এবং ডাটাবেজ-বান্ধব বহুভাষী বিষয়বস্তুর সাপোর্ট যোগ করে।"
+#: ../qtranslate_widget.php:183
+#, php-format
+msgid ""
+"Other common CSS block for flag classes \"%s\" is loaded in the head of HTML and can be "
+"controlled with option \"%s\"."
+msgstr ""
+"\"%s\" flag ক্লাসের জন্য অন্যান্য সাধারণ সিএসএস ব্লক এইচটিএমএল-এর শিরোনামে লোড হয় এবং \"%s\" "
+"বিকল্পের সাহায্যে নিয়ন্ত্রণ করা যায়।"
+
+#, php-format
+#~ msgid ""
+#~ "Plugin %s may be integrated with multilingual plugin %s with a help of plugin %s."
+#~ msgstr "প্লাগিন %s হয়তো বহুভাসী প্লাগিন %s এর সাথে %s প্লাগিনের সাহায্যে সমন্বিত।"
+
+#~ msgid "Please, press an appropriate button below."
+#~ msgstr "নিচের যেকোনো উপযুক্ত বোতাম চাপুন।"
+
+#, php-format
+#~ msgid "Install plugin %s"
+#~ msgstr "%s প্লাগিনটি ইনস্টল করুন"
+
+#~ msgid "I am aware of that, dismiss this message."
+#~ msgstr "আমি এসম্পর্কে জানি, মেসেজ বাতিল করো।"
+
+#~ msgid "Our team would greatly appreciate any feedback:"
+#~ msgstr "আমাদের টিম যেকোনো ফিডব্যাক সাদরে গ্রহণ করবে:"
+
+#, php-format
+#~ msgid "%sUse Support Forum%s to ask a question."
+#~ msgstr "প্রশ্ন জিজ্ঞেস করতে %sসাপোর্ট ফোরাম%s ব্যবহার করুন।"
+
+#, php-format
+#~ msgid "%sVisit%s %s website."
+#~ msgstr "%sভিজিট করুন%s %s এর ওয়েবসাইট"
+
+#, php-format
+#~ msgid "%sShare a new idea%s with our community."
+#~ msgstr "আমাদের কমিউনিটির সাথে %sনতুন কোনো আইডিয়া শেয়ার%s করুন।"
+
+#, php-format
+#~ msgid "%sReview the plugin%s at WordPress site."
+#~ msgstr "ওয়ার্ডপ্রেস সাইটে %sপ্লাগিন রিভিউ%s করুন।"
+
+#~ msgid "Thank me again in a few months!"
+#~ msgstr "কয়েক মাসের মধ্যেই আবার আমাকে ধন্যবাদ দেবেন!"
+
+#, php-format
+#~ msgid "Please, help us to make a decision on \"%s\" feature, press the button below."
+#~ msgstr "আমাদের \"%s\" ফিচারটি সম্পর্কে সিদ্ধান্ত নিতে সাহায্য করতে নিচের বোতামটি চাপুন।"
+
+#~ msgid "Translation Service"
+#~ msgstr "অনুবাদ পরিষেবা"
+
+#, php-format
+#~ msgid "Survey on \"%s\" feature"
+#~ msgstr "\"%s\" ফিচারের উপর সার্ভে"
+
+#, php-format
+#~ msgid ""
+#~ "The latest version of plugin %s has a number of new options, for example, %s, which "
+#~ "may change the look of some pages. Please, review the help text of new options on "
+#~ "%sconfiguration page%s."
+#~ msgstr ""
+#~ "সর্বশেষ সংস্করণের %s প্লাগিনে বেশ ক'টি নতুন অপশন আছে, যেমন, %s, যা কিছু পাতার দৃশ্যমান "
+#~ "পরিবর্তন ঘটাবে। অনুগ্রহপূর্বক, নতুন অপশনগুলোর সাহায্য বার্তা পাতাটি %sকনফিগার পাতায়%s দেখে "
+#~ "নিন।"
+
+#~ msgid "Add to Menu"
+#~ msgstr "মেনুতে যোগকরণ"
+
+#~ msgid "Settings"
+#~ msgstr "সেটিংস"
+
+#~ msgid "Language Code has to be 2 characters long!"
+#~ msgstr "ভাষা কোড অবশ্যই 2 ক্যারেক্টারের হতে হবে!"
+
+#~ msgctxt ""
+#~ "Appears in the column \"Languages\" on post listing pages, when content has no "
+#~ "language tags yet."
+#~ msgid "Languages are not set"
+#~ msgstr "ভাষা সেট করা নেই"
+
+#~ msgid "Language"
+#~ msgstr "ভাষা"
+
+#~ msgid ""
+#~ "2-Letter <a href=\"http://www.w3.org/WAI/ER/IG/ert/iso639.htm#2letter\">ISO Language "
+#~ "Code</a> for the Language you want to insert. (Example: en)"
+#~ msgstr ""
+#~ "2-বর্ণ <a href=\"http://www.w3.org/WAI/ER/IG/ert/iso639.htm#2letter\">ISO ভাষা সংকেত</"
+#~ "a> আপনি যে ভাষাটি নিতে চাচ্ছেন। (উদা: en)"
+
+#~ msgid "Switching Language"
+#~ msgstr "ভাষা পরিবর্তন"
+
+#, php-format
+#~ msgid ""
+#~ "Switching language to %1$s... If the Dashboard isn't loading, use this <a href=\"%2$s"
+#~ "\" title=\"Dashboard\">link</a>."
+#~ msgstr ""
+#~ "ভাষা পরিবর্তন করে %1$s-তে নেয়া হচ্ছে... যদি ড্যাশবোর্ড না আসে তবে এই <a href=\"%2$s\" "
+#~ "title=\"Dashboard\">লিংকে</a>যান।"
+
+#, fuzzy
+#~ msgid "CSS set:"
+#~ msgstr "CSS সেট:"
+
+#, fuzzy
+#~ msgctxt "browser option"
+#~ msgid "Inspect Element"
+#~ msgstr "ইনস্পেক্ট এলিমেন্ট"
+
+#, fuzzy
+#~ msgctxt "Two-letter Language Code meant."
+#~ msgid "Code"
+#~ msgstr "কোড"
+
+#, fuzzy
+#~ msgid ""
+#~ "For the sake of viewer convenience, the content is shown below in the alternative "
+#~ "language."
+#~ msgstr "দর্শকের সুবিধার্থে নিচের বিষয়বস্তু বিকল্প ভাষাতে দেখানো হয়েছে।"
+
+#~ msgid "You may click the link to switch the active language."
+#~ msgstr "আপনি লিংকে ক্লিক করে সক্রিয় ভাষাটি পরিবর্তন করতে পারেন।"
+
+# শিরোনামের পরে কোলন। যেমন, ভাষার মেনুর উপরের দিকে।
+#~ msgctxt "Colon after a title. For example, in top item of Language Menu."
+#~ msgid ":"
+#~ msgstr ":"
+
+#~ msgid "The language/s do not have a valid ISO 639-1 representation."
+#~ msgstr "ভাষাগুলোর ISO 639-1 অনুমোদন নেই।"
+
+#~ msgid "The language/s you used are not supported by the service."
+#~ msgstr "আপনার ব্যবহারকৃত ভাষা/গুলোর এই পরিষেবায় সমর্থন নেই।"
+
+#~ msgid "There is no such service."
+#~ msgstr "এরকম কোনো পরিষেবা নেই।"
+
+#~ msgid "The system could not process your order."
+#~ msgstr "সিস্টেম আপনার অর্ডার প্রসেস করতে পারছে না।"
+
+#~ msgid "There has been an error with the selected service."
+#~ msgstr "নির্বাচিত পরিষেবাটিতে কোনো একটি সমস্যা হয়েছে।"
+
+#~ msgid "An unknown error occured with the selected service."
+#~ msgstr "নির্বাচিত পরিষেবাটির সাথে কোনো অজানা একটি সমস্যা হয়েছে।"
+
+#~ msgid "The server returned a debugging message."
+#~ msgstr "সার্ভার একটি ডিবাগিং মেসেজ পাঠিয়েছে।"
+
+#, php-format
+#~ msgid "<div>Translate to %s</div>"
+#~ msgstr "<div>%s তে অনুবাদ করুন</div>"
+
+#~ msgid "qTranslate Services Settings"
+#~ msgstr "কিউট্রান্সলেট পরিষেবা সেটিং"
+
+#~ msgid "Translate to"
+#~ msgstr "অনুবাদ করুন"
+
+#~ msgid "Order deleted."
+#~ msgstr "ক্রম মুছে দেয়া হয়েছে।"
+
+#~ msgid "Status updated for all open orders."
+#~ msgstr "সকল খোলা অর্ডারের স্ট্যাটাস হালনাগাদকৃত।"
+
+#~ msgid "Please save your post first."
+#~ msgstr "আপনার পোস্ট আগে সংরক্ষণ করুন।"
+
+#~ msgid "Post Title"
+#~ msgstr "পোস্টের শিরোনাম"
+
+#~ msgid "Service"
+#~ msgstr "পরিষেবা"
+
+#~ msgid "Source Language"
+#~ msgstr "মূল ভাষা"
+
+#~ msgid "Target Language"
+#~ msgstr "লক্ষ্য ভাষা"
+
+#~ msgid "qTranslate Services"
+#~ msgstr "কিউট্রান্সলেট পরিষেবা"
+
+#, php-format
+#~ msgid ""
+#~ "<div id=\"message\" class=\"error fade\"><p>qTranslate Services could not load <a "
+#~ "href=\"%s\">OpenSSL</a>!</p></div>"
+#~ msgstr ""
+#~ "<div id=\"message\" class=\"error fade\"><p>কিউট্রান্সলেট পরিষেবা <a href=\"%s"
+#~ "\">ওপেনএসএসএল</a>লোড করতে পারেনি!</p></div>"
+
+#~ msgid "Enable qTranslate Services"
+#~ msgstr "কিউট্রান্সলেট পরিষেবা চালান"
+
+#~ msgid ""
+#~ "With qTranslate Services, you will be able to use professional human translation "
+#~ "services with a few clicks."
+#~ msgstr ""
+#~ "কিউ ট্রান্সলেট পরিষেবার সাহায্যে আপনি কয়েকটি ক্লিক করে পেশাদার মানব অনুবাদ পরিষেবা ব্যবহার "
+#~ "করতে সক্ষম হবেন।"
+
+#~ msgid "Open Orders"
+#~ msgstr "খোলা অর্ডার"
+
+#~ msgid "Website"
+#~ msgstr "ওয়েবসাইট"
+
+#, php-format
+#~ msgid "Current Status: %s"
+#~ msgstr "বর্তমান অবস্থা :  %s"
+
+#, php-format
+#~ msgid ""
+#~ "qTranslate Services will automatically check every hour whether the translations are "
+#~ "finished and update your posts accordingly. You can always <a href=\"%s\">check "
+#~ "manually</a>."
+#~ msgstr ""
+#~ "কিউট্রান্সলেট পরিষেবা স্বয়ংক্রিয়ভাবে প্রতি ঘণ্টায় চেক করবে অনুবাদ হয়ে গিয়েছে কিনা এবং "
+#~ "পোস্টগুলো সেইভাবে আপডেট করবে। আপনি সবসময়ই <a href=\"%s\">ম্যানুয়ালি চেক</a> করতে পারেন।"
+
+#~ msgid ""
+#~ "Deleting an open order doesn't cancel it. You will have to logon to the service "
+#~ "homepage and cancel it there."
+#~ msgstr ""
+#~ "খোলা অর্ডার মুছে দিলেই তা বাতিল হবে না। আপনাকে পরিষেবার হোমপেজে লগঅন করে সেখান থেকে "
+#~ "বাতিল করতে হবে।"
+
+#~ msgid "No open orders."
+#~ msgstr "কোনো অর্ডার ওপেন নেই।"
+
+#~ msgid "Service Configuration"
+#~ msgstr "পরিষেবা কনফিগারেশন"
+
+#~ msgid ""
+#~ "Below, you will find configuration settings for qTranslate Service Providers, which "
+#~ "are required for them to operate."
+#~ msgstr ""
+#~ "নিচে, আপনি কিউট্রান্সলেট পরিষেবা সরবরাহকারীদের জন্য কনফিগারেশন সেটিং পাবেন, যা তাদের "
+#~ "পরিচালনার জন্য আবশ্যক।"
+
+#, php-format
+#~ msgid "To translate a post, please go to the <a href=\"%s\">edit posts overview</a>."
+#~ msgstr "কোনো পোস্ট অনুবাদ করতে হলে, <a href=\"%s\">পোস্ট এডিট ওভারভিউ</a> দেখুন।"
+
+#, php-format
+#~ msgid "Post with id \"%s\" not found!"
+#~ msgstr "\"%s\" আইডির কোনো পোস্ট পাওয়া যায়নি!"
+
+#~ msgid "The requested Post has no content, no Translation possible."
+#~ msgstr "অনুরোধকৃত পোস্টে কোনো বিষয়বস্তু নেই, অনুবাদ সম্ভব নয়।"
+
+#~ msgid ""
+#~ "The Post already has content for the selected target language. If a translation "
+#~ "request is send, the current text for the target language will be overwritten."
+#~ msgstr ""
+#~ "পোস্টে নির্বাচিত অভীষ্ট ভাষায় বিষয়বস্তু ইতোমধ্যেই আছে। যদি অনুবাদের অনুরোধ পাঠানো হয়, তবে "
+#~ "অভীষ্ট ভাষার বর্তমান টেক্সট প্রতিস্থাপিত হবে।"
+
+#, php-format
+#~ msgid "An error occured: %s"
+#~ msgstr "কোনো সমস্যা হয়েছে: %s"
+
+#, php-format
+#~ msgid ""
+#~ "An serious error occured and qTranslate Services cannot proceed. For help, please "
+#~ "visit the <a href=\"%s\">Support Forum</a>"
+#~ msgstr ""
+#~ "বড়সড় একটি ত্রুটি পাওয়া গেছে এবং কিউট্রান্সলেট পরিষেবা আর এগুতে পারছে না। সাহায্যের জন্য <a "
+#~ "href=\"%s\">সাপোর্ট ফোরামে</a> যান"
+
+#~ msgid "Order successfully sent."
+#~ msgstr "অর্ডার সফলভাবে পাঠানো হয়েছে।"
+
+#~ msgid ""
+#~ "Your translation order has been successfully transfered to the selected service."
+#~ msgstr "আপনার অনুবাদ অর্ডারটি সফলভাবে নির্বাচিত পরিষেবাটিতে স্থানান্তরিত হয়েছে।"
+
+#, php-format
+#~ msgid "The service returned this message: %s"
+#~ msgstr "পরিষেবাটি এই মেসেজ পাঠিয়েছে: %s"
+
+#~ msgid "Feel free to choose an action:"
+#~ msgstr "পছন্দমত যেকোনো অ্যাকশন পছন্দ করুন:"
+
+#~ msgid "Translate this post to another language."
+#~ msgstr "এই পোস্টটি আরেকটি ভাষায় অনুবাদ করুন।"
+
+#~ msgid "Translate a different post."
+#~ msgstr "অন্য একটি পোস্ট অনুবাদ করুন।"
+
+#~ msgid "View all open orders."
+#~ msgstr "সকল খোলা অর্ডার দেখুন।"
+
+#~ msgid "Let qTranslate Services check if any open orders are finished."
+#~ msgstr "কিউট্রান্সলেট পরিষেবাকে দেখতে দিন কোনো খোলা অর্ডার শেষ হয়েছে কিনা।"
+
+#, php-format
+#~ msgid ""
+#~ "Your article is available in multiple languages. If you do not want to translate "
+#~ "from %1$s, you can switch to one of the following languages: %2$s"
+#~ msgstr ""
+#~ "আপনার আর্টিকেল একাধিক ভাষায় আছে। যদি আপনি %1$s থেকে অনুবাদ করতে না চান, তবে আপনি এই "
+#~ "ভাষাগুলোর যেকোনো একটিতে যেতে পারেন: %2$s"
+
+#~ msgid "Please choose the language you want to translate to:"
+#~ msgstr "যে ভাষায় অনুবাদ করতে চান তা পছন্দ করুন:"
+
+#~ msgid "Continue"
+#~ msgstr "এগিয়ে যান"
+
+#~ msgid "Confirm Order"
+#~ msgstr "অর্ডার নিশ্চিত"
+
+#~ msgid "Please confirm your order."
+#~ msgstr "আপনার অর্ডার নিশ্চিত করুন।"
+
+#~ msgid "Request Translation"
+#~ msgstr "অনুবাদের অনুরোধ"
+
+#~ msgid "Javascript is required for qTranslate Services"
+#~ msgstr "কিউট্রান্সলেট পরিষেবার জন্য জাভাস্ক্রিপ্ট অত্যাবশ্যক"
+
+#~ msgid "Please choose a service first"
+#~ msgstr "প্রথমে একটি সেবা পছন্দ করুন"
+
+#~ msgid "ERROR: Could not connect to qTranslate Services. Please try again later."
+#~ msgstr "সমস্যা: কিউট্রান্সলেট পরিষেবা'র সাথে সংযোগ করা যায়নি। পরে আবার চেষ্টা করুন।"
+
+#, php-format
+#~ msgid ""
+#~ "Cannot use this service, not all <a href=\"%s\">required fields</a> filled in for "
+#~ "this service."
+#~ msgstr ""
+#~ "সেবাটি ব্যবহার করা যাচ্ছে না, সেবার অনেক <a href=\"%s\">আবশ্যকীয় ফিল্ড</a> পূরণ করা হয়নি।"
+
+#~ msgid "<p><img src=\"images/wpspin_light.gif\"> Getting Quote...</p>"
+#~ msgstr "<p><img src=\"images/wpspin_light.gif\"> পাওয়া যাচ্ছে...</p>"
+
+#~ msgid "Click to toggle"
+#~ msgstr "টগল করতে ক্লিক করুন"
+
+#~ msgid "Review Article"
+#~ msgstr "আর্টিকেল রিভিউ"
+
+#~ msgid ""
+#~ "Your article will be SSL encrypted and securly sent to qTranslate Services, which "
+#~ "will forward your text to the chosen Translation Service. Once qTranslate Services "
+#~ "receives the translated text, it will automatically appear on your blog."
+#~ msgstr ""
+#~ "আপনার নিবন্ধটি এসএসএল এনক্রিপ্ট করা হবে এবং সুরক্ষিতভাবে কিউট্রান্সলেট পরিষেবাতে পাঠানো "
+#~ "হবে, যা আপনার টেক্সটকে পছন্দের অনুবাদ পরিষেবায় ফরোয়ার্ড পাঠাবে। কিউট্রান্সলেট পরিষেবা "
+#~ "অনুবাদকৃত টেক্সট পাওয়ার পর, তা স্বয়ংক্রিয়ভাবে আপনার ব্লগে উপস্থিত হবে।"
+
+#~ msgid "unavailable"
+#~ msgstr "অনুপলব্ধ"
+
+#~ msgid "free"
+#~ msgstr "বিনামূল্যে"
+
+#, php-format
+#~ msgid "<p>Price: %1$s %2$s</p>"
+#~ msgstr "<p>দাম: %1$s %2$s</p>"
+
+#, php-format
+#~ msgid "~ %1$s %2$s"
+#~ msgstr "~ %1$s %2$s"
+
+#~ msgid "An error occured!"
+#~ msgstr "কোনো ভুল হয়েছে!"
+
+#~ msgid "Adds user-friendly and database-friendly multilingual content support."
+#~ msgstr "ব্যবহার-বান্ধব এবং ডাটাবেজ-বান্ধব বহুভাষী বিষয়বস্তুর সাপোর্ট যোগ করে।"
 
 #~ msgid "Hide"
 #~ msgstr "اخفاء"
