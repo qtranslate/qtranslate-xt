@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: qTranslate-X 3.4.6.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-10-14 02:27-0600\n"
-"PO-Revision-Date: 2021-01-20 23:01+0600\n"
+"PO-Revision-Date: 2021-02-09 15:56+0600\n"
 "Last-Translator: Lenin <doctortomorrow@gmail.com>\n"
 "Language-Team: qTranslate Team Translators <nedal.elghamry@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -143,7 +143,7 @@ msgstr "%s নিষ্ক্রিয় করুন"
 #: admin/qtx_activation_hook.php:835
 #, php-format
 msgid "Plugin %s may be integrated with multilingual plugin %s with a help of plugin %s."
-msgstr "Plugin %s may be integrated with multilingual plugin %s with a help of plugin %s."
+msgstr "প্লাগিন %s হয়তো বহুভাসী প্লাগিন %s এর সাথে %s প্লাগিনের সাহায্যে সমন্বিত।"
 
 #: admin/qtx_activation_hook.php:837
 msgid "Please, press an appropriate button below."
@@ -492,7 +492,6 @@ msgid "Locale to be used in browser at front-end to set %s HTML attributes to sp
 msgstr ""
 
 #: admin/qtx_configuration.php:91
-#, fuzzy
 msgid "Date Format"
 msgstr "তারিখ ফরম্যাট"
 
@@ -513,9 +512,8 @@ msgid "Not Available Message"
 msgstr "অপ্রাপ্যতার বার্তা"
 
 #: admin/qtx_configuration.php:104
-#, fuzzy
 msgid "Message to display if post is not available in the requested language. (Example: Sorry, this entry is only available in %LANG:, : and %.)"
-msgstr "رسالة للعرض عن عدم توافر اللغة المطلوبة للمحتوي المعروض  (مثال: عفوا هذه اللغة غير متاحة في  %LANG:, :  و  %.)"
+msgstr ""
 
 #: admin/qtx_configuration.php:105
 msgid "%LANG:&lt;normal_separator&gt;:&lt;last_separator&gt;% generates a list of languages separated by &lt;normal_separator&gt; except for the last one, where &lt;last_separator&gt; will be used instead."
@@ -551,9 +549,9 @@ msgid "Switching Language"
 msgstr "ভাষা পরিবর্তন"
 
 #: admin/qtx_configuration.php:153
-#, fuzzy, php-format
+#, php-format
 msgid "Switching language to %1$s... If the Dashboard isn't loading, use this <a href=\"%2$s\" title=\"Dashboard\">link</a>."
-msgstr "جاري تغيير اللغة الي  %1$s... اذا لم يتم تحويلك تلقائيا برجاء الضغط <a href=\"%2$s\" title=\"Dashboard\">هنا</a>."
+msgstr "ভাষা পরিবর্তন করে %1$s-তে নেয়া হচ্ছে... যদি ড্যাশবোর্ড না আসে তবে এই <a href=\"%2$s\" title=\"Dashboard\">লিংকে</a>যান।"
 
 #: admin/qtx_configuration.php:173
 msgid "Edit Language"
