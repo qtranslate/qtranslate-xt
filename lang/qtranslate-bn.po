@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: qTranslate-X 3.4.6.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-09 15:56+0600\n"
-"PO-Revision-Date: 2021-02-09 17:12+0600\n"
+"PO-Revision-Date: 2021-02-09 18:52+0600\n"
 "Last-Translator: Lenin <doctortomorrow@gmail.com>\n"
 "Language-Team: qTranslate Team Translators <nedal.elghamry@gmail.com>\n"
 "Language: bn\n"
@@ -294,19 +294,17 @@ msgstr ""
 
 #: ../admin/qtx_admin_modules.php:162 ../admin/qtx_admin_modules.php:163
 #: ../admin/qtx_admin_modules.php:174
-#, fuzzy
-#| msgid "Action"
 msgid "Active"
-msgstr "ব্যবস্থা গ্রহণ"
+msgstr "সক্রিয়"
 
 #: ../admin/qtx_admin_modules.php:168 ../admin/qtx_admin_modules.php:169
 #: ../admin/qtx_admin_modules.php:182
 msgid "Inactive"
-msgstr ""
+msgstr "নিষ্ক্রিয়"
 
 #: ../admin/qtx_admin_modules.php:175
 msgid "Blocked"
-msgstr ""
+msgstr "ব্লককৃত"
 
 #: ../admin/qtx_admin_modules.php:181
 #, fuzzy
@@ -912,11 +910,11 @@ msgstr ""
 #: ../admin/qtx_admin_settings.php:492 ../admin/qtx_languages.php:74
 #: ../qtranslate_widget.php:183
 msgid "Head inline CSS"
-msgstr ""
+msgstr "হেডে ইনলাইন সিএসএস"
 
 #: ../admin/qtx_admin_settings.php:497
 msgid "CSS code added by plugin in the head of front-end pages:"
-msgstr ""
+msgstr "ফ্রন্ড-এন্ডের পাতাসমূহের হেডে প্লাগিন কর্তৃক যোগকৃত সিএসএস কোডসমূহ:"
 
 #: ../admin/qtx_admin_settings.php:502 ../admin/qtx_admin_settings.php:687
 #: ../admin/qtx_admin_settings.php:752 ../qtranslate_widget.php:183
@@ -925,7 +923,7 @@ msgstr "ডিফল্টে ফিরে যেতে, টেক্সট ম�
 
 #: ../admin/qtx_admin_settings.php:502 ../qtranslate_widget.php:183
 msgid "To disable this inline CSS, clear the check box."
-msgstr ""
+msgstr "এই ইনলাইট সিএসএস নিষ্ক্রিয় করতে, চেকবক্স আনচেক করুন।"
 
 #: ../admin/qtx_admin_settings.php:506
 msgid "Cookie Settings"
@@ -963,7 +961,7 @@ msgstr ""
 
 #: ../admin/qtx_admin_settings.php:524
 msgid "Update Gettext Databases"
-msgstr ""
+msgstr "গেটটেক্সট ডাটাবেজ আপডেট"
 
 #: ../admin/qtx_admin_settings.php:529
 msgid "Automatically check for .mo-Database Updates of installed languages."
@@ -1080,7 +1078,7 @@ msgstr ""
 
 #: ../admin/qtx_admin_settings.php:598
 msgid "Editor Raw Mode"
-msgstr ""
+msgstr "এডিটর র মোড"
 
 #: ../admin/qtx_admin_settings.php:599
 msgid "Do not use Language Switching Buttons to edit multi-language text entries."
@@ -1195,7 +1193,7 @@ msgstr ""
 
 #: ../admin/qtx_admin_settings.php:709
 msgid "Built-in Modules"
-msgstr ""
+msgstr "নিজস্ব মডিউলসমূহ"
 
 #: ../admin/qtx_admin_settings.php:712
 msgid ""
@@ -1291,12 +1289,12 @@ msgstr ""
 
 #: ../admin/qtx_admin_settings.php:807 ../admin/qtx_import_export.php:68
 msgid "Compatibility Functions"
-msgstr ""
+msgstr "কমপ্যাটিবিলিটি ফাংশনসমূহ"
 
 #: ../admin/qtx_admin_settings.php:812
 #, php-format
 msgid "Enable function name compatibility (%s)."
-msgstr ""
+msgstr "ফাংশন নামের কমপ্যাটিবিলিটি সক্রিয় (%s)।"
 
 #: ../admin/qtx_admin_settings.php:814
 #, php-format
@@ -1312,7 +1310,7 @@ msgstr ""
 
 #: ../admin/qtx_admin_settings.php:825
 msgid "Debugging Information"
-msgstr ""
+msgstr "ডিবাগিং তথ্য"
 
 #: ../admin/qtx_admin_settings.php:827
 #, php-format
@@ -1447,27 +1445,27 @@ msgstr "ডাটাবেজকে বাক্স বন্ধনি ফরম
 
 #: ../admin/qtx_admin_utils_db.php:43 ../admin/qtx_admin_utils_db.php:45
 msgid "Note: custom entries are not touched."
-msgstr ""
+msgstr "টীকা: কাস্টম ভুক্তিগুলো ধরা হয়নি।"
 
 #: ../admin/qtx_admin_utils_db.php:45
 msgid "Database has been converted to legacy dual-tag format."
-msgstr ""
+msgstr "ডাটাবেসকে পুরানো দুই-ট্যাগ ফরম্যাটে রূপান্তর করা হয়েছে।"
 
 #: ../admin/qtx_admin_utils_db.php:310
 #, php-format
 msgid "Failed to open input database file \"%s\""
-msgstr ""
+msgstr "ইনপুট ডাটাবেস ফাইল \"%s\" খুলতে ব্যর্থ"
 
 #: ../admin/qtx_admin_utils_db.php:324 ../admin/qtx_admin_utils_db.php:341
 #: ../admin/qtx_admin_utils_db.php:374
 #, php-format
 msgid "Failed to open output database file \"%s\""
-msgstr ""
+msgstr "আউটপুট ডাটাবেস ফাইল \"%s\" খুলতে ব্যর্থ"
 
 #: ../admin/qtx_admin_utils_db.php:377
 #, php-format
 msgid "Failed to re-open output database file \"%s\""
-msgstr ""
+msgstr "ইনপুট ডাটাবেস ফাইল \"%s\" পুনরায় খুলতে ব্যর্থ"
 
 #: ../admin/qtx_admin_utils_db.php:425
 #, php-format
@@ -1478,7 +1476,7 @@ msgstr ""
 
 #: ../admin/qtx_admin_utils_db.php:496
 msgid "Could not fetch the list of terms from database."
-msgstr ""
+msgstr "ডাটাবেস থেকে টার্মের তালিকা আনা যায়নি।"
 
 #: ../admin/qtx_admin_utils_db.php:498
 msgid "Nothing has been altered."
@@ -1486,7 +1484,7 @@ msgstr "কিছুই বদলানো হয়নি।"
 
 #: ../admin/qtx_admin_utils_db.php:514
 msgid "Term configuration is inconsistent."
-msgstr ""
+msgstr "টার্ম কনফিগারেশনে ধারাবাহিকতা নেই।"
 
 #: ../admin/qtx_admin_utils_db.php:516
 #, php-format
@@ -1505,11 +1503,11 @@ msgstr ""
 
 #: ../admin/qtx_admin_utils_db.php:596
 msgid "Save this report for further analysis, if necessary."
-msgstr ""
+msgstr "এই রিপোর্ট আরও বিশ্লেষণের জন্য সংরক্ষণ করুন, যদি প্রয়োজন পড়ে।"
 
 #: ../admin/qtx_admin_utils_db.php:599
 msgid "Legacy term names have been cleaned up:"
-msgstr ""
+msgstr "পুরানো টার্ম নামগুলো পরিস্কার করা হয়েছে:"
 
 #: ../admin/qtx_import_export.php:68
 #, php-format
@@ -1640,7 +1638,7 @@ msgstr "স্মরণযোগ্য, কেবল স্ট্রিং অ�
 
 #: ../admin/qtx_import_export.php:202
 msgid "Clean Legacy Term Names"
-msgstr ""
+msgstr "পুরানো টার্ম নামগুলো পরিস্কার করুন"
 
 #: ../admin/qtx_import_export.php:204
 msgid ""
@@ -1651,7 +1649,7 @@ msgstr ""
 
 #: ../admin/qtx_import_export.php:207
 msgid "Split database file by language."
-msgstr ""
+msgstr "ডাটাবেজ ফাইলকে ভাষা ভিত্তিক টুকরো করুন।"
 
 #: ../admin/qtx_import_export.php:209
 #, php-format
