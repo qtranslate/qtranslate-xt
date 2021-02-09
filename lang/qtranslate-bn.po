@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: qTranslate-X 3.4.6.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-09 15:56+0600\n"
-"PO-Revision-Date: 2021-02-09 16:56+0600\n"
+"PO-Revision-Date: 2021-02-09 17:12+0600\n"
 "Last-Translator: Lenin <doctortomorrow@gmail.com>\n"
 "Language-Team: qTranslate Team Translators <nedal.elghamry@gmail.com>\n"
 "Language: bn\n"
@@ -470,8 +470,8 @@ msgid ""
 "For help on how to configure qTranslate correctly, take a look at the <a href=\"%1$s"
 "\">qTranslate FAQ</a> and the <a href=\"%2$s\">Support Forum</a>."
 msgstr ""
-"للمساعدة في تفعيل و تشغيل qTranslate بشكل صحيح, الرجاء اتباع  <a href=\"%1$s"
-"\">التعليمات</a> و <a href=\"%2$s\">الدعم الفني</a>."
+"For help on how to configure qTranslate correctly, take a look at the <a href=\"%1$s"
+"\">qTranslate FAQ</a> and the <a href=\"%2$s\">Support Forum</a>."
 
 #: ../admin/qtx_admin_settings.php:106 ../admin/qtx_admin_settings.php:170
 msgid "Language Code"
@@ -562,7 +562,11 @@ msgid ""
 "www.php.net/manual/function.strftime.php\">strftime</a> (use %q for day suffix (st,nd,"
 "rd,th)) or <a href=\"http://www.php.net/manual/function.date.php\">date</a> format. "
 "This field is optional. (Example: %A %B %e%q, %Y)"
-msgstr "اختياري"
+msgstr ""
+"Depending on your Date / Time Conversion Mode, you can either enter a <a href=\"http://"
+"www.php.net/manual/function.strftime.php\">strftime</a> (use %q for day suffix (st,nd,"
+"rd,th)) or <a href=\"http://www.php.net/manual/function.date.php\">date</a> format. "
+"This field is optional. (Example: %A %B %e%q, %Y)"
 
 #: ../admin/qtx_admin_settings.php:181
 msgid "Time Format"
@@ -573,7 +577,10 @@ msgid ""
 "Depending on your Date / Time Conversion Mode, you can either enter a <a href=\"http://"
 "www.php.net/manual/function.strftime.php\">strftime</a> or <a href=\"http://www.php.net/"
 "manual/function.date.php\">date</a> format. This field is optional. (Example: %I:%M %p)"
-msgstr "اختياري"
+msgstr ""
+"Depending on your Date / Time Conversion Mode, you can either enter a <a href=\"http://"
+"www.php.net/manual/function.strftime.php\">strftime</a> or <a href=\"http://www.php.net/"
+"manual/function.date.php\">date</a> format. This field is optional. (Example: %I:%M %p)"
 
 #: ../admin/qtx_admin_settings.php:187 ../admin/qtx_admin_settings.php:420
 msgid "Not Available Message"
@@ -584,8 +591,6 @@ msgid ""
 "Message to display if post is not available in the requested language. (Example: Sorry, "
 "this entry is only available in %LANG:, : and %.)"
 msgstr ""
-"رسالة للعرض عن عدم توافر اللغة المطلوبة للمحتوي المعروض  (مثال: عفوا هذه اللغة غير "
-"متاحة في  %LANG:, :  و  %.)"
 
 #: ../admin/qtx_admin_settings.php:193
 msgid ""
@@ -593,6 +598,9 @@ msgid ""
 "separated by &lt;normal_separator&gt; except for the last one, where &lt;"
 "last_separator&gt; will be used instead."
 msgstr ""
+"%LANG:&lt;normal_separator&gt;:&lt;last_separator&gt;% generates a list of languages "
+"separated by &lt;normal_separator&gt; except for the last one, where &lt;"
+"last_separator&gt; will be used instead."
 
 #: ../admin/qtx_admin_settings.php:195
 #, php-format
@@ -701,8 +709,8 @@ msgid ""
 "Choose the default language of your blog. This is the language which will be shown on "
 "%s. You can also change the order the languages by clicking on the arrows above."
 msgstr ""
-"اختر اللغة الافتراضية لموفعك. يمكنك مشاهدة اللغة من هنا %s. يمكن ايضا تغيير ترتيب "
-"اللغات عن طريق الضغط علي الاسهم بالاعلي."
+"Choose the default language of your blog. This is the language which will be shown on "
+"%s. You can also change the order the languages by clicking on the arrows above."
 
 #: ../admin/qtx_admin_settings.php:327 ../admin/qtx_admin_settings.php:330
 #: ../admin/qtx_admin_settings.php:513
@@ -763,9 +771,8 @@ msgid ""
 msgstr ""
 
 #: ../admin/qtx_admin_settings.php:388
-#, fuzzy
 msgid "Hide posts which content is not available for the selected language."
-msgstr "اخفاء المحتوي الغير متوفر له ترجمة للغة المختارة."
+msgstr "Hide posts which content is not available for the selected language."
 
 #: ../admin/qtx_admin_settings.php:391
 msgid ""
@@ -773,8 +780,9 @@ msgid ""
 "language. If unchecked, a message will appear showing all the languages the content is "
 "available in."
 msgstr ""
-"عند التفعيل, لن تظهر المواضيع ان لم تكن متاحة في اللغة المختارة. اذا لم يتم التفعيل "
-"ستظهر رسالة بها كل اللغات المتاحة للمحتوي المعروض."
+"When checked, posts will be hidden if the content is not available for the selected "
+"language. If unchecked, a message will appear showing all the languages the content is "
+"available in."
 
 #: ../admin/qtx_admin_settings.php:392
 msgid ""
@@ -860,7 +868,9 @@ msgstr "ব্রাউজারের ভাষা অনুধাবন কর
 msgid ""
 "When the frontpage is visited via bookmark/external link/type-in, the visitor will be "
 "forwarded to the correct URL for the language specified by his browser."
-msgstr "اذا تم زيارة الصفحة سيتم التحويل اللغة تلقائيا الي اللغة المستخدمة في المتصفح."
+msgstr ""
+"When the frontpage is visited via bookmark/external link/type-in, the visitor will be "
+"forwarded to the correct URL for the language specified by his browser."
 
 #: ../admin/qtx_admin_settings.php:446
 msgid "Post Types"
@@ -886,11 +896,13 @@ msgstr "পতাকার ইমেজের পাথ"
 msgid ""
 "Path to the flag images under wp-content, with trailing slash. (Default: %s, clear the "
 "value above to reset it to the default)"
-msgstr "مسار محتوي اعلام الدول داخل wp-content (الافتراضي هو  %s )"
+msgstr ""
+"Path to the flag images under wp-content, with trailing slash. (Default: %s, clear the "
+"value above to reset it to the default)"
 
 #: ../admin/qtx_admin_settings.php:483
 msgid "Ignore Links"
-msgstr "تجاهل الروابط"
+msgstr "লিংক এড়াবে"
 
 #: ../admin/qtx_admin_settings.php:488
 #, php-format
@@ -1003,7 +1015,7 @@ msgstr ""
 
 #: ../admin/qtx_admin_settings.php:563
 msgid "Translation of options"
-msgstr "ترجمة الخيارات"
+msgstr "অপশনগুলোর অনুবাদ"
 
 #: ../admin/qtx_admin_settings.php:569
 #, fuzzy
@@ -1113,7 +1125,7 @@ msgstr ""
 #: ../admin/qtx_admin_settings.php:625 ../admin/qtx_admin_settings.php:627
 #: ../admin/qtx_admin_settings.php:678 ../admin/qtx_admin_settings.php:681
 msgid "Use custom CSS"
-msgstr "CSS خاص"
+msgstr "কাস্টম CSS ব্যবহার করুন।"
 
 #: ../admin/qtx_admin_settings.php:627
 #, php-format
@@ -1153,19 +1165,17 @@ msgid "Draw a border around translatable fields."
 msgstr "অনুবাদযোগ্য ফিল্ডের চারদিকে দাগ দেখাবে।"
 
 #: ../admin/qtx_admin_settings.php:668 ../admin/qtx_admin_settings.php:671
-#, fuzzy
 msgid "Show a shadow on the left of translatable fields."
-msgstr "عرض اشارة علي يسار الحقول المتاحة للترجمة"
+msgstr "Show a shadow on the left of translatable fields."
 
 #: ../admin/qtx_admin_settings.php:673 ../admin/qtx_admin_settings.php:676
-#, fuzzy
 msgid "Outline border around translatable fields."
-msgstr "رسم حدود حول الحقول المتاحة للترجمة"
+msgstr "Outline border around translatable fields."
 
 #: ../admin/qtx_admin_settings.php:688
 #, php-format
 msgid "The color in use is taken from your profile option %s, the third color."
-msgstr "اللون المستخدم  %s مستخدم من خيار الالوان في اعدادات صفحة المستخدم"
+msgstr "The color in use is taken from your profile option %s, the third color."
 
 #: ../admin/qtx_admin_settings.php:703
 #, php-format
@@ -1236,7 +1246,7 @@ msgstr ""
 
 #: ../admin/qtx_admin_settings.php:774
 msgid "Custom Fields"
-msgstr "الحقول المخصصة"
+msgstr "কাস্টম ফিল্ডসমূহ"
 
 #: ../admin/qtx_admin_settings.php:776
 #, php-format
@@ -1269,7 +1279,6 @@ msgid ""
 msgstr ""
 
 #: ../admin/qtx_admin_settings.php:798
-#, fuzzy
 msgid "Custom Filters"
 msgstr "কাস্টম ফিল্টার"
 
@@ -1314,24 +1323,20 @@ msgid ""
 msgstr ""
 
 #: ../admin/qtx_admin_settings.php:830
-#, fuzzy
-#| msgid "Additional information: %s"
 msgid "Collect information"
-msgstr "বাড়তি তথ্য: %s"
+msgstr "তথ্য সংগ্রহ"
 
 #: ../admin/qtx_admin_settings.php:833
 msgid "Versions"
-msgstr ""
+msgstr "সংস্করণ"
 
 #: ../admin/qtx_admin_settings.php:838
-#, fuzzy
-#| msgid "Configuration Files"
 msgid "Configuration"
-msgstr "কনফিগারেশন ফাইলসমূহ"
+msgstr "কনফিগারেশন"
 
 #: ../admin/qtx_admin_settings.php:843
 msgid "Browser"
-msgstr ""
+msgstr "ব্রাউজার"
 
 #: ../admin/qtx_admin_settings.php:861
 msgid "List of Configured Languages"
@@ -1428,6 +1433,9 @@ msgid ""
 "to a place where you would need it the most. Click the handle at the top-right corner "
 "of this widget to hide this message."
 msgstr ""
+"This is a set of \"%s\" from %s. Click any blank space between the buttons and drag it "
+"to a place where you would need it the most. Click the handle at the top-right corner "
+"of this widget to hide this message."
 
 #: ../admin/qtx_admin_utils.php:448
 msgid "Language Switching Buttons"
@@ -1435,7 +1443,7 @@ msgstr "ভাষা পাল্টানোর বোতাম"
 
 #: ../admin/qtx_admin_utils_db.php:43
 msgid "Database has been converted to square bracket format."
-msgstr ""
+msgstr "ডাটাবেজকে বাক্স বন্ধনি ফরম্যাটে রূপান্তর করা হয়েছে।"
 
 #: ../admin/qtx_admin_utils_db.php:43 ../admin/qtx_admin_utils_db.php:45
 msgid "Note: custom entries are not touched."
@@ -1446,23 +1454,20 @@ msgid "Database has been converted to legacy dual-tag format."
 msgstr ""
 
 #: ../admin/qtx_admin_utils_db.php:310
-#, fuzzy, php-format
-#| msgid "Failed to update gettext database for \"%s\": %s"
+#, php-format
 msgid "Failed to open input database file \"%s\""
-msgstr "গেটটেক্সট ডাটাবেজ পাওয়া যায়নি \"%s\": %s"
+msgstr ""
 
 #: ../admin/qtx_admin_utils_db.php:324 ../admin/qtx_admin_utils_db.php:341
 #: ../admin/qtx_admin_utils_db.php:374
-#, fuzzy, php-format
-#| msgid "Failed to update gettext database for \"%s\": %s"
+#, php-format
 msgid "Failed to open output database file \"%s\""
-msgstr "গেটটেক্সট ডাটাবেজ পাওয়া যায়নি \"%s\": %s"
+msgstr ""
 
 #: ../admin/qtx_admin_utils_db.php:377
-#, fuzzy, php-format
-#| msgid "Failed to update gettext database for \"%s\": %s"
+#, php-format
 msgid "Failed to re-open output database file \"%s\""
-msgstr "গেটটেক্সট ডাটাবেজ পাওয়া যায়নি \"%s\": %s"
+msgstr ""
 
 #: ../admin/qtx_admin_utils_db.php:425
 #, php-format
@@ -1477,7 +1482,7 @@ msgstr ""
 
 #: ../admin/qtx_admin_utils_db.php:498
 msgid "Nothing has been altered."
-msgstr ""
+msgstr "কিছুই বদলানো হয়নি।"
 
 #: ../admin/qtx_admin_utils_db.php:514
 msgid "Term configuration is inconsistent."
@@ -1762,10 +1767,8 @@ msgstr "ফাইল (কিউট্রান্সলেট)"
 #: ../modules/acf/src/acf_5/fields/textarea.php:32
 #: ../modules/acf/src/acf_5/fields/url.php:32
 #: ../modules/acf/src/acf_5/fields/wysiwyg.php:32
-#, fuzzy
-#| msgid "Translate"
 msgid "qTranslate"
-msgstr "অনুবাদ করুন"
+msgstr "কিউট্রান্সলেট"
 
 #: ../modules/acf/src/acf_5/fields/file.php:41
 msgid "Select File"
@@ -1865,10 +1868,8 @@ msgid "Leave blank for no limit"
 msgstr "কোনো সীমা না রাখতে ফাঁকা রাখুন"
 
 #: ../modules/acf/src/acf_5/fields/textarea.php:31
-#, fuzzy
-#| msgid "Reset qTranslate"
 msgid "Text Area (qTranslate)"
-msgstr "কিউট্রান্সলেট রিসেট করুন"
+msgstr "টেক্সট এরিয়া (কিউট্রান্সলেট)"
 
 #: ../modules/acf/src/acf_5/fields/url.php:31
 msgid "Url (qTranslate)"
