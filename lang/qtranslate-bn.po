@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: qTranslate-X 3.4.6.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-09 19:59+0600\n"
-"PO-Revision-Date: 2021-02-09 19:59+0600\n"
+"POT-Creation-Date: 2021-02-09 20:13+0600\n"
+"PO-Revision-Date: 2021-02-09 20:46+0600\n"
 "Last-Translator: Lenin <doctortomorrow@gmail.com>\n"
 "Language-Team: qTranslate Team Translators <nedal.elghamry@gmail.com>\n"
 "Language: bn\n"
@@ -166,7 +166,7 @@ msgstr ""
 "এর সেটিংস/ভাষা কনফিগারেশন পাতায়। %sচলমান%s"
 
 #: ../admin/qtx_activation_hook.php:934
-#, fuzzy, php-format
+#, php-format
 msgid ""
 "%sError:%s plugin %s cannot run concurrently with plugin %s. You may import and export "
 "compatible settings between %s and %s on Settings/<a href=\"%s\">Languages</a> "
@@ -235,6 +235,8 @@ msgid ""
 "Menu item added is replaced with a drop-down menu of available languages, when menu is "
 "rendered."
 msgstr ""
+"যোগ করা মেনু আইটেম মেনু দেখাবার সময়, প্রাপ্য ভাষাগুলোর থেকে একটি ড্রপডাউন মেনু দিয়ে পাল্টে দেয়া "
+"হয়েছে।"
 
 #: ../admin/qtx_admin.php:700
 #, php-format
@@ -245,11 +247,14 @@ msgid ""
 msgstr ""
 
 #: ../admin/qtx_admin.php:702
-#, php-format
+#, fuzzy, php-format
+#| msgid ""
+#| "The field \"%s\" of inserted menu item allows additional configuration described in "
+#| "%sFAQ%s."
 msgid ""
 "The field \"%s\" of inserted menu item allows additional configuration described in our "
 "%sWiki%s."
-msgstr ""
+msgstr "%s ফিল্ডে যোগকৃত মেনু আইটেম %sFAQ%s-তে বর্ণিত অতিরিক্ত কিছু কনফিগারেশন দেয়।"
 
 #: ../admin/qtx_admin.php:719
 msgid "Language Switcher"
@@ -294,17 +299,19 @@ msgstr ""
 
 #: ../admin/qtx_admin_modules.php:162 ../admin/qtx_admin_modules.php:163
 #: ../admin/qtx_admin_modules.php:174
+#, fuzzy
+#| msgid "Action"
 msgid "Active"
-msgstr "সক্রিয়"
+msgstr "ব্যবস্থা গ্রহণ"
 
 #: ../admin/qtx_admin_modules.php:168 ../admin/qtx_admin_modules.php:169
 #: ../admin/qtx_admin_modules.php:182
 msgid "Inactive"
-msgstr "নিষ্ক্রিয়"
+msgstr ""
 
 #: ../admin/qtx_admin_modules.php:175
 msgid "Blocked"
-msgstr "ব্লককৃত"
+msgstr ""
 
 #: ../admin/qtx_admin_modules.php:181
 #, fuzzy
@@ -336,8 +343,10 @@ msgid ""
 msgstr ""
 
 #: ../admin/qtx_admin_options_update.php:67 ../admin/qtx_admin_options_update.php:209
+#, fuzzy
+#| msgid "Single Language Mode."
 msgid "Invalid language code!"
-msgstr "অবৈধ ভাষা কোড!"
+msgstr "একক ভাষা মোড।"
 
 #: ../admin/qtx_admin_options_update.php:77 ../admin/qtx_admin_options_update.php:82
 msgid "There is already a language with the same Language Code!"
@@ -589,8 +598,6 @@ msgid ""
 "Message to display if post is not available in the requested language. (Example: Sorry, "
 "this entry is only available in %LANG:, : and %.)"
 msgstr ""
-"رسالة للعرض عن عدم توافر اللغة المطلوبة للمحتوي المعروض  (مثال: عفوا هذه اللغة غير "
-"متاحة في  %LANG:, :  و  %.)"
 
 #: ../admin/qtx_admin_settings.php:193
 msgid ""
@@ -771,6 +778,8 @@ msgid ""
 msgstr ""
 
 #: ../admin/qtx_admin_settings.php:388
+#, fuzzy
+#| msgid "Hide posts which content is not available for the selected language."
 msgid "Hide posts which content is not available for the selected language."
 msgstr "Hide posts which content is not available for the selected language."
 
@@ -1195,7 +1204,7 @@ msgstr ""
 
 #: ../admin/qtx_admin_settings.php:709
 msgid "Built-in Modules"
-msgstr "নিজস্ব মডিউলসমূহ"
+msgstr ""
 
 #: ../admin/qtx_admin_settings.php:712
 msgid ""
@@ -1312,7 +1321,7 @@ msgstr ""
 
 #: ../admin/qtx_admin_settings.php:825
 msgid "Debugging Information"
-msgstr "ডিবাগিং তথ্য"
+msgstr ""
 
 #: ../admin/qtx_admin_settings.php:827
 #, php-format
@@ -1324,19 +1333,23 @@ msgstr ""
 
 #: ../admin/qtx_admin_settings.php:830
 msgid "Collect information"
-msgstr "তথ্য সংগ্রহ"
+msgstr ""
 
 #: ../admin/qtx_admin_settings.php:833
+#, fuzzy
+#| msgid "Plugin Version %s"
 msgid "Versions"
-msgstr "সংস্করণ"
+msgstr "প্লাগিন সংস্করণ %s"
 
 #: ../admin/qtx_admin_settings.php:838
+#, fuzzy
+#| msgid "Configuration Files"
 msgid "Configuration"
-msgstr "কনফিগারেশন"
+msgstr "কনফিগারেশন ফাইলসমূহ"
 
 #: ../admin/qtx_admin_settings.php:843
 msgid "Browser"
-msgstr "ব্রাউজার"
+msgstr ""
 
 #: ../admin/qtx_admin_settings.php:861
 msgid "List of Configured Languages"
@@ -1497,11 +1510,11 @@ msgstr ""
 #: ../admin/qtx_admin_utils_db.php:581
 #, php-format
 msgid "Term \"%s\" (id=%d) has been modified from:%sto:%s"
-msgstr ""
+msgstr "টার্ম \"%s\" (id=%d) বদলানো হয়েছে:%s থেকে:%s"
 
 #: ../admin/qtx_admin_utils_db.php:593
 msgid "No term has been modified. All terms are already in a consistent state."
-msgstr ""
+msgstr "কোনো টার্ম বদলানো হয়নি। সকল টার্ম ইতোমধ্যেই একটি ধারাবাহিকতায় আছে।"
 
 #: ../admin/qtx_admin_utils_db.php:596
 msgid "Save this report for further analysis, if necessary."
@@ -1785,7 +1798,7 @@ msgstr "ফাইল আপডেট"
 #: ../modules/acf/src/acf_5/fields/file.php:44
 #: ../modules/acf/src/acf_5/fields/image.php:49
 msgid "Uploaded to this post"
-msgstr "এই পোস্টে আপলোড করা হয়েছে"
+msgstr "এই পোস্টে আপলোডকৃত"
 
 #: ../modules/acf/src/acf_5/fields/file.php:140
 msgid "File name"
@@ -1804,16 +1817,20 @@ msgid "Add File"
 msgstr "ফাইল যোগ"
 
 #: ../modules/acf/src/acf_5/fields/image.php:31
+#, fuzzy
+#| msgid "Reset qTranslate"
 msgid "Image (qTranslate)"
-msgstr "ছবি (কিউট্রান্সলেট)"
+msgstr "কিউট্রান্সলেট রিসেট করুন"
 
 #: ../modules/acf/src/acf_5/fields/image.php:46
 msgid "Select Image"
 msgstr "ছবি নির্বাচন"
 
 #: ../modules/acf/src/acf_5/fields/image.php:47
+#, fuzzy
+#| msgid "Edit Language"
 msgid "Edit Image"
-msgstr "ছবি সম্পাদনা"
+msgstr "ভাষা সম্পাদনা"
 
 #: ../modules/acf/src/acf_5/fields/image.php:48
 msgid "Update Image"
@@ -1821,19 +1838,21 @@ msgstr "ছবি আপডেট"
 
 #: ../modules/acf/src/acf_5/fields/image.php:50
 msgid "All images"
-msgstr "সব ছবি"
+msgstr "সকল ছবি"
 
 #: ../modules/acf/src/acf_5/fields/image.php:139
 msgid "Remove"
-msgstr "সরান"
+msgstr "মুছুন"
 
 #: ../modules/acf/src/acf_5/fields/image.php:155
 msgid "No image selected"
-msgstr "কোনো ছবি নির্বাচন করা হয়নি"
+msgstr "কোনো ছবি নির্বাচিত নয়"
 
 #: ../modules/acf/src/acf_5/fields/image.php:156
+#, fuzzy
+#| msgid "Add Language"
 msgid "Add Image"
-msgstr "ছবি যোগ করুন"
+msgstr "ভাষা যোগ করুন"
 
 #: ../modules/acf/src/acf_5/fields/post_object.php:31
 msgid "Post Object (qTranslate)"
@@ -1841,15 +1860,17 @@ msgstr "পোস্ট অবজেক্ট (কিউট্রান্সল
 
 #: ../modules/acf/src/acf_5/fields/text.php:31
 msgid "Text (qTranslate)"
-msgstr "টেক্সট কিউট্রান্সলেট"
+msgstr "টেক্সট (কিউট্রান্সলেট)"
 
 #: ../modules/acf/src/acf_5/fields/text.php:100
+#, fuzzy
+#| msgid "Default Language"
 msgid "Default Value"
-msgstr "ডিফল্ট মান"
+msgstr "ডিফল্ট ভাষা"
 
 #: ../modules/acf/src/acf_5/fields/text.php:101
 msgid "Appears when creating a new post"
-msgstr "এটা দেখা যায় নতুন একটি পোস্ট তৈরির সময়"
+msgstr "নতুন পোস্ট তৈরির সময় দেখায়"
 
 #: ../modules/acf/src/acf_5/fields/text.php:108
 msgid "Placeholder Text"
@@ -1857,7 +1878,7 @@ msgstr "স্থানসংকুলান টেক্সট"
 
 #: ../modules/acf/src/acf_5/fields/text.php:109
 msgid "Appears within the input"
-msgstr "ইনপুটের মধ্যে আসবে"
+msgstr "ইনপুটের মধ্যে দেখা যাবে"
 
 #: ../modules/acf/src/acf_5/fields/text.php:116
 msgid "Character Limit"
@@ -1865,19 +1886,25 @@ msgstr "ক্যারেক্টার সীমা"
 
 #: ../modules/acf/src/acf_5/fields/text.php:117
 msgid "Leave blank for no limit"
-msgstr "কোনো সীমা না রাখতে ফাঁকা রাখুন"
+msgstr "কোনো সীমা না রাখতে খালি রাখুন"
 
 #: ../modules/acf/src/acf_5/fields/textarea.php:31
+#, fuzzy
+#| msgid "Reset qTranslate"
 msgid "Text Area (qTranslate)"
-msgstr "টেক্সট এরিয়া (কিউট্রান্সলেট)"
+msgstr "কিউট্রান্সলেট রিসেট করুন"
 
 #: ../modules/acf/src/acf_5/fields/url.php:31
+#, fuzzy
+#| msgid "Reset qTranslate"
 msgid "Url (qTranslate)"
-msgstr "ইউআরএল (কিউট্রান্সলেট)"
+msgstr "কিউট্রান্সলেট রিসেট করুন"
 
 #: ../modules/acf/src/acf_5/fields/wysiwyg.php:31
+#, fuzzy
+#| msgid "Reset qTranslate"
 msgid "Wysiwyg Editor (qTranslate)"
-msgstr "উইসিউইগ এডিটর (কিউট্রান্সলেট)"
+msgstr "কিউট্রান্সলেট রিসেট করুন"
 
 #: ../modules/acf/src/acf_5/fields/wysiwyg.php:143
 msgid "Visual"
@@ -1891,13 +1918,13 @@ msgstr "%s মানটি আবশ্যক"
 #: ../modules/wp-seo/qwpseo-admin.php:201
 #, php-format
 msgid "%sNotes from %s"
-msgstr "%s টীকা %s এর থেকে"
+msgstr "%sটীকা %s থেকে"
 
 #: ../modules/wp-seo/qwpseo-admin.php:203
 msgid ""
 "In addition to main XML Sitemap, you may also view sitemaps for each individual "
 "language:"
-msgstr ""
+msgstr "প্রধান এক্সএমএল সাইটম্যাপ ছাড়াও আপনি প্রতিটি ভাষায়ও আলাদা সাইটম্যাপ দেখতে পারবেন:"
 
 #: ../modules/wp-seo/qwpseo-admin.php:215
 #, php-format
@@ -1998,6 +2025,20 @@ msgstr ""
 
 #, php-format
 #~ msgid ""
+#~ "The latest version of plugin %s has a number of new options, for example, %s, which "
+#~ "may change the look of some pages. Please, review the help text of new options on "
+#~ "%sconfiguration page%s."
+#~ msgstr ""
+#~ "সর্বশেষ সংস্করণের %s প্লাগিনে বেশ ক'টি নতুন অপশন আছে, যেমন, %s, যা কিছু পাতার দৃশ্যমান "
+#~ "পরিবর্তন ঘটাবে। অনুগ্রহপূর্বক, নতুন অপশনগুলোর সাহায্য বার্তা পাতাটি %sকনফিগার পাতায়%s দেখে "
+#~ "নিন।"
+
+#, php-format
+#~ msgid "%sHide button \"Copy From\"%s under advanced option group \"%3$s\""
+#~ msgstr "বাটন %s-কে লুকান \"%s\" থেকে কপি অগ্রগামী অপশন গ্রুপ \"%3$s\" থেকে"
+
+#, php-format
+#~ msgid ""
 #~ "Plugin %s may be integrated with multilingual plugin %s with a help of plugin %s."
 #~ msgstr "প্লাগিন %s হয়তো বহুভাসী প্লাগিন %s এর সাথে %s প্লাগিনের সাহায্যে সমন্বিত।"
 
@@ -2030,35 +2071,8 @@ msgstr ""
 #~ msgid "%sReview the plugin%s at WordPress site."
 #~ msgstr "ওয়ার্ডপ্রেস সাইটে %sপ্লাগিন রিভিউ%s করুন।"
 
-#~ msgid "Thank me again in a few months!"
-#~ msgstr "কয়েক মাসের মধ্যেই আবার আমাকে ধন্যবাদ দেবেন!"
-
-#, php-format
-#~ msgid "Please, help us to make a decision on \"%s\" feature, press the button below."
-#~ msgstr "আমাদের \"%s\" ফিচারটি সম্পর্কে সিদ্ধান্ত নিতে সাহায্য করতে নিচের বোতামটি চাপুন।"
-
-#~ msgid "Translation Service"
-#~ msgstr "অনুবাদ পরিষেবা"
-
-#, php-format
-#~ msgid "Survey on \"%s\" feature"
-#~ msgstr "\"%s\" ফিচারের উপর সার্ভে"
-
-#, php-format
-#~ msgid ""
-#~ "The latest version of plugin %s has a number of new options, for example, %s, which "
-#~ "may change the look of some pages. Please, review the help text of new options on "
-#~ "%sconfiguration page%s."
-#~ msgstr ""
-#~ "সর্বশেষ সংস্করণের %s প্লাগিনে বেশ ক'টি নতুন অপশন আছে, যেমন, %s, যা কিছু পাতার দৃশ্যমান "
-#~ "পরিবর্তন ঘটাবে। অনুগ্রহপূর্বক, নতুন অপশনগুলোর সাহায্য বার্তা পাতাটি %sকনফিগার পাতায়%s দেখে "
-#~ "নিন।"
-
 #~ msgid "Add to Menu"
 #~ msgstr "মেনুতে যোগকরণ"
-
-#~ msgid "Settings"
-#~ msgstr "সেটিংস"
 
 #~ msgid "Language Code has to be 2 characters long!"
 #~ msgstr "ভাষা কোড অবশ্যই 2 ক্যারেক্টারের হতে হবে!"
@@ -2068,9 +2082,6 @@ msgstr ""
 #~ "language tags yet."
 #~ msgid "Languages are not set"
 #~ msgstr "ভাষা সেট করা নেই"
-
-#~ msgid "Language"
-#~ msgstr "ভাষা"
 
 #~ msgid ""
 #~ "2-Letter <a href=\"http://www.w3.org/WAI/ER/IG/ert/iso639.htm#2letter\">ISO Language "
@@ -2091,10 +2102,6 @@ msgstr ""
 #~ "title=\"Dashboard\">লিংকে</a>যান।"
 
 #, fuzzy
-#~ msgid "CSS set:"
-#~ msgstr "CSS সেট:"
-
-#, fuzzy
 #~ msgctxt "browser option"
 #~ msgid "Inspect Element"
 #~ msgstr "ইনস্পেক্ট এলিমেন্ট"
@@ -2106,265 +2113,28 @@ msgstr ""
 
 #, fuzzy
 #~ msgid ""
+#~ "For the sake of viewer convenience, the content is shown below in the default "
+#~ "language of this site."
+#~ msgstr "দর্শকের সুবিধার্থে নিচের বিষয়বস্তু বিকল্প ভাষাতে দেখানো হয়েছে।"
+
+#, fuzzy
+#~ msgid ""
+#~ "For the sake of viewer convenience, the content is shown below in one of the "
+#~ "available alternative languages."
+#~ msgstr "দর্শকের সুবিধার্থে নিচের বিষয়বস্তু বিকল্প ভাষাতে দেখানো হয়েছে।"
+
+#, fuzzy
+#~| msgid "You may click the link to switch the active language."
+#~ msgid ""
+#~ "You may click one of the links to switch the site language to another available "
+#~ "language."
+#~ msgstr "আপনি লিংকে ক্লিক করে সক্রিয় ভাষাটি পরিবর্তন করতে পারেন।"
+
+#, fuzzy
+#~ msgid ""
 #~ "For the sake of viewer convenience, the content is shown below in the alternative "
 #~ "language."
 #~ msgstr "দর্শকের সুবিধার্থে নিচের বিষয়বস্তু বিকল্প ভাষাতে দেখানো হয়েছে।"
 
 #~ msgid "You may click the link to switch the active language."
 #~ msgstr "আপনি লিংকে ক্লিক করে সক্রিয় ভাষাটি পরিবর্তন করতে পারেন।"
-
-# শিরোনামের পরে কোলন। যেমন, ভাষার মেনুর উপরের দিকে।
-#~ msgctxt "Colon after a title. For example, in top item of Language Menu."
-#~ msgid ":"
-#~ msgstr ":"
-
-#~ msgid "The language/s do not have a valid ISO 639-1 representation."
-#~ msgstr "ভাষাগুলোর ISO 639-1 অনুমোদন নেই।"
-
-#~ msgid "The language/s you used are not supported by the service."
-#~ msgstr "আপনার ব্যবহারকৃত ভাষা/গুলোর এই পরিষেবায় সমর্থন নেই।"
-
-#~ msgid "There is no such service."
-#~ msgstr "এরকম কোনো পরিষেবা নেই।"
-
-#~ msgid "The system could not process your order."
-#~ msgstr "সিস্টেম আপনার অর্ডার প্রসেস করতে পারছে না।"
-
-#~ msgid "There has been an error with the selected service."
-#~ msgstr "নির্বাচিত পরিষেবাটিতে কোনো একটি সমস্যা হয়েছে।"
-
-#~ msgid "An unknown error occured with the selected service."
-#~ msgstr "নির্বাচিত পরিষেবাটির সাথে কোনো অজানা একটি সমস্যা হয়েছে।"
-
-#~ msgid "The server returned a debugging message."
-#~ msgstr "সার্ভার একটি ডিবাগিং মেসেজ পাঠিয়েছে।"
-
-#, php-format
-#~ msgid "<div>Translate to %s</div>"
-#~ msgstr "<div>%s তে অনুবাদ করুন</div>"
-
-#~ msgid "qTranslate Services Settings"
-#~ msgstr "কিউট্রান্সলেট পরিষেবা সেটিং"
-
-#~ msgid "Translate to"
-#~ msgstr "অনুবাদ করুন"
-
-#~ msgid "Order deleted."
-#~ msgstr "ক্রম মুছে দেয়া হয়েছে।"
-
-#~ msgid "Status updated for all open orders."
-#~ msgstr "সকল খোলা অর্ডারের স্ট্যাটাস হালনাগাদকৃত।"
-
-#~ msgid "Please save your post first."
-#~ msgstr "আপনার পোস্ট আগে সংরক্ষণ করুন।"
-
-#~ msgid "Post Title"
-#~ msgstr "পোস্টের শিরোনাম"
-
-#~ msgid "Service"
-#~ msgstr "পরিষেবা"
-
-#~ msgid "Source Language"
-#~ msgstr "মূল ভাষা"
-
-#~ msgid "Target Language"
-#~ msgstr "লক্ষ্য ভাষা"
-
-#~ msgid "qTranslate Services"
-#~ msgstr "কিউট্রান্সলেট পরিষেবা"
-
-#, php-format
-#~ msgid ""
-#~ "<div id=\"message\" class=\"error fade\"><p>qTranslate Services could not load <a "
-#~ "href=\"%s\">OpenSSL</a>!</p></div>"
-#~ msgstr ""
-#~ "<div id=\"message\" class=\"error fade\"><p>কিউট্রান্সলেট পরিষেবা <a href=\"%s"
-#~ "\">ওপেনএসএসএল</a>লোড করতে পারেনি!</p></div>"
-
-#~ msgid "Enable qTranslate Services"
-#~ msgstr "কিউট্রান্সলেট পরিষেবা চালান"
-
-#~ msgid ""
-#~ "With qTranslate Services, you will be able to use professional human translation "
-#~ "services with a few clicks."
-#~ msgstr ""
-#~ "কিউ ট্রান্সলেট পরিষেবার সাহায্যে আপনি কয়েকটি ক্লিক করে পেশাদার মানব অনুবাদ পরিষেবা ব্যবহার "
-#~ "করতে সক্ষম হবেন।"
-
-#~ msgid "Open Orders"
-#~ msgstr "খোলা অর্ডার"
-
-#~ msgid "Website"
-#~ msgstr "ওয়েবসাইট"
-
-#, php-format
-#~ msgid "Current Status: %s"
-#~ msgstr "বর্তমান অবস্থা :  %s"
-
-#, php-format
-#~ msgid ""
-#~ "qTranslate Services will automatically check every hour whether the translations are "
-#~ "finished and update your posts accordingly. You can always <a href=\"%s\">check "
-#~ "manually</a>."
-#~ msgstr ""
-#~ "কিউট্রান্সলেট পরিষেবা স্বয়ংক্রিয়ভাবে প্রতি ঘণ্টায় চেক করবে অনুবাদ হয়ে গিয়েছে কিনা এবং "
-#~ "পোস্টগুলো সেইভাবে আপডেট করবে। আপনি সবসময়ই <a href=\"%s\">ম্যানুয়ালি চেক</a> করতে পারেন।"
-
-#~ msgid ""
-#~ "Deleting an open order doesn't cancel it. You will have to logon to the service "
-#~ "homepage and cancel it there."
-#~ msgstr ""
-#~ "খোলা অর্ডার মুছে দিলেই তা বাতিল হবে না। আপনাকে পরিষেবার হোমপেজে লগঅন করে সেখান থেকে "
-#~ "বাতিল করতে হবে।"
-
-#~ msgid "No open orders."
-#~ msgstr "কোনো অর্ডার ওপেন নেই।"
-
-#~ msgid "Service Configuration"
-#~ msgstr "পরিষেবা কনফিগারেশন"
-
-#~ msgid ""
-#~ "Below, you will find configuration settings for qTranslate Service Providers, which "
-#~ "are required for them to operate."
-#~ msgstr ""
-#~ "নিচে, আপনি কিউট্রান্সলেট পরিষেবা সরবরাহকারীদের জন্য কনফিগারেশন সেটিং পাবেন, যা তাদের "
-#~ "পরিচালনার জন্য আবশ্যক।"
-
-#, php-format
-#~ msgid "To translate a post, please go to the <a href=\"%s\">edit posts overview</a>."
-#~ msgstr "কোনো পোস্ট অনুবাদ করতে হলে, <a href=\"%s\">পোস্ট এডিট ওভারভিউ</a> দেখুন।"
-
-#, php-format
-#~ msgid "Post with id \"%s\" not found!"
-#~ msgstr "\"%s\" আইডির কোনো পোস্ট পাওয়া যায়নি!"
-
-#~ msgid "The requested Post has no content, no Translation possible."
-#~ msgstr "অনুরোধকৃত পোস্টে কোনো বিষয়বস্তু নেই, অনুবাদ সম্ভব নয়।"
-
-#~ msgid ""
-#~ "The Post already has content for the selected target language. If a translation "
-#~ "request is send, the current text for the target language will be overwritten."
-#~ msgstr ""
-#~ "পোস্টে নির্বাচিত অভীষ্ট ভাষায় বিষয়বস্তু ইতোমধ্যেই আছে। যদি অনুবাদের অনুরোধ পাঠানো হয়, তবে "
-#~ "অভীষ্ট ভাষার বর্তমান টেক্সট প্রতিস্থাপিত হবে।"
-
-#, php-format
-#~ msgid "An error occured: %s"
-#~ msgstr "কোনো সমস্যা হয়েছে: %s"
-
-#, php-format
-#~ msgid ""
-#~ "An serious error occured and qTranslate Services cannot proceed. For help, please "
-#~ "visit the <a href=\"%s\">Support Forum</a>"
-#~ msgstr ""
-#~ "বড়সড় একটি ত্রুটি পাওয়া গেছে এবং কিউট্রান্সলেট পরিষেবা আর এগুতে পারছে না। সাহায্যের জন্য <a "
-#~ "href=\"%s\">সাপোর্ট ফোরামে</a> যান"
-
-#~ msgid "Order successfully sent."
-#~ msgstr "অর্ডার সফলভাবে পাঠানো হয়েছে।"
-
-#~ msgid ""
-#~ "Your translation order has been successfully transfered to the selected service."
-#~ msgstr "আপনার অনুবাদ অর্ডারটি সফলভাবে নির্বাচিত পরিষেবাটিতে স্থানান্তরিত হয়েছে।"
-
-#, php-format
-#~ msgid "The service returned this message: %s"
-#~ msgstr "পরিষেবাটি এই মেসেজ পাঠিয়েছে: %s"
-
-#~ msgid "Feel free to choose an action:"
-#~ msgstr "পছন্দমত যেকোনো অ্যাকশন পছন্দ করুন:"
-
-#~ msgid "Translate this post to another language."
-#~ msgstr "এই পোস্টটি আরেকটি ভাষায় অনুবাদ করুন।"
-
-#~ msgid "Translate a different post."
-#~ msgstr "অন্য একটি পোস্ট অনুবাদ করুন।"
-
-#~ msgid "View all open orders."
-#~ msgstr "সকল খোলা অর্ডার দেখুন।"
-
-#~ msgid "Let qTranslate Services check if any open orders are finished."
-#~ msgstr "কিউট্রান্সলেট পরিষেবাকে দেখতে দিন কোনো খোলা অর্ডার শেষ হয়েছে কিনা।"
-
-#, php-format
-#~ msgid ""
-#~ "Your article is available in multiple languages. If you do not want to translate "
-#~ "from %1$s, you can switch to one of the following languages: %2$s"
-#~ msgstr ""
-#~ "আপনার আর্টিকেল একাধিক ভাষায় আছে। যদি আপনি %1$s থেকে অনুবাদ করতে না চান, তবে আপনি এই "
-#~ "ভাষাগুলোর যেকোনো একটিতে যেতে পারেন: %2$s"
-
-#~ msgid "Please choose the language you want to translate to:"
-#~ msgstr "যে ভাষায় অনুবাদ করতে চান তা পছন্দ করুন:"
-
-#~ msgid "Continue"
-#~ msgstr "এগিয়ে যান"
-
-#~ msgid "Confirm Order"
-#~ msgstr "অর্ডার নিশ্চিত"
-
-#~ msgid "Please confirm your order."
-#~ msgstr "আপনার অর্ডার নিশ্চিত করুন।"
-
-#~ msgid "Request Translation"
-#~ msgstr "অনুবাদের অনুরোধ"
-
-#~ msgid "Javascript is required for qTranslate Services"
-#~ msgstr "কিউট্রান্সলেট পরিষেবার জন্য জাভাস্ক্রিপ্ট অত্যাবশ্যক"
-
-#~ msgid "Please choose a service first"
-#~ msgstr "প্রথমে একটি সেবা পছন্দ করুন"
-
-#~ msgid "ERROR: Could not connect to qTranslate Services. Please try again later."
-#~ msgstr "সমস্যা: কিউট্রান্সলেট পরিষেবা'র সাথে সংযোগ করা যায়নি। পরে আবার চেষ্টা করুন।"
-
-#, php-format
-#~ msgid ""
-#~ "Cannot use this service, not all <a href=\"%s\">required fields</a> filled in for "
-#~ "this service."
-#~ msgstr ""
-#~ "সেবাটি ব্যবহার করা যাচ্ছে না, সেবার অনেক <a href=\"%s\">আবশ্যকীয় ফিল্ড</a> পূরণ করা হয়নি।"
-
-#~ msgid "<p><img src=\"images/wpspin_light.gif\"> Getting Quote...</p>"
-#~ msgstr "<p><img src=\"images/wpspin_light.gif\"> পাওয়া যাচ্ছে...</p>"
-
-#~ msgid "Click to toggle"
-#~ msgstr "টগল করতে ক্লিক করুন"
-
-#~ msgid "Review Article"
-#~ msgstr "আর্টিকেল রিভিউ"
-
-#~ msgid ""
-#~ "Your article will be SSL encrypted and securly sent to qTranslate Services, which "
-#~ "will forward your text to the chosen Translation Service. Once qTranslate Services "
-#~ "receives the translated text, it will automatically appear on your blog."
-#~ msgstr ""
-#~ "আপনার নিবন্ধটি এসএসএল এনক্রিপ্ট করা হবে এবং সুরক্ষিতভাবে কিউট্রান্সলেট পরিষেবাতে পাঠানো "
-#~ "হবে, যা আপনার টেক্সটকে পছন্দের অনুবাদ পরিষেবায় ফরোয়ার্ড পাঠাবে। কিউট্রান্সলেট পরিষেবা "
-#~ "অনুবাদকৃত টেক্সট পাওয়ার পর, তা স্বয়ংক্রিয়ভাবে আপনার ব্লগে উপস্থিত হবে।"
-
-#~ msgid "unavailable"
-#~ msgstr "অনুপলব্ধ"
-
-#~ msgid "free"
-#~ msgstr "বিনামূল্যে"
-
-#, php-format
-#~ msgid "<p>Price: %1$s %2$s</p>"
-#~ msgstr "<p>দাম: %1$s %2$s</p>"
-
-#, php-format
-#~ msgid "~ %1$s %2$s"
-#~ msgstr "~ %1$s %2$s"
-
-#~ msgid "An error occured!"
-#~ msgstr "কোনো ভুল হয়েছে!"
-
-#~ msgid "Adds user-friendly and database-friendly multilingual content support."
-#~ msgstr "ব্যবহার-বান্ধব এবং ডাটাবেজ-বান্ধব বহুভাষী বিষয়বস্তুর সাপোর্ট যোগ করে।"
-
-#~ msgid "Hide"
-#~ msgstr "اخفاء"
-
-#~ msgid "Show"
-#~ msgstr "عرض"
