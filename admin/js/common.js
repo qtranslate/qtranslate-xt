@@ -908,7 +908,8 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
             }
         };
 
-        this.addContentHooksTinyMCE = function () {
+        this.addContentHooksTinyMCE = function (event) {
+            console.log('QTX addContentHooksTinyMCE', event);
             function setEditorHooks(ed) {
                 var id = ed.id;
                 if (!id)
@@ -956,7 +957,7 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
                      * We could not figure out a good way to distinct within this function which way it was called,
                      * except this tricky comparison on the next line.
                      *
-                     * If somebody finds out a better way, please let us know at qtranslateteam@gmail.com.
+                     * If somebody finds out a better way, please let us know at https://github.com/qtranslate/qtranslate-xt/issues/.
                      */
                     updateTinyMCEonInit = text_e !== text_h;
                 }
@@ -997,20 +998,23 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
                     }
                 }
             };
-            setTinyMceInit();
 
             /** Adds more TinyMCE editors, which may have been initialized dynamically. */
             loadTinyMceHooks = function () {
-                if (!window.tinyMCE)
-                    return;
-                if (!tinyMCE.editors)
+                if (!window.tinyMCE || !tinyMCE.editors)
                     return;
                 for (var i = 0; i < tinyMCE.editors.length; ++i) {
                     var ed = tinyMCE.editors[i];
                     setEditorHooks(ed);
                 }
             };
-            window.addEventListener('load', loadTinyMceHooks);
+
+            if (event && event.type && event.type === 'load') {
+                loadTinyMceHooks();
+            } else {
+                // This is executed first, during initialization with the first call to get_qtx()
+                setTinyMceInit();
+            }
         };
 
         if (!qTranslateConfig.onTabSwitchFunctions)
@@ -1421,6 +1425,15 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
     };
 
     $(function () {
+        console.log('QTX onReady');
         qTranslateConfig.js.get_qtx();
+    });
+
+    // With jQuery3 ready handlers fire asynchronously and may be fired after load...
+    // See: https://github.com/jquery/jquery/issues/3194
+    $(window).on('load', function(event) {
+        console.log('QTX onLoad');
+        var qtx = qTranslateConfig.js.get_qtx();
+        qtx.addContentHooksTinyMCE(event);
     });
 })(jQuery);
