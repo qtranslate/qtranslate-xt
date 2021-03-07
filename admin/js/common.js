@@ -1001,11 +1001,10 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 
             /** Adds more TinyMCE editors, which may have been initialized dynamically. */
             loadTinyMceHooks = function () {
-                if (!window.tinyMCE || !tinyMCE.editors)
-                    return;
-                for (var i = 0; i < tinyMCE.editors.length; ++i) {
-                    var ed = tinyMCE.editors[i];
-                    setEditorHooks(ed);
+                if (window.tinyMCE) {
+                    tinyMCE.get().forEach(function (editor) {
+                        setEditorHooks(editor);
+                    });
                 }
             };
 
