@@ -345,8 +345,11 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 
             h.fields = {};
             if (!qTranslateConfig.RAW) {
+                // Most crucial moment when untranslated content is parsed
                 contents = qtranxj_split(inpField.value);
+                // Substitute the current ML content with translated content for the current language
                 inpField.value = contents[h.lang];
+                // Insert translated content for each language before the current field
                 for (var lang in contents) {
                     var text = contents[lang];
                     var fnm = bfnm + '[' + lang + ']';
@@ -909,7 +912,6 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
         };
 
         this.addContentHooksTinyMCE = function (event) {
-            console.log('QTX addContentHooksTinyMCE', event);
             function setEditorHooks(ed) {
                 var id = ed.id;
                 if (!id)
@@ -1423,15 +1425,9 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
         return qTranslateConfig.qtx;
     };
 
-    $(function () {
-        console.log('QTX onReady');
-        qTranslateConfig.js.get_qtx();
-    });
-
-    // With jQuery3 ready handlers fire asynchronously and may be fired after load...
+    // With jQuery3 ready handlers fire asynchronously and may be fired after load.
     // See: https://github.com/jquery/jquery/issues/3194
     $(window).on('load', function(event) {
-        console.log('QTX onLoad');
         var qtx = qTranslateConfig.js.get_qtx();
         qtx.addContentHooksTinyMCE(event);
     });
