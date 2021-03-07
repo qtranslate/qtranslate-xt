@@ -793,7 +793,7 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
                 qtx.addContentHooksByClass(className);
             }
             if (qTranslateConfig.LSB)
-                setTinyMceInit();
+                qtx.addContentHooksTinyMCE();
         };
 
         /**
@@ -911,110 +911,102 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
             }
         };
 
-        this.addContentHooksTinyMCE = function (event) {
-            function setEditorHooks(ed) {
-                var id = ed.id;
-                if (!id)
-                    return;
-                var h = contentHooks[id];
-                if (!h)
-                    return;
-                if (h.mce) {
-                    return;  // already initialized
-                }
-                h.mce = ed;
-
-                /**
-                 * Highlighting the translatable fields
-                 * @since 3.2-b3
-                 */
-                ed.getContainer().className += ' qtranxs-translatable';
-                ed.getElement().className += ' qtranxs-translatable';
-
-                var updateTinyMCEonInit = h.updateTinyMCEonInit;
-                if (updateTinyMCEonInit == null) {
-                    // 'tmce-active' or 'html-active' was not provided on the wrapper
-                    var text_e = ed.getContent({format: 'html'}).replace(/\s+/g, '');
-                    var text_h = h.contentField.value.replace(/\s+/g, '');
-                    /**
-                     * @since 3.2.9.8 - this is an ugly trick.
-                     * Before this version, it was working relying on properly timed synchronisation of the page loading process,
-                     * which did not work correctly in some browsers like IE or MAC OS, for example.
-                     * Now, function setTinyMceInit is called after HTML loaded, before TinyMCE initialization, and it always set
-                     * tinyMCEPreInit.mceInit, which causes to call this function, setEditorHooks, on TinyMCE initialization of each editor.
-                     * However, function setEditorHooks gets invoked in two ways:
-                     *
-                     * 1. On page load, when Visual mode is initially on.
-                     *      In this case we need to apply updateTinyMCE, which possibly applies wpautop.
-                     *      Without q-X, WP applies wpautop in this case in php code in /wp-includes/class-wp-editor.php,
-                     *      function 'editor', line "add_filter('the_editor_content', 'wp_richedit_pre');".
-                     *      q-X disables this call in 'function qtranxf_the_editor',
-                     *      since wpautop does not work correctly on multilingual values, and there is no filter to adjust its behaviour.
-                     *      So, here we have to apply back wpautop to single-language value, which is achieved
-                     *      with a call to updateTinyMCE(h) below.
-                     *
-                     * 2. When user switches to Visual mode for the first time from a page, which was initially loaded in Text mode.
-                     *      In this case, wpautop gets applied internally inside TinyMCE, and we do not need to call updateTinyMCE(h) below.
-                     *
-                     * We could not figure out a good way to distinct within this function which way it was called,
-                     * except this tricky comparison on the next line.
-                     *
-                     * If somebody finds out a better way, please let us know at https://github.com/qtranslate/qtranslate-xt/issues/.
-                     */
-                    updateTinyMCEonInit = text_e !== text_h;
-                }
-                if (updateTinyMCEonInit) {
-                    updateTinyMCE(h);
-                }
-                return h;
+        /** Link a TinyMCE editor with translatable content. The editor should be initialized for TinyMCE. */
+        var setEditorHooks = function (ed) {
+            var id = ed.id;
+            if (!id)
+                return;
+            var h = contentHooks[id];
+            if (!h)
+                return;
+            if (h.mce) {
+                return;  // already initialized for qTranslate
             }
+            h.mce = ed;
 
-            /** Sets hooks on HTML-loaded TinyMCE editors via tinyMCEPreInit.mceInit. */
-            setTinyMceInit = function () {
-                if (!window.tinyMCEPreInit || !window.tinyMCE) {
-                    return;
-                }
-                for (var key in contentHooks) {
-                    var h = contentHooks[key];
-                    if (h.contentField.tagName !== 'TEXTAREA' || h.mce || h.mceInit || !tinyMCEPreInit.mceInit[key])
-                        continue;
-                    h.mceInit = tinyMCEPreInit.mceInit[key];
-                    if (h.mceInit.wpautop) {
-                        h.wpautop = h.mceInit.wpautop;
-                        var wrappers = tinymce.DOM.select('#wp-' + key + '-wrap');
-                        if (wrappers && wrappers.length) {
-                            h.wrapper = wrappers[0];
-                            if (h.wrapper) {
-                                if (tinymce.DOM.hasClass(h.wrapper, 'tmce-active'))
-                                    h.updateTinyMCEonInit = true;
-                                if (tinymce.DOM.hasClass(h.wrapper, 'html-active'))
-                                    h.updateTinyMCEonInit = false;
-                                // otherwise h.updateTinyMCEonInit stays undetermined
-                            }
+            /**
+             * Highlighting the translatable fields
+             * @since 3.2-b3
+             */
+            ed.getContainer().className += ' qtranxs-translatable';
+            ed.getElement().className += ' qtranxs-translatable';
+
+            var updateTinyMCEonInit = h.updateTinyMCEonInit;
+            if (updateTinyMCEonInit == null) {
+                // 'tmce-active' or 'html-active' was not provided on the wrapper
+                var text_e = ed.getContent({format: 'html'}).replace(/\s+/g, '');
+                var text_h = h.contentField.value.replace(/\s+/g, '');
+                /**
+                 * @since 3.2.9.8 - this is an ugly trick.
+                 * Before this version, it was working relying on properly timed synchronisation of the page loading process,
+                 * which did not work correctly in some browsers like IE or MAC OS, for example.
+                 * Now, function addContentHooksTinyMCE is called in the footer scripts, before TinyMCE initialization, and it always sets
+                 * tinyMCEPreInit.mceInit, which causes to call this function, setEditorHooks, on TinyMCE initialization of each editor.
+                 * However, function setEditorHooks gets invoked in two ways:
+                 *
+                 * 1. On page load, when Visual mode is initially on.
+                 *      In this case we need to apply updateTinyMCE, which possibly applies wpautop.
+                 *      Without q-X, WP applies wpautop in this case in php code in /wp-includes/class-wp-editor.php,
+                 *      function 'editor', line "add_filter('the_editor_content', 'wp_richedit_pre');".
+                 *      q-X disables this call in 'function qtranxf_the_editor',
+                 *      since wpautop does not work correctly on multilingual values, and there is no filter to adjust its behaviour.
+                 *      So, here we have to apply back wpautop to single-language value, which is achieved
+                 *      with a call to updateTinyMCE(h) below.
+                 *
+                 * 2. When user switches to Visual mode for the first time from a page, which was initially loaded in Text mode.
+                 *      In this case, wpautop gets applied internally inside TinyMCE, and we do not need to call updateTinyMCE(h) below.
+                 *
+                 * We could not figure out a good way to distinct within this function which way it was called,
+                 * except this tricky comparison on the next line.
+                 *
+                 * If somebody finds out a better way, please let us know at https://github.com/qtranslate/qtranslate-xt/issues/.
+                 */
+                updateTinyMCEonInit = text_e !== text_h;
+            }
+            if (updateTinyMCEonInit) {
+                updateTinyMCE(h);
+            }
+            return h;
+        }
+
+        /** Sets hooks on HTML-loaded TinyMCE editors via tinyMCEPreInit.mceInit. */
+        this.addContentHooksTinyMCE = function () {
+            if (!window.tinyMCEPreInit || !window.tinyMCE) {
+                return;
+            }
+            for (var key in contentHooks) {
+                var h = contentHooks[key];
+                if (h.contentField.tagName !== 'TEXTAREA' || h.mce || h.mceInit || !tinyMCEPreInit.mceInit[key])
+                    continue;
+                h.mceInit = tinyMCEPreInit.mceInit[key];
+                if (h.mceInit.wpautop) {
+                    h.wpautop = h.mceInit.wpautop;
+                    var wrappers = tinymce.DOM.select('#wp-' + key + '-wrap');
+                    if (wrappers && wrappers.length) {
+                        h.wrapper = wrappers[0];
+                        if (h.wrapper) {
+                            if (tinymce.DOM.hasClass(h.wrapper, 'tmce-active'))
+                                h.updateTinyMCEonInit = true;
+                            if (tinymce.DOM.hasClass(h.wrapper, 'html-active'))
+                                h.updateTinyMCEonInit = false;
+                            // otherwise h.updateTinyMCEonInit stays undetermined
                         }
-                    } else {
-                        h.updateTinyMCEonInit = false;
                     }
-                    tinyMCEPreInit.mceInit[key].init_instance_callback = function (ed) {
-                        setEditorHooks(ed);
-                    }
+                } else {
+                    h.updateTinyMCEonInit = false;
                 }
-            };
-
-            /** Adds more TinyMCE editors, which may have been initialized dynamically. */
-            loadTinyMceHooks = function () {
-                if (window.tinyMCE) {
-                    tinyMCE.get().forEach(function (editor) {
-                        setEditorHooks(editor);
-                    });
+                tinyMCEPreInit.mceInit[key].init_instance_callback = function (ed) {
+                    setEditorHooks(ed);
                 }
-            };
+            }
+        };
 
-            if (event && event.type && event.type === 'load') {
-                loadTinyMceHooks();
-            } else {
-                // This is executed first, during initialization with the first call to get_qtx()
-                setTinyMceInit();
+        /** Adds more TinyMCE editors, which may have been initialized dynamically. */
+        this.loadAdditionalTinyMceHooks = function () {
+            if (window.tinyMCE) {
+                tinyMCE.get().forEach(function (editor) {
+                    setEditorHooks(editor);
+                });
             }
         };
 
@@ -1427,8 +1419,10 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
 
     // With jQuery3 ready handlers fire asynchronously and may be fired after load.
     // See: https://github.com/jquery/jquery/issues/3194
-    $(window).on('load', function(event) {
+    $(window).on('load', function () {
+        // qtx may already be initialized (see 'wp_tiny_mce_init' for the Classic Editor)
         var qtx = qTranslateConfig.js.get_qtx();
-        qtx.addContentHooksTinyMCE(event);
+        // Setup hooks for additional TinyMCE editors initialized dynamically
+        qtx.loadAdditionalTinyMceHooks();
     });
 })(jQuery);
