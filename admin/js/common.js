@@ -911,6 +911,7 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
             }
         };
 
+        /** Link a TinyMCE editor with translatable content. The editor should be initialized for TinyMCE. */
         var setEditorHooks = function (ed) {
             var id = ed.id;
             if (!id)
@@ -919,7 +920,7 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
             if (!h)
                 return;
             if (h.mce) {
-                return;  // already initialized
+                return;  // already initialized for qTranslate
             }
             h.mce = ed;
 
@@ -939,7 +940,7 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
                  * @since 3.2.9.8 - this is an ugly trick.
                  * Before this version, it was working relying on properly timed synchronisation of the page loading process,
                  * which did not work correctly in some browsers like IE or MAC OS, for example.
-                 * Now, function addContentHooksTinyMCE is called in the footer scripts, before TinyMCE initialization, and it always set
+                 * Now, function addContentHooksTinyMCE is called in the footer scripts, before TinyMCE initialization, and it always sets
                  * tinyMCEPreInit.mceInit, which causes to call this function, setEditorHooks, on TinyMCE initialization of each editor.
                  * However, function setEditorHooks gets invoked in two ways:
                  *
@@ -1001,7 +1002,7 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
         };
 
         /** Adds more TinyMCE editors, which may have been initialized dynamically. */
-        this.loadTinyMceHooks = function () {
+        this.loadAdditionalTinyMceHooks = function () {
             if (window.tinyMCE) {
                 tinyMCE.get().forEach(function (editor) {
                     setEditorHooks(editor);
@@ -1419,7 +1420,9 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
     // With jQuery3 ready handlers fire asynchronously and may be fired after load.
     // See: https://github.com/jquery/jquery/issues/3194
     $(window).on('load', function () {
+        // qtx may already be initialized (see 'wp_tiny_mce_init' for the Classic Editor)
         var qtx = qTranslateConfig.js.get_qtx();
-        qtx.loadTinyMceHooks();
+        // Setup hooks for additional TinyMCE editors initialized dynamically
+        qtx.loadAdditionalTinyMceHooks();
     });
 })(jQuery);
