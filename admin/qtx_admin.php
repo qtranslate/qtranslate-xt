@@ -858,6 +858,22 @@ function qtranxf_admin_footer_update( $text ) {
     return $text;
 }
 
+/**
+ * Initialize qTranslate qtx in JS to set the content hooks just before the call to tinymce.init.
+ * This anticipated qtx init sequence runs before the usual ready/load events, but still in the footer so the content is
+ * supposed to be available for a proper initialization of qTranslate.
+ */
+function qtranxf_admin_tiny_mce_init( $mce_settings ) {
+    if ( isset( $mce_settings ) ):
+        ?>
+        <script type="text/javascript">
+            if (qTranslateConfig && qTranslateConfig.js)
+                qTranslateConfig.js.get_qtx();
+        </script>
+    <?php
+    endif;
+}
+
 function qtranxf_admin_load() {
     qtranxf_admin_loadConfig();
 
@@ -881,6 +897,7 @@ function qtranxf_admin_load() {
     add_action( 'admin_footer', 'qtranxf_admin_footer', 999 );
     add_filter( 'admin_footer_text', 'qtranxf_admin_footer_text', 99 );
     add_filter( 'update_footer', 'qtranxf_admin_footer_update', 99 );
+    add_action( 'wp_tiny_mce_init', 'qtranxf_admin_tiny_mce_init' );
 
     // after POST & GET are set, and before all WP objects are created, alternatively can use action 'setup_theme' instead.
     add_action( 'sanitize_comment_cookies', 'qtranxf_decode_translations_posted', 5 );
