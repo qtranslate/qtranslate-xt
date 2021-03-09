@@ -3,7 +3,7 @@ Developed by: new qTranslate community, from qTranslate-X by John Clause and qTr
 Contributors: herrvigg, johnclause, chineseleper, Vavooon, grafcom  
 Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, translation  
 Requires: 4.8  
-Tested up to: 5.6  
+Tested up to: 5.6.2  
 Stable tag: N/A  
 License: GPLv2 or later  
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  

@@ -1,3 +1,33 @@
+### 3.9.3
+Core
+* Fix Javascript init for Classic Editor with WP5.6 (#946, #931)
+  * Fix async ready/load events with jQuery3
+  * Anticipate qtx init before TinyMCE init
+  * Remove ready handler from common.js
+  * Fix deprecated tinymce.editors
+* Refactor TinyMCE hook functions in common.js (#978)
+* Redesign admin language list with icons (#945)
+* Prefix global functions in modules with qtranxf_ (#959)
+* Add permalink info for incompatible pre-path mode (#821)
+
+Yoast
+* Rewrite Yoast module from scratch (#794)
+* Move legacy Yoast 13 module to dev (#794)
+* Fix wp-seo opengraph title translation (#944)
+* Add front filters schema and breadcumbs (#947)
+* Generalize front filters (#947)
+* Translate org/company name (#947)
+
+WooCommerce
+* Add front filter for product_get_name (#957)
+* Add support for Paypal Checkout (#949)
+
+ACF
+* Add CSS for acf-autosize (#955)
+
+Localization
+* Add Bangla localization files (#960)
+
 ### 3.9.2
 Core
 * Fix unitialized string offset in urlinfo (#928, #939, #940)
