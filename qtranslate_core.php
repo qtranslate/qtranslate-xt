@@ -728,7 +728,6 @@ function qtranxf_load_option_func( $name, $opn = null, $func = null ) {
 function qtranxf_is_permalink_structure_query() {
     $permalink_structure = get_option( 'permalink_structure' );
 
-    //qtranxf_dbg_echo('qtranxf_is_permalink_structure_query: ', $permalink_structure);
     return empty( $permalink_structure ) || strpos( $permalink_structure, '?' ) !== false || strpos( $permalink_structure, 'index.php' ) !== false;
 }
 

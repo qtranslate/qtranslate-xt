@@ -331,7 +331,10 @@ class QTX_Admin_Settings {
                         <label title="Pre-Path Mode">
                             <input type="radio" name="url_mode"
                                    value="<?php echo QTX_URL_PATH; ?>" <?php checked( $url_mode, QTX_URL_PATH );
-                            disabled( $permalink_is_query ) ?> /> <?php echo __( 'Use Pre-Path Mode (Default, puts /en/ in front of URL)', 'qtranslate' ) . '. ' . __( 'SEO friendly.', 'qtranslate' ) ?>
+                            disabled( $permalink_is_query ) ?> /> <?php echo __( 'Use Pre-Path Mode (Default, puts /en/ in front of URL)', 'qtranslate' ) . '. ' . __( 'SEO friendly.', 'qtranslate' );
+                            if ( $permalink_is_query ) {
+                                echo ' ' . __( 'Requires a permalink structure without query string or index.php (not Plain).', 'qtranslate' );
+                            } ?>
                         </label><br/>
                         <label title="Pre-Domain Mode">
                             <input type="radio" name="url_mode"
