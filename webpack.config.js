@@ -5,14 +5,14 @@ const path = require('path');
 
 module.exports = {
     entry: {
-        'common': './admin/js/src/common.js',
-        'edit-tags-exec': './admin/js/src/edit-tags-exec.js',
-        'editor-gutenberg': './admin/js/src/editor-gutenberg.js',
-        'nav-menus-exec': './admin/js/src/nav-menus-exec.js',
-        'notices': './admin/js/src/notices.js',
-        'options': './admin/js/src/options.js',
-        'post-exec': './admin/js/src/post-exec.js',
-        'widgets-exec': './admin/js/src/widgets-exec.js',
+        'common': './admin/js/common.js',
+        'edit-tags-exec': './admin/js/edit-tags-exec.js',
+        'editor-gutenberg': './admin/js/editor-gutenberg.js',
+        'nav-menus-exec': './admin/js/nav-menus-exec.js',
+        'notices': './admin/js/notices.js',
+        'options': './admin/js/options.js',
+        'post-exec': './admin/js/post-exec.js',
+        'widgets-exec': './admin/js/widgets-exec.js',
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
