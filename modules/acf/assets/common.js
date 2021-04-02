@@ -58,8 +58,9 @@
         // TODO qTranslateConfig should not be accessed here in common.js (temporary fix for LSB edit selection)
         if (!qTranslateConfig.LSB)
             return;
+        var qtx = qTranslateConfig.js.get_qtx();
         // select the edit tab from active language
-        var language = qTranslateConfig.qtx.getActiveLanguage();
+        var language = qtx.getActiveLanguage();
         if (language) {
             // show the correct ACF fields
             onLanguageSwitch(language);

@@ -1,11 +1,8 @@
 (function ($) {
     $(window).on('load', function () {
-        // Only proceed if qTranslate is loaded
-        if (typeof qTranslateConfig != 'object' || typeof qTranslateConfig.qtx != 'object') {
-            return;
-        }
+        var qtx = qTranslateConfig.js.get_qtx();
 
-        qTranslateConfig.qtx.enableLanguageSwitchingButtons('block');
+        qtx.enableLanguageSwitchingButtons('block');
 
         // Ensure that translation of standard field types is enabled
         if (!window.acf_qtranslate_translate_standard_field_types) {
@@ -21,7 +18,7 @@
 
         // Remove content hooks from ACF Fields
         $('.acf-postbox .acf-field').find('.qtranxs-translatable').each(function () {
-            qTranslateConfig.qtx.removeContentHook(this);
+            qtx.removeContentHook(this);
         });
 
         var post_type = $('#post_type').val();
@@ -45,7 +42,7 @@
                 var form = $(this).closest('form').get(0);
                 var field = $(this).find(selector).get(0);
                 if (!isTranslatableField(field)) return;
-                qTranslateConfig.qtx.addContentHookC(field, form);
+                qtx.addContentHookC(field, form);
             });
 
             // Watch and add content hooks when new fields are added
@@ -53,10 +50,10 @@
                 var form = $el.closest('form').get(0);
                 var field = $el.find(selector).get(0);
                 if (!isTranslatableField(field)) return;
-                qTranslateConfig.qtx.addContentHookC(field, form);
+                qtx.addContentHookC(field, form);
 
                 if ($(field).hasClass('wp-editor-area')) {
-                    //qTranslateConfig.qtx.addContentHooksTinyMCE();
+                    // qtx.addContentHooksTinyMCE();
 
                     // We must manually trigger load event so that the
                     // loadTinyMceHooks function which calls setEditorHooks is executed
@@ -71,7 +68,7 @@
 
         });
 
-        //qTranslateConfig.qtx.addContentHooksTinyMCE();
+        // qtx.addContentHooksTinyMCE();
 
         // Watch and remove content hooks when fields are removed
         // however ACF removes the elements from the DOM early so
@@ -87,7 +84,7 @@
         function repeaterRemove($el) {
             var row = ($el.$el || $el).closest('.acf-row'); // support old versions of ACF5PRO as well
             row.find(_.toArray(field_types).join(',')).filter('.qtranxs-translatable').each(function () {
-                qTranslateConfig.qtx.removeContentHook(this);
+                qtx.removeContentHook(this);
             });
             // call the original handler
             repeaterFieldRemove.call(this, $el);
