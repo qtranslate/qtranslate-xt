@@ -1,7 +1,5 @@
 const path = require('path');
-// const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-// const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-// const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -35,15 +33,7 @@ module.exports = {
             },
         ]
     },
+    plugins: [
+        new CleanWebpackPlugin()
+    ],
 };
-
-/*
-// plugins: [
-    new MiniCssExtractPlugin({
-        filename: "[name].css",
-        chunkFilename: "[id].css"
-    }),
-    new CssMinimizerPlugin(),
-    new CleanWebpackPlugin()
-],
-*/
