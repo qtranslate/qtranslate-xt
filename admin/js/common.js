@@ -26,12 +26,12 @@
  */
 
 // global config
-var qTranslateConfig = window.qTranslateConfig;
+export var qTranslateConfig = window.qTranslateConfig;
 
 /**
  * since 3.2.7
  */
-qtranxj_get_split_blocks = function (text) {
+export var qtranxj_get_split_blocks = function (text) {
     var regex = '(<!--:lang-->|<!--:-->|\\[:lang]|\\[:]|{:lang}|{:})'.replace(/lang/g, qTranslateConfig.lang_code_format);
     var split_regex = new RegExp(regex, "gi");
 
@@ -59,7 +59,7 @@ qtranxj_get_split_blocks = function (text) {
 /**
  * since 3.2.7
  */
-qtranxj_split = function (text) {
+export var qtranxj_split = function (text) {
     var blocks = qtranxj_get_split_blocks(text);
     return qtranxj_split_blocks(blocks);
 };
@@ -67,7 +67,7 @@ qtranxj_split = function (text) {
 /**
  * since 3.1-b1 - closing tag [:]
  */
-qtranxj_split_blocks = function (blocks) {
+export var qtranxj_split_blocks = function (blocks) {
     var result = new Object;
     for (var lang in qTranslateConfig.language_config) {
         result[lang] = '';
@@ -127,7 +127,7 @@ qtranxj_split_blocks = function (blocks) {
     return result;
 };
 
-function qtranxj_ce(tagName, props, pNode, isFirst) {
+export var qtranxj_ce = function (tagName, props, pNode, isFirst) {
     var el = document.createElement(tagName);
     if (props) {
         for (var prop in props) {
@@ -142,7 +142,7 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
         }
     }
     return el;
-}
+};
 
 (function ($) {
     // the edit language corresponds to the current LSB selection or the main admin language for single mode
@@ -361,7 +361,7 @@ function qtranxj_ce(tagName, props, pNode, isFirst) {
                 }
 
                 // insert a hidden element in the form so that the edit language is sent to the server
-                $form = $(inpField).closest('form');
+                var $form = $(inpField).closest('form');
                 if ($form.length) {
                     var $hidden = $form.find('input[name="qtranslate-edit-language"]');
                     if (!$hidden.length) {
