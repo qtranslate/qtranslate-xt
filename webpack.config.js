@@ -14,10 +14,6 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: "[name].js"
-    },
-    externals: {
-        jquery: 'jQuery'
     },
     module: {
         rules: [
