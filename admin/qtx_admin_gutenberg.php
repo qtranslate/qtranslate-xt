@@ -157,12 +157,11 @@ class QTX_Admin_Gutenberg {
      * Enqueue the JS script
      */
     public function enqueue_block_editor_assets() {
-        $script_file = 'dist/editor-gutenberg.js';
         wp_register_script(
             'qtx-gutenberg',
-            plugins_url( $script_file, QTRANSLATE_FILE ),
+            plugins_url( 'dist/editor-gutenberg.js', QTRANSLATE_FILE ),
             array(),
-            filemtime( QTRANSLATE_DIR . '/' . $script_file ),
+            QTX_VERSION,
             true
         );
         wp_enqueue_script( 'qtx-gutenberg' );

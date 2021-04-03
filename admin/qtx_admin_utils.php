@@ -54,8 +54,8 @@ function qtranxf_enqueue_scripts( $jss ) {
         if ( isset( $js['src'] ) ) {
             $handle = isset( $js['handle'] ) ? $js['handle'] : ( is_string( $key ) ? $key : 'qtranslate-admin-js-' . ( ++ $cnt ) );
             $src    = $js['src'];
-            $ver = isset( $js['ver'] ) ? $js['ver'] : QTX_VERSION;
-            $url = content_url( $src );
+            $ver    = isset( $js['ver'] ) ? $js['ver'] : QTX_VERSION;
+            $url    = content_url( $src );
             if ( isset( $js['deps'] ) ) {
                 $deps = array_merge( $deps, $js['deps'] );
             }
@@ -527,9 +527,9 @@ function qtranxf_admin_debug_info() {
 
         $info['configuration'] = $q_config;
         // clear config information, too verbose and generally irrelevant
-        unset($info['configuration']['front_config']);
-        unset($info['configuration']['admin_config']);
-        unset($info['configuration']['i18n-cache']);
+        unset( $info['configuration']['front_config'] );
+        unset( $info['configuration']['admin_config'] );
+        unset( $info['configuration']['i18n-cache'] );
 
         $plugins         = get_option( 'active_plugins' );
         $plugin_versions = array();

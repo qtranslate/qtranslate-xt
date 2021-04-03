@@ -1,4 +1,4 @@
-const path = require('path');
+// Webpack configuration for qTranslate-XT
 
 module.exports = {
     entry: {
