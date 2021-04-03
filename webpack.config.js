@@ -1,5 +1,4 @@
 const path = require('path');
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -13,7 +12,7 @@ module.exports = {
         'widgets-exec': './admin/js/widgets-exec.js',
     },
     output: {
-        path: path.resolve(__dirname, 'dist'),
+        clean: true,
     },
     module: {
         rules: [
@@ -29,7 +28,4 @@ module.exports = {
             },
         ]
     },
-    plugins: [
-        new CleanWebpackPlugin()
-    ],
 };
