@@ -3,7 +3,7 @@ Developed by: new qTranslate community, from qTranslate-X by John Clause and qTr
 Contributors: herrvigg, johnclause, chineseleper, Vavooon, grafcom  
 Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, translation  
 Requires: 4.8  
-Tested up to: 5.6.2  
+Tested up to: 5.7  
 Stable tag: N/A  
 License: GPLv2 or later  
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
@@ -71,6 +71,9 @@ Note for developers:
 * old releases may contain legacy headers that can become problematic. Be very cautious if you customize the updates for given branches!
 
 ## Upgrade Notice
+
+### 3.10.0
+New feature! Javascript code bundled with Webpack and Babel. New paths updated on plugin reactivation or by saving your qTranslate-XT language settings.
 
 ### 3.9.0
 New feature! Extend language code to 2-letter (ISO 639-1) or 3-letter (ISO 639-2 and ISO 639-3). Enforce lower case for new entries. Upper case only allowed for existing 2-letter codes as legacy support, but a migration will be required, see [#884](https://github.com/qtranslate/qtranslate-xt/issues/884).

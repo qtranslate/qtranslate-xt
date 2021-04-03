@@ -2,12 +2,12 @@
   "name": "qtranslate-xt",
   "version": "1.0.0",
   "description": "qTranslate-XT (eXTended)",
-  "main": "admin/js/src/index.js",
+  "main": "admin/js/common.js",
   "private": true,
   "scripts": {
-    "build": "babel admin/js/src -d admin/js/lib --minified --verbose",
-    "dev": "babel admin/js/src -d admin/js/lib --verbose",
-    "watch": "babel admin/js/src -d admin/js/lib --watch --verbose",
+    "build": "webpack --mode=production --progress",
+    "dev": "webpack --mode=development --devtool=eval-source-map --progress",
+    "watch": "webpack --mode=development --devtool=eval --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,9 +22,12 @@
   },
   "homepage": "https://github.com/qtranslate/qtranslate-xt#readme",
   "devDependencies": {
-    "@babel/cli": "^7.11.6",
-    "@babel/core": "^7.11.6",
-    "@babel/preset-env": "^7.11.5"
+    "@babel/cli": "^7.13.14",
+    "@babel/core": "^7.13.14",
+    "@babel/preset-env": "^7.13.12",
+    "babel-loader": "^8.2.2",
+    "webpack": "^5.30.0",
+    "webpack-cli": "^4.6.0"
   },
   "dependencies": {}
 }

@@ -58,7 +58,7 @@
       },
       "js-exec": {
         "post-exec": {
-          "src": "./admin/js/post-exec.min.js"
+          "src": "./dist/post-exec.js"
         }
       }
     },
@@ -107,7 +107,7 @@
       },
       "js-exec": {
         "widgets-exec": {
-          "src": "./admin/js/widgets-exec.min.js"
+          "src": "./dist/widgets-exec.js"
         }
       }
     },
@@ -171,7 +171,7 @@
       },
       "js-exec": {
         "edit-tags-exec": {
-          "src": "./admin/js/edit-tags-exec.min.js"
+          "src": "./dist/edit-tags-exec.js"
         }
       }
     },
@@ -221,7 +221,7 @@
       },
       "js-exec": {
         "nav-menus-exec": {
-          "src": "./admin/js/nav-menus-exec.min.js"
+          "src": "./dist/nav-menus-exec.js"
         }
       }
     },
