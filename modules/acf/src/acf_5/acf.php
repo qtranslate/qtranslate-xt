@@ -21,8 +21,6 @@ class acf_qtranslate_acf_5 implements acf_qtranslate_acf_interface {
         // a higher priority is needed for custom admin options (ACF PRO)
         add_filter( 'acf/format_value', array( $this, 'format_value' ), 5 );
         add_action( 'acf/include_fields', array( $this, 'include_fields' ), 5 );
-
-        add_action( 'acf/input/admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
     }
 
     /**
@@ -44,16 +42,6 @@ class acf_qtranslate_acf_5 implements acf_qtranslate_acf_interface {
         acf()->fields->register_field_type( new acf_qtranslate_acf_5_textarea( $this->plugin ) );
         acf()->fields->register_field_type( new acf_qtranslate_acf_5_url( $this->plugin ) );
         acf()->fields->register_field_type( new acf_qtranslate_acf_5_wysiwyg( $this->plugin ) );
-    }
-
-    /**
-     * Load javascript and stylesheets on admin pages
-     */
-    public function admin_enqueue_scripts() {
-        wp_enqueue_script( 'acf_qtranslate_main', plugins_url( 'dist/acf-main.js', QTRANSLATE_FILE ), array(
-            'acf-input',
-            'underscore'
-        ), QTX_VERSION );
     }
 
     /**

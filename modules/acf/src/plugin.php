@@ -107,10 +107,10 @@ class acf_qtranslate_plugin {
         wp_enqueue_style( 'acf_qtranslate_common', plugins_url( '/assets/common.css', ACF_QTRANSLATE_PLUGIN ),
             array( 'acf-input' ), QTX_VERSION );
 
-        wp_enqueue_script( 'acf_qtranslate_common', plugins_url( 'dist/acf-common.js', QTRANSLATE_FILE ), array(
+        wp_enqueue_script( 'qtranslate-acf', plugins_url( 'dist/modules/acf.js', QTRANSLATE_FILE ), array(
             'acf-input',
             'underscore',
-            'qtranslate-admin-common'  // TODO remove temporary dependency (see acf_5/common.js)
+            'qtranslate-admin-common'
         ), QTX_VERSION );
     }
 
