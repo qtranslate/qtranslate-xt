@@ -50,13 +50,10 @@ class acf_qtranslate_acf_5 implements acf_qtranslate_acf_interface {
      * Load javascript and stylesheets on admin pages
      */
     public function admin_enqueue_scripts() {
-        $debug   = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG;
-        $script  = $debug ? 'assets/acf_5/main.js' : 'assets/acf_5/main.min.js';
-        $version = $debug ? filemtime( ACF_QTRANSLATE_PLUGIN_DIR . $script ) : QTX_VERSION;
-        wp_enqueue_script( 'acf_qtranslate_main', plugins_url( $script, ACF_QTRANSLATE_PLUGIN ), array(
+        wp_enqueue_script( 'acf_qtranslate_main', plugins_url( 'dist/acf-main.js', QTRANSLATE_FILE ), array(
             'acf-input',
             'underscore'
-        ), $version );
+        ), QTX_VERSION );
     }
 
     /**

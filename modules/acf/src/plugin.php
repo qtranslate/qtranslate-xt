@@ -104,15 +104,14 @@ class acf_qtranslate_plugin {
      * Load javascript and stylesheets on admin pages
      */
     public function admin_enqueue_scripts() {
-        wp_enqueue_style( 'acf_qtranslate_common', plugins_url( '/assets/common.css', ACF_QTRANSLATE_PLUGIN ), array( 'acf-input' ) );
-        $debug   = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG;
-        $script  = $debug ? 'assets/common.js' : 'assets/common.min.js';
-        $version = $debug ? filemtime( ACF_QTRANSLATE_PLUGIN_DIR . $script ) : QTX_VERSION;
-        wp_enqueue_script( 'acf_qtranslate_common', plugins_url( $script, ACF_QTRANSLATE_PLUGIN ), array(
+        wp_enqueue_style( 'acf_qtranslate_common', plugins_url( '/assets/common.css', ACF_QTRANSLATE_PLUGIN ),
+            array( 'acf-input' ), QTX_VERSION );
+
+        wp_enqueue_script( 'acf_qtranslate_common', plugins_url( 'dist/acf-common.js', QTRANSLATE_FILE ), array(
             'acf-input',
             'underscore',
-            'qtranslate-admin-common'     // TODO remove temporary dependency (see common.js)
-        ), $version );
+            'qtranslate-admin-common'  // TODO remove temporary dependency (see acf_5/common.js)
+        ), QTX_VERSION );
     }
 
     /**

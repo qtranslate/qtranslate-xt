@@ -10,6 +10,9 @@ module.exports = {
         'options': './admin/js/options.js',
         'post-exec': './admin/js/post-exec.js',
         'widgets-exec': './admin/js/widgets-exec.js',
+        'acf-common': './modules/acf/assets/common.js',
+        'acf-main': './modules/acf/assets/acf_5/main.js',
+        'acf-qtranslatex': './modules/acf/assets/acf_5/qtranslatex.js',
     },
     output: {
         clean: true,
