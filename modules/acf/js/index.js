@@ -1,3 +1,3 @@
-import './common';
-import './fields';
+import './register';
+import './switch';
 import './qtranslatex';
