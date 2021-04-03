@@ -27,7 +27,6 @@ class acf_qtranslate_qtranslatex {
         $this->plugin = $plugin;
 
         add_action( 'admin_head', array( $this, 'admin_head' ) );
-        add_action( 'acf/input/admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
     }
 
     /**
@@ -60,19 +59,4 @@ class acf_qtranslate_qtranslatex {
             <?php
         }
     }
-
-    /**
-     * Load javascript and stylesheets on admin pages
-     */
-    public function admin_enqueue_scripts() {
-        $acf_version = $this->plugin->acf_major_version();
-        $debug       = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG;
-        $script      = "assets/acf_{$acf_version}/" . ( $debug ? "qtranslatex.js" : "qtranslatex.min.js" );
-        $version     = $debug ? filemtime( ACF_QTRANSLATE_PLUGIN_DIR . $script ) : QTX_VERSION;
-        wp_enqueue_script( 'acf_qtranslatex', plugins_url( $script, ACF_QTRANSLATE_PLUGIN ), array(
-            'acf_qtranslate_common',
-            'qtranslate-admin-common'
-        ), $version );
-    }
-
 }

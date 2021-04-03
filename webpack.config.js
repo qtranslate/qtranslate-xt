@@ -10,6 +10,7 @@ module.exports = {
         'options': './admin/js/options.js',
         'post-exec': './admin/js/post-exec.js',
         'widgets-exec': './admin/js/widgets-exec.js',
+        'modules/acf': './modules/acf/js/index.js',
     },
     output: {
         clean: true,
