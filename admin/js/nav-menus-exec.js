@@ -3,9 +3,9 @@
 */
 (function ($) {
     $(function () {
-        var qtx = qTranslateConfig.js.get_qtx();
+        const qtx = qTranslateConfig.js.get_qtx();
 
-        var addMenuItemHooks = function (li) {
+        const addMenuItemHooks = function (li) {
             qtx.addContentHooksByClass('edit-menu-item-title', li);
             qtx.addContentHooksByClass('edit-menu-item-attr-title', li);
             qtx.addContentHooksByClass('[edit-menu-item-description', li); // must use '[:]' separator style
@@ -14,17 +14,17 @@
             qtx.addDisplayHooksByTagInClass('link-to-original', 'A', li);
         };
 
-        var onAddMenuItem = function (menuMarkup) {
-            var rx = /id="menu-item-(\d+)"/gi;
+        const onAddMenuItem = function (menuMarkup) {
+            const rx = /id="menu-item-(\d+)"/gi;
             while ((matches = rx.exec(menuMarkup))) {
-                var id = 'menu-item-' + matches[1];
-                var li = document.getElementById(id);
+                const id = 'menu-item-' + matches[1];
+                const li = document.getElementById(id);
                 if (li) addMenuItemHooks(li);
             }
         };
 
         if (wpNavMenu) {
-            var wp_addMenuItemToBottom = wpNavMenu.addMenuItemToBottom;
+            const wp_addMenuItemToBottom = wpNavMenu.addMenuItemToBottom;
             if (typeof wp_addMenuItemToBottom == 'function') {
                 wpNavMenu.addMenuItemToBottom = function (menuMarkup, req) {
                     wp_addMenuItemToBottom(menuMarkup, req);
@@ -39,7 +39,7 @@
             }
         }
 
-        var onLanguageSwitchAfter = function (lang) {
+        const onLanguageSwitchAfter = function (lang) {
             if (wpNavMenu) {
                 if (typeof wpNavMenu.refreshKeyboardAccessibility == 'function') {
                     wpNavMenu.refreshKeyboardAccessibility();

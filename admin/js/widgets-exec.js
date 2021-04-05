@@ -6,9 +6,9 @@
         if (!window.wpWidgets)
             return;
 
-        var qtx = qTranslateConfig.js.get_qtx();
+        const qtx = qTranslateConfig.js.get_qtx();
 
-        var onWidgetUpdate = function (evt, widget) {
+        const onWidgetUpdate = function (evt, widget) {
             widget.find('span.in-widget-title').each(function (i, e) {
                 qtx.addDisplayHook(e);
             });
@@ -23,7 +23,7 @@
         $(document).on('widget-added', onWidgetUpdate);
         $(document).on('widget-updated', onWidgetUpdate);
 
-        var onLanguageSwitchAfter = function () {
+        const onLanguageSwitchAfter = function () {
             $('#widgets-right .widget').each(function () {
                 wpWidgets.appendTitle(this);
             });

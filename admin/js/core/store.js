@@ -3,13 +3,13 @@
  */
 
 // the edit language corresponds to the current LSB selection or the main admin language for single mode
-var keyEditLanguage = 'qtranslate-xt-admin-edit-language';
+const keyEditLanguage = 'qtranslate-xt-admin-edit-language';
 
-export var getStoredEditLanguage = function () {
+export const getStoredEditLanguage = function () {
     return sessionStorage.getItem(keyEditLanguage);
 };
 
-export var storeEditLanguage = function (lang) {
+export const storeEditLanguage = function (lang) {
     try {
         sessionStorage.setItem(keyEditLanguage, lang);
     } catch (e) {
