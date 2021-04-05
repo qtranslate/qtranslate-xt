@@ -1,21 +1,6 @@
-/*
-	Copyright 2019  qTranslate-XT  (https://github.com/qtranslate/qtranslate-xt)
-
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 2 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
-	GNU General Public License for more details.
-
-	You should have received a copy of the GNU General Public License
-	along with this program; if not, write to the Free Software
-	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
-*/
 /**
+ * Main qTranslateX class for LSB and content hooks
+ *
  * Search for 'Designed as interface for other plugin integration' in comments to functions
  * to find out which functions are safe to use in the 3rd-party integration.
  * Avoid accessing internal variables directly, as they are subject to be re-designed at any time.
@@ -24,138 +9,13 @@
  * - qTranslateConfig.js - is a place where custom Java script functions are stored, if needed.
  * Read Integration Guide: https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide for more information.
  */
+import {qtranxj_ce} from './dom';
+import {qtranxj_get_split_blocks, qtranxj_split, qtranxj_split_blocks} from './qblocks';
+import {getStoredEditLanguage, storeEditLanguage} from './store';
 
-// global config
-export var qTranslateConfig = window.qTranslateConfig;
-
-/**
- * since 3.2.7
- */
-export var qtranxj_get_split_blocks = function (text) {
-    var regex = '(<!--:lang-->|<!--:-->|\\[:lang]|\\[:]|{:lang}|{:})'.replace(/lang/g, qTranslateConfig.lang_code_format);
-    var split_regex = new RegExp(regex, "gi");
-
-    // Most browsers support RegExp.prototype[@@split]()... except IE
-    if ('a~b'.split(/(~)/).length === 3) {
-        return text.split(split_regex);
-    }
-
-    // compatibility for unsupported engines
-    var start = 0, arr = [];
-    var result;
-    while ((result = split_regex.exec(text)) != null) {
-        arr.push(text.slice(start, result.index));
-        if (result.length > 1)
-            arr.push(result[1]);
-        start = split_regex.lastIndex;
-    }
-    if (start < text.length)
-        arr.push(text.slice(start));
-    if (start === text.length)
-        arr.push(''); // delimiter at the end
-    return arr;
-};
-
-/**
- * since 3.2.7
- */
-export var qtranxj_split = function (text) {
-    var blocks = qtranxj_get_split_blocks(text);
-    return qtranxj_split_blocks(blocks);
-};
-
-/**
- * since 3.1-b1 - closing tag [:]
- */
-export var qtranxj_split_blocks = function (blocks) {
-    var result = new Object;
-    for (var lang in qTranslateConfig.language_config) {
-        result[lang] = '';
-    }
-    if (!blocks || !blocks.length)
-        return result;
-    if (blocks.length === 1) {
-        // no language separator found, enter it to all languages
-        var b = blocks[0];
-        for (var lang in qTranslateConfig.language_config) {
-            result[lang] += b;
-        }
-        return result;
-    }
-    var clang_regex = new RegExp('<!--:(lang)-->'.replace(/lang/g, qTranslateConfig.lang_code_format), 'gi');
-    var blang_regex = new RegExp('\\[:(lang)]'.replace(/lang/g, qTranslateConfig.lang_code_format), 'gi');
-    var slang_regex = new RegExp('{:(lang)}'.replace(/lang/g, qTranslateConfig.lang_code_format), 'gi');
-    var lang = false;
-    var matches;
-    for (var i = 0; i < blocks.length; ++i) {
-        var b = blocks[i];
-        if (!b.length)
-            continue;
-        matches = clang_regex.exec(b);
-        clang_regex.lastIndex = 0;
-        if (matches != null) {
-            lang = matches[1];
-            continue;
-        }
-        matches = blang_regex.exec(b);
-        blang_regex.lastIndex = 0;
-        if (matches != null) {
-            lang = matches[1];
-            continue;
-        }
-        matches = slang_regex.exec(b);
-        slang_regex.lastIndex = 0;
-        if (matches != null) {
-            lang = matches[1];
-            continue;
-        }
-        if (b === '<!--:-->' || b === '[:]' || b === '{:}') {
-            lang = false;
-            continue;
-        }
-        if (lang) {
-            if (!result[lang]) result[lang] = b;
-            else result[lang] += b;
-            lang = false;
-        } else {
-            // keep neutral text
-            for (var key in result) {
-                result[key] += b;
-            }
-        }
-    }
-    return result;
-};
-
-export var qtranxj_ce = function (tagName, props, pNode, isFirst) {
-    var el = document.createElement(tagName);
-    if (props) {
-        for (var prop in props) {
-            el[prop] = props[prop];
-        }
-    }
-    if (pNode) {
-        if (isFirst && pNode.firstChild) {
-            pNode.insertBefore(el, pNode.firstChild);
-        } else {
-            pNode.appendChild(el);
-        }
-    }
-    return el;
-};
+var qTranslateConfig = window.qTranslateConfig;
 
 (function ($) {
-    // the edit language corresponds to the current LSB selection or the main admin language for single mode
-    var keyEditLanguage = 'qtranslate-xt-admin-edit-language';
-    var storeEditLanguage = function (lang) {
-        try {
-            sessionStorage.setItem(keyEditLanguage, lang);
-        } catch (e) {
-            // no big deal if this can't be stored
-            console.log('Failed to store "' + keyEditLanguage + '" with sessionStorage', e);
-        }
-    };
-
     var qTranslateX = function (pg) {
         var qtx = this;
 
@@ -201,7 +61,7 @@ export var qtranxj_ce = function (tagName, props, pNode, isFirst) {
         };
 
         if (qTranslateConfig.LSB) {
-            qTranslateConfig.activeLanguage = sessionStorage.getItem(keyEditLanguage);
+            qTranslateConfig.activeLanguage = getStoredEditLanguage();
             if (!qTranslateConfig.activeLanguage || !this.isLanguageEnabled(qTranslateConfig.activeLanguage)) {
                 qTranslateConfig.activeLanguage = qTranslateConfig.language;
                 if (this.isLanguageEnabled(qTranslateConfig.activeLanguage)) {
@@ -1425,4 +1285,5 @@ export var qtranxj_ce = function (tagName, props, pNode, isFirst) {
         // Setup hooks for additional TinyMCE editors initialized dynamically
         qtx.loadAdditionalTinyMceHooks();
     });
+
 })(jQuery);
