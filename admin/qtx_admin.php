@@ -324,7 +324,7 @@ function qtranxf_get_admin_page_config_post_type( $post_type ) {
             unset( $page_config['js-conf'] );
         }
 
-        $page_config['js'][] = array( 'handle' => 'qtranslate-admin-common', 'src' => './dist/common.js' );
+        $page_config['js'][] = array( 'handle' => 'qtranslate-admin-main', 'src' => './dist/main.js' );
 
         if ( isset( $page_config['js-exec'] ) ) {
             foreach ( $page_config['js-exec'] as $key => $js ) {

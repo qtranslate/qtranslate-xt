@@ -2,7 +2,7 @@
 
 module.exports = {
     entry: {
-        'common': './admin/js/common.js',
+        'main': './admin/js/main.js',
         'edit-tags-exec': './admin/js/edit-tags-exec.js',
         'editor-gutenberg': './admin/js/editor-gutenberg.js',
         'nav-menus-exec': './admin/js/nav-menus-exec.js',

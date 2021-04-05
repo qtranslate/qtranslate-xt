@@ -37,7 +37,7 @@ function qwpseo_add_admin_page_config( $page_configs ) {
                 'handle' => 'qwpseo-prep',
                 'src'    => $dir . '/js/qwpseo-prep.min.js',
                 'ver'    => QWPSEO_VERSION,
-                'deps'   => array( 'qtranslate-admin-common' )
+                'deps'   => array( 'qtranslate-admin-main' )
             );
             $deps[] = 'yoast-seo-term-scraper';
             break;
@@ -136,7 +136,7 @@ function qwpseo_script_deps() {
             break;
         case 'post.php':
         case 'post-new.php':
-            $handles = array( 'post-edit-classic' => 'qtranslate-admin-common' );
+            $handles = array( 'post-edit-classic' => 'qtranslate-admin-main' );
             break;
         default:
             return;
