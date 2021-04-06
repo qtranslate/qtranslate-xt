@@ -1,11 +1,11 @@
 /**
  * Utilities for qTranslate blocks
  */
-var qTranslateConfig = window.qTranslateConfig;
+const qTranslateConfig = window.qTranslateConfig;
 
-export var qtranxj_get_split_blocks = function (text) {
-    var regex = '(<!--:lang-->|<!--:-->|\\[:lang]|\\[:]|{:lang}|{:})'.replace(/lang/g, qTranslateConfig.lang_code_format);
-    var split_regex = new RegExp(regex, "gi");
+export const qtranxj_get_split_blocks = function (text) {
+    const regex = '(<!--:lang-->|<!--:-->|\\[:lang]|\\[:]|{:lang}|{:})'.replace(/lang/g, qTranslateConfig.lang_code_format);
+    const split_regex = new RegExp(regex, "gi");
 
     // Most browsers support RegExp.prototype[@@split]()... except IE
     if ('a~b'.split(/(~)/).length === 3) {
@@ -13,8 +13,8 @@ export var qtranxj_get_split_blocks = function (text) {
     }
 
     // compatibility for unsupported engines
-    var start = 0, arr = [];
-    var result;
+    let start = 0, arr = [];
+    let result;
     while ((result = split_regex.exec(text)) != null) {
         arr.push(text.slice(start, result.index));
         if (result.length > 1)
@@ -28,33 +28,33 @@ export var qtranxj_get_split_blocks = function (text) {
     return arr;
 };
 
-export var qtranxj_split = function (text) {
-    var blocks = qtranxj_get_split_blocks(text);
+export const qtranxj_split = function (text) {
+    const blocks = qtranxj_get_split_blocks(text);
     return qtranxj_split_blocks(blocks);
 };
 
-export var qtranxj_split_blocks = function (blocks) {
-    var result = new Object;
-    for (var lang in qTranslateConfig.language_config) {
+export const qtranxj_split_blocks = function (blocks) {
+    const result = new Object;
+    for (const lang in qTranslateConfig.language_config) {
         result[lang] = '';
     }
     if (!blocks || !blocks.length)
         return result;
     if (blocks.length === 1) {
         // no language separator found, enter it to all languages
-        var b = blocks[0];
-        for (var lang in qTranslateConfig.language_config) {
+        const b = blocks[0];
+        for (const lang in qTranslateConfig.language_config) {
             result[lang] += b;
         }
         return result;
     }
-    var clang_regex = new RegExp('<!--:(lang)-->'.replace(/lang/g, qTranslateConfig.lang_code_format), 'gi');
-    var blang_regex = new RegExp('\\[:(lang)]'.replace(/lang/g, qTranslateConfig.lang_code_format), 'gi');
-    var slang_regex = new RegExp('{:(lang)}'.replace(/lang/g, qTranslateConfig.lang_code_format), 'gi');
-    var lang = false;
-    var matches;
-    for (var i = 0; i < blocks.length; ++i) {
-        var b = blocks[i];
+    const clang_regex = new RegExp('<!--:(lang)-->'.replace(/lang/g, qTranslateConfig.lang_code_format), 'gi');
+    const blang_regex = new RegExp('\\[:(lang)]'.replace(/lang/g, qTranslateConfig.lang_code_format), 'gi');
+    const slang_regex = new RegExp('{:(lang)}'.replace(/lang/g, qTranslateConfig.lang_code_format), 'gi');
+    let lang = false;
+    let matches;
+    for (let i = 0; i < blocks.length; ++i) {
+        const b = blocks[i];
         if (!b.length)
             continue;
         matches = clang_regex.exec(b);
@@ -85,7 +85,7 @@ export var qtranxj_split_blocks = function (blocks) {
             lang = false;
         } else {
             // keep neutral text
-            for (var key in result) {
+            for (const key in result) {
                 result[key] += b;
             }
         }

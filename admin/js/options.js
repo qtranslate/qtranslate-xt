@@ -3,13 +3,13 @@
 */
 (function ($) {
 
-    var keySection = 'qtranslate-xt-admin-section';
-    var switchTab = function (hash) {
+    const keySection = 'qtranslate-xt-admin-section';
+    const switchTab = function (hash) {
         if (!hash) {
             return false;
         }
 
-        var anchor = $('.nav-tab-wrapper a[href="' + hash + '"]');
+        const anchor = $('.nav-tab-wrapper a[href="' + hash + '"]');
         if (!anchor.length) {
             return false;
         }
@@ -17,12 +17,12 @@
         anchor.parent().children().removeClass('nav-tab-active');
         anchor.addClass('nav-tab-active');
 
-        var form = $('#qtranxs-configuration-form');
-        var tabId = hash.replace('#', '#tab-');
-        var tabContents = $('.tabs-content');
+        const form = $('#qtranxs-configuration-form');
+        const tabId = hash.replace('#', '#tab-');
+        const tabContents = $('.tabs-content');
         tabContents.children().addClass('hidden');
         tabContents.find('div' + tabId).removeClass('hidden');
-        var action = form.attr('action').replace(/(#.*|$)/, hash);
+        const action = form.attr('action').replace(/(#.*|$)/, hash);
         form.attr('action', action);
 
         try {
@@ -35,22 +35,22 @@
         return true;
     };
 
-    var onHashChange = function (defaultHash) {
-        var hash = window.location.hash;
-        if (switchTab(hash)) {
+    const onHashChange = function (defaultHash) {
+        const locationHash = window.location.hash;
+        if (switchTab(locationHash)) {
             return;
         }
 
-        hash = sessionStorage.getItem(keySection);
-        if (switchTab(hash)) {
+        const storedHash = sessionStorage.getItem(keySection);
+        if (switchTab(storedHash)) {
             return;
         }
 
         switchTab(defaultHash);
     };
 
-    var onFlagChange = function (url) {
-        var $preview = $('#preview_flag');
+    const onFlagChange = function (url) {
+        const $preview = $('#preview_flag');
         $preview.css('display', 'inline');
         $preview.attr('src', $preview.attr('data-flag-path') + url);
     };
@@ -61,20 +61,20 @@
         });
         onHashChange('#general');
 
-        var $langFlag = $('#language_flag');
+        const $langFlag = $('#language_flag');
         $langFlag.on('change', function () {
             onFlagChange(this.value);
         });
         onFlagChange($langFlag.val());
 
         $('#qtranxs_debug_query').on('click', function () {
-            var ca = document.cookie.split(';');
-            var browserInfo = {
+            const ca = document.cookie.split(';');
+            const browserInfo = {
                 'cookies': [],
                 'navigator': navigator.userAgent
             };
-            for (var i = 0; i < ca.length; i++) {
-                var cookieStr = ca[i].trim();
+            for (let i = 0; i < ca.length; i++) {
+                const cookieStr = ca[i].trim();
                 if (cookieStr.indexOf('qtrans') === 0) {
                     browserInfo['cookies'].push(cookieStr);
                 }

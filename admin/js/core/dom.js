@@ -1,10 +1,10 @@
 /**
  * DOM manipulation
  */
-export var qtranxj_ce = function (tagName, props, pNode, isFirst) {
-    var el = document.createElement(tagName);
+export const qtranxj_ce = function (tagName, props, pNode, isFirst) {
+    const el = document.createElement(tagName);
     if (props) {
-        for (var prop in props) {
+        for (const prop in props) {
             el[prop] = props[prop];
         }
     }
