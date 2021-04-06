@@ -511,7 +511,7 @@ const qTranslateConfig = window.qTranslateConfig;
         };
 
         const updateTinyMCE = function (h) {
-            text = h.contentField.value;
+            let text = h.contentField.value;
             if (h.wpautop && window.switchEditors) {
                 text = window.switchEditors.wpautop(text);
             }
