@@ -1,34 +1,34 @@
 /* executed for
  /wp-admin/widgets.php
 */
-(function ($) {
-    $(function () {
-        if (!window.wpWidgets)
-            return;
+const $ = jQuery;
 
-        const qtx = qTranslateConfig.js.get_qtx();
+$(function () {
+    if (!window.wpWidgets)
+        return;
 
-        const onWidgetUpdate = function (evt, widget) {
-            widget.find('span.in-widget-title').each(function (i, e) {
-                qtx.addDisplayHook(e);
-            });
-            widget.find("input[id^='widget-'][id$='-title']").each(function (i, e) {
-                qtx.refreshContentHook(e);
-            });
-            widget.find("textarea[id^='widget-text-'][id$='-text']").each(function (i, e) {
-                qtx.refreshContentHook(e);
-            });
-        };
+    const qtx = qTranslateConfig.js.get_qtx();
 
-        $(document).on('widget-added', onWidgetUpdate);
-        $(document).on('widget-updated', onWidgetUpdate);
+    const onWidgetUpdate = function (evt, widget) {
+        widget.find('span.in-widget-title').each(function (i, e) {
+            qtx.addDisplayHook(e);
+        });
+        widget.find("input[id^='widget-'][id$='-title']").each(function (i, e) {
+            qtx.refreshContentHook(e);
+        });
+        widget.find("textarea[id^='widget-text-'][id$='-text']").each(function (i, e) {
+            qtx.refreshContentHook(e);
+        });
+    };
 
-        const onLanguageSwitchAfter = function () {
-            $('#widgets-right .widget').each(function () {
-                wpWidgets.appendTitle(this);
-            });
-        };
+    $(document).on('widget-added', onWidgetUpdate);
+    $(document).on('widget-updated', onWidgetUpdate);
 
-        qtx.addLanguageSwitchAfterListener(onLanguageSwitchAfter);
-    });
-})(jQuery);
+    const onLanguageSwitchAfter = function () {
+        $('#widgets-right .widget').each(function () {
+            wpWidgets.appendTitle(this);
+        });
+    };
+
+    qtx.addLanguageSwitchAfterListener(onLanguageSwitchAfter);
+});

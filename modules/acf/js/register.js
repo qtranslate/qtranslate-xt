@@ -1,4 +1,6 @@
-(function ($) {
+const $ = jQuery;
+
+const register_fields = () => {
     acf.registerFieldType(acf.models.FileField.extend({
         type: 'qtranslate_file',
 
@@ -181,4 +183,6 @@
             });
         }
     }));
-})(jQuery);
+};
+
+register_fields();
