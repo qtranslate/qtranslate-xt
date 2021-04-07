@@ -6,36 +6,36 @@ const $ = jQuery;
 $(function () {
     const qtx = qTranslateConfig.js.get_qtx();
 
-    const addDisplayHook = function (i, o) {
-        qtx.addDisplayHook(o);
+    const addDisplayHook = function (i, e) {
+        qtx.addDisplayHook(e);
     };
 
-    const updateRow = function (r) {
-        const j = $(r);
-        j.find('.row-title, .description').each(addDisplayHook);
-        j.find('td.name span.inline').css('display', 'none');
+    const updateRow = function (row) {
+        const $row = $(row);
+        $row.find('.row-title, .description').each(addDisplayHook);
+        $row.find('td.name span.inline').css('display', 'none');
     };
 
-    const the_list = $('#the-list');
-    let rcnt = $('#the-list > tr').length;
+    const $theList = $('#the-list');
+    let nbRows = $('#the-list > tr').length;
 
     const onRowAdd = function () {
-        const trs = the_list.children();
-        if (rcnt === trs.length)
+        const $rows = $theList.children();
+        if (nbRows === $rows.length)
             return false;
-        const ok = rcnt > trs.length;
-        rcnt = trs.length;
+        const ok = nbRows > $rows.length;
+        nbRows = $rows.length;
         if (ok)
             return false;
-        for (let i = 0; i < trs.length; ++i) {
-            const r = trs[i];
-            updateRow(r);
+        for (let i = 0; i < $rows.length; ++i) {
+            const row = $rows[i];
+            updateRow(row);
         }
         return false;
     };
 
-    the_list.each(function (i, o) {
-        $(o).bind("DOMSubtreeModified", onRowAdd);
+    $theList.each(function (i, e) {
+        $(e).bind("DOMSubtreeModified", onRowAdd);
     });
 
     // remove "Quick Edit" links for now

@@ -2,18 +2,18 @@
  * DOM manipulation
  */
 export const qtranxj_ce = function (tagName, props, pNode, isFirst) {
-    const el = document.createElement(tagName);
+    const elem = document.createElement(tagName);
     if (props) {
         for (const prop in props) {
-            el[prop] = props[prop];
+            elem[prop] = props[prop];
         }
     }
     if (pNode) {
         if (isFirst && pNode.firstChild) {
-            pNode.insertBefore(el, pNode.firstChild);
+            pNode.insertBefore(elem, pNode.firstChild);
         } else {
-            pNode.appendChild(el);
+            pNode.appendChild(elem);
         }
     }
-    return el;
+    return elem;
 };

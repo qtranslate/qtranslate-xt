@@ -18,12 +18,12 @@ $(function () {
                 break;
             case '2': // QTX_URL_PATH
                 const homepath = qTranslateConfig.home_url_path;
-                let p = url.pathname;
-                if (p[0] !== '/')
-                    p = '/' + p; // to deal with IE imperfection: http://stackoverflow.com/questions/956233/javascript-pathname-ie-quirk
-                const i = p.indexOf(homepath);
+                let path = url.pathname;
+                if (path[0] !== '/')
+                    path = '/' + path; // to deal with IE imperfection: http://stackoverflow.com/questions/956233/javascript-pathname-ie-quirk
+                const i = path.indexOf(homepath);
                 if (i >= 0)
-                    url.pathname = qTranslateConfig.homeinfo_path + lang + p.substring(i + homepath.length - 1);
+                    url.pathname = qTranslateConfig.homeinfo_path + lang + path.substring(i + homepath.length - 1);
                 break;
             case '3': // QTX_URL_DOMAIN
                 url.host = lang + '.' + url.host;
@@ -95,14 +95,14 @@ $(function () {
     };
 
     // handle prompt text of empty field 'title', not important
-    const field_title = $('#title');
-    const title_label = $('#title-prompt-text');
+    const fieldTitle = $('#title');
+    const labelTitle = $('#title-prompt-text');
     const hide_title_prompt_text = function (lang) {
-        const value = field_title.val();
+        const value = fieldTitle.val();
         if (value) {
-            title_label.addClass('screen-reader-text');
+            labelTitle.addClass('screen-reader-text');
         } else {
-            title_label.removeClass('screen-reader-text');
+            labelTitle.removeClass('screen-reader-text');
         }
     };
 
@@ -111,7 +111,7 @@ $(function () {
 
     qtx.addLanguageSwitchAfterListener(setSlugLanguage);
 
-    if (title_label && field_title) {
+    if (labelTitle && fieldTitle) {
         qtx.addLanguageSwitchAfterListener(hide_title_prompt_text);
     }
 
