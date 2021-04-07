@@ -90,13 +90,6 @@ const qTranslateX = function (pg) {
 
     const contentHooks = {};
 
-    const updateFusedValueH = function (id, value) {
-        if (qTranslateConfig.RAW)
-            return;
-        const h = contentHooks[id];
-        h.fields[h.lang].value = value.trim();
-    };
-
     /**
      * Designed as interface for other plugin integration. The documentation is available at
      * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
@@ -978,24 +971,6 @@ const qTranslateX = function (pg) {
             const wraps = form.getElementsByClassName('wrap');
             if (wraps.length)
                 return form;
-        }
-        return null;
-    };
-
-    const getFormWrap = function () {
-        const forms = document.getElementsByTagName('form');
-        for (let i = 0; i < forms.length; ++i) {
-            const form = forms[i];
-            const wraps = form.getElementsByClassName('wrap');
-            if (wraps.length)
-                return wraps[0];
-        }
-        const wraps = document.getElementsByClassName('wrap');
-        for (let i = 0; i < wraps.length; ++i) {
-            const wrap = wraps[i];
-            const forms = wrap.getElementsByTagName('form');
-            if (forms.length)
-                return w;
         }
         return null;
     };
