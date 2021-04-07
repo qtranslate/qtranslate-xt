@@ -4,19 +4,26 @@
 */
 const $ = jQuery;
 
+const UrlMode = Object.freeze({
+   QTX_URL_QUERY: 1,
+   QTX_URL_PATH: 2,
+   QTX_URL_DOMAIN: 3,
+   QTX_URL_DOMAINS: 4,
+});
+
 $(function () {
     const qtx = qTranslateConfig.js.get_qtx();
     const convertURL = function (url, lang) {
-        switch (qTranslateConfig.url_mode.toString()) {
-            // TODO define proper constants
-            case '1':   // QTX_URL_QUERY
+        switch (qTranslateConfig.url_mode) {
+            case UrlMode.QTX_URL_QUERY:
                 if (url.search) {
                     url.search += '&lang=' + lang;
                 } else {
                     url.search = '?lang=' + lang;
                 }
                 break;
-            case '2': // QTX_URL_PATH
+
+            case UrlMode.QTX_URL_PATH:
                 const homepath = qTranslateConfig.home_url_path;
                 let path = url.pathname;
                 if (path[0] !== '/')
@@ -25,10 +32,12 @@ $(function () {
                 if (i >= 0)
                     url.pathname = qTranslateConfig.homeinfo_path + lang + path.substring(i + homepath.length - 1);
                 break;
-            case '3': // QTX_URL_DOMAIN
+
+            case UrlMode.QTX_URL_DOMAIN:
                 url.host = lang + '.' + url.host;
                 break;
-            case '4': // QTX_URL_DOMAINS
+
+            case UrlMode.QTX_URL_DOMAINS:
                 url.host = qTranslateConfig.domains[lang];
                 break;
         }
@@ -62,9 +71,7 @@ $(function () {
             btnPreviewAction.children[0].href = langUrl.href;
         }
 
-        // TODO define proper constants
-        if (qTranslateConfig.url_mode !== 1) {
-            // !QTX_URL_QUERY
+        if (qTranslateConfig.url_mode !== UrlMode.QTX_URL_QUERY) {
             if (!slugSamplePermalink) {
                 const slugEl = document.getElementById('sample-permalink');
                 if (slugEl && slugEl.offsetHeight > 0 && slugEl.childNodes.length) {
