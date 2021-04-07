@@ -113,14 +113,14 @@ const qTranslateX = function (pg) {
      *
      * @since 3.3.2
      */
-    this.addContentHook = function (inpField, encode, field_name) {
-        if (!inpField) return false;
-        switch (inpField.tagName) {
+    this.addContentHook = function (inputField, encode, fieldName) {
+        if (!inputField) return false;
+        switch (inputField.tagName) {
             case 'TEXTAREA':
                 break;
             case 'INPUT':
                 // reject the types which cannot be multilingual
-                switch (inpField.type) {
+                switch (inputField.type) {
                     case 'button':
                     case 'checkbox':
                     case 'password':
@@ -133,72 +133,72 @@ const qTranslateX = function (pg) {
                 return false;
         }
 
-        if (!field_name) {
-            if (!inpField.name) return false;
-            field_name = inpField.name;
+        if (!fieldName) {
+            if (!inputField.name) return false;
+            fieldName = inputField.name;
         }
-        if (inpField.id) {
-            if (contentHooks[inpField.id]) {
-                if ($.contains(document, inpField))
-                    return contentHooks[inpField.id];
+        if (inputField.id) {
+            if (contentHooks[inputField.id]) {
+                if ($.contains(document, inputField))
+                    return contentHooks[inputField.id];
                 // otherwise some Java script already removed previously hooked element
-                qtx.removeContentHook(inpField);
+                qtx.removeContentHook(inputField);
             }
-        } else if (!contentHooks[field_name]) {
-            inpField.id = field_name;
+        } else if (!contentHooks[fieldName]) {
+            inputField.id = fieldName;
         } else {
             let idx = 0;
             do {
                 ++idx;
-                inpField.id = field_name + idx;
-            } while (contentHooks[inpField.id]);
+                inputField.id = fieldName + idx;
+            } while (contentHooks[inputField.id]);
         }
 
         /**
          * Highlighting the translatable fields
          * @since 3.2-b3
          */
-        inpField.className += ' qtranxs-translatable';
+        inputField.className += ' qtranxs-translatable';
 
-        const h = contentHooks[inpField.id] = {};
-        h.name = field_name;
-        h.contentField = inpField;
+        const h = contentHooks[inputField.id] = {};
+        h.name = fieldName;
+        h.contentField = inputField;
         h.lang = qTranslateConfig.activeLanguage;
 
-        let qtx_prefix;
+        let qtxPrefix;
         if (encode) {
             switch (encode) {
                 case 'slug':
-                    qtx_prefix = 'qtranslate-slugs[';
+                    qtxPrefix = 'qtranslate-slugs[';
                     break;
                 case 'term':
-                    qtx_prefix = 'qtranslate-terms[';
+                    qtxPrefix = 'qtranslate-terms[';
                     break;
                 default:
-                    qtx_prefix = 'qtranslate-fields[';
+                    qtxPrefix = 'qtranslate-fields[';
                     break;
             }
         } else {
             // since 3.1 we get rid of <--:--> encoding
             encode = '[';
-            qtx_prefix = 'qtranslate-fields[';
+            qtxPrefix = 'qtranslate-fields[';
         }
 
         h.encode = encode;
 
-        let bfnm, sfnm;
-        const p = h.name.indexOf('[');
-        if (p < 0) {
-            bfnm = qtx_prefix + h.name + ']';
+        let baseName, suffixName;
+        const pos = h.name.indexOf('[');
+        if (pos < 0) {
+            baseName = qtxPrefix + h.name + ']';
         } else {
-            bfnm = qtx_prefix + h.name.substring(0, p) + ']';
+            baseName = qtxPrefix + h.name.substring(0, pos) + ']';
             if (h.name.lastIndexOf('[]') < 0) {
-                bfnm += h.name.substring(p);
+                baseName += h.name.substring(pos);
             } else {
                 const len = h.name.length - 2;
-                if (len > p)
-                    bfnm += h.name.substring(p, len);
-                sfnm = '[]';
+                if (len > pos)
+                    baseName += h.name.substring(pos, len);
+                suffixName = '[]';
             }
         }
 
@@ -207,22 +207,22 @@ const qTranslateX = function (pg) {
         h.fields = {};
         if (!qTranslateConfig.RAW) {
             // Most crucial moment when untranslated content is parsed
-            contents = qtranxj_split(inpField.value);
+            contents = qtranxj_split(inputField.value);
             // Substitute the current ML content with translated content for the current language
-            inpField.value = contents[h.lang];
+            inputField.value = contents[h.lang];
             // Insert translated content for each language before the current field
             for (const lang in contents) {
                 const text = contents[lang];
-                let fnm = bfnm + '[' + lang + ']';
-                if (sfnm)
-                    fnm += sfnm;
-                const f = qtranxj_ce('input', {name: fnm, type: 'hidden', className: 'hidden', value: text});
-                h.fields[lang] = f;
-                inpField.parentNode.insertBefore(f, inpField);
+                let newName = baseName + '[' + lang + ']';
+                if (suffixName)
+                    newName += suffixName;
+                const newField = qtranxj_ce('input', {name: newName, type: 'hidden', className: 'hidden', value: text});
+                h.fields[lang] = newField;
+                inputField.parentNode.insertBefore(newField, inputField);
             }
 
             // insert a hidden element in the form so that the edit language is sent to the server
-            const $form = $(inpField).closest('form');
+            const $form = $(inputField).closest('form');
             if ($form.length) {
                 const $hidden = $form.find('input[name="qtranslate-edit-language"]');
                 if (!$hidden.length) {
@@ -233,7 +233,7 @@ const qTranslateX = function (pg) {
                     }, $form[0], true);
                 }
             } else {
-                console.error('No form found for translatable field id=', inpField.id);
+                console.error('No form found for translatable field id=', inputField.id);
             }
         }
 
@@ -243,9 +243,9 @@ const qTranslateX = function (pg) {
             case 'slug':
             case 'term': {
                 if (qTranslateConfig.RAW)
-                    contents = qtranxj_split(inpField.value);
+                    contents = qtranxj_split(inputField.value);
                 h.sepfield = qtranxj_ce('input', {
-                    name: bfnm + '[qtranslate-original-value]',
+                    name: baseName + '[qtranslate-original-value]',
                     type: 'hidden',
                     className: 'hidden',
                     value: contents[qTranslateConfig.default_language]
@@ -255,7 +255,7 @@ const qTranslateX = function (pg) {
             default: {
                 if (!qTranslateConfig.RAW) {
                     h.sepfield = qtranxj_ce('input', {
-                        name: bfnm + '[qtranslate-separator]',
+                        name: baseName + '[qtranslate-separator]',
                         type: 'hidden',
                         className: 'hidden',
                         value: encode
@@ -266,32 +266,32 @@ const qTranslateX = function (pg) {
         }
 
         if (h.sepfield)
-            inpField.parentNode.insertBefore(h.sepfield, inpField);
+            inputField.parentNode.insertBefore(h.sepfield, inputField);
 
         return h;
     };
-    this.addContentHookC = function (inpField) {
-        return qtx.addContentHook(inpField, '['); // TODO shouldn't it be '<' ?!
+    this.addContentHookC = function (inputField) {
+        return qtx.addContentHook(inputField, '['); // TODO shouldn't it be '<' ?!
     };
-    this.addContentHookB = function (inpField) {
-        return qtx.addContentHook(inpField, '[');
+    this.addContentHookB = function (inputField) {
+        return qtx.addContentHook(inputField, '[');
     };
 
-    this.addContentHookById = function (id, sep, nm) {
-        return qtx.addContentHook(document.getElementById(id), sep, nm);
+    this.addContentHookById = function (id, sep, name) {
+        return qtx.addContentHook(document.getElementById(id), sep, name);
     };
-    this.addContentHookByIdName = function (nm) {
+    this.addContentHookByIdName = function (name) {
         let sep;
-        switch (nm[0]) {
+        switch (name[0]) {
             case '<':
             case '[':
-                sep = nm.substring(0, 1);
-                nm = nm.substring(1);
+                sep = name.substring(0, 1);
+                name = name.substring(1);
                 break;
             default:
                 break;
         }
-        return qtx.addContentHookById(nm, sep);
+        return qtx.addContentHookById(name, sep);
     };
     this.addContentHookByIdC = function (id) {
         return qtx.addContentHookById(id, '['); // TODO shouldn't it be '<' ?!
@@ -306,27 +306,27 @@ const qTranslateX = function (pg) {
      *
      * @since 3.1-b2
      */
-    this.addContentHooks = function (fields, sep, field_name) {
+    this.addContentHooks = function (fields, sep, fieldName) {
         for (let i = 0; i < fields.length; ++i) {
             const field = fields[i];
-            qtx.addContentHook(field, sep, field_name);
+            qtx.addContentHook(field, sep, fieldName);
         }
     };
 
-    const addContentHooksByClassName = function (nm, container, sep) {
+    const addContentHooksByClassName = function (name, container, sep) {
         if (!container)
             container = document;
-        const fields = container.getElementsByClassName(nm);
+        const fields = container.getElementsByClassName(name);
         qtx.addContentHooks(fields, sep);
     };
 
-    this.addContentHooksByClass = function (nm, container) {
+    this.addContentHooksByClass = function (name, container) {
         let sep;
-        if (nm.indexOf('<') === 0 || nm.indexOf('[') === 0) {
-            sep = nm.substring(0, 1);
-            nm = nm.substring(1);
+        if (name.indexOf('<') === 0 || name.indexOf('[') === 0) {
+            sep = name.substring(0, 1);
+            name = name.substring(1);
         }
-        addContentHooksByClassName(nm, container, sep);
+        addContentHooksByClassName(name, container, sep);
     };
 
     /**
@@ -335,8 +335,8 @@ const qTranslateX = function (pg) {
      *
      * @since 3.3.2
      */
-    this.addContentHooksByTagInClass = function (nm, tag, container) {
-        const elems = container.getElementsByClassName(nm);
+    this.addContentHooksByTagInClass = function (name, tag, container) {
+        const elems = container.getElementsByClassName(name);
         for (let i = 0; i < elems.length; ++i) {
             const elem = elems[i];
             const items = elem.getElementsByTagName(tag);
@@ -366,13 +366,13 @@ const qTranslateX = function (pg) {
      *
      * @since 3.3
      */
-    this.removeContentHook = function (inpField) {
-        if (!inpField || !inpField.id || !contentHooks[inpField.id])
+    this.removeContentHook = function (inputField) {
+        if (!inputField || !inputField.id || !contentHooks[inputField.id])
             return false;
-        const h = contentHooks[inpField.id];
+        const h = contentHooks[inputField.id];
         removeContentHookH(h);
         // @since 3.2.9.8 - h.contents -> h.fields
-        $(inpField).removeClass('qtranxs-translatable');
+        $(inputField).removeClass('qtranxs-translatable');
         return true;
     };
 
@@ -381,13 +381,13 @@ const qTranslateX = function (pg) {
      * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
      * Re-create a hook, after a piece of HTML is dynamically replaced with a custom Java script.
      */
-    this.refreshContentHook = function (inpField) {
-        if (!inpField || !inpField.id)
+    this.refreshContentHook = function (inputField) {
+        if (!inputField || !inputField.id)
             return false;
-        const h = contentHooks[inpField.id];
-        if (h)
-            removeContentHookH(h);
-        return qtx.addContentHook(inpField);
+        const hook = contentHooks[inputField.id];
+        if (hook)
+            removeContentHookH(hook);
+        return qtx.addContentHook(inputField);
     };
 
     /**
@@ -424,18 +424,18 @@ const qTranslateX = function (pg) {
      * @since 3.2.7
      */
     const displayHookNodes = [];
-    const addDisplayHookNode = function (nd) {
-        if (!nd.nodeValue)
+    const addDisplayHookNode = function (node) {
+        if (!node.nodeValue)
             return 0;
-        const blocks = qtranxj_get_split_blocks(nd.nodeValue);
+        const blocks = qtranxj_get_split_blocks(node.nodeValue);
         if (!blocks || !blocks.length || blocks.length === 1)
             return 0;
-        const h = {};
-        h.nd = nd;
-        h.contents = qtranxj_split_blocks(blocks);
-        completeDisplayContent(h.contents);
-        nd.nodeValue = h.contents[qTranslateConfig.activeLanguage];
-        displayHookNodes.push(h);
+        const hook = {};
+        hook.nd = node;
+        hook.contents = qtranxj_split_blocks(blocks);
+        completeDisplayContent(hook.contents);
+        node.nodeValue = hook.contents[qTranslateConfig.activeLanguage];
+        displayHookNodes.push(hook);
         return 1;
     };
 
@@ -443,19 +443,19 @@ const qTranslateX = function (pg) {
      * @since 3.2.7
      */
     const displayHookAttrs = [];
-    const addDisplayHookAttr = function (nd, attr) {
-        if (!nd.hasAttribute(attr)) return 0;
-        const value = nd.getAttribute(attr);
+    const addDisplayHookAttr = function (node, attr) {
+        if (!node.hasAttribute(attr)) return 0;
+        const value = node.getAttribute(attr);
         const blocks = qtranxj_get_split_blocks(value);
         if (!blocks || !blocks.length || blocks.length === 1)
             return 0;
-        const h = {};
-        h.nd = nd;
-        h.attr = attr;
-        h.contents = qtranxj_split_blocks(blocks);
-        completeDisplayContent(h.contents);
-        nd.setAttribute(attr, h.contents[qTranslateConfig.activeLanguage]);
-        displayHookAttrs.push(h);
+        const hook = {};
+        hook.nd = node;
+        hook.attr = attr;
+        hook.contents = qtranxj_split_blocks(blocks);
+        completeDisplayContent(hook.contents);
+        node.setAttribute(attr, hook.contents[qTranslateConfig.activeLanguage]);
+        displayHookAttrs.push(hook);
         return 1;
     };
 
@@ -479,26 +479,26 @@ const qTranslateX = function (pg) {
             default:
                 break;
         }
-        //co('addDisplayHook: elem: ',elem);
-        let cnt = 0;
+
+        let nbHooks = 0;
         if (elem.childNodes && elem.childNodes.length) {
             for (let i = 0; i < elem.childNodes.length; ++i) {
-                const nd = elem.childNodes[i];
-                switch (nd.nodeType) {
+                const node = elem.childNodes[i];
+                switch (node.nodeType) {
                     // http://www.w3.org/TR/REC-DOM-Level-1/level-one-core.html#ID-1950641247
                     case 1: // ELEMENT_NODE
-                        cnt += qtx.addDisplayHook(nd);
+                        nbHooks += qtx.addDisplayHook(node);
                         break;
                     case 2: // ATTRIBUTE_NODE
                     case 3: // TEXT_NODE
-                        cnt += addDisplayHookNode(nd);
+                        nbHooks += addDisplayHookNode(node);
                         break;
                     default:
                         break;
                 }
             }
         }
-        return cnt;
+        return nbHooks;
     };
 
     /**
@@ -511,29 +511,29 @@ const qTranslateX = function (pg) {
         return qtx.addDisplayHook(document.getElementById(id));
     };
 
-    const updateTinyMCE = function (h) {
-        let text = h.contentField.value;
-        if (h.wpautop && window.switchEditors) {
+    const updateTinyMCE = function (hook) {
+        let text = hook.contentField.value;
+        if (hook.wpautop && window.switchEditors) {
             text = window.switchEditors.wpautop(text);
         }
-        h.mce.setContent(text, {format: 'html'});
+        hook.mce.setContent(text, {format: 'html'});
     };
 
     const onTabSwitch = function (lang) {
         storeEditLanguage(lang);
 
         for (let i = displayHookNodes.length; --i >= 0;) {
-            const h = displayHookNodes[i];
-            if (h.nd.parentNode) {
-                h.nd.nodeValue = h.contents[lang]; // IE gets upset here if node was removed
+            const hook = displayHookNodes[i];
+            if (hook.nd.parentNode) {
+                hook.nd.nodeValue = hook.contents[lang]; // IE gets upset here if node was removed
             } else {
                 displayHookNodes.splice(i, 1); // node was removed by some other function
             }
         }
         for (let i = displayHookAttrs.length; --i >= 0;) {
-            const h = displayHookAttrs[i];
-            if (h.nd.parentNode) {
-                h.nd.setAttribute(h.attr, h.contents[lang]);
+            const hook = displayHookAttrs[i];
+            if (hook.nd.parentNode) {
+                hook.nd.setAttribute(hook.attr, hook.contents[lang]);
             } else {
                 displayHookAttrs.splice(i, 1); // node was removed by some other function
             }
@@ -541,34 +541,34 @@ const qTranslateX = function (pg) {
         if (qTranslateConfig.RAW)
             return;
         for (const key in contentHooks) {
-            const h = contentHooks[key];
-            const mce = h.mce && !h.mce.hidden;
+            const hook = contentHooks[key];
+            const mce = hook.mce && !hook.mce.hidden;
             if (mce) {
-                h.mce.save({format: 'html'});
+                hook.mce.save({format: 'html'});
             }
 
-            const text = h.contentField.value.trim();
+            const text = hook.contentField.value.trim();
             const blocks = qtranxj_get_split_blocks(text);
             if (!blocks || blocks.length <= 1) {
                 // value is not ML, switch it to other language
-                h.fields[h.lang].value = text;
-                h.lang = lang;
-                const value = h.fields[h.lang].value;
-                if (h.contentField.placeholder && value !== '') {
+                hook.fields[hook.lang].value = text;
+                hook.lang = lang;
+                const value = hook.fields[hook.lang].value;
+                if (hook.contentField.placeholder && value !== '') {
                     // since 3.2.7
-                    h.contentField.placeholder = '';
+                    hook.contentField.placeholder = '';
                 }
-                h.contentField.value = value;
+                hook.contentField.value = value;
                 if (mce) {
-                    updateTinyMCE(h);
+                    updateTinyMCE(hook);
                 }
             } else {
                 // value is ML, fill out values per language
                 const contents = qtranxj_split_blocks(blocks);
-                for (const lng in h.fields) {
-                    h.fields[lng].value = contents[lng];
+                for (const langField in hook.fields) {
+                    hook.fields[langField].value = contents[langField];
                 }
-                h.lang = lang;
+                hook.lang = lang;
             }
         }
     };
@@ -618,8 +618,8 @@ const qTranslateX = function (pg) {
      *
      * @since 3.3
      */
-    this.addDisplayHooksByClass = function (nm, container) {
-        const elems = container.getElementsByClassName(nm);
+    this.addDisplayHooksByClass = function (name, container) {
+        const elems = container.getElementsByClassName(name);
         qtx.addDisplayHooks(elems);
     };
 
@@ -629,8 +629,8 @@ const qTranslateX = function (pg) {
      *
      * @since 3.3
      */
-    this.addDisplayHooksByTagInClass = function (nm, tag, container) {
-        const elems = container.getElementsByClassName(nm);
+    this.addDisplayHooksByTagInClass = function (name, tag, container) {
+        const elems = container.getElementsByClassName(name);
         for (let i = 0; i < elems.length; ++i) {
             const elem = elems[i];
             const items = elem.getElementsByTagName(tag);
@@ -688,64 +688,63 @@ const qTranslateX = function (pg) {
      * Parses page configuration, loaded in qtranxf_get_admin_page_config_post_type.
      * @since 3.1-b2
      */
-    const addPageHooks = function (page_config_forms) {
-        for (const form_id in page_config_forms) {
-            const frm = page_config_forms[form_id];
+    const addPageHooks = function (pageConfigForms) {
+        for (const formId in pageConfigForms) {
+            const formConfig = pageConfigForms[formId];
             let form;
-            if (frm.form) {
-                if (frm.form.id) {
-                    form = document.getElementById(frm.form.id);
-                } else if (frm.form.jquery) {
-                    form = $(frm.form.jquery);
-                } else if (frm.form.name) {
-                    const elms = document.getElementsByName(frm.form.name);
+            if (formConfig.form) {
+                if (formConfig.form.id) {
+                    form = document.getElementById(formConfig.form.id);
+                } else if (formConfig.form.jquery) {
+                    form = $(formConfig.form.jquery);
+                } else if (formConfig.form.name) {
+                    const elms = document.getElementsByName(formConfig.form.name);
                     if (elms && elms.length) {
                         form = elms[0];
                     }
                 }
             } else {
-                form = document.getElementById(form_id);
+                form = document.getElementById(formId);
             }
             if (!form) {
                 form = getWrapForm();
                 if (!form)
                     form = document;
             }
-            for (const handle in frm.fields) {
-                const fld = frm.fields[handle];
+            for (const handle in formConfig.fields) {
+                const field = formConfig.fields[handle];
                 let containers = [];
-                if (fld.container_id) {
-                    const container = document.getElementById(fld.container_id);
+                if (field.container_id) {
+                    const container = document.getElementById(field.container_id);
                     if (container)
                         containers.push(container);
-                } else if (fld.container_jquery) {
-                    containers = $(fld.container_jquery);
-                } else if (fld.container_class) {
-                    containers = document.getElementsByClassName(fld.container_class);
+                } else if (field.container_jquery) {
+                    containers = $(field.container_jquery);
+                } else if (field.container_class) {
+                    containers = document.getElementsByClassName(field.container_class);
                 } else {// if(form){
                     containers.push(form);
                 }
-                const sep = fld.encode;
+                const sep = field.encode;
                 switch (sep) {
                     case 'none':
                         continue;
                     case 'display':
-                        if (fld.jquery) {
+                        if (field.jquery) {
                             for (let i = 0; i < containers.length; ++i) {
                                 const container = containers[i];
-                                const fields = $(container).find(fld.jquery);
-                                if (fld.attrs) {
-                                    qtx.addDisplayHooksAttrs(fields, fld.attrs);
+                                const fields = $(container).find(field.jquery);
+                                if (field.attrs) {
+                                    qtx.addDisplayHooksAttrs(fields, field.attrs);
                                 } else {
                                     qtx.addDisplayHooks(fields);
                                 }
                             }
                         } else {
-                            const id = fld.id ? fld.id : handle;
-                            //co('addPageHooks:display: id=',id);
+                            const id = field.id ? field.id : handle;
                             const field = document.getElementById(id);
-                            if (fld.attrs) {
-                                qtx.addDisplayHookAttrs(field, fld.attrs);
+                            if (field.attrs) {
+                                qtx.addDisplayHookAttrs(field, field.attrs);
                             } else {
                                 qtx.addDisplayHook(field);
                             }
@@ -756,15 +755,15 @@ const qTranslateX = function (pg) {
                     case '{': // s - swirly/curly bracket
                     case 'byline':
                     default:
-                        if (fld.jquery) {
+                        if (field.jquery) {
                             for (let i = 0; i < containers.length; ++i) {
                                 const container = containers[i];
-                                const fields = $(container).find(fld.jquery);
-                                qtx.addContentHooks(fields, sep, fld.name);
+                                const fields = $(container).find(field.jquery);
+                                qtx.addContentHooks(fields, sep, field.name);
                             }
                         } else {
-                            const id = fld.id ? fld.id : handle;
-                            qtx.addContentHookById(id, sep, fld.name);
+                            const id = field.id ? field.id : handle;
+                            qtx.addContentHookById(id, sep, field.name);
                         }
                         break;
                 }
@@ -773,30 +772,30 @@ const qTranslateX = function (pg) {
     };
 
     /** Link a TinyMCE editor with translatable content. The editor should be initialized for TinyMCE. */
-    const setEditorHooks = function (ed) {
-        const id = ed.id;
+    const setEditorHooks = function (editor) {
+        const id = editor.id;
         if (!id)
             return;
-        const h = contentHooks[id];
-        if (!h)
+        const hook = contentHooks[id];
+        if (!hook)
             return;
-        if (h.mce) {
+        if (hook.mce) {
             return;  // already initialized for qTranslate
         }
-        h.mce = ed;
+        hook.mce = editor;
 
         /**
          * Highlighting the translatable fields
          * @since 3.2-b3
          */
-        ed.getContainer().className += ' qtranxs-translatable';
-        ed.getElement().className += ' qtranxs-translatable';
+        editor.getContainer().className += ' qtranxs-translatable';
+        editor.getElement().className += ' qtranxs-translatable';
 
-        let updateTinyMCEonInit = h.updateTinyMCEonInit;
+        let updateTinyMCEonInit = hook.updateTinyMCEonInit;
         if (updateTinyMCEonInit == null) {
             // 'tmce-active' or 'html-active' was not provided on the wrapper
-            const text_e = ed.getContent({format: 'html'}).replace(/\s+/g, '');
-            const text_h = h.contentField.value.replace(/\s+/g, '');
+            const textEditor = editor.getContent({format: 'html'}).replace(/\s+/g, '');
+            const textHook = hook.contentField.value.replace(/\s+/g, '');
             /**
              * @since 3.2.9.8 - this is an ugly trick.
              * Before this version, it was working relying on properly timed synchronisation of the page loading process,
@@ -812,22 +811,22 @@ const qTranslateX = function (pg) {
              *      q-X disables this call in 'function qtranxf_the_editor',
              *      since wpautop does not work correctly on multilingual values, and there is no filter to adjust its behaviour.
              *      So, here we have to apply back wpautop to single-language value, which is achieved
-             *      with a call to updateTinyMCE(h) below.
+             *      with a call to updateTinyMCE(hook) below.
              *
              * 2. When user switches to Visual mode for the first time from a page, which was initially loaded in Text mode.
-             *      In this case, wpautop gets applied internally inside TinyMCE, and we do not need to call updateTinyMCE(h) below.
+             *      In this case, wpautop gets applied internally inside TinyMCE, and we do not need to call updateTinyMCE(hook) below.
              *
              * We could not figure out a good way to distinct within this function which way it was called,
              * except this tricky comparison on the next line.
              *
              * If somebody finds out a better way, please let us know at https://github.com/qtranslate/qtranslate-xt/issues/.
              */
-            updateTinyMCEonInit = text_e !== text_h;
+            updateTinyMCEonInit = textEditor !== textHook;
         }
         if (updateTinyMCEonInit) {
-            updateTinyMCE(h);
+            updateTinyMCE(hook);
         }
-        return h;
+        return hook;
     }
 
     /** Sets hooks on HTML-loaded TinyMCE editors via tinyMCEPreInit.mceInit. */
@@ -836,28 +835,28 @@ const qTranslateX = function (pg) {
             return;
         }
         for (const key in contentHooks) {
-            const h = contentHooks[key];
-            if (h.contentField.tagName !== 'TEXTAREA' || h.mce || h.mceInit || !tinyMCEPreInit.mceInit[key])
+            const hook = contentHooks[key];
+            if (hook.contentField.tagName !== 'TEXTAREA' || hook.mce || hook.mceInit || !tinyMCEPreInit.mceInit[key])
                 continue;
-            h.mceInit = tinyMCEPreInit.mceInit[key];
-            if (h.mceInit.wpautop) {
-                h.wpautop = h.mceInit.wpautop;
+            hook.mceInit = tinyMCEPreInit.mceInit[key];
+            if (hook.mceInit.wpautop) {
+                hook.wpautop = hook.mceInit.wpautop;
                 const wrappers = tinymce.DOM.select('#wp-' + key + '-wrap');
                 if (wrappers && wrappers.length) {
-                    h.wrapper = wrappers[0];
-                    if (h.wrapper) {
-                        if (tinymce.DOM.hasClass(h.wrapper, 'tmce-active'))
-                            h.updateTinyMCEonInit = true;
-                        if (tinymce.DOM.hasClass(h.wrapper, 'html-active'))
-                            h.updateTinyMCEonInit = false;
-                        // otherwise h.updateTinyMCEonInit stays undetermined
+                    hook.wrapper = wrappers[0];
+                    if (hook.wrapper) {
+                        if (tinymce.DOM.hasClass(hook.wrapper, 'tmce-active'))
+                            hook.updateTinyMCEonInit = true;
+                        if (tinymce.DOM.hasClass(hook.wrapper, 'html-active'))
+                            hook.updateTinyMCEonInit = false;
+                        // otherwise hook.updateTinyMCEonInit stays undetermined
                     }
                 }
             } else {
-                h.updateTinyMCEonInit = false;
+                hook.updateTinyMCEonInit = false;
             }
-            tinyMCEPreInit.mceInit[key].init_instance_callback = function (ed) {
-                setEditorHooks(ed);
+            tinyMCEPreInit.mceInit[key].init_instance_callback = function (editor) {
+                setEditorHooks(editor);
             }
         }
     };
@@ -905,8 +904,8 @@ const qTranslateX = function (pg) {
      */
     this.delLanguageSwitchBeforeListener = function (func) {
         for (let i = 0; i < qTranslateConfig.onTabSwitchFunctionsSave.length; ++i) {
-            const f = qTranslateConfig.onTabSwitchFunctionsSave[i];
-            if (f !== func)
+            const funcSave = qTranslateConfig.onTabSwitchFunctionsSave[i];
+            if (funcSave !== func)
                 continue;
             qTranslateConfig.onTabSwitchFunctionsSave.splice(i, 1);
             return;
@@ -936,8 +935,8 @@ const qTranslateX = function (pg) {
      */
     this.delLanguageSwitchAfterListener = function (func) {
         for (let i = 0; i < qTranslateConfig.onTabSwitchFunctionsLoad.length; ++i) {
-            const f = qTranslateConfig.onTabSwitchFunctionsLoad[i];
-            if (f !== func)
+            const funcLoad = qTranslateConfig.onTabSwitchFunctionsLoad[i];
+            if (funcLoad !== func)
                 continue;
             qTranslateConfig.onTabSwitchFunctionsLoad.splice(i, 1);
             return;
@@ -966,8 +965,8 @@ const qTranslateX = function (pg) {
     const getWrapForm = function () {
         const wraps = document.getElementsByClassName('wrap');
         for (let i = 0; i < wraps.length; ++i) {
-            const w = wraps[i];
-            const forms = w.getElementsByTagName('form');
+            const wrap = wraps[i];
+            const forms = wrap.getElementsByTagName('form');
             if (forms.length)
                 return forms[0];
         }
@@ -975,10 +974,10 @@ const qTranslateX = function (pg) {
         if (forms.length === 1)
             return forms[0];
         for (let i = 0; i < forms.length; ++i) {
-            const f = forms[i];
-            const wraps = f.getElementsByClassName('wrap');
+            const form = forms[i];
+            const wraps = form.getElementsByClassName('wrap');
             if (wraps.length)
-                return f;
+                return form;
         }
         return null;
     };
@@ -986,15 +985,15 @@ const qTranslateX = function (pg) {
     const getFormWrap = function () {
         const forms = document.getElementsByTagName('form');
         for (let i = 0; i < forms.length; ++i) {
-            const f = forms[i];
-            const wraps = f.getElementsByClassName('wrap');
+            const form = forms[i];
+            const wraps = form.getElementsByClassName('wrap');
             if (wraps.length)
                 return wraps[0];
         }
         const wraps = document.getElementsByClassName('wrap');
         for (let i = 0; i < wraps.length; ++i) {
-            const w = wraps[i];
-            const forms = w.getElementsByTagName('form');
+            const wrap = wraps[i];
+            const forms = wrap.getElementsByTagName('form');
             if (forms.length)
                 return w;
         }
@@ -1111,17 +1110,17 @@ const qTranslateX = function (pg) {
         const lang = qTranslateConfig.activeLanguage;
         let changed = false;
         for (const key in contentHooks) {
-            const h = contentHooks[key];
-            const mce = h.mce && !h.mce.hidden;
-            let value = mce ? h.mce.getContent({format: 'html'}) : h.contentField.value;
+            const hook = contentHooks[key];
+            const mce = hook.mce && !hook.mce.hidden;
+            let value = mce ? hook.mce.getContent({format: 'html'}) : hook.contentField.value;
             if (value)
                 continue; // do not overwrite existent content
-            value = h.fields[langFrom].value;
+            value = hook.fields[langFrom].value;
             if (!value)
                 continue;
-            h.contentField.value = value;
+            hook.contentField.value = value;
             if (mce)
-                updateTinyMCE(h);
+                updateTinyMCE(hook);
             changed = true;
         }
         if (changed)
@@ -1182,23 +1181,23 @@ const qTranslateX = function (pg) {
     };
 
     const setupMetaBoxLSB = function () {
-        const mb = document.getElementById('qtranxs-meta-box-lsb');
-        if (!mb)
+        const metaBox = document.getElementById('qtranxs-meta-box-lsb');
+        if (!metaBox)
             return;
 
-        const inside_elems = mb.getElementsByClassName('inside');
-        if (!inside_elems.length)
+        const insideElems = metaBox.getElementsByClassName('inside');
+        if (!insideElems.length)
             return; // consistency check in case WP did some changes
 
-        mb.className += ' closed';
-        $(mb).find('.hndle').remove(); // original h3 element is replaced with span below
+        metaBox.className += ' closed';
+        $(metaBox).find('.hndle').remove(); // original h3 element is replaced with span below
 
-        const sp = document.createElement('span');
-        mb.insertBefore(sp, inside_elems[0]);
-        sp.className = 'hndle ui-sortable-handle';
+        const span = document.createElement('span');
+        metaBox.insertBefore(span, insideElems[0]);
+        span.className = 'hndle ui-sortable-handle';
 
         const langSwitchWrap = qtx.createSetOfLSBwith(qTranslateConfig.lsb_style_wrap_class);
-        sp.appendChild(langSwitchWrap);
+        span.appendChild(langSwitchWrap);
         $('#qtranxs-meta-box-lsb .hndle').unbind('click.postboxes');
     };
 
@@ -1212,42 +1211,42 @@ const qTranslateX = function (pg) {
         if (qTranslateConfig.page_config && qTranslateConfig.page_config.anchors) {
             for (const id in qTranslateConfig.page_config.anchors) {
                 const anchor = qTranslateConfig.page_config.anchors[id];
-                const f = document.getElementById(id);
-                if (f) {
-                    anchors.push({f: f, where: anchor.where});
+                const target = document.getElementById(id);
+                if (target) {
+                    anchors.push({target: target, where: anchor.where});
                 } else if (anchor.jquery) {
-                    const list = $(anchor.jquery);
-                    for (let i = 0; i < list.length; ++i) {
-                        const f = list[i];
-                        anchors.push({f: f, where: anchor.where});
+                    const targets = $(anchor.jquery);
+                    for (let i = 0; i < targets.length; ++i) {
+                        const target = targets[i];
+                        anchors.push({target: target, where: anchor.where});
                     }
                 }
             }
         }
         if (!anchors.length) {
-            let f = pg.langSwitchWrapAnchor;
-            if (!f) {
-                f = getWrapForm();
+            let target = pg.langSwitchWrapAnchor;
+            if (!target) {
+                target = getWrapForm();
             }
-            if (f) anchors.push({f: f, where: 'before'});
+            if (target) anchors.push({target: target, where: 'before'});
         }
         for (let i = 0; i < anchors.length; ++i) {
             const anchor = anchors[i];
             if (!anchor.where || anchor.where.indexOf('before') >= 0) {
                 const langSwitchWrap = qtx.createSetOfLSB();
-                anchor.f.parentNode.insertBefore(langSwitchWrap, anchor.f);
+                anchor.target.parentNode.insertBefore(langSwitchWrap, anchor.target);
             }
             if (anchor.where && anchor.where.indexOf('after') >= 0) {
                 const langSwitchWrap = qtx.createSetOfLSB();
-                anchor.f.parentNode.insertBefore(langSwitchWrap, anchor.f.nextSibling);
+                anchor.target.parentNode.insertBefore(langSwitchWrap, anchor.target.nextSibling);
             }
             if (anchor.where && anchor.where.indexOf('first') >= 0) {
                 const langSwitchWrap = qtx.createSetOfLSB();
-                anchor.f.insertBefore(langSwitchWrap, anchor.f.firstChild);
+                anchor.target.insertBefore(langSwitchWrap, anchor.target.firstChild);
             }
             if (anchor.where && anchor.where.indexOf('last') >= 0) {
                 const langSwitchWrap = qtx.createSetOfLSB();
-                anchor.f.insertBefore(langSwitchWrap, null);
+                anchor.target.insertBefore(langSwitchWrap, null);
             }
         }
 

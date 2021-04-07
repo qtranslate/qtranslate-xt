@@ -5,21 +5,21 @@ const qTranslateConfig = window.qTranslateConfig;
 
 export const qtranxj_get_split_blocks = function (text) {
     const regex = '(<!--:lang-->|<!--:-->|\\[:lang]|\\[:]|{:lang}|{:})'.replace(/lang/g, qTranslateConfig.lang_code_format);
-    const split_regex = new RegExp(regex, "gi");
+    const splitRegex = new RegExp(regex, "gi");
 
     // Most browsers support RegExp.prototype[@@split]()... except IE
     if ('a~b'.split(/(~)/).length === 3) {
-        return text.split(split_regex);
+        return text.split(splitRegex);
     }
 
     // compatibility for unsupported engines
     let start = 0, arr = [];
     let result;
-    while ((result = split_regex.exec(text)) != null) {
+    while ((result = splitRegex.exec(text)) != null) {
         arr.push(text.slice(start, result.index));
         if (result.length > 1)
             arr.push(result[1]);
-        start = split_regex.lastIndex;
+        start = splitRegex.lastIndex;
     }
     if (start < text.length)
         arr.push(text.slice(start));

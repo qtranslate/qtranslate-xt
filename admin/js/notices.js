@@ -3,23 +3,23 @@ const $ = jQuery;
 $(function () {
     $('.notice-dismiss, .qtranxs-notice-dismiss').each(
         function () {
-            const q = $(this);
-            const d = q.closest('div.is-dismissible');
-            if (!d.length)
+            const $notice = $(this);
+            const $div = $notice.closest('div.is-dismissible');
+            if (!$div.length)
                 return;
-            if (!q.hasClass('qtranxs-notice-dismiss')) {
-                const f = d.find('.qtranxs-notice-dismiss');
-                if (!f.length)
+            if (!$notice.hasClass('qtranxs-notice-dismiss')) {
+                const $dismiss = $div.find('.qtranxs-notice-dismiss');
+                if (!$dismiss.length)
                     return;
             }
-            let id = d.attr('id');
+            let id = $div.attr('id');
             if (!id)
                 return;
             id = id.replace('qtranxs-', '');
-            const action = d.attr('action');
-            q.on('click',
+            const action = $div.attr('action');
+            $notice.on('click',
                 function () {
-                    d.css('display', 'none');
+                    $div.css('display', 'none');
                     $.post(ajaxurl, {action: 'qtranslate_admin_notice', notice_id: id, notice_action: action});
                 }
             );

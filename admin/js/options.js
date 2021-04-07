@@ -69,13 +69,13 @@ $(function () {
     onFlagChange($langFlag.val());
 
     $('#qtranxs_debug_query').on('click', function () {
-        const ca = document.cookie.split(';');
+        const cookies = document.cookie.split(';');
         const browserInfo = {
             'cookies': [],
             'navigator': navigator.userAgent
         };
-        for (let i = 0; i < ca.length; i++) {
-            const cookieStr = ca[i].trim();
+        for (let i = 0; i < cookies.length; i++) {
+            const cookieStr = cookies[i].trim();
             if (cookieStr.indexOf('qtrans') === 0) {
                 browserInfo['cookies'].push(cookieStr);
             }
