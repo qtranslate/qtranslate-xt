@@ -721,7 +721,7 @@ const qTranslateX = function (pg) {
                 const sep = field.encode;
                 switch (sep) {
                     case 'none':
-                        continue;
+                        break;
                     case 'display':
                         if (field.jquery) {
                             for (let i = 0; i < containers.length; ++i) {
@@ -766,10 +766,9 @@ const qTranslateX = function (pg) {
 
     /** Link a TinyMCE editor with translatable content. The editor should be initialized for TinyMCE. */
     const setEditorHooks = function (editor) {
-        const id = editor.id;
-        if (!id)
+        if (!editor.id)
             return;
-        const hook = contentHooks[id];
+        const hook = contentHooks[editor.id];
         if (!hook)
             return;
         if (hook.mce) {
@@ -983,15 +982,8 @@ const qTranslateX = function (pg) {
 
     addMultilingualHooks();
 
-    if (!displayHookNodes.length && !displayHookAttrs.length) {
-        let ok = false;
-        for (const key in contentHooks) {
-            ok = true;
-            break;
-        }
-        if (!ok) {
-            return;
-        }
+    if (!displayHookNodes.length && !displayHookAttrs.length && !Object.keys(contentHooks).length) {
+        return;
     }
 
     this.onLoadLanguage = function (lang, langFrom) {
