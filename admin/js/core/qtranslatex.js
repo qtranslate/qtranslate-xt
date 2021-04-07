@@ -153,10 +153,10 @@ const qTranslateX = function (pg) {
          */
         inputField.className += ' qtranxs-translatable';
 
-        const h = contentHooks[inputField.id] = {};
-        h.name = fieldName;
-        h.contentField = inputField;
-        h.lang = qTranslateConfig.activeLanguage;
+        const hook = contentHooks[inputField.id] = {};
+        hook.name = fieldName;
+        hook.contentField = inputField;
+        hook.lang = qTranslateConfig.activeLanguage;
 
         let qtxPrefix;
         if (encode) {
@@ -177,32 +177,32 @@ const qTranslateX = function (pg) {
             qtxPrefix = 'qtranslate-fields[';
         }
 
-        h.encode = encode;
+        hook.encode = encode;
 
         let baseName, suffixName;
-        const pos = h.name.indexOf('[');
+        const pos = hook.name.indexOf('[');
         if (pos < 0) {
-            baseName = qtxPrefix + h.name + ']';
+            baseName = qtxPrefix + hook.name + ']';
         } else {
-            baseName = qtxPrefix + h.name.substring(0, pos) + ']';
-            if (h.name.lastIndexOf('[]') < 0) {
-                baseName += h.name.substring(pos);
+            baseName = qtxPrefix + hook.name.substring(0, pos) + ']';
+            if (hook.name.lastIndexOf('[]') < 0) {
+                baseName += hook.name.substring(pos);
             } else {
-                const len = h.name.length - 2;
+                const len = hook.name.length - 2;
                 if (len > pos)
-                    baseName += h.name.substring(pos, len);
+                    baseName += hook.name.substring(pos, len);
                 suffixName = '[]';
             }
         }
 
         let contents;
 
-        h.fields = {};
+        hook.fields = {};
         if (!qTranslateConfig.RAW) {
             // Most crucial moment when untranslated content is parsed
             contents = qtranxj_split(inputField.value);
             // Substitute the current ML content with translated content for the current language
-            inputField.value = contents[h.lang];
+            inputField.value = contents[hook.lang];
             // Insert translated content for each language before the current field
             for (const lang in contents) {
                 const text = contents[lang];
@@ -210,7 +210,7 @@ const qTranslateX = function (pg) {
                 if (suffixName)
                     newName += suffixName;
                 const newField = qtranxj_ce('input', {name: newName, type: 'hidden', className: 'hidden', value: text});
-                h.fields[lang] = newField;
+                hook.fields[lang] = newField;
                 inputField.parentNode.insertBefore(newField, inputField);
             }
 
@@ -230,14 +230,14 @@ const qTranslateX = function (pg) {
             }
         }
 
-        // since 3.2.9.8 - h.contents -> h.fields
+        // since 3.2.9.8 - hook.contents -> hook.fields
         // since 3.3.8.7 - slug & term
         switch (encode) {
             case 'slug':
             case 'term': {
                 if (qTranslateConfig.RAW)
                     contents = qtranxj_split(inputField.value);
-                h.sepfield = qtranxj_ce('input', {
+                hook.sepfield = qtranxj_ce('input', {
                     name: baseName + '[qtranslate-original-value]',
                     type: 'hidden',
                     className: 'hidden',
@@ -247,7 +247,7 @@ const qTranslateX = function (pg) {
                 break;
             default: {
                 if (!qTranslateConfig.RAW) {
-                    h.sepfield = qtranxj_ce('input', {
+                    hook.sepfield = qtranxj_ce('input', {
                         name: baseName + '[qtranslate-separator]',
                         type: 'hidden',
                         className: 'hidden',
@@ -258,10 +258,10 @@ const qTranslateX = function (pg) {
                 break;
         }
 
-        if (h.sepfield)
-            inputField.parentNode.insertBefore(h.sepfield, inputField);
+        if (hook.sepfield)
+            inputField.parentNode.insertBefore(hook.sepfield, inputField);
 
-        return h;
+        return hook;
     };
     this.addContentHookC = function (inputField) {
         return qtx.addContentHook(inputField, '['); // TODO shouldn't it be '<' ?!
@@ -337,19 +337,19 @@ const qTranslateX = function (pg) {
         }
     };
 
-    const removeContentHookH = function (h) {
-        if (!h)
+    const removeContentHookH = function (hook) {
+        if (!hook)
             return false;
-        if (h.sepfield)
-            $(h.sepfield).remove();
+        if (hook.sepfield)
+            $(hook.sepfield).remove();
         const contents = {};
-        for (const lang in h.fields) {
-            const f = h.fields[lang];
+        for (const lang in hook.fields) {
+            const f = hook.fields[lang];
             contents[lang] = f.value;
             $(f).remove();
         }
-        $(h.contentField).removeClass('qtranxs-translatable');
-        delete contentHooks[h.contentField.id];
+        $(hook.contentField).removeClass('qtranxs-translatable');
+        delete contentHooks[hook.contentField.id];
         return contents;
     };
 
@@ -362,9 +362,9 @@ const qTranslateX = function (pg) {
     this.removeContentHook = function (inputField) {
         if (!inputField || !inputField.id || !contentHooks[inputField.id])
             return false;
-        const h = contentHooks[inputField.id];
-        removeContentHookH(h);
-        // @since 3.2.9.8 - h.contents -> h.fields
+        const hook = contentHooks[inputField.id];
+        removeContentHookH(hook);
+        // @since 3.2.9.8 - hook.contents -> hook.fields
         $(inputField).removeClass('qtranxs-translatable');
         return true;
     };
