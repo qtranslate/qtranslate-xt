@@ -742,11 +742,11 @@ const qTranslateX = function (pg) {
                             }
                         } else {
                             const id = field.id ? field.id : handle;
-                            const field = document.getElementById(id);
+                            const element = document.getElementById(id);
                             if (field.attrs) {
-                                qtx.addDisplayHookAttrs(field, field.attrs);
+                                qtx.addDisplayHookAttrs(element, field.attrs);
                             } else {
-                                qtx.addDisplayHook(field);
+                                qtx.addDisplayHook(element);
                             }
                         }
                         break;
