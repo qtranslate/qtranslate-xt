@@ -467,15 +467,6 @@ function qtranxf_normalize_config_files( $file_paths ) {
 }
 
 /**
- * @since 3.5.5
- */
-function qtranxf_find_plugin_by_folder( $fld, $plugins ) {
-    _deprecated_function( __FUNCTION__, '3.7.3' );
-
-    return null;
-}
-
-/**
  * Search globally for config files:
  * 1) themes
  * 2) mu-plugins
@@ -603,12 +594,6 @@ function qtranxf_update_config_files() {
     qtranxf_update_config_options( $config_files, $changed );
 }
 
-function qtranxf_find_plugin_file( $fp ) {
-    _deprecated_function( __FUNCTION__, '3.7.3' );
-
-    return null;
-}
-
 function qtranxf_on_switch_theme( $new_name, $new_theme ) {
     $config_files = qtranxf_get_option_config_files();
     $changed      = false;
@@ -633,15 +618,6 @@ function qtranxf_on_switch_theme( $new_name, $new_theme ) {
 }
 
 add_action( 'switch_theme', 'qtranxf_on_switch_theme', 10, 2 );
-
-function qtranxf_find_plugin_config_files( &$fn_bnm, &$fn_qtx, $bnm ) {
-    _deprecated_function( __FUNCTION__, '3.7.3', 'qtranxf_find_plugin_config_file()' );
-
-    $fn_bnm = qtranxf_find_plugin_config_file( $bnm );
-    $fn_qtx = null;
-
-    return $fn_bnm;
-}
 
 /**
  * Search for i18n-config.json files for regular plugins
