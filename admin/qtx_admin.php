@@ -861,8 +861,8 @@ function qtranxf_admin_tiny_mce_init( $mce_settings ) {
     if ( isset( $mce_settings ) ):
         ?>
         <script type="text/javascript">
-            if (qTranslateConfig && qTranslateConfig.js)
-                qTranslateConfig.js.get_qtx();
+            if (window.qTranslateConfig !== undefined && window.qTranslateConfig.js !== undefined)
+                window.qTranslateConfig.js.get_qtx();
         </script>
     <?php
     endif;
