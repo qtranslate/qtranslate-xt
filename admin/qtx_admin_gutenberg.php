@@ -58,6 +58,9 @@ class QTX_Admin_Gutenberg {
             return $response;
         }
 
+        // See https://github.com/WordPress/gutenberg/issues/14012#issuecomment-467015362
+        require_once( ABSPATH . 'wp-admin/includes/post.php' );
+
         if ( ! use_block_editor_for_post( $post ) ) {
             return $response;
         }
