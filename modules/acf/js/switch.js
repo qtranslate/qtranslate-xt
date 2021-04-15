@@ -26,6 +26,8 @@ $body.on('click', '.wp-switch-editor[data-language]', function () {
     parent.find('input[data-language="' + language + '"], textarea[data-language="' + language + '"]').focus();
     // TODO shouldn't we use qtx.switchActiveLanguage instead?
     $('.qtranxs-lang-switch[lang="' + language + '"]:first').trigger('click');
+    // Prevent default behavior switching Visual Editor
+    return false;
 });
 
 /**
