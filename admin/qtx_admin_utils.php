@@ -487,6 +487,7 @@ function qtranxf_post_type_optional( $post_type ) {
 }
 
 function qtranxf_json_encode( $o ) {
+    _deprecated_function( __FUNCTION__, '3.10.0' );
     if ( version_compare( PHP_VERSION, '5.4.0' ) >= 0 ) {
         return json_encode( $o, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES );
     }

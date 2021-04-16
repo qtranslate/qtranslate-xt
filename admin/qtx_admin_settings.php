@@ -229,7 +229,7 @@ class QTX_Admin_Settings {
             printf( __( 'Please, read %sIntegration Guide%s for more information.', 'qtranslate' ), '<a href="https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide" target="_blank">', '</a>' ); ?></p>
         <p class="qtranxs_explanation">
             <textarea class="widefat" rows="30">
-                <?php echo esc_textarea( str_replace( '[]', '{}', qtranxf_json_encode( $configs ) ) ); ?>
+                <?php echo esc_textarea( str_replace( '[]', '{}', json_encode( $configs, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES ) ) ); ?>
             </textarea>
         </p>
         <p class="qtranxs-notes">
@@ -764,7 +764,7 @@ class QTX_Admin_Settings {
                                    style="width:100%"><?php if ( isset( $_POST['json_custom_i18n_config'] ) ) {
                             echo sanitize_text_field( stripslashes( $_POST['json_custom_i18n_config'] ) );
                         } else if ( ! empty( $q_config['custom_i18n_config'] ) )
-                            echo qtranxf_json_encode( $q_config['custom_i18n_config'] ) ?></textarea>
+                            echo json_encode( $q_config['custom_i18n_config'], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES ) ?></textarea>
                     <p class="qtranxs-notes"><?php printf( __( 'It would make no difference, if the content of this field is stored in a file, which name is listed last in option "%s". Therefore, this field only provides flexibility for the sake of convenience.', 'qtranslate' ), __( 'Configuration Files', 'qtranslate' ) );
                         echo ' ';
                         printf( __( 'Please, read %sIntegration Guide%s for more information.', 'qtranslate' ), '<a href="https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide" target="_blank">', '</a>' );
