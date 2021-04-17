@@ -680,7 +680,10 @@ function qtranxf_merge_config( $cfg_all, $cfg ) {
 }
 
 /**
- * filters i18n configurations for the current page
+ * Parse i18n configurations, filtered for the current page URL and query.
+ * The post type is not filtered yet.
+ *
+ * @return array of active configurations, per post type
  */
 function qtranxf_parse_page_config( $config, $url_path, $url_query ) {
     global $q_config;
@@ -704,8 +707,10 @@ function qtranxf_parse_page_config( $config, $url_path, $url_query ) {
             continue;
         }
 
+        // Empty string key applies to all post types
         $post_type_key = '';
         if ( isset( $pgcfg['post_type'] ) ) {
+            // Store the post type(s) as a regex pattern
             if ( is_string( $pgcfg['post_type'] ) ) {
                 $post_type_key = $delimiter . $pgcfg['post_type'] . $delimiter;
                 unset( $pgcfg['post_type'] );
@@ -716,11 +721,13 @@ function qtranxf_parse_page_config( $config, $url_path, $url_query ) {
                 }
             }
         }
+
         if ( ! isset( $page_configs[ $post_type_key ] ) ) {
             $page_configs[ $post_type_key ] = array();
         }
         $page_config = &$page_configs[ $post_type_key ];
 
+        // Aggregate the page configs for this post type
         foreach ( $pgcfg as $key => $cfg ) {
             if ( empty( $cfg ) ) {
                 continue;
@@ -796,8 +803,17 @@ function qtranxf_parse_page_config( $config, $url_path, $url_query ) {
                 }
             }
         }
+
+        // Store all page config keys for this post type
+        if (! isset ($page_config['keys'])) {
+            $page_config['keys'] = array( $pgkey );
+        }
+        else {
+            $page_config['keys'][] = $pgkey;
+        }
     }
 
+    // Clean up empty configs
     foreach ( $page_configs as $post_type_key => &$page_config ) {
         if ( ! empty( $page_config ) ) {
             // clean up 'fields'
