@@ -12,8 +12,14 @@ const UrlMode = Object.freeze({
    QTX_URL_DOMAINS: 4,
 });
 
-$(function () {
+$('body').on('qtranslate_load_admin', (event, page) => {
+    if (page !== 'post') {
+        return;
+    }
+    console.log('qtranslate_load_admin', page);
+
     const qtx = qTranslateConfig.js.get_qtx();
+
     const convertURL = function (url, lang) {
         switch (qTranslateConfig.url_mode) {
             case UrlMode.QTX_URL_QUERY:
@@ -143,5 +149,4 @@ $(function () {
             window.location = window.location.origin + window.location.pathname + '?' + $.param(params);
         })
     }
-
 });
