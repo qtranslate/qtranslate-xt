@@ -1,6 +1,7 @@
 /* executed for
  /wp-admin/options-general.php
 */
+'use strict';
 const $ = jQuery;
 
 const keySection = 'qtranslate-xt-admin-section';

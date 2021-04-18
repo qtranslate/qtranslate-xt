@@ -3,6 +3,7 @@
  *
  * $author herrvigg
  */
+'use strict';
 
 (function () {
     console.log('QT-XT API: setup apiFetch');

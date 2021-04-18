@@ -9,6 +9,7 @@
  * - qTranslateConfig.js - is a place where custom Java script functions are stored, if needed.
  * Read Integration Guide: https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide for more information.
  */
+'use strict';
 import {qtranxj_ce} from './dom';
 import {qtranxj_get_split_blocks, qtranxj_split, qtranxj_split_blocks} from './qblocks';
 import {getStoredEditLanguage, storeEditLanguage} from './store';

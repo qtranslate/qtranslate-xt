@@ -1,6 +1,7 @@
 /* executed for 
  /wp-admin/edit-tags.php (without action=edit)
 */
+'use strict';
 const $ = jQuery;
 
 $(function () {

@@ -1,7 +1,7 @@
 /**
  * Storage for admin edit language
  */
-
+'use strict';
 // the edit language corresponds to the current LSB selection or the main admin language for single mode
 const keyEditLanguage = 'qtranslate-xt-admin-edit-language';
 

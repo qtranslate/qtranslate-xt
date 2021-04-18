@@ -2,6 +2,7 @@
  /wp-admin/post.php
  /wp-admin/post-new.php
 */
+'use strict';
 const $ = jQuery;
 
 const UrlMode = Object.freeze({

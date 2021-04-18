@@ -1,6 +1,8 @@
 /**
  * DOM manipulation
  */
+'use strict';
+
 export const qtranxj_ce = function (tagName, props, pNode, isFirst) {
     const elem = document.createElement(tagName);
     if (props) {

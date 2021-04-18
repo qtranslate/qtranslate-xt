@@ -1,6 +1,7 @@
 /**
  * Utilities for qTranslate blocks
  */
+'use strict';
 const qTranslateConfig = window.qTranslateConfig;
 
 export const qtranxj_get_split_blocks = function (text) {

@@ -1,6 +1,7 @@
 /* executed for
  /wp-admin/widgets.php
 */
+'use strict';
 const $ = jQuery;
 
 $(function () {

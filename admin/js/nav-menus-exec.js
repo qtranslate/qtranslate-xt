@@ -1,6 +1,7 @@
 /* executed for
  /wp-admin/nav-menus.php
 */
+'use strict';
 const $ = jQuery;
 
 $(function () {
@@ -17,6 +18,7 @@ $(function () {
 
     const onAddMenuItem = function (menuMarkup) {
         const rx = /id="menu-item-(\d+)"/gi;
+        let matches;
         while ((matches = rx.exec(menuMarkup))) {
             const id = 'menu-item-' + matches[1];
             const li = document.getElementById(id);
