@@ -55,11 +55,6 @@
             }
           }
         }
-      },
-      "js-exec": {
-        "post-exec": {
-          "src": "./dist/post-exec.js"
-        }
       }
     },
     "options-general": {
@@ -103,11 +98,6 @@
               "encode": "display"
             }
           }
-        }
-      },
-      "js-exec": {
-        "widgets-exec": {
-          "src": "./dist/widgets-exec.js"
         }
       }
     },
@@ -168,11 +158,6 @@
             }
           }
         }
-      },
-      "js-exec": {
-        "edit-tags-exec": {
-          "src": "./dist/edit-tags-exec.js"
-        }
       }
     },
     "nav-menus": {
@@ -217,11 +202,6 @@
               "encode": "display"
             }
           }
-        }
-      },
-      "js-exec": {
-        "nav-menus-exec": {
-          "src": "./dist/nav-menus-exec.js"
         }
       }
     },
