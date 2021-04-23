@@ -4,13 +4,8 @@
 'use strict';
 const $ = jQuery;
 
-$('body').on('qtranslate_load_admin', (event, page) => {
-    if (page !== 'edit-tags') {
-        return;
-    }
-    console.log('qtranslate_load_admin', page);
-
-    const qtx = qTranslateConfig.js.get_qtx();
+$(document).on('qtxLoadAdmin:edit-tags', (event, qtx) => {
+    console.log('onQtxLoadAdmin:edit-tags');
 
     const addDisplayHook = function (i, e) {
         qtx.addDisplayHook(e);

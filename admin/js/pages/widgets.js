@@ -4,16 +4,11 @@
 'use strict';
 const $ = jQuery;
 
-$('body').on('qtranslate_load_admin', (event, page) => {
-    if (page !== 'widgets') {
-        return;
-    }
-    console.log('qtranslate_load_admin', page);
+$(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
+    console.log('qtxLoadAdmin:widgets');
 
     if (!window.wpWidgets)
         return;
-
-    const qtx = qTranslateConfig.js.get_qtx();
 
     const onWidgetUpdate = function (evt, widget) {
         widget.find('span.in-widget-title').each(function (i, e) {

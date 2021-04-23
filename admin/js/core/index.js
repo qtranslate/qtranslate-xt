@@ -26,8 +26,8 @@ $(window).on('load', function () {
     const configKeys = get_page_config_keys();
     console.log('Loading page configs', configKeys);
     configKeys.forEach(key => {
-        console.log('trigger qtranslate_load_admin', key);
-        $('body').trigger('qtranslate_load_admin', [key, qtx]);
+        console.log('trigger qtxLoadAdmin:' + key);
+        $(document).trigger('qtxLoadAdmin:' + key, [qtx]);
     });
 });
 

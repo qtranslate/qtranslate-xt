@@ -4,13 +4,8 @@
 'use strict';
 const $ = jQuery;
 
-$('body').on('qtranslate_load_admin', (event, page) => {
-    if (page !== 'nav-menus') {
-        return;
-    }
-    console.log('qtranslate_load_admin', page);
-
-    const qtx = qTranslateConfig.js.get_qtx();
+$(document).on('qtxLoadAdmin:nav-menus', (event, qtx) => {
+    console.log('qtxLoadAdmin:nav-menus');
 
     const addMenuItemHooks = function (li) {
         qtx.addContentHooksByClass('edit-menu-item-title', li);
