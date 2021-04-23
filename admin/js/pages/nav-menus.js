@@ -4,9 +4,7 @@
 'use strict';
 const $ = jQuery;
 
-$(function () {
-    const qtx = qTranslateConfig.js.get_qtx();
-
+$(document).on('qtxLoadAdmin:nav-menus', (event, qtx) => {
     const addMenuItemHooks = function (li) {
         qtx.addContentHooksByClass('edit-menu-item-title', li);
         qtx.addContentHooksByClass('edit-menu-item-attr-title', li);

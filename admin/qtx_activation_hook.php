@@ -116,12 +116,30 @@ function qtranxf_load_config_files( $json_files ) {
         }
     }
 
-    $cfg_all = array();
+    $cfg_all               = array();
+    $deprecated_js_configs = array();
     foreach ( $json_files as $config_file ) {
         $cfg_json = file_get_contents( $config_file );
         if ( $cfg_json ) {
             $cfg = json_decode( $cfg_json, true );
             if ( ! empty( $cfg ) && is_array( $cfg ) ) {
+                // TODO: Remove check for deprecated keys in future versions
+                foreach ( [ 'admin-config', 'front-config' ] as $main_key ) {
+                    if ( ! array_key_exists( $main_key, $cfg ) ) {
+                        continue;
+                    }
+                    $main_config = $cfg[ $main_key ];
+                    foreach ( $main_config as $page_config ) {
+                        if ( array_key_exists( 'js-exec', $page_config ) ) {
+                            if ( ! array_key_exists( $config_file, $deprecated_js_configs ) ) {
+                                $deprecated_js_configs[ $config_file ] = 1;
+                            } else {
+                                $deprecated_js_configs[ $config_file ] ++;
+                            }
+                        }
+                    }
+                }
+
                 $cfg_all = qtranxf_merge_config( $cfg_all, $cfg );
             } else {
                 qtranxf_error_log( sprintf( __( 'Could not parse %s file "%s" listed in option "%s".', 'qtranslate' ), 'JSON', '<strong>' . $config_file . '</strong>', '<a href="' . admin_url( 'options-general.php?page=qtranslate-xt#integration' ) . '">' . __( 'Configuration Files', 'qtranslate' ) . '</a>' ) . ' ' . __( 'Please, correct the syntax error in the file.', 'qtranslate' ) . ' ' . sprintf( __( 'Once the problem is fixed, re-save the configuration by pressing button "%s" on plugin %ssettings page%s.', 'qtranslate' ), __( 'Save Changes', 'qtranslate' ), '<a href="' . admin_url( 'options-general.php?page=qtranslate-xt#integration' ) . '">', '</a>' ) );
@@ -135,6 +153,16 @@ function qtranxf_load_config_files( $json_files ) {
     }
     if ( ! isset( $cfg_all['front-config'] ) ) {
         $cfg_all['front-config'] = array();
+    }
+
+    if ( ! empty( $deprecated_js_configs ) ) {
+        $warning = sprintf( __( 'Deprecated "%s" configuration keys found:', 'qtranslate' ), 'js-exec' ) . '<ul>' . PHP_EOL;
+        foreach ( $deprecated_js_configs as $file => $count ) {
+            $warning .= "<li>$file (#$count)</li>" . PHP_EOL;
+        }
+        $warning .= '</ul>' . PHP_EOL;
+        $warning .= sprintf( __( 'Those keys will be incompatible in next releases. For more information, see: %s.', 'qtranslate' ), '<a href="https://github.com/qtranslate/qtranslate-xt/wiki/Custom-Javascript">Wiki Custom Javacsript</a>' );
+        qtranxf_add_warning( $warning );
     }
 
     return $cfg_all;
