@@ -486,19 +486,6 @@ function qtranxf_add_admin_footer_js() {
     <?php
 }
 
-function qtranxf_add_admin_head_js( $enqueue_script = true ) {
-    $js_options = 'dist/options.js';
-    $version    = filemtime( QTRANSLATE_DIR . '/' . $js_options );
-    if ( $enqueue_script ) {
-        wp_enqueue_script( 'qtranslate-admin-options', plugins_url( $js_options, QTRANSLATE_FILE ), array(), $version );
-    } else {
-        echo '<script type="text/javascript">' . PHP_EOL . '// <![CDATA[' . PHP_EOL;
-        $plugin_dir_path = plugin_dir_path( __FILE__ );
-        readfile( $plugin_dir_path . $js_options );
-        echo '//]]>' . PHP_EOL . '</script>' . PHP_EOL;
-    }
-}
-
 function qtranxf_add_admin_lang_icons() {
     global $q_config;
 
@@ -582,7 +569,9 @@ function qtranxf_admin_head() {
     qtranxf_add_admin_css();
     global $q_config;
     if ( isset( $q_config['url_info']['query'] ) && strpos( $q_config['url_info']['query'], 'page=qtranslate-xt' ) !== false ) {
-        qtranxf_add_admin_head_js( true );
+        $js_options = 'dist/options.js';
+        $version    = filemtime( QTRANSLATE_DIR . '/' . $js_options );
+        wp_enqueue_script( 'qtranslate-admin-options', plugins_url( $js_options, QTRANSLATE_FILE ), array(), $version );
     }
 }
 
@@ -760,8 +749,7 @@ function qtranxf_admin_notices_config() {
     global $q_config;
     if ( empty( $q_config['url_info']['errors'] ) &&
          empty( $q_config['url_info']['warnings'] ) &&
-         empty( $q_config['url_info']['messages'] ) &&
-         empty( $q_config['lic']['wrn'] ) ) {
+         empty( $q_config['url_info']['messages'] ) ) {
         return;
     }
 
