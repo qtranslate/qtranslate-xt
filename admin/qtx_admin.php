@@ -379,7 +379,7 @@ function qtranxf_get_admin_page_config_post_type( $post_type ) {
     return $page_config;
 }
 
-function qtranxf_add_admin_footer_js() {
+function qtranxf_admin_footer() {
     global $q_config;
     $post_type   = qtranxf_post_type();
     $page_config = qtranxf_get_admin_page_config_post_type( $post_type );
@@ -573,10 +573,6 @@ function qtranxf_admin_head() {
         $version    = filemtime( QTRANSLATE_DIR . '/' . $js_options );
         wp_enqueue_script( 'qtranslate-admin-options', plugins_url( $js_options, QTRANSLATE_FILE ), array(), $version );
     }
-}
-
-function qtranxf_admin_footer() {
-    qtranxf_add_admin_footer_js();
 }
 
 function qtranxf_customize_allowed_urls( $urls ) {
