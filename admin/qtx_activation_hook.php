@@ -116,8 +116,8 @@ function qtranxf_load_config_files( $json_files ) {
         }
     }
 
-    $cfg_all             = array();
-    $deprecated_js_execs = array();
+    $cfg_all               = array();
+    $deprecated_js_configs = array();
     foreach ( $json_files as $config_file ) {
         $cfg_json = file_get_contents( $config_file );
         if ( $cfg_json ) {
@@ -129,12 +129,12 @@ function qtranxf_load_config_files( $json_files ) {
                         continue;
                     }
                     $main_config = $cfg[ $main_key ];
-                    foreach ( $main_config as $page_key => $page_config ) {
+                    foreach ( $main_config as $page_config ) {
                         if ( array_key_exists( 'js-exec', $page_config ) ) {
-                            if ( ! array_key_exists( $config_file, $deprecated_js_execs ) ) {
-                                $deprecated_js_execs[ $config_file ] = 1;
+                            if ( ! array_key_exists( $config_file, $deprecated_js_configs ) ) {
+                                $deprecated_js_configs[ $config_file ] = 1;
                             } else {
-                                $deprecated_js_execs[ $config_file ] ++;
+                                $deprecated_js_configs[ $config_file ] ++;
                             }
                         }
                     }
@@ -155,13 +155,13 @@ function qtranxf_load_config_files( $json_files ) {
         $cfg_all['front-config'] = array();
     }
 
-    if ( ! empty( $deprecated_js_execs ) ) {
-        $warning = sprintf( __( 'Deprecated "%s" configuration keys found for:', 'qtranslate' ), 'js-exec' ) . '<ul>' . PHP_EOL;
-        foreach ( $deprecated_js_execs as $file => $count ) {
+    if ( ! empty( $deprecated_js_configs ) ) {
+        $warning = sprintf( __( 'Deprecated "%s" configuration keys found:', 'qtranslate' ), 'js-exec' ) . '<ul>' . PHP_EOL;
+        foreach ( $deprecated_js_configs as $file => $count ) {
             $warning .= "<li>$file (#$count)</li>" . PHP_EOL;
         }
         $warning .= '</ul>' . PHP_EOL;
-        $warning .= sprintf( __( 'Those keys will be incompatible in %snext releases%s.', 'qtranslate' ), '<a href="https://github.com/qtranslate/qtranslate-xt/pull/1009">', '</a>' );
+        $warning .= sprintf( __( 'Those keys will be incompatible in next releases. For more information, see: %s.', 'qtranslate' ), '<a href="https://github.com/qtranslate/qtranslate-xt/wiki/Custom-Javascript">Wiki Custom Javacsript</a>' );
         qtranxf_add_warning( $warning );
     }
 
