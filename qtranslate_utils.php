@@ -804,12 +804,13 @@ function qtranxf_parse_page_config( $config, $url_path, $url_query ) {
             }
         }
 
-        // Store all page config keys for this post type
-        if (! isset ($page_config['keys'])) {
-            $page_config['keys'] = array( $pgkey );
-        }
-        else {
-            $page_config['keys'][] = $pgkey;
+        // Store all page config keys when selectors exist (pages or post_type)
+        if ( array_key_exists( 'pages', $pgcfg ) || ! empty( $post_type_key ) ) {
+            if ( ! isset ( $page_config['keys'] ) ) {
+                $page_config['keys'] = array( $pgkey );
+            } else {
+                $page_config['keys'][] = $pgkey;
+            }
         }
     }
 
