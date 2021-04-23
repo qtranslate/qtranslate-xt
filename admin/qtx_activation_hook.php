@@ -130,7 +130,7 @@ function qtranxf_load_config_files( $json_files ) {
                     }
                     $main_config = $cfg[ $main_key ];
                     foreach ( $main_config as $page_config ) {
-                        if ( array_key_exists( 'js-exec', $page_config ) ) {
+                        if ( array_key_exists( 'js-exec', $page_config ) || array_key_exists( 'js-conf', $page_config ) ) {
                             if ( ! array_key_exists( $config_file, $deprecated_js_configs ) ) {
                                 $deprecated_js_configs[ $config_file ] = 1;
                             } else {
@@ -156,7 +156,7 @@ function qtranxf_load_config_files( $json_files ) {
     }
 
     if ( ! empty( $deprecated_js_configs ) ) {
-        $warning = sprintf( __( 'Deprecated "%s" configuration keys found:', 'qtranslate' ), 'js-exec' ) . '<ul>' . PHP_EOL;
+        $warning = sprintf( __( 'Deprecated %s configuration keys found:', 'qtranslate' ), '"js-exec" / "js-conf"' ) . '<ul>' . PHP_EOL;
         foreach ( $deprecated_js_configs as $file => $count ) {
             $warning .= "<li>$file (#$count)</li>" . PHP_EOL;
         }
