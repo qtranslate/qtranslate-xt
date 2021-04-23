@@ -5,8 +5,6 @@
 const $ = jQuery;
 
 $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
-    console.log('qtxLoadAdmin:widgets');
-
     if (!window.wpWidgets)
         return;
 

@@ -24,9 +24,7 @@ $(window).on('load', function () {
     qtx.loadAdditionalTinyMceHooks();
 
     const configKeys = get_page_config_keys();
-    console.log('Loading page configs', configKeys);
     configKeys.forEach(key => {
-        console.log('trigger qtxLoadAdmin:' + key);
         $(document).trigger('qtxLoadAdmin:' + key, [qtx]);
     });
 });

@@ -5,8 +5,6 @@
 const $ = jQuery;
 
 $(document).on('qtxLoadAdmin:nav-menus', (event, qtx) => {
-    console.log('qtxLoadAdmin:nav-menus');
-
     const addMenuItemHooks = function (li) {
         qtx.addContentHooksByClass('edit-menu-item-title', li);
         qtx.addContentHooksByClass('edit-menu-item-attr-title', li);

@@ -13,8 +13,6 @@ const UrlMode = Object.freeze({
 });
 
 $(document).on('qtxLoadAdmin:post', (event, qtx) => {
-    console.log('qtxLoadAdmin:post');
-
     const convertURL = function (url, lang) {
         switch (qTranslateConfig.url_mode) {
             case UrlMode.QTX_URL_QUERY:

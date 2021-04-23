@@ -5,8 +5,6 @@
 const $ = jQuery;
 
 $(document).on('qtxLoadAdmin:edit-tags', (event, qtx) => {
-    console.log('onQtxLoadAdmin:edit-tags');
-
     const addDisplayHook = function (i, e) {
         qtx.addDisplayHook(e);
     };
