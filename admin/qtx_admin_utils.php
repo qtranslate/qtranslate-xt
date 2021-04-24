@@ -482,6 +482,7 @@ function qtranxf_json_encode( $o ) {
  * return reference to $page_config['forms'][$name]['fields']
  */
 function qtranxf_config_add_form( &$page_config, $name ) {
+    _deprecated_function( __FUNCTION__, '3.10.0' );
     if ( ! isset( $page_config['forms'][ $name ] ) ) {
         $page_config['forms'][ $name ] = array( 'fields' => array() );
     } else if ( ! isset( $page_config['forms'][ $name ]['fields'] ) ) {
