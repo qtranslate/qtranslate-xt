@@ -459,13 +459,7 @@ add_action( 'add_meta_boxes', 'qtranxf_add_meta_box_LSB', 10, 2 );
  * @since 3.3
  */
 function qtranxf_post_type_optional( $post_type ) {
-    switch ( $post_type ) {
-        case 'revision':
-        case 'nav_menu_item':
-            return false; // no option for this type
-        default:
-            return true;
-    }
+    return ! in_array( $post_type, [ 'revision', 'nav_menu_item' ] );
 }
 
 function qtranxf_json_encode( $o ) {

@@ -613,14 +613,10 @@ function qtranxf_post_type() {
         return $post_type;
     }
     if ( $post && isset( $post->post_type ) ) {
-        $post_type = $post->post_type;
-
-        return $post_type;
+        return $post->post_type;
     }
     if ( isset( $_REQUEST['post_type'] ) ) {
-        $post_type = $_REQUEST['post_type'];
-
-        return $post_type;
+        return $_REQUEST['post_type'];
     }
 
     return null;
