@@ -160,24 +160,6 @@ function qtranxf_clean_request( $name ) {
     unset( $_REQUEST[ $name ] );
 }
 
-/**
- * @since 3.4.6.9
- */
-function qtranxf_clean_request_of( $type, $name ) {
-    unset( $_GET[ $type ][ $name ] );
-    unset( $_POST[ $type ][ $name ] );
-    unset( $_REQUEST[ $type ][ $name ] );
-    if ( empty( $_GET[ $type ] ) ) {
-        unset( $_GET[ $type ] );
-    }
-    if ( empty( $_POST[ $type ] ) ) {
-        unset( $_POST[ $type ] );
-    }
-    if ( empty( $_REQUEST[ $type ] ) ) {
-        unset( $_REQUEST[ $type ] );
-    }
-}
-
 function qtranxf_ensure_language_set( &$langs, $lang, $default_value = null ) {
     if ( ! empty( $langs[ $lang ] ) ) {
         return $langs[ $lang ];
