@@ -130,11 +130,23 @@ function qtranxf_load_config_files( $json_files ) {
                     }
                     $main_config = $cfg[ $main_key ];
                     foreach ( $main_config as $page_config ) {
-                        if ( array_key_exists( 'js-exec', $page_config ) || array_key_exists( 'js-conf', $page_config ) ) {
-                            if ( ! array_key_exists( $config_file, $deprecated_js_configs ) ) {
-                                $deprecated_js_configs[ $config_file ] = 1;
-                            } else {
-                                $deprecated_js_configs[ $config_file ] ++;
+                        if ( isset( $page_config['js-conf'] ) ) {
+                            $deprecated_key = '"js-conf"';
+                            if ( ! isset( $deprecated_js_configs[ $deprecated_key ] ) ) {
+                                $deprecated_js_configs[ $deprecated_key ] = [];
+                            }
+                            $deprecated_js_configs[ $deprecated_key ][] = $config_file;
+                        }
+                        if ( isset( $page_config['js-exec'] ) ) {
+                            foreach ( $page_config['js-exec'] as $js_exec ) {
+                                if ( isset( $js_exec['javascript'] ) ) {
+                                    $deprecated_key = '"javascript" (in "js-exec")';
+                                    if ( ! isset( $deprecated_js_configs[ $deprecated_key ] ) ) {
+                                        $deprecated_js_configs[ $deprecated_key ] = [];
+                                    }
+                                    $deprecated_js_configs[ $deprecated_key ][] = $config_file;
+                                    break;
+                                }
                             }
                         }
                     }
@@ -156,14 +168,21 @@ function qtranxf_load_config_files( $json_files ) {
     }
 
     if ( ! empty( $deprecated_js_configs ) ) {
-        $warning = sprintf( __( 'Deprecated %s configuration keys found:', 'qtranslate' ), '"js-exec" / "js-conf"' ) . '<ul>' . PHP_EOL;
-        foreach ( $deprecated_js_configs as $file => $count ) {
-            $warning .= "<li>$file (#$count)</li>" . PHP_EOL;
+        $warning_files = [];
+        foreach ( $deprecated_js_configs as $deprecated_key => $deprecated_files ) {
+            $unique_files = array_unique( $deprecated_files );
+            foreach ( $unique_files as $file ) {
+                $warning_files[] = "<li>$file : $deprecated_key</li>";
+            }
         }
+        $warning = __( 'Deprecated keys found in qTranslate-XT configuration files.', 'qtranslate' );
+        $warning .= '<ul>' . PHP_EOL;
+        $warning .= implode( PHP_EOL, $warning_files );
         $warning .= '</ul>' . PHP_EOL;
         $warning .= sprintf( __( 'Those keys will be incompatible in next releases. For more information, see: %s.', 'qtranslate' ), '<a href="https://github.com/qtranslate/qtranslate-xt/wiki/Custom-Javascript">Wiki Custom Javacsript</a>' );
         qtranxf_add_warning( $warning );
     }
+
 
     return $cfg_all;
 }
