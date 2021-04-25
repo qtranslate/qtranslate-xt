@@ -172,17 +172,14 @@ function qtranxf_load_config_files( $json_files ) {
         foreach ( $deprecated_js_configs as $deprecated_key => $deprecated_files ) {
             $unique_files = array_unique( $deprecated_files );
             foreach ( $unique_files as $file ) {
-                $warning_files[] = "<li>$file : $deprecated_key</li>";
+                $warning_files[] = "$file : $deprecated_key";
             }
         }
-        $warning = __( 'Deprecated keys found in qTranslate-XT configuration files.', 'qtranslate' );
-        $warning .= '<ul>' . PHP_EOL;
-        $warning .= implode( PHP_EOL, $warning_files );
-        $warning .= '</ul>' . PHP_EOL;
-        $warning .= sprintf( __( 'Those keys will be incompatible in next releases. For more information, see: %s.', 'qtranslate' ), '<a href="https://github.com/qtranslate/qtranslate-xt/wiki/Custom-Javascript">Wiki Custom Javacsript</a>' );
+        $warning = sprintf( __( 'Deprecated configuration key(s) in %s:', 'qtranslate' ), 'qTranslate-XT' );
+        $warning .= '<pre>' . implode( '<br>', $warning_files ) . '</pre>';
+        $warning .= sprintf( __( 'This configuration will become incompatible in next releases. For more information, see: %s.', 'qtranslate' ), '<a href="https://github.com/qtranslate/qtranslate-xt/wiki/Custom-Javascript">Wiki Custom Javacsript</a>' );
         qtranxf_add_warning( $warning );
     }
-
 
     return $cfg_all;
 }
@@ -418,8 +415,15 @@ function qtranxf_load_config_all( $json_files, $custom_config ) {
     global $q_config;
     $nerr = isset( $q_config['url_info']['errors'] ) ? count( $q_config['url_info']['errors'] ) : 0;
     $cfg  = qtranxf_load_config_files( $json_files );
-    $cfg  = qtranxf_merge_config( $cfg, $custom_config );
-    $cfg  = qtranxf_standardize_i18n_config( $cfg );
+    if ( ! empty( $custom_config ) ) {
+        $warning = sprintf( __( 'Deprecated configuration key(s) in %s:', 'qtranslate' ), 'qTranslate-XT' );
+        $warning .= '<pre>"custom_i18n_config" (settings / integration)</pre>';
+        $warning .= sprintf( __( 'This configuration will become incompatible in next releases. For more information, see: %s.', 'qtranslate' ),
+            '<a href="https://github.com/qtranslate/qtranslate-xt/issues/1012">github</a>' );
+        qtranxf_add_warning( $warning );
+    }
+    $cfg = qtranxf_merge_config( $cfg, $custom_config );
+    $cfg = qtranxf_standardize_i18n_config( $cfg );
     // store the errors permanently until an admin fixes them,
     // otherwise admin may not realise that not all configurations are loaded.
     if ( ! empty( $q_config['url_info']['errors'] ) && $nerr != count( $q_config['url_info']['errors'] ) ) {

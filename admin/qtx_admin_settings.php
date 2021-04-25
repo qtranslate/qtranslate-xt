@@ -758,7 +758,11 @@ class QTX_Admin_Settings {
             <tr>
                 <th scope="row"><?php _e( 'Custom Configuration', 'qtranslate' ) ?></th>
                 <td><label for="qtranxs_json_custom_i18n_config"
-                           class="qtranxs_explanation"><?php printf( __( 'Additional custom JSON-encoded configuration of %s for all admin pages. It is processed after all files from option "%s" are loaded, providing opportunity to add or to override configuration tokens as necessary.', 'qtranslate' ), 'qTranslate&#8209;XT', __( 'Configuration Files', 'qtranslate' ) ); ?></label>
+                           class="qtranxs_explanation"><?php
+                        if ( ! empty( $q_config['custom_i18n_config'] ) ) {
+                            echo( '<p class="qtranxs-deprecated">' . __( 'Deprecated', 'qtranslate' ) . '</p>' );
+                        }
+                        printf( __( 'Additional custom JSON-encoded configuration of %s for all admin pages. It is processed after all files from option "%s" are loaded, providing opportunity to add or to override configuration tokens as necessary.', 'qtranslate' ), 'qTranslate&#8209;XT', __( 'Configuration Files', 'qtranslate' ) ); ?></label>
                     <br/><textarea name="json_custom_i18n_config" id="qtranxs_json_custom_i18n_config"
                                    rows="4"
                                    style="width:100%"><?php if ( isset( $_POST['json_custom_i18n_config'] ) ) {

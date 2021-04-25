@@ -48,3 +48,8 @@
 	padding: 8px 10px;
     display: table-cell;
 }
+
+.qtranxs-deprecated {
+    font-weight: bold;
+    color: darkorange;
+}
