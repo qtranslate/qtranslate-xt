@@ -16,24 +16,6 @@ function qtranxf_translate_wp( $string ) {
 }
 
 /**
- * @since 3.3.8.8
- */
-function qtranxf_plugin_basename() {
-    _deprecated_function( __FUNCTION__, '3.7.3', 'plugin_basename( QTRANSLATE_FILE )' );
-
-    return plugin_basename( QTRANSLATE_FILE );
-}
-
-/**
- * @since 3.3.2
- */
-function qtranxf_plugin_dirname() {
-    _deprecated_function( __FUNCTION__, '3.7.3', 'dirname( QTRANSLATE_DIR )' );
-
-    return dirname( QTRANSLATE_DIR );
-}
-
-/**
  * Compose path to a plugin folder relative to WP_CONTENT_DIR.
  * Takes into account linked folders in the path.
  * Works for plugin paths only. No trailing slash in the return string.
