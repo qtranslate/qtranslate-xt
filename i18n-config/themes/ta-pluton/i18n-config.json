@@ -3,7 +3,7 @@
     "themes/ta-pluton": "1.0"
   },
   "admin-config": {
-    "theme-panel": {
+    "ta-pluton-panel": {
       "pages": {
         "admin.php": "page=_options&tab="
       },
@@ -92,8 +92,8 @@
         }
       },
       "js-exec": {
-        "redux-slides-header-update": {
-          "javascript": "(function($) { qTranslateConfig.qtx.addLanguageSwitchAfterListener( function(){ $('.slide-title').each(function(i,e){ var t = e.value; if(!t) return; $(e).parents().eq( 3 ).find( '.redux-slides-header' ).text( t ); }); }); })(jQuery);"
+        "ta-pluton-panel": {
+          "src": "./i18n-config/themes/ta-pluton/qtx-admin.js"
         }
       }
     }
