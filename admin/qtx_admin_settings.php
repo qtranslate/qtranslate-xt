@@ -206,9 +206,9 @@ class QTX_Admin_Settings {
         global $q_config;
 
         $admin_config = $q_config['admin_config'];
-        $admin_config = apply_filters( 'qtranslate_load_admin_page_config', $admin_config );
         $admin_config = apply_filters( 'qtranslate_admin_config', $admin_config );
         $admin_config = apply_filters_deprecated( 'i18n_admin_config', array( $admin_config ), '3.10.0', 'qtranslate_admin_config' );
+        $admin_config = apply_filters_deprecated( 'qtranslate_load_admin_page_config', array( $admin_config ), '3.10.0', 'qtranslate_admin_config' );
 
         $front_config = $q_config['front_config'];
         $front_config = apply_filters( 'qtranslate_front_config', $front_config );

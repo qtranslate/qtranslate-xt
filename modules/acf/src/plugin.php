@@ -19,7 +19,7 @@ class acf_qtranslate_plugin {
         add_action( 'admin_menu', array( $this, 'admin_menu' ) );
         add_action( 'admin_init', array( $this, 'admin_init' ) );
 
-        add_filter( 'qtranslate_load_admin_page_config', array( $this, 'qtranslate_load_admin_page_config' ) );
+        add_filter( 'qtranslate_admin_config', array( $this, 'filter_qtranslate_admin_config' ) );
         add_filter( 'plugin_action_links_' . plugin_basename( ACF_QTRANSLATE_PLUGIN ), array(
             $this,
             'plugin_action_links'
@@ -160,7 +160,7 @@ class acf_qtranslate_plugin {
      *
      * @return array
      */
-    public function qtranslate_load_admin_page_config( $config ) {
+    public function filter_qtranslate_admin_config( $config ) {
         $pages = array(
             'admin.php' => 'page=',
         );

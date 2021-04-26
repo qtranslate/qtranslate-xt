@@ -50,7 +50,7 @@ function qtranxf_wc_add_admin_styles() {
     wp_enqueue_style( 'qtranxf_wc_qtranslate_admin', plugins_url( '/qwc-admin.css', __FILE__ ), array(), QTX_VERSION );
 }
 
-add_filter( 'qtranslate_load_admin_page_config', 'qtranxf_wc_add_admin_page_config' );
+add_filter( 'qtranslate_admin_config', 'qtranxf_wc_add_admin_page_config' );
 function qtranxf_wc_add_admin_page_config( $page_configs ) {
     // post.php
     // TODO refactor append config

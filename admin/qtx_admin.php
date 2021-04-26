@@ -216,8 +216,6 @@ function qtranxf_get_admin_page_config() {
     }
 
     $admin_config = $q_config['admin_config'];
-    // TODO obsolete filter?
-    $admin_config = apply_filters( 'qtranslate_load_admin_page_config', $admin_config );
     /**
      * Customize the admin configuration for all pages.
      *
@@ -225,6 +223,7 @@ function qtranxf_get_admin_page_config() {
      */
     $admin_config = apply_filters( 'qtranslate_admin_config', $admin_config );
     $admin_config = apply_filters_deprecated( 'i18n_admin_config', array( $admin_config ), '3.10.0', 'qtranslate_admin_config' );
+    $admin_config = apply_filters_deprecated( 'qtranslate_load_admin_page_config', array( $admin_config ), '3.10.0', 'qtranslate_admin_config' );
 
     $url_query    = isset( $q_config['url_info']['query'] ) ? $q_config['url_info']['query'] : '';
     $page_configs = qtranxf_parse_page_config( $admin_config, $pagenow, $url_query );
