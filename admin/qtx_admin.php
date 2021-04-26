@@ -87,7 +87,7 @@ function qtranxf_decode_json_name_value( $value ) {
 function qtranxf_collect_translations_posted() {
     $edit_lang = null;
     if ( isset( $_REQUEST['qtranslate-fields'] ) ) {
-        $edit_lang = qtranxf_getLanguageEdit();
+        $edit_lang = qtranxf_get_edit_language();
         foreach ( $_REQUEST['qtranslate-fields'] as $name => &$qfields ) {
             if ( ! isset( $_REQUEST[ $name ] ) ) {
                 unset( $_REQUEST['qtranslate-fields'][ $name ] );
@@ -118,7 +118,7 @@ function qtranxf_collect_translations_posted() {
                 continue;
             }
             if ( ! $edit_lang ) {
-                $edit_lang = qtranxf_getLanguageEdit();
+                $edit_lang = qtranxf_get_edit_language();
             }
             qtranxf_collect_translations( $request['qtranslate-fields'], $request, $edit_lang );
             unset( $request['qtranslate-fields'] );
@@ -139,7 +139,7 @@ function qtranxf_decode_translations_posted() {
     if ( isset( $_POST['nav-menu-data'] ) ) {
         $request = qtranxf_decode_json_name_value( $_POST['nav-menu-data'] );
         if ( ! empty( $request['qtranslate-fields'] ) ) {
-            $edit_lang = qtranxf_getLanguageEdit();
+            $edit_lang = qtranxf_get_edit_language();
             qtranxf_collect_translations( $request['qtranslate-fields'], $request, $edit_lang );
             unset( $request['qtranslate-fields'] );
             foreach ( $request as $key => $value ) {
@@ -202,7 +202,7 @@ function qtranxf_admin_init() {
     }
 
     if ( $q_config['auto_update_mo'] ) {
-        qtranxf_updateGettextDatabases();
+        qtranxf_update_gettext_databases();
     }
 }
 

@@ -921,7 +921,7 @@ function qtranxf_executeOnUpdate() {
     $messages = &$q_config['url_info']['messages'];
 
     if ( isset( $_POST['update_mo_now'] ) && $_POST['update_mo_now'] == '1' ) {
-        $result = qtranxf_updateGettextDatabases( true );
+        $result = qtranxf_update_gettext_databases( true );
         if ( $result === 0 ) {
             $messages[] = __( 'Gettext databases updated.', 'qtranslate' );
         }

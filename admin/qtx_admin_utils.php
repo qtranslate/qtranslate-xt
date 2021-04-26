@@ -180,6 +180,11 @@ function qtranxf_ensure_language_set( &$langs, $lang, $default_value = null ) {
 }
 
 function qtranxf_getLanguageEdit() {
+    _deprecated_function( __FUNCTION__, '3.10.0', 'qtranxf_get_edit_language' );
+    qtranxf_get_edit_language();
+}
+
+function qtranxf_get_edit_language() {
     global $q_config;
 
     if ( ! isset( $_REQUEST['qtranslate-edit-language'] ) ) {
@@ -194,7 +199,7 @@ function qtranxf_getLanguageEdit() {
     return $lang;
 }
 
-function qtranxf_languageColumnHeader( $columns ) {
+function qtranxf_language_column_header( $columns ) {
     $new_columns = array();
     if ( isset( $columns['cb'] ) ) {
         $new_columns['cb'] = '';
@@ -216,7 +221,7 @@ function qtranxf_languageColumnHeader( $columns ) {
     return array_merge( $new_columns, $columns );
 }
 
-function qtranxf_languageColumn( $column ) {
+function qtranxf_language_column( $column ) {
     global $q_config, $post;
     if ( $column == 'language' ) {
         $missing_languages   = null;
@@ -381,9 +386,14 @@ function qtranxf_the_editor( $editor_div ) {
  */
 
 function qtranxf_updateGettextDatabases( $force = false, $only_for_language = '' ) {
+    _deprecated_function( __FUNCTION__, '3.10.0', 'qtranxf_update_gettext_databases' );
+    qtranxf_update_gettext_databases( $force, $only_for_language );
+}
+
+function qtranxf_update_gettext_databases( $force = false, $only_for_language = '' ) {
     require_once( QTRANSLATE_DIR . '/admin/qtx_update_gettext_db.php' );
 
-    return qtranxf_updateGettextDatabasesEx( $force, $only_for_language );
+    return qtranxf_update_gettext_databases_ex( $force, $only_for_language );
 }
 
 function qtranxf_add_conf_filters() {
@@ -573,7 +583,7 @@ function qtranxf_decode_name_value( $name_values ) {
     return $decoded;
 }
 
-add_filter( 'manage_posts_columns', 'qtranxf_languageColumnHeader' );
-add_filter( 'manage_posts_custom_column', 'qtranxf_languageColumn' );
-add_filter( 'manage_pages_columns', 'qtranxf_languageColumnHeader' );
-add_filter( 'manage_pages_custom_column', 'qtranxf_languageColumn' );
+add_filter( 'manage_posts_columns', 'qtranxf_language_column_header' );
+add_filter( 'manage_posts_custom_column', 'qtranxf_language_column' );
+add_filter( 'manage_pages_columns', 'qtranxf_language_column_header' );
+add_filter( 'manage_pages_custom_column', 'qtranxf_language_column' );

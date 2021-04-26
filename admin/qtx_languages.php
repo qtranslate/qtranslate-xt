@@ -110,7 +110,7 @@ function qtranxf_enableLanguage( $lang ) {
 
     // force update of .mo files
     if ( $q_config['auto_update_mo'] ) {
-        qtranxf_updateGettextDatabases( true, $lang );
+        qtranxf_update_gettext_databases( true, $lang );
     }
 
     return true;
