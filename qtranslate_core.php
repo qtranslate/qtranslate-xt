@@ -841,7 +841,8 @@ function qtranxf_load_config() {
     /**
      * Opportunity to load additional front-end features.
      */
-    do_action( 'qtranslate_loadConfig' );
+    do_action( 'qtranslate_load_config' );
+    do_action_deprecated( 'qtranslate_loadConfig', array(), '3.10.0', 'qtranslate_load_config' );
 }
 
 // check if it is a link to an ignored file type

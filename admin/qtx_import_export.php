@@ -119,7 +119,7 @@ function qtranxf_migrate_plugins() {
     }
 }
 
-add_action( 'qtranslate_saveConfig', 'qtranxf_migrate_plugins', 30 );
+add_action( 'qtranslate_save_config', 'qtranxf_migrate_plugins', 30 );
 
 function qtranxf_add_row_migrate( $nm, $plugin, $args = null ) {
     if ( ! file_exists( WP_PLUGIN_DIR . '/' . $plugin ) && ! file_exists( WPMU_PLUGIN_DIR . '/' . $plugin ) ) {

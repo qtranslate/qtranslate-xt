@@ -77,7 +77,8 @@ function qtranxf_admin_load_config() {
     }
 
     // opportunity to load additional admin features
-    do_action( 'qtranslate_admin_loadConfig' );
+    do_action( 'qtranslate_admin_load_config' );
+    do_action_deprecated( 'qtranslate_admin_loadConfig', array(), '3.10.0', 'qtranslate_admin_load_config' );
 
     qtranxf_add_conf_filters();
 }

@@ -242,7 +242,12 @@ function qtranxf_languageColumn( $column ) {
             $available_languages_names = join( ', ', $available_languages_name );
             echo apply_filters( 'qtranslate_available_languages_names', $available_languages_names );
         }
-        do_action( 'qtranslate_languageColumn', $available_languages, $missing_languages );
+
+        do_action( 'qtranslate_language_column', $available_languages, $missing_languages );
+        do_action_deprecated( 'qtranslate_languageColumn', array(
+            $available_languages,
+            $missing_languages
+        ), '3.10.0', 'qtranslate_language_column' );
     }
 
     return $column;

@@ -295,7 +295,8 @@ function qtranxf_edit_config() {
         $messages[] = $msg;
     }
 
-    do_action( 'qtranslate_editConfig' );
+    do_action( 'qtranslate_edit_config' );
+    do_action_deprecated( 'qtranslate_editConfig', array(), '3.10.0', 'qtranslate_edit_config' );
 
     $everything_fine = ( ( isset( $_POST['submit'] ) || isset( $_GET['delete'] ) || isset( $_GET['enable'] ) || isset( $_GET['disable'] ) || isset( $_GET['moveup'] ) || isset( $_GET['movedown'] ) ) && empty( $errors ) );
     if ( $everything_fine ) {
@@ -380,7 +381,7 @@ function qtranxf_reset_config() {
     QTX_Admin_Modules::update_modules_status();
 }
 
-add_action( 'qtranslate_saveConfig', 'qtranxf_reset_config', 20 );
+add_action( 'qtranslate_save_config', 'qtranxf_reset_config', 20 );
 
 function qtranxf_update_option( $nm, $default_value = null ) {
     global $q_config;
@@ -493,7 +494,8 @@ function qtranxf_save_config() {
         qtranxf_update_option( $nm, $def );
     }
 
-    do_action( 'qtranslate_saveConfig' );
+    do_action( 'qtranslate_save_config' );
+    do_action_deprecated( 'qtranslate_saveConfig', array(), '3.10.0', 'qtranslate_save_config' );
 }
 
 function qtranxf_reloadConfig() {
