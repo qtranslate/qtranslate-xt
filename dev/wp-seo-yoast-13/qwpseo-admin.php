@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-add_filter( 'i18n_admin_config', 'qwpseo_add_admin_page_config' );
+add_filter( 'qtranslate_admin_config', 'qwpseo_add_admin_page_config' );
 function qwpseo_add_admin_page_config( $page_configs ) {
     if ( ! isset( $page_configs['yoast_wpseo'] ) ) {
         $page_configs['yoast_wpseo'] = array();

@@ -207,7 +207,8 @@ class QTX_Admin_Settings {
 
         $admin_config = $q_config['admin_config'];
         $admin_config = apply_filters( 'qtranslate_load_admin_page_config', $admin_config );
-        $admin_config = apply_filters( 'i18n_admin_config', $admin_config );
+        $admin_config = apply_filters( 'qtranslate_admin_config', $admin_config );
+        $admin_config = apply_filters_deprecated( 'i18n_admin_config', array( $admin_config ), '3.10.0', 'qtranslate_admin_config' );
 
         $front_config = $q_config['front_config'];
         $front_config = apply_filters( 'i18n_front_config', $front_config );
@@ -224,7 +225,7 @@ class QTX_Admin_Settings {
         </p>
         <h3 class="heading"><?php _e( 'Configuration Inspector', 'qtranslate' ) ?></h3>
         <p class="qtranxs_explanation">
-            <?php printf( __( 'Review a combined JSON-encoded configuration as loaded from options %s and %s, as well as from the theme and other plugins via filters %s and %s.', 'qtranslate' ), '"' . __( 'Configuration Files', 'qtranslate' ) . '"', '"' . __( 'Custom Configuration', 'qtranslate' ) . '"', '"i18n_admin_config"', '"i18n_front_config"' );
+            <?php printf( __( 'Review a combined JSON-encoded configuration as loaded from options %s and %s, as well as from the theme and other plugins via filters %s and %s.', 'qtranslate' ), '"' . __( 'Configuration Files', 'qtranslate' ) . '"', '"' . __( 'Custom Configuration', 'qtranslate' ) . '"', '"qtranslate_admin_config"', '"i18n_front_config"' );
             echo ' ';
             printf( __( 'Please, read %sIntegration Guide%s for more information.', 'qtranslate' ), '<a href="https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide" target="_blank">', '</a>' ); ?></p>
         <p class="qtranxs_explanation">

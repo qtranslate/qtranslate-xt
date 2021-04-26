@@ -218,15 +218,17 @@ function qtranxf_get_admin_page_config() {
     $admin_config = $q_config['admin_config'];
     // TODO obsolete filter?
     $admin_config = apply_filters( 'qtranslate_load_admin_page_config', $admin_config );
-    $url_query    = isset( $q_config['url_info']['query'] ) ? $q_config['url_info']['query'] : '';
     /**
      * Customize the admin configuration for all pages.
      *
      * @param (array) $admin_config token 'admin-config' of the configuration.
      */
-    $admin_config = apply_filters( 'i18n_admin_config', $admin_config );
+    $admin_config = apply_filters( 'qtranslate_admin_config', $admin_config );
+    $admin_config = apply_filters_deprecated( 'i18n_admin_config', array( $admin_config ), '3.10.0', 'qtranslate_admin_config' );
 
-    $page_configs                                 = qtranxf_parse_page_config( $admin_config, $pagenow, $url_query );
+    $url_query    = isset( $q_config['url_info']['query'] ) ? $q_config['url_info']['query'] : '';
+    $page_configs = qtranxf_parse_page_config( $admin_config, $pagenow, $url_query );
+
     $q_config['i18n-cache']['admin_page_configs'] = $page_configs;
 
     return $page_configs;
