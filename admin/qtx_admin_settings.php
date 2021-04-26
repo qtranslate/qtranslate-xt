@@ -211,7 +211,8 @@ class QTX_Admin_Settings {
         $admin_config = apply_filters_deprecated( 'i18n_admin_config', array( $admin_config ), '3.10.0', 'qtranslate_admin_config' );
 
         $front_config = $q_config['front_config'];
-        $front_config = apply_filters( 'i18n_front_config', $front_config );
+        $front_config = apply_filters( 'qtranslate_front_config', $front_config );
+        $front_config = apply_filters_deprecated( 'i18n_front_config', array( $front_config ), '3.10.0', 'qtranslate_front_config' );
 
         $configs                 = array();
         $configs['vendor']       = 'combined effective configuration';
@@ -225,7 +226,7 @@ class QTX_Admin_Settings {
         </p>
         <h3 class="heading"><?php _e( 'Configuration Inspector', 'qtranslate' ) ?></h3>
         <p class="qtranxs_explanation">
-            <?php printf( __( 'Review a combined JSON-encoded configuration as loaded from options %s and %s, as well as from the theme and other plugins via filters %s and %s.', 'qtranslate' ), '"' . __( 'Configuration Files', 'qtranslate' ) . '"', '"' . __( 'Custom Configuration', 'qtranslate' ) . '"', '"qtranslate_admin_config"', '"i18n_front_config"' );
+            <?php printf( __( 'Review a combined JSON-encoded configuration as loaded from options %s and %s, as well as from the theme and other plugins via filters %s and %s.', 'qtranslate' ), '"' . __( 'Configuration Files', 'qtranslate' ) . '"', '"' . __( 'Custom Configuration', 'qtranslate' ) . '"', '"qtranslate_admin_config"', '"qtranslate_front_config"' );
             echo ' ';
             printf( __( 'Please, read %sIntegration Guide%s for more information.', 'qtranslate' ), '<a href="https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide" target="_blank">', '</a>' ); ?></p>
         <p class="qtranxs_explanation">
@@ -234,7 +235,7 @@ class QTX_Admin_Settings {
             </textarea>
         </p>
         <p class="qtranxs-notes">
-            <?php printf( __( 'Note to developers: ensure that front-end filter %s is also active on admin side, otherwise the changes it makes will not show up here. Having this filter active on admin side does not affect admin pages functionality, except this field.', 'qtranslate' ), '"i18n_front_config"' ) ?>
+            <?php printf( __( 'Note to developers: ensure that front-end filter %s is also active on admin side, otherwise the changes it makes will not show up here. Having this filter active on admin side does not affect admin pages functionality, except this field.', 'qtranslate' ), '"qtranslate_front_config"' ) ?>
         </p>
         <p class="qtranxs-notes">
             <a href="<?php echo $this->options_uri . '#integration' ?>"><?php _e( 'back to configuration page', 'qtranslate' ) ?></a>

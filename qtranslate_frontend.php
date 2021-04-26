@@ -21,7 +21,8 @@ function qtranxf_get_front_page_config() {
      *
      * @param (array) $front_config token 'front-config' of the configuration.
      */
-    $front_config = apply_filters( 'i18n_front_config', $front_config );
+    $front_config = apply_filters( 'qtranslate_front_config', $front_config );
+    $front_config = apply_filters_deprecated( 'i18n_front_config', array( $front_config ), '3.10.0', 'qtranslate_front_config' );
 
     $page_configs = qtranxf_parse_page_config( $front_config, $url_path, $url_query );
 

@@ -38,5 +38,5 @@ function qtranxf_wpseo_add_filters_front() {
     }
 }
 
-// TODO: trigger this with a proper hook - i18n_front_config can't be used in modules, here it's too late!
+// TODO: trigger this with a proper hook - qtranslate_front_config can't be used in modules, here it's too late!
 qtranxf_wpseo_add_filters_front();

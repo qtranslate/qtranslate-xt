@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-add_filter( 'i18n_front_config', 'qwpseo_add_front_page_config' );
+add_filter( 'qtranslate_front_config', 'qwpseo_add_front_page_config' );
 function qwpseo_add_front_page_config( $page_configs ) {
     $ids = qwpseo_get_meta_keys();
     foreach ( $ids as $id ) {
