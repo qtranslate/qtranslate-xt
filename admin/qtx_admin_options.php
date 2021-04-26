@@ -43,6 +43,11 @@ function qtranxf_admin_set_default_options( &$options ) {
 }
 
 function qtranxf_admin_loadConfig() {
+    _deprecated_function( __FUNCTION__, '3.10.0', 'qtranxf_admin_load_config' );
+    qtranxf_admin_load_config();
+}
+
+function qtranxf_admin_load_config() {
     global $q_config, $qtranslate_options;
     qtranxf_admin_set_default_options( $qtranslate_options );
 

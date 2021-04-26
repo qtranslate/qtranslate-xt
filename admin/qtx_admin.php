@@ -184,7 +184,7 @@ function qtranxf_admin_init() {
         // TODO run this only if one of the forms or actions submitted --> && !empty($_POST)
     ) {
         require_once( QTRANSLATE_DIR . '/admin/qtx_admin_options_update.php' );
-        qtranxf_editConfig();
+        qtranxf_edit_config();
     }
 
     $next_thanks = get_option( 'qtranslate_next_thanks' );
@@ -853,7 +853,7 @@ function qtranxf_admin_tiny_mce_init( $mce_settings ) {
 }
 
 function qtranxf_admin_load() {
-    qtranxf_admin_loadConfig();
+    qtranxf_admin_load_config();
 
     $basename = plugin_basename( QTRANSLATE_FILE );
     add_filter( 'plugin_action_links_' . $basename, 'qtranxf_links', 10, 4 );

@@ -8,7 +8,7 @@ require_once( QTRANSLATE_DIR . '/modules/qtx_modules_handler.php' );
 function qtranxf_init_language() {
     global $q_config, $pagenow;
 
-    qtranxf_loadConfig();
+    qtranxf_load_config();
 
     // 'url_info' hash is not for external use, it is subject to change at any time.
     // 'url_info' is preserved on reloadConfig
@@ -731,7 +731,13 @@ function qtranxf_is_permalink_structure_query() {
     return empty( $permalink_structure ) || strpos( $permalink_structure, '?' ) !== false || strpos( $permalink_structure, 'index.php' ) !== false;
 }
 
+
 function qtranxf_loadConfig() {
+    _deprecated_function( __FUNCTION__, '3.10.0', 'qtranxf_load_config' );
+    qtranxf_load_config();
+}
+
+function qtranxf_load_config() {
     global $qtranslate_options, $q_config;
     qtranxf_set_default_options( $qtranslate_options );
 

@@ -114,7 +114,7 @@ function qtranxf_migrate_plugins() {
         }
         $f();
         if ( $value == 'import' ) {
-            qtranxf_reloadConfig();
+            qtranxf_reload_config();
         }
     }
 }
