@@ -158,19 +158,15 @@ function qtranxf_load_admin_page_config() {
 }
 
 /**
- * @return bool true is we are on qtx configuration page.
+ * @return bool true when the current page is the configuration page of QT-XT.
  * @since 3.4.7
  */
 function qtranxf_admin_is_config_page() {
-    static $is_config_page;
-    if ( ! $is_config_page ) {
-        global $q_config, $pagenow;
-        $is_config_page = $pagenow == 'options-general.php'
-                          && isset( $q_config['url_info']['query'] )
-                          && strpos( $q_config['url_info']['query'], 'page=qtranslate-xt' ) !== false;
-    }
+    global $q_config, $pagenow;
 
-    return $is_config_page;
+    return ( $pagenow == 'options-general.php' )
+           && isset( $q_config['url_info']['query'] )
+           && ( strpos( $q_config['url_info']['query'], 'page=qtranslate-xt' ) !== false );
 }
 
 function qtranxf_admin_init() {
@@ -567,12 +563,14 @@ function qtranxf_add_admin_css() {
 }
 
 function qtranxf_admin_head() {
+    _deprecated_function( __FUNCTION__, '3.10.0', 'qtranxf_admin_enqueue_scripts' );
+}
+
+function qtranxf_admin_enqueue_scripts() {
     qtranxf_add_admin_css();
-    global $q_config;
-    if ( isset( $q_config['url_info']['query'] ) && strpos( $q_config['url_info']['query'], 'page=qtranslate-xt' ) !== false ) {
-        $js_options = 'dist/options.js';
-        $version    = filemtime( QTRANSLATE_DIR . '/' . $js_options );
-        wp_enqueue_script( 'qtranslate-admin-options', plugins_url( $js_options, QTRANSLATE_FILE ), array(), $version );
+
+    if ( qtranxf_admin_is_config_page() ) {
+        wp_enqueue_script( 'qtranslate-admin-options', plugins_url( 'dist/options.js', QTRANSLATE_FILE ), array(), QTX_VERSION );
     }
 }
 
@@ -871,8 +869,9 @@ function qtranxf_admin_load() {
     // Caution:  we are being called in 'plugins_loaded' from core with a higher priority, but we add a later hook
     add_action( 'plugins_loaded', 'qtranxf_collect_translations_posted', 5 );
 
+
     add_action( 'admin_init', 'qtranxf_admin_init', 2 );
-    add_action( 'admin_head', 'qtranxf_admin_head' );
+    add_action( 'admin_enqueue_scripts', 'qtranxf_admin_enqueue_scripts' );
     add_action( 'admin_footer', 'qtranxf_admin_footer', 999 );
     add_filter( 'admin_footer_text', 'qtranxf_admin_footer_text', 99 );
     add_filter( 'update_footer', 'qtranxf_admin_footer_update', 99 );
