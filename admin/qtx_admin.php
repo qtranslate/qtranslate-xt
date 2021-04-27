@@ -562,7 +562,7 @@ function qtranxf_add_admin_css() {
     }
     echo '<style type="text/css" media="screen">' . PHP_EOL;
     echo $css;
-    do_action( 'qtranslate_admin_css' );
+    do_action_deprecated( 'qtranslate_admin_css', array(), '3.10.0', 'admin_enqueue_scripts', 'Discourage internal CSS' );
     echo '</style>' . PHP_EOL;
 }
 
