@@ -88,17 +88,29 @@ function qtranxf_collect_translations_posted() {
     $edit_lang = null;
     if ( isset( $_REQUEST['qtranslate-fields'] ) ) {
         $edit_lang = qtranxf_get_edit_language();
+        // Retrieve the part of the request holding the last changes for the current tab language
+        if ( $_REQUEST['action'] === 'save-widget') {
+            // For widgets, the input data is in a sub-branch
+            // TODO make more robust
+            $widget_id = $_REQUEST['widget_number'];
+            $source_request = &$_REQUEST['widget-text'][$widget_id];
+        }
+        else {
+            // For general the case, it's directly in the main request
+            $source_request = &$_REQUEST;
+        }
+        // Retrieve data for all languages, regroup and "hack" the request with a ML value
         foreach ( $_REQUEST['qtranslate-fields'] as $name => &$qfields ) {
-            if ( ! isset( $_REQUEST[ $name ] ) ) {
+            if ( ! isset( $source_request[ $name ] ) ) {
                 unset( $_REQUEST['qtranslate-fields'][ $name ] );
                 continue;
             }
-            qtranxf_collect_translations( $qfields, $_REQUEST[ $name ], $edit_lang );
+            qtranxf_collect_translations( $qfields, $source_request[ $name ], $edit_lang );
             if ( isset( $_POST[ $name ] ) ) {
-                $_POST[ $name ] = $_REQUEST[ $name ];
+                $_POST[ $name ] = $source_request[ $name ];
             }
             if ( isset( $_GET[ $name ] ) ) {
-                $_GET[ $name ] = $_REQUEST[ $name ];
+                $_GET[ $name ] = $source_request[ $name ];
             }
         }
         qtranxf_clean_request( 'qtranslate-fields' );
@@ -892,6 +904,16 @@ function qtranxf_admin_load() {
     if ( version_compare( $wp_version, '5.0' ) >= 0 ) {
         require_once( QTRANSLATE_DIR . '/admin/qtx_admin_gutenberg.php' );
     }
+    add_filter( 'widget_update_callback', function( $instance, $new, $old, $obj )
+    {
+        if( 'text' === $obj->id_base && ! empty( $instance['text'] ) )
+        {
+            // Warning this overrides the widget instance text input:
+            // $instance['text'] = 'override text';
+        }
+
+        return $instance;
+    }, 10, 4 );
 }
 
 qtranxf_admin_load();
