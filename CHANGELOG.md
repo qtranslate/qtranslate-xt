@@ -1,3 +1,34 @@
+### 3.10.0
+Core
+* Major overhaul of Javascript builds
+  * New feature! Javascript bundled with Webpack and Babel (#990), production builds delivered in `dist`
+  * Update Wiki for [debugging Javascript](https://github.com/qtranslate/qtranslate-xt/wiki/Troubleshooting#debugging-javascript)
+  * Reorganize Javascript sources (#994)   
+  * Refactor source code with const let ES6 (#996), new jQuery wrappers (#998), rename variables (#1001)
+* Improve integration of [Custom Javscript](https://github.com/qtranslate/qtranslate-xt/wiki/Custom-Javascript)
+  * Refactor `js-exec` config entries with JS events (#1009) - allows fusion of fragmented scripts into prod bundle
+  * Deprecate `js-conf` and `javascript` config entries (#1000) - no more Javascript code in JSON configs
+* Deprecate custom JSON configuration user field (#1012)
+* Update hooks
+  * Rename filter `i18n_admin_config` -> `qtranslate_admin_config`
+  * Rename filter `i18n_front_config` -> `qtranslate_front_config`
+  * Deprecate duplicate filter `qtranslate_load_admin_page_config` (use `qtranslate_admin_config`)
+  * Rename config actions with underscores, e.g. `qtranslate_loadConfig` -> `qtranslate_load_config`
+  * Deprecate action `qtranslate_admin_css`
+  * Replace `admin_head` hook with `admin_enqueue_scripts`
+* Update functions
+  * Deprecate functions `qtranxf_json_encode`, `qtranxf_config_add_form`
+  * Rename config and utils functions with underscores, e.g. `qtranxf_loedConfig` -> `qtranxf_load_config`
+  * Delete functions deprecated in 3.7.3
+  * Delete internal functions `qtranxf_add_admin_head_js`, `qtranxf_add_admin_footer_js`, `qtranxf_clean_request_of`
+* Fix undefined `use_block_editor_for_post` for Gutenberg (#1004)
+
+ACF
+* Fix async qtx loading in ACF (#998)
+* Fix qtx and repeaterFieldRemove in ACF JS (#1006)
+* Fix visual editor switch with ACF tabs (#1007)
+* Refactor ACF js with ES6 const let (#997)
+
 ### 3.9.3
 Core
 * Fix Javascript init for Classic Editor with WP5.6 (#946, #931)
