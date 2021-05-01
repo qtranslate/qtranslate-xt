@@ -56,7 +56,7 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
         });
     };
 
-    $(document).on('widget-added', onWidgetUpdate);
+    // $(document).on('widget-added', onWidgetUpdate);
     $(document).on('widget-updated', onWidgetUpdate);
 
     const onLanguageSwitchAfter = function () {

@@ -116,7 +116,10 @@ const qTranslateX = function (pg) {
         }
 
         if (!fieldName) {
-            if (!inputField.name) return false;
+            if (!inputField.name) {
+                console.error('QTX Failed to add hook, missing name for field', inputField);
+                return false;
+            }
             fieldName = inputField.name;
         }
         if (inputField.id) {
@@ -367,8 +370,10 @@ const qTranslateX = function (pg) {
         if (!inputField || !inputField.id)
             return false;
         const hook = contentHooks[inputField.id];
-        if (hook)
+        if (hook) {
             removeContentHookH(hook);
+            return qtx.addContentHook(inputField, hook.name, hook.encode);
+        }
         return qtx.addContentHook(inputField);
     };
 
