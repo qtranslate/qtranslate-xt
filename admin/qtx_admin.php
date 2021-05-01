@@ -89,28 +89,48 @@ function qtranxf_collect_translations_posted() {
     if ( isset( $_REQUEST['qtranslate-fields'] ) ) {
         $edit_lang = qtranxf_get_edit_language();
         // Retrieve the part of the request holding the last changes for the current tab language
-        if ( $_REQUEST['action'] === 'save-widget') {
+        if ( $_REQUEST['action'] === 'save-widget' ) {
             // For widgets, the input data is in a sub-branch
-            // TODO make more robust
-            $widget_id = $_REQUEST['widget_number'];
-            $source_request = &$_REQUEST['widget-text'][$widget_id];
-        }
-        else {
-            // For general the case, it's directly in the main request
-            $source_request = &$_REQUEST;
-        }
-        // Retrieve data for all languages, regroup and "hack" the request with a ML value
-        foreach ( $_REQUEST['qtranslate-fields'] as $name => &$qfields ) {
-            if ( ! isset( $source_request[ $name ] ) ) {
-                unset( $_REQUEST['qtranslate-fields'][ $name ] );
-                continue;
+            $widget_multi_number = isset( $_REQUEST['multi_number'] ) ? (int) $_REQUEST['multi_number'] : '';
+            // TODO clarify this
+            $widget_number  = $widget_multi_number ? $widget_multi_number : $_REQUEST['widget_number'];
+            $source_request = &$_REQUEST['widget-text'][ $widget_number ];
+            if ( isset( $_REQUEST['qtranslate-fields']['widget-text'][ $widget_number ] ) ) {
+                // update?
+                $qtx_request = &$_REQUEST['qtranslate-fields']['widget-text'][ $widget_number ];
+            } else {
+                // creation
+                $qtx_request = &$_REQUEST['qtranslate-fields'];
             }
-            qtranxf_collect_translations( $qfields, $source_request[ $name ], $edit_lang );
-            if ( isset( $_POST[ $name ] ) ) {
-                $_POST[ $name ] = $source_request[ $name ];
+
+            // Retrieve data for all languages, regroup and "hack" the request with a ML value
+            foreach ( $qtx_request as $name => &$qfields ) {
+                if ( ! isset( $source_request[ $name ] ) ) {
+                    unset( $_REQUEST['qtranslate-fields'][ $name ] );
+                    continue;
+                }
+                qtranxf_collect_translations( $qfields, $source_request[ $name ], $edit_lang );
+                if ( isset( $_POST['widget-text'][ $widget_number ][ $name ] ) ) {
+                    $_POST['widget-text'][ $widget_number ][ $name ] = $source_request[ $name ];
+                }
+                if ( isset( $_GET['widget-text'][ $widget_number ][ $name ] ) ) {
+                    $_GET['widget-text'][ $widget_number ][ $name ] = $source_request[ $name ];
+                }
             }
-            if ( isset( $_GET[ $name ] ) ) {
-                $_GET[ $name ] = $source_request[ $name ];
+        } else {
+            // Retrieve data for all languages, regroup and "hack" the request with a ML value
+            foreach ( $_REQUEST as $name => &$qfields ) {
+                if ( ! isset( $_REQUEST[ $name ] ) ) {
+                    unset( $_REQUEST['qtranslate-fields'][ $name ] );
+                    continue;
+                }
+                qtranxf_collect_translations( $qfields, $_REQUEST[ $name ], $edit_lang );
+                if ( isset( $_POST[ $name ] ) ) {
+                    $_POST[ $name ] = $_REQUEST[ $name ];
+                }
+                if ( isset( $_GET[ $name ] ) ) {
+                    $_GET[ $name ] = $_REQUEST[ $name ];
+                }
             }
         }
         qtranxf_clean_request( 'qtranslate-fields' );
@@ -904,10 +924,8 @@ function qtranxf_admin_load() {
     if ( version_compare( $wp_version, '5.0' ) >= 0 ) {
         require_once( QTRANSLATE_DIR . '/admin/qtx_admin_gutenberg.php' );
     }
-    add_filter( 'widget_update_callback', function( $instance, $new, $old, $obj )
-    {
-        if( 'text' === $obj->id_base && ! empty( $instance['text'] ) )
-        {
+    add_filter( 'widget_update_callback', function ( $instance, $new, $old, $obj ) {
+        if ( 'text' === $obj->id_base && ! empty( $instance['text'] ) ) {
             // Warning this overrides the widget instance text input:
             // $instance['text'] = 'override text';
         }
