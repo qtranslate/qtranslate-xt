@@ -13,28 +13,21 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
     $(document).on('wp-before-tinymce-init', (event, editor) => {
         console.log('wp-before-tinymce-init');
 
+        console.log('init MCE', editor);
+        const widget = $(editor.selector).parents('.widget');
+
         // Normally the title is not dependent on TinyMCE
         // But the elements are created dynamically by WP when the area is shown
-
-        // TODO add hooks only for that editor, not all widgets
-        const widget = jQuery('#widgets-right');
         widget.find('span.in-widget-title').each(function (i, e) {
             qtx.addDisplayHook(e);
         });
         widget.find(".text-widget-fields input[id$='_title']").each(function (i, e) {
-            console.log('found title', e)
-            const ret = qtx.addContentHookById(e.id, '[', 'title');
-            console.log('addContentHook', ret)
-            // qtx.refreshContentHook(e);
+            qtx.addContentHookById(e.id, '[', 'title');
         });
-
         widget.find(".text-widget-fields textarea[id$='_text']").each(function (i, e) {
-            console.log('found text', e)
             const ret = qtx.addContentHook(e, '[', 'text');
             console.log('addContentHook', ret)
-            // qtx.refreshContentHook(e);
         });
-
     });
 
     jQuery(document).on('tinymce-editor-init', () => {
@@ -43,7 +36,6 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
 
     // TODO hook elements of basic widgets without TinyMCE such as CustomHTML
     const onWidgetAdd = function (evt, widget) {
-        // const $widget = $(widget);
         const widget_base = widget.find('.id_base').val();
         console.log('onWidgetAdd', widget, widget_base);
         switch(widget_base) {
@@ -62,8 +54,8 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
                 });
                 widget.find(".custom-html-widget-fields .CodeMirror-wrap").addClass('qtranxs-translatable');
                 break;
-            case 'text_widget':
-                // Maybe initialize stuff here?
+
+            case 'text':
                 break;
         }
     }
@@ -76,7 +68,7 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
             case 'custom_html':
                 // TODO
                 break;
-            case 'text_widget':
+            case 'text':
                 widget.find('span.in-widget-title').each(function (i, e) {
                     qtx.refreshContentHook(e);
                 });

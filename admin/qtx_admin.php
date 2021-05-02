@@ -88,13 +88,13 @@ function qtranxf_collect_translations_posted() {
     $edit_lang = null;
     if ( isset( $_REQUEST['qtranslate-fields'] ) ) {
         $edit_lang = qtranxf_get_edit_language();
-        // Retrieve the part of the request holding the last changes for the current tab language
-        if ( $_REQUEST['action'] === 'save-widget' ) {
-            // For widgets, the input data is in a sub-branch
+        // Special case for widgets, limit to widget-text but might be extended
+        if ( $_REQUEST['action'] === 'save-widget' && isset($_REQUEST['widget-text']) ) {
             $widget_multi_number = isset( $_REQUEST['multi_number'] ) ? (int) $_REQUEST['multi_number'] : '';
             // TODO clarify this
-            $widget_number  = $widget_multi_number ? $widget_multi_number : $_REQUEST['widget_number'];
-            $source_request = &$_REQUEST['widget-text'][ $widget_number ];
+            $widget_number  = $widget_multi_number ?: $_REQUEST['widget_number'];
+            // Retrieve the part of the request holding the last changes for the current tab language
+            $widget_request = &$_REQUEST['widget-text'][ $widget_number ];
             if ( isset( $_REQUEST['qtranslate-fields']['widget-text'][ $widget_number ] ) ) {
                 // update?
                 $qtx_request = &$_REQUEST['qtranslate-fields']['widget-text'][ $widget_number ];
@@ -104,27 +104,27 @@ function qtranxf_collect_translations_posted() {
             }
 
             // Retrieve data for all languages, regroup and "hack" the request with a ML value
-            foreach ( $qtx_request as $name => &$qfields ) {
-                if ( ! isset( $source_request[ $name ] ) ) {
+            foreach ( $qtx_request as $name => &$qtx_fields ) {
+                if ( ! isset( $widget_request[ $name ] ) ) {
                     unset( $_REQUEST['qtranslate-fields'][ $name ] );
                     continue;
                 }
-                qtranxf_collect_translations( $qfields, $source_request[ $name ], $edit_lang );
+                qtranxf_collect_translations( $qtx_fields, $widget_request[ $name ], $edit_lang );
                 if ( isset( $_POST['widget-text'][ $widget_number ][ $name ] ) ) {
-                    $_POST['widget-text'][ $widget_number ][ $name ] = $source_request[ $name ];
+                    $_POST['widget-text'][ $widget_number ][ $name ] = $widget_request[ $name ];
                 }
                 if ( isset( $_GET['widget-text'][ $widget_number ][ $name ] ) ) {
-                    $_GET['widget-text'][ $widget_number ][ $name ] = $source_request[ $name ];
+                    $_GET['widget-text'][ $widget_number ][ $name ] = $widget_request[ $name ];
                 }
             }
         } else {
             // Retrieve data for all languages, regroup and "hack" the request with a ML value
-            foreach ( $_REQUEST as $name => &$qfields ) {
+            foreach ( $_REQUEST as $name => &$qtx_fields ) {
                 if ( ! isset( $_REQUEST[ $name ] ) ) {
                     unset( $_REQUEST['qtranslate-fields'][ $name ] );
                     continue;
                 }
-                qtranxf_collect_translations( $qfields, $_REQUEST[ $name ], $edit_lang );
+                qtranxf_collect_translations( $qtx_fields, $_REQUEST[ $name ], $edit_lang );
                 if ( isset( $_POST[ $name ] ) ) {
                     $_POST[ $name ] = $_REQUEST[ $name ];
                 }
@@ -138,6 +138,7 @@ function qtranxf_collect_translations_posted() {
 
     if ( wp_doing_ajax() ) {
         // parse variables collected as a query string in an option
+        // TODO why do we need this with ajax? In which case is the request passed as string?!
         foreach ( $_REQUEST as $name => $value ) {
             if ( ! is_string( $value ) ) {
                 continue;
@@ -901,7 +902,6 @@ function qtranxf_admin_load() {
     // Caution:  we are being called in 'plugins_loaded' from core with a higher priority, but we add a later hook
     add_action( 'plugins_loaded', 'qtranxf_collect_translations_posted', 5 );
 
-
     add_action( 'admin_init', 'qtranxf_admin_init', 2 );
     add_action( 'admin_enqueue_scripts', 'qtranxf_admin_enqueue_scripts' );
     add_action( 'admin_footer', 'qtranxf_admin_footer', 999 );
@@ -924,6 +924,8 @@ function qtranxf_admin_load() {
     if ( version_compare( $wp_version, '5.0' ) >= 0 ) {
         require_once( QTRANSLATE_DIR . '/admin/qtx_admin_gutenberg.php' );
     }
+
+    remove_filter('widget_text_content', 'wpautop');
     add_filter( 'widget_update_callback', function ( $instance, $new, $old, $obj ) {
         if ( 'text' === $obj->id_base && ! empty( $instance['text'] ) ) {
             // Warning this overrides the widget instance text input:

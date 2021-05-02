@@ -341,6 +341,14 @@ const qTranslateX = function (pg) {
             $(f).remove();
         }
         hook.contentField.classList.remove('qtranxs-translatable');
+        if (hook.mce) {
+            const editor = hook.mce;
+            console.log('remove editor', editor);
+            editor.getContainer().classList.remove('qtranxs-translatable');
+            editor.getElement().classList.remove('qtranxs-translatable');
+            window.wp.editor.remove(editor.id);
+            // editor.destroy()
+        }
         delete contentHooks[hook.contentField.id];
         return contents;
     };
