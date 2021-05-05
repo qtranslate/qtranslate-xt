@@ -259,7 +259,7 @@ function qtranxf_generateLanguageSelectCode( $args = array(), $id = '' ) {
                     }
                     echo '>';
                     if ( $type == 'image' ) {
-                        echo '<img src="' . $flag_location . $q_config['flag'][ $language ] . '" alt="' . $alt . '" />';
+                        echo '<img class="qtranxs-flag" src="' . $flag_location . $q_config['flag'][ $language ] . '" alt="' . $alt . '" />';
                     }
                     echo '<span';
                     if ( $type == 'image' || $type == 'css_only' ) {
@@ -295,7 +295,7 @@ function qtranxf_generateLanguageSelectCode( $args = array(), $id = '' ) {
                         echo ' class="active"';
                     }
                     echo '><a href="' . qtranxf_convertURL( $url, $language, false, true ) . '"';
-                    echo ' class="qtranxs_flag_' . $language . ' qtranxs_flag_and_text" title="' . $alt . '">';
+                    echo ' class="qtranxs_flag qtranxs_flag_' . $language . ' qtranxs_flag_and_text" title="' . $alt . '">';
                     echo '<span>' . $q_config['language_name'][ $language ] . '</span></a></li>' . PHP_EOL;
                 }
             }
@@ -323,7 +323,7 @@ function qtranxf_generateLanguageSelectCode( $args = array(), $id = '' ) {
                     $s       = $flag_location . $q_config['flag'][ $language ];
                     $n       = $q_config['language_name'][ $language ];
                     $content = $format;
-                    $content = str_replace( '%f', '<img src="' . $s . '" alt="' . $alt . '" />', $content );
+                    $content = str_replace( '%f', '<img class="qtranxs-flag" src="' . $s . '" alt="' . $alt . '" />', $content );
                     $content = str_replace( '%s', $s, $content );
                     $content = str_replace( '%n', $n, $content );
                     if ( strpos( $content, '%a' ) !== false ) {
