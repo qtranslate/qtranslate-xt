@@ -781,8 +781,8 @@ const qTranslateX = function (pg) {
          * Highlighting the translatable fields
          * @since 3.2-b3
          */
-        editor.getContainer().className += ' qtranxs-translatable';
-        editor.getElement().className += ' qtranxs-translatable';
+        $(editor.getContainer()).addClass('qtranxs-translatable');
+        $(editor.getElement()).addClass('qtranxs-translatable');
 
         return hook;
     }
@@ -1123,9 +1123,11 @@ const qTranslateX = function (pg) {
         $('#qtranxs-meta-box-lsb .hndle').unbind('click.postboxes');
     };
 
-    if (qTranslateConfig.LSB) {
-        // additional initialization
+    if (!qTranslateConfig.RAW) {
         this.addContentHooksTinyMCE();
+    }
+
+    if (qTranslateConfig.LSB) {
         setupMetaBoxLSB();
 
         // create sets of LSB
