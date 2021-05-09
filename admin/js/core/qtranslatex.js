@@ -22,6 +22,13 @@ const qTranslateX = function (pg) {
     const qtx = this;
 
     /**
+     * Internal state of the hooks
+     */
+    const contentHooks = {};
+    const displayHookNodes = [];
+    const displayHookAttrs = [];
+
+    /**
      * Designed as interface for other plugin integration. The documentation is available at
      * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
      * return array keyed by two-letter language code. Example of usage:
@@ -62,23 +69,6 @@ const qTranslateX = function (pg) {
         return !!qTranslateConfig.language_config[lang];
     };
 
-    if (qTranslateConfig.LSB) {
-        qTranslateConfig.activeLanguage = getStoredEditLanguage();
-        if (!qTranslateConfig.activeLanguage || !this.isLanguageEnabled(qTranslateConfig.activeLanguage)) {
-            qTranslateConfig.activeLanguage = qTranslateConfig.language;
-            if (this.isLanguageEnabled(qTranslateConfig.activeLanguage)) {
-                storeEditLanguage(qTranslateConfig.activeLanguage);
-            } else {
-                // fallback to single mode
-                qTranslateConfig.LSB = false;
-            }
-        }
-    } else {
-        qTranslateConfig.activeLanguage = qTranslateConfig.language;
-        // no need to store for the current mode, but just in case the LSB are used later
-        storeEditLanguage(qTranslateConfig.activeLanguage);
-    }
-
     /**
      * Designed as interface for other plugin integration. The documentation is available at
      * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
@@ -88,8 +78,6 @@ const qTranslateX = function (pg) {
     this.getActiveLanguage = function () {
         return qTranslateConfig.activeLanguage;
     };
-
-    const contentHooks = {};
 
     /**
      * Designed as interface for other plugin integration. The documentation is available at
@@ -417,7 +405,6 @@ const qTranslateX = function (pg) {
     /**
      * @since 3.2.7
      */
-    const displayHookNodes = [];
     const addDisplayHookNode = function (node) {
         if (!node.nodeValue)
             return 0;
@@ -436,7 +423,6 @@ const qTranslateX = function (pg) {
     /**
      * @since 3.2.7
      */
-    const displayHookAttrs = [];
     const addDisplayHookAttr = function (node, attr) {
         if (!node.hasAttribute(attr)) return 0;
         const value = node.getAttribute(attr);
@@ -817,13 +803,6 @@ const qTranslateX = function (pg) {
         }
     };
 
-    if (!qTranslateConfig.onTabSwitchFunctions)
-        qTranslateConfig.onTabSwitchFunctions = [];
-    if (!qTranslateConfig.onTabSwitchFunctionsSave)
-        qTranslateConfig.onTabSwitchFunctionsSave = [];
-    if (!qTranslateConfig.onTabSwitchFunctionsLoad)
-        qTranslateConfig.onTabSwitchFunctionsLoad = [];
-
     this.addLanguageSwitchListener = function (func) {
         qTranslateConfig.onTabSwitchFunctions.push(func);
     };
@@ -928,18 +907,6 @@ const qTranslateX = function (pg) {
         }
         return null;
     };
-
-    if (typeof (pg.addContentHooks) == "function")
-        pg.addContentHooks(this);
-
-    if (qTranslateConfig.page_config && qTranslateConfig.page_config.forms)
-        addPageHooks(qTranslateConfig.page_config.forms);
-
-    addMultilingualHooks();
-
-    if (!displayHookNodes.length && !displayHookAttrs.length && !Object.keys(contentHooks).length) {
-        return;
-    }
 
     this.onLoadLanguage = function (lang, langFrom) {
         const onTabSwitchFunctionsLoad = qTranslateConfig.onTabSwitchFunctionsLoad;
@@ -1124,13 +1091,7 @@ const qTranslateX = function (pg) {
         $('#qtranxs-meta-box-lsb .hndle').unbind('click.postboxes');
     };
 
-    if (!qTranslateConfig.RAW) {
-        this.addContentHooksTinyMCE();
-    }
-
-    if (qTranslateConfig.LSB) {
-        setupMetaBoxLSB();
-
+    const setupAnchorsLSB = function () {
         // create sets of LSB
         const anchors = [];
         if (qTranslateConfig.page_config && qTranslateConfig.page_config.anchors) {
@@ -1174,15 +1135,63 @@ const qTranslateX = function (pg) {
                 anchor.target.insertBefore(langSwitchWrap, null);
             }
         }
+    };
 
-        /**
-         * @since 3.2.4 Synchronization of multiple sets of Language Switching Buttons
-         */
-        this.addLanguageSwitchListener(onTabSwitch);
-        if (pg.onTabSwitch) {
-            this.addLanguageSwitchListener(pg.onTabSwitch);
+    const initialize = function () {
+        if (qTranslateConfig.LSB) {
+            qTranslateConfig.activeLanguage = getStoredEditLanguage();
+            if (!qTranslateConfig.activeLanguage || !qtx.isLanguageEnabled(qTranslateConfig.activeLanguage)) {
+                qTranslateConfig.activeLanguage = qTranslateConfig.language;
+                if (qtx.isLanguageEnabled(qTranslateConfig.activeLanguage)) {
+                    storeEditLanguage(qTranslateConfig.activeLanguage);
+                } else {
+                    // fallback to single mode
+                    qTranslateConfig.LSB = false;
+                }
+            }
+        } else {
+            qTranslateConfig.activeLanguage = qTranslateConfig.language;
+            // no need to store for the current mode, but just in case the LSB are used later
+            storeEditLanguage(qTranslateConfig.activeLanguage);
         }
-    }
+
+        if (!qTranslateConfig.onTabSwitchFunctions)
+            qTranslateConfig.onTabSwitchFunctions = [];
+        if (!qTranslateConfig.onTabSwitchFunctionsSave)
+            qTranslateConfig.onTabSwitchFunctionsSave = [];
+        if (!qTranslateConfig.onTabSwitchFunctionsLoad)
+            qTranslateConfig.onTabSwitchFunctionsLoad = [];
+
+        if (typeof (pg.addContentHooks) == "function")
+            pg.addContentHooks(qtx);
+
+        if (qTranslateConfig.page_config && qTranslateConfig.page_config.forms)
+            addPageHooks(qTranslateConfig.page_config.forms);
+
+        addMultilingualHooks();
+
+        if (!displayHookNodes.length && !displayHookAttrs.length && !Object.keys(contentHooks).length) {
+            return;
+        }
+
+        if (!qTranslateConfig.RAW) {
+            qtx.addContentHooksTinyMCE();
+        }
+
+        if (qTranslateConfig.LSB) {
+            setupMetaBoxLSB();
+            setupAnchorsLSB();
+            /**
+             * @since 3.2.4 Synchronization of multiple sets of Language Switching Buttons
+             */
+            qtx.addLanguageSwitchListener(onTabSwitch);
+            if (pg.onTabSwitch) {
+                qtx.addLanguageSwitchListener(pg.onTabSwitch);
+            }
+        }
+    };
+
+    initialize();
 };
 
 /**
