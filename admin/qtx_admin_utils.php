@@ -339,35 +339,6 @@ if ( ! function_exists( 'qtranxf_trim_words' ) ) {
     }
 }
 
-/**
- * The same as core wp_htmledit_pre in /wp-includes/formatting.php,
- * but with last argument of htmlspecialchars $double_encode off,
- * which makes it to survive multiple applications from other plugins,
- * for example, "PS Disable Auto Formatting" (https://wordpress.org/plugins/ps-disable-auto-formatting/)
- * cited on support thread https://wordpress.org/support/topic/incompatibility-with-ps-disable-auto-formatting.
- * @since 2.9.8.9
- */
-if ( ! function_exists( 'qtranxf_htmledit_pre' ) ) {
-    function qtranxf_htmledit_pre( $output ) {
-        if ( ! empty( $output ) ) {
-            // convert only < > &
-            $output = htmlspecialchars( $output, ENT_NOQUOTES, get_option( 'blog_charset' ), false );
-        }
-
-        return apply_filters( 'htmledit_pre', $output );
-    }
-}
-
-function qtranxf_the_editor( $editor_div ) {
-    // remove wpautop, which causes unmatched <p> on combined language strings
-    if ( 'html' != wp_default_editor() ) {
-        remove_filter( 'the_editor_content', 'wp_richedit_pre' );
-        add_filter( 'the_editor_content', 'qtranxf_htmledit_pre', 99 );
-    }
-
-    return $editor_div;
-}
-
 /* @since 3.3.8.7 use filter 'admin_title' instead
  * function qtranxf_filter_options_general($value){
  * global $q_config;
@@ -408,8 +379,7 @@ function qtranxf_add_conf_filters() {
             break;
         case QTX_EDITOR_MODE_LSB:
         default:
-            // applied in /wp-includes/class-wp-editor.php
-            add_filter( 'the_editor', 'qtranxf_the_editor' );
+            // Nothing to do
             break;
     }
 }
@@ -418,7 +388,6 @@ function qtranxf_del_conf_filters() {
     remove_filter( 'gettext', 'qtranxf_gettext', 0 );
     remove_filter( 'gettext_with_context', 'qtranxf_gettext_with_context', 0 );
     remove_filter( 'ngettext', 'qtranxf_ngettext', 0 );
-    remove_filter( 'the_editor', 'qtranxf_the_editor' );
 }
 
 /**
