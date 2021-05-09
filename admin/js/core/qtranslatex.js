@@ -505,7 +505,7 @@ const qTranslateX = function (pg) {
         return qtx.addDisplayHook(document.getElementById(id));
     };
 
-    const updateTinyMCE = function (hook) {
+    const updateMceEditorContent = function (hook) {
         let text = hook.contentField.value;
         if (hook.wpautop && window.switchEditors) {
             text = window.switchEditors.wpautop(text);
@@ -554,7 +554,7 @@ const qTranslateX = function (pg) {
                 }
                 hook.contentField.value = value;
                 if (mce) {
-                    updateTinyMCE(hook);
+                    updateMceEditorContent(hook);
                 }
             } else {
                 // value is ML, fill out values per language
@@ -1041,8 +1041,9 @@ const qTranslateX = function (pg) {
             if (!value)
                 continue;
             hook.contentField.value = value;
-            if (mce)
-                updateTinyMCE(hook);
+            if (mce) {
+                updateMceEditorContent(hook);
+            }
             changed = true;
         }
         if (changed)
