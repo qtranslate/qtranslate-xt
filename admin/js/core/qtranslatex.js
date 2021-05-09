@@ -784,47 +784,14 @@ const qTranslateX = function (pg) {
         editor.getContainer().className += ' qtranxs-translatable';
         editor.getElement().className += ' qtranxs-translatable';
 
-        let updateTinyMCEonInit = hook.updateTinyMCEonInit;
-        if (updateTinyMCEonInit == null) {
-            // 'tmce-active' or 'html-active' was not provided on the wrapper
-            const textEditor = editor.getContent({format: 'html'}).replace(/\s+/g, '');
-            const textHook = hook.contentField.value.replace(/\s+/g, '');
-            /**
-             * @since 3.2.9.8 - this is an ugly trick.
-             * Before this version, it was working relying on properly timed synchronisation of the page loading process,
-             * which did not work correctly in some browsers like IE or MAC OS, for example.
-             * Now, function addContentHooksTinyMCE is called in the footer scripts, before TinyMCE initialization, and it always sets
-             * tinyMCEPreInit.mceInit, which causes to call this function, setEditorHooks, on TinyMCE initialization of each editor.
-             * However, function setEditorHooks gets invoked in two ways:
-             *
-             * 1. On page load, when Visual mode is initially on.
-             *      In this case we need to apply updateTinyMCE, which possibly applies wpautop.
-             *      Without q-X, WP applies wpautop in this case in php code in /wp-includes/class-wp-editor.php,
-             *      function 'editor', line "add_filter('the_editor_content', 'wp_richedit_pre');".
-             *      q-X disables this call in 'function qtranxf_the_editor',
-             *      since wpautop does not work correctly on multilingual values, and there is no filter to adjust its behaviour.
-             *      So, here we have to apply back wpautop to single-language value, which is achieved
-             *      with a call to updateTinyMCE(hook) below.
-             *
-             * 2. When user switches to Visual mode for the first time from a page, which was initially loaded in Text mode.
-             *      In this case, wpautop gets applied internally inside TinyMCE, and we do not need to call updateTinyMCE(hook) below.
-             *
-             * We could not figure out a good way to distinct within this function which way it was called,
-             * except this tricky comparison on the next line.
-             *
-             * If somebody finds out a better way, please let us know at https://github.com/qtranslate/qtranslate-xt/issues/.
-             */
-            updateTinyMCEonInit = textEditor !== textHook;
-        }
-        if (updateTinyMCEonInit) {
-            updateTinyMCE(hook);
-        }
         return hook;
     }
 
-    /** Sets hooks on HTML-loaded TinyMCE editors via tinyMCEPreInit.mceInit. */
+    /**
+     * Sets hooks on HTML-loaded TinyMCE editors via tinyMCEPreInit.mceInit.
+     */
     this.addContentHooksTinyMCE = function () {
-        if (!window.tinyMCEPreInit || !window.tinyMCE) {
+        if (!window.tinyMCEPreInit) {
             return;
         }
         for (const key in contentHooks) {
@@ -832,29 +799,16 @@ const qTranslateX = function (pg) {
             if (hook.contentField.tagName !== 'TEXTAREA' || hook.mce || hook.mceInit || !tinyMCEPreInit.mceInit[key])
                 continue;
             hook.mceInit = tinyMCEPreInit.mceInit[key];
-            if (hook.mceInit.wpautop) {
-                hook.wpautop = hook.mceInit.wpautop;
-                const wrappers = tinymce.DOM.select('#wp-' + key + '-wrap');
-                if (wrappers && wrappers.length) {
-                    hook.wrapper = wrappers[0];
-                    if (hook.wrapper) {
-                        if (tinymce.DOM.hasClass(hook.wrapper, 'tmce-active'))
-                            hook.updateTinyMCEonInit = true;
-                        if (tinymce.DOM.hasClass(hook.wrapper, 'html-active'))
-                            hook.updateTinyMCEonInit = false;
-                        // otherwise hook.updateTinyMCEonInit stays undetermined
-                    }
-                }
-            } else {
-                hook.updateTinyMCEonInit = false;
-            }
+            hook.wpautop = hook.mceInit.wpautop;
             tinyMCEPreInit.mceInit[key].init_instance_callback = function (editor) {
                 setEditorHooks(editor);
             }
         }
     };
 
-    /** Adds more TinyMCE editors, which may have been initialized dynamically. */
+    /**
+     * Adds more TinyMCE editors, which may have been initialized dynamically.
+     */
     this.loadAdditionalTinyMceHooks = function () {
         if (window.tinyMCE) {
             tinyMCE.get().forEach(function (editor) {
