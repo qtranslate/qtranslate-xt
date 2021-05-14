@@ -14,9 +14,7 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
     const editors = [];
 
     $(document).on('wp-before-tinymce-init', (event, editor) => {
-        console.log('wp-before-tinymce-init');
-
-        console.log('init MCE', editor);
+        console.log('wp-before-tinymce-init', editor);
         const widget = $(editor.selector).parents('.widget');
 
         // Normally the title is not dependent on TinyMCE
@@ -40,12 +38,12 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
 
     jQuery(document).on('tinymce-editor-init', (event, editor) => {
         // qtx.loadAdditionalTinyMceHooks();
-        console.log('tinymce-editor-init', editor.id);
         editors.push(editor.id);
-        // const hook = qtx.setEditorHooks(editor.id);
+        const hook = qtx.setEditorHooks(editor, 'widget-text-19-text');
+        console.log('tinymce-editor-init', editor.id, hook);
         // const editor = tinyMCE.get(editor_id);
-        $(editor.getContainer()).addClass('qtranxs-translatable');
-        $(editor.getElement()).addClass('qtranxs-translatable');
+        // $(editor.getContainer()).addClass('qtranxs-translatable');
+        // $(editor.getElement()).addClass('qtranxs-translatable');
     });
 
     // TODO hook elements of basic widgets without TinyMCE such as CustomHTML
@@ -99,36 +97,32 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
     $(document).on('widget-added', onWidgetAdd);
     $(document).on('widget-updated', onWidgetUpdate);
 
-    const onLanguageSwitchBefore = function () {
-        console.log('switch before', editors);
-        for (const editor_id of editors) {
-            const editor = tinyMCE.get(editor_id);
-            if (!editor.hidden) {
-                editor.save({format: 'html'});
-            }
-        }
-    };
+    // const onLanguageSwitchBefore = function () {
+    //     console.log('switch before', editors);
+    //     for (const editor_id of editors) {
+    //         const editor = tinyMCE.get(editor_id);
+    //         if (!editor.hidden) {
+    //             editor.save({format: 'html'});
+    //         }
+    //     }
+    // };
 
     const onLanguageSwitchAfter = function () {
         $('#widgets-right .widget').each(function () {
-            console.log('onLanguageSwitchAfter', this);
             const widget = $(this);
             const widget_base = widget.find('.id_base').val();
             if (widget_base == 'text') {
                 const widget_id = widget.find('.widget-id').val();
                 console.log('onLanguageSwitchAfter textwidget update', widget_id, Date());
                 if (widget_id in wp.textWidgets.widgetControls) { // check if open?
-                    const syncInput = widget.find( '.sync-input.text' );
-                    // console.log('val textarea', syncInput.val());
+                    // const syncInput = widget.find( '.sync-input.text' );
                     wp.textWidgets.widgetControls[widget_id].updateFields();
-                    // const editor = tinyMCE.get(editor_id);
-                    // editor.save();
                 }
             }
             wpWidgets.appendTitle(this);
         });
     };
 
-    qtx.addLanguageSwitchBeforeListener(onLanguageSwitchBefore);
+    // qtx.addLanguageSwitchBeforeListener(onLanguageSwitchBefore);
     qtx.addLanguageSwitchAfterListener(onLanguageSwitchAfter);
 });

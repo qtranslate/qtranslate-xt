@@ -562,8 +562,8 @@ const qTranslateX = function (pg) {
             return;
         for (const key in contentHooks) {
             const hook = contentHooks[key];
-            const mce = hook.mce && !hook.mce.hidden;
-            if (mce) {
+            const isVisualEditor = hook.mce && !hook.mce.hidden;
+            if (isVisualEditor) {
                 hook.mce.save({format: 'html'});
             }
 
@@ -579,7 +579,8 @@ const qTranslateX = function (pg) {
                     hook.contentField.placeholder = '';
                 }
                 hook.contentField.value = value;
-                if (mce) {
+                if (isVisualEditor && hook.mce.id === key) {
+                    // Update only if MCE linked to the contentField with same ID, not the case for widget
                     updateMceEditorContent(hook);
                 }
             } else {
@@ -792,11 +793,14 @@ const qTranslateX = function (pg) {
     };
 
     /** Link a TinyMCE editor with translatable content. The editor should be initialized for TinyMCE. */
-    const setEditorHooks = function (editor) {
+    this.setEditorHooks = function (editor, fieldId) {
         console.log('QTX setEditorHooks', editor, contentHooks);
         if (!editor.id)
             return;
-        const hook = contentHooks[editor.id];
+        if (fieldId === undefined) {
+            fieldId = editor.id;
+        }
+        const hook = contentHooks[fieldId];
         if (!hook)
             return;
         if (hook.mce) {
