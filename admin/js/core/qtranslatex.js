@@ -196,7 +196,7 @@ const qTranslateX = function (pg) {
             // Most crucial moment when untranslated content is parsed
             contents = qtranxj_split(inputField.value);
             // Substitute the current ML content with translated content for the current language
-            console.log('qtx contents', hook.name, contents, inputField);
+            // console.log('qtx contents', hook.name, contents, inputField);
             inputField.value = contents[hook.lang];
 
             // Insert translated content for each language before the current field
@@ -793,7 +793,7 @@ const qTranslateX = function (pg) {
 
     /** Link a TinyMCE editor with translatable content. The editor should be initialized for TinyMCE. */
     const setEditorHooks = function (editor) {
-        console.log('QTX setEditorHooks', editor);
+        console.log('QTX setEditorHooks', editor, contentHooks);
         if (!editor.id)
             return;
         const hook = contentHooks[editor.id];
@@ -821,7 +821,6 @@ const qTranslateX = function (pg) {
         if (!window.tinyMCEPreInit) {
             return;
         }
-        console.log('QTX addContentHooksTinyMCE');
         for (const key in contentHooks) {
             const hook = contentHooks[key];
             if (hook.contentField.tagName !== 'TEXTAREA' || hook.mce || hook.mceInit || !tinyMCEPreInit.mceInit[key])
@@ -829,7 +828,6 @@ const qTranslateX = function (pg) {
             hook.mceInit = tinyMCEPreInit.mceInit[key];
             hook.wpautop = hook.mceInit.wpautop;
             tinyMCEPreInit.mceInit[key].init_instance_callback = function (editor) {
-                console.log('init_instance_callback', editor);
                 setEditorHooks(editor);
             }
         }

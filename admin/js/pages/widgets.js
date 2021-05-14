@@ -2,6 +2,7 @@
  /wp-admin/widgets.php
 */
 'use strict';
+
 const $ = jQuery;
 
 $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
@@ -9,13 +10,13 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
         return;
 
     console.log('QTX widgets');
-    let editor_id;
+    // Editors are created dynamically for each widget
+    const editors = [];
 
     $(document).on('wp-before-tinymce-init', (event, editor) => {
         console.log('wp-before-tinymce-init');
 
         console.log('init MCE', editor);
-        editor_id = editor.selector.split('#')[1];
         const widget = $(editor.selector).parents('.widget');
 
         // Normally the title is not dependent on TinyMCE
@@ -37,9 +38,12 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
         // });
     });
 
-    jQuery(document).on('tinymce-editor-init', () => {
+    jQuery(document).on('tinymce-editor-init', (event, editor) => {
         // qtx.loadAdditionalTinyMceHooks();
-        const editor = tinyMCE.get(editor_id);
+        console.log('tinymce-editor-init', editor.id);
+        editors.push(editor.id);
+        // const hook = qtx.setEditorHooks(editor.id);
+        // const editor = tinyMCE.get(editor_id);
         $(editor.getContainer()).addClass('qtranxs-translatable');
         $(editor.getElement()).addClass('qtranxs-translatable');
     });
@@ -96,9 +100,13 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
     $(document).on('widget-updated', onWidgetUpdate);
 
     const onLanguageSwitchBefore = function () {
-        const editor = tinyMCE.get(editor_id);
-        console.log('switch before', editor);
-        editor.save();
+        console.log('switch before', editors);
+        for (const editor_id of editors) {
+            const editor = tinyMCE.get(editor_id);
+            if (!editor.hidden) {
+                editor.save({format: 'html'});
+            }
+        }
     };
 
     const onLanguageSwitchAfter = function () {
@@ -111,11 +119,10 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
                 console.log('onLanguageSwitchAfter textwidget update', widget_id, Date());
                 if (widget_id in wp.textWidgets.widgetControls) { // check if open?
                     const syncInput = widget.find( '.sync-input.text' );
-                    console.log('val textarea', syncInput.val());
-
+                    // console.log('val textarea', syncInput.val());
                     wp.textWidgets.widgetControls[widget_id].updateFields();
-                    const editor = tinyMCE.get(editor_id);
-                    editor.save();
+                    // const editor = tinyMCE.get(editor_id);
+                    // editor.save();
                 }
             }
             wpWidgets.appendTitle(this);
