@@ -87,6 +87,12 @@
       "forms": {
         "widgets-right": {
           "fields": {
+            "widget-title": {
+              "jquery": "input[id^='widget-'][id$='-title']"
+            },
+            "widget-text-text": {
+              "jquery": "textarea[id^='widget-text-'][id$='-text']"
+            },
             "in-widget-title": {
               "jquery": "span.in-widget-title",
               "encode": "display"
