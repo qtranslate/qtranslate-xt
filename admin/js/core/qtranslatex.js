@@ -127,6 +127,7 @@ const qTranslateX = function (pg) {
                 if ($.contains(document, inputField))
                     return contentHooks[inputField.id];
                 // otherwise some Java script already removed previously hooked element
+                console.log('qtx addContent removeContentHook', inputField.id);
                 qtx.removeContentHook(inputField);
             }
         } else if (!contentHooks[fieldName]) {
@@ -138,6 +139,7 @@ const qTranslateX = function (pg) {
                 inputField.id = fieldName + idx;
             } while (contentHooks[inputField.id]);
         }
+        console.log('qtx addContent id=', inputField.id);
 
         /**
          * Highlighting the translatable fields
@@ -194,7 +196,9 @@ const qTranslateX = function (pg) {
             // Most crucial moment when untranslated content is parsed
             contents = qtranxj_split(inputField.value);
             // Substitute the current ML content with translated content for the current language
+            console.log('qtx contents', hook.name, contents, inputField);
             inputField.value = contents[hook.lang];
+
             // Insert translated content for each language before the current field
             for (const lang in contents) {
                 const text = contents[lang];
@@ -379,8 +383,30 @@ const qTranslateX = function (pg) {
             return false;
         const hook = contentHooks[inputField.id];
         if (hook) {
-            removeContentHookH(hook);
-            return qtx.addContentHook(inputField, hook.name, hook.encode);
+            // removeContentHookH(hook);
+            // return qtx.addContentHook(inputField, hook.name, hook.encode);
+
+            if (!qTranslateConfig.RAW) {
+                // Most crucial moment when untranslated content is parsed
+                const contents = qtranxj_split(hook.mce ? hook.mce.getContent() : $(inputField).val());
+                console.log('refresh content', contents);
+                // Substitute the current ML content with translated content for the current language
+                inputField.value = contents[hook.lang];
+                // Insert translated content for each language before the current field
+                for (const lang in contents) {
+                    const text = contents[lang];
+                    hook.fields[lang].value = text;
+                }
+                if (hook.mce) {
+                    // Replace
+                    let text = contents[hook.lang];
+                    if (hook.wpautop && window.switchEditors) {
+                        text = window.switchEditors.wpautop(text);
+                    }
+                    hook.mce.setContent(text, {format: 'html'});
+                }
+            }
+            return hook;
         }
         return qtx.addContentHook(inputField);
     };
@@ -509,6 +535,7 @@ const qTranslateX = function (pg) {
         if (hook.wpautop && window.switchEditors) {
             text = window.switchEditors.wpautop(text);
         }
+        console.log('QTX updateMceEditorContent', hook.wpautop);
         hook.mce.setContent(text, {format: 'html'});
     };
 
@@ -766,6 +793,7 @@ const qTranslateX = function (pg) {
 
     /** Link a TinyMCE editor with translatable content. The editor should be initialized for TinyMCE. */
     const setEditorHooks = function (editor) {
+        console.log('QTX setEditorHooks', editor);
         if (!editor.id)
             return;
         const hook = contentHooks[editor.id];
@@ -793,6 +821,7 @@ const qTranslateX = function (pg) {
         if (!window.tinyMCEPreInit) {
             return;
         }
+        console.log('QTX addContentHooksTinyMCE');
         for (const key in contentHooks) {
             const hook = contentHooks[key];
             if (hook.contentField.tagName !== 'TEXTAREA' || hook.mce || hook.mceInit || !tinyMCEPreInit.mceInit[key])
@@ -800,6 +829,7 @@ const qTranslateX = function (pg) {
             hook.mceInit = tinyMCEPreInit.mceInit[key];
             hook.wpautop = hook.mceInit.wpautop;
             tinyMCEPreInit.mceInit[key].init_instance_callback = function (editor) {
+                console.log('init_instance_callback', editor);
                 setEditorHooks(editor);
             }
         }
