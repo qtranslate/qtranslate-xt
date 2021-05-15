@@ -350,7 +350,7 @@ const qTranslateX = function (pg) {
             console.log('remove editor', editor);
             editor.getContainer().classList.remove('qtranxs-translatable');
             editor.getElement().classList.remove('qtranxs-translatable');
-            window.wp.editor.remove(editor.id);
+            // window.wp.editor.remove(editor.id);
             // editor.destroy()
         }
         delete contentHooks[hook.contentField.id];
@@ -379,34 +379,32 @@ const qTranslateX = function (pg) {
      * Re-create a hook, after a piece of HTML is dynamically replaced with a custom Java script.
      */
     this.refreshContentHook = function (inputField) {
-        if (!inputField || !inputField.id)
+        if (qTranslateConfig.RAW || !inputField || !inputField.id)
             return false;
         const hook = contentHooks[inputField.id];
         if (hook) {
-            // removeContentHookH(hook);
-            // return qtx.addContentHook(inputField, hook.name, hook.encode);
-
-            if (!qTranslateConfig.RAW) {
-                // Most crucial moment when untranslated content is parsed
-                const contents = qtranxj_split(hook.mce ? hook.mce.getContent() : $(inputField).val());
-                console.log('refresh content', contents);
-                // Substitute the current ML content with translated content for the current language
-                inputField.value = contents[hook.lang];
-                // Insert translated content for each language before the current field
-                for (const lang in contents) {
-                    const text = contents[lang];
-                    hook.fields[lang].value = text;
-                }
-                if (hook.mce) {
-                    // Replace
-                    let text = contents[hook.lang];
-                    if (hook.wpautop && window.switchEditors) {
-                        text = window.switchEditors.wpautop(text);
-                    }
-                    hook.mce.setContent(text, {format: 'html'});
-                }
-            }
-            return hook;
+            removeContentHookH(hook);
+            // // return qtx.addContentHook(inputField, hook.name, hook.encode);
+            //
+            // // Most crucial moment when untranslated content is parsed
+            // const contents = qtranxj_split(hook.mce ? hook.mce.getContent() : $(inputField).val());
+            // console.log('refresh content', contents);
+            // // Substitute the current ML content with translated content for the current language
+            // inputField.value = contents[hook.lang];
+            // // Insert translated content for each language before the current field
+            // for (const lang in contents) {
+            //     const text = contents[lang];
+            //     hook.fields[lang].value = text;
+            // }
+            // if (hook.mce && !hook.mce.hidden && hook.mce.id === inputField.id) {
+            //     // Replace
+            //     let text = contents[hook.lang];
+            //     if (hook.wpautop && window.switchEditors) {
+            //         text = window.switchEditors.wpautop(text);
+            //     }
+            //     hook.mce.setContent(text, {format: 'html'});
+            // }
+            // return hook;
         }
         return qtx.addContentHook(inputField);
     };
@@ -794,13 +792,13 @@ const qTranslateX = function (pg) {
 
     /** Link a TinyMCE editor with translatable content. The editor should be initialized for TinyMCE. */
     this.setEditorHooks = function (editor, fieldId) {
-        console.log('QTX setEditorHooks', editor, contentHooks);
         if (!editor.id)
             return;
         if (fieldId === undefined) {
             fieldId = editor.id;
         }
         const hook = contentHooks[fieldId];
+        console.log('QTX setEditorHooks', hook);
         if (!hook)
             return;
         if (hook.mce) {

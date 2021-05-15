@@ -11,7 +11,7 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
 
     console.log('QTX widgets');
     // Editors are created dynamically for each widget
-    const editors = [];
+    const editors = {};
 
     $(document).on('wp-before-tinymce-init', (event, editor) => {
         console.log('wp-before-tinymce-init', editor);
@@ -38,7 +38,8 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
 
     jQuery(document).on('tinymce-editor-init', (event, editor) => {
         // qtx.loadAdditionalTinyMceHooks();
-        editors.push(editor.id);
+        // TODO get widget id
+        editors['widget-text-19-text'] = editor.id;
         const hook = qtx.setEditorHooks(editor, 'widget-text-19-text');
         console.log('tinymce-editor-init', editor.id, hook);
         // const editor = tinyMCE.get(editor_id);
@@ -48,9 +49,9 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
 
     // TODO hook elements of basic widgets without TinyMCE such as CustomHTML
     const onWidgetAdd = function (evt, widget) {
-        const widget_base = widget.find('.id_base').val();
-        console.log('onWidgetAdd', widget, widget_base);
-        switch(widget_base) {
+        const widgetBase = widget.find('.id_base').val();
+        console.log('onWidgetAdd', widget, widgetBase);
+        switch(widgetBase) {
             case 'custom_html':
                 widget.find(".custom-html-widget-fields input[id$='_title']").each(function (i, e) {
                     console.log('found title', e)
@@ -74,22 +75,35 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
 
     const onWidgetUpdate = function (evt, widget) {
         // const widget = $(widget);
-        const widget_base = widget.find('.id_base').val();
-        console.log('onWidgetUpdate', widget, widget_base);
-        switch(widget_base) {
+        const widgetBase = widget.find('.id_base').val();
+        console.log('onWidgetUpdate', widget, widgetBase, editors);
+        switch(widgetBase) {
             case 'custom_html':
                 // TODO
                 break;
             case 'text':
+                const widgetId = widget.find('.widget-id').val();
                 // widget.find('span.in-widget-title').each(function (i, e) {
                 //     qtx.refreshContentHook(e);
                 // });
-                // widget.find("input.qtranxs-translatable").each(function (i, e) {
-                //     qtx.refreshContentHook(e);
-                // });
-                // widget.find("textarea.qtranxs-translatable").each(function (i, e) {
-                //     qtx.refreshContentHook(e);
-                // });
+                widget.find(".widget-content input[id^='widget-text-'][id$='-title']").each(function (i, e) {
+                    qtx.refreshContentHook(e);
+                });
+                widget.find(".widget-content textarea[id^='widget-text-'][id$='-text']").each(function (i, e) {
+                    const hook = qtx.refreshContentHook(e);
+                    const editorId = editors['widget-' + widgetId + '-text'];
+                    const editor = window.tinyMCE.get(editorId);
+                    console.log('calling setEditorHooks', editorId, editor, widgetId, editors);
+                    qtx.setEditorHooks(editor, 'widget-' + widgetId + '-text');
+                    // todo hack
+                    $('#' + editorId).val('');
+                });
+                console.log('onWidgetUpdate id', widgetId, Date());
+                if (widgetId in wp.textWidgets.widgetControls) { // check if open?
+                    // const syncInput = widget.find( '.sync-input.text' );
+                    wp.textWidgets.widgetControls[widgetId].updateFields();
+                }
+                wpWidgets.appendTitle(widget);
                 break;
         }
     };
@@ -110,13 +124,13 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
     const onLanguageSwitchAfter = function () {
         $('#widgets-right .widget').each(function () {
             const widget = $(this);
-            const widget_base = widget.find('.id_base').val();
-            if (widget_base == 'text') {
-                const widget_id = widget.find('.widget-id').val();
-                console.log('onLanguageSwitchAfter textwidget update', widget_id, Date());
-                if (widget_id in wp.textWidgets.widgetControls) { // check if open?
+            const widgetBase = widget.find('.id_base').val();
+            if (widgetBase === 'text') {
+                const widgetId = widget.find('.widget-id').val();
+                console.log('onLanguageSwitchAfter textwidget update', widget, widgetId, Date());
+                if (widgetId in wp.textWidgets.widgetControls) { // check if open?
                     // const syncInput = widget.find( '.sync-input.text' );
-                    wp.textWidgets.widgetControls[widget_id].updateFields();
+                    wp.textWidgets.widgetControls[widgetId].updateFields();
                 }
             }
             wpWidgets.appendTitle(this);
