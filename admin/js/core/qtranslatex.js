@@ -347,11 +347,8 @@ const qTranslateX = function (pg) {
         hook.contentField.classList.remove('qtranxs-translatable');
         if (hook.mce) {
             const editor = hook.mce;
-            console.log('remove editor', editor);
             editor.getContainer().classList.remove('qtranxs-translatable');
             editor.getElement().classList.remove('qtranxs-translatable');
-            // window.wp.editor.remove(editor.id);
-            // editor.destroy()
         }
         delete contentHooks[hook.contentField.id];
         return contents;
@@ -535,6 +532,7 @@ const qTranslateX = function (pg) {
         }
         console.log('QTX updateMceEditorContent', hook.wpautop);
         hook.mce.setContent(text, {format: 'html'});
+        // hook.mce.save({format: 'html'});
     };
 
     const onTabSwitch = function (lang) {
@@ -577,6 +575,16 @@ const qTranslateX = function (pg) {
                     hook.contentField.placeholder = '';
                 }
                 hook.contentField.value = value;
+                // if (hook.mce) {
+                //     const values = [];
+                //     for (const [k, v] of Object.entries(hook.fields)) {
+                //         values.push($(v).val());
+                //     }
+                //     console.log('set value', values);
+                //     // if (hook.mce.id !== key) {
+                //     //     $('#' + hook.mce.id).val(Date().toString());
+                //     // }
+                // }
                 if (isVisualEditor && hook.mce.id === key) {
                     // Update only if MCE linked to the contentField with same ID, not the case for widget
                     updateMceEditorContent(hook);
@@ -791,14 +799,14 @@ const qTranslateX = function (pg) {
     };
 
     /** Link a TinyMCE editor with translatable content. The editor should be initialized for TinyMCE. */
-    this.setEditorHooks = function (editor, fieldId) {
+    this.attachEditorHook = function (editor, fieldId) {
         if (!editor.id)
             return;
         if (fieldId === undefined) {
             fieldId = editor.id;
         }
-        const hook = contentHooks[fieldId];
-        console.log('QTX setEditorHooks', hook);
+        const hook = contentHooks[fieldId ];
+        console.log('QTX attachEditorHook', hook);
         if (!hook)
             return;
         if (hook.mce) {
@@ -830,7 +838,7 @@ const qTranslateX = function (pg) {
             hook.mceInit = tinyMCEPreInit.mceInit[key];
             hook.wpautop = hook.mceInit.wpautop;
             tinyMCEPreInit.mceInit[key].init_instance_callback = function (editor) {
-                setEditorHooks(editor);
+                qtx.attachEditorHook(editor);
             }
         }
     };
@@ -841,7 +849,7 @@ const qTranslateX = function (pg) {
     this.loadAdditionalTinyMceHooks = function () {
         if (window.tinyMCE) {
             tinyMCE.get().forEach(function (editor) {
-                setEditorHooks(editor);
+                qtx.attachEditorHook(editor);
             });
         }
     };

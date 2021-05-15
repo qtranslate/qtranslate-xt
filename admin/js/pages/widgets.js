@@ -40,7 +40,8 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
         // qtx.loadAdditionalTinyMceHooks();
         // TODO get widget id
         editors['widget-text-19-text'] = editor.id;
-        const hook = qtx.setEditorHooks(editor, 'widget-text-19-text');
+        const hook = qtx.attachEditorHook(editor, 'widget-text-19-text');
+        hook.wpautop = true;
         console.log('tinymce-editor-init', editor.id, hook);
         // const editor = tinyMCE.get(editor_id);
         // $(editor.getContainer()).addClass('qtranxs-translatable');
@@ -86,15 +87,15 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
                 // widget.find('span.in-widget-title').each(function (i, e) {
                 //     qtx.refreshContentHook(e);
                 // });
+                const editorId = editors['widget-' + widgetId + '-text'];
+                const editor = window.tinyMCE.get(editorId);
                 widget.find(".widget-content input[id^='widget-text-'][id$='-title']").each(function (i, e) {
                     qtx.refreshContentHook(e);
                 });
                 widget.find(".widget-content textarea[id^='widget-text-'][id$='-text']").each(function (i, e) {
                     const hook = qtx.refreshContentHook(e);
-                    const editorId = editors['widget-' + widgetId + '-text'];
-                    const editor = window.tinyMCE.get(editorId);
                     console.log('calling setEditorHooks', editorId, editor, widgetId, editors);
-                    qtx.setEditorHooks(editor, 'widget-' + widgetId + '-text');
+                    qtx.attachEditorHook(editor, 'widget-' + widgetId + '-text');
                     // todo hack
                     $('#' + editorId).val('');
                 });
@@ -102,6 +103,9 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
                 if (widgetId in wp.textWidgets.widgetControls) { // check if open?
                     // const syncInput = widget.find( '.sync-input.text' );
                     wp.textWidgets.widgetControls[widgetId].updateFields();
+                    if (!editor.hidden) {
+                        editor.save({format: 'html'});
+                    }
                 }
                 wpWidgets.appendTitle(widget);
                 break;
@@ -128,9 +132,14 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
             if (widgetBase === 'text') {
                 const widgetId = widget.find('.widget-id').val();
                 console.log('onLanguageSwitchAfter textwidget update', widget, widgetId, Date());
+                const editorId = editors['widget-' + widgetId + '-text'];
                 if (widgetId in wp.textWidgets.widgetControls) { // check if open?
                     // const syncInput = widget.find( '.sync-input.text' );
                     wp.textWidgets.widgetControls[widgetId].updateFields();
+                    const editor = tinyMCE.get(editorId);
+                    if (!editor.hidden) {
+                        editor.save({format: 'html'});
+                    }
                 }
             }
             wpWidgets.appendTitle(this);
