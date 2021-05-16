@@ -924,16 +924,6 @@ function qtranxf_admin_load() {
     if ( version_compare( $wp_version, '5.0' ) >= 0 ) {
         require_once( QTRANSLATE_DIR . '/admin/qtx_admin_gutenberg.php' );
     }
-
-    remove_filter('widget_text_content', 'wpautop');
-    add_filter( 'widget_update_callback', function ( $instance, $new, $old, $obj ) {
-        if ( 'text' === $obj->id_base && ! empty( $instance['text'] ) ) {
-            // Warning this overrides the widget instance text input:
-            // $instance['text'] = 'override text';
-        }
-
-        return $instance;
-    }, 10, 4 );
 }
 
 qtranxf_admin_load();
