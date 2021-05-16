@@ -96,6 +96,7 @@ const qTranslateX = function (pg) {
      * @since 3.3.2
      */
     this.addContentHook = function (inputField, encode, fieldName) {
+        console.log('addContentHook', contentHooks[inputField.id]);
         if (!inputField) return false;
         switch (inputField.tagName) {
             case 'TEXTAREA':
@@ -380,6 +381,8 @@ const qTranslateX = function (pg) {
             return false;
         const hook = contentHooks[inputField.id];
         if (hook) {
+            // TODO undo hack
+            hook.contentField = inputField;
             removeContentHookH(hook);
             // // return qtx.addContentHook(inputField, hook.name, hook.encode);
             //
@@ -532,7 +535,8 @@ const qTranslateX = function (pg) {
         }
         console.log('QTX updateMceEditorContent', hook.wpautop);
         hook.mce.setContent(text, {format: 'html'});
-        // hook.mce.save({format: 'html'});
+        // TODO clarify why a save is need for widgets
+        hook.mce.save();
     };
 
     const onTabSwitch = function (lang) {
@@ -560,7 +564,7 @@ const qTranslateX = function (pg) {
             const hook = contentHooks[key];
             const isVisualEditor = hook.mce && !hook.mce.hidden;
             if (isVisualEditor) {
-                hook.mce.save({format: 'html'});
+                hook.mce.save();
             }
 
             const text = hook.contentField.value.trim();
@@ -574,19 +578,9 @@ const qTranslateX = function (pg) {
                     // since 3.2.7
                     hook.contentField.placeholder = '';
                 }
+
                 hook.contentField.value = value;
-                // if (hook.mce) {
-                //     const values = [];
-                //     for (const [k, v] of Object.entries(hook.fields)) {
-                //         values.push($(v).val());
-                //     }
-                //     console.log('set value', values);
-                //     // if (hook.mce.id !== key) {
-                //     //     $('#' + hook.mce.id).val(Date().toString());
-                //     // }
-                // }
-                if (isVisualEditor && hook.mce.id === key) {
-                    // Update only if MCE linked to the contentField with same ID, not the case for widget
+                if (isVisualEditor) {
                     updateMceEditorContent(hook);
                 }
             } else {
@@ -805,7 +799,7 @@ const qTranslateX = function (pg) {
         if (fieldId === undefined) {
             fieldId = editor.id;
         }
-        const hook = contentHooks[fieldId ];
+        const hook = contentHooks[fieldId];
         console.log('QTX attachEditorHook', hook);
         if (!hook)
             return;
