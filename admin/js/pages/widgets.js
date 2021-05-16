@@ -18,10 +18,9 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
         // Normally the title is not dependent on TinyMCE
         // But the elements are created dynamically by WP when the area is shown
         widget.find(".text-widget-fields input[id$='_title']").each(function (i, e) {
-            // qtx.addContentHookById(e.id, '[', 'title');
-            // $(e).addClass('qtranxs-translatable');
             const fieldId = 'widget-' + getWidgetId(e) + '-title';
             const hook = qtx.hasContentHook(fieldId);
+            // TODO improve hack
             hook.contentField = e;
             $(e).addClass('qtranxs-translatable');
         });
@@ -48,13 +47,8 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
         // qtx.loadAdditionalTinyMceHooks();
         const textArea = document.getElementById(editor.id);
         const fieldId = 'widget-' + getWidgetId(textArea) + '-text';
-        const hook = qtx.attachEditorHook(editor, fieldId);
-        hook.contentField = document.getElementById(editor.id);
-        hook.wpautop = true;
+        const hook = qtx.attachEditorHook(editor, {fieldId: fieldId, wpautop: true});
         console.log('tinymce-editor-init', editor.id, hook);
-        // const editor = tinyMCE.get(editor_id);
-        // $(editor.getContainer()).addClass('qtranxs-translatable');
-        // $(editor.getElement()).addClass('qtranxs-translatable');
     });
 
     // // TODO hook elements of basic widgets without TinyMCE such as CustomHTML
@@ -91,31 +85,17 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
                 break;
             case 'text':
                 const widgetId = widget.find('.widget-id').val();
-                // widget.find('span.in-widget-title').each(function (i, e) {
-                //     qtx.refreshContentHook(e);
-                // });
-                //const editorId = editors['widget-' + widgetId + '-text'];
-                //const editor = window.tinyMCE.get(editorId);
                 const fieldTitle = widget.find(".text-widget-fields input[id$='_title']")[0];
-                console.log('fieldTitle', fieldTitle);
                 widget.find(".widget-content input[id^='widget-text-'][id$='-title']").each(function (i, e) {
                     const fieldSyncTitle = document.getElementById('widget-' + widgetId + '-title');
                     const hook = qtx.refreshContentHook(e);
                     hook.contentField = fieldTitle;
-                    // Here the title field has not been synced after translation yet
-                    //fieldTitle.val(fieldSyncTitle.val());
-                    //fieldTitle.trigger('change');
                 });
                 const fieldText = widget.find(".text-widget-fields textarea[id$='_text']");
                 const editor = window.tinyMCE.get(fieldText[0].id);
                 widget.find(".widget-content textarea[id^='widget-text-'][id$='-text']").each(function (i, e) {
-                    // const fieldSyncText = document.getElementById('widget-' + widgetId + '-text');
-                    const hook = qtx.refreshContentHook(e);
-                    console.log('calling setEditorHooks', editor.id);
-                    const editorHook = qtx.attachEditorHook(editor, 'widget-' + widgetId + '-text');
-                    editorHook.wpautop = true;
-                    //editorHook.mce.setContent(wp.editor.autop( syncInput.val() ));
-                    //editorHook.mce.save();
+                    qtx.refreshContentHook(e);
+                    qtx.attachEditorHook(editor, {fieldId: 'widget-' + widgetId + '-text', wpautop: true});
 
                     // Here the text field has not been synced after translation yet
                     // Because the text field has not been updated by wp.widgets when in Visual Mode,
@@ -124,8 +104,7 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
                     const syncInput = widget.find( '.sync-input.text' );
                     fieldText.val(syncInput.val() + 'x');
                 });
-                console.log('onWidgetUpdate id', widgetId, Date());
-                if (widgetId in wp.textWidgets.widgetControls) { // check if open?
+                if (widgetId in wp.textWidgets.widgetControls) {
                     wp.textWidgets.widgetControls[widgetId].updateFields();
                 }
                 wpWidgets.appendTitle(widget);

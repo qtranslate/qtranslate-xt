@@ -96,7 +96,6 @@ const qTranslateX = function (pg) {
      * @since 3.3.2
      */
     this.addContentHook = function (inputField, encode, fieldName) {
-        console.log('addContentHook', contentHooks[inputField.id]);
         if (!inputField) return false;
         switch (inputField.tagName) {
             case 'TEXTAREA':
@@ -128,7 +127,7 @@ const qTranslateX = function (pg) {
                 if ($.contains(document, inputField))
                     return contentHooks[inputField.id];
                 // otherwise some Java script already removed previously hooked element
-                console.log('qtx addContent removeContentHook', inputField.id);
+                console.warn('QTX missing input field id=', inputField.id);
                 qtx.removeContentHook(inputField);
             }
         } else if (!contentHooks[fieldName]) {
@@ -140,7 +139,7 @@ const qTranslateX = function (pg) {
                 inputField.id = fieldName + idx;
             } while (contentHooks[inputField.id]);
         }
-        console.log('qtx addContent id=', inputField.id);
+        console.log('QTX addContent id=', inputField.id);
 
         /**
          * Highlighting the translatable fields
@@ -381,30 +380,9 @@ const qTranslateX = function (pg) {
             return false;
         const hook = contentHooks[inputField.id];
         if (hook) {
-            // TODO undo hack
+            // Ensure the hook can be removed by re-attaching it the original input field, in case it was detached
             hook.contentField = inputField;
             removeContentHookH(hook);
-            // // return qtx.addContentHook(inputField, hook.name, hook.encode);
-            //
-            // // Most crucial moment when untranslated content is parsed
-            // const contents = qtranxj_split(hook.mce ? hook.mce.getContent() : $(inputField).val());
-            // console.log('refresh content', contents);
-            // // Substitute the current ML content with translated content for the current language
-            // inputField.value = contents[hook.lang];
-            // // Insert translated content for each language before the current field
-            // for (const lang in contents) {
-            //     const text = contents[lang];
-            //     hook.fields[lang].value = text;
-            // }
-            // if (hook.mce && !hook.mce.hidden && hook.mce.id === inputField.id) {
-            //     // Replace
-            //     let text = contents[hook.lang];
-            //     if (hook.wpautop && window.switchEditors) {
-            //         text = window.switchEditors.wpautop(text);
-            //     }
-            //     hook.mce.setContent(text, {format: 'html'});
-            // }
-            // return hook;
         }
         return qtx.addContentHook(inputField);
     };
@@ -533,7 +511,7 @@ const qTranslateX = function (pg) {
         if (hook.wpautop && window.switchEditors) {
             text = window.switchEditors.wpautop(text);
         }
-        console.log('QTX updateMceEditorContent', hook.wpautop);
+        console.log('QTX updateMceEditorContent', hook.mce);
         hook.mce.setContent(text, {format: 'html'});
         // TODO clarify why a save is need for widgets
         hook.mce.save();
@@ -793,16 +771,22 @@ const qTranslateX = function (pg) {
     };
 
     /** Link a TinyMCE editor with translatable content. The editor should be initialized for TinyMCE. */
-    this.attachEditorHook = function (editor, fieldId) {
+    this.attachEditorHook = function (editor, options) {
         if (!editor.id)
             return;
-        if (fieldId === undefined) {
-            fieldId = editor.id;
-        }
+        // The MCE editor can be linked to translatable fields having a different ID, e.g. for widgets
+        const fieldId = (options && options.fieldId !== undefined) ? options.fieldId : editor.id;
         const hook = contentHooks[fieldId];
         console.log('QTX attachEditorHook', hook);
         if (!hook)
             return;
+        if (options && options.wpautop !== undefined) {
+            hook.wpautop = options.wpautop;
+        }
+        // The main content field should always match the editor ID so that its value is updated on tab switch
+        if (fieldId !== editor.id) {
+            hook.contentField = document.getElementById(editor.id);
+        }
         if (hook.mce) {
             return;  // already initialized for qTranslate
         }
