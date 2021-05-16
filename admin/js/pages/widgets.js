@@ -103,15 +103,21 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
                     // Because the text field has not been updated by wp.widgets when in Visual Mode,
                     // it still has the translated content before saving the widget.
                     // To allow updateField to change the MCE content, change the value of the text field.
-                    const syncInput = widget.find( '.sync-input.text' );
+                    const syncInput = widget.find('.sync-input.text');
                     fieldText.val(syncInput.val() + 'x');
                 });
                 if (widgetId in wp.textWidgets.widgetControls) {
                     wp.textWidgets.widgetControls[widgetId].updateFields();
                 }
-                wpWidgets.appendTitle(widget);
+                break;
+            default:
+                widget.find(".widget-content input[id^='widget-'][id$='-title']").each(function (i, e) {
+                    qtx.refreshContentHook(e);
+                });
                 break;
         }
+
+        wpWidgets.appendTitle(widget);
     };
 
     $(document).on('widget-added', onWidgetUpdate);
