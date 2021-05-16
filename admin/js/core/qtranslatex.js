@@ -381,6 +381,7 @@ const qTranslateX = function (pg) {
         const hook = contentHooks[inputField.id];
         if (hook) {
             // Ensure the hook can be removed by re-attaching it the original input field, in case it was detached
+            hook.contentField.classList.remove('qtranxs-translatable');
             hook.contentField = inputField;
             removeContentHookH(hook);
         }

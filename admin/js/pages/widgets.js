@@ -20,9 +20,9 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
         widget.find(".text-widget-fields input[id$='_title']").each(function (i, e) {
             const fieldId = 'widget-' + getWidgetId(e) + '-title';
             const hook = qtx.hasContentHook(fieldId);
-            // TODO improve hack
+            // TODO improve attach hack
             hook.contentField = e;
-            $(e).addClass('qtranxs-translatable');
+            e.classList.add('qtranxs-translatable');
         });
 
         // widget.find('span.in-widget-title').each(function (i, e) {
@@ -89,7 +89,9 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
                 widget.find(".widget-content input[id^='widget-text-'][id$='-title']").each(function (i, e) {
                     const fieldSyncTitle = document.getElementById('widget-' + widgetId + '-title');
                     const hook = qtx.refreshContentHook(e);
+                    // TODO improve attach hack
                     hook.contentField = fieldTitle;
+                    fieldTitle.classList.add('qtranxs-translatable');
                 });
                 const fieldText = widget.find(".text-widget-fields textarea[id$='_text']");
                 const editor = window.tinyMCE.get(fieldText[0].id);
