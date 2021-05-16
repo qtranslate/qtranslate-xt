@@ -119,7 +119,7 @@ function qtranxf_collect_translations_posted() {
             }
         } else {
             // Retrieve data for all languages, regroup and "hack" the request with a ML value
-            foreach ( $_REQUEST as $name => &$qtx_fields ) {
+            foreach ( $_REQUEST['qtranslate-fields'] as $name => &$qtx_fields ) {
                 if ( ! isset( $_REQUEST[ $name ] ) ) {
                     unset( $_REQUEST['qtranslate-fields'][ $name ] );
                     continue;
