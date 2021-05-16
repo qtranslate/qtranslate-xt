@@ -140,7 +140,7 @@ const qTranslateX = function (pg) {
          * Highlighting the translatable fields
          * @since 3.2-b3
          */
-        inputField.className += ' qtranxs-translatable';
+        inputField.classList.add('qtranxs-translatable');
 
         const hook = contentHooks[inputField.id] = {};
         hook.name = fieldName;
@@ -337,7 +337,7 @@ const qTranslateX = function (pg) {
             contents[lang] = f.value;
             $(f).remove();
         }
-        $(hook.contentField).removeClass('qtranxs-translatable');
+        hook.contentField.classList.remove('qtranxs-translatable');
         delete contentHooks[hook.contentField.id];
         return contents;
     };
@@ -354,7 +354,7 @@ const qTranslateX = function (pg) {
         const hook = contentHooks[inputField.id];
         removeContentHookH(hook);
         // @since 3.2.9.8 - hook.contents -> hook.fields
-        $(inputField).removeClass('qtranxs-translatable');
+        inputField.classList.remove('qtranxs-translatable');
         return true;
     };
 
@@ -767,8 +767,8 @@ const qTranslateX = function (pg) {
          * Highlighting the translatable fields
          * @since 3.2-b3
          */
-        $(editor.getContainer()).addClass('qtranxs-translatable');
-        $(editor.getElement()).addClass('qtranxs-translatable');
+        editor.getContainer().classList.add('qtranxs-translatable');
+        editor.getElement().classList.add('qtranxs-translatable');
 
         return hook;
     }
@@ -1079,12 +1079,12 @@ const qTranslateX = function (pg) {
         if (!insideElems.length)
             return; // consistency check in case WP did some changes
 
-        metaBox.className += ' closed';
+        metaBox.classList.add('closed');
         $(metaBox).find('.hndle').remove(); // original h3 element is replaced with span below
 
         const span = document.createElement('span');
         metaBox.insertBefore(span, insideElems[0]);
-        span.className = 'hndle ui-sortable-handle';
+        span.classList.add('hndle', 'ui-sortable-handle');
 
         const langSwitchWrap = qtx.createSetOfLSBwith(qTranslateConfig.lsb_style_wrap_class);
         span.appendChild(langSwitchWrap);
