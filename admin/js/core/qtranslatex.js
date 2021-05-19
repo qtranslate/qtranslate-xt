@@ -509,7 +509,7 @@ const qTranslateX = function (pg) {
 
     const updateMceEditorContent = function (hook) {
         let text = hook.contentField.value;
-        if (hook.wpautop && window.switchEditors) {
+        if (hook.mce.settings.wpautop && window.switchEditors) {
             text = window.switchEditors.wpautop(text);
         }
         console.log('QTX updateMceEditorContent', hook.mce);
@@ -772,18 +772,17 @@ const qTranslateX = function (pg) {
     };
 
     /** Link a TinyMCE editor with translatable content. The editor should be initialized for TinyMCE. */
-    this.attachEditorHook = function (editor, options) {
+    this.attachEditorHook = function (editor, fieldId) {
         if (!editor.id)
             return;
         // The MCE editor can be linked to translatable fields having a different ID, e.g. for widgets
-        const fieldId = (options && options.fieldId !== undefined) ? options.fieldId : editor.id;
+        if (!fieldId) {
+            fieldId = editor.id;
+        }
         const hook = contentHooks[fieldId];
-        console.log('QTX attachEditorHook', hook);
+        console.log('QTX attachEditorHook', fieldId, hook);
         if (!hook)
             return;
-        if (options && options.wpautop !== undefined) {
-            hook.wpautop = options.wpautop;
-        }
         // The main content field should always match the editor ID so that its value is updated on tab switch
         if (fieldId !== editor.id) {
             hook.contentField = document.getElementById(editor.id);
@@ -815,7 +814,6 @@ const qTranslateX = function (pg) {
             if (hook.contentField.tagName !== 'TEXTAREA' || hook.mce || hook.mceInit || !tinyMCEPreInit.mceInit[key])
                 continue;
             hook.mceInit = tinyMCEPreInit.mceInit[key];
-            hook.wpautop = hook.mceInit.wpautop;
             tinyMCEPreInit.mceInit[key].init_instance_callback = function (editor) {
                 qtx.attachEditorHook(editor);
             }

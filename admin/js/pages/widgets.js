@@ -31,7 +31,7 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
         // qtx.loadAdditionalTinyMceHooks();
         const textArea = document.getElementById(editor.id);
         const fieldId = 'widget-' + getWidgetId(textArea) + '-text';
-        qtx.attachEditorHook(editor, {fieldId: fieldId, wpautop: true});
+        qtx.attachEditorHook(editor, fieldId);
     });
 
     const onWidgetUpdate = function (evt, widget) {
@@ -54,7 +54,7 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
                 const editor = window.tinyMCE.get(fieldText[0].id);
                 widget.find(".widget-content textarea[id^='widget-text-'][id$='-text']").each(function (i, e) {
                     qtx.refreshContentHook(e);
-                    qtx.attachEditorHook(editor, {fieldId: 'widget-' + widgetId + '-text', wpautop: true});
+                    qtx.attachEditorHook(editor, e.id);
 
                     // Here the text field has not been synced after translation yet
                     // Because the text field has not been updated by wp.widgets when in Visual Mode,
