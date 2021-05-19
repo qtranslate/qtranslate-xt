@@ -11,32 +11,6 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
 
     console.log('QTX widgets');
 
-    $(document).on('wp-before-tinymce-init', (event, editor) => {
-        console.log('wp-before-tinymce-init', editor);
-        const widget = $(editor.selector).parents('.widget');
-
-        // Normally the title is not dependent on TinyMCE
-        // But the elements are created dynamically by WP when the area is shown
-        widget.find(".text-widget-fields input[id$='_title']").each(function (i, e) {
-            const fieldId = 'widget-' + getWidgetId(e) + '-title';
-            const hook = qtx.hasContentHook(fieldId);
-            // TODO improve attach hack
-            hook.contentField = e;
-            e.classList.add('qtranxs-translatable');
-        });
-
-        // widget.find('span.in-widget-title').each(function (i, e) {
-        //     qtx.addDisplayHook(e);
-        // });
-        // widget.find(".text-widget-fields input[id$='_title']").each(function (i, e) {
-        //     qtx.addContentHookById(e.id, '[', 'title');
-        // });
-        // widget.find(".text-widget-fields textarea[id$='_text']").each(function (i, e) {
-        //     const ret = qtx.addContentHook(e, '[', 'text');
-        //     console.log('addContentHook', ret)
-        // });
-    });
-
     const getWidgetId = function (field) {
         const widgetInside = $(field).parents('.widget-inside');
         const widgetId = widgetInside.find('.widget-id').val();
@@ -44,38 +18,21 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
     };
 
     jQuery(document).on('tinymce-editor-init', (event, editor) => {
+        const widget = $(editor.settings.selector).parents('.widget');
+        // The title is not dependent on TinyMCE
+        // But the widget input fields are created dynamically by WP when the area is shown
+        widget.find(".text-widget-fields input[id$='_title']").each(function (i, e) {
+            const fieldId = 'widget-' + getWidgetId(e) + '-title';
+            const hook = qtx.hasContentHook(fieldId);
+            // TODO improve attach hack
+            hook.contentField = e;
+            e.classList.add('qtranxs-translatable');
+        });
         // qtx.loadAdditionalTinyMceHooks();
         const textArea = document.getElementById(editor.id);
         const fieldId = 'widget-' + getWidgetId(textArea) + '-text';
-        const hook = qtx.attachEditorHook(editor, {fieldId: fieldId, wpautop: true});
-        console.log('tinymce-editor-init', editor.id, hook);
+        qtx.attachEditorHook(editor, {fieldId: fieldId, wpautop: true});
     });
-
-    // // TODO hook elements of basic widgets without TinyMCE such as CustomHTML
-    // const onWidgetAdd = function (evt, widget) {
-    //     const widgetBase = widget.find('.id_base').val();
-    //     console.log('onWidgetAdd', widget, widgetBase);
-    //     switch(widgetBase) {
-    //         case 'custom_html':
-    //             widget.find(".custom-html-widget-fields input[id$='_title']").each(function (i, e) {
-    //                 console.log('found title', e)
-    //                 const ret = qtx.addContentHookById(e.id, '[', 'title');
-    //                 console.log('addContentHook', ret)
-    //                 // qtx.refreshContentHook(e);
-    //             });
-    //             widget.find(".custom-html-widget-fields textarea[id$='_content']").each(function (i, e) {
-    //                 console.log('found content', e)
-    //                 const ret = qtx.addContentHookById(e.id, '[', 'content');
-    //                 console.log('addContentHook', ret)
-    //                 // qtx.refreshContentHook(e);
-    //             });
-    //             widget.find(".custom-html-widget-fields .CodeMirror-wrap").addClass('qtranxs-translatable');
-    //             break;
-    //
-    //         case 'text':
-    //             break;
-    //     }
-    // }
 
     const onWidgetUpdate = function (evt, widget) {
         const widgetBase = widget.find('.id_base').val();
