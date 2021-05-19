@@ -23,12 +23,8 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
         // But the widget input fields are created dynamically by WP when the area is shown
         widget.find(".text-widget-fields input[id$='_title']").each(function (i, e) {
             const fieldId = 'widget-' + getWidgetId(e) + '-title';
-            const hook = qtx.hasContentHook(fieldId);
-            // TODO improve attach hack
-            hook.contentField = e;
-            e.classList.add('qtranxs-translatable');
+            qtx.attachContentHook(e, fieldId);
         });
-        // qtx.loadAdditionalTinyMceHooks();
         const textArea = document.getElementById(editor.id);
         const fieldId = 'widget-' + getWidgetId(textArea) + '-text';
         qtx.attachEditorHook(editor, fieldId);
@@ -44,11 +40,8 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
                 const widgetId = widget.find('.widget-id').val();
                 const fieldTitle = widget.find(".text-widget-fields input[id$='_title']")[0];
                 widget.find(".widget-content input[id^='widget-text-'][id$='-title']").each(function (i, e) {
-                    const fieldSyncTitle = document.getElementById('widget-' + widgetId + '-title');
-                    const hook = qtx.refreshContentHook(e);
-                    // TODO improve attach hack
-                    hook.contentField = fieldTitle;
-                    fieldTitle.classList.add('qtranxs-translatable');
+                    qtx.refreshContentHook(e);
+                    qtx.attachContentHook(fieldTitle, e.id);
                 });
                 const fieldText = widget.find(".text-widget-fields textarea[id$='_text']");
                 const editor = window.tinyMCE.get(fieldText[0].id);

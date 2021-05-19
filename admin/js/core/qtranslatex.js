@@ -89,6 +89,16 @@ const qTranslateX = function (pg) {
         return contentHooks[id];
     };
 
+    this.attachContentHook = function (inputField, fieldID)
+    {
+        const hook = contentHooks[fieldID ? fieldID : inputField.id];
+        if (!hook) {
+            return;
+        }
+        inputField.classList.add('qtranxs-translatable');
+        hook.contentField = inputField;
+    }
+
     /**
      * Designed as interface for other plugin integration. The documentation is available at
      * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
@@ -141,16 +151,10 @@ const qTranslateX = function (pg) {
         }
         console.log('QTX addContent id=', inputField.id);
 
-        /**
-         * Highlighting the translatable fields
-         * @since 3.2-b3
-         */
-        inputField.classList.add('qtranxs-translatable');
-
         const hook = contentHooks[inputField.id] = {};
         hook.name = fieldName;
-        hook.contentField = inputField;
         hook.lang = qTranslateConfig.activeLanguage;
+        qtx.attachContentHook(inputField);
 
         let qtxPrefix;
         if (encode) {
