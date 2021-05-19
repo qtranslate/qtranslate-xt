@@ -88,49 +88,17 @@ function qtranxf_collect_translations_posted() {
     $edit_lang = null;
     if ( isset( $_REQUEST['qtranslate-fields'] ) ) {
         $edit_lang = qtranxf_get_edit_language();
-        // Special case for widgets, limit to widget-text but might be extended
-        if ( $_REQUEST['action'] === 'save-widget' && isset($_REQUEST['widget-text']) ) {
-            $widget_multi_number = isset( $_REQUEST['multi_number'] ) ? (int) $_REQUEST['multi_number'] : '';
-            // TODO clarify this
-            $widget_number  = $widget_multi_number ?: $_REQUEST['widget_number'];
-            // Retrieve the part of the request holding the last changes for the current tab language
-            $widget_request = &$_REQUEST['widget-text'][ $widget_number ];
-            if ( isset( $_REQUEST['qtranslate-fields']['widget-text'][ $widget_number ] ) ) {
-                // update?
-                $qtx_request = &$_REQUEST['qtranslate-fields']['widget-text'][ $widget_number ];
-            } else {
-                // creation
-                $qtx_request = &$_REQUEST['qtranslate-fields'];
+        foreach ( $_REQUEST['qtranslate-fields'] as $name => &$qfields ) {
+            if ( ! isset( $_REQUEST[ $name ] ) ) {
+                unset( $_REQUEST['qtranslate-fields'][ $name ] );
+                continue;
             }
-
-            // Retrieve data for all languages, regroup and "hack" the request with a ML value
-            foreach ( $qtx_request as $name => &$qtx_fields ) {
-                if ( ! isset( $widget_request[ $name ] ) ) {
-                    unset( $_REQUEST['qtranslate-fields'][ $name ] );
-                    continue;
-                }
-                qtranxf_collect_translations( $qtx_fields, $widget_request[ $name ], $edit_lang );
-                if ( isset( $_POST['widget-text'][ $widget_number ][ $name ] ) ) {
-                    $_POST['widget-text'][ $widget_number ][ $name ] = $widget_request[ $name ];
-                }
-                if ( isset( $_GET['widget-text'][ $widget_number ][ $name ] ) ) {
-                    $_GET['widget-text'][ $widget_number ][ $name ] = $widget_request[ $name ];
-                }
+            qtranxf_collect_translations( $qfields, $_REQUEST[ $name ], $edit_lang );
+            if ( isset( $_POST[ $name ] ) ) {
+                $_POST[ $name ] = $_REQUEST[ $name ];
             }
-        } else {
-            // Retrieve data for all languages, regroup and "hack" the request with a ML value
-            foreach ( $_REQUEST['qtranslate-fields'] as $name => &$qtx_fields ) {
-                if ( ! isset( $_REQUEST[ $name ] ) ) {
-                    unset( $_REQUEST['qtranslate-fields'][ $name ] );
-                    continue;
-                }
-                qtranxf_collect_translations( $qtx_fields, $_REQUEST[ $name ], $edit_lang );
-                if ( isset( $_POST[ $name ] ) ) {
-                    $_POST[ $name ] = $_REQUEST[ $name ];
-                }
-                if ( isset( $_GET[ $name ] ) ) {
-                    $_GET[ $name ] = $_REQUEST[ $name ];
-                }
+            if ( isset( $_GET[ $name ] ) ) {
+                $_GET[ $name ] = $_REQUEST[ $name ];
             }
         }
         qtranxf_clean_request( 'qtranslate-fields' );
@@ -138,7 +106,6 @@ function qtranxf_collect_translations_posted() {
 
     if ( wp_doing_ajax() ) {
         // parse variables collected as a query string in an option
-        // TODO why do we need this with ajax? In which case is the request passed as string?!
         foreach ( $_REQUEST as $name => $value ) {
             if ( ! is_string( $value ) ) {
                 continue;
@@ -901,6 +868,7 @@ function qtranxf_admin_load() {
 
     // Caution:  we are being called in 'plugins_loaded' from core with a higher priority, but we add a later hook
     add_action( 'plugins_loaded', 'qtranxf_collect_translations_posted', 5 );
+
 
     add_action( 'admin_init', 'qtranxf_admin_init', 2 );
     add_action( 'admin_enqueue_scripts', 'qtranxf_admin_enqueue_scripts' );
