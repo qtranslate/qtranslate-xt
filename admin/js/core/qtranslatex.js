@@ -517,7 +517,7 @@ const qTranslateX = function (pg) {
             text = window.switchEditors.wpautop(text);
         }
         console.log('QTX updateMceEditorContent', hook.mce);
-        hook.mce.setContent(text, {format: 'html'});
+        hook.mce.setContent(text);
         // TODO clarify why a save is need for widgets
         hook.mce.save();
     };
@@ -545,8 +545,8 @@ const qTranslateX = function (pg) {
             return;
         for (const key in contentHooks) {
             const hook = contentHooks[key];
-            const isVisualEditor = hook.mce && !hook.mce.hidden;
-            if (isVisualEditor) {
+            const visualMode = hook.mce && !hook.mce.hidden;
+            if (visualMode) {
                 hook.mce.save();
             }
 
@@ -563,7 +563,7 @@ const qTranslateX = function (pg) {
                 }
 
                 hook.contentField.value = value;
-                if (isVisualEditor) {
+                if (visualMode) {
                     updateMceEditorContent(hook);
                 }
             } else {
@@ -1032,15 +1032,15 @@ const qTranslateX = function (pg) {
         let changed = false;
         for (const key in contentHooks) {
             const hook = contentHooks[key];
-            const mce = hook.mce && !hook.mce.hidden;
-            let value = mce ? hook.mce.getContent({format: 'html'}) : hook.contentField.value;
+            const visualMode = hook.mce && !hook.mce.hidden;
+            let value = visualMode ? hook.mce.getContent() : hook.contentField.value;
             if (value)
                 continue; // do not overwrite existent content
             value = hook.fields[langFrom].value;
             if (!value)
                 continue;
             hook.contentField.value = value;
-            if (mce) {
+            if (visualMode) {
                 updateMceEditorContent(hook);
             }
             changed = true;
