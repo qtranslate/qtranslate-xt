@@ -493,10 +493,10 @@ const qTranslateX = function (pg) {
 
     const updateMceEditorContent = function (hook) {
         let text = hook.contentField.value;
-        if (hook.wpautop && window.switchEditors) {
+        if (hook.mce.settings.wpautop && window.switchEditors) {
             text = window.switchEditors.wpautop(text);
         }
-        hook.mce.setContent(text, {format: 'html'});
+        hook.mce.setContent(text);
     };
 
     const onTabSwitch = function (lang) {
@@ -522,9 +522,9 @@ const qTranslateX = function (pg) {
             return;
         for (const key in contentHooks) {
             const hook = contentHooks[key];
-            const mce = hook.mce && !hook.mce.hidden;
-            if (mce) {
-                hook.mce.save({format: 'html'});
+            const visualMode = hook.mce && !hook.mce.hidden;
+            if (visualMode) {
+                hook.mce.save();
             }
 
             const text = hook.contentField.value.trim();
@@ -539,7 +539,7 @@ const qTranslateX = function (pg) {
                     hook.contentField.placeholder = '';
                 }
                 hook.contentField.value = value;
-                if (mce) {
+                if (visualMode) {
                     updateMceEditorContent(hook);
                 }
             } else {
@@ -785,7 +785,6 @@ const qTranslateX = function (pg) {
             if (hook.contentField.tagName !== 'TEXTAREA' || hook.mce || hook.mceInit || !tinyMCEPreInit.mceInit[key])
                 continue;
             hook.mceInit = tinyMCEPreInit.mceInit[key];
-            hook.wpautop = hook.mceInit.wpautop;
             tinyMCEPreInit.mceInit[key].init_instance_callback = function (editor) {
                 setEditorHooks(editor);
             }
@@ -1000,15 +999,15 @@ const qTranslateX = function (pg) {
         let changed = false;
         for (const key in contentHooks) {
             const hook = contentHooks[key];
-            const mce = hook.mce && !hook.mce.hidden;
-            let value = mce ? hook.mce.getContent({format: 'html'}) : hook.contentField.value;
+            const visualMode = hook.mce && !hook.mce.hidden;
+            let value = visualMode ? hook.mce.getContent() : hook.contentField.value;
             if (value)
                 continue; // do not overwrite existent content
             value = hook.fields[langFrom].value;
             if (!value)
                 continue;
             hook.contentField.value = value;
-            if (mce) {
+            if (visualMode) {
                 updateMceEditorContent(hook);
             }
             changed = true;
