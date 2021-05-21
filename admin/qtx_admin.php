@@ -103,35 +103,6 @@ function qtranxf_collect_translations_posted() {
         }
         qtranxf_clean_request( 'qtranslate-fields' );
     }
-
-    if ( wp_doing_ajax() ) {
-        // parse variables collected as a query string in an option
-        foreach ( $_REQUEST as $name => $value ) {
-            if ( ! is_string( $value ) ) {
-                continue;
-            }
-            if ( strpos( $value, 'qtranslate-fields' ) === false ) {
-                continue;
-            }
-            parse_str( $value, $request );
-            if ( empty( $request['qtranslate-fields'] ) ) {
-                continue;
-            }
-            if ( ! $edit_lang ) {
-                $edit_lang = qtranxf_get_edit_language();
-            }
-            qtranxf_collect_translations( $request['qtranslate-fields'], $request, $edit_lang );
-            unset( $request['qtranslate-fields'] );
-            $url_encoded       = http_build_query( $request );
-            $_REQUEST[ $name ] = $url_encoded;
-            if ( isset( $_POST[ $name ] ) ) {
-                $_POST[ $name ] = $url_encoded;
-            }
-            if ( isset( $_GET[ $name ] ) ) {
-                $_GET [ $name ] = $url_encoded;
-            }
-        }
-    }
 }
 
 function qtranxf_decode_translations_posted() {
