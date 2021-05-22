@@ -516,10 +516,7 @@ const qTranslateX = function (pg) {
         if (hook.mce.settings.wpautop && window.switchEditors) {
             text = window.switchEditors.wpautop(text);
         }
-        console.log('QTX updateMceEditorContent', hook.mce);
         hook.mce.setContent(text);
-        // TODO clarify why a save is need for widgets
-        hook.mce.save();
     };
 
     const onTabSwitch = function (lang) {
@@ -563,6 +560,8 @@ const qTranslateX = function (pg) {
                 }
 
                 hook.contentField.value = value;
+                // Some widgets such as text-widget sync the widget content on 'change' event on the input field
+                $(hook.contentField).trigger('change');
                 if (visualMode) {
                     updateMceEditorContent(hook);
                 }
