@@ -11,31 +11,22 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
 
     console.log('QTX widgets');
 
-    const getWidgetId = function (field) {
-        const widgetInside = $(field).parents('.widget-inside');
-        const widgetId = widgetInside.find('.widget-id').val();
-        return widgetId;
-    };
-
     jQuery(document).on('tinymce-editor-init', (event, editor) => {
         const widget = $(editor.settings.selector).parents('.widget');
+        const widgetId = widget.find('.widget-id').val();
         // The title is not dependent on TinyMCE
         // But the widget input fields are created dynamically by WP when the area is shown
         widget.find(".text-widget-fields input[id$='_title']").each(function (i, e) {
-            const fieldId = 'widget-' + getWidgetId(e) + '-title';
-            qtx.attachContentHook(e, fieldId);
+            const contentId = 'widget-' + widgetId + '-title';
+            qtx.attachContentHook(e, contentId);
         });
-        const textArea = document.getElementById(editor.id);
-        const fieldId = 'widget-' + getWidgetId(textArea) + '-text';
-        qtx.attachEditorHook(editor, fieldId);
+        const contentId = 'widget-' + widgetId + '-text';
+        qtx.attachEditorHook(editor, contentId);
     });
 
     const onWidgetUpdate = function (evt, widget) {
         const widgetBase = widget.find('.id_base').val();
         switch(widgetBase) {
-            case 'custom_html':
-                // TODO
-                break;
             case 'text':
                 const widgetId = widget.find('.widget-id').val();
                 const fieldTitle = widget.find(".text-widget-fields input[id$='_title']")[0];

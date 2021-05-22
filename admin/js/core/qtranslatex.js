@@ -776,19 +776,20 @@ const qTranslateX = function (pg) {
     };
 
     /** Link a TinyMCE editor with translatable content. The editor should be initialized for TinyMCE. */
-    this.attachEditorHook = function (editor, fieldId) {
+    this.attachEditorHook = function (editor, contentId) {
         if (!editor.id)
             return;
-        // The MCE editor can be linked to translatable fields having a different ID, e.g. for widgets
-        if (!fieldId) {
-            fieldId = editor.id;
+        // The MCE editor can be linked to translatable content having a different ID, e.g. for widgets
+        if (!contentId) {
+            contentId = editor.id;
         }
-        const hook = contentHooks[fieldId];
-        console.log('QTX attachEditorHook', fieldId, hook);
+        const hook = contentHooks[contentId];
+        console.log('QTX attachEditorHook', contentId, hook);
         if (!hook)
             return;
-        // The main content field should always match the editor ID so that its value is updated on tab switch
-        if (fieldId !== editor.id) {
+        // The hook may have been created for a different content field, e.g. for widgets
+        // The main content field should always match the editor ID so that its value is synced on tab switch
+        if (contentId !== editor.id) {
             hook.contentField = document.getElementById(editor.id);
         }
         if (hook.mce) {
