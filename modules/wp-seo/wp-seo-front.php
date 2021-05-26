@@ -26,6 +26,9 @@ function qtranxf_wpseo_add_filters_front() {
         if ( array_key_exists( 'description', $piece ) ) {
             $piece['description'] = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage( $piece['description'] );
         }
+        if (array_key_exists('name', $piece)) {
+            $piece['name'] = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage($piece['name']);
+        }
 
         return $piece;
     }
