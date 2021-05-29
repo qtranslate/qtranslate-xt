@@ -4,6 +4,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function qtranxf_wpseo_add_filters_front() {
+    add_filter( 'wpseo_canonical', 'qtranxf_checkCanonical', 10, 2 );
+
     # For reference: https://developer.yoast.com/customization/apis/metadata-api/
     $use_filters = array(
         # Generic presenters
