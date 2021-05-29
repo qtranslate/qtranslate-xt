@@ -9,19 +9,17 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
     if (!window.wpWidgets)
         return;
 
-    console.log('QTX widgets');
-
     jQuery(document).on('tinymce-editor-init', (event, editor) => {
         const widget = $(editor.settings.selector).parents('.widget');
         const widgetId = widget.find('.widget-id').val();
         // The title is not dependent on TinyMCE
         // But the widget input fields are created dynamically by WP when the area is shown
+        const titleContentId = 'widget-' + widgetId + '-title';
         widget.find(".text-widget-fields input[id$='_title']").each(function (i, e) {
-            const contentId = 'widget-' + widgetId + '-title';
-            qtx.attachContentHook(e, contentId);
+            qtx.attachContentHook(e, titleContentId);
         });
-        const contentId = 'widget-' + widgetId + '-text';
-        qtx.attachEditorHook(editor, contentId);
+        const textContentId = 'widget-' + widgetId + '-text';
+        qtx.attachEditorHook(editor, textContentId);
     });
 
     const onWidgetUpdate = function (evt, widget) {
@@ -70,6 +68,5 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
         });
     };
 
-    // qtx.addLanguageSwitchBeforeListener(onLanguageSwitchBefore);
     qtx.addLanguageSwitchAfterListener(onLanguageSwitchAfter);
 });
