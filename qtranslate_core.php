@@ -919,7 +919,7 @@ function qtranxf_url_del_language( &$urlinfo ) {
             if ( ! empty( $urlinfo['wp-path'] ) && preg_match( "!^/($lang_code)(/|$)!i", $urlinfo['wp-path'], $match ) ) {
                 if ( qtranxf_isEnabled( $match[1] ) ) {
                     // found language information, remove it
-                    $urlinfo['wp-path'] = substr( $urlinfo['wp-path'], 3 );
+                    $urlinfo['wp-path'] = substr( $urlinfo['wp-path'], strlen( $match[1] ) + 1 );
                 }
             }
             break;

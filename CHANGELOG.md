@@ -1,3 +1,16 @@
+### 3.10.1
+Core
+* Add qtranxs-flag class to flags on frontend (#1015)
+* Remove obsolete wpautop hack for editor init (#1019)
+* Remove wpautop from hook fields and format specifier (#1024)
+* Remove Ajax qtranslate-fields collect as string (#1026)
+* Create internal QTX initialize function in JS
+* Use classList in JS instead of className or jQuery
+
+Yoast
+* Fix Yoast 'name' schema for WebPages (#1033)
+* Fix Yoast canonical URL (#1032)
+
 ### 3.10.0
 Core
 * Major overhaul of Javascript builds
