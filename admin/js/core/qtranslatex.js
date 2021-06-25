@@ -89,9 +89,21 @@ const qTranslateX = function (pg) {
         return contentHooks[id];
     };
 
-    this.attachContentHook = function (inputField, fieldID)
+    /**
+     * Attach an input field to an existing content hook.
+     *
+     * Usually, this function is called internally for input fields edited by the user.
+     * In some cases (e.g. widgets), the editable fields are different from those containing
+     * the translatable content. This function allows to attach them to the hook.
+     * The single content field initially attached is not updated anymore but the hidden fields
+     * storing each language content are still updated.
+     *
+     * @param inputField field editable by the user
+     * @param hookId optional element ID to override the content hook key
+     */
+    this.attachContentHook = function (inputField, hookId)
     {
-        const hook = contentHooks[fieldID ? fieldID : inputField.id];
+        const hook = contentHooks[hookId ? hookId : inputField.id];
         if (!hook) {
             return;
         }
@@ -127,17 +139,18 @@ const qTranslateX = function (pg) {
 
         if (!fieldName) {
             if (!inputField.name) {
-                console.error('QTX Failed to add hook, missing name for field', inputField);
+                console.error('Missing name in field', inputField);
                 return false;
             }
             fieldName = inputField.name;
         }
+
         if (inputField.id) {
             if (contentHooks[inputField.id]) {
                 if ($.contains(document, inputField))
                     return contentHooks[inputField.id];
                 // otherwise some Java script already removed previously hooked element
-                console.warn('QTX missing input field id=', inputField.id);
+                console.warn('No input field with id=', inputField.id);
                 qtx.removeContentHook(inputField);
             }
         } else if (!contentHooks[fieldName]) {
@@ -149,7 +162,6 @@ const qTranslateX = function (pg) {
                 inputField.id = fieldName + idx;
             } while (contentHooks[inputField.id]);
         }
-        console.log('QTX addContent id=', inputField.id);
 
         const hook = contentHooks[inputField.id] = {};
         hook.name = fieldName;
@@ -200,7 +212,6 @@ const qTranslateX = function (pg) {
             // Most crucial moment when untranslated content is parsed
             contents = qtranxj_split(inputField.value);
             // Substitute the current ML content with translated content for the current language
-            // console.log('qtx contents', hook.name, contents, inputField);
             inputField.value = contents[hook.lang];
 
             // Insert translated content for each language before the current field
@@ -783,7 +794,6 @@ const qTranslateX = function (pg) {
             contentId = editor.id;
         }
         const hook = contentHooks[contentId];
-        console.log('QTX attachEditorHook', contentId, hook);
         if (!hook)
             return;
         // The hook may have been created for a different content field, e.g. for widgets
@@ -796,10 +806,6 @@ const qTranslateX = function (pg) {
         }
         hook.mce = editor;
 
-        /**
-         * Highlighting the translatable fields
-         * @since 3.2-b3
-         */
         editor.getContainer().classList.add('qtranxs-translatable');
         editor.getElement().classList.add('qtranxs-translatable');
 
