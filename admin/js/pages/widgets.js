@@ -27,25 +27,24 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
         switch (widgetBase) {
             case 'text':
                 const widgetId = widget.find('.widget-id').val();
-                const fieldTitle = widget.find(".text-widget-fields input[id$='_title']")[0];
+                const fieldTitle = widget.find(".text-widget-fields input[id$='_title']");
                 widget.find(".widget-content input[id^='widget-text-'][id$='-title']").each(function (i, e) {
                     qtx.refreshContentHook(e);
-                    qtx.attachContentHook(fieldTitle, e.id);
+                    qtx.attachContentHook(fieldTitle[0], e.id);
                 });
-                const fieldText = widget.find(".text-widget-fields textarea[id$='_text']")[0];
-                const editor = window.tinyMCE.get(fieldText.id);
-                console.log('widgetUpdate editor', widgetId, editor)
+
+                const fieldText = widget.find(".text-widget-fields textarea[id$='_text']");
+                const editor = window.tinyMCE.get(fieldText[0].id);
                 widget.find(".widget-content textarea[id^='widget-text-'][id$='-text']").each(function (i, e) {
                     qtx.refreshContentHook(e);
                     if (editor) {
                         qtx.attachEditorHook(editor, e.id);
-
-                        // Here the text field has not been synced after translation yet
+                        // The text field has not been synced after translation yet.
                         // Because the text field has not been updated by wp.widgets when in Visual Mode,
                         // it still has the translated content before saving the widget.
                         // To allow updateField to change the MCE content, change the value of the text field.
                         const syncInput = widget.find('.sync-input.text');
-                        fieldText.val(syncInput.val() + 'x');
+                        fieldText.val(syncInput.val() + '*');
                     }
                 });
                 if (widgetId in wp.textWidgets.widgetControls) {
@@ -62,7 +61,9 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
     };
 
     const onWidgetAdded = function (evt, widget) {
-        onWidgetUpdate(evt, widget);  // rely on refreshContent
+        // Rely on refreshContent to create hooks
+        onWidgetUpdate(evt, widget);
+        // The LSB may not be initialized yet if all widget areas were empty on page load
         qtx.setupLanguageSwitch();
     };
 

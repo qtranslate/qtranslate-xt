@@ -93,18 +93,20 @@ const qTranslateX = function (pg) {
     /**
      * Attach an input field to an existing content hook.
      *
-     * Usually, this function is called internally for input fields edited by the user.
+     * Usually, this function is called internally for an input field edited by the user.
      * In some cases (e.g. widgets), the editable fields are different from those containing
      * the translatable content. This function allows to attach them to the hook.
      * The single content field initially attached is not updated anymore but the hidden fields
      * storing each language content are still updated.
+     * @see addContentHook
+     * @see attachEditorHook
      *
      * @param inputField field editable by the user
-     * @param hookId optional element ID to override the content hook key
+     * @param contentId optional element ID to override the content hook key (default: input ID)
      */
-    this.attachContentHook = function (inputField, hookId)
+    this.attachContentHook = function (inputField, contentId)
     {
-        const hook = contentHooks[hookId ? hookId : inputField.id];
+        const hook = contentHooks[contentId ? contentId : inputField.id];
         if (!hook) {
             return;
         }
@@ -785,24 +787,37 @@ const qTranslateX = function (pg) {
         }
     };
 
-    /** Link a TinyMCE editor with translatable content. The editor should be initialized for TinyMCE. */
+    /**
+     * Link a TinyMCE editor with translatable content.
+     *
+     * Usually, this function is called internally for an input field edited by the user.
+     * In some cases (e.g. widgets), the editable fields are different from those containing
+     * the translatable content. This function allows to attach them to the hook.
+     * The single content field initially attached is not updated anymore but the hidden fields
+     * storing each language content are still updated.
+     * @see attachContentHook
+     *
+     * @param editor tinyMCE editor, should be initialized for TinyMCE
+     * @param contentId optional element ID to override the content hook key (default: input ID)
+     * @return hook
+     */
     this.attachEditorHook = function (editor, contentId) {
         if (!editor.id)
-            return;
+            return null;
         // The MCE editor can be linked to translatable content having a different ID, e.g. for widgets
         if (!contentId) {
             contentId = editor.id;
         }
         const hook = contentHooks[contentId];
         if (!hook)
-            return;
+            return null;
         // The hook may have been created for a different content field, e.g. for widgets
         // The main content field should always match the editor ID so that its value is synced on tab switch
         if (contentId !== editor.id) {
             hook.contentField = document.getElementById(editor.id);
         }
         if (hook.mce) {
-            return;  // already initialized for qTranslate
+            return hook;  // already initialized for qTranslate
         }
         hook.mce = editor;
 
@@ -1147,7 +1162,6 @@ const qTranslateX = function (pg) {
                 }
             }
         }
-        console.log('anchors', anchors);
         if (!anchors.length) {
             let target = pg.langSwitchWrapAnchor;
             if (!target) {
