@@ -24,7 +24,7 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
 
     const onWidgetUpdate = function (evt, widget) {
         const widgetBase = widget.find('.id_base').val();
-        switch(widgetBase) {
+        switch (widgetBase) {
             case 'text':
                 const widgetId = widget.find('.widget-id').val();
                 const fieldTitle = widget.find(".text-widget-fields input[id$='_title']")[0];
@@ -32,18 +32,21 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
                     qtx.refreshContentHook(e);
                     qtx.attachContentHook(fieldTitle, e.id);
                 });
-                const fieldText = widget.find(".text-widget-fields textarea[id$='_text']");
-                const editor = window.tinyMCE.get(fieldText[0].id);
+                const fieldText = widget.find(".text-widget-fields textarea[id$='_text']")[0];
+                const editor = window.tinyMCE.get(fieldText.id);
+                console.log('widgetUpdate editor', widgetId, editor)
                 widget.find(".widget-content textarea[id^='widget-text-'][id$='-text']").each(function (i, e) {
                     qtx.refreshContentHook(e);
-                    qtx.attachEditorHook(editor, e.id);
+                    if (editor) {
+                        qtx.attachEditorHook(editor, e.id);
 
-                    // Here the text field has not been synced after translation yet
-                    // Because the text field has not been updated by wp.widgets when in Visual Mode,
-                    // it still has the translated content before saving the widget.
-                    // To allow updateField to change the MCE content, change the value of the text field.
-                    const syncInput = widget.find('.sync-input.text');
-                    fieldText.val(syncInput.val() + 'x');
+                        // Here the text field has not been synced after translation yet
+                        // Because the text field has not been updated by wp.widgets when in Visual Mode,
+                        // it still has the translated content before saving the widget.
+                        // To allow updateField to change the MCE content, change the value of the text field.
+                        const syncInput = widget.find('.sync-input.text');
+                        fieldText.val(syncInput.val() + 'x');
+                    }
                 });
                 if (widgetId in wp.textWidgets.widgetControls) {
                     wp.textWidgets.widgetControls[widgetId].updateFields();
@@ -55,11 +58,15 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
                 });
                 break;
         }
-
         wpWidgets.appendTitle(widget);
     };
 
-    $(document).on('widget-added', onWidgetUpdate);
+    const onWidgetAdded = function (evt, widget) {
+        onWidgetUpdate(evt, widget);  // rely on refreshContent
+        qtx.setupLanguageSwitch();
+    };
+
+    $(document).on('widget-added', onWidgetAdded);
     $(document).on('widget-updated', onWidgetUpdate);
 
     const onLanguageSwitchAfter = function () {

@@ -22,11 +22,12 @@ const qTranslateX = function (pg) {
     const qtx = this;
 
     /**
-     * Internal state of the hooks
+     * Internal state of hooks and languageSwitch, not exposed
      */
     const contentHooks = {};
     const displayHookNodes = [];
     const displayHookAttrs = [];
+    let languageSwitchInitialized = false;
 
     /**
      * Designed as interface for other plugin integration. The documentation is available at
@@ -667,8 +668,7 @@ const qTranslateX = function (pg) {
             const className = qTranslateConfig.custom_field_classes[i];
             qtx.addContentHooksByClass(className);
         }
-        if (qTranslateConfig.LSB)
-            qtx.addContentHooksTinyMCE();
+        qtx.addContentHooksTinyMCE();
     };
 
     /**
@@ -816,7 +816,7 @@ const qTranslateX = function (pg) {
      * Sets hooks on HTML-loaded TinyMCE editors via tinyMCEPreInit.mceInit.
      */
     this.addContentHooksTinyMCE = function () {
-        if (!window.tinyMCEPreInit) {
+        if (!window.tinyMCEPreInit || qTranslateConfig.RAW) {
             return;
         }
         for (const key in contentHooks) {
@@ -1147,6 +1147,7 @@ const qTranslateX = function (pg) {
                 }
             }
         }
+        console.log('anchors', anchors);
         if (!anchors.length) {
             let target = pg.langSwitchWrapAnchor;
             if (!target) {
@@ -1174,6 +1175,33 @@ const qTranslateX = function (pg) {
             }
         }
     };
+
+    /**
+     * Setup the language switching buttons, meta box and listeners.
+     *
+     * Usually, this is called internally after the display and content hooks have been added.
+     * However some pages may initialize the hooks later on events (e.g. widget-added).
+     * Switching buttons should only be created if there is at least one hook, so this offers
+     * the possibility to setup the language switch dynamically later.
+     */
+    this.setupLanguageSwitch = function() {
+        if (languageSwitchInitialized || !qTranslateConfig.LSB) {
+            return;
+        }
+        if (!displayHookNodes.length && !displayHookAttrs.length && !Object.keys(contentHooks).length) {
+            return;
+        }
+
+        setupMetaBoxLSB();
+        setupAnchorsLSB();
+        // Synchronization of multiple sets of Language Switching Buttons
+        qtx.addLanguageSwitchListener(onTabSwitch);
+        if (pg.onTabSwitch) {
+            qtx.addLanguageSwitchListener(pg.onTabSwitch);
+        }
+
+        languageSwitchInitialized = true;
+    }
 
     const initialize = function () {
         if (qTranslateConfig.LSB) {
@@ -1208,25 +1236,9 @@ const qTranslateX = function (pg) {
 
         addMultilingualHooks();
 
-        if (!displayHookNodes.length && !displayHookAttrs.length && !Object.keys(contentHooks).length) {
-            return;
-        }
+        qtx.addContentHooksTinyMCE();
 
-        if (!qTranslateConfig.RAW) {
-            qtx.addContentHooksTinyMCE();
-        }
-
-        if (qTranslateConfig.LSB) {
-            setupMetaBoxLSB();
-            setupAnchorsLSB();
-            /**
-             * @since 3.2.4 Synchronization of multiple sets of Language Switching Buttons
-             */
-            qtx.addLanguageSwitchListener(onTabSwitch);
-            if (pg.onTabSwitch) {
-                qtx.addLanguageSwitchListener(pg.onTabSwitch);
-            }
-        }
+        qtx.setupLanguageSwitch();
     };
 
     initialize();
