@@ -326,22 +326,6 @@ const qTranslateX = function (pg) {
         }
     };
 
-    const removeContentHookH = function (hook) {
-        if (!hook)
-            return false;
-        if (hook.sepfield)
-            $(hook.sepfield).remove();
-        const contents = {};
-        for (const lang in hook.fields) {
-            const f = hook.fields[lang];
-            contents[lang] = f.value;
-            $(f).remove();
-        }
-        hook.contentField.classList.remove('qtranxs-translatable');
-        delete contentHooks[hook.contentField.id];
-        return contents;
-    };
-
     /**
      * Designed as interface for other plugin integration. The documentation is available at
      * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
@@ -349,11 +333,26 @@ const qTranslateX = function (pg) {
      * @since 3.3
      */
     this.removeContentHook = function (inputField) {
-        if (!inputField || !inputField.id || !contentHooks[inputField.id])
+        if (!inputField || !inputField.id)
             return false;
         const hook = contentHooks[inputField.id];
-        removeContentHookH(hook);
-        // @since 3.2.9.8 - hook.contents -> hook.fields
+        if (!hook) {
+            return false;
+        }
+        if (hook.sepfield) {
+            $(hook.sepfield).remove();
+        }
+        for (const lang in hook.fields) {
+            const langField = hook.fields[lang];
+            $(langField).remove();
+        }
+        if (hook.mce) {
+            const editor = hook.mce;
+            editor.getContainer().classList.remove('qtranxs-translatable');
+            editor.getElement().classList.remove('qtranxs-translatable');
+        }
+        hook.contentField.classList.remove('qtranxs-translatable');
+        delete contentHooks[inputField.id];
         inputField.classList.remove('qtranxs-translatable');
         return true;
     };
@@ -364,11 +363,7 @@ const qTranslateX = function (pg) {
      * Re-create a hook, after a piece of HTML is dynamically replaced with a custom Java script.
      */
     this.refreshContentHook = function (inputField) {
-        if (!inputField || !inputField.id)
-            return false;
-        const hook = contentHooks[inputField.id];
-        if (hook)
-            removeContentHookH(hook);
+        qtx.removeContentHook(inputField);
         return qtx.addContentHook(inputField);
     };
 
