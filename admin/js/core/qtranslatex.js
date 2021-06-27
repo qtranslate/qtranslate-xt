@@ -364,8 +364,6 @@ const qTranslateX = function (pg) {
         if (!hook) {
             return false;
         }
-        // The current content field may not be the same as the input field, in case it was re-attached (e.g. widgets)
-        hook.contentField.classList.remove('qtranxs-translatable');
         if (hook.sepfield) {
             $(hook.sepfield).remove();
         }
@@ -378,6 +376,8 @@ const qTranslateX = function (pg) {
             editor.getContainer().classList.remove('qtranxs-translatable');
             editor.getElement().classList.remove('qtranxs-translatable');
         }
+        // The current content field may not be the same as the input field, in case it was re-attached (e.g. widgets)
+        hook.contentField.classList.remove('qtranxs-translatable');
         delete contentHooks[inputField.id];
         inputField.classList.remove('qtranxs-translatable');
         return true;
