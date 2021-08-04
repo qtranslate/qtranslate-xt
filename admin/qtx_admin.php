@@ -863,6 +863,10 @@ function qtranxf_admin_load() {
     if ( version_compare( $wp_version, '5.0' ) >= 0 ) {
         require_once( QTRANSLATE_DIR . '/admin/qtx_admin_gutenberg.php' );
     }
+
+    // Disable the block editor from managing widgets, including the Gutenberg plugin
+    add_filter( 'gutenberg_use_widgets_block_editor', '__return_false', 99 );
+    add_filter( 'use_widgets_block_editor', '__return_false', 99 );
 }
 
 qtranxf_admin_load();
