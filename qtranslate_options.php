@@ -249,7 +249,7 @@ function qtranxf_default_not_available() {
     $nam['ru'] = 'Извините, этот текст доступен только на &ldquo;%LANG:&rdquo;, &ldquo;:&rdquo; и &ldquo;%&rdquo;.';//ok
     $nam['fi'] = 'Tämä teksti on valitettavasti saatavilla vain kielillä: %LANG:, : ja %.';//Jyrki Vanamo, Oct 20 2015, 3.4.6.5
     $nam['fr'] = 'Désolé, cet article est seulement disponible en %LANG:, : et %.';
-    $nam['nl'] = 'Onze verontschuldigingen, dit bericht is alleen beschikbaar in %LANG:, : en %.';
+    $nam['nl'] = 'Onze verontschuldigingen, dit bericht is alleen beschikbaar in het %LANG:, : en %.';
     $nam['sv'] = 'Tyvärr är denna artikel enbart tillgänglig på %LANG:, : och %.';
     $nam['it'] = 'Ci spiace, ma questo articolo è disponibile soltanto in %LANG:, : e %.';
     $nam['ro'] = 'Din păcate acest articol este disponibil doar în %LANG:, : și %.';
