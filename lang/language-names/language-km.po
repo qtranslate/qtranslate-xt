@@ -1,7 +1,15 @@
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Language: \n"
+"Language: km\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Herr Vigg <herrvigg@gmail.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.0\n"
 
 msgid "en"
 msgstr "អង់គ្លេស"
@@ -10,16 +18,16 @@ msgid "en_US"
 msgstr "អង់គ្លេស (ស.រ.អ)"
 
 msgid "af"
-msgstr "អាហ្វ្រិកាន"
+msgstr "អាហ្វហ្គានីស្ថាន"
 
 msgid "ak"
-msgstr "អាកាន"
+msgstr ""
 
 msgid "sq"
 msgstr "អាល់បានី"
 
 msgid "arq"
-msgstr ""
+msgstr "អាល់ហ្សេរី"
 
 msgid "am"
 msgstr "អាមហារីច"
@@ -76,13 +84,13 @@ msgid "bal"
 msgstr ""
 
 msgid "zh_CN"
-msgstr ""
+msgstr "ចិន"
 
 msgid "zh_HK"
-msgstr ""
+msgstr "ចិន(ហុងកុង)"
 
 msgid "zh_TW"
-msgstr ""
+msgstr "ចិន(តែវ៉ាន់)"
 
 msgid "co"
 msgstr "កូស៊ីខាន"
@@ -109,13 +117,13 @@ msgid "dzo"
 msgstr ""
 
 msgid "en_AU"
-msgstr ""
+msgstr "អង់គ្លេស(អូស្ត្រាលី)"
 
 msgid "en_CA"
-msgstr ""
+msgstr "អង់គ្លេស(កាណាដា)"
 
 msgid "en_NZ"
-msgstr ""
+msgstr "អង់គ្លេស"
 
 msgid "en_ZA"
 msgstr ""
@@ -136,10 +144,10 @@ msgid "fi"
 msgstr "ហ្វាំងឡង់"
 
 msgid "fr_BE"
-msgstr ""
+msgstr "បារាំង(បែលហ្ស៊ិក)"
 
 msgid "fr_CA"
-msgstr ""
+msgstr "បារាំង(កាណាដា)"
 
 msgid "fr_FR"
 msgstr "បារាំង"
@@ -163,7 +171,7 @@ msgid "de_DE"
 msgstr "អាល្លឺម៉ង់"
 
 msgid "de_CH"
-msgstr ""
+msgstr "អាល្លឺម៉ង់(ស្វីស)"
 
 msgid "el"
 msgstr "ក្រិច"
@@ -175,7 +183,7 @@ msgid "gu"
 msgstr "ហ្កុយ៉ារាទី"
 
 msgid "haw_US"
-msgstr "ហាវៃ"
+msgstr "ហាវៃ(ស.រ)"
 
 msgid "haz"
 msgstr ""
@@ -184,7 +192,7 @@ msgid "he_IL"
 msgstr "អ៊ីស្រាអែល"
 
 msgid "hi_IN"
-msgstr "ហិណ្ឌី"
+msgstr "ហិណ្ឌូ(ឥណ្ឌា)"
 
 msgid "hu_HU"
 msgstr "ហុងគ្រី"
@@ -196,7 +204,7 @@ msgid "ido"
 msgstr ""
 
 msgid "id_ID"
-msgstr "ឥណ្ឌូណេស៊ី"
+msgstr "ឥណ្ឌូនេស៊ី"
 
 msgid "ga"
 msgstr "អៀរឡង់"
@@ -262,10 +270,10 @@ msgid "ms_MY"
 msgstr "ម៉ាឡេស៊ី"
 
 msgid "ml_IN"
-msgstr "មលយាល័ម"
+msgstr "ម៉ាឡាយ៉ាឡា"
 
 msgid "mri"
-msgstr ""
+msgstr "ម៉ៅរី"
 
 msgid "mr"
 msgstr "ម៉ារ៉ាធី"
@@ -277,88 +285,88 @@ msgid "mn"
 msgstr "ម៉ុងហ្គោលី"
 
 msgid "me_ME"
-msgstr ""
+msgstr "ម៉ុងតេណេហ្គ្រោ"
 
 msgid "ary"
-msgstr ""
+msgstr "ម៉ូរ៉ូខេន"
 
 msgid "my_MM"
-msgstr ""
+msgstr "មីយ៉ាន់ម៉ា"
 
 msgid "ne_NP"
 msgstr "នេប៉ាល់"
 
 msgid "nb_NO"
-msgstr "ន័រវែស បុកម៉ាល់"
+msgstr "ន័រវែស (បុកម៉ាល់)"
 
 msgid "nn_NO"
-msgstr "ន័រវែស នីនូស"
+msgstr "ន័រវែស (នីនូស)"
 
 msgid "oci"
-msgstr ""
+msgstr "អុកស៊ីតង់"
 
 msgid "ory"
-msgstr ""
+msgstr "អូរីយ៉ា"
 
 msgid "os"
-msgstr ""
+msgstr "អូស៊ីទិក"
 
 msgid "ps"
 msgstr "បាស្តូ"
 
 msgid "fa_IR"
-msgstr "ភឺសៀន"
+msgstr "ពែក្ស"
 
 msgid "fa_AF"
-msgstr ""
+msgstr "ពែក្ស(អាហ្វហ្គានីស្ថាន)"
 
 msgid "pl_PL"
 msgstr "ប៉ូឡូញ"
 
 msgid "pt_BR"
-msgstr ""
+msgstr "ព័រទុយហ្កាល់(ប្រេស៊ីល)"
 
 msgid "pt_PT"
 msgstr "ព័រទុយហ្គាល់ (អឺរ៉ុប)"
 
 msgid "pa_IN"
-msgstr "បឹនជាពិ"
+msgstr "ពុនចាពី"
 
 msgid "rhg"
-msgstr ""
+msgstr "រ៉ូហ៊ីងយ៉ា"
 
 msgid "ro_RO"
-msgstr "រូម៉ានី"
+msgstr "រ៉ូម៉ានី"
 
 msgid "roh"
-msgstr ""
+msgstr "រ៉ូម៉ាំង វ៉ាល់ឡាឌើ"
 
 msgid "ru_RU"
 msgstr "រុស្ស៊ី"
 
 msgid "ru_UA"
-msgstr ""
+msgstr "រុស្ស៊ី (អ៊ុយក្រែន)"
 
 msgid "rue"
-msgstr ""
+msgstr "រ៉ាសិុន"
 
 msgid "sah"
-msgstr ""
+msgstr "សាហ្គា"
 
 msgid "sa_IN"
-msgstr ""
+msgstr "សំស្ក្រឹត(ឥណ្ឌា)"
 
 msgid "srd"
-msgstr ""
+msgstr "ស្សាកដានៀ"
 
 msgid "gd"
-msgstr "ភាសាហ្កែលិគ (gd)"
+msgstr "ស្កុតឡែន(ហ្គេលិន)"
 
 msgid "sr_RS"
-msgstr "ស៊ែប"
+msgstr "ស៊ែប៊ី"
 
 msgid "szl"
-msgstr ""
+msgstr "ស៊ាលីស៊ាន"
 
 msgid "sd_PK"
 msgstr "ស៊ីនឌី"
@@ -373,34 +381,34 @@ msgid "sl_SI"
 msgstr "ស្លូវ៉ានី"
 
 msgid "so_SO"
-msgstr "សូម៉ាលី"
+msgstr "ស៊ូម៉ាលី"
 
 msgid "azb"
-msgstr ""
+msgstr "អេស្រាបៃហ្សានី"
 
 msgid "es_AR"
-msgstr ""
+msgstr "អេស្ប៉ាញ(អាហ្សង់ទីន)"
 
 msgid "es_CL"
-msgstr ""
+msgstr "អេស្ប៉ាញ(ឈីលី)"
 
 msgid "es_CO"
-msgstr ""
+msgstr "អេស្ប៉ាញ(កូឡំប៊ី)"
 
 msgid "es_MX"
-msgstr ""
+msgstr "អេស្ប៉ាញ(មុិកស៊ីកូ)"
 
 msgid "es_PE"
-msgstr ""
+msgstr "អេស្ប៉ាញ(បេរ៉ូ)"
 
 msgid "es_PR"
-msgstr ""
+msgstr "អេស្ប៉ាញ(ព័រទុយកាល់)"
 
 msgid "es_ES"
-msgstr "អេស្ប៉ាញ (អ៊ឺរ៉ុប)"
+msgstr "អេស្ប៉ាញ"
 
 msgid "es_VE"
-msgstr ""
+msgstr "អេស្ប៉ាញ(វ៉េនុយស៊ុយអេឡា)"
 
 msgid "su_ID"
 msgstr "ស៊ូដង់"
@@ -409,16 +417,16 @@ msgid "sw"
 msgstr "ស្វាហ៊ីលី"
 
 msgid "sv_SE"
-msgstr "ស៊ុយអែដ"
+msgstr "ស៊ុយអែត"
 
 msgid "gsw"
 msgstr "អាល្លឺម៉ង (ស្វីស)"
 
 msgid "tl"
-msgstr ""
+msgstr "តាហ្គាឡង់"
 
 msgid "tg"
-msgstr "តាដហ្សីគីស្តង់"
+msgstr "ទ័រជីក"
 
 msgid "tzm"
 msgstr "តាម៉ាសាយអាត្លាសកណ្តាល"
@@ -473,4 +481,3 @@ msgstr "វេល"
 
 msgid "yor"
 msgstr ""
-
