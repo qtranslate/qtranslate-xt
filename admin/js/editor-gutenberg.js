@@ -6,15 +6,18 @@
 'use strict';
 
 (function () {
-    console.log('QT-XT API: setup apiFetch');
+    // console.log('QT-XT API: setup apiFetch');
     wp.apiFetch.use((options, next) => {
         if (!options.path || (options.method !== 'PUT' && options.method !== 'POST')) {
             return next(options);
         }
-
+        const editor = wp.data.select('core/editor');
+        if (!editor) {
+            return next(options);
+        }
         // A better event handler is needed to understand when the post is saved.
         // For now "wait" by ignoring all API calls until the post is loaded in the editor.
-        const post = wp.data.select('core/editor').getCurrentPost();
+        const post = editor.getCurrentPost();
         // console.log('QT-XT API: PRE handling method=' + options.method, 'path=' + options.path, 'post=', post);
         if (!post.hasOwnProperty('type')) {
             return next(options);
@@ -23,7 +26,7 @@
         if (!typeData.hasOwnProperty('rest_base')) {
             return next(options);
         }
-        //console.log('QT-XT API: PRE handling method=' + options.method, 'path=' + options.path, 'post=', post, 'type=', typeData);
+        // console.log('QT-XT API: PRE handling method=' + options.method, 'path=' + options.path, 'post=', post, 'type=', typeData);
         const prefixPath = '/wp/v2/' + typeData.rest_base + '/' + post.id;
 
         if ((options.path.startsWith(prefixPath) && options.method === 'PUT') ||
@@ -40,7 +43,7 @@
                     'qtx_editor_lang': post.qtx_editor_lang
                 }
             };
-            console.log('QT-XT API: using options=', options);
+            // console.log('QT-XT API: using options=', options);
             const result = next(newOptions);
             return result;
         }
