@@ -1,3 +1,20 @@
+### 3.11.0
+Core
+* Enable language switch for text widget with TinyMCE editor (#1042, #529, #616, #912)
+* Disable the block-based widget editor with WordPress 5.8 (#1058, #1042)
+* Set cookies with explicit `SameSite=Lax` policy (#1053)
+* Fix URL conversion for 3-letter language code (#1035)
+* Fix uninitialized string offset in utils (#1047)
+* Refactor and fix `removeContentHook` (#1043)
+
+Localization
+* Update localization zh_CN (80%) (#1049)
+* Update localization ru_RU (45%) (#444)
+* Update localization sl_SI (53%) (#437)
+* Add localization nl_NL_formal (70%) (#416)
+* Update language names for km (85%) (#420)
+* Update POT template
+
 ### 3.10.1
 Core
 * Add qtranxs-flag class to flags on frontend (#1015)

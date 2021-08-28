@@ -3,7 +3,7 @@ Developed by: new qTranslate community, from qTranslate-X by John Clause and qTr
 Contributors: herrvigg, johnclause, chineseleper, Vavooon, grafcom  
 Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, translation  
 Requires: 4.8  
-Tested up to: 5.7.2  
+Tested up to: 5.8  
 Stable tag: N/A  
 License: GPLv2 or later  
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
@@ -71,6 +71,10 @@ Note for developers:
 * old releases may contain legacy headers that can become problematic. Be very cautious if you customize the updates for given branches!
 
 ## Upgrade Notice
+
+### 3.11.0
+Major fix! Enable language switch for text widget with TinyMCE editor.  
+Warning: disable new block-based widget editor with WordPress 5.8. See [#1058](https://github.com/qtranslate/qtranslate-xt/issues/1058).
 
 ### 3.10.0
 New feature! Javascript code bundled with Webpack and Babel. New paths updated on plugin reactivation or by saving your qTranslate-XT language settings.
