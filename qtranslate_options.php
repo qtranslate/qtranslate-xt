@@ -48,6 +48,7 @@ define( 'QTX_HIGHLIGHT_MODE_CUSTOM_CSS', 9 );
 
 define( 'QTX_COOKIE_NAME_FRONT', 'qtrans_front_language' );
 define( 'QTX_COOKIE_NAME_ADMIN', 'qtrans_admin_language' );
+define( 'QTX_COOKIE_SAMESITE', 'Lax' );
 
 define( 'QTX_IGNORE_FILE_TYPES', 'gif,jpg,jpeg,png,svg,pdf,swf,tif,rar,zip,7z,mpg,divx,mpeg,avi,css,js,mp3,mp4,apk' );
 

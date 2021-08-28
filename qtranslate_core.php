@@ -459,7 +459,7 @@ function qtranxf_setcookie_language( $lang, $cookie_name, $cookie_path ) {
             'path'     => $cookie_path,
             'secure'   => $q_config['use_secure_cookie'],
             'httponly' => true,
-            'samesite' => 'Lax'
+            'samesite' => QTX_COOKIE_SAMESITE
         ] );
     } else {
         // only meant for server-side, set 'httponly' flag
