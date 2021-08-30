@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: qTranslate-X 3.11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-28 23:16+0200\n"
-"PO-Revision-Date: 2021-08-28 23:16+0200\n"
-"Last-Translator: Herr Vigg <herrvigg@gmail.com>\n"
+"PO-Revision-Date: 2021-08-30 12:23+0800\n"
+"Last-Translator: Dallas Lu <i@dallas.lu>\n"
 "Language-Team: SilverFox <vzerda@gmail.com>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
@@ -70,17 +70,16 @@ msgid "Please, correct the syntax error in the file."
 msgstr "请纠正文件中的语法错误。"
 
 #: admin/qtx_activation_hook.php:175 admin/qtx_activation_hook.php:416
-#, fuzzy, php-format
-#| msgid "Term configuration is inconsistent."
+#, php-format
 msgid "Deprecated configuration key(s) in %s:"
-msgstr "术语配置不一致。"
+msgstr "在 %s 中被废弃的配置键值："
 
 #: admin/qtx_activation_hook.php:177 admin/qtx_activation_hook.php:418
 #, php-format
 msgid ""
 "This configuration will become incompatible in next releases. For more "
 "information, see: %s."
-msgstr ""
+msgstr "这种配置在接下来的版本中会变得不兼容。欲了解更多信息，请参见：%s。"
 
 #: admin/qtx_activation_hook.php:762
 #, php-format
@@ -131,6 +130,8 @@ msgid ""
 "<b>Caution!</b> The block editor (Gutenberg) is supported only recently in "
 "%s with some limitations. Use at your own discretion!"
 msgstr ""
+"<b>请注意!</b>块状编辑器（Gutenberg）最近才在 %s 开始获得支持，有一些限制。使"
+"用时请自行斟酌！"
 
 #: admin/qtx_activation_hook.php:909
 #, php-format
@@ -138,13 +139,15 @@ msgid ""
 "Currently only the single language edit mode is supported. For more details, "
 "please read carefully our <a href=\"%s\">Gutenberg FAQ</a>."
 msgstr ""
+"目前只支持单一语言的编辑模式。欲了解更多详情，请仔细阅读我们的<a href=\"%s"
+"\">Gutenberg 常见问题</a>。"
 
 #: admin/qtx_activation_hook.php:913
 #, php-format
 msgid ""
 "It is recommended to install the <a href=\"%s\">%s</a> in your <a href=\"%s"
 "\">plugins</a>."
-msgstr ""
+msgstr "若要安装 <a href=\"%s\">%s</a>，请前往<a href=\"%s\">插件</a>。"
 
 #: admin/qtx_activation_hook.php:941 admin/qtx_activation_hook.php:960
 #: admin/qtx_import_export.php:86
@@ -263,14 +266,11 @@ msgstr ""
 "式中定义。语言菜单的标签也可以通过菜单配置中的\"%s\"字段进行自定义。"
 
 #: admin/qtx_admin.php:651
-#, fuzzy, php-format
-#| msgid ""
-#| "The field \"%s\" of inserted menu item allows additional configuration "
-#| "described in %sFAQ%s."
+#, php-format
 msgid ""
 "The field \"%s\" of inserted menu item allows additional configuration "
 "described in our %sWiki%s."
-msgstr "插入的菜单项的\"%s\"字段，允许在%s常见问题%s中描述的额外配置。"
+msgstr "插入的菜单项的字段 \"%s\" 允许使用在我们的 %sWiki%s 中描述的额外配置。"
 
 #: admin/qtx_admin.php:658
 msgid "Add to Menu"
@@ -307,47 +307,43 @@ msgstr "获取%s"
 msgid ""
 "Modules status undefined in %s. Please deactivate it and reactivate it again "
 "from the plugins page."
-msgstr ""
+msgstr "模块状态在 %s 中未定义。请停用它，并从插件页面重新激活它。"
 
 #: admin/qtx_admin_modules.php:131
 #, php-format
 msgid ""
 "The plugin \"%s\" is incompatible with the module \"%s\" of %s. Please "
 "disable it."
-msgstr ""
+msgstr "插件 \"%s\" 与模块 \"%s\"（%s 中）不兼容。请停用它。"
 
 #: admin/qtx_admin_modules.php:132
-#, fuzzy, php-format
-#| msgid "Activate plugin %s"
+#, php-format
 msgid "Deactivate plugin %s"
-msgstr "激活插件 %s"
+msgstr "停用插件 %s"
 
 #: admin/qtx_admin_modules.php:142
 #, php-format
 msgid "The following modules are now active in %s:"
-msgstr ""
+msgstr "以下模块在 %s 中现已激活："
 
 #: admin/qtx_admin_modules.php:162 admin/qtx_admin_modules.php:163
 #: admin/qtx_admin_modules.php:174
-#, fuzzy
-#| msgid "Action"
 msgid "Active"
-msgstr "动作"
+msgstr "激活"
 
 #: admin/qtx_admin_modules.php:168 admin/qtx_admin_modules.php:169
 #: admin/qtx_admin_modules.php:182
 msgid "Inactive"
-msgstr ""
+msgstr "未激活"
 
 #: admin/qtx_admin_modules.php:175
 msgid "Blocked"
-msgstr ""
+msgstr "已屏蔽"
 
 #: admin/qtx_admin_modules.php:181
-#, fuzzy
 #| msgid "Pre-Defined"
 msgid "Undefined"
-msgstr "预定义"
+msgstr "未定义"
 
 #: admin/qtx_admin_options_update.php:45
 msgid "qTranslate has been reset."
@@ -371,12 +367,12 @@ msgid ""
 "The 2-letter language code \"%s\" should be lower case (ISO 639-1). Upper "
 "case is still allowed for legacy codes but not for new entries."
 msgstr ""
+"2 个字母的语言代码 \"%s\" 应该是小写的（ISO 639-1）。传统代码仍允许大写，但新"
+"条目不允许。"
 
 #: admin/qtx_admin_options_update.php:72 admin/qtx_admin_options_update.php:214
-#, fuzzy
-#| msgid "Single Language Mode."
 msgid "Invalid language code!"
-msgstr "单一语言模式。"
+msgstr "语言代码不合法！"
 
 #: admin/qtx_admin_options_update.php:82 admin/qtx_admin_options_update.php:87
 msgid "There is already a language with the same Language Code!"
@@ -420,21 +416,13 @@ msgid "No initially untranslated posts found to set the default language."
 msgstr "没有发现最初未翻译的文章来设置默认语言。"
 
 #: admin/qtx_admin_options_update.php:205
-#, fuzzy
-#| msgid ""
-#| "Post types other than \"post\" or \"page\", as well as unpublished "
-#| "entries, will have to be adjusted manually as needed, since there is no "
-#| "common way to automate setting the default language otherwise. It can be "
-#| "done with a custom script though. You may request a %spaid support%s for "
-#| "this."
 msgid ""
 "Post types other than \"post\" or \"page\", as well as unpublished entries, "
 "will have to be adjusted manually as needed, since there is no common way to "
 "automate setting the default language otherwise."
 msgstr ""
-"除了 \"文章(post)\"或 \"页面(page)\"以外的帖子类型，以及未发表的条目，将不得"
-"不根据需要手动调整，因为没有自动设置默认语言的通用方法。不过可以用一个自定义"
-"脚本来完成。你可以为此请求一个%s付费支持%s。"
+"除了 \"文章(post)\"或 \"页面(page)\"以外的文章类型，以及未发表的条目，将不得"
+"不根据需要手动调整，因为没有自动设置默认语言的通用方法。"
 
 #: admin/qtx_admin_options_update.php:239
 msgid "Language is already enabled or invalid!"
@@ -511,10 +499,8 @@ msgid "back to configuration page"
 msgstr "回到配置页面"
 
 #: admin/qtx_admin_settings.php:60
-#, fuzzy
-#| msgid "Language Management (qTranslate Configuration)"
 msgid "Language Management (qTranslate-XT Configuration)"
-msgstr "语言管理 (qTranslate 配置)"
+msgstr "语言管理 (qTranslate-XT 配置)"
 
 #: admin/qtx_admin_settings.php:62
 #, php-format
@@ -535,16 +521,10 @@ msgid ""
 "Language %sISO 639 code%s, two-letter (ISO 639-1) or three-letter (ISO 639-2 "
 "and 639-3), lower case. (Examples: en, fr, zh, nds)"
 msgstr ""
+"语言 %sISO 639代码%s，双字母（ISO 639-1）或三字母（ISO 639-2 和 639-3），小"
+"写。(例如：en, fr, zh, nds)"
 
 #: admin/qtx_admin_settings.php:112
-#, fuzzy
-#| msgid ""
-#| "The language code is used in language tags and in URLs. It is case "
-#| "sensitive. Use of lower case for the language code is preferable, but not "
-#| "required. The code may be arbitrary chosen by site owner, although it is "
-#| "preferable to use already commonly accepted code if available. Once a "
-#| "language code is created and entries for this language are made, it is "
-#| "difficult to change it, please make a careful decision."
 msgid ""
 "The language code is used in language tags and in URLs. The code may be "
 "arbitrary chosen by site owner, although it is preferable to use already "
@@ -552,9 +532,9 @@ msgid ""
 "entries for this language are made, it is difficult to change it, please "
 "make a careful decision."
 msgstr ""
-"语言代码在语言标签和URL中使用。它是区分大小写的。语言代码最好使用小写，但不是"
-"必须的。该代码可由网站所有者任意选择，但如果有的话，最好是使用已被普遍接受的"
-"代码。一旦创建了语言代码，并为该语言建立了条目，就很难再改变它，请谨慎决定。"
+"语言代码在语言标签和URL中使用。该代码可由网站所有者任意选择，但如果有的话，最"
+"好是使用已经被普遍接受的代码。一旦创建了语言代码，并为这种语言建立了条目，就"
+"很难再改变它，请谨慎决定。"
 
 #: admin/qtx_admin_settings.php:116 admin/qtx_admin_settings.php:139
 #: admin/qtx_admin_settings_language_list.php:29
@@ -733,7 +713,7 @@ msgstr "导出"
 
 #: admin/qtx_admin_settings.php:259
 msgid "Troubleshooting"
-msgstr ""
+msgstr "故障排除"
 
 #: admin/qtx_admin_settings.php:265
 #, php-format
@@ -801,7 +781,7 @@ msgstr "对 SEO 友好。"
 #: admin/qtx_admin_settings.php:338
 msgid ""
 "Requires a permalink structure without query string or index.php (not Plain)."
-msgstr ""
+msgstr "需要一个没有查询字符串或 index.php 的固定结构（不是 Plain）。"
 
 #: admin/qtx_admin_settings.php:343
 msgid "Use Pre-Domain Mode (uses http://en.yoursite.com)"
@@ -853,8 +833,6 @@ msgstr ""
 "个选项都是相互独立的。"
 
 #: admin/qtx_admin_settings.php:393
-#, fuzzy
-#| msgid "Hide Content which is not available for the selected language."
 msgid "Hide posts which content is not available for the selected language."
 msgstr "若文章内容不存在选定语言的翻译版本时将隐藏。"
 
@@ -892,10 +870,6 @@ msgid "Convert Database"
 msgstr "转换数据库"
 
 #: admin/qtx_admin_settings.php:404
-#, fuzzy
-#| msgid ""
-#| "Show content in an alternative language when translation is not available "
-#| "for the selected language."
 msgid ""
 "Show post content in an alternative language when translation is not "
 "available for the selected language."
@@ -915,10 +889,6 @@ msgstr ""
 "用语言的内容也将被显示出来，而不是预期的语言。"
 
 #: admin/qtx_admin_settings.php:412
-#, fuzzy
-#| msgid ""
-#| "Show displayed language prefix when content is not available for the "
-#| "selected language."
 msgid ""
 "Show displayed language prefix when field content is not available for the "
 "selected language."
@@ -1311,7 +1281,7 @@ msgstr "阅读 %s集成指南%s，了解更多关于如何定制 %s 配置的信
 
 #: admin/qtx_admin_settings.php:714
 msgid "Built-in Modules"
-msgstr ""
+msgstr "内置模块"
 
 #: admin/qtx_admin_settings.php:717
 msgid ""
@@ -1319,17 +1289,15 @@ msgid ""
 "plugin is active and no incompatible plugin (e.g. legacy integration plugin) "
 "prevents them to be loaded."
 msgstr ""
+"如果相关的插件处于激活状态，并且没有不兼容的插件（如传统的集成插件）阻止它们"
+"被加载，内置的集成模块就会自动启用。"
 
 #: admin/qtx_admin_settings.php:722
-#, fuzzy
-#| msgid "Name"
 msgctxt "Modules table header"
 msgid "Name"
 msgstr "名称"
 
 #: admin/qtx_admin_settings.php:723
-#, fuzzy
-#| msgid "Plugin"
 msgctxt "Modules table header"
 msgid "Plugin"
 msgstr "插件"
@@ -1337,12 +1305,12 @@ msgstr "插件"
 #: admin/qtx_admin_settings.php:724
 msgctxt "Modules table header"
 msgid "Module"
-msgstr ""
+msgstr "模块"
 
 #: admin/qtx_admin_settings.php:725
 msgctxt "Modules table header"
 msgid "Status"
-msgstr ""
+msgstr "状态"
 
 #: admin/qtx_admin_settings.php:749
 #, php-format
@@ -1377,7 +1345,7 @@ msgstr "使用\"%s\"来审查所有\"%s\"和这个选项产生的组合配置。
 
 #: admin/qtx_admin_settings.php:765
 msgid "Deprecated"
-msgstr ""
+msgstr "已弃用"
 
 #: admin/qtx_admin_settings.php:767
 #, php-format
@@ -1506,26 +1474,20 @@ msgstr ""
 "有助于他人协助诊断是否存在错误设置。"
 
 #: admin/qtx_admin_settings.php:839
-#, fuzzy
-#| msgid "Additional information: %s"
 msgid "Collect information"
-msgstr "附加信息： %s"
+msgstr "收集信息"
 
 #: admin/qtx_admin_settings.php:842
-#, fuzzy
-#| msgid "Plugin Version %s"
 msgid "Versions"
-msgstr "插件版本 %s"
+msgstr "版本"
 
 #: admin/qtx_admin_settings.php:847
-#, fuzzy
-#| msgid "Configuration Files"
 msgid "Configuration"
-msgstr "配置文件"
+msgstr "配置"
 
 #: admin/qtx_admin_settings.php:852
 msgid "Browser"
-msgstr ""
+msgstr "浏览器"
 
 #: admin/qtx_admin_settings.php:870
 msgid "List of Configured Languages"
@@ -1596,7 +1558,7 @@ msgstr "代码"
 
 #: admin/qtx_admin_settings_language_list.php:32
 msgid "Status"
-msgstr ""
+msgstr "状态"
 
 #: admin/qtx_admin_settings_language_list.php:33
 msgid "Action"
@@ -1609,15 +1571,13 @@ msgstr "已存储"
 #: admin/qtx_admin_settings_language_list.php:62
 #, php-format
 msgid "%s Flag"
-msgstr "%s旗帜"
+msgstr "%s 旗帜"
 
 #: admin/qtx_admin_settings_language_list.php:74
 msgid "Default"
 msgstr "默认"
 
 #: admin/qtx_admin_settings_language_list.php:78
-#, fuzzy
-#| msgid "Enable"
 msgid "Enabled"
 msgstr "启用"
 
@@ -1771,17 +1731,17 @@ msgid ""
 "share a success story as well, either on %sthe forum%s, or via the same e-"
 "mail as mentioned above. Thank you very much for trying %s."
 msgstr ""
-"%s重要%s:在你开始编辑帖子和页面之前，请确保你的前台网站和后台管理都能在这个配"
-"置下工作。回顾一下\"%s\"，看看这里是否使用了其中提到的任何冲突插件，可能会有"
-"所帮助。虽然目前来自%s的内容与这个插件兼容，但新修改的帖子和页面将被保存为新"
-"的纯方括号编码，与以前的%s编码相比，有很多优点。然而，新的编码并不直接与%s兼"
-"容，你将需要一个额外的步骤在\"%s\"选项下提供，才能迁移回到%s。即使有了这个额"
-"外的转换步骤，第三方插件自定义存储的数据也不会被自动转换，但手动编辑仍然可以"
-"工作。这就是为什么建议你在做任何进一步的改变之前，先创建一个测试副本的网站。"
-"如果你遇到了问题，请给我们一个机会来改进%s，将你的网站测试副本的登录信息发送"
-"到%s，并详细说明哪些地方不工作，同时继续使用你的主网站%s。如果你也能在%s论"
-"坛%s上，或通过上述相同的电子邮件，分享一个成功的故事，也会有所帮助。非常感谢"
-"您对%s的尝试。"
+"%s重要%s：在你开始编辑帖子和页面之前，请确保你的前台网站和后台管理都能在这个"
+"配置下工作。回顾一下\"%s\"，看看这里是否使用了其中提到的任何冲突插件，可能会"
+"有所帮助。虽然目前来自%s的内容与这个插件兼容，但新修改的帖子和页面将被保存为"
+"新的纯方括号编码，与以前的%s编码相比，有很多优点。然而，新的编码并不直接与%s"
+"兼容，你将需要一个额外的步骤在\"%s\"选项下提供，才能迁移回到%s。即使有了这个"
+"额外的转换步骤，第三方插件自定义存储的数据也不会被自动转换，但手动编辑仍然可"
+"以工作。这就是为什么建议你在做任何进一步的改变之前，先创建一个测试副本的网"
+"站。如果你遇到了问题，请给我们一个机会来改进%s，将你的网站测试副本的登录信息"
+"发送到%s，并详细说明哪些地方不工作，同时继续使用你的主网站%s。如果你也能在%s"
+"论坛%s上，或通过上述相同的电子邮件，分享一个成功的故事，也会有所帮助。非常感"
+"谢您对%s的尝试。"
 
 #: admin/qtx_import_export.php:87
 msgid ""
@@ -2010,29 +1970,27 @@ msgstr "突出显示可翻译字段的方式是通过全局选项%s配置的。"
 
 #: dist/modules/acf.js:1
 msgid ".acf-postbox .acf-field"
-msgstr ""
+msgstr ".acf-postbox .acf-field"
 
 #: dist/modules/acf.js:1
 msgid "#post_type"
-msgstr ""
+msgstr "#post_type"
 
 #: dist/modules/acf.js:1
 msgid "body"
-msgstr ""
+msgstr "body"
 
 #: dist/modules/acf.js:1
 msgid ".multi-language-field"
-msgstr ""
+msgstr ".multi-language-field"
 
 #: dist/modules/acf.js:1
 msgid ".qtranxs-lang-switch[lang=\""
-msgstr ""
+msgstr ".qtranxs-lang-switch[lang=\""
 
 #: modules/acf/src/acf_5/fields/file.php:31
-#, fuzzy
-#| msgid "qTranslate"
 msgid "File (qTranslate)"
-msgstr "qTranslate"
+msgstr "文件 (qTranslate)"
 
 #: modules/acf/src/acf_5/fields/file.php:32
 #: modules/acf/src/acf_5/fields/image.php:32
@@ -2045,152 +2003,130 @@ msgstr "qTranslate"
 
 #: modules/acf/src/acf_5/fields/file.php:41
 msgid "Select File"
-msgstr ""
+msgstr "选择文件"
 
 #: modules/acf/src/acf_5/fields/file.php:42
-#, fuzzy
-#| msgid "Edit"
 msgid "Edit File"
-msgstr "编辑"
+msgstr "编辑文件"
 
 #: modules/acf/src/acf_5/fields/file.php:43
 msgid "Update File"
-msgstr ""
+msgstr "上传文件"
 
 #: modules/acf/src/acf_5/fields/file.php:44
 #: modules/acf/src/acf_5/fields/image.php:49
-#, fuzzy
-#| msgid "View this post."
 msgid "Uploaded to this post"
-msgstr "查看此文章。"
+msgstr "已上传至此文章"
 
 #: modules/acf/src/acf_5/fields/file.php:140
 msgid "File name"
-msgstr ""
+msgstr "文件名称"
 
 #: modules/acf/src/acf_5/fields/file.php:145
 msgid "File size"
-msgstr ""
+msgstr "文件大小"
 
 #: modules/acf/src/acf_5/fields/file.php:168
 msgid "No file selected"
-msgstr ""
+msgstr "未选择文件"
 
 #: modules/acf/src/acf_5/fields/file.php:170
 msgid "Add File"
-msgstr ""
+msgstr "添加文件"
 
 #: modules/acf/src/acf_5/fields/image.php:31
-#, fuzzy
-#| msgid "qTranslate"
 msgid "Image (qTranslate)"
-msgstr "qTranslate"
+msgstr "图片 (qTranslate)"
 
 #: modules/acf/src/acf_5/fields/image.php:46
-#, fuzzy
-#| msgid "Text and Image"
 msgid "Select Image"
-msgstr "文本及图像"
+msgstr "选择图片"
 
 #: modules/acf/src/acf_5/fields/image.php:47
-#, fuzzy
-#| msgid "Edit Language"
 msgid "Edit Image"
-msgstr "编辑语言"
+msgstr "编辑图片"
 
 #: modules/acf/src/acf_5/fields/image.php:48
 msgid "Update Image"
-msgstr ""
+msgstr "上传图片"
 
 #: modules/acf/src/acf_5/fields/image.php:50
 msgid "All images"
-msgstr ""
+msgstr "全部图片"
 
 #: modules/acf/src/acf_5/fields/image.php:139
 msgid "Remove"
-msgstr ""
+msgstr "移除"
 
 #: modules/acf/src/acf_5/fields/image.php:155
 msgid "No image selected"
-msgstr ""
+msgstr "未选择图片"
 
 #: modules/acf/src/acf_5/fields/image.php:156
-#, fuzzy
-#| msgid "Add Language"
 msgid "Add Image"
-msgstr "添加语言"
+msgstr "添加图片"
 
 #: modules/acf/src/acf_5/fields/post_object.php:31
-#, fuzzy
 #| msgid "Reset qTranslate"
 msgid "Post Object (qTranslate)"
-msgstr "重置 qTranslate"
+msgstr "文章对象 (qTranslate)"
 
 #: modules/acf/src/acf_5/fields/text.php:31
-#, fuzzy
 #| msgid "Reset qTranslate"
 msgid "Text (qTranslate)"
-msgstr "重置 qTranslate"
+msgstr "文本 (qTranslate)"
 
 #: modules/acf/src/acf_5/fields/text.php:100
-#, fuzzy
-#| msgid "Default Language"
 msgid "Default Value"
-msgstr "默认语言"
+msgstr "默认值"
 
 #: modules/acf/src/acf_5/fields/text.php:101
 msgid "Appears when creating a new post"
-msgstr ""
+msgstr "创建文章时出现"
 
 #: modules/acf/src/acf_5/fields/text.php:108
 msgid "Placeholder Text"
-msgstr ""
+msgstr "占位文字"
 
 #: modules/acf/src/acf_5/fields/text.php:109
 msgid "Appears within the input"
-msgstr ""
+msgstr "在输入框中出现"
 
 #: modules/acf/src/acf_5/fields/text.php:116
 msgid "Character Limit"
-msgstr ""
+msgstr "字符限制"
 
 #: modules/acf/src/acf_5/fields/text.php:117
 msgid "Leave blank for no limit"
-msgstr ""
+msgstr "留空为无限制"
 
 #: modules/acf/src/acf_5/fields/textarea.php:31
-#, fuzzy
 #| msgid "Reset qTranslate"
 msgid "Text Area (qTranslate)"
-msgstr "重置 qTranslate"
+msgstr "文本域 (qTranslate)"
 
 #: modules/acf/src/acf_5/fields/url.php:31
-#, fuzzy
-#| msgid "qTranslate"
 msgid "Url (qTranslate)"
-msgstr "qTranslate"
+msgstr "Url (qTranslate)"
 
 #: modules/acf/src/acf_5/fields/wysiwyg.php:31
-#, fuzzy
 #| msgid "Reset qTranslate"
 msgid "Wysiwyg Editor (qTranslate)"
-msgstr "重置 qTranslate"
+msgstr "所见即所得编辑器 (qTranslate)"
 
 #: modules/acf/src/acf_5/fields/wysiwyg.php:143
 msgid "Visual"
-msgstr ""
+msgstr "可视化"
 
 #: modules/acf/src/acf_5/fields/wysiwyg.php:146
-#, fuzzy
-#| msgid "Text only"
 msgctxt "Name for the Text editor tab (formerly HTML)"
 msgid "Text"
-msgstr "仅文本"
+msgstr "文本"
 
 #: modules/acf/src/plugin.php:406
 #, php-format
 msgid "%s value is required"
-msgstr ""
+msgstr "%s 内容是必填的"
 
 #: qtranslate_widget.php:37
 msgid "Allows your visitors to choose a Language."
