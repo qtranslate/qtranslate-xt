@@ -1,0 +1,53 @@
+/*messages*/
+.error {color:#cc0000;}
+
+.settings_page_qtranslate-slug-settings .form-table th  {
+	width: 15%;
+	min-width: 15% !important;
+}
+
+.settings_page_qtranslate-slug-settings .form-table td > span {
+	display: inline-block;
+	min-width: 100px;
+}
+
+.settings_page_qtranslate-slug-settings .form-table label {
+	display: block;
+	margin-bottom: 8px;
+}
+
+.settings_page_qtranslate-slug-settings .qts-slug {
+	width: 35%;
+}
+
+#qts-loading {
+	display: none;
+	position: relative;
+	margin-left: 5px;
+	vertical-align: middle;
+}
+
+div.updated.success{
+	border-color: #298e00;
+	background-color: #D4EDC9;
+}
+
+.error a.button-primary {
+	color: white !important;
+	text-decoration: none !important;
+}
+
+.ko {
+	color: #c00;
+}
+/* v1.1.18 */
+#edittag #qts_term_slugs { display: none; }
+.term-slug-wrap .qts_term_block input {
+	width: 86.5%; 
+}
+
+.qts_term_block label {
+  display: inline-block;
+  min-width: 120px;
+}
+ 

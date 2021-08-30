@@ -61,11 +61,6 @@ function qtranxf_init_language() {
         }
     }
 
-    // TODO fix qtranslate-slug still using 'original_url' field and remove it from here, this has no sense!
-    if ( defined( 'QTS_VERSION' ) ) {
-        $url_info['original_url'] = $_SERVER['REQUEST_URI'];
-    }
-
     $url_info['language'] = qtranxf_detect_language( $url_info );
     $q_config['language'] = apply_filters( 'qtranslate_language', $url_info['language'], $url_info );
 

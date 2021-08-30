@@ -18,6 +18,9 @@ class QTX_Modules_Handler {
         if ( ! is_array( $options_modules ) ) {
             return null;
         }
+        
+        self::update_manual_enabled_modules();        
+        
         foreach ( $def_modules as $def_module ) {
             if ( ! array_key_exists( $def_module['id'], $options_modules ) ) {
                 continue;
@@ -27,6 +30,16 @@ class QTX_Modules_Handler {
                 include_once( QTRANSLATE_DIR . '/modules/' . $def_module['id'] . '/' . $def_module['id'] . '.php' );
             }
         }
+    }
+    
+    public static function update_manual_enabled_modules() {
+        global $q_config;
+        $options_modules = get_option( 'qtranslate_modules', array() );
+        
+        if ($q_config['slugs_enabled'] && $options_modules['slugs']!=1){
+                $options_modules['slugs']=1;
+                update_option( 'qtranslate_modules', $options_modules ); 
+        }       
     }
 
     /**
@@ -89,8 +102,12 @@ class QTX_Modules_Handler {
                 'name'         => 'Yoast SEO',
                 'plugin'       => 'wordpress-seo/wp-seo.php',
                 'incompatible' => 'wp-seo-qtranslate-x/wordpress-seo-qtranslate-x.php'
-            )
-        );
+            ),
+            array(    'id'     => 'slugs',
+                'name'         => 'Slugs',
+                'plugin'       => true,
+                'incompatible' => 'qtranslate-slug/qtranslate-slug.php'
+            ));
     }
 
 }

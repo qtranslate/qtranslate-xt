@@ -1,0 +1,16 @@
+.qts_type_image .qts_lang_item { 
+    float: left;
+    margin-right: 7px;
+}
+.qts_type_image .qts_lang_item.last-child {
+    margin-right: 0;
+}
+.qts_lang_item{
+    margin-top: 7px;
+    margin-bottom: 7px;
+}
+.qts_both {
+    white-space: nowrap;
+    line-height:1em;
+}
+.qts_both img { margin-right: 4px }

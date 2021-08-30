@@ -244,6 +244,8 @@ class QTX_Admin_Settings {
     }
 
     private function add_sections( $nonce_action ) {
+         global $q_config;
+        
         $admin_sections             = array();
         $admin_sections['general']  = __( 'General', 'qtranslate' );
         $admin_sections['advanced'] = __( 'Advanced', 'qtranslate' );
@@ -256,6 +258,10 @@ class QTX_Admin_Settings {
         $admin_sections['integration']     = __( 'Integration', 'qtranslate' );
         $admin_sections['import']          = __( 'Import', 'qtranslate' ) . '/' . __( 'Export', 'qtranslate' );
         $admin_sections['languages']       = __( 'Languages', 'qtranslate' );
+        
+        if ($q_config['slugs_enabled'])
+            $admin_sections['slugs']           = __( 'Slugs', 'qtranslate' );
+        
         $admin_sections['troubleshooting'] = __( 'Troubleshooting', 'qtranslate' );
 
         ?>
@@ -272,6 +278,10 @@ class QTX_Admin_Settings {
                 $this->add_general_section();
                 $this->add_advanced_section();
                 $this->add_integration_section();
+                
+                if ($q_config['slugs_enabled'])
+                    $this->add_slugs_section();
+                
                 $this->add_troubleshooting_section();
                 // Allow to load additional services
                 do_action( 'qtranslate_configuration', $this->options_uri );
@@ -693,6 +703,17 @@ class QTX_Admin_Settings {
                         printf( __( 'The color in use is taken from your profile option %s, the third color.', 'qtranslate' ), '"<a href="' . admin_url( '/profile.php' ) . '">' . qtranxf_translate_wp( 'Admin Color Scheme' ) . '</a>"' ) ?></p>
                 </td>
             </tr>
+             <tr id="option_slugs_enabled">
+                <th scope="row"><?php _e( 'Slugs translation', 'qtranslate' ) ?></th>
+                <td>
+                    <label for="slugs_enabled">
+                        <input type="checkbox" name="slugs_enabled"
+                               id="slugs_enabled"
+                               value="1"<?php checked( $q_config['slugs_enabled']) ?>/>&nbsp;<?php _e( 'Enable slugs translation.', 'qtranslate' ) ?>
+                    </label>
+                    <p class="qtranxs-notes"><?php echo __( 'This will activate the slug translation module (experimental feature). ', 'qtranslate' )?></p>
+                </td>
+            </tr>
         </table>
         <?php
         $this->close_section( 'advanced' );
@@ -825,6 +846,24 @@ class QTX_Admin_Settings {
             </tr>
         </table>
         <?php $this->close_section( 'integration' );
+    }
+    
+    private function add_slugs_section() {
+        global $q_config;
+        $this->open_section( 'slugs' ); ?>
+        
+         <table class="form-table qtranxs-form-table" id="qtranxs_slugs_config">
+            <tr>
+                <th scope="row"><?php _e( 'Slugs translation', 'qtranslate' ) ?></th>
+                <td>
+                    <p class="qtranxs_explanation"><?php printf( __( 'Placeholder, settings for slugs translation are still available <a href="%s">here</a>.', 'qtranslate' ), get_admin_url().'options-general.php?page=qtranslate-slug-settings' ) ?></p>
+                </td>
+            </tr>
+        </table>   
+        
+        
+        <?php
+        $this->close_section( 'slugs', false );
     }
 
     private function add_troubleshooting_section() {
