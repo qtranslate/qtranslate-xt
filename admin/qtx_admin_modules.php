@@ -63,9 +63,9 @@ class QTX_Admin_Modules {
                     break;
                 }
             }
-        } else if (is_bool($integration_plugin)){
-		$active = $integration_plugin;
-	} else {
+        } else if ( is_bool( $integration_plugin ) ) {
+            $active = $integration_plugin;
+        } else {
             $active = call_user_func( $func_is_active, $integration_plugin );
         }
 
