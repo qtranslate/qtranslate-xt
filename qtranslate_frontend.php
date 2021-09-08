@@ -54,6 +54,8 @@ function qtranxf_wp_head() {
     // Fallback for unmatched language (default hreflang for SEO)
     $hreflangs['x-default'] = qtranxf_convertURL( '', $q_config['default_language'] );
 
+    $hreflangs = apply_filters( 'qtranslate_hreflangs', $hreflangs );
+
     foreach ( $hreflangs as $hreflang => $href ) {
         echo '<link hreflang="' . $hreflang . '" href="' . $href . '" rel="alternate" />' . PHP_EOL;
     }
