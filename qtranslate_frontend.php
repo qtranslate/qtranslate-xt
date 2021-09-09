@@ -102,7 +102,7 @@ function qtranxf_wp_get_nav_menu_items( $items, $menu, $args ) {
                             $p = get_post( $item->object_id );
                             if ( $p ) {
                                 $post_title_ml = isset( $p->post_title_ml ) ? $p->post_title_ml : $p->post_title;
-                                $item_title    = qtranxf_use_language( $language, $post_title_ml, false, true );
+                                $item_title    = qtranxf_use_language( $language, $post_title_ml, false, $q_config['hide_untranslated_menu'] );
                             }
                             break;
                         case 'taxonomy':
@@ -120,7 +120,7 @@ function qtranxf_wp_get_nav_menu_items( $items, $menu, $args ) {
                             break;
                     }
                 } else {
-                    $item_title = qtranxf_use_language( $language, $item_title, false, true );
+                    $item_title = qtranxf_use_language( $language, $item_title, false, $q_config['hide_untranslated_menu'] );
                 }
             }
             if ( empty( $item_title ) ) {
