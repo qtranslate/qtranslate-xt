@@ -165,11 +165,12 @@ function qtranxf_detect_language( &$url_info ) {
     // parse language and front info from HTTP_REFERER
     if ( isset( $_SERVER['HTTP_REFERER'] ) && $parse_referrer ) {
         $http_referer             = $_SERVER['HTTP_REFERER'];
+        $http_request_uri         = $_SERVER['REQUEST_URI'];
         $url_info['http_referer'] = $http_referer;
 
         // if needed, detect front- vs back-end
         $parse_referrer_language = true;
-        if ( strpos( $http_referer, '/wp-admin' ) !== false ) {
+        if ( strpos( $http_request_uri, '/wp-admin' ) !== false || strpos( $http_referer, '/wp-admin' ) !== false ) {
             $url_info['referer_admin'] = true;
             if ( ! isset( $url_info['doing_front_end'] ) ) {
                 $url_info['doing_front_end'] = false;
