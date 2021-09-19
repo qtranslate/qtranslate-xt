@@ -397,6 +397,13 @@ class QTX_Admin_Settings {
                         <?php _e( 'The message about available languages for the content of a post or a page may also appear if a single post display with an untranslated content if viewed directly.', 'qtranslate' ) ?>
                         <?php printf( __( 'This function will not work correctly if you installed %s on a blog with existing entries. In this case you will need to take a look at option "%s" under "%s" section.', 'qtranslate' ), 'qTranslate', __( 'Convert Database', 'qtranslate' ), __( 'Import', 'qtranslate' ) . '/' . __( 'Export', 'qtranslate' ) ) ?></p>
                     <br/>
+                    <label for="hide_untranslated_menu">
+                        <input type="checkbox" name="hide_untranslated_menu" id="hide_untranslated_menu"
+                               value="1"<?php checked( $q_config['hide_untranslated_menu'] ) ?>/> <?php _e( 'Hide menu items for which no translation is available for the selected language.', 'qtranslate' ) ?>
+                    </label>
+                    <br/>
+                    <p class="qtranxs-notes"><?php _e( 'When checked, menu items will be hidden if the item is not available for the selected language. If unchecked, the item will be shown in the default language.', 'qtranslate' ) ?></p>
+                    <br/>
                     <label for="show_alternative_content">
                         <input type="checkbox"
                                name="show_alternative_content"
