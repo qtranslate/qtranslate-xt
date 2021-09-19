@@ -1,0 +1,142 @@
+# Copyright (C) 2012 qTranslate slug
+# This file is distributed under the same license as the qTranslate slug package.
+msgid ""
+msgstr ""
+"Project-Id-Version: qTranslate slug 1.0\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/qtranslate-slug\n"
+"POT-Creation-Date: 2012-05-27 20:27:55+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2012-06-17 03:37+0100\n"
+"Last-Translator: Carlos Sanz <carlos.sanz@gmail.com>\n"
+"Language-Team: Carlos Sanz Garcia <carlos.sanz@gmail.com>\n"
+
+# qtranslate-slug.php
+msgid "Language selector"
+msgstr "Selector de idioma"
+
+# qtranslate-slug.php
+msgid "Title:"
+msgstr "Título:"
+
+# qtranslate-slug.php
+msgid "<p style=\"color:red\">This plugin requires qTranslate to be installed and activated.</p>"
+msgstr "<p style=\"color:red\">Este plugin necesita qTranslate instalado y activado previamente.</p>"
+
+# qtranslate-slug.php
+msgid "Slug"
+msgstr "Enlace permanente"
+
+# qtranslate-slug.php
+msgid "Show short name (en):"
+msgstr "Mostrar nombre corto (en):"
+
+# qtranslate-slug-settings-options.php
+msgid "Post types"
+msgstr "Post types"
+
+# qtranslate-slug-settings-options.php
+msgid "Taxonomies"
+msgstr "Taxonomias"
+
+# qtranslate-slug-settings-options.php
+msgid "Slug (%s)"
+msgstr "URL (%s)"
+
+# qtranslate-slug-settings-options.php
+msgid "<code>http://example.org/<u>%s</u>/some-%s/</code>"
+msgstr "<code>http://ejemplo.org/<u>%s</u>/algun-%s/</code>"
+
+# qtranslate-slug-settings-options.php
+msgid "<code>http://example.org/<u>category</u>/some-category/</code>"
+msgstr "<code>http://ejemplo.org/<u>categoria</u>/alguna-categoria/</code>"
+
+# qtranslate-slug-settings-options.php
+msgid "<code>http://example.org/<u>tag</u>/some-tag/</code>"
+msgstr "<code>http://ejemplo.org/<u>etiqueta</u>/alguna-etiqueta/</code>"
+
+# qtranslate-slug-settings.php
+msgid "Qtranslate Slug options"
+msgstr "Opciones de Qtranslate Slug"
+
+# qtranslate-slug-settings.php
+msgid "Slug options"
+msgstr "Opciones de URL"
+
+# qtranslate-slug-settings.php
+msgid "Save Changes"
+msgstr "Guardar cambios"
+
+# qtranslate-slug-settings.php
+msgid "Expecting a Numeric value! Please fix."
+msgstr "Se espera un valor numérico! Por favor, corrígelo."
+
+# qtranslate-slug-settings.php
+msgid "Expecting comma separated numeric values! Please fix."
+msgstr "Se esperan valores numéricos separados por coma! Por favor, corrígelo."
+
+# qtranslate-slug-settings.php
+msgid "Invalid email"
+msgstr "E-mail incorrecto"
+
+# qtranslate-slug-settings.php
+msgid "This setting field cannot be empty! Please enter a valid email address."
+msgstr "Este campo no puede estar vacío! Por favor introduce una dirección de e-mail válida."
+
+# qtranslate-slug-settings.php
+msgid "Please enter a valid email address."
+msgstr "Por favor introduce una dirección de e-mail válida."
+
+# qtranslate-slug-settings.php
+msgid "upgrade now"
+msgstr "actualizar ahora"
+
+# qtranslate-slug.php
+msgid "Please update your old data to the new system."
+msgstr "Por favor actualiza tu antiguo sistema de datos al nuevo."
+
+# qtranslate-slug-settings.php
+msgid "Upgrade your data"
+msgstr "Actualiza tus datos"
+
+# qtranslate-slug-settings.php
+msgid "There are slugs stored with old data system. Please upgrade your data pressing upgrade button:"
+msgstr "Hay slugs almacenados en el antiguo sistema. Por favor actualiza tus datos aprentando el botón actualizar:"
+
+# qtranslate-slug-settings.php
+msgid "Sorry, some error happened. Refresh this page and try again please."
+msgstr "Lo sentimos, algún tipo de error ha ocurrido. Por favor recarga esta página y prueba otra vez."
+
+# qtranslate-slug-settings.php
+msgid "Congratulations, your data has been upgraded, you are up to date."
+msgstr "Felicidades, tus datos se han actualizado, ahora estás al día."
+
+# qtranslate-slug-settings.php
+msgid "One step more, select what type of slug is this: <strong>%s</strong>"
+msgstr "Un paso más, selecction qué tipo de slug es este: <strong>%s</strong>"
+
+# qtranslate-slug-settings.php
+msgid "Post, Page or Custom post type"
+msgstr "Entrada, Página o Custom post type"
+
+# qtranslate-slug-settings.php
+msgid "Category, tag or custom taxonomy"
+msgstr "Categoria, tag o taxonomía"
+
+# qtranslate-slug.php
+msgid "This plugin requires at least <strong>Wordpress 3.3</strong> and <strong>Qtranslate(2.5.8 or newer)</strong>"
+msgstr "Este plugin requiere al menos <strong>Wordpress 3.3</strong> y <strong>Qtranslate(2.5.8 o mayor)</strong>"
+
+# qtranslate-slug-settings.php
+msgid "If you activated previously the <a href=\"options-permalink.php\">pretty permalinks</a>, in this section you can translate the <abbr title=\"en inglés, Universal Resource Locator\">URLs</abbr> <strong>bases</strong> for <a href=\"http://codex.wordpress.org/Function_Reference/register_post_type#Arguments\">public</a> post_types, categories, tags and taxonomies."
+msgstr "Si has activado previamente los <a href=\"options-permalink.php\">enlaces permanentes</a>, en esta sección podrás traducir las <strong>bases</strong> de las <abbr title=\"en inglés, Universal Resource Locator\">URLs</abbr> para post_types, categorías, etiquetas y taxonomias <a href=\"http://codex.wordpress.org/Function_Reference/register_post_type#Arguments\">públicas</a>."
+
+# qtranslate-slug-settings.php
+msgid "For example, the post_type <kbd>books</kbd>, in Spanish would be displayed as <code>http://example.org/es/libros/post-type-name/</code>. If you leave this blank will use the default option when you <a href=\"http://codex.wordpress.org/Function_Reference/register_post_type\">registered</a> the post_type."
+msgstr "Por ejemplo, para el post_type  <kbd>books</kbd> en Español se mostraría como <code>http://example.org/es/libros/post-type-name/</code>. Si dejas esto en blanco se usará la opción predeterminada cuando <a href=\"http://codex.wordpress.org/Function_Reference/register_post_type\">registraste</a> el post_type."
+
+# qtranslate-slug-settings.php
+msgid "For example, the taxonomy <kbd>category</kbd>, in Spanish would be displayed as <code>http://example.org/es/categoria/taxonomy-name/</code>. If you leave this blank will use the default option when you <a href=\"http://codex.wordpress.org/Function_Reference/register_taxonomy\">registered</a> the taxonomy (if you previously setup a base permastruct for <u>categories</u> or <u>tags</u> in <a href=\"options-permalink.php\">permalinks</a> page, these bases will be overwritten by the translated ones)."
+msgstr "Por ejemplo, la taxonomia <kbd>category</kbd>, en Español se mostraría como <code>http://example.org/es/categoria/taxonomy-name/</code>.  Si dejas esto en blanco se usará la opción predeterminada cuando <a href=\"http://codex.wordpress.org/Function_Reference/register_taxonomy\">registraste</a> la texonomia (si previamente configuraste la base de las estructuraas de <u>categorías</u> o <u>tags</u> en la página <a href=\"options-permalink.php\">enlaces permanentes</a>, estas bases serán reemplazadas por las traducidas)."
+

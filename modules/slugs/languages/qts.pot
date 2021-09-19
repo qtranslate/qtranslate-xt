@@ -1,0 +1,313 @@
+# Copyright (C) 2012 qTranslate slug
+# This file is distributed under the same license as the qTranslate slug package.
+msgid ""
+msgstr ""
+"Project-Id-Version: qTranslate slug 1.0\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/qtranslate-slug\n"
+"POT-Creation-Date: 2015-01-23 14:23-0000\n"
+"PO-Revision-Date: 2015-01-23 14:23-0000\n"
+"Last-Translator: Pedro Mendonça <ped.gaspar@gmail.com>\n"
+"Language-Team: Carlos Sanz Garcia <carlos.sanz@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.7.3\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext;_n;__ngettext_noop;_n_noop;_x;_nx;"
+"_nx_noop;_ex;esc_attr__;esc_attr_e;esc_attr_x;esc_html__;esc_html_e;"
+"esc_html_x\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: ..\n"
+
+#: ../includes/class-qtranslate-slug-widget.php:11
+msgid "Allows your visitors to choose a Language."
+msgstr ""
+
+#: ../includes/class-qtranslate-slug-widget.php:12
+msgid "Language selector"
+msgstr ""
+
+#: ../includes/class-qtranslate-slug-widget.php:19
+msgid "Language"
+msgstr ""
+
+#: ../includes/class-qtranslate-slug-widget.php:51
+msgid "Title:"
+msgstr ""
+
+#: ../includes/class-qtranslate-slug-widget.php:52
+msgid "Hide Title:"
+msgstr ""
+
+#: ../includes/class-qtranslate-slug-widget.php:53
+msgid "Display:"
+msgstr ""
+
+#: ../includes/class-qtranslate-slug-widget.php:54
+msgid "Text only"
+msgstr ""
+
+#: ../includes/class-qtranslate-slug-widget.php:55
+msgid "Image only"
+msgstr ""
+
+#: ../includes/class-qtranslate-slug-widget.php:56
+msgid "Text and Image"
+msgstr ""
+
+#: ../includes/class-qtranslate-slug-widget.php:57
+msgid "Dropdown Box"
+msgstr ""
+
+#: ../includes/class-qtranslate-slug-widget.php:58
+msgid "Show short name (en):"
+msgstr ""
+
+#: ../includes/class-qtranslate-slug.php:413
+msgid "Please update your old data to the new system."
+msgstr ""
+
+#: ../includes/class-qtranslate-slug.php:413
+#: ../includes/qtranslate-slug-settings.php:29
+msgid "upgrade now"
+msgstr ""
+
+#: ../includes/class-qtranslate-slug.php:427
+msgid "or newer"
+msgstr ""
+
+#: ../includes/class-qtranslate-slug.php:432
+msgid "This plugin requires at least %s and either %s, or %s, or %s"
+msgstr ""
+
+#: ../includes/class-qtranslate-slug.php:432
+msgid "More information about"
+msgstr ""
+
+#: ../includes/class-qtranslate-slug.php:1612
+msgid "View all posts in %s"
+msgstr ""
+
+#: ../includes/class-qtranslate-slug.php:1739
+msgid "Empty Term"
+msgstr ""
+
+#: ../includes/class-qtranslate-slug.php:1999
+#: ../includes/class-qtranslate-slug.php:2000
+#: ../includes/class-qtranslate-slug.php:2003
+#: ../includes/class-qtranslate-slug.php:2541
+msgid "Slug"
+msgstr ""
+
+#: ../includes/class-qtranslate-slug.php:2214
+#: ../includes/class-qtranslate-slug.php:2233
+#: ../includes/qtranslate-slug-settings-options.php:39
+msgid "Slug (%s)"
+msgstr ""
+
+#: ../includes/class-qtranslate-slug.php:2400
+#: ../includes/class-qtranslate-slug.php:2404
+msgid "Name"
+msgstr ""
+
+#: ../includes/class-qtranslate-slug.php:2542
+msgid "Posts"
+msgstr ""
+
+#: ../includes/class-qtranslate-slug.php:2634
+msgid "Languages"
+msgstr ""
+
+#: ../includes/class-qtranslate-slug.php:2657
+msgid "All languages"
+msgstr ""
+
+#: ../includes/qtranslate-slug-settings-options.php:14
+msgid "Post types"
+msgstr ""
+
+#: ../includes/qtranslate-slug-settings-options.php:15
+msgid "Taxonomies"
+msgstr ""
+
+#: ../includes/qtranslate-slug-settings-options.php:16
+msgid "Styles"
+msgstr ""
+
+#: ../includes/qtranslate-slug-settings-options.php:63
+msgid "Change styles type"
+msgstr ""
+
+#: ../includes/qtranslate-slug-settings-options.php:65
+msgid "adds a file (qts-default.css) to the theme's header."
+msgstr ""
+
+#: ../includes/qtranslate-slug-settings-options.php:66
+msgid ""
+"adds a minified ( slighlty faster) file (qts-default.min.css) to the theme's "
+"header."
+msgstr ""
+
+#: ../includes/qtranslate-slug-settings-options.php:67
+msgid "prints the styles directly into the theme's header."
+msgstr ""
+
+#: ../includes/qtranslate-slug-settings-options.php:68
+msgid "neither include not print the default style."
+msgstr ""
+
+#: ../includes/qtranslate-slug-settings-options.php:73
+msgid "file"
+msgstr ""
+
+#: ../includes/qtranslate-slug-settings-options.php:74
+msgid "minified"
+msgstr ""
+
+#: ../includes/qtranslate-slug-settings-options.php:75
+msgid "inline"
+msgstr ""
+
+#: ../includes/qtranslate-slug-settings-options.php:76
+msgid "none"
+msgstr ""
+
+#: ../includes/qtranslate-slug-settings-options.php:106
+#: ../includes/qtranslate-slug-settings-options.php:148
+msgid "<code>http://example.org/<u>%s</u>/some-%s/</code>"
+msgstr ""
+
+#: ../includes/qtranslate-slug-settings-options.php:119
+msgid "Categories"
+msgstr ""
+
+#: ../includes/qtranslate-slug-settings-options.php:120
+msgid "<code>http://example.org/<u>category</u>/some-category/</code>"
+msgstr ""
+
+#: ../includes/qtranslate-slug-settings-options.php:130
+msgid "Tags"
+msgstr ""
+
+#: ../includes/qtranslate-slug-settings-options.php:131
+msgid "<code>http://example.org/<u>tag</u>/some-tag/</code>"
+msgstr ""
+
+#: ../includes/qtranslate-slug-settings-options.php:175
+msgid "Qtranslate Settings - Contextual Help"
+msgstr ""
+
+#: ../includes/qtranslate-slug-settings-options.php:176
+msgid ""
+"Contextual help goes here. You may want to use different html elements to "
+"format your text as you want."
+msgstr ""
+
+#: ../includes/qtranslate-slug-settings.php:23
+msgid "Upgrade your data"
+msgstr ""
+
+#: ../includes/qtranslate-slug-settings.php:24
+msgid ""
+"There are slugs stored with old data system. Please upgrade your data pressing "
+"upgrade button:"
+msgstr ""
+
+#: ../includes/qtranslate-slug-settings.php:77
+msgid "Sorry, some error happened. Refresh this page and try again please."
+msgstr ""
+
+#: ../includes/qtranslate-slug-settings.php:84
+msgid "Congratulations, your data has been upgraded, you are up to date."
+msgstr ""
+
+#: ../includes/qtranslate-slug-settings.php:90
+msgid "One step more, select what type of slug is this: <strong>%s</strong>"
+msgstr ""
+
+#: ../includes/qtranslate-slug-settings.php:91
+msgid "Post, Page or Custom post type"
+msgstr ""
+
+#: ../includes/qtranslate-slug-settings.php:91
+msgid "Category, tag or custom taxonomy"
+msgstr ""
+
+#: ../includes/qtranslate-slug-settings.php:182
+#: ../includes/qtranslate-slug-settings.php:322
+msgid "Qtranslate Slug options"
+msgstr ""
+
+#: ../includes/qtranslate-slug-settings.php:322
+msgid "Slug options"
+msgstr ""
+
+#: ../includes/qtranslate-slug-settings.php:359
+msgid ""
+"For example, the post_type <kbd>books</kbd>, in Spanish would be displayed as "
+"<code>http://example.org/es/libros/post-type-name/</code>. If you leave this "
+"blank will use the default option when you <a href=\"http://codex.wordpress."
+"org/Function_Reference/register_post_type\">registered</a> the post_type."
+msgstr ""
+
+#: ../includes/qtranslate-slug-settings.php:364
+msgid ""
+"For example, the taxonomy <kbd>category</kbd>, in Spanish would be displayed "
+"as <code>http://example.org/es/categoria/taxonomy-name/</code>. If you leave "
+"this blank will use the default option when you <a href=\"http://codex."
+"wordpress.org/Function_Reference/register_taxonomy\">registered</a> the "
+"taxonomy (if you previously setup a base permastruct for <u>categories</u> or "
+"<u>tags</u> in <a href=\"options-permalink.php\">permalinks</a> page, these "
+"bases will be overwritten by the translated ones)."
+msgstr ""
+
+#: ../includes/qtranslate-slug-settings.php:368
+msgid "The default styles are very minimal, and you can include them or not."
+msgstr ""
+
+#: ../includes/qtranslate-slug-settings.php:567
+msgid ""
+"If you activated previously the <a href=\"options-permalink.php\">pretty "
+"permalinks</a>, in this section you can translate the <abbr title=\"en inglés, "
+"Universal Resource Locator\">URLs</abbr> <strong>bases</strong> for <a href="
+"\"http://codex.wordpress.org/Function_Reference/register_post_type#Arguments"
+"\">public</a> post_types, categories, tags and taxonomies."
+msgstr ""
+
+#: ../includes/qtranslate-slug-settings.php:586
+msgid "If you selected \"none\", copy and use these styles as you see fit:"
+msgstr ""
+
+#: ../includes/qtranslate-slug-settings.php:589
+msgid "Save Changes"
+msgstr ""
+
+#: ../includes/qtranslate-slug-settings.php:642
+msgid "Expecting a Numeric value! Please fix."
+msgstr ""
+
+#: ../includes/qtranslate-slug-settings.php:655
+msgid "Expecting comma separated numeric values"
+msgstr ""
+
+#: ../includes/qtranslate-slug-settings.php:665
+msgid "Expecting comma separated numeric values! Please fix."
+msgstr ""
+
+#: ../includes/qtranslate-slug-settings.php:690
+msgid "Invalid email"
+msgstr ""
+
+#: ../includes/qtranslate-slug-settings.php:692
+msgid "This setting field cannot be empty! Please enter a valid email address."
+msgstr ""
+
+#: ../includes/qtranslate-slug-settings.php:700
+msgid "Please enter a valid email address."
+msgstr ""
+
+#: ../qtranslate-slug.php:150
+msgid "Settings"
+msgstr ""
