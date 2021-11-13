@@ -124,7 +124,7 @@ function qwpseo_admin_notices() {
         return;
     }
     ?>
-    <script type="text/javascript">
+    <script>
         function qwpseo_hide_notice() {
             jQuery('#qwpseo_notice_meta_fix').addClass('hidden');
         }

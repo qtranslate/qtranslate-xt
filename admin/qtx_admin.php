@@ -434,7 +434,7 @@ function qtranxf_admin_footer() {
 
     qtranxf_enqueue_scripts( $page_config['js'] );
     ?>
-    <script type="text/javascript">
+    <script>
         // <![CDATA[
         <?php
         echo 'var qTranslateConfig=' . json_encode( $config ) . ';' . PHP_EOL;
@@ -814,7 +814,7 @@ function qtranxf_admin_footer_update( $text ) {
 function qtranxf_admin_tiny_mce_init( $mce_settings ) {
     if ( isset( $mce_settings ) ):
         ?>
-        <script type="text/javascript">
+        <script>
             if (window.qTranslateConfig !== undefined && window.qTranslateConfig.js !== undefined)
                 window.qTranslateConfig.js.get_qtx();
         </script>
