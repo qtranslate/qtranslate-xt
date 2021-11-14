@@ -955,6 +955,17 @@ const qTranslateX = function (pg) {
         }
     };
 
+    this.onSaveLanguage = function (lang) {
+        let success = true;
+        const onTabSwitchFunctionsSave = qTranslateConfig.onTabSwitchFunctionsSave;
+        for (let i = 0; i < onTabSwitchFunctionsSave.length; ++i) {
+            const ok = onTabSwitchFunctionsSave[i].call(qTranslateConfig.qtx, qTranslateConfig.activeLanguage, lang);
+            if (ok === false)
+                success = false;
+        }
+        return success;
+    };
+
     /**
      * former switchTab
      * @since 3.3.2
@@ -964,15 +975,9 @@ const qTranslateX = function (pg) {
             return;
         }
         if (qTranslateConfig.activeLanguage) {
-            let ok2switch = true;
-            const onTabSwitchFunctionsSave = qTranslateConfig.onTabSwitchFunctionsSave;
-            for (let i = 0; i < onTabSwitchFunctionsSave.length; ++i) {
-                const ok = onTabSwitchFunctionsSave[i].call(qTranslateConfig.qtx, qTranslateConfig.activeLanguage, lang);
-                if (ok === false)
-                    ok2switch = false;
-            }
-            if (!ok2switch)
-                return; // cancel button switch, if one of onTabSwitchFunctionsSave returned 'false'
+            // cancel button switch, if one of onTabSwitchFunctionsSave returned 'false'
+            if (!this.onSaveLanguage(lang))
+                return;
 
             const tabSwitches = qTranslateConfig.tabSwitches[qTranslateConfig.activeLanguage];
             for (let i = 0; i < tabSwitches.length; ++i) {

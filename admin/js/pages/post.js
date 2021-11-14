@@ -6,10 +6,10 @@
 const $ = jQuery;
 
 const UrlMode = Object.freeze({
-   QTX_URL_QUERY: 1,
-   QTX_URL_PATH: 2,
-   QTX_URL_DOMAIN: 3,
-   QTX_URL_DOMAINS: 4,
+    QTX_URL_QUERY: 1,
+    QTX_URL_PATH: 2,
+    QTX_URL_DOMAIN: 3,
+    QTX_URL_DOMAINS: 4,
 });
 
 $(document).on('qtxLoadAdmin:post', (event, qtx) => {
@@ -142,4 +142,32 @@ $(document).on('qtxLoadAdmin:post', (event, qtx) => {
             window.location = window.location.origin + window.location.pathname + '?' + $.param(params);
         })
     }
+
+    if (qTranslateConfig.LSB) {
+        $('#post').on('submit', function (e) {
+            console.log('POST!');
+            if (qTranslateConfig.activeLanguage) {
+                const lang = qTranslateConfig.activeLanguage;
+                if (!qtx.onSaveLanguage(lang)) {
+                    e.preventDefault();
+                    console.error('Problem when saving!');
+                }
+                const onTabSwitchFunctions = qTranslateConfig.onTabSwitchFunctions;
+                for (let i = 0; i < onTabSwitchFunctions.length; ++i) {
+                    onTabSwitchFunctions[i].call(qTranslateConfig.qtx, lang, lang);
+                }
+            }
+
+            e.preventDefault();
+            const a = $('form').serializeArray();
+            console.log('processing...', a);
+            for (let i = 0; i < a.length; i++) {
+                const field = a[i];
+                if (field.name.indexOf('qtranslate-fields[content]') === 0) {
+                    console.log('Content ', field.name, field.value);
+                }
+            }
+        });
+    }
+
 });
