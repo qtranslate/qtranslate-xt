@@ -458,7 +458,7 @@ function qtranxf_add_admin_lang_icons() {
     global $q_config;
 
     $flag_location = qtranxf_flag_location();
-    echo '<style type="text/css">' . PHP_EOL;
+    echo '<style>' . PHP_EOL;
     echo "#wpadminbar #wp-admin-bar-language>div.ab-item{ background-size: 0;";
     echo 'background-image: url(' . $flag_location . $q_config['flag'][ $q_config['language'] ] . ');}' . PHP_EOL;
     foreach ( $q_config['enabled_languages'] as $language ) {
@@ -527,7 +527,7 @@ function qtranxf_add_admin_css() {
     foreach ( $current_color_scheme as $key => $color ) {
         $css = preg_replace( '/#UserColor' . $key . '/m', $color, $css );
     }
-    echo '<style type="text/css" media="screen">' . PHP_EOL;
+    echo '<style media="screen">' . PHP_EOL;
     echo $css;
     do_action_deprecated( 'qtranslate_admin_css', array(), '3.10.0', 'admin_enqueue_scripts', 'Discourage internal CSS' );
     echo '</style>' . PHP_EOL;

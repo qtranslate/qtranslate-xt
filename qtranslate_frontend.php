@@ -33,7 +33,7 @@ function qtranxf_wp_head() {
     global $q_config;
 
     if ( $q_config['header_css_on'] ) {
-        echo '<style type="text/css">' . PHP_EOL . $q_config['header_css'] . '</style>' . PHP_EOL;
+        echo '<style>' . PHP_EOL . $q_config['header_css'] . '</style>' . PHP_EOL;
     }
 
     if ( is_404() ) {
