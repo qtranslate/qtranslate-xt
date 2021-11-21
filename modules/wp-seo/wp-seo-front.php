@@ -137,9 +137,10 @@ function qtranxf_wpseo_add_filters_front() {
     function qtranxf_wpseo_next_prev_filter( $link ) {
         global $q_config;
 
-        preg_match_all( '/<link[^>]+href=([\'"])(?<href>.+?)\1[^>]*>/i', $link, $link_extract_href );
-        preg_match_all( '/<link[^>]+rel=([\'"])(?<rel>.+?)\1[^>]*>/i', $link, $link_extract_rel );
-        $link = '<link rel="' . $link_extract_rel['rel'][0] . '" href="' . qtranxf_convertURL( $link_extract_href['href'][0], $q_config['language'] ) . '" />';
+        if ( preg_match_all( '/<link[^>]+href=([\'"])(?<href>.+?)\1[^>]*>/i', $link, $link_extract_href ) &&
+             preg_match_all( '/<link[^>]+rel=([\'"])(?<rel>.+?)\1[^>]*>/i', $link, $link_extract_rel ) ) {
+            $link = '<link rel="' . $link_extract_rel['rel'][0] . '" href="' . qtranxf_convertURL( $link_extract_href['href'][0], $q_config['language'] ) . '" />';
+        }
 
         return $link;
     }
