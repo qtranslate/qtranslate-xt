@@ -97,24 +97,24 @@ class acf_qtranslate_acf_5_text extends acf_field_text {
     function render_field_settings( $field ) {
         // default_value
         acf_render_field_setting( $field, array(
-            'label'        => __( 'Default Value', 'qtranslate' ),
-            'instructions' => __( 'Appears when creating a new post', 'qtranslate' ),
+            'label'        => __( 'Default Value', 'acf' ),
+            'instructions' => __( 'Appears when creating a new post', 'acf' ),
             'type'         => 'text',
             'name'         => 'default_value',
         ) );
 
         // placeholder
         acf_render_field_setting( $field, array(
-            'label'        => __( 'Placeholder Text', 'qtranslate' ),
-            'instructions' => __( 'Appears within the input', 'qtranslate' ),
+            'label'        => __( 'Placeholder Text', 'acf' ),
+            'instructions' => __( 'Appears within the input', 'acf' ),
             'type'         => 'text',
             'name'         => 'placeholder',
         ) );
 
         // maxlength
         acf_render_field_setting( $field, array(
-            'label'        => __( 'Character Limit', 'qtranslate' ),
-            'instructions' => __( 'Leave blank for no limit', 'qtranslate' ),
+            'label'        => __( 'Character Limit', 'acf' ),
+            'instructions' => __( 'Leave blank for no limit', 'acf' ),
             'type'         => 'number',
             'name'         => 'maxlength',
         ) );

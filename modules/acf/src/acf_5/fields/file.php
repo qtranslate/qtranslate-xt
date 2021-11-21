@@ -38,10 +38,10 @@ class acf_qtranslate_acf_5_file extends acf_field_file {
             'mime_types'    => ''
         );
         $this->l10n     = array(
-            'select'     => __( "Select File", 'qtranslate' ),
-            'edit'       => __( "Edit File", 'qtranslate' ),
-            'update'     => __( "Update File", 'qtranslate' ),
-            'uploadedTo' => __( "Uploaded to this post", 'qtranslate' ),
+            'select'     => __( "Select File", 'acf' ),
+            'edit'       => __( "Edit File", 'acf' ),
+            'update'     => __( "Update File", 'acf' ),
+            'uploadedTo' => __( "Uploaded to this post", 'acf' ),
         );
 
         add_filter( 'get_media_item_args', array( $this, 'get_media_item_args' ) );
@@ -137,12 +137,12 @@ class acf_qtranslate_acf_5_file extends acf_field_file {
                             <strong data-name="title"><?php echo $atts['title']; ?></strong>
                         </p>
                         <p>
-                            <strong><?php _e( 'File name', 'qtranslate' ); ?>:</strong>
+                            <strong><?php _e( 'File name', 'acf' ); ?>:</strong>
                             <a data-name="filename" href="<?php echo $atts['url']; ?>"
                                target="_blank"><?php echo $atts['filename']; ?></a>
                         </p>
                         <p>
-                            <strong><?php _e( 'File size', 'qtranslate' ); ?>:</strong>
+                            <strong><?php _e( 'File size', 'acf' ); ?>:</strong>
                             <span data-name="filesize"><?php echo $atts['filesize']; ?></span>
                         </p>
 
@@ -165,9 +165,9 @@ class acf_qtranslate_acf_5_file extends acf_field_file {
 
                     <?php else: ?>
 
-                        <p style="margin:0;"><?php _e( 'No file selected', 'qtranslate' ); ?> <a data-name="add"
-                                                                                                 class="acf-button button"
-                                                                                                 href="#"><?php _e( 'Add File', 'qtranslate' ); ?></a>
+                        <p style="margin:0;"><?php _e( 'No file selected', 'acf' ); ?> <a data-name="add"
+                                                                                          class="acf-button button"
+                                                                                          href="#"><?php _e( 'Add File', 'acf' ); ?></a>
                         </p>
 
                     <?php endif; ?>

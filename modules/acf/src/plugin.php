@@ -403,7 +403,7 @@ class acf_qtranslate_plugin {
         foreach ( $values as $key_language => $value_language ) {
             // validate properly the required value (see: acf_validate_value in acf_validation)
             if ( $field['required'] && empty( $value_language ) ) {
-                return '(' . $q_config['language_name'][ $key_language ] . ') ' . sprintf( __( '%s value is required', 'qtranslate' ), $field['label'] );
+                return '(' . $q_config['language_name'][ $key_language ] . ') ' . sprintf( __( '%s value is required', 'acf' ), $field['label'] );
             }
             // validate with original ACF method
             if ( isset( $validation_method ) ) {

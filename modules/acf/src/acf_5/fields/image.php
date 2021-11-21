@@ -43,11 +43,11 @@ class acf_qtranslate_acf_5_image extends acf_field_image {
             'mime_types'    => ''
         );
         $this->l10n     = array(
-            'select'     => __( "Select Image", 'qtranslate' ),
-            'edit'       => __( "Edit Image", 'qtranslate' ),
-            'update'     => __( "Update Image", 'qtranslate' ),
-            'uploadedTo' => __( "Uploaded to this post", 'qtranslate' ),
-            'all'        => __( "All images", 'qtranslate' ),
+            'select'     => __( "Select Image", 'acf' ),
+            'edit'       => __( "Edit Image", 'acf' ),
+            'update'     => __( "Update Image", 'acf' ),
+            'uploadedTo' => __( "Uploaded to this post", 'acf' ),
+            'all'        => __( "All images", 'acf' ),
         );
 
         add_filter( 'get_media_item_args', array( $this, 'get_media_item_args' ) );
@@ -133,10 +133,10 @@ class acf_qtranslate_acf_5_image extends acf_field_image {
                         <?php
                         if ( $uploader != 'basic' ):
                             ?><a class="acf-icon -pencil dark" data-name="edit" href="#"
-                                 title="<?php _e( 'Edit', 'qtranslate' ); ?>"></a><?php
+                                 title="<?php _e( 'Edit', 'acf' ); ?>"></a><?php
                         endif;
                         ?><a class="acf-icon -cancel dark" data-name="remove" href="#"
-                             title="<?php _e( 'Remove', 'qtranslate' ); ?>"></a>
+                             title="<?php _e( 'Remove', 'acf' ); ?>"></a>
                     </div>
                 </div>
                 <div class="hide-if-value">
@@ -152,9 +152,8 @@ class acf_qtranslate_acf_5_image extends acf_field_image {
 
                     <?php else: ?>
 
-                        <p><?php _e( 'No image selected', 'qtranslate' ); ?> <a data-name="add"
-                                                                                class="acf-button button"
-                                                                                href="#"><?php _e( 'Add Image', 'qtranslate' ); ?></a>
+                        <p><?php _e( 'No image selected', 'acf' ); ?> <a data-name="add" class="acf-button button"
+                                                                         href="#"><?php _e( 'Add Image', 'acf' ); ?></a>
                         </p>
 
                     <?php endif; ?>
