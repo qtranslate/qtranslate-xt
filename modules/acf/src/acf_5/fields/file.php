@@ -28,7 +28,7 @@ class acf_qtranslate_acf_5_file extends acf_field_file {
      */
     function initialize() {
         $this->name     = 'qtranslate_file';
-        $this->label    = sprintf( __( "File (%s)", 'qtranslate' ), "qTranslate-XT" );
+        $this->label    = __( "File", 'acf' ) . " (qTranslate-XT)";
         $this->category = "qTranslate-XT";
         $this->defaults = array(
             'return_format' => 'array',

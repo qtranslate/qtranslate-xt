@@ -28,7 +28,7 @@ class acf_qtranslate_acf_5_image extends acf_field_image {
      */
     function initialize() {
         $this->name     = 'qtranslate_image';
-        $this->label    = sprintf( __( "Image (%s)", 'qtranslate' ), "qTranslate-XT" );
+        $this->label    = __( "Image", 'acf' ) . " (qTranslate-XT)";
         $this->category = "qTranslate-XT";
         $this->defaults = array(
             'return_format' => 'array',

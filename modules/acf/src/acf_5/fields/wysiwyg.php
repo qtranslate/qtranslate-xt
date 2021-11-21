@@ -28,7 +28,7 @@ class acf_qtranslate_acf_5_wysiwyg extends acf_field_wysiwyg {
      */
     function initialize() {
         $this->name     = 'qtranslate_wysiwyg';
-        $this->label    = sprintf( __( "Wysiwyg Editor (%s)", 'qtranslate' ), "qTranslate-XT" );
+        $this->label    = __( "Wysiwyg Editor", 'acf' ) . " (qTranslate-XT)";
         $this->category = "qTranslate-XT";
         $this->defaults = array(
             'tabs'          => 'all',
