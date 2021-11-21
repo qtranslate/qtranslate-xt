@@ -28,8 +28,8 @@ class acf_qtranslate_acf_5_wysiwyg extends acf_field_wysiwyg {
      */
     function initialize() {
         $this->name     = 'qtranslate_wysiwyg';
-        $this->label    = __( "Wysiwyg Editor (qTranslate)", 'acf' );
-        $this->category = __( "qTranslate", 'acf' );
+        $this->label    = sprintf( __( "Wysiwyg Editor (%s)", 'qtranslate' ), "qTranslate-XT" );
+        $this->category = "qTranslate-XT";
         $this->defaults = array(
             'tabs'          => 'all',
             'toolbar'       => 'full',
@@ -129,10 +129,10 @@ class acf_qtranslate_acf_5_wysiwyg extends acf_field_wysiwyg {
                         <div class="wp-editor-tabs">
                             <button id="<?php echo $id; ?>-tmce"
                                     class="wp-switch-editor switch-tmce" <?php echo $button; ?>
-                                    type="button"><?php echo __( 'Visual', 'acf' ); ?></button>
+                                    type="button"><?php echo __( 'Visual', 'qtranslate' ); ?></button>
                             <button id="<?php echo $id; ?>-html"
                                     class="wp-switch-editor switch-html" <?php echo $button; ?>
-                                    type="button"><?php echo _x( 'Text', 'Name for the Text editor tab (formerly HTML)', 'acf' ); ?></button>
+                                    type="button"><?php echo _x( 'Text', 'Name for the Text editor tab (formerly HTML)', 'qtranslate' ); ?></button>
                         </div>
                     <?php endif; ?>
                 </div>
