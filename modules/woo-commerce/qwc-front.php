@@ -20,6 +20,7 @@ function qtranxf_wc_add_filters_front() {
         'woocommerce_gateway_description'                   => 20,
         'woocommerce_gateway_title'                         => 20,
         'woocommerce_gateway_icon'                          => 20,
+        'woocommerce_get_privacy_policy_text'               => 20,
         'woocommerce_order_details_after_order_table_items' => 20,
         'woocommerce_order_item_display_meta_value'         => 20,
         'woocommerce_order_item_name'                       => 20,
