@@ -88,7 +88,7 @@ function qtranxf_init_language() {
              */
             $target = apply_filters( 'qtranslate_language_detect_redirect', $url_lang, $url_orig, $url_info );
             if ( $target !== false && $target != $url_orig ) {
-                wp_redirect( $target );
+                wp_redirect( $target, 301 );
                 nocache_headers(); // prevent browser from caching redirection
                 exit();
             } else {
