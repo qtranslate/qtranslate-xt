@@ -30,33 +30,43 @@ function qtranxf_wpseo_add_filters_front() {
         add_filter( $name, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', $priority );
     }
 
-    add_filter( 'wpseo_schema_webpage', 'qtranxf_wpseo_webpage_schema', 10, 2 );
     function qtranxf_wpseo_webpage_schema( $piece, $context ) {
-        if ( array_key_exists( 'description', $piece ) ) {
+        if ( isset( $piece['description'] ) ) {
             $piece['description'] = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage( $piece['description'] );
         }
-        if ( array_key_exists( 'name', $piece ) ) {
+        if ( isset( $piece['name'] ) ) {
             $piece['name'] = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage( $piece['name'] );
         }
 
         return $piece;
     }
 
-    add_filter( 'wpseo_breadcrumb_single_link_info', 'qtranxf_wpseo_breadcrumbs_link', 10, 3 );
+    add_filter( 'wpseo_schema_webpage', 'qtranxf_wpseo_webpage_schema', 10, 2 );
+
     function qtranxf_wpseo_breadcrumbs_link( $link_info, $index, $crumbs ) {
         global $q_config;
 
-        $link_info['text'] = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage( $link_info['text'] );
-        $link_info['url']  = qtranxf_convertURL( $link_info['url'], $q_config['language'] );
+        if ( isset( $data['text'] ) ) {
+            $link_info['text'] = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage( $link_info['text'] );
+        }
+        if ( isset( $data['url'] ) ) {
+            $link_info['url'] = qtranxf_convertURL( $link_info['url'], $q_config['language'] );
+        }
 
         return $link_info;
     }
 
+    add_filter( 'wpseo_breadcrumb_single_link_info', 'qtranxf_wpseo_breadcrumbs_link', 10, 3 );
+
     function qtranxf_wpseo_schema_website( $data ) {
         global $q_config;
 
-        $data['@id'] = qtranxf_convertURL( $data['@id'], $q_config['language'] );
-        $data['url'] = qtranxf_convertURL( $data['url'], $q_config['language'] );
+        if ( isset( $data['@id'] ) ) {
+            $data['@id'] = qtranxf_convertURL( $data['@id'], $q_config['language'] );
+        }
+        if ( isset( $data['url'] ) ) {
+            $data['url'] = qtranxf_convertURL( $data['url'], $q_config['language'] );
+        }
 
         return $data;
     }
@@ -66,9 +76,7 @@ function qtranxf_wpseo_add_filters_front() {
     function qtranxf_wpseo_json_ld_search_url( $search_url ) {
         global $q_config;
 
-        $search_url = qtranxf_convertURL( $search_url, $q_config['language'] );
-
-        return $search_url;
+        return qtranxf_convertURL( $search_url, $q_config['language'] );
     }
 
     add_filter( 'wpseo_json_ld_search_url', 'qtranxf_wpseo_json_ld_search_url', 10, 3 );
@@ -76,7 +84,9 @@ function qtranxf_wpseo_add_filters_front() {
     function qtranxf_wpseo_schema_imageobject( $data ) {
         global $q_config;
 
-        $data['@id'] = qtranxf_convertURL( $data['@id'], $q_config['language'] );
+        if ( isset( $data['@id'] ) ) {
+            $data['@id'] = qtranxf_convertURL( $data['@id'], $q_config['language'] );
+        }
 
         return $data;
     }
@@ -88,9 +98,12 @@ function qtranxf_wpseo_add_filters_front() {
 
         $lang = $q_config['language'];
 
-        $data['@id'] = qtranxf_convertURL( $data['@id'], $lang );
-        $data['url'] = qtranxf_convertURL( $data['url'], $lang );
-
+        if ( isset( $data['@id'] ) ) {
+            $data['@id'] = qtranxf_convertURL( $data['@id'], $lang );
+        }
+        if ( isset( $data['url'] ) ) {
+            $data['url'] = qtranxf_convertURL( $data['url'], $lang );
+        }
         if ( isset( $data['isPartOf']['@id'] ) ) {
             $data['isPartOf']['@id'] = qtranxf_convertURL( $data['isPartOf']['@id'], $lang );
         }
@@ -98,12 +111,11 @@ function qtranxf_wpseo_add_filters_front() {
             $data['primaryImageOfPage']['@id'] = qtranxf_convertURL( $data['primaryImageOfPage']['@id'], $lang );
         }
         // It seems to work fine for $data['author']['@id'] without filter.
-
         if ( isset( $data['breadcrumb']['@id'] ) ) {
             $data['breadcrumb']['@id'] = qtranxf_convertURL( $data['breadcrumb']['@id'], $lang );
         }
-        if ( $data['potentialAction'][0]['target'] ) {
-            $data['potentialAction'][0]['target'] = [ qtranxf_convertURL( $data['potentialAction'][0]->target, $lang ) ];
+        if ( isset( $data['potentialAction'][0]['target'] ) ) {
+            $data['potentialAction'][0]['target'] = [ qtranxf_convertURL( $data['potentialAction'][0]['target'], $lang ) ];
         }
 
         return $data;
@@ -114,7 +126,9 @@ function qtranxf_wpseo_add_filters_front() {
     function qtranxf_wpseo_schema_breadcrumb( $data ) {
         global $q_config;
 
-        $data['@id'] = qtranxf_convertURL( $data['@id'], $q_config['language'] );
+        if ( isset( $data['@id'] ) ) {
+            $data['@id'] = qtranxf_convertURL( $data['@id'], $q_config['language'] );
+        }
 
         return $data;
     }
