@@ -1,3 +1,6 @@
+### 3.11.2
+* Fix warnings with Yoast breadcrumbs front (#1086)
+
 ### 3.11.1
 Core
 * Remove obsolete HTML `type` attributes from `script` and `style` tags (#1074)
