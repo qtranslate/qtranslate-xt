@@ -58,6 +58,33 @@ function qtranxf_wpseo_add_filters_front() {
 
     add_filter( 'wpseo_breadcrumb_single_link_info', 'qtranxf_wpseo_breadcrumbs_link', 10, 3 );
 
+    function qtranxf_wpseo_schema_organization( $data ) {
+        global $q_config;
+
+        if ( isset( $data['@id'] ) ) {
+            $data['@id'] = qtranxf_convertURL( $data['@id'], $q_config['language'] );
+        }
+        if ( isset( $data['name'] ) ) {
+            $data['name'] = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage( $data['name'] );
+        }
+        if ( isset( $data['url'] ) ) {
+            $data['url'] = qtranxf_convertURL( $data['url'], $q_config['language'] );
+        }
+        if ( isset( $data['logo']['@id'] ) ) {
+            $data['logo']['@id'] = qtranxf_convertURL( $data['logo']['@id'], $q_config['language'] );
+        }
+        if ( isset( $data['logo']['caption'] ) ) {
+            $data['logo']['caption'] = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage( $data['logo']['caption'] );
+        }
+        if ( isset( $data['image']['@id'] ) ) {
+            $data['image']['@id'] = qtranxf_convertURL( $data['image']['@id'], $q_config['language'] );
+        }
+
+        return $data;
+    }
+
+    add_filter( 'wpseo_schema_organization', 'qtranxf_wpseo_schema_organization' );
+
     function qtranxf_wpseo_schema_website( $data ) {
         global $q_config;
 
@@ -66,6 +93,9 @@ function qtranxf_wpseo_add_filters_front() {
         }
         if ( isset( $data['url'] ) ) {
             $data['url'] = qtranxf_convertURL( $data['url'], $q_config['language'] );
+        }
+        if ( isset( $data['publisher']['@id'] ) ) {
+            $data['publisher']['@id'] = qtranxf_convertURL( $data['publisher']['@id'], $q_config['language'] );
         }
 
         return $data;
