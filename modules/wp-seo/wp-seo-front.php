@@ -46,10 +46,10 @@ function qtranxf_wpseo_add_filters_front() {
     function qtranxf_wpseo_breadcrumbs_link( $link_info, $index, $crumbs ) {
         global $q_config;
 
-        if ( isset( $link_info['text'] ) ) {
+        if ( isset( $data['text'] ) ) {
             $link_info['text'] = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage( $link_info['text'] );
         }
-        if ( isset( $link_info['url'] ) ) {
+        if ( isset( $data['url'] ) ) {
             $link_info['url'] = qtranxf_convertURL( $link_info['url'], $q_config['language'] );
         }
 
@@ -58,7 +58,6 @@ function qtranxf_wpseo_add_filters_front() {
 
     add_filter( 'wpseo_breadcrumb_single_link_info', 'qtranxf_wpseo_breadcrumbs_link', 10, 3 );
 
-    //NEW FILTER ORGANIZATION SCHEMA
     function qtranxf_wpseo_schema_organization( $data ) {
         global $q_config;
 
@@ -96,7 +95,7 @@ function qtranxf_wpseo_add_filters_front() {
             $data['url'] = qtranxf_convertURL( $data['url'], $q_config['language'] );
         }
         if ( isset( $data['publisher']['@id'] ) ) {
-            $data['publisher']['@id'] = qtranxf_convertURL( $data['publisher']['@id'], $q_config['language'] ); //NEW PUBLISHER FILTER ADDED
+            $data['publisher']['@id'] = qtranxf_convertURL( $data['publisher']['@id'], $q_config['language'] );
         }
 
         return $data;
