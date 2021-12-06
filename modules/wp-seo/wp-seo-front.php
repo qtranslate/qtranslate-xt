@@ -46,10 +46,10 @@ function qtranxf_wpseo_add_filters_front() {
     function qtranxf_wpseo_breadcrumbs_link( $link_info, $index, $crumbs ) {
         global $q_config;
 
-        if ( isset( $data['text'] ) ) {
+        if ( isset( $link_info['text'] ) ) {
             $link_info['text'] = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage( $link_info['text'] );
         }
-        if ( isset( $data['url'] ) ) {
+        if ( isset( $link_info['url'] ) ) {
             $link_info['url'] = qtranxf_convertURL( $link_info['url'], $q_config['language'] );
         }
 
