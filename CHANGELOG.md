@@ -1,3 +1,6 @@
+### 3.11.4
+* Fix Yoast filter front schema webpage (#1086)
+
 ### 3.11.3
 * Fix regression Yoast filter front in 3.11.2 (#1086)
 * Add Yoast filters for organization schema and publisher (#1090)
