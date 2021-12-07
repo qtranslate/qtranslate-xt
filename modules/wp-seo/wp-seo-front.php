@@ -144,8 +144,8 @@ function qtranxf_wpseo_add_filters_front() {
         if ( isset( $data['breadcrumb']['@id'] ) ) {
             $data['breadcrumb']['@id'] = qtranxf_convertURL( $data['breadcrumb']['@id'], $lang );
         }
-        if ( isset( $data['potentialAction'][0]['target'] ) ) {
-            $data['potentialAction'][0]['target'] = [ qtranxf_convertURL( $data['potentialAction'][0]['target'], $lang ) ];
+        if ( isset( $data['potentialAction'][0]['target'][0] ) ) {
+            $data['potentialAction'][0]['target'][0] = [ qtranxf_convertURL( $data['potentialAction'][0]['target'][0], $lang ) ];
         }
 
         return $data;
