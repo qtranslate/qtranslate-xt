@@ -661,7 +661,7 @@ function qtranxf_load_option_array( $name, $default_value = null ) {
             if ( function_exists( $default_value ) ) {
                 $vals = call_user_func( $default_value );
             } else {
-                $vals = preg_split( '/[\s,]+/', $default_value, null, PREG_SPLIT_NO_EMPTY );
+                $vals = preg_split( '/[\s,]+/', $default_value, -1, PREG_SPLIT_NO_EMPTY );
             }
         } else if ( is_array( $default_value ) ) {
             $vals = $default_value;
@@ -829,7 +829,7 @@ function qtranxf_load_config() {
     $ignore_file_types = get_option( 'qtranslate_ignore_file_types' );
     $val               = explode( ',', QTX_IGNORE_FILE_TYPES );
     if ( ! empty( $ignore_file_types ) ) {
-        $vals = preg_split( '/[\s,]+/', strtolower( $ignore_file_types ), null, PREG_SPLIT_NO_EMPTY );
+        $vals = preg_split( '/[\s,]+/', strtolower( $ignore_file_types ), -1, PREG_SPLIT_NO_EMPTY );
         foreach ( $vals as $v ) {
             if ( empty( $v ) ) {
                 continue;
@@ -1174,7 +1174,7 @@ function qtranxf_get_language_blocks( $text ) {
     $lang_code   = QTX_LANG_CODE_FORMAT;
     $split_regex = "#(<!--:$lang_code-->|<!--:-->|\[:$lang_code\]|\[:\]|\{:$lang_code\}|\{:\})#ism";
 
-    return preg_split( $split_regex, $text, - 1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE );
+    return preg_split( $split_regex, $text, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE );
 }
 
 function qtranxf_split( $text ) {
@@ -1397,7 +1397,7 @@ function qtranxf_join_byseparator( $texts, $regex_sep ) {
 
     $lines = array();
     foreach ( $texts as $lang => $lang_text ) {
-        $lines[ $lang ] = preg_split( $regex_sep, $lang_text, null, PREG_SPLIT_DELIM_CAPTURE );
+        $lines[ $lang ] = preg_split( $regex_sep, $lang_text, -1, PREG_SPLIT_DELIM_CAPTURE );
     }
 
     $text = '';
