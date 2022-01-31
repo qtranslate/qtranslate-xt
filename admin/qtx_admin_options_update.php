@@ -181,10 +181,10 @@ function qtranxf_edit_config() {
                 }
                 switch ( $post->post_type ) {
                     case 'post':
-                        ++ $cnt_post;
+                        ++$cnt_post;
                         break;
                     case 'page':
-                        ++ $cnt_page;
+                        ++$cnt_page;
                         break;
                 }
                 $wpdb->query( $wpdb->prepare( 'UPDATE ' . $wpdb->posts . ' set post_content = %s, post_title = %s, post_excerpt = %s WHERE ID = %d', $content, $title, $excerpt, $post->ID ) );

@@ -1441,7 +1441,7 @@ function qtranxf_join_byline( $texts ) {
     }
 
     $text = '';
-    for ( $i = 0; true; ++ $i ) {
+    for ( $i = 0; true; ++$i ) {
         $done    = true;
         $to_join = array();
         foreach ( $lines as $lang => $lang_lines ) {
@@ -1561,7 +1561,7 @@ function qtranxf_use_content( $lang, $content, $available_langs, $show_available
             }
             $language_name = qtranxf_getLanguageName( $language );
             $language_list = '<a href="' . qtranxf_convertURL( '', $language, false, true ) . '" class="qtranxs-available-language-link qtranxs-available-language-link-' . $language . '" title="' . $q_config['language_name'][ $language ] . '">' . $language_name . '</a>' . $language_list;
-            ++ $i;
+            ++$i;
         }
     }
 

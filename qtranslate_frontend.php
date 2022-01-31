@@ -301,7 +301,7 @@ function qtranxf_add_language_menu_item( &$items, &$menu_order, &$itemid, $key, 
                 continue;
             }
         }
-        $item = new WP_Post( (object) array( 'ID' => ++ $itemid ) );
+        $item = new WP_Post( (object) array( 'ID' => ++$itemid ) );
 
         // add properties required for nav_menu_item, whose absense causes class-wp-customize-setting.php to throw Exception in function __construct
         $item->target      = '';
@@ -310,7 +310,7 @@ function qtranxf_add_language_menu_item( &$items, &$menu_order, &$itemid, $key, 
 
         // set properties for language menu item
         $item->menu_item_parent = $qtransmenu->ID;
-        $item->menu_order       = ++ $menu_order;
+        $item->menu_order       = ++$menu_order;
         $item->post_type        = 'nav_menu_item';
         $item->object           = 'custom';
         $item->object_id        = $qtransmenu->object_id;

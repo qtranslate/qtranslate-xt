@@ -107,7 +107,7 @@ function qtranxf_migrate_plugins() {
         if ( ! qtranxf_endsWith( $key, '-migration' ) ) {
             continue;
         }
-        $plugin = substr( $key, 0, - strlen( '-migration' ) );
+        $plugin = substr( $key, 0, -strlen( '-migration' ) );
         $f      = 'qtranxf_migrate_' . $value . '_' . str_replace( '-', '_', $plugin );
         if ( ! function_exists( $f ) ) {
             continue;

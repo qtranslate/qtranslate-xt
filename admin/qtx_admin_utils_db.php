@@ -351,7 +351,7 @@ function qtranxf_split_database_file( $ifp, $languages_to_keep ) {
     $cnt = 0;
     while ( ( $s = fgets( $ifh ) ) ) {
         if ( qtranxf_isMultilingual( $s ) ) {
-            ++ $cnt;
+            ++$cnt;
             $lns = qtranxf_split( $s );
             $ok  = true;
             foreach ( $lns as $lang => $ln ) {
