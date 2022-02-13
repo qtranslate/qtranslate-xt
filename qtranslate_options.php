@@ -86,6 +86,7 @@ function qtranxf_set_default_options( &$ops ) {
         'hide_default_language'          => true,   // hide language tag for default language in urls
         'use_secure_cookie'              => false,
         'header_css_on'                  => true,
+        'slugs_enabled'                  => false,
     );
 
     // single line options
