@@ -369,7 +369,7 @@ function qts_sanitize_bases( $base_slugs = false ) {
                 $count      = 2;
                 while ( in_array( $value, $base_founded ) ) {
                     $value = "$base_value-$count";
-                    $count ++;
+                    $count++;
                 }
                 $base_founded[] = $base_slugs[ $type ][ $lang ] = $value;
             endif;

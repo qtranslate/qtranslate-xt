@@ -1593,7 +1593,7 @@ class QtranslateSlug {
                     // TODO: update unique_slug :: differs from current wp func ( 4.3.1 )
                     $alt_post_name   = substr( $slug, 0, 200 - ( strlen( $suffix ) + 1 ) ) . "-$suffix";
                     $post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $alt_post_name, $post_ID ) );
-                    $suffix ++;
+                    $suffix++;
                 } while ( $post_name_check );
                 $slug = $alt_post_name;
             }
@@ -1610,7 +1610,7 @@ class QtranslateSlug {
                     // TODO: update unique_slug :: same as above: differs from current wp func ( 4.3.1 )
                     $alt_post_name   = substr( $slug, 0, 200 - ( strlen( $suffix ) + 1 ) ) . "-$suffix";
                     $post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $meta_key, $alt_post_name, $post_type, $post_ID ) );
-                    $suffix ++;
+                    $suffix++;
                 } while ( $post_name_check );
                 $slug = $alt_post_name;
             }
@@ -1769,7 +1769,7 @@ class QtranslateSlug {
             $num = 2;
             do {
                 $alt_slug = $slug . "-$num";
-                $num ++;
+                $num++;
                 $slug_check = $wpdb->get_var(
                     $wpdb->prepare(
                         "SELECT meta_value FROM $wpdb->termmeta WHERE meta_key = '%s' AND meta_value = '%s'",
@@ -2350,7 +2350,7 @@ class QtranslateSlug {
                 $count = 0;
                 $p     = $page;
                 while ( $p->post_parent != 0 && isset( $pages[ $p->post_parent ] ) ) {
-                    $count ++;
+                    $count++;
                     $parent = $pages[ $p->post_parent ];
                     if ( ! isset( $revparts[ $count ] ) || $parent->meta_value != $revparts[ $count ] ) {
                         break;

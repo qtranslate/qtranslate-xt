@@ -8,8 +8,9 @@
 class QtranslateSlugWidget extends WP_Widget {
 
     function __construct() {
-        $widget_ops = array( 'classname'   => 'qts_widget',
-                             'description' => __( 'Allows your visitors to choose a Language.', 'qts' )
+        $widget_ops = array(
+            'classname'   => 'qts_widget',
+            'description' => __( 'Allows your visitors to choose a Language.', 'qts' )
         );
         parent::__construct( 'qtranslateslug', __( 'Language selector (QTS)', 'qts' ), $widget_ops );
     }
@@ -47,9 +48,10 @@ class QtranslateSlugWidget extends WP_Widget {
     }
 
     function form( $instance ) {
-        $instance   = wp_parse_args( (array) $instance, array( 'title'      => '',
-                                                               'hide-title' => false,
-                                                               'type'       => 'text'
+        $instance   = wp_parse_args( (array) $instance, array(
+            'title'      => '',
+            'hide-title' => false,
+            'type'       => 'text'
         ) );
         $title      = $instance['title'];
         $hide_title = $instance['hide-title'];
