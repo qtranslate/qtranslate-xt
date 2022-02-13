@@ -106,7 +106,7 @@ class QTX_Modules_Handler {
             ),
             array(
                 'id'           => 'slugs',
-                'name'         => 'Slugs',
+                'name'         => 'Slugs (experimental)',
                 'plugin'       => true,
                 'incompatible' => 'qtranslate-slug/qtranslate-slug.php'
             )

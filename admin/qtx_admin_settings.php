@@ -705,17 +705,6 @@ class QTX_Admin_Settings {
                         printf( __( 'The color in use is taken from your profile option %s, the third color.', 'qtranslate' ), '"<a href="' . admin_url( '/profile.php' ) . '">' . qtranxf_translate_wp( 'Admin Color Scheme' ) . '</a>"' ) ?></p>
                 </td>
             </tr>
-            <tr id="option_slugs_enabled">
-                <th scope="row"><?php _e( 'Slugs translation', 'qtranslate' ) ?></th>
-                <td>
-                    <label for="slugs_enabled">
-                        <input type="checkbox" name="slugs_enabled"
-                               id="slugs_enabled"
-                               value="1"<?php checked( $q_config['slugs_enabled'] ) ?>/>&nbsp;<?php _e( 'Enable slugs translation.', 'qtranslate' ) ?>
-                    </label>
-                    <p class="qtranxs-notes"><?php echo __( 'This will activate the slug translation module (experimental feature). ', 'qtranslate' ) ?></p>
-                </td>
-            </tr>
         </table>
         <?php
         $this->close_section( 'advanced' );
@@ -764,6 +753,19 @@ class QTX_Admin_Settings {
                         <?php endforeach; ?>
                         </tbody>
                     </table>
+                </td>
+            </tr>
+            <tr id="option_slugs_enabled">
+                <th scope="row"><?php _e( 'Slugs translation', 'qtranslate' ) ?></th>
+                <td>
+                    <label for="slugs_enabled">
+                        <input type="checkbox" name="slugs_enabled"
+                               id="slugs_enabled"
+                               value="1"<?php checked( $q_config['slugs_enabled'] ) ?>/>&nbsp;<?php _e( 'Enable slugs translation.', 'qtranslate' ); ?>
+                    </label>
+                    <p class="qtranxs-notes"> <?php echo __( 'This activates the slug translation module. ', 'qtranslate' );
+                        echo '&nbsp;' . __( 'Attention! This module is still experimental. It is subject to bugs and limitations.', 'qtranslate' ) ?>
+                    </p>
                 </td>
             </tr>
             <tr>
