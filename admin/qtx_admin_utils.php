@@ -52,7 +52,7 @@ function qtranxf_enqueue_scripts( $jss ) {
     $deps = array();
     foreach ( $jss as $key => $js ) {
         if ( isset( $js['src'] ) ) {
-            $handle = isset( $js['handle'] ) ? $js['handle'] : ( is_string( $key ) ? $key : 'qtranslate-admin-js-' . ( ++ $cnt ) );
+            $handle = isset( $js['handle'] ) ? $js['handle'] : ( is_string( $key ) ? $key : 'qtranslate-admin-js-' . ( ++$cnt ) );
             $src    = $js['src'];
             $ver    = isset( $js['ver'] ) ? $js['ver'] : QTX_VERSION;
             $url    = content_url( $src );
@@ -274,7 +274,7 @@ function qtranxf_fetch_file_selection( $dir, $suffix = '.css' ) {
         }
         $name = str_replace( '_', ' ', $name );
         if ( qtranxf_endsWith( $name, '.min' ) ) {
-            $name           = substr( $name, - 4 );
+            $name           = substr( $name, -4 );
             $files[ $name ] = $file;
         } elseif ( ! isset( $files[ $name ] ) ) {
             $files[ $name ] = $file;

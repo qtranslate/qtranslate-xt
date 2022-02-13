@@ -119,7 +119,7 @@ class acf_qtranslate_plugin {
      */
     public function admin_footer() {
         ?>
-        <script type="text/javascript">
+        <script>
             (function ($) {
                 var anchors = {
                     '#post-body-content': 'prepend',

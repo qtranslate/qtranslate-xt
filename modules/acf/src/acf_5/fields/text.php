@@ -28,8 +28,8 @@ class acf_qtranslate_acf_5_text extends acf_field_text {
      */
     function initialize() {
         $this->name     = 'qtranslate_text';
-        $this->label    = __( "Text (qTranslate)", 'acf' );
-        $this->category = __( "qTranslate", 'acf' );
+        $this->label    = __( "Text", 'acf' ) . " (qTranslate-XT)";
+        $this->category = "qTranslate-XT";
         $this->defaults = array(
             'default_value' => '',
             'maxlength'     => '',

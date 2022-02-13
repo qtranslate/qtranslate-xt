@@ -1,3 +1,27 @@
+### 3.11.4
+* Fix Yoast filter front schema webpage (#1086)
+
+### 3.11.3
+* Fix regression Yoast filter front in 3.11.2 (#1086)
+* Add Yoast filters for organization schema and publisher (#1090)
+
+### 3.11.2
+* Fix warnings with Yoast breadcrumbs front (#1086)
+
+### 3.11.1
+Core
+* Remove obsolete HTML `type` attributes from `script` and `style` tags (#1074)
+
+Integration
+* ACF: Delete obsolete WP version check in ACF wysiwyg
+* ACF: Fix localization of ACF field labels (#1081)
+* Yoast: Fix yoast breadcrumbs front (#1079)
+* WooComerce: Add hook for WC privacy policy text (#1083)
+
+Localization
+* Update keywords list POT template
+* Update keywords and localization zh_CN (100%) (#1059)
+
 ### 3.11.0
 Core
 * Enable language switch for text widget with TinyMCE editor (#1042, #529, #616, #912)

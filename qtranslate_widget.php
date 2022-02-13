@@ -41,7 +41,7 @@ class qTranslateXWidget extends WP_Widget {
 
     function widget( $args, $instance ) {
         if ( ! isset( $instance['widget-css-off'] ) ) {
-            echo '<style type="text/css">' . PHP_EOL;
+            echo '<style>' . PHP_EOL;
             echo empty( $instance['widget-css'] ) ? QTX_WIDGET_CSS : $instance['widget-css'];
             echo '</style>' . PHP_EOL;
         }
@@ -270,7 +270,7 @@ function qtranxf_generateLanguageSelectCode( $args = array(), $id = '' ) {
                 }
 
                 if ( $type == 'dropdown' ) {
-                    echo '<script type="text/javascript">' . PHP_EOL . '// <![CDATA[' . PHP_EOL;
+                    echo '<script>' . PHP_EOL . '// <![CDATA[' . PHP_EOL;
                     echo "var lc = document.getElementById('" . $id . "');" . PHP_EOL;
                     echo "var s = document.createElement('select');" . PHP_EOL;
                     echo "s.id = 'qtranxs_select_" . $id . "';" . PHP_EOL;

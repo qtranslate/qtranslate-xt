@@ -28,8 +28,8 @@ class acf_qtranslate_acf_5_wysiwyg extends acf_field_wysiwyg {
      */
     function initialize() {
         $this->name     = 'qtranslate_wysiwyg';
-        $this->label    = __( "Wysiwyg Editor (qTranslate)", 'acf' );
-        $this->category = __( "qTranslate", 'acf' );
+        $this->label    = __( "Wysiwyg Editor", 'acf' ) . " (qTranslate-XT)";
+        $this->category = "qTranslate-XT";
         $this->defaults = array(
             'tabs'          => 'all',
             'toolbar'       => 'full',
@@ -49,8 +49,6 @@ class acf_qtranslate_acf_5_wysiwyg extends acf_field_wysiwyg {
      * @param array $field
      */
     function render_field( $field ) {
-        global $wp_version;
-
         acf_enqueue_uploader();
 
         $default_editor = 'html';
@@ -88,12 +86,7 @@ class acf_qtranslate_acf_5_wysiwyg extends acf_field_wysiwyg {
         remove_filter( 'acf_the_editor_content', 'wp_htmledit_pre', 10 );
         remove_filter( 'acf_the_editor_content', 'wp_richedit_pre', 10 );
 
-        if ( version_compare( $wp_version, '4.3', '>=' ) ) {
-            add_filter( 'acf_the_editor_content', 'format_for_editor', 10, 2 );
-        } else {
-            $function = ( $default_editor === 'html' ) ? 'wp_htmledit_pre' : 'wp_richedit_pre';
-            add_filter( 'acf_the_editor_content', $function, 10, 1 );
-        }
+        add_filter( 'acf_the_editor_content', 'format_for_editor', 10, 2 );
 
         global $q_config;
 
@@ -118,11 +111,7 @@ class acf_qtranslate_acf_5_wysiwyg extends acf_field_wysiwyg {
                 $class .= ' current-language';
             }
 
-            if ( version_compare( $wp_version, '4.3', '>=' ) ) {
-                $button = 'data-wp-editor-id="' . $id . '"';
-            } else {
-                $button = 'onclick="switchEditors.switchto(this);"';
-            }
+            $button = 'data-wp-editor-id="' . $id . '"';
 
             $value = apply_filters( 'acf_the_editor_content', $values[ $language ], $default_editor );
 

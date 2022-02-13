@@ -44,7 +44,7 @@ function qtranxf_dir_from_wp_content( $plugin ) {
 
     $i = 0;
     while ( $i < $plugin_len && $i < $content_len && $plugin_dir[ $i ] == $content_dir[ $i ] ) {
-        ++ $i;
+        ++$i;
     }
     if ( $i == $content_len ) {
         return substr( $plugin_dir, $content_len );
@@ -55,7 +55,7 @@ function qtranxf_dir_from_wp_content( $plugin ) {
 
     $content_dir = substr( $content_dir, $i );
     $plugin_dir  = substr( $plugin_dir, $i );
-    for ( $i = substr_count( $content_dir, '/' ); -- $i >= 0; ) {
+    for ( $i = substr_count( $content_dir, '/' ); --$i >= 0; ) {
         $plugin_dir = '../' . $plugin_dir;
     }
 
@@ -496,7 +496,7 @@ function qtranxf_startsWith( $string, $needle ) {
     if ( $len > strlen( $string ) ) {
         return false;
     }
-    for ( $i = 0; $i < $len; ++ $i ) {
+    for ( $i = 0; $i < $len; ++$i ) {
         if ( $string[ $i ] != $needle[ $i ] ) {
             return false;
         }
@@ -514,7 +514,7 @@ function qtranxf_endsWith( $string, $needle ) {
     if ( $base < 0 ) {
         return false;
     }
-    for ( $i = 0; $i < $len; ++ $i ) {
+    for ( $i = 0; $i < $len; ++$i ) {
         if ( $string[ $base + $i ] != $needle[ $i ] ) {
             return false;
         }

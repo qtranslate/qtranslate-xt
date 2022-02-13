@@ -181,10 +181,10 @@ function qtranxf_edit_config() {
                 }
                 switch ( $post->post_type ) {
                     case 'post':
-                        ++ $cnt_post;
+                        ++$cnt_post;
                         break;
                     case 'page':
-                        ++ $cnt_page;
+                        ++$cnt_page;
                         break;
                 }
                 $wpdb->query( $wpdb->prepare( 'UPDATE ' . $wpdb->posts . ' set post_content = %s, post_title = %s, post_excerpt = %s WHERE ID = %d', $content, $title, $excerpt, $post->ID ) );
@@ -395,7 +395,7 @@ function qtranxf_update_option( $nm, $default_value = null ) {
             if ( function_exists( $default_value ) ) {
                 $default_value = call_user_func( $default_value );
             } elseif ( is_array( $q_config[ $nm ] ) ) {
-                $default_value = preg_split( '/[\s,]+/', $default_value, null, PREG_SPLIT_NO_EMPTY );
+                $default_value = preg_split( '/[\s,]+/', $default_value, -1, PREG_SPLIT_NO_EMPTY );
             }
         }
         if ( $default_value === $q_config[ $nm ] ) {
@@ -597,11 +597,11 @@ function qtranxf_update_setting( $var, $type = QTX_STRING, $def = null ) {
             $val = $_POST[ $var ];
             if ( ! is_array( $_POST[ $var ] ) ) {
                 $val = sanitize_text_field( $val );
-                $val = preg_split( '/[\s,]+/', $val, null, PREG_SPLIT_NO_EMPTY );
+                $val = preg_split( '/[\s,]+/', $val, -1, PREG_SPLIT_NO_EMPTY );
             }
             if ( empty( $val ) && ! is_null( $def ) ) {
                 if ( is_string( $def ) ) {
-                    $val = preg_split( '/[\s,]+/', $def, null, PREG_SPLIT_NO_EMPTY );
+                    $val = preg_split( '/[\s,]+/', $def, -1, PREG_SPLIT_NO_EMPTY );
                 } else if ( is_array( $def ) ) {
                     $val = $def;
                 }
@@ -714,7 +714,7 @@ function qtranxf_update_setting_ignore_file_types( $name ) {
     if ( ! isset( $_POST[ $name ] ) ) {
         return false;
     }
-    $posted  = preg_split( '/[\s,]+/', strtolower( sanitize_text_field( $_POST[ $name ] ) ), null, PREG_SPLIT_NO_EMPTY );
+    $posted  = preg_split( '/[\s,]+/', strtolower( sanitize_text_field( $_POST[ $name ] ) ), -1, PREG_SPLIT_NO_EMPTY );
     $ignored = explode( ',', QTX_IGNORE_FILE_TYPES );
     if ( is_array( $posted ) ) {
         foreach ( $posted as $posted_value ) {
@@ -837,7 +837,7 @@ function qtranxf_update_settings() {
     if ( isset( $_POST['json_config_files'] ) ) {
         // verify that files are loadable
         $json_config_files_post = sanitize_text_field( stripslashes( $_POST['json_config_files'] ) );
-        $json_files             = preg_split( '/[\s,]+/', $json_config_files_post, null, PREG_SPLIT_NO_EMPTY );
+        $json_files             = preg_split( '/[\s,]+/', $json_config_files_post, -1, PREG_SPLIT_NO_EMPTY );
         if ( empty( $json_files ) ) {
             $_POST['config_files'] = array();
             unset( $_POST['json_config_files'] );
