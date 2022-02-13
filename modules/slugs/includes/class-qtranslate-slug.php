@@ -321,10 +321,10 @@ class QtranslateSlug {
 
         if ( $q_config['slugs_enabled'] ) {
             $this->install();
-            $options_modules['slugs'] = 1;
+            $options_modules['slugs'] = QTX_MODULE_STATUS_ACTIVE;
         } else {
             $this->deactivate();
-            $options_modules['slugs'] = 2;
+            $options_modules['slugs'] = QTX_MODULE_STATUS_INACTIVE;
         }
         update_option( 'qtranslate_modules', $options_modules );
     }

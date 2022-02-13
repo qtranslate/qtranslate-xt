@@ -36,8 +36,9 @@ class QTX_Modules_Handler {
         global $q_config;
         $options_modules = get_option( 'qtranslate_modules', array() );
 
-        if ( $q_config['slugs_enabled'] && $options_modules['slugs'] != 1 ) {
-            $options_modules['slugs'] = 1;
+        // TODO: workaround to enable slugs from option checkbox, could be generalized to any module for user control
+        if ( $q_config['slugs_enabled'] && $options_modules['slugs'] != QTX_MODULE_STATUS_ACTIVE ) {
+            $options_modules['slugs'] = QTX_MODULE_STATUS_ACTIVE;
             update_option( 'qtranslate_modules', $options_modules );
         }
     }
