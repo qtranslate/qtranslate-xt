@@ -53,13 +53,6 @@ class QtranslateSlug {
     private $enabled_languages = array();
 
     /**
-     * Array of enabled languages
-     * @var array
-     * @since 1.0
-     */
-    private $url_path_mode = "";
-
-    /**
      * slug in meta_key name in meta tables
      * @var string
      * @since 1.0
@@ -299,7 +292,6 @@ class QtranslateSlug {
         $this->current_lang      = $q_config['language'];
         $this->enabled_languages = $q_config['enabled_languages'];
         $this->default_language  = $q_config['default_language'];
-        $this->set_url_path_mode();
 
         if ( is_admin() ) {
 
@@ -610,7 +602,7 @@ class QtranslateSlug {
             $req_uri = trim( $req_uri, '/' );
             $req_uri = preg_replace( "|^$home_path|", '', $req_uri );
             $req_uri = trim( $req_uri, '/' );
-            if ( $GLOBALS['q_config']['url_mode'] == $this->get_url_path_mode() ) {
+            if ( $GLOBALS['q_config']['url_mode'] == QTX_URL_PATH ) {
                 $req_uri = preg_replace( "/^{$GLOBALS['q_config']['language']}(\/|$)/", '', $req_uri );
             }
             $pathinfo = trim( $pathinfo, '/' );
@@ -2073,31 +2065,6 @@ class QtranslateSlug {
      */
     private function get_enabled_languages() {
         return $this->enabled_languages;
-    }
-
-    /**
-     * return the enabled languages
-     * we store and use it all the way!
-     * @since 1.1.9
-     */
-    private function get_url_path_mode() {
-        return $this->url_path_mode;
-    }
-
-    /**
-     * Sets the url path mode based on the qtranslate or fork settings.
-     *
-     */
-
-    private function set_url_path_mode() {
-        if ( '' === $this->url_path_mode ) {
-            include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-            if ( is_plugin_active( 'qtranslate-x/qtranslate.php' ) || defined( 'QTRANSLATE_FILE' ) ) {
-                $this->url_path_mode = QTX_URL_PATH;
-            } else {
-                $this->url_path_mode = QT_URL_PATH;
-            }
-        }
     }
 
     /**
