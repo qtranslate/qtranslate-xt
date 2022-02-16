@@ -13,17 +13,13 @@ include_once( 'qtranslate-slug-settings-options.php' );
  * @package Qtranslate Slug
  */
 function qts_get_settings() {
-
     $output = array();
-
     // put together the output array
     $output['qts_option_name']   = QTS_OPTIONS_NAME; // the option name as used in the get_option() call.
     $output['qts_page_title']    = __( 'Qtranslate Slug options', 'qts' ); // the settings page title
     $output['qts_page_sections'] = qts_options_page_sections(); // the settings sections
     $output['qts_page_fields']   = qts_options_page_fields(); // the settings fields
     $output['qts_page_styles']   = qts_options_page_styles(); // the settings for style
-
-
     $output['qts_contextual_help'] = qts_options_page_contextual_help(); // the contextual help
 
     return $output;
@@ -76,9 +72,7 @@ function qts_create_settings_field( $args = array() ) {
         'class'     => $class
     );
 
-
     add_settings_field( $id, $title, 'qts_show_form_field', __FILE__, $section, $field_args );
-
 }
 
 /**
