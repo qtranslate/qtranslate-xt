@@ -139,10 +139,6 @@ function qts_get_url( $lang = false ) {
  */
 function qts_add_settings_link( $links, $file ) {
 
-    if ( QtranslateSlug::block_activate() ) {
-        return $links;
-    }
-
     $this_plugin = plugin_basename( __FILE__ );
     if ( $file == $this_plugin ) {
         $settings_link = "<a href=\"options-general.php?page=" . QTS_PAGE_BASENAME . "\">" . __( 'Settings', 'qts' ) . '</a>';

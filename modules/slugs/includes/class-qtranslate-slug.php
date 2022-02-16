@@ -81,25 +81,6 @@ class QtranslateSlug {
     private $plugin_prefix = "";
 
     /**
-     * check dependences for activation
-     *
-     * @since 1.0
-     */
-    static function block_activate() {
-        global $wp_version;
-        include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-
-        return (
-            version_compare( $wp_version, "4.0", "<" ) ||
-            ! ( defined( 'QTRANSLATE_FILE' ) ||
-                ( is_plugin_active( 'qtranslate/qtranslate.php' ) ||
-                  is_plugin_active( 'qtranslate/qtranslate-x.php' ) ||
-                  is_plugin_active( 'mqtranslate/mqtranslate.php' ) ||
-                  is_plugin_active( 'qtranslate-x/qtranslate.php' ) ) )
-        );
-    }
-
-    /**
      * getter: options
      * @since 1.0
      */
@@ -170,12 +151,6 @@ class QtranslateSlug {
      */
     public function install() {
         global $wpdb;
-
-        /*if ( self::block_activate() ) {
-            if (is_admin()) {
-                add_action('admin_notices', array(&$this, 'notice_dependences'));
-            }
-        }*/
 
         if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 
@@ -268,27 +243,6 @@ class QtranslateSlug {
     }
 
     /**
-     * admin notice: update your old data
-     *
-     * @since 1.0
-     */
-    function notice_dependences() {
-
-        $ornewer  = __( 'or newer', 'qts' );
-        $info_url = admin_url( 'plugin-install.php?tab=plugin-information' );
-        echo '<div class="error">' . PHP_EOL;
-        echo '<p><strong>Qtranslate Slug:</strong></p>' . PHP_EOL;
-        echo '<p>';
-        printf( __( 'This plugin requires at least %s and either %s, or %s, or %s', 'qts' ),
-            '<strong>WordPress 4.0</strong>',
-            '<a href="' . $info_url . '&plugin=qtranslate-x&TB_iframe=true" class="thickbox" aria-label="' . __( 'More information about', 'qts' ) . ' ' . 'qTranslate-X" data-title="qTranslate-X"><strong>qTranslate-X</strong></a> (2.9 ' . $ornewer . ')',
-            '<a href="' . $info_url . '&plugin=mqtranslate&TB_iframe=true" class="thickbox" aria-label="' . __( 'More information about', 'qts' ) . ' ' . 'mqTranslate" data-title="mqTranslate"><strong>mqTranslate</strong></a> (2.6.2.4 ' . $ornewer . ')',
-            '<a href="' . $info_url . '&plugin=qtranslate&TB_iframe=true" class="thickbox" aria-label="' . __( 'More information about', 'qts' ) . ' ' . 'qTranslate" data-title="qTranslate"><strong>qTranslate</strong></a> (2.5.8 ' . $ornewer . ')' );
-        echo '</p>' . PHP_EOL;
-        echo '</div>' . PHP_EOL;
-    }
-
-    /**
      * checks if old table 'qtranslate_slug' exists and is not empty
      *
      * @return object | false
@@ -342,16 +296,6 @@ class QtranslateSlug {
 
         load_plugin_textdomain( 'qts', false, basename( plugin_dir_path( dirname( __FILE__ ) ) ) . '/languages' );
 
-        // checking plugin activate
-        if ( self::block_activate() ) {
-            if ( is_admin() ) {
-                add_action( 'admin_notices', array( &$this, 'notice_dependences' ) );
-            }
-
-            return;
-        } else {
-            remove_action( 'admin_notices', array( &$this, 'notice_dependences' ) );
-        }
         if ( is_admin() ) {
             include_once( dirname( __FILE__ ) . '/qtranslate-slug-settings.php' );
         }
@@ -2170,6 +2114,7 @@ class QtranslateSlug {
      */
     private function set_plugin_prefix() {
         if ( '' === $this->plugin_prefix ) {
+            include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
             if ( is_plugin_active( 'qtranslate-x/qtranslate.php' ) || defined( 'QTRANSLATE_FILE' ) ) {
                 $this->plugin_prefix = 'qtranxf_';
             } else {
