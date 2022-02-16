@@ -74,13 +74,6 @@ class QtranslateSlug {
     private $current_url = array();
 
     /**
-     * Variable that contains the prefix for base plugin function names (qtranslate/qtranslate-x)
-     * @var string
-     * @since ?
-     */
-    private $plugin_prefix = "";
-
-    /**
      * getter: options
      * @since 1.0
      */
@@ -306,7 +299,6 @@ class QtranslateSlug {
         $this->current_lang      = $q_config['language'];
         $this->enabled_languages = $q_config['enabled_languages'];
         $this->default_language  = $q_config['default_language'];
-        $this->set_plugin_prefix();
         $this->set_url_path_mode();
 
         if ( is_admin() ) {
@@ -359,19 +351,17 @@ class QtranslateSlug {
         // remove from qtranslate the discouraged meta http-equiv, inline styles
         // (including flag URLs) and wrong hreflang links
 
-        remove_action( 'wp_head', $this->get_plugin_prefix() . 'header' );
-        if ( "qtranxf_" === $this->get_plugin_prefix() ) {
-            remove_action( 'wp_head', $this->get_plugin_prefix() . 'wp_head' );
-        }
+        remove_action( 'wp_head', 'qtranxf_header' );
+        remove_action( 'wp_head', 'qtranxf_wp_head' );
 
         // add proper hreflang links
         add_action( 'wp_head', array( &$this, 'qtranslate_slug_header_extended' ) );
 
         // remove some Qtranslate filters
-        remove_filter( 'page_link', $this->get_plugin_prefix() . 'convertURL' );
-        remove_filter( 'post_link', $this->get_plugin_prefix() . 'convertURL' );
-        remove_filter( 'category_link', $this->get_plugin_prefix() . 'convertURL' );
-        remove_filter( 'tag_link', $this->get_plugin_prefix() . 'convertURL' );
+        remove_filter( 'page_link', 'qtranxf_convertURL' );
+        remove_filter( 'post_link', 'qtranxf_convertURL' );
+        remove_filter( 'category_link', 'qtranxf_convertURL' );
+        remove_filter( 'tag_link', 'qtranxf_convertURL' );
 
         //FIXME: query vars are broken
         add_filter( 'qts_permastruct', array( &$this, 'get_extra_permastruct' ), 0, 2 );
@@ -382,7 +372,7 @@ class QtranslateSlug {
         add_filter( '_get_page_link', array( &$this, '_get_page_link' ), 0, 2 );
         add_filter( 'term_link', array( &$this, 'term_link' ), 600, 3 );
 
-        add_filter( 'single_term_title', $this->get_plugin_prefix() . 'useTermLib', 805 );
+        add_filter( 'single_term_title', 'qtranxf_useTermLib', 805 );
         add_filter( 'get_blogs_of_user', array( &$this, 'blog_names' ), 1 );
         add_action( 'widgets_init', array( &$this, 'widget_init' ), 100 );
         // Add specific CSS class to body class based on current lang
@@ -430,7 +420,7 @@ class QtranslateSlug {
      * @param array $classes list of classes
      */
     public function qts_body_class( $classes ) {
-        $classes[] = call_user_func( $this->get_plugin_prefix() . 'getLanguage' );
+        $classes[] = qtranxf_getLanguage();
 
         return $classes;
     }
@@ -464,7 +454,7 @@ class QtranslateSlug {
      */
     public function qts_quickuse( $text, $lang = '' ) {
         $lang        = '' == $lang ? $this->current_lang : $lang;
-        $parsed_text = call_user_func( $this->get_plugin_prefix() . 'getSortedLanguages', $text );
+        $parsed_text = qtranxf_getSortedLanguages( $text ); // TODO: this call looks very wrong!
         if ( ! empty( $parsed_text[ $lang ] ) ) {
             return $parsed_text[ $lang ];
         }
@@ -923,7 +913,7 @@ class QtranslateSlug {
         }
 
         if ( ! $ignore_caller ) {
-            $url = call_user_func( $this->get_plugin_prefix() . 'convertURL', $url, $this->get_lang(), true );
+            $url = qtranxf_convertURL( $url, $this->get_lang(), true );
         }
 
         return $url;
@@ -1263,7 +1253,7 @@ class QtranslateSlug {
         if ( $pagenow != 'admin-ajax.php' ) {
 
             $meta = get_option( 'qtranslate_term_name' );
-            $lang = call_user_func( $this->get_plugin_prefix() . 'getLanguage' );
+            $lang = qtranxf_getLanguage();
 
 
             if ( ! empty( $terms ) ) {
@@ -1314,7 +1304,7 @@ class QtranslateSlug {
 
             // get the name from qtx
             $meta = get_option( 'qtranslate_term_name' );
-            $lang = call_user_func( $this->get_plugin_prefix() . 'getLanguage' );
+            $lang = qtranxf_getLanguage();
 
             if ( ! empty( $terms ) ) {
                 foreach ( $terms as $term ) {
@@ -1457,7 +1447,7 @@ class QtranslateSlug {
      */
     public function validate_post_slug( $slug, $post, $lang ) {
 
-        $post_title = trim( call_user_func( $this->get_plugin_prefix() . 'use', $lang, $_POST['post_title'] ) );
+        $post_title = trim( qtranxf_use( $lang, $_POST['post_title'] ) );
         $post_name  = get_post_meta( $post->ID, $this->get_meta_key( $lang ), true );
         if ( ! $post_name ) {
             $post_name = $post->post_name;
@@ -1661,7 +1651,7 @@ class QtranslateSlug {
 
         global $q_config; //TODO: q_config  : term_name
 
-        $term_key = call_user_func( $this->get_plugin_prefix() . 'split', $term->name );
+        $term_key = qtranxf_split( $term->name );
         // after split we will get array (with language code as a key )
 
         $term_key = $term_key[ $this->default_language ];
@@ -1972,7 +1962,7 @@ class QtranslateSlug {
         );
         $args     = wp_parse_args( $args, $defaults );
 
-        $languages = call_user_func( $this->get_plugin_prefix() . 'getSortedLanguages' );
+        $languages = qtranxf_getSortedLanguages();
 
         // every type
         switch ( $type ) {
@@ -1989,7 +1979,7 @@ class QtranslateSlug {
 
                     $url = $this->get_current_url( $lang );
                     // 43LC: hack to play nice with qtranslate-x
-                    if ( "qtranxf_" === $this->plugin_prefix && $this->default_language === $lang ) {
+                    if ( $this->default_language === $lang ) {
 
                         $url = qtranxf_convertURL( '', $lang, false, true );
                     }
@@ -2095,41 +2085,13 @@ class QtranslateSlug {
     }
 
     /**
-     * Returns the correct prefix for the function names of the different supported translation plugins.
-     * Will return 'qtranxf_' if qtranslate-x is used, 'qtrans_' otherwise.
-     *
-     * @return string the function name prefix for translation functions from other plugins
-     * @since 1.1.9
-     */
-
-    private function get_plugin_prefix() {
-
-        return $this->plugin_prefix;
-    }
-
-    /**
-     * Sets the prefix for the active fork. See get_plugin_prefix
-     * @since 1.1.9
-     *
-     */
-    private function set_plugin_prefix() {
-        if ( '' === $this->plugin_prefix ) {
-            include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-            if ( is_plugin_active( 'qtranslate-x/qtranslate.php' ) || defined( 'QTRANSLATE_FILE' ) ) {
-                $this->plugin_prefix = 'qtranxf_';
-            } else {
-                $this->plugin_prefix = 'qtrans_';
-            }
-        }
-    }
-
-    /**
      * Sets the url path mode based on the qtranslate or fork settings.
      *
      */
 
     private function set_url_path_mode() {
         if ( '' === $this->url_path_mode ) {
+            include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
             if ( is_plugin_active( 'qtranslate-x/qtranslate.php' ) || defined( 'QTRANSLATE_FILE' ) ) {
                 $this->url_path_mode = QTX_URL_PATH;
             } else {
