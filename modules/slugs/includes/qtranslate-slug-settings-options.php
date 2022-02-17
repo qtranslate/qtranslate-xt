@@ -9,7 +9,6 @@
  * @package Qtranslate Slug
  */
 function qts_options_page_sections() {
-
     $sections               = array();
     $sections['post_types'] = __( 'Post types', 'qts' );
     $sections['taxonomies'] = __( 'Taxonomies', 'qts' );
@@ -33,7 +32,6 @@ function get_multi_txt_choices( $name = false ) {
     if ( ! $name ) {
         return array();
     }
-
     $choices = array();
     foreach ( $q_config['enabled_languages'] as $key => $lang ) {
         $label     = sprintf( __( 'Slug (%s)', 'qts' ), $q_config['language_name'][ $lang ] );
@@ -53,8 +51,6 @@ function get_multi_txt_choices( $name = false ) {
  * @package Qtranslate Slug
  */
 function qts_options_page_styles() {
-
-
     $options[] = array(
         "section" => "styles",
         "id"      => QTS_PREFIX . "styles",
@@ -89,12 +85,10 @@ function qts_options_page_styles() {
  * @package Qtranslate Slug
  */
 function qts_options_page_fields() {
-
     $post_types = get_post_types( array( '_builtin' => false, 'public' => true ), 'objects' );
 
     // each post type
     foreach ( $post_types as $post_type ):
-
         $options[] = array(
             "section" => "post_types",
             "id"      => QTS_PREFIX . "post_type_" . $post_type->name,
@@ -105,7 +99,6 @@ function qts_options_page_fields() {
             "choices" => get_multi_txt_choices( $post_type->name ),
             "std"     => ""
         );
-
     endforeach;
     // end each post type
 
@@ -131,12 +124,10 @@ function qts_options_page_fields() {
         "std"     => ""
     );
 
-
     $taxonomies = get_taxonomies( array( 'public' => true, 'show_ui' => true, '_builtin' => false ), 'object' );
 
     // each extra taxonomy
     foreach ( $taxonomies as $taxonomy ):
-
         $options[] = array(
             "section" => "taxonomies",
             "id"      => QTS_PREFIX . "taxonomy_" . $taxonomy->name,
@@ -147,7 +138,6 @@ function qts_options_page_fields() {
             "choices" => get_multi_txt_choices( $taxonomy->name ),
             "std"     => ""
         );
-
     endforeach;
 
     // end each extra taxonomy
@@ -165,8 +155,6 @@ function qts_options_page_fields() {
  *
  */
 function qts_options_page_contextual_help() {
-
-
     $text = "<h3>" . __( 'Qtranslate Settings - Contextual Help', 'qts' ) . "</h3>";
     $text .= "<p>" . __( 'Contextual help goes here. You may want to use different html elements to format your text as you want.', 'qts' ) . "</p>";
 
