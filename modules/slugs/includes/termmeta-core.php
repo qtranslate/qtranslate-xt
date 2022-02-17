@@ -170,7 +170,7 @@ endif;
  *
  * @return array
  */
-if ( ! function_exists( 'add_term_meta' ) ):
+if ( ! function_exists( 'get_term_custom' ) ):
     function get_term_custom( $term_id ) {
         $term_id = (int) $term_id;
 
@@ -202,28 +202,5 @@ if ( ! function_exists( 'get_term_custom_keys' ) ):
         if ( $keys = array_keys( $custom ) ) {
             return $keys;
         }
-    }
-endif;
-
-/**
- * Retrieve values for a custom term field.
- *
- * The parameters must not be considered optional. All of the term meta fields
- * will be retrieved and only the meta field key values returned.
- *
- * @param string $key Meta field key.
- * @param int $term_id Term ID
- *
- * @return array Meta field values.
- */
-if ( ! function_exists( 'get_term_custom_values' ) ):
-    function get_term_custom_values( $key = '', $term_id ) {
-        if ( ! $key ) {
-            return null;
-        }
-
-        $custom = get_term_custom( $term_id );
-
-        return isset( $custom[ $key ] ) ? $custom[ $key ] : null;
     }
 endif;
