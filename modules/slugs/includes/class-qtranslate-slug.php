@@ -965,7 +965,7 @@ class QtranslateSlug {
                 if ( $cats ) {
                     usort( $cats, '_usort_terms_by_ID' ); // order by ID
 
-                    $category = get_term_meta( $cats[0]->term_id, $this->get_meta_key(), true );
+                    $category = get_metadata( 'term', $cats[0]->term_id, $this->get_meta_key(), true );
                     if ( ! $category ) {
                         $category = $cats[0]->slug;
                     }
@@ -979,7 +979,7 @@ class QtranslateSlug {
                 if ( empty( $category ) ) {
                     $default_category = get_category( get_option( 'default_category' ) );
 
-                    $default_category_slug = get_term_meta( $default_category->term_id, $this->get_meta_key(), true );
+                    $default_category_slug = get_metadata( 'term', $default_category->term_id, $this->get_meta_key(), true );
                     if ( ! $default_category_slug ) {
                         $default_category_slug = $default_category->slug;
                     }
@@ -1109,7 +1109,7 @@ class QtranslateSlug {
 
         $termlink = apply_filters( 'qts_permastruct', $wp_rewrite->get_extra_permastruct( $taxonomy ), $taxonomy );
 
-        $slug = get_term_meta( $term->term_id, $this->get_meta_key(), true );
+        $slug = get_metadata( 'term', $term->term_id, $this->get_meta_key(), true );
         if ( ! $slug ) {
             $slug = $term->slug;
         }
@@ -1132,7 +1132,7 @@ class QtranslateSlug {
                 foreach ( (array) $ancestors as $ancestor ) {
                     $ancestor_term = get_term( $ancestor, $taxonomy );
 
-                    $ancestor_slug = get_term_meta( $ancestor_term->term_id, $this->get_meta_key(), true );
+                    $ancestor_slug = get_metadata( 'term', $ancestor_term->term_id, $this->get_meta_key(), true );
                     if ( ! $ancestor_slug ) {
                         $ancestor_slug = $ancestor_term->slug;
                     }
@@ -1503,7 +1503,7 @@ class QtranslateSlug {
 
             foreach ( $this->enabled_languages as $lang ) {
 
-                $slug = ( is_object( $term ) ) ? get_term_meta( $term->term_id, $this->get_meta_key( $lang ), true ) : '';
+                $slug = ( is_object( $term ) ) ? get_metadata( 'term', $term->term_id, $this->get_meta_key( $lang ), true ) : '';
 
                 $value = ( $slug ) ? htmlspecialchars( $slug, ENT_QUOTES ) : '';
 
@@ -1523,7 +1523,7 @@ class QtranslateSlug {
 
                 echo "<div class=\"form-field\">" . PHP_EOL;
 
-                $slug = ( is_object( $term ) ) ? get_term_meta( $term->term_id, $this->get_meta_key( $lang ), true ) : '';
+                $slug = ( is_object( $term ) ) ? get_metadata( 'term', $term->term_id, $this->get_meta_key( $lang ), true ) : '';
 
                 $value = ( $slug ) ? htmlspecialchars( $slug, ENT_QUOTES ) : '';
 
@@ -1617,7 +1617,7 @@ class QtranslateSlug {
     /**
      * Display multiple input fields, one per language
      *
-     * @param $term_id the term id
+     * @param $term_id int the term id
      * @param $tt_id the term taxonomy id
      * @param $taxonomy the term object
      *
@@ -1649,8 +1649,8 @@ class QtranslateSlug {
 
             $meta_value = apply_filters( 'qts_validate_term_slug', $term_slug, $term, $lang );
 
-            delete_term_meta( $term_id, $meta_name );
-            update_term_meta( $term_id, $meta_name, $meta_value );
+            delete_metadata( 'term', $term_id, $meta_name );
+            update_metadata( 'term', $term_id, $meta_name, $meta_value );
         }
     }
 
@@ -1725,7 +1725,7 @@ class QtranslateSlug {
 
         switch ( $column_name ) {
             case 'qts-slug':
-                echo get_term_meta( $term_id, $this->get_meta_key(), true );
+                echo get_metadata( 'term', $term_id, $this->get_meta_key(), true );
                 break;
         }
 
@@ -1945,19 +1945,6 @@ class QtranslateSlug {
      */
     private function activate() {
         $this->set_options();
-
-        $qts_version = get_option( 'qts_version' );
-
-        // checks version and do the installation
-        if ( ! $qts_version || $qts_version != QTS_VERSION ) {
-
-            // install termmeta table using functions from Simple-Term-Meta
-            // ( http://wordpress.org/extend/plugins/simple-term-meta/ )
-            install_term_meta_table();
-
-            // update installed option
-            update_option( 'qts_version', QTS_VERSION );
-        }
 
         // regenerate rewrite rules in db
         add_action( 'generate_rewrite_rules', array( &$this, 'modify_rewrite_rules' ) );
@@ -2188,7 +2175,7 @@ class QtranslateSlug {
         }
 
         if ( $nicename ) {
-            $name = get_term_meta( $parent->term_id, $this->get_meta_key(), true );
+            $name = get_metadata( 'term', $parent->term_id, $this->get_meta_key(), true );
             if ( ! $name ) {
                 $name = $parent->slug;
             }

@@ -2,7 +2,6 @@
 
 include_once( dirname( __FILE__ ) . '/includes/class-qtranslate-slug-widget.php' );
 include_once( dirname( __FILE__ ) . '/includes/class-qtranslate-slug.php' );
-include_once( dirname( __FILE__ ) . '/includes/termmeta-core.php' );
 
 if ( ! defined( "QTS_VERSION" ) ) {
     define( "QTS_VERSION", '1.1.18' );
@@ -79,7 +78,7 @@ function qts_add_settings_link( $links, $file ) {
 add_filter( 'plugin_action_links', 'qts_add_settings_link', 10, 2 );
 
 /**
- * Delete plugin stored data ( options, termmeta table and postmeta data )
+ * Delete plugin stored data ( options and postmeta data )
  *
  * @package Qtranslate Slug
  * @subpackage Settings
@@ -89,11 +88,8 @@ add_filter( 'plugin_action_links', 'qts_add_settings_link', 10, 2 );
 function qts_uninstall() {
     global $q_config, $wpdb;
 
-    // options
     delete_option( QTS_OPTIONS_NAME );
-    delete_option( 'qts_version' );
 
-    // delete postmeta data
     $meta_keys = array();
     foreach ( $q_config['enabled_languages'] as $lang ) {
         $meta_keys[] = sprintf( "_qts_slug_%s", $lang );
