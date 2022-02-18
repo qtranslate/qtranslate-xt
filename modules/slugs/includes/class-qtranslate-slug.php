@@ -1275,7 +1275,8 @@ class QtranslateSlug {
      */
     public function validate_post_slug( $slug, $post, $lang ) {
 
-        $post_title = trim( qtranxf_use( $lang, $_POST['post_title'] ) );
+        $post_title = trim( qtranxf_use( $lang, $post->post_title) );
+
         $post_name  = get_post_meta( $post->ID, $this->get_meta_key( $lang ), true );
         if ( ! $post_name ) {
             $post_name = $post->post_name;
