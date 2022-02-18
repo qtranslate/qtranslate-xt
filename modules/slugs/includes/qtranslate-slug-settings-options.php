@@ -1,12 +1,8 @@
 <?php
 /**
- * Define our settings sections
+ * Define our settings sections.
  *
  * @return array key=$id, array value=$title in: add_settings_section( $id, $title, $callback, $page );
- * @subpackage Settings
- * @version 1.0
- *
- * @package Qtranslate Slug
  */
 function qts_options_page_sections() {
     $sections               = array();
@@ -18,13 +14,9 @@ function qts_options_page_sections() {
 }
 
 /**
- * Helper for create arrays of choices
+ * Helper for create arrays of choices.
  *
  * @return array
- * @subpackage Settings
- * @version 1.0
- *
- * @package Qtranslate Slug
  */
 function get_multi_txt_choices( $name = false ) {
     global $q_config;
@@ -42,13 +34,9 @@ function get_multi_txt_choices( $name = false ) {
 }
 
 /**
- * Define our form fields (settings) for displaying the default styles
+ * Define our form fields (settings) for displaying the default styles.
  *
  * @return array
- * @subpackage Settings
- * @version 1.1.7
- *
- * @package Qtranslate Slug
  */
 function qts_options_page_styles() {
     $options[] = array(
@@ -76,13 +64,9 @@ function qts_options_page_styles() {
 }
 
 /**
- * Define our form fields (settings)
+ * Define our form fields (settings).
  *
  * @return array
- * @subpackage Settings
- * @version 1.0
- *
- * @package Qtranslate Slug
  */
 function qts_options_page_fields() {
     $post_types = get_post_types( array( '_builtin' => false, 'public' => true ), 'objects' );
@@ -147,12 +131,7 @@ function qts_options_page_fields() {
 }
 
 /**
- * Contextual Help
- *
- * @package Qtranslate Slug
- * @subpackage Settings
- * @version 1.0
- *
+ * Contextual Help.
  */
 function qts_options_page_contextual_help() {
     $text = "<h3>" . __( 'Qtranslate Settings - Contextual Help', 'qts' ) . "</h3>";

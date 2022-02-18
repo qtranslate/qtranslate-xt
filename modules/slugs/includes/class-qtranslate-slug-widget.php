@@ -2,8 +2,6 @@
 
 /**
  * QtranslateSlug_Widget class
- *
- * @since 1.0
  */
 class QtranslateSlugWidget extends WP_Widget {
 

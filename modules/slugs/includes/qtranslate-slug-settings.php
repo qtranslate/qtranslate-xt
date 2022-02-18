@@ -4,13 +4,9 @@
 include_once( 'qtranslate-slug-settings-options.php' );
 
 /**
- * Helper function for defining variables for the current page
+ * Helper function for defining variables for the current page.
  *
  * @return array
- * @subpackage Settings
- * @version 1.0
- *
- * @package Qtranslate Slug
  */
 function qts_get_settings() {
     $output = array();
@@ -26,16 +22,12 @@ function qts_get_settings() {
 }
 
 /**
- * Helper function for registering our form field settings
+ * Helper function for registering our form field settings.
+ * src: http://alisothegeek.com/2011/01/wordpress-settings-api-tutorial-1/
  *
  * @param (array) $args The array of arguments to be used in creating the field
  *
  * @return function call
- * @version 1.0
- *
- * src: http://alisothegeek.com/2011/01/wordpress-settings-api-tutorial-1/
- * @package Qtranslate Slug
- * @subpackage Settings
  */
 function qts_create_settings_field( $args = array() ) {
     // default array to overwrite when calling the function
@@ -76,11 +68,6 @@ function qts_create_settings_field( $args = array() ) {
 
 /**
  * Register our setting, settings sections and settings fields
- *
- * @package Qtranslate Slug
- * @subpackage Settings
- * @version 1.0
- *
  */
 function qts_register_settings() {
     // get the settings sections array
@@ -117,12 +104,7 @@ function qts_register_settings() {
 add_action( 'admin_init', 'qts_register_settings' );
 
 /**
- * Group scripts (js & css)
- *
- * @package Qtranslate Slug
- * @subpackage Settings
- * @version 1.0
- *
+ * Group scripts (js & css).
  */
 function qts_settings_scripts() {
     global $qtranslate_slug;
@@ -141,12 +123,7 @@ function qts_settings_scripts() {
 add_action( 'admin_head', 'qts_settings_scripts' );
 
 /**
- * The Admin menu page
- *
- * @package Qtranslate Slug
- * @subpackage Settings
- * @version 1.0
- *
+ * The Admin menu page.
  */
 function qts_add_menu() {
     global $current_screen;
@@ -161,18 +138,10 @@ function qts_add_menu() {
 
 add_action( 'admin_menu', 'qts_add_menu' );
 
-
-////////////////////////////////////////////////////////////////////////////////////////
-// Callback functions
-
 /**
- * Section HTML, displayed before the first option
+ * Section HTML, displayed before the first option.
  *
- * @return echoes output
- * @subpackage Settings
- * @version 1.0
- *
- * @package Qtranslate Slug
+ * @return void echoes output
  */
 function qts_section_fn( $page_section = false ) {
 
@@ -198,13 +167,9 @@ function qts_section_fn( $page_section = false ) {
 }
 
 /**
- * Form Fields HTML: all form field types share the same function
+ * Form Fields HTML: all form field types share the same function.
  *
- * @return echoes output
- * @subpackage Settings
- * @version 1.0
- *
- * @package Qtranslate Slug
+ * @return void echoes output
  */
 function qts_show_form_field( $args = array() ) {
     global $qtranslate_slug;
@@ -342,12 +307,7 @@ function qts_show_form_field( $args = array() ) {
 }
 
 /**
- * Validates base slugs per 'type' (post_type | taxonomy) and 'language'
- *
- * @package Qtranslate Slug
- * @subpackage Settings
- * @version 1.0
- *
+ * Validates base slugs per 'type' (post_type | taxonomy) and 'language'.
  */
 function qts_sanitize_bases( $base_slugs = false ) {
 
@@ -377,13 +337,9 @@ function qts_sanitize_bases( $base_slugs = false ) {
 }
 
 /**
- * Admin Settings Page HTML
+ * Admin Settings Page HTML.
  *
- * @return echoes output
- * @subpackage Settings
- * @version 1.0
- *
- * @package Qtranslate Slug
+ * @return void echoes output
  */
 function qts_show_settings_page() {
     // get the settings sections array
@@ -423,13 +379,9 @@ function qts_show_settings_page() {
 <?php }
 
 /**
- * Validate input
+ * Validate input.
  *
  * @return array
- * @subpackage Settings
- * @version 1.0
- *
- * @package Qtranslate Slug
  */
 function qts_validate_options( $input ) {
 
@@ -776,31 +728,22 @@ function qts_validate_options( $input ) {
 }
 
 /**
- * Helper function for creating admin messages
+ * Helper function for creating admin messages.
+ * src: http://www.wprecipes.com/how-to-show-an-urgent-message-in-the-wordpress-admin-area
  *
  * @param (string) $message The message to echo
  * @param (string) $msgclass The message class
  *
- * @return echoes the message
- * @package Qtranslate Slug
- * @subpackage Settings
- * @version 1.0
- *
- * src: http://www.wprecipes.com/how-to-show-an-urgent-message-in-the-wordpress-admin-area
- *
+ * @return void echoes the message
  */
 function qts_show_msg( $message, $msgclass = 'info' ) {
     echo "<div id='message' class='$msgclass'>$message</div>";
 }
 
 /**
- * Callback function for displaying admin messages
+ * Callback function for displaying admin messages.
  *
- * @return calls qts_show_msg()
- * @subpackage Settings
- * @version 1.0
- *
- * @package Qtranslate Slug
+ * @return void calls qts_show_msg()
  */
 function qts_admin_msgs() {
     global $current_screen;

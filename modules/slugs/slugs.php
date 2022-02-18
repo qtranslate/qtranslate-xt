@@ -37,11 +37,7 @@ add_action( 'plugins_loaded', array( $qtranslate_slug, 'init' ) );
 ////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * Language Selector Code for templating
- *
- * @package Qtranslate Slug
- * @subpackage Core
- * @since 1.0
+ * Language Selector Code for templating.
  */
 function qts_language_menu( $type = "text", $args = array() ) {
     global $qtranslate_slug;
@@ -56,13 +52,7 @@ function qts_get_url( $lang = false ) {
 }
 
 /**
- * Add a "Settings" link to the plugins.php page for Qtranslate Slug
- *
- * @return calls qts_show_msg()
- * @subpackage Settings
- * @version 1.0
- *
- * @package Qtranslate Slug
+ * Add a "Settings" link to the plugins.php page for Qtranslate Slug.
  */
 function qts_add_settings_link( $links, $file ) {
 
@@ -78,12 +68,7 @@ function qts_add_settings_link( $links, $file ) {
 add_filter( 'plugin_action_links', 'qts_add_settings_link', 10, 2 );
 
 /**
- * Delete plugin stored data ( options and postmeta data )
- *
- * @package Qtranslate Slug
- * @subpackage Settings
- * @version 1.0
- *
+ * Delete plugin stored data ( options and postmeta data ).
  */
 function qts_uninstall() {
     global $q_config, $wpdb;
