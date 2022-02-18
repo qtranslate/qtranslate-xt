@@ -1032,7 +1032,7 @@ class QtranslateSlug {
 
         if ( ! is_object( $term ) ) {
             if ( is_int( $term ) ) {
-                $term = &get_term( $term, $taxonomy );
+                $term = get_term( $term, $taxonomy );
             } else {
                 $term = $this->get_term_by( 'slug', $term, $taxonomy );
             }
