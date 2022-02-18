@@ -15,11 +15,11 @@ include_once( 'qtranslate-slug-settings-options.php' );
 function qts_get_settings() {
     $output = array();
     // put together the output array
-    $output['qts_option_name']   = QTS_OPTIONS_NAME; // the option name as used in the get_option() call.
-    $output['qts_page_title']    = __( 'Qtranslate Slug options', 'qts' ); // the settings page title
-    $output['qts_page_sections'] = qts_options_page_sections(); // the settings sections
-    $output['qts_page_fields']   = qts_options_page_fields(); // the settings fields
-    $output['qts_page_styles']   = qts_options_page_styles(); // the settings for style
+    $output['qts_option_name']     = QTS_OPTIONS_NAME; // the option name as used in the get_option() call.
+    $output['qts_page_title']      = __( 'Qtranslate Slug options', 'qts' ); // the settings page title
+    $output['qts_page_sections']   = qts_options_page_sections(); // the settings sections
+    $output['qts_page_fields']     = qts_options_page_fields(); // the settings fields
+    $output['qts_page_styles']     = qts_options_page_styles(); // the settings for style
     $output['qts_contextual_help'] = qts_options_page_contextual_help(); // the contextual help
 
     return $output;
@@ -58,21 +58,20 @@ function qts_create_settings_field( $args = array() ) {
         // the HTML form element class. Is used for validation purposes and may be also use for styling if needed.
     );
 
-    // "extract" to be able to use the array keys as variables in our function output below
-    extract( wp_parse_args( $args, $defaults ) );
+    $parsed = wp_parse_args( $args, $defaults );
 
     // additional arguments for use in form field output in the function qts_show_form_field!
     $field_args = array(
-        'type'      => $type,
-        'id'        => $id,
-        'desc'      => $desc,
-        'std'       => $std,
-        'choices'   => $choices,
-        'label_for' => $id,
-        'class'     => $class
+        'type'      => $parsed['type'],
+        'id'        => $parsed['id'],
+        'desc'      => $parsed['desc'],
+        'std'       => $parsed['std'],
+        'choices'   => $parsed['choices'],
+        'class'     => $parsed['class'],
+        'label_for' => $parsed['id']
     );
 
-    add_settings_field( $id, $title, 'qts_show_form_field', __FILE__, $section, $field_args );
+    add_settings_field( $parsed['id'], $parsed['title'], 'qts_show_form_field', __FILE__, $parsed['section'], $field_args );
 }
 
 /**
@@ -84,7 +83,6 @@ function qts_create_settings_field( $args = array() ) {
  *
  */
 function qts_register_settings() {
-
     // get the settings sections array
     $settings_output = qts_get_settings();
     $qts_option_name = $settings_output['qts_option_name'];
@@ -211,14 +209,19 @@ function qts_section_fn( $page_section = false ) {
 function qts_show_form_field( $args = array() ) {
     global $qtranslate_slug;
 
-    extract( $args );
+    $type    = $args['type'];
+    $id      = $args['id'];
+    $desc    = $args['desc'];
+    $std     = $args['std'];
+    $choices = $args['choices'];
+    $class   = $args['class'];
 
     // get the settings sections array
     $settings_output = qts_get_settings();
     $options         = $qtranslate_slug->get_options();
 
     // pass the standard value if the option is not yet set in the database
-    if ( ! isset( $options[ $id ] ) && 'type' != 'checkbox' ) {
+    if ( ! isset( $options[ $id ] ) && $type != 'checkbox' ) {
         $options[ $id ] = $std;
     }
 

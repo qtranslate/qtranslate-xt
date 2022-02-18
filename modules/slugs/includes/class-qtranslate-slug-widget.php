@@ -16,9 +16,7 @@ class QtranslateSlugWidget extends WP_Widget {
     }
 
     function widget( $args, $instance ) {
-        extract( $args );
-
-        echo $before_widget;
+        echo $args['before_widget'];
         $title      = empty( $instance['title'] ) ? __( 'Language', 'qts' ) : apply_filters( 'widget_title', $instance['title'] );
         $hide_title = empty( $instance['hide-title'] ) ? false : 'on';
         $type       = $instance['type'];
@@ -29,12 +27,12 @@ class QtranslateSlugWidget extends WP_Widget {
         }
 
         if ( $hide_title != 'on' ) {
-            echo $before_title . $title . $after_title;
+            echo $args['before_title'] . $title . $args['after_title'];
         }
 
         qts_language_menu( $type, array( 'id' => $this->id, 'short' => $short_text ) );
 
-        echo $after_widget;
+        echo $args['after_widget'];
     }
 
     function update( $new_instance, $old_instance ) {
