@@ -2420,5 +2420,3 @@ class QtranslateSlug {
         return $html;
     }
 }
-
-?>
