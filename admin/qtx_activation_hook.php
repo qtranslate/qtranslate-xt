@@ -771,18 +771,18 @@ function qtranxf_activation_hook() {
     if ( is_plugin_active( 'mqtranslate/mqtranslate.php' ) ) {
         qtranxf_admin_notice_deactivate_plugin( 'mqTranslate', 'mqtranslate/mqtranslate.php' );
     }
-
     if ( is_plugin_active( 'qtranslate/qtranslate.php' ) ) {
         update_option( 'qtranslate_qtrans_compatibility', '1' );
         qtranxf_admin_notice_deactivate_plugin( 'qTranslate', 'qtranslate/qtranslate.php' );
     }
-
     if ( is_plugin_active( 'qtranslate-xp/ppqtranslate.php' ) ) {
         qtranxf_admin_notice_deactivate_plugin( 'qTranslate Plus', 'qtranslate-xp/ppqtranslate.php' );
     }
-
     if ( is_plugin_active( 'ztranslate/ztranslate.php' ) ) {
         qtranxf_admin_notice_deactivate_plugin( 'zTranslate', 'ztranslate/ztranslate.php' );
+    }
+    if ( is_plugin_active( 'qtranslate-x/qtranslate.php' ) ) {
+        qtranxf_admin_notice_deactivate_plugin( 'qTranslate-X', 'qtranslate-x/qtranslate.php' );
     }
 
     $ts                     = time();
