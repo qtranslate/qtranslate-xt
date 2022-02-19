@@ -494,6 +494,8 @@ function qtranxf_save_config() {
         qtranxf_update_option( $nm, $def );
     }
 
+    QTX_Modules_Handler::update_manual_enabled_modules();
+
     do_action( 'qtranslate_save_config' );
     do_action_deprecated( 'qtranslate_saveConfig', array(), '3.10.0', 'qtranslate_save_config' );
 }

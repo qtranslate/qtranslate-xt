@@ -19,8 +19,6 @@ class QTX_Modules_Handler {
             return null;
         }
 
-        self::update_manual_enabled_modules();
-
         foreach ( $def_modules as $def_module ) {
             if ( ! array_key_exists( $def_module['id'], $options_modules ) ) {
                 continue;
