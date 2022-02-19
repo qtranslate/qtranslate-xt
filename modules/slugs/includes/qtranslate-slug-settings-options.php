@@ -25,7 +25,7 @@ function get_multi_txt_choices( $name = false ) {
         return array();
     }
     $choices = array();
-    foreach ( $q_config['enabled_languages'] as $key => $lang ) {
+    foreach ( $q_config['enabled_languages'] as $lang ) {
         $label     = sprintf( __( 'Slug (%s)', 'qts' ), $q_config['language_name'][ $lang ] );
         $choices[] = "$label|$lang"; // prints: 'Slug (English)|en' ( $name = books )
     }
@@ -77,7 +77,7 @@ function qts_options_page_fields() {
             "section" => "post_types",
             "id"      => QTS_PREFIX . "post_type_" . $post_type->name,
             "title"   => $post_type->labels->singular_name,
-            "desc"    => sprintf( __( '<code>http://example.org/<u>%s</u>/some-%s/</code>', 'qts' ), $post_type->name, $post_type->name ),
+            "desc"    => sprintf( __( '<code>https://example.org/<u>%s</u>/some-%s/</code>', 'qts' ), $post_type->name, $post_type->name ),
             'class'   => 'qts-slug',
             "type"    => "multi-text",
             "choices" => get_multi_txt_choices( $post_type->name ),
@@ -90,7 +90,7 @@ function qts_options_page_fields() {
         "section" => "taxonomies",
         "id"      => QTS_PREFIX . "taxonomy_category",
         "title"   => __( 'Categories', 'qts' ),
-        "desc"    => __( '<code>http://example.org/<u>category</u>/some-category/</code>', 'qts' ),
+        "desc"    => __( '<code>https://example.org/<u>category</u>/some-category/</code>', 'qts' ),
         "type"    => "multi-text",
         'class'   => 'qts-slug',
         "choices" => get_multi_txt_choices( 'category' ),
@@ -101,7 +101,7 @@ function qts_options_page_fields() {
         "section" => "taxonomies",
         "id"      => QTS_PREFIX . "taxonomy_post_tag",
         "title"   => __( 'Tags', 'qts' ),
-        "desc"    => __( '<code>http://example.org/<u>tag</u>/some-tag/</code>', 'qts' ),
+        "desc"    => __( '<code>https://example.org/<u>tag</u>/some-tag/</code>', 'qts' ),
         "type"    => "multi-text",
         'class'   => 'qts-slug',
         "choices" => get_multi_txt_choices( 'post_tag' ),
@@ -116,7 +116,7 @@ function qts_options_page_fields() {
             "section" => "taxonomies",
             "id"      => QTS_PREFIX . "taxonomy_" . $taxonomy->name,
             "title"   => $taxonomy->labels->singular_name,
-            "desc"    => sprintf( __( '<code>http://example.org/<u>%s</u>/some-%s/</code>', 'qts' ), $taxonomy->name, $taxonomy->name ),
+            "desc"    => sprintf( __( '<code>https://example.org/<u>%s</u>/some-%s/</code>', 'qts' ), $taxonomy->name, $taxonomy->name ),
             "type"    => "multi-text",
             'class'   => 'qts-slug',
             "choices" => get_multi_txt_choices( $taxonomy->name ),

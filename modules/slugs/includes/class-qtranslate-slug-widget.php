@@ -18,7 +18,7 @@ class QtranslateSlugWidget extends WP_Widget {
         $title      = empty( $instance['title'] ) ? __( 'Language', 'qts' ) : apply_filters( 'widget_title', $instance['title'] );
         $hide_title = empty( $instance['hide-title'] ) ? false : 'on';
         $type       = $instance['type'];
-        $short_text = ( $instance['short_text'] == 'on' ) ? true : false;
+        $short_text = $instance['short_text'] == 'on';
 
         if ( $type != 'text' && $type != 'image' && $type != 'both' && $type != 'dropdown' ) {
             $type = 'text';

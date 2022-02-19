@@ -9,8 +9,7 @@ include_once( 'qtranslate-slug-settings-options.php' );
  * @return array
  */
 function qts_get_settings() {
-    $output = array();
-    // put together the output array
+    $output                        = array();
     $output['qts_option_name']     = QTS_OPTIONS_NAME; // the option name as used in the get_option() call.
     $output['qts_page_title']      = __( 'Qtranslate Slug options', 'qts' ); // the settings page title
     $output['qts_page_sections']   = qts_options_page_sections(); // the settings sections
@@ -27,10 +26,9 @@ function qts_get_settings() {
  *
  * @param (array) $args The array of arguments to be used in creating the field
  *
- * @return function call
+ * @return void
  */
 function qts_create_settings_field( $args = array() ) {
-    // default array to overwrite when calling the function
     $defaults = array(
         'id'      => 'default_field',
         // the ID of the setting in our options array, and the ID of the HTML form element
@@ -70,29 +68,22 @@ function qts_create_settings_field( $args = array() ) {
  * Register our setting, settings sections and settings fields
  */
 function qts_register_settings() {
-    // get the settings sections array
     $settings_output = qts_get_settings();
     $qts_option_name = $settings_output['qts_option_name'];
 
-    //setting
     register_setting( $qts_option_name, $qts_option_name, 'qts_validate_options' );
-
-    //sections
     if ( ! empty( $settings_output['qts_page_sections'] ) ) {
         // call the "add_settings_section" for each!
         foreach ( $settings_output['qts_page_sections'] as $id => $title ) {
             add_settings_section( $id, $title, 'qts_section_fn', __FILE__ );
         }
     }
-
-    //fields
     if ( ! empty( $settings_output['qts_page_fields'] ) ) {
         // call the "add_settings_field" for each!
         foreach ( $settings_output['qts_page_fields'] as $option ) {
             qts_create_settings_field( $option );
         }
     }
-    //style
     if ( ! empty( $settings_output['qts_page_styles'] ) ) {
         // call the "add_settings_field" for each
         foreach ( $settings_output['qts_page_styles'] as $styleoption ) {
@@ -152,12 +143,12 @@ function qts_section_fn( $page_section = false ) {
     switch ( $page_section['id'] ) {
         case 'post_types':
 
-            echo "<p>" . __( 'For example, the post_type <kbd>books</kbd>, in Spanish would be displayed as <code>http://example.org/es/libros/post-type-name/</code>. If you leave this blank will use the default option when you <a href="http://codex.wordpress.org/Function_Reference/register_post_type">registered</a> the post_type.', 'qts' ) . "</p>";
+            echo "<p>" . __( 'For example, the post_type <kbd>books</kbd>, in Spanish would be displayed as <code>https://example.org/es/libros/post-type-name/</code>. If you leave this blank will use the default option when you <a href="https://codex.wordpress.org/Function_Reference/register_post_type">registered</a> the post_type.', 'qts' ) . "</p>";
             break;
 
         case 'taxonomies':
 
-            echo "<p>" . __( 'For example, the taxonomy <kbd>category</kbd>, in Spanish would be displayed as <code>http://example.org/es/categoria/taxonomy-name/</code>. If you leave this blank will use the default option when you <a href="http://codex.wordpress.org/Function_Reference/register_taxonomy">registered</a> the taxonomy (if you previously setup a base permastruct for <u>categories</u> or <u>tags</u> in <a href="options-permalink.php">permalinks</a> page, these bases will be overwritten by the translated ones).', 'qts' ) . "</p>";
+            echo "<p>" . __( 'For example, the taxonomy <kbd>category</kbd>, in Spanish would be displayed as <code>https://example.org/es/categoria/taxonomy-name/</code>. If you leave this blank will use the default option when you <a href="https://codex.wordpress.org/Function_Reference/register_taxonomy">registered</a> the taxonomy (if you previously setup a base permastruct for <u>categories</u> or <u>tags</u> in <a href="options-permalink.php">permalinks</a> page, these bases will be overwritten by the translated ones).', 'qts' ) . "</p>";
             break;
         case 'styles':
 
@@ -181,7 +172,6 @@ function qts_show_form_field( $args = array() ) {
     $choices = $args['choices'];
     $class   = $args['class'];
 
-    // get the settings sections array
     $settings_output = qts_get_settings();
     $options         = $qtranslate_slug->get_options();
 
@@ -309,15 +299,9 @@ function qts_show_form_field( $args = array() ) {
 /**
  * Validates base slugs per 'type' (post_type | taxonomy) and 'language'.
  */
-function qts_sanitize_bases( $base_slugs = false ) {
-
-    if ( ! $base_slugs || empty( $base_slugs ) ) {
-        return;
-    }
-
+function qts_sanitize_bases( $base_slugs ) {
     $base_slugs_processed = array();
     $base_founded         = array();
-
     // changing array structure
     foreach ( $base_slugs as $type => $base ) {
         foreach ( $base as $lang => $value ) {
@@ -342,30 +326,25 @@ function qts_sanitize_bases( $base_slugs = false ) {
  * @return void echoes output
  */
 function qts_show_settings_page() {
-    // get the settings sections array
     $settings_output = qts_get_settings();
     ?>
     <div class="wrap">
         <div class="icon32" id="icon-options-general"></div>
         <h2><?php echo $settings_output['qts_page_title']; ?></h2>
-
-        <p><?php _e( 'If you activated previously the <a href="options-permalink.php">pretty permalinks</a>, in this section you can translate the <abbr title="en inglés, Universal Resource Locator">URLs</abbr> <strong>bases</strong> for <a href="http://codex.wordpress.org/Function_Reference/register_post_type#Arguments">public</a> post_types, categories, tags and taxonomies.', 'qts' ); ?> </p>
+        <p><?php _e( 'If you activated previously the <a href="options-permalink.php">pretty permalinks</a>, in this section you can translate the <abbr title="en inglés, Universal Resource Locator">URLs</abbr> <strong>bases</strong> for <a href="https://codex.wordpress.org/Function_Reference/register_post_type#Arguments">public</a> post_types, categories, tags and taxonomies.', 'qts' ); ?> </p>
 
         <form action="options.php" method="post">
             <?php
-
-            // http://codex.wordpress.org/Function_Reference/settings_fields
+            // https://codex.wordpress.org/Function_Reference/settings_fields
             settings_fields( $settings_output['qts_option_name'] );
 
-            // http://codex.wordpress.org/Function_Reference/do_settings_sections
+            // https://codex.wordpress.org/Function_Reference/do_settings_sections
             do_settings_sections( __FILE__ );
             // rewrite rules
             flush_rewrite_rules();
             ?>
             <?php $css_path = plugin_dir_url( dirname( __FILE__ ) ) . 'assets/css/qts-default.css';
             $file_styles    = file_get_contents( $css_path );
-
-
             ?>
             <p><?php _e( 'If you selected "none", copy and use these styles as you see fit:', 'qts' ); ?> </p>
             <textarea name="textarea" rows="10" cols="80"><?php echo $file_styles; ?></textarea>;
@@ -384,8 +363,6 @@ function qts_show_settings_page() {
  * @return array
  */
 function qts_validate_options( $input ) {
-
-    // for enhanced security, create a new empty array
     $valid_input = array();
 
     // collect only the values we expect and fill the new $valid_input array
@@ -393,26 +370,20 @@ function qts_validate_options( $input ) {
 
     // get the settings sections array
     $settings_output = qts_get_settings();
-
-    $styleoptions = $settings_output['qts_page_styles'];
-
-    $slugoptions = $settings_output['qts_page_fields'];
-
-    $options = array_merge( $styleoptions, $slugoptions );
+    $styleoptions    = $settings_output['qts_page_styles'];
+    $slugoptions     = $settings_output['qts_page_fields'];
+    $options         = array_merge( $styleoptions, $slugoptions );
 
     // run a foreach and switch on option type
     foreach ( $options as $option ):
-
         switch ( $option['type'] ):
             case 'text':
                 //switch validation based on the class!
                 switch ( $option['class'] ) {
-                    //for numeric
                     case 'numeric':
                         //accept the input only when numeric!
                         $input[ $option['id'] ]       = trim( $input[ $option['id'] ] ); // trim whitespace
                         $valid_input[ $option['id'] ] = ( is_numeric( $input[ $option['id'] ] ) ) ? $input[ $option['id'] ] : 'Expecting a Numeric value!';
-
                         // register error
                         if ( is_numeric( $input[ $option['id'] ] ) == false ) {
                             add_settings_error(
@@ -423,8 +394,6 @@ function qts_validate_options( $input ) {
                             );
                         }
                         break;
-
-                    //for multi-numeric values (separated by a comma)
                     case 'multinumeric':
                         //accept the input only when the numeric values are comma separated
                         $input[ $option['id'] ] = trim( $input[ $option['id'] ] ); // trim whitespace
@@ -446,22 +415,16 @@ function qts_validate_options( $input ) {
                             );
                         }
                         break;
-
-                    //for no html
                     case 'nohtml':
                         //accept the input only after stripping out all html, extra white space etc!
                         $input[ $option['id'] ]       = sanitize_text_field( $input[ $option['id'] ] ); // need to add slashes still before sending to the database
                         $valid_input[ $option['id'] ] = addslashes( $input[ $option['id'] ] );
                         break;
-
-                    //for url
                     case 'url':
                         //accept the input only when the url has been sanited for database usage with esc_url_raw()
                         $input[ $option['id'] ]       = trim( $input[ $option['id'] ] ); // trim whitespace
                         $valid_input[ $option['id'] ] = esc_url_raw( $input[ $option['id'] ] );
                         break;
-
-                    //for email
                     case 'email':
                         //accept the input only after the email has been validated
                         $input[ $option['id'] ] = trim( $input[ $option['id'] ] ); // trim whitespace
@@ -470,7 +433,6 @@ function qts_validate_options( $input ) {
                         } elseif ( $input[ $option['id'] ] == '' ) {
                             $valid_input[ $option['id'] ] = __( 'This setting field cannot be empty! Please enter a valid email address.', 'qts' );
                         }
-
                         // register error
                         if ( is_email( $input[ $option['id'] ] ) == false || $input[ $option['id'] ] == '' ) {
                             add_settings_error(
@@ -481,8 +443,6 @@ function qts_validate_options( $input ) {
                             );
                         }
                         break;
-
-                    // a "cover-all" fall-back when the class argument is not set
                     default:
                         // accept only a few inline html elements
                         $allowed_html = array(
@@ -510,27 +470,21 @@ function qts_validate_options( $input ) {
 
                 $text_values = array();
                 foreach ( $option['choices'] as $k => $v ) {
-                    // explode the connective
-                    $pieces = explode( "|", $v );
-
+                    $pieces        = explode( "|", $v );
                     $text_values[] = $pieces[1];
                 }
 
                 foreach ( $text_values as $v ) {
-
                     // Check that the option isn't empty
                     if ( ! empty( $input[ $option['id'] . '|' . $v ] ) ) {
                         // If it's not null, make sure it's sanitized, add it to an array
                         switch ( $option['class'] ) {
                             // different sanitation actions based on the class create you own cases as you need them
-
-                            //for numeric input
                             case 'numeric':
                                 //accept the input only if is numberic!
                                 $input[ $option['id'] . '|' . $v ] = trim( $input[ $option['id'] . '|' . $v ] ); // trim whitespace
                                 $input[ $option['id'] . '|' . $v ] = ( is_numeric( $input[ $option['id'] . '|' . $v ] ) ) ? $input[ $option['id'] . '|' . $v ] : '';
                                 break;
-
                             case 'qts-slug':
                                 // strip all html tags and white-space.
                                 $exploded_types                    = explode( '_', $option['id'] );
@@ -538,8 +492,6 @@ function qts_validate_options( $input ) {
                                 $input[ $option['id'] . '|' . $v ] = sanitize_title( sanitize_text_field( $input[ $option['id'] . '|' . $v ] ) );
                                 $input[ $option['id'] . '|' . $v ] = addslashes( $input[ $option['id'] . '|' . $v ] );
                                 break;
-
-                            // a "cover-all" fall-back when the class argument is not set
                             default:
                                 // strip all html tags and white-space.
                                 $input[ $option['id'] . '|' . $v ] = sanitize_text_field( $input[ $option['id'] . '|' . $v ] ); // need to add slashes still before sending to the database
@@ -562,10 +514,8 @@ function qts_validate_options( $input ) {
             case 'textarea':
                 //switch validation based on the class!
                 switch ( $option['class'] ) {
-                    //for only inline html
                     case 'inlinehtml':
                         // accept only inline html
-                        // trim whitespace
                         $input[ $option['id'] ] = trim( $input[ $option['id'] ] );
                         // find incorrectly nested or missing closing tags and fix markup
                         $input[ $option['id'] ] = force_balance_tags( $input[ $option['id'] ] );
@@ -574,27 +524,20 @@ function qts_validate_options( $input ) {
                         //calls stripslashes then addslashes
                         $valid_input[ $option['id'] ] = wp_filter_kses( $input[ $option['id'] ] );
                         break;
-
-                    //for no html
                     case 'nohtml':
                         //accept the input only after stripping out all html, extra white space etc!
                         // need to add slashes still before sending to the database
                         $input[ $option['id'] ]       = sanitize_text_field( $input[ $option['id'] ] );
                         $valid_input[ $option['id'] ] = addslashes( $input[ $option['id'] ] );
                         break;
-
-                    //for allowlinebreaks
                     case 'allowlinebreaks':
                         //accept the input only after stripping out all html, extra white space etc!
                         // need to add slashes still before sending to the database
                         $input[ $option['id'] ]       = wp_strip_all_tags( $input[ $option['id'] ] );
                         $valid_input[ $option['id'] ] = addslashes( $input[ $option['id'] ] );
                         break;
-
-                    // a "cover-all" fall-back when the class argument is not set
                     default:
                         // accept only limited html
-                        //my allowed html
                         $allowed_html = array(
                             'a'          => array( 'href' => array(), 'title' => array() ),
                             'b'          => array(),
@@ -656,25 +599,20 @@ function qts_validate_options( $input ) {
                         break;
                 }
                 break;
-
             case 'select':
                 // check to see if the selected value is in our approved array of values!
                 $valid_input[ $option['id'] ] = ( in_array( $input[ $option['id'] ], $option['choices'] ) ? $input[ $option['id'] ] : '' );
                 break;
-
             case 'select2':
                 // process $select_values
                 $select_values = array();
                 foreach ( $option['choices'] as $k => $v ) {
-                    // explode the connective
-                    $pieces = explode( "|", $v );
-
+                    $pieces          = explode( "|", $v );
                     $select_values[] = $pieces[1];
                 }
                 // check to see if selected value is in our approved array of values!
                 $valid_input[ $option['id'] ] = ( in_array( $input[ $option['id'] ], $select_values ) ? $input[ $option['id'] ] : '' );
                 break;
-
             case 'checkbox':
                 // if it's not set, default to null!
                 if ( ! isset( $input[ $option['id'] ] ) ) {
@@ -683,19 +621,14 @@ function qts_validate_options( $input ) {
                 // Our checkbox value is either 0 or 1
                 $valid_input[ $option['id'] ] = ( $input[ $option['id'] ] == 1 ? 1 : 0 );
                 break;
-
             case 'multi-checkbox':
                 unset( $checkboxarray );
                 $check_values = array();
                 foreach ( $option['choices'] as $k => $v ) {
-                    // explode the connective
-                    $pieces = explode( "|", $v );
-
+                    $pieces         = explode( "|", $v );
                     $check_values[] = $pieces[1];
                 }
-
                 foreach ( $check_values as $v ) {
-
                     // Check that the option isn't null
                     if ( ! empty( $input[ $option['id'] . '|' . $v ] ) ) {
                         // If it's not null, make sure it's true, add it to an array
@@ -709,19 +642,14 @@ function qts_validate_options( $input ) {
                     $valid_input[ $option['id'] ] = $checkboxarray;
                 }
                 break;
-
             case 'multi-radio':
                 $valid_input[ $option['id'] ] = ( empty( $input ) || ! isset( $input[ $option['id'] ] ) ) ? $option['std'] : $input[ $option['id'] ];
                 break;
-
         endswitch;
 
         if ( ! empty( $valid_input ) && $valid_input[ $option['id'] ] === "qts-slug" ) {
             $valid_input = qts_sanitize_bases( $valid_input );
-        } else {
-            $valid_input = $valid_input;
         }
-
     endforeach;
 
     return $valid_input;

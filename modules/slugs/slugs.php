@@ -15,9 +15,6 @@ if ( ! defined( "QTS_PAGE_BASENAME" ) ) {
 if ( ! defined( "QTS_OPTIONS_NAME" ) ) {
     define( "QTS_OPTIONS_NAME", 'qts_options' );
 }
-if ( ! defined( "PHP_EOL" ) ) {
-    define( "PHP_EOL", "\r\n" );
-}
 
 // Init the module
 global $qtranslate_slug;
