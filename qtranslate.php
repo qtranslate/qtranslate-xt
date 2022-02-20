@@ -12,7 +12,7 @@
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.txt
  * Author e-mail: herrvigg@gmail.com
- * Original Author: John Clause and Qian Qin (http://www.qianqin.de mail@qianqin.de)
+ * Original Author: John Clause and Qian Qin (https://www.qianqin.de mail@qianqin.de)
  * GitHub Plugin URI: https://github.com/qtranslate/qtranslate-xt/
  */
 /* Unused keywords (as described in https://codex.wordpress.org/Writing_a_Plugin):

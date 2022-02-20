@@ -4,7 +4,7 @@
  *
  * @version 1.1.2
  * @author Michel Weimerskirch
- * @link http://michel.weimerskirch.net
+ * @link https://michel.weimerskirch.net
  */
 
 class qTranslateSupportForGravityforms {

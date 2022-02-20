@@ -438,7 +438,7 @@ msgid "Language Code"
 msgstr "Lingvo"
 
 #: admin/qtx_configuration.php:27
-msgid "2-Letter <a href=\"http://www.w3.org/WAI/ER/IG/ert/iso639.htm#2letter\">ISO Language Code</a> for the Language you want to insert. (Example: en)"
+msgid "2-Letter <a href=\"https://www.w3.org/WAI/ER/IG/ert/iso639.htm#2letter\">ISO Language Code</a> for the Language you want to insert. (Example: en)"
 msgstr ""
 
 #: admin/qtx_configuration.php:27
@@ -496,7 +496,7 @@ msgid "Date Format"
 msgstr ""
 
 #: admin/qtx_configuration.php:93
-msgid "Depending on your Date / Time Conversion Mode, you can either enter a <a href=\"http://www.php.net/manual/function.strftime.php\">strftime</a> (use %q for day suffix (st,nd,rd,th)) or <a href=\"http://www.php.net/manual/function.date.php\">date</a> format. This field is optional. (Example: %A %B %e%q, %Y)"
+msgid "Depending on your Date / Time Conversion Mode, you can either enter a <a href=\"https://www.php.net/manual/function.strftime.php\">strftime</a> (use %q for day suffix (st,nd,rd,th)) or <a href=\"https://www.php.net/manual/function.date.php\">date</a> format. This field is optional. (Example: %A %B %e%q, %Y)"
 msgstr ""
 
 #: admin/qtx_configuration.php:96
@@ -504,7 +504,7 @@ msgid "Time Format"
 msgstr ""
 
 #: admin/qtx_configuration.php:98
-msgid "Depending on your Date / Time Conversion Mode, you can either enter a <a href=\"http://www.php.net/manual/function.strftime.php\">strftime</a> or <a href=\"http://www.php.net/manual/function.date.php\">date</a> format. This field is optional. (Example: %I:%M %p)"
+msgid "Depending on your Date / Time Conversion Mode, you can either enter a <a href=\"https://www.php.net/manual/function.strftime.php\">strftime</a> or <a href=\"https://www.php.net/manual/function.date.php\">date</a> format. This field is optional. (Example: %I:%M %p)"
 msgstr ""
 
 #: admin/qtx_configuration.php:101 admin/qtx_configuration.php:330
@@ -662,7 +662,7 @@ msgid "Use Pre-Path Mode (Default, puts /en/ in front of URL)"
 msgstr ""
 
 #: admin/qtx_configuration.php:280
-msgid "Use Pre-Domain Mode (uses http://en.yoursite.com)"
+msgid "Use Pre-Domain Mode (uses https://en.yoursite.com)"
 msgstr ""
 
 #: admin/qtx_configuration.php:280

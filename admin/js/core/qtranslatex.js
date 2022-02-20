@@ -486,7 +486,7 @@ const qTranslateX = function (pg) {
             for (let i = 0; i < elem.childNodes.length; ++i) {
                 const node = elem.childNodes[i];
                 switch (node.nodeType) {
-                    // http://www.w3.org/TR/REC-DOM-Level-1/level-one-core.html#ID-1950641247
+                    // https://www.w3.org/TR/REC-DOM-Level-1/level-one-core.html#ID-1950641247
                     case 1: // ELEMENT_NODE
                         nbHooks += qtx.addDisplayHook(node);
                         break;

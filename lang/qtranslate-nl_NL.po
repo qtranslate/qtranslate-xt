@@ -11,7 +11,7 @@ msgstr ""
 "POT-Creation-Date: 2016-04-23 02:27-0600\n"
 "PO-Revision-Date: 2015-10-11 10:01+0100\n"
 "Last-Translator: Marius Siroen <marius@marius-siroen.com>\n"
-"Language-Team: Dutch (Netherlands) (http://www.transifex.com/projects/p/qtranslate-x/language/nl_NL/)\n"
+"Language-Team: Dutch (Netherlands) (https://www.transifex.com/projects/p/qtranslate-x/language/nl_NL/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -438,8 +438,8 @@ msgid "Language Code"
 msgstr "Taal Code"
 
 #: admin/qtx_configuration.php:27
-msgid "2-Letter <a href=\"http://www.w3.org/WAI/ER/IG/ert/iso639.htm#2letter\">ISO Language Code</a> for the Language you want to insert. (Example: en)"
-msgstr "2-Letterig <a href=\"http://www.w3.org/WAI/ER/IG/ert/iso639.htm#2letter\">ISO Taal Code</a> voor de taal die je wilt toevoegen. (b.v.: nl)"
+msgid "2-Letter <a href=\"https://www.w3.org/WAI/ER/IG/ert/iso639.htm#2letter\">ISO Language Code</a> for the Language you want to insert. (Example: en)"
+msgstr "2-Letterig <a href=\"https://www.w3.org/WAI/ER/IG/ert/iso639.htm#2letter\">ISO Taal Code</a> voor de taal die je wilt toevoegen. (b.v.: nl)"
 
 #: admin/qtx_configuration.php:27
 msgid "The language code is used in language tags and in URLs. It is case sensitive. Use of lower case for the language code is preferable, but not required. The code may be arbitrary chosen by site owner, although it is preferable to use already commonly accepted code if available. Once a language code is created and entries for this language are made, it is difficult to change it, please make a careful decision."
@@ -496,16 +496,16 @@ msgid "Date Format"
 msgstr "Datum Formaat"
 
 #: admin/qtx_configuration.php:93
-msgid "Depending on your Date / Time Conversion Mode, you can either enter a <a href=\"http://www.php.net/manual/function.strftime.php\">strftime</a> (use %q for day suffix (st,nd,rd,th)) or <a href=\"http://www.php.net/manual/function.date.php\">date</a> format. This field is optional. (Example: %A %B %e%q, %Y)"
-msgstr "Afhankelijk van jouw datum/tijd weergaven, kan je of <a href=\"http://www.php.net/manual/function.strftime.php\">strftime</a> (gebruik %q voor dag achtervoegsel (1e,2e)) of <a href=\"http://www.php.net/manual/function.date.php\">date</a> formaat. Dit veld is optioneel. (b.v.: %A, %e %B %Y)"
+msgid "Depending on your Date / Time Conversion Mode, you can either enter a <a href=\"https://www.php.net/manual/function.strftime.php\">strftime</a> (use %q for day suffix (st,nd,rd,th)) or <a href=\"https://www.php.net/manual/function.date.php\">date</a> format. This field is optional. (Example: %A %B %e%q, %Y)"
+msgstr "Afhankelijk van jouw datum/tijd weergaven, kan je of <a href=\"https://www.php.net/manual/function.strftime.php\">strftime</a> (gebruik %q voor dag achtervoegsel (1e,2e)) of <a href=\"https://www.php.net/manual/function.date.php\">date</a> formaat. Dit veld is optioneel. (b.v.: %A, %e %B %Y)"
 
 #: admin/qtx_configuration.php:96
 msgid "Time Format"
 msgstr "Tijd Formaat"
 
 #: admin/qtx_configuration.php:98
-msgid "Depending on your Date / Time Conversion Mode, you can either enter a <a href=\"http://www.php.net/manual/function.strftime.php\">strftime</a> or <a href=\"http://www.php.net/manual/function.date.php\">date</a> format. This field is optional. (Example: %I:%M %p)"
-msgstr "Afhankelijk van jouw datum/tijd weergaven, kan je of <a href=\"http://www.php.net/manual/function.strftime.php\">strftime</a> of <a href=\"http://www.php.net/manual/function.date.php\">date</a> formaat. Dit veld is optioneel. (b.v.: %H:%M)"
+msgid "Depending on your Date / Time Conversion Mode, you can either enter a <a href=\"https://www.php.net/manual/function.strftime.php\">strftime</a> or <a href=\"https://www.php.net/manual/function.date.php\">date</a> format. This field is optional. (Example: %I:%M %p)"
+msgstr "Afhankelijk van jouw datum/tijd weergaven, kan je of <a href=\"https://www.php.net/manual/function.strftime.php\">strftime</a> of <a href=\"https://www.php.net/manual/function.date.php\">date</a> formaat. Dit veld is optioneel. (b.v.: %H:%M)"
 
 #: admin/qtx_configuration.php:101 admin/qtx_configuration.php:330
 msgid "Not Available Message"
@@ -659,8 +659,8 @@ msgid "Use Pre-Path Mode (Default, puts /en/ in front of URL)"
 msgstr "Gebruik Pre-Pad Modus (Standaard, zet /nl/ voor de URL)"
 
 #: admin/qtx_configuration.php:280
-msgid "Use Pre-Domain Mode (uses http://en.yoursite.com)"
-msgstr "Gebruik Pre-Domein Modus (gebruik http://nl.jouwsite.nl)"
+msgid "Use Pre-Domain Mode (uses https://en.yoursite.com)"
+msgstr "Gebruik Pre-Domein Modus (gebruik https://nl.jouwsite.nl)"
 
 #: admin/qtx_configuration.php:280
 msgid "You will need to configure DNS sub-domains on your site."

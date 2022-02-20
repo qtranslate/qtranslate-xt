@@ -175,13 +175,13 @@ class QTX_Admin_Settings {
                     <label for="language_date_format"><?php _e( 'Date Format', 'qtranslate' ) ?><br/></label>
                     <input name="language_date_format" id="language_date_format" type="text"
                            value="<?php echo $language_date_format; ?>"/>
-                    <p class="qtranxs-notes"><?php _e( 'Depending on your Date / Time Conversion Mode, you can either enter a <a href="http://www.php.net/manual/function.strftime.php">strftime</a> (use %q for day suffix (st,nd,rd,th)) or <a href="http://www.php.net/manual/function.date.php">date</a> format. This field is optional. (Example: %A %B %e%q, %Y)', 'qtranslate' ) ?></p>
+                    <p class="qtranxs-notes"><?php _e( 'Depending on your Date / Time Conversion Mode, you can either enter a <a href="https://www.php.net/manual/function.strftime.php">strftime</a> (use %q for day suffix (st,nd,rd,th)) or <a href="https://www.php.net/manual/function.date.php">date</a> format. This field is optional. (Example: %A %B %e%q, %Y)', 'qtranslate' ) ?></p>
                 </div>
                 <div class="form-field">
                     <label for="language_time_format"><?php _e( 'Time Format', 'qtranslate' ) ?><br/></label>
                     <input name="language_time_format" id="language_time_format" type="text"
                            value="<?php echo $language_time_format; ?>"/>
-                    <p class="qtranxs-notes"><?php _e( 'Depending on your Date / Time Conversion Mode, you can either enter a <a href="http://www.php.net/manual/function.strftime.php">strftime</a> or <a href="http://www.php.net/manual/function.date.php">date</a> format. This field is optional. (Example: %I:%M %p)', 'qtranslate' ) ?></p>
+                    <p class="qtranxs-notes"><?php _e( 'Depending on your Date / Time Conversion Mode, you can either enter a <a href="https://www.php.net/manual/function.strftime.php">strftime</a> or <a href="https://www.php.net/manual/function.date.php">date</a> format. This field is optional. (Example: %I:%M %p)', 'qtranslate' ) ?></p>
                 </div>
                 <div class="form-field">
                     <label for="language_na_message"><?php _e( 'Not Available Message', 'qtranslate' ) ?><br/></label>
@@ -192,7 +192,7 @@ class QTX_Admin_Settings {
                         <br/>
                         <?php _e( '%LANG:&lt;normal_separator&gt;:&lt;last_separator&gt;% generates a list of languages separated by &lt;normal_separator&gt; except for the last one, where &lt;last_separator&gt; will be used instead.', 'qtranslate' );
                         echo ' ';
-                        printf( __( 'The language names substituted into the list of available languages are shown translated in the active language. The nominative form of language names is used as it is fetched from %s may not fit the grammar rules of your language. It is then advisable to include quotes in this message like this "%s". Alternatively you may modify "%s" files in folder "%s" with names that fit your grammar rules. Please, %scontact the development team%s, if you decide to modify "%s" files.', 'qtranslate' ), '<a href="http://unicode.org/Public/cldr/latest" title="Unicode Common Locale Data Repository" target="_blank" tabindex="-1">CLDR</a>', 'Sorry, this entry is only available in "%LANG:", ":" and "%".', '.po', '<a href="https://github.com/qtranslate/qtranslate-xt/tree/master/lang/language-names" target="_blank" tabindex="-1">/lang/language-names/</a>', '<a href="https://github.com/qtranslate/qtranslate-xt/issues" target="_blank" tabindex="-1">', '</a>', '.po' );
+                        printf( __( 'The language names substituted into the list of available languages are shown translated in the active language. The nominative form of language names is used as it is fetched from %s may not fit the grammar rules of your language. It is then advisable to include quotes in this message like this "%s". Alternatively you may modify "%s" files in folder "%s" with names that fit your grammar rules. Please, %scontact the development team%s, if you decide to modify "%s" files.', 'qtranslate' ), '<a href="https://unicode.org/Public/cldr/latest" title="Unicode Common Locale Data Repository" target="_blank" tabindex="-1">CLDR</a>', 'Sorry, this entry is only available in "%LANG:", ":" and "%".', '.po', '<a href="https://github.com/qtranslate/qtranslate-xt/tree/master/lang/language-names" target="_blank" tabindex="-1">/lang/language-names/</a>', '<a href="https://github.com/qtranslate/qtranslate-xt/issues" target="_blank" tabindex="-1">', '</a>', '.po' );
                         ?>
                     </p>
                 </div>
@@ -352,7 +352,7 @@ class QTX_Admin_Settings {
                         </label><br/>
                         <label title="Pre-Domain Mode">
                             <input type="radio" name="url_mode"
-                                   value="<?php echo QTX_URL_DOMAIN; ?>" <?php checked( $url_mode, QTX_URL_DOMAIN ) ?> /> <?php echo __( 'Use Pre-Domain Mode (uses http://en.yoursite.com)', 'qtranslate' ) . '. ' . __( 'You will need to configure DNS sub-domains on your site.', 'qtranslate' ) ?>
+                                   value="<?php echo QTX_URL_DOMAIN; ?>" <?php checked( $url_mode, QTX_URL_DOMAIN ) ?> /> <?php echo __( 'Use Pre-Domain Mode (uses https://en.yoursite.com)', 'qtranslate' ) . '. ' . __( 'You will need to configure DNS sub-domains on your site.', 'qtranslate' ) ?>
                         </label><br/>
                         <label title="Per-Domain Mode">
                             <input type="radio" name="url_mode"

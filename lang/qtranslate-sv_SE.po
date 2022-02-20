@@ -443,7 +443,7 @@ msgid "Language Code"
 msgstr "Språk"
 
 #: admin/qtx_configuration.php:27
-msgid "2-Letter <a href=\"http://www.w3.org/WAI/ER/IG/ert/iso639.htm#2letter\">ISO Language Code</a> for the Language you want to insert. (Example: en)"
+msgid "2-Letter <a href=\"https://www.w3.org/WAI/ER/IG/ert/iso639.htm#2letter\">ISO Language Code</a> for the Language you want to insert. (Example: en)"
 msgstr ""
 
 #: admin/qtx_configuration.php:27
@@ -501,7 +501,7 @@ msgid "Date Format"
 msgstr ""
 
 #: admin/qtx_configuration.php:93
-msgid "Depending on your Date / Time Conversion Mode, you can either enter a <a href=\"http://www.php.net/manual/function.strftime.php\">strftime</a> (use %q for day suffix (st,nd,rd,th)) or <a href=\"http://www.php.net/manual/function.date.php\">date</a> format. This field is optional. (Example: %A %B %e%q, %Y)"
+msgid "Depending on your Date / Time Conversion Mode, you can either enter a <a href=\"https://www.php.net/manual/function.strftime.php\">strftime</a> (use %q for day suffix (st,nd,rd,th)) or <a href=\"https://www.php.net/manual/function.date.php\">date</a> format. This field is optional. (Example: %A %B %e%q, %Y)"
 msgstr ""
 
 #: admin/qtx_configuration.php:96
@@ -509,7 +509,7 @@ msgid "Time Format"
 msgstr ""
 
 #: admin/qtx_configuration.php:98
-msgid "Depending on your Date / Time Conversion Mode, you can either enter a <a href=\"http://www.php.net/manual/function.strftime.php\">strftime</a> or <a href=\"http://www.php.net/manual/function.date.php\">date</a> format. This field is optional. (Example: %I:%M %p)"
+msgid "Depending on your Date / Time Conversion Mode, you can either enter a <a href=\"https://www.php.net/manual/function.strftime.php\">strftime</a> or <a href=\"https://www.php.net/manual/function.date.php\">date</a> format. This field is optional. (Example: %I:%M %p)"
 msgstr ""
 
 #: admin/qtx_configuration.php:101 admin/qtx_configuration.php:330
@@ -669,7 +669,7 @@ msgid "Use Pre-Path Mode (Default, puts /en/ in front of URL)"
 msgstr ""
 
 #: admin/qtx_configuration.php:280
-msgid "Use Pre-Domain Mode (uses http://en.yoursite.com)"
+msgid "Use Pre-Domain Mode (uses https://en.yoursite.com)"
 msgstr ""
 
 #: admin/qtx_configuration.php:280
@@ -1741,8 +1741,8 @@ msgstr ""
 #~ msgstr "Om du stöter på problem som du inte klarar att lösa själv, kan du besöka <a href=\"%s\">Supportforumet</a>. Genom att ange följande text hjälper du andra att upptäcka eventuella fel med konfigureringen."
 
 #, fuzzy
-#~ msgid "The qTranslate Editor has disabled itself because it hasn't been tested with your Wordpress version yet. This is done to prevent Wordpress from malfunctioning. To remove this message permanently, please update qTranslate to the <a href=\"http://wordpress.org/plugins/mqtranslate/\" target=\"_blank\">corresponding version</a>."
-#~ msgstr "Redigeraren qTranslate har blockerat sig själv eftersom den ännu ej testats med din nuvarande version av Wordpress. Detta skyddar Wordpress från att fallera. Du kan aktivera tillägget genom att <a href=\"javascript:qtrans_editorInit();\" title=\"Activate qTranslate\" id=\"qtrans_imsg_link\">klicka här</a> (kan leda till <b>förlust av data</b>! Används på eget ansvar!). För att ta bort detta meddelande permanent, uppdatera qTranslate till <a href=\"http://www.qianqin.de/qtranslate/download/\">motsvarande version</a>."
+#~ msgid "The qTranslate Editor has disabled itself because it hasn't been tested with your Wordpress version yet. This is done to prevent Wordpress from malfunctioning. To remove this message permanently, please update qTranslate to the <a href=\"https://wordpress.org/plugins/mqtranslate/\" target=\"_blank\">corresponding version</a>."
+#~ msgstr "Redigeraren qTranslate har blockerat sig själv eftersom den ännu ej testats med din nuvarande version av Wordpress. Detta skyddar Wordpress från att fallera. Du kan aktivera tillägget genom att <a href=\"javascript:qtrans_editorInit();\" title=\"Activate qTranslate\" id=\"qtrans_imsg_link\">klicka här</a> (kan leda till <b>förlust av data</b>! Används på eget ansvar!). För att ta bort detta meddelande permanent, uppdatera qTranslate till <a href=\"https://www.qianqin.de/qtranslate/download/\">motsvarande version</a>."
 
 #~ msgid "Title"
 #~ msgstr "Rubrik"

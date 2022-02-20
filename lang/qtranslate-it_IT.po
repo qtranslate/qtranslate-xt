@@ -524,8 +524,8 @@ msgstr "Codice Lingua"
 
 # @ qtranslate
 #: admin/qtx_configuration.php:27
-msgid "2-Letter <a href=\"http://www.w3.org/WAI/ER/IG/ert/iso639.htm#2letter\">ISO Language Code</a> for the Language you want to insert. (Example: en)"
-msgstr "<a href=\"http://www.w3.org/WAI/ER/IG/ert/iso639.htm#2letter\">Codice Lingua ISO</a> a 2 lettere per la Lingua che vuoi inserire. (Esempio: it)"
+msgid "2-Letter <a href=\"https://www.w3.org/WAI/ER/IG/ert/iso639.htm#2letter\">ISO Language Code</a> for the Language you want to insert. (Example: en)"
+msgstr "<a href=\"https://www.w3.org/WAI/ER/IG/ert/iso639.htm#2letter\">Codice Lingua ISO</a> a 2 lettere per la Lingua che vuoi inserire. (Esempio: it)"
 
 # @ qtranslate
 #: admin/qtx_configuration.php:27
@@ -596,8 +596,8 @@ msgstr "Formato Data"
 
 # @ qtranslate
 #: admin/qtx_configuration.php:93
-msgid "Depending on your Date / Time Conversion Mode, you can either enter a <a href=\"http://www.php.net/manual/function.strftime.php\">strftime</a> (use %q for day suffix (st,nd,rd,th)) or <a href=\"http://www.php.net/manual/function.date.php\">date</a> format. This field is optional. (Example: %A %B %e%q, %Y)"
-msgstr "Relativamente al tuo Metodo di Conversione di Data/Ora, puoi inserire o il formato <a href=\"http://www.php.net/manual/function.strftime.php\">strftime</a> (usa %q per il suffisso del giorno (st,nd,rd,th)) oppure il formato <a href=\"http://www.php.net/manual/function.date.php\">date</a>. Questo campo è opzionale. (Esempio: %A %B %e%q, %Y)"
+msgid "Depending on your Date / Time Conversion Mode, you can either enter a <a href=\"https://www.php.net/manual/function.strftime.php\">strftime</a> (use %q for day suffix (st,nd,rd,th)) or <a href=\"https://www.php.net/manual/function.date.php\">date</a> format. This field is optional. (Example: %A %B %e%q, %Y)"
+msgstr "Relativamente al tuo Metodo di Conversione di Data/Ora, puoi inserire o il formato <a href=\"https://www.php.net/manual/function.strftime.php\">strftime</a> (usa %q per il suffisso del giorno (st,nd,rd,th)) oppure il formato <a href=\"https://www.php.net/manual/function.date.php\">date</a>. Questo campo è opzionale. (Esempio: %A %B %e%q, %Y)"
 
 # @ qtranslate
 #: admin/qtx_configuration.php:96
@@ -606,8 +606,8 @@ msgstr "Formato Ora"
 
 # @ qtranslate
 #: admin/qtx_configuration.php:98
-msgid "Depending on your Date / Time Conversion Mode, you can either enter a <a href=\"http://www.php.net/manual/function.strftime.php\">strftime</a> or <a href=\"http://www.php.net/manual/function.date.php\">date</a> format. This field is optional. (Example: %I:%M %p)"
-msgstr "Relativamente al tuo Metodo di Conversione di Data/Ora, puoi inserire o il formato <a href=\"http://www.php.net/manual/function.strftime.php\">strftime</a> oppure il formato <a href=\"http://www.php.net/manual/function.date.php\">date</a>. Questo campo è opzionale. (Esempio: %I:%M %p)"
+msgid "Depending on your Date / Time Conversion Mode, you can either enter a <a href=\"https://www.php.net/manual/function.strftime.php\">strftime</a> or <a href=\"https://www.php.net/manual/function.date.php\">date</a> format. This field is optional. (Example: %I:%M %p)"
+msgstr "Relativamente al tuo Metodo di Conversione di Data/Ora, puoi inserire o il formato <a href=\"https://www.php.net/manual/function.strftime.php\">strftime</a> oppure il formato <a href=\"https://www.php.net/manual/function.date.php\">date</a>. Questo campo è opzionale. (Esempio: %I:%M %p)"
 
 # @ qtranslate
 #: admin/qtx_configuration.php:101 admin/qtx_configuration.php:330
@@ -794,8 +794,8 @@ msgstr "Usa Modalità Pre-Path (Default, inserisce /it/ all'inizio dell'URL)"
 
 # @ qtranslate
 #: admin/qtx_configuration.php:280
-msgid "Use Pre-Domain Mode (uses http://en.yoursite.com)"
-msgstr "Usa Modalità Pre-Domain (usa http://it.tuosito.com)"
+msgid "Use Pre-Domain Mode (uses https://en.yoursite.com)"
+msgstr "Usa Modalità Pre-Domain (usa https://it.tuosito.com)"
 
 # @ qtranslate
 #: admin/qtx_configuration.php:280

@@ -440,8 +440,8 @@ msgid "Language Code"
 msgstr "Codi d'Idioma"
 
 #: admin/qtx_configuration.php:27
-msgid "2-Letter <a href=\"http://www.w3.org/WAI/ER/IG/ert/iso639.htm#2letter\">ISO Language Code</a> for the Language you want to insert. (Example: en)"
-msgstr "2-Lletres <a href=\"http://www.w3.org/WAI/ER/IG/ert/iso639.htm#2letter\">ISO de Codi d'Idioma</a> per l'idioma que vulguis afegir. (Example: ca)"
+msgid "2-Letter <a href=\"https://www.w3.org/WAI/ER/IG/ert/iso639.htm#2letter\">ISO Language Code</a> for the Language you want to insert. (Example: en)"
+msgstr "2-Lletres <a href=\"https://www.w3.org/WAI/ER/IG/ert/iso639.htm#2letter\">ISO de Codi d'Idioma</a> per l'idioma que vulguis afegir. (Example: ca)"
 
 #: admin/qtx_configuration.php:27
 msgid "The language code is used in language tags and in URLs. It is case sensitive. Use of lower case for the language code is preferable, but not required. The code may be arbitrary chosen by site owner, although it is preferable to use already commonly accepted code if available. Once a language code is created and entries for this language are made, it is difficult to change it, please make a careful decision."
@@ -498,16 +498,16 @@ msgid "Date Format"
 msgstr "Format de data"
 
 #: admin/qtx_configuration.php:93
-msgid "Depending on your Date / Time Conversion Mode, you can either enter a <a href=\"http://www.php.net/manual/function.strftime.php\">strftime</a> (use %q for day suffix (st,nd,rd,th)) or <a href=\"http://www.php.net/manual/function.date.php\">date</a> format. This field is optional. (Example: %A %B %e%q, %Y)"
-msgstr "Depenent de la teva data i format d'hora, pots util·litzar els formats <a href=\"http://www.php.net/manual/function.strftime.php \">strftime</a> (utilitza %q per als dies sufix (st,nd,rd,th))  o <a href=\"http://www.php.net/manual/function.date.php\">date</a>. Aquest camp és opcional. (Exemple:  %I:%M %p)"
+msgid "Depending on your Date / Time Conversion Mode, you can either enter a <a href=\"https://www.php.net/manual/function.strftime.php\">strftime</a> (use %q for day suffix (st,nd,rd,th)) or <a href=\"https://www.php.net/manual/function.date.php\">date</a> format. This field is optional. (Example: %A %B %e%q, %Y)"
+msgstr "Depenent de la teva data i format d'hora, pots util·litzar els formats <a href=\"https://www.php.net/manual/function.strftime.php \">strftime</a> (utilitza %q per als dies sufix (st,nd,rd,th))  o <a href=\"https://www.php.net/manual/function.date.php\">date</a>. Aquest camp és opcional. (Exemple:  %I:%M %p)"
 
 #: admin/qtx_configuration.php:96
 msgid "Time Format"
 msgstr "Format d'hora"
 
 #: admin/qtx_configuration.php:98
-msgid "Depending on your Date / Time Conversion Mode, you can either enter a <a href=\"http://www.php.net/manual/function.strftime.php\">strftime</a> or <a href=\"http://www.php.net/manual/function.date.php\">date</a> format. This field is optional. (Example: %I:%M %p)"
-msgstr "Depenent de la teva data i format d'hora, pots util·litzar els formats<a href=\"http://www.php.net/manual/function.strftime.php \">strftime</a> o <a href=\"http://www.php.net/manual/function.date.php\">date</a>. Aquest camp és opcional. (Exemple:  %I:%M %p)"
+msgid "Depending on your Date / Time Conversion Mode, you can either enter a <a href=\"https://www.php.net/manual/function.strftime.php\">strftime</a> or <a href=\"https://www.php.net/manual/function.date.php\">date</a> format. This field is optional. (Example: %I:%M %p)"
+msgstr "Depenent de la teva data i format d'hora, pots util·litzar els formats<a href=\"https://www.php.net/manual/function.strftime.php \">strftime</a> o <a href=\"https://www.php.net/manual/function.date.php\">date</a>. Aquest camp és opcional. (Exemple:  %I:%M %p)"
 
 #: admin/qtx_configuration.php:101 admin/qtx_configuration.php:330
 msgid "Not Available Message"
@@ -664,8 +664,8 @@ msgid "Use Pre-Path Mode (Default, puts /en/ in front of URL)"
 msgstr "Utilitzar el mode de pre-ruta (per defecte, mostra /ca/ davant de la URL)"
 
 #: admin/qtx_configuration.php:280
-msgid "Use Pre-Domain Mode (uses http://en.yoursite.com)"
-msgstr "Utilitzeu la manera de pre-domini (utilitza http://ca.yoursite.com)"
+msgid "Use Pre-Domain Mode (uses https://en.yoursite.com)"
+msgstr "Utilitzeu la manera de pre-domini (utilitza https://ca.yoursite.com)"
 
 #: admin/qtx_configuration.php:280
 msgid "You will need to configure DNS sub-domains on your site."

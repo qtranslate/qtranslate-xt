@@ -635,10 +635,10 @@ msgstr "Code de la langue"
 
 #: admin/qtx_configuration.php:36
 msgid ""
-"2-Letter <a href=\"http://www.w3.org/WAI/ER/IG/ert/iso639.htm#2letter\">ISO "
+"2-Letter <a href=\"https://www.w3.org/WAI/ER/IG/ert/iso639.htm#2letter\">ISO "
 "Language Code</a> for the Language you want to insert. (Example: en)"
 msgstr ""
-"Les 2 lettres du <a href=\"http://www.w3.org/WAI/ER/IG/ert/iso639.htm#2letter"
+"Les 2 lettres du <a href=\"https://www.w3.org/WAI/ER/IG/ert/iso639.htm#2letter"
 "\">Code ISO</a> de la langue que vous souhaitez ajouter. (Exemple : fr)"
 
 #: admin/qtx_configuration.php:36
@@ -721,15 +721,15 @@ msgstr "Format de la date"
 #: admin/qtx_configuration.php:110
 msgid ""
 "Depending on your Date / Time Conversion Mode, you can either enter a <a "
-"href=\"http://www.php.net/manual/function.strftime.php\">strftime</a> (use "
-"%q for day suffix (st,nd,rd,th)) or <a href=\"http://www.php.net/manual/"
+"href=\"https://www.php.net/manual/function.strftime.php\">strftime</a> (use "
+"%q for day suffix (st,nd,rd,th)) or <a href=\"https://www.php.net/manual/"
 "function.date.php\">date</a> format. This field is optional. (Example: %A %B "
 "%e%q, %Y)"
 msgstr ""
 "Dépend de votre mode de conversion Date / Heure, vous pouvez entrer une date "
-"au format <a href=\"http://www.php.net/manual/function.strftime.php"
+"au format <a href=\"https://www.php.net/manual/function.strftime.php"
 "\">strftime</a> (utilisez %q pour le suffixe des jours anglais (st,nd,rd,"
-"th)) ou au format <a href=\"http://www.php.net/manual/function.date.php"
+"th)) ou au format <a href=\"https://www.php.net/manual/function.date.php"
 "\">date</a>. Ce champ est optionnel. (Exemple: %A %B %e%q, %Y)"
 
 #: admin/qtx_configuration.php:113
@@ -739,13 +739,13 @@ msgstr "Format de l’heure"
 #: admin/qtx_configuration.php:116
 msgid ""
 "Depending on your Date / Time Conversion Mode, you can either enter a <a "
-"href=\"http://www.php.net/manual/function.strftime.php\">strftime</a> or <a "
-"href=\"http://www.php.net/manual/function.date.php\">date</a> format. This "
+"href=\"https://www.php.net/manual/function.strftime.php\">strftime</a> or <a "
+"href=\"https://www.php.net/manual/function.date.php\">date</a> format. This "
 "field is optional. (Example: %I:%M %p)"
 msgstr ""
 "Dépend de votre mode de conversion Date / Heure, vous pouvez entrer une "
-"heure au format <a href=\"http://www.php.net/manual/function.strftime.php"
-"\">strftime</a> ou au format <a href=\"http://www.php.net/manual/function."
+"heure au format <a href=\"https://www.php.net/manual/function.strftime.php"
+"\">strftime</a> ou au format <a href=\"https://www.php.net/manual/function."
 "date.php\">date</a>. Ce champ est optionnel. (Exemple: %I:%M %p)"
 
 #: admin/qtx_configuration.php:119 admin/qtx_configuration.php:396
@@ -964,8 +964,8 @@ msgid "SEO friendly."
 msgstr "Compatible avec SEO (optimisation pour les moteurs de recherche)."
 
 #: admin/qtx_configuration.php:326
-msgid "Use Pre-Domain Mode (uses http://en.yoursite.com)"
-msgstr "Utiliser le mode Sous-Domaine (http://fr.votresite.com)"
+msgid "Use Pre-Domain Mode (uses https://en.yoursite.com)"
+msgstr "Utiliser le mode Sous-Domaine (https://fr.votresite.com)"
 
 #: admin/qtx_configuration.php:326
 msgid "You will need to configure DNS sub-domains on your site."

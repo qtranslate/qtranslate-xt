@@ -441,8 +441,8 @@ msgid "Language Code"
 msgstr "Código do idioma"
 
 #: admin/qtx_configuration.php:27
-msgid "2-Letter <a href=\"http://www.w3.org/WAI/ER/IG/ert/iso639.htm#2letter\">ISO Language Code</a> for the Language you want to insert. (Example: en)"
-msgstr "<a href=\"http://www.w3.org/WAI/ER/IG/ert/iso639.htm#2letter\">Código do Idioma ISO</a> de 2 letras para o Idioma que deseja introduzir. (Exemplo: pt)"
+msgid "2-Letter <a href=\"https://www.w3.org/WAI/ER/IG/ert/iso639.htm#2letter\">ISO Language Code</a> for the Language you want to insert. (Example: en)"
+msgstr "<a href=\"https://www.w3.org/WAI/ER/IG/ert/iso639.htm#2letter\">Código do Idioma ISO</a> de 2 letras para o Idioma que deseja introduzir. (Exemplo: pt)"
 
 #: admin/qtx_configuration.php:27
 msgid "The language code is used in language tags and in URLs. It is case sensitive. Use of lower case for the language code is preferable, but not required. The code may be arbitrary chosen by site owner, although it is preferable to use already commonly accepted code if available. Once a language code is created and entries for this language are made, it is difficult to change it, please make a careful decision."
@@ -499,15 +499,15 @@ msgid "Date Format"
 msgstr "Formato da Data"
 
 #: admin/qtx_configuration.php:93
-msgid "Depending on your Date / Time Conversion Mode, you can either enter a <a href=\"http://www.php.net/manual/function.strftime.php\">strftime</a> (use %q for day suffix (st,nd,rd,th)) or <a href=\"http://www.php.net/manual/function.date.php\">date</a> format. This field is optional. (Example: %A %B %e%q, %Y)"
-msgstr "Dependendo do seu modo de conversão de data e hora, pode usar um formato <a href=\"http://www.php.net/manual/function.strftime.php\">strftime</a> ou <a href=\"http://www.php.net/manual/function.date.php\">data</a>. Este campo é opcional. (Exemplo: %A,%e de %B  de %Y)"
+msgid "Depending on your Date / Time Conversion Mode, you can either enter a <a href=\"https://www.php.net/manual/function.strftime.php\">strftime</a> (use %q for day suffix (st,nd,rd,th)) or <a href=\"https://www.php.net/manual/function.date.php\">date</a> format. This field is optional. (Example: %A %B %e%q, %Y)"
+msgstr "Dependendo do seu modo de conversão de data e hora, pode usar um formato <a href=\"https://www.php.net/manual/function.strftime.php\">strftime</a> ou <a href=\"https://www.php.net/manual/function.date.php\">data</a>. Este campo é opcional. (Exemplo: %A,%e de %B  de %Y)"
 
 #: admin/qtx_configuration.php:96
 msgid "Time Format"
 msgstr "Formato da Hora"
 
 #: admin/qtx_configuration.php:98
-msgid "Depending on your Date / Time Conversion Mode, you can either enter a <a href=\"http://www.php.net/manual/function.strftime.php\">strftime</a> or <a href=\"http://www.php.net/manual/function.date.php\">date</a> format. This field is optional. (Example: %I:%M %p)"
+msgid "Depending on your Date / Time Conversion Mode, you can either enter a <a href=\"https://www.php.net/manual/function.strftime.php\">strftime</a> or <a href=\"http://www.php.net/manual/function.date.php\">date</a> format. This field is optional. (Example: %I:%M %p)"
 msgstr "Dependendo do seu modo de conversão de data e hora, pode usar um formato <a href=\"http://www.php.net/manual/function.strftime.php\">strftime</a> ou <a href=\"http://www.php.net/manual/function.date.php\">data</a>. Este campo é opcional. (Example: %H:%M)"
 
 #: admin/qtx_configuration.php:101 admin/qtx_configuration.php:330

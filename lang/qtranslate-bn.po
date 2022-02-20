@@ -565,14 +565,14 @@ msgstr "তারিখ ফরম্যাট"
 
 #: ../admin/qtx_admin_settings.php:178
 msgid ""
-"Depending on your Date / Time Conversion Mode, you can either enter a <a href=\"http://"
+"Depending on your Date / Time Conversion Mode, you can either enter a <a href=\"https://"
 "www.php.net/manual/function.strftime.php\">strftime</a> (use %q for day suffix (st,nd,"
-"rd,th)) or <a href=\"http://www.php.net/manual/function.date.php\">date</a> format. "
+"rd,th)) or <a href=\"https://www.php.net/manual/function.date.php\">date</a> format. "
 "This field is optional. (Example: %A %B %e%q, %Y)"
 msgstr ""
-"Depending on your Date / Time Conversion Mode, you can either enter a <a href=\"http://"
+"Depending on your Date / Time Conversion Mode, you can either enter a <a href=\"https://"
 "www.php.net/manual/function.strftime.php\">strftime</a> (use %q for day suffix (st,nd,"
-"rd,th)) or <a href=\"http://www.php.net/manual/function.date.php\">date</a> format. "
+"rd,th)) or <a href=\"https://www.php.net/manual/function.date.php\">date</a> format. "
 "This field is optional. (Example: %A %B %e%q, %Y)"
 
 #: ../admin/qtx_admin_settings.php:181
@@ -581,12 +581,12 @@ msgstr "সময় ফরম্যাট"
 
 #: ../admin/qtx_admin_settings.php:184
 msgid ""
-"Depending on your Date / Time Conversion Mode, you can either enter a <a href=\"http://"
-"www.php.net/manual/function.strftime.php\">strftime</a> or <a href=\"http://www.php.net/"
+"Depending on your Date / Time Conversion Mode, you can either enter a <a href=\"https://"
+"www.php.net/manual/function.strftime.php\">strftime</a> or <a href=\"https://www.php.net/"
 "manual/function.date.php\">date</a> format. This field is optional. (Example: %I:%M %p)"
 msgstr ""
-"Depending on your Date / Time Conversion Mode, you can either enter a <a href=\"http://"
-"www.php.net/manual/function.strftime.php\">strftime</a> or <a href=\"http://www.php.net/"
+"Depending on your Date / Time Conversion Mode, you can either enter a <a href=\"https://"
+"www.php.net/manual/function.strftime.php\">strftime</a> or <a href=\"https://www.php.net/"
 "manual/function.date.php\">date</a> format. This field is optional. (Example: %I:%M %p)"
 
 #: ../admin/qtx_admin_settings.php:187 ../admin/qtx_admin_settings.php:420
@@ -733,7 +733,7 @@ msgid "SEO friendly."
 msgstr "এসইও বান্ধব।"
 
 #: ../admin/qtx_admin_settings.php:338
-msgid "Use Pre-Domain Mode (uses http://en.yoursite.com)"
+msgid "Use Pre-Domain Mode (uses https://en.yoursite.com)"
 msgstr ""
 
 #: ../admin/qtx_admin_settings.php:338
