@@ -660,11 +660,12 @@ function qtranxf_update_i18n_config() {
     $json_files         = $q_config['config_files'];
     $custom_i18n_config = $q_config['custom_i18n_config'];
     $cfg                = qtranxf_load_config_all( $json_files, $custom_i18n_config );
-    if ( $q_config['admin_config'] !== $cfg['admin-config'] ) {
+    // TODO clarify admin/front contexts before call
+    if ( isset( $q_config['admin_config'] ) && $q_config['admin_config'] !== $cfg['admin-config'] ) {
         $q_config['admin_config'] = $cfg['admin-config'];
         qtranxf_update_option( 'admin_config' );
     }
-    if ( $q_config['front_config'] !== $cfg['front-config'] ) {
+    if ( isset( $q_config['front_config'] ) && $q_config['front_config'] !== $cfg['front-config'] ) {
         $q_config['front_config'] = $cfg['front-config'];
         qtranxf_update_option( 'front_config' );
     }
