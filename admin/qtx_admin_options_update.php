@@ -501,11 +501,11 @@ function qtranxf_save_config() {
 }
 
 function qtranxf_reloadConfig() {
-    _deprecated_function( __FUNCTION__, '3.10.0', 'qtranxf_admin_reload_config' );
-    qtranxf_admin_reload_config();
+    _deprecated_function( __FUNCTION__, '3.10.0', 'qtranxf_reload_config' );
+    qtranxf_reload_config();
 }
 
-function qtranxf_admin_reload_config() {
+function qtranxf_reload_config() {
     global $q_config;
     $url_info = isset( $q_config['url_info'] ) ? $q_config['url_info'] : null;
     qtranxf_del_conf_filters();
