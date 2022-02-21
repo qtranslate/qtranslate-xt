@@ -103,12 +103,6 @@ function qts_settings_scripts() {
     wp_enqueue_style( 'qts_theme_settings_css', plugins_url( 'assets/css/qts-settings.css', dirname( __FILE__ ) ) );
     wp_enqueue_script( 'qts_theme_settings_js', plugins_url( 'assets/js/qts-settings.js', dirname( __FILE__ ) ), array( 'jquery' ) );
 
-    /**
-     * @deprecated
-     */
-    if ( $qtranslate_slug->check_old_data() ) {
-        wp_enqueue_script( 'qts_theme_settings_upgrade_js', plugins_url( 'assets/js/qts-settings-upgrade.js', dirname( __FILE__ ) ), array( 'jquery' ) );
-    }
 }
 
 add_action( 'admin_head', 'qts_settings_scripts' );
