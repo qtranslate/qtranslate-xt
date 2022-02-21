@@ -26,6 +26,10 @@ class QTX_Admin_Gutenberg {
      * Register the REST filters
      */
     public function rest_api_init() {
+        // filter to short circuit the Gutenberg related REST API
+        $pre = apply_filters('qtranslate_gutenberg', false);
+        if($pre !== false) return;
+
         global $q_config;
 
         $post_types = get_post_types( array( 'show_in_rest' => true ) );
@@ -160,6 +164,10 @@ class QTX_Admin_Gutenberg {
      * Enqueue the JS script
      */
     public function enqueue_block_editor_assets() {
+        // filter to short circuit the Gutenberg JS script
+        $pre = apply_filters('qtranslate_gutenberg', false);
+        if($pre !== false) return;
+
         wp_register_script(
             'qtx-gutenberg',
             plugins_url( 'dist/editor-gutenberg.js', QTRANSLATE_FILE ),
