@@ -3,9 +3,6 @@
 include_once( dirname( __FILE__ ) . '/includes/class-qtranslate-slug-widget.php' );
 include_once( dirname( __FILE__ ) . '/includes/class-qtranslate-slug.php' );
 
-if ( ! defined( "QTS_VERSION" ) ) {
-    define( "QTS_VERSION", '1.1.18' );
-}
 if ( ! defined( "QTS_PREFIX" ) ) {
     define( "QTS_PREFIX", '_qts_' );
 }

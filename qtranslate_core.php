@@ -1115,7 +1115,7 @@ function qtranxf_convertURL( $url = '', $lang = '', $forceadmin = false, $showDe
     }
     if ( empty( $url ) ) {
         // TODO refactor this hack for qtranslate-slug! We might need a hook here.
-        if ( $q_config['url_info']['doing_front_end'] && defined( 'QTS_VERSION' ) && $q_config['url_mode'] != QTX_URL_QUERY ) {
+        if ( $q_config['url_info']['doing_front_end'] && function_exists('qts_get_url') && $q_config['url_mode'] != QTX_URL_QUERY ) {
             // quick workaround, but need a permanent solution
             $url = qts_get_url( $lang );
             if ( ! empty( $url ) ) {
