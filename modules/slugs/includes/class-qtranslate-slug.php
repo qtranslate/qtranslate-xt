@@ -130,39 +130,6 @@ class QtranslateSlug {
     }
 
     /**
-     * Register front end styles and enqueue.
-     */
-    public function register_plugin_styles() {
-        wp_register_style( 'qts_front_styles', plugins_url( '/assets/css/qts-default.css', dirname( __FILE__ ) ) );
-        wp_enqueue_style( 'qts_front_styles' );
-    }
-
-    /**
-     * Register minified front end styles and enqueue.
-     * 43LC: easier duplicating the function :|
-     */
-    public function register_plugin_styles_min() {
-        wp_register_style( 'qts_front_styles', plugins_url( '/assets/css/qts-default.min.css', dirname( __FILE__ ) ) );
-        wp_enqueue_style( 'qts_front_styles' );
-    }
-
-    /**
-     * Print front end styles.
-     */
-    public function print_plugin_styles() {
-        $css_path = dirname( __FILE__ ) . '/assets/css/qts-default.css';
-
-        if ( ! file_exists( $css_path ) || ! is_readable( $css_path ) ) {
-            return;
-        }
-        $default_css_file = file_get_contents( $css_path, FILE_USE_INCLUDE_PATH );
-        $css              = "<style media=\"screen\">\n";
-        $css              .= "$default_css_file\n";
-        $css              .= "</style>\n";
-        echo $css;
-    }
-
-    /**
      * Actions when deactivating the plugin.
      */
     public function deactivate() {
@@ -231,15 +198,7 @@ class QtranslateSlug {
             }
         } else {
             add_filter( 'request', array( &$this, 'filter_request' ) );
-            // adds external style file
-            $qts_options = $this->get_options();
-            if ( ! isset( $qts_options[ QTS_PREFIX . 'styles' ] ) || $qts_options[ QTS_PREFIX . 'styles' ] == "file" ) {
-                add_action( 'wp_enqueue_scripts', array( &$this, 'register_plugin_styles' ) );
-            } elseif ( $qts_options[ QTS_PREFIX . 'styles' ] == "minified" ) {
-                add_action( 'wp_enqueue_scripts', array( &$this, 'register_plugin_styles_min' ) );
-            } elseif ( $qts_options[ QTS_PREFIX . 'styles' ] == "inline" ) {
-                add_action( 'wp_print_styles', array( &$this, 'print_plugin_styles' ), 20 );
-            }
+            $this->set_options();
         }
         //FIXME: query vars are broken
         add_filter( 'query_vars', array( &$this, 'query_vars' ) );
