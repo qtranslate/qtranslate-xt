@@ -22,10 +22,10 @@ global $qtranslate_slug;
 $qtranslate_slug = new QtranslateSlug();
 
 add_action( 'qtranslate_edit_config', array( $qtranslate_slug, 'qtranslate_updated_settings' ) );
-// TODO: check if something to do when QTX deactivated
-//add_action( 'qtranslate_slug_deactivate',array($qtranslate_slug, 'deactivate'));
+add_action( 'qtranslate_slug_deactivate', array($qtranslate_slug, 'deactivate'));
 
-// plugin uninstall
+// plugin deactivation/uninstall
+register_deactivation_hook( QTRANSLATE_FILE, array($qtranslate_slug, 'deactivate'));
 register_uninstall_hook( QTRANSLATE_FILE, 'qts_uninstall' );
 
 // plugin init
