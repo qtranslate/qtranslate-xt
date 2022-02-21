@@ -48,7 +48,7 @@ class QtranslateSlug {
      * Slug in meta_key name in meta tables.
      * @var string
      */
-    private $meta_key = "_qts_slug_%s";
+    private $meta_key = QTS_META_PREFIX . "%s";
 
     /**
      * Array of translated versions of the current url.
@@ -365,7 +365,7 @@ class QtranslateSlug {
      * @return string the slug or empty if not found
      */
     public function get_slug( $id, $lang ) {
-        $slugArray = get_post_meta( $id, '_qts_slug_' . $lang );
+        $slugArray = get_post_meta( $id, QTS_META_PREFIX . $lang );
 
         return ! empty( $slugArray ) ? $slugArray[0] : "";
     }
