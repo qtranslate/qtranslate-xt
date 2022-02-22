@@ -49,22 +49,6 @@ function qts_get_url( $lang = false ) {
 }
 
 /**
- * Add a "Settings" link to the plugins.php page for Qtranslate Slug.
- */
-function qts_add_settings_link( $links, $file ) {
-
-    $this_plugin = plugin_basename( __FILE__ );
-    if ( $file == $this_plugin ) {
-        $settings_link = "<a href=\"options-general.php?page=" . QTS_PAGE_BASENAME . "\">" . __( 'Settings', 'qts' ) . '</a>';
-        array_unshift( $links, $settings_link );
-    }
-
-    return $links;
-}
-
-add_filter( 'plugin_action_links', 'qts_add_settings_link', 10, 2 );
-
-/**
  * Delete plugin stored data ( options and postmeta data ).
  */
 function qts_uninstall() {
