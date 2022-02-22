@@ -8,7 +8,6 @@ function qts_options_page_sections() {
     $sections               = array();
     $sections['post_types'] = __( 'Post types', 'qts' );
     $sections['taxonomies'] = __( 'Taxonomies', 'qts' );
-    $sections['styles']     = __( 'Styles', 'qts' );
 
     return $sections;
 }
@@ -31,36 +30,6 @@ function get_multi_txt_choices( $name = false ) {
     }
 
     return $choices;
-}
-
-/**
- * Define our form fields (settings) for displaying the default styles.
- *
- * @return array
- */
-function qts_options_page_styles() {
-    $options[] = array(
-        "section" => "styles",
-        "id"      => QTS_PREFIX . "styles",
-        "title"   => __( 'Change styles type', 'qts' ),
-        "desc"    => array(
-            __( "adds a file (qts-default.css) to the theme's header.", "qts" ),
-            __( "adds a minified ( slighlty faster) file (qts-default.min.css) to the theme's header.", "qts" ),
-            __( "prints the styles directly into the theme's header.", "qts" ),
-            __( "neither include not print the default style.", "qts" )
-        ),
-        "type"    => "multi-radio",
-        'class'   => 'qts-style',
-        "choices" => array(
-            __( "file", "qts" ),
-            __( "minified", "qts" ),
-            __( "inline", "qts" ),
-            __( "none", "qts" )
-        ),
-        "std"     => "file"
-    );
-
-    return $options;
 }
 
 /**

@@ -14,7 +14,6 @@ function qts_get_settings() {
     $output['qts_page_title']      = __( 'Qtranslate Slug options', 'qts' ); // the settings page title
     $output['qts_page_sections']   = qts_options_page_sections(); // the settings sections
     $output['qts_page_fields']     = qts_options_page_fields(); // the settings fields
-    $output['qts_page_styles']     = qts_options_page_styles(); // the settings for style
     $output['qts_contextual_help'] = qts_options_page_contextual_help(); // the contextual help
 
     return $output;
@@ -84,12 +83,6 @@ function qts_register_settings() {
             qts_create_settings_field( $option );
         }
     }
-    if ( ! empty( $settings_output['qts_page_styles'] ) ) {
-        // call the "add_settings_field" for each
-        foreach ( $settings_output['qts_page_styles'] as $styleoption ) {
-            qts_create_settings_field( $styleoption );
-        }
-    }
 }
 
 add_action( 'admin_init', 'qts_register_settings' );
@@ -103,12 +96,6 @@ function qts_settings_scripts() {
     wp_enqueue_style( 'qts_theme_settings_css', plugins_url( 'assets/css/qts-settings.css', dirname( __FILE__ ) ) );
     wp_enqueue_script( 'qts_theme_settings_js', plugins_url( 'assets/js/qts-settings.js', dirname( __FILE__ ) ), array( 'jquery' ) );
 
-    /**
-     * @deprecated
-     */
-    if ( $qtranslate_slug->check_old_data() ) {
-        wp_enqueue_script( 'qts_theme_settings_upgrade_js', plugins_url( 'assets/js/qts-settings-upgrade.js', dirname( __FILE__ ) ), array( 'jquery' ) );
-    }
 }
 
 add_action( 'admin_head', 'qts_settings_scripts' );
@@ -149,10 +136,6 @@ function qts_section_fn( $page_section = false ) {
         case 'taxonomies':
 
             echo "<p>" . __( 'For example, the taxonomy <kbd>category</kbd>, in Spanish would be displayed as <code>https://example.org/es/categoria/taxonomy-name/</code>. If you leave this blank will use the default option when you <a href="https://codex.wordpress.org/Function_Reference/register_taxonomy">registered</a> the taxonomy (if you previously setup a base permastruct for <u>categories</u> or <u>tags</u> in <a href="options-permalink.php">permalinks</a> page, these bases will be overwritten by the translated ones).', 'qts' ) . "</p>";
-            break;
-        case 'styles':
-
-            echo "<p>" . __( 'The default styles are very minimal, and you can include them or not.', 'qts' ) . "</p>\n";
             break;
     }
 }
@@ -343,11 +326,6 @@ function qts_show_settings_page() {
             // rewrite rules
             flush_rewrite_rules();
             ?>
-            <?php $css_path = plugin_dir_url( dirname( __FILE__ ) ) . 'assets/css/qts-default.css';
-            $file_styles    = file_get_contents( $css_path );
-            ?>
-            <p><?php _e( 'If you selected "none", copy and use these styles as you see fit:', 'qts' ); ?> </p>
-            <textarea name="textarea" rows="10" cols="80"><?php echo $file_styles; ?></textarea>;
             <p class="submit">
                 <input name="Submit" type="submit" class="button-primary"
                        value="<?php esc_attr_e( 'Save Changes', 'qts' ); ?>"/>
@@ -370,9 +348,7 @@ function qts_validate_options( $input ) {
 
     // get the settings sections array
     $settings_output = qts_get_settings();
-    $styleoptions    = $settings_output['qts_page_styles'];
-    $slugoptions     = $settings_output['qts_page_fields'];
-    $options         = array_merge( $styleoptions, $slugoptions );
+    $options         = $settings_output['qts_page_fields'];
 
     // run a foreach and switch on option type
     foreach ( $options as $option ):

@@ -130,39 +130,6 @@ class QtranslateSlug {
     }
 
     /**
-     * Register front end styles and enqueue.
-     */
-    public function register_plugin_styles() {
-        wp_register_style( 'qts_front_styles', plugins_url( '/assets/css/qts-default.css', dirname( __FILE__ ) ) );
-        wp_enqueue_style( 'qts_front_styles' );
-    }
-
-    /**
-     * Register minified front end styles and enqueue.
-     * 43LC: easier duplicating the function :|
-     */
-    public function register_plugin_styles_min() {
-        wp_register_style( 'qts_front_styles', plugins_url( '/assets/css/qts-default.min.css', dirname( __FILE__ ) ) );
-        wp_enqueue_style( 'qts_front_styles' );
-    }
-
-    /**
-     * Print front end styles.
-     */
-    public function print_plugin_styles() {
-        $css_path = dirname( __FILE__ ) . '/assets/css/qts-default.css';
-
-        if ( ! file_exists( $css_path ) || ! is_readable( $css_path ) ) {
-            return;
-        }
-        $default_css_file = file_get_contents( $css_path, FILE_USE_INCLUDE_PATH );
-        $css              = "<style media=\"screen\">\n";
-        $css              .= "$default_css_file\n";
-        $css              .= "</style>\n";
-        echo $css;
-    }
-
-    /**
      * Actions when deactivating the plugin.
      */
     public function deactivate() {
@@ -171,42 +138,6 @@ class QtranslateSlug {
         // regenerate rewrite rules in db
         remove_action( 'generate_rewrite_rules', array( &$this, 'modify_rewrite_rules' ) );
         $wp_rewrite->flush_rules();
-    }
-
-    /**
-     * Admin notice: update your old data.
-     */
-    function notice_update() {
-        global $current_screen;
-
-        if ( $current_screen->id != 'settings_page_qtranslate-slug-settings' ) {
-            echo "<div class=\"updated\">" . PHP_EOL;
-            echo "<p><strong>Qtranslate Slug:</strong></p>" . PHP_EOL;
-            printf( "<p>%s <a href=\"%s\" class=\"button\">%s</a></p>", __( 'Please update your old data to the new system.', 'qts' ), add_query_arg( array( 'page' => 'qtranslate-slug-settings' ), 'options-general.php' ), __( 'upgrade now', 'qts' ) ) . PHP_EOL;
-            echo "</div>" . PHP_EOL;
-        }
-    }
-
-    /**
-     * Checks if old table 'qtranslate_slug' exists and is not empty.
-     *
-     * @return object | false
-     */
-    public function check_old_data() {
-        global $wpdb;
-
-        if ( $this->old_data === false ) {
-            return false;
-        }
-        $table_name = $wpdb->get_var( "SHOW TABLES LIKE '{$wpdb->prefix}qtranslate_slug'" );
-        if ( ! empty( $table_name ) ) {
-            $this->old_data = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}qtranslate_slug" );
-        }
-        if ( empty( $table_name ) || empty( $this->old_data ) ) {
-            $this->old_data = false;
-        }
-
-        return $this->old_data;
     }
 
     function qtranslate_updated_settings() {
@@ -243,7 +174,6 @@ class QtranslateSlug {
         $this->default_language  = $q_config['default_language'];
 
         if ( is_admin() ) {
-            $this->check_old_versions();
             // add filters
             add_filter( 'qts_validate_post_slug', array( &$this, 'validate_post_slug' ), 0, 3 );
             add_filter( 'qts_validate_post_slug', array( &$this, 'unique_post_slug' ), 1, 3 );
@@ -268,15 +198,7 @@ class QtranslateSlug {
             }
         } else {
             add_filter( 'request', array( &$this, 'filter_request' ) );
-            // adds external style file
-            $qts_options = $this->get_options();
-            if ( ! isset( $qts_options[ QTS_PREFIX . 'styles' ] ) || $qts_options[ QTS_PREFIX . 'styles' ] == "file" ) {
-                add_action( 'wp_enqueue_scripts', array( &$this, 'register_plugin_styles' ) );
-            } elseif ( $qts_options[ QTS_PREFIX . 'styles' ] == "minified" ) {
-                add_action( 'wp_enqueue_scripts', array( &$this, 'register_plugin_styles_min' ) );
-            } elseif ( $qts_options[ QTS_PREFIX . 'styles' ] == "inline" ) {
-                add_action( 'wp_print_styles', array( &$this, 'print_plugin_styles' ), 20 );
-            }
+            $this->set_options();
         }
         //FIXME: query vars are broken
         add_filter( 'query_vars', array( &$this, 'query_vars' ) );
@@ -1844,15 +1766,6 @@ class QtranslateSlug {
         // regenerate rewrite rules in db
         add_action( 'generate_rewrite_rules', array( &$this, 'modify_rewrite_rules' ) );
         flush_rewrite_rules();
-    }
-
-    /**
-     * Actions when deactivating the plugin
-     */
-    private function check_old_versions() {
-        if ( $this->check_old_data() ) {
-            add_action( 'admin_notices', array( &$this, 'notice_update' ) );
-        }
     }
 
     /**
