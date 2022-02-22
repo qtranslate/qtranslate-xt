@@ -447,6 +447,13 @@ function qtranxf_detect_language_front( &$url_info ) {
 function qtranxf_setcookie_language( $lang, $cookie_name, $cookie_path ) {
     global $q_config;
 
+    // fix "Headers already sent" error in PHP
+    // 'setcookie' is function modifying the HTTP header (need to send a 'Set-Cookie:')
+    // sometimes wp_cron.php SEEMS to be the source of headers being sent prematurely
+    // so we avoid setting the cookie during 'wp_doing_cron' if the headers have
+    // already been sent (it's painless for the plugin to skip this)
+    if(headers_sent() && wp_doing_cron()) return;
+
     // SameSite only available with options API from PHP 7.3.0
     if ( version_compare( PHP_VERSION, '7.3.0' ) >= 0 ) {
         setcookie( $cookie_name, $lang, [
