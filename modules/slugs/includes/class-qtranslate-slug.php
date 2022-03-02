@@ -87,7 +87,7 @@ class QtranslateSlug {
         if ( ! $new_options || empty( $new_options ) ) {
             return;
         }
-        if ( count( $this->options ) != count( $new_options ) ) {
+        if ( $this->options == $new_options ) {
             return;
         }
         update_option( QTS_OPTIONS_NAME, $new_options );

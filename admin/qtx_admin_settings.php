@@ -279,11 +279,6 @@ class QTX_Admin_Settings {
                 $this->add_general_section();
                 $this->add_advanced_section();
                 $this->add_integration_section();
-
-                if ( $q_config['slugs_enabled'] ) {
-                    $this->add_slugs_section();
-                }
-
                 $this->add_troubleshooting_section();
                 // Allow to load additional services
                 do_action( 'qtranslate_configuration', $this->options_uri );
@@ -850,24 +845,6 @@ class QTX_Admin_Settings {
             </tr>
         </table>
         <?php $this->close_section( 'integration' );
-    }
-
-    private function add_slugs_section() {
-        global $q_config;
-        $this->open_section( 'slugs' ); ?>
-
-        <table class="form-table qtranxs-form-table" id="qtranxs_slugs_config">
-            <tr>
-                <th scope="row"><?php _e( 'Slugs translation', 'qtranslate' ) ?></th>
-                <td>
-                    <p class="qtranxs_explanation"><?php printf( __( 'Placeholder, settings for slugs translation are still available <a href="%s">here</a>.', 'qtranslate' ), get_admin_url() . 'options-general.php?page=qtranslate-slug-settings' ) ?></p>
-                </td>
-            </tr>
-        </table>
-
-
-        <?php
-        $this->close_section( 'slugs', false );
     }
 
     private function add_troubleshooting_section() {
