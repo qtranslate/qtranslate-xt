@@ -216,10 +216,15 @@ add_action( 'qtranslate_configuration', 'qts_show_settings_page');
  * @return array
  */
 function qts_validate_options( $input ) {
+    global $q_config;
+    //Initialize lookup array to be used to make sure slug for a specific language is unique
+    $slugs_lookup_array = array();
+    foreach ( $q_config['enabled_languages'] as $lang ) {
+        $slugs_lookup_array[ $lang ] = array();
+    }
     //TODO: errors are not displayed, earlier hook to be evaluated
     $errors   = &$q_config['url_info']['errors'];
     $valid_input = array();
-    $slugs_lookup_array =array();
 
     // collect only the values we expect and fill the new $valid_input array
     // i.e. whitelist our option IDs
@@ -230,7 +235,6 @@ function qts_validate_options( $input ) {
 
     // run a foreach and switch on option type
     foreach ( $options as $option ):
-        $slugs_lookup_array[ $option[ 'id' ] ] =false;
         switch ( $option['type'] ):
             case 'text':
                 //switch validation based on the class!
@@ -276,7 +280,6 @@ function qts_validate_options( $input ) {
                             case 'qts-slug':
                                 // strip all html tags and white-space.
                                 //allows slug1/slug2 structure
-                                $slugs_lookup_array[ $option[ 'id' ] ] =true;
                                 $exploded_slugs                    = explode( '/', $input[ $option['id'] . '|' . $v ] );
                                 $clean_slugs = array();
                                 foreach ($exploded_slugs as $exploded_slug){
@@ -285,8 +288,15 @@ function qts_validate_options( $input ) {
                                         $clean_slugs[]=$clean_slug;
                                     }
                                 }
-                                $input[ $option['id'] . '|' . $v ] = implode("/",$clean_slugs);
-                                $input[ $option['id'] . '|' . $v ] = addslashes( $input[ $option['id'] . '|' . $v ] );
+                                $new_slug = addslashes(implode("/",$clean_slugs));
+                                //avoid duplicate slugs per language
+                                while ( in_array( $new_slug, $slugs_lookup_array[ $v ] ) ) {
+                                    $new_slug = "$new_slug-2";
+                                }
+                                if ( !empty($new_slug)){
+                                    $slugs_lookup_array[ $v ][] = $new_slug;
+                                }
+                                $input[ $option['id'] . '|' . $v ] = $new_slug;
                                 break;
                             default:
                                 // strip all html tags and white-space.
