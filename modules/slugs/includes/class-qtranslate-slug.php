@@ -307,7 +307,6 @@ class QtranslateSlug {
 
         add_filter( 'single_term_title', 'qtranxf_useTermLib', 805 );
         add_filter( 'get_blogs_of_user', array( &$this, 'blog_names' ), 1 );
-        add_action( 'widgets_init', array( &$this, 'widget_init' ), 100 );
         // Add specific CSS class to body class based on current lang
         add_filter( 'body_class', array( $this, 'qts_body_class' ), 600, 1 );
 
@@ -1658,32 +1657,6 @@ class QtranslateSlug {
         }
 
         return $blogs;
-    }
-
-    /**
-     * Initialise the Language Widget selector.
-     */
-    public function widget_init() {
-
-        if ( class_exists( 'qTranslateWidget' ) ) {
-            unregister_widget( 'qTranslateWidget' );
-        }
-        if ( class_exists( 'mqTranslateWidget' ) ) {
-            unregister_widget( 'mqTranslateWidget' );
-        }
-        if ( class_exists( 'ppqTranslateWidget' ) ) {
-            unregister_widget( 'ppqTranslateWidget' );
-        }
-        register_widget( 'QtranslateSlugWidget' );
-    }
-
-    /**
-     * Remove some default dashboard Widgets on Desktop.
-     * @deprecated
-     */
-    function remove_dashboard_widgets() {
-        global $wp_meta_boxes;
-        unset( $wp_meta_boxes['dashboard']['side']['core']['dashboard_quick_press'] );
     }
 
     /**

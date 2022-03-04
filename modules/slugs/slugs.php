@@ -1,6 +1,5 @@
 <?php
 
-include_once( dirname( __FILE__ ) . '/includes/class-qtranslate-slug-widget.php' );
 include_once( dirname( __FILE__ ) . '/includes/class-qtranslate-slug.php' );
 
 if ( ! defined( "QTS_PREFIX" ) ) {
