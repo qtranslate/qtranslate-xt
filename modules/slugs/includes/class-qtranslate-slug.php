@@ -87,10 +87,11 @@ class QtranslateSlug {
         if ( ! $new_options || empty( $new_options ) ) {
             return;
         }
-        if ( count( $this->options ) != count( $new_options ) ) {
+        if ( $this->options == $new_options ) {
             return;
         }
         update_option( QTS_OPTIONS_NAME, $new_options );
+        flush_rewrite_rules();
         $this->options = $new_options;
     }
 
@@ -258,7 +259,7 @@ class QtranslateSlug {
         if ( is_404() ) {
             return;
         }
-        //taken from qtx but see our #341 ticket for clarification
+        // taken from qtx but see our #341 ticket for clarification
         echo '<link hreflang="x-default" href="' . esc_url( $this->get_current_url( $this->default_language ) ) . '" rel="alternate" />' . PHP_EOL;
         foreach ( $this->get_enabled_languages() as $language ) {
 
@@ -306,6 +307,7 @@ class QtranslateSlug {
         if ( ! empty( $parsed_text[ $lang ] ) ) {
             return $parsed_text[ $lang ];
         }
+
         // TODO: check what to do if lang not found in ML values
         return $text;
     }

@@ -9,9 +9,6 @@ if ( ! defined( "QTS_VERSION" ) ) {
 if ( ! defined( "QTS_PREFIX" ) ) {
     define( "QTS_PREFIX", '_qts_' );
 }
-if ( ! defined( "QTS_PAGE_BASENAME" ) ) {
-    define( 'QTS_PAGE_BASENAME', 'qtranslate-slug-settings' );
-}
 if ( ! defined( "QTS_OPTIONS_NAME" ) ) {
     define( "QTS_OPTIONS_NAME", 'qts_options' );
 }
