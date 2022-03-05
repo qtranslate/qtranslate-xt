@@ -203,7 +203,6 @@ function qts_show_settings_page() {
         }
     }
     QTX_Admin_Settings::close_section( 'slugs' );
-    flush_rewrite_rules();
 }
 
 add_action( 'qtranslate_configuration', 'qts_show_settings_page' );

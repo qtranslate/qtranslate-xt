@@ -91,6 +91,7 @@ class QtranslateSlug {
             return;
         }
         update_option( QTS_OPTIONS_NAME, $new_options );
+        flush_rewrite_rules();
         $this->options = $new_options;
     }
 
