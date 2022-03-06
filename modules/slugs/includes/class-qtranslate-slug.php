@@ -383,6 +383,7 @@ class QtranslateSlug {
         if ( ! empty( $parsed_text[ $lang ] ) ) {
             return $parsed_text[ $lang ];
         }
+
         // TODO: check what to do if lang not found in ML values
         return $text;
     }
