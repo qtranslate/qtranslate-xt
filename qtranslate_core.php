@@ -1118,20 +1118,6 @@ function qtranxf_convertURL( $url = '', $lang = '', $forceadmin = false, $showDe
     if ( empty( $lang ) ) {
         $lang = $q_config['language'];
     }
-    if ( empty( $url ) ) {
-        // TODO refactor this hack for qtranslate-slug! We might need a hook here.
-        if ( $q_config['url_info']['doing_front_end'] && function_exists( 'qts_get_url' ) && $q_config['url_mode'] != QTX_URL_QUERY ) {
-            // quick workaround, but need a permanent solution
-            $url = qts_get_url( $lang );
-            if ( ! empty( $url ) ) {
-                if ( $showDefaultLanguage && $q_config['hide_default_language'] && $lang == $q_config['default_language'] ) {
-                    $url = qtranxf_convertURL( $url, $lang, $forceadmin, true );
-                }
-
-                return $url;
-            }
-        }
-    }
     if ( ! $q_config['url_info']['doing_front_end'] && ! $forceadmin ) {
         return $url;
     }
@@ -1143,6 +1129,9 @@ function qtranxf_convertURL( $url = '', $lang = '', $forceadmin = false, $showDe
         $showDefaultLanguage = ! $q_config['hide_default_language'];
     }
     $showLanguage = $showDefaultLanguage || $lang != $q_config['default_language'];
+
+    $url = apply_filters( 'qtranslate_convert_url_before', $url, $lang );
+
     $complete     = qtranxf_get_url_for_language( $url, $lang, $showLanguage );
 
     return $complete;
