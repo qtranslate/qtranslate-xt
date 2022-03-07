@@ -186,7 +186,6 @@ class QtranslateSlug {
             add_action( 'admin_menu', array( &$this, 'add_slug_meta_box' ) );
             add_action( 'admin_menu', array( &$this, 'remove_defaultslug_meta_box' ) );
             add_action( 'save_post', array( &$this, 'save_postdata' ), 605, 2 );
-            add_action( 'delete_term', array( &$this, 'delete_term' ), 0, 3 );
             add_action( 'created_term', array( &$this, 'save_term' ), 605, 3 );
             add_action( 'edited_term', array( &$this, 'save_term' ), 605, 3 );
             add_action( 'admin_head', array( &$this, 'hide_slug_box' ), 900 );
@@ -194,9 +193,7 @@ class QtranslateSlug {
             add_action( 'init', array( &$this, 'taxonomies_hooks' ), 805 );
 
             add_action( 'admin_head', array( &$this, 'hide_quick_edit' ), 600 );
-            if ( ! defined( 'QTRANSLATE_FILE' ) ) {
-                add_action( 'admin_init', array( &$this, 'fix_nav_menu' ) );
-            }
+
         } else {
             add_filter( 'request', array( &$this, 'filter_request' ) );
             $this->set_options();
@@ -207,17 +204,17 @@ class QtranslateSlug {
 
         // remove from qtranslate the discouraged meta http-equiv, inline styles
         // (including flag URLs) and wrong hreflang links
-        remove_action( 'wp_head', 'qtranxf_header' );
-        remove_action( 'wp_head', 'qtranxf_wp_head' );
+        remove_action( 'wp_head', 'qtranxf_header' ); //TODO: check if it is needed, and why it is not in the main plugin in case
+        remove_action( 'wp_head', 'qtranxf_wp_head' ); //TODO: check if it is needed, and why it is not in the main plugin in case
 
         // add proper hreflang links
         add_action( 'wp_head', array( &$this, 'qtranslate_slug_header_extended' ) );
 
         // remove some Qtranslate filters
-        remove_filter( 'page_link', 'qtranxf_convertURL' );
-        remove_filter( 'post_link', 'qtranxf_convertURL' );
-        remove_filter( 'category_link', 'qtranxf_convertURL' );
-        remove_filter( 'tag_link', 'qtranxf_convertURL' );
+        remove_filter( 'page_link', 'qtranxf_convertURL' ); //TODO: check if it is needed
+        remove_filter( 'post_link', 'qtranxf_convertURL' ); //TODO: check if it is needed
+        remove_filter( 'category_link', 'qtranxf_convertURL' ); //TODO: check if it is needed
+        remove_filter( 'tag_link', 'qtranxf_convertURL' ); //TODO: check if it is needed
 
         //FIXME: query vars are broken
         add_filter( 'qts_permastruct', array( &$this, 'get_extra_permastruct' ), 0, 2 );
@@ -231,20 +228,7 @@ class QtranslateSlug {
         add_filter( 'single_term_title', 'qtranxf_useTermLib', 805 );
         add_filter( 'get_blogs_of_user', array( &$this, 'blog_names' ), 1 );
         // Add specific CSS class to body class based on current lang
-        add_filter( 'body_class', array( $this, 'qts_body_class' ), 600, 1 );
-
-        add_filter( 'nav_menu_attr_title', array( $this, 'qts_filter_attr_title' ), 0, 3 );
-    }
-
-    /**
-     * Filters menu link attribute.
-     *
-     * @param string $item_title The menu item title attribute.
-     *
-     * @return string
-     */
-    function qts_filter_attr_title( $item_title ) {
-        return $this->qts_quickuse( $item_title );
+        add_filter( 'body_class', array( $this, 'qts_body_class' ), 600, 1 ); //TODO: if it is needed, this should be moved to main plugin...
     }
 
     /**
@@ -290,25 +274,6 @@ class QtranslateSlug {
         $slugArray = get_post_meta( $id, QTS_META_PREFIX . $lang );
 
         return ! empty( $slugArray ) ? $slugArray[0] : "";
-    }
-
-    /**
-     * Get text in $lang, or in the current lang.
-     *
-     * @param string $text the whole text
-     * @param string $lang (optional) get the text in this language, or if empty, the current
-     *
-     * @return string the text in the required language
-     */
-    public function qts_quickuse( $text, $lang = '' ) {
-        $lang        = '' == $lang ? $this->current_lang : $lang;
-        $parsed_text = qtranxf_getSortedLanguages( $text ); // TODO: this call looks very wrong!
-        if ( ! empty( $parsed_text[ $lang ] ) ) {
-            return $parsed_text[ $lang ];
-        }
-
-        // TODO: check what to do if lang not found in ML values
-        return $text;
     }
 
     /**
@@ -1474,7 +1439,7 @@ class QtranslateSlug {
         $cur_screen = get_current_screen();
         if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )  // check autosave
              || ( ! current_user_can( 'edit_posts' ) ) // check permission
-             || ( isset( $cur_screen ) && $cur_screen->id === "nav-menus" )
+             || ( isset( $cur_screen ) && $cur_screen->id === "nav-menus" ) //TODO: check if this condition is really needed
         ) {
             return;
         }
@@ -1499,15 +1464,6 @@ class QtranslateSlug {
             delete_metadata( 'term', $term_id, $meta_name );
             update_metadata( 'term', $term_id, $meta_name, $meta_value );
         }
-    }
-
-    /**
-     * Deletes termmeta rows associated with the term.
-     */
-    public function delete_term( $term_id, $tt_id, $taxonomy ) {
-        global $wpdb;
-
-        $wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->termmeta WHERE term_id = %d", $term_id ) );
     }
 
     /**
@@ -1581,132 +1537,6 @@ class QtranslateSlug {
         }
 
         return $blogs;
-    }
-
-    /**
-     * Adds support for qtranslate nav menus.
-     */
-    public function fix_nav_menu() {
-        global $pagenow;
-
-        if ( $pagenow != 'nav-menus.php' ) {
-            return;
-        }
-        //FIXME: fix the nav menu box
-        //        wp_enqueue_script( 'nav-menu-query',  plugins_url( 'assets/js/qts-nav-menu-min.js' , dirname(__FILE__ ) ), 'nav-menu', '1.0' );
-        //        add_meta_box( 'qt-languages', __('Languages', 'qts'), array(&$this, 'nav_menu_meta_box'), 'nav-menus', 'side', 'default' );
-    }
-
-    /**
-     * Draws meta box for select language.
-     */
-    public function nav_menu_meta_box() {
-        global $q_config;
-        echo '<p>';
-        foreach ( $q_config['enabled_languages'] as $id => $language ) {
-            $checked = ( $language == $q_config['language'] ) ? ' checked="checked"' : '';
-            echo '<p style="margin:0 0 5px 0"><input type="radio" style="margin-right:5px" name="wa_qt_lang" value="' . $language . '" id="wa_gt_lang_' . $id . '" ' . $checked . '/>';
-            echo '<label for="wa_gt_lang_' . $id . '">';
-            echo '<img src="' . trailingslashit( WP_CONTENT_URL ) . $q_config['flag_location'] . $q_config['flag'][ $language ] . '"/>&nbsp;';
-            echo __( $q_config['language_name'][ $language ], 'qtranslate' );
-            echo '</label></p>';
-        }
-        echo '<p style="margin:0 0 5px 0"><input type="radio" style="margin-right:5px" name="wa_qt_lang" value="all" id="wa_gt_lang_999" />';
-        echo '<label for="wa_gt_lang_999">';
-        echo __( 'All languages', 'qts' );
-        echo '</label></p>';
-        echo '</p>';
-    }
-
-    /**
-     * Language select function for templating.
-     *
-     * @param $type (string) choose the type of menu: 'text', 'image', 'both', 'dropdown'
-     * @param $args (array) some args for draw the menu: array( 'id', 'class', 'short' );
-     */
-    public function language_menu( $type = "text", $args = array() ) {
-        global $q_config;
-
-        // default arguments
-        $defaults = array(
-            'id'    => "qts-lang-menu",
-            'class' => "qts-lang-menu",
-            'short' => false
-        );
-        $args     = wp_parse_args( $args, $defaults );
-
-        $languages = qtranxf_getSortedLanguages();
-
-        // every type
-        switch ( $type ) {
-            case 'image':
-            case 'text':
-            case 'both':
-                $baseurl       = dirname( plugins_url() );
-                $num_languages = count( $languages );
-                echo "<ul id=\"{$args['id']}\" class=\"qts_type_{$type} {$args['class']}\">" . PHP_EOL;
-
-                foreach ( $languages as $index => $lang ):
-                    $url = $this->get_current_url( $lang );
-                    // 43LC: hack to play nice with qtranslate-x
-                    if ( $this->default_language === $lang ) {
-
-                        $url = qtranxf_convertURL( '', $lang, false, true );
-                    }
-                    $item_class = array();
-                    if ( (string) $q_config['language'] == (string) $lang ) {
-                        $item_class[] = 'current-menu-item';
-                    }
-                    if ( $index == ( $num_languages - 1 ) ) {
-                        $item_class[] = 'last-child';
-                    }
-
-                    $item_class = ' class="qts_lang_item ' . implode( ' ', $item_class ) . '"';
-
-                    $language_name = ( $args['short'] ) ? $lang : $q_config['language_name'][ $lang ];
-
-                    if ( $type == 'image' ) {
-                        $link_class   = " class=\"qtrans_flag qtrans_flag_$lang\"";
-                        $link_content = "<span style=\"display:none\">$language_name</span>";
-                    } else if ( $type == 'both' ) {
-                        $link_class   = " class=\"qts_both qtrans_flag qtrans_flag_$lang\"";
-                        $link_content = "$language_name";
-                    } else {
-                        $link_class   = '';
-                        $link_content = $language_name;
-                        $link_flag    = '';
-                    }
-                    if ( $type == 'image' || $type == 'both' ) {
-                        $link_flag_url = $baseurl . '/' . $q_config['flag_location'] . $q_config['flag'][ $lang ];
-
-                        //TODO: add i18n for alt attribute
-                        //43LC: hardcoding height and width
-                        $link_flag = "<img width=\"18\" height=\"12\" src=\"$link_flag_url\" alt=\"$language_name\" />";
-                    }
-                    echo "<li $item_class><a href=\"$url\" lang=\"$lang\" hreflang=\"$lang\"$link_class>$link_flag$link_content</a></li>" . PHP_EOL;
-                endforeach;
-
-                echo "</ul>" . PHP_EOL;
-                break;
-
-            case 'dropdown':
-                echo "<select id=\"{$args['id']}\" class=\"{$args['class']}\" onchange=\"window.location.href=this.options[this.selectedIndex].value\">" . PHP_EOL;
-
-                foreach ( $languages as $lang ):
-                    $url = $this->get_current_url( $lang );
-
-                    $item_class = '';
-                    if ( (string) $q_config['language'] == (string) $lang ) {
-                        $item_class = 'selected="selected"';
-                    }
-
-                    $language_name = ( $args['short'] ) ? $lang : $q_config['language_name'][ $lang ];
-                    echo "<option value=\"$url\" $item_class>$language_name</option>" . PHP_EOL;
-                endforeach;
-
-                echo "</select>" . PHP_EOL;
-                break;
-        }
     }
 
     /**

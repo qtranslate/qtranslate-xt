@@ -29,15 +29,6 @@ add_action( 'plugins_loaded', array( $qtranslate_slug, 'init' ) );
 
 ////////////////////////////////////////////////////////////////////////////////////////
 
-/**
- * Language Selector Code for templating.
- */
-function qts_language_menu( $type = "text", $args = array() ) {
-    global $qtranslate_slug;
-
-    $qtranslate_slug->language_menu( $type, $args );
-}
-
 function qts_get_url( $lang = false ) {
     global $qtranslate_slug;
 
