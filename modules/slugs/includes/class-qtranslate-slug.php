@@ -164,8 +164,6 @@ class QtranslateSlug {
             return;
         }
 
-        load_plugin_textdomain( 'qts', false, basename( plugin_dir_path( dirname( __FILE__ ) ) ) . '/languages' );
-
         if ( is_admin() ) {
             include_once( dirname( __FILE__ ) . '/qtranslate-slug-settings.php' );
         }
@@ -917,6 +915,7 @@ class QtranslateSlug {
      *
      * @return string the link translated
      */
+    //TODO: review this function vs get_term_link(), e.g. checks and error handling may be unneeded here
     public function term_link( $link, $term, $taxonomy ) {
         global $wp_rewrite;
 
@@ -934,7 +933,7 @@ class QtranslateSlug {
         }
 
         if ( ! is_object( $term ) ) {
-            $term = new WP_Error( 'invalid_term', __( 'Empty Term', 'qts' ) );
+            $term = new WP_Error( 'invalid_term', __( 'Empty Term' ) );
         }
 
         if ( is_wp_error( $term ) ) {
@@ -1113,17 +1112,17 @@ class QtranslateSlug {
             $context  = apply_filters( "qts_admin_meta_box_context", "side" );
             $priority = apply_filters( "qts_admin_meta_box_priority", "high" );
 
-            add_meta_box( 'qts_sectionid', __( 'Slug QTS', 'qts' ), array(
+            add_meta_box( 'qts_sectionid', __( 'Slugs per language', 'qtranslate' ), array(
                 &$this,
                 'draw_meta_box'
             ), 'post', $context, $priority );
-            add_meta_box( 'qts_sectionid', __( 'Slug  QTS', 'qts' ), array(
+            add_meta_box( 'qts_sectionid', __( 'Slugs per language', 'qtranslate' ), array(
                 &$this,
                 'draw_meta_box'
             ), 'page', $context, $priority );
 
             foreach ( get_post_types( array( '_builtin' => false ) ) as $ptype ) {
-                add_meta_box( 'qts_sectionid', __( 'Slug  QTS', 'qts' ), array(
+                add_meta_box( 'qts_sectionid', __( 'Slugs per language', 'qtranslate' ), array(
                     &$this,
                     'draw_meta_box'
                 ), $ptype, $context, $priority );
@@ -1322,7 +1321,7 @@ class QtranslateSlug {
                 $value = ( $slug ) ? htmlspecialchars( $slug, ENT_QUOTES ) : '';
 
                 echo "<tr class=\"form-field form-required\">" . PHP_EOL;
-                echo "<th scope=\"row\"><label for=\"qts_{$lang}_slug\">" . sprintf( __( 'Slug (%s)', 'qts' ), $q_config['language_name'][ $lang ] ) . "</label></th>" . PHP_EOL;
+                echo "<th scope=\"row\"><label for=\"qts_{$lang}_slug\">" . sprintf( __( 'Slug' ) . ' (%s)', $q_config['language_name'][ $lang ] ) . "</label></th>" . PHP_EOL;
                 echo "<td><input type=\"text\" name=\"qts_{$lang}_slug\" value=\"" . urldecode( $value ) . "\" /></td></tr>" . PHP_EOL;
 
             }
@@ -1341,7 +1340,7 @@ class QtranslateSlug {
 
                 $value = ( $slug ) ? htmlspecialchars( $slug, ENT_QUOTES ) : '';
 
-                echo "<label for=\"qts_{$lang}_slug\">" . sprintf( __( 'Slug (%s)', 'qts' ), $q_config['language_name'][ $lang ] ) . "</label>" . PHP_EOL;
+                echo "<label for=\"qts_{$lang}_slug\">" . sprintf( __( 'Slug' ) . ' (%s)', $q_config['language_name'][ $lang ] ) . "</label>" . PHP_EOL;
                 echo "<input type=\"text\" name=\"qts_{$lang}_slug\" value=\"" . urldecode( $value ) . "\" aria-required=\"true\">" . PHP_EOL;
                 echo '</div>';
             }
@@ -1510,8 +1509,8 @@ class QtranslateSlug {
         unset( $columns['slug'] );
         unset( $columns['posts'] );
 
-        $columns['qts-slug'] = __( 'Slug', 'qts' );
-        $columns['posts']    = __( 'Posts', 'qts' );
+        $columns['qts-slug'] = __( 'Slug' );
+        $columns['posts']    = __( 'Posts' );
 
         return $columns;
     }
@@ -1750,6 +1749,7 @@ class QtranslateSlug {
      *
      * @return string
      */
+    //TODO: $link seems to be unused (always false), to be removed and function cleaned up
     private function get_category_parents( $id, $link = false, $separator = '/', $nicename = false, $visited = array() ) {
         $chain  = '';
         $parent = get_category( $id );
