@@ -2020,7 +2020,7 @@ msgstr ""
 #: modules/slugs/includes/class-qtranslate-slug.php:1512
 #: modules/slugs/includes/qtranslate-slug-settings-options.php:25
 msgid "Slug"
-msgstr ""
+msgstr "Enlace permanente"
 
 #: modules/slugs/includes/class-qtranslate-slug.php:1513
 msgid "Posts"
@@ -2033,11 +2033,11 @@ msgstr ""
 
 #: modules/slugs/includes/qtranslate-slug-settings-options.php:9
 msgid "Post types"
-msgstr ""
+msgstr "Post types"
 
 #: modules/slugs/includes/qtranslate-slug-settings-options.php:10
 msgid "Taxonomies"
-msgstr ""
+msgstr "Taxonomias"
 
 #: modules/slugs/includes/qtranslate-slug-settings.php:27
 msgid ""

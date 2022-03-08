@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: qTranslate-X 3.4.6.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-03-08 19:56+0100\n"
-"PO-Revision-Date: 2022-03-09 00:04+0100\n"
+"PO-Revision-Date: 2022-03-09 00:23+0100\n"
 "Last-Translator: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "Language-Team: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "Language: pt_PT\n"
@@ -2253,24 +2253,24 @@ msgstr ""
 #: modules/slugs/includes/class-qtranslate-slug.php:1512
 #: modules/slugs/includes/qtranslate-slug-settings-options.php:25
 msgid "Slug"
-msgstr ""
+msgstr "URL"
 
 #: modules/slugs/includes/class-qtranslate-slug.php:1513
 msgid "Posts"
-msgstr ""
+msgstr "Artigos"
 
 #: modules/slugs/includes/class-qtranslate-slug.php:1776
 #, php-format
 msgid "View all posts in %s"
-msgstr ""
+msgstr "Ver todos os artigos em %s"
 
 #: modules/slugs/includes/qtranslate-slug-settings-options.php:9
 msgid "Post types"
-msgstr ""
+msgstr "Tipos de artigos"
 
 #: modules/slugs/includes/qtranslate-slug-settings-options.php:10
 msgid "Taxonomies"
-msgstr ""
+msgstr "Taxonomies"
 
 #: modules/slugs/includes/qtranslate-slug-settings.php:27
 msgid ""
