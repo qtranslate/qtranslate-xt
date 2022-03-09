@@ -35,7 +35,7 @@ function get_multi_txt_choices() {
  * @return array
  */
 function qts_options_page_fields() {
-    $post_types = get_post_types( array( '_builtin' => false, 'public' => true ), 'objects' );
+    $post_types = get_post_types( array( 'public' => true ), 'objects' );
 
     $options = array();
     foreach ( $post_types as $post_type ) {
@@ -47,15 +47,27 @@ function qts_options_page_fields() {
         $options[] = qts_options_page_build_slug_fields( $taxonomy, "taxonomies", "taxonomy_" );
     }
 
-    return $options;
+    return array_filter($options);
 }
 
 function qts_options_page_build_slug_fields( $object, $target_section, $id_prefix ) {
+    if ( ! is_array($object->rewrite) ) {
+        if ( $object->rewrite ){
+            $slug = $object->name;
+        }else{
+            return array();
+        }
+    } else if (array_key_exists( 'slug', $object->rewrite ) ) {
+        $slug = ltrim( $object->rewrite['slug'], "/" );
+    } else {
+        $slug = $object->name;
+    }
+        
     return array(
         "section" => $target_section,
         "id"      => QTS_PREFIX . $id_prefix . $object->name,
         "title"   => qtranxf_use( qtranxf_getLanguage(), $object->label ),
-        "desc"    => sprintf( '<code>https://example.org/<u>%s</u>/some-%s/</code>', array_key_exists( 'slug', $object->rewrite ) ? ltrim( $object->rewrite['slug'], "/" ) : $object->name, $object->name ),
+        "desc"    => sprintf( '<code>https://example.org/<u>%s</u>/some-%s/</code>', $slug, $object->name ),
         'class'   => 'qts-slug', // used in qts_validate_options. TODO: cleaner way to be considered...
         "type"    => "multi-text",
         "choices" => get_multi_txt_choices(),
