@@ -108,17 +108,15 @@ class QtranslateSlug {
     }
 
     /**
-     * Check if exists qtranslate and do the installation, support multisite.
+     * Do the installation, support multisite.
      */
     public function install() {
-        global $wpdb;
-
-        if ( function_exists( 'is_multisite' ) && is_multisite() ) {
-            if ( isset( $_GET['networkwide'] ) && ( $_GET['networkwide'] == 1 ) ) {
-                $old_blog = $wpdb->blogid;
-                $blogids  = $wpdb->get_col( $wpdb->prepare( "SELECT blog_id FROM $wpdb->blogs" ) );
-                foreach ( $blogids as $blog_id ) {
-                    switch_to_blog( $blog_id );
+        if ( is_multisite() ) {
+            if ( is_plugin_active_for_network(plugin_basename(QTRANSLATE_FILE)) ) {
+                $old_blog = get_current_blog_id();
+                $blogs  = wp_get_sites();
+                foreach ( $blogs as $blog ) {
+                    switch_to_blog( $blog[blog_id]);
                     $this->activate();
                 }
                 switch_to_blog( $old_blog );
