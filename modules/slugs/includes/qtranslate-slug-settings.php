@@ -389,14 +389,15 @@ function get_multi_txt_choices() {
  * @return array
  */
 function qts_options_page_fields() {
-    $post_types = get_post_types( array( 'public' => true ), 'objects' );
+    global $qtranslate_slug;
+    $post_types = $qtranslate_slug->get_public_post_types();
 
     $options = array();
     foreach ( $post_types as $post_type ) {
         $options[] = qts_options_page_build_slug_fields( $post_type, "post_types", "post_type_" );
     }
 
-    $taxonomies = get_taxonomies( array( 'public' => true, 'show_ui' => true ), 'object' );
+    $taxonomies = $qtranslate_slug->get_public_taxonomies();
     foreach ( $taxonomies as $taxonomy ) {
         $options[] = qts_options_page_build_slug_fields( $taxonomy, "taxonomies", "taxonomy_" );
     }
@@ -405,13 +406,7 @@ function qts_options_page_fields() {
 }
 
 function qts_options_page_build_slug_fields( $object, $target_section, $id_prefix ) {
-    if ( ! is_array($object->rewrite) ) {
-        if ( $object->rewrite ){
-            $slug = $object->name;
-        }else{
-            return array();
-        }
-    } else if (array_key_exists( 'slug', $object->rewrite ) ) {
+    if ( is_array($object->rewrite) && array_key_exists( 'slug', $object->rewrite ) ) {
         $slug = ltrim( $object->rewrite['slug'], "/" );
     } else {
         $slug = $object->name;
