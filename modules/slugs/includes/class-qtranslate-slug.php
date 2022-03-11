@@ -1476,9 +1476,10 @@ class QtranslateSlug {
         echo "<script type=\"text/javascript\">\n// <![CDATA[\r\n";
         echo "
 		var slugforms = jQuery('#qts_term_slugs').html();
-		jQuery('#slug').parent().html(slugforms)\n;
-		console.log(slugforms);
-		
+                if ( jQuery('#slug').length ) {
+                    jQuery('#slug').parent().html(slugforms);
+                    jQuery('#qts_term_slugs').remove();
+                }
 		";
         echo "// ]]>\n</script>\n";
     }
@@ -1507,11 +1508,7 @@ class QtranslateSlug {
 
     public function taxonomy_columns( $columns ) {
         unset( $columns['slug'] );
-        unset( $columns['posts'] );
-
         $columns['qts-slug'] = __( 'Slug' );
-        $columns['posts']    = __( 'Posts' );
-
         return $columns;
     }
 
