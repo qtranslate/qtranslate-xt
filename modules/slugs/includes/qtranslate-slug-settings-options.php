@@ -6,8 +6,8 @@
  */
 function qts_options_page_sections() {
     $sections               = array();
-    $sections['post_types'] = __( 'Post types', 'qts' );
-    $sections['taxonomies'] = __( 'Taxonomies', 'qts' );
+    $sections['post_types'] = __( 'Post types', 'qtranslate' );
+    $sections['taxonomies'] = __( 'Taxonomies', 'qtranslate' );
 
     return $sections;
 }
@@ -22,7 +22,7 @@ function get_multi_txt_choices() {
 
     $choices = array();
     foreach ( $q_config['enabled_languages'] as $lang ) {
-        $label     = sprintf( __( 'Slug', 'qts' ) . ' (%s)', $q_config['language_name'][ $lang ] );
+        $label     = sprintf( __( 'Slug' ) . ' (%s)', $q_config['language_name'][ $lang ] );
         $choices[] = "$label|$lang"; // prints: 'Slug (English)|en'
     }
 
