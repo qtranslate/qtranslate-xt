@@ -111,18 +111,16 @@ class QtranslateSlug {
      * Do the installation, support multisite.
      */
     public function install() {
-        if ( is_multisite() ) {
-            if ( is_plugin_active_for_network(plugin_basename(QTRANSLATE_FILE)) ) {
-                $old_blog = get_current_blog_id();
-                $blogs  = wp_get_sites();
-                foreach ( $blogs as $blog ) {
-                    switch_to_blog( $blog[blog_id]);
-                    $this->activate();
-                }
-                switch_to_blog( $old_blog );
-
-                return;
+        if ( is_plugin_active_for_network(plugin_basename(QTRANSLATE_FILE)) ) {
+            $old_blog = get_current_blog_id();
+            $blogs  = get_sites();
+            foreach ( $blogs as $blog ) {
+                switch_to_blog( $blog->blog_id);
+                $this->activate();
             }
+            switch_to_blog( $old_blog );
+
+            return;
         }
 
         $this->activate();
