@@ -1,11 +1,11 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: qTranslate-X 3.4.6.5\n"
+"Project-Id-Version: qtranslate-xt 3.11.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-03-08 19:56+0100\n"
-"PO-Revision-Date: 2022-03-09 00:07+0100\n"
-"Last-Translator: Simone Montrucchio <simonemontrucchio@users.github.com>\n"
-"Language-Team: ITALIAN <IT@li.org>\n"
+"PO-Revision-Date: 2022-03-09 16:05+0100\n"
+"Last-Translator: Giovanni Cascione <https://github.com/spleen1981>\n"
+"Language-Team: qtranslate-xt\n"
 "Language: it_IT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -31,7 +31,7 @@ msgstr "Impossibile trovare il file \"%s\" elencato nell'opzione \"%s\"."
 #: admin/qtx_admin_settings.php:767 admin/qtx_admin_settings.php:787
 #: admin/qtx_admin_settings.php:794 admin/qtx_admin_settings.php:798
 msgid "Configuration Files"
-msgstr "Files di Configurazione"
+msgstr "File di Configurazione"
 
 # @ qtranslate
 #: admin/qtx_activation_hook.php:114
@@ -80,7 +80,7 @@ msgstr "Per favore correggi l'errore di sintassi nel file."
 #: admin/qtx_activation_hook.php:175 admin/qtx_activation_hook.php:416
 #, php-format
 msgid "Deprecated configuration key(s) in %s:"
-msgstr ""
+msgstr "Configurazione chiavi deprecata in %s:"
 
 #: admin/qtx_activation_hook.php:177 admin/qtx_activation_hook.php:418
 #, php-format
@@ -88,6 +88,8 @@ msgid ""
 "This configuration will become incompatible in next releases. For more "
 "information, see: %s."
 msgstr ""
+"Questa configurazione diventerà incompatibile nelle prossime versioni. Per "
+"maggiori informazioni, vedi %s."
 
 # @ qtranslate
 #: admin/qtx_activation_hook.php:762
@@ -108,17 +110,19 @@ msgid ""
 "the site configuration. It might be a good idea to %sreview the changes%s in "
 "the list of configuration files."
 msgstr ""
+"L'opzione \"%s\" del plugin %s è stata modificata automaticamente dopo i "
+"cambiamenti recenti nella configurazione del sito. Potrebbe essere una buona "
+"idea %scontrollare le modifiche%s nella lista dei file di configurazione."
 
 #: admin/qtx_activation_hook.php:873
 #, php-format
 msgid "Review Option \"%s\""
-msgstr ""
+msgstr "Controlla opzione \"%s\""
 
 # @ qtranslate
 #: admin/qtx_activation_hook.php:875
-#, fuzzy
 msgid "Read Integration Guide"
-msgstr "Leggi la Guida di Attivazione"
+msgstr "Leggi la Guida di Integrazione"
 
 # @ qtranslate
 #: admin/qtx_activation_hook.php:876 admin/qtx_activation_hook.php:892
@@ -143,6 +147,8 @@ msgid ""
 "<b>Caution!</b> The block editor (Gutenberg) is supported only recently in "
 "%s with some limitations. Use at your own discretion!"
 msgstr ""
+"<b>Attenzione!</b> Il supporto dell'editor a blocchi (Gutenberg) è molto "
+"recente in %s ed è soggetto a limitazioni. Usare a propria discrezione!"
 
 #: admin/qtx_activation_hook.php:909
 #, php-format
@@ -150,6 +156,9 @@ msgid ""
 "Currently only the single language edit mode is supported. For more details, "
 "please read carefully our <a href=\"%s\">Gutenberg FAQ</a>."
 msgstr ""
+"Attualmente solo la modalità di modifica in linguaggio singolo è supportata. "
+"Per maggiori dettagli, per favore leggi attentamente le nostre <a href=\"%s"
+"\">Gutenberg FAQ</a>."
 
 #: admin/qtx_activation_hook.php:913
 #, php-format
@@ -157,6 +166,8 @@ msgid ""
 "It is recommended to install the <a href=\"%s\">%s</a> in your <a href=\"%s"
 "\">plugins</a>."
 msgstr ""
+"Si raccomanda l'installazione di <a href=\"%s\">%s</a> nei tuoi <a href=\"%s"
+"\">plugins</a>."
 
 # @ qtranslate
 #: admin/qtx_activation_hook.php:941 admin/qtx_activation_hook.php:960
@@ -228,11 +239,11 @@ msgstr "Disattivare %s"
 #: admin/qtx_admin.php:744 qtranslate_frontend.php:270 qtranslate_widget.php:55
 #, php-format
 msgid "%s:"
-msgstr ""
+msgstr "%s:"
 
 #: admin/qtx_activation_hook.php:991 admin/qtx_admin.php:734
 msgid "Error"
-msgstr ""
+msgstr "Errore"
 
 # @ qtranslate
 #: admin/qtx_admin.php:340
@@ -242,24 +253,24 @@ msgstr "Impossibile trovare il file di script \"%s\" per gestire \"%s\"."
 
 #: admin/qtx_admin.php:390
 msgid "Show multilingual content in "
-msgstr ""
+msgstr "Mostra contenuto multilingua in "
 
 #: admin/qtx_admin.php:421
 msgid "Fill empty multilingual fields with content from other language"
-msgstr ""
+msgstr "Riempi i campi multilingua vuoti con il contenuto da altre lingue"
 
 #: admin/qtx_admin.php:423
 msgid "Choose language to copy multilingual content from"
-msgstr ""
+msgstr "Scegliere la lingua da cui copiare il contenuto multilingua"
 
 #: admin/qtx_admin.php:425
 msgid "Copy from"
-msgstr ""
+msgstr "Copia da"
 
 # @ qtranslate
 #: admin/qtx_admin.php:599
 msgid "Language Management"
-msgstr "Gestione Linguaggi"
+msgstr "Gestione linguaggi"
 
 # @ qtranslate
 #: admin/qtx_admin.php:599 admin/qtx_admin_settings.php:260
@@ -270,7 +281,7 @@ msgstr "Lingue"
 # @ qtranslate
 #: admin/qtx_admin.php:606
 msgid "Language Menu"
-msgstr "Menu Lingua"
+msgstr "Menu lingua"
 
 # @ qtranslate
 #: admin/qtx_admin.php:644
@@ -306,6 +317,8 @@ msgid ""
 "The field \"%s\" of inserted menu item allows additional configuration "
 "described in our %sWiki%s."
 msgstr ""
+"Il campo \"%s\" dell'elemento menu inserito permette configurazioni "
+"aggiuntive descritte nella nostra %sWiki%s."
 
 # @ qtranslate
 #: admin/qtx_admin.php:658
@@ -315,11 +328,11 @@ msgstr "Aggiungi al Menu"
 # @ qtranslate
 #: admin/qtx_admin.php:668
 msgid "Language Switcher"
-msgstr "Cambia Lingua"
+msgstr "Cambia lingua"
 
 #: admin/qtx_admin.php:744
 msgid "Warning"
-msgstr ""
+msgstr "Avviso"
 
 # @ qtranslate
 #: admin/qtx_admin.php:781
@@ -330,7 +343,7 @@ msgstr "Grazie per usare il plugin %s!"
 #: admin/qtx_admin.php:790
 #, php-format
 msgid "Plugin Version %s"
-msgstr ""
+msgstr "Versione plugin %s"
 
 #: admin/qtx_admin.php:801
 #, php-format
@@ -338,7 +351,7 @@ msgctxt ""
 "%s is a version number of a plugin. It is a shortcut for \"Get version %s of "
 "such a such plugin.\""
 msgid "Get %s"
-msgstr ""
+msgstr "Aggiorna a %s"
 
 #: admin/qtx_admin_modules.php:112
 #, php-format
@@ -346,6 +359,8 @@ msgid ""
 "Modules status undefined in %s. Please deactivate it and reactivate it again "
 "from the plugins page."
 msgstr ""
+"Stato del modulo non definito in %s. Per favore disattivalo e riattivalo "
+"dalla pagina dei plugin."
 
 #: admin/qtx_admin_modules.php:133
 #, php-format
@@ -353,34 +368,36 @@ msgid ""
 "The plugin \"%s\" is incompatible with the module \"%s\" of %s. Please "
 "disable it."
 msgstr ""
+"Il plugin \"%s\" non è compatibile con il modulo \"%s\" di %s. Per favore "
+"disabilitalo."
 
 #: admin/qtx_admin_modules.php:134
 #, php-format
 msgid "Deactivate plugin %s"
-msgstr ""
+msgstr "Disattiva pligin %s"
 
 #: admin/qtx_admin_modules.php:144
 #, php-format
 msgid "The following modules are now active in %s:"
-msgstr ""
+msgstr "I seguenti moduli sono ora attivi in %s:"
 
 #: admin/qtx_admin_modules.php:164 admin/qtx_admin_modules.php:165
 #: admin/qtx_admin_modules.php:176
 msgid "Active"
-msgstr ""
+msgstr "Attivo"
 
 #: admin/qtx_admin_modules.php:170 admin/qtx_admin_modules.php:171
 #: admin/qtx_admin_modules.php:184
 msgid "Inactive"
-msgstr ""
+msgstr "Inattivo"
 
 #: admin/qtx_admin_modules.php:177
 msgid "Blocked"
-msgstr ""
+msgstr "Bloccato"
 
 #: admin/qtx_admin_modules.php:183
 msgid "Undefined"
-msgstr ""
+msgstr "Non definito"
 
 # @ qtranslate
 #: admin/qtx_admin_options_update.php:45
@@ -404,7 +421,7 @@ msgstr "La lingua deve avere un nome!"
 
 #: admin/qtx_admin_options_update.php:72 admin/qtx_admin_options_update.php:214
 msgid "Invalid language code!"
-msgstr ""
+msgstr "Codice lingua non valido!"
 
 # @ qtranslate
 #: admin/qtx_admin_options_update.php:82 admin/qtx_admin_options_update.php:87
@@ -417,6 +434,8 @@ msgid ""
 "The new language properties have been saved. If you think these properties "
 "should be the preset default, please %ssend email%s to the development team."
 msgstr ""
+"Le proprietà della nuova lingua sono state salvate. Se pensi dovrebbero "
+"essere di default, per favore  %smanda una mail%s al team di sviluppo."
 
 # @ qtranslate
 #: admin/qtx_admin_options_update.php:162
@@ -464,6 +483,9 @@ msgid ""
 "will have to be adjusted manually as needed, since there is no common way to "
 "automate setting the default language otherwise."
 msgstr ""
+"I tipi di post diversi da \"articoli\" e \"pagine\", così come le bozze, "
+"dovranno essere modificati manualmente se necessario, non essendoci un modo "
+"comune di automatizzarne l'impostazione di lingua predefinita."
 
 # @ qtranslate
 #: admin/qtx_admin_options_update.php:239
@@ -560,7 +582,7 @@ msgstr "torna alla pagina di configurazione"
 
 #: admin/qtx_admin_settings.php:60
 msgid "Language Management (qTranslate-XT Configuration)"
-msgstr ""
+msgstr "Gestione linguaggi (configurazione qTranslate-XT)"
 
 # @ qtranslate
 #: admin/qtx_admin_settings.php:62
@@ -584,6 +606,8 @@ msgid ""
 "Language %sISO 639 code%s, two-letter (ISO 639-1) or three-letter (ISO 639-2 "
 "and 639-3), lower case. (Examples: en, fr, zh, nds)"
 msgstr ""
+"Lingua %scodice ISO 639%s, due lettere (ISO 639-1) o tre lettere (ISO 639-2 "
+"and 639-3), minuscolo. (Esempio: en, fr, zh, nds)"
 
 #: admin/qtx_admin_settings.php:112
 msgid ""
@@ -593,6 +617,11 @@ msgid ""
 "entries for this language are made, it is difficult to change it, please "
 "make a careful decision."
 msgstr ""
+"Il codice lingua viene utilizzato per i tag dei linguaggi e per gli URL. Il "
+"codice può essere scelto arbitrariamente dall'owner del sito, ma è "
+"preferibile usare quelli già comunemente accettati, se disponibili. Una "
+"volta definito il codice lingua e usato per i contenuti è difficile "
+"cambiarlo, quindi sceglilo attentamente."
 
 # @ qtranslate
 #: admin/qtx_admin_settings.php:116 admin/qtx_admin_settings.php:139
@@ -643,7 +672,7 @@ msgstr "Codice locale PHP e Wordpress per la lingua. (Esempio: it_IT)"
 # @ qtranslate
 #: admin/qtx_admin_settings.php:162
 msgid "You will need to install the .mo file for this language."
-msgstr "Dovrai installare il file .mo per questa lingua"
+msgstr "Dovrai installare il file .mo per questa lingua."
 
 # @ qtranslate
 #: admin/qtx_admin_settings.php:166
@@ -737,6 +766,14 @@ msgid ""
 "names that fit your grammar rules. Please, %scontact the development team%s, "
 "if you decide to modify \"%s\" files."
 msgstr ""
+"I nomi delle lingue sostituiti nella lista delle lingue disponibili sono "
+"mostrati nella lingua attiva. La forma dei nomi delle lingue è usata così "
+"come definita in %s, e potrebbe non rispettare le regole grammaticali della "
+"tua lingua. È quindi consigliabile usare le virgolette in questo messaggio "
+"in questo modo \"%s\". In alternativa puoi modificare i file \"%s\" nella "
+"cartella \"%s\" con nomi che rispettano le tue regole grammaticali. Per "
+"favore %scontatta il team di sviluppo%s se decidi di modificare i file \"%s"
+"\"."
 
 # @ qtranslate
 #: admin/qtx_admin_settings.php:227 admin/qtx_admin_settings.php:774
@@ -804,11 +841,11 @@ msgstr "Esportazione"
 
 #: admin/qtx_admin_settings.php:263
 msgid "Slugs"
-msgstr ""
+msgstr "Slug"
 
 #: admin/qtx_admin_settings.php:266
 msgid "Troubleshooting"
-msgstr ""
+msgstr "Risoluzione problemi"
 
 # @ qtranslate
 #: admin/qtx_admin_settings.php:272
@@ -892,6 +929,8 @@ msgstr "Adatto al SEO."
 msgid ""
 "Requires a permalink structure without query string or index.php (not Plain)."
 msgstr ""
+"Richiede una struttura permalink senza query string o \"index.php\" per "
+"esteso."
 
 # @ qtranslate
 #: admin/qtx_admin_settings.php:350
@@ -959,6 +998,7 @@ msgstr ""
 #: admin/qtx_admin_settings.php:400
 msgid "Hide posts which content is not available for the selected language."
 msgstr ""
+"Nascondi i post il cui contenuto non è disponibile nella lingua selezionata."
 
 # @ qtranslate
 #: admin/qtx_admin_settings.php:403
@@ -1005,10 +1045,12 @@ msgid ""
 "Show post content in an alternative language when translation is not "
 "available for the selected language."
 msgstr ""
+"Mostra il contenuto del post in una lingua alternativa quando la traduzione "
+"non è disponibile per la lingua selezionata."
 
 # @ qtranslate
 #: admin/qtx_admin_settings.php:413
-#, fuzzy, php-format
+#, php-format
 msgid ""
 "When a page or a post with an untranslated content is viewed, a message with "
 "a list of other available languages is displayed, in which languages are "
@@ -1017,7 +1059,7 @@ msgid ""
 "language, for the sake of user convenience."
 msgstr ""
 "Quando viene visitata una pagina o un articolo con un contenuto non "
-"tradotto, è mostrato un messaggio con un elenco delle altre lingue "
+"tradotto, viene mostrato un messaggio con un elenco delle altre lingue "
 "disponibili, nel quale le lingue sono ordinate come definito nell'opzione "
 "\"%s\". Se questa opzione è attiva, allora il contenuto nella lingua "
 "principale verrà anche mostrato, al posto della lingua desiderata, per "
@@ -1030,6 +1072,8 @@ msgid ""
 "Show displayed language prefix when field content is not available for the "
 "selected language."
 msgstr ""
+"Mostra il prefisso della lingua quando il contenuto non è disponibile per la "
+"lingua selezionata."
 
 # @ qtranslate
 #: admin/qtx_admin_settings.php:422
@@ -1046,13 +1090,12 @@ msgstr ""
 
 # @ qtranslate
 #: admin/qtx_admin_settings.php:426
-#, fuzzy
 msgid "Language Names"
-msgstr "Lingue"
+msgstr "Nomi lingue"
 
 #: admin/qtx_admin_settings.php:430
 msgid "Show language names in \"Camel Case\"."
-msgstr ""
+msgstr "Mostra i nomi delle lingue in \"Camel Case\"."
 
 #: admin/qtx_admin_settings.php:432
 #, php-format
@@ -1060,6 +1103,8 @@ msgid ""
 "Define how to display translated language names, whenever languages need to "
 "be listed, for example, in \"%s\" statement."
 msgstr ""
+"Imposta come mostrare i nomi delle lingue tradotti ogni volta che è "
+"necessario mostrare un elenco di lingue, per esempio nella frase \"%s\"."
 
 # @ qtranslate
 #: admin/qtx_admin_settings.php:436
@@ -1085,12 +1130,12 @@ msgstr ""
 # @ qtranslate
 #: admin/qtx_admin_settings.php:458
 msgid "Post Types"
-msgstr "Tipi di pubblicazioni"
+msgstr "Tipi di post"
 
 # @ qtranslate
 #: admin/qtx_admin_settings.php:460
 msgid "Post types enabled for translation:"
-msgstr "Tipi di pubblicazioni abilitate per la traduzione:"
+msgstr "Tipi di post abilitati per la traduzione:"
 
 # @ qtranslate
 #: admin/qtx_admin_settings.php:480
@@ -1448,6 +1493,8 @@ msgid ""
 "Hide button \"Copy From\", which allows to copy multilingual content from "
 "other language."
 msgstr ""
+"Nascondi il pulsante \"Copia da\", che consente di copiare contenuto "
+"multilingua da altre lingue."
 
 # @ qtranslate
 #: admin/qtx_admin_settings.php:660 admin/qtx_admin_settings.php:664
@@ -1483,13 +1530,11 @@ msgstr "Disegna un bordo colorato accanto ai campi traducibili."
 
 # @ qtranslate
 #: admin/qtx_admin_settings.php:680 admin/qtx_admin_settings.php:683
-#, fuzzy
 msgid "Show a shadow on the left of translatable fields."
 msgstr "Mostra una linea sul bordo sinistro del campi traducibili."
 
 # @ qtranslate
 #: admin/qtx_admin_settings.php:685 admin/qtx_admin_settings.php:688
-#, fuzzy
 msgid "Outline border around translatable fields."
 msgstr "Disegna un bordo colorato accanto ai campi traducibili."
 
@@ -1526,7 +1571,7 @@ msgstr ""
 
 #: admin/qtx_admin_settings.php:721
 msgid "Built-in Modules"
-msgstr ""
+msgstr "Moduli built-in"
 
 #: admin/qtx_admin_settings.php:724
 msgid ""
@@ -1534,44 +1579,49 @@ msgid ""
 "plugin is active and no incompatible plugin (e.g. legacy integration plugin) "
 "prevents them to be loaded."
 msgstr ""
+"I moduli di integrazione built-in sono caricati automaticamente se il "
+"relativo plugin è installato e nessun altro plugin incompatibile (es. plugin "
+"di integrazione obsoleti) impedisce il loro caricamento."
 
 #: admin/qtx_admin_settings.php:729
 msgctxt "Modules table header"
 msgid "Name"
-msgstr ""
+msgstr "Nome"
 
 #: admin/qtx_admin_settings.php:730
 msgctxt "Modules table header"
 msgid "Plugin"
-msgstr ""
+msgstr "Plugin"
 
 #: admin/qtx_admin_settings.php:731
 msgctxt "Modules table header"
 msgid "Module"
-msgstr ""
+msgstr "Modulo"
 
 #: admin/qtx_admin_settings.php:732
 msgctxt "Modules table header"
 msgid "Status"
-msgstr ""
+msgstr "Stato"
 
 #: admin/qtx_admin_settings.php:754
 msgid "Slugs translation"
-msgstr ""
+msgstr "Traduzione slug"
 
 #: admin/qtx_admin_settings.php:759
 msgid "Enable slugs translation."
-msgstr ""
+msgstr "Abilita la traduzione degli slug."
 
 #: admin/qtx_admin_settings.php:761
 msgid "This activates the slug translation module. "
-msgstr ""
+msgstr "Attiva il modulo di traduzione degli slug. "
 
 #: admin/qtx_admin_settings.php:762
 msgid ""
 "Attention! This module is still experimental. It is subject to bugs and "
 "limitations."
 msgstr ""
+"Attenzione! Questo modulo è sperimentale. Può essere soggetto a bug e "
+"limitazioni."
 
 # @ qtranslate
 #: admin/qtx_admin_settings.php:769
@@ -1615,7 +1665,7 @@ msgstr ""
 
 #: admin/qtx_admin_settings.php:785
 msgid "Deprecated"
-msgstr ""
+msgstr "Deprecato"
 
 # @ qtranslate
 #: admin/qtx_admin_settings.php:787
@@ -1704,7 +1754,7 @@ msgstr ""
 "Lingua (LSB). Fai attenzione a non includere una classe che danneggerebbe i "
 "campi con lingua neutra. Se non puoi identificare in modo unico un campo "
 "richiesto né dall'attributo %s né dall'attributo %s, riporta questo problema "
-"sul %sForum di Supporto%s."
+"sul %sForum di Supporto%s"
 
 # @ qtranslate
 #: admin/qtx_admin_settings.php:827
@@ -1758,7 +1808,7 @@ msgstr ""
 
 #: admin/qtx_admin_settings.php:854
 msgid "Debugging Information"
-msgstr ""
+msgstr "Informazioni di debug"
 
 #: admin/qtx_admin_settings.php:856
 #, php-format
@@ -1767,22 +1817,25 @@ msgid ""
 "can visit the <a href=\"%s\">Support Forum</a>. Posting the following "
 "Content will help other detect any misconfigurations."
 msgstr ""
+"Se hai riscontrato problemi che non riesci a risolvere in autonomia, puoi "
+"visitare il <a href=\"%s\">Forum di Supporto</a>. Postare il contenuto "
+"seguente aiuterà gli altri ad individuare possibili errori di configurazione."
 
 #: admin/qtx_admin_settings.php:859
 msgid "Collect information"
-msgstr ""
+msgstr "Raccogli informazioni"
 
 #: admin/qtx_admin_settings.php:862
 msgid "Versions"
-msgstr ""
+msgstr "Versioni"
 
 #: admin/qtx_admin_settings.php:867
 msgid "Configuration"
-msgstr ""
+msgstr "Configurazione"
 
 #: admin/qtx_admin_settings.php:872
 msgid "Browser"
-msgstr ""
+msgstr "Browser"
 
 # @ qtranslate
 #: admin/qtx_admin_settings.php:890
@@ -1871,7 +1924,7 @@ msgstr "Codice lingua"
 
 #: admin/qtx_admin_settings_language_list.php:32
 msgid "Status"
-msgstr ""
+msgstr "Stato"
 
 # @ qtranslate
 #: admin/qtx_admin_settings_language_list.php:33
@@ -1896,7 +1949,7 @@ msgstr "Default"
 
 #: admin/qtx_admin_settings_language_list.php:78
 msgid "Enabled"
-msgstr ""
+msgstr "Abilitato"
 
 # @ qtranslate
 #: admin/qtx_admin_settings_language_list.php:91
@@ -1936,7 +1989,7 @@ msgstr ""
 # @ qtranslate
 #: admin/qtx_admin_utils.php:409
 msgid "Language Switching Buttons"
-msgstr "Tasti Per Cambiare Lingua"
+msgstr "Pulsanti per cambiare lingua"
 
 # @ qtranslate
 #: admin/qtx_admin_utils_db.php:43
@@ -1946,7 +1999,7 @@ msgstr "Il database è stato convertito al formato con parentesi quadre."
 # @ qtranslate
 #: admin/qtx_admin_utils_db.php:43 admin/qtx_admin_utils_db.php:45
 msgid "Note: custom entries are not touched."
-msgstr "Nota: le annotazioni personalizzate non sono toccate"
+msgstr "Nota: le annotazioni personalizzate non vengono modificate."
 
 # @ qtranslate
 #: admin/qtx_admin_utils_db.php:45
@@ -1956,18 +2009,18 @@ msgstr "Il database è stato convertito al vecchio formato doppio-tag."
 #: admin/qtx_admin_utils_db.php:310
 #, php-format
 msgid "Failed to open input database file \"%s\""
-msgstr ""
+msgstr "Impossibile aprire il file di input del database \"%s\""
 
 #: admin/qtx_admin_utils_db.php:324 admin/qtx_admin_utils_db.php:341
 #: admin/qtx_admin_utils_db.php:374
 #, php-format
 msgid "Failed to open output database file \"%s\""
-msgstr ""
+msgstr "Impossibile aprire il file di output del database \"%s\""
 
 #: admin/qtx_admin_utils_db.php:377
 #, php-format
 msgid "Failed to re-open output database file \"%s\""
-msgstr ""
+msgstr "Impossibile riaprire il file di output del database \"%s\""
 
 #: admin/qtx_admin_utils_db.php:425
 #, php-format
@@ -1975,18 +2028,20 @@ msgid ""
 "The database file provided has been split as requested. Number of "
 "multilingual strings found is %s. The result files are:%s"
 msgstr ""
+"Il file del database fornito è stato suddiviso come richiesto. Il numero di "
+"stringhe multilingua trovate è %s. I file risultanti sono:%s"
 
 #: admin/qtx_admin_utils_db.php:496
 msgid "Could not fetch the list of terms from database."
-msgstr ""
+msgstr "Impossibile recuperare la lista dei termini dal database."
 
 #: admin/qtx_admin_utils_db.php:498
 msgid "Nothing has been altered."
-msgstr ""
+msgstr "Nessuna modifica apportata."
 
 #: admin/qtx_admin_utils_db.php:514
 msgid "Term configuration is inconsistent."
-msgstr ""
+msgstr "La configurazione del termine non è consistente."
 
 #: admin/qtx_admin_utils_db.php:516
 #, php-format
@@ -1994,23 +2049,26 @@ msgid ""
 "Term \"%s\" (id=%d) cannot be loaded and is left untouched. Error message on "
 "load was:%s"
 msgstr ""
+"Il termine \"%s\" (id=%d) non può essere caricato e non è stato modificato. "
+"L'errore durante il caricamento è stato: %s"
 
 #: admin/qtx_admin_utils_db.php:581
 #, php-format
 msgid "Term \"%s\" (id=%d) has been modified from:%sto:%s"
-msgstr ""
+msgstr "Il termine \"%s\" (id=%d) è stato modificato da:%sa:%s"
 
 #: admin/qtx_admin_utils_db.php:593
 msgid "No term has been modified. All terms are already in a consistent state."
 msgstr ""
+"Nessun termine è stato modificato. Tutti i termini sono già aggiornati."
 
 #: admin/qtx_admin_utils_db.php:596
 msgid "Save this report for further analysis, if necessary."
-msgstr ""
+msgstr "Salva questo report per ulteriore analisi, se necessario."
 
 #: admin/qtx_admin_utils_db.php:599
 msgid "Legacy term names have been cleaned up:"
-msgstr ""
+msgstr "I nomi dei termini obsoleti sono stati ripuliti:"
 
 # @ qtranslate
 #: admin/qtx_import_export.php:68
@@ -2198,7 +2256,7 @@ msgstr ""
 # @ qtranslate
 #: admin/qtx_import_export.php:196
 msgid "Convert database back to the legacy \"dual language tag\" style."
-msgstr "Converti il database di nuovo al vecchio stile \"lingua doppio-tag\""
+msgstr "Converti il database di nuovo al vecchio stile \"lingua doppio-tag\"."
 
 # @ qtranslate
 #: admin/qtx_import_export.php:198
@@ -2211,7 +2269,7 @@ msgstr ""
 
 #: admin/qtx_import_export.php:202
 msgid "Clean Legacy Term Names"
-msgstr ""
+msgstr "Ripulisci i nomi dei termini obsoleti"
 
 #: admin/qtx_import_export.php:204
 msgid ""
@@ -2220,10 +2278,15 @@ msgid ""
 "need to be re-entered after this operation. The term names should stay "
 "consistent in the future."
 msgstr ""
+"Ripulisci le inconsistenze del modo originale di q-translate di salvare i "
+"nomi dei termini. Le traduzioni di alcuni tag, categorie o altri termini "
+"potrebbero andare perse e il loro reinserimento potrebbe essere necessario "
+"dopo questa operazione. I nomi dei termini dovrebbero rimanere consistenti "
+"nel futuro."
 
 #: admin/qtx_import_export.php:207
 msgid "Split database file by language."
-msgstr ""
+msgstr "Dividi il database per lingua."
 
 #: admin/qtx_import_export.php:209
 #, php-format
@@ -2232,6 +2295,9 @@ msgid ""
 "resulting %s files, named with language-based suffix, are saved in the same "
 "folder, where the input file is):"
 msgstr ""
+"Fornisci il percorso completo del file %s di input del database multilingua "
+"(i risultanti file %s saranno salvati allo stesso percorso e nominati con i "
+"suffissi della relativa lingua)"
 
 #: admin/qtx_import_export.php:214
 msgid ""
@@ -2240,6 +2306,10 @@ msgid ""
 "database is split by language into a set of language-tags-free database "
 "files."
 msgstr ""
+"Specifica quale lingua mantenere nel file di output principale. Fornisci una "
+"lista di codici di due lettere per le lingue da mantenere, separati da "
+"virgola. Se lasciata vuota, il database è suddiviso per lingua in un set di "
+"file ripuliti dai tag multilingua."
 
 #: admin/qtx_import_export.php:219
 #, php-format
@@ -2249,6 +2319,10 @@ msgid ""
 "new clean %s files back to the server. A separate clean database will also "
 "be saved fir each excluded language."
 msgstr ""
+"Per rimuovere una o più lingue dall'intero database, puoi effettuare il dump "
+"del database in un file %s, quindi seguire questa procedura e caricare un "
+"nuovo file %s pulito sul server. Un ulteriore database pulito sarà anche "
+"salvato per ciascun linguaggio escluso."
 
 # @ qtranslate
 #: admin/qtx_import_export.php:229
@@ -2320,6 +2394,8 @@ msgid ""
 "If you do not wish to customize this option, then reset it to the default by "
 "emptying its value."
 msgstr ""
+"Se non vuoi modificare questa opzione, lascia il campo vuoto per usare il "
+"valore di default."
 
 # @ qtranslate
 #: admin/qtx_languages.php:128
@@ -2333,9 +2409,9 @@ msgstr "Database Gettext <strong>non</strong>aggiornati:"
 
 # @ qtranslate
 #: admin/qtx_update_gettext_db.php:83
-#, fuzzy, php-format
+#, php-format
 msgid "Failed to update gettext database for \"%s\": %s"
-msgstr "Aggiorna i databases Gettext ora."
+msgstr "Impossibile aggiornare il database gettext per \"%s\": %s"
 
 # @ qtranslate
 #: admin/qtx_user_options.php:12
@@ -2359,164 +2435,164 @@ msgstr ""
 
 #: modules/acf/src/acf_5/fields/file.php:31
 msgid "File"
-msgstr ""
+msgstr "File"
 
 #: modules/acf/src/acf_5/fields/file.php:41
 msgid "Select File"
-msgstr ""
+msgstr "Seleziona file"
 
 #: modules/acf/src/acf_5/fields/file.php:42
 msgid "Edit File"
-msgstr ""
+msgstr "Modifica File"
 
 #: modules/acf/src/acf_5/fields/file.php:43
 msgid "Update File"
-msgstr ""
+msgstr "Carica File"
 
 #: modules/acf/src/acf_5/fields/file.php:44
 #: modules/acf/src/acf_5/fields/image.php:49
 msgid "Uploaded to this post"
-msgstr ""
+msgstr "Caricato in questo post"
 
 #: modules/acf/src/acf_5/fields/file.php:140
 msgid "File name"
-msgstr ""
+msgstr "Nome del file"
 
 #: modules/acf/src/acf_5/fields/file.php:145
 msgid "File size"
-msgstr ""
+msgstr "Dimensione del file"
 
 #: modules/acf/src/acf_5/fields/file.php:168
 msgid "No file selected"
-msgstr ""
+msgstr "Nessun file selezionato"
 
 #: modules/acf/src/acf_5/fields/file.php:170
 msgid "Add File"
-msgstr ""
+msgstr "Aggiungi File"
 
 #: modules/acf/src/acf_5/fields/image.php:31
 msgid "Image"
-msgstr ""
+msgstr "Immagine"
 
 #: modules/acf/src/acf_5/fields/image.php:46
 msgid "Select Image"
-msgstr ""
+msgstr "Seleziona immagine"
 
 #: modules/acf/src/acf_5/fields/image.php:47
 msgid "Edit Image"
-msgstr ""
+msgstr "Modifica Immagine"
 
 #: modules/acf/src/acf_5/fields/image.php:48
 msgid "Update Image"
-msgstr ""
+msgstr "Carica Immagine"
 
 #: modules/acf/src/acf_5/fields/image.php:50
 msgid "All images"
-msgstr ""
+msgstr "Tutte le immagini"
 
 #: modules/acf/src/acf_5/fields/image.php:139
 msgid "Remove"
-msgstr ""
+msgstr "Rimuovi"
 
 #: modules/acf/src/acf_5/fields/image.php:155
 msgid "No image selected"
-msgstr ""
+msgstr "Nessuna immagine selezionata"
 
 #: modules/acf/src/acf_5/fields/image.php:156
 msgid "Add Image"
-msgstr ""
+msgstr "Aggiungi Immagine"
 
 #: modules/acf/src/acf_5/fields/post_object.php:31
 msgid "Post Object"
-msgstr ""
+msgstr "Oggetto post"
 
 #: modules/acf/src/acf_5/fields/text.php:31
 msgid "Text"
-msgstr ""
+msgstr "Testo"
 
 #: modules/acf/src/acf_5/fields/text.php:100
 msgid "Default Value"
-msgstr ""
+msgstr "Valore di default"
 
 #: modules/acf/src/acf_5/fields/text.php:101
 msgid "Appears when creating a new post"
-msgstr ""
+msgstr "Mostrato quando un nuovo post viene creato"
 
 #: modules/acf/src/acf_5/fields/text.php:108
 msgid "Placeholder Text"
-msgstr ""
+msgstr "Segnaposto per il testo"
 
 #: modules/acf/src/acf_5/fields/text.php:109
 msgid "Appears within the input"
-msgstr ""
+msgstr "Mostrato all'interno dell'input"
 
 #: modules/acf/src/acf_5/fields/text.php:116
 msgid "Character Limit"
-msgstr ""
+msgstr "Limite di caratteri"
 
 #: modules/acf/src/acf_5/fields/text.php:117
 msgid "Leave blank for no limit"
-msgstr ""
+msgstr "Lasciare vuoto per rimuovere i limiti"
 
 #: modules/acf/src/acf_5/fields/textarea.php:31
 msgid "Textarea"
-msgstr ""
+msgstr "Area di testo"
 
 #: modules/acf/src/acf_5/fields/url.php:31
 msgid "Url"
-msgstr ""
+msgstr "URL"
 
 #: modules/acf/src/acf_5/fields/wysiwyg.php:31
 msgid "Wysiwyg Editor"
-msgstr ""
+msgstr "Editor Wysiwyg"
 
 #: modules/acf/src/acf_5/fields/wysiwyg.php:132
 msgid "Visual"
-msgstr ""
+msgstr "Visuale"
 
 #: modules/acf/src/acf_5/fields/wysiwyg.php:135
 msgctxt "Name for the Text editor tab (formerly HTML)"
 msgid "Text"
-msgstr ""
+msgstr "Testo"
 
 #: modules/acf/src/plugin.php:406
 #, php-format
 msgid "%s value is required"
-msgstr ""
+msgstr "Il valore di %s  è obbligatorio"
 
 #: modules/slugs/includes/class-qtranslate-slug.php:936
 msgid "Empty Term"
-msgstr ""
+msgstr "Termine non esistente"
 
 #: modules/slugs/includes/class-qtranslate-slug.php:1115
 #: modules/slugs/includes/class-qtranslate-slug.php:1119
 #: modules/slugs/includes/class-qtranslate-slug.php:1125
 msgid "Slugs per language"
-msgstr ""
+msgstr "Slug per lingua"
 
 #: modules/slugs/includes/class-qtranslate-slug.php:1324
 #: modules/slugs/includes/class-qtranslate-slug.php:1343
 #: modules/slugs/includes/class-qtranslate-slug.php:1512
 #: modules/slugs/includes/qtranslate-slug-settings-options.php:25
 msgid "Slug"
-msgstr ""
+msgstr "Slug"
 
 #: modules/slugs/includes/class-qtranslate-slug.php:1513
 msgid "Posts"
-msgstr ""
+msgstr "Post"
 
 #: modules/slugs/includes/class-qtranslate-slug.php:1776
 #, php-format
 msgid "View all posts in %s"
-msgstr ""
+msgstr "Vedi tutti i post in %s"
 
 #: modules/slugs/includes/qtranslate-slug-settings-options.php:9
 msgid "Post types"
-msgstr ""
+msgstr "Tipi di post"
 
 #: modules/slugs/includes/qtranslate-slug-settings-options.php:10
 msgid "Taxonomies"
-msgstr ""
+msgstr "Tassonomie"
 
 #: modules/slugs/includes/qtranslate-slug-settings.php:27
 msgid ""
@@ -2526,6 +2602,11 @@ msgid ""
 "wordpress.org/reference/functions/register_post_type/\">registered</a> the "
 "post_type."
 msgstr ""
+"Per esempio, il post_type <kbd>books</kbd>, in spagnolo potrebbe essere "
+"mostrato come <code>https://example.org/es/libros/post-type-name/</code>. Se "
+"il campo viene lasciato vuoto verrà utilizzata l'opzione di default della <a "
+"href=\"https://developer.wordpress.org/reference/functions/"
+"register_post_type/\">registrazione</a> del post_type."
 
 #: modules/slugs/includes/qtranslate-slug-settings.php:31
 msgid ""
@@ -2538,6 +2619,14 @@ msgid ""
 "\">permalinks</a> page, these bases will be overwritten by the translated "
 "ones)."
 msgstr ""
+"Per esempio, la tassonomia <kbd>category</kbd>, in spagnolo potrebbe essere "
+"mostrata come <code>https://example.org/es/categoria/taxonomy-name/</code>. "
+"Se il campo viene lasciato vuoto verrà utilizzata l'opzione di default della "
+"<a href=\"https://developer.wordpress.org/reference/functions/"
+"register_taxonomy/\">registrazione</a> della tassonomia. Se avevi impostato "
+"uno slug personalizzato per <u>categorie</u> o <u>tag</u> nella pagina <a "
+"href=\"options-permalink.php\">permalinks</a> , questi cambiamenti saranno "
+"sovrascritti."
 
 #: modules/slugs/includes/qtranslate-slug-settings.php:193
 msgid ""
@@ -2548,6 +2637,11 @@ msgid ""
 "register_post_type/#parameters\">public</a> post_types, categories, tags and "
 "taxonomies."
 msgstr ""
+"Se utilizzi i <a href=\"options-permalink.php\">pretty permalinks</a>, in "
+"questa sezione puoi tradurre le <strong>basi</strong> degli <abbr title="
+"\"Universal Resource Locator\">URL</abbr> per post_type e tassonomie <a href="
+"\"https://developer.wordpress.org/reference/functions/register_post_type/"
+"#parameters\">pubbliche</a>."
 
 # @ qtranslate
 #: qtranslate_widget.php:37
@@ -2572,7 +2666,7 @@ msgstr "Nascondi Titolo:"
 # @ qtranslate
 #: qtranslate_widget.php:130
 msgid "Hide Title Colon:"
-msgstr "Nascondi Titolo:"
+msgstr "Nascondi i due punti dal Titolo:"
 
 # @ qtranslate
 #: qtranslate_widget.php:134
@@ -2601,50 +2695,46 @@ msgstr "Casella a tendina"
 
 #: qtranslate_widget.php:158
 msgid "Custom list item format:"
-msgstr ""
+msgstr "Formato lista elementi personalizzato:"
 
 #: qtranslate_widget.php:166
 msgid "Accepted format arguments:"
-msgstr ""
+msgstr "I seguenti argomenti sono supportati per il formato:"
 
 # @ qtranslate
 #: qtranslate_widget.php:167
-#, fuzzy
 msgid "Flag Image HTML"
-msgstr "Percorso Immagine Bandiere"
+msgstr "Immagine Bandiere HTML"
 
 # @ qtranslate
 #: qtranslate_widget.php:168
-#, fuzzy
 msgid "Flag Image URL"
-msgstr "Percorso Immagine Bandiere"
+msgstr "URL Immagine Bandiere"
 
 # @ qtranslate
 #: qtranslate_widget.php:169
-#, fuzzy
 msgid "Language Native Name"
-msgstr "Gestione Linguaggi"
+msgstr "Nome lingua nativa"
 
 # @ qtranslate
 #: qtranslate_widget.php:170
-#, fuzzy
 msgid "Language Name in Active Language"
-msgstr "Non è stata impostata una lingua"
+msgstr "Nome lingua nel linguaggio attivo"
 
 # @ qtranslate
 #: qtranslate_widget.php:171
-#, fuzzy
 msgid "Language 2-Letter Code"
-msgstr "Codice Lingua"
+msgstr "Codice Lingua di 2 lettere"
 
 #: qtranslate_widget.php:174
 #, php-format
 msgid "For example, format \"%s\" would do the same as the choice \"%s\"."
 msgstr ""
+"Per esempio, il formato \"%s\" avrebbe lo stesso effetto della scelta \"%s\"."
 
 #: qtranslate_widget.php:176
 msgid "An appropriate custom CSS is expected to be provided in this case."
-msgstr ""
+msgstr "Un file CSS custom adeguato deve essere fornito in questo caso."
 
 # @ qtranslate
 #: qtranslate_widget.php:180
