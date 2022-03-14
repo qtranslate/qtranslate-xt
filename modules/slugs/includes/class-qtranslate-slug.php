@@ -111,11 +111,11 @@ class QtranslateSlug {
      * Do the installation, support multisite.
      */
     public function install() {
-        if ( is_plugin_active_for_network(plugin_basename(QTRANSLATE_FILE)) ) {
+        if ( is_plugin_active_for_network( plugin_basename( QTRANSLATE_FILE ) ) ) {
             $old_blog = get_current_blog_id();
-            $blogs  = get_sites();
+            $blogs    = get_sites();
             foreach ( $blogs as $blog ) {
-                switch_to_blog( $blog->blog_id);
+                switch_to_blog( $blog->blog_id );
                 $this->activate();
             }
             switch_to_blog( $old_blog );
@@ -224,7 +224,10 @@ class QtranslateSlug {
         add_filter( 'single_term_title', 'qtranxf_useTermLib', 805 );
         add_filter( 'get_blogs_of_user', array( &$this, 'blog_names' ), 1 );
         // Add specific CSS class to body class based on current lang
-        add_filter( 'body_class', array( $this, 'qts_body_class' ), 600, 1 ); //TODO: if it is needed, this should be moved to main plugin...
+        add_filter( 'body_class', array(
+            $this,
+            'qts_body_class'
+        ), 600, 1 ); //TODO: if it is needed, this should be moved to main plugin...
     }
 
     /**
