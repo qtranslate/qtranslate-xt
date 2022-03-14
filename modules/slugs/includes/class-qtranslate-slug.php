@@ -1066,7 +1066,7 @@ class QtranslateSlug {
     public function hide_quick_edit() {
         echo "<!-- QTS remove quick edit box -->" . PHP_EOL;
         echo "<style media=\"screen\">" . PHP_EOL;
-        echo "  .inline-edit-row fieldset.inline-edit-col-left .inline-edit-col *:first-child + label + label  { display: none !important }" . PHP_EOL;
+        echo "  .inline-edit-row fieldset.inline-edit-col-left .inline-edit-col *:first-child + label { display: none !important }" . PHP_EOL;
         echo "</style>" . PHP_EOL;
     }
 
