@@ -281,7 +281,7 @@ class QtranslateSlug {
      */
     public function modify_rewrite_rules() {
         // post types rules
-        $post_types = get_post_types( array( '_builtin' => false ), 'objects' );
+        $post_types = $this->get_public_post_types();
         foreach ( $post_types as $post_type ) {
             $this->generate_extra_rules( $post_type->name );
         }
@@ -501,9 +501,12 @@ class QtranslateSlug {
         if ( ( isset( $wp->matched_query ) || empty( $query ) ) && ! isset( $query['s'] ) ) {
             $query = wp_parse_args( $wp->matched_query );
         }
-        foreach ( get_post_types() as $post_type ) {
-            if ( array_key_exists( $post_type, $query ) && ! in_array( $post_type, array( 'post', 'page' ) ) ) {
-                $query['post_type'] = $post_type;
+        foreach ( $this->get_public_post_types() as $post_type ) {
+            if ( array_key_exists( $post_type->name, $query ) && ! in_array( $post_type->name, array(
+                    'post',
+                    'page'
+                ) ) ) {
+                $query['post_type'] = $post_type->name;
             }
         }
         // -> page
@@ -581,19 +584,18 @@ class QtranslateSlug {
 
 
         // -> taxonomy
-        $taxonomies = get_taxonomies( array( 'public' => true, '_builtin' => false ) );
-        foreach ( $taxonomies as $term_name ):
-            if ( isset( $query[ $term_name ] ) ) {
-                $term_slug = $this->get_last_slash( $query[ $term_name ] );
-                $term      = $this->get_term_by( 'slug', $term_slug, $term_name );
+        foreach ( $this->get_public_taxonomies() as $item ):
+            if ( isset( $query[ $item->name ] ) ) {
+                $term_slug = $this->get_last_slash( $query[ $item->name ] );
+                $term      = $this->get_term_by( 'slug', $term_slug, $item->name );
                 if ( ! $term ) {
                     return $query;
                 }
                 $cache_array = array( $term );
-                update_term_cache( $cache_array, $term_name ); // caching query :)
-                $id                  = $term;
-                $query[ $term_name ] = $term->slug;
-                $function            = 'get_term_link';
+                update_term_cache( $cache_array, $item->name ); // caching query :)
+                $id                   = $term;
+                $query[ $item->name ] = $term->slug;
+                $function             = 'get_term_link';
 
             }
         endforeach;
@@ -1538,6 +1540,42 @@ class QtranslateSlug {
     }
 
     /**
+     * Helper: returns public taxonomies.
+     *
+     * @return array of public taxonomies objects
+     */
+    public function get_public_taxonomies() {
+        $all_taxonomies = get_taxonomies( array( 'public' => true, 'show_ui' => true ), 'objects' );
+        $taxonomies     = array();
+
+        foreach ( $all_taxonomies as $taxonomy ) {
+            if ( $taxonomy->rewrite ) {
+                $taxonomies[] = $taxonomy;
+            }
+        }
+
+        return $taxonomies;
+    }
+
+    /**
+     * Helper: returns public post_types with rewritable slugs.
+     *
+     * @return array of public post_types objects
+     */
+    public function get_public_post_types() {
+        $all_post_types = get_post_types( array( 'public' => true ), 'objects' );
+        $post_types     = array();
+
+        foreach ( $all_post_types as $post_type ) {
+            if ( $post_type->rewrite ) {
+                $post_types[] = $post_type;
+            }
+        }
+
+        return $post_types;
+    }
+
+    /**
      * Return the current / temp language.
      */
     private function get_lang() {
@@ -1594,18 +1632,6 @@ class QtranslateSlug {
                 $wp_rewrite->rules = array_merge( $rules, $wp_rewrite->rules );
             endif;
         endforeach;
-    }
-
-    /**
-     * Helper: returns public built-in and not built-in taxonomies.
-     *
-     * @return array of public taxonomies objects
-     */
-    private function get_public_taxonomies() {
-        $builtin    = get_taxonomies( array( 'public' => true, 'show_ui' => true, '_builtin' => true ), 'object' );
-        $taxonomies = get_taxonomies( array( 'public' => true, 'show_ui' => true, '_builtin' => false ), 'object' );
-
-        return array_merge( $builtin, $taxonomies );
     }
 
     /**
