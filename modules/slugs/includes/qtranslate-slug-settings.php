@@ -390,9 +390,9 @@ function get_multi_txt_choices() {
  */
 function qts_options_page_fields() {
     global $qtranslate_slug;
-    $post_types = $qtranslate_slug->get_public_post_types();
-
     $options = array();
+
+    $post_types = $qtranslate_slug->get_public_post_types();
     foreach ( $post_types as $post_type ) {
         $options[] = qts_options_page_build_slug_fields( $post_type, "post_types", "post_type_" );
     }
