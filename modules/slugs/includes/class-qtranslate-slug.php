@@ -502,7 +502,10 @@ class QtranslateSlug {
             $query = wp_parse_args( $wp->matched_query );
         }
         foreach ( $this->get_public_post_types() as $post_type ) {
-            if ( array_key_exists( $post_type->name, $query ) && ! in_array( $post_type->name, array( 'post', 'page' ) ) ) {
+            if ( array_key_exists( $post_type->name, $query ) && ! in_array( $post_type->name, array(
+                    'post',
+                    'page'
+                ) ) ) {
                 $query['post_type'] = $post_type->name;
             }
         }
@@ -590,9 +593,9 @@ class QtranslateSlug {
                 }
                 $cache_array = array( $term );
                 update_term_cache( $cache_array, $item->name ); // caching query :)
-                $id                  = $term;
+                $id                   = $term;
                 $query[ $item->name ] = $term->slug;
-                $function            = 'get_term_link';
+                $function             = 'get_term_link';
 
             }
         endforeach;
@@ -1537,6 +1540,42 @@ class QtranslateSlug {
     }
 
     /**
+     * Helper: returns public taxonomies.
+     *
+     * @return array of public taxonomies objects
+     */
+    public function get_public_taxonomies() {
+        $all_taxonomies = get_taxonomies( array( 'public' => true, 'show_ui' => true ), 'objects' );
+        $taxonomies     = array();
+
+        foreach ( $all_taxonomies as $taxonomy ) {
+            if ( $taxonomy->rewrite ) {
+                $taxonomies[] = $taxonomy;
+            }
+        }
+
+        return $taxonomies;
+    }
+
+    /**
+     * Helper: returns public post_types with rewritable slugs.
+     *
+     * @return array of public post_types objects
+     */
+    public function get_public_post_types() {
+        $all_post_types = get_post_types( array( 'public' => true ), 'objects' );
+        $post_types     = array();
+
+        foreach ( $all_post_types as $post_type ) {
+            if ( $post_type->rewrite ) {
+                $post_types[] = $post_type;
+            }
+        }
+
+        return $post_types;
+    }
+
+    /**
      * Return the current / temp language.
      */
     private function get_lang() {
@@ -1593,42 +1632,6 @@ class QtranslateSlug {
                 $wp_rewrite->rules = array_merge( $rules, $wp_rewrite->rules );
             endif;
         endforeach;
-    }
-
-    /**
-     * Helper: returns public taxonomies.
-     *
-     * @return array of public taxonomies objects
-     */
-    public function get_public_taxonomies() {
-        $all_taxonomies    = get_taxonomies( array( 'public' => true, 'show_ui' => true), 'objects' );
-        $taxonomies=array();
-
-        foreach ( $all_taxonomies as $taxonomy ) {
-            if ( $taxonomy->rewrite ) {
-                $taxonomies[]=$taxonomy;
-            }
-        }
-
-        return $taxonomies;
-    }
-
-     /**
-     * Helper: returns public post_types with rewritable slugs.
-     *
-     * @return array of public post_types objects
-     */
-    public function get_public_post_types() {
-        $all_post_types = get_post_types( array( 'public' => true ), 'objects' );
-        $post_types=array();
-
-        foreach ( $all_post_types as $post_type ) {
-            if ( $post_type->rewrite ) {
-                $post_types[]=$post_type;
-            }
-        }
-
-        return $post_types;
     }
 
     /**

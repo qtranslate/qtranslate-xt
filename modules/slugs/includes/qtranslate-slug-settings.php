@@ -402,16 +402,16 @@ function qts_options_page_fields() {
         $options[] = qts_options_page_build_slug_fields( $taxonomy, "taxonomies", "taxonomy_" );
     }
 
-    return array_filter($options);
+    return array_filter( $options );
 }
 
 function qts_options_page_build_slug_fields( $object, $target_section, $id_prefix ) {
-    if ( is_array($object->rewrite) && array_key_exists( 'slug', $object->rewrite ) ) {
+    if ( is_array( $object->rewrite ) && array_key_exists( 'slug', $object->rewrite ) ) {
         $slug = ltrim( $object->rewrite['slug'], "/" );
     } else {
         $slug = $object->name;
     }
-        
+
     return array(
         "section" => $target_section,
         "id"      => QTS_PREFIX . $id_prefix . $object->name,
