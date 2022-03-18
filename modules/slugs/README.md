@@ -15,11 +15,6 @@ If you want to translate also the base permastructs (ex. *category*, *tag*, etc)
 - Set the base permastructs for **post types** and **taxonomies** (If you setup a base permastruct for *categories* or *tags* in *Settings/Permalinks*, these will be overwritten by the translated ones).
 - Save settings and that's all!
 
-### How can I insert a language selector in my theme ?
-You can choose to:
-* use **Qtranslate Slug Widget** in your sidebar.
-* place in your template `<?php if (function_exists('qts_language_menu') ) qts_language_menu('text'); ?>`. Options are: `dropdown`, `text`, `image`, and `both`.
-
 ### Appears an error 404, what can I do?
 In the admin go to *Settings/Permalinks* or *Settings/Slug options* and save.
 
@@ -27,7 +22,7 @@ In the admin go to *Settings/Permalinks* or *Settings/Slug options* and save.
 That's because language selector metabox is hidden, if you are in admin *nav menus* screen, press the button **Screen options** (on top and right) and after, check the option *Languages*. It will appear a **Language** meta box on top of the left sidebar.
 
 ### How to get the current url in a specific language?
-You can use `qts_get_url()` or the awkwardly named `qTranslateSlug_getSelfUrl()` which is an alias for the first one.
+You can use `qts_get_url()`.
 
 ## TODO
 

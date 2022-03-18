@@ -31,15 +31,6 @@ add_filter( 'qtranslate_convert_url_before', 'qts_convert_url_before_cb', 10, 2 
 
 ////////////////////////////////////////////////////////////////////////////////////////
 
-/**
- * Language Selector Code for templating.
- */
-function qts_language_menu( $type = "text", $args = array() ) {
-    global $qtranslate_slug;
-
-    $qtranslate_slug->language_menu( $type, $args );
-}
-
 function qts_get_url( $lang = false ) {
     global $qtranslate_slug;
 

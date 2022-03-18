@@ -1,7 +1,7 @@
 <?php
 
-// page settings sections & fields as well as the contextual help text.
-include_once( 'qtranslate-slug-settings-options.php' );
+add_action( 'qtranslate_update_settings', 'qts_update_settings' );
+add_action( 'qtranslate_configuration', 'qts_show_settings_page' );
 
 /**
  * Helper function for defining variables for the current page.
@@ -24,11 +24,11 @@ function qts_get_settings() {
 function qts_section_fn( $section_id = '' ) {
     switch ( $section_id ) {
         case 'post_types':
-            echo "<p>" . __( 'For example, the post_type <kbd>books</kbd>, in Spanish would be displayed as <code>https://example.org/es/libros/post-type-name/</code>. If you leave this blank will use the default option when you <a href="https://developer.wordpress.org/reference/functions/register_post_type/">registered</a> the post_type.', 'qts' ) . "</p>";
+            echo "<p>" . __( 'For example, the post_type <kbd>books</kbd>, in Spanish would be displayed as <code>https://example.org/es/libros/post-type-name/</code>. If you leave this blank will use the default option when you <a href="https://developer.wordpress.org/reference/functions/register_post_type/">registered</a> the post_type.', 'qtranslate' ) . "</p>";
             break;
 
         case 'taxonomies':
-            echo "<p>" . __( 'For example, the taxonomy <kbd>category</kbd>, in Spanish would be displayed as <code>https://example.org/es/categoria/taxonomy-name/</code>. If you leave this blank will use the default option when you <a href="https://developer.wordpress.org/reference/functions/register_taxonomy/">registered</a> the taxonomy (if you previously setup a base permastruct for <u>categories</u> or <u>tags</u> in <a href="options-permalink.php">permalinks</a> page, these bases will be overwritten by the translated ones).', 'qts' ) . "</p>";
+            echo "<p>" . __( 'For example, the taxonomy <kbd>category</kbd>, in Spanish would be displayed as <code>https://example.org/es/categoria/taxonomy-name/</code>. If you leave this blank will use the default option when you <a href="https://developer.wordpress.org/reference/functions/register_taxonomy/">registered</a> the taxonomy (if you previously setup a base permastruct for <u>categories</u> or <u>tags</u> in <a href="options-permalink.php">permalinks</a> page, these bases will be overwritten by the translated ones).', 'qtranslate' ) . "</p>";
             break;
     }
 }
@@ -74,7 +74,7 @@ function qts_show_form_field( $args = array() ) {
         case "multi-text":
             foreach ( $choices as $item ) {
                 $item    = explode( "|", $item ); // cat_name|cat_slug
-                $item[0] = esc_html__( $item[0], 'qts' );
+                $item[0] = esc_html( $item[0] );
 
                 if ( ! empty( $options[ $id ] ) ) {
                     foreach ( $options[ $id ] as $option_key => $option_val ) {
@@ -87,7 +87,6 @@ function qts_show_form_field( $args = array() ) {
                 }
                 echo "<label for=" . QTS_OPTIONS_NAME . "[$id|${item[1]}]>" . $item[0] . "</label> " .
                      "<input class='$field_class' type='text' id='$id|${item[1]}' name='" . QTS_OPTIONS_NAME . "[$id|${item[1]}]' value='" . urldecode( $value ) . "' /><br/>";
-                //echo "<span>$item[0]:</span> <input class='$field_class' type='text' id='$id|$item[1]' name='" . QTS_OPTIONS_NAME . "[$id|$item[1]]' value='$value' /><br/>";
             }
             echo ( $desc != '' ) ? "<p class='qtranxs-notes'>$desc</p>" : "";
             break;
@@ -102,8 +101,8 @@ function qts_show_form_field( $args = array() ) {
         case 'select':
             echo "<select id='$id' class='select$field_class' name='" . QTS_OPTIONS_NAME . "[$id]'>";
             foreach ( $choices as $item ) {
-                $value = esc_attr( $item, 'qts' );
-                $item  = esc_html( $item, 'qts' );
+                $value = esc_attr( $item );
+                $item  = esc_html( $item );
 
                 $selected = ( $options[ $id ] == $value ) ? 'selected="selected"' : '';
                 echo "<option value='$value' $selected>$item</option>";
@@ -117,7 +116,7 @@ function qts_show_form_field( $args = array() ) {
             foreach ( $choices as $item ) {
 
                 $item    = explode( "|", $item );
-                $item[0] = esc_html( $item[0], 'qts' );
+                $item[0] = esc_html( $item[0] );
 
                 $selected = ( $options[ $id ] == $item[1] ) ? 'selected="selected"' : '';
                 echo "<option value='$item[1]' $selected>$item[0]</option>";
@@ -135,7 +134,7 @@ function qts_show_form_field( $args = array() ) {
             foreach ( $choices as $item ) {
 
                 $item    = explode( "|", $item );
-                $item[0] = esc_html( $item[0], 'qts' );
+                $item[0] = esc_html( $item[0] );
 
                 $checked = '';
 
@@ -154,8 +153,8 @@ function qts_show_form_field( $args = array() ) {
             foreach ( $choices as $index => $item ) {
 
                 $item       = explode( "|", $item );
-                $item_key   = ( count( $item ) > 1 ) ? esc_html( $item[0], 'qts' ) : esc_html( end( $item ), 'qts' );
-                $item_value = ( count( $item ) > 1 ) ? esc_html( $item[1], 'qts' ) : esc_html( end( $item ), 'qts' );
+                $item_key   = ( count( $item ) > 1 ) ? esc_html( $item[0] ) : esc_html( end( $item ) );
+                $item_value = ( count( $item ) > 1 ) ? esc_html( $item[1] ) : esc_html( end( $item ) );
 
                 $checked = '';
 
@@ -190,7 +189,7 @@ function qts_show_settings_page() {
     }
     QTX_Admin_Settings::open_section( 'slugs' );
     ?>
-    <p class="heading"><?php _e( 'If you activated previously the <a href="options-permalink.php">pretty permalinks</a>, in this section you can translate the <abbr title="en inglés, Universal Resource Locator">URLs</abbr> <strong>bases</strong> for <a href="https://developer.wordpress.org/reference/functions/register_post_type/#parameters">public</a> post_types, categories, tags and taxonomies.', 'qts' ); ?> </p>
+    <p class="heading"><?php _e( 'If you activated previously the <a href="options-permalink.php">pretty permalinks</a>, in this section you can translate the <abbr title="en inglés, Universal Resource Locator">URLs</abbr> <strong>bases</strong> for <a href="https://developer.wordpress.org/reference/functions/register_post_type/#parameters">public</a> post_types, categories, tags and taxonomies.', 'qtranslate' ); ?> </p>
 
     <?php foreach ( $settings_output['qts_page_sections'] as $id => $title ) { ?>
         <h2><?php echo $title; ?></h2>
@@ -205,8 +204,6 @@ function qts_show_settings_page() {
     QTX_Admin_Settings::close_section( 'slugs' );
 }
 
-add_action( 'qtranslate_configuration', 'qts_show_settings_page' );
-
 /**
  * Validate input.
  *
@@ -219,8 +216,7 @@ function qts_validate_options( $input ) {
     foreach ( $q_config['enabled_languages'] as $lang ) {
         $slugs_lookup_array[ $lang ] = array();
     }
-    // TODO: errors are not displayed, earlier hook to be evaluated
-    $errors      = &$q_config['url_info']['errors'];
+
     $valid_input = array();
 
     // collect only the values we expect and fill the new $valid_input array
@@ -240,10 +236,6 @@ function qts_validate_options( $input ) {
                         // accept the input only when numeric!
                         $input[ $option['id'] ]       = trim( $input[ $option['id'] ] ); // trim whitespace
                         $valid_input[ $option['id'] ] = ( is_numeric( $input[ $option['id'] ] ) ) ? $input[ $option['id'] ] : 'Expecting a Numeric value!';
-                        // register error
-                        if ( is_numeric( $input[ $option['id'] ] ) == false ) {
-                            $errors[] = $option['id'] . ': ' . __( 'Expecting a Numeric value! Please fix.', 'qts' );
-                        }
                         break;
                     default:
                         // accept the input only after stripping out all html, extra white space etc!
@@ -346,8 +338,6 @@ function qts_validate_options( $input ) {
                     $valid_input[ $option['id'] ] = $checkboxarray;
                 }
                 break;
-            default:
-                $errors[] = $option['id'] . ': ' . __( 'Unknown field type.', 'qts' );
         endswitch;
     endforeach;
 
@@ -363,4 +353,73 @@ function qts_update_settings() {
     $qtranslate_slug->save_options( $qts_settings );
 }
 
-add_action( 'qtranslate_update_settings', 'qts_update_settings' );
+/**
+ * Define our settings sections.
+ *
+ * @return array key=$id, array value=$title in: add_settings_section( $id, $title, $callback, $page );
+ */
+function qts_options_page_sections() {
+    $sections               = array();
+    $sections['post_types'] = __( 'Post types', 'qtranslate' );
+    $sections['taxonomies'] = __( 'Taxonomies', 'qtranslate' );
+
+    return $sections;
+}
+
+/**
+ * Helper for create arrays of choices.
+ *
+ * @return array
+ */
+function get_multi_txt_choices() {
+    global $q_config;
+
+    $choices = array();
+    foreach ( $q_config['enabled_languages'] as $lang ) {
+        $label     = sprintf( __( 'Slug' ) . ' (%s)', $q_config['language_name'][ $lang ] );
+        $choices[] = "$label|$lang"; // prints: 'Slug (English)|en'
+    }
+
+    return $choices;
+}
+
+/**
+ * Define our form fields (settings).
+ *
+ * @return array
+ */
+function qts_options_page_fields() {
+    global $qtranslate_slug;
+    $options = array();
+
+    $post_types = $qtranslate_slug->get_public_post_types();
+    foreach ( $post_types as $post_type ) {
+        $options[] = qts_options_page_build_slug_fields( $post_type, "post_types", "post_type_" );
+    }
+
+    $taxonomies = $qtranslate_slug->get_public_taxonomies();
+    foreach ( $taxonomies as $taxonomy ) {
+        $options[] = qts_options_page_build_slug_fields( $taxonomy, "taxonomies", "taxonomy_" );
+    }
+
+    return array_filter( $options );
+}
+
+function qts_options_page_build_slug_fields( $object, $target_section, $id_prefix ) {
+    if ( is_array( $object->rewrite ) && array_key_exists( 'slug', $object->rewrite ) ) {
+        $slug = ltrim( $object->rewrite['slug'], "/" );
+    } else {
+        $slug = $object->name;
+    }
+
+    return array(
+        "section" => $target_section,
+        "id"      => QTS_PREFIX . $id_prefix . $object->name,
+        "title"   => qtranxf_use( qtranxf_getLanguage(), $object->label ),
+        "desc"    => sprintf( '<code>https://example.org/<u>%s</u>/some-%s/</code>', $slug, $object->name ),
+        'class'   => 'qts-slug', // used in qts_validate_options. TODO: cleaner way to be considered...
+        "type"    => "multi-text",
+        "choices" => get_multi_txt_choices(),
+        "std"     => ""
+    );
+}
