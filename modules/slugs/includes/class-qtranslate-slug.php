@@ -1098,14 +1098,11 @@ class QtranslateSlug {
      * Creates a metabox for every post type available.
      */
     public function add_slug_meta_box() {
-        $context  = apply_filters( "qts_admin_meta_box_context", "side" );
-        $priority = apply_filters( "qts_admin_meta_box_priority", "high" );
-
         remove_meta_box( 'slugdiv', null, 'normal' );
         add_meta_box( 'qts_sectionid', __( 'Slugs per language', 'qtranslate' ), array(
             &$this,
             'draw_meta_box'
-        ), null, $context, $priority );
+        ), null, 'side', 'high' );
     }
 
     /**
