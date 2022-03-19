@@ -14,6 +14,7 @@ class QtranslateSlug {
      * Array with old data system.
      * @var bool
      */
+    //TODO: seems to be unused: remove
     private $old_data = null;
 
     /**
@@ -31,17 +32,20 @@ class QtranslateSlug {
     /**
      * Variable for current language.
      */
+    //TODO: Check why not using QTX directly
     private $current_lang = false;
 
     /**
      * Variable for default language.
      */
+    //TODO: Check why not using QTX directly
     private $default_language = false;
 
     /**
      * Array of enabled languages.
      * @var array
      */
+    //TODO: Check why not using QTX directly
     private $enabled_languages = array();
 
     /**
@@ -108,23 +112,19 @@ class QtranslateSlug {
     }
 
     /**
-     * Check if exists qtranslate and do the installation, support multisite.
+     * Do the installation, support multisite.
      */
     public function install() {
-        global $wpdb;
-
-        if ( function_exists( 'is_multisite' ) && is_multisite() ) {
-            if ( isset( $_GET['networkwide'] ) && ( $_GET['networkwide'] == 1 ) ) {
-                $old_blog = $wpdb->blogid;
-                $blogids  = $wpdb->get_col( $wpdb->prepare( "SELECT blog_id FROM $wpdb->blogs" ) );
-                foreach ( $blogids as $blog_id ) {
-                    switch_to_blog( $blog_id );
-                    $this->activate();
-                }
-                switch_to_blog( $old_blog );
-
-                return;
+        if ( is_plugin_active_for_network( plugin_basename( QTRANSLATE_FILE ) ) ) {
+            $old_blog = get_current_blog_id();
+            $blogs    = get_sites();
+            foreach ( $blogs as $blog ) {
+                switch_to_blog( $blog->blog_id );
+                $this->activate();
             }
+            switch_to_blog( $old_blog );
+
+            return;
         }
 
         $this->activate();
@@ -181,9 +181,9 @@ class QtranslateSlug {
             add_filter( 'wp_get_object_terms', array( &$this, 'get_object_terms' ), 0, 4 );
             add_filter( 'get_terms', array( &$this, 'get_terms' ), 0, 3 );
             // admin actions
-            add_action( 'admin_menu', array( &$this, 'add_slug_meta_box' ) );
-            add_action( 'admin_menu', array( &$this, 'remove_defaultslug_meta_box' ) );
+            add_action( 'add_meta_boxes', array( &$this, 'add_slug_meta_box' ) );
             add_action( 'save_post', array( &$this, 'save_postdata' ), 605, 2 );
+            add_action( 'edit_attachment', array( $this, 'save_postdata' ) );
             add_action( 'created_term', array( &$this, 'save_term' ), 605, 3 );
             add_action( 'edited_term', array( &$this, 'save_term' ), 605, 3 );
             add_action( 'admin_head', array( &$this, 'hide_slug_box' ), 900 );
@@ -226,7 +226,10 @@ class QtranslateSlug {
         add_filter( 'single_term_title', 'qtranxf_useTermLib', 805 );
         add_filter( 'get_blogs_of_user', array( &$this, 'blog_names' ), 1 );
         // Add specific CSS class to body class based on current lang
-        add_filter( 'body_class', array( $this, 'qts_body_class' ), 600, 1 ); //TODO: if it is needed, this should be moved to main plugin...
+        add_filter( 'body_class', array(
+            $this,
+            'qts_body_class'
+        ), 600, 1 ); //TODO: if it is needed, this should be moved to main plugin...
     }
 
     /**
@@ -282,7 +285,7 @@ class QtranslateSlug {
      */
     public function modify_rewrite_rules() {
         // post types rules
-        $post_types = get_post_types( array( '_builtin' => false ), 'objects' );
+        $post_types = $this->get_public_post_types();
         foreach ( $post_types as $post_type ) {
             $this->generate_extra_rules( $post_type->name );
         }
@@ -502,9 +505,12 @@ class QtranslateSlug {
         if ( ( isset( $wp->matched_query ) || empty( $query ) ) && ! isset( $query['s'] ) ) {
             $query = wp_parse_args( $wp->matched_query );
         }
-        foreach ( get_post_types() as $post_type ) {
-            if ( array_key_exists( $post_type, $query ) && ! in_array( $post_type, array( 'post', 'page' ) ) ) {
-                $query['post_type'] = $post_type;
+        foreach ( $this->get_public_post_types() as $post_type ) {
+            if ( array_key_exists( $post_type->name, $query ) && ! in_array( $post_type->name, array(
+                    'post',
+                    'page'
+                ) ) ) {
+                $query['post_type'] = $post_type->name;
             }
         }
         // -> page
@@ -582,19 +588,18 @@ class QtranslateSlug {
 
 
         // -> taxonomy
-        $taxonomies = get_taxonomies( array( 'public' => true, '_builtin' => false ) );
-        foreach ( $taxonomies as $term_name ):
-            if ( isset( $query[ $term_name ] ) ) {
-                $term_slug = $this->get_last_slash( $query[ $term_name ] );
-                $term      = $this->get_term_by( 'slug', $term_slug, $term_name );
+        foreach ( $this->get_public_taxonomies() as $item ):
+            if ( isset( $query[ $item->name ] ) ) {
+                $term_slug = $this->get_last_slash( $query[ $item->name ] );
+                $term      = $this->get_term_by( 'slug', $term_slug, $item->name );
                 if ( ! $term ) {
                     return $query;
                 }
                 $cache_array = array( $term );
-                update_term_cache( $cache_array, $term_name ); // caching query :)
-                $id                  = $term;
-                $query[ $term_name ] = $term->slug;
-                $function            = 'get_term_link';
+                update_term_cache( $cache_array, $item->name ); // caching query :)
+                $id                   = $term;
+                $query[ $item->name ] = $term->slug;
+                $function             = 'get_term_link';
 
             }
         endforeach;
@@ -1067,7 +1072,7 @@ class QtranslateSlug {
     public function hide_quick_edit() {
         echo "<!-- QTS remove quick edit box -->" . PHP_EOL;
         echo "<style media=\"screen\">" . PHP_EOL;
-        echo "  .inline-edit-row fieldset.inline-edit-col-left .inline-edit-col *:first-child + label + label  { display: none !important }" . PHP_EOL;
+        echo "  .inline-edit-row fieldset.inline-edit-col-left .inline-edit-col *:first-child + label { display: none !important }" . PHP_EOL;
         echo "</style>" . PHP_EOL;
     }
 
@@ -1090,44 +1095,14 @@ class QtranslateSlug {
     }
 
     /**
-     * Hide auttomatically the wordpress slug box in edit posts page.
-     * User should still be able to use it if needed.
-     */
-    public function remove_defaultslug_meta_box() {
-
-        if ( is_admin() ) {
-            if ( ! current_user_can( 'manage_options' ) ) {
-                remove_meta_box( 'slugdiv', 'post', 'normal' );
-            }
-        }
-    }
-
-    /**
-     * Creates a metabox for every post, page and post type available.
+     * Creates a metabox for every post type available.
      */
     public function add_slug_meta_box() {
-
-        if ( function_exists( 'add_meta_box' ) ) {
-
-            $context  = apply_filters( "qts_admin_meta_box_context", "side" );
-            $priority = apply_filters( "qts_admin_meta_box_priority", "high" );
-
-            add_meta_box( 'qts_sectionid', __( 'Slugs per language', 'qtranslate' ), array(
-                &$this,
-                'draw_meta_box'
-            ), 'post', $context, $priority );
-            add_meta_box( 'qts_sectionid', __( 'Slugs per language', 'qtranslate' ), array(
-                &$this,
-                'draw_meta_box'
-            ), 'page', $context, $priority );
-
-            foreach ( get_post_types( array( '_builtin' => false ) ) as $ptype ) {
-                add_meta_box( 'qts_sectionid', __( 'Slugs per language', 'qtranslate' ), array(
-                    &$this,
-                    'draw_meta_box'
-                ), $ptype, $context, $priority );
-            }
-        }
+        remove_meta_box( 'slugdiv', null, 'normal' );
+        add_meta_box( 'qts_sectionid', __( 'Slugs per language', 'qtranslate' ), array(
+            &$this,
+            'draw_meta_box'
+        ), null, 'side', 'high' );
     }
 
     /**
@@ -1280,7 +1255,10 @@ class QtranslateSlug {
      *
      * @return void
      */
-    public function save_postdata( $post_id, $post ) {
+    public function save_postdata( $post_id, $post = null ) {
+        if ( is_null( $post ) ) {
+            $post = get_post( $post_id );
+        }
         $post_type_object = get_post_type_object( $post->post_type );
 
         if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )                       // check autosave
@@ -1536,9 +1514,47 @@ class QtranslateSlug {
     }
 
     /**
+     * Helper: returns public taxonomies.
+     *
+     * @return array of public taxonomies objects
+     */
+    public function get_public_taxonomies() {
+        $all_taxonomies = get_taxonomies( array( 'public' => true, 'show_ui' => true ), 'objects' );
+        $taxonomies     = array();
+
+        foreach ( $all_taxonomies as $taxonomy ) {
+            if ( $taxonomy->rewrite ) {
+                $taxonomies[] = $taxonomy;
+            }
+        }
+
+        return $taxonomies;
+    }
+
+    /**
+     * Helper: returns public post_types with rewritable slugs.
+     *
+     * @return array of public post_types objects
+     */
+    public function get_public_post_types() {
+        $all_post_types = get_post_types( array( 'public' => true ), 'objects' );
+        $post_types     = array();
+
+        foreach ( $all_post_types as $post_type ) {
+            if ( $post_type->rewrite ) {
+                $post_types[] = $post_type;
+            }
+        }
+
+        return $post_types;
+    }
+
+    /**
      * Return the current / temp language.
      */
+    //TODO: Check why not using QTX directly
     private function get_lang() {
+        //TODO: check, $this->lang is never supposed to be true...
         return ( $this->lang ) ? $this->lang : $this->current_lang;
     }
 
@@ -1546,6 +1562,7 @@ class QtranslateSlug {
      * Return the current / temp language.
      * we store and use it all the way!
      */
+    //TODO: Check why not using QTX directly. Also it seems to be unused
     private function get_currentlang() {
         return $this->current_lang;
     }
@@ -1554,6 +1571,7 @@ class QtranslateSlug {
      * Return the enabled languages.
      * we store and use it all the way!
      */
+    //TODO: Check why not using QTX directly
     private function get_enabled_languages() {
         return $this->enabled_languages;
     }
@@ -1592,18 +1610,6 @@ class QtranslateSlug {
                 $wp_rewrite->rules = array_merge( $rules, $wp_rewrite->rules );
             endif;
         endforeach;
-    }
-
-    /**
-     * Helper: returns public built-in and not built-in taxonomies.
-     *
-     * @return array of public taxonomies objects
-     */
-    private function get_public_taxonomies() {
-        $builtin    = get_taxonomies( array( 'public' => true, 'show_ui' => true, '_builtin' => true ), 'object' );
-        $taxonomies = get_taxonomies( array( 'public' => true, 'show_ui' => true, '_builtin' => false ), 'object' );
-
-        return array_merge( $builtin, $taxonomies );
     }
 
     /**
