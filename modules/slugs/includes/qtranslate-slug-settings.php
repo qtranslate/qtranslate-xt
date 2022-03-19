@@ -1,7 +1,7 @@
 <?php
 
-// page settings sections & fields as well as the contextual help text.
-include_once( 'qtranslate-slug-settings-options.php' );
+add_action( 'qtranslate_update_settings', 'qts_update_settings' );
+add_action( 'qtranslate_configuration', 'qts_show_settings_page' );
 
 /**
  * Helper function for defining variables for the current page.
@@ -87,7 +87,6 @@ function qts_show_form_field( $args = array() ) {
                 }
                 echo "<label for=" . QTS_OPTIONS_NAME . "[$id|${item[1]}]>" . $item[0] . "</label> " .
                      "<input class='$field_class' type='text' id='$id|${item[1]}' name='" . QTS_OPTIONS_NAME . "[$id|${item[1]}]' value='" . urldecode( $value ) . "' /><br/>";
-                //echo "<span>$item[0]:</span> <input class='$field_class' type='text' id='$id|$item[1]' name='" . QTS_OPTIONS_NAME . "[$id|$item[1]]' value='$value' /><br/>";
             }
             echo ( $desc != '' ) ? "<p class='qtranxs-notes'>$desc</p>" : "";
             break;
@@ -204,8 +203,6 @@ function qts_show_settings_page() {
     }
     QTX_Admin_Settings::close_section( 'slugs' );
 }
-
-add_action( 'qtranslate_configuration', 'qts_show_settings_page' );
 
 /**
  * Validate input.
@@ -356,4 +353,73 @@ function qts_update_settings() {
     $qtranslate_slug->save_options( $qts_settings );
 }
 
-add_action( 'qtranslate_update_settings', 'qts_update_settings' );
+/**
+ * Define our settings sections.
+ *
+ * @return array key=$id, array value=$title in: add_settings_section( $id, $title, $callback, $page );
+ */
+function qts_options_page_sections() {
+    $sections               = array();
+    $sections['post_types'] = __( 'Post types', 'qtranslate' );
+    $sections['taxonomies'] = __( 'Taxonomies', 'qtranslate' );
+
+    return $sections;
+}
+
+/**
+ * Helper for create arrays of choices.
+ *
+ * @return array
+ */
+function get_multi_txt_choices() {
+    global $q_config;
+
+    $choices = array();
+    foreach ( $q_config['enabled_languages'] as $lang ) {
+        $label     = sprintf( __( 'Slug' ) . ' (%s)', $q_config['language_name'][ $lang ] );
+        $choices[] = "$label|$lang"; // prints: 'Slug (English)|en'
+    }
+
+    return $choices;
+}
+
+/**
+ * Define our form fields (settings).
+ *
+ * @return array
+ */
+function qts_options_page_fields() {
+    global $qtranslate_slug;
+    $options = array();
+
+    $post_types = $qtranslate_slug->get_public_post_types();
+    foreach ( $post_types as $post_type ) {
+        $options[] = qts_options_page_build_slug_fields( $post_type, "post_types", "post_type_" );
+    }
+
+    $taxonomies = $qtranslate_slug->get_public_taxonomies();
+    foreach ( $taxonomies as $taxonomy ) {
+        $options[] = qts_options_page_build_slug_fields( $taxonomy, "taxonomies", "taxonomy_" );
+    }
+
+    return array_filter( $options );
+}
+
+function qts_options_page_build_slug_fields( $object, $target_section, $id_prefix ) {
+    if ( is_array( $object->rewrite ) && array_key_exists( 'slug', $object->rewrite ) ) {
+        $slug = ltrim( $object->rewrite['slug'], "/" );
+    } else {
+        $slug = $object->name;
+    }
+
+    return array(
+        "section" => $target_section,
+        "id"      => QTS_PREFIX . $id_prefix . $object->name,
+        "title"   => qtranxf_use( qtranxf_getLanguage(), $object->label ),
+        "desc"    => sprintf( '<code>https://example.org/<u>%s</u>/some-%s/</code>', $slug, $object->name ),
+        'class'   => 'qts-slug', // used in qts_validate_options. TODO: cleaner way to be considered...
+        "type"    => "multi-text",
+        "choices" => get_multi_txt_choices(),
+        "std"     => ""
+    );
+}
