@@ -14,6 +14,7 @@ class QtranslateSlug {
      * Array with old data system.
      * @var bool
      */
+    //TODO: seems to be unused: remove
     private $old_data = null;
 
     /**
@@ -31,17 +32,20 @@ class QtranslateSlug {
     /**
      * Variable for current language.
      */
+    //TODO: Check why not using QTX directly
     private $current_lang = false;
 
     /**
      * Variable for default language.
      */
+    //TODO: Check why not using QTX directly
     private $default_language = false;
 
     /**
      * Array of enabled languages.
      * @var array
      */
+    //TODO: Check why not using QTX directly
     private $enabled_languages = array();
 
     /**
@@ -177,9 +181,9 @@ class QtranslateSlug {
             add_filter( 'wp_get_object_terms', array( &$this, 'get_object_terms' ), 0, 4 );
             add_filter( 'get_terms', array( &$this, 'get_terms' ), 0, 3 );
             // admin actions
-            add_action( 'admin_menu', array( &$this, 'add_slug_meta_box' ) );
-            add_action( 'admin_menu', array( &$this, 'remove_defaultslug_meta_box' ) );
+            add_action( 'add_meta_boxes', array( &$this, 'add_slug_meta_box' ) );
             add_action( 'save_post', array( &$this, 'save_postdata' ), 605, 2 );
+            add_action( 'edit_attachment', array( $this, 'save_postdata' ) );
             add_action( 'created_term', array( &$this, 'save_term' ), 605, 3 );
             add_action( 'edited_term', array( &$this, 'save_term' ), 605, 3 );
             add_action( 'admin_head', array( &$this, 'hide_slug_box' ), 900 );
@@ -1091,44 +1095,14 @@ class QtranslateSlug {
     }
 
     /**
-     * Hide auttomatically the wordpress slug box in edit posts page.
-     * User should still be able to use it if needed.
-     */
-    public function remove_defaultslug_meta_box() {
-
-        if ( is_admin() ) {
-            if ( ! current_user_can( 'manage_options' ) ) {
-                remove_meta_box( 'slugdiv', 'post', 'normal' );
-            }
-        }
-    }
-
-    /**
-     * Creates a metabox for every post, page and post type available.
+     * Creates a metabox for every post type available.
      */
     public function add_slug_meta_box() {
-
-        if ( function_exists( 'add_meta_box' ) ) {
-
-            $context  = apply_filters( "qts_admin_meta_box_context", "side" );
-            $priority = apply_filters( "qts_admin_meta_box_priority", "high" );
-
-            add_meta_box( 'qts_sectionid', __( 'Slugs per language', 'qtranslate' ), array(
-                &$this,
-                'draw_meta_box'
-            ), 'post', $context, $priority );
-            add_meta_box( 'qts_sectionid', __( 'Slugs per language', 'qtranslate' ), array(
-                &$this,
-                'draw_meta_box'
-            ), 'page', $context, $priority );
-
-            foreach ( get_post_types( array( '_builtin' => false ) ) as $ptype ) {
-                add_meta_box( 'qts_sectionid', __( 'Slugs per language', 'qtranslate' ), array(
-                    &$this,
-                    'draw_meta_box'
-                ), $ptype, $context, $priority );
-            }
-        }
+        remove_meta_box( 'slugdiv', null, 'normal' );
+        add_meta_box( 'qts_sectionid', __( 'Slugs per language', 'qtranslate' ), array(
+            &$this,
+            'draw_meta_box'
+        ), null, 'side', 'high' );
     }
 
     /**
@@ -1281,7 +1255,10 @@ class QtranslateSlug {
      *
      * @return void
      */
-    public function save_postdata( $post_id, $post ) {
+    public function save_postdata( $post_id, $post = null ) {
+        if ( is_null( $post ) ) {
+            $post = get_post( $post_id );
+        }
         $post_type_object = get_post_type_object( $post->post_type );
 
         if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )                       // check autosave
@@ -1578,7 +1555,9 @@ class QtranslateSlug {
     /**
      * Return the current / temp language.
      */
+    //TODO: Check why not using QTX directly
     private function get_lang() {
+        //TODO: check, $this->lang is never supposed to be true...
         return ( $this->lang ) ? $this->lang : $this->current_lang;
     }
 
@@ -1586,6 +1565,7 @@ class QtranslateSlug {
      * Return the current / temp language.
      * we store and use it all the way!
      */
+    //TODO: Check why not using QTX directly. Also it seems to be unused
     private function get_currentlang() {
         return $this->current_lang;
     }
@@ -1594,6 +1574,7 @@ class QtranslateSlug {
      * Return the enabled languages.
      * we store and use it all the way!
      */
+    //TODO: Check why not using QTX directly
     private function get_enabled_languages() {
         return $this->enabled_languages;
     }
