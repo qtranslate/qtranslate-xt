@@ -183,7 +183,7 @@ class QtranslateSlug {
             // admin actions
             add_action( 'add_meta_boxes', array( &$this, 'add_slug_meta_box' ) );
             add_action( 'save_post', array( &$this, 'save_postdata' ), 605, 2 );
-            add_action( 'edit_attachment', array( $this, 'save_postdata') );
+            add_action( 'edit_attachment', array( $this, 'save_postdata' ) );
             add_action( 'created_term', array( &$this, 'save_term' ), 605, 3 );
             add_action( 'edited_term', array( &$this, 'save_term' ), 605, 3 );
             add_action( 'admin_head', array( &$this, 'hide_slug_box' ), 900 );
@@ -1093,18 +1093,19 @@ class QtranslateSlug {
                 break;
         endswitch;
     }
+
     /**
      * Creates a metabox for every post type available.
      */
     public function add_slug_meta_box() {
-            $context  = apply_filters( "qts_admin_meta_box_context", "side" );
-            $priority = apply_filters( "qts_admin_meta_box_priority", "high" );
+        $context  = apply_filters( "qts_admin_meta_box_context", "side" );
+        $priority = apply_filters( "qts_admin_meta_box_priority", "high" );
 
-            remove_meta_box( 'slugdiv', null, 'normal' );
-            add_meta_box( 'qts_sectionid', __( 'Slugs per language', 'qtranslate' ), array(
-                &$this,
-                'draw_meta_box'
-            ), null, $context, $priority );
+        remove_meta_box( 'slugdiv', null, 'normal' );
+        add_meta_box( 'qts_sectionid', __( 'Slugs per language', 'qtranslate' ), array(
+            &$this,
+            'draw_meta_box'
+        ), null, $context, $priority );
     }
 
     /**
@@ -1257,10 +1258,9 @@ class QtranslateSlug {
      *
      * @return void
      */
-    public function save_postdata( $post_id, $post=null ) {
-
-        if ( is_null($post) ) {
-            $post=get_post( $post_id );
+    public function save_postdata( $post_id, $post = null ) {
+        if ( is_null( $post ) ) {
+            $post = get_post( $post_id );
         }
         $post_type_object = get_post_type_object( $post->post_type );
 
