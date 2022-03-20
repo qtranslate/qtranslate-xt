@@ -1083,10 +1083,10 @@ class QtranslateSlug {
         global $pagenow;
         switch ( $pagenow ):
             case 'edit-tags.php':
-                $id='tag-slug';
+                $id = 'tag-slug';
                 break;
             case 'term.php':
-                $id='slug';
+                $id = 'slug';
                 break;
             default:
                 return;
@@ -1297,7 +1297,7 @@ class QtranslateSlug {
         echo "<div id=\"form-field term-slug-wrap\">" . PHP_EOL;
         foreach ( $this->enabled_languages as $lang ) {
             echo "<div class=\"form-field\">" . PHP_EOL;
-            $slug = ( is_object( $term ) ) ? get_metadata( 'term', $term->term_id, $this->get_meta_key( $lang ), true ) : '';
+            $slug  = ( is_object( $term ) ) ? get_metadata( 'term', $term->term_id, $this->get_meta_key( $lang ), true ) : '';
             $value = ( $slug ) ? htmlspecialchars( $slug, ENT_QUOTES ) : '';
             echo "<label for=\"qts_{$lang}_slug\">" . sprintf( __( 'Slug' ) . ' (%s)', $q_config['language_name'][ $lang ] ) . "</label>" . PHP_EOL;
             echo "<input type=\"text\" name=\"qts_{$lang}_slug\" value=\"" . urldecode( $value ) . "\" aria-required=\"true\">" . PHP_EOL;
@@ -1306,7 +1306,7 @@ class QtranslateSlug {
         echo '</div>';
     }
 
-       /**
+    /**
      * Display multiple input fields, one per language for edit term page.
      *
      * @param $term string the term object
@@ -1316,7 +1316,7 @@ class QtranslateSlug {
 
         echo "<table class=\"form-table\">" . PHP_EOL;
         foreach ( $this->enabled_languages as $lang ) {
-            $slug = ( is_object( $term ) ) ? get_metadata( 'term', $term->term_id, $this->get_meta_key( $lang ), true ) : '';
+            $slug  = ( is_object( $term ) ) ? get_metadata( 'term', $term->term_id, $this->get_meta_key( $lang ), true ) : '';
             $value = ( $slug ) ? htmlspecialchars( $slug, ENT_QUOTES ) : '';
             echo "<tr class=\"form-field term-slug-wrap\">" . PHP_EOL;
             echo "<th scope=\"row\"><label for=\"qts_{$lang}_slug\">" . sprintf( __( 'Slug' ) . ' (%s)', $q_config['language_name'][ $lang ] ) . "</label></th>" . PHP_EOL;
@@ -1465,6 +1465,7 @@ class QtranslateSlug {
     public function taxonomy_columns( $columns ) {
         unset( $columns['slug'] );
         $columns['qts-slug'] = __( 'Slug' );
+
         return $columns;
     }
 
