@@ -186,7 +186,7 @@ class QtranslateSlug {
             add_action( 'edit_attachment', array( $this, 'save_postdata' ) );
             add_action( 'created_term', array( &$this, 'save_term' ), 605, 3 );
             add_action( 'edited_term', array( &$this, 'save_term' ), 605, 3 );
-            add_action( 'admin_head', array( &$this, 'hide_slug_box' ), 900 );
+            add_action( 'admin_head', array( &$this, 'hide_term_slug_box' ), 900 );
 
             add_action( 'init', array( &$this, 'taxonomies_hooks' ), 805 );
 
@@ -1077,21 +1077,28 @@ class QtranslateSlug {
     }
 
     /**
-     * Hide auttomatically the wordpress slug box in edit terms page.
+     * Hide automatically the wordpress slug box in edit terms page.
      */
-    public function hide_slug_box() {
+    public function hide_term_slug_box() {
         global $pagenow;
         switch ( $pagenow ):
             case 'edit-tags.php':
-                echo "<!-- QTS remove slug box -->" . PHP_EOL;
-                echo "<script type=\"text/javascript\" charset=\"utf-8\">" . PHP_EOL;
-                echo "  jQuery(document).ready(function($){" . PHP_EOL;
-                echo "      $(\"#tag-slug\").parent().hide();" . PHP_EOL;
-                echo "      $(\".form-field td #slug\").parent().parent().hide();" . PHP_EOL;
-                echo "  });" . PHP_EOL;
-                echo "</script>" . PHP_EOL;
+                $id = 'tag-slug';
                 break;
+            case 'term.php':
+                $id = 'slug';
+                break;
+            default:
+                return;
         endswitch;
+
+        echo "<!-- QTS remove slug box -->" . PHP_EOL;
+        echo "<script type=\"text/javascript\" charset=\"utf-8\">" . PHP_EOL;
+        echo "  jQuery(document).ready(function($){" . PHP_EOL;
+        echo "      $(\"#" . $id . "\").parent().hide();" . PHP_EOL;
+        echo "      $(\".form-field td #slug\").parent().parent().hide();" . PHP_EOL;
+        echo "  });" . PHP_EOL;
+        echo "</script>" . PHP_EOL;
     }
 
     /**
@@ -1153,11 +1160,11 @@ class QtranslateSlug {
 
         //TODO: if has a slug, test and use it
         //TODO: and then replace the default slug with the dafault language slug
-        $name = ( $post_title == '' || strlen( $post_title ) == 0 ) ? $post_name : $post_title;
+        $name = ( $post_title === '' ) ? $post_name : $post_title;
 
         $slug = trim( $slug );
 
-        $slug = ( empty( $slug ) ) ? sanitize_title( $name ) : sanitize_title( $slug );
+        $slug = ( $slug === '' ) ? sanitize_title( $name ) : sanitize_title( $slug );
 
         return htmlspecialchars( $slug, ENT_QUOTES );
     }
@@ -1280,50 +1287,42 @@ class QtranslateSlug {
     }
 
     /**
-     * Display multiple input fields, one per language.
+     * Display multiple input fields, one per language for add term page.
      *
      * @param $term string the term object
      */
-    public function show_term_fields( $term ) {
-        global $q_config; //TODO: q_config  : language_name
+    public function show_add_term_fields( $term ) {
+        global $q_config;
 
-        // prints the fields in edit page
-        if ( isset( $_GET['action'] ) && $_GET['action'] == 'edit' ):
-            echo "<table class=\"form-table\">" . PHP_EOL;
-            echo "<input type=\"hidden\" name=\"qts_nonce\" id=\"qts_nonce\" value=\"" . wp_create_nonce( 'qts_nonce' ) . "\" />" . PHP_EOL;
+        echo "<div id=\"form-field term-slug-wrap\">" . PHP_EOL;
+        foreach ( $this->enabled_languages as $lang ) {
+            echo "<div class=\"form-field\">" . PHP_EOL;
+            $slug  = ( is_object( $term ) ) ? get_metadata( 'term', $term->term_id, $this->get_meta_key( $lang ), true ) : '';
+            $value = ( $slug ) ? htmlspecialchars( $slug, ENT_QUOTES ) : '';
+            echo "<label for=\"qts_{$lang}_slug\">" . sprintf( __( 'Slug' ) . ' (%s)', $q_config['language_name'][ $lang ] ) . "</label>" . PHP_EOL;
+            echo "<input type=\"text\" name=\"qts_{$lang}_slug\" value=\"" . urldecode( $value ) . "\" aria-required=\"true\">" . PHP_EOL;
+            echo '</div>';
+        }
+        echo '</div>';
+    }
 
-            foreach ( $this->enabled_languages as $lang ) {
+    /**
+     * Display multiple input fields, one per language for edit term page.
+     *
+     * @param $term string the term object
+     */
+    public function show_edit_term_fields( $term ) {
+        global $q_config;
 
-                $slug = ( is_object( $term ) ) ? get_metadata( 'term', $term->term_id, $this->get_meta_key( $lang ), true ) : '';
-
-                $value = ( $slug ) ? htmlspecialchars( $slug, ENT_QUOTES ) : '';
-
-                echo "<tr class=\"form-field form-required\">" . PHP_EOL;
-                echo "<th scope=\"row\"><label for=\"qts_{$lang}_slug\">" . sprintf( __( 'Slug' ) . ' (%s)', $q_config['language_name'][ $lang ] ) . "</label></th>" . PHP_EOL;
-                echo "<td><input type=\"text\" name=\"qts_{$lang}_slug\" value=\"" . urldecode( $value ) . "\" /></td></tr>" . PHP_EOL;
-
-            }
-
-            echo '</table>';
-
-        // prints the fields in new page
-        else:
-            echo "<input type=\"hidden\" name=\"qts_nonce\" id=\"qts_nonce\" value=\"" . wp_create_nonce( 'qts_nonce' ) . "\" />" . PHP_EOL;
-            echo "<div id=\"qts_term_slugs\"><div class=\"qts_term_block\">" . PHP_EOL;
-            foreach ( $this->enabled_languages as $lang ) {
-
-                echo "<div class=\"form-field\">" . PHP_EOL;
-
-                $slug = ( is_object( $term ) ) ? get_metadata( 'term', $term->term_id, $this->get_meta_key( $lang ), true ) : '';
-
-                $value = ( $slug ) ? htmlspecialchars( $slug, ENT_QUOTES ) : '';
-
-                echo "<label for=\"qts_{$lang}_slug\">" . sprintf( __( 'Slug' ) . ' (%s)', $q_config['language_name'][ $lang ] ) . "</label>" . PHP_EOL;
-                echo "<input type=\"text\" name=\"qts_{$lang}_slug\" value=\"" . urldecode( $value ) . "\" aria-required=\"true\">" . PHP_EOL;
-                echo '</div>';
-            }
-            echo '</div></div>';
-        endif;
+        echo "<table class=\"form-table\">" . PHP_EOL;
+        foreach ( $this->enabled_languages as $lang ) {
+            $slug  = ( is_object( $term ) ) ? get_metadata( 'term', $term->term_id, $this->get_meta_key( $lang ), true ) : '';
+            $value = ( $slug ) ? htmlspecialchars( $slug, ENT_QUOTES ) : '';
+            echo "<tr class=\"form-field term-slug-wrap\">" . PHP_EOL;
+            echo "<th scope=\"row\"><label for=\"qts_{$lang}_slug\">" . sprintf( __( 'Slug' ) . ' (%s)', $q_config['language_name'][ $lang ] ) . "</label></th>" . PHP_EOL;
+            echo "<td><input type=\"text\" name=\"qts_{$lang}_slug\" value=\"" . urldecode( $value ) . "\" /></td></tr>" . PHP_EOL;
+        }
+        echo "</table>";
     }
 
     /**
@@ -1336,27 +1335,12 @@ class QtranslateSlug {
      * @return string the slug validated
      */
     public function validate_term_slug( $slug, $term, $lang ) {
-
-        global $q_config; //TODO: q_config  : term_name
-
-        $term_key = qtranxf_split( $term->name );
-        // after split we will get array (with language code as a key )
-
-        $term_key = $term_key[ $this->default_language ];
-
-        $name_in_lang = $q_config['term_name'][ $term_key ][ $lang ];
-
-        $ajax_name = 'new' . $term->taxonomy;
-        $post_name = isset( $_POST['name'] ) ? $_POST['name'] : '';
-        $term_name = isset( $_POST[ $ajax_name ] ) ? trim( $_POST[ $ajax_name ] ) : $post_name;
-
-        if ( empty( $term_name ) ) {
-            return $slug;
+        $term_name = trim( qtranxf_use( $lang, $term->name, false, true ) );
+        if ( $term_name === '' ) {
+            $term_name = trim( qtranxf_use( $this->default_language, $term->name ) );
         }
-
-        $name = ( $name_in_lang == '' || strlen( $name_in_lang ) == 0 ) ? $term_name : $name_in_lang;
         $slug = trim( $slug );
-        $slug = ( empty( $slug ) ) ? sanitize_title( $name ) : sanitize_title( $slug );
+        $slug = $slug === '' ? sanitize_title( $term_name ) : sanitize_title( $slug );
 
         return htmlspecialchars( $slug, ENT_QUOTES );
     }
@@ -1424,41 +1408,14 @@ class QtranslateSlug {
         $term = get_term( $term_id, $taxonomy );
         foreach ( $this->get_enabled_languages() as $lang ) {
             $meta_name = $this->get_meta_key( $lang );
-
-            //43LC: when at the post edit screen and creating a new tag
-            // the $slug comes from $_POST with the value of the post slug,
-            // not with the term slug.
-            if ( $_POST['action'] == "editpost" ) {
-                // so we use the slug wp gave it
-                $term_slug = $term->slug;
-            } else {
-                // otherwise, its the edit term screen
-                $term_slug = $_POST["qts_{$lang}_slug"];
-            }
+            //condition is needed in case term is added through ajax e.g. in post edit page
+            $term_slug = isset( $_POST["qts_{$lang}_slug"] ) ? $_POST["qts_{$lang}_slug"] : '';
 
             $meta_value = apply_filters( 'qts_validate_term_slug', $term_slug, $term, $lang );
 
             delete_metadata( 'term', $term_id, $meta_name );
             update_metadata( 'term', $term_id, $meta_name, $meta_value );
         }
-    }
-
-    /**
-     * Creates and prints the forms and hides the default fields.
-     *
-     * @param object $term the term object
-     * TODO: change Slug column and View link
-     * TODO: move code into js file
-     */
-    public function qts_modify_term_form( $term ) {
-        echo "<script type=\"text/javascript\">\n// <![CDATA[\r\n";
-        echo "
-		var slugforms = jQuery('#qts_term_slugs').html();
-		jQuery('#slug').parent().html(slugforms)\n;
-		console.log(slugforms);
-		
-		";
-        echo "// ]]>\n</script>\n";
     }
 
     /**
@@ -1470,10 +1427,8 @@ class QtranslateSlug {
 
         if ( $taxonomies ) {
             foreach ( $taxonomies as $taxonomy ) {
-                add_action( $taxonomy->name . '_add_form', array( &$this, 'qts_modify_term_form' ) );
-                add_action( $taxonomy->name . '_edit_form', array( &$this, 'qts_modify_term_form' ) );
-                add_action( $taxonomy->name . '_add_form_fields', array( &$this, 'show_term_fields' ) );
-                add_action( $taxonomy->name . '_edit_form_fields', array( &$this, 'show_term_fields' ) );
+                add_action( $taxonomy->name . '_add_form_fields', array( &$this, 'show_add_term_fields' ) );
+                add_action( $taxonomy->name . '_edit_form_fields', array( &$this, 'show_edit_term_fields' ) );
                 add_filter( 'manage_edit-' . $taxonomy->name . '_columns', array( &$this, 'taxonomy_columns' ) );
                 add_filter( 'manage_' . $taxonomy->name . '_custom_column', array(
                     &$this,
@@ -1485,10 +1440,7 @@ class QtranslateSlug {
 
     public function taxonomy_columns( $columns ) {
         unset( $columns['slug'] );
-        unset( $columns['posts'] );
-
         $columns['qts-slug'] = __( 'Slug' );
-        $columns['posts']    = __( 'Posts' );
 
         return $columns;
     }
@@ -1889,105 +1841,5 @@ class QtranslateSlug {
         } else {
             return $term;
         }
-    }
-
-    /**
-     * Helper for qts_modify_term_form_for.
-     *
-     * @param string $id the term id
-     * @param object #term the term
-     * @param string $language the term name
-     * @param string $action the term name
-     *
-     * @return string $html the new input fields
-     * TODO: use DocumentFragment
-     */
-    private function qts_insert_term_input( $id, $name, $termname, $language, $action ) {
-        global $q_config; //TODO: q_config  : language_name, term_name
-        $html = "";
-        if ( $action === "new" ) {
-            $html = "
-	        var il = document.getElementsByTagName('input'),
-	        	 d = document.createElement('div'),
-                 l = document.createTextNode('" . $name . " (" . $q_config['language_name'][ $language ] . ")'),
-	            ll = document.createElement('label'),
-	             i = document.createElement('input'),
-	           ins = null;
-	        for(var j = 0; j < il.length; j++) {
-	            if(il[j].id=='" . $id . "') {
-	                ins = il[j];
-	                break;
-	            }
-	        }
-	        i.type = 'text';
-	        i.id = i.name = ll.htmlFor ='qtrans_term_" . $language . "';
-	    ";
-        } elseif ( $action === "edit" ) {
-            $html = "
-	        var tr = document.createElement('tr'),
-	            th = document.createElement('th'),
-	            ll = document.createElement('label'),
-	             l = document.createTextNode('" . $name . " (" . $q_config['language_name'][ $language ] . ")'),
-	            td = document.createElement('td'),
-	             i = document.createElement('input'),
-	           ins = document.getElementById('" . $id . "');
-	        i.type = 'text';
-	        i.id = i.name = ll.htmlFor ='qtrans_term_" . $language . "';
-	    ";
-        }
-        if ( isset( $q_config['term_name'][ $termname ][ $language ] ) ) {
-            $html .= "
-		     i.value = '" . addslashes( htmlspecialchars_decode( $q_config['term_name'][ $termname ][ $language ], ENT_QUOTES ) ) . "';";
-            //43LC: applied ENT_QUOTES to both edit and new forms.
-        } else {
-            $html .= "
-			  if (ins != null)
-				  i.value = ins.value;
-			  ";
-        }
-
-        if ( $language == $this->default_language ) {
-            $html .= "
-				i.onchange = function() { 
-					var il = document.getElementsByTagName('input'),
-					   ins = null;
-					for(var j = 0; j < il.length; j++) {
-						if(il[j].id=='" . $id . "') {
-							ins = il[j];
-							break;
-						}
-					}
-					if (ins != null)
-						ins.value = document.getElementById('qtrans_term_" . $language . "').value;
-				};
-				";
-        }
-        if ( $action === "new" ) {
-            $html .= "
-	        if (ins != null)
-	            ins = ins.parentNode;
-	        d.className = 'form-field form-required';
-	        ll.appendChild(l);
-	        d.appendChild(ll);
-	        d.appendChild(i);
-	        if (ins != null)
-	            ins.parentNode.insertBefore(d,ins);
-	        ";
-        } elseif ( $action === "edit" ) {
-            $html .= "
-	        ins = ins.parentNode.parentNode;
-	        tr.className = 'form-field form-required';
-	        th.scope = 'row';
-	        th.vAlign = 'top';
-	        ll.appendChild(l);
-	        th.appendChild(ll);
-	        tr.appendChild(th);
-	        td.appendChild(i);
-	        tr.appendChild(td);
-	        ins.parentNode.insertBefore(tr,ins);
-	        ";
-        }
-
-        return $html;
     }
 }
