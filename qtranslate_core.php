@@ -1130,7 +1130,7 @@ function qtranxf_convertURL( $url = '', $lang = '', $forceadmin = false, $showDe
     }
     $showLanguage = $showDefaultLanguage || $lang != $q_config['default_language'];
 
-    $url = apply_filters( 'qtranslate_convert_url_before', $url, $lang );
+    $url = apply_filters( 'qtranslate_convert_url', $url, $lang );
 
     $complete     = qtranxf_get_url_for_language( $url, $lang, $showLanguage );
 
