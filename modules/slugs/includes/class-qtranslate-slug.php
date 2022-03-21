@@ -1160,11 +1160,11 @@ class QtranslateSlug {
 
         //TODO: if has a slug, test and use it
         //TODO: and then replace the default slug with the dafault language slug
-        $name = ( $post_title == '' || strlen( $post_title ) == 0 ) ? $post_name : $post_title;
+        $name = ( $post_title === '' ) ? $post_name : $post_title;
 
         $slug = trim( $slug );
 
-        $slug = ( empty( $slug ) ) ? sanitize_title( $name ) : sanitize_title( $slug );
+        $slug = ( $slug === '' ) ? sanitize_title( $name ) : sanitize_title( $slug );
 
         return htmlspecialchars( $slug, ENT_QUOTES );
     }
@@ -1335,27 +1335,12 @@ class QtranslateSlug {
      * @return string the slug validated
      */
     public function validate_term_slug( $slug, $term, $lang ) {
-
-        global $q_config; //TODO: q_config  : term_name
-
-        $term_key = qtranxf_split( $term->name );
-        // after split we will get array (with language code as a key )
-
-        $term_key = $term_key[ $this->default_language ];
-
-        $name_in_lang = $q_config['term_name'][ $term_key ][ $lang ];
-
-        $ajax_name = 'new' . $term->taxonomy;
-        $post_name = isset( $_POST['name'] ) ? $_POST['name'] : '';
-        $term_name = isset( $_POST[ $ajax_name ] ) ? trim( $_POST[ $ajax_name ] ) : $post_name;
-
-        if ( empty( $term_name ) ) {
-            return $slug;
+        $term_name = trim( qtranxf_use( $lang, $term->name, false, true ) );
+        if ( $term_name === '' ) {
+             $term_name = trim( qtranxf_use( $this->default_language, $term->name ) );
         }
-
-        $name = ( $name_in_lang == '' || strlen( $name_in_lang ) == 0 ) ? $term_name : $name_in_lang;
         $slug = trim( $slug );
-        $slug = ( empty( $slug ) ) ? sanitize_title( $name ) : sanitize_title( $slug );
+        $slug = $slug === '' ? sanitize_title( $term_name ) : sanitize_title( $slug );
 
         return htmlspecialchars( $slug, ENT_QUOTES );
     }
@@ -1423,17 +1408,8 @@ class QtranslateSlug {
         $term = get_term( $term_id, $taxonomy );
         foreach ( $this->get_enabled_languages() as $lang ) {
             $meta_name = $this->get_meta_key( $lang );
-
-            //43LC: when at the post edit screen and creating a new tag
-            // the $slug comes from $_POST with the value of the post slug,
-            // not with the term slug.
-            if ( $_POST['action'] == "editpost" ) {
-                // so we use the slug wp gave it
-                $term_slug = $term->slug;
-            } else {
-                // otherwise, its the edit term screen
-                $term_slug = $_POST["qts_{$lang}_slug"];
-            }
+            //condition is needed in case term is added through ajax e.g. in post edit page
+            $term_slug=isset($_POST["qts_{$lang}_slug"])?$_POST["qts_{$lang}_slug"]:'';
 
             $meta_value = apply_filters( 'qts_validate_term_slug', $term_slug, $term, $lang );
 
