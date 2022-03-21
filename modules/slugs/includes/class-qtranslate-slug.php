@@ -1337,7 +1337,7 @@ class QtranslateSlug {
     public function validate_term_slug( $slug, $term, $lang ) {
         $term_name = trim( qtranxf_use( $lang, $term->name, false, true ) );
         if ( $term_name === '' ) {
-             $term_name = trim( qtranxf_use( $this->default_language, $term->name ) );
+            $term_name = trim( qtranxf_use( $this->default_language, $term->name ) );
         }
         $slug = trim( $slug );
         $slug = $slug === '' ? sanitize_title( $term_name ) : sanitize_title( $slug );
@@ -1409,7 +1409,7 @@ class QtranslateSlug {
         foreach ( $this->get_enabled_languages() as $lang ) {
             $meta_name = $this->get_meta_key( $lang );
             //condition is needed in case term is added through ajax e.g. in post edit page
-            $term_slug=isset($_POST["qts_{$lang}_slug"])?$_POST["qts_{$lang}_slug"]:'';
+            $term_slug = isset( $_POST["qts_{$lang}_slug"] ) ? $_POST["qts_{$lang}_slug"] : '';
 
             $meta_value = apply_filters( 'qts_validate_term_slug', $term_slug, $term, $lang );
 
