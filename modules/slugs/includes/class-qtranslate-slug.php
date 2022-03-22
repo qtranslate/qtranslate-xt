@@ -11,13 +11,6 @@ class QtranslateSlug {
     protected $options;
 
     /**
-     * Array with old data system.
-     * @var bool
-     */
-    //TODO: seems to be unused: remove
-    private $old_data = null;
-
-    /**
      * Stores permalink_structure option, for save queries to db.
      * @var string
      */
@@ -28,25 +21,6 @@ class QtranslateSlug {
      * @var string
      */
     private $lang = false;
-
-    /**
-     * Variable for current language.
-     */
-    //TODO: Check why not using QTX directly
-    private $current_lang = false;
-
-    /**
-     * Variable for default language.
-     */
-    //TODO: Check why not using QTX directly
-    private $default_language = false;
-
-    /**
-     * Array of enabled languages.
-     * @var array
-     */
-    //TODO: Check why not using QTX directly
-    private $enabled_languages = array();
 
     /**
      * Slug in meta_key name in meta tables.
@@ -167,10 +141,6 @@ class QtranslateSlug {
         if ( is_admin() ) {
             include_once( dirname( __FILE__ ) . '/qtranslate-slug-settings.php' );
         }
-        // until we get  a proper function, this will make it for it.
-        $this->current_lang      = $q_config['language'];
-        $this->enabled_languages = $q_config['enabled_languages'];
-        $this->default_language  = $q_config['default_language'];
 
         if ( is_admin() ) {
             // add filters
@@ -240,12 +210,14 @@ class QtranslateSlug {
      * @global array $q_config available languages
      */
     public function qtranslate_slug_header_extended() {
+        global $q_config;
         if ( is_404() ) {
             return;
         }
+        //TODO: double check following comment:
         // taken from qtx but see our #341 ticket for clarification
-        echo '<link hreflang="x-default" href="' . esc_url( $this->get_current_url( $this->default_language ) ) . '" rel="alternate" />' . PHP_EOL;
-        foreach ( $this->get_enabled_languages() as $language ) {
+        echo '<link hreflang="x-default" href="' . esc_url( $this->get_current_url( $q_config['default_language'] ) ) . '" rel="alternate" />' . PHP_EOL;
+        foreach ( $q_config['enabled_languages'] as $language ) {
 
             echo '<link hreflang="' . $language . '" href="' . esc_url( $this->get_current_url( $language ) ) . '" rel="alternate" />' . "\n";
         }
@@ -499,6 +471,7 @@ class QtranslateSlug {
      * @return array $query processed
      */
     function filter_request( $query ) {
+        global $q_config;
         global $wp;
         // FIXME: why is this here? it breaks custom variables getter
         // https://wordpress.org/support/topic/cant-retrieve-public-query-variables
@@ -618,7 +591,7 @@ class QtranslateSlug {
 
         if ( isset( $function ) ) {
             // parse all languages links
-            foreach ( $this->get_enabled_languages() as $lang ) {
+            foreach ( $q_config['enabled_languages'] as $lang ) {
 
                 $this->lang                 = $lang;
                 $this->current_url[ $lang ] = esc_url( apply_filters( 'qts_url_args', call_user_func( $function, $id ) ) );
@@ -661,6 +634,7 @@ class QtranslateSlug {
      * @return string Home url link with optional path appended.
      */
     public function home_url( $url, $path, $scheme, $blog_id ) {
+        global $q_config;
         if ( ! in_array( $scheme, array( 'http', 'https' ) ) ) {
             $scheme = is_ssl() && ! is_admin() ? 'https' : 'http';
         }
@@ -1124,7 +1098,7 @@ class QtranslateSlug {
         echo "<table style=\"width:100%\">" . PHP_EOL;
         echo "<input type=\"hidden\" name=\"qts_nonce\" id=\"qts_nonce\" value=\"" . wp_create_nonce( 'qts_nonce' ) . "\" />" . PHP_EOL;
 
-        foreach ( $this->enabled_languages as $lang ):
+        foreach ( $q_config['enabled_languages'] as $lang ):
 
             $slug = get_post_meta( $post->ID, $this->get_meta_key( $lang ), true );
 
@@ -1263,6 +1237,7 @@ class QtranslateSlug {
      * @return void
      */
     public function save_postdata( $post_id, $post = null ) {
+        global $q_config;
         if ( is_null( $post ) ) {
             $post = get_post( $post_id );
         }
@@ -1274,7 +1249,7 @@ class QtranslateSlug {
              || ( ! current_user_can( $post_type_object->cap->edit_post, $post_id ) ) ) {  // check permission
             return;
         }
-        foreach ( $this->get_enabled_languages() as $lang ) {
+        foreach ( $q_config['enabled_languages'] as $lang ) {
 
             // check required because it is not available inside quick edit
             if ( isset( $_POST["qts_{$lang}_slug"] ) ) {
@@ -1295,7 +1270,7 @@ class QtranslateSlug {
         global $q_config;
 
         echo "<div id=\"form-field term-slug-wrap\">" . PHP_EOL;
-        foreach ( $this->enabled_languages as $lang ) {
+        foreach ( $q_config['enabled_languages'] as $lang ) {
             echo "<div class=\"form-field\">" . PHP_EOL;
             $slug  = ( is_object( $term ) ) ? get_metadata( 'term', $term->term_id, $this->get_meta_key( $lang ), true ) : '';
             $value = ( $slug ) ? htmlspecialchars( $slug, ENT_QUOTES ) : '';
@@ -1315,7 +1290,7 @@ class QtranslateSlug {
         global $q_config;
 
         echo "<table class=\"form-table\">" . PHP_EOL;
-        foreach ( $this->enabled_languages as $lang ) {
+        foreach ( $q_config['enabled_languages'] as $lang ) {
             $slug  = ( is_object( $term ) ) ? get_metadata( 'term', $term->term_id, $this->get_meta_key( $lang ), true ) : '';
             $value = ( $slug ) ? htmlspecialchars( $slug, ENT_QUOTES ) : '';
             echo "<tr class=\"form-field term-slug-wrap\">" . PHP_EOL;
@@ -1337,7 +1312,7 @@ class QtranslateSlug {
     public function validate_term_slug( $slug, $term, $lang ) {
         $term_name = trim( qtranxf_use( $lang, $term->name, false, true ) );
         if ( $term_name === '' ) {
-            $term_name = trim( qtranxf_use( $this->default_language, $term->name ) );
+            $term_name = trim( qtranxf_use( $q_config['default_language'], $term->name ) );
         }
         $slug = trim( $slug );
         $slug = $slug === '' ? sanitize_title( $term_name ) : sanitize_title( $slug );
@@ -1397,6 +1372,7 @@ class QtranslateSlug {
      * @return void
      */
     public function save_term( $term_id, $tt_id, $taxonomy ) {
+        global $q_config;
         $cur_screen = get_current_screen();
         if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )  // check autosave
              || ( ! current_user_can( 'edit_posts' ) ) // check permission
@@ -1406,7 +1382,7 @@ class QtranslateSlug {
         }
 
         $term = get_term( $term_id, $taxonomy );
-        foreach ( $this->get_enabled_languages() as $lang ) {
+        foreach ( $q_config['enabled_languages'] as $lang ) {
             $meta_name = $this->get_meta_key( $lang );
             //condition is needed in case term is added through ajax e.g. in post edit page
             $term_slug = isset( $_POST["qts_{$lang}_slug"] ) ? $_POST["qts_{$lang}_slug"] : '';
@@ -1507,28 +1483,9 @@ class QtranslateSlug {
     /**
      * Return the current / temp language.
      */
-    //TODO: Check why not using QTX directly
     private function get_lang() {
-        //TODO: check, $this->lang is never supposed to be true...
-        return ( $this->lang ) ? $this->lang : $this->current_lang;
-    }
-
-    /**
-     * Return the current / temp language.
-     * we store and use it all the way!
-     */
-    //TODO: Check why not using QTX directly. Also it seems to be unused
-    private function get_currentlang() {
-        return $this->current_lang;
-    }
-
-    /**
-     * Return the enabled languages.
-     * we store and use it all the way!
-     */
-    //TODO: Check why not using QTX directly
-    private function get_enabled_languages() {
-        return $this->enabled_languages;
+        global $q_config;
+        return ( $this->lang ) ? $this->lang : $q_config['language'];
     }
 
     /**
@@ -1548,9 +1505,10 @@ class QtranslateSlug {
      * @param string $name name of extra permastruct
      */
     private function generate_extra_rules( $name = false ) {
+        global $q_config;
         global $wp_rewrite;
 
-        foreach ( $this->get_enabled_languages() as $lang ):
+        foreach ( $q_config['enabled_languages'] as $lang ):
             if ( $base = $this->get_base_slug( $name, $lang ) ):
                 $struct = $wp_rewrite->extra_permastructs[ $name ];
                 if ( is_array( $struct ) ) {
