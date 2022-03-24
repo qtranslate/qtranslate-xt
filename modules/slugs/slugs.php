@@ -13,12 +13,15 @@ if ( ! defined( "QTS_META_PREFIX" ) ) {
 // Init the module
 
 include_once( dirname( __FILE__ ) . '/includes/class-qtranslate-slug.php' );
+include_once( dirname( __FILE__ ) . '/includes/qtranslate-slug-utils.php' );
 
 global $qtranslate_slug;
 $qtranslate_slug = new QtranslateSlug();
 
-include_once( dirname( __FILE__ ) . '/includes/qtranslate-slug-utils.php' );
-include_once( dirname( __FILE__ ) . '/includes/qtranslate-slug-admin.php' );
+
+if ( is_admin() ) {
+    include_once( dirname( __FILE__ ) . '/includes/qtranslate-slug-admin.php' );
+}
 
 // plugin init
 add_action( 'plugins_loaded', array( $qtranslate_slug, 'init' ) );
