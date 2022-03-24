@@ -350,6 +350,7 @@ function qts_update_settings() {
     if ( isset( $_POST[ QTS_OPTIONS_NAME ] ) ) {
         $qts_settings = qts_validate_options( $_POST[ QTS_OPTIONS_NAME ] );
     }
+    
     $qtranslate_slug->save_options( $qts_settings );
 }
 
