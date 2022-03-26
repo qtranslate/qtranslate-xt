@@ -528,12 +528,12 @@ function qtranxf_updateSetting( $var, $type = QTX_STRING, $def = null ) {
     qtranxf_update_setting( $var, $type, $def );
 }
 
-function qtranxf_update_setting( $var, $type = QTX_STRING, $def = null ) {
+function qtranxf_update_setting( $var, $type = QTX_STRING, $def = null, $bool_allowed = false ) {
     global $q_config, $qtranslate_options;
     if ( ! isset( $_POST['submit'] ) ) {
         return false;
     }
-    if ( ! isset( $_POST[ $var ] ) && $type != QTX_BOOLEAN ) {
+    if ( ! isset( $_POST[ $var ] ) && $type != QTX_BOOLEAN && ! $bool_allowed ) {
         return false;
     }
 
@@ -596,10 +596,14 @@ function qtranxf_update_setting( $var, $type = QTX_STRING, $def = null ) {
 
             return true;
         case QTX_ARRAY:
-            $val = $_POST[ $var ];
-            if ( ! is_array( $_POST[ $var ] ) ) {
-                $val = sanitize_text_field( $val );
-                $val = preg_split( '/[\s,]+/', $val, -1, PREG_SPLIT_NO_EMPTY );
+            if ( isset($_POST[ $var ] ) ){
+                $val=$_POST[ $var ];
+                if ( ! is_array( $_POST[ $var ] ) ) {
+                    $val = sanitize_text_field( $val );
+                    $val = preg_split( '/[\s,]+/', $val, -1, PREG_SPLIT_NO_EMPTY );
+                }
+            }else{
+                $val='';
             }
             if ( empty( $val ) && ! is_null( $def ) ) {
                 if ( is_string( $def ) ) {
@@ -807,6 +811,7 @@ function qtranxf_update_settings() {
         qtranxf_update_setting( $name, QTX_ARRAY, $default );
     }
     qtranxf_update_setting( 'filter_options', QTX_ARRAY );
+    qtranxf_update_setting( 'ma_module_enabled', QTX_ARRAY, null, true );
 
     switch ( $q_config['url_mode'] ) {
         case QTX_URL_DOMAIN:

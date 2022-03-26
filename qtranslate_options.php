@@ -86,7 +86,6 @@ function qtranxf_set_default_options( &$ops ) {
         'hide_default_language'          => true,   // hide language tag for default language in urls
         'use_secure_cookie'              => false,
         'header_css_on'                  => true,
-        'slugs_enabled'                  => false,
     );
 
     // single line options
@@ -115,6 +114,7 @@ function qtranxf_set_default_options( &$ops ) {
         'filter_options'         => QTX_FILTER_OPTIONS_DEFAULT, // array
         'ignore_file_types'      => QTX_IGNORE_FILE_TYPES,  // array
         'domains'                => null,   // array
+        'ma_module_enabled'  => QTX_Modules_Handler::ma_modules_default_options(),
     );
 
     // must have function 'qtranxf_default_option_name()' which returns a default value for option 'option_name'.
