@@ -157,6 +157,7 @@ class QTX_Admin_Modules {
         $infos           = array();
         foreach ( $module_defs as $module_def ) {
             $info         = array();
+            $info['id']   = $module_def['id'];
             $info['name'] = $module_def['name'];
             $status       = array_key_exists( $module_def['id'], $options_modules ) ? $options_modules[ $module_def['id'] ] : QTX_MODULE_STATUS_UNDEFINED;
             switch ( $status ) {

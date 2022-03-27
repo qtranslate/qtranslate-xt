@@ -528,12 +528,12 @@ function qtranxf_updateSetting( $var, $type = QTX_STRING, $def = null ) {
     qtranxf_update_setting( $var, $type, $def );
 }
 
-function qtranxf_update_setting( $var, $type = QTX_STRING, $def = null, $bool_allowed = false ) {
+function qtranxf_update_setting( $var, $type = QTX_STRING, $def = null, $bool_elements_array = false ) {
     global $q_config, $qtranslate_options;
     if ( ! isset( $_POST['submit'] ) ) {
         return false;
     }
-    if ( ! isset( $_POST[ $var ] ) && $type != QTX_BOOLEAN && ! $bool_allowed ) {
+    if ( ! isset( $_POST[ $var ] ) && $type != QTX_BOOLEAN && ! $bool_elements_array ) {
         return false;
     }
 

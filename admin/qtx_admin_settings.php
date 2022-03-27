@@ -259,6 +259,7 @@ class QTX_Admin_Settings {
         $admin_sections['import']      = __( 'Import', 'qtranslate' ) . '/' . __( 'Export', 'qtranslate' );
         $admin_sections['languages']   = __( 'Languages', 'qtranslate' );
 
+        //TODO: this actually assumes every manual activation module has settings, dedicated key to be added if that is not the case...
         if ( isset( $q_config['ma_module_enabled'] ) ) {
             foreach ( $q_config['ma_module_enabled'] as $module_id => $module_enabled ) {
                 if ( ! $module_enabled ) {
@@ -743,7 +744,17 @@ class QTX_Admin_Settings {
                         foreach ( $modules as $module ):
                             ?>
                             <tr>
-                                <td><?php echo $module['name'] ?></td>
+                                <td>
+                                    <?php if ( isset( $q_config['ma_module_enabled'][ $module['id'] ] ) ) : ?>
+                                        <label for="ma_module_enabled_<?php echo $module['id']; ?>">
+                                            <input type="checkbox"
+                                                   name="ma_module_enabled[<?php echo $module['id']; ?>]"
+                                                   id="ma_module_enabled_<?php echo $module['id']; ?>"
+                                                   value="1"<?php checked( $q_config['ma_module_enabled'][ $module['id'] ] ) ?>/>
+                                            <?php echo $module['name']; ?>
+                                        </label>
+                                    <?php else: echo $module['name']; endif; ?>
+                                </td>
                                 <td><?php echo $module['plugin'] ?></td>
                                 <td><?php echo $module['module'] ?></td>
                                 <td style="color: <?php echo $module['color'] ?>">
@@ -755,25 +766,6 @@ class QTX_Admin_Settings {
                     </table>
                 </td>
             </tr>
-            <?php
-            foreach ( $q_config['ma_module_enabled'] as $module_id => $module_enabled ):
-                $module = QTX_Modules_Handler::get_module_def_by_id( $module_id );
-                ?>
-                <tr>
-                    <th scope="row"><?php echo $module['name']; ?></th>
-                    <td>
-                        <label for="ma_module_enabled_<?php echo $module_id; ?>">
-                            <input type="checkbox" name="ma_module_enabled[<?php echo $module_id; ?>]"
-                                   id="ma_module_enabled_<?php echo $module_id; ?>"
-                                   value="1"<?php checked( $module_enabled ) ?>/>&nbsp;<?php echo $module['ma_checkbox_text']; ?>
-                        </label>
-                        <p class="qtranxs-notes"> <?php echo $module['ma_checkbox_notes']; ?>
-                        </p>
-                    </td>
-                </tr>
-            <?php
-            endforeach;
-            ?>
             <tr>
                 <th scope="row"><?php _e( 'Configuration Files', 'qtranslate' ) ?></th>
                 <td><label for="qtranxs_config_files"
