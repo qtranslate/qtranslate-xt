@@ -4,6 +4,9 @@ define( 'QTX_MODULE_STATUS_UNDEFINED', 0 );
 define( 'QTX_MODULE_STATUS_ACTIVE', 1 );
 define( 'QTX_MODULE_STATUS_INACTIVE', 2 );
 define( 'QTX_MODULE_STATUS_BLOCKED', 3 );
+define( 'QTRANSLATE_MODULES_DIR', QTRANSLATE_DIR . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR  );
+define( 'QTRANSLATE_MODULES_CONFIG', QTRANSLATE_MODULES_DIR . '%s' . DIRECTORY_SEPARATOR . 'module-config.php' );
+define( 'QTRANSLATE_MODULES_FILE', QTRANSLATE_MODULES_DIR . '%s' . DIRECTORY_SEPARATOR . '%s.php' );
 
 class QTX_Modules_Handler {
     /**
@@ -25,7 +28,7 @@ class QTX_Modules_Handler {
             }
             $module_status = $options_modules[ $def_module['id'] ];
             if ( $module_status === QTX_MODULE_STATUS_ACTIVE ) {
-                include_once( QTRANSLATE_DIR . '/modules/' . $def_module['id'] . '/' . $def_module['id'] . '.php' );
+                include_once( sprintf( QTRANSLATE_MODULES_FILE, $def_module['id'], $def_module['id'] ) );
             }
         }
     }
@@ -62,64 +65,30 @@ class QTX_Modules_Handler {
      * @return array ordered by name
      */
     public static function get_modules_defs() {
-        return array(
-            array(
-                'id'           => 'acf',
-                'name'         => 'ACF',
-                'plugin'       => array( 'advanced-custom-fields/acf.php', 'advanced-custom-fields-pro/acf.php' ),
-                'incompatible' => 'acf-qtranslate/acf-qtranslate.php',
-            ),
-            array(
-                'id'           => 'all-in-one-seo-pack',
-                'name'         => 'All in One SEO Pack',
-                'plugin'       => array(
-                    'all-in-one-seo-pack/all_in_one_seo_pack.php',
-                    'all-in-one-seo-pack-pro/all_in_one_seo_pack.php'
-                ),
-                'incompatible' => 'all-in-one-seo-pack-qtranslate-x/qaioseop.php',
-            ),
-            array(
-                'id'           => 'events-made-easy',
-                'name'         => 'Events Made Easy',
-                'plugin'       => 'events-made-easy/events-manager.php',
-                'incompatible' => 'events-made-easy-qtranslate-x/events-made-easy-qtranslate-x.php',
-            ),
-            array(
-                'id'     => 'jetpack',
-                'name'   => 'Jetpack',
-                'plugin' => 'jetpack/jetpack.php',
-            ),
-            array(
-                'id'     => 'google-site-kit',
-                'name'   => 'Google Site Kit',
-                'plugin' => 'google-site-kit/google-site-kit.php',
-            ),
-            array(
-                'id'           => 'gravity-forms',
-                'name'         => 'Gravity Forms',
-                'plugin'       => 'gravityforms/gravityforms.php',
-                'incompatible' => 'qtranslate-support-for-gravityforms/qtranslate-support-for-gravityforms.php',
-            ),
-            array(
-                'id'           => 'woo-commerce',
-                'name'         => 'WooCommerce',
-                'plugin'       => 'woocommerce/woocommerce.php',
-                'incompatible' => 'woocommerce-qtranslate-x/woocommerce-qtranslate-x.php',
-            ),
-            array(
-                'id'           => 'wp-seo',
-                'name'         => 'Yoast SEO',
-                'plugin'       => 'wordpress-seo/wp-seo.php',
-                'incompatible' => 'wp-seo-qtranslate-x/wordpress-seo-qtranslate-x.php',
-            ),
-            array(
-                'id'                => 'slugs',
-                'name'              => __( 'Slugs translation', 'qtranslate' ) . sprintf( ' (%s)', __( 'experimental' ) ),
+        $defaults=array(
+                'id'                => '',
+                'name'              => '',
                 'plugin'            => true,
-                'incompatible'      => 'qtranslate-slug/qtranslate-slug.php',
-                'manual_activation' => true,
-            )
-        );
+                'incompatible'      => '',
+                'manual_activation' => false,
+                );
+        $cdir = scandir( QTRANSLATE_MODULES_DIR );
+        $modules_defs=array();
+        foreach ($cdir as $key => $value)
+        {
+            if ( !in_array( $value, array( ".", ".." ) ) &&
+                    is_dir( QTRANSLATE_MODULES_DIR . $value ) &&
+                    file_exists( sprintf( QTRANSLATE_MODULES_CONFIG, $value ) ) ) {
+                $module_config=array();
+                include( sprintf( QTRANSLATE_MODULES_CONFIG, $value ) );
+                $result=array_merge($defaults,$module_config);
+                if ($result['id']==$value && file_exists( sprintf( QTRANSLATE_MODULES_FILE, $value, $value ) ) ){
+                    $modules_defs[]=$result;
+                }
+           }
+        }
+
+        return $modules_defs;
     }
 
     public static function ma_modules_default_options() {
