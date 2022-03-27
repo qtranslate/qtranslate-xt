@@ -259,6 +259,7 @@ class QTX_Admin_Settings {
         $admin_sections['import']      = __( 'Import', 'qtranslate' ) . '/' . __( 'Export', 'qtranslate' );
         $admin_sections['languages']   = __( 'Languages', 'qtranslate' );
 
+        //TODO: this actually assumes every manual activation module has settings, dedicated key to be added if that is not the case...
         if ( isset( $q_config['ma_module_enabled'] ) ) {
             foreach ( $q_config['ma_module_enabled'] as $module_id => $module_enabled ) {
                 if ( ! $module_enabled ) {
