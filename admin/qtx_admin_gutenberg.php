@@ -11,7 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class QTX_Admin_Gutenberg
  *
- * Manages the Gutenberg block editor with the related REST API
+ * Manages the Gutenberg block editor with the related REST API.
+ * Limitation: only the single language mode is supported.
  */
 class QTX_Admin_Gutenberg {
     /**
@@ -26,11 +27,13 @@ class QTX_Admin_Gutenberg {
      * Register the REST filters
      */
     public function rest_api_init() {
-        // filter to short circuit the Gutenberg related REST API
-        $pre = apply_filters('qtranslate_gutenberg', false);
-        if($pre !== false) return;
-
         global $q_config;
+
+        // Filter to allow qTranslate-XT to manage the block editor (single language mode)
+        $admin_block_editor = apply_filters( 'qtranslate_admin_block_editor', true );
+        if ( ! $admin_block_editor ) {
+            return;
+        }
 
         $post_types = get_post_types( array( 'show_in_rest' => true ) );
         foreach ( $post_types as $post_type ) {
@@ -164,9 +167,11 @@ class QTX_Admin_Gutenberg {
      * Enqueue the JS script
      */
     public function enqueue_block_editor_assets() {
-        // filter to short circuit the Gutenberg JS script
-        $pre = apply_filters('qtranslate_gutenberg', false);
-        if($pre !== false) return;
+        // Filter to allow qTranslate-XT to manage the block editor (single language mode)
+        $admin_block_editor = apply_filters( 'qtranslate_admin_block_editor', true );
+        if ( ! $admin_block_editor ) {
+            return;
+        }
 
         wp_register_script(
             'qtx-gutenberg',
