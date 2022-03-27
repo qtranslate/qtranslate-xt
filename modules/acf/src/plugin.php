@@ -13,9 +13,10 @@ class acf_qtranslate_plugin {
      */
     public function __construct() {
         add_action( 'plugins_loaded', array( $this, 'init' ), 3 );
-        add_action( 'after_setup_theme', array( $this, 'init' ), - 10 );
+        add_action( 'after_setup_theme', array( $this, 'init' ), -10 );
         add_action( 'acf/input/admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
-        add_action( 'admin_footer', array( $this, 'admin_footer' ), - 10 );
+        add_action( 'admin_footer', array( $this, 'admin_footer' ), -10 );
+        add_action( 'admin_head', array( $this, 'admin_head' ) );
         add_action( 'admin_menu', array( $this, 'admin_menu' ) );
         add_action( 'admin_init', array( $this, 'admin_init' ) );
 
@@ -32,19 +33,12 @@ class acf_qtranslate_plugin {
      * @return void
      */
     public function init() {
-        static $plugin_loaded;
-
-        if ( ! $plugin_loaded && $this->acf_enabled() && $this->qtranslatex_enabled() ) {
-            // setup qtranslate fields for ACF 5
+        static $plugin_loaded = false;
+        if ( ! $plugin_loaded && $this->acf_enabled() ) {
             if ( $this->acf_major_version() === 5 ) {
                 require_once ACF_QTRANSLATE_PLUGIN_DIR . 'src/acf_5/acf.php';
                 $this->acf = new acf_qtranslate_acf_5( $this );
             }
-
-            // setup qtranslatex integration
-            require_once ACF_QTRANSLATE_PLUGIN_DIR . 'src/qtranslatex.php';
-            new acf_qtranslate_qtranslatex( $this, $this->acf );
-
             $plugin_loaded = true;
         }
     }
@@ -78,13 +72,6 @@ class acf_qtranslate_plugin {
      */
     public function acf_major_version() {
         return (int) $this->acf_version();
-    }
-
-    /**
-     * Check if qTranslate-X is enabled
-     */
-    public function qtranslatex_enabled() {
-        return function_exists( 'qtranxf_getLanguage' );
     }
 
     /**
@@ -138,6 +125,37 @@ class acf_qtranslate_plugin {
             })(jQuery);
         </script>
         <?php
+    }
+
+    /**
+     * Add additional styles and scripts to head
+     */
+    public function admin_head() {
+        // Hide the language tabs if they shouldn't be displayed
+        $show_language_tabs = $this->get_plugin_setting( 'show_language_tabs' );
+        if ( ! $show_language_tabs ) {
+            ?>
+            <style>
+                .multi-language-field {
+                    margin-top: 0 !important;
+                }
+
+                .multi-language-field .wp-switch-editor[data-language] {
+                    display: none !important;
+                }
+            </style>
+            <?php
+        }
+
+        // Enable translation of standard field types
+        $translate_standard_field_types = $this->get_plugin_setting( 'translate_standard_field_types' );
+        if ( $translate_standard_field_types ) {
+            ?>
+            <script>
+                var acf_qtranslate_translate_standard_field_types = <?= json_encode( $translate_standard_field_types ) ?>;
+            </script>
+            <?php
+        }
     }
 
     /**
