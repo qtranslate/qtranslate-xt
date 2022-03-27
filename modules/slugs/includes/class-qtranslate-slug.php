@@ -33,14 +33,11 @@ class QtranslateSlug {
      */
     function init() {
         global $q_config;
-        if ( ! $q_config['slugs_enabled'] ) {
+        if ( ! $q_config['ma_module_enabled']['slugs'] ) {
             return;
         }
 
-        $this->options_buffer = get_option( QTS_OPTIONS_NAME );
-        if ( ! $this->options_buffer ) {
-            add_option( QTS_OPTIONS_NAME, array() );
-        }
+        $this->options_buffer = get_option( QTS_OPTIONS_NAME, array() );
         $this->permalink_structure = get_option( 'permalink_structure' );
 
         if ( ! is_admin() ) {

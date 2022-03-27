@@ -259,10 +259,13 @@ class QTX_Admin_Settings {
         $admin_sections['import']      = __( 'Import', 'qtranslate' ) . '/' . __( 'Export', 'qtranslate' );
         $admin_sections['languages']   = __( 'Languages', 'qtranslate' );
 
-        if ( $q_config['slugs_enabled'] ) {
-            $admin_sections['slugs'] = __( 'Slugs', 'qtranslate' );
+        if (isset($q_config['ma_module_enabled'])){
+            foreach ( $q_config['ma_module_enabled'] as $module_id=>$module_enabled ){
+                if (!$module_enabled) continue;
+                $ma_module=QTX_Modules_Handler::get_module_def_by_id($module_id);
+                $admin_sections[$module_id] = $ma_module['name'];
+            }
         }
-
         $admin_sections['troubleshooting'] = __( 'Troubleshooting', 'qtranslate' );
 
         ?>
@@ -750,19 +753,25 @@ class QTX_Admin_Settings {
                     </table>
                 </td>
             </tr>
-            <tr id="option_slugs_enabled">
-                <th scope="row"><?php _e( 'Slugs translation', 'qtranslate' ) ?></th>
+            <?php
+            foreach ( $q_config['ma_module_enabled'] as $module_id=>$module_enabled ):
+                $module=QTX_Modules_Handler::get_module_def_by_id($module_id);
+            ?>
+            <tr>
+                <th scope="row"><?php echo $module['name']; ?></th>
                 <td>
-                    <label for="slugs_enabled">
-                        <input type="checkbox" name="slugs_enabled"
-                               id="slugs_enabled"
-                               value="1"<?php checked( $q_config['slugs_enabled'] ) ?>/>&nbsp;<?php _e( 'Enable slugs translation.', 'qtranslate' ); ?>
+                    <label for="ma_module_enabled_<?php echo $module_id; ?>">
+                        <input type="checkbox" name="ma_module_enabled[<?php echo $module_id; ?>]"
+                               id="ma_module_enabled_<?php echo $module_id; ?>"
+                               value="1"<?php checked( $module_enabled ) ?>/>&nbsp;<?php echo $module['ma_checkbox_text']; ?>
                     </label>
-                    <p class="qtranxs-notes"> <?php echo __( 'This activates the slug translation module. ', 'qtranslate' );
-                        echo '&nbsp;' . __( 'Attention! This module is still experimental. It is subject to bugs and limitations.', 'qtranslate' ) ?>
+                    <p class="qtranxs-notes"> <?php echo $module['ma_checkbox_notes']; ?>
                     </p>
                 </td>
             </tr>
+            <?php
+            endforeach;
+            ?>
             <tr>
                 <th scope="row"><?php _e( 'Configuration Files', 'qtranslate' ) ?></th>
                 <td><label for="qtranxs_config_files"

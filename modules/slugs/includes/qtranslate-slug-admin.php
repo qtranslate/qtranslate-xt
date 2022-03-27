@@ -20,7 +20,6 @@ add_action( 'edited_term', 'qts_save_term', 605, 3 );
 add_action( 'admin_head', 'qts_hide_term_slug_box', 900 );
 add_action( 'init', 'qts_taxonomies_hooks', 805 );
 add_action( 'admin_head', 'qts_hide_quick_edit', 600 );
-add_action( 'qtranslate_edit_config', 'qts_updated_settings' );
 // plugin deactivation/uninstall
 register_deactivation_hook( QTRANSLATE_FILE, 'qts_deactivate' );
 register_uninstall_hook( QTRANSLATE_FILE, 'qts_uninstall' );
@@ -101,20 +100,6 @@ function qts_deactivate() {
    // regenerate rewrite rules in db
    remove_action( 'generate_rewrite_rules', array( &$qtranslate_slug, 'modify_rewrite_rules' ) );
    $wp_rewrite->flush_rules();
-}
-
-function qts_updated_settings() {
-    global $q_config;
-
-    $options_modules = get_option( 'qtranslate_modules', array() );
-    if ( $q_config['slugs_enabled'] ) {
-        qts_install();
-        $options_modules['slugs'] = QTX_MODULE_STATUS_ACTIVE;
-    } else {
-        qts_deactivate();
-        $options_modules['slugs'] = QTX_MODULE_STATUS_INACTIVE;
-    }
-    update_option( 'qtranslate_modules', $options_modules );
 }
 
  /**
@@ -558,4 +543,13 @@ function qts_get_terms( $terms, $taxonomy ) {
     }
 
     return $terms;
+}
+
+function qts_ma_module_updated(){
+    global $q_config;
+    if ($q_config['ma_module_enabled']['slugs']){
+        qts_multi_activate();
+    }else{
+        qts_deactivate();
+    }
 }

@@ -673,11 +673,11 @@ function qtranxf_load_option_array( $name, $default_value = null ) {
 
     // clean up array due to previous configuration imperfections
     foreach ( $vals as $key => $val ) {
-        if ( ! empty( $val ) ) {
+        if ( isset( $val ) ) {
             continue;
         }
         unset( $vals[ $key ] );
-        if ( ! empty( $vals ) ) {
+        if ( isset( $vals ) ) {
             continue;
         }
         delete_option( 'qtranslate_' . $name );
@@ -779,7 +779,7 @@ function qtranxf_load_config() {
     foreach ( $qtranslate_options['front']['array'] as $name => $def ) {
         qtranxf_load_option_array( $name, $def );
     }
-
+    qtranxf_load_option('ma_module_enabled');
     qtranxf_load_option_array( 'term_name', array() );
 
     if ( $q_config['filter_options_mode'] == QTX_FILTER_OPTIONS_LIST ) {
