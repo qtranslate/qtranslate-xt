@@ -779,7 +779,7 @@ function qtranxf_load_config() {
     foreach ( $qtranslate_options['front']['array'] as $name => $def ) {
         qtranxf_load_option_array( $name, $def );
     }
-    qtranxf_load_option('ma_module_enabled');
+    qtranxf_load_option( 'ma_module_enabled' );
     qtranxf_load_option_array( 'term_name', array() );
 
     if ( $q_config['filter_options_mode'] == QTX_FILTER_OPTIONS_LIST ) {
@@ -1132,7 +1132,7 @@ function qtranxf_convertURL( $url = '', $lang = '', $forceadmin = false, $showDe
 
     $url = apply_filters( 'qtranslate_convert_url', $url, $lang );
 
-    $complete     = qtranxf_get_url_for_language( $url, $lang, $showLanguage );
+    $complete = qtranxf_get_url_for_language( $url, $lang, $showLanguage );
 
     return $complete;
 }

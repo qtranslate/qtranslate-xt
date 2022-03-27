@@ -25,5 +25,5 @@ if ( is_admin() ) {
 
 // plugin init
 add_action( 'plugins_loaded', array( $qtranslate_slug, 'init' ) );
-add_action('qtx_ma_modules_updated','qts_ma_module_updated');
+add_action( 'qtx_ma_modules_updated', 'qts_ma_module_updated' );
 add_filter( 'qtranslate_convert_url', 'qts_convert_url', 10, 2 );

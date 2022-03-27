@@ -596,14 +596,14 @@ function qtranxf_update_setting( $var, $type = QTX_STRING, $def = null, $bool_al
 
             return true;
         case QTX_ARRAY:
-            if ( isset($_POST[ $var ] ) ){
-                $val=$_POST[ $var ];
+            if ( isset( $_POST[ $var ] ) ) {
+                $val = $_POST[ $var ];
                 if ( ! is_array( $_POST[ $var ] ) ) {
                     $val = sanitize_text_field( $val );
                     $val = preg_split( '/[\s,]+/', $val, -1, PREG_SPLIT_NO_EMPTY );
                 }
-            }else{
-                $val='';
+            } else {
+                $val = '';
             }
             if ( empty( $val ) && ! is_null( $def ) ) {
                 if ( is_string( $def ) ) {

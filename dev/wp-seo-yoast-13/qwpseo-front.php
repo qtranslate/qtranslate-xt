@@ -77,8 +77,8 @@ function qwpseo_sitemap_index( $sm ) {
     $sitemaps = array();
     while ( ( $p = strpos( $content, '<sitemap>', $p ) ) !== false ) {
         if ( ( $e = strpos( $content, '</sitemap>', $p ) ) !== false ) {
-            $len = $e - $p + strlen( '</sitemap>' );
-            $s   = substr( $content, $p, $len );
+            $len        = $e - $p + strlen( '</sitemap>' );
+            $s          = substr( $content, $p, $len );
             $p          += $len;
             $sitemaps[] = $s;
         } else {
@@ -108,7 +108,7 @@ add_filter( 'wpseo_sitemap_index', 'qwpseo_sitemap_index' );
  */
 function qwpseo_enable_xml_sitemap_post_url( $loc, $p ) {
     global $q_config;
-    $lang = $q_config['language'];
+    $lang            = $q_config['language'];
     $p->post_content = qtranxf_use_language( $lang, $p->post_content, false, true );
 
     return $loc;

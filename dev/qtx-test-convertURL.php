@@ -27,8 +27,8 @@ function qtranxf_run_test_convertURL( $url_mode, $lang ) {
 
     // common tests
     $urls = array(
-        '#'                                      => '#',
-        '#tag'                                   => '#tag',
+        '#'                                       => '#',
+        '#tag'                                    => '#tag',
         'https://external.domain.com'             => 'https://external.domain.com',
         'https://external.domain.com/'            => 'https://external.domain.com/',
         'https://external.domain.com?tr=123#tag'  => 'https://external.domain.com?tr=123#tag',

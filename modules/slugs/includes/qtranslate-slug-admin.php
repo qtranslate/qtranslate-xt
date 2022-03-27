@@ -90,27 +90,28 @@ function qts_activate() {
     add_action( 'generate_rewrite_rules', array( &$qtranslate_slug, 'modify_rewrite_rules' ) );
     flush_rewrite_rules();
 }
-/**
-* Actions when deactivating the plugin.
-*/
-function qts_deactivate() {
-   global $wp_rewrite;
-   global $qtranslate_slug;
 
-   // regenerate rewrite rules in db
-   remove_action( 'generate_rewrite_rules', array( &$qtranslate_slug, 'modify_rewrite_rules' ) );
-   $wp_rewrite->flush_rules();
+/**
+ * Actions when deactivating the plugin.
+ */
+function qts_deactivate() {
+    global $wp_rewrite;
+    global $qtranslate_slug;
+
+    // regenerate rewrite rules in db
+    remove_action( 'generate_rewrite_rules', array( &$qtranslate_slug, 'modify_rewrite_rules' ) );
+    $wp_rewrite->flush_rules();
 }
 
- /**
-* Creates a metabox for every post type available.
-*/
+/**
+ * Creates a metabox for every post type available.
+ */
 function qts_add_slug_meta_box() {
-   remove_meta_box( 'slugdiv', null, 'normal' );
-   add_meta_box( 'qts_sectionid', __( 'Slugs per language', 'qtranslate' ), array(
-       &$this,
-       'qts_draw_meta_box'
-   ), null, 'side', 'high' );
+    remove_meta_box( 'slugdiv', null, 'normal' );
+    add_meta_box( 'qts_sectionid', __( 'Slugs per language', 'qtranslate' ), array(
+        &$this,
+        'qts_draw_meta_box'
+    ), null, 'side', 'high' );
 }
 
 /**
@@ -152,7 +153,7 @@ function qts_draw_meta_box( $post ) {
  */
 function qts_validate_post_slug( $slug, $post, $lang ) {
     $post_title = trim( qtranxf_use( $lang, $post->post_title ) );
-    $post_name = get_post_meta( $post->ID, QTS_META_PREFIX . $lang, true );
+    $post_name  = get_post_meta( $post->ID, QTS_META_PREFIX . $lang, true );
     if ( ! $post_name ) {
         $post_name = $post->post_name;
     }
@@ -319,8 +320,8 @@ function qts_validate_term_slug( $slug, $term, $lang ) {
 function qts_unique_term_slug( $slug, $term, $lang ) {
     global $wpdb;
 
-    $query         = $wpdb->prepare( "SELECT term_id FROM $wpdb->termmeta WHERE meta_key = '%s' AND meta_value = '%s' AND term_id != %d ", QTS_META_PREFIX . $lang, $slug, $term->term_id );
-    $exists_slug   = $wpdb->get_results( $query );
+    $query       = $wpdb->prepare( "SELECT term_id FROM $wpdb->termmeta WHERE meta_key = '%s' AND meta_value = '%s' AND term_id != %d ", QTS_META_PREFIX . $lang, $slug, $term->term_id );
+    $exists_slug = $wpdb->get_results( $query );
 
     if ( empty( $exists_slug ) ) {
         return $slug;
@@ -417,38 +418,38 @@ function qts_show_edit_term_fields( $term ) {
 }
 
 /**
-* Hide automatically the wordpress slug box in edit terms page.
-*/
+ * Hide automatically the wordpress slug box in edit terms page.
+ */
 function qts_hide_term_slug_box() {
-   global $pagenow;
-   switch ( $pagenow ):
-       case 'edit-tags.php':
-           $id = 'tag-slug';
-           break;
-       case 'term.php':
-           $id = 'slug';
-           break;
-       default:
-           return;
-   endswitch;
+    global $pagenow;
+    switch ( $pagenow ):
+        case 'edit-tags.php':
+            $id = 'tag-slug';
+            break;
+        case 'term.php':
+            $id = 'slug';
+            break;
+        default:
+            return;
+    endswitch;
 
-   echo "<!-- QTS remove slug box -->" . PHP_EOL;
-   echo "<script type=\"text/javascript\" charset=\"utf-8\">" . PHP_EOL;
-   echo "  jQuery(document).ready(function($){" . PHP_EOL;
-   echo "      $(\"#" . $id . "\").parent().hide();" . PHP_EOL;
-   echo "      $(\".form-field td #slug\").parent().parent().hide();" . PHP_EOL;
-   echo "  });" . PHP_EOL;
-   echo "</script>" . PHP_EOL;
+    echo "<!-- QTS remove slug box -->" . PHP_EOL;
+    echo "<script type=\"text/javascript\" charset=\"utf-8\">" . PHP_EOL;
+    echo "  jQuery(document).ready(function($){" . PHP_EOL;
+    echo "      $(\"#" . $id . "\").parent().hide();" . PHP_EOL;
+    echo "      $(\".form-field td #slug\").parent().parent().hide();" . PHP_EOL;
+    echo "  });" . PHP_EOL;
+    echo "</script>" . PHP_EOL;
 }
 
 /**
-* Hide quickedit slug.
-*/
+ * Hide quickedit slug.
+ */
 function qts_hide_quick_edit() {
-   echo "<!-- QTS remove quick edit box -->" . PHP_EOL;
-   echo "<style media=\"screen\">" . PHP_EOL;
-   echo "  .inline-edit-row fieldset.inline-edit-col-left .inline-edit-col *:first-child + label { display: none !important }" . PHP_EOL;
-   echo "</style>" . PHP_EOL;
+    echo "<!-- QTS remove quick edit box -->" . PHP_EOL;
+    echo "<style media=\"screen\">" . PHP_EOL;
+    echo "  .inline-edit-row fieldset.inline-edit-col-left .inline-edit-col *:first-child + label { display: none !important }" . PHP_EOL;
+    echo "</style>" . PHP_EOL;
 }
 
 function qts_taxonomy_columns( $columns ) {
@@ -473,39 +474,39 @@ function qts_taxonomy_custom_column( $str, $column_name, $term_id ) {
 
 //TODO: check if following function is needed
 /**
-* Fix for:
-* - Taxonomy & custom taxonomy names in Post Manage page
-* - List of tags already added to the post in Post
-* - Edit page (but have issues when saving)
-*
-* @param (array) $terms
-* @param (int|array) $obj_id
-* @param (string|array) $taxonomy
-* @param (array) $taxonomy
-*/
+ * Fix for:
+ * - Taxonomy & custom taxonomy names in Post Manage page
+ * - List of tags already added to the post in Post
+ * - Edit page (but have issues when saving)
+ *
+ * @param (array) $terms
+ * @param (int|array) $obj_id
+ * @param (string|array) $taxonomy
+ * @param (array) $taxonomy
+ */
 function qts_get_object_terms( $terms, $obj_id, $taxonomy, $args ) {
 
-   global $pagenow;
+    global $pagenow;
 
-   // Although in post edit page the tags are translated,
-   // but when saving/updating the post Wordpress considers
-   // the translated tags as new tags. Due to this
-   // issue I limit this 'hack' to the post manage
-   // page only.
-   if ( $pagenow == 'edit.php' ) {
-       $meta = get_option( 'qtranslate_term_name' );
+    // Although in post edit page the tags are translated,
+    // but when saving/updating the post Wordpress considers
+    // the translated tags as new tags. Due to this
+    // issue I limit this 'hack' to the post manage
+    // page only.
+    if ( $pagenow == 'edit.php' ) {
+        $meta = get_option( 'qtranslate_term_name' );
 
-       if ( ! empty( $terms ) ) {
-           foreach ( $terms as $term ) {
-               if ( isset( $meta[ $term->name ][ $q_config['language'] ] ) ) {
-                   $term->name = $meta[ $term->name ][ $q_config['language'] ];
-               }
-           }
-       }
+        if ( ! empty( $terms ) ) {
+            foreach ( $terms as $term ) {
+                if ( isset( $meta[ $term->name ][ $q_config['language'] ] ) ) {
+                    $term->name = $meta[ $term->name ][ $q_config['language'] ];
+                }
+            }
+        }
 
-   }
+    }
 
-   return $terms;
+    return $terms;
 }
 
 /**
@@ -545,11 +546,11 @@ function qts_get_terms( $terms, $taxonomy ) {
     return $terms;
 }
 
-function qts_ma_module_updated(){
+function qts_ma_module_updated() {
     global $q_config;
-    if ($q_config['ma_module_enabled']['slugs']){
+    if ( $q_config['ma_module_enabled']['slugs'] ) {
         qts_multi_activate();
-    }else{
+    } else {
         qts_deactivate();
     }
 }

@@ -48,7 +48,7 @@ function qts_show_form_field( $args = array() ) {
     $choices = $args['choices'];
     $class   = $args['class'];
 
-    $options = $qtranslate_slug->options_buffer?$qtranslate_slug->options_buffer:get_option( QTS_OPTIONS_NAME, array() );
+    $options = $qtranslate_slug->options_buffer ? $qtranslate_slug->options_buffer : get_option( QTS_OPTIONS_NAME, array() );
 
     // pass the standard value if the option is not yet set in the database
     if ( ! isset( $options[ $id ] ) && $type != 'checkbox' ) {
@@ -350,7 +350,7 @@ function qts_update_settings() {
     if ( isset( $_POST[ QTS_OPTIONS_NAME ] ) ) {
         $qts_settings = qts_validate_options( $_POST[ QTS_OPTIONS_NAME ] );
     }
-    
+
     if ( ! $qts_settings || empty( $qts_settings ) ) {
         return;
     }

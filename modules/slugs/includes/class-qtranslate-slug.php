@@ -37,7 +37,7 @@ class QtranslateSlug {
             return;
         }
 
-        $this->options_buffer = get_option( QTS_OPTIONS_NAME, array() );
+        $this->options_buffer      = get_option( QTS_OPTIONS_NAME, array() );
         $this->permalink_structure = get_option( 'permalink_structure' );
 
         if ( ! is_admin() ) {
@@ -470,7 +470,7 @@ class QtranslateSlug {
             // parse all languages links
             foreach ( $q_config['enabled_languages'] as $lang ) {
 
-                $this->temp_lang                 = $lang;
+                $this->temp_lang            = $lang;
                 $this->current_url[ $lang ] = esc_url( apply_filters( 'qts_url_args', call_user_func( $function, $id ) ) );
             }
             $this->temp_lang = false;
@@ -895,6 +895,7 @@ class QtranslateSlug {
      */
     private function get_temp_lang() {
         global $q_config;
+
         return ( $this->temp_lang ) ? $this->temp_lang : $q_config['language'];
     }
 
