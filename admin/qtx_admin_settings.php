@@ -745,14 +745,15 @@ class QTX_Admin_Settings {
                             ?>
                             <tr>
                                 <td>
-                                    <?php if ( isset( $q_config[ 'ma_module_enabled' ][ $module[ 'id' ] ] ) ) { ?>
-                                    <label for="ma_module_enabled_<?php echo $module[ 'id' ]; ?>">
-                                        <input type="checkbox" name="ma_module_enabled[<?php echo $module[ 'id' ]; ?>]"
-                                            id="ma_module_enabled_<?php echo $module[ 'id' ]; ?>"
-                                            value="1"<?php checked( $q_config[ 'ma_module_enabled' ][ $module[ 'id' ] ] ) ?>/>
-                                        <?php echo $module['name']; ?>
-                                    </label>
-                                    <?php } else { echo $module['name']; } ?>
+                                    <?php if ( isset( $q_config['ma_module_enabled'][ $module['id'] ] ) ) : ?>
+                                        <label for="ma_module_enabled_<?php echo $module['id']; ?>">
+                                            <input type="checkbox"
+                                                   name="ma_module_enabled[<?php echo $module['id']; ?>]"
+                                                   id="ma_module_enabled_<?php echo $module['id']; ?>"
+                                                   value="1"<?php checked( $q_config['ma_module_enabled'][ $module['id'] ] ) ?>/>
+                                            <?php echo $module['name']; ?>
+                                        </label>
+                                    <?php else: echo $module['name']; endif; ?>
                                 </td>
                                 <td><?php echo $module['plugin'] ?></td>
                                 <td><?php echo $module['module'] ?></td>
