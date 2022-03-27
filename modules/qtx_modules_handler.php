@@ -118,8 +118,6 @@ class QTX_Modules_Handler {
                 'plugin'            => true,
                 'incompatible'      => 'qtranslate-slug/qtranslate-slug.php',
                 'manual_activation' => true,
-                'ma_checkbox_text'  => __( 'Enable slugs translation.', 'qtranslate' ),
-                'ma_checkbox_notes' => __( 'This activates the slug translation module. ', 'qtranslate' ) . __( 'Attention! This module is still experimental. It is subject to bugs and limitations.', 'qtranslate' )
             )
         );
     }
