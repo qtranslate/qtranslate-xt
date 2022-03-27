@@ -621,14 +621,27 @@ function qtranxf_load_option_flag_location( $nm ) {
     }
 }
 
-function qtranxf_validateBool( $var, $default_value ) {
-    if ( $var === '0' ) {
-        return false;
-    } elseif ( $var === '1' ) {
-        return true;
-    } else {
-        return $default_value;
+function qtranxf_validateBool( $var ) {
+    if (is_string( $var )){
+        $val = strtolower( $var );
+        switch ( $val ) {
+            case '0':
+            case 'n':
+            case 'no':
+                return false;
+            case '1':
+            case 'y':
+            case 'yes':
+                return true;
+        }
+    } elseif (is_array( $var )){
+        $result=array();
+        foreach ($var as $key => $element){
+            $result[$key]=qtranxf_validateBool($element);
+        }
+        return $result;
     }
+    return (bool)$val;
 }
 
 function qtranxf_load_option( $name, $default_value = null ) {
@@ -694,30 +707,7 @@ function qtranxf_load_option_bool( $name, $default_value = null ) {
             $q_config[ $name ] = $default_value;
         }
     } else {
-        switch ( $val ) {
-            case '0':
-                $q_config[ $name ] = false;
-                break;
-            case '1':
-                $q_config[ $name ] = true;
-                break;
-            default:
-                $val = strtolower( $val );
-                switch ( $val ) {
-                    case 'n':
-                    case 'no':
-                        $q_config[ $name ] = false;
-                        break;
-                    case 'y':
-                    case 'yes':
-                        $q_config[ $name ] = true;
-                        break;
-                    default:
-                        $q_config[ $name ] = ! empty( $val );
-                        break;
-                }
-                break;
-        }
+        $q_config[ $name ] = qtranxf_validateBool( $val );
     }
 }
 
@@ -779,7 +769,7 @@ function qtranxf_load_config() {
     foreach ( $qtranslate_options['front']['array'] as $name => $def ) {
         qtranxf_load_option_array( $name, $def );
     }
-    qtranxf_load_option( 'ma_module_enabled' );
+    qtranxf_load_option_bool( 'ma_module_enabled' );
     qtranxf_load_option_array( 'term_name', array() );
 
     if ( $q_config['filter_options_mode'] == QTX_FILTER_OPTIONS_LIST ) {
