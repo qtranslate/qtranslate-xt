@@ -68,7 +68,6 @@ class QTX_Modules_Handler {
                 'name'              => 'ACF',
                 'plugin'            => array( 'advanced-custom-fields/acf.php', 'advanced-custom-fields-pro/acf.php' ),
                 'incompatible'      => 'acf-qtranslate/acf-qtranslate.php',
-                'manual_activation' => false
             ),
             array(
                 'id'                => 'all-in-one-seo-pack',
@@ -78,47 +77,40 @@ class QTX_Modules_Handler {
                     'all-in-one-seo-pack-pro/all_in_one_seo_pack.php'
                 ),
                 'incompatible'      => 'all-in-one-seo-pack-qtranslate-x/qaioseop.php',
-                'manual_activation' => false
             ),
             array(
                 'id'                => 'events-made-easy',
                 'name'              => 'Events Made Easy',
                 'plugin'            => 'events-made-easy/events-manager.php',
                 'incompatible'      => 'events-made-easy-qtranslate-x/events-made-easy-qtranslate-x.php',
-                'manual_activation' => false
             ),
             array(
                 'id'                => 'jetpack',
                 'name'              => 'Jetpack',
                 'plugin'            => 'jetpack/jetpack.php',
-                'manual_activation' => false
             ),
             array(
                 'id'                => 'google-site-kit',
                 'name'              => 'Google Site Kit',
                 'plugin'            => 'google-site-kit/google-site-kit.php',
-                'manual_activation' => false
             ),
             array(
                 'id'                => 'gravity-forms',
                 'name'              => 'Gravity Forms',
                 'plugin'            => 'gravityforms/gravityforms.php',
                 'incompatible'      => 'qtranslate-support-for-gravityforms/qtranslate-support-for-gravityforms.php',
-                'manual_activation' => false
             ),
             array(
                 'id'                => 'woo-commerce',
                 'name'              => 'WooCommerce',
                 'plugin'            => 'woocommerce/woocommerce.php',
                 'incompatible'      => 'woocommerce-qtranslate-x/woocommerce-qtranslate-x.php',
-                'manual_activation' => false
             ),
             array(
                 'id'                => 'wp-seo',
                 'name'              => 'Yoast SEO',
                 'plugin'            => 'wordpress-seo/wp-seo.php',
                 'incompatible'      => 'wp-seo-qtranslate-x/wordpress-seo-qtranslate-x.php',
-                'manual_activation' => false
             ),
             array(
                 'id'                => 'slugs',
@@ -136,7 +128,7 @@ class QTX_Modules_Handler {
         $module_defs = self::get_modules_defs();
         $response    = array();
         foreach ( $module_defs as $module ) {
-            if ( $module['manual_activation'] == true ) {
+            if ( isset($module['manual_activation']) && $module['manual_activation'] == true ) {
                 $response[ $module['id'] ] = false;
             }
         }
