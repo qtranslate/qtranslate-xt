@@ -30,6 +30,11 @@ register_uninstall_hook( QTRANSLATE_FILE, 'qts_uninstall' );
 function qts_taxonomies_hooks() {
     global $qtranslate_slug;
 
+    $add_slugs_hooks=apply_filters( 'qts_add_tax_slugs_hook', array() );
+    foreach ( $add_slugs_hooks as $hook ){
+        add_action( $hook, 'qts_show_add_term_fields' );
+    }
+
     $taxonomies = $qtranslate_slug->get_public_taxonomies();
 
     if ( $taxonomies ) {
@@ -427,7 +432,9 @@ function qts_hide_term_slug_box() {
             $id = 'slug';
             break;
         default:
-            return;
+            $id = apply_filters( 'qts_hide_term_slug_box_by_id', '', $pagenow );
+            $additional_jquery = apply_filters( 'qts_term_slug_box_additional_jquery','', $pagenow);
+            if ( $id === '' ) return;
     endswitch;
 
     echo "<!-- QTS remove slug box -->" . PHP_EOL;
@@ -435,6 +442,7 @@ function qts_hide_term_slug_box() {
     echo "  jQuery(document).ready(function($){" . PHP_EOL;
     echo "      $(\"#" . $id . "\").parent().hide();" . PHP_EOL;
     echo "      $(\".form-field td #slug\").parent().parent().hide();" . PHP_EOL;
+    if ( isset( $additional_jquery ) ) echo $additional_jquery;
     echo "  });" . PHP_EOL;
     echo "</script>" . PHP_EOL;
 }
