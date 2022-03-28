@@ -511,7 +511,6 @@ class QtranslateSlug {
      * @return string Home url link with optional path appended.
      */
     public function home_url( $url, $path, $scheme, $blog_id ) {
-        global $q_config;
         if ( ! in_array( $scheme, array( 'http', 'https' ) ) ) {
             $scheme = is_ssl() && ! is_admin() ? 'https' : 'http';
         }

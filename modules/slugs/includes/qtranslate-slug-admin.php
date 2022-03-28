@@ -108,10 +108,7 @@ function qts_deactivate() {
  */
 function qts_add_slug_meta_box() {
     remove_meta_box( 'slugdiv', null, 'normal' );
-    add_meta_box( 'qts_sectionid', __( 'Slugs per language', 'qtranslate' ), array(
-        &$this,
-        'qts_draw_meta_box'
-    ), null, 'side', 'high' );
+    add_meta_box( 'qts_sectionid', __( 'Slugs per language', 'qtranslate' ), 'qts_draw_meta_box', null, 'side', 'high' );
 }
 
 /**
@@ -487,6 +484,7 @@ function qts_taxonomy_custom_column( $str, $column_name, $term_id ) {
 function qts_get_object_terms( $terms, $obj_id, $taxonomy, $args ) {
 
     global $pagenow;
+    global $q_config;
 
     // Although in post edit page the tags are translated,
     // but when saving/updating the post Wordpress considers
