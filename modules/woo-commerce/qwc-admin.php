@@ -414,3 +414,33 @@ function qtranxf_wc_admin_filters() {
 }
 
 qtranxf_wc_admin_filters();
+
+
+function qtranxf_wc_admin_add_term_slugs($add_slugs_hooks){
+    return array_merge($add_slugs_hooks,
+            array('woocommerce_after_add_attribute_fields'));
+}
+
+add_filter( 'qts_add_tax_slugs_hook', 'qtranxf_wc_admin_add_term_slugs' );
+
+function qtranxf_wc_admin_hide_term_slugs( $id, $pagenow ){
+    if ( $pagenow=='edit.php' &&
+            isset($_GET['page']) &&
+            $_GET['page']=='product_attributes'){
+        return 'attribute_name';
+    }
+}
+
+add_filter( 'qts_hide_term_slug_box_by_id', 'qtranxf_wc_admin_hide_term_slugs', 10, 2 );
+
+//TODO: actual slug column to be added (javascript seems the only way currently). For the time being, possibly overridden slugs column is hidden.
+function qtranxf_wc_admin_hide_column_slugs( $additional_jquery, $pagenow ){
+    if ( $pagenow=='edit.php' &&
+            isset($_GET['page']) &&
+            $_GET['page']=='product_attributes'){
+        return "$('table tr th:nth-child(2)').hide()" . PHP_EOL .
+               "$('table tr td:nth-child(2)').hide()" . PHP_EOL;
+    }
+}
+
+add_filter( 'qts_term_slug_box_additional_jquery', 'qtranxf_wc_admin_hide_column_slugs', 10, 2 );
