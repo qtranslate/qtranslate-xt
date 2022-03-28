@@ -358,8 +358,8 @@ function qts_update_settings() {
         return;
     }
     update_option( QTS_OPTIONS_NAME, $qts_settings );
-    flush_rewrite_rules();
     $qtranslate_slug->options_buffer = $qts_settings;
+    flush_rewrite_rules();
 }
 
 /**
