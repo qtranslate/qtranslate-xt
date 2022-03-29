@@ -45,6 +45,8 @@ function qtranxf_wc_add_filters_admin() {
 
 qtranxf_wc_add_filters_admin();
 
+add_filter('woocommerce_attribute_taxonomies','qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage');
+
 add_action( 'admin_enqueue_scripts', 'qtranxf_wc_add_admin_styles' );
 function qtranxf_wc_add_admin_styles() {
     wp_enqueue_style( 'qtranxf_wc_qtranslate_admin', plugins_url( '/qwc-admin.css', __FILE__ ), array(), QTX_VERSION );
