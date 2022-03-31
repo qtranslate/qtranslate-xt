@@ -41,6 +41,8 @@ function qtranxf_wc_add_filters_admin() {
     foreach ( $email_common as $name => $priority ) {
         add_filter( $name, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', $priority );
     }
+    
+    add_filter( 'woocommerce_attribute_taxonomies' , 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage' );
 }
 
 qtranxf_wc_add_filters_admin();
