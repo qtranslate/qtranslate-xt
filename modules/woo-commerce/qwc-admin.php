@@ -43,6 +43,7 @@ function qtranxf_wc_add_filters_admin() {
     }
     
     add_filter( 'woocommerce_attribute_taxonomies' , 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage' );
+    add_filter( 'woocommerce_variation_option_name' , 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage' );
 }
 
 qtranxf_wc_add_filters_admin();
