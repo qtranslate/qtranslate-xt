@@ -21,7 +21,7 @@ function qtranxf_wc_add_filters_front() {
         'woocommerce_gateway_title'                         => 20,
         'woocommerce_gateway_icon'                          => 20,
         'woocommerce_get_privacy_policy_text'               => 20,
-        'woocommerce_order_details_after_order_table_items' => 20,
+        //'woocommerce_order_details_after_order_table_items' => 20, //TODO: this is an action, not a filter. Actually does not do anything. Intent also not clear. If intent is translating $purchase_note that could only be done through 'pre_kses' filter currently, to be implemented in case.
         'woocommerce_order_item_display_meta_value'         => 20,
         'woocommerce_order_item_name'                       => 20,
         'woocommerce_order_get_tax_totals'                  => 20,
