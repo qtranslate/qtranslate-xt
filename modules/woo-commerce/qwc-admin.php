@@ -414,9 +414,3 @@ function qtranxf_wc_admin_filters() {
 }
 
 qtranxf_wc_admin_filters();
-
-
-function qtranxf_wc_admin_add_term_slugs($add_slugs_hooks){
-    return array_merge($add_slugs_hooks,
-            array('woocommerce_after_add_attribute_fields'));
-}

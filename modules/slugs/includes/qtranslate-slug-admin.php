@@ -30,11 +30,6 @@ register_uninstall_hook( QTRANSLATE_FILE, 'qts_uninstall' );
 function qts_taxonomies_hooks() {
     global $qtranslate_slug;
 
-    $add_slugs_hooks=apply_filters( 'qts_add_tax_slugs_hook', array() );
-    foreach ( $add_slugs_hooks as $hook ){
-        add_action( $hook, 'qts_show_add_term_fields' );
-    }
-
     $taxonomies = $qtranslate_slug->get_public_taxonomies();
 
     if ( $taxonomies ) {
@@ -44,6 +39,10 @@ function qts_taxonomies_hooks() {
             add_filter( 'manage_edit-' . $taxonomy->name . '_columns', 'qts_taxonomy_columns' );
             add_filter( 'manage_' . $taxonomy->name . '_custom_column', 'qts_taxonomy_custom_column', 0, 3 );
         }
+    }
+
+    if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
+        add_action( 'woocommerce_after_add_attribute_fields', 'qts_show_add_term_fields' );
     }
 }
 
