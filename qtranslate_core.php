@@ -641,7 +641,7 @@ function qtranxf_validateBool( $var ) {
         }
         return $result;
     }
-    return (bool)$val;
+    return (bool)$var;
 }
 
 function qtranxf_load_option( $name, $default_value = null ) {
