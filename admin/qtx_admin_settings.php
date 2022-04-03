@@ -731,19 +731,18 @@ class QTX_Admin_Settings {
                         <?php
                         $modules = QTX_Admin_Modules::get_modules_infos();
                         foreach ( $modules as $module ):
+                            $module_is_disabled = QTX_Admin_Modules::check_module( QTX_Modules_Handler::get_module_def_by_id( $module['id'] ) ) != QTX_MODULE_STATUS_ACTIVE;
                             ?>
                             <tr>
                                 <td>
-                                    <?php if ( isset( $q_config['ma_module_enabled'][ $module['id'] ] ) ) : ?>
-                                        <label for="ma_module_enabled_<?php echo $module['id']; ?>">
-                                            <input type="checkbox"
-                                                   name="ma_module_enabled[<?php echo $module['id']; ?>]"
-                                                   id="ma_module_enabled_<?php echo $module['id']; ?>"
-                                                   value="1"<?php checked( $q_config['ma_module_enabled'][ $module['id'] ] );
-                                                   disabled(QTX_Admin_Modules::check_module( QTX_Modules_Handler::get_module_def_by_id( $module['id'] ) ) != QTX_MODULE_STATUS_ACTIVE ) ?>/>
-                                            <?php echo $module['name']; ?>
-                                        </label>
-                                    <?php else: echo $module['name']; endif; ?>
+                                    <label for="ma_module_enabled_<?php echo $module['id']; ?>">
+                                        <input type="checkbox"
+                                               name="ma_module_enabled[<?php echo $module['id']; ?>]"
+                                               id="ma_module_enabled_<?php echo $module['id']; ?>"
+                                               value="1"<?php checked( $q_config['ma_module_enabled'][ $module['id'] ] && ! $module_is_disabled );
+                                               disabled($module_is_disabled) ?>/>
+                                        <?php echo $module['name']; ?>
+                                    </label>
                                 </td>
                                 <td><?php echo $module['plugin'] ?></td>
                                 <td><?php echo $module['module'] ?></td>
