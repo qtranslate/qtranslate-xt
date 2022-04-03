@@ -53,6 +53,7 @@ class QTX_Admin_Modules {
     public static function check_module( $module_def, $func_is_active = 'is_plugin_active' ) {
         $module_status = QTX_MODULE_STATUS_INACTIVE;
 
+        require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
         // TODO the call_user_func should be replaced by direct calls from PHP7
         $integration_plugin = $module_def['plugin'];
         if ( is_array( $integration_plugin ) ) {
@@ -168,6 +169,7 @@ class QTX_Admin_Modules {
                     $info['color']  = 'green';
                     break;
                 case QTX_MODULE_STATUS_INACTIVE:
+                    // TODO: fix plugin state may not be inactive
                     $info['plugin'] = $module_def['plugin'] === true ? '-' : __( 'Inactive', 'qtranslate' );
                     $info['module'] = __( 'Inactive', 'qtranslate' );
                     $info['icon']   = 'dashicons-no-alt';
