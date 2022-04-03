@@ -30,6 +30,9 @@ register_uninstall_hook( QTRANSLATE_FILE, 'qts_uninstall' );
 function qts_taxonomies_hooks() {
     global $qtranslate_slug;
 
+    //TODO: check if it is worth to cache this option in QTX_Modules_Handler class
+    $options_modules = get_option( 'qtranslate_modules', array() );
+
     $taxonomies = $qtranslate_slug->get_public_taxonomies();
 
     if ( $taxonomies ) {
@@ -41,7 +44,7 @@ function qts_taxonomies_hooks() {
         }
     }
 
-    if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
+    if ( isset( $options_modules['woo-commerce'] ) && $options_modules['woo-commerce'] === QTX_MODULE_STATUS_ACTIVE ) {
         add_action( 'woocommerce_after_add_attribute_fields', 'qts_show_add_term_fields' );
     }
 }
