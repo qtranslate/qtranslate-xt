@@ -53,7 +53,7 @@ class QTX_Modules_Handler {
         $changed         = false;
         foreach ( $q_config['ma_module_enabled'] as $module_id => $module_enabled ) {
             $status = QTX_Admin_Modules::check_module( self::get_module_def_by_id( $module_id ) );
-            if ($status == QTX_MODULE_STATUS_ACTIVE) { //module can be activated
+            if ( $status == QTX_MODULE_STATUS_ACTIVE ) { //module can be activated
                 if ( $module_enabled && $options_modules[ $module_id ] != QTX_MODULE_STATUS_ACTIVE ) {
                     $options_modules[ $module_id ] = QTX_MODULE_STATUS_ACTIVE;
                     $changed                       = true;
@@ -62,10 +62,10 @@ class QTX_Modules_Handler {
                     $changed                       = true;
                 }
             } else { //TODO check if actual cases exists from user interface, otherwise this condition is redundant
-                $q_config['ma_module_enabled'][$module_id] = false;
+                $q_config['ma_module_enabled'][ $module_id ] = false;
                 if ( $options_modules[ $module_id ] != $status ) {
                     $options_modules[ $module_id ] = $status;
-                    $changed = true;
+                    $changed                       = true;
                 }
             }
         }
@@ -139,11 +139,11 @@ class QTX_Modules_Handler {
                 'incompatible' => 'wp-seo-qtranslate-x/wordpress-seo-qtranslate-x.php',
             ),
             array(
-                'id'                => 'slugs',
-                'name'              => __( 'Slugs translation', 'qtranslate' ) . sprintf( ' (%s)', __( 'experimental' ) ),
-                'plugin'            => true,
-                'incompatible'      => 'qtranslate-slug/qtranslate-slug.php',
-                'has_settings'      => true,
+                'id'           => 'slugs',
+                'name'         => __( 'Slugs translation', 'qtranslate' ) . sprintf( ' (%s)', __( 'experimental' ) ),
+                'plugin'       => true,
+                'incompatible' => 'qtranslate-slug/qtranslate-slug.php',
+                'has_settings' => true,
             )
         );
     }
@@ -152,7 +152,7 @@ class QTX_Modules_Handler {
         $module_defs = self::get_modules_defs();
         $response    = array();
         foreach ( $module_defs as $module ) {
-            $response[ $module['id'] ] = $module['plugin']===true ? false : QTX_Admin_Modules::check_module( $module )===QTX_MODULE_STATUS_ACTIVE;
+            $response[ $module['id'] ] = $module['plugin'] === true ? false : QTX_Admin_Modules::check_module( $module ) === QTX_MODULE_STATUS_ACTIVE;
         }
 
         return $response;

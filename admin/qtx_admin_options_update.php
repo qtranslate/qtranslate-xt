@@ -613,7 +613,7 @@ function qtranxf_update_setting( $var, $type = QTX_STRING, $def = null, $bool_el
                 }
             }
             // in case of bools array compare updating settings arrays with defaults to find keys set as false
-            if ( $bool_elements_array && ! is_null( $def ) && is_array( $def )) {
+            if ( $bool_elements_array && ! is_null( $def ) && is_array( $def ) ) {
                 foreach ( $def as $key => $value ) {
                     if ( ! array_key_exists( $key, $val ) ) {
                         $val[ $key ] = false; //e.g. unchecked checkboxes input are not included in _$_POST

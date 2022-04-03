@@ -162,26 +162,26 @@ class QTX_Admin_Modules {
             $status       = array_key_exists( $module_def['id'], $options_modules ) ? $options_modules[ $module_def['id'] ] : QTX_MODULE_STATUS_UNDEFINED;
             switch ( $status ) {
                 case QTX_MODULE_STATUS_ACTIVE:
-                    $info['plugin'] = $module_def['plugin']===true?'-':__( 'Active', 'qtranslate' );
+                    $info['plugin'] = $module_def['plugin'] === true ? '-' : __( 'Active', 'qtranslate' );
                     $info['module'] = __( 'Active', 'qtranslate' );
                     $info['icon']   = 'dashicons-yes';
                     $info['color']  = 'green';
                     break;
                 case QTX_MODULE_STATUS_INACTIVE:
-                    $info['plugin'] = $module_def['plugin']===true?'-':__( 'Inactive', 'qtranslate' );
+                    $info['plugin'] = $module_def['plugin'] === true ? '-' : __( 'Inactive', 'qtranslate' );
                     $info['module'] = __( 'Inactive', 'qtranslate' );
                     $info['icon']   = 'dashicons-no-alt';
                     $info['color']  = '';
                     break;
                 case QTX_MODULE_STATUS_BLOCKED:
-                    $info['plugin'] = $module_def['plugin']===true?'-':__( 'Active', 'qtranslate' );
+                    $info['plugin'] = $module_def['plugin'] === true ? '-' : __( 'Active', 'qtranslate' );
                     $info['module'] = __( 'Blocked', 'qtranslate' );
                     $info['icon']   = 'dashicons-warning';
                     $info['color']  = 'orange';
                     break;
                 case QTX_MODULE_STATUS_UNDEFINED:
                 default:
-                    $info['plugin'] = $module_def['plugin']===true?'-':__( 'Undefined', 'qtranslate' );
+                    $info['plugin'] = $module_def['plugin'] === true ? '-' : __( 'Undefined', 'qtranslate' );
                     $info['module'] = __( 'Inactive', 'qtranslate' );
                     $info['icon']   = 'dashicons-editor-help';
                     $info['color']  = '';

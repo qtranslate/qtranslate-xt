@@ -740,7 +740,7 @@ class QTX_Admin_Settings {
                                                name="ma_module_enabled[<?php echo $module['id']; ?>]"
                                                id="ma_module_enabled_<?php echo $module['id']; ?>"
                                                value="1"<?php checked( $q_config['ma_module_enabled'][ $module['id'] ] && ! $module_is_disabled );
-                                               disabled($module_is_disabled) ?>/>
+                                        disabled( $module_is_disabled ) ?>/>
                                         <?php echo $module['name']; ?>
                                     </label>
                                 </td>
