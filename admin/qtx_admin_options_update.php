@@ -598,18 +598,26 @@ function qtranxf_update_setting( $var, $type = QTX_STRING, $def = null, $bool_el
         case QTX_ARRAY:
             if ( isset( $_POST[ $var ] ) ) {
                 $val = $_POST[ $var ];
-                if ( ! is_array( $_POST[ $var ] ) ) {
+                if ( ! is_array( $val ) ) {
                     $val = sanitize_text_field( $val );
                     $val = preg_split( '/[\s,]+/', $val, -1, PREG_SPLIT_NO_EMPTY );
                 }
             } else {
-                $val = '';
+                $val = array();
             }
-            if ( empty( $val ) && ! is_null( $def ) ) {
+            if ( ! $bool_elements_array && empty( $val ) && ! is_null( $def ) ) {
                 if ( is_string( $def ) ) {
                     $val = preg_split( '/[\s,]+/', $def, -1, PREG_SPLIT_NO_EMPTY );
                 } else if ( is_array( $def ) ) {
                     $val = $def;
+                }
+            }
+            // in case of bools array compare updating settings arrays with defaults to find keys set as false
+            if ( $bool_elements_array && ! is_null( $def ) && is_array( $def )) {
+                foreach ( $def as $key => $value ) {
+                    if ( ! array_key_exists( $key, $val ) ) {
+                        $val[ $key ] = false; //e.g. unchecked checkboxes input are not included in _$_POST
+                    }
                 }
             }
             if ( isset( $q_config[ $var ] ) && qtranxf_array_compare( $q_config[ $var ], $val ) ) {

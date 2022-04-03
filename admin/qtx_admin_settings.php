@@ -739,7 +739,8 @@ class QTX_Admin_Settings {
                                             <input type="checkbox"
                                                    name="ma_module_enabled[<?php echo $module['id']; ?>]"
                                                    id="ma_module_enabled_<?php echo $module['id']; ?>"
-                                                   value="1"<?php checked( $q_config['ma_module_enabled'][ $module['id'] ] ) ?>/>
+                                                   value="1"<?php checked( $q_config['ma_module_enabled'][ $module['id'] ] );
+                                                   disabled(QTX_Admin_Modules::check_module( QTX_Modules_Handler::get_module_def_by_id( $module['id'] ) ) != QTX_MODULE_STATUS_ACTIVE ) ?>/>
                                             <?php echo $module['name']; ?>
                                         </label>
                                     <?php else: echo $module['name']; endif; ?>

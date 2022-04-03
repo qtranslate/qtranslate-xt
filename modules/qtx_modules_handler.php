@@ -52,12 +52,21 @@ class QTX_Modules_Handler {
         $options_modules = get_option( 'qtranslate_modules', array() );
         $changed         = false;
         foreach ( $q_config['ma_module_enabled'] as $module_id => $module_enabled ) {
-            if ( $module_enabled && $options_modules[ $module_id ] != QTX_MODULE_STATUS_ACTIVE ) {
-                $options_modules[ $module_id ] = QTX_MODULE_STATUS_ACTIVE;
-                $changed                       = true;
-            } else if ( ! $module_enabled && $options_modules[ $module_id ] == QTX_MODULE_STATUS_ACTIVE ) {
-                $options_modules[ $module_id ] = QTX_MODULE_STATUS_INACTIVE;
-                $changed                       = true;
+            $status = QTX_Admin_Modules::check_module( self::get_module_def_by_id( $module_id ) );
+            if ($status == QTX_MODULE_STATUS_ACTIVE) { //module can be activated
+                if ( $module_enabled && $options_modules[ $module_id ] != QTX_MODULE_STATUS_ACTIVE ) {
+                    $options_modules[ $module_id ] = QTX_MODULE_STATUS_ACTIVE;
+                    $changed                       = true;
+                } else if ( ! $module_enabled && $options_modules[ $module_id ] == QTX_MODULE_STATUS_ACTIVE ) {
+                    $options_modules[ $module_id ] = QTX_MODULE_STATUS_INACTIVE;
+                    $changed                       = true;
+                }
+            } else { //TODO check if actual cases exists from user interface, otherwise this condition is redundant
+                $q_config['ma_module_enabled'][$module_id] = false;
+                if ( $options_modules[ $module_id ] != $status ) {
+                    $options_modules[ $module_id ] = $status;
+                    $changed = true;
+                }
             }
         }
 
@@ -134,7 +143,6 @@ class QTX_Modules_Handler {
                 'name'              => __( 'Slugs translation', 'qtranslate' ) . sprintf( ' (%s)', __( 'experimental' ) ),
                 'plugin'            => true,
                 'incompatible'      => 'qtranslate-slug/qtranslate-slug.php',
-                'manual_activation' => true,
                 'has_settings'      => true,
             )
         );
@@ -144,9 +152,7 @@ class QTX_Modules_Handler {
         $module_defs = self::get_modules_defs();
         $response    = array();
         foreach ( $module_defs as $module ) {
-            if ( isset( $module['manual_activation'] ) && $module['manual_activation'] == true ) {
-                $response[ $module['id'] ] = false;
-            }
+            $response[ $module['id'] ] = $module['plugin']===true ? false : QTX_Admin_Modules::check_module( $module )===QTX_MODULE_STATUS_ACTIVE;
         }
 
         return $response;
