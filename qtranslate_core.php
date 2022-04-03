@@ -124,7 +124,7 @@ function qtranxf_init_language() {
 
     qtranxf_load_option_qtrans_compatibility();
 
-    QTX_Modules_Handler::load_modules_enabled();
+    QTX_Modules_Handler::load_active_modules();
 
     /**
      * allow other plugins and modules to initialize whatever they need for language

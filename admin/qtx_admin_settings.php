@@ -244,33 +244,22 @@ class QTX_Admin_Settings {
     }
 
     private function add_sections( $nonce_action ) {
-        global $q_config;
-
         $admin_sections             = array();
         $admin_sections['general']  = __( 'General', 'qtranslate' );
         $admin_sections['advanced'] = __( 'Advanced', 'qtranslate' );
-
-        $custom_sections = apply_filters( 'qtranslate_admin_sections', array() );
+        $custom_sections            = apply_filters( 'qtranslate_admin_sections', array() );
         foreach ( $custom_sections as $key => $value ) {
             $admin_sections[ $key ] = $value;
         }
-
         $admin_sections['integration'] = __( 'Integration', 'qtranslate' );
-        $admin_sections['import']      = __( 'Import', 'qtranslate' ) . '/' . __( 'Export', 'qtranslate' );
-        $admin_sections['languages']   = __( 'Languages', 'qtranslate' );
-
-        //TODO: this actually assumes every manual activation module has settings, dedicated key to be added if that is not the case...
-        if ( isset( $q_config['ma_module_enabled'] ) ) {
-            foreach ( $q_config['ma_module_enabled'] as $module_id => $module_enabled ) {
-                if ( ! $module_enabled ) {
-                    continue;
-                }
-                $ma_module                    = QTX_Modules_Handler::get_module_def_by_id( $module_id );
-                $admin_sections[ $module_id ] = $ma_module['name'];
+        foreach ( QTX_Modules_Handler::get_active_modules() as $module ) {
+            if ( isset( $module ['has_settings'] ) && $module ['has_settings'] ) {
+                $admin_sections[ $module['id'] ] = $module['name'];
             }
         }
+        $admin_sections['import']          = __( 'Import', 'qtranslate' ) . '/' . __( 'Export', 'qtranslate' );
+        $admin_sections['languages']       = __( 'Languages', 'qtranslate' );
         $admin_sections['troubleshooting'] = __( 'Troubleshooting', 'qtranslate' );
-
         ?>
         <h2 class="nav-tab-wrapper">
             <?php foreach ( $admin_sections as $slug => $name ) : ?>
