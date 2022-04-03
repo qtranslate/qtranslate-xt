@@ -7,26 +7,43 @@ define( 'QTX_MODULE_STATUS_BLOCKED', 3 );
 
 class QTX_Modules_Handler {
     /**
-     * Loads modules previously enabled in the options after validation for plugin integration on admin-side.
+     * Get the modules previously activated in the options after validation for plugin integration on admin-side.
      * Note these should be loaded before "qtranslate_init_language" is triggered.
      *
      * @see QTX_Admin_Modules::update_modules_status()
+     * @array Module defs.
      */
-    public static function load_modules_enabled() {
-        $def_modules     = self::get_modules_defs();
+    public static function get_active_modules() {
         $options_modules = get_option( 'qtranslate_modules', array() );
         if ( ! is_array( $options_modules ) ) {
-            return null;
+            return array();
         }
 
+        $active_modules = array();
+        $def_modules    = self::get_modules_defs();
         foreach ( $def_modules as $def_module ) {
             if ( ! array_key_exists( $def_module['id'], $options_modules ) ) {
                 continue;
             }
             $module_status = $options_modules[ $def_module['id'] ];
             if ( $module_status === QTX_MODULE_STATUS_ACTIVE ) {
-                include_once( QTRANSLATE_DIR . '/modules/' . $def_module['id'] . '/' . $def_module['id'] . '.php' );
+                array_push( $active_modules, $def_module );
             }
+        }
+
+        return $active_modules;
+    }
+
+    /**
+     * Loads modules previously activated in the options after validation for plugin integration on admin-side.
+     * Note these should be loaded before "qtranslate_init_language" is triggered.
+     *
+     * @see QTX_Admin_Modules::update_modules_status()
+     */
+    public static function load_active_modules() {
+        $def_modules = self::get_active_modules();
+        foreach ( $def_modules as $def_module ) {
+            include_once( QTRANSLATE_DIR . '/modules/' . $def_module['id'] . '/' . $def_module['id'] . '.php' );
         }
     }
 
@@ -46,7 +63,7 @@ class QTX_Modules_Handler {
 
         if ( $changed ) {
             update_option( 'qtranslate_modules', $options_modules );
-            self::load_modules_enabled();
+            self::load_active_modules();
             do_action( 'qtx_ma_modules_updated' );
         }
     }
@@ -118,6 +135,7 @@ class QTX_Modules_Handler {
                 'plugin'            => true,
                 'incompatible'      => 'qtranslate-slug/qtranslate-slug.php',
                 'manual_activation' => true,
+                'has_settings'      => true,
             )
         );
     }
