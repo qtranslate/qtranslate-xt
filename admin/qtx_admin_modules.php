@@ -53,6 +53,7 @@ class QTX_Admin_Modules {
     public static function check_module( $module_def, $func_is_active = 'is_plugin_active' ) {
         $module_status = QTX_MODULE_STATUS_INACTIVE;
 
+        require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
         // TODO the call_user_func should be replaced by direct calls from PHP7
         $integration_plugin = $module_def['plugin'];
         if ( is_array( $integration_plugin ) ) {
@@ -162,26 +163,27 @@ class QTX_Admin_Modules {
             $status       = array_key_exists( $module_def['id'], $options_modules ) ? $options_modules[ $module_def['id'] ] : QTX_MODULE_STATUS_UNDEFINED;
             switch ( $status ) {
                 case QTX_MODULE_STATUS_ACTIVE:
-                    $info['plugin'] = __( 'Active', 'qtranslate' );
+                    $info['plugin'] = $module_def['plugin'] === true ? '-' : __( 'Active', 'qtranslate' );
                     $info['module'] = __( 'Active', 'qtranslate' );
                     $info['icon']   = 'dashicons-yes';
                     $info['color']  = 'green';
                     break;
                 case QTX_MODULE_STATUS_INACTIVE:
-                    $info['plugin'] = __( 'Inactive', 'qtranslate' );
+                    // TODO: fix plugin state may not be inactive
+                    $info['plugin'] = $module_def['plugin'] === true ? '-' : __( 'Inactive', 'qtranslate' );
                     $info['module'] = __( 'Inactive', 'qtranslate' );
                     $info['icon']   = 'dashicons-no-alt';
                     $info['color']  = '';
                     break;
                 case QTX_MODULE_STATUS_BLOCKED:
-                    $info['plugin'] = __( 'Active', 'qtranslate' );
+                    $info['plugin'] = $module_def['plugin'] === true ? '-' : __( 'Active', 'qtranslate' );
                     $info['module'] = __( 'Blocked', 'qtranslate' );
                     $info['icon']   = 'dashicons-warning';
                     $info['color']  = 'orange';
                     break;
                 case QTX_MODULE_STATUS_UNDEFINED:
                 default:
-                    $info['plugin'] = __( 'Undefined', 'qtranslate' );
+                    $info['plugin'] = $module_def['plugin'] === true ? '-' : __( 'Undefined', 'qtranslate' );
                     $info['module'] = __( 'Inactive', 'qtranslate' );
                     $info['icon']   = 'dashicons-editor-help';
                     $info['color']  = '';

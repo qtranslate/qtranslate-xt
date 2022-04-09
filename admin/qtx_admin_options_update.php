@@ -596,21 +596,20 @@ function qtranxf_update_setting( $var, $type = QTX_STRING, $def = null, $bool_el
 
             return true;
         case QTX_ARRAY:
-            if ( isset( $_POST[ $var ] ) ) {
-                $val = $_POST[ $var ];
-                if ( ! is_array( $_POST[ $var ] ) ) {
-                    $val = sanitize_text_field( $val );
-                    $val = preg_split( '/[\s,]+/', $val, -1, PREG_SPLIT_NO_EMPTY );
-                }
-            } else {
-                $val = '';
+            $val = isset( $_POST[ $var ] ) ? $_POST[ $var ] : array();
+            if ( ! is_array( $val ) ) {
+                $val = sanitize_text_field( $val );
+                $val = preg_split( '/[\s,]+/', $val, -1, PREG_SPLIT_NO_EMPTY );
             }
-            if ( empty( $val ) && ! is_null( $def ) ) {
+            if ( ! $bool_elements_array && empty( $val ) ) {
                 if ( is_string( $def ) ) {
                     $val = preg_split( '/[\s,]+/', $def, -1, PREG_SPLIT_NO_EMPTY );
                 } else if ( is_array( $def ) ) {
-                    $val = $def;
+                    $val = $def;  // TODO: why replace all the array? Check if shouldn't it be merged with default.
                 }
+            }
+            if ( $bool_elements_array && is_array( $def ) ) {
+                $val = array_merge( $def, $val );
             }
             if ( isset( $q_config[ $var ] ) && qtranxf_array_compare( $q_config[ $var ], $val ) ) {
                 return false;
