@@ -35,6 +35,19 @@ class QTX_Modules_Handler {
     }
 
     /**
+     * Check if a module is active.
+     *
+     * @param string $module_id
+     *
+     * @bool true if module active.
+     */
+    public static function is_module_active( $module_id ) {
+        $options_modules = get_option( 'qtranslate_modules', array() );
+
+        return isset( $options_modules[ $module_id ] ) && $options_modules[ $module_id ] === QTX_MODULE_STATUS_ACTIVE;
+    }
+
+    /**
      * Loads modules previously activated in the options after validation for plugin integration on admin-side.
      * Note these should be loaded before "qtranslate_init_language" is triggered.
      *
