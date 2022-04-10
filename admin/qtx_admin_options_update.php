@@ -609,7 +609,13 @@ function qtranxf_update_setting( $var, $type = QTX_STRING, $def = null, $bool_el
                 }
             }
             if ( $bool_elements_array && is_array( $def ) ) {
-                $val = array_merge( $def, $val );
+                // TODO: refactor ma_enabled vs state. Normally we should use array_merge($def, $val) but we can't.
+                // TODO: Unchecked checkboxes input are not included in $_POST so default values are ignored and forced to false.
+                foreach ( $def as $key => $value ) {
+                    if ( ! array_key_exists( $key, $val ) ) {
+                        $val[ $key ] = false;
+                    }
+                }
             }
             if ( isset( $q_config[ $var ] ) && qtranxf_array_compare( $q_config[ $var ], $val ) ) {
                 return false;
