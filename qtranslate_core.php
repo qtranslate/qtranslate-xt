@@ -124,7 +124,7 @@ function qtranxf_init_language() {
 
     qtranxf_load_option_qtrans_compatibility();
 
-    QTX_Modules_Handler::load_modules_enabled();
+    QTX_Modules_Handler::load_active_modules();
 
     /**
      * allow other plugins and modules to initialize whatever they need for language
@@ -779,7 +779,7 @@ function qtranxf_load_config() {
     foreach ( $qtranslate_options['front']['array'] as $name => $def ) {
         qtranxf_load_option_array( $name, $def );
     }
-    qtranxf_load_option( 'ma_module_enabled' );
+    qtranxf_load_option_array( 'ma_module_enabled', $qtranslate_options['default_value']['ma_module_enabled'] );
     qtranxf_load_option_array( 'term_name', array() );
 
     if ( $q_config['filter_options_mode'] == QTX_FILTER_OPTIONS_LIST ) {

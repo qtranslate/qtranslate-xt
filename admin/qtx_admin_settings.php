@@ -244,33 +244,22 @@ class QTX_Admin_Settings {
     }
 
     private function add_sections( $nonce_action ) {
-        global $q_config;
-
         $admin_sections             = array();
         $admin_sections['general']  = __( 'General', 'qtranslate' );
         $admin_sections['advanced'] = __( 'Advanced', 'qtranslate' );
-
-        $custom_sections = apply_filters( 'qtranslate_admin_sections', array() );
+        $custom_sections            = apply_filters( 'qtranslate_admin_sections', array() );
         foreach ( $custom_sections as $key => $value ) {
             $admin_sections[ $key ] = $value;
         }
-
         $admin_sections['integration'] = __( 'Integration', 'qtranslate' );
-        $admin_sections['import']      = __( 'Import', 'qtranslate' ) . '/' . __( 'Export', 'qtranslate' );
-        $admin_sections['languages']   = __( 'Languages', 'qtranslate' );
-
-        //TODO: this actually assumes every manual activation module has settings, dedicated key to be added if that is not the case...
-        if ( isset( $q_config['ma_module_enabled'] ) ) {
-            foreach ( $q_config['ma_module_enabled'] as $module_id => $module_enabled ) {
-                if ( ! $module_enabled ) {
-                    continue;
-                }
-                $ma_module                    = QTX_Modules_Handler::get_module_def_by_id( $module_id );
-                $admin_sections[ $module_id ] = $ma_module['name'];
+        foreach ( QTX_Modules_Handler::get_active_modules() as $module ) {
+            if ( isset( $module ['has_settings'] ) && $module ['has_settings'] ) {
+                $admin_sections[ $module['id'] ] = $module['name'];
             }
         }
+        $admin_sections['import']          = __( 'Import', 'qtranslate' ) . '/' . __( 'Export', 'qtranslate' );
+        $admin_sections['languages']       = __( 'Languages', 'qtranslate' );
         $admin_sections['troubleshooting'] = __( 'Troubleshooting', 'qtranslate' );
-
         ?>
         <h2 class="nav-tab-wrapper">
             <?php foreach ( $admin_sections as $slug => $name ) : ?>
@@ -742,18 +731,18 @@ class QTX_Admin_Settings {
                         <?php
                         $modules = QTX_Admin_Modules::get_modules_infos();
                         foreach ( $modules as $module ):
+                            $module_is_disabled = QTX_Admin_Modules::check_module( QTX_Modules_Handler::get_module_def_by_id( $module['id'] ) ) != QTX_MODULE_STATUS_ACTIVE;
                             ?>
                             <tr>
                                 <td>
-                                    <?php if ( isset( $q_config['ma_module_enabled'][ $module['id'] ] ) ) : ?>
-                                        <label for="ma_module_enabled_<?php echo $module['id']; ?>">
-                                            <input type="checkbox"
-                                                   name="ma_module_enabled[<?php echo $module['id']; ?>]"
-                                                   id="ma_module_enabled_<?php echo $module['id']; ?>"
-                                                   value="1"<?php checked( $q_config['ma_module_enabled'][ $module['id'] ] ) ?>/>
-                                            <?php echo $module['name']; ?>
-                                        </label>
-                                    <?php else: echo $module['name']; endif; ?>
+                                    <label for="ma_module_enabled_<?php echo $module['id']; ?>">
+                                        <input type="checkbox"
+                                               name="ma_module_enabled[<?php echo $module['id']; ?>]"
+                                               id="ma_module_enabled_<?php echo $module['id']; ?>"
+                                               value="1"<?php checked( $q_config['ma_module_enabled'][ $module['id'] ] && ! $module_is_disabled );
+                                        disabled( $module_is_disabled ) ?>/>
+                                        <?php echo $module['name']; ?>
+                                    </label>
                                 </td>
                                 <td><?php echo $module['plugin'] ?></td>
                                 <td><?php echo $module['module'] ?></td>

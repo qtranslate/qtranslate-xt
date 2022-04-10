@@ -20,6 +20,7 @@ add_action( 'edited_term', 'qts_save_term', 605, 3 );
 add_action( 'admin_head', 'qts_hide_term_slug_box', 900 );
 add_action( 'init', 'qts_taxonomies_hooks', 805 );
 add_action( 'admin_head', 'qts_hide_quick_edit', 600 );
+add_action( 'qtranslate_save_config', 'qts_ma_module_updated' );
 // plugin deactivation/uninstall
 register_deactivation_hook( QTRANSLATE_FILE, 'qts_deactivate' );
 register_uninstall_hook( QTRANSLATE_FILE, 'qts_uninstall' );
