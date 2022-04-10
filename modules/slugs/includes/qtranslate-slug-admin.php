@@ -434,12 +434,12 @@ function qts_hide_term_slug_box() {
             $id = 'slug';
             break;
         case 'edit.php': //This is to handle Woocommerce edit product attributes page
-            if ( isset($_GET['page']) && $_GET['page']=='product_attributes' ){
+            if ( isset( $_GET['page'] ) && $_GET['page'] == 'product_attributes' ) {
                 $id = 'attribute_name';
                 //TODO: actual slug column to be added (javascript seems the only way currently). For the time being, possibly overridden slugs column is hidden.
                 $additional_jquery =
-                        "$('table tr th:nth-child(2)').hide()" . PHP_EOL .
-                        "$('table tr td:nth-child(2)').hide()" . PHP_EOL;
+                    "$('table tr th:nth-child(2)').hide()" . PHP_EOL .
+                    "$('table tr td:nth-child(2)').hide()" . PHP_EOL;
             }
             break;
         default:
@@ -451,7 +451,9 @@ function qts_hide_term_slug_box() {
     echo "  jQuery(document).ready(function($){" . PHP_EOL;
     echo "      $(\"#" . $id . "\").parent().hide();" . PHP_EOL;
     echo "      $(\".form-field td #slug\").parent().parent().hide();" . PHP_EOL;
-    if ( isset( $additional_jquery ) ) echo $additional_jquery;
+    if ( isset( $additional_jquery ) ) {
+        echo $additional_jquery;
+    }
     echo "  });" . PHP_EOL;
     echo "</script>" . PHP_EOL;
 }
