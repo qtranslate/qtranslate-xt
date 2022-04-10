@@ -107,6 +107,31 @@ class QTX_Admin_Modules {
         } );
     }
 
+    public static function update_manual_enabled_modules() {
+        global $q_config;
+        $options_modules = get_option( 'qtranslate_modules', array() );
+        foreach ( $q_config['ma_module_enabled'] as $module_id => $module_enabled ) {
+            $check_status = self::check_module( QTX_Modules_Handler::get_module_def_by_id( $module_id ) );
+            if ( $check_status == QTX_MODULE_STATUS_ACTIVE ) {
+                // The state of the checked module can be changed by the admin.
+                if ( $module_enabled && $options_modules[ $module_id ] != QTX_MODULE_STATUS_ACTIVE ) {
+                    $options_modules[ $module_id ] = QTX_MODULE_STATUS_ACTIVE;
+                } else if ( ! $module_enabled && $options_modules[ $module_id ] == QTX_MODULE_STATUS_ACTIVE ) {
+                    $options_modules[ $module_id ] = QTX_MODULE_STATUS_INACTIVE;
+                }
+            } else {
+                // TODO fix update when module plugin state changed
+                $q_config['ma_module_enabled'][ $module_id ] = false;
+                if ( $options_modules[ $module_id ] != $check_status ) {
+                    $options_modules[ $module_id ] = $check_status;
+                }
+            }
+        }
+
+        update_option( 'qtranslate_modules', $options_modules );
+        QTX_Modules_Handler::load_active_modules();
+    }
+
     public static function admin_notices() {
         $options_modules = get_option( 'qtranslate_modules', array() );
         if ( empty( $options_modules ) ) {

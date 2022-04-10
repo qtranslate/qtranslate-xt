@@ -47,39 +47,6 @@ class QTX_Modules_Handler {
         }
     }
 
-    public static function update_manual_enabled_modules() {
-        global $q_config;
-        $options_modules = get_option( 'qtranslate_modules', array() );
-        $changed         = false;
-        foreach ( $q_config['ma_module_enabled'] as $module_id => $module_enabled ) {
-            $check_status = QTX_Admin_Modules::check_module( self::get_module_def_by_id( $module_id ) );
-            if ( $check_status == QTX_MODULE_STATUS_ACTIVE ) {
-                // The state of the checked module can be changed by the admin.
-                if ( $module_enabled && $options_modules[ $module_id ] != QTX_MODULE_STATUS_ACTIVE ) {
-                    $options_modules[ $module_id ] = QTX_MODULE_STATUS_ACTIVE;
-                    $changed                       = true;
-                } else if ( ! $module_enabled && $options_modules[ $module_id ] == QTX_MODULE_STATUS_ACTIVE ) {
-                    $options_modules[ $module_id ] = QTX_MODULE_STATUS_INACTIVE;
-                    $changed                       = true;
-                }
-            } else {
-                // TODO fix update when module plugin state changed
-                $q_config['ma_module_enabled'][ $module_id ] = false;
-                if ( $options_modules[ $module_id ] != $check_status ) {
-                    $options_modules[ $module_id ] = $check_status;
-                    $changed                       = true;
-                }
-            }
-        }
-
-        if ( $changed ) {
-            update_option( 'qtranslate_modules', $options_modules );
-            self::load_active_modules();
-            // TODO remove this action
-            do_action( 'qtx_ma_modules_updated' );
-        }
-    }
-
     /**
      * Retrieve the definitions of the built-in integration modules.
      * Each module is defined by:
@@ -155,7 +122,7 @@ class QTX_Modules_Handler {
         $module_defs = self::get_modules_defs();
         // TODO: break deps on admin
         require_once( QTRANSLATE_DIR . '/admin/qtx_admin_modules.php' );
-        $response    = array();
+        $response = array();
         foreach ( $module_defs as $module ) {
             $response[ $module['id'] ] = $module['plugin'] === true ? false : QTX_Admin_Modules::check_module( $module ) === QTX_MODULE_STATUS_ACTIVE;
         }
