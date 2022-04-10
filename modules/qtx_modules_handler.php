@@ -153,6 +153,8 @@ class QTX_Modules_Handler {
 
     public static function ma_modules_default_options() {
         $module_defs = self::get_modules_defs();
+        // TODO: break deps on admin
+        require_once( QTRANSLATE_DIR . '/admin/qtx_admin_modules.php' );
         $response    = array();
         foreach ( $module_defs as $module ) {
             $response[ $module['id'] ] = $module['plugin'] === true ? false : QTX_Admin_Modules::check_module( $module ) === QTX_MODULE_STATUS_ACTIVE;
