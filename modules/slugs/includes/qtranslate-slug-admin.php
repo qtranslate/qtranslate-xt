@@ -26,7 +26,7 @@ register_deactivation_hook( QTRANSLATE_FILE, 'qts_deactivate' );
 register_uninstall_hook( QTRANSLATE_FILE, 'qts_uninstall' );
 
 /**
- * Adds support for qtranslate in taxonomies.
+ * Add support for taxonomies and optional integration with WooCommerce.
  */
 function qts_taxonomies_hooks() {
     global $qtranslate_slug;
@@ -40,6 +40,10 @@ function qts_taxonomies_hooks() {
             add_filter( 'manage_edit-' . $taxonomy->name . '_columns', 'qts_taxonomy_columns' );
             add_filter( 'manage_' . $taxonomy->name . '_custom_column', 'qts_taxonomy_custom_column', 0, 3 );
         }
+    }
+
+    if ( QTX_Modules_Handler::is_module_active( 'woo-commerce' ) ) {
+        add_action( 'woocommerce_after_add_attribute_fields', 'qts_show_add_term_fields' );
     }
 }
 
@@ -427,6 +431,16 @@ function qts_hide_term_slug_box() {
         case 'term.php':
             $id = 'slug';
             break;
+        case 'edit.php':
+            // Handle WooCommerce edit product attributes page.
+            if ( isset( $_GET['page'] ) && $_GET['page'] == 'product_attributes' ) {
+                $id = 'attribute_name';
+                // TODO: actual slug column to be added (javascript seems the only way currently). For the time being, possibly overridden slugs column is hidden.
+                $additional_jquery =
+                    "$('table tr th:nth-child(2)').hide()" . PHP_EOL .
+                    "$('table tr td:nth-child(2)').hide()" . PHP_EOL;
+            }
+            break;
         default:
             return;
     endswitch;
@@ -436,6 +450,9 @@ function qts_hide_term_slug_box() {
     echo "  jQuery(document).ready(function($){" . PHP_EOL;
     echo "      $(\"#" . $id . "\").parent().hide();" . PHP_EOL;
     echo "      $(\".form-field td #slug\").parent().parent().hide();" . PHP_EOL;
+    if ( isset( $additional_jquery ) ) {
+        echo $additional_jquery;
+    }
     echo "  });" . PHP_EOL;
     echo "</script>" . PHP_EOL;
 }
