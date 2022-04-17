@@ -729,18 +729,19 @@ class QTX_Admin_Settings {
                         </thead>
                         <tbody>
                         <?php
-                        global $q_config;
-                        foreach ( QTX_Admin_Modules::get_modules_infos() as $module ):
+                        $modules = QTX_Admin_Modules::get_modules_infos();
+                        foreach ( $modules as $module ):
+                            $module_id = $module['id'];
                             // TODO: allow custom default value by module
-                            $module_is_checked = isset( $q_config['modules_ma_enabled'][ $module['id'] ] ) && $q_config['modules_ma_enabled'][ $module['id'] ];
-                            $module_is_disabled = QTX_Admin_Modules::can_module_be_activated( QTX_Modules_Handler::get_module_def_by_id( $module['id'] ) ) != QTX_MODULE_STATUS_ACTIVE;
+                            $module_is_checked  = isset( $q_config['modules_ma_enabled'][ $module_id ] ) && $q_config['modules_ma_enabled'][ $module_id ];
+                            $module_is_disabled = QTX_Admin_Modules::can_module_be_activated( QTX_Modules_Handler::get_module_def_by_id( $module_id ) ) != QTX_MODULE_STATUS_ACTIVE;
                             ?>
                             <tr>
                                 <td>
-                                    <label for="modules_ma_enabled_<?php echo $module['id']; ?>">
+                                    <label for="modules_ma_enabled_<?php echo $module_id; ?>">
                                         <input type="checkbox"
-                                               name="modules_ma_enabled[<?php echo $module['id']; ?>]"
-                                               id="modules_ma_enabled_<?php echo $module['id']; ?>"
+                                               name="modules_ma_enabled[<?php echo $module_id; ?>]"
+                                               id="modules_ma_enabled_<?php echo $module_id; ?>"
                                                value="1"<?php checked( $module_is_checked );
                                         disabled( $module_is_disabled ) ?>/>
                                         <?php echo $module['name']; ?>

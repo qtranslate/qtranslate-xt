@@ -779,7 +779,7 @@ function qtranxf_load_config() {
     foreach ( $qtranslate_options['front']['array'] as $name => $def ) {
         qtranxf_load_option_array( $name, $def );
     }
-    // qtranxf_load_option_array( 'ma_module_enabled', array() );
+
     qtranxf_load_option_array( 'term_name', array() );
 
     if ( $q_config['filter_options_mode'] == QTX_FILTER_OPTIONS_LIST ) {
