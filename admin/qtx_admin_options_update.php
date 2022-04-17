@@ -494,8 +494,6 @@ function qtranxf_save_config() {
         qtranxf_update_option( $nm, $def );
     }
 
-    QTX_Admin_Modules::update_manual_enabled_modules();
-
     do_action( 'qtranslate_save_config' );
     do_action_deprecated( 'qtranslate_saveConfig', array(), '3.10.0', 'qtranslate_save_config' );
 }
@@ -816,7 +814,6 @@ function qtranxf_update_settings() {
         qtranxf_update_setting( $name, QTX_ARRAY, $default );
     }
     qtranxf_update_setting( 'filter_options', QTX_ARRAY );
-    qtranxf_update_setting( 'ma_module_enabled', QTX_ARRAY, null, true );
 
     switch ( $q_config['url_mode'] ) {
         case QTX_URL_DOMAIN:
@@ -924,6 +921,8 @@ function qtranxf_update_settings() {
     }
 
     $q_config['i18n-cache'] = array(); // clear i18n-config cache
+
+    QTX_Admin_Modules::update_modules_status();
 
     // opportunity to update special custom settings on sub-plugins
     do_action( 'qtranslate_update_settings' );

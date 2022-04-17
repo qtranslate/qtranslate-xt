@@ -4,6 +4,7 @@ define( 'QTX_MODULE_STATUS_UNDEFINED', 0 );
 define( 'QTX_MODULE_STATUS_ACTIVE', 1 );
 define( 'QTX_MODULE_STATUS_INACTIVE', 2 );
 define( 'QTX_MODULE_STATUS_BLOCKED', 3 );
+define( 'QTX_MODULE_STATUS_DISABLED', 4 );
 
 class QTX_Modules_Handler {
     /**

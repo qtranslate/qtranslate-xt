@@ -36,6 +36,7 @@ function qtranxf_admin_set_default_options( &$options ) {
         'custom_fields'        => array(),
         'custom_field_classes' => array(),
         'post_type_excluded'   => array(),
+        'modules_ma_enabled'   => array()
     );
 
     // options processed in a special way
