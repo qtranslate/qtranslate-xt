@@ -17,7 +17,7 @@ class QTX_Admin_Modules {
      * Each module is activated:
      * - if the conditions with integration and incompatible plugins (optional) are met
      * AND
-     * - if the `modules_ma_enabled` admin option is checked for that module.
+     * - if the `admin_enabled_modules` admin option is checked for that module.
      *
      * The valid modules are stored in the 'qtranslate_modules' option, telling which module should be loaded.
      * Note each module can enable hooks both for admin and front requests.
@@ -33,7 +33,7 @@ class QTX_Admin_Modules {
             $status = self::can_module_be_activated( $module_def, $func_is_active );
             if ( $status == QTX_MODULE_STATUS_ACTIVE ) {
                 // The admin options matter only if the module can be activated, otherwise the hard conditions prevail.
-                if ( isset ( $q_config['modules_ma_enabled'][ $module_def['id'] ] ) && ! $q_config['modules_ma_enabled'][ $module_def['id'] ] ) {
+                if ( isset ( $q_config['admin_enabled_modules'][ $module_def['id'] ] ) && ! $q_config['admin_enabled_modules'][ $module_def['id'] ] ) {
                     $status = QTX_MODULE_STATUS_INACTIVE;
                 }
             }

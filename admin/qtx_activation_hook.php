@@ -832,7 +832,7 @@ function qtranxf_activation_hook() {
     // After reactivation the enabled modules are reloaded, but all the conditions are checked with all plugins again.
     global $qtranslate_options;
     qtranxf_admin_set_default_options( $qtranslate_options );
-    qtranxf_load_option_array( 'modules_ma_enabled', $qtranslate_options['admin']['modules_ma_enabled'] );
+    qtranxf_load_option_array( 'admin_enabled_modules', $qtranslate_options['admin']['admin_enabled_modules'] );
     QTX_Admin_Modules::update_modules_status();
 
     /**

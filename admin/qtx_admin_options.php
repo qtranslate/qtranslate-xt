@@ -39,10 +39,10 @@ function qtranxf_admin_set_default_options( &$options ) {
     );
 
     // Boolean set defining the default enabled options for each module, hard values not depending on any state.
-    $options['admin']['modules_ma_enabled'] = array();
+    $options['admin']['admin_enabled_modules'] = array();
     foreach ( QTX_Modules_Handler::get_modules_defs() as $module_def ) {
         // TODO: expand default values in module def
-        $options['admin']['modules_ma_enabled'][ $module_def['id'] ] = ( $module_def['plugin'] !== true );
+        $options['admin']['admin_enabled_modules'][ $module_def['id'] ] = ( $module_def['plugin'] !== true );
     }
 
     // options processed in a special way
@@ -78,7 +78,7 @@ function qtranxf_admin_load_config() {
         qtranxf_load_option_array( $name, $default );
     }
 
-    qtranxf_load_option_array( 'modules_ma_enabled', $qtranslate_options['admin']['modules_ma_enabled'] );
+    qtranxf_load_option_array( 'admin_enabled_modules', $qtranslate_options['admin']['admin_enabled_modules'] );
 
     if ( empty( $q_config['admin_config'] ) ) {
         require_once( QTRANSLATE_DIR . '/admin/qtx_admin_options_update.php' );
