@@ -941,6 +941,8 @@ function qtranxf_update_settings() {
 
     $q_config['i18n-cache'] = array(); // clear i18n-config cache
 
+    qtranxf_update_setting( 'modules_ma_enabled', QTX_BOOLEAN_SET, $qtranslate_options['admin']['modules_ma_enabled'] );
+
     QTX_Admin_Modules::update_modules_status();
 
     // opportunity to update special custom settings on sub-plugins

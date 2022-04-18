@@ -28,17 +28,11 @@ class QTX_Admin_Modules {
         foreach ( $module_defs as $module_def ) {
             $status = self::can_module_be_activated( $module_def, $func_is_active );
             if ( $status == QTX_MODULE_STATUS_ACTIVE ) {
-                // The admin checkboxes are not sent in the POST message on update, enforce default values to `false` here.
-                if ( ! isset ( $q_config['modules_ma_enabled'][ $module_def['id'] ] ) ) {
-                    $q_config['modules_ma_enabled'][ $module_def['id'] ] = false;
-                }
-
-                // Note the module may also be disabled manually from before the current update.
-                if ( ! $q_config['modules_ma_enabled'][ $module_def['id'] ] ) {
+                // The admin options matter only if the module can be activated, otherwise the hard conditions prevail.
+                if ( isset ( $q_config['modules_ma_enabled'][ $module_def['id'] ] ) && ! $q_config['modules_ma_enabled'][ $module_def['id'] ] ) {
                     $status = QTX_MODULE_STATUS_INACTIVE;
                 }
             }
-
             $option_modules[ $module_def['id'] ] = $status;
         }
 
