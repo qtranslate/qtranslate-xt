@@ -526,12 +526,13 @@ function qtranxf_updateSetting( $var, $type = QTX_STRING, $def = null ) {
     qtranxf_update_setting( $var, $type, $def );
 }
 
-function qtranxf_update_setting( $var, $type = QTX_STRING, $def = null, $bool_elements_array = false ) {
+function qtranxf_update_setting( $var, $type = QTX_STRING, $def = null ) {
     global $q_config, $qtranslate_options;
     if ( ! isset( $_POST['submit'] ) ) {
         return false;
     }
-    if ( ! isset( $_POST[ $var ] ) && $type != QTX_BOOLEAN && ! $bool_elements_array ) {
+    // Require POST data except for booleans, as unchecked boxes are not sent with the form.
+    if ( ! isset( $_POST[ $var ] ) && $type != QTX_BOOLEAN && $type != QTX_BOOLEAN_SET ) {
         return false;
     }
 
@@ -568,6 +569,7 @@ function qtranxf_update_setting( $var, $type = QTX_STRING, $def = null, $bool_el
             qtranxf_update_option( $var, $def );
 
             return true;
+
         case QTX_TEXT:
             $val = $_POST[ $var ];
             // standardize multi-line string
@@ -593,25 +595,39 @@ function qtranxf_update_setting( $var, $type = QTX_STRING, $def = null, $bool_el
             qtranxf_update_option( $var, $def );
 
             return true;
+
         case QTX_ARRAY:
             $val = isset( $_POST[ $var ] ) ? $_POST[ $var ] : array();
             if ( ! is_array( $val ) ) {
                 $val = sanitize_text_field( $val );
                 $val = preg_split( '/[\s,]+/', $val, -1, PREG_SPLIT_NO_EMPTY );
             }
-            if ( ! $bool_elements_array && empty( $val ) ) {
+            if ( empty( $val ) ) {
                 if ( is_string( $def ) ) {
                     $val = preg_split( '/[\s,]+/', $def, -1, PREG_SPLIT_NO_EMPTY );
                 } else if ( is_array( $def ) ) {
                     $val = $def;  // TODO: why replace all the array? Check if shouldn't it be merged with default.
                 }
             }
-            if ( $bool_elements_array && is_array( $def ) ) {
-                // TODO: refactor ma_enabled vs state. Normally we should use array_merge($def, $val) but we can't.
-                // TODO: Unchecked checkboxes input are not included in $_POST so default values are ignored and forced to false.
-                foreach ( $def as $key => $value ) {
+            if ( isset( $q_config[ $var ] ) && qtranxf_array_compare( $q_config[ $var ], $val ) ) {
+                return false;
+            }
+            $q_config[ $var ] = $val;
+            qtranxf_update_option( $var, $def );
+
+            return true;
+
+        case QTX_BOOLEAN_SET:
+            $val = isset( $_POST[ $var ] ) ? $_POST[ $var ] : array();
+            // Convert all input values to boolean types
+            foreach ( $val as &$value ) {
+                $value = (bool) $value;
+            }
+            // Input checkboxes that are unchecked are not in $_POST so default values are used to detect missing keys.
+            if ( isset ( $def ) ) {
+                foreach ( array_keys( $def ) as $key ) {
                     if ( ! array_key_exists( $key, $val ) ) {
-                        $val[ $key ] = false;
+                        $val[ $key ] = false;   // Ignore the default value, enforce `false` for that key.
                     }
                 }
             }
@@ -622,6 +638,7 @@ function qtranxf_update_setting( $var, $type = QTX_STRING, $def = null, $bool_el
             qtranxf_update_option( $var, $def );
 
             return true;
+
         case QTX_BOOLEAN:
             if ( isset( $_POST[ $var ] ) && $_POST[ $var ] == 1 ) {
                 if ( $q_config[ $var ] ) {
@@ -637,6 +654,7 @@ function qtranxf_update_setting( $var, $type = QTX_STRING, $def = null, $bool_el
             qtranxf_update_option_bool( $var, $def );
 
             return true;
+
         case QTX_INTEGER:
             $val = sanitize_text_field( $_POST[ $var ] );
             $val = intval( $val );
@@ -813,6 +831,7 @@ function qtranxf_update_settings() {
     foreach ( $qtranslate_options['front']['array'] as $name => $default ) {
         qtranxf_update_setting( $name, QTX_ARRAY, $default );
     }
+
     qtranxf_update_setting( 'filter_options', QTX_ARRAY );
 
     switch ( $q_config['url_mode'] ) {
