@@ -13,19 +13,23 @@ class QTX_Admin_Modules {
 
     /**
      * Update the modules status for plugin integration.
+     *
+     * Each module is activated:
+     * - if the conditions with integration and incompatible plugins (optional) are met
+     * AND
+     * - if the `modules_ma_enabled` admin option is checked for that module.
+     *
      * The valid modules are stored in the 'qtranslate_modules' option, telling which module should be loaded.
      * Note each module can enable hooks both for admin and front requests.
      *
      * @param callable $func_is_active callback to evaluate if a plugin is active
      */
     public static function update_modules_status( $func_is_active = 'is_plugin_active' ) {
-        require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-
         global $q_config;
 
-        $module_defs    = QTX_Modules_Handler::get_modules_defs();
         $option_modules = array();
-        foreach ( $module_defs as $module_def ) {
+        require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+        foreach ( QTX_Modules_Handler::get_modules_defs() as $module_def ) {
             $status = self::can_module_be_activated( $module_def, $func_is_active );
             if ( $status == QTX_MODULE_STATUS_ACTIVE ) {
                 // The admin options matter only if the module can be activated, otherwise the hard conditions prevail.
