@@ -46,6 +46,7 @@ class QTX_Admin_Modules {
         // trigger info notices only if changed
         if ( $old_option_modules != $option_modules ) {
             set_transient( 'qtranslate_notice_modules', true, 5 );
+            QTX_Modules_Handler::load_active_modules();
         }
     }
 
