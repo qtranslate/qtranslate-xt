@@ -724,15 +724,15 @@ class QTX_Admin_Settings {
                             <th class="row-title"><?php _ex( 'Name', 'Modules table header', 'qtranslate' ); ?></th>
                             <th><?php _ex( 'Plugin', 'Modules table header', 'qtranslate' ); ?></th>
                             <th><?php _ex( 'Module', 'Modules table header', 'qtranslate' ); ?></th>
-                            <th><?php _ex( 'Status', 'Modules table header', 'qtranslate' ); ?></th>
+                            <th><?php _ex( 'State', 'Modules table header', 'qtranslate' ); ?></th>
                         </tr>
                         </thead>
                         <tbody>
                         <?php
                         foreach ( QTX_Admin_Modules::get_modules_infos() as $module ) :
                             $module_id = $module['def']['id'];
-                            $module_is_checked = ( isset( $q_config['admin_enabled_modules'][ $module_id ] ) && $q_config['admin_enabled_modules'][ $module_id ] ) || ( $module['status'] == QTX_MODULE_STATUS_ACTIVE );
-                            $module_is_disabled = ( QTX_Admin_Modules::can_module_be_activated( $module['def'] ) != QTX_MODULE_STATUS_ACTIVE );
+                            $module_is_checked = ( isset( $q_config['admin_enabled_modules'][ $module_id ] ) && $q_config['admin_enabled_modules'][ $module_id ] ) || ( $module['state'] == QTX_MODULE_STATE_ACTIVE );
+                            $module_is_disabled = ( QTX_Admin_Modules::can_module_be_activated( $module['def'] ) != QTX_MODULE_STATE_ACTIVE );
                             ?>
                             <tr>
                                 <td>

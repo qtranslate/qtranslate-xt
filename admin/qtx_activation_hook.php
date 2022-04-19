@@ -833,7 +833,7 @@ function qtranxf_activation_hook() {
     global $qtranslate_options;
     qtranxf_admin_set_default_options( $qtranslate_options );
     qtranxf_load_option_array( 'admin_enabled_modules', $qtranslate_options['admin']['admin_enabled_modules'] );
-    QTX_Admin_Modules::update_modules_status();
+    QTX_Admin_Modules::update_modules_state();
 
     /**
      * A chance to execute activation actions specifically for this plugin.
