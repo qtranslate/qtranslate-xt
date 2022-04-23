@@ -253,8 +253,10 @@ class QTX_Admin_Settings {
             $admin_sections[ $key ] = $value;
         }
         $admin_sections['integration'] = __( 'Integration', 'qtranslate' );
-        foreach ( QTX_Module_Loader::get_active_modules() as $module ) {
-            if ( $module->has_settings() ) {
+
+        $settings_modules = QTX_Admin_Settings_Module::get_settings_modules();
+        foreach ( $settings_modules as $module ) {
+            if ( $module->is_active() && $module->has_settings() ) {
                 $admin_sections[ $module->id ] = $module->name;
             }
         }
@@ -274,7 +276,7 @@ class QTX_Admin_Settings {
                 <?php
                 $this->add_general_section();
                 $this->add_advanced_section();
-                $this->add_integration_section();
+                $this->add_integration_section( $settings_modules );
                 $this->add_troubleshooting_section();
                 // Allow to load additional services
                 do_action( 'qtranslate_configuration', $this->options_uri );
@@ -701,7 +703,12 @@ class QTX_Admin_Settings {
         $this->close_section( 'advanced' );
     }
 
-    private function add_integration_section() {
+    /**
+     * @param QTX_Admin_Settings_Module[] $settings_modules
+     *
+     * @return void
+     */
+    private function add_integration_section( $settings_modules ) {
         global $q_config;
 
         $this->open_section( 'integration' ); ?>
@@ -729,7 +736,7 @@ class QTX_Admin_Settings {
                         </thead>
                         <tbody>
                         <?php
-                        foreach ( QTX_Admin_Settings_Module::get_settings_modules() as $module ) :
+                        foreach ( $settings_modules as $module ) :
                             ?>
                             <tr>
                                 <td>

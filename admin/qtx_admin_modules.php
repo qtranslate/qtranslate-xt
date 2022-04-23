@@ -1,5 +1,7 @@
 <?php
 
+require_once( QTRANSLATE_DIR . '/modules/qtx_module_setup.php' );
+
 /**
  * Module admin management, taking care of the state updates and notices.
  */

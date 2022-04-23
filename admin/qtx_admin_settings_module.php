@@ -1,5 +1,8 @@
 <?php
 
+require_once( QTRANSLATE_DIR . '/admin/qtx_admin_modules.php' );
+require_once( QTRANSLATE_DIR . '/modules/qtx_module_setup.php' );
+
 /**
  * Module admin settings, for display in the settings panels.
  */
@@ -69,6 +72,19 @@ class QTX_Admin_Settings_Module {
         return ( QTX_Admin_Modules::can_module_be_activated( $this->module ) != QTX_MODULE_STATE_ACTIVE );
     }
 
+    public function is_active() {
+        return $this->state == QTX_MODULE_STATE_ACTIVE;
+    }
+
+    /**
+     * Retrieve disabled settings.
+     *
+     * @return bool
+     */
+    public function has_settings() {
+        return $this->module->has_settings();
+    }
+
     /**
      * Retrieve settings for all modules (for display).
      * The status is retrieved from the modules option.
@@ -76,11 +92,10 @@ class QTX_Admin_Settings_Module {
      * @return QTX_Admin_Settings_Module[]
      */
     public static function get_settings_modules() {
-        $modules         = QTX_Module_Setup::get_modules();
-        $options_modules = get_option( 'qtranslate_modules_state', array() );
-        $settings        = array();
-        foreach ( $modules as $module ) {
-            $state      = isset( $options_modules[ $module->id ] ) ? $options_modules[ $module->id ] : QTX_MODULE_STATE_UNDEFINED;
+        $states   = get_option( 'qtranslate_modules_state', array() );
+        $settings = array();
+        foreach ( QTX_Module_Setup::get_modules() as $module ) {
+            $state      = isset( $states[ $module->id ] ) ? $states[ $module->id ] : QTX_MODULE_STATE_UNDEFINED;
             $settings[] = new QTX_Admin_Settings_Module( $module, $state );
         }
 
