@@ -827,7 +827,13 @@ function qtranxf_activation_hook() {
         qtranxf_update_option_admin_notices( $messages, 'gutenberg-support', false );
     }
 
-    QTX_Admin_Modules::update_modules_status();
+    // To initialize the modules state we need the default enabled modules but the `q_config` has not been loaded yet.
+    // For the first activation, the default options are used.
+    // After reactivation the enabled modules are reloaded, but all the conditions are checked with all plugins again.
+    global $qtranslate_options;
+    qtranxf_admin_set_default_options( $qtranslate_options );
+    qtranxf_load_option_array( 'admin_enabled_modules', $qtranslate_options['admin']['admin_enabled_modules'] );
+    QTX_Admin_Modules::update_modules_state();
 
     /**
      * A chance to execute activation actions specifically for this plugin.

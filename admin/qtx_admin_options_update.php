@@ -359,7 +359,7 @@ function qtranxf_reset_config() {
     // internal private options not loaded by default
     delete_option( 'qtranslate_next_update_mo' );
     delete_option( 'qtranslate_next_thanks' );
-    delete_option( 'qtranslate_modules' );
+    delete_option( 'qtranslate_modules_state' );
 
     // obsolete options
     delete_option( 'qtranslate_custom_pages' );
@@ -378,7 +378,7 @@ function qtranxf_reset_config() {
     qtranxf_reload_config();
     add_filter( 'locale', 'qtranxf_localeForCurrentLanguage', 99 );
 
-    QTX_Admin_Modules::update_modules_status();
+    QTX_Admin_Modules::update_modules_state();
 }
 
 add_action( 'qtranslate_save_config', 'qtranxf_reset_config', 20 );
@@ -493,8 +493,6 @@ function qtranxf_save_config() {
     foreach ( $qtranslate_options['admin']['array'] as $nm => $def ) {
         qtranxf_update_option( $nm, $def );
     }
-
-    QTX_Admin_Modules::update_manual_enabled_modules();
 
     do_action( 'qtranslate_save_config' );
     do_action_deprecated( 'qtranslate_saveConfig', array(), '3.10.0', 'qtranslate_save_config' );
@@ -835,7 +833,6 @@ function qtranxf_update_settings() {
     }
 
     qtranxf_update_setting( 'filter_options', QTX_ARRAY );
-    qtranxf_update_setting( 'ma_module_enabled', QTX_BOOLEAN_SET );
 
     switch ( $q_config['url_mode'] ) {
         case QTX_URL_DOMAIN:
@@ -943,6 +940,10 @@ function qtranxf_update_settings() {
     }
 
     $q_config['i18n-cache'] = array(); // clear i18n-config cache
+
+    qtranxf_update_setting( 'admin_enabled_modules', QTX_BOOLEAN_SET, $qtranslate_options['admin']['admin_enabled_modules'] );
+
+    QTX_Admin_Modules::update_modules_state();
 
     // opportunity to update special custom settings on sub-plugins
     do_action( 'qtranslate_update_settings' );

@@ -563,10 +563,10 @@ function qts_get_terms( $terms, $taxonomy ) {
 }
 
 function qts_ma_module_updated() {
-    global $q_config;
-    if ( $q_config['ma_module_enabled']['slugs'] ) {
+    if ( QTX_Modules_Handler::is_module_active( 'slugs' ) ) {
         qts_multi_activate();
     } else {
         qts_deactivate();
+
     }
 }

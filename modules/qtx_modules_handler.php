@@ -1,20 +1,20 @@
 <?php
 
-define( 'QTX_MODULE_STATUS_UNDEFINED', 0 );
-define( 'QTX_MODULE_STATUS_ACTIVE', 1 );
-define( 'QTX_MODULE_STATUS_INACTIVE', 2 );
-define( 'QTX_MODULE_STATUS_BLOCKED', 3 );
+define( 'QTX_MODULE_STATE_UNDEFINED', 0 );
+define( 'QTX_MODULE_STATE_ACTIVE', 1 );
+define( 'QTX_MODULE_STATE_INACTIVE', 2 );
+define( 'QTX_MODULE_STATE_BLOCKED', 3 );
 
 class QTX_Modules_Handler {
     /**
      * Get the modules previously activated in the options after validation for plugin integration on admin-side.
      * Note these should be loaded before "qtranslate_init_language" is triggered.
      *
-     * @see QTX_Admin_Modules::update_modules_status()
+     * @see QTX_Admin_Modules::update_modules_state()
      * @array Module defs.
      */
     public static function get_active_modules() {
-        $options_modules = get_option( 'qtranslate_modules', array() );
+        $options_modules = get_option( 'qtranslate_modules_state', array() );
         if ( ! is_array( $options_modules ) ) {
             return array();
         }
@@ -25,8 +25,8 @@ class QTX_Modules_Handler {
             if ( ! array_key_exists( $def_module['id'], $options_modules ) ) {
                 continue;
             }
-            $module_status = $options_modules[ $def_module['id'] ];
-            if ( $module_status === QTX_MODULE_STATUS_ACTIVE ) {
+            $state = $options_modules[ $def_module['id'] ];
+            if ( $state === QTX_MODULE_STATE_ACTIVE ) {
                 array_push( $active_modules, $def_module );
             }
         }
@@ -42,16 +42,16 @@ class QTX_Modules_Handler {
      * @bool true if module active.
      */
     public static function is_module_active( $module_id ) {
-        $options_modules = get_option( 'qtranslate_modules', array() );
+        $options_modules = get_option( 'qtranslate_modules_state', array() );
 
-        return isset( $options_modules[ $module_id ] ) && $options_modules[ $module_id ] === QTX_MODULE_STATUS_ACTIVE;
+        return isset( $options_modules[ $module_id ] ) && $options_modules[ $module_id ] === QTX_MODULE_STATE_ACTIVE;
     }
 
     /**
      * Loads modules previously activated in the options after validation for plugin integration on admin-side.
      * Note these should be loaded before "qtranslate_init_language" is triggered.
      *
-     * @see QTX_Admin_Modules::update_modules_status()
+     * @see QTX_Admin_Modules::update_modules_state()
      */
     public static function load_active_modules() {
         $def_modules = self::get_active_modules();
@@ -129,30 +129,5 @@ class QTX_Modules_Handler {
                 'has_settings' => true,
             )
         );
-    }
-
-    public static function ma_modules_default_options() {
-        $module_defs = self::get_modules_defs();
-        // TODO: break deps on admin
-        require_once( QTRANSLATE_DIR . '/admin/qtx_admin_modules.php' );
-        $response = array();
-        foreach ( $module_defs as $module ) {
-            $response[ $module['id'] ] = $module['plugin'] === true ? false : QTX_Admin_Modules::check_module( $module ) === QTX_MODULE_STATUS_ACTIVE;
-        }
-
-        return $response;
-    }
-
-    public static function get_module_def_by_id( $module_id ) {
-        $module_defs = self::get_modules_defs();
-        $response    = array();
-        foreach ( $module_defs as $module ) {
-            if ( $module['id'] === $module_id ) {
-                $response = $module;
-                break;
-            }
-        }
-
-        return $response;
     }
 }
