@@ -40,7 +40,7 @@ class QTX_Module_Setup {
             [
                 'id'           => 'events-made-easy',
                 'name'         => 'Events Made Easy',
-                'plugin'       => [ 'events-made-easy/events-manager.php' ],
+                'plugins'      => [ 'events-made-easy/events-manager.php' ],
                 'incompatible' => 'events-made-easy-qtranslate-x/events-made-easy-qtranslate-x.php',
             ],
             [
