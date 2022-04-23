@@ -5,6 +5,23 @@ define( 'QTX_MODULE_STATE_ACTIVE', 1 );
 define( 'QTX_MODULE_STATE_INACTIVE', 2 );
 define( 'QTX_MODULE_STATE_BLOCKED', 3 );
 
+/**
+ * Definition of a module.
+ */
+class QTX_Module {
+    public $id;
+    public $name;
+    public $plugin;
+    public $incompatible;
+    public $has_settings;
+
+    function __construct( $data ) {
+        foreach ( $data as $key => $value ) {
+            $this->{$key} = $value;
+        }
+    }
+}
+
 class QTX_Modules_Handler {
     /**
      * Get the modules previously activated in the options after validation for plugin integration on admin-side.
@@ -20,14 +37,14 @@ class QTX_Modules_Handler {
         }
 
         $active_modules = array();
-        $def_modules    = self::get_modules_defs();
-        foreach ( $def_modules as $def_module ) {
-            if ( ! array_key_exists( $def_module['id'], $options_modules ) ) {
+        $modules        = self::get_modules_defs();
+        foreach ( $modules as $module ) {
+            if ( ! array_key_exists( $module->id, $options_modules ) ) {
                 continue;
             }
-            $state = $options_modules[ $def_module['id'] ];
+            $state = $options_modules[ $module->id ];
             if ( $state === QTX_MODULE_STATE_ACTIVE ) {
-                array_push( $active_modules, $def_module );
+                $active_modules[] = $module;
             }
         }
 
@@ -54,9 +71,9 @@ class QTX_Modules_Handler {
      * @see QTX_Admin_Modules::update_modules_state()
      */
     public static function load_active_modules() {
-        $def_modules = self::get_active_modules();
-        foreach ( $def_modules as $def_module ) {
-            include_once( QTRANSLATE_DIR . '/modules/' . $def_module['id'] . '/' . $def_module['id'] . '.php' );
+        $modules = self::get_active_modules();
+        foreach ( $modules as $module ) {
+            include_once( QTRANSLATE_DIR . '/modules/' . $module->id . '/' . $module->id . '.php' );
         }
     }
 
@@ -68,10 +85,10 @@ class QTX_Modules_Handler {
      * - plugin (mixed): WP identifier of plugin to be integrated, or array of plugin identifiers
      * - incompatible: WP identifier of plugin incompatible with the module
      *
-     * @return array ordered by name
+     * @return QTX_Module[] ordered by name
      */
     public static function get_modules_defs() {
-        return array(
+        $defs = array(
             array(
                 'id'           => 'acf',
                 'name'         => 'ACF',
@@ -129,5 +146,12 @@ class QTX_Modules_Handler {
                 'has_settings' => true,
             )
         );
+
+        $modules = [];
+        foreach ( $defs as $def ) {
+            $modules[] = new QTX_Module( $def );
+        }
+
+        return $modules;
     }
 }

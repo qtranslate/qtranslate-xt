@@ -253,7 +253,7 @@ class QTX_Admin_Settings {
         }
         $admin_sections['integration'] = __( 'Integration', 'qtranslate' );
         foreach ( QTX_Modules_Handler::get_active_modules() as $module ) {
-            if ( isset( $module ['has_settings'] ) && $module ['has_settings'] ) {
+            if ( isset( $module->has_settings ) && $module->has_settings ) {
                 $admin_sections[ $module['id'] ] = $module['name'];
             }
         }
@@ -729,7 +729,7 @@ class QTX_Admin_Settings {
                         <tbody>
                         <?php
                         foreach ( QTX_Admin_Modules::get_modules_infos() as $module ) :
-                            $module_id = $module['def']['id'];
+                            $module_id = $module['def']->id;
                             $module_is_checked = ( isset( $q_config['admin_enabled_modules'][ $module_id ] ) && $q_config['admin_enabled_modules'][ $module_id ] ) || ( $module['state'] == QTX_MODULE_STATE_ACTIVE );
                             $module_is_disabled = ( QTX_Admin_Modules::can_module_be_activated( $module['def'] ) != QTX_MODULE_STATE_ACTIVE );
                             ?>
@@ -741,7 +741,7 @@ class QTX_Admin_Settings {
                                            value="1"<?php checked( $module_is_checked );
                                     disabled( $module_is_disabled ) ?>/>
                                     <label for="admin_enabled_modules_<?php echo $module_id; ?>">
-                                        <?php echo $module['def']['name']; ?>
+                                        <?php echo $module['def']->name; ?>
                                     </label>
                                 </td>
                                 <td><?php echo $module['plugin'] ?></td>
