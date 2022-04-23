@@ -252,8 +252,8 @@ class QTX_Admin_Settings {
             $admin_sections[ $key ] = $value;
         }
         $admin_sections['integration'] = __( 'Integration', 'qtranslate' );
-        foreach ( QTX_Modules_Handler::get_active_modules() as $module ) {
-            if ( isset( $module->has_settings ) && $module->has_settings ) {
+        foreach ( QTX_Module_Loader::get_active_modules() as $module ) {
+            if ( $module->has_settings() ) {
                 $admin_sections[ $module['id'] ] = $module['name'];
             }
         }

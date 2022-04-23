@@ -29,7 +29,7 @@ class QTX_Admin_Modules {
 
         $option_modules = array();
         require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-        foreach ( QTX_Modules_Handler::get_modules_defs() as $module ) {
+        foreach ( QTX_Module_Loader::get_modules_defs() as $module ) {
             $state = self::can_module_be_activated( $module, $func_is_active );
             if ( $state == QTX_MODULE_STATE_ACTIVE ) {
                 // The admin options matter only if the module can be activated, otherwise the hard conditions prevail.
@@ -46,7 +46,7 @@ class QTX_Admin_Modules {
         // trigger info notices only if changed
         if ( $old_option_modules != $option_modules ) {
             set_transient( 'qtranslate_notice_modules', true, 5 );
-            QTX_Modules_Handler::load_active_modules();
+            QTX_Module_Loader::load_active_modules();
         }
     }
 
@@ -145,7 +145,7 @@ class QTX_Admin_Modules {
             return;
         }
 
-        $modules        = QTX_Modules_Handler::get_modules_defs();
+        $modules        = QTX_Module_Loader::get_modules_defs();
         $active_modules = array();
         foreach ( $modules as $module ) {
             if ( ! array_key_exists( $module->id, $options_modules ) ) {
@@ -180,7 +180,7 @@ class QTX_Admin_Modules {
      * The status is retrieved from the modules option.
      */
     public static function get_modules_infos() {
-        $modules         = QTX_Modules_Handler::get_modules_defs();
+        $modules         = QTX_Module_Loader::get_modules_defs();
         $options_modules = get_option( 'qtranslate_modules_state', array() );
         $infos           = array();
         foreach ( $modules as $module ) {

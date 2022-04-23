@@ -33,7 +33,7 @@ class QtranslateSlug {
      */
     function init() {
         // TODO: remove `plugins_loaded` hook to initialize the module, it is loaded by QTX handler not WordPress.
-        if ( ! QTX_Modules_Handler::is_module_active( 'slugs' ) ) {
+        if ( ! QTX_Module_Loader::is_module_active( 'slugs' ) ) {
             return;
         }
 

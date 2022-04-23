@@ -42,7 +42,7 @@ function qts_taxonomies_hooks() {
         }
     }
 
-    if ( QTX_Modules_Handler::is_module_active( 'woo-commerce' ) ) {
+    if ( QTX_Module_Loader::is_module_active( 'woo-commerce' ) ) {
         add_action( 'woocommerce_after_add_attribute_fields', 'qts_show_add_term_fields' );
     }
 }
@@ -563,7 +563,7 @@ function qts_get_terms( $terms, $taxonomy ) {
 }
 
 function qts_ma_module_updated() {
-    if ( QTX_Modules_Handler::is_module_active( 'slugs' ) ) {
+    if ( QTX_Module_Loader::is_module_active( 'slugs' ) ) {
         qts_multi_activate();
     } else {
         qts_deactivate();

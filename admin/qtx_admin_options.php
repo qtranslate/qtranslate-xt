@@ -40,9 +40,8 @@ function qtranxf_admin_set_default_options( &$options ) {
 
     // Boolean set defining the default enabled options for each module, hard values not depending on any state.
     $options['admin']['admin_enabled_modules'] = array();
-    foreach ( QTX_Modules_Handler::get_modules_defs() as $module ) {
-        // TODO: expand default values in module def
-        $options['admin']['admin_enabled_modules'][ $module->id ] = ( $module->plugin !== true );
+    foreach ( QTX_Module_Loader::get_modules_defs() as $module ) {
+        $options['admin']['admin_enabled_modules'][ $module->id ] = $module->is_default_enabled();
     }
 
     // options processed in a special way
