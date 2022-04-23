@@ -174,47 +174,4 @@ class QTX_Admin_Modules {
             delete_transient( 'qtranslate_notice_modules' );
         }
     }
-
-    /**
-     * Retrieve infos for all modules (for display).
-     * The status is retrieved from the modules option.
-     */
-    public static function get_modules_infos() {
-        $modules         = QTX_Module_Loader::get_modules_defs();
-        $options_modules = get_option( 'qtranslate_modules_state', array() );
-        $infos           = array();
-        foreach ( $modules as $module ) {
-            $info           = array();
-            $info['def']    = $module;
-            $info['state']  = isset( $options_modules[ $module->id ] ) ? $options_modules[ $module->id ] : QTX_MODULE_STATE_UNDEFINED;
-            $info['plugin'] = $module->plugin === true ? _x( 'None', 'Module admin', 'qtranslate' ) : ( self::is_module_plugin_active( $module ) ? _x( 'Active', 'Module admin', 'qtranslate' ) : _x( 'Inactive', 'Module admin', 'qtranslate' ) );
-            switch ( $info['state'] ) {
-                case QTX_MODULE_STATE_ACTIVE:
-                    $info['module'] = _x( 'Active', 'Module admin', 'qtranslate' );
-                    $info['icon']   = 'dashicons-yes';
-                    $info['color']  = 'green';
-                    break;
-                case QTX_MODULE_STATE_INACTIVE:
-                    $info['module'] = _x( 'Inactive', 'Module admin', 'qtranslate' );
-                    $info['icon']   = 'dashicons-no-alt';
-                    $info['color']  = '';
-                    break;
-                case QTX_MODULE_STATE_BLOCKED:
-                    $info['module'] = _x( 'Blocked', 'Module admin', 'qtranslate' );
-                    $info['icon']   = 'dashicons-warning';
-                    $info['color']  = 'orange';
-                    break;
-                case QTX_MODULE_STATE_UNDEFINED:
-                default:
-                    $info['module'] = __( 'Inactive', 'qtranslate' );
-                    $info['icon']   = 'dashicons-editor-help';
-                    $info['color']  = '';
-                    break;
-            }
-
-            array_push( $infos, $info );
-        }
-
-        return $infos;
-    }
 }

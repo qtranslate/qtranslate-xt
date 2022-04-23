@@ -5,6 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once( QTRANSLATE_DIR . '/admin/qtx_admin_options_update.php' );
 require_once( QTRANSLATE_DIR . '/admin/qtx_admin_settings_language_list.php' );
+require_once( QTRANSLATE_DIR . '/admin/qtx_admin_settings_modules.php' );
 require_once( QTRANSLATE_DIR . '/admin/qtx_import_export.php' );
 
 /**
@@ -254,7 +255,7 @@ class QTX_Admin_Settings {
         $admin_sections['integration'] = __( 'Integration', 'qtranslate' );
         foreach ( QTX_Module_Loader::get_active_modules() as $module ) {
             if ( $module->has_settings() ) {
-                $admin_sections[ $module['id'] ] = $module['name'];
+                $admin_sections[ $module->id ] = $module->name;
             }
         }
         $admin_sections['import']          = __( 'Import', 'qtranslate' ) . '/' . __( 'Export', 'qtranslate' );
@@ -728,26 +729,23 @@ class QTX_Admin_Settings {
                         </thead>
                         <tbody>
                         <?php
-                        foreach ( QTX_Admin_Modules::get_modules_infos() as $module ) :
-                            $module_id = $module['def']->id;
-                            $module_is_checked = ( isset( $q_config['admin_enabled_modules'][ $module_id ] ) && $q_config['admin_enabled_modules'][ $module_id ] ) || ( $module['state'] == QTX_MODULE_STATE_ACTIVE );
-                            $module_is_disabled = ( QTX_Admin_Modules::can_module_be_activated( $module['def'] ) != QTX_MODULE_STATE_ACTIVE );
+                        foreach ( QTX_Admin_Settings_Module::get_modules_settings() as $module ) :
                             ?>
                             <tr>
                                 <td>
                                     <input type="checkbox"
-                                           name="admin_enabled_modules[<?php echo $module_id; ?>]"
-                                           id="admin_enabled_modules_<?php echo $module_id; ?>"
-                                           value="1"<?php checked( $module_is_checked );
-                                    disabled( $module_is_disabled ) ?>/>
-                                    <label for="admin_enabled_modules_<?php echo $module_id; ?>">
-                                        <?php echo $module['def']->name; ?>
+                                           name="admin_enabled_modules[<?php echo $module->id; ?>]"
+                                           id="admin_enabled_modules_<?php echo $module->id; ?>"
+                                           value="1"<?php checked( $module->is_checked() );
+                                    disabled( $module->is_disabled() ) ?>/>
+                                    <label for="admin_enabled_modules_<?php echo $module->id; ?>">
+                                        <?php echo $module->name; ?>
                                     </label>
                                 </td>
-                                <td><?php echo $module['plugin'] ?></td>
-                                <td style="color: <?php echo $module['color'] ?>">
-                                    <span class="dashicons <?php echo $module['icon'] ?>"></span>
-                                    <?php echo $module['module'] ?>
+                                <td><?php echo $module->plugin_state_label ?></td>
+                                <td style="color: <?php echo $module->color ?>">
+                                    <span class="dashicons <?php echo $module->icon ?>"></span>
+                                    <?php echo $module->module_state_label ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
