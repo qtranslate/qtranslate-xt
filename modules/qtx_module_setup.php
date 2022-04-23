@@ -10,72 +10,72 @@ class QTX_Module_Setup {
      * Retrieve the setup of the built-in modules.
      *
      * Each module is defined by:
-     * - id: key used to identify the module, also used in options
-     * - name: for user display
-     * - plugin (mixed): WP identifier of plugin to be integrated, or array of plugin identifiers
-     * - incompatible: WP identifier of plugin incompatible with the module
+     * - id (required): key used to identify the module, also used in options
+     * - name (required): for user display
+     * - plugins (optional, array): WP identifier of plugin to be integrated, or array of plugin identifiers
+     * - incompatible (optional): WP identifier of plugin incompatible with the module
+     * - has_settings (optional, bool): for specific admin settings
      *
-     * @see QTX_Module these fields must match the class members.
      * @return array[] ordered by module name
+     * @see QTX_Module these fields must match the class members.
      */
     protected static function get_module_setup() {
-        return array(
-            array(
+        return [
+            [
                 'id'           => 'acf',
                 'name'         => 'ACF',
-                'plugin'       => array( 'advanced-custom-fields/acf.php', 'advanced-custom-fields-pro/acf.php' ),
+                'plugins'      => [ 'advanced-custom-fields/acf.php', 'advanced-custom-fields-pro/acf.php' ],
                 'incompatible' => 'acf-qtranslate/acf-qtranslate.php',
-            ),
-            array(
+            ],
+            [
                 'id'           => 'all-in-one-seo-pack',
                 'name'         => 'All in One SEO Pack',
-                'plugin'       => array(
+                'plugins'      => [
                     'all-in-one-seo-pack/all_in_one_seo_pack.php',
                     'all-in-one-seo-pack-pro/all_in_one_seo_pack.php'
-                ),
+                ],
                 'incompatible' => 'all-in-one-seo-pack-qtranslate-x/qaioseop.php',
-            ),
-            array(
+            ],
+            [
                 'id'           => 'events-made-easy',
                 'name'         => 'Events Made Easy',
-                'plugin'       => 'events-made-easy/events-manager.php',
+                'plugin'       => [ 'events-made-easy/events-manager.php' ],
                 'incompatible' => 'events-made-easy-qtranslate-x/events-made-easy-qtranslate-x.php',
-            ),
-            array(
-                'id'     => 'jetpack',
-                'name'   => 'Jetpack',
-                'plugin' => 'jetpack/jetpack.php',
-            ),
-            array(
-                'id'     => 'google-site-kit',
-                'name'   => 'Google Site Kit',
-                'plugin' => 'google-site-kit/google-site-kit.php',
-            ),
-            array(
+            ],
+            [
+                'id'      => 'jetpack',
+                'name'    => 'Jetpack',
+                'plugins' => [ 'jetpack/jetpack.php' ],
+            ],
+            [
+                'id'      => 'google-site-kit',
+                'name'    => 'Google Site Kit',
+                'plugins' => [ 'google-site-kit/google-site-kit.php' ],
+            ],
+            [
                 'id'           => 'gravity-forms',
                 'name'         => 'Gravity Forms',
-                'plugin'       => 'gravityforms/gravityforms.php',
+                'plugins'      => [ 'gravityforms/gravityforms.php' ],
                 'incompatible' => 'qtranslate-support-for-gravityforms/qtranslate-support-for-gravityforms.php',
-            ),
-            array(
+            ],
+            [
                 'id'           => 'woo-commerce',
                 'name'         => 'WooCommerce',
-                'plugin'       => 'woocommerce/woocommerce.php',
+                'plugins'      => [ 'woocommerce/woocommerce.php' ],
                 'incompatible' => 'woocommerce-qtranslate-x/woocommerce-qtranslate-x.php',
-            ),
-            array(
+            ],
+            [
                 'id'           => 'wp-seo',
                 'name'         => 'Yoast SEO',
-                'plugin'       => 'wordpress-seo/wp-seo.php',
+                'plugins'      => [ 'wordpress-seo/wp-seo.php' ],
                 'incompatible' => 'wp-seo-qtranslate-x/wordpress-seo-qtranslate-x.php',
-            ),
-            array(
+            ],
+            [
                 'id'           => 'slugs',
                 'name'         => __( 'Slugs translation', 'qtranslate' ) . sprintf( ' (%s)', __( 'experimental' ) ),
-                'plugin'       => true,
                 'incompatible' => 'qtranslate-slug/qtranslate-slug.php',
                 'has_settings' => true,
-            )
-        );
+            ]
+        ];
     }
 }

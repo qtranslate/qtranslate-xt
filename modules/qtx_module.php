@@ -6,22 +6,44 @@
  * This provides only the basic structure, not the module logic or states.
  */
 class QTX_Module {
+    /**
+     * @var string
+     */
     public $id;
-    public $name;
-    public $plugin;
-    public $incompatible;
-    public $has_settings;
 
     /**
-     * Constructor from field array.
+     * @var string
+     */
+    public $name;
+
+    /**
+     * @type array
+     */
+    public $plugins;
+
+    /**
+     * @var string|null
+     */
+    public $incompatible;
+
+    /**
+     * @var bool
+     */
+    protected $has_settings;
+
+    /**
+     * Constructor from fields array.
+     *
+     * @param array[] $fields
      *
      * @see QTX_Module_Setup
-     * @param array[] $fields
      */
     function __construct( $fields ) {
-        foreach ( $fields as $key => $value ) {
-            $this->{$key} = $value;
-        }
+        $this->id           = $fields['id'];
+        $this->name         = $fields['name'];
+        $this->plugins      = isset( $fields['plugins'] ) ? $fields['plugins'] : array();
+        $this->incompatible = isset( $fields['incompatible'] ) ? $fields['incompatible'] : null;
+        $this->has_settings = isset( $fields['has_settings'] ) ? $fields['has_settings'] : false;
     }
 
     /**
@@ -30,7 +52,7 @@ class QTX_Module {
      * @return bool
      */
     function has_settings() {
-        return isset( $this->has_settings ) ? $this->has_settings : false;
+        return $this->has_settings;
     }
 
     /**
@@ -39,6 +61,6 @@ class QTX_Module {
      * @return bool
      */
     function is_default_enabled() {
-        return ( $this->plugin !== true );
+        return ! empty( $this->plugins );
     }
 }

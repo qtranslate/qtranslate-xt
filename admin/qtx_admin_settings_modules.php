@@ -23,7 +23,7 @@ class QTX_Admin_Settings_Module {
         $this->id                 = $module->id;
         $this->name               = $module->name;
         $this->state              = isset( $options_modules[ $module->id ] ) ? $options_modules[ $module->id ] : QTX_MODULE_STATE_UNDEFINED;
-        $this->plugin_state_label = $module->plugin === true ? _x( 'None', 'Module admin', 'qtranslate' ) : ( QTX_Admin_Modules::is_module_plugin_active( $module ) ? _x( 'Active', 'Module admin', 'qtranslate' ) : _x( 'Inactive', 'Module admin', 'qtranslate' ) );
+        $this->plugin_state_label = empty( $module->plugins ) ? _x( 'None', 'Module admin', 'qtranslate' ) : ( QTX_Admin_Modules::is_module_plugin_active( $module ) ? _x( 'Active', 'Module admin', 'qtranslate' ) : _x( 'Inactive', 'Module admin', 'qtranslate' ) );
         switch ( $this->state ) {
             case QTX_MODULE_STATE_ACTIVE:
                 $this->module_state_label = _x( 'Active', 'Module admin', 'qtranslate' );

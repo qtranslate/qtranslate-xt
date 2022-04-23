@@ -56,29 +56,22 @@ class QTX_Admin_Modules {
      * @param QTX_Module $module
      * @param callable $func_is_active
      *
-     * @return bool|mixed true if the integration plugin is active or if the module does not have any..
+     * @return bool true if the integration plugin is active OR if the module does not have any..
      */
     public static function is_module_plugin_active( $module, $func_is_active = 'is_plugin_active' ) {
-        $active = false;
+        if ( empty( $module->plugins ) ) {
+            return true; // Attention :should not be interpreted as "having a plugin".
+        }
 
         require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
         // TODO the call_user_func should be replaced by direct calls from PHP7
-        $integration_plugin = $module->plugin;
-        if ( is_array( $integration_plugin ) ) {
-            $active = false;
-            foreach ( $integration_plugin as $item_plugin ) {
-                if ( call_user_func( $func_is_active, $item_plugin ) ) {
-                    $active = true;
-                    break;
-                }
+        foreach ( $module->plugins as $plugin ) {
+            if ( call_user_func( $func_is_active, $plugin ) ) {
+                return true;
             }
-        } else if ( is_bool( $integration_plugin ) ) {
-            $active = $integration_plugin;
-        } else if ( is_string( $integration_plugin ) ) {
-            $active = call_user_func( $func_is_active, $integration_plugin );
         }
 
-        return $active;
+        return false;
     }
 
     /**
