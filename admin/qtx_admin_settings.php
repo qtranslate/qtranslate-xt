@@ -716,15 +716,14 @@ class QTX_Admin_Settings {
                 <th scope="row"><?php _e( 'Built-in Modules', 'qtranslate' ) ?></th>
                 <td>
                     <label for="qtranxs_modules"
-                           class="qtranxs_explanation"><?php _e( 'The built-in integration modules are automatically enabled if the related plugin is active and no incompatible plugin (e.g. legacy integration plugin) prevents them to be loaded.', 'qtranslate' ); ?></label>
+                           class="qtranxs_explanation"><?php _e( 'Each built-in integration module can only be enabled if the required plugin is active and no incompatible plugin (e.g. legacy integration plugin) prevents it to be loaded.', 'qtranslate' ); ?></label>
                     <br/>
                     <table id="qtranxs_modules" class="widefat">
                         <thead>
                         <tr>
-                            <th class="row-title"><?php _ex( 'Name', 'Modules table header', 'qtranslate' ); ?></th>
-                            <th><?php _ex( 'Plugin', 'Modules table header', 'qtranslate' ); ?></th>
-                            <th><?php _ex( 'Module', 'Modules table header', 'qtranslate' ); ?></th>
-                            <th><?php _ex( 'State', 'Modules table header', 'qtranslate' ); ?></th>
+                            <th class="row-title"><?php _ex( 'Name', 'Module admin', 'qtranslate' ); ?></th>
+                            <th><?php _ex( 'Required plugin', 'Module admin', 'qtranslate' ); ?></th>
+                            <th><?php _ex( 'Module', 'Module admin', 'qtranslate' ); ?></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -736,19 +735,19 @@ class QTX_Admin_Settings {
                             ?>
                             <tr>
                                 <td>
-                                    <label for="admin_enabled_modules_<?php echo $module_id; ?>">
-                                    </label>
                                     <input type="checkbox"
                                            name="admin_enabled_modules[<?php echo $module_id; ?>]"
                                            id="admin_enabled_modules_<?php echo $module_id; ?>"
                                            value="1"<?php checked( $module_is_checked );
                                     disabled( $module_is_disabled ) ?>/>
-                                    <?php echo $module['def']['name']; ?>
+                                    <label for="admin_enabled_modules_<?php echo $module_id; ?>">
+                                        <?php echo $module['def']['name']; ?>
+                                    </label>
                                 </td>
                                 <td><?php echo $module['plugin'] ?></td>
-                                <td><?php echo $module['module'] ?></td>
                                 <td style="color: <?php echo $module['color'] ?>">
                                     <span class="dashicons <?php echo $module['icon'] ?>"></span>
+                                    <?php echo $module['module'] ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

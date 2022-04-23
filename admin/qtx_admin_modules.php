@@ -187,20 +187,20 @@ class QTX_Admin_Modules {
             $info           = array();
             $info['def']    = $module_def;
             $info['state']  = isset( $options_modules[ $module_def['id'] ] ) ? $options_modules[ $module_def['id'] ] : QTX_MODULE_STATE_UNDEFINED;
-            $info['plugin'] = $module_def['plugin'] === true ? '-' : ( self::is_module_plugin_active( $module_def ) ? __( 'Active', 'qtranslate' ) : __( 'Inactive', 'qtranslate' ) );
+            $info['plugin'] = $module_def['plugin'] === true ? _x( 'None', 'Module admin', 'qtranslate' ) : ( self::is_module_plugin_active( $module_def ) ? _x( 'Active', 'Module admin', 'qtranslate' ) : _x( 'Inactive', 'Module admin', 'qtranslate' ) );
             switch ( $info['state'] ) {
                 case QTX_MODULE_STATE_ACTIVE:
-                    $info['module'] = __( 'Active', 'qtranslate' );
+                    $info['module'] = _x( 'Active', 'Module admin', 'qtranslate' );
                     $info['icon']   = 'dashicons-yes';
                     $info['color']  = 'green';
                     break;
                 case QTX_MODULE_STATE_INACTIVE:
-                    $info['module'] = __( 'Inactive', 'qtranslate' );
+                    $info['module'] = _x( 'Inactive', 'Module admin', 'qtranslate' );
                     $info['icon']   = 'dashicons-no-alt';
                     $info['color']  = '';
                     break;
                 case QTX_MODULE_STATE_BLOCKED:
-                    $info['module'] = __( 'Blocked', 'qtranslate' );
+                    $info['module'] = _x( 'Blocked', 'Module admin', 'qtranslate' );
                     $info['icon']   = 'dashicons-warning';
                     $info['color']  = 'orange';
                     break;
