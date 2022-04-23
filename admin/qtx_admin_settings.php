@@ -722,14 +722,14 @@ class QTX_Admin_Settings {
                     <table id="qtranxs_modules" class="widefat">
                         <thead>
                         <tr>
-                            <th class="row-title"><?php _ex( 'Name', 'Module admin', 'qtranslate' ); ?></th>
-                            <th><?php _ex( 'Required plugin', 'Module admin', 'qtranslate' ); ?></th>
-                            <th><?php _ex( 'Module', 'Module admin', 'qtranslate' ); ?></th>
+                            <th class="row-title"><?php _ex( 'Name', 'Module settings', 'qtranslate' ); ?></th>
+                            <th><?php _ex( 'Required plugin', 'Module settings', 'qtranslate' ); ?></th>
+                            <th><?php _ex( 'Module', 'Module settings', 'qtranslate' ); ?></th>
                         </tr>
                         </thead>
                         <tbody>
                         <?php
-                        foreach ( QTX_Admin_Settings_Module::get_modules_settings() as $module ) :
+                        foreach ( QTX_Admin_Settings_Module::get_settings_modules() as $module ) :
                             ?>
                             <tr>
                                 <td>

@@ -6,7 +6,7 @@
 class QTX_Admin_Settings_Module {
     public $id;
     public $name;
-    public $state;
+    protected $state;
     public $plugin_state_label;
     public $module_state_label;
     public $icon;
@@ -18,39 +18,39 @@ class QTX_Admin_Settings_Module {
      *
      * @param QTX_Module $module
      */
-    public function __construct( $module, $options_modules ) {
-        $this->module             = $module;
-        $this->id                 = $module->id;
-        $this->name               = $module->name;
-        $this->state              = isset( $options_modules[ $module->id ] ) ? $options_modules[ $module->id ] : QTX_MODULE_STATE_UNDEFINED;
-        $this->plugin_state_label = empty( $module->plugins ) ? _x( 'None', 'Module admin', 'qtranslate' ) : ( QTX_Admin_Modules::is_module_plugin_active( $module ) ? _x( 'Active', 'Module admin', 'qtranslate' ) : _x( 'Inactive', 'Module admin', 'qtranslate' ) );
+    public function __construct( $module, $state ) {
+        $this->module = $module;
+        $this->id     = $module->id;
+        $this->name   = $module->name;
+        $this->state  = $state;
         switch ( $this->state ) {
             case QTX_MODULE_STATE_ACTIVE:
-                $this->module_state_label = _x( 'Active', 'Module admin', 'qtranslate' );
+                $this->module_state_label = _x( 'Active', 'Module settings', 'qtranslate' );
                 $this->icon               = 'dashicons-yes';
                 $this->color              = 'green';
                 break;
             case QTX_MODULE_STATE_INACTIVE:
-                $this->module_state_label = _x( 'Inactive', 'Module admin', 'qtranslate' );
+                $this->module_state_label = _x( 'Inactive', 'Module settings', 'qtranslate' );
                 $this->icon               = 'dashicons-no-alt';
                 $this->color              = '';
                 break;
             case QTX_MODULE_STATE_BLOCKED:
-                $this->module_state_label = _x( 'Blocked', 'Module admin', 'qtranslate' );
+                $this->module_state_label = _x( 'Blocked', 'Module settings', 'qtranslate' );
                 $this->icon               = 'dashicons-warning';
                 $this->color              = 'orange';
                 break;
             case QTX_MODULE_STATE_UNDEFINED:
             default:
-                $this->module_state_label = __( 'Inactive', 'qtranslate' );
+                $this->module_state_label = _x( 'Inactive', 'Module settings', 'qtranslate' );
                 $this->icon               = 'dashicons-editor-help';
                 $this->color              = '';
                 break;
         }
+        $this->plugin_state_label = empty( $module->plugins ) ? _x( 'None', 'Module settings', 'qtranslate' ) : ( QTX_Admin_Modules::is_module_plugin_active( $module ) ? _x( 'Active', 'Module settings', 'qtranslate' ) : _x( 'Inactive', 'Module settings', 'qtranslate' ) );
     }
 
     /**
-     * Retrieve checked settings.
+     * Retrieve admin enabled checked settings.
      *
      * @return bool
      */
@@ -75,12 +75,13 @@ class QTX_Admin_Settings_Module {
      *
      * @return QTX_Admin_Settings_Module[]
      */
-    public static function get_modules_settings() {
-        $modules         = QTX_Module_Loader::get_modules_defs();
+    public static function get_settings_modules() {
+        $modules         = QTX_Module_Setup::get_modules();
         $options_modules = get_option( 'qtranslate_modules_state', array() );
         $settings        = array();
         foreach ( $modules as $module ) {
-            $settings[] = new QTX_Admin_Settings_Module( $module, $options_modules );
+            $state      = isset( $options_modules[ $module->id ] ) ? $options_modules[ $module->id ] : QTX_MODULE_STATE_UNDEFINED;
+            $settings[] = new QTX_Admin_Settings_Module( $module, $state );
         }
 
         return $settings;

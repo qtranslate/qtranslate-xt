@@ -5,10 +5,12 @@ define( 'QTX_MODULE_STATE_ACTIVE', 1 );
 define( 'QTX_MODULE_STATE_INACTIVE', 2 );
 define( 'QTX_MODULE_STATE_BLOCKED', 3 );
 
-require_once( QTRANSLATE_DIR . '/modules/qtx_module.php' );
 require_once( QTRANSLATE_DIR . '/modules/qtx_module_setup.php' );
 
-class QTX_Module_Loader extends QTX_Module_Setup {
+/**
+ * Provide infos about the module states and the ability to load them. This never changes any state.
+ */
+class QTX_Module_Loader {
     /**
      * Get the modules previously activated in the options after validation for plugin integration on admin-side.
      * Note these should be loaded before "qtranslate_init_language" is triggered.
@@ -23,7 +25,7 @@ class QTX_Module_Loader extends QTX_Module_Setup {
         }
 
         $active_modules = array();
-        $modules        = self::get_modules_defs();
+        $modules        = QTX_Module_Setup::get_modules();
         foreach ( $modules as $module ) {
             if ( ! array_key_exists( $module->id, $options_modules ) ) {
                 continue;
@@ -61,25 +63,5 @@ class QTX_Module_Loader extends QTX_Module_Setup {
         foreach ( $modules as $module ) {
             include_once( QTRANSLATE_DIR . '/modules/' . $module->id . '/' . $module->id . '.php' );
         }
-    }
-
-    /**
-     * Retrieve the definitions of the built-in integration modules.
-     *
-     * @return QTX_Module[] ordered by name
-     */
-    public static function get_modules_defs() {
-        static $modules;    // This can be cached, never changes.
-
-        if ( isset( $modules ) ) {
-            return $modules;
-        }
-
-        $modules = [];
-        foreach ( self::get_module_setup() as $setup ) {
-            $modules[] = new QTX_Module( $setup );
-        }
-
-        return $modules;
     }
 }

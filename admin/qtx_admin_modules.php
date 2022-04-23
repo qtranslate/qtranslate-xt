@@ -1,7 +1,9 @@
 <?php
 
+/**
+ * Module admin management, taking care of the state updates and notices.
+ */
 class QTX_Admin_Modules {
-
     /**
      * Register hooks for modules and related plugins
      */
@@ -29,7 +31,7 @@ class QTX_Admin_Modules {
 
         $option_modules = array();
         require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-        foreach ( QTX_Module_Loader::get_modules_defs() as $module ) {
+        foreach ( QTX_Module_Setup::get_modules() as $module ) {
             $state = self::can_module_be_activated( $module, $func_is_active );
             if ( $state == QTX_MODULE_STATE_ACTIVE ) {
                 // The admin options matter only if the module can be activated, otherwise the hard conditions prevail.
@@ -43,7 +45,7 @@ class QTX_Admin_Modules {
         $old_option_modules = get_option( 'qtranslate_modules_state' );
         update_option( 'qtranslate_modules_state', $option_modules );
 
-        // trigger info notices only if changed
+        // Trigger info notices and potential loading only if changed.
         if ( $old_option_modules != $option_modules ) {
             set_transient( 'qtranslate_notice_modules', true, 5 );
             QTX_Module_Loader::load_active_modules();
@@ -89,8 +91,7 @@ class QTX_Admin_Modules {
     public static function can_module_be_activated( $module, $func_is_active = 'is_plugin_active' ) {
         $state = QTX_MODULE_STATE_INACTIVE;
 
-        $active = self::is_module_plugin_active( $module, $func_is_active );
-        if ( $active ) {
+        if ( self::is_module_plugin_active( $module, $func_is_active ) ) {
             if ( isset( $module->incompatible ) && call_user_func( $func_is_active, $module->incompatible ) ) {
                 $state = QTX_MODULE_STATE_BLOCKED;
             } else {
@@ -138,8 +139,8 @@ class QTX_Admin_Modules {
             return;
         }
 
-        $modules        = QTX_Module_Loader::get_modules_defs();
         $active_modules = array();
+        $modules        = QTX_Module_Setup::get_modules();
         foreach ( $modules as $module ) {
             if ( ! array_key_exists( $module->id, $options_modules ) ) {
                 continue;

@@ -1,14 +1,15 @@
 <?php
 
+require_once( QTRANSLATE_DIR . '/modules/qtx_module.php' );
+
 /**
  * Static setup data for the built-in modules.
- *
- * This is internal, not meant to be accessed directly.
  */
 class QTX_Module_Setup {
     /**
-     * Retrieve the setup of the built-in modules.
+     * Retrieve the raw setup of the built-in modules.
      *
+     * This structure is internal, not meant to be accessed directly.
      * Each module is defined by:
      * - id (required): key used to identify the module, also used in options
      * - name (required): for user display
@@ -19,7 +20,7 @@ class QTX_Module_Setup {
      * @return array[] ordered by module name
      * @see QTX_Module these fields must match the class members.
      */
-    protected static function get_module_setup() {
+    protected static function get_builtin_setup() {
         return [
             [
                 'id'           => 'acf',
@@ -77,5 +78,25 @@ class QTX_Module_Setup {
                 'has_settings' => true,
             ]
         ];
+    }
+
+    /**
+     * Retrieve the module static infos (this does not load them).
+     *
+     * @return QTX_Module[] ordered by name
+     */
+    public static function get_modules() {
+        static $modules;    // This can be cached, never changes.
+
+        if ( isset( $modules ) ) {
+            return $modules;
+        }
+
+        $modules = [];
+        foreach ( self::get_builtin_setup() as $setup ) {
+            $modules[] = new QTX_Module( $setup );
+        }
+
+        return $modules;
     }
 }
