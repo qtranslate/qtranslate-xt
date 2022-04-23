@@ -743,6 +743,12 @@ class QTX_Admin_Settings {
                                     <label for="admin_enabled_modules_<?php echo $module_id; ?>">
                                         <?php echo $module['def']['name']; ?>
                                     </label>
+                                    <input type="checkbox"
+                                           name="admin_enabled_modules[<?php echo $module_id; ?>]"
+                                           id="admin_enabled_modules_<?php echo $module_id; ?>"
+                                           value="1"<?php checked( $module_is_checked );
+                                    disabled( $module_is_disabled ) ?>/>
+                                    <?php echo $module['def']['name']; ?>
                                 </td>
                                 <td><?php echo $module['plugin'] ?></td>
                                 <td style="color: <?php echo $module['color'] ?>">
