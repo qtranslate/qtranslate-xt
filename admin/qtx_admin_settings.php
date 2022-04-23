@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once( QTRANSLATE_DIR . '/admin/qtx_admin_options_update.php' );
 require_once( QTRANSLATE_DIR . '/admin/qtx_admin_settings_language_list.php' );
-require_once( QTRANSLATE_DIR . '/admin/qtx_admin_settings_modules.php' );
+require_once( QTRANSLATE_DIR . '/admin/qtx_admin_settings_module.php' );
 require_once( QTRANSLATE_DIR . '/admin/qtx_import_export.php' );
 
 /**
