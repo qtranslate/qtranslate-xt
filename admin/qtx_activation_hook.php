@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-require_once( QTRANSLATE_DIR . '/admin/qtx_admin_modules.php' );
+require_once( QTRANSLATE_DIR . '/modules/qtx_admin_module_manager.php' );
 
 /**
  * Save language properties from configuration to WP options
@@ -833,7 +833,7 @@ function qtranxf_activation_hook() {
     global $qtranslate_options;
     qtranxf_admin_set_default_options( $qtranslate_options );
     qtranxf_load_option_array( 'admin_enabled_modules', $qtranslate_options['admin']['admin_enabled_modules'] );
-    QTX_Admin_Modules::update_modules_state();
+    QTX_Admin_Module_Manager::update_modules_state();
 
     /**
      * A chance to execute activation actions specifically for this plugin.
@@ -1056,5 +1056,5 @@ function qtranxf_register_activation_hooks() {
     $qtx_plugin_basename = plugin_basename( QTRANSLATE_FILE );
     register_activation_hook( $qtx_plugin_basename, 'qtranxf_activation_hook' );
     register_deactivation_hook( $qtx_plugin_basename, 'qtranxf_deactivation_hook' );
-    QTX_Admin_Modules::register_hooks();
+    QTX_Admin_Module_Manager::register_hooks();
 }

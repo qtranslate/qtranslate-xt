@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-require_once( QTRANSLATE_DIR . '/modules/qtx_modules_handler.php' );
+require_once( QTRANSLATE_DIR . '/modules/qtx_module_loader.php' );
 
 function qtranxf_init_language() {
     global $q_config, $pagenow;
@@ -124,7 +124,7 @@ function qtranxf_init_language() {
 
     qtranxf_load_option_qtrans_compatibility();
 
-    QTX_Modules_Handler::load_active_modules();
+    QTX_Module_Loader::load_active_modules();
 
     /**
      * allow other plugins and modules to initialize whatever they need for language

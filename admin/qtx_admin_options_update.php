@@ -5,6 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once( QTRANSLATE_DIR . '/admin/qtx_admin_options.php' );
 require_once( QTRANSLATE_DIR . '/admin/qtx_import_export.php' );
+require_once( QTRANSLATE_DIR . '/modules/qtx_admin_module_manager.php' );
 
 function qtranxf_editConfig() {
     _deprecated_function( __FUNCTION__, '3.10.0', 'qtranxf_edit_config' );
@@ -378,7 +379,7 @@ function qtranxf_reset_config() {
     qtranxf_reload_config();
     add_filter( 'locale', 'qtranxf_localeForCurrentLanguage', 99 );
 
-    QTX_Admin_Modules::update_modules_state();
+    QTX_Admin_Module_Manager::update_modules_state();
 }
 
 add_action( 'qtranslate_save_config', 'qtranxf_reset_config', 20 );
@@ -943,7 +944,7 @@ function qtranxf_update_settings() {
 
     qtranxf_update_setting( 'admin_enabled_modules', QTX_BOOLEAN_SET, $qtranslate_options['admin']['admin_enabled_modules'] );
 
-    QTX_Admin_Modules::update_modules_state();
+    QTX_Admin_Module_Manager::update_modules_state();
 
     // opportunity to update special custom settings on sub-plugins
     do_action( 'qtranslate_update_settings' );

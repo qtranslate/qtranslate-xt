@@ -4,6 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once( QTRANSLATE_DIR . '/admin/qtx_admin_utils.php' );
+require_once( QTRANSLATE_DIR . '/modules/qtx_admin_module.php' );
 
 function qtranxf_admin_set_default_options( &$options ) {
     // options processed in a standardized way
@@ -40,9 +41,8 @@ function qtranxf_admin_set_default_options( &$options ) {
 
     // Boolean set defining the default enabled options for each module, hard values not depending on any state.
     $options['admin']['admin_enabled_modules'] = array();
-    foreach ( QTX_Modules_Handler::get_modules_defs() as $module_def ) {
-        // TODO: expand default values in module def
-        $options['admin']['admin_enabled_modules'][ $module_def['id'] ] = ( $module_def['plugin'] !== true );
+    foreach ( QTX_Admin_Module::get_modules() as $module ) {
+        $options['admin']['admin_enabled_modules'][ $module->id ] = $module->is_default_enabled();
     }
 
     // options processed in a special way
