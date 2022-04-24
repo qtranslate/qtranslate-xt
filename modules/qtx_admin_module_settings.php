@@ -1,30 +1,40 @@
 <?php
 
-require_once( QTRANSLATE_DIR . '/admin/qtx_admin_modules.php' );
-require_once( QTRANSLATE_DIR . '/modules/qtx_module_setup.php' );
+require_once( QTRANSLATE_DIR . '/modules/qtx_admin_module_manager.php' );
+require_once( QTRANSLATE_DIR . '/modules/qtx_admin_module.php' );
+require_once( QTRANSLATE_DIR . '/modules/qtx_module_state.php' );
 
 /**
  * Module admin settings, for display in the settings panels.
  */
-class QTX_Admin_Settings_Module {
+class QTX_Admin_Module_Settings {
     public $id;
     public $name;
-    protected $state;
     public $plugin_state_label;
     public $module_state_label;
     public $icon;
     public $color;
+
+    /**
+     * @var int Internal state.
+     */
+    protected $state;
+
+    /**
+     * @var QTX_Admin_Module Underlying module definition.
+     */
     protected $module;
 
     /**
      * Constructor.
      *
-     * @param QTX_Module $module
+     * @param QTX_Admin_Module $module
+     * @param integer $state
      */
     public function __construct( $module, $state ) {
-        $this->module = $module;
         $this->id     = $module->id;
         $this->name   = $module->name;
+        $this->module = $module;
         $this->state  = $state;
         switch ( $this->state ) {
             case QTX_MODULE_STATE_ACTIVE:
@@ -46,10 +56,10 @@ class QTX_Admin_Settings_Module {
             default:
                 $this->module_state_label = _x( 'Inactive', 'Module settings', 'qtranslate' );
                 $this->icon               = 'dashicons-editor-help';
-                $this->color              = '';
+                $this->color              = 'orange';
                 break;
         }
-        $this->plugin_state_label = empty( $module->plugins ) ? _x( 'None', 'Module settings', 'qtranslate' ) : ( QTX_Admin_Modules::is_module_plugin_active( $module ) ? _x( 'Active', 'Module settings', 'qtranslate' ) : _x( 'Inactive', 'Module settings', 'qtranslate' ) );
+        $this->plugin_state_label = empty( $module->plugins ) ? _x( 'None', 'Module settings', 'qtranslate' ) : ( QTX_Admin_Module_Manager::is_module_plugin_active( $module ) ? _x( 'Active', 'Module settings', 'qtranslate' ) : _x( 'Inactive', 'Module settings', 'qtranslate' ) );
     }
 
     /**
@@ -69,34 +79,39 @@ class QTX_Admin_Settings_Module {
      * @return bool
      */
     public function is_disabled() {
-        return ( QTX_Admin_Modules::can_module_be_activated( $this->module ) != QTX_MODULE_STATE_ACTIVE );
+        return ( QTX_Admin_Module_Manager::can_module_be_activated( $this->module ) != QTX_MODULE_STATE_ACTIVE );
     }
 
+    /**
+     * Check if the module state is active.
+     *
+     * @return bool
+     */
     public function is_active() {
         return $this->state == QTX_MODULE_STATE_ACTIVE;
     }
 
     /**
-     * Retrieve disabled settings.
+     * Check if the module has settings.
      *
      * @return bool
      */
     public function has_settings() {
-        return $this->module->has_settings();
+        return $this->module->has_settings;
     }
 
     /**
      * Retrieve settings for all modules (for display).
      * The status is retrieved from the modules option.
      *
-     * @return QTX_Admin_Settings_Module[]
+     * @return QTX_Admin_Module_Settings[]
      */
     public static function get_settings_modules() {
         $states   = get_option( 'qtranslate_modules_state', array() );
         $settings = array();
-        foreach ( QTX_Module_Setup::get_modules() as $module ) {
+        foreach ( QTX_Admin_Module::get_modules() as $module ) {
             $state      = isset( $states[ $module->id ] ) ? $states[ $module->id ] : QTX_MODULE_STATE_UNDEFINED;
-            $settings[] = new QTX_Admin_Settings_Module( $module, $state );
+            $settings[] = new QTX_Admin_Module_Settings( $module, $state );
         }
 
         return $settings;

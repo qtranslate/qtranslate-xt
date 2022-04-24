@@ -1,18 +1,19 @@
 <?php
 
-require_once( QTRANSLATE_DIR . '/modules/qtx_module_setup.php' );
+require_once( QTRANSLATE_DIR . '/modules/qtx_admin_module.php' );
+require_once( QTRANSLATE_DIR . '/modules/qtx_module_state.php' );
 
 /**
  * Module admin management, taking care of the state updates and notices.
  */
-class QTX_Admin_Modules {
+class QTX_Admin_Module_Manager {
     /**
      * Register hooks for modules and related plugins
      */
     public static function register_hooks() {
-        add_action( 'admin_notices', 'QTX_Admin_Modules::admin_notices' );
-        add_action( 'activated_plugin', 'QTX_Admin_Modules::register_plugin_activated' );
-        add_action( 'deactivated_plugin', 'QTX_Admin_Modules::register_plugin_deactivated' );
+        add_action( 'admin_notices', 'QTX_Admin_Module_Manager::admin_notices' );
+        add_action( 'activated_plugin', 'QTX_Admin_Module_Manager::register_plugin_activated' );
+        add_action( 'deactivated_plugin', 'QTX_Admin_Module_Manager::register_plugin_deactivated' );
     }
 
     /**
@@ -33,7 +34,7 @@ class QTX_Admin_Modules {
 
         $option_modules = array();
         require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-        foreach ( QTX_Module_Setup::get_modules() as $module ) {
+        foreach ( QTX_Admin_Module::get_modules() as $module ) {
             $state = self::can_module_be_activated( $module, $func_is_active );
             if ( $state == QTX_MODULE_STATE_ACTIVE ) {
                 // The admin options matter only if the module can be activated, otherwise the hard conditions prevail.
@@ -57,14 +58,14 @@ class QTX_Admin_Modules {
     /**
      * Check if the module has a related plugin active, if any.
      *
-     * @param QTX_Module $module
+     * @param QTX_Admin_Module $module
      * @param callable $func_is_active
      *
-     * @return bool true if the integration plugin is active OR if the module does not have any..
+     * @return bool true if the integration plugin is active OR if the module does not have any.
      */
     public static function is_module_plugin_active( $module, $func_is_active = 'is_plugin_active' ) {
         if ( empty( $module->plugins ) ) {
-            return true; // Attention :should not be interpreted as "having a plugin".
+            return true; // Attention: should not be interpreted as "having a plugin".
         }
 
         require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
@@ -85,7 +86,7 @@ class QTX_Admin_Modules {
      *
      * ATTENTION: the admin checkboxes are ignored in this check! This evaluates the "potential" state.
      *
-     * @param QTX_Module $module
+     * @param QTX_Admin_Module $module
      * @param callable $func_is_active callback to evaluate if a plugin is active
      *
      * @return integer module state
@@ -142,7 +143,7 @@ class QTX_Admin_Modules {
         }
 
         $active_modules = array();
-        $modules        = QTX_Module_Setup::get_modules();
+        $modules        = QTX_Admin_Module::get_modules();
         foreach ( $modules as $module ) {
             if ( ! array_key_exists( $module->id, $options_modules ) ) {
                 continue;

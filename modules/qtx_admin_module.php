@@ -1,16 +1,70 @@
 <?php
 
-require_once( QTRANSLATE_DIR . '/modules/qtx_module.php' );
-
 /**
- * Static setup data for the built-in modules.
+ * Static definition of a built-in modules.
+ *
+ * This provides only the basic structure, not the module logic or states.
  */
-class QTX_Module_Setup {
+class QTX_Admin_Module {
+    /**
+     * @var string Internal id.
+     */
+    public $id;
+
+    /**
+     * @var string Name for display.
+     */
+    public $name;
+
+    /**
+     * Array of required plugin(s) defined in the WP format (directory/file.php).
+     * If this list is not empty, the module requires at least one of the plugin(s) to be activated.
+     *
+     * @var string[]
+     */
+    public $plugins;
+
+    /**
+     * Incompatible plugin in the WP format, only one or zero supported.
+     * If not empty, the module cannot be activated is this plugin is active.
+     *
+     * @var string|null
+     */
+    public $incompatible;
+
+    /**
+     * @var bool A module can have specific admin settings.
+     */
+    public $has_settings;
+
+    /**
+     * Constructor from fields array.
+     *
+     * @param array[] $fields
+     *
+     * @see QTX_Admin_Module
+     */
+    function __construct( $fields ) {
+        $this->id           = $fields['id'];
+        $this->name         = $fields['name'];
+        $this->plugins      = isset( $fields['plugins'] ) ? $fields['plugins'] : array();
+        $this->incompatible = isset( $fields['incompatible'] ) ? $fields['incompatible'] : null;
+        $this->has_settings = isset( $fields['has_settings'] ) ? $fields['has_settings'] : false;
+    }
+
+    /**
+     * Retrieve the default settings for the "admin enabled state" (checkbox).
+     *
+     * @return bool
+     */
+    function is_default_enabled() {
+        return ! empty( $this->plugins );
+    }
+    
     /**
      * Retrieve the raw setup of the built-in modules.
      *
-     * This structure is internal, not meant to be accessed directly.
-     * Each module is defined by:
+     * This structure is internal, but these fields must match the class members:
      * - id (required): key used to identify the module, also used in options
      * - name (required): for user display
      * - plugins (optional, array): WP identifier of plugin to be integrated, or array of plugin identifiers
@@ -18,12 +72,11 @@ class QTX_Module_Setup {
      * - has_settings (optional, bool): for specific admin settings
      *
      * @return array[] ordered by module name
-     * @see QTX_Module these fields must match the class members.
      */
     protected static function get_builtin_setup() {
         return [
             [
-                'id'           => 'acf',
+                'id'           => 'acf2',
                 'name'         => 'ACF',
                 'plugins'      => [ 'advanced-custom-fields/acf.php', 'advanced-custom-fields-pro/acf.php' ],
                 'incompatible' => 'acf-qtranslate/acf-qtranslate.php',
@@ -81,12 +134,12 @@ class QTX_Module_Setup {
     }
 
     /**
-     * Retrieve the module static infos (this does not load them).
+     * Retrieve the module definitions.
      *
-     * @return QTX_Module[] ordered by name
+     * @return QTX_Admin_Module[] ordered by name
      */
     public static function get_modules() {
-        static $modules;    // This can be cached, never changes.
+        static $modules;
 
         if ( isset( $modules ) ) {
             return $modules;
@@ -94,7 +147,7 @@ class QTX_Module_Setup {
 
         $modules = [];
         foreach ( self::get_builtin_setup() as $setup ) {
-            $modules[] = new QTX_Module( $setup );
+            $modules[] = new QTX_Admin_Module( $setup );
         }
 
         return $modules;

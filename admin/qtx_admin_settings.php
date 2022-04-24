@@ -5,8 +5,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once( QTRANSLATE_DIR . '/admin/qtx_admin_options_update.php' );
 require_once( QTRANSLATE_DIR . '/admin/qtx_admin_settings_language_list.php' );
-require_once( QTRANSLATE_DIR . '/admin/qtx_admin_settings_module.php' );
 require_once( QTRANSLATE_DIR . '/admin/qtx_import_export.php' );
+require_once( QTRANSLATE_DIR . '/modules/qtx_admin_module_settings.php' );
 
 /**
  * Class QTX_Admin_Settings
@@ -254,7 +254,7 @@ class QTX_Admin_Settings {
         }
         $admin_sections['integration'] = __( 'Integration', 'qtranslate' );
 
-        $settings_modules = QTX_Admin_Settings_Module::get_settings_modules();
+        $settings_modules = QTX_Admin_Module_Settings::get_settings_modules();
         foreach ( $settings_modules as $module ) {
             if ( $module->is_active() && $module->has_settings() ) {
                 $admin_sections[ $module->id ] = $module->name;
@@ -704,7 +704,7 @@ class QTX_Admin_Settings {
     }
 
     /**
-     * @param QTX_Admin_Settings_Module[] $settings_modules
+     * @param QTX_Admin_Module_Settings[] $settings_modules
      *
      * @return void
      */

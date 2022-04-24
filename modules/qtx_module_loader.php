@@ -1,15 +1,11 @@
 <?php
 
-define( 'QTX_MODULE_STATE_UNDEFINED', 0 );
-define( 'QTX_MODULE_STATE_ACTIVE', 1 );
-define( 'QTX_MODULE_STATE_INACTIVE', 2 );
-define( 'QTX_MODULE_STATE_BLOCKED', 3 );
-
+require_once( QTRANSLATE_DIR . '/modules/qtx_module_state.php' );
 
 /**
  * Provide infos about the module states and the ability to load them. This never changes any state.
  *
- * @see QTX_Admin_Modules::update_modules_state()
+ * @see QTX_Admin_Module_Manager::update_modules_state()
  */
 class QTX_Module_Loader {
     /**
