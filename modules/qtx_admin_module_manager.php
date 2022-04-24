@@ -106,28 +106,28 @@ class QTX_Admin_Module_Manager {
     }
 
     /**
-     * Hook called after a plugin is activated
+     * Hook called after a plugin is activated.
      *
-     * @param string $updated_plugin name of the plugin
+     * @param string $activated_plugin name of the plugin being activated.
      */
-    public static function register_plugin_activated( $updated_plugin ) {
-        // we could use "is_plugin_active" because the "active_plugins" option is updated BEFORE the action is called
-        // however this is not the case for the deactivation so for consistency we use the counterpart check
-        self::update_modules_state( function ( $test_plugin ) use ( $updated_plugin ) {
-            return ( $test_plugin === $updated_plugin ) ? true : is_plugin_active( $test_plugin );
+    public static function register_plugin_activated( $activated_plugin ) {
+        // We could use "is_plugin_active" because the "active_plugins" option is updated BEFORE the action is called.
+        // However, this is not the case for the deactivation so for consistency we use the counterpart check.
+        self::update_modules_state( function ( $check_plugin ) use ( $activated_plugin ) {
+            return ( $check_plugin === $activated_plugin ) || is_plugin_active( $check_plugin );
         } );
     }
 
     /**
-     * Hook called after a plugin is deactivated
+     * Hook called after a plugin is deactivated.
      *
-     * @param string $updated_plugin name of the plugin
+     * @param string $deactivated_plugin name of the plugin being deactivated.
      */
-    public static function register_plugin_deactivated( $updated_plugin ) {
-        // we can't use "is_plugin_active" because the "active_plugins" option is updated AFTER the action is called!
-        // this is a problem of WP Core, but we pass a custom function as a workaround
-        self::update_modules_state( function ( $test_plugin ) use ( $updated_plugin ) {
-            return ( $test_plugin === $updated_plugin ) ? false : is_plugin_active( $test_plugin );
+    public static function register_plugin_deactivated( $deactivated_plugin ) {
+        // We can't use "is_plugin_active" because the "active_plugins" option is updated AFTER the action is called!
+        // This is a problem of WP Core, but we pass a custom function as a workaround.
+        self::update_modules_state( function ( $check_plugin ) use ( $deactivated_plugin ) {
+            return ( $check_plugin !== $deactivated_plugin ) && is_plugin_active( $check_plugin );
         } );
     }
 

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Static definition of a built-in modules.
+ * Static definition of a built-in module.
  *
  * This provides only the basic structure, not the module logic or states.
  */
@@ -60,7 +60,7 @@ class QTX_Admin_Module {
     function is_default_enabled() {
         return ! empty( $this->plugins );
     }
-    
+
     /**
      * Retrieve the raw setup of the built-in modules.
      *
@@ -76,7 +76,7 @@ class QTX_Admin_Module {
     protected static function get_builtin_setup() {
         return [
             [
-                'id'           => 'acf2',
+                'id'           => 'acf',
                 'name'         => 'ACF',
                 'plugins'      => [ 'advanced-custom-fields/acf.php', 'advanced-custom-fields-pro/acf.php' ],
                 'incompatible' => 'acf-qtranslate/acf-qtranslate.php',
@@ -140,11 +140,9 @@ class QTX_Admin_Module {
      */
     public static function get_modules() {
         static $modules;
-
         if ( isset( $modules ) ) {
             return $modules;
         }
-
         $modules = [];
         foreach ( self::get_builtin_setup() as $setup ) {
             $modules[] = new QTX_Admin_Module( $setup );

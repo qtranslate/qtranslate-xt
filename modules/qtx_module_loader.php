@@ -3,9 +3,9 @@
 require_once( QTRANSLATE_DIR . '/modules/qtx_module_state.php' );
 
 /**
- * Provide infos about the module states and the ability to load them. This never changes any state.
+ * Provide the ability to load the modules and check the stored state, with a minimal overhead for the front-side.
  *
- * @see QTX_Admin_Module_Manager::update_modules_state()
+ * @see QTX_Admin_Module_Manager::update_modules_state() for state updates. No state change is done here.
  */
 class QTX_Module_Loader {
     /**
