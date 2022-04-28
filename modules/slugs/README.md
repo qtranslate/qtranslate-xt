@@ -2,7 +2,7 @@
 
 Adds support for permalink (slug/URL) translations to qTranslate-XT.
 
-This module was created from [qtranslate-slug](https://github.com/not-only-code/qtranslate-slug) plugin v1.1.8, integrated as [a module](https://github.com/qtranslate/qtranslate-xt/pull/1060).
+This module was created from [qtranslate-slug](https://github.com/not-only-code/qtranslate-slug) plugin v1.1.18, integrated as [a module](https://github.com/qtranslate/qtranslate-xt/pull/1060).
 For more details see the discussion [Include qtranslate slug into -XT](https://github.com/qtranslate/qtranslate-xt/issues/671).
 
 ## Frequently Asked Questions
