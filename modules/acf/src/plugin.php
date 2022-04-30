@@ -17,14 +17,11 @@ class acf_qtranslate_plugin {
         add_action( 'acf/input/admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
         add_action( 'admin_footer', array( $this, 'admin_footer' ), -10 );
         add_action( 'admin_head', array( $this, 'admin_head' ) );
-        add_action( 'admin_menu', array( $this, 'admin_menu' ) );
         add_action( 'admin_init', array( $this, 'admin_init' ) );
 
         add_filter( 'qtranslate_admin_config', array( $this, 'filter_qtranslate_admin_config' ) );
-        add_filter( 'plugin_action_links_' . plugin_basename( ACF_QTRANSLATE_PLUGIN ), array(
-            $this,
-            'plugin_action_links'
-        ) );
+        add_action( 'qtranslate_configuration', array( $this, 'display_settings' ) );
+        add_action( 'qtranslate_update_settings', array( $this, 'update_settings' ) );
     }
 
     /**
@@ -159,19 +156,6 @@ class acf_qtranslate_plugin {
     }
 
     /**
-     * Add settings link on plugin page
-     *
-     * @param array $links
-     *
-     * @return array
-     */
-    public function plugin_action_links( $links ) {
-        array_unshift( $links, '<a href="options-general.php?page=acf-qtranslate">Settings</a>' );
-
-        return $links;
-    }
-
-    /**
      * Enable the display of the LSB on ACF Options pages
      *
      * @param array $config
@@ -241,13 +225,13 @@ class acf_qtranslate_plugin {
      * Retrieve the value of a plugin setting
      *
      * @param string $name
-     * @param $default
+     * @param mixed $default
      *
-     * @return |null
+     * @return mixed
      */
     function get_plugin_setting( $name, $default = null ) {
         $options = get_option( 'acf_qtranslate' );
-        if ( isset( $options[ $name ] ) === true ) {
+        if ( isset( $options[ $name ] ) ) {
             return $options[ $name ];
         }
 
@@ -255,80 +239,58 @@ class acf_qtranslate_plugin {
     }
 
     /**
-     * Register the options page with the Wordpress menu
-     */
-    function admin_menu() {
-        add_options_page( 'ACF qTranslate', 'ACF qTranslate', 'manage_options', 'acf-qtranslate', array(
-            $this,
-            'options_page'
-        ) );
-    }
-
-    /**
      * Register settings and default fields
      */
     function admin_init() {
-        register_setting( 'acf_qtranslate', 'acf_qtranslate' );
+        register_setting( 'settings-qtranslate-acf', 'acf_qtranslate' );
 
+        // Define a placeholder for the fields without title or content.
         add_settings_section(
-            'qtranslatex_section',
-            'qTranslate-X',
-            array( $this, 'render_section_qtranslatex' ),
-            'acf_qtranslate'
+            'section-acf',
+            '',
+            '__return_false',
+            'settings-qtranslate-acf'
         );
 
         add_settings_field(
             'translate_standard_field_types',
             'Enable translation for Standard Field Types',
             array( $this, 'render_setting_translate_standard_field_types' ),
-            'acf_qtranslate',
-            'qtranslatex_section'
+            'settings-qtranslate-acf',
+            'section-acf'
         );
 
         add_settings_field(
             'show_language_tabs',
             'Display language tabs',
             array( $this, 'render_setting_show_language_tabs' ),
-            'acf_qtranslate',
-            'qtranslatex_section'
+            'settings-qtranslate-acf',
+            'section-acf'
         );
 
         add_settings_field(
             'show_on_pages',
             'Display the LSB on the following pages',
             array( $this, 'render_setting_show_on_pages' ),
-            'acf_qtranslate',
-            'qtranslatex_section'
+            'settings-qtranslate-acf',
+            'section-acf'
         );
     }
 
-    /**
-     * Render the options page
-     */
-    function options_page() {
-        ?>
-        <form action="options.php" method="post">
-            <h2>ACF qTranslate Settings</h2>
-            <br>
-            <?php
-
-            settings_fields( 'acf_qtranslate' );
-            do_settings_sections( 'acf_qtranslate' );
-            submit_button();
-
-            ?>
-        </form>
-        <?php
+    function display_settings() {
+        QTX_Admin_Settings::open_section( 'acf' );
+        wp_nonce_field( 'acf', 'nonce_acf', false );
+        do_settings_sections( 'settings-qtranslate-acf' );
+        QTX_Admin_Settings::close_section( 'acf' );
     }
 
-    /**
-     * Render the qTranslate-XT section
-     */
-    function render_section_qtranslatex() {
-        ?>
-        The following options represent additional functionality that is available when
-        using qTranslate-XT. This functionality is off by default and must be enabled below.
-        <?php
+    function update_settings() {
+        // The nonce allows to validate the settings tab was displayed but also to have checkbox fields only.
+        if ( ! isset( $_POST['nonce_acf'] ) || ! wp_verify_nonce( $_POST['nonce_acf'], 'acf' ) ) {
+            return;
+        }
+        $options = isset( $_POST['acf_qtranslate'] ) ? $_POST['acf_qtranslate'] : null;
+        update_option( 'acf_qtranslate', $options );
     }
 
     /**

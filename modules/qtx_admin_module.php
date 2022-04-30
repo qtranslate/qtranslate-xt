@@ -80,6 +80,7 @@ class QTX_Admin_Module {
                 'name'         => 'ACF',
                 'plugins'      => [ 'advanced-custom-fields/acf.php', 'advanced-custom-fields-pro/acf.php' ],
                 'incompatible' => 'acf-qtranslate/acf-qtranslate.php',
+                'has_settings' => true,
             ],
             [
                 'id'           => 'all-in-one-seo-pack',
