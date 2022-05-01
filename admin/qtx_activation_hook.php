@@ -753,7 +753,6 @@ function qtranxf_clear_debug_log() {
     }
 }
 
-
 function qtranxf_activation_hook() {
     qtranxf_clear_debug_log();
     if ( version_compare( PHP_VERSION, '5.4' ) < 0 ) {
@@ -784,6 +783,11 @@ function qtranxf_activation_hook() {
     if ( is_plugin_active( 'qtranslate-x/qtranslate.php' ) ) {
         qtranxf_admin_notice_deactivate_plugin( 'qTranslate-X', 'qtranslate-x/qtranslate.php' );
     }
+
+    // Migrate legacy options, temporary transitions during evolutions.
+    qtranxf_migrate_legacy_option( 'qtranslate_modules', QTX_OPTIONS_MODULES_STATE );
+    qtranxf_migrate_legacy_option( 'acf_qtranslate', QTX_OPTIONS_MODULE_ACF, false );
+    qtranxf_migrate_legacy_option( 'qts_options', QTX_OPTIONS_MODULE_SLUGS, false );
 
     $ts                     = time();
     $next_thanks            = get_option( 'qtranslate_next_thanks' );

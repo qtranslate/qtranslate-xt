@@ -24,7 +24,7 @@ class QTX_Admin_Module_Manager {
      * AND
      * - if the `admin_enabled_modules` admin option is checked for that module.
      *
-     * Update the 'qtranslate_modules_state' option, telling which module should be loaded.
+     * Update the QTX_OPTIONS_MODULES_STATE option, telling which module should be loaded.
      * Note each module can enable hooks both for admin and front requests.
      *
      * @param callable $func_is_active callback to evaluate if a plugin is active
@@ -45,8 +45,8 @@ class QTX_Admin_Module_Manager {
             $option_modules[ $module->id ] = $state;
         }
 
-        $old_option_modules = get_option( 'qtranslate_modules_state' );
-        update_option( 'qtranslate_modules_state', $option_modules );
+        $old_option_modules = get_option( QTX_OPTIONS_MODULES_STATE );
+        update_option( QTX_OPTIONS_MODULES_STATE, $option_modules );
 
         // Trigger info notices and potential loading only if changed.
         if ( $old_option_modules != $option_modules ) {
@@ -132,7 +132,7 @@ class QTX_Admin_Module_Manager {
     }
 
     public static function admin_notices() {
-        $options_modules = get_option( 'qtranslate_modules_state', array() );
+        $options_modules = get_option( QTX_OPTIONS_MODULES_STATE, array() );
         if ( empty( $options_modules ) ) {
             $msg   = '<p>' . sprintf( __( 'Modules state undefined in %s. Please deactivate it and reactivate it again from the plugins page.', 'qtranslate' ), 'qTranslate&#8209;XT' ) . '</p>';
             $nonce = wp_create_nonce( 'deactivate-plugin_qtranslate-xt/qtranslate.php' );

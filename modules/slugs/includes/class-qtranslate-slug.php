@@ -37,7 +37,7 @@ class QtranslateSlug {
             return;
         }
 
-        $this->options_buffer      = get_option( QTS_OPTIONS_NAME, array() );
+        $this->options_buffer      = get_option( QTX_OPTIONS_MODULE_SLUGS, array() );
         $this->permalink_structure = get_option( 'permalink_structure' );
 
         if ( ! is_admin() ) {

@@ -91,3 +91,28 @@ function qtranxf_admin_load_config() {
 
     qtranxf_add_conf_filters();
 }
+
+/**
+ * Migrate, rename and clean up a legacy option.
+ *
+ * Recopy the legacy option if the new doesn't already exist.
+ * Delete the legacy option if belonging to `qtranslate`, preserve external plugin options.
+ *
+ * @param string $old_name
+ * @param string $new_name
+ * @param bool|string $autoload as in update_option
+ *
+ * @return void
+ */
+function qtranxf_migrate_legacy_option( $old_name, $new_name, $autoload = null ) {
+    if ( ! get_option( $new_name ) ) {
+        $old_value = get_option( $old_name );
+        if ( $old_value ) {
+            update_option( $new_name, $old_value, $autoload );
+        }
+    }
+    // Clean up legacy options in any case, but only for own plugin.
+    if ( strpos( $old_name, 'qtranslate_' ) === 0 ) {
+        delete_option( $old_name );
+    }
+}

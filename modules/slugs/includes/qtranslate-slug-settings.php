@@ -48,7 +48,7 @@ function qts_show_form_field( $args = array() ) {
     $choices = $args['choices'];
     $class   = $args['class'];
 
-    $options = $qtranslate_slug->options_buffer ? $qtranslate_slug->options_buffer : get_option( QTS_OPTIONS_NAME, array() );
+    $options = $qtranslate_slug->options_buffer ? $qtranslate_slug->options_buffer : get_option( QTX_OPTIONS_MODULE_SLUGS, array() );
 
     // pass the standard value if the option is not yet set in the database
     if ( ! isset( $options[ $id ] ) && $type != 'checkbox' ) {
@@ -67,7 +67,7 @@ function qts_show_form_field( $args = array() ) {
         case 'text':
             $options[ $id ] = stripslashes( $options[ $id ] );
             $options[ $id ] = esc_attr( $options[ $id ] );
-            echo "<input class='regular-text$field_class' type='text' id='$id' name='" . QTS_OPTIONS_NAME . "[$id]' value='$options[$id]' />";
+            echo "<input class='regular-text$field_class' type='text' id='$id' name='" . QTX_OPTIONS_MODULE_SLUGS . "[$id]' value='$options[$id]' />";
             echo ( $desc != '' ) ? "<br /><p class='qtranxs-notes'>$desc</p>" : "";
             break;
 
@@ -85,8 +85,8 @@ function qts_show_form_field( $args = array() ) {
                 } else {
                     $value = '';
                 }
-                echo "<label for=" . QTS_OPTIONS_NAME . "[$id|${item[1]}]>" . $item[0] . "</label> " .
-                     "<input class='$field_class' type='text' id='$id|${item[1]}' name='" . QTS_OPTIONS_NAME . "[$id|${item[1]}]' value='" . urldecode( $value ) . "' /><br/>";
+                echo "<label for=" . QTX_OPTIONS_MODULE_SLUGS . "[$id|${item[1]}]>" . $item[0] . "</label> " .
+                     "<input class='$field_class' type='text' id='$id|${item[1]}' name='" . QTX_OPTIONS_MODULE_SLUGS . "[$id|${item[1]}]' value='" . urldecode( $value ) . "' /><br/>";
             }
             echo ( $desc != '' ) ? "<p class='qtranxs-notes'>$desc</p>" : "";
             break;
@@ -94,12 +94,12 @@ function qts_show_form_field( $args = array() ) {
         case 'textarea':
             $options[ $id ] = stripslashes( $options[ $id ] );
             $options[ $id ] = esc_html( $options[ $id ] );
-            echo "<textarea class='textarea$field_class' type='text' id='$id' name='" . QTS_OPTIONS_NAME . "[$id]' rows='5' cols='30'>$options[$id]</textarea>";
+            echo "<textarea class='textarea$field_class' type='text' id='$id' name='" . QTX_OPTIONS_MODULE_SLUGS . "[$id]' rows='5' cols='30'>$options[$id]</textarea>";
             echo ( $desc != '' ) ? "<br /><p class='qtranxs-notes'>$desc</p>" : "";
             break;
 
         case 'select':
-            echo "<select id='$id' class='select$field_class' name='" . QTS_OPTIONS_NAME . "[$id]'>";
+            echo "<select id='$id' class='select$field_class' name='" . QTX_OPTIONS_MODULE_SLUGS . "[$id]'>";
             foreach ( $choices as $item ) {
                 $value = esc_attr( $item );
                 $item  = esc_html( $item );
@@ -112,7 +112,7 @@ function qts_show_form_field( $args = array() ) {
             break;
 
         case 'select2':
-            echo "<select id='$id' class='select$field_class' name='" . QTS_OPTIONS_NAME . "[$id]'>";
+            echo "<select id='$id' class='select$field_class' name='" . QTX_OPTIONS_MODULE_SLUGS . "[$id]'>";
             foreach ( $choices as $item ) {
 
                 $item    = explode( "|", $item );
@@ -126,7 +126,7 @@ function qts_show_form_field( $args = array() ) {
             break;
 
         case 'checkbox':
-            echo "<input class='checkbox$field_class' type='checkbox' id='$id' name='" . QTS_OPTIONS_NAME . "[$id]' value='1' " . checked( $options[ $id ], 1, false ) . " />";
+            echo "<input class='checkbox$field_class' type='checkbox' id='$id' name='" . QTX_OPTIONS_MODULE_SLUGS . "[$id]' value='1' " . checked( $options[ $id ], 1, false ) . " />";
             echo ( $desc != '' ) ? "<br /><p class='qtranxs-notes'>$desc</p>" : "";
             break;
 
@@ -144,7 +144,7 @@ function qts_show_form_field( $args = array() ) {
                     }
                 }
 
-                echo "<input class='checkbox$field_class' type='checkbox' id='$id|$item[1]' name='" . QTS_OPTIONS_NAME . "[$id|$item[1]]' value='1' $checked /> $item[0] <br/>";
+                echo "<input class='checkbox$field_class' type='checkbox' id='$id|$item[1]' name='" . QTX_OPTIONS_MODULE_SLUGS . "[$id|$item[1]]' value='1' $checked /> $item[0] <br/>";
             }
             echo ( $desc != '' ) ? "<br /><p class='qtranxs-notes'>$desc</p>" : "";
             break;
@@ -162,7 +162,7 @@ function qts_show_form_field( $args = array() ) {
                     $checked = 'checked="checked"';
                 }
 
-                echo "<label for='$id|$item_value'><input class='radio$field_class' type='radio' id='$id|$item_value' name='" . QTS_OPTIONS_NAME . "[$id]' value='$item_value' $checked /> <strong>$item_key</strong>";
+                echo "<label for='$id|$item_value'><input class='radio$field_class' type='radio' id='$id|$item_value' name='" . QTX_OPTIONS_MODULE_SLUGS . "[$id]' value='$item_value' $checked /> <strong>$item_key</strong>";
                 if ( isset( $desc[ $index ] ) && ! empty( $desc[ $index ] ) ) {
                     echo ": " . $desc[ $index ];
                 }
@@ -347,8 +347,8 @@ function qts_validate_options( $input ) {
 function qts_update_settings() {
     global $qtranslate_slug;
     $qts_settings = false;
-    if ( isset( $_POST[ QTS_OPTIONS_NAME ] ) ) {
-        $qts_settings = qts_validate_options( $_POST[ QTS_OPTIONS_NAME ] );
+    if ( isset( $_POST[ QTX_OPTIONS_MODULE_SLUGS ] ) ) {
+        $qts_settings = qts_validate_options( $_POST[ QTX_OPTIONS_MODULE_SLUGS ] );
     }
 
     if ( ! $qts_settings || empty( $qts_settings ) ) {
@@ -357,7 +357,7 @@ function qts_update_settings() {
     if ( $qtranslate_slug->options_buffer == $qts_settings ) {
         return;
     }
-    update_option( QTS_OPTIONS_NAME, $qts_settings );
+    update_option( QTX_OPTIONS_MODULE_SLUGS, $qts_settings, false );
     $qtranslate_slug->options_buffer = $qts_settings;
     flush_rewrite_rules();
 }
