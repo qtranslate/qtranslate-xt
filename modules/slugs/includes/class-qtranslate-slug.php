@@ -956,9 +956,16 @@ class QtranslateSlug {
         $page_path     = str_replace( '%2F', '/', $page_path );
         $page_path     = str_replace( '%20', ' ', $page_path );
         $parts         = explode( '/', trim( $page_path, '/' ) );
-        $parts         = array_map( 'esc_sql', $parts );
-        $parts         = array_map( array( $wpdb, 'remove_placeholder_escape' ), $parts );
-        $parts         = array_map( 'sanitize_title_for_query', $parts );
+        $parts         = array_map(
+                            function ( $a ) {
+                                global $wpdb;
+                                return sanitize_title_for_query(
+                                    $wpdb->remove_placeholder_escape(
+                                        esc_sql( $a )
+                                    )
+                                );
+                            },
+                            $parts );
         $in_string     = "'" . implode( "','", $parts ) . "'";
         $meta_key      = QTS_META_PREFIX . $this->get_temp_lang();
         $post_type_sql = $post_type;
