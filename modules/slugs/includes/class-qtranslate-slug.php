@@ -37,6 +37,10 @@ class QtranslateSlug {
             return;
         }
 
+        // TODO: remove temporary import of legacy option for master, rely on plugin activation in next release.
+        require_once( QTRANSLATE_DIR . '/admin/qtx_admin_options.php' );
+        qtranxf_import_legacy_option( 'qts_options', QTX_OPTIONS_MODULE_SLUGS, false );
+
         $this->options_buffer      = get_option( QTX_OPTIONS_MODULE_SLUGS, array() );
         $this->permalink_structure = get_option( 'permalink_structure' );
 

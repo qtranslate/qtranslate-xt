@@ -784,10 +784,10 @@ function qtranxf_activation_hook() {
         qtranxf_admin_notice_deactivate_plugin( 'qTranslate-X', 'qtranslate-x/qtranslate.php' );
     }
 
-    // Migrate legacy options, temporary transitions during evolutions.
-    qtranxf_migrate_legacy_option( 'qtranslate_modules', QTX_OPTIONS_MODULES_STATE );
-    qtranxf_migrate_legacy_option( 'acf_qtranslate', QTX_OPTIONS_MODULE_ACF, false );
-    qtranxf_migrate_legacy_option( 'qts_options', QTX_OPTIONS_MODULE_SLUGS, false );
+    // Migrate (rename/import) legacy options, temporary transitions during evolutions.
+    qtranxf_rename_legacy_option( 'qtranslate_modules', QTX_OPTIONS_MODULES_STATE );
+    qtranxf_import_legacy_option( 'acf_qtranslate', QTX_OPTIONS_MODULE_ACF, false );
+    qtranxf_import_legacy_option( 'qts_options', QTX_OPTIONS_MODULE_SLUGS, false );
 
     $ts                     = time();
     $next_thanks            = get_option( 'qtranslate_next_thanks' );

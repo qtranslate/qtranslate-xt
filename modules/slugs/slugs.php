@@ -7,10 +7,6 @@ if ( ! defined( "QTS_META_PREFIX" ) ) {
     define( "QTS_META_PREFIX", QTS_PREFIX . 'slug_' );
 }
 
-// TODO: remove temporary rename of legacy option for master, rely on plugin activation in next release.
-require_once( QTRANSLATE_DIR . '/admin/qtx_admin_options.php' );
-qtranxf_migrate_legacy_option( 'qts_options', QTX_OPTIONS_MODULE_SLUGS, false );
-
 // Init the module
 
 include_once( dirname( __FILE__ ) . '/includes/class-qtranslate-slug.php' );

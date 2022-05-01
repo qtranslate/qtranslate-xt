@@ -93,10 +93,7 @@ function qtranxf_admin_load_config() {
 }
 
 /**
- * Migrate, rename and clean up a legacy option.
- *
- * Recopy the legacy option if the new doesn't already exist.
- * Delete the legacy option if belonging to `qtranslate`, preserve external plugin options.
+ * Import legacy option by recopying its value if the new option doesn't already exist.
  *
  * @param string $old_name
  * @param string $new_name
@@ -104,15 +101,29 @@ function qtranxf_admin_load_config() {
  *
  * @return void
  */
-function qtranxf_migrate_legacy_option( $old_name, $new_name, $autoload = null ) {
+function qtranxf_import_legacy_option( $old_name, $new_name, $autoload = null ) {
+    assert( strpos( $new_name, 'qtranslate_' ) === 0 );
     if ( ! get_option( $new_name ) ) {
         $old_value = get_option( $old_name );
         if ( $old_value ) {
             update_option( $new_name, $old_value, $autoload );
         }
     }
-    // Clean up legacy options in any case, but only for own plugin.
-    if ( strpos( $old_name, 'qtranslate_' ) === 0 ) {
-        delete_option( $old_name );
-    }
+}
+
+/**
+ * Rename a legacy option: import and cleanup.
+ * Only applies to `qtranslate` options, preserve external plugin options.
+ *
+ * @param string $old_name
+ * @param string $new_name
+ * @param bool|string $autoload as in update_option
+ *
+ * @return void
+ */
+function qtranxf_rename_legacy_option( $old_name, $new_name, $autoload = null ) {
+    assert( strpos( $new_name, 'qtranslate_' ) === 0 );
+    assert( strpos( $old_name, 'qtranslate_' ) === 0 );
+    qtranxf_import_legacy_option( $old_name, $new_name, $autoload );
+    delete_option( $old_name );
 }
