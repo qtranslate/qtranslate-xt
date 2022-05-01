@@ -957,7 +957,7 @@ class QtranslateSlug {
         $page_path     = str_replace( '%20', ' ', $page_path );
         $parts         = explode( '/', trim( $page_path, '/' ) );
         $parts         = array_map( 'esc_sql', $parts );
-        $parts         = array_map(array($wpdb,'remove_placeholder_escape'), $parts);
+        $parts         = array_map( array( $wpdb, 'remove_placeholder_escape' ), $parts );
         $parts         = array_map( 'sanitize_title_for_query', $parts );
         $in_string     = "'" . implode( "','", $parts ) . "'";
         $meta_key      = QTS_META_PREFIX . $this->get_temp_lang();
