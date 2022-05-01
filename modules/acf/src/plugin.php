@@ -32,6 +32,10 @@ class acf_qtranslate_plugin {
     public function init() {
         static $plugin_loaded = false;
         if ( ! $plugin_loaded && $this->acf_enabled() ) {
+            // TODO: remove temporary import of legacy option for master, rely on plugin activation in next release.
+            require_once( QTRANSLATE_DIR . '/admin/qtx_admin_options.php' );
+            qtranxf_import_legacy_option( 'acf_qtranslate', QTX_OPTIONS_MODULE_ACF, false );
+
             if ( $this->acf_major_version() === 5 ) {
                 require_once ACF_QTRANSLATE_PLUGIN_DIR . 'src/acf_5/acf.php';
                 $this->acf = new acf_qtranslate_acf_5( $this );
@@ -230,7 +234,7 @@ class acf_qtranslate_plugin {
      * @return mixed
      */
     function get_plugin_setting( $name, $default = null ) {
-        $options = get_option( 'acf_qtranslate' );
+        $options = get_option( QTX_OPTIONS_MODULE_ACF );
         if ( isset( $options[ $name ] ) ) {
             return $options[ $name ];
         }
@@ -242,7 +246,7 @@ class acf_qtranslate_plugin {
      * Register settings and default fields
      */
     function admin_init() {
-        register_setting( 'settings-qtranslate-acf', 'acf_qtranslate' );
+        register_setting( 'settings-qtranslate-acf', QTX_OPTIONS_MODULE_ACF );
 
         // Define a placeholder for the fields without title or content.
         add_settings_section(
@@ -289,8 +293,8 @@ class acf_qtranslate_plugin {
         if ( ! isset( $_POST['nonce_acf'] ) || ! wp_verify_nonce( $_POST['nonce_acf'], 'acf' ) ) {
             return;
         }
-        $options = isset( $_POST['acf_qtranslate'] ) ? $_POST['acf_qtranslate'] : null;
-        update_option( 'acf_qtranslate', $options );
+        $options = isset( $_POST[ QTX_OPTIONS_MODULE_ACF ] ) ? $_POST[ QTX_OPTIONS_MODULE_ACF ] : null;
+        update_option( QTX_OPTIONS_MODULE_ACF, $options, false );
     }
 
     /**
@@ -299,7 +303,7 @@ class acf_qtranslate_plugin {
     function render_setting_translate_standard_field_types() {
         ?>
         <input type="checkbox"
-               name="acf_qtranslate[translate_standard_field_types]" <?php checked( $this->get_plugin_setting( 'translate_standard_field_types' ), 1 ); ?>
+               name="<?php echo QTX_OPTIONS_MODULE_ACF ?>[translate_standard_field_types]" <?php checked( $this->get_plugin_setting( 'translate_standard_field_types' ), 1 ); ?>
                value="1">
         <?php
     }
@@ -310,7 +314,7 @@ class acf_qtranslate_plugin {
     function render_setting_show_language_tabs() {
         ?>
         <input type="checkbox"
-               name="acf_qtranslate[show_language_tabs]" <?php checked( $this->get_plugin_setting( 'show_language_tabs' ), 1 ); ?>
+               name="<?php echo QTX_OPTIONS_MODULE_ACF ?>[show_language_tabs]" <?php checked( $this->get_plugin_setting( 'show_language_tabs' ), 1 ); ?>
                value="1">
         <?php
     }
@@ -320,7 +324,8 @@ class acf_qtranslate_plugin {
      */
     function render_setting_show_on_pages() {
         ?>
-        <textarea name="acf_qtranslate[show_on_pages]" style="max-width:500px;width:100%;height:200px;padding-top:6px"
+        <textarea name="<?php echo QTX_OPTIONS_MODULE_ACF ?>[show_on_pages]"
+                  style="max-width:500px;width:100%;height:200px;padding-top:6px"
                   placeholder="post.php"><?= esc_html( $this->get_plugin_setting( 'show_on_pages' ) ) ?></textarea><br>
         <small>Enter each page on it's own line</small>
         <?php
