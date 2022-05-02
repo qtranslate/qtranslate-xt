@@ -360,7 +360,9 @@ function qtranxf_reset_config() {
     // internal private options not loaded by default
     delete_option( 'qtranslate_next_update_mo' );
     delete_option( 'qtranslate_next_thanks' );
-    delete_option( 'qtranslate_modules_state' );
+    delete_option( QTX_OPTIONS_MODULES_STATE );
+    delete_option( QTX_OPTIONS_MODULE_ACF );
+    delete_option( QTX_OPTIONS_MODULE_SLUGS );
 
     // obsolete options
     delete_option( 'qtranslate_custom_pages' );

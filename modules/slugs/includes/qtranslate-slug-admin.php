@@ -72,7 +72,7 @@ function qts_multi_activate() {
 function qts_uninstall() {
     global $q_config, $wpdb;
 
-    delete_option( QTS_OPTIONS_NAME );
+    delete_option( QTX_OPTIONS_MODULE_SLUGS );
 
     $meta_keys = array();
     foreach ( $q_config['enabled_languages'] as $lang ) {

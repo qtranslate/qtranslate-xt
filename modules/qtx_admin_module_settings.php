@@ -107,7 +107,7 @@ class QTX_Admin_Module_Settings {
      * @return QTX_Admin_Module_Settings[]
      */
     public static function get_settings_modules() {
-        $states   = get_option( 'qtranslate_modules_state', array() );
+        $states   = get_option( QTX_OPTIONS_MODULES_STATE, array() );
         $settings = array();
         foreach ( QTX_Admin_Module::get_modules() as $module ) {
             $state      = isset( $states[ $module->id ] ) ? $states[ $module->id ] : QTX_MODULE_STATE_UNDEFINED;

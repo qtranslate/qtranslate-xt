@@ -3,9 +3,6 @@
 if ( ! defined( "QTS_PREFIX" ) ) {
     define( "QTS_PREFIX", '_qts_' );
 }
-if ( ! defined( "QTS_OPTIONS_NAME" ) ) {
-    define( "QTS_OPTIONS_NAME", 'qts_options' );
-}
 if ( ! defined( "QTS_META_PREFIX" ) ) {
     define( "QTS_META_PREFIX", QTS_PREFIX . 'slug_' );
 }

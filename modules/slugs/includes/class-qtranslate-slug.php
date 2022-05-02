@@ -37,7 +37,11 @@ class QtranslateSlug {
             return;
         }
 
-        $this->options_buffer      = get_option( QTS_OPTIONS_NAME, array() );
+        // TODO: remove temporary import of legacy option for master, rely on plugin activation in next release.
+        require_once( QTRANSLATE_DIR . '/admin/qtx_admin_options.php' );
+        qtranxf_import_legacy_option( 'qts_options', QTX_OPTIONS_MODULE_SLUGS, false );
+
+        $this->options_buffer      = get_option( QTX_OPTIONS_MODULE_SLUGS, array() );
         $this->permalink_structure = get_option( 'permalink_structure' );
 
         if ( ! is_admin() ) {
@@ -968,8 +972,16 @@ class QtranslateSlug {
         $page_path     = str_replace( '%2F', '/', $page_path );
         $page_path     = str_replace( '%20', ' ', $page_path );
         $parts         = explode( '/', trim( $page_path, '/' ) );
-        $parts         = array_map( 'esc_sql', $parts );
-        $parts         = array_map( 'sanitize_title_for_query', $parts );
+        $parts         = array_map(
+                            function ( $a ) {
+                                global $wpdb;
+                                return sanitize_title_for_query(
+                                    $wpdb->remove_placeholder_escape(
+                                        esc_sql( $a )
+                                    )
+                                );
+                            },
+                            $parts );
         $in_string     = "'" . implode( "','", $parts ) . "'";
         $meta_key      = QTS_META_PREFIX . $this->get_temp_lang();
         $post_type_sql = $post_type;
