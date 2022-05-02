@@ -19,21 +19,8 @@ If you want to translate also the base permastructs (ex. *category*, *tag*, etc)
 ### I get a 404 error, what can I do?
 In the admin go to *Settings/Permalinks* or *Settings/Languages* (qTranslate) options and save.
 
-### I can't manage translations in Nav Menus.
-That's because language selector metabox is hidden, if you are in admin *nav menus* screen, press the button **Screen options** (on top and right) and after, check the option *Languages*. It will appear a **Language** meta box on top of the left sidebar.
-
 ### How to get the current url in a specific language?
 You can use `qts_get_url()`.
-
-## TODO
-In slug options you can change the bases for taxonomies and custom post types.  
-So, for example, you can change /category/ for /category/ for english and /categoria/ for spanish version.
-But these won't work:
-* slug with UTF8 characters in taxonomies bases: example:  /類別/... instead of /category/...
-  UTF8 in taxonomies works just fine: /category_zh/魚/
-* slug with UTF8 characters in custom post type bases : example:  /圖書/... instead of /books/...
-  UTF8 in custom post slugs works just fine: /tushu/彩繪中國經典名著/
-* translating custom post types archives with custom base name /tushu/ isn't working. Using UTF8 in the the default slug works as expected : /中國/
 
 ## Contributors
 
