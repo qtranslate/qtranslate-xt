@@ -47,7 +47,6 @@ class QtranslateSlug {
         if ( ! is_admin() ) {
             add_filter( 'request', array( &$this, 'filter_request' ) );
         }
-        //FIXME: query vars are broken
         add_filter( 'query_vars', array( &$this, 'query_vars' ) );
         add_action( 'generate_rewrite_rules', array( &$this, 'modify_rewrite_rules' ) );
 
@@ -65,7 +64,6 @@ class QtranslateSlug {
         remove_filter( 'category_link', 'qtranxf_convertURL' ); //TODO: check if it is needed
         remove_filter( 'tag_link', 'qtranxf_convertURL' ); //TODO: check if it is needed
 
-        //FIXME: query vars are broken
         add_filter( 'qts_permastruct', array( &$this, 'get_extra_permastruct' ), 0, 2 );
         add_filter( 'qts_url_args', array( &$this, 'parse_url_args' ), 0, 1 );
         add_filter( 'home_url', array( &$this, 'home_url' ), 10, 4 );
@@ -354,21 +352,24 @@ class QtranslateSlug {
     function filter_request( $query ) {
         global $q_config;
         global $wp;
-        // FIXME: why is this here? it breaks custom variables getter
-        // https://wordpress.org/support/topic/cant-retrieve-public-query-variables
-        if ( ( isset( $wp->matched_query ) || empty( $query ) ) && ! isset( $query['s'] ) ) {
-            $query = wp_parse_args( $wp->matched_query );
+
+        if ( isset( $query['error'] ) && isset( $wp->matched_query ) ) {
+            unset( $query['error'] );
+            $query = array_merge( wp_parse_args( $wp->matched_query ), $query );
         }
-        foreach ( $this->get_public_post_types() as $post_type ) {
-            if ( array_key_exists( $post_type->name, $query ) && ! in_array( $post_type->name, array(
-                    'post',
-                    'page'
-                ) ) ) {
-                $query['post_type'] = $post_type->name;
-            }
-        }
+
+        // -> home url
+        if ( empty( $query ) || isset( $query['error'] ) ):
+            $function = 'home_url';
+            $id       = '';
+
+        // -> search
+        elseif ( isset( $query['s'] ) ):
+            $id       = $query['s'];
+            $function = "get_search_link";
+
         // -> page
-        if ( isset( $query['pagename'] ) || isset( $query['page_id'] ) ):
+        elseif ( isset( $query['pagename'] ) || isset( $query['page_id'] ) ):
             $page = wp_cache_get( 'qts_page_request' );
             if ( ! $page ) {
                 $page = isset( $query['page_id'] ) ? get_post( $query['page_id'] ) : $this->get_page_by_path( $query['pagename'] );
@@ -382,23 +383,7 @@ class QtranslateSlug {
             wp_cache_delete( 'qts_page_request' );
             $query['pagename'] = get_page_uri( $page );
             $function          = 'get_page_link';
-        // -> custom post type
-        elseif ( isset( $query['post_type'] ) ):
-            if ( count( $query ) == 1 ) {
-                $function = 'get_post_type_archive_link';
-                $id       = $query['post_type'];
-            } else {
-                $page_slug = ( isset( $query['name'] ) && ! empty( $query['name'] ) ) ? $query['name'] : $query[ $query['post_type'] ];
-                $page      = $this->get_page_by_path( $page_slug, OBJECT, $query['post_type'] );
-                if ( ! $page ) {
-                    return $query;
-                }
-                $id          = $page->ID;
-                $cache_array = array( $page );
-                update_post_caches( $cache_array, $query['post_type'] ); // caching query :)
-                $query['name'] = $query[ $query['post_type'] ] = get_page_uri( $page );
-                $function      = 'get_post_permalink';
-            }
+
         // -> post
         elseif ( isset( $query['name'] ) || isset( $query['p'] ) ):
             $post = isset( $query['p'] ) ? get_post( $query['p'] ) : $this->get_page_by_path( $query['name'], OBJECT, 'post' );
@@ -414,9 +399,12 @@ class QtranslateSlug {
         // -> category
         elseif ( ( isset( $query['category_name'] ) || isset( $query['cat'] ) ) ):
             if ( isset( $query['category_name'] ) ) {
-                $term_slug = $this->get_last_slash( $query['category_name'] );
+                $term_slug = $this->get_last_slash( empty( $query['category_name'] ) ? $wp->request : $query['category_name'] );
+                $term      = $this->get_term_by( 'slug', $term_slug, 'category' );
+            } else {
+                $term = get_term( $query['cat'], 'category' );
             }
-            $term = isset( $query['cat'] ) ? get_term( $query['cat'], 'category' ) : $this->get_term_by( 'slug', $term_slug, 'category' );
+
             if ( ! $term ) {
                 return $query;
             }
@@ -438,37 +426,52 @@ class QtranslateSlug {
             $query['tag'] = $term->slug;
             $function     = 'get_tag_link';
 
-        endif;
-
-
-        // -> taxonomy
-        foreach ( $this->get_public_taxonomies() as $item ):
-            if ( isset( $query[ $item->name ] ) ) {
-                $term_slug = $this->get_last_slash( $query[ $item->name ] );
-                $term      = $this->get_term_by( 'slug', $term_slug, $item->name );
-                if ( ! $term ) {
-                    return $query;
+        else:
+            // -> custom post type
+            foreach ( $this->get_public_post_types() as $post_type ) {
+                if ( array_key_exists( $post_type->name, $query ) && ! in_array( $post_type->name, array(
+                        'post',
+                        'page'
+                    ) ) ) {
+                    $query['post_type'] = $post_type->name;
+                    break;
                 }
-                $cache_array = array( $term );
-                update_term_cache( $cache_array, $item->name ); // caching query :)
-                $id                   = $term;
-                $query[ $item->name ] = $term->slug;
-                $function             = 'get_term_link';
-
             }
-        endforeach;
 
-        // -> home url
-        if ( empty( $query ) ) {
-            $function = 'home_url';
-            $id       = '';
-        }
+            if ( isset( $query['post_type'] ) ) {
+                if ( count( $query ) == 1 ) {
+                    $function = 'get_post_type_archive_link';
+                    $id       = $query['post_type'];
+                } else {
+                    $page_slug = ( isset( $query['name'] ) && ! empty( $query['name'] ) ) ? $query['name'] : $query[ $query['post_type'] ];
+                    $page      = $this->get_page_by_path( $page_slug, OBJECT, $query['post_type'] );
+                    if ( ! $page ) {
+                        return $query;
+                    }
+                    $id          = $page->ID;
+                    $cache_array = array( $page );
+                    update_post_caches( $cache_array, $query['post_type'] ); // caching query :)
+                    $query['name'] = $query[ $query['post_type'] ] = get_page_uri( $page );
+                    $function      = 'get_post_permalink';
+                }
+            }
 
-        // -> search
-        if ( isset( $query['s'] ) ) {
-            $id       = $query['s'];
-            $function = "get_search_link";
-        }
+            // -> taxonomy
+            foreach ( $this->get_public_taxonomies() as $item ):
+                if ( isset( $query[ $item->name ] ) ) {
+                    $term_slug = $this->get_last_slash( empty( $query[ $item->name ] ) ? $wp->request : $query[ $item->name ] );
+                    $term      = $this->get_term_by( 'slug', $term_slug, $item->name );
+                    if ( ! $term ) {
+                        return $query;
+                    }
+                    $cache_array = array( $term );
+                    update_term_cache( $cache_array, $item->name ); // caching query :)
+                    $id                   = $term;
+                    $query[ $item->name ] = $term->slug;
+                    $function             = 'get_term_link';
+                }
+            endforeach;
+        endif;
 
         if ( isset( $function ) ) {
             // parse all languages links
@@ -960,16 +963,10 @@ class QtranslateSlug {
         $page_path     = str_replace( '%2F', '/', $page_path );
         $page_path     = str_replace( '%20', ' ', $page_path );
         $parts         = explode( '/', trim( $page_path, '/' ) );
-        $parts         = array_map(
-                            function ( $a ) {
-                                global $wpdb;
-                                return sanitize_title_for_query(
-                                    $wpdb->remove_placeholder_escape(
-                                        esc_sql( $a )
-                                    )
-                                );
-                            },
-                            $parts );
+        $parts         = array_map( function ( $a ) use ( $wpdb ) {
+            return sanitize_title_for_query( $wpdb->remove_placeholder_escape( esc_sql( $a ) ) );
+        },
+            $parts );
         $in_string     = "'" . implode( "','", $parts ) . "'";
         $meta_key      = QTS_META_PREFIX . $this->get_temp_lang();
         $post_type_sql = $post_type;
