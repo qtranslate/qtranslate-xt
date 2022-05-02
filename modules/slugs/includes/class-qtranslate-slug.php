@@ -353,13 +353,13 @@ class QtranslateSlug {
         global $q_config;
         global $wp;
 
-        if ( isset( $query[ 'error' ] ) && isset( $wp->matched_query ) ){
-            unset( $query[ 'error' ] );
-            $query = array_merge ( wp_parse_args( $wp->matched_query ), $query );
+        if ( isset( $query['error'] ) && isset( $wp->matched_query ) ) {
+            unset( $query['error'] );
+            $query = array_merge( wp_parse_args( $wp->matched_query ), $query );
         }
 
         // -> home url
-        if ( empty( $query ) || isset( $query[ 'error' ] ) ):
+        if ( empty( $query ) || isset( $query['error'] ) ):
             $function = 'home_url';
             $id       = '';
 
@@ -399,12 +399,8 @@ class QtranslateSlug {
         // -> category
         elseif ( ( isset( $query['category_name'] ) || isset( $query['cat'] ) ) ):
             if ( isset( $query['category_name'] ) ) {
-                if ( empty( $query['category_name'] ) ) {
-                    $term_slug = $this->get_last_slash( $wp->request );
-                } else {
-                    $term_slug = $this->get_last_slash( $query['category_name'] );
-                }
-                $term = $this->get_term_by( 'slug', $term_slug, 'category' );
+                $term_slug = $this->get_last_slash( empty( $query['category_name'] ) ? $wp->request : $query['category_name'] );
+                $term      = $this->get_term_by( 'slug', $term_slug, 'category' );
             } else {
                 $term = get_term( $query['cat'], 'category' );
             }
@@ -429,8 +425,8 @@ class QtranslateSlug {
             $id           = $term->term_id;
             $query['tag'] = $term->slug;
             $function     = 'get_tag_link';
-        else:
 
+        else:
             // -> custom post type
             foreach ( $this->get_public_post_types() as $post_type ) {
                 if ( array_key_exists( $post_type->name, $query ) && ! in_array( $post_type->name, array(
@@ -442,7 +438,7 @@ class QtranslateSlug {
                 }
             }
 
-            if ( isset( $query['post_type'] ) ){
+            if ( isset( $query['post_type'] ) ) {
                 if ( count( $query ) == 1 ) {
                     $function = 'get_post_type_archive_link';
                     $id       = $query['post_type'];
@@ -463,12 +459,7 @@ class QtranslateSlug {
             // -> taxonomy
             foreach ( $this->get_public_taxonomies() as $item ):
                 if ( isset( $query[ $item->name ] ) ) {
-                     if ( empty( $query[ $item->name ] ) ) {
-                        $term_slug = $this->get_last_slash( $wp->request );
-                    } else {
-                        $term_slug = $this->get_last_slash( $query[ $item->name ] );
-                    }
-
+                    $term_slug = $this->get_last_slash( empty( $query[ $item->name ] ) ? $wp->request : $query[ $item->name ] );
                     $term      = $this->get_term_by( 'slug', $term_slug, $item->name );
                     if ( ! $term ) {
                         return $query;
@@ -972,16 +963,10 @@ class QtranslateSlug {
         $page_path     = str_replace( '%2F', '/', $page_path );
         $page_path     = str_replace( '%20', ' ', $page_path );
         $parts         = explode( '/', trim( $page_path, '/' ) );
-        $parts         = array_map(
-                            function ( $a ) {
-                                global $wpdb;
-                                return sanitize_title_for_query(
-                                    $wpdb->remove_placeholder_escape(
-                                        esc_sql( $a )
-                                    )
-                                );
-                            },
-                            $parts );
+        $parts         = array_map( function ( $a ) use ( $wpdb ) {
+            return sanitize_title_for_query( $wpdb->remove_placeholder_escape( esc_sql( $a ) ) );
+        },
+            $parts );
         $in_string     = "'" . implode( "','", $parts ) . "'";
         $meta_key      = QTS_META_PREFIX . $this->get_temp_lang();
         $post_type_sql = $post_type;
