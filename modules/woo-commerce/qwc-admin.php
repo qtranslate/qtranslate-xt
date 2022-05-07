@@ -44,8 +44,6 @@ function qtranxf_wc_add_filters_admin() {
 
     add_filter( 'woocommerce_attribute_taxonomies' , 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage' );
     add_filter( 'woocommerce_variation_option_name' , 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage' );
-    //TODO: check upstream in QTX core if a cleaner approach can be adopted
-    add_action( 'woocommerce_after_edit_attribute_fields', function(){echo "<script>jQuery(document).ready(function(){jQuery(\"td\").show()})</script>";});
 }
 
 qtranxf_wc_add_filters_admin();

@@ -433,7 +433,7 @@ function qts_hide_term_slug_box() {
             break;
         case 'edit.php':
             // Handle WooCommerce edit product attributes page.
-            if ( isset( $_GET['page'] ) && $_GET['page'] == 'product_attributes' ) {
+            if ( isset( $_GET['page'] ) && $_GET['page'] == 'product_attributes' && ! isset( $_GET['edit'] ) ) {
                 $id = 'attribute_name';
                 // TODO: actual slug column to be added (javascript seems the only way currently). For the time being, possibly overridden slugs column is hidden.
                 $additional_jquery =
