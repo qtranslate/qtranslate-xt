@@ -44,6 +44,7 @@ function qts_taxonomies_hooks() {
 
     if ( QTX_Module_Loader::is_module_active( 'woo-commerce' ) ) {
         add_action( 'woocommerce_after_add_attribute_fields', 'qts_show_add_term_fields' );
+        add_action( 'woocommerce_after_edit_attribute_fields', 'qts_show_edit_term_fields' );
     }
 }
 
@@ -434,11 +435,19 @@ function qts_hide_term_slug_box() {
         case 'edit.php':
             // Handle WooCommerce edit product attributes page.
             if ( isset( $_GET['page'] ) && $_GET['page'] == 'product_attributes' ) {
+                // Hide the regular slug input field.
                 $id = 'attribute_name';
-                // TODO: actual slug column to be added (javascript seems the only way currently). For the time being, possibly overridden slugs column is hidden.
-                $additional_jquery =
-                    "$('table tr th:nth-child(2)').hide()" . PHP_EOL .
-                    "$('table tr td:nth-child(2)').hide()" . PHP_EOL;
+                if ( isset( $_GET['edit'] ) ) {
+                    // Hide the slug header left of the input field.
+                    $additional_jquery =
+                        "$(\"#" . $id . "\").parent().prev(\"th\").hide()" . PHP_EOL;
+                } else {
+                    // Hide the slug column in the table.
+                    // TODO: actual slug column to be added (javascript seems the only way currently). For the time being, possibly overridden slugs column is hidden.
+                    $additional_jquery =
+                        "$('table tr th:nth-child(2)').hide()" . PHP_EOL .
+                        "$('table tr td:nth-child(2)').hide()" . PHP_EOL;
+                }
             }
             break;
         default:
@@ -446,7 +455,7 @@ function qts_hide_term_slug_box() {
     endswitch;
 
     echo "<!-- QTS remove slug box -->" . PHP_EOL;
-    echo "<script type=\"text/javascript\" charset=\"utf-8\">" . PHP_EOL;
+    echo "<script>" . PHP_EOL;
     echo "  jQuery(document).ready(function($){" . PHP_EOL;
     echo "      $(\"#" . $id . "\").parent().hide();" . PHP_EOL;
     echo "      $(\".form-field td #slug\").parent().parent().hide();" . PHP_EOL;
