@@ -123,25 +123,22 @@ function qts_add_slug_meta_box() {
  * @param $post (object) current post object
  */
 function qts_draw_meta_box( $post ) {
-    global $q_config; // //TODO: q_config  : language_name
+    global $q_config;
 
     // Use nonce for verification
-    echo "<table style=\"width:100%\">" . PHP_EOL;
-    echo "<input type=\"hidden\" name=\"qts_nonce\" id=\"qts_nonce\" value=\"" . wp_create_nonce( 'qts_nonce' ) . "\" />" . PHP_EOL;
-
+    echo '<table class="qtranxs-slugs-metabox">' . PHP_EOL;
+    echo '<input type="hidden" name="qts_nonce" id="qts_nonce" value="' . wp_create_nonce( 'qts_nonce' ) . '" />' . PHP_EOL;
+    $flag_location = qtranxf_flag_location();
     foreach ( $q_config['enabled_languages'] as $lang ):
-
-        $slug = get_post_meta( $post->ID, QTS_META_PREFIX . $lang, true );
-
+        $slug  = get_post_meta( $post->ID, QTS_META_PREFIX . $lang, true );
         $value = ( $slug ) ? htmlspecialchars( $slug, ENT_QUOTES ) : '';
-
+        $name  = $q_config['language_name'][ $lang ];
+        $title = sprintf( __( 'Slug' ) . ' (%s)', $name );
         echo "<tr>" . PHP_EOL;
-        echo "<th style=\"text-align:left; width:10%; color:#555 \"><label for=\"qts_{$lang}_slug\">" . __( $q_config['language_name'][ $lang ], 'qtranslate' ) . "</label></th>" . PHP_EOL;
-        echo "<td><input type=\"text\" id=\"qts_{$lang}_slug\" name=\"qts_{$lang}_slug\" value=\"" . urldecode( $value ) . "\" style=\"width:90%; margin-left:10%; color:#777\" /></td>" . PHP_EOL;
+        echo "<th><img class='qtranxs-lang-flag' src='${flag_location}{$q_config['flag'][ $lang ]}' alt='${name}' title='${name}' /></th>" . PHP_EOL;
+        echo "<td><input type='text' id='qts_{$lang}_slug' name='qts_{$lang}_slug' value=\"" . urldecode( $value ) . "\" title='$title' /></td>" . PHP_EOL;
         echo "</tr>" . PHP_EOL;
-
     endforeach;
-
     echo '</table>' . PHP_EOL;
 }
 
@@ -389,16 +386,22 @@ function qts_save_term( $term_id, $tt_id, $taxonomy ) {
 function qts_show_add_term_fields( $term ) {
     global $q_config;
 
-    echo "<div id=\"form-field term-slug-wrap\">" . PHP_EOL;
+    $flag_location = qtranxf_flag_location();
+    echo '<div class="form-field term-slug-wrap">' . PHP_EOL;
+    echo '<label>' . __( 'Slugs per language', 'qtranslate' ) . '</label>' . PHP_EOL;;
+    echo '<ul class="qtranxs-slugs-list qtranxs-slugs-terms">';
     foreach ( $q_config['enabled_languages'] as $lang ) {
-        echo "<div class=\"form-field\">" . PHP_EOL;
         $slug  = ( is_object( $term ) ) ? get_metadata( 'term', $term->term_id, QTS_META_PREFIX . $lang, true ) : '';
         $value = ( $slug ) ? htmlspecialchars( $slug, ENT_QUOTES ) : '';
-        echo "<label for=\"qts_{$lang}_slug\">" . sprintf( __( 'Slug' ) . ' (%s)', $q_config['language_name'][ $lang ] ) . "</label>" . PHP_EOL;
-        echo "<input type=\"text\" name=\"qts_{$lang}_slug\" value=\"" . urldecode( $value ) . "\" aria-required=\"true\">" . PHP_EOL;
-        echo '</div>';
+        $flag  = $q_config['flag'][ $lang ];
+        $name  = $q_config['language_name'][ $lang ];
+        $title = sprintf( __( 'Slug' ) . ' (%s)', $name );
+        echo "<li><img class='qtranxs-lang-flag' src='${flag_location}${flag}' alt='$name' title=$name' />" . PHP_EOL;
+        echo "<input type='text' name='qts_{$lang}_slug' value='" . urldecode( $value ) . "' aria-required='true' title='$title' />" . PHP_EOL;
+        echo '</li>';
     }
-    echo '</div>';
+    echo '</ul>' . PHP_EOL;;
+    echo '</div>' . PHP_EOL;;
 }
 
 /**
@@ -409,15 +412,20 @@ function qts_show_add_term_fields( $term ) {
 function qts_show_edit_term_fields( $term ) {
     global $q_config;
 
-    echo "<table class=\"form-table\">" . PHP_EOL;
+    echo '<tr class="form-field"><th>' . __( 'Slugs per language', 'qtranslate' ) . '</th>';
+    echo '<td><ul class="qtranxs-slugs-list qtranxs-slugs-terms">' . PHP_EOL;
+    $flag_location = qtranxf_flag_location();
     foreach ( $q_config['enabled_languages'] as $lang ) {
         $slug  = ( is_object( $term ) ) ? get_metadata( 'term', $term->term_id, QTS_META_PREFIX . $lang, true ) : '';
         $value = ( $slug ) ? htmlspecialchars( $slug, ENT_QUOTES ) : '';
-        echo "<tr class=\"form-field term-slug-wrap\">" . PHP_EOL;
-        echo "<th scope=\"row\"><label for=\"qts_{$lang}_slug\">" . sprintf( __( 'Slug' ) . ' (%s)', $q_config['language_name'][ $lang ] ) . "</label></th>" . PHP_EOL;
-        echo "<td><input type=\"text\" name=\"qts_{$lang}_slug\" value=\"" . urldecode( $value ) . "\" /></td></tr>" . PHP_EOL;
+        $flag  = $q_config['flag'][ $lang ];
+        $name  = $q_config['language_name'][ $lang ];
+        $title = sprintf( __( 'Slug' ) . ' (%s)', $name );
+        echo "<li><img class='qtranxs-lang-flag' src='${flag_location}${flag}' alt='$name' title='$name' />" . PHP_EOL;
+        echo "<input type='text' name='qts_{$lang}_slug' value='" . urldecode( $value ) . "' title='$title' /></li>" . PHP_EOL;
     }
-    echo "</table>";
+    echo "</ul></td>";
+    echo "</tr>";
 }
 
 /**

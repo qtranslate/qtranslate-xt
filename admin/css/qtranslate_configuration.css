@@ -22,6 +22,11 @@
     vertical-align: middle;
 }
 
+.qtranxs-lang-flag {
+    vertical-align: middle;
+    margin: 2px 4px;
+}
+
 .qtranxs-language-list td {
     vertical-align: middle;
     display: table-cell;
@@ -52,4 +57,23 @@
 .qtranxs-deprecated {
     font-weight: bold;
     color: darkorange;
+}
+
+.qtranxs-slugs-metabox {
+    width: 100%;
+    padding: 0;
+}
+
+.qtranxs-slugs-metabox input {
+    color:#777;
+    width: 100%;
+}
+
+.qtranxs-slugs-list {
+    list-style: none;
+    white-space: nowrap;
+}
+
+.qtranxs-slugs-terms input[type=text] {
+    width: 90%;
 }
