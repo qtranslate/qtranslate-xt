@@ -246,8 +246,6 @@ function qtranxf_generateLanguageSelectCode( $args = array(), $id = '' ) {
                         $classes[] = 'active';
                     }
                     echo '<li class="' . implode( ' ', $classes ) . '"><a href="' . qtranxf_convertURL( $url, $language, false, true ) . '"';
-                    // set hreflang
-                    echo ' hreflang="' . $language . '"';
                     echo ' title="' . $alt . '"';
                     if ( $type == 'image' ) {
                         echo ' class="qtranxs_image qtranxs_image_' . $language . '"';
