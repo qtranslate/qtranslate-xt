@@ -40,6 +40,7 @@ function qts_section_fn( $section_id = '' ) {
  */
 function qts_show_form_field( $args = array() ) {
     global $qtranslate_slug;
+    global $q_config;
 
     $type    = $args['type'];
     $id      = $args['id'];
@@ -58,7 +59,7 @@ function qts_show_form_field( $args = array() ) {
     // additional field class. output only if the class is defined in the create_setting arguments
     $field_class = ( $class != '' ) ? ' ' . $class : '';
 
-    echo '<table class="form-table qtranxs-form-table" id="qtranxs_slugs_config"><tbody><tr">';
+    echo '<table class="form-table qtranxs-form-table" id="' . $id . '"><tbody><tr">';
     echo '<th scope="row">' . $args['title'] . '</th>';
     echo '<td><div class="form-field">';
 
@@ -72,8 +73,10 @@ function qts_show_form_field( $args = array() ) {
             break;
 
         case "multi-text":
+            $flag_location = qtranxf_flag_location();
+            echo "<ul class='qtranxs-slugs-list'>";
             foreach ( $choices as $item ) {
-                $item    = explode( "|", $item ); // cat_name|cat_slug
+                $item    = explode( "|", $item ); // label|slug
                 $item[0] = esc_html( $item[0] );
 
                 if ( ! empty( $options[ $id ] ) ) {
@@ -85,9 +88,15 @@ function qts_show_form_field( $args = array() ) {
                 } else {
                     $value = '';
                 }
-                echo "<label for=" . QTX_OPTIONS_MODULE_SLUGS . "[$id|${item[1]}]>" . $item[0] . "</label> " .
-                     "<input class='$field_class' type='text' id='$id|${item[1]}' name='" . QTX_OPTIONS_MODULE_SLUGS . "[$id|${item[1]}]' value='" . urldecode( $value ) . "' /><br/>";
+                // Assume the slug is a language (to be clarified in the given choices).
+                $lang = $item[1];
+                $flag = $q_config['flag'][ $lang ];
+                $name = $q_config['language_name'][ $lang ];
+                $item_id = "$id|${item[1]}";
+                echo "<li><img class='qtranxs-lang-flag' src='${flag_location}${flag}' alt='$name' title='$name' />" . PHP_EOL;
+                echo "<input class='$field_class' type='text' id='$item_id' name='" . QTX_OPTIONS_MODULE_SLUGS . "[$item_id]' value='" . urldecode( $value ) . "' title='{$item[0]}' /></li>" . PHP_EOL;
             }
+            echo "</ul>";
             echo ( $desc != '' ) ? "<p class='qtranxs-notes'>$desc</p>" : "";
             break;
 
@@ -262,7 +271,7 @@ function qts_validate_options( $input ) {
                         switch ( $option['class'] ) {
                             // different sanitation actions based on the class create you own cases as you need them
                             case 'numeric':
-                                // accept the input only if is numberic!
+                                // accept the input only if is numeric!
                                 $input[ $option['id'] . '|' . $v ] = trim( $input[ $option['id'] . '|' . $v ] ); // trim whitespace
                                 $input[ $option['id'] . '|' . $v ] = ( is_numeric( $input[ $option['id'] . '|' . $v ] ) ) ? $input[ $option['id'] . '|' . $v ] : '';
                                 break;
