@@ -379,53 +379,55 @@ function qts_save_term( $term_id, $tt_id, $taxonomy ) {
 }
 
 /**
- * Display multiple input fields, one per language for add term page.
+ * Display a list of multiple input fields, one per language for add/edit term.
  *
- * @param $term string the term object
+ * @param WP_Term|null $term If a term object is given, the values are retrieved from meta, otherwise left empty.
+ *
+ * @return void
  */
-function qts_show_add_term_fields( $term ) {
+function qts_show_list_term_fields( $term ) {
     global $q_config;
 
-    $flag_location = qtranxf_flag_location();
-    echo '<div class="form-field term-slug-wrap">' . PHP_EOL;
-    echo '<label>' . __( 'Slugs per language', 'qtranslate' ) . '</label>' . PHP_EOL;;
-    echo '<ul class="qtranxs-slugs-list qtranxs-slugs-terms">';
-    foreach ( $q_config['enabled_languages'] as $lang ) {
-        $slug  = ( is_object( $term ) ) ? get_metadata( 'term', $term->term_id, QTS_META_PREFIX . $lang, true ) : '';
-        $value = ( $slug ) ? htmlspecialchars( $slug, ENT_QUOTES ) : '';
-        $flag  = $q_config['flag'][ $lang ];
-        $name  = $q_config['language_name'][ $lang ];
-        $title = sprintf( __( 'Slug' ) . ' (%s)', $name );
-        echo "<li><img class='qtranxs-lang-flag' src='${flag_location}${flag}' alt='$name' title=$name' />" . PHP_EOL;
-        echo "<input type='text' name='qts_{$lang}_slug' value='" . urldecode( $value ) . "' aria-required='true' title='$title' />" . PHP_EOL;
-        echo '</li>';
-    }
-    echo '</ul>' . PHP_EOL;;
-    echo '</div>' . PHP_EOL;;
+    $flag_location = qtranxf_flag_location(); ?>
+    <ul class="qtranxs-slugs-list qtranxs-slugs-terms"><?php
+        foreach ( $q_config['enabled_languages'] as $lang ) {
+            $slug  = is_object( $term ) ? get_metadata( 'term', $term->term_id, QTS_META_PREFIX . $lang, true ) : '';
+            $value = $slug ? htmlspecialchars( $slug, ENT_QUOTES ) : '';
+            $flag  = $q_config['flag'][ $lang ];
+            $name  = $q_config['language_name'][ $lang ];
+            $title = sprintf( __( 'Slug' ) . ' (%s)', $name );
+            echo "<li><img class='qtranxs-lang-flag' src='${flag_location}${flag}' alt='$name' title='$name' />" . PHP_EOL;
+            echo "<input type='text' name='qts_{$lang}_slug' value='" . urldecode( $value ) . "' title='$title' /></li>" . PHP_EOL;
+        } ?>
+    </ul>
+    <?php
+}
+
+/**
+ * Display multiple input fields, one per language for add term page.
+ *
+ */
+function qts_show_add_term_fields() {
+    ?>
+    <div class="form-field term-slug-wrap">
+        <label><?php _e( 'Slugs per language', 'qtranslate' ) ?></label>
+        <?php qts_show_list_term_fields( null ); ?>
+    </div>
+    <?php
 }
 
 /**
  * Display multiple input fields, one per language for edit term page.
  *
- * @param $term string the term object
+ * @param WP_Term $term the term object
  */
 function qts_show_edit_term_fields( $term ) {
-    global $q_config;
-
-    echo '<tr class="form-field"><th>' . __( 'Slugs per language', 'qtranslate' ) . '</th>';
-    echo '<td><ul class="qtranxs-slugs-list qtranxs-slugs-terms">' . PHP_EOL;
-    $flag_location = qtranxf_flag_location();
-    foreach ( $q_config['enabled_languages'] as $lang ) {
-        $slug  = ( is_object( $term ) ) ? get_metadata( 'term', $term->term_id, QTS_META_PREFIX . $lang, true ) : '';
-        $value = ( $slug ) ? htmlspecialchars( $slug, ENT_QUOTES ) : '';
-        $flag  = $q_config['flag'][ $lang ];
-        $name  = $q_config['language_name'][ $lang ];
-        $title = sprintf( __( 'Slug' ) . ' (%s)', $name );
-        echo "<li><img class='qtranxs-lang-flag' src='${flag_location}${flag}' alt='$name' title='$name' />" . PHP_EOL;
-        echo "<input type='text' name='qts_{$lang}_slug' value='" . urldecode( $value ) . "' title='$title' /></li>" . PHP_EOL;
-    }
-    echo "</ul></td>";
-    echo "</tr>";
+    ?>
+    <tr class="form-field term-slug-wrap">
+        <th><?php _e( 'Slugs per language', 'qtranslate' ) ?></th>
+        <td><?php qts_show_list_term_fields( $term ); ?></td>
+    </tr>
+    <?php
 }
 
 /**
