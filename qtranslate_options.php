@@ -55,10 +55,22 @@ define( 'QTX_IGNORE_FILE_TYPES', 'gif,jpg,jpeg,png,svg,pdf,swf,tif,rar,zip,7z,mp
 // Language code format: ISO 639-1 (2 alpha), 639-2 or 639-3 (3 alpha)
 define( 'QTX_LANG_CODE_FORMAT', '[a-z]{2,3}' );
 
+/**
+ * Option names.
+ */
+const QTX_OPTIONS_MODULES_STATE = 'qtranslate_modules_state';
+const QTX_OPTIONS_MODULE_ACF    = 'qtranslate_module_acf';
+const QTX_OPTIONS_MODULE_SLUGS  = 'qtranslate_module_slugs';
 
+/**
+ * @global array Global configuration, interpreted from settings and i18n configuration loaded from JSON.
+ */
 global $q_config;
-global $qtranslate_options;
 
+/**
+ * @global array Global options, mapped at a lower level to the settings.
+ */
+global $qtranslate_options;
 
 /**
  * array of default option values

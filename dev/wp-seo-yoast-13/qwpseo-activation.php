@@ -99,7 +99,7 @@ function qwpseo_meta_check() {
 }
 
 function qwpseo_ajax_meta_fix() {
-    for ( $i = 10; -- $i > 0; ) {
+    for ( $i = 10; --$i > 0; ) {
         $result = qwpseo_meta_check();
         if ( is_null( $result ) ) {
             die( qtranxf_translate( 'An error occurred during the database update.' ) );
@@ -124,7 +124,7 @@ function qwpseo_admin_notices() {
         return;
     }
     ?>
-    <script type="text/javascript">
+    <script>
         function qwpseo_hide_notice() {
             jQuery('#qwpseo_notice_meta_fix').addClass('hidden');
         }

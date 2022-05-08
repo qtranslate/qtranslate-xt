@@ -6,6 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 require_once( QTRANSLATE_DIR . '/admin/qtx_admin_options_update.php' );
 require_once( QTRANSLATE_DIR . '/admin/qtx_admin_settings_language_list.php' );
 require_once( QTRANSLATE_DIR . '/admin/qtx_import_export.php' );
+require_once( QTRANSLATE_DIR . '/modules/qtx_admin_module_settings.php' );
 
 /**
  * Class QTX_Admin_Settings
@@ -175,13 +176,13 @@ class QTX_Admin_Settings {
                     <label for="language_date_format"><?php _e( 'Date Format', 'qtranslate' ) ?><br/></label>
                     <input name="language_date_format" id="language_date_format" type="text"
                            value="<?php echo $language_date_format; ?>"/>
-                    <p class="qtranxs-notes"><?php _e( 'Depending on your Date / Time Conversion Mode, you can either enter a <a href="http://www.php.net/manual/function.strftime.php">strftime</a> (use %q for day suffix (st,nd,rd,th)) or <a href="http://www.php.net/manual/function.date.php">date</a> format. This field is optional. (Example: %A %B %e%q, %Y)', 'qtranslate' ) ?></p>
+                    <p class="qtranxs-notes"><?php _e( 'Depending on your Date / Time Conversion Mode, you can either enter a <a href="https://www.php.net/manual/function.strftime.php">strftime</a> (use %q for day suffix (st,nd,rd,th)) or <a href="https://www.php.net/manual/function.date.php">date</a> format. This field is optional. (Example: %A %B %e%q, %Y)', 'qtranslate' ) ?></p>
                 </div>
                 <div class="form-field">
                     <label for="language_time_format"><?php _e( 'Time Format', 'qtranslate' ) ?><br/></label>
                     <input name="language_time_format" id="language_time_format" type="text"
                            value="<?php echo $language_time_format; ?>"/>
-                    <p class="qtranxs-notes"><?php _e( 'Depending on your Date / Time Conversion Mode, you can either enter a <a href="http://www.php.net/manual/function.strftime.php">strftime</a> or <a href="http://www.php.net/manual/function.date.php">date</a> format. This field is optional. (Example: %I:%M %p)', 'qtranslate' ) ?></p>
+                    <p class="qtranxs-notes"><?php _e( 'Depending on your Date / Time Conversion Mode, you can either enter a <a href="https://www.php.net/manual/function.strftime.php">strftime</a> or <a href="https://www.php.net/manual/function.date.php">date</a> format. This field is optional. (Example: %I:%M %p)', 'qtranslate' ) ?></p>
                 </div>
                 <div class="form-field">
                     <label for="language_na_message"><?php _e( 'Not Available Message', 'qtranslate' ) ?><br/></label>
@@ -192,7 +193,7 @@ class QTX_Admin_Settings {
                         <br/>
                         <?php _e( '%LANG:&lt;normal_separator&gt;:&lt;last_separator&gt;% generates a list of languages separated by &lt;normal_separator&gt; except for the last one, where &lt;last_separator&gt; will be used instead.', 'qtranslate' );
                         echo ' ';
-                        printf( __( 'The language names substituted into the list of available languages are shown translated in the active language. The nominative form of language names is used as it is fetched from %s may not fit the grammar rules of your language. It is then advisable to include quotes in this message like this "%s". Alternatively you may modify "%s" files in folder "%s" with names that fit your grammar rules. Please, %scontact the development team%s, if you decide to modify "%s" files.', 'qtranslate' ), '<a href="http://unicode.org/Public/cldr/latest" title="Unicode Common Locale Data Repository" target="_blank" tabindex="-1">CLDR</a>', 'Sorry, this entry is only available in "%LANG:", ":" and "%".', '.po', '<a href="https://github.com/qtranslate/qtranslate-xt/tree/master/lang/language-names" target="_blank" tabindex="-1">/lang/language-names/</a>', '<a href="https://github.com/qtranslate/qtranslate-xt/issues" target="_blank" tabindex="-1">', '</a>', '.po' );
+                        printf( __( 'The language names substituted into the list of available languages are shown translated in the active language. The nominative form of language names is used as it is fetched from %s may not fit the grammar rules of your language. It is then advisable to include quotes in this message like this "%s". Alternatively you may modify "%s" files in folder "%s" with names that fit your grammar rules. Please, %scontact the development team%s, if you decide to modify "%s" files.', 'qtranslate' ), '<a href="https://unicode.org/Public/cldr/latest" title="Unicode Common Locale Data Repository" target="_blank" tabindex="-1">CLDR</a>', 'Sorry, this entry is only available in "%LANG:", ":" and "%".', '.po', '<a href="https://github.com/qtranslate/qtranslate-xt/tree/master/lang/language-names" target="_blank" tabindex="-1">/lang/language-names/</a>', '<a href="https://github.com/qtranslate/qtranslate-xt/issues" target="_blank" tabindex="-1">', '</a>', '.po' );
                         ?>
                     </p>
                 </div>
@@ -247,17 +248,21 @@ class QTX_Admin_Settings {
         $admin_sections             = array();
         $admin_sections['general']  = __( 'General', 'qtranslate' );
         $admin_sections['advanced'] = __( 'Advanced', 'qtranslate' );
-
-        $custom_sections = apply_filters( 'qtranslate_admin_sections', array() );
+        $custom_sections            = apply_filters( 'qtranslate_admin_sections', array() );
         foreach ( $custom_sections as $key => $value ) {
             $admin_sections[ $key ] = $value;
         }
+        $admin_sections['integration'] = __( 'Integration', 'qtranslate' );
 
-        $admin_sections['integration']     = __( 'Integration', 'qtranslate' );
+        $settings_modules = QTX_Admin_Module_Settings::get_settings_modules();
+        foreach ( $settings_modules as $module ) {
+            if ( $module->is_active() && $module->has_settings() ) {
+                $admin_sections[ $module->id ] = $module->name;
+            }
+        }
         $admin_sections['import']          = __( 'Import', 'qtranslate' ) . '/' . __( 'Export', 'qtranslate' );
         $admin_sections['languages']       = __( 'Languages', 'qtranslate' );
         $admin_sections['troubleshooting'] = __( 'Troubleshooting', 'qtranslate' );
-
         ?>
         <h2 class="nav-tab-wrapper">
             <?php foreach ( $admin_sections as $slug => $name ) : ?>
@@ -271,7 +276,7 @@ class QTX_Admin_Settings {
                 <?php
                 $this->add_general_section();
                 $this->add_advanced_section();
-                $this->add_integration_section();
+                $this->add_integration_section( $settings_modules );
                 $this->add_troubleshooting_section();
                 // Allow to load additional services
                 do_action( 'qtranslate_configuration', $this->options_uri );
@@ -340,7 +345,7 @@ class QTX_Admin_Settings {
                         </label><br/>
                         <label title="Pre-Domain Mode">
                             <input type="radio" name="url_mode"
-                                   value="<?php echo QTX_URL_DOMAIN; ?>" <?php checked( $url_mode, QTX_URL_DOMAIN ) ?> /> <?php echo __( 'Use Pre-Domain Mode (uses http://en.yoursite.com)', 'qtranslate' ) . '. ' . __( 'You will need to configure DNS sub-domains on your site.', 'qtranslate' ) ?>
+                                   value="<?php echo QTX_URL_DOMAIN; ?>" <?php checked( $url_mode, QTX_URL_DOMAIN ) ?> /> <?php echo __( 'Use Pre-Domain Mode (uses https://en.yoursite.com)', 'qtranslate' ) . '. ' . __( 'You will need to configure DNS sub-domains on your site.', 'qtranslate' ) ?>
                         </label><br/>
                         <label title="Per-Domain Mode">
                             <input type="radio" name="url_mode"
@@ -705,7 +710,12 @@ class QTX_Admin_Settings {
         $this->close_section( 'advanced' );
     }
 
-    private function add_integration_section() {
+    /**
+     * @param QTX_Admin_Module_Settings[] $settings_modules
+     *
+     * @return void
+     */
+    private function add_integration_section( $settings_modules ) {
         global $q_config;
 
         $this->open_section( 'integration' ); ?>
@@ -721,28 +731,35 @@ class QTX_Admin_Settings {
                 <th scope="row"><?php _e( 'Built-in Modules', 'qtranslate' ) ?></th>
                 <td>
                     <label for="qtranxs_modules"
-                           class="qtranxs_explanation"><?php _e( 'The built-in integration modules are automatically enabled if the related plugin is active and no incompatible plugin (e.g. legacy integration plugin) prevents them to be loaded.', 'qtranslate' ); ?></label>
+                           class="qtranxs_explanation"><?php _e( 'Each built-in integration module can only be enabled if the required plugin is active and no incompatible plugin (e.g. legacy integration plugin) prevents it to be loaded.', 'qtranslate' ); ?></label>
                     <br/>
                     <table id="qtranxs_modules" class="widefat">
                         <thead>
                         <tr>
-                            <th class="row-title"><?php _ex( 'Name', 'Modules table header', 'qtranslate' ); ?></th>
-                            <th><?php _ex( 'Plugin', 'Modules table header', 'qtranslate' ); ?></th>
-                            <th><?php _ex( 'Module', 'Modules table header', 'qtranslate' ); ?></th>
-                            <th><?php _ex( 'Status', 'Modules table header', 'qtranslate' ); ?></th>
+                            <th class="row-title"><?php _ex( 'Name', 'Module settings', 'qtranslate' ); ?></th>
+                            <th><?php _ex( 'Required plugin', 'Module settings', 'qtranslate' ); ?></th>
+                            <th><?php _ex( 'Module', 'Module settings', 'qtranslate' ); ?></th>
                         </tr>
                         </thead>
                         <tbody>
                         <?php
-                        $modules = QTX_Admin_Modules::get_modules_infos();
-                        foreach ( $modules as $module ):
+                        foreach ( $settings_modules as $module ) :
                             ?>
                             <tr>
-                                <td><?php echo $module['name'] ?></td>
-                                <td><?php echo $module['plugin'] ?></td>
-                                <td><?php echo $module['module'] ?></td>
-                                <td style="color: <?php echo $module['color'] ?>">
-                                    <span class="dashicons <?php echo $module['icon'] ?>"></span>
+                                <td>
+                                    <input type="checkbox"
+                                           name="admin_enabled_modules[<?php echo $module->id; ?>]"
+                                           id="admin_enabled_modules_<?php echo $module->id; ?>"
+                                           value="1"<?php checked( $module->is_checked() );
+                                    disabled( $module->is_disabled() ) ?>/>
+                                    <label for="admin_enabled_modules_<?php echo $module->id; ?>">
+                                        <?php echo $module->name; ?>
+                                    </label>
+                                </td>
+                                <td><?php echo $module->plugin_state_label ?></td>
+                                <td style="color: <?php echo $module->color ?>">
+                                    <span class="dashicons <?php echo $module->icon ?>"></span>
+                                    <?php echo $module->module_state_label ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

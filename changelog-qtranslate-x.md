@@ -4,7 +4,7 @@
 * Fix: proper tag editing on page `post.php` under non-default language [Issue #366](https://github.com/qTranslate-Team/qtranslate-x/issues/366).
 
 ### 3.4.6.7
-* Fix: for `/wp-login/` and `/login/`. Thanks to [extremecarver](http://qtranslate-x.com/support/index.php?action=profile;u=373).
+* Fix: for `/wp-login/` and `/login/`. Thanks to [extremecarver](https://qtranslate-x.com/support/index.php?action=profile;u=373).
 * Fix: unexpected menu behaviour for empty menu label when option "Hide Content which is not available for the selected language" is on: [WP Topic](https://wordpress.org/support/topic/menu-visible-despite-empty-label).
 
 ### 3.4.6.6
@@ -27,7 +27,7 @@ Old *.mo files are kept in order not to break the sites that may be currently us
 qtranslate-el_GR.* renamed to qtranslate-el.*<br>
 qtranslate-es_CA.* renamed to qtranslate-ca.*<br>
 qtranslate-hr_HR.* renamed to qtranslate-hr.*<br>
-This emerged from [Topic #27](http://qtranslate-x.com/support/index.php?topic=27).
+This emerged from [Topic #27](https://qtranslate-x.com/support/index.php?topic=27).
 * Languages: Slovak (sk_SK) language preset has been added. Thanks to Andrej Leitner.
 * Fix: WP45, LSB on term adit page '/wp-admin/term.php': [Issue #342](https://github.com/qTranslate-Team/qtranslate-x/issues/342)
 * Fix: WP45, menu update problem '/wp-admin/nav-menus.php': [Issue #347](https://github.com/qTranslate-Team/qtranslate-x/issues/374).
@@ -36,7 +36,7 @@ This emerged from [Topic #27](http://qtranslate-x.com/support/index.php?topic=27
 ### 3.4.6.4 release ###
 * Enhancement: The list of available languages in "Not Available Message" and alternative language shown now follow the order of languages defined on configuration page, ignoring the default language. For example, if the first language in the order is English, the second is your native and the default, then English translation will be preferably shown as alternative language. Most sites are expected to be unaffected, since the first language in the order is normally the default langauge. However, it may make sense to first try to show most common language (like English in this example), instead of the default language. Now this is possible with putting the most common language to be the first in the order of languages. The order affects language menu, widget and language shown when translation is not available, as well as any other place where languages need to be listed in an order.
 * Fix: `home_url()` on admin side is now only filtered on `/wp-admin/customize.php` page, otherwise it created a few problems, for example, wrong overwriting of `.htaccess` file in some cases, causing Internal Server Error 500 with infinite redirection loop: [WP Topic](https://wordpress.org/support/topic/internal-server-error-500-after-346-update).
-* Fix: consistency and caching of meta data translations. Known affected theme: [Sahifa](http://themeforest.net/item/sahifa-responsive-wordpress-news-magazine-blog-theme/2819356). [WP Issue](https://wordpress.org/support/topic/qtranslate-x-not-working-with-sahifa-custom-sliders).
+* Fix: consistency and caching of meta data translations. Known affected theme: [Sahifa](https://themeforest.net/item/sahifa-responsive-wordpress-news-magazine-blog-theme/2819356). [WP Issue](https://wordpress.org/support/topic/qtranslate-x-not-working-with-sahifa-custom-sliders).
 
 ### 3.4.6.2 release ###
 * Fix: recovered translation of parent of a category on category edit page.
@@ -86,7 +86,7 @@ This emerged from [Topic #27](http://qtranslate-x.com/support/index.php?topic=27
 
 ### 3.4.3 release
 * Fix: qtranxf_trim_words defined at front and admin side: [Issue #201](https://github.com/qTranslate-Team/qtranslate-x/issues/201).
-* Fix: [BugTraq issue 139](http://seclists.org/bugtraq/2015/Jul/139) reported for old qTranslate was assumed to be applicable to qTranlstae-X too, causing WP to ban the plugin temporarily.
+* Fix: [BugTraq issue 139](https://seclists.org/bugtraq/2015/Jul/139) reported for old qTranslate was assumed to be applicable to qTranlstae-X too, causing WP to ban the plugin temporarily.
 * Improvement: WP_CLI compatibility.
 * Translation: a lot of thanks to all translators contributed.
 

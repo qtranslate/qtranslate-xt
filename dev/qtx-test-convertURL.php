@@ -27,16 +27,16 @@ function qtranxf_run_test_convertURL( $url_mode, $lang ) {
 
     // common tests
     $urls = array(
-        '#'                                      => '#',
-        '#tag'                                   => '#tag',
-        'http://external.domain.com'             => 'http://external.domain.com',
-        'http://external.domain.com/'            => 'http://external.domain.com/',
-        'http://external.domain.com?tr=123#tag'  => 'http://external.domain.com?tr=123#tag',
-        'http://external.domain.com/?tr=123#tag' => 'http://external.domain.com/?tr=123#tag',
-        'http://external.domain.com?tr=123'      => 'http://external.domain.com?tr=123',
-        'http://external.domain.com/?tr=123'     => 'http://external.domain.com/?tr=123',
-        'http://external.domain.com#tag'         => 'http://external.domain.com#tag',
-        'http://external.domain.com/#tag'        => 'http://external.domain.com/#tag',
+        '#'                                       => '#',
+        '#tag'                                    => '#tag',
+        'https://external.domain.com'             => 'https://external.domain.com',
+        'https://external.domain.com/'            => 'https://external.domain.com/',
+        'https://external.domain.com?tr=123#tag'  => 'https://external.domain.com?tr=123#tag',
+        'https://external.domain.com/?tr=123#tag' => 'https://external.domain.com/?tr=123#tag',
+        'https://external.domain.com?tr=123'      => 'https://external.domain.com?tr=123',
+        'https://external.domain.com/?tr=123'     => 'https://external.domain.com/?tr=123',
+        'https://external.domain.com#tag'         => 'https://external.domain.com#tag',
+        'https://external.domain.com/#tag'        => 'https://external.domain.com/#tag',
     );
     qtranxf_test_convertURL( 'Common', $urls, $lang, true );
     qtranxf_test_convertURL( 'Common', $urls, $lang, false );

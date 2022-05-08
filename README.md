@@ -3,10 +3,10 @@ Developed by: new qTranslate community, from qTranslate-X by John Clause and qTr
 Contributors: herrvigg, johnclause, chineseleper, Vavooon, grafcom  
 Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, translation  
 Requires: 4.8  
-Tested up to: 5.8  
+Tested up to: 5.8.2  
 Stable tag: N/A  
 License: GPLv2 or later  
-License URI: http://www.gnu.org/licenses/gpl-2.0.html  
+License URI: https://www.gnu.org/licenses/gpl-2.0.html  
 
 Adds user-friendly multilingual content support, stored in single post.
 
@@ -72,6 +72,10 @@ Note for developers:
 
 ## Upgrade Notice
 
+### 3.12.0
+* New module: **Slugs** (experimental) for permalink (slug/URL) translations, integrated from [qtranslate-slug](https://github.com/not-only-code/qtranslate-slug) plugin (v1.1.18)
+* New module settings with manual activation and integrated custom settings for ACF and Slugs
+
 ### 3.11.0
 Major fix! Enable language switch for text widget with TinyMCE editor.  
 Warning: disable new block-based widget editor with WordPress 5.8. See [#1058](https://github.com/qtranslate/qtranslate-xt/issues/1058).
@@ -116,7 +120,6 @@ The [legacy issues](https://github.com/qtranslate/qtranslate-xt/wiki/Known-Issue
 ## Desirable Unimplemented Features
 
 * refactor integration API, possibly without json files (i18n-config.json)
-* support for translatable slugs
 * support for [localized hreflang](https://support.google.com/webmasters/answer/189077) with country/region codes (ISO 3166-1 alpha-2)
 * full support for Gutenberg (with LSB)
 * unit/integration tests, automated CI tests

@@ -1,3 +1,73 @@
+### 3.12.0
+New module: **Slugs** (experimental)
+* Add support for permalink (slug/URL) translations to qTranslate-XT (#671)
+* Integrated from [qtranslate-slug (QTS)](https://github.com/not-only-code/qtranslate-slug) plugin v1.1.18 (#1060)
+
+Core
+* Add `qtranslate_admin_block_editor` filter to disable Gutenberg support (#1112)
+* Refactor bool-array setting to `QTX_BOOLEAN_SET` (#1151)
+* Fix 'Headers already sent' for `wp_doing_cron` (#1114)
+* Fix regression on reset config (#1109)
+* Fix deprecated `preg_split` with PHP8.1 (#1085)
+* Check qTranslate-X plugin disabled on QT-XT activation
+
+Modules
+* Admin modules
+  * Generalize manual activation (#1147, #1137, #1135, #1136)
+  * Generalize custom module settings tabs (#1146)
+  * Harmonize module options as `qtranslate_module_<name>` (#1158)
+  * Refactor module classes and file structure (#1153)
+* ACF
+  * Integrate ACF settings in modules tab (#1154)
+  * Simplify module init (#1139)
+* Gravity Forms
+  * Fix translation of choice text in Gravity Forms (#1095)
+* Slugs
+  * separate admin functions from qts class, cleaning, refactoring (#1134, #1141)
+  * refactor language setup with internal `q_config` (#1130)
+  * refactor with new `qtranslate_convert_url` filter (#1117)
+  * refactor and fix add/edit terms slugs (#1126)
+  * improve slug admin metabox handling (#1124)
+  * rationalize get post_types/taxonomies (#1121)
+  * fix hide slug field in post quickedit (#1125)
+  * refactor install with WP API (#1122)
+  * merge qts textdomain to qtranslate, update l10n (#1120)
+  * remove nav functions and cleanup (#1118)
+  * handle deactivation, remove widget, cleanup (#1111)
+  * remove obsolete migration functions and styling (#1113)
+  * integrate Slugs settings in qtranslate (#1115, #1107)
+  * use `$post` arg in `validate_post_slug` (#1102)
+  * fix warnings and major cleanup (PHPDoc, termmeta wrappers) (#671)
+  * delete unused function raising warning in PHP8.1 (#1103)
+* WooComerce
+  * Removed unneeded action mistakenly used as a filter (#1145)
+  * Fix untranslated options in product variations (#1144)
+  * Fix product attributes translations (#1143)
+
+### 3.11.4
+* Fix Yoast filter front schema webpage (#1086)
+
+### 3.11.3
+* Fix regression Yoast filter front in 3.11.2 (#1086)
+* Add Yoast filters for organization schema and publisher (#1090)
+
+### 3.11.2
+* Fix warnings with Yoast breadcrumbs front (#1086)
+
+### 3.11.1
+Core
+* Remove obsolete HTML `type` attributes from `script` and `style` tags (#1074)
+
+Integration
+* ACF: Delete obsolete WP version check in ACF wysiwyg
+* ACF: Fix localization of ACF field labels (#1081)
+* Yoast: Fix yoast breadcrumbs front (#1079)
+* WooComerce: Add hook for WC privacy policy text (#1083)
+
+Localization
+* Update keywords list POT template
+* Update keywords and localization zh_CN (100%) (#1059)
+
 ### 3.11.0
 Core
 * Enable language switch for text widget with TinyMCE editor (#1042, #529, #616, #912)

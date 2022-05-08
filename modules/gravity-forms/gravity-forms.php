@@ -4,7 +4,7 @@
  *
  * @version 1.1.2
  * @author Michel Weimerskirch
- * @link http://michel.weimerskirch.net
+ * @link https://michel.weimerskirch.net
  */
 
 class qTranslateSupportForGravityforms {
@@ -65,7 +65,11 @@ class qTranslateSupportForGravityforms {
                 // Support for the poll add-on
                 if ( isset( $form['fields'][ $id ]->choices ) && $form['fields'][ $id ]->choices ) {
                     foreach ( $form['fields'][ $id ]->choices as $value => $key ) {
-                        $form['fields'][ $id ]['choices'][ $value ]['text'] = $this->translate( $key['text'] );
+                        if ( is_object( $form['fields'][ $id ] ) ) {
+                            $form['fields'][ $id ]->choices[ $value ]['text'] = $this->translate( $key['text'] );
+                        } else {
+                            $form['fields'][ $id ]['choices'][ $value ]['text'] = $this->translate( $key['text'] );
+                        }
                     }
                 }
                 if ( isset( $form['fields'][ $id ]->nextButton ) && $form['fields'][ $id ]->nextButton ) {

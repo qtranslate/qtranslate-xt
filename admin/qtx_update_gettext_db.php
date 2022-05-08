@@ -81,7 +81,7 @@ function qtranxf_update_gettext_databases_ex( $force = false, $only_for_language
 
         if ( is_wp_error( $res ) ) {
             qtranxf_add_warning( sprintf( __( 'Failed to update gettext database for "%s": %s', 'qtranslate' ), $q_config['language_name'][ $lang ], $res->get_error_message() ) );
-            ++ $errcnt;
+            ++$errcnt;
         }
     }
 

@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-require_once( QTRANSLATE_DIR . '/admin/qtx_admin_modules.php' );
+require_once( QTRANSLATE_DIR . '/modules/qtx_admin_module_manager.php' );
 
 /**
  * Save language properties from configuration to WP options
@@ -753,7 +753,6 @@ function qtranxf_clear_debug_log() {
     }
 }
 
-
 function qtranxf_activation_hook() {
     qtranxf_clear_debug_log();
     if ( version_compare( PHP_VERSION, '5.4' ) < 0 ) {
@@ -771,19 +770,24 @@ function qtranxf_activation_hook() {
     if ( is_plugin_active( 'mqtranslate/mqtranslate.php' ) ) {
         qtranxf_admin_notice_deactivate_plugin( 'mqTranslate', 'mqtranslate/mqtranslate.php' );
     }
-
     if ( is_plugin_active( 'qtranslate/qtranslate.php' ) ) {
         update_option( 'qtranslate_qtrans_compatibility', '1' );
         qtranxf_admin_notice_deactivate_plugin( 'qTranslate', 'qtranslate/qtranslate.php' );
     }
-
     if ( is_plugin_active( 'qtranslate-xp/ppqtranslate.php' ) ) {
         qtranxf_admin_notice_deactivate_plugin( 'qTranslate Plus', 'qtranslate-xp/ppqtranslate.php' );
     }
-
     if ( is_plugin_active( 'ztranslate/ztranslate.php' ) ) {
         qtranxf_admin_notice_deactivate_plugin( 'zTranslate', 'ztranslate/ztranslate.php' );
     }
+    if ( is_plugin_active( 'qtranslate-x/qtranslate.php' ) ) {
+        qtranxf_admin_notice_deactivate_plugin( 'qTranslate-X', 'qtranslate-x/qtranslate.php' );
+    }
+
+    // Migrate (rename/import) legacy options, temporary transitions during evolutions.
+    qtranxf_rename_legacy_option( 'qtranslate_modules', QTX_OPTIONS_MODULES_STATE );
+    qtranxf_import_legacy_option( 'acf_qtranslate', QTX_OPTIONS_MODULE_ACF, false );
+    qtranxf_import_legacy_option( 'qts_options', QTX_OPTIONS_MODULE_SLUGS, false );
 
     $ts                     = time();
     $next_thanks            = get_option( 'qtranslate_next_thanks' );
@@ -827,7 +831,13 @@ function qtranxf_activation_hook() {
         qtranxf_update_option_admin_notices( $messages, 'gutenberg-support', false );
     }
 
-    QTX_Admin_Modules::update_modules_status();
+    // To initialize the modules state we need the default enabled modules but the `q_config` has not been loaded yet.
+    // For the first activation, the default options are used.
+    // After reactivation the enabled modules are reloaded, but all the conditions are checked with all plugins again.
+    global $qtranslate_options;
+    qtranxf_admin_set_default_options( $qtranslate_options );
+    qtranxf_load_option_array( 'admin_enabled_modules', $qtranslate_options['admin']['admin_enabled_modules'] );
+    QTX_Admin_Module_Manager::update_modules_state();
 
     /**
      * A chance to execute activation actions specifically for this plugin.
@@ -1050,5 +1060,5 @@ function qtranxf_register_activation_hooks() {
     $qtx_plugin_basename = plugin_basename( QTRANSLATE_FILE );
     register_activation_hook( $qtx_plugin_basename, 'qtranxf_activation_hook' );
     register_deactivation_hook( $qtx_plugin_basename, 'qtranxf_deactivation_hook' );
-    QTX_Admin_Modules::register_hooks();
+    QTX_Admin_Module_Manager::register_hooks();
 }

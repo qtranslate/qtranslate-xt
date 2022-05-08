@@ -46,7 +46,7 @@ function qtranxf_test_meta_cache() {
     }
     $views = get_post_meta( $post->ID, 'views', true );
     $views = $views ? $views : 0;
-    $views ++;
+    $views++;
     update_post_meta( $post->ID, 'views', $views );
     $views_fetched = get_post_meta( $post->ID, 'views', true );
     if ( qtranxf_check_test( $views_fetched, $views, 'qtranxf_test_meta_cache' ) ) {

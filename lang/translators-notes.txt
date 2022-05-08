@@ -17,7 +17,7 @@ Subfolder 'language-names' contains translations of other language names, which 
 You may wish to modify the translations of foreign language names to fit the grammar rules of your language in "Not Available Message".
 Please contact us to [report](https://github.com/qtranslate/qtranslate-xt/issues) which modifications should be made.
 
-For developers, to integrate Transifex: http://docs.transifex.com/client/
+For developers, to integrate Transifex: https://docs.transifex.com/client/
 ------------------------------------------------------------------------------------------------------------------------
 
 ACKNOWLEDGEMENTS
@@ -25,8 +25,8 @@ ACKNOWLEDGEMENTS
 Default Language Contributors
 =============================
 Most flags in flags directory are made by Luc Balemans and downloaded from
-FOTW Flags Of The World website at http://flagspot.net/flags/
-(http://www.crwflags.com/FOTW/FLAGS/wflags.html)
+FOTW Flags Of The World website at https://flagspot.net/flags/
+(https://www.crwflags.com/FOTW/FLAGS/wflags.html)
 
 Default Language Contributors
 =============================

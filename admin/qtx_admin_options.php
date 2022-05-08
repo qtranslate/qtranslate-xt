@@ -4,6 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once( QTRANSLATE_DIR . '/admin/qtx_admin_utils.php' );
+require_once( QTRANSLATE_DIR . '/modules/qtx_admin_module.php' );
 
 function qtranxf_admin_set_default_options( &$options ) {
     // options processed in a standardized way
@@ -38,6 +39,12 @@ function qtranxf_admin_set_default_options( &$options ) {
         'post_type_excluded'   => array(),
     );
 
+    // Boolean set defining the default enabled options for each module, hard values not depending on any state.
+    $options['admin']['admin_enabled_modules'] = array();
+    foreach ( QTX_Admin_Module::get_modules() as $module ) {
+        $options['admin']['admin_enabled_modules'][ $module->id ] = $module->is_default_enabled();
+    }
+
     // options processed in a special way
     $options = apply_filters( 'qtranslate_option_config_admin', $options );
 }
@@ -71,6 +78,8 @@ function qtranxf_admin_load_config() {
         qtranxf_load_option_array( $name, $default );
     }
 
+    qtranxf_load_option_array( 'admin_enabled_modules', $qtranslate_options['admin']['admin_enabled_modules'] );
+
     if ( empty( $q_config['admin_config'] ) ) {
         require_once( QTRANSLATE_DIR . '/admin/qtx_admin_options_update.php' );
         qtranxf_update_i18n_config();
@@ -81,4 +90,40 @@ function qtranxf_admin_load_config() {
     do_action_deprecated( 'qtranslate_admin_loadConfig', array(), '3.10.0', 'qtranslate_admin_load_config' );
 
     qtranxf_add_conf_filters();
+}
+
+/**
+ * Import legacy option by recopying its value if the new option doesn't already exist.
+ *
+ * @param string $old_name
+ * @param string $new_name
+ * @param bool|string $autoload as in update_option
+ *
+ * @return void
+ */
+function qtranxf_import_legacy_option( $old_name, $new_name, $autoload = null ) {
+    assert( strpos( $new_name, 'qtranslate_' ) === 0 );
+    if ( ! get_option( $new_name ) ) {
+        $old_value = get_option( $old_name );
+        if ( $old_value ) {
+            update_option( $new_name, $old_value, $autoload );
+        }
+    }
+}
+
+/**
+ * Rename a legacy option: import and cleanup.
+ * Only applies to `qtranslate` options, preserve external plugin options.
+ *
+ * @param string $old_name
+ * @param string $new_name
+ * @param bool|string $autoload as in update_option
+ *
+ * @return void
+ */
+function qtranxf_rename_legacy_option( $old_name, $new_name, $autoload = null ) {
+    assert( strpos( $new_name, 'qtranslate_' ) === 0 );
+    assert( strpos( $old_name, 'qtranslate_' ) === 0 );
+    qtranxf_import_legacy_option( $old_name, $new_name, $autoload );
+    delete_option( $old_name );
 }

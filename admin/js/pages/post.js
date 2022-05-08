@@ -27,7 +27,7 @@ $(document).on('qtxLoadAdmin:post', (event, qtx) => {
                 const homepath = qTranslateConfig.home_url_path;
                 let path = url.pathname;
                 if (path[0] !== '/')
-                    path = '/' + path; // to deal with IE imperfection: http://stackoverflow.com/questions/956233/javascript-pathname-ie-quirk
+                    path = '/' + path; // to deal with IE imperfection: https://stackoverflow.com/questions/956233/javascript-pathname-ie-quirk
                 const i = path.indexOf(homepath);
                 if (i >= 0)
                     url.pathname = qTranslateConfig.homeinfo_path + lang + path.substring(i + homepath.length - 1);
