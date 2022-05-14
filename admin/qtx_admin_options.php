@@ -127,3 +127,14 @@ function qtranxf_rename_legacy_option( $old_name, $new_name, $autoload = null ) 
     qtranxf_import_legacy_option( $old_name, $new_name, $autoload );
     delete_option( $old_name );
 }
+
+//Temporary workaround to prevent legacy qtranslate-slugs metadata removal on plugin uninstallation
+add_action( 'wp_loaded', 'qtranslate_slugs_uninstall_override' );
+
+function qtranslate_slugs_uninstall_override() {
+    $uninstallable_plugins = (array) get_option( 'uninstall_plugins' );
+    if ( isset( $uninstallable_plugins[ 'qtranslate-slug/qtranslate-slug.php' ] ) ){
+        unset( $uninstallable_plugins[ 'qtranslate-slug/qtranslate-slug.php' ] );
+        update_option( 'uninstall_plugins', $uninstallable_plugins );
+    }
+}
