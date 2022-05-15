@@ -353,8 +353,10 @@ class QtranslateSlug {
         global $q_config;
         global $wp;
 
-        if ( isset( $query['error'] ) && isset( $wp->matched_query ) ) {
-            unset( $query['error'] );
+        if ( isset( $wp->matched_query ) ) {
+            if ( isset( $query['error'] ) ){
+                unset( $query['error'] );
+            }
             $query = array_merge( wp_parse_args( $wp->matched_query ), $query );
         }
 
@@ -370,6 +372,9 @@ class QtranslateSlug {
 
         // -> page
         elseif ( isset( $query['pagename'] ) || isset( $query['page_id'] ) ):
+            if ( isset( $query['name'] ) ) {
+                unset($query['name']);
+            }
             $page = wp_cache_get( 'qts_page_request' );
             if ( ! $page ) {
                 $page = isset( $query['page_id'] ) ? get_post( $query['page_id'] ) : $this->get_page_by_path( $query['pagename'] );
@@ -383,18 +388,6 @@ class QtranslateSlug {
             wp_cache_delete( 'qts_page_request' );
             $query['pagename'] = get_page_uri( $page );
             $function          = 'get_page_link';
-
-        // -> post
-        elseif ( isset( $query['name'] ) || isset( $query['p'] ) ):
-            $post = isset( $query['p'] ) ? get_post( $query['p'] ) : $this->get_page_by_path( $query['name'], OBJECT, 'post' );
-            if ( ! $post ) {
-                return $query;
-            }
-            $query['name'] = $post->post_name;
-            $id            = $post->ID;
-            $cache_array   = array( $post );
-            update_post_caches( $cache_array );
-            $function = 'get_permalink';
 
         // -> category
         elseif ( ( isset( $query['category_name'] ) || isset( $query['cat'] ) ) ):
@@ -427,6 +420,7 @@ class QtranslateSlug {
             $function     = 'get_tag_link';
 
         else:
+
             // -> custom post type
             foreach ( $this->get_public_post_types() as $post_type ) {
                 if ( array_key_exists( $post_type->name, $query ) && ! in_array( $post_type->name, array(
@@ -437,7 +431,6 @@ class QtranslateSlug {
                     break;
                 }
             }
-
             if ( isset( $query['post_type'] ) ) {
                 if ( count( $query ) == 1 ) {
                     $function = 'get_post_type_archive_link';
@@ -471,6 +464,19 @@ class QtranslateSlug {
                     $function             = 'get_term_link';
                 }
             endforeach;
+
+             // -> post
+            if ( ! $function && ( isset($query['name']) || isset($query['p'] ) ) ) {
+                $post = isset($query['p']) ? get_post($query['p']) : $this->get_page_by_path($query['name'], OBJECT, 'post');
+                if (!$post) {
+                    return $query;
+                }
+                $query['name'] = $post->post_name;
+                $id = $post->ID;
+                $cache_array = array($post);
+                update_post_caches($cache_array);
+                $function = 'get_permalink';
+            }
         endif;
 
         if ( isset( $function ) ) {
