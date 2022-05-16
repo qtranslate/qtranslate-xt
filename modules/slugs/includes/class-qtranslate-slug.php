@@ -353,6 +353,11 @@ class QtranslateSlug {
         global $q_config;
         global $wp;
 
+        /* As $wp->matched_query filters the query including slugs mudule custom rewrite rules, it provides all necessary data to reach the intended resource.
+         * However discarding completely $query arg and using only $wp->matched_query would result in losing possible custom query vars.
+         * Hence $query and $wp->matched_query are merged and unneeded/conflictual keys (e.g. 'error') from $query are removed.
+         */
+
         if ( isset( $wp->matched_query ) ) {
             if ( isset( $query['error'] ) ){
                 unset( $query['error'] );
@@ -372,6 +377,9 @@ class QtranslateSlug {
 
         // -> page
         elseif ( isset( $query['pagename'] ) || isset( $query['page_id'] ) ):
+            /* 'name' key from passed $query var is removed if 'pagename' key is present in $wp->matched_query.
+             * Both keys causes conflict between posts and pages as 'name' is used for posts, resulting in 404 error.
+             */
             if ( isset( $query['name'] ) ) {
                 unset($query['name']);
             }
@@ -421,6 +429,8 @@ class QtranslateSlug {
 
         else:
 
+            // If none of the conditions above are matched, specific tests to identify custom post types and taxonomies are performed here.
+
             // -> custom post type
             foreach ( $this->get_public_post_types() as $post_type ) {
                 if ( array_key_exists( $post_type->name, $query ) && ! in_array( $post_type->name, array(
@@ -464,6 +474,12 @@ class QtranslateSlug {
                     $function             = 'get_term_link';
                 }
             endforeach;
+
+            /* As 'name' key is present also at least both for pages and custom post types, this condition alone cannot be used to identify uniquely the posts.
+             * For pages and custom post types specific tests can be and are performed earlier but no additional specific condition seems to be applicable for posts.
+             * Given the above, the following test needs to be placed after the custom post types one, and is it positive if 'name' key is there and no other match is found earlier.
+             * If a specific condition was found to uniquely identify posts, this block should be placed in the main if block.
+             */
 
              // -> post
             if ( ! $function && ( isset($query['name']) || isset($query['p'] ) ) ) {
