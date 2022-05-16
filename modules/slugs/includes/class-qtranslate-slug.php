@@ -398,7 +398,8 @@ class QtranslateSlug {
             $function          = 'get_page_link';
 
         // -> category
-        elseif ( ( isset( $query['category_name'] ) || isset( $query['cat'] ) ) ):
+        // If 'name' key is defined, query is relevant to a post with a /%category%/%postname%/ permalink structure and will be captured later.
+        elseif ( ( ( isset( $query['category_name'] ) || isset( $query['cat'] ) ) && ! isset($query['name'] ) ) ):
             if ( isset( $query['category_name'] ) ) {
                 $term_slug = $this->get_last_slash( empty( $query['category_name'] ) ? $wp->request : $query['category_name'] );
                 $term      = $this->get_term_by( 'slug', $term_slug, 'category' );
