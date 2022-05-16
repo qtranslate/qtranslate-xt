@@ -942,12 +942,12 @@ class QtranslateSlug {
                 $struct = $wp_rewrite->extra_permastructs[ $name ];
                 if ( is_array( $struct ) ) {
                     if ( count( $struct ) == 2 ) {
-                        $rules = $wp_rewrite->generate_rewrite_rules( "/$base/%$name%", $struct[1] );
+                        $rules = $wp_rewrite->generate_rewrite_rules( "/".rawurldecode($base)."/%".rawurldecode($name)."%", $struct[1] );
                     } else {
-                        $rules = $wp_rewrite->generate_rewrite_rules( "/$base/%$name%", $struct['ep_mask'], $struct['paged'], $struct['feed'], $struct['forcomments'], $struct['walk_dirs'], $struct['endpoints'] );
+                        $rules = $wp_rewrite->generate_rewrite_rules( "/".rawurldecode($base)."/%".rawurldecode($name)."%", $struct['ep_mask'], $struct['paged'], $struct['feed'], $struct['forcomments'], $struct['walk_dirs'], $struct['endpoints'] );
                     }
                 } else {
-                    $rules = $wp_rewrite->generate_rewrite_rules( "/$base/%$name%" );
+                    $rules = $wp_rewrite->generate_rewrite_rules( "/".rawurldecode($base)."/%".rawurldecode($name)."%" );
                 }
                 $wp_rewrite->rules = array_merge( $rules, $wp_rewrite->rules );
             endif;
