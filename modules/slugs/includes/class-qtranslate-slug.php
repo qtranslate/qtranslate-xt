@@ -353,8 +353,15 @@ class QtranslateSlug {
         global $q_config;
         global $wp;
 
-        if ( isset( $query['error'] ) && isset( $wp->matched_query ) ) {
-            unset( $query['error'] );
+        /* As $wp->matched_query filters the query including slugs mudule custom rewrite rules, it provides all necessary data to reach the intended resource.
+         * However discarding completely $query arg and using only $wp->matched_query would result in losing possible custom query vars.
+         * Hence $query and $wp->matched_query are merged and unneeded/conflictual keys (e.g. 'error') from $query are removed.
+         */
+
+        if ( isset( $wp->matched_query ) ) {
+            if ( isset( $query['error'] ) ){
+                unset( $query['error'] );
+            }
             $query = array_merge( wp_parse_args( $wp->matched_query ), $query );
         }
 
@@ -370,6 +377,12 @@ class QtranslateSlug {
 
         // -> page
         elseif ( isset( $query['pagename'] ) || isset( $query['page_id'] ) ):
+            /* 'name' key from passed $query var is removed if 'pagename' key is present in $wp->matched_query.
+             * Both keys causes conflict between posts and pages as 'name' is used for posts, resulting in 404 error.
+             */
+            if ( isset( $query['name'] ) ) {
+                unset($query['name']);
+            }
             $page = wp_cache_get( 'qts_page_request' );
             if ( ! $page ) {
                 $page = isset( $query['page_id'] ) ? get_post( $query['page_id'] ) : $this->get_page_by_path( $query['pagename'] );
@@ -384,20 +397,9 @@ class QtranslateSlug {
             $query['pagename'] = get_page_uri( $page );
             $function          = 'get_page_link';
 
-        // -> post
-        elseif ( isset( $query['name'] ) || isset( $query['p'] ) ):
-            $post = isset( $query['p'] ) ? get_post( $query['p'] ) : $this->get_page_by_path( $query['name'], OBJECT, 'post' );
-            if ( ! $post ) {
-                return $query;
-            }
-            $query['name'] = $post->post_name;
-            $id            = $post->ID;
-            $cache_array   = array( $post );
-            update_post_caches( $cache_array );
-            $function = 'get_permalink';
-
         // -> category
-        elseif ( ( isset( $query['category_name'] ) || isset( $query['cat'] ) ) ):
+        // If 'name' key is defined, query is relevant to a post with a /%category%/%postname%/ permalink structure and will be captured later.
+        elseif ( ( ( isset( $query['category_name'] ) || isset( $query['cat'] ) ) && ! isset($query['name'] ) ) ):
             if ( isset( $query['category_name'] ) ) {
                 $term_slug = $this->get_last_slash( empty( $query['category_name'] ) ? $wp->request : $query['category_name'] );
                 $term      = $this->get_term_by( 'slug', $term_slug, 'category' );
@@ -427,6 +429,9 @@ class QtranslateSlug {
             $function     = 'get_tag_link';
 
         else:
+
+            // If none of the conditions above are matched, specific tests to identify custom post types and taxonomies are performed here.
+
             // -> custom post type
             foreach ( $this->get_public_post_types() as $post_type ) {
                 if ( array_key_exists( $post_type->name, $query ) && ! in_array( $post_type->name, array(
@@ -437,7 +442,6 @@ class QtranslateSlug {
                     break;
                 }
             }
-
             if ( isset( $query['post_type'] ) ) {
                 if ( count( $query ) == 1 ) {
                     $function = 'get_post_type_archive_link';
@@ -471,6 +475,25 @@ class QtranslateSlug {
                     $function             = 'get_term_link';
                 }
             endforeach;
+
+            /* As 'name' key is present also at least both for pages and custom post types, this condition alone cannot be used to identify uniquely the posts.
+             * For pages and custom post types specific tests can be and are performed earlier but no additional specific condition seems to be applicable for posts.
+             * Given the above, the following test needs to be placed after the custom post types one, and is it positive if 'name' key is there and no other match is found earlier.
+             * If a specific condition was found to uniquely identify posts, this block should be placed in the main if block.
+             */
+
+             // -> post
+            if ( ! $function && ( isset($query['name']) || isset($query['p'] ) ) ) {
+                $post = isset($query['p']) ? get_post($query['p']) : $this->get_page_by_path($query['name'], OBJECT, 'post');
+                if (!$post) {
+                    return $query;
+                }
+                $query['name'] = $post->post_name;
+                $id = $post->ID;
+                $cache_array = array($post);
+                update_post_caches($cache_array);
+                $function = 'get_permalink';
+            }
         endif;
 
         if ( isset( $function ) ) {
@@ -919,12 +942,12 @@ class QtranslateSlug {
                 $struct = $wp_rewrite->extra_permastructs[ $name ];
                 if ( is_array( $struct ) ) {
                     if ( count( $struct ) == 2 ) {
-                        $rules = $wp_rewrite->generate_rewrite_rules( "/$base/%$name%", $struct[1] );
+                        $rules = $wp_rewrite->generate_rewrite_rules( "/".rawurldecode($base)."/%".rawurldecode($name)."%", $struct[1] );
                     } else {
-                        $rules = $wp_rewrite->generate_rewrite_rules( "/$base/%$name%", $struct['ep_mask'], $struct['paged'], $struct['feed'], $struct['forcomments'], $struct['walk_dirs'], $struct['endpoints'] );
+                        $rules = $wp_rewrite->generate_rewrite_rules( "/".rawurldecode($base)."/%".rawurldecode($name)."%", $struct['ep_mask'], $struct['paged'], $struct['feed'], $struct['forcomments'], $struct['walk_dirs'], $struct['endpoints'] );
                     }
                 } else {
-                    $rules = $wp_rewrite->generate_rewrite_rules( "/$base/%$name%" );
+                    $rules = $wp_rewrite->generate_rewrite_rules( "/".rawurldecode($base)."/%".rawurldecode($name)."%" );
                 }
                 $wp_rewrite->rules = array_merge( $rules, $wp_rewrite->rules );
             endif;
