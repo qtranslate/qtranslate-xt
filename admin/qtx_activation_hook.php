@@ -932,6 +932,31 @@ function qtranxf_admin_notices_gutenberg() {
 
 add_action( 'admin_notices', 'qtranxf_admin_notices_gutenberg' );
 
+function qtranxf_admin_notices_slugs() {
+    if ( qtranxf_check_admin_notice( 'slugs-import' ) ) {
+        return;
+    }
+    $old_value = get_option( 'qts_options' );
+    if ( ! $old_value ) {
+        return;
+    }
+    // TODO: check stored value after migration done.
+    require_once( QTRANSLATE_DIR . '/modules/slugs/includes/qtranslate-slug-utils.php' );
+    $msg = qts_check_import_slugs();
+    if ( empty( $msg ) ) {
+        return;
+    }
+    qtranxf_admin_notice_dismiss_script();
+    echo '<div class="notice notice-warning qtranxs-notice-ajax is-dismissible" id="qtranxs-slugs-import" action="unset"><p>';
+    $options_link = admin_url( 'options-general.php?page=qtranslate-xt#import' );
+    echo '<p>' . sprintf( __( '%s : found slugs meta that can be imported. Go to the <a href="%s">import settings</a> to import.', 'qtranslate' ), qtranxf_get_plugin_link(), $options_link ) . '</p>';
+    echo '<p>' . $msg . '</p>';
+    echo '</p><p><a class="button qtranxs-notice-dismiss" href="javascript:void(0);">' . __( 'I have already done it, dismiss this message.', 'qtranslate' );
+    echo '</a></p></div>';
+}
+
+add_action( 'admin_notices', 'qtranxf_admin_notices_slugs' );
+
 function qtranxf_admin_notice_deactivate_plugin( $name, $plugin ) {
     deactivate_plugins( $plugin, true );
     $d        = dirname( $plugin );

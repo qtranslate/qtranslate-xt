@@ -229,6 +229,15 @@ function qtranxf_admin_section_import_export( $request_uri ) {
             'text' => sprintf( __( 'Use plugin %s to import data.', 'qtranslate' ), '<a href="https://wordpress.org/plugins/w2q-wpml-to-qtranslate/" target="_blank">W2Q: WPML to qTranslate</a>' )
         ) ) ?>
         <?php do_action( 'qtranslate_add_row_migrate' ) ?>
+        <tr id="qtranslate-import-slugs">
+            <th scope="row"><?php _e( 'Import from slugs', 'qtranslate' ) ?></th>
+            <td>
+                <label for="qtranslate_import_slugs"><input type="checkbox" name="qtranslate_import_slugs"
+                                                            id="qtranslate_import_slugs"
+                                                            value="1"/> <?php _e( 'Import options and term meta from slugs.', 'qtranslate' ) ?>
+                </label>
+            </td>
+        </tr>
         <tr>
             <th scope="row"><?php _e( 'Reset qTranslate', 'qtranslate' ) ?></th>
             <td>

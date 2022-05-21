@@ -971,6 +971,11 @@ function qtranxf_executeOnUpdate() {
             $messages[] = $msg;
         }
     }
+
+    if ( isset( $_POST['qtranslate_import_slugs'] ) && $_POST['qtranslate_import_slugs'] == '1' ) {
+        require_once( QTRANSLATE_DIR . '/modules/slugs/includes/qtranslate-slug-utils.php' );
+        $messages[] = qts_import_slugs();
+    }
 }
 
 function qtranxf_mark_default( $text ) {
