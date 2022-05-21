@@ -4,7 +4,7 @@ if ( ! defined( "QTS_PREFIX" ) ) {
     define( "QTS_PREFIX", '_qts_' );
 }
 
-const QTS_META_PREFIX = 'qtranslate_slug_';
+const QTX_SLUG_META_PREFIX = 'qtranslate_slug_';
 
 // Init the module
 
