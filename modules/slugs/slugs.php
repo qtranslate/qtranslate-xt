@@ -3,9 +3,8 @@
 if ( ! defined( "QTS_PREFIX" ) ) {
     define( "QTS_PREFIX", '_qts_' );
 }
-if ( ! defined( "QTS_META_PREFIX" ) ) {
-    define( "QTS_META_PREFIX", QTS_PREFIX . 'slug_' );
-}
+
+const QTS_META_PREFIX = 'qtranslate_slug_';
 
 // Init the module
 

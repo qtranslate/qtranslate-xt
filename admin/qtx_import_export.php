@@ -234,7 +234,13 @@ function qtranxf_admin_section_import_export( $request_uri ) {
             <td>
                 <label for="qtranslate_import_slugs"><input type="checkbox" name="qtranslate_import_slugs"
                                                             id="qtranslate_import_slugs"
-                                                            value="1"/> <?php _e( 'Import options and term meta from slugs.', 'qtranslate' ) ?>
+                                                            value="1"/> <?php _e( 'Import options, post and term meta from legacy slugs (QTS). Attention, existing slugs will be deleted.', 'qtranslate' ); ?>
+                </label>
+                <br/>
+                <label for="qtranslate_import_slugs_confirm"><input type="checkbox"
+                                                                    name="qtranslate_import_slugs_confirm"
+                                                                    id="qtranslate_import_slugs_confirm"
+                                                                    value="1"/> <?php _e( "Confirm import in database. Leave unchecked for a dry-run mode without change saved in database.", 'qtranslate' ) ?>
                 </label>
             </td>
         </tr>

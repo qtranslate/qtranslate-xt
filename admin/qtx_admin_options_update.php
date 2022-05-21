@@ -972,9 +972,10 @@ function qtranxf_executeOnUpdate() {
         }
     }
 
-    if ( isset( $_POST['qtranslate_import_slugs'] ) && $_POST['qtranslate_import_slugs'] == '1' ) {
+    if ( isset( $_POST['qtranslate_import_slugs'] ) && $_POST['qtranslate_import_slugs'] ) {
         require_once( QTRANSLATE_DIR . '/modules/slugs/includes/qtranslate-slug-utils.php' );
-        $messages[] = qts_import_slugs();
+        $db_commit  = isset( $_POST['qtranslate_import_slugs_confirm'] ) && $_POST['qtranslate_import_slugs_confirm'];
+        $messages[] = qts_import_slugs( $db_commit );
     }
 }
 

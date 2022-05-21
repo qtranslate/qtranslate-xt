@@ -21,7 +21,7 @@ function qts_convert_url( $url, $lang ) {
 /**
  * Check if slugs meta can be imported from the legacy postmeta and termmeta.
  *
- * @return string messages giving details, or empty if failed.
+ * @return string messages giving details, or empty if no meta found.
  */
 function qts_check_import_slugs() {
     global $wpdb;
@@ -42,31 +42,38 @@ function qts_check_import_slugs() {
 /**
  * Import slugs meta by duplicating the legacy postmeta and termmeta.
  *
- * @return string messages giving details, or empty if failed.
+ * @param bool $db_commit true to commit changes, false for dry-run mode.
+ *
+ * @return string messages giving details.
  */
-function qts_import_slugs() {
+function qts_import_slugs( $db_commit ) {
     global $wpdb;
 
-    $meta_prefix = 'QTX_SLUGS'; // TOOD decide target prefix.
+    $meta_prefix = 'qtranslate_slug';
     $old_prefix  = '_qts_slug';
 
     $import_meta = function ( $dbmeta, $dbmetaid, &$msg ) use ( $wpdb, $old_prefix, $meta_prefix ) {
         $results = $wpdb->query( "DELETE FROM $dbmeta WHERE meta_key like '$meta_prefix%'" );
         if ( $results ) {
-            $msg[] = sprintf( __( "Deleted %s slugs from $dbmeta.", 'qtranslate' ), $results );
+            $msg[] = sprintf( __( "Deleted %s rows from $dbmeta (%s).", 'qtranslate' ), $results, $meta_prefix );
         }
         $results = $wpdb->query( "INSERT INTO $dbmeta ($dbmetaid, meta_key, meta_value)
                               SELECT $dbmetaid, REPLACE(meta_key, '$old_prefix', '$meta_prefix'), meta_value
                               FROM  $dbmeta
                               WHERE meta_key like '$old_prefix%'" );
-        if ( $results ) {
-            $msg[] = sprintf( __( "Imported %s slugs into $dbmeta.", 'qtranslate' ), $results );
-        }
+        $msg[]   = sprintf( __( "Imported %s rows into $dbmeta (%s->%s).", 'qtranslate' ), $results ?: '0', $old_prefix, $meta_prefix );
     };
 
-    $msg = [];
+    $msg   = [];
+    $msg[] = $db_commit ? __( 'Import slugs:', 'qtranslate' ) : __( "Dry-run mode:", 'qtranslate' );
+    $wpdb->query( "START TRANSACTION" );
     $import_meta( $wpdb->postmeta, 'post_id', $msg );
     $import_meta( $wpdb->termmeta, 'term_id', $msg );
+    if ( $db_commit ) {
+        $wpdb->query( "COMMIT" );
+    } else {
+        $wpdb->query( "ROLLBACK" );
+    }
 
-    return empty( $msg ) ? __( "No slug meta was imported.", 'qtranslate' ) : implode( '<br>', $msg );
+    return implode( '<br>', $msg );
 }
