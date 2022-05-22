@@ -162,7 +162,7 @@ class QtranslateSlug {
             return false;
         }
         $qts_options = $this->options_buffer;
-        $option_name = QTS_PREFIX . $type . '_' . $name;
+        $option_name = $type . '_' . $name;
         if ( ! isset( $qts_options[ $option_name ] ) || empty( $qts_options[ $option_name ] ) ) {
             return false;
         }

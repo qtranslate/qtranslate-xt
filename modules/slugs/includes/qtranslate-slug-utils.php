@@ -97,9 +97,15 @@ function qts_import_slugs_options( $db_commit ) {
 
     $options = get_option( 'qts_options' );
     if ( $options ) {
-        $msg[] = sprintf( __( "Imported %s types from options.", 'qtranslate' ), count( $options ) );
+        $new_options = [];
+        // Drop the legacy prefix.
+        foreach ( $options as $type => $slugs ) {
+            $type                 = str_replace( '_qts_', '', $type );
+            $new_options[ $type ] = $slugs;
+        }
+        $msg[] = sprintf( __( "Imported %s types from options.", 'qtranslate' ), count( $new_options ) );
         if ( $db_commit ) {
-            update_option( QTX_OPTIONS_MODULE_SLUGS, $options, false );
+            update_option( QTX_OPTIONS_MODULE_SLUGS, $new_options, false );
         }
     }
 

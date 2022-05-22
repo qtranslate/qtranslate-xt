@@ -68,7 +68,7 @@ function qts_show_form_field( $args = array() ) {
         case 'text':
             $options[ $id ] = stripslashes( $options[ $id ] );
             $options[ $id ] = esc_attr( $options[ $id ] );
-            echo "<input class='regular-text$field_class' type='text' id='$id' name='" . QTX_OPTIONS_MODULE_SLUGS . "[$id]' value='$options[$id]' />";
+            echo "<input class='regular-text$field_class' type='text' name='" . QTX_OPTIONS_MODULE_SLUGS . "[$id]' value='$options[$id]' />";
             echo ( $desc != '' ) ? "<br /><p class='qtranxs-notes'>$desc</p>" : "";
             break;
 
@@ -94,7 +94,7 @@ function qts_show_form_field( $args = array() ) {
                 $name    = $q_config['language_name'][ $lang ];
                 $item_id = "$id|${item[1]}";
                 echo "<li><img class='qtranxs-lang-flag' src='${flag_location}${flag}' alt='$name' title='$name' />" . PHP_EOL;
-                echo "<input class='$field_class' type='text' id='$item_id' name='" . QTX_OPTIONS_MODULE_SLUGS . "[$item_id]' value='" . urldecode( $value ) . "' title='{$item[0]}' /></li>" . PHP_EOL;
+                echo "<input class='$field_class' type='text' name='" . QTX_OPTIONS_MODULE_SLUGS . "[$item_id]' value='" . urldecode( $value ) . "' title='{$item[0]}' /></li>" . PHP_EOL;
             }
             echo "</ul>";
             echo ( $desc != '' ) ? "<p class='qtranxs-notes'>$desc</p>" : "";
@@ -103,12 +103,12 @@ function qts_show_form_field( $args = array() ) {
         case 'textarea':
             $options[ $id ] = stripslashes( $options[ $id ] );
             $options[ $id ] = esc_html( $options[ $id ] );
-            echo "<textarea class='textarea$field_class' type='text' id='$id' name='" . QTX_OPTIONS_MODULE_SLUGS . "[$id]' rows='5' cols='30'>$options[$id]</textarea>";
+            echo "<textarea class='textarea$field_class' type='text' name='" . QTX_OPTIONS_MODULE_SLUGS . "[$id]' rows='5' cols='30'>$options[$id]</textarea>";
             echo ( $desc != '' ) ? "<br /><p class='qtranxs-notes'>$desc</p>" : "";
             break;
 
         case 'select':
-            echo "<select id='$id' class='select$field_class' name='" . QTX_OPTIONS_MODULE_SLUGS . "[$id]'>";
+            echo "<select class='select$field_class' name='" . QTX_OPTIONS_MODULE_SLUGS . "[$id]'>";
             foreach ( $choices as $item ) {
                 $value = esc_attr( $item );
                 $item  = esc_html( $item );
@@ -121,7 +121,7 @@ function qts_show_form_field( $args = array() ) {
             break;
 
         case 'select2':
-            echo "<select id='$id' class='select$field_class' name='" . QTX_OPTIONS_MODULE_SLUGS . "[$id]'>";
+            echo "<select class='select$field_class' name='" . QTX_OPTIONS_MODULE_SLUGS . "[$id]'>";
             foreach ( $choices as $item ) {
 
                 $item    = explode( "|", $item );
@@ -135,7 +135,7 @@ function qts_show_form_field( $args = array() ) {
             break;
 
         case 'checkbox':
-            echo "<input class='checkbox$field_class' type='checkbox' id='$id' name='" . QTX_OPTIONS_MODULE_SLUGS . "[$id]' value='1' " . checked( $options[ $id ], 1, false ) . " />";
+            echo "<input class='checkbox$field_class' type='checkbox' name='" . QTX_OPTIONS_MODULE_SLUGS . "[$id]' value='1' " . checked( $options[ $id ], 1, false ) . " />";
             echo ( $desc != '' ) ? "<br /><p class='qtranxs-notes'>$desc</p>" : "";
             break;
 
@@ -153,7 +153,7 @@ function qts_show_form_field( $args = array() ) {
                     }
                 }
 
-                echo "<input class='checkbox$field_class' type='checkbox' id='$id|$item[1]' name='" . QTX_OPTIONS_MODULE_SLUGS . "[$id|$item[1]]' value='1' $checked /> $item[0] <br/>";
+                echo "<input class='checkbox$field_class' type='checkbox' name='" . QTX_OPTIONS_MODULE_SLUGS . "[$id|$item[1]]' value='1' $checked /> $item[0] <br/>";
             }
             echo ( $desc != '' ) ? "<br /><p class='qtranxs-notes'>$desc</p>" : "";
             break;
@@ -171,7 +171,7 @@ function qts_show_form_field( $args = array() ) {
                     $checked = 'checked="checked"';
                 }
 
-                echo "<label for='$id|$item_value'><input class='radio$field_class' type='radio' id='$id|$item_value' name='" . QTX_OPTIONS_MODULE_SLUGS . "[$id]' value='$item_value' $checked /> <strong>$item_key</strong>";
+                echo "<label for='qtx_slugs_$id'><input class='radio$field_class' type='radio' id='qtx_slugs_$id' name='" . QTX_OPTIONS_MODULE_SLUGS . "[$id]' value='$item_value' $checked /> <strong>$item_key</strong>";
                 if ( isset( $desc[ $index ] ) && ! empty( $desc[ $index ] ) ) {
                     echo ": " . $desc[ $index ];
                 }
@@ -432,7 +432,7 @@ function qts_options_page_build_slug_fields( $object, $target_section, $id_prefi
 
     return array(
         "section" => $target_section,
-        "id"      => QTS_PREFIX . $id_prefix . $object->name,
+        "id"      => $id_prefix . $object->name,
         "title"   => qtranxf_use( qtranxf_getLanguage(), $object->label ),
         "desc"    => sprintf( '<code>https://example.org/<u>%s</u>/some-%s/</code>', $slug, $object->name ),
         'class'   => 'qts-slug', // used in qts_validate_options. TODO: cleaner way to be considered...
