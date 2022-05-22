@@ -359,7 +359,7 @@ class QtranslateSlug {
          */
 
         if ( isset( $wp->matched_query ) ) {
-            if ( isset( $query['error'] ) ){
+            if ( isset( $query['error'] ) ) {
                 unset( $query['error'] );
             }
             $query = array_merge( wp_parse_args( $wp->matched_query ), $query );
@@ -381,7 +381,7 @@ class QtranslateSlug {
              * Both keys causes conflict between posts and pages as 'name' is used for posts, resulting in 404 error.
              */
             if ( isset( $query['name'] ) ) {
-                unset($query['name']);
+                unset( $query['name'] );
             }
             $page = wp_cache_get( 'qts_page_request' );
             if ( ! $page ) {
@@ -399,7 +399,7 @@ class QtranslateSlug {
 
         // -> category
         // If 'name' key is defined, query is relevant to a post with a /%category%/%postname%/ permalink structure and will be captured later.
-        elseif ( ( ( isset( $query['category_name'] ) || isset( $query['cat'] ) ) && ! isset($query['name'] ) ) ):
+        elseif ( ( ( isset( $query['category_name'] ) || isset( $query['cat'] ) ) && ! isset( $query['name'] ) ) ):
             if ( isset( $query['category_name'] ) ) {
                 $term_slug = $this->get_last_slash( empty( $query['category_name'] ) ? $wp->request : $query['category_name'] );
                 $term      = $this->get_term_by( 'slug', $term_slug, 'category' );
@@ -482,16 +482,16 @@ class QtranslateSlug {
              * If a specific condition was found to uniquely identify posts, this block should be placed in the main if block.
              */
 
-             // -> post
-            if ( ! $function && ( isset($query['name']) || isset($query['p'] ) ) ) {
-                $post = isset($query['p']) ? get_post($query['p']) : $this->get_page_by_path($query['name'], OBJECT, 'post');
-                if (!$post) {
+            // -> post
+            if ( ! $function && ( isset( $query['name'] ) || isset( $query['p'] ) ) ) {
+                $post = isset( $query['p'] ) ? get_post( $query['p'] ) : $this->get_page_by_path( $query['name'], OBJECT, 'post' );
+                if ( ! $post ) {
                     return $query;
                 }
                 $query['name'] = $post->post_name;
-                $id = $post->ID;
-                $cache_array = array($post);
-                update_post_caches($cache_array);
+                $id            = $post->ID;
+                $cache_array   = array( $post );
+                update_post_caches( $cache_array );
                 $function = 'get_permalink';
             }
         endif;
@@ -942,12 +942,12 @@ class QtranslateSlug {
                 $struct = $wp_rewrite->extra_permastructs[ $name ];
                 if ( is_array( $struct ) ) {
                     if ( count( $struct ) == 2 ) {
-                        $rules = $wp_rewrite->generate_rewrite_rules( "/".rawurldecode($base)."/%".rawurldecode($name)."%", $struct[1] );
+                        $rules = $wp_rewrite->generate_rewrite_rules( "/" . rawurldecode( $base ) . "/%" . rawurldecode( $name ) . "%", $struct[1] );
                     } else {
-                        $rules = $wp_rewrite->generate_rewrite_rules( "/".rawurldecode($base)."/%".rawurldecode($name)."%", $struct['ep_mask'], $struct['paged'], $struct['feed'], $struct['forcomments'], $struct['walk_dirs'], $struct['endpoints'] );
+                        $rules = $wp_rewrite->generate_rewrite_rules( "/" . rawurldecode( $base ) . "/%" . rawurldecode( $name ) . "%", $struct['ep_mask'], $struct['paged'], $struct['feed'], $struct['forcomments'], $struct['walk_dirs'], $struct['endpoints'] );
                     }
                 } else {
-                    $rules = $wp_rewrite->generate_rewrite_rules( "/".rawurldecode($base)."/%".rawurldecode($name)."%" );
+                    $rules = $wp_rewrite->generate_rewrite_rules( "/" . rawurldecode( $base ) . "/%" . rawurldecode( $name ) . "%" );
                 }
                 $wp_rewrite->rules = array_merge( $rules, $wp_rewrite->rules );
             endif;

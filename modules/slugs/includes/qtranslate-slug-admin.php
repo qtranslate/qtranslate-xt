@@ -456,9 +456,9 @@ function qts_show_edit_taxonomy_slugs_option_link() {
         <th><?php _e( 'Slugs per language', 'qtranslate' ) ?></th>
         <td>
             <?php
-        //TODO: link destination should not be hardcoded here, but currently $options_uri property is private in QTX_Admin_Settings class (base options page) and module id is hardcoded independently from module definitions in QTX_Admin_Module class (module href).
-        echo sprintf( "<p>" . __( 'Multilanguage slugs can be set up in <a href="%s">slugs module settings</a>', 'qtranslate' ) . "</p>", admin_url( 'options-general.php?page=qtranslate-xt#slugs' ) );
-        ?>
+            //TODO: link destination should not be hardcoded here, but currently $options_uri property is private in QTX_Admin_Settings class (base options page) and module id is hardcoded independently from module definitions in QTX_Admin_Module class (module href).
+            echo sprintf( "<p>" . __( 'Multilanguage slugs can be set up in <a href="%s">slugs module settings</a>', 'qtranslate' ) . "</p>", admin_url( 'options-general.php?page=qtranslate-xt#slugs' ) );
+            ?>
         </td>
     </tr>
     <?php
