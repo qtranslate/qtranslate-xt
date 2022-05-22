@@ -931,7 +931,7 @@ function qtranxf_admin_notices_gutenberg() {
 
 add_action( 'admin_notices', 'qtranxf_admin_notices_gutenberg' );
 
-function qtranxf_admin_notices_slugs() {
+function qtranxf_admin_notices_slugs_import() {
     if ( qtranxf_check_admin_notice( 'slugs-import' ) ) {
         return;
     }
@@ -940,7 +940,7 @@ function qtranxf_admin_notices_slugs() {
         return;
     }
     // TODO: check stored value after migration done.
-    require_once( QTRANSLATE_DIR . '/modules/slugs/includes/qtranslate-slug-utils.php' );
+    require_once( QTRANSLATE_DIR . '/modules/slugs/includes/qtranslate-slug-import.php' );
     $msg = qts_check_import_slugs();
     if ( empty( $msg ) ) {
         return;
@@ -954,7 +954,7 @@ function qtranxf_admin_notices_slugs() {
     echo '</a></p></div>';
 }
 
-add_action( 'admin_notices', 'qtranxf_admin_notices_slugs' );
+add_action( 'admin_notices', 'qtranxf_admin_notices_slugs_import' );
 
 function qtranxf_admin_notice_deactivate_plugin( $name, $plugin ) {
     deactivate_plugins( $plugin, true );
