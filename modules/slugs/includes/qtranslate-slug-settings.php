@@ -49,7 +49,7 @@ function qts_show_form_field( $args = array() ) {
     $choices = $args['choices'];
     $class   = $args['class'];
 
-    $options = $qtranslate_slug->options_buffer ? $qtranslate_slug->options_buffer : get_option( QTX_OPTIONS_MODULE_SLUGS, array() );
+    $options = $qtranslate_slug->options_buffer ?: get_option( QTX_OPTIONS_MODULE_SLUGS, array() );
 
     // pass the standard value if the option is not yet set in the database
     if ( ! isset( $options[ $id ] ) && $type != 'checkbox' ) {
@@ -79,14 +79,13 @@ function qts_show_form_field( $args = array() ) {
                 $item    = explode( "|", $item ); // label|slug
                 $item[0] = esc_html( $item[0] );
 
+                $value = '';
                 if ( ! empty( $options[ $id ] ) ) {
                     foreach ( $options[ $id ] as $option_key => $option_val ) {
                         if ( $item[1] == $option_key ) {
                             $value = $option_val;
                         }
                     }
-                } else {
-                    $value = '';
                 }
                 // Assume the slug is a language (to be clarified in the given choices).
                 $lang    = $item[1];
@@ -259,8 +258,8 @@ function qts_validate_options( $input ) {
                 unset( $textarray );
 
                 $text_values = array();
-                foreach ( $option['choices'] as $k => $v ) {
-                    $pieces        = explode( "|", $v );
+                foreach ( $option['choices'] as $value ) {
+                    $pieces        = explode( "|", $value );
                     $text_values[] = $pieces[1];
                 }
 
@@ -329,8 +328,8 @@ function qts_validate_options( $input ) {
             case 'multi-checkbox':
                 unset( $checkboxarray );
                 $check_values = array();
-                foreach ( $option['choices'] as $k => $v ) {
-                    $pieces         = explode( "|", $v );
+                foreach ( $option['choices'] as $value ) {
+                    $pieces         = explode( "|", $value );
                     $check_values[] = $pieces[1];
                 }
                 foreach ( $check_values as $v ) {
@@ -355,12 +354,9 @@ function qts_validate_options( $input ) {
 
 function qts_update_settings() {
     global $qtranslate_slug;
-    $qts_settings = false;
-    if ( isset( $_POST[ QTX_OPTIONS_MODULE_SLUGS ] ) ) {
-        $qts_settings = qts_validate_options( $_POST[ QTX_OPTIONS_MODULE_SLUGS ] );
-    }
 
-    if ( ! $qts_settings || empty( $qts_settings ) ) {
+    $qts_settings = isset( $_POST[ QTX_OPTIONS_MODULE_SLUGS ] ) ? qts_validate_options( $_POST[ QTX_OPTIONS_MODULE_SLUGS ] ) : array();
+    if ( empty( $qts_settings ) ) {
         return;
     }
     if ( $qtranslate_slug->options_buffer == $qts_settings ) {
