@@ -1,21 +1,35 @@
 <?php
+
+const QTX_SLUG_OLD_META_PREFIX    = '_qts_slug_';
+const QTX_SLUG_OLD_OPTIONS_PREFIX = '_qts_';
+const QTX_SLUG_OLD_OPTIONS        = 'qts_options';
+
 /**
- * Check if slugs meta can be imported from the legacy postmeta and termmeta.
+ * Check if slugs meta should be imported from the legacy postmeta and termmeta.
  *
- * @return string messages giving details, or empty if no meta found.
+ * @return string messages giving details, empty if new meta found or no legacy meta found.
  */
 function qts_check_import_slugs() {
     global $wpdb;
 
-    $count_slugs = function ( $dbmeta, &$msg ) use ( $wpdb ) {
-        $results = $wpdb->get_var( "SELECT count(*) FROM  $dbmeta WHERE meta_key like '_qts_slug%'" );
+    $count_slugs = function ( $dbmeta, $prefix, &$msg ) use ( $wpdb ) {
+        $results = $wpdb->get_var( "SELECT count(*) FROM  $dbmeta WHERE meta_key like '$prefix%'" );
         if ( $results ) {
             $msg[] = sprintf( __( "Found %s slugs from $dbmeta.", 'qtranslate' ), $results );
         }
     };
 
-    $count_slugs( $wpdb->postmeta, $msg );
-    $count_slugs( $wpdb->termmeta, $msg );
+    $msg = [];
+    $count_slugs( $wpdb->postmeta, QTX_SLUG_META_PREFIX, $msg );
+    $count_slugs( $wpdb->termmeta, QTX_SLUG_META_PREFIX, $msg );
+    // Found some post/term meta with the new keys. No import to suggest, but it can still be done manually.
+    if ( ! empty( $msg ) ) {
+        return '';
+    }
+
+    $msg = [];
+    $count_slugs( $wpdb->postmeta, QTX_SLUG_OLD_META_PREFIX, $msg );
+    $count_slugs( $wpdb->termmeta, QTX_SLUG_OLD_META_PREFIX, $msg );
 
     return empty ( $msg ) ? $msg : implode( '<br>', $msg );
 }
@@ -31,9 +45,10 @@ function qts_import_slugs_meta( $db_commit ) {
     global $wpdb;
 
     $new_prefix = QTX_SLUG_META_PREFIX;
-    $old_prefix = '_qts_slug';
+    $old_prefix = QTX_SLUG_OLD_META_PREFIX;
 
     $import_meta = function ( $dbmeta, $dbmetaid, &$msg ) use ( $wpdb, $old_prefix, $new_prefix ) {
+
         $results = $wpdb->query( "DELETE FROM $dbmeta WHERE meta_key like '$new_prefix%'" );
         if ( $results ) {
             $msg[] = sprintf( __( "Deleted %s rows from $dbmeta (%s).", 'qtranslate' ), $results, $new_prefix );
@@ -76,12 +91,12 @@ function qts_import_slugs_options( $db_commit ) {
         }
     }
 
-    $options = get_option( 'qts_options' );
+    $options = get_option( QTX_SLUG_OLD_OPTIONS );
     if ( $options ) {
         $new_options = [];
         // Drop the legacy prefix.
         foreach ( $options as $type => $slugs ) {
-            $type                 = str_replace( '_qts_', '', $type );
+            $type                 = str_replace( QTX_SLUG_OLD_OPTIONS_PREFIX, '', $type );
             $new_options[ $type ] = $slugs;
         }
         $msg[] = sprintf( __( "Imported %s types from options.", 'qtranslate' ), count( $new_options ) );
@@ -105,6 +120,11 @@ function qts_import_slugs( $db_commit ) {
     $msg[] = $db_commit ? __( 'Import slugs:', 'qtranslate' ) : __( "Dry-run mode:", 'qtranslate' );
     $msg[] = qts_import_slugs_meta( $db_commit );
     $msg[] = qts_import_slugs_options( $db_commit );
+
+    if ( $db_commit ) {
+        // Hide the admin notice.
+        qtranxf_update_admin_notice( 'slugs-import', true );
+    }
 
     return implode( '<br/>', $msg );
 }

@@ -935,18 +935,19 @@ function qtranxf_admin_notices_slugs_import() {
     if ( qtranxf_check_admin_notice( 'slugs-import' ) ) {
         return;
     }
+    // Very quick check to see if worth going further.
     $old_value = get_option( 'qts_options' );
     if ( ! $old_value ) {
-        return;
+        return '';
     }
-    // TODO: check stored value after migration done.
+    // More advanced checks.
     require_once( QTRANSLATE_DIR . '/modules/slugs/includes/qtranslate-slug-import.php' );
     $msg = qts_check_import_slugs();
     if ( empty( $msg ) ) {
         return;
     }
     qtranxf_admin_notice_dismiss_script();
-    echo '<div class="notice notice-warning qtranxs-notice-ajax is-dismissible" id="qtranxs-slugs-import" action="unset"><p>';
+    echo '<div class="notice notice-warning qtranxs-notice-ajax is-dismissible" id="qtranxs-slugs-import"><p>';
     $options_link = admin_url( 'options-general.php?page=qtranslate-xt#import' );
     echo '<p>' . sprintf( __( '%s : found slugs meta that can be imported. Go to the <a href="%s">import settings</a> to import.', 'qtranslate' ), qtranxf_get_plugin_link(), $options_link ) . '</p>';
     echo '<p>' . $msg . '</p>';
@@ -1052,6 +1053,14 @@ function qtranxf_update_option_admin_notices( $messages, $id, $set = true ) {
     return $messages;
 }
 
+/**
+ * Update an admin notice to be set (hidden) / unset (shown).
+ *
+ * @param string $id
+ * @param bool $set true to set the message as seen (hide), false to unset (show)
+ *
+ * @return array|mixed
+ */
 function qtranxf_update_admin_notice( $id, $set ) {
     $messages = get_option( 'qtranslate_admin_notices', array() );
 
