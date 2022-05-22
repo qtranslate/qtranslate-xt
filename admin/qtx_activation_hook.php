@@ -942,7 +942,7 @@ function qtranxf_admin_notices_slugs_import() {
     }
     // More advanced checks.
     require_once( QTRANSLATE_DIR . '/modules/slugs/includes/qtranslate-slug-import.php' );
-    $msg = qts_check_import_slugs();
+    $msg = qtranxf_slugs_check_import_qts();
     if ( empty( $msg ) ) {
         return;
     }

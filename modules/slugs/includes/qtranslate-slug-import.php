@@ -5,11 +5,11 @@ const QTX_SLUG_OLD_OPTIONS_PREFIX = '_qts_';
 const QTX_SLUG_OLD_OPTIONS_NAME   = 'qts_options';
 
 /**
- * Check if slugs meta should be imported from the legacy postmeta and termmeta.
+ * Check if slugs meta should be imported from the legacy QTS postmeta and termmeta.
  *
  * @return string messages giving details, empty if new meta found or no legacy meta found.
  */
-function qts_check_import_slugs() {
+function qtranxf_slugs_check_import_qts() {
     global $wpdb;
 
     $count_slugs = function ( $dbmeta, $prefix, &$msg ) use ( $wpdb ) {
@@ -35,13 +35,13 @@ function qts_check_import_slugs() {
 }
 
 /**
- * Import slugs meta by duplicating the legacy postmeta and termmeta.
+ * Import slugs meta by duplicating the legacy QTS postmeta and termmeta.
  *
  * @param bool $db_commit true to commit changes, false for dry-run mode.
  *
  * @return string messages giving details.
  */
-function qts_import_slugs_meta( $db_commit ) {
+function qtranxf_slugs_import_qts_meta( $db_commit ) {
     global $wpdb;
 
     $new_prefix = QTX_SLUG_META_PREFIX;
@@ -74,13 +74,13 @@ function qts_import_slugs_meta( $db_commit ) {
 }
 
 /**
- * Import slugs legacy options.
+ * Import slugs legacy QTS options.
  *
  * @param bool $db_commit true to commit changes, false for dry-run mode.
  *
  * @return string messages giving details.
  */
-function qts_import_slugs_options( $db_commit ) {
+function qtranxf_slugs_import_qts_options( $db_commit ) {
     $msg = [];
 
     $new_options = get_option( QTX_OPTIONS_MODULE_SLUGS );
@@ -109,17 +109,17 @@ function qts_import_slugs_options( $db_commit ) {
 }
 
 /**
- * Import slugs legacy options.
+ * Import slugs legacy QTS data (options and meta).
  *
  * @param bool $db_commit true to commit changes, false for dry-run mode.
  *
  * @return string messages giving details.
  */
-function qts_import_slugs( $db_commit ) {
+function qtranxf_slugs_import_qts_data( $db_commit ) {
     $msg   = [];
     $msg[] = $db_commit ? __( 'Import slugs:', 'qtranslate' ) : __( "Dry-run mode:", 'qtranslate' );
-    $msg[] = qts_import_slugs_meta( $db_commit );
-    $msg[] = qts_import_slugs_options( $db_commit );
+    $msg[] = qtranxf_slugs_import_qts_meta( $db_commit );
+    $msg[] = qtranxf_slugs_import_qts_options( $db_commit );
 
     if ( $db_commit ) {
         // Hide the admin notice.
