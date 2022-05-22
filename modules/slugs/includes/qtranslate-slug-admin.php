@@ -77,7 +77,7 @@ function qts_uninstall() {
 
     $meta_keys = array();
     foreach ( $q_config['enabled_languages'] as $lang ) {
-        $meta_keys[] = QTX_SLUG_META_PREFIX . $lang;
+        $meta_keys[] = QTX_SLUGS_META_PREFIX . $lang;
     }
     $meta_keys = "'" . implode( "','", $meta_keys ) . "'";
     $wpdb->query( "DELETE from $wpdb->postmeta WHERE meta_key IN ($meta_keys)" );
@@ -130,7 +130,7 @@ function qts_draw_meta_box( $post ) {
     echo '<input type="hidden" name="qts_nonce" id="qts_nonce" value="' . wp_create_nonce( 'qts_nonce' ) . '" />' . PHP_EOL;
     $flag_location = qtranxf_flag_location();
     foreach ( $q_config['enabled_languages'] as $lang ):
-        $slug  = get_post_meta( $post->ID, QTX_SLUG_META_PREFIX . $lang, true );
+        $slug  = get_post_meta( $post->ID, QTX_SLUGS_META_PREFIX . $lang, true );
         $value = ( $slug ) ? htmlspecialchars( $slug, ENT_QUOTES ) : '';
         $name  = $q_config['language_name'][ $lang ];
         $title = sprintf( __( 'Slug' ) . ' (%s)', $name );
@@ -153,7 +153,7 @@ function qts_draw_meta_box( $post ) {
  */
 function qts_validate_post_slug( $slug, $post, $lang ) {
     $post_title = trim( qtranxf_use( $lang, $post->post_title ) );
-    $post_name  = get_post_meta( $post->ID, QTX_SLUG_META_PREFIX . $lang, true );
+    $post_name  = get_post_meta( $post->ID, QTX_SLUGS_META_PREFIX . $lang, true );
     if ( ! $post_name ) {
         $post_name = $post->post_name;
     }
@@ -235,7 +235,7 @@ function qts_wp_unique_post_slug( $slug, $post_ID, $post_status, $post_type, $po
         // TODO: update unique_slug :: missing hieararchical from current wp func ( 4.3.1 )
         // Post slugs must be unique across all posts.
         $check_sql       = "SELECT $wpdb->postmeta.meta_value FROM $wpdb->posts,$wpdb->postmeta WHERE $wpdb->posts.ID = $wpdb->postmeta.post_id AND $wpdb->postmeta.meta_key = '%s' AND $wpdb->postmeta.meta_value = '%s' AND $wpdb->posts.post_type = %s AND ID != %d LIMIT 1";
-        $post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, QTX_SLUG_META_PREFIX . $lang, $slug, $post_type, $post_ID ) );
+        $post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, QTX_SLUGS_META_PREFIX . $lang, $slug, $post_type, $post_ID ) );
 
         // TODO: update unique_slug :: missing check for conflict with dates archive from current wp func ( 4.3.1 )
         if ( $post_name_check || in_array( $slug, $feeds ) || apply_filters( 'wp_unique_post_slug_is_bad_flat_slug', false, $slug, $post_type ) ) {
@@ -243,7 +243,7 @@ function qts_wp_unique_post_slug( $slug, $post_ID, $post_status, $post_type, $po
             do {
                 // TODO: update unique_slug :: same as above: differs from current wp func ( 4.3.1 )
                 $alt_post_name   = substr( $slug, 0, 200 - ( strlen( $suffix ) + 1 ) ) . "-$suffix";
-                $post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, QTX_SLUG_META_PREFIX . $lang, $alt_post_name, $post_type, $post_ID ) );
+                $post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, QTX_SLUGS_META_PREFIX . $lang, $alt_post_name, $post_type, $post_ID ) );
                 $suffix++;
             } while ( $post_name_check );
             $slug = $alt_post_name;
@@ -280,8 +280,8 @@ function qts_save_postdata( $post_id, $post = null ) {
         // check required because it is not available inside quick edit
         if ( isset( $_POST["qts_{$lang}_slug"] ) ) {
             $meta_value = apply_filters( 'qts_validate_post_slug', $_POST["qts_{$lang}_slug"], $post, $lang );
-            delete_post_meta( $post_id, QTX_SLUG_META_PREFIX . $lang );
-            update_post_meta( $post_id, QTX_SLUG_META_PREFIX . $lang, $meta_value );
+            delete_post_meta( $post_id, QTX_SLUGS_META_PREFIX . $lang );
+            update_post_meta( $post_id, QTX_SLUGS_META_PREFIX . $lang, $meta_value );
         }
     }
 }
@@ -320,7 +320,7 @@ function qts_validate_term_slug( $slug, $term, $lang ) {
 function qts_unique_term_slug( $slug, $term, $lang ) {
     global $wpdb;
 
-    $query       = $wpdb->prepare( "SELECT term_id FROM $wpdb->termmeta WHERE meta_key = '%s' AND meta_value = '%s' AND term_id != %d ", QTX_SLUG_META_PREFIX . $lang, $slug, $term->term_id );
+    $query       = $wpdb->prepare( "SELECT term_id FROM $wpdb->termmeta WHERE meta_key = '%s' AND meta_value = '%s' AND term_id != %d ", QTX_SLUGS_META_PREFIX . $lang, $slug, $term->term_id );
     $exists_slug = $wpdb->get_results( $query );
 
     if ( empty( $exists_slug ) ) {
@@ -328,7 +328,7 @@ function qts_unique_term_slug( $slug, $term, $lang ) {
     }
 
     // If we didn't get a unique slug, try appending a number to make it unique.
-    $query = $wpdb->prepare( "SELECT meta_value FROM $wpdb->termmeta WHERE meta_key = '%s' AND meta_value = '%s' AND term_id != %d", QTX_SLUG_META_PREFIX . $lang, $slug, $term->term_id );
+    $query = $wpdb->prepare( "SELECT meta_value FROM $wpdb->termmeta WHERE meta_key = '%s' AND meta_value = '%s' AND term_id != %d", QTX_SLUGS_META_PREFIX . $lang, $slug, $term->term_id );
 
     if ( $wpdb->get_var( $query ) ) {
         $num = 2;
@@ -338,7 +338,7 @@ function qts_unique_term_slug( $slug, $term, $lang ) {
             $slug_check = $wpdb->get_var(
                 $wpdb->prepare(
                     "SELECT meta_value FROM $wpdb->termmeta WHERE meta_key = '%s' AND meta_value = '%s'",
-                    QTX_SLUG_META_PREFIX . $lang,
+                    QTX_SLUGS_META_PREFIX . $lang,
                     $alt_slug ) );
         } while ( $slug_check );
         $slug = $alt_slug;
@@ -373,8 +373,8 @@ function qts_save_term( $term_id, $tt_id, $taxonomy ) {
 
         $meta_value = apply_filters( 'qts_validate_term_slug', $term_slug, $term, $lang );
 
-        delete_metadata( 'term', $term_id, QTX_SLUG_META_PREFIX . $lang );
-        update_metadata( 'term', $term_id, QTX_SLUG_META_PREFIX . $lang, $meta_value );
+        delete_metadata( 'term', $term_id, QTX_SLUGS_META_PREFIX . $lang );
+        update_metadata( 'term', $term_id, QTX_SLUGS_META_PREFIX . $lang, $meta_value );
     }
 }
 
@@ -391,7 +391,7 @@ function qts_show_list_term_fields( $term ) {
     $flag_location = qtranxf_flag_location(); ?>
     <ul class="qtranxs-slugs-list qtranxs-slugs-terms"><?php
         foreach ( $q_config['enabled_languages'] as $lang ) {
-            $slug  = is_object( $term ) ? get_metadata( 'term', $term->term_id, QTX_SLUG_META_PREFIX . $lang, true ) : '';
+            $slug  = is_object( $term ) ? get_metadata( 'term', $term->term_id, QTX_SLUGS_META_PREFIX . $lang, true ) : '';
             $value = $slug ? htmlspecialchars( $slug, ENT_QUOTES ) : '';
             $flag  = $q_config['flag'][ $lang ];
             $name  = $q_config['language_name'][ $lang ];
@@ -532,7 +532,7 @@ function qts_taxonomy_custom_column( $str, $column_name, $term_id ) {
 
     switch ( $column_name ) {
         case 'qts-slug':
-            echo get_metadata( 'term', $term_id, QTX_SLUG_META_PREFIX . $q_config['language'], true );
+            echo get_metadata( 'term', $term_id, QTX_SLUGS_META_PREFIX . $q_config['language'], true );
             break;
     }
 

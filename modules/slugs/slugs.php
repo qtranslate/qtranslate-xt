@@ -1,5 +1,5 @@
 <?php
-const QTX_SLUG_META_PREFIX = 'qtranslate_slug_';
+const QTX_SLUGS_META_PREFIX = 'qtranslate_slug_';   // The language code is appended.
 
 include_once( dirname( __FILE__ ) . '/includes/class-qtranslate-slug.php' );
 include_once( dirname( __FILE__ ) . '/includes/qtranslate-slug-utils.php' );

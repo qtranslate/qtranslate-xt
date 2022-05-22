@@ -119,7 +119,7 @@ class QtranslateSlug {
      * @return string the slug or empty if not found
      */
     public function get_slug( $id, $lang ) {
-        $slugArray = get_post_meta( $id, QTX_SLUG_META_PREFIX . $lang );
+        $slugArray = get_post_meta( $id, QTX_SLUGS_META_PREFIX . $lang );
 
         return ! empty( $slugArray ) ? $slugArray[0] : "";
     }
@@ -606,7 +606,7 @@ class QtranslateSlug {
 
         $post_link = apply_filters( 'qts_permastruct', $wp_rewrite->get_extra_permastruct( $post->post_type ), $post->post_type );
 
-        $slug = get_post_meta( $post->ID, QTX_SLUG_META_PREFIX . $this->get_temp_lang(), true );
+        $slug = get_post_meta( $post->ID, QTX_SLUGS_META_PREFIX . $this->get_temp_lang(), true );
         if ( ! $slug ) {
             $slug = $post->post_name;
         }
@@ -684,7 +684,7 @@ class QtranslateSlug {
                 if ( $cats ) {
                     usort( $cats, '_usort_terms_by_ID' ); // order by ID
 
-                    $category = get_metadata( 'term', $cats[0]->term_id, QTX_SLUG_META_PREFIX . $this->get_temp_lang(), true );
+                    $category = get_metadata( 'term', $cats[0]->term_id, QTX_SLUGS_META_PREFIX . $this->get_temp_lang(), true );
                     if ( ! $category ) {
                         $category = $cats[0]->slug;
                     }
@@ -698,7 +698,7 @@ class QtranslateSlug {
                 if ( empty( $category ) ) {
                     $default_category = get_category( get_option( 'default_category' ) );
 
-                    $default_category_slug = get_metadata( 'term', $default_category->term_id, QTX_SLUG_META_PREFIX . $this->get_temp_lang(), true );
+                    $default_category_slug = get_metadata( 'term', $default_category->term_id, QTX_SLUGS_META_PREFIX . $this->get_temp_lang(), true );
                     if ( ! $default_category_slug ) {
                         $default_category_slug = $default_category->slug;
                     }
@@ -715,7 +715,7 @@ class QtranslateSlug {
 
             $date = explode( " ", date( 'Y m d H i s', $unixtime ) );
 
-            $post_slug = get_post_meta( $post->ID, QTX_SLUG_META_PREFIX . $this->get_temp_lang(), true );
+            $post_slug = get_post_meta( $post->ID, QTX_SLUGS_META_PREFIX . $this->get_temp_lang(), true );
             if ( ! $post_slug ) {
                 $post_slug = $post->post_name;
             }
@@ -825,7 +825,7 @@ class QtranslateSlug {
 
         $termlink = apply_filters( 'qts_permastruct', $wp_rewrite->get_extra_permastruct( $taxonomy ), $taxonomy );
 
-        $slug = get_metadata( 'term', $term->term_id, QTX_SLUG_META_PREFIX . $this->get_temp_lang(), true );
+        $slug = get_metadata( 'term', $term->term_id, QTX_SLUGS_META_PREFIX . $this->get_temp_lang(), true );
         if ( ! $slug ) {
             $slug = $term->slug;
         }
@@ -848,7 +848,7 @@ class QtranslateSlug {
                 foreach ( (array) $ancestors as $ancestor ) {
                     $ancestor_term = get_term( $ancestor, $taxonomy );
 
-                    $ancestor_slug = get_metadata( 'term', $ancestor_term->term_id, QTX_SLUG_META_PREFIX . $this->get_temp_lang(), true );
+                    $ancestor_slug = get_metadata( 'term', $ancestor_term->term_id, QTX_SLUGS_META_PREFIX . $this->get_temp_lang(), true );
                     if ( ! $ancestor_slug ) {
                         $ancestor_slug = $ancestor_term->slug;
                     }
@@ -987,7 +987,7 @@ class QtranslateSlug {
         },
             $parts );
         $in_string     = "'" . implode( "','", $parts ) . "'";
-        $meta_key      = QTX_SLUG_META_PREFIX . $this->get_temp_lang();
+        $meta_key      = QTX_SLUGS_META_PREFIX . $this->get_temp_lang();
         $post_type_sql = $post_type;
         $wpdb->escape_by_ref( $post_type_sql );
 
@@ -1102,7 +1102,7 @@ class QtranslateSlug {
         }
 
         if ( $nicename ) {
-            $name = get_metadata( 'term', $parent->term_id, QTX_SLUG_META_PREFIX . $this->get_temp_lang(), true );
+            $name = get_metadata( 'term', $parent->term_id, QTX_SLUGS_META_PREFIX . $this->get_temp_lang(), true );
             if ( ! $name ) {
                 $name = $parent->slug;
             }
@@ -1138,7 +1138,7 @@ class QtranslateSlug {
             $page = get_post( $page );
         }
 
-        $uri = get_post_meta( $page->ID, QTX_SLUG_META_PREFIX . $this->get_temp_lang(), true );
+        $uri = get_post_meta( $page->ID, QTX_SLUGS_META_PREFIX . $this->get_temp_lang(), true );
         if ( ! $uri ) {
             $uri = $page->post_name;
         }
@@ -1151,7 +1151,7 @@ class QtranslateSlug {
         while ( $page->post_parent != 0 ) {
             $page = get_post( $page->post_parent );
 
-            $page_name = get_post_meta( $page->ID, QTX_SLUG_META_PREFIX . $this->get_temp_lang(), true );
+            $page_name = get_post_meta( $page->ID, QTX_SLUGS_META_PREFIX . $this->get_temp_lang(), true );
             if ( ! $page_name ) {
                 $page_name = $page->post_name;
             }
@@ -1182,7 +1182,7 @@ class QtranslateSlug {
         $original_field = $field;
 
         if ( 'slug' == $field ) {
-            $field = 'm.meta_key = \'' . QTX_SLUG_META_PREFIX . $this->get_temp_lang() . '\' AND m.meta_value';
+            $field = 'm.meta_key = \'' . QTX_SLUGS_META_PREFIX . $this->get_temp_lang() . '\' AND m.meta_value';
             $value = sanitize_title( $value );
             if ( empty( $value ) ) {
                 return false;

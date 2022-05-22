@@ -1,8 +1,10 @@
 <?php
-
-const QTX_SLUG_OLD_META_PREFIX    = '_qts_slug_';
-const QTX_SLUG_OLD_OPTIONS_PREFIX = '_qts_';
-const QTX_SLUG_OLD_OPTIONS_NAME   = 'qts_options';
+/**
+ * Legacy meta and options from QTS plugin.
+ */
+const QTX_SLUGS_LEGACY_QTS_META_PREFIX    = '_qts_slug_';
+const QTX_SLUGS_LEGACY_QTS_OPTIONS_PREFIX = '_qts_';
+const QTX_SLUGS_LEGACY_QTS_OPTIONS_NAME   = 'qts_options';
 
 /**
  * Check if slugs meta should be imported from the legacy QTS postmeta and termmeta.
@@ -12,24 +14,33 @@ const QTX_SLUG_OLD_OPTIONS_NAME   = 'qts_options';
 function qtranxf_slugs_check_import_qts() {
     global $wpdb;
 
-    $count_slugs = function ( $dbmeta, $prefix, &$msg ) use ( $wpdb ) {
-        $results = $wpdb->get_var( "SELECT count(*) FROM  $dbmeta WHERE meta_key like '$prefix%'" );
+    /**
+     * Generic function that counts the meta items.
+     *
+     * @param string $table name of the meta table (postmeta, termmeta)
+     * @param string $prefix prefix for the meta key
+     * @param string[] $msg array of messsages, updated
+     *
+     * @return void
+     */
+    $count_slugs = function ( $table, $prefix, &$msg ) use ( $wpdb ) {
+        $results = $wpdb->get_var( "SELECT count(*) FROM  $table WHERE meta_key like '$prefix%'" );
         if ( $results ) {
-            $msg[] = sprintf( __( "Found %s slugs from $dbmeta.", 'qtranslate' ), $results );
+            $msg[] = sprintf( __( "Found %s slugs from $table.", 'qtranslate' ), $results );
         }
     };
 
     $msg = [];
-    $count_slugs( $wpdb->postmeta, QTX_SLUG_META_PREFIX, $msg );
-    $count_slugs( $wpdb->termmeta, QTX_SLUG_META_PREFIX, $msg );
-    // Found some post/term meta with the new keys. No import to suggest, but it can still be done manually.
+    $count_slugs( $wpdb->postmeta, QTX_SLUGS_META_PREFIX, $msg );
+    $count_slugs( $wpdb->termmeta, QTX_SLUGS_META_PREFIX, $msg );
     if ( ! empty( $msg ) ) {
+        // Found some post/term meta with the new keys, no import to suggest (it can still be done manually).
         return '';
     }
 
     $msg = [];
-    $count_slugs( $wpdb->postmeta, QTX_SLUG_OLD_META_PREFIX, $msg );
-    $count_slugs( $wpdb->termmeta, QTX_SLUG_OLD_META_PREFIX, $msg );
+    $count_slugs( $wpdb->postmeta, QTX_SLUGS_LEGACY_QTS_META_PREFIX, $msg );
+    $count_slugs( $wpdb->termmeta, QTX_SLUGS_LEGACY_QTS_META_PREFIX, $msg );
 
     return empty ( $msg ) ? $msg : implode( '<br>', $msg );
 }
@@ -44,20 +55,28 @@ function qtranxf_slugs_check_import_qts() {
 function qtranxf_slugs_import_qts_meta( $db_commit ) {
     global $wpdb;
 
-    $new_prefix = QTX_SLUG_META_PREFIX;
-    $old_prefix = QTX_SLUG_OLD_META_PREFIX;
+    $new_prefix = QTX_SLUGS_META_PREFIX;
+    $old_prefix = QTX_SLUGS_LEGACY_QTS_META_PREFIX;
 
-    $import_meta = function ( $dbmeta, $dbmetaid, &$msg ) use ( $wpdb, $old_prefix, $new_prefix ) {
-
-        $results = $wpdb->query( "DELETE FROM $dbmeta WHERE meta_key like '$new_prefix%'" );
+    /**
+     * Generic function that imports old meta into new ones. All existing new meta are erased first.
+     *
+     * @param string $table name of the meta table (postmeta, termmeta)
+     * @param string $colid column name giving the meta id (post_id, term_id)
+     * @param string[] $msg array of messages, updated
+     *
+     * @return void
+     */
+    $import_meta = function ( $table, $colid, &$msg ) use ( $wpdb, $old_prefix, $new_prefix ) {
+        $results = $wpdb->query( "DELETE FROM $table WHERE meta_key like '$new_prefix%'" );
         if ( $results ) {
-            $msg[] = sprintf( __( "Deleted %s rows from $dbmeta (%s).", 'qtranslate' ), $results, $new_prefix );
+            $msg[] = sprintf( __( "Deleted %s rows from $table (%s).", 'qtranslate' ), $results, $new_prefix );
         }
-        $results = $wpdb->query( "INSERT INTO $dbmeta ($dbmetaid, meta_key, meta_value)
-                              SELECT $dbmetaid, REPLACE(meta_key, '$old_prefix', '$new_prefix'), meta_value
-                              FROM  $dbmeta
+        $results = $wpdb->query( "INSERT INTO $table ($colid, meta_key, meta_value)
+                              SELECT $colid, REPLACE(meta_key, '$old_prefix', '$new_prefix'), meta_value
+                              FROM  $table
                               WHERE meta_key like '$old_prefix%'" );
-        $msg[]   = sprintf( __( "Imported %s rows into $dbmeta (%s->%s).", 'qtranslate' ), $results ?: '0', $old_prefix, $new_prefix );
+        $msg[]   = sprintf( __( "Imported %s rows into $table (%s->%s).", 'qtranslate' ), $results ?: '0', $old_prefix, $new_prefix );
     };
 
     $msg = [];
@@ -85,24 +104,24 @@ function qtranxf_slugs_import_qts_options( $db_commit ) {
 
     $new_options = get_option( QTX_OPTIONS_MODULE_SLUGS );
     if ( $new_options ) {
-        $msg[] = sprintf( __( "Deleted %s types from options.", 'qtranslate' ), count( $new_options ) );
         if ( $db_commit ) {
             delete_option( QTX_OPTIONS_MODULE_SLUGS );
         }
+        $msg[] = sprintf( __( "Deleted %s types from options.", 'qtranslate' ), count( $new_options ) );
     }
 
-    $options = get_option( QTX_SLUG_OLD_OPTIONS_NAME );
+    $options = get_option( QTX_SLUGS_LEGACY_QTS_OPTIONS_NAME );
     if ( $options ) {
         $new_options = [];
         // Drop the legacy prefix.
         foreach ( $options as $type => $slugs ) {
-            $type                 = str_replace( QTX_SLUG_OLD_OPTIONS_PREFIX, '', $type );
-            $new_options[ $type ] = $slugs;
+            $new_type                 = str_replace( QTX_SLUGS_LEGACY_QTS_OPTIONS_PREFIX, '', $type );
+            $new_options[ $new_type ] = $slugs;
         }
-        $msg[] = sprintf( __( "Imported %s types from options.", 'qtranslate' ), count( $new_options ) );
         if ( $db_commit ) {
             update_option( QTX_OPTIONS_MODULE_SLUGS, $new_options, false );
         }
+        $msg[] = sprintf( __( "Imported %s types from options.", 'qtranslate' ), count( $new_options ) );
     }
 
     return implode( '<br/>', $msg );
