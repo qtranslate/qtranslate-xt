@@ -46,7 +46,7 @@ function qts_check_import_slugs() {
  *
  * @return string messages giving details.
  */
-function qts_import_slugs( $db_commit ) {
+function qts_import_slugs_meta( $db_commit ) {
     global $wpdb;
 
     $new_prefix = QTX_SLUG_META_PREFIX;
@@ -64,8 +64,7 @@ function qts_import_slugs( $db_commit ) {
         $msg[]   = sprintf( __( "Imported %s rows into $dbmeta (%s->%s).", 'qtranslate' ), $results ?: '0', $old_prefix, $new_prefix );
     };
 
-    $msg   = [];
-    $msg[] = $db_commit ? __( 'Import slugs:', 'qtranslate' ) : __( "Dry-run mode:", 'qtranslate' );
+    $msg = [];
     $wpdb->query( "START TRANSACTION" );
     $import_meta( $wpdb->postmeta, 'post_id', $msg );
     $import_meta( $wpdb->termmeta, 'term_id', $msg );
@@ -76,4 +75,49 @@ function qts_import_slugs( $db_commit ) {
     }
 
     return implode( '<br>', $msg );
+}
+
+/**
+ * Import slugs legacy options.
+ *
+ * @param bool $db_commit true to commit changes, false for dry-run mode.
+ *
+ * @return string messages giving details.
+ */
+function qts_import_slugs_options( $db_commit ) {
+    $msg = [];
+
+    $new_options = get_option( QTX_OPTIONS_MODULE_SLUGS );
+    if ( $new_options ) {
+        $msg[] = sprintf( __( "Deleted %s types from options.", 'qtranslate' ), count( $new_options ) );
+        if ( $db_commit ) {
+            delete_option( QTX_OPTIONS_MODULE_SLUGS );
+        }
+    }
+
+    $options = get_option( 'qts_options' );
+    if ( $options ) {
+        $msg[] = sprintf( __( "Imported %s types from options.", 'qtranslate' ), count( $options ) );
+        if ( $db_commit ) {
+            update_option( QTX_OPTIONS_MODULE_SLUGS, $options, false );
+        }
+    }
+
+    return implode( '<br/>', $msg );
+}
+
+/**
+ * Import slugs legacy options.
+ *
+ * @param bool $db_commit true to commit changes, false for dry-run mode.
+ *
+ * @return string messages giving details.
+ */
+function qts_import_slugs( $db_commit ) {
+    $msg   = [];
+    $msg[] = $db_commit ? __( 'Import slugs:', 'qtranslate' ) : __( "Dry-run mode:", 'qtranslate' );
+    $msg[] = qts_import_slugs_meta( $db_commit );
+    $msg[] = qts_import_slugs_options( $db_commit );
+
+    return implode( '<br/>', $msg );
 }
