@@ -2,7 +2,7 @@
 
 const QTX_SLUG_OLD_META_PREFIX    = '_qts_slug_';
 const QTX_SLUG_OLD_OPTIONS_PREFIX = '_qts_';
-const QTX_SLUG_OLD_OPTIONS        = 'qts_options';
+const QTX_SLUG_OLD_OPTIONS_NAME   = 'qts_options';
 
 /**
  * Check if slugs meta should be imported from the legacy postmeta and termmeta.
@@ -91,7 +91,7 @@ function qts_import_slugs_options( $db_commit ) {
         }
     }
 
-    $options = get_option( QTX_SLUG_OLD_OPTIONS );
+    $options = get_option( QTX_SLUG_OLD_OPTIONS_NAME );
     if ( $options ) {
         $new_options = [];
         // Drop the legacy prefix.
