@@ -15,11 +15,11 @@ function qtranxf_slugs_check_import_qts() {
     global $wpdb;
 
     /**
-     * Generic function that counts the meta items.
+     * Generic function that counts the slugs meta, legacy (QTS) or new (QTX).
      *
      * @param string $table name of the meta table (postmeta, termmeta)
      * @param string $prefix prefix for the meta key
-     * @param string[] $msg array of messsages, updated
+     * @param string[] $msg array of messages, updated
      *
      * @return void
      */
@@ -46,7 +46,7 @@ function qtranxf_slugs_check_import_qts() {
 }
 
 /**
- * Import slugs meta by duplicating the legacy QTS postmeta and termmeta.
+ * Import slugs meta by duplicating the legacy QTS postmeta and termmeta for QTX.
  *
  * @param bool $db_commit true to commit changes, false for dry-run mode.
  *

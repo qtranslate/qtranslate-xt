@@ -932,15 +932,15 @@ function qtranxf_admin_notices_gutenberg() {
 add_action( 'admin_notices', 'qtranxf_admin_notices_gutenberg' );
 
 function qtranxf_admin_notices_slugs_import() {
-    if ( qtranxf_check_admin_notice( 'slugs-import' ) ) {
+    if ( qtranxf_check_admin_notice( 'slugs-import' ) || ! QTX_Module_Loader::is_module_active( 'slugs' ) ) {
         return;
     }
-    // Very quick check to see if worth going further.
+    // Very quick check to see if QTS has been used.
     $old_value = get_option( 'qts_options' );
     if ( ! $old_value ) {
-        return '';
+        return;
     }
-    // More advanced checks.
+    // More advanced checks in QTS meta.
     require_once( QTRANSLATE_DIR . '/modules/slugs/includes/qtranslate-slug-import.php' );
     $msg = qtranxf_slugs_check_import_qts();
     if ( empty( $msg ) ) {
