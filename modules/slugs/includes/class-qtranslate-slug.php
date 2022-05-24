@@ -131,8 +131,6 @@ class QtranslateSlug {
     /**
      * Adds news rules to translate the URL bases,
      * this function must be called on flush_rewrite or 'flush_rewrite_rules'.
-     *
-     * @param object $wp_rewrite
      */
     public function modify_rewrite_rules() {
         // post types rules
@@ -167,9 +165,6 @@ class QtranslateSlug {
         }
         $qts_options = $this->options_buffer;
         $option_name = QTS_PREFIX . $type . '_' . $name;
-        if ( ! isset( $qts_options[ $option_name ] ) || empty( $qts_options[ $option_name ] ) ) {
-            return false;
-        }
         if ( isset( $qts_options[ $option_name ][ $lang ] ) ) {
             return $qts_options[ $option_name ][ $lang ];
         }
@@ -298,7 +293,7 @@ class QtranslateSlug {
                         $request_match = $req_uri . '/' . $request;
                     }
                     if ( preg_match( "#^$match#", $request_match, $matches ) || preg_match( "#^$match#", urldecode( $request_match ), $matches ) ) {
-                        if ( $wp_rewrite->use_verbose_page_rules && preg_match( '/pagename=\$matches\[([0-9]+)\]/', $query, $varmatch ) ) {
+                        if ( $wp_rewrite->use_verbose_page_rules && preg_match( '/pagename=\$matches\[(\d+)\]/', $query, $varmatch ) ) {
                             // this is a verbose page match, lets check to be sure about it
                             if ( ! $page_foundid = $this->get_page_by_path( $matches[ $varmatch[1] ] ) ) {
                                 continue;
@@ -313,7 +308,7 @@ class QtranslateSlug {
                 }
             }
 
-            if ( isset( $wp->matched_rule ) ) {
+            if ( isset( $wp->matched_rule ) && isset( $query ) && isset( $matches ) ) {
                 // Trim the query of everything up to the '?'.
                 $query = preg_replace( "!^.+\?!", '', $query );
                 // Substitute the substring matches into the query.
@@ -448,7 +443,7 @@ class QtranslateSlug {
                     $id       = $query['post_type'];
                 } else {
                     $page_slug = ( isset( $query['name'] ) && ! empty( $query['name'] ) ) ? $query['name'] : $query[ $query['post_type'] ];
-                    $page      = $this->get_page_by_path( $page_slug, OBJECT, $query['post_type'] );
+                    $page      = $this->get_page_by_path( $page_slug, $query['post_type'] );
                     if ( ! $page ) {
                         return $query;
                     }
@@ -483,8 +478,8 @@ class QtranslateSlug {
              */
 
             // -> post
-            if ( ! $function && ( isset( $query['name'] ) || isset( $query['p'] ) ) ) {
-                $post = isset( $query['p'] ) ? get_post( $query['p'] ) : $this->get_page_by_path( $query['name'], OBJECT, 'post' );
+            if ( ! isset( $function ) && ( isset( $query['name'] ) || isset( $query['p'] ) ) ) {
+                $post = isset( $query['p'] ) ? get_post( $query['p'] ) : $this->get_page_by_path( $query['name'], 'post' );
                 if ( ! $post ) {
                     return $query;
                 }
@@ -496,7 +491,7 @@ class QtranslateSlug {
             }
         endif;
 
-        if ( isset( $function ) ) {
+        if ( isset( $function ) && isset( $id ) ) {
             // parse all languages links
             foreach ( $q_config['enabled_languages'] as $lang ) {
 
@@ -763,7 +758,7 @@ class QtranslateSlug {
         $current_post = $post;
 
         if ( ! $id ) {
-            $id = (int) $post->ID;
+            $id = $post->ID;
         } else {
             $current_post = get_post( $id );
         }
@@ -849,7 +844,7 @@ class QtranslateSlug {
             if ( $t->rewrite['hierarchical'] ) {
                 $hierarchical_slugs = array();
                 $ancestors          = get_ancestors( $term->term_id, $taxonomy );
-                foreach ( (array) $ancestors as $ancestor ) {
+                foreach ( $ancestors as $ancestor ) {
                     $ancestor_term = get_term( $ancestor, $taxonomy );
 
                     $ancestor_slug = get_metadata( 'term', $ancestor_term->term_id, QTS_META_PREFIX . $this->get_temp_lang(), true );
@@ -925,7 +920,7 @@ class QtranslateSlug {
     private function get_temp_lang() {
         global $q_config;
 
-        return ( $this->temp_lang ) ? $this->temp_lang : $q_config['language'];
+        return ( $this->temp_lang ) ?: $q_config['language'];
     }
 
     /**
@@ -974,12 +969,11 @@ class QtranslateSlug {
      * Retrieves a page id given its path.
      *
      * @param string $page_path Page path
-     * @param string $output Optional. Output type. OBJECT, ARRAY_N, or ARRAY_A. Default OBJECT.
      * @param string $post_type Optional. Post type. Default page.
      *
      * @return mixed Null when complete.
      */
-    private function get_page_id_by_path( $page_path, $output = OBJECT, $post_type = 'page' ) {
+    private function get_page_id_by_path( $page_path, $post_type = 'page' ) {
         global $wpdb;
 
         $page_path     = rawurlencode( urldecode( $page_path ) );
@@ -1039,15 +1033,14 @@ class QtranslateSlug {
      * Retrieves a page given its path.
      *
      * @param string $page_path Page path
-     * @param string $output Optional. Output type. OBJECT, ARRAY_N, or ARRAY_A. Default OBJECT.
      * @param string $post_type Optional. Post type. Default page.
      *
-     * @return mixed Null when complete.
+     * @return array|WP_Post|null Null when complete.
      */
-    private function get_page_by_path( $page_path, $output = OBJECT, $post_type = 'page' ) {
-        $foundid = $this->get_page_id_by_path( $page_path, $output, $post_type );
+    private function get_page_by_path( $page_path, $post_type = 'page' ) {
+        $foundid = $this->get_page_id_by_path( $page_path, $post_type );
         if ( $foundid ) {
-            return get_post( $foundid, $output );
+            return get_post( $foundid );
         }
 
         return null;
@@ -1169,15 +1162,14 @@ class QtranslateSlug {
     /**
      * Get all Term data from database by Term field and data.
      *
-     * @param (string) $field Either 'slug', 'name', or 'id'
-     * @param (string|int) $value Search for this term value
-     * @param (string) $taxonomy Taxonomy Name
-     * @param (string) $output Constant OBJECT, ARRAY_A, or ARRAY_N
-     * @param (string) $filter Optional, default is raw or no WordPress defined filter will applied.
+     * @param string $field Either 'slug', 'name', or 'id'
+     * @param string|int $value Search for this term value
+     * @param string $taxonomy Taxonomy Name
      *
-     * @return (mixed) Term Row from database. Will return false if $taxonomy does not exist or $term was not found.
+     * @return array|false|object|WP_Error|WP_Term|null Term Row from database. Will return false if $taxonomy does not exist or $term was not found.
+     * TODO: simplify return type and error handling, unexpected results may cause bugs!
      */
-    private function get_term_by( $field, $value, $taxonomy, $output = OBJECT, $filter = 'raw' ) {
+    private function get_term_by( $field, $value, $taxonomy ) {
         global $wpdb;
 
         if ( ! taxonomy_exists( $taxonomy ) ) {
@@ -1196,7 +1188,7 @@ class QtranslateSlug {
             $value = stripslashes( $value );
             $field = 't.name';
         } else {
-            $term = get_term( (int) $value, $taxonomy, $output, $filter );
+            $term = get_term( (int) $value, $taxonomy );
             if ( is_wp_error( $term ) ) {
                 $term = false;
             }
@@ -1219,16 +1211,8 @@ class QtranslateSlug {
 
         $term = apply_filters( 'get_term', $term, $taxonomy );
         $term = apply_filters( "get_$taxonomy", $term, $taxonomy );
-        $term = sanitize_term( $term, $taxonomy, $filter );
+        $term = sanitize_term( $term, $taxonomy, 'raw' );
 
-        if ( $output == OBJECT ) {
-            return $term;
-        } elseif ( $output == ARRAY_A ) {
-            return get_object_vars( $term );
-        } elseif ( $output == ARRAY_N ) {
-            return array_values( get_object_vars( $term ) );
-        } else {
-            return $term;
-        }
+        return $term;
     }
 }
