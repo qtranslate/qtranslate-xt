@@ -81,6 +81,7 @@ function qts_uninstall() {
     }
     $meta_keys = "'" . implode( "','", $meta_keys ) . "'";
     $wpdb->query( "DELETE from $wpdb->postmeta WHERE meta_key IN ($meta_keys)" );
+    $wpdb->query( "DELETE from $wpdb->termmeta WHERE meta_key IN ($meta_keys)" );
 
     qts_deactivate();
 
