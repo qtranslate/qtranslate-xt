@@ -68,15 +68,18 @@ function qtranxf_slugs_import_qts_meta( $db_commit ) {
      * @return void
      */
     $import_meta = function ( $table, $colid, &$msg ) use ( $wpdb, $old_prefix, $new_prefix ) {
-        $results = $wpdb->query( "DELETE FROM $table WHERE meta_key like '$new_prefix%'" );
-        if ( $results ) {
-            $msg[] = sprintf( __( "Deleted %s rows from $table (%s).", 'qtranslate' ), $results, $new_prefix );
-        }
+        // Count maximum number of items that can be imported.
+        $max_results = $wpdb->get_var( "SELECT count(*) FROM  $table WHERE meta_key like '$old_prefix%'" );
+        // Import only new QTS items, existing ones are ignored (not overwritten).
         $results = $wpdb->query( "INSERT INTO $table ($colid, meta_key, meta_value)
-                              SELECT $colid, REPLACE(meta_key, '$old_prefix', '$new_prefix'), meta_value
-                              FROM  $table
-                              WHERE meta_key like '$old_prefix%'" );
-        $msg[]   = sprintf( __( "Imported %s rows into $table (%s->%s).", 'qtranslate' ), $results ?: '0', $old_prefix, $new_prefix );
+            SELECT $colid, REPLACE(meta_key, '$old_prefix', '$new_prefix'), meta_value
+            FROM  $table
+            WHERE meta_key LIKE '$old_prefix%' AND meta_id NOT IN (
+                -- Find QTS items that have already been imported to new, matched by (colid,meta_key) pair
+                SELECT qts.meta_id
+                FROM $table new, $table qts
+                WHERE new.$colid = qts.$colid AND new.meta_key = REPLACE(qts.meta_key, '$old_prefix', '$new_prefix') AND qts.meta_key LIKE '$old_prefix%')" );
+        $msg[]   = sprintf( __( "Imported %s/%s rows into $table (%s->%s).", 'qtranslate' ), $results ?: '0', $max_results ?: '0', $old_prefix, $new_prefix );
     };
 
     $msg = [];
