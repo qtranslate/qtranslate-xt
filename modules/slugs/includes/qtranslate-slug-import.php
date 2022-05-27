@@ -52,7 +52,7 @@ function qtranxf_slugs_check_import_qts() {
  *
  * @return string messages giving details.
  */
-function qtranxf_slugs_import_qts_meta( $db_commit ) {
+function qtranxf_slugs_import_qts_meta( $db_delete, $db_commit ) {
     global $wpdb;
 
     $new_prefix = QTX_SLUGS_META_PREFIX;
@@ -67,7 +67,13 @@ function qtranxf_slugs_import_qts_meta( $db_commit ) {
      *
      * @return void
      */
-    $import_meta = function ( $table, $colid, &$msg ) use ( $wpdb, $old_prefix, $new_prefix ) {
+    $import_meta = function ( $table, $colid, $db_delete, &$msg ) use ( $wpdb, $old_prefix, $new_prefix ) {
+        if ($db_delete) {
+            $results = $wpdb->query( "DELETE FROM $table WHERE meta_key like '$new_prefix%'" );
+            if ( $results ) {
+                $msg[] = sprintf( __( "Deleted %s rows from $table (%s).", 'qtranslate' ), $results, $new_prefix );
+            }
+        }
         // Count maximum number of items that can be imported.
         $max_results = $wpdb->get_var( "SELECT count(*) FROM  $table WHERE meta_key like '$old_prefix%'" );
         // Import only new QTS items, existing ones are ignored (not overwritten).
@@ -84,8 +90,8 @@ function qtranxf_slugs_import_qts_meta( $db_commit ) {
 
     $msg = [];
     $wpdb->query( "START TRANSACTION" );
-    $import_meta( $wpdb->postmeta, 'post_id', $msg );
-    $import_meta( $wpdb->termmeta, 'term_id', $msg );
+    $import_meta( $wpdb->postmeta, 'post_id', $db_delete, $msg );
+    $import_meta( $wpdb->termmeta, 'term_id', $db_delete, $msg );
     if ( $db_commit ) {
         $wpdb->query( "COMMIT" );
     } else {
@@ -133,14 +139,15 @@ function qtranxf_slugs_import_qts_options( $db_commit ) {
 /**
  * Import slugs legacy QTS data (options and meta).
  *
+ * @param bool $db_delete true to delete before import.
  * @param bool $db_commit true to commit changes, false for dry-run mode.
  *
  * @return string messages giving details.
  */
-function qtranxf_slugs_import_qts_data( $db_commit ) {
+function qtranxf_slugs_import_qts_data( $db_delete, $db_commit ) {
     $msg   = [];
     $msg[] = $db_commit ? __( 'Import slugs:', 'qtranslate' ) : __( "Dry-run mode:", 'qtranslate' );
-    $msg[] = qtranxf_slugs_import_qts_meta( $db_commit );
+    $msg[] = qtranxf_slugs_import_qts_meta( $db_delete, $db_commit );
     $msg[] = qtranxf_slugs_import_qts_options( $db_commit );
 
     if ( $db_commit ) {

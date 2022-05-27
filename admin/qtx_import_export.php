@@ -237,15 +237,23 @@ function qtranxf_admin_section_import_export( $request_uri ) {
                         <input type="checkbox" name="qtranslate_import_slugs"
                                id="qtranslate_import_slugs"
                                value="1"
-                               onclick="let x=jQuery('#qtranslate_import_slugs_confirm'); x.prop('disabled', !jQuery(this).prop('checked')); x.prop('checked', false);"/>
+                               onclick="let c=jQuery('#qtranslate_import_slugs_confirm'); c.prop('disabled', !jQuery(this).prop('checked')); c.prop('checked', false);
+                                        let d=jQuery('#qtranslate_import_slugs_delete'); d.prop('disabled', !jQuery(this).prop('checked')); d.prop('checked', false);"/>
                         <?php _e( 'Import options, post and term meta from legacy slugs (QTS).', 'qtranslate' ); ?>
+                    </label>
+                    <br/>
+                    <label for="qtranslate_import_slugs_delete">
+                        <input type="checkbox" name="qtranslate_import_slugs_delete"
+                               id="qtranslate_import_slugs_delete"
+                               value="1" <?php disabled( true ) ?> />
+                        <?php _e( 'Delete existing options, post and meta (qTranslate) before import.', 'qtranslate' ); ?>
                     </label>
                     <br/>
                     <label for="qtranslate_import_slugs_confirm">
                         <input type="checkbox"
                                name="qtranslate_import_slugs_confirm"
                                id="qtranslate_import_slugs_confirm"
-                               value="1" <?php disabled( true ) ?> /> <?php _e( "Confirm import in database. Leave unchecked for a dry-run mode without change saved in database.", 'qtranslate' ) ?>
+                               value="1" <?php disabled( true ) ?> /> <?php _e( "Confirm to save changes in database. Leave unchecked for a dry-run mode.", 'qtranslate' ) ?>
                     </label>
                 </td>
             </tr>
