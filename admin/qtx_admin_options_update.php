@@ -974,9 +974,8 @@ function qtranxf_executeOnUpdate() {
 
     if ( isset( $_POST['qtranslate_import_slugs'] ) && $_POST['qtranslate_import_slugs'] ) {
         require_once( QTRANSLATE_DIR . '/modules/slugs/admin/slugs-qts-import.php' );
-        $db_delete  = isset( $_POST['qtranslate_import_slugs_delete'] ) && $_POST['qtranslate_import_slugs_delete'];
         $db_commit  = isset( $_POST['qtranslate_import_slugs_confirm'] ) && $_POST['qtranslate_import_slugs_confirm'];
-        $messages[] = qtranxf_slugs_import_qts_data( $db_delete, $db_commit );
+        $messages[] = qtranxf_slugs_import_qts_data( $db_commit );
     }
 }
 

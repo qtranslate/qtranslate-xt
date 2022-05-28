@@ -46,15 +46,14 @@ function qtranxf_slugs_check_import_qts() {
 }
 
 /**
- * Import slugs meta by duplicating the legacy QTS postmeta and termmeta for QTX.
- * Existing meta_key are preserved unless deletion is asked explicitly.
+ * Import slugs meta by migrating the legacy QTS postmeta and termmeta to QTX.
+ * Attention: current slugs meta are deleted.
  *
- * @param bool $db_delete true to delete existing meta before import.
  * @param bool $db_commit true to commit changes, false for dry-run mode.
  *
  * @return string messages giving details.
  */
-function qtranxf_slugs_import_qts_meta( $db_delete, $db_commit ) {
+function qtranxf_slugs_import_qts_meta( $db_commit ) {
     global $wpdb;
 
     $new_prefix = QTX_SLUGS_META_PREFIX;
@@ -64,37 +63,22 @@ function qtranxf_slugs_import_qts_meta( $db_delete, $db_commit ) {
      * Generic function that imports old meta into new ones. Only new meta_key (after rename) are imported.
      *
      * @param string $table name of the meta table (postmeta, termmeta)
-     * @param string $colid column name giving the meta id (post_id, term_id)
-     * @param bool $db_delete true to delete existing meta before import.
      * @param string[] $msg array of messages, updated
      *
      * @return void
      */
-    $import_meta = function ( $table, $colid, $db_delete, &$msg ) use ( $wpdb, $old_prefix, $new_prefix ) {
-        if ( $db_delete ) {
-            $results = $wpdb->query( "DELETE FROM $table WHERE meta_key like '$new_prefix%'" );
-            if ( $results ) {
-                $msg[] = sprintf( __( "Deleted %s rows from $table (%s).", 'qtranslate' ), $results, $new_prefix );
-            }
-        }
-        // Count maximum number of items that can be imported.
-        $max_results = $wpdb->get_var( "SELECT count(*) FROM  $table WHERE meta_key like '$old_prefix%'" );
+    $import_meta = function ( $table, &$msg ) use ( $wpdb, $old_prefix, $new_prefix ) {
+        $results = $wpdb->query( "DELETE FROM $table WHERE meta_key like '$new_prefix%'" );
+        $msg[]   = sprintf( __( "Deleted %s rows from $table (%s).", 'qtranslate' ), $results ?: '0', $new_prefix );
         // Import only new QTS items, existing ones are ignored (not overwritten).
-        $results = $wpdb->query( "INSERT INTO $table ($colid, meta_key, meta_value)
-            SELECT $colid, REPLACE(meta_key, '$old_prefix', '$new_prefix'), meta_value
-            FROM  $table
-            WHERE meta_key LIKE '$old_prefix%' AND meta_id NOT IN (
-                -- Find QTS items that have already been imported to new, matched by (colid,meta_key) pair
-                SELECT qts.meta_id
-                FROM $table new, $table qts
-                WHERE new.$colid = qts.$colid AND new.meta_key = REPLACE(qts.meta_key, '$old_prefix', '$new_prefix') AND qts.meta_key LIKE '$old_prefix%')" );
-        $msg[]   = sprintf( __( "Imported %s/%s rows into $table (%s->%s).", 'qtranslate' ), $results ?: '0', $max_results ?: '0', $old_prefix, $new_prefix );
+        $results = $wpdb->query( "UPDATE $table SET meta_key = REPLACE(meta_key, '$old_prefix', '$new_prefix') WHERE meta_key LIKE '$old_prefix%'" );
+        $msg[]   = sprintf( __( "Migrated %s rows into $table.", 'qtranslate' ), $results ?: '0' );
     };
 
     $msg = [];
     $wpdb->query( "START TRANSACTION" );
-    $import_meta( $wpdb->postmeta, 'post_id', $db_delete, $msg );
-    $import_meta( $wpdb->termmeta, 'term_id', $db_delete, $msg );
+    $import_meta( $wpdb->postmeta, $msg );
+    $import_meta( $wpdb->termmeta, $msg );
     if ( $db_commit ) {
         $wpdb->query( "COMMIT" );
     } else {
@@ -105,75 +89,61 @@ function qtranxf_slugs_import_qts_meta( $db_delete, $db_commit ) {
 }
 
 /**
- * Import slugs legacy QTS options by fusing them with current options.
+ * Import slugs by migrating the legacy QTS options.
+ * Attention: current slugs options are deleted.
  *
- * Existing meta_key are preserved unless deletion is asked explicitly. If not, a conservative merge is done:
- * - for new types, all slugs are imported
- * - for existing types, slugs are merged, existing slugs are preserved (no overwrite).
- *
- * @param bool $db_delete true to delete existing options before import.
  * @param bool $db_commit true to commit changes, false for dry-run mode.
  *
  * @return string messages giving details.
  */
-function qtranxf_slugs_import_qts_options( $db_delete, $db_commit ) {
-    $msg         = [];
-    $new_options = [];
+function qtranxf_slugs_import_qts_options( $db_commit ) {
+    $msg = [];
 
-    // Current options are saved before import, may contain new types depending on active plugins.
     $old_options = get_option( QTX_OPTIONS_MODULE_SLUGS );
     if ( $old_options ) {
-        if ( $db_delete ) {
-            if ( $db_commit ) {
-                delete_option( QTX_OPTIONS_MODULE_SLUGS );
-            }
-            $msg[] = sprintf( __( "Deleted %s types from options.", 'qtranslate' ), count( $old_options ) );
-        } else {
-            // Drop the legacy prefix, retro-fix of current options previously saved on master branch (development).
-            foreach ( $old_options as $type => $slugs ) {
-                $type                 = str_replace( QTX_SLUGS_LEGACY_QTS_OPTIONS_PREFIX, '', $type );
-                $new_options[ $type ] = $slugs;
-            }
+        if ( $db_commit ) {
+            delete_option( QTX_OPTIONS_MODULE_SLUGS );
         }
+        $msg[] = sprintf( __( "Deleted %s types from options.", 'qtranslate' ), count( $old_options ) );
     }
 
-    $imported_types = 0;
-    $qts_options    = get_option( QTX_SLUGS_LEGACY_QTS_OPTIONS_NAME );
+    $new_options = [];
+    $qts_options = get_option( QTX_SLUGS_LEGACY_QTS_OPTIONS_NAME );
     if ( $qts_options ) {
+        // Drop the legacy prefix.
         foreach ( $qts_options as $type => $slugs ) {
-            // Drop the legacy prefix.
-            $type = str_replace( QTX_SLUGS_LEGACY_QTS_OPTIONS_PREFIX, '', $type );
-            if ( isset( $new_options[ $type ] ) ) {
-                // Fuse slugs, but existing values prevail (no overwrite).
-                $new_options[ $type ] = array_merge( $slugs, $new_options[ $type ] );
-            } else {
-                $new_options[ $type ] = $slugs;
-                $imported_types++;
-            }
+            $type                 = str_replace( QTX_SLUGS_LEGACY_QTS_OPTIONS_PREFIX, '', $type );
+            $new_options[ $type ] = $slugs;
         }
     }
-
     if ( $db_commit ) {
         update_option( QTX_OPTIONS_MODULE_SLUGS, $new_options, false );
+        delete_option( QTX_SLUGS_LEGACY_QTS_OPTIONS_NAME );
+
+        global $qtranslate_slugs;
+        if ( $qtranslate_slugs->options_buffer != $new_options ) {
+            $qtranslate_slugs->options_buffer = $new_options;
+            flush_rewrite_rules();
+        }
     }
-    $msg[] = sprintf( __( "Imported %s types from options.", 'qtranslate' ), $imported_types );
+    $msg[] = sprintf( __( "Migrated %s types from options.", 'qtranslate' ), count( $new_options ) );
 
     return implode( '<br/>', $msg );
 }
 
 /**
  * Import slugs legacy QTS data (meta and options).
+ * Attention: current slugs data are deleted.
  *
- * @param bool $db_delete true to delete existing meta and options before import.
  * @param bool $db_commit true to commit changes, false for dry-run mode.
  *
  * @return string messages giving details.
  */
-function qtranxf_slugs_import_qts_data( $db_delete, $db_commit ) {
+function qtranxf_slugs_import_qts_data( $db_commit ) {
     $msg   = [];
     $msg[] = $db_commit ? __( 'Import slugs:', 'qtranslate' ) : __( "Dry-run mode:", 'qtranslate' );
-    $msg[] = qtranxf_slugs_import_qts_meta( $db_delete, $db_commit );
-    $msg[] = qtranxf_slugs_import_qts_options( $db_delete, $db_commit );
+    $msg[] = qtranxf_slugs_import_qts_meta( $db_commit );
+    $msg[] = qtranxf_slugs_import_qts_options( $db_commit );
 
     if ( $db_commit ) {
         qtranxf_update_admin_notice( 'slugs-import', true );  // Hide the automatic admin notice.
