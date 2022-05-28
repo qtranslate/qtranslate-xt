@@ -537,7 +537,7 @@ function qts_taxonomy_custom_column( $str, $column_name, $term_id ) {
     global $q_config;
 
     if ( $column_name === 'qts-slug' ) {
-        echo get_metadata( 'term', $term_id, QTS_META_PREFIX . $q_config['language'], true );
+        echo get_metadata( 'term', $term_id, QTX_SLUGS_META_PREFIX . $q_config['language'], true );
     }
 
     return false;

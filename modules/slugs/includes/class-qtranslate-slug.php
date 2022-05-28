@@ -843,7 +843,7 @@ class QtranslateSlug {
                 foreach ( $ancestors as $ancestor ) {
                     $ancestor_term = get_term( $ancestor, $taxonomy );
 
-                    $ancestor_slug = get_metadata( 'term', $ancestor_term->term_id, QTS_META_PREFIX . $this->get_temp_lang(), true );
+                    $ancestor_slug = get_metadata( 'term', $ancestor_term->term_id, QTX_SLUGS_META_PREFIX . $this->get_temp_lang(), true );
                     if ( ! $ancestor_slug ) {
                         $ancestor_slug = $ancestor_term->slug;
                     }
