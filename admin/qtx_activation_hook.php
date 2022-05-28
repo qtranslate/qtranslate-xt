@@ -931,31 +931,29 @@ function qtranxf_admin_notices_gutenberg() {
 
 add_action( 'admin_notices', 'qtranxf_admin_notices_gutenberg' );
 
-function qtranxf_admin_notices_slugs_import() {
-    if ( qtranxf_check_admin_notice( 'slugs-import' ) || ! QTX_Module_Loader::is_module_active( 'slugs' ) ) {
+function qtranxf_admin_notices_slugs_migrate() {
+    if ( qtranxf_check_admin_notice( 'slugs-migrate' ) || ! QTX_Module_Loader::is_module_active( 'slugs' ) ) {
         return;
     }
-    // Very quick check to see if QTS has been used.
-    $old_value = get_option( 'qts_options' );
+    $old_value = get_option( 'qts_options' );  // Very quick check to avoid loading more code.
     if ( ! $old_value ) {
         return;
     }
-    // More advanced checks in QTS meta.
-    require_once( QTRANSLATE_DIR . '/modules/slugs/admin/slugs-qts-import.php' );
-    $msg = qtranxf_slugs_check_import_qts();
+    require_once( QTRANSLATE_DIR . '/modules/slugs/admin/slugs-migrate-qts.php' );
+    $msg = qtranxf_slugs_check_migrate_qts();  // More advanced checks with QTS meta.
     if ( empty( $msg ) ) {
         return;
     }
     qtranxf_admin_notice_dismiss_script();
-    echo '<div class="notice notice-warning qtranxs-notice-ajax is-dismissible" id="qtranxs-slugs-import"><p>';
+    echo '<div class="notice notice-warning qtranxs-notice-ajax is-dismissible" id="qtranxs-slugs-migrate"><p>';
     $options_link = admin_url( 'options-general.php?page=qtranslate-xt#import' );
-    echo '<p>' . sprintf( __( '%s : found slugs meta that can be imported. Go to the <a href="%s">import settings</a> to import.', 'qtranslate' ), qtranxf_get_plugin_link(), $options_link ) . '</p>';
+    echo '<p>' . sprintf( __( '%s : found slugs meta that can be migrated. Go to the <a href="%s">import settings</a> to migrate.', 'qtranslate' ), qtranxf_get_plugin_link(), $options_link ) . '</p>';
     echo '<p>' . $msg . '</p>';
     echo '</p><p><a class="button qtranxs-notice-dismiss" href="javascript:void(0);">' . __( 'I have already done it, dismiss this message.', 'qtranslate' );
     echo '</a></p></div>';
 }
 
-add_action( 'admin_notices', 'qtranxf_admin_notices_slugs_import' );
+add_action( 'admin_notices', 'qtranxf_admin_notices_slugs_migrate' );
 
 function qtranxf_admin_notice_deactivate_plugin( $name, $plugin ) {
     deactivate_plugins( $plugin, true );

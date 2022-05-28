@@ -231,11 +231,11 @@ function qtranxf_admin_section_import_export( $request_uri ) {
         <?php do_action( 'qtranslate_add_row_migrate' ) ?>
         <?php if ( QTX_Module_Loader::is_module_active( 'slugs' ) ): ?>
             <tr id="qtranslate-import-slugs">
-                <th scope="row"><?php _e( 'Import from slugs', 'qtranslate' ) ?></th>
+                <th scope="row"><?php _e( 'Migrate QTS slugs', 'qtranslate' ) ?></th>
                 <td>
-                    <label for="qtranslate_import_slugs">
-                        <input type="checkbox" name="qtranslate_import_slugs"
-                               id="qtranslate_import_slugs"
+                    <label for="qtranslate_import_slugs_migrate">
+                        <input type="checkbox" name="qtranslate_import_slugs_migrate"
+                               id="qtranslate_import_slugs_migrate"
                                value="1"
                                onclick="let c=jQuery('#qtranslate_import_slugs_confirm'); c.prop('disabled', !jQuery(this).prop('checked')); c.prop('checked', false);"/>
                         <?php _e( 'Migrate slugs options, post and term meta from legacy plugin (QTS) to qTranslate.', 'qtranslate' ); ?>
@@ -245,7 +245,7 @@ function qtranxf_admin_section_import_export( $request_uri ) {
                         <input type="checkbox"
                                name="qtranslate_import_slugs_confirm"
                                id="qtranslate_import_slugs_confirm"
-                               value="1" <?php disabled( true ) ?> /> <?php _e( "Confirm migration of QTS slugs in database. Attention! Existing slugs are erased, this action is irreversible. Leave unchecked for a dry-run.", 'qtranslate' ) ?>
+                               value="1" <?php disabled( true ) ?> /> <?php _e( "Confirm migration of QTS slugs in database. Attention: existing slugs are erased! This action is irreversible. Leave unchecked for a dry-run.", 'qtranslate' ) ?>
                     </label>
                 </td>
             </tr>
