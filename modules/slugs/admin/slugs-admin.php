@@ -2,7 +2,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
-include_once( dirname( __FILE__ ) . '/qtranslate-slug-settings.php' );
+include_once( dirname( __FILE__ ) . '/slugs-settings.php' );
 
 // add filters
 add_filter( 'qts_validate_post_slug', 'qts_validate_post_slug', 0, 3 );
@@ -29,9 +29,9 @@ register_uninstall_hook( QTRANSLATE_FILE, 'qts_uninstall' );
  * Add support for taxonomies and optional integration with WooCommerce.
  */
 function qts_taxonomies_hooks() {
-    global $qtranslate_slug;
+    global $qtranslate_slugs;
 
-    $taxonomies = $qtranslate_slug->get_public_taxonomies();
+    $taxonomies = $qtranslate_slugs->get_public_taxonomies();
 
     if ( $taxonomies ) {
         foreach ( $taxonomies as $taxonomy ) {
@@ -91,10 +91,10 @@ function qts_uninstall() {
  * Activates and do the installation.
  */
 function qts_activate() {
-    global $qtranslate_slug;
+    global $qtranslate_slugs;
 
     // regenerate rewrite rules in db
-    add_action( 'generate_rewrite_rules', array( &$qtranslate_slug, 'modify_rewrite_rules' ) );
+    add_action( 'generate_rewrite_rules', array( &$qtranslate_slugs, 'modify_rewrite_rules' ) );
     flush_rewrite_rules();
 }
 
@@ -103,10 +103,10 @@ function qts_activate() {
  */
 function qts_deactivate() {
     global $wp_rewrite;
-    global $qtranslate_slug;
+    global $qtranslate_slugs;
 
     // regenerate rewrite rules in db
-    remove_action( 'generate_rewrite_rules', array( &$qtranslate_slug, 'modify_rewrite_rules' ) );
+    remove_action( 'generate_rewrite_rules', array( &$qtranslate_slugs, 'modify_rewrite_rules' ) );
     $wp_rewrite->flush_rules();
 }
 

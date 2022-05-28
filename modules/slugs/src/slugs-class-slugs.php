@@ -1,9 +1,9 @@
 <?php
 
 /**
- * QtranslateSlug class
+ * Main class for translation of slugs, setting up hooks for front-side.
  */
-class QtranslateSlug {
+class QTX_Slugs {
     /**
      * Stores options slugs from database.
      * @var array
@@ -81,7 +81,7 @@ class QtranslateSlug {
      * Adds proper links to the content with available translations.
      * Fixes issue #25
      *
-     * @global QtranslateSlug $qtranslate_slug used to convert the url
+     * @global QtranslateSlug $qtranslate_slugs used to convert the url
      * @global array $q_config available languages
      */
     public function qtranslate_slug_header_extended() {

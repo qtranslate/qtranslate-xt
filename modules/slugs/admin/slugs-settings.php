@@ -39,7 +39,7 @@ function qts_section_fn( $section_id = '' ) {
  * @return void echoes output
  */
 function qts_show_form_field( $args = array() ) {
-    global $qtranslate_slug;
+    global $qtranslate_slugs;
     global $q_config;
 
     $type    = $args['type'];
@@ -49,7 +49,7 @@ function qts_show_form_field( $args = array() ) {
     $choices = $args['choices'];
     $class   = $args['class'];
 
-    $options = $qtranslate_slug->options_buffer ?: get_option( QTX_OPTIONS_MODULE_SLUGS, array() );
+    $options = $qtranslate_slugs->options_buffer ?: get_option( QTX_OPTIONS_MODULE_SLUGS, array() );
 
     // pass the standard value if the option is not yet set in the database
     if ( ! isset( $options[ $id ] ) && $type != 'checkbox' ) {
@@ -353,17 +353,17 @@ function qts_validate_options( $input ) {
 }
 
 function qts_update_settings() {
-    global $qtranslate_slug;
+    global $qtranslate_slugs;
 
     $qts_settings = isset( $_POST[ QTX_OPTIONS_MODULE_SLUGS ] ) ? qts_validate_options( $_POST[ QTX_OPTIONS_MODULE_SLUGS ] ) : array();
     if ( empty( $qts_settings ) ) {
         return;
     }
-    if ( $qtranslate_slug->options_buffer == $qts_settings ) {
+    if ( $qtranslate_slugs->options_buffer == $qts_settings ) {
         return;
     }
     update_option( QTX_OPTIONS_MODULE_SLUGS, $qts_settings, false );
-    $qtranslate_slug->options_buffer = $qts_settings;
+    $qtranslate_slugs->options_buffer = $qts_settings;
     flush_rewrite_rules();
 }
 
@@ -403,15 +403,15 @@ function get_multi_txt_choices() {
  * @return array
  */
 function qts_options_page_fields() {
-    global $qtranslate_slug;
+    global $qtranslate_slugs;
     $options = array();
 
-    $post_types = $qtranslate_slug->get_public_post_types();
+    $post_types = $qtranslate_slugs->get_public_post_types();
     foreach ( $post_types as $post_type ) {
         $options[] = qts_options_page_build_slug_fields( $post_type, "post_types", "post_type_" );
     }
 
-    $taxonomies = $qtranslate_slug->get_public_taxonomies();
+    $taxonomies = $qtranslate_slugs->get_public_taxonomies();
     foreach ( $taxonomies as $taxonomy ) {
         $options[] = qts_options_page_build_slug_fields( $taxonomy, "taxonomies", "taxonomy_" );
     }
