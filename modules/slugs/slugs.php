@@ -17,7 +17,7 @@ $qtranslate_slug = new QtranslateSlug();
 
 
 if ( is_admin() ) {
-    include_once( dirname( __FILE__ ) . '/includes/qtranslate-slug-admin.php' );
+    include_once( dirname( __FILE__ ) . '/admin/qtranslate-slug-admin.php' );
 }
 
 // plugin init
