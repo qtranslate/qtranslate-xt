@@ -99,6 +99,11 @@ function qtranxf_slugs_migrate_qts_meta( $db_commit ) {
 function qtranxf_slugs_migrate_qts_options( $db_commit ) {
     $msg = [];
 
+    $qts_options = get_option( QTX_SLUGS_LEGACY_QTS_OPTIONS_NAME );
+    if ( ! $qts_options ) {
+        return __( "No options to migrate.", 'qtranslate' );
+    }
+
     $old_options = get_option( QTX_OPTIONS_MODULE_SLUGS );
     if ( $old_options ) {
         if ( $db_commit ) {
@@ -108,13 +113,10 @@ function qtranxf_slugs_migrate_qts_options( $db_commit ) {
     }
 
     $new_options = [];
-    $qts_options = get_option( QTX_SLUGS_LEGACY_QTS_OPTIONS_NAME );
-    if ( $qts_options ) {
-        // Drop the legacy prefix.
-        foreach ( $qts_options as $type => $slugs ) {
-            $type                 = str_replace( QTX_SLUGS_LEGACY_QTS_OPTIONS_PREFIX, '', $type );
-            $new_options[ $type ] = $slugs;
-        }
+    // Drop the legacy prefix.
+    foreach ( $qts_options as $type => $slugs ) {
+        $type                 = str_replace( QTX_SLUGS_LEGACY_QTS_OPTIONS_PREFIX, '', $type );
+        $new_options[ $type ] = $slugs;
     }
     if ( $db_commit ) {
         update_option( QTX_OPTIONS_MODULE_SLUGS, $new_options, false );
