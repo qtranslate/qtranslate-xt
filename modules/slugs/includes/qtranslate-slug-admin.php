@@ -235,7 +235,7 @@ function qts_wp_unique_post_slug( $slug, $post_ID, $post_status, $post_type, $po
     } else {
         // TODO: update unique_slug :: missing hieararchical from current wp func ( 4.3.1 )
         // Post slugs must be unique across all posts.
-        $check_sql       = "SELECT $wpdb->postmeta.meta_value FROM $wpdb->posts,$wpdb->postmeta WHERE $wpdb->posts.ID = $wpdb->postmeta.post_id AND $wpdb->postmeta.meta_key = '%s' AND $wpdb->postmeta.meta_value = '%s' AND $wpdb->posts.post_type = %s AND ID != %d LIMIT 1";
+        $check_sql       = "SELECT $wpdb->postmeta.meta_value FROM $wpdb->posts,$wpdb->postmeta WHERE $wpdb->posts.ID = $wpdb->postmeta.post_id AND $wpdb->postmeta.meta_key = '%s' AND $wpdb->postmeta.meta_value = '%s' AND $wpdb->posts.post_type = %s AND $wpdb->posts.ID != %d LIMIT 1";
         $post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, QTX_SLUGS_META_PREFIX . $lang, $slug, $post_type, $post_ID ) );
 
         // TODO: update unique_slug :: missing check for conflict with dates archive from current wp func ( 4.3.1 )
@@ -297,6 +297,8 @@ function qts_save_postdata( $post_id, $post = null ) {
  * @return string the slug validated
  */
 function qts_validate_term_slug( $slug, $term, $lang ) {
+    global $q_config;
+
     $term_name = trim( qtranxf_use( $lang, $term->name, false, true ) );
     if ( $term_name === '' ) {
         $term_name = trim( qtranxf_use( $q_config['default_language'], $term->name ) );
@@ -499,6 +501,9 @@ function qts_hide_term_slug_box() {
             return;
     endswitch;
 
+    if ( ! isset( $id ) ) {
+        return;
+    }
     echo "<!-- QTS remove slug box -->" . PHP_EOL;
     echo "<script>" . PHP_EOL;
     echo "  jQuery(document).ready(function($){" . PHP_EOL;
@@ -531,10 +536,8 @@ function qts_taxonomy_columns( $columns ) {
 function qts_taxonomy_custom_column( $str, $column_name, $term_id ) {
     global $q_config;
 
-    switch ( $column_name ) {
-        case 'qts-slug':
-            echo get_metadata( 'term', $term_id, QTX_SLUGS_META_PREFIX . $q_config['language'], true );
-            break;
+    if ( $column_name === 'qts-slug' ) {
+        echo get_metadata( 'term', $term_id, QTS_META_PREFIX . $q_config['language'], true );
     }
 
     return false;

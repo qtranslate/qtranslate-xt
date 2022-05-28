@@ -448,7 +448,7 @@ function qtranxf_getLanguageName( $lang = '' ) {
         // not loaded by default, since this place should not be hit frequently
         $locale = $q_config['locale'][ $q_config['language'] ];
         if ( ! load_textdomain( 'language-names', QTRANSLATE_DIR . '/lang/language-names/language-' . $locale . '.mo' ) ) {
-            if ( strlen( $locale ) >= 2 && $locale[2] == '_' ) {
+            if ( strlen( $locale ) > 2 && $locale[2] == '_' ) {
                 $locale = substr( $locale, 0, 2 );
                 load_textdomain( 'language-names', QTRANSLATE_DIR . '/lang/language-names/language-' . $locale . '.mo' );
             }
@@ -456,15 +456,17 @@ function qtranxf_getLanguageName( $lang = '' ) {
     }
     $translations = get_translations_for_domain( 'language-names' );
     $locale       = $q_config['locale'][ $lang ];
-    while ( ! isset( $translations->entries[ $locale ] ) ) {
-        if ( strlen( $locale ) >= 2 && $locale[2] == '_' ) {
+    if ( ! isset( $translations->entries[ $locale ] ) ) {
+        $found_locale = false;
+        if ( strlen( $locale ) > 2 && $locale[2] == '_' ) {
             $locale = substr( $locale, 0, 2 );
             if ( isset( $translations->entries[ $locale ] ) ) {
-                break;
+                $found_locale = true;
             }
         }
-
-        return $q_config['language-names'][ $lang ] = $q_config['language_name'][ $lang ];
+        if ( ! $found_locale ) {
+            return $q_config['language-names'][ $lang ] = $q_config['language_name'][ $lang ];
+        }
     }
     $n = $translations->entries[ $locale ]->translations[0];
     if ( empty( $q_config['language_name_case'] ) ) {
