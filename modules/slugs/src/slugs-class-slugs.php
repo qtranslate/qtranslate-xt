@@ -64,8 +64,6 @@ class QTX_Slugs {
         remove_filter( 'category_link', 'qtranxf_convertURL' ); //TODO: check if it is needed
         remove_filter( 'tag_link', 'qtranxf_convertURL' ); //TODO: check if it is needed
 
-        add_filter( 'qts_permastruct', array( &$this, 'get_extra_permastruct' ), 0, 2 );
-        add_filter( 'qts_url_args', array( &$this, 'parse_url_args' ), 0, 1 );
         add_filter( 'home_url', array( &$this, 'home_url' ), 10, 4 );
         add_filter( 'post_type_link', array( &$this, 'post_type_link' ), 600, 4 );
         add_filter( 'post_link', array( &$this, 'post_link' ), 0, 3 );
@@ -176,7 +174,6 @@ class QTX_Slugs {
      * Parse and adds $_GET args passed to an URL.
      *
      * @param string $url parameters
-     * @param string $lang processed
      *
      * @return string converted URL
      */
@@ -494,9 +491,9 @@ class QTX_Slugs {
         if ( isset( $function ) && isset( $id ) ) {
             // parse all languages links
             foreach ( $q_config['enabled_languages'] as $lang ) {
-
                 $this->temp_lang            = $lang;
-                $this->current_url[ $lang ] = esc_url( apply_filters( 'qts_url_args', call_user_func( $function, $id ) ) );
+                $url                        = call_user_func( $function, $id );
+                $this->current_url[ $lang ] = esc_url( $this->parse_url_args( $url ) );
             }
             $this->temp_lang = false;
         }
@@ -603,7 +600,8 @@ class QTX_Slugs {
             return $post;
         }
 
-        $post_link = apply_filters( 'qts_permastruct', $wp_rewrite->get_extra_permastruct( $post->post_type ), $post->post_type );
+        $permastruct = $wp_rewrite->get_extra_permastruct( $post->post_type );
+        $post_link   = $this->get_extra_permastruct( $permastruct, $post->post_type );
 
         $slug = get_post_meta( $post->ID, QTS_META_PREFIX . $this->get_temp_lang(), true );
         if ( ! $slug ) {
@@ -820,9 +818,9 @@ class QTX_Slugs {
             return $term;
         }
 
-        $taxonomy = $term->taxonomy;
-
-        $termlink = apply_filters( 'qts_permastruct', $wp_rewrite->get_extra_permastruct( $taxonomy ), $taxonomy );
+        $taxonomy    = $term->taxonomy;
+        $permastruct = $wp_rewrite->get_extra_permastruct( $taxonomy );
+        $termlink    = $this->get_extra_permastruct( $permastruct, $taxonomy );
 
         $slug = get_metadata( 'term', $term->term_id, QTS_META_PREFIX . $this->get_temp_lang(), true );
         if ( ! $slug ) {
