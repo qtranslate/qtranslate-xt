@@ -236,8 +236,8 @@ function qtranxf_admin_section_import_export( $request_uri ) {
                     <label for="qtranslate_import_slugs_migrate">
                         <input type="checkbox" name="qtranslate_import_slugs_migrate"
                                id="qtranslate_import_slugs_migrate"
-                               value="1"
-                               onclick="let c=jQuery('#qtranslate_import_slugs_confirm'); c.prop('disabled', !jQuery(this).prop('checked')); c.prop('checked', false);"/>
+                               class="qtranxs_double_check" data-double-check="#qtranslate_import_slugs_confirm"
+                               value="1"/>
                         <?php _e( 'Migrate slugs options, post and term meta from legacy QTS plugin to qTranslate.', 'qtranslate' ); ?>
                     </label>
                     <br/>
@@ -253,19 +253,28 @@ function qtranxf_admin_section_import_export( $request_uri ) {
         <tr>
             <th scope="row"><?php _e( 'Reset qTranslate', 'qtranslate' ) ?></th>
             <td>
-                <label for="qtranslate_reset"><input type="checkbox" name="qtranslate_reset" id="qtranslate_reset"
-                                                     value="1"/> <?php _e( 'Check this box and click Save Changes to reset all qTranslate settings.', 'qtranslate' ) ?>
+                <label for="qtranslate_reset_all">
+                    <input type="checkbox" name="qtranslate_reset_all" id="qtranslate_reset_all"
+                           class="qtranxs_double_check"
+                           data-double-check="#qtranslate_reset_confirm,#qtranslate_reset_terms"
+                           value="1"/>
+                    <?php _e( 'Check this box and click Save Changes to reset all qTranslate settings.', 'qtranslate' ) ?>
                 </label>
                 <br/>
-                <label for="qtranslate_reset2"><input type="checkbox" name="qtranslate_reset2" id="qtranslate_reset2"
-                                                      value="1"/> <?php _e( 'Yes, I really want to reset qTranslate.', 'qtranslate' ) ?>
+                <label for="qtranslate_reset_confirm">
+                    <input type="checkbox" name="qtranslate_reset_confirm" id="qtranslate_reset_confirm"
+                           value="1" <?php disabled( true ) ?>/>
+                    <?php _e( 'Yes, I really want to reset qTranslate.', 'qtranslate' ) ?>
                 </label>
                 <br/>
-                <label for="qtranslate_reset3"><input type="checkbox" name="qtranslate_reset3" id="qtranslate_reset3"
-                                                      value="1"/> <?php _e( 'Also delete Translations for Categories/Tags/Link Categories.', 'qtranslate' ) ?>
+                <label for="qtranslate_reset_terms">
+                    <input type="checkbox" name="qtranslate_reset_terms" id="qtranslate_reset_terms"
+                           value="1" <?php disabled( true ) ?>/>
+                    <?php _e( 'Also delete Translations for Categories/Tags/Link Categories.', 'qtranslate' ) ?>
                 </label>
                 <br/>
                 <small><?php _e( 'If something isn\'t working correctly, you can always try to reset all qTranslate settings. A Reset won\'t delete any posts but will remove all settings (including all languages added).', 'qtranslate' ) ?></small>
+                <br/>
                 <br/>
                 <label for="qtranslate_reset_admin_notices"><input type="checkbox" name="qtranslate_reset_admin_notices"
                                                                    id="qtranslate_reset_admin_notices"
