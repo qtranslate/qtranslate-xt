@@ -156,9 +156,9 @@ function qts_sanitize_post_slug( $slug, $post, $lang ) {
 
     //TODO: if has a slug, test and use it
     //TODO: and then replace the default slug with the default language slug
-    $name = empty( $post_title ) ? $post_name : $post_title;
+    $name = ( $post_title === '' ) ? $post_name : $post_title;
     $slug = trim( $slug );
-    $slug = empty( $slug ) ? sanitize_title( $name ) : sanitize_title( $slug );
+    $slug = ( $slug === '' ) ? sanitize_title( $name ) : sanitize_title( $slug );
 
     return htmlspecialchars( $slug, ENT_QUOTES );
 }
@@ -295,11 +295,11 @@ function qts_sanitize_term_slug( $slug, $term, $lang ) {
     global $q_config;
 
     $term_name = trim( qtranxf_use( $lang, $term->name, false, true ) );
-    if ( empty( $term_name ) ) {
+    if ( $term_name === '' ) {
         $term_name = trim( qtranxf_use( $q_config['default_language'], $term->name ) );
     }
     $slug = trim( $slug );
-    $slug = empty( $slug ) ? sanitize_title( $term_name ) : sanitize_title( $slug );
+    $slug = $slug === '' ? sanitize_title( $term_name ) : sanitize_title( $slug );
 
     return htmlspecialchars( $slug, ENT_QUOTES );
 }
