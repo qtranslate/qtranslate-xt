@@ -26,7 +26,7 @@ function qtranxf_slugs_check_migrate_qts() {
     $count_slugs = function ( $table, $prefix, &$msg ) use ( $wpdb ) {
         $results = $wpdb->get_var( "SELECT count(*) FROM  $table WHERE meta_key like '$prefix%'" );
         if ( $results ) {
-            $msg[] = sprintf( __( "Found %s slugs from $table.", 'qtranslate' ), $results );
+            $msg[] = sprintf( __( "Found %d slugs from $table.", 'qtranslate' ), $results );
         }
     };
 
@@ -68,15 +68,15 @@ function qtranxf_slugs_migrate_qts_meta( $db_commit ) {
      * @return void
      */
     $migrate_meta = function ( $table, &$msg ) use ( $wpdb, $old_prefix, $new_prefix ) {
-        $max_results = $wpdb->get_var( "SELECT count(*) FROM  $table WHERE meta_key like '$old_prefix%'" );
-        if ( ! $max_results ) {
+        $results = $wpdb->get_var( "SELECT count(*) FROM  $table WHERE meta_key like '$old_prefix%'" );
+        if ( ! $results ) {
             $msg[] = sprintf( __( "No slugs to migrate from %s.", 'qtranslate' ), $table );
         } else {
             $results = $wpdb->query( "DELETE FROM $table WHERE meta_key like '$new_prefix%'" );
-            $msg[]   = sprintf( __( "Deleted %s slugs from $table (%s).", 'qtranslate' ), $results ?: '0', $new_prefix );
+            $msg[]   = sprintf( __( "Deleted %d slugs from %s (%s).", 'qtranslate' ), $results ?: 0, $table, $new_prefix );
             // Rename meta keys.
             $results = $wpdb->query( "UPDATE $table SET meta_key = REPLACE(meta_key, '$old_prefix', '$new_prefix') WHERE meta_key LIKE '$old_prefix%'" );
-            $msg[]   = sprintf( __( "Migrated %s slugs from $table (%s).", 'qtranslate' ), $results ?: '0', $old_prefix );
+            $msg[]   = sprintf( __( "Migrated %d slugs from %s (%s).", 'qtranslate' ), $results ?: 0, $table, $old_prefix );
         }
     };
 
@@ -114,7 +114,7 @@ function qtranxf_slugs_migrate_qts_options( $db_commit ) {
         if ( $db_commit ) {
             delete_option( QTX_OPTIONS_MODULE_SLUGS );
         }
-        $msg[] = sprintf( __( "Deleted %s types from options.", 'qtranslate' ), count( $old_options ) );
+        $msg[] = sprintf( __( "Deleted %d types from options.", 'qtranslate' ), count( $old_options ) );
     }
 
     $new_options = [];
@@ -133,7 +133,7 @@ function qtranxf_slugs_migrate_qts_options( $db_commit ) {
             flush_rewrite_rules();
         }
     }
-    $msg[] = sprintf( __( "Migrated %s types from options.", 'qtranslate' ), count( $new_options ) );
+    $msg[] = sprintf( __( "Migrated %d types from options.", 'qtranslate' ), count( $new_options ) );
 
     return implode( '<br/>', $msg );
 }
