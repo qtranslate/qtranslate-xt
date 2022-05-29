@@ -104,4 +104,11 @@ $(function () {
             }
         });
     })
+
+    // Checkboxes with double-check has associated checkbox(es) depending on it.
+    $('.qtranxs_double_check').on('click', function () {
+        const check = $($(this).attr('data-double-check'));  // There may be more than one checkbox (CSS selector).
+        check.prop('disabled', !$(this).prop('checked'));
+        check.prop('checked', false);
+    });
 });
