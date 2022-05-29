@@ -935,10 +935,11 @@ function qtranxf_admin_notices_slugs_migrate() {
     if ( qtranxf_check_admin_notice( 'slugs-migrate' ) || ! QTX_Module_Loader::is_module_active( 'slugs' ) ) {
         return;
     }
-    $old_value = get_option( 'qts_options' );  // Very quick check to avoid loading more code.
-    if ( ! $old_value ) {
-        return;
-    }
+    // TODO: restore quick check before release (temporarily disabled for master dev)
+//    $old_value = get_option( 'qts_options' );  // Very quick check to avoid loading more code.
+//    if ( ! $old_value ) {
+//        return;
+//    }
     require_once( QTRANSLATE_DIR . '/modules/slugs/admin/slugs-migrate-qts.php' );
     $msg = qtranxf_slugs_check_migrate_qts();  // More advanced checks with QTS meta.
     if ( empty( $msg ) ) {

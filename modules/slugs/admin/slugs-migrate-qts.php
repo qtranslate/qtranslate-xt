@@ -31,14 +31,6 @@ function qtranxf_slugs_check_migrate_qts() {
     };
 
     $msg = [];
-    $count_slugs( $wpdb->postmeta, QTX_SLUGS_META_PREFIX, $msg );
-    $count_slugs( $wpdb->termmeta, QTX_SLUGS_META_PREFIX, $msg );
-    if ( ! empty( $msg ) ) {
-        // Found some post/term meta with the new keys, no migrate to suggest (it can still be done manually).
-        return '';
-    }
-
-    $msg = [];
     $count_slugs( $wpdb->postmeta, QTX_SLUGS_LEGACY_QTS_META_PREFIX, $msg );
     $count_slugs( $wpdb->termmeta, QTX_SLUGS_LEGACY_QTS_META_PREFIX, $msg );
 
