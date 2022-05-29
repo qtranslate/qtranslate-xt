@@ -47,7 +47,7 @@ function qtranxf_slugs_check_migrate_qts() {
 
 /**
  * Migrate slugs meta by migrating the legacy QTS postmeta and termmeta to QTX.
- * Attention: current slugs meta are deleted.
+ * Attention: current slugs meta are deleted if QTS slugs are found.
  *
  * @param bool $db_commit true to commit changes, false for dry-run mode.
  *
@@ -68,11 +68,16 @@ function qtranxf_slugs_migrate_qts_meta( $db_commit ) {
      * @return void
      */
     $migrate_meta = function ( $table, &$msg ) use ( $wpdb, $old_prefix, $new_prefix ) {
-        $results = $wpdb->query( "DELETE FROM $table WHERE meta_key like '$new_prefix%'" );
-        $msg[]   = sprintf( __( "Deleted %s rows from $table (%s).", 'qtranslate' ), $results ?: '0', $new_prefix );
-        // Rename meta keys.
-        $results = $wpdb->query( "UPDATE $table SET meta_key = REPLACE(meta_key, '$old_prefix', '$new_prefix') WHERE meta_key LIKE '$old_prefix%'" );
-        $msg[]   = sprintf( __( "Migrated %s rows from $table (%s).", 'qtranslate' ), $results ?: '0', $old_prefix );
+        $max_results = $wpdb->get_var( "SELECT count(*) FROM  $table WHERE meta_key like '$old_prefix%'" );
+        if ( ! $max_results ) {
+            $msg[] = sprintf( __( "No slugs to migrate from %s.", 'qtranslate' ), $table );
+        } else {
+            $results = $wpdb->query( "DELETE FROM $table WHERE meta_key like '$new_prefix%'" );
+            $msg[]   = sprintf( __( "Deleted %s slugs from $table (%s).", 'qtranslate' ), $results ?: '0', $new_prefix );
+            // Rename meta keys.
+            $results = $wpdb->query( "UPDATE $table SET meta_key = REPLACE(meta_key, '$old_prefix', '$new_prefix') WHERE meta_key LIKE '$old_prefix%'" );
+            $msg[]   = sprintf( __( "Migrated %s slugs from $table (%s).", 'qtranslate' ), $results ?: '0', $old_prefix );
+        }
     };
 
     $msg = [];
@@ -90,7 +95,7 @@ function qtranxf_slugs_migrate_qts_meta( $db_commit ) {
 
 /**
  * Migrate legacy QTS options to QTX.
- * Attention: current slugs options are deleted.
+ * Attention: current slugs options are deleted if QTS options are found.
  *
  * @param bool $db_commit true to commit changes, false for dry-run mode.
  *
@@ -135,7 +140,7 @@ function qtranxf_slugs_migrate_qts_options( $db_commit ) {
 
 /**
  * Migrate slugs legacy QTS data (meta and options).
- * Attention: current slugs data are deleted.
+ * Attention: current slugs data are deleted if QTS data are found.
  *
  * @param bool $db_commit true to commit changes, false for dry-run mode.
  *
