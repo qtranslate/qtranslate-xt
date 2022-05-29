@@ -63,32 +63,37 @@ function qtranxf_slugs_migrate_qts_meta( $db_commit ) {
      * Generic function that migrates QTS meta to QTX meta.
      *
      * @param string $table name of the meta table (postmeta, termmeta)
+     * @param string $colid column name of the parent id (post_id, term_id)
      * @param string[] $msg array of messages, updated
      *
      * @return void
      */
-    $migrate_meta = function ( $table, &$msg ) use ( $wpdb, $old_prefix, $new_prefix ) {
-        $results = $wpdb->get_var( "SELECT count(*) FROM  $table WHERE meta_key like '$old_prefix%'" );
-        if ( ! $results ) {
+    $migrate_meta = function ( $table, $colid, $db_commit, &$msg ) use ( $wpdb, $old_prefix, $new_prefix ) {
+        $count_qts = $wpdb->get_var( "SELECT count(*) FROM  $table WHERE meta_key like '$old_prefix%'" );
+        if ( ! $count_qts ) {
             $msg[] = sprintf( __( "No slugs to migrate from %s.", 'qtranslate' ), $table );
-        } else {
-            $results = $wpdb->query( "DELETE FROM $table WHERE meta_key like '$new_prefix%'" );
+
+            return;
+        }
+        // Find the related post_id/term_id to delete (not meta_id), to ensure the migrated slugs replace the whole existing groups.
+        $id_to_delete = "SELECT DISTINCT($colid) FROM $table WHERE meta_key LIKE '$old_prefix%'";
+        if ( $db_commit ) {
+            $results = $wpdb->query( "DELETE FROM $table WHERE meta_key like '$new_prefix%' AND $colid in ($id_to_delete)" );
             $msg[]   = sprintf( __( "Deleted %d slugs from %s (%s).", 'qtranslate' ), $results ?: 0, $table, $new_prefix );
             // Rename meta keys.
             $results = $wpdb->query( "UPDATE $table SET meta_key = REPLACE(meta_key, '$old_prefix', '$new_prefix') WHERE meta_key LIKE '$old_prefix%'" );
             $msg[]   = sprintf( __( "Migrated %d slugs from %s (%s).", 'qtranslate' ), $results ?: 0, $table, $old_prefix );
+        } else {
+            // Dry-run mode: show how many slugs are to be deleted and migrated, no change in DB.
+            $results = $wpdb->get_var( "SELECT count(*) FROM  $table WHERE meta_key like '$new_prefix%' AND $colid in ($id_to_delete)" );
+            $msg[]   = sprintf( __( "Deleted %d slugs from %s (%s).", 'qtranslate' ), $results ?: 0, $table, $new_prefix );
+            $msg[]   = sprintf( __( "Migrated %d slugs from %s (%s).", 'qtranslate' ), $count_qts, $table, $old_prefix );
         }
     };
 
     $msg = [];
-    $wpdb->query( "START TRANSACTION" );
-    $migrate_meta( $wpdb->postmeta, $msg );
-    $migrate_meta( $wpdb->termmeta, $msg );
-    if ( $db_commit ) {
-        $wpdb->query( "COMMIT" );
-    } else {
-        $wpdb->query( "ROLLBACK" );
-    }
+    $migrate_meta( $wpdb->postmeta, 'post_id', $db_commit, $msg );
+    $migrate_meta( $wpdb->termmeta, 'term_id', $db_commit, $msg );
 
     return implode( '<br>', $msg );
 }
