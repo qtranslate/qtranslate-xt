@@ -238,14 +238,14 @@ function qtranxf_admin_section_import_export( $request_uri ) {
                                id="qtranslate_import_slugs_migrate"
                                value="1"
                                onclick="let c=jQuery('#qtranslate_import_slugs_confirm'); c.prop('disabled', !jQuery(this).prop('checked')); c.prop('checked', false);"/>
-                        <?php _e( 'Migrate slugs options, post and term meta from legacy plugin (QTS) to qTranslate.', 'qtranslate' ); ?>
+                        <?php _e( 'Migrate slugs options, post and term meta from legacy QTS plugin to qTranslate.', 'qtranslate' ); ?>
                     </label>
                     <br/>
                     <label for="qtranslate_import_slugs_confirm">
                         <input type="checkbox"
                                name="qtranslate_import_slugs_confirm"
                                id="qtranslate_import_slugs_confirm"
-                               value="1" <?php disabled( true ) ?> /> <?php _e( "Confirm migration of QTS slugs in database. Attention: existing slugs are erased! This action is irreversible. Leave unchecked for a dry-run.", 'qtranslate' ) ?>
+                               value="1" <?php disabled( true ) ?> /> <?php _e( "Confirm migration of QTS slugs in database. Attention! Existing slugs are replaced. Leave unchecked for a dry-run.", 'qtranslate' ) ?>
                     </label>
                 </td>
             </tr>
