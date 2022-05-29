@@ -5,10 +5,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 include_once( dirname( __FILE__ ) . '/slugs-settings.php' );
 
 // add filters
-add_filter( 'qts_validate_post_slug', 'qts_validate_post_slug', 0, 3 );
-add_filter( 'qts_validate_post_slug', 'qts_unique_post_slug', 1, 3 );
-add_filter( 'qts_validate_term_slug', 'qts_validate_term_slug', 0, 3 );
-add_filter( 'qts_validate_term_slug', 'qts_unique_term_slug', 1, 3 );
 add_filter( 'wp_get_object_terms', 'qts_get_object_terms', 0, 4 );
 add_filter( 'get_terms', 'qts_get_terms', 0, 3 );
 // admin actions
@@ -143,15 +139,15 @@ function qts_draw_meta_box( $post ) {
 }
 
 /**
- * Sanitize title as slug, if empty slug.
+ * Sanitize a post slug for a given language.
  *
- * @param $post (object) the post object
- * @param $slug (string) the slug name
- * @param $lang (string) the language
+ * @param string $slug slug name
+ * @param WP_Post $post the post object
+ * @param string $lang the language
  *
- * @return string the slug validated
+ * @return string sanitized slug
  */
-function qts_validate_post_slug( $slug, $post, $lang ) {
+function qts_sanitize_post_slug( $slug, $post, $lang ) {
     $post_title = trim( qtranxf_use( $lang, $post->post_title ) );
     $post_name  = get_post_meta( $post->ID, QTS_META_PREFIX . $lang, true );
     if ( ! $post_name ) {
@@ -159,11 +155,9 @@ function qts_validate_post_slug( $slug, $post, $lang ) {
     }
 
     //TODO: if has a slug, test and use it
-    //TODO: and then replace the default slug with the dafault language slug
+    //TODO: and then replace the default slug with the default language slug
     $name = ( $post_title === '' ) ? $post_name : $post_title;
-
     $slug = trim( $slug );
-
     $slug = ( $slug === '' ) ? sanitize_title( $name ) : sanitize_title( $slug );
 
     return htmlspecialchars( $slug, ENT_QUOTES );
@@ -172,9 +166,9 @@ function qts_validate_post_slug( $slug, $post, $lang ) {
 /**
  * Validates post slug against repetitions per language
  *
- * @param $post (object) the post object
- * @param $slug (string) the slug name
- * @param $lang (string) the language
+ * @param string $slug the slug name
+ * @param WP_Post $post the post object
+ * @param string $lang the language
  *
  * @return string the slug validated
  */
@@ -257,8 +251,8 @@ function qts_wp_unique_post_slug( $slug, $post_ID, $post_status, $post_type, $po
 /**
  * Saves the translated slug when the page is saved.
  *
- * @param $post_id int the post id
- * @param $post object the post object
+ * @param int $post_id the post id
+ * @param WP_Post $post the post object
  *
  * @return void
  */
@@ -269,33 +263,35 @@ function qts_save_postdata( $post_id, $post = null ) {
     }
     $post_type_object = get_post_type_object( $post->post_type );
 
-    if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )                       // check autosave
-         || ( ! isset( $_POST['post_ID'] ) || $post_id != $_POST['post_ID'] ) // check revision
-         || ( isset( $_POST['qts_nonce'] ) && ! wp_verify_nonce( $_POST['qts_nonce'], 'qts_nonce' ) )   // verify nonce
-         || ( ! current_user_can( $post_type_object->cap->edit_post, $post_id ) ) ) {  // check permission
+    if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+         || ( ! isset( $_POST['post_ID'] ) || $post_id != $_POST['post_ID'] )
+         || ( isset( $_POST['qts_nonce'] ) && ! wp_verify_nonce( $_POST['qts_nonce'], 'qts_nonce' ) )
+         || ( ! current_user_can( $post_type_object->cap->edit_post, $post_id ) ) ) {
         return;
     }
     foreach ( $q_config['enabled_languages'] as $lang ) {
-
         // check required because it is not available inside quick edit
         if ( isset( $_POST["qts_{$lang}_slug"] ) ) {
-            $meta_value = apply_filters( 'qts_validate_post_slug', $_POST["qts_{$lang}_slug"], $post, $lang );
+            $slug = $_POST["qts_{$lang}_slug"];
+            $slug = qts_sanitize_post_slug( $slug, $post, $lang );
+            $slug = qts_unique_post_slug( $slug, $post, $lang );
+
             delete_post_meta( $post_id, QTS_META_PREFIX . $lang );
-            update_post_meta( $post_id, QTS_META_PREFIX . $lang, $meta_value );
+            update_post_meta( $post_id, QTS_META_PREFIX . $lang, $slug );
         }
     }
 }
 
 /**
- * Sanitize title as slug, if empty slug.
+ * Sanitize a term slug.
  *
- * @param $term (object) the term object
- * @param $slug (string) the slug name
- * @param $lang (string) the language
+ * @param string $slug the slug name
+ * @param WP_Term $term the term object
+ * @param string $lang the language
  *
- * @return string the slug validated
+ * @return string sanitized slug
  */
-function qts_validate_term_slug( $slug, $term, $lang ) {
+function qts_sanitize_term_slug( $slug, $term, $lang ) {
     global $q_config;
 
     $term_name = trim( qtranxf_use( $lang, $term->name, false, true ) );
@@ -309,13 +305,13 @@ function qts_validate_term_slug( $slug, $term, $lang ) {
 }
 
 /**
- * Will make slug unique per language, if it isn't already.
+ * Make a term slug unique for a given language.
  *
- * @param string $slug The string that will be tried for a unique slug
- * @param object $term The term object that the $slug will belong too
- * @param object $lang The language reference
+ * @param string $slug term slug to be made unique
+ * @param WP_Term $term the term object the slug belongs to
+ * @param object $lang language
  *
- * @return string Will return a true unique slug.
+ * @return string unique slug
  *
  * @since 1.0
  */
@@ -361,8 +357,8 @@ function qts_unique_term_slug( $slug, $term, $lang ) {
 function qts_save_term( $term_id, $tt_id, $taxonomy ) {
     global $q_config;
     $cur_screen = get_current_screen();
-    if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )  // check autosave
-         || ( ! current_user_can( 'edit_posts' ) ) // check permission
+    if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+         || ( ! current_user_can( 'edit_posts' ) )
          || ( isset( $cur_screen ) && $cur_screen->id === "nav-menus" ) //TODO: check if this condition is really needed
     ) {
         return;
@@ -370,13 +366,13 @@ function qts_save_term( $term_id, $tt_id, $taxonomy ) {
 
     $term = get_term( $term_id, $taxonomy );
     foreach ( $q_config['enabled_languages'] as $lang ) {
-        //condition is needed in case term is added through ajax e.g. in post edit page
-        $term_slug = isset( $_POST["qts_{$lang}_slug"] ) ? $_POST["qts_{$lang}_slug"] : '';
-
-        $meta_value = apply_filters( 'qts_validate_term_slug', $term_slug, $term, $lang );
+        // condition is needed in case term is added through ajax e.g. in post edit page
+        $slug = isset( $_POST["qts_{$lang}_slug"] ) ? $_POST["qts_{$lang}_slug"] : '';
+        $slug = qts_sanitize_term_slug( $slug, $term, $lang );
+        $slug = qts_unique_term_slug( $slug, $term, $lang );
 
         delete_metadata( 'term', $term_id, QTS_META_PREFIX . $lang );
-        update_metadata( 'term', $term_id, QTS_META_PREFIX . $lang, $meta_value );
+        update_metadata( 'term', $term_id, QTS_META_PREFIX . $lang, $slug );
     }
 }
 
