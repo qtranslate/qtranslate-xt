@@ -229,6 +229,27 @@ function qtranxf_admin_section_import_export( $request_uri ) {
             'text' => sprintf( __( 'Use plugin %s to import data.', 'qtranslate' ), '<a href="https://wordpress.org/plugins/w2q-wpml-to-qtranslate/" target="_blank">W2Q: WPML to qTranslate</a>' )
         ) ) ?>
         <?php do_action( 'qtranslate_add_row_migrate' ) ?>
+        <?php if ( QTX_Module_Loader::is_module_active( 'slugs' ) ): ?>
+            <tr id="qtranslate-import-slugs">
+                <th scope="row"><?php _e( 'Migrate QTS slugs', 'qtranslate' ) ?></th>
+                <td>
+                    <label for="qtranslate_import_slugs_migrate">
+                        <input type="checkbox" name="qtranslate_import_slugs_migrate"
+                               id="qtranslate_import_slugs_migrate"
+                               value="1"
+                               onclick="let c=jQuery('#qtranslate_import_slugs_confirm'); c.prop('disabled', !jQuery(this).prop('checked')); c.prop('checked', false);"/>
+                        <?php _e( 'Migrate slugs options, post and term meta from legacy QTS plugin to qTranslate.', 'qtranslate' ); ?>
+                    </label>
+                    <br/>
+                    <label for="qtranslate_import_slugs_confirm">
+                        <input type="checkbox"
+                               name="qtranslate_import_slugs_confirm"
+                               id="qtranslate_import_slugs_confirm"
+                               value="1" <?php disabled( true ) ?> /> <?php _e( "Confirm migration of QTS slugs in database. Attention! Existing slugs are replaced. Leave unchecked for a dry-run.", 'qtranslate' ) ?>
+                    </label>
+                </td>
+            </tr>
+        <?php endif ?>
         <tr>
             <th scope="row"><?php _e( 'Reset qTranslate', 'qtranslate' ) ?></th>
             <td>

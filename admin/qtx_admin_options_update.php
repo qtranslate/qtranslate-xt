@@ -45,6 +45,14 @@ function qtranxf_edit_config() {
     if ( isset( $_POST['qtranslate_reset'] ) && isset( $_POST['qtranslate_reset2'] ) ) {
         $messages[] = __( 'qTranslate has been reset.', 'qtranslate' );
     } elseif ( isset( $_POST['default_language'] ) ) {
+        // TODO: remove temporary hack - restore QTS options for master dev before migration.
+        // Undo import legacy options in master before new options are saved with new keys...
+        $qts_options = get_option( 'qts_options' );
+        $new_options = get_option( QTX_OPTIONS_MODULE_SLUGS );
+        // Re-create original QTS options that can be properly imported again.
+        if ( ! $qts_options && $new_options && count( $new_options ) > 0 && strpos( array_keys( $new_options )[0], '_qts_' ) === 0 ) {
+            update_option( 'qts_options', $new_options, false );
+        }
 
         qtranxf_update_settings();
 
@@ -970,6 +978,12 @@ function qtranxf_executeOnUpdate() {
         if ( $msg ) {
             $messages[] = $msg;
         }
+    }
+
+    if ( isset( $_POST['qtranslate_import_slugs_migrate'] ) && $_POST['qtranslate_import_slugs_migrate'] ) {
+        require_once( QTRANSLATE_DIR . '/modules/slugs/admin/slugs-migrate-qts.php' );
+        $db_commit  = isset( $_POST['qtranslate_import_slugs_confirm'] ) && $_POST['qtranslate_import_slugs_confirm'];
+        $messages[] = qtranxf_slugs_migrate_qts_data( $db_commit );
     }
 }
 

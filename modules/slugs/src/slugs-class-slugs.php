@@ -37,10 +37,6 @@ class QTX_Slugs {
             return;
         }
 
-        // TODO: remove temporary import of legacy option for master, rely on plugin activation in next release.
-        require_once( QTRANSLATE_DIR . '/admin/qtx_admin_options.php' );
-        qtranxf_import_legacy_option( 'qts_options', QTX_OPTIONS_MODULE_SLUGS, false );
-
         $this->options_buffer      = get_option( QTX_OPTIONS_MODULE_SLUGS, array() );
         $this->permalink_structure = get_option( 'permalink_structure' );
 
@@ -121,7 +117,7 @@ class QTX_Slugs {
      * @return string the slug or empty if not found
      */
     public function get_slug( $id, $lang ) {
-        $slugArray = get_post_meta( $id, QTS_META_PREFIX . $lang );
+        $slugArray = get_post_meta( $id, QTX_SLUGS_META_PREFIX . $lang );
 
         return ! empty( $slugArray ) ? $slugArray[0] : "";
     }
@@ -162,7 +158,7 @@ class QTX_Slugs {
             return false;
         }
         $qts_options = $this->options_buffer;
-        $option_name = QTS_PREFIX . $type . '_' . $name;
+        $option_name = $type . '_' . $name;
         if ( isset( $qts_options[ $option_name ][ $lang ] ) ) {
             return $qts_options[ $option_name ][ $lang ];
         }
@@ -603,7 +599,7 @@ class QTX_Slugs {
         $permastruct = $wp_rewrite->get_extra_permastruct( $post->post_type );
         $post_link   = $this->get_extra_permastruct( $permastruct, $post->post_type );
 
-        $slug = get_post_meta( $post->ID, QTS_META_PREFIX . $this->get_temp_lang(), true );
+        $slug = get_post_meta( $post->ID, QTX_SLUGS_META_PREFIX . $this->get_temp_lang(), true );
         if ( ! $slug ) {
             $slug = $post->post_name;
         }
@@ -681,7 +677,7 @@ class QTX_Slugs {
                 if ( $cats ) {
                     usort( $cats, '_usort_terms_by_ID' ); // order by ID
 
-                    $category = get_metadata( 'term', $cats[0]->term_id, QTS_META_PREFIX . $this->get_temp_lang(), true );
+                    $category = get_metadata( 'term', $cats[0]->term_id, QTX_SLUGS_META_PREFIX . $this->get_temp_lang(), true );
                     if ( ! $category ) {
                         $category = $cats[0]->slug;
                     }
@@ -695,7 +691,7 @@ class QTX_Slugs {
                 if ( empty( $category ) ) {
                     $default_category = get_category( get_option( 'default_category' ) );
 
-                    $default_category_slug = get_metadata( 'term', $default_category->term_id, QTS_META_PREFIX . $this->get_temp_lang(), true );
+                    $default_category_slug = get_metadata( 'term', $default_category->term_id, QTX_SLUGS_META_PREFIX . $this->get_temp_lang(), true );
                     if ( ! $default_category_slug ) {
                         $default_category_slug = $default_category->slug;
                     }
@@ -712,7 +708,7 @@ class QTX_Slugs {
 
             $date = explode( " ", date( 'Y m d H i s', $unixtime ) );
 
-            $post_slug = get_post_meta( $post->ID, QTS_META_PREFIX . $this->get_temp_lang(), true );
+            $post_slug = get_post_meta( $post->ID, QTX_SLUGS_META_PREFIX . $this->get_temp_lang(), true );
             if ( ! $post_slug ) {
                 $post_slug = $post->post_name;
             }
@@ -822,7 +818,7 @@ class QTX_Slugs {
         $permastruct = $wp_rewrite->get_extra_permastruct( $taxonomy );
         $termlink    = $this->get_extra_permastruct( $permastruct, $taxonomy );
 
-        $slug = get_metadata( 'term', $term->term_id, QTS_META_PREFIX . $this->get_temp_lang(), true );
+        $slug = get_metadata( 'term', $term->term_id, QTX_SLUGS_META_PREFIX . $this->get_temp_lang(), true );
         if ( ! $slug ) {
             $slug = $term->slug;
         }
@@ -845,7 +841,7 @@ class QTX_Slugs {
                 foreach ( $ancestors as $ancestor ) {
                     $ancestor_term = get_term( $ancestor, $taxonomy );
 
-                    $ancestor_slug = get_metadata( 'term', $ancestor_term->term_id, QTS_META_PREFIX . $this->get_temp_lang(), true );
+                    $ancestor_slug = get_metadata( 'term', $ancestor_term->term_id, QTX_SLUGS_META_PREFIX . $this->get_temp_lang(), true );
                     if ( ! $ancestor_slug ) {
                         $ancestor_slug = $ancestor_term->slug;
                     }
@@ -983,7 +979,7 @@ class QTX_Slugs {
         },
             $parts );
         $in_string     = "'" . implode( "','", $parts ) . "'";
-        $meta_key      = QTS_META_PREFIX . $this->get_temp_lang();
+        $meta_key      = QTX_SLUGS_META_PREFIX . $this->get_temp_lang();
         $post_type_sql = $post_type;
         $wpdb->escape_by_ref( $post_type_sql );
 
@@ -1097,7 +1093,7 @@ class QTX_Slugs {
         }
 
         if ( $nicename ) {
-            $name = get_metadata( 'term', $parent->term_id, QTS_META_PREFIX . $this->get_temp_lang(), true );
+            $name = get_metadata( 'term', $parent->term_id, QTX_SLUGS_META_PREFIX . $this->get_temp_lang(), true );
             if ( ! $name ) {
                 $name = $parent->slug;
             }
@@ -1133,7 +1129,7 @@ class QTX_Slugs {
             $page = get_post( $page );
         }
 
-        $uri = get_post_meta( $page->ID, QTS_META_PREFIX . $this->get_temp_lang(), true );
+        $uri = get_post_meta( $page->ID, QTX_SLUGS_META_PREFIX . $this->get_temp_lang(), true );
         if ( ! $uri ) {
             $uri = $page->post_name;
         }
@@ -1146,7 +1142,7 @@ class QTX_Slugs {
         while ( $page->post_parent != 0 ) {
             $page = get_post( $page->post_parent );
 
-            $page_name = get_post_meta( $page->ID, QTS_META_PREFIX . $this->get_temp_lang(), true );
+            $page_name = get_post_meta( $page->ID, QTX_SLUGS_META_PREFIX . $this->get_temp_lang(), true );
             if ( ! $page_name ) {
                 $page_name = $page->post_name;
             }
@@ -1176,7 +1172,7 @@ class QTX_Slugs {
         $original_field = $field;
 
         if ( 'slug' == $field ) {
-            $field = 'm.meta_key = \'' . QTS_META_PREFIX . $this->get_temp_lang() . '\' AND m.meta_value';
+            $field = 'm.meta_key = \'' . QTX_SLUGS_META_PREFIX . $this->get_temp_lang() . '\' AND m.meta_value';
             $value = sanitize_title( $value );
             if ( empty( $value ) ) {
                 return false;

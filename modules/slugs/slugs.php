@@ -1,11 +1,5 @@
 <?php
-
-if ( ! defined( "QTS_PREFIX" ) ) {
-    define( "QTS_PREFIX", '_qts_' );
-}
-if ( ! defined( "QTS_META_PREFIX" ) ) {
-    define( "QTS_META_PREFIX", QTS_PREFIX . 'slug_' );
-}
+const QTX_SLUGS_META_PREFIX = 'qtranslate_slug_';   // The language code is appended.
 
 include_once( dirname( __FILE__ ) . '/src/slugs-class-slugs.php' );
 include_once( dirname( __FILE__ ) . '/src/slugs-utils.php' );
