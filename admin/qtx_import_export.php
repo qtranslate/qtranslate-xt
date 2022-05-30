@@ -245,7 +245,7 @@ function qtranxf_admin_section_import_export( $request_uri ) {
                         <input type="checkbox"
                                name="qtranslate_import_slugs_confirm"
                                id="qtranslate_import_slugs_confirm"
-                               value="1" <?php disabled( true ) ?> /> <?php _e( "Confirm migration of QTS slugs in database. Attention! Existing slugs are replaced. Leave unchecked for a dry-run.", 'qtranslate' ) ?>
+                               value="1" <?php disabled( true ) ?> /> <?php _e( "Confirm to perform the migration of QTS slugs, or leave unchecked for a dry run test without update. Attention! Current module slugs data may be overwritten.", 'qtranslate' ) ?>
                     </label>
                 </td>
             </tr>
