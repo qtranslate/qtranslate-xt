@@ -185,7 +185,7 @@ class QTX_Slugs {
         // FIXME: why we do this :
         $base_args = isset( $base_query['query'] ) ? wp_parse_args( $base_query['query'] ) : array();
 
-        if ( empty( $this->permalink_structure ) || $q_config['url_mode'] == 1 ) {
+        if ( empty( $this->permalink_structure ) || $q_config['url_mode'] == QTX_URL_QUERY ) {
             $base_args['lang'] = $this->get_temp_lang();
 
         }
@@ -341,7 +341,7 @@ class QTX_Slugs {
         global $q_config;
         global $wp;
 
-        /* As $wp->matched_query filters the query including slugs mudule custom rewrite rules, it provides all necessary data to reach the intended resource.
+        /* As $wp->matched_query filters the query including slugs module custom rewrite rules, it provides all necessary data to reach the intended resource.
          * However discarding completely $query arg and using only $wp->matched_query would result in losing possible custom query vars.
          * Hence $query and $wp->matched_query are merged and unneeded/conflictual keys (e.g. 'error') from $query are removed.
          */
@@ -728,7 +728,7 @@ class QTX_Slugs {
                     $post_slug,
                 );
             $permalink      = home_url( str_replace( $rewritecode, $rewritereplace, $permalink ) );
-            if ( $q_config['url_mode'] != 1 ) {
+            if ( $q_config['url_mode'] != QTX_URL_QUERY ) {
                 $permalink = user_trailingslashit( $permalink, 'single' );
             }
         } else { // if they're not using the fancy permalink option
@@ -768,7 +768,7 @@ class QTX_Slugs {
             $link = trim( $link, '/' ); // hack
             $link = home_url( "/$link/" ); // hack
 
-            if ( $q_config['url_mode'] != 1 ) {
+            if ( $q_config['url_mode'] != QTX_URL_QUERY ) {
                 $link = user_trailingslashit( $link, 'page' );
             }
 
@@ -1134,7 +1134,7 @@ class QTX_Slugs {
             $uri = $page->post_name;
         }
 
-        // A page cannot be it's own parent.
+        // A page cannot be its own parent.
         if ( $page->post_parent == $page->ID ) {
             return $uri;
         }
