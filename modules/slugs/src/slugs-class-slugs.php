@@ -198,11 +198,14 @@ class QTX_Slugs {
     }
 
     /**
-     * Fix get_page_by_path when querying vars.
+     * This `query_vars` filter is mostly used as an action to hack the `wp` object, in particular its matched query.
+     * Ideally, the slugs matching should be done from `get_page_by_path`, but there's no WP filter available...
+     * So this mimics parts of `parse_request` later, but here the matching of the rewrite rules accounts for the slugs.
+     * The query vars are purged from the original WP matched query to avoid a mismatch with the slugs matched query.
      *
-     * @param $query_vars object query vars founded
+     * @param array $query_vars
      *
-     * @return object $query_vars processed
+     * @return array $query_vars processed
      */
     public function query_vars( $query_vars ) {
         global $wp, $wp_rewrite;
@@ -302,6 +305,8 @@ class QTX_Slugs {
             }
 
             if ( isset( $wp->matched_rule ) && isset( $query ) && isset( $matches ) ) {
+                // Store the original WP query vars before update from slugs.
+                parse_str( $wp->matched_query, $query_vars_before_slugs_match );
                 // Trim the query of everything up to the '?'.
                 $query = preg_replace( "!^.+\?!", '', $query );
                 // Substitute the substring matches into the query.
@@ -309,10 +314,20 @@ class QTX_Slugs {
                 $wp->matched_query = $query;
                 // Parse the query.
                 parse_str( $query, $perma_query_vars );
-                // If we're processing a 404 request, clear the error var
-                // since we found something.
+                // If we're processing a 404 request, clear the error var since we found something.
                 unset( $_GET['error'] );
                 unset( $error );
+                // Purge all query vars previously set in the WP matched query, as they may not be consistent with the slugs request.
+                $vars_to_purge = array_keys( $query_vars_before_slugs_match );
+                // But, do not remove the new vars coming from the slugs match query.
+                $vars_slugs_to_keep = array_keys( $perma_query_vars );
+                $vars_to_purge      = array_filter( $vars_to_purge, function ( $var ) use ( $vars_slugs_to_keep ) {
+                    return ! in_array( $var, $vars_slugs_to_keep );
+                } );
+                // This filtering is conservative, most of the original public vars remain.
+                $query_vars = array_filter( $query_vars, function ( $var ) use ( $vars_to_purge ) {
+                    return ! in_array( $var, $vars_to_purge );
+                } );
             }
 
             // If req_uri is empty or if it is a request for ourself, unset error.
@@ -326,8 +341,7 @@ class QTX_Slugs {
             }
         }
 
-        // TODO check this call, looks bug-prone
-        return count( array_diff( $query_vars, $wp->public_query_vars ) ) > 0 ? $query_vars : $wp->public_query_vars;
+        return $query_vars;
     }
 
     /**
@@ -340,11 +354,6 @@ class QTX_Slugs {
     function filter_request( $query ) {
         global $q_config;
         global $wp;
-
-        /* As $wp->matched_query filters the query including slugs module custom rewrite rules, it provides all necessary data to reach the intended resource.
-         * However discarding completely $query arg and using only $wp->matched_query would result in losing possible custom query vars.
-         * Hence $query and $wp->matched_query are merged and unneeded/conflictual keys (e.g. 'error') from $query are removed.
-         */
 
         if ( isset( $wp->matched_query ) ) {
             if ( isset( $query['error'] ) ) {
@@ -365,12 +374,6 @@ class QTX_Slugs {
 
         // -> page
         elseif ( isset( $query['pagename'] ) || isset( $query['page_id'] ) ):
-            /* 'name' key from passed $query var is removed if 'pagename' key is present in $wp->matched_query.
-             * Both keys causes conflict between posts and pages as 'name' is used for posts, resulting in 404 error.
-             */
-            if ( isset( $query['name'] ) ) {
-                unset( $query['name'] );
-            }
             $page = wp_cache_get( 'qts_page_request' );
             if ( ! $page ) {
                 $page = isset( $query['page_id'] ) ? get_post( $query['page_id'] ) : $this->get_page_by_path( $query['pagename'] );
