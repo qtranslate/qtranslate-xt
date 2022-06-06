@@ -32,10 +32,6 @@ class acf_qtranslate_plugin {
     public function init() {
         static $plugin_loaded = false;
         if ( ! $plugin_loaded && $this->acf_enabled() ) {
-            // TODO: remove temporary import of legacy option for master, rely on plugin activation in next release.
-            require_once( QTRANSLATE_DIR . '/admin/qtx_admin_options.php' );
-            qtranxf_import_legacy_option( 'acf_qtranslate', QTX_OPTIONS_MODULE_ACF, false );
-
             if ( $this->acf_major_version() === 5 ) {
                 require_once ACF_QTRANSLATE_PLUGIN_DIR . 'src/acf_5/acf.php';
                 $this->acf = new acf_qtranslate_acf_5( $this );

@@ -45,17 +45,7 @@ function qtranxf_edit_config() {
     if ( isset( $_POST['qtranslate_reset_all'] ) && isset( $_POST['qtranslate_reset_confirm'] ) ) {
         $messages[] = __( 'qTranslate has been reset.', 'qtranslate' );
     } elseif ( isset( $_POST['default_language'] ) ) {
-        // TODO: remove temporary hack - restore QTS options for master dev before migration.
-        // Undo import legacy options in master before new options are saved with new keys...
-        $qts_options = get_option( 'qts_options' );
-        $new_options = get_option( QTX_OPTIONS_MODULE_SLUGS );
-        // Re-create original QTS options that can be properly imported again.
-        if ( ! $qts_options && $new_options && count( $new_options ) > 0 && strpos( array_keys( $new_options )[0], '_qts_' ) === 0 ) {
-            update_option( 'qts_options', $new_options, false );
-        }
-
         qtranxf_update_settings();
-
         // execute actions
         qtranxf_executeOnUpdate();
     }
