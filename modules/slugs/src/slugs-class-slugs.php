@@ -291,10 +291,10 @@ class QTX_Slugs {
                     if ( preg_match( "#^$match#", $request_match, $matches ) || preg_match( "#^$match#", urldecode( $request_match ), $matches ) ) {
                         if ( $wp_rewrite->use_verbose_page_rules && preg_match( '/pagename=\$matches\[(\d+)\]/', $query, $varmatch ) ) {
                             // this is a verbose page match, lets check to be sure about it
-                            if ( ! $page_foundid = $this->get_page_by_path( $matches[ $varmatch[1] ] ) ) {
+                            if ( ! $page_found = $this->get_page_by_path( $matches[ $varmatch[1] ] ) ) {
                                 continue;
                             } else {
-                                wp_cache_set( 'qts_page_request', $page_foundid ); // caching query :)
+                                set_transient( 'qtranslate_slugs_matched_page', $page_found, 30 );  // Store the matched page for `filter_request`.
                             }
                         }
                         // Got a match.
@@ -374,17 +374,17 @@ class QTX_Slugs {
 
         // -> page
         elseif ( isset( $query['pagename'] ) || isset( $query['page_id'] ) ):
-            $page = wp_cache_get( 'qts_page_request' );
-            if ( ! $page ) {
+            $page = get_transient( 'qtranslate_slugs_matched_page' );
+            if ( $page === false ) {
                 $page = isset( $query['page_id'] ) ? get_post( $query['page_id'] ) : $this->get_page_by_path( $query['pagename'] );
             }
+            delete_transient( 'qtranslate_slugs_matched_page' );
             if ( ! $page ) {
                 return $query;
             }
             $id          = $page->ID;
             $cache_array = array( $page );
-            update_post_caches( $cache_array, 'page' ); // caching query :)
-            wp_cache_delete( 'qts_page_request' );
+            update_post_caches( $cache_array, 'page' );
             $query['pagename'] = get_page_uri( $page );
             $function          = 'get_page_link';
 
