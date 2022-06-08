@@ -37,6 +37,7 @@ Modules
   * Fix
     * Filter query vars in slugs, fix 404 mismatch (#1180)
     * Fix many PhpPStorm warnings (#1172)
+    * Fix slugs in Cyrillic due to `esc_sql()` 4.8.3 breaking change (#1156, #1157)
     * Fix page/post conflict and utf8 chars in filter_request (#1168)
     * Remove slug fields for WC attributes add/edit page (#1164)
     * Fix hide slug field in post quickedit (#1125)
