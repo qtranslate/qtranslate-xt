@@ -5,68 +5,68 @@ if ( ! defined( 'ABSPATH' ) ) {
 include_once( dirname( __FILE__ ) . '/slugs-settings.php' );
 
 // add filters
-add_filter( 'wp_get_object_terms', 'qts_get_object_terms', 0, 4 );
-add_filter( 'get_terms', 'qts_get_terms', 0, 3 );
+add_filter( 'wp_get_object_terms', 'qtranxf_slugs_get_object_terms', 0, 4 );
+add_filter( 'get_terms', 'qtranxf_slugs_get_terms', 0, 3 );
 // admin actions
-add_action( 'add_meta_boxes', 'qts_add_slug_meta_box' );
-add_action( 'save_post', 'qts_save_postdata', 605, 2 );
-add_action( 'edit_attachment', 'qts_save_postdata' );
-add_action( 'created_term', 'qts_save_term', 605, 3 );
-add_action( 'edited_term', 'qts_save_term', 605, 3 );
-add_action( 'admin_head', 'qts_hide_term_slug_box', 900 );
-add_action( 'init', 'qts_taxonomies_hooks', 805 );
-add_action( 'admin_head', 'qts_hide_quick_edit', 600 );
-add_action( 'qtranslate_save_config', 'qts_ma_module_updated' );
+add_action( 'add_meta_boxes', 'qtranxf_slugs_add_slug_meta_box' );
+add_action( 'save_post', 'qtranxf_slugs_save_postdata', 605, 2 );
+add_action( 'edit_attachment', 'qtranxf_slugs_save_postdata' );
+add_action( 'created_term', 'qtranxf_slugs_save_term', 605, 3 );
+add_action( 'edited_term', 'qtranxf_slugs_save_term', 605, 3 );
+add_action( 'admin_head', 'qtranxf_slugs_hide_term_slug_box', 900 );
+add_action( 'init', 'qtranxf_slugs_taxonomies_hooks', 805 );
+add_action( 'admin_head', 'qtranxf_slugs_hide_quick_edit', 600 );
+add_action( 'qtranslate_save_config', 'qtranxf_slugs_ma_module_updated' );
 // plugin deactivation/uninstall
-register_deactivation_hook( QTRANSLATE_FILE, 'qts_deactivate' );
-register_uninstall_hook( QTRANSLATE_FILE, 'qts_uninstall' );
+register_deactivation_hook( QTRANSLATE_FILE, 'qtranxf_slugs_deactivate' );
+register_uninstall_hook( QTRANSLATE_FILE, 'qtranxf_slugs_uninstall' );
 
 /**
  * Add support for taxonomies and optional integration with WooCommerce.
  */
-function qts_taxonomies_hooks() {
+function qtranxf_slugs_taxonomies_hooks() {
     global $qtranslate_slugs;
 
     $taxonomies = $qtranslate_slugs->get_public_taxonomies();
 
     if ( $taxonomies ) {
         foreach ( $taxonomies as $taxonomy ) {
-            add_action( $taxonomy->name . '_add_form_fields', 'qts_show_add_term_fields' );
-            add_action( $taxonomy->name . '_edit_form_fields', 'qts_show_edit_term_fields' );
-            add_filter( 'manage_edit-' . $taxonomy->name . '_columns', 'qts_taxonomy_columns' );
-            add_filter( 'manage_' . $taxonomy->name . '_custom_column', 'qts_taxonomy_custom_column', 0, 3 );
+            add_action( $taxonomy->name . '_add_form_fields', 'qtranxf_slugs_show_add_term_fields' );
+            add_action( $taxonomy->name . '_edit_form_fields', 'qtranxf_slugs_show_edit_term_fields' );
+            add_filter( 'manage_edit-' . $taxonomy->name . '_columns', 'qtranxf_slugs_taxonomy_columns' );
+            add_filter( 'manage_' . $taxonomy->name . '_custom_column', 'qtranxf_slugs_taxonomy_custom_column', 0, 3 );
         }
     }
 
     if ( QTX_Module_Loader::is_module_active( 'woo-commerce' ) ) {
-        add_action( 'woocommerce_after_add_attribute_fields', 'qts_show_add_taxonomy_slugs_option_link' );
-        add_action( 'woocommerce_after_edit_attribute_fields', 'qts_show_edit_taxonomy_slugs_option_link' );
+        add_action( 'woocommerce_after_add_attribute_fields', 'qtranxf_slugs_show_add_taxonomy_slugs_option_link' );
+        add_action( 'woocommerce_after_edit_attribute_fields', 'qtranxf_slugs_show_edit_taxonomy_slugs_option_link' );
     }
 }
 
 /**
  * Do the installation, support multisite.
  */
-function qts_multi_activate() {
+function qtranxf_slugs_multi_activate() {
     if ( is_plugin_active_for_network( plugin_basename( QTRANSLATE_FILE ) ) ) {
         $old_blog = get_current_blog_id();
         $blogs    = get_sites();
         foreach ( $blogs as $blog ) {
             switch_to_blog( $blog->blog_id );
-            qts_activate();
+            qtranxf_slugs_activate();
         }
         switch_to_blog( $old_blog );
 
         return;
     }
 
-    qts_activate();
+    qtranxf_slugs_activate();
 }
 
 /**
  * Delete plugin stored data ( options and postmeta data ).
  */
-function qts_uninstall() {
+function qtranxf_slugs_uninstall() {
     global $q_config, $wpdb;
 
     delete_option( QTX_OPTIONS_MODULE_SLUGS );
@@ -79,14 +79,14 @@ function qts_uninstall() {
     $wpdb->query( "DELETE from $wpdb->postmeta WHERE meta_key IN ($meta_keys)" );
     $wpdb->query( "DELETE from $wpdb->termmeta WHERE meta_key IN ($meta_keys)" );
 
-    qts_deactivate();
+    qtranxf_slugs_deactivate();
 
 }
 
 /**
  * Activates and do the installation.
  */
-function qts_activate() {
+function qtranxf_slugs_activate() {
     global $qtranslate_slugs;
 
     // regenerate rewrite rules in db
@@ -97,7 +97,7 @@ function qts_activate() {
 /**
  * Actions when deactivating the plugin.
  */
-function qts_deactivate() {
+function qtranxf_slugs_deactivate() {
     global $wp_rewrite;
     global $qtranslate_slugs;
 
@@ -109,9 +109,9 @@ function qts_deactivate() {
 /**
  * Creates a metabox for every post type available.
  */
-function qts_add_slug_meta_box() {
+function qtranxf_slugs_add_slug_meta_box() {
     remove_meta_box( 'slugdiv', null, 'normal' );
-    add_meta_box( 'qts_sectionid', __( 'Slugs per language', 'qtranslate' ), 'qts_draw_meta_box', null, 'side', 'high' );
+    add_meta_box( 'qts_sectionid', __( 'Slugs per language', 'qtranslate' ), 'qtranxf_slugs_draw_meta_box', null, 'side', 'high' );
 }
 
 /**
@@ -119,7 +119,7 @@ function qts_add_slug_meta_box() {
  *
  * @param $post (object) current post object
  */
-function qts_draw_meta_box( $post ) {
+function qtranxf_slugs_draw_meta_box( $post ) {
     global $q_config;
 
     // Use nonce for verification
@@ -148,7 +148,7 @@ function qts_draw_meta_box( $post ) {
  *
  * @return string sanitized slug
  */
-function qts_sanitize_post_slug( $slug, $post, $lang ) {
+function qtranxf_slugs_sanitize_post_slug( $slug, $post, $lang ) {
     $post_title = trim( qtranxf_use( $lang, $post->post_title ) );
     $post_name  = get_post_meta( $post->ID, QTX_SLUGS_META_PREFIX . $lang, true );
     if ( ! $post_name ) {
@@ -173,7 +173,7 @@ function qts_sanitize_post_slug( $slug, $post, $lang ) {
  *
  * @return string the slug validated
  */
-function qts_unique_post_slug( $slug, $post, $lang ) {
+function qtranxf_slugs_unique_post_slug( $slug, $post, $lang ) {
 
     $original_status = $post->post_status;
 
@@ -181,7 +181,7 @@ function qts_unique_post_slug( $slug, $post, $lang ) {
         $post->post_status = 'publish';
     }
 
-    $slug = qts_wp_unique_post_slug( $slug, $post->ID, $post->post_status, $post->post_type, $post->post_parent, $lang );
+    $slug = qtranxf_slugs_wp_unique_post_slug( $slug, $post->ID, $post->post_status, $post->post_type, $post->post_parent, $lang );
 
     $post->post_status = $original_status;
 
@@ -199,7 +199,7 @@ function qts_unique_post_slug( $slug, $post, $lang ) {
  *
  * @return string unique slug for the post, based on language meta_value (with a -1, -2, etc. suffix)
  */
-function qts_wp_unique_post_slug( $slug, $post_ID, $post_status, $post_type, $post_parent, $lang ) {
+function qtranxf_slugs_wp_unique_post_slug( $slug, $post_ID, $post_status, $post_type, $post_parent, $lang ) {
     if ( in_array( $post_status, array( 'draft', 'pending', 'auto-draft' ) ) ) {
         return $slug;
     }
@@ -257,7 +257,7 @@ function qts_wp_unique_post_slug( $slug, $post_ID, $post_status, $post_type, $po
  *
  * @return void
  */
-function qts_save_postdata( $post_id, $post = null ) {
+function qtranxf_slugs_save_postdata( $post_id, $post = null ) {
     global $q_config;
     if ( is_null( $post ) ) {
         $post = get_post( $post_id );
@@ -274,8 +274,8 @@ function qts_save_postdata( $post_id, $post = null ) {
         // check required because it is not available inside quick edit
         if ( isset( $_POST["qts_{$lang}_slug"] ) ) {
             $slug = $_POST["qts_{$lang}_slug"];
-            $slug = qts_sanitize_post_slug( $slug, $post, $lang );
-            $slug = qts_unique_post_slug( $slug, $post, $lang );
+            $slug = qtranxf_slugs_sanitize_post_slug( $slug, $post, $lang );
+            $slug = qtranxf_slugs_unique_post_slug( $slug, $post, $lang );
 
             delete_post_meta( $post_id, QTX_SLUGS_META_PREFIX . $lang );
             update_post_meta( $post_id, QTX_SLUGS_META_PREFIX . $lang, $slug );
@@ -292,7 +292,7 @@ function qts_save_postdata( $post_id, $post = null ) {
  *
  * @return string sanitized slug
  */
-function qts_sanitize_term_slug( $slug, $term, $lang ) {
+function qtranxf_slugs_sanitize_term_slug( $slug, $term, $lang ) {
     global $q_config;
 
     $term_name = trim( qtranxf_use( $lang, $term->name, false, true ) );
@@ -316,7 +316,7 @@ function qts_sanitize_term_slug( $slug, $term, $lang ) {
  *
  * @since 1.0
  */
-function qts_unique_term_slug( $slug, $term, $lang ) {
+function qtranxf_slugs_unique_term_slug( $slug, $term, $lang ) {
     global $wpdb;
 
     $query       = $wpdb->prepare( "SELECT term_id FROM $wpdb->termmeta WHERE meta_key = '%s' AND meta_value = '%s' AND term_id != %d ", QTX_SLUGS_META_PREFIX . $lang, $slug, $term->term_id );
@@ -355,7 +355,7 @@ function qts_unique_term_slug( $slug, $term, $lang ) {
  *
  * @return void
  */
-function qts_save_term( $term_id, $tt_id, $taxonomy ) {
+function qtranxf_slugs_save_term( $term_id, $tt_id, $taxonomy ) {
     global $q_config;
     $cur_screen = get_current_screen();
     if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
@@ -369,8 +369,8 @@ function qts_save_term( $term_id, $tt_id, $taxonomy ) {
     foreach ( $q_config['enabled_languages'] as $lang ) {
         // condition is needed in case term is added through ajax e.g. in post edit page
         $slug = isset( $_POST["qts_{$lang}_slug"] ) ? $_POST["qts_{$lang}_slug"] : '';
-        $slug = qts_sanitize_term_slug( $slug, $term, $lang );
-        $slug = qts_unique_term_slug( $slug, $term, $lang );
+        $slug = qtranxf_slugs_sanitize_term_slug( $slug, $term, $lang );
+        $slug = qtranxf_slugs_unique_term_slug( $slug, $term, $lang );
 
         delete_metadata( 'term', $term_id, QTX_SLUGS_META_PREFIX . $lang );
         update_metadata( 'term', $term_id, QTX_SLUGS_META_PREFIX . $lang, $slug );
@@ -384,7 +384,7 @@ function qts_save_term( $term_id, $tt_id, $taxonomy ) {
  *
  * @return void
  */
-function qts_show_list_term_fields( $term ) {
+function qtranxf_slugs_show_list_term_fields( $term ) {
     global $q_config;
 
     $flag_location = qtranxf_flag_location(); ?>
@@ -406,11 +406,11 @@ function qts_show_list_term_fields( $term ) {
  * Display multiple input fields, one per language for add term page.
  *
  */
-function qts_show_add_term_fields() {
+function qtranxf_slugs_show_add_term_fields() {
     ?>
     <div class="form-field term-slug-wrap">
         <label><?php _e( 'Slugs per language', 'qtranslate' ) ?></label>
-        <?php qts_show_list_term_fields( null ); ?>
+        <?php qtranxf_slugs_show_list_term_fields( null ); ?>
     </div>
     <?php
 }
@@ -420,11 +420,11 @@ function qts_show_add_term_fields() {
  *
  * @param WP_Term $term the term object
  */
-function qts_show_edit_term_fields( $term ) {
+function qtranxf_slugs_show_edit_term_fields( $term ) {
     ?>
     <tr class="form-field term-slug-wrap">
         <th><?php _e( 'Slugs per language', 'qtranslate' ) ?></th>
-        <td><?php qts_show_list_term_fields( $term ); ?></td>
+        <td><?php qtranxf_slugs_show_list_term_fields( $term ); ?></td>
     </tr>
     <?php
 }
@@ -433,7 +433,7 @@ function qts_show_edit_term_fields( $term ) {
  * Display link to slugs settings for add custom tax admin page (e.g. WooCommerce product attributes).
  *
  */
-function qts_show_add_taxonomy_slugs_option_link() {
+function qtranxf_slugs_show_add_taxonomy_slugs_option_link() {
     ?>
     <div class="form-field term-slug-wrap">
         <label><?php _e( 'Slugs per language', 'qtranslate' ) ?></label>
@@ -449,7 +449,7 @@ function qts_show_add_taxonomy_slugs_option_link() {
  * Display link to slugs settings for edit custom tax admin page (e.g. WooCommerce product attributes).
  *
  */
-function qts_show_edit_taxonomy_slugs_option_link() {
+function qtranxf_slugs_show_edit_taxonomy_slugs_option_link() {
     ?>
     <tr class="form-field term-slug-wrap">
         <th><?php _e( 'Slugs per language', 'qtranslate' ) ?></th>
@@ -466,7 +466,7 @@ function qts_show_edit_taxonomy_slugs_option_link() {
 /**
  * Hide automatically the wordpress slug box in edit terms page.
  */
-function qts_hide_term_slug_box() {
+function qtranxf_slugs_hide_term_slug_box() {
     global $pagenow;
     switch ( $pagenow ):
         case 'edit-tags.php':
@@ -515,21 +515,21 @@ function qts_hide_term_slug_box() {
 /**
  * Hide quickedit slug.
  */
-function qts_hide_quick_edit() {
+function qtranxf_slugs_hide_quick_edit() {
     echo "<!-- QTS remove quick edit box -->" . PHP_EOL;
     echo "<style media=\"screen\">" . PHP_EOL;
     echo "  .inline-edit-row fieldset.inline-edit-col-left .inline-edit-col *:first-child + label { display: none !important }" . PHP_EOL;
     echo "</style>" . PHP_EOL;
 }
 
-function qts_taxonomy_columns( $columns ) {
+function qtranxf_slugs_taxonomy_columns( $columns ) {
     unset( $columns['slug'] );
     $columns['qts-slug'] = __( 'Slug' );
 
     return $columns;
 }
 
-function qts_taxonomy_custom_column( $str, $column_name, $term_id ) {
+function qtranxf_slugs_taxonomy_custom_column( $str, $column_name, $term_id ) {
     global $q_config;
 
     if ( $column_name === 'qts-slug' ) {
@@ -552,7 +552,7 @@ function qts_taxonomy_custom_column( $str, $column_name, $term_id ) {
  * @param (string|array) $taxonomy
  * @param (array) $taxonomy
  */
-function qts_get_object_terms( $terms, $obj_id, $taxonomy, $args ) {
+function qtranxf_slugs_get_object_terms( $terms, $obj_id, $taxonomy, $args ) {
 
     global $pagenow;
     global $q_config;
@@ -589,7 +589,7 @@ function qts_get_object_terms( $terms, $obj_id, $taxonomy, $args ) {
  * @param (array) $terms
  * @param (string|array) $taxonomy
  */
-function qts_get_terms( $terms, $taxonomy ) {
+function qtranxf_slugs_get_terms( $terms, $taxonomy ) {
 
     global $pagenow;
     global $q_config;
@@ -615,11 +615,11 @@ function qts_get_terms( $terms, $taxonomy ) {
     return $terms;
 }
 
-function qts_ma_module_updated() {
+function qtranxf_slugs_ma_module_updated() {
     if ( QTX_Module_Loader::is_module_active( 'slugs' ) ) {
-        qts_multi_activate();
+        qtranxf_slugs_multi_activate();
     } else {
-        qts_deactivate();
+        qtranxf_slugs_deactivate();
 
     }
 }

@@ -52,7 +52,7 @@ class QTX_Slugs {
         remove_action( 'wp_head', 'qtranxf_wp_head' ); //TODO: check if it is needed, and why it is not in the main plugin in case
 
         // add proper hreflang links
-        add_action( 'wp_head', array( &$this, 'qtranslate_slug_header_extended' ) );
+        add_action( 'wp_head', array( &$this, 'head_hreflang' ) );
 
         // remove some Qtranslate filters
         remove_filter( 'page_link', 'qtranxf_convertURL' ); //TODO: check if it is needed
@@ -71,7 +71,7 @@ class QTX_Slugs {
         // Add specific CSS class to body class based on current lang
         add_filter( 'body_class', array(
             $this,
-            'qts_body_class'
+            'body_class'
         ), 600, 1 ); //TODO: if it is needed, this should be moved to main plugin...
     }
 
@@ -82,7 +82,7 @@ class QTX_Slugs {
      * @global QtranslateSlug $qtranslate_slugs used to convert the url
      * @global array $q_config available languages
      */
-    public function qtranslate_slug_header_extended() {
+    public function head_hreflang() {
         global $q_config;
         if ( is_404() ) {
             return;
@@ -101,7 +101,7 @@ class QTX_Slugs {
      *
      * @param array $classes list of classes
      */
-    public function qts_body_class( $classes ) {
+    public function body_class( $classes ) {
         $classes[] = qtranxf_getLanguage();
 
         return $classes;

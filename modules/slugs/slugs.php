@@ -12,4 +12,4 @@ if ( is_admin() ) {
 }
 
 add_action( 'plugins_loaded', array( $qtranslate_slugs, 'init' ) );
-add_filter( 'qtranslate_convert_url', 'qts_convert_url', 10, 2 );
+add_filter( 'qtranslate_convert_url', 'qtranxf_slugs_convert_url', 10, 2 );

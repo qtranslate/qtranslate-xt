@@ -1,17 +1,17 @@
 <?php
 
-add_action( 'qtranslate_update_settings', 'qts_update_settings' );
-add_action( 'qtranslate_configuration', 'qts_show_settings_page' );
+add_action( 'qtranslate_update_settings', 'qtranxf_slugs_update_settings' );
+add_action( 'qtranslate_configuration', 'qtranxf_slugs_show_settings_page' );
 
 /**
  * Helper function for defining variables for the current page.
  *
  * @return array
  */
-function qts_get_settings() {
+function qtranxf_slugs_get_settings() {
     $output                      = array();
-    $output['qts_page_sections'] = qts_options_page_sections();
-    $output['qts_page_fields']   = qts_options_page_fields();
+    $output['qts_page_sections'] = qtranxf_slugs_options_page_sections();
+    $output['qts_page_fields']   = qtranxf_slugs_options_page_fields();
 
     return $output;
 }
@@ -21,7 +21,7 @@ function qts_get_settings() {
  *
  * @return void echoes output
  */
-function qts_section_fn( $section_id = '' ) {
+function qtranxf_slugs_section_fn( $section_id = '' ) {
     switch ( $section_id ) {
         case 'post_types':
             echo "<p>" . __( 'For example, the post_type <kbd>books</kbd>, in Spanish would be displayed as <code>https://example.org/es/libros/post-type-name/</code>. If you leave this blank will use the default option when you <a href="https://developer.wordpress.org/reference/functions/register_post_type/">registered</a> the post_type.', 'qtranslate' ) . "</p>";
@@ -38,7 +38,7 @@ function qts_section_fn( $section_id = '' ) {
  *
  * @return void echoes output
  */
-function qts_show_form_field( $args = array() ) {
+function qtranxf_slugs_show_form_field( $args = array() ) {
     global $qtranslate_slugs;
     global $q_config;
 
@@ -189,8 +189,8 @@ function qts_show_form_field( $args = array() ) {
  *
  * @return void echoes output
  */
-function qts_show_settings_page() {
-    $settings_output = qts_get_settings();
+function qtranxf_slugs_show_settings_page() {
+    $settings_output = qtranxf_slugs_get_settings();
 
     if ( empty( $settings_output['qts_page_sections'] ) ) {
         return;
@@ -201,11 +201,11 @@ function qts_show_settings_page() {
 
     <?php foreach ( $settings_output['qts_page_sections'] as $id => $title ) { ?>
         <h2><?php echo $title; ?></h2>
-        <?php qts_section_fn( $id );
+        <?php qtranxf_slugs_section_fn( $id );
         // call the "add_settings_field" for each!
         foreach ( $settings_output['qts_page_fields'] as $option ) {
             if ( $option['section'] == $id ) {
-                qts_show_form_field( $option );
+                qtranxf_slugs_show_form_field( $option );
             }
         }
     }
@@ -217,7 +217,7 @@ function qts_show_settings_page() {
  *
  * @return array
  */
-function qts_validate_options( $input ) {
+function qtranxf_slugs_validate_options( $input ) {
     global $q_config;
     // Initialize lookup array to be used to make sure slug for a specific language is unique
     $slugs_lookup_array = array();
@@ -231,7 +231,7 @@ function qts_validate_options( $input ) {
     // i.e. whitelist our option IDs
 
     // get the settings sections array
-    $settings_output = qts_get_settings();
+    $settings_output = qtranxf_slugs_get_settings();
     $options         = $settings_output['qts_page_fields'];
 
     // run a foreach and switch on option type
@@ -352,10 +352,10 @@ function qts_validate_options( $input ) {
     return $valid_input;
 }
 
-function qts_update_settings() {
+function qtranxf_slugs_update_settings() {
     global $qtranslate_slugs;
 
-    $qts_settings = isset( $_POST[ QTX_OPTIONS_MODULE_SLUGS ] ) ? qts_validate_options( $_POST[ QTX_OPTIONS_MODULE_SLUGS ] ) : array();
+    $qts_settings = isset( $_POST[ QTX_OPTIONS_MODULE_SLUGS ] ) ? qtranxf_slugs_validate_options( $_POST[ QTX_OPTIONS_MODULE_SLUGS ] ) : array();
     if ( empty( $qts_settings ) ) {
         return;
     }
@@ -372,7 +372,7 @@ function qts_update_settings() {
  *
  * @return array key=$id, array value=$title in: add_settings_section( $id, $title, $callback, $page );
  */
-function qts_options_page_sections() {
+function qtranxf_slugs_options_page_sections() {
     $sections               = array();
     $sections['post_types'] = __( 'Post types', 'qtranslate' );
     $sections['taxonomies'] = __( 'Taxonomies', 'qtranslate' );
@@ -385,7 +385,7 @@ function qts_options_page_sections() {
  *
  * @return array
  */
-function get_multi_txt_choices() {
+function qtranxf_slugs_get_multi_txt_choices() {
     global $q_config;
 
     $choices = array();
@@ -402,24 +402,24 @@ function get_multi_txt_choices() {
  *
  * @return array
  */
-function qts_options_page_fields() {
+function qtranxf_slugs_options_page_fields() {
     global $qtranslate_slugs;
     $options = array();
 
     $post_types = $qtranslate_slugs->get_public_post_types();
     foreach ( $post_types as $post_type ) {
-        $options[] = qts_options_page_build_slug_fields( $post_type, "post_types", "post_type_" );
+        $options[] = qtranxf_slugs_options_page_build_slug_fields( $post_type, "post_types", "post_type_" );
     }
 
     $taxonomies = $qtranslate_slugs->get_public_taxonomies();
     foreach ( $taxonomies as $taxonomy ) {
-        $options[] = qts_options_page_build_slug_fields( $taxonomy, "taxonomies", "taxonomy_" );
+        $options[] = qtranxf_slugs_options_page_build_slug_fields( $taxonomy, "taxonomies", "taxonomy_" );
     }
 
     return array_filter( $options );
 }
 
-function qts_options_page_build_slug_fields( $object, $target_section, $id_prefix ) {
+function qtranxf_slugs_options_page_build_slug_fields( $object, $target_section, $id_prefix ) {
     if ( is_array( $object->rewrite ) && array_key_exists( 'slug', $object->rewrite ) ) {
         $slug = ltrim( $object->rewrite['slug'], "/" );
     } else {
@@ -431,9 +431,9 @@ function qts_options_page_build_slug_fields( $object, $target_section, $id_prefi
         "id"      => $id_prefix . $object->name,
         "title"   => qtranxf_use( qtranxf_getLanguage(), $object->label ),
         "desc"    => sprintf( '<code>https://example.org/<u>%s</u>/some-%s/</code>', $slug, $object->name ),
-        'class'   => 'qts-slug', // used in qts_validate_options. TODO: cleaner way to be considered...
+        'class'   => 'qts-slug', // used in qtranxf_slugs_validate_options. TODO: cleaner way to be considered...
         "type"    => "multi-text",
-        "choices" => get_multi_txt_choices(),
+        "choices" => qtranxf_slugs_get_multi_txt_choices(),
         "std"     => ""
     );
 }
