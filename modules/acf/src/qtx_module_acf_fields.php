@@ -4,7 +4,6 @@
  * Allows the integration with the main ACF plugin by setting up the derived fields.
  */
 class QTX_Module_Acf_Fields {
-
     /**
      * The module instance
      * @var QTX_Module_Acf
@@ -25,16 +24,16 @@ class QTX_Module_Acf_Fields {
     }
 
     /**
-     * Load javascript and stylesheets on admin pages
+     * Register the fields in the ACF plugin.
      */
     public function include_fields() {
-        require_once ACF_QTRANSLATE_PLUGIN_DIR . 'src/fields/file.php';
-        require_once ACF_QTRANSLATE_PLUGIN_DIR . 'src/fields/image.php';
-        require_once ACF_QTRANSLATE_PLUGIN_DIR . 'src/fields/post_object.php';
-        require_once ACF_QTRANSLATE_PLUGIN_DIR . 'src/fields/text.php';
-        require_once ACF_QTRANSLATE_PLUGIN_DIR . 'src/fields/textarea.php';
-        require_once ACF_QTRANSLATE_PLUGIN_DIR . 'src/fields/url.php';
-        require_once ACF_QTRANSLATE_PLUGIN_DIR . 'src/fields/wysiwyg.php';
+        require_once __DIR__ . '/fields/file.php';
+        require_once __DIR__ . '/fields/image.php';
+        require_once __DIR__ . '/fields/post_object.php';
+        require_once __DIR__ . '/fields/text.php';
+        require_once __DIR__ . '/fields/textarea.php';
+        require_once __DIR__ . '/fields/url.php';
+        require_once __DIR__ . '/fields/wysiwyg.php';
 
         acf()->fields->register_field_type( new QTX_Module_Acf_Field_File( $this->module ) );
         acf()->fields->register_field_type( new QTX_Module_Acf_Field_Image( $this->module ) );

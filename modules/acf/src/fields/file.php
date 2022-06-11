@@ -1,7 +1,6 @@
 <?php
 
 class QTX_Module_Acf_Field_File extends acf_field_file {
-
     /**
      * The module instance
      * @var QTX_Module_Acf

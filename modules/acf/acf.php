@@ -6,9 +6,6 @@
  * @author: funkjedi (http://funkjedi.com)
  */
 
-define( 'ACF_QTRANSLATE_PLUGIN', __FILE__ );
-define( 'ACF_QTRANSLATE_PLUGIN_DIR', plugin_dir_path( ACF_QTRANSLATE_PLUGIN ) );
-
 class QTX_Module_Acf {
     /**
      * Constructor
@@ -35,7 +32,7 @@ class QTX_Module_Acf {
         static $plugin_loaded = false;
         if ( ! $plugin_loaded && $this->acf_enabled() ) {
             if ( $this->acf_major_version() === 5 ) {
-                require_once ACF_QTRANSLATE_PLUGIN_DIR . 'src/qtx_module_acf_fields.php';
+                require_once __DIR__ . '/src/qtx_module_acf_fields.php';
                 new QTX_Module_Acf_Fields( $this );
             }
             $plugin_loaded = true;
@@ -90,7 +87,7 @@ class QTX_Module_Acf {
      * Load javascript and stylesheets on admin pages
      */
     public function admin_enqueue_scripts() {
-        wp_enqueue_style( 'qtranslate-acf', plugins_url( 'assets/acf.css', ACF_QTRANSLATE_PLUGIN ),
+        wp_enqueue_style( 'qtranslate-acf', plugins_url( 'assets/acf.css', __FILE__ ),
             array( 'acf-input' ), QTX_VERSION );
 
         wp_enqueue_script( 'qtranslate-acf', plugins_url( 'dist/modules/acf.js', QTRANSLATE_FILE ), array(
@@ -101,7 +98,7 @@ class QTX_Module_Acf {
     }
 
     /**
-     * Output a hidden block that can be use to force qTranslate-X to include the LSB
+     * Output a hidden block that can be used to force qTranslate-X to include the LSB
      */
     public function admin_footer() {
         ?>

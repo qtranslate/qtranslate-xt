@@ -1,7 +1,6 @@
 <?php
 
 class QTX_Module_Acf_Field_Wysiwyg extends acf_field_wysiwyg {
-
     /**
      * The module instance
      * @var QTX_Module_Acf

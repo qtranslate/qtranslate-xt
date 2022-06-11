@@ -1,7 +1,6 @@
 <?php
 
 class QTX_Module_Acf_Field_Url extends acf_field_url {
-
     /**
      * The module instance
      * @var QTX_Module_Acf
