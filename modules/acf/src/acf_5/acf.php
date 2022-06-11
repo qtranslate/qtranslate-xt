@@ -2,18 +2,18 @@
 
 require_once ACF_QTRANSLATE_PLUGIN_DIR . 'src/acf_interface.php';
 
-class acf_qtranslate_acf_5 implements acf_qtranslate_acf_interface {
+class QTX_Module_Acf_V5 implements QTX_Module_Acf_Interface {
 
     /**
      * The plugin instance
-     * @var acf_qtranslate_plugin
+     * @var QTX_Module_Acf_Plugin
      */
     protected $plugin;
 
     /**
      * Constructor
      *
-     * @param acf_qtranslate_plugin $plugin
+     * @param QTX_Module_Acf_Plugin $plugin
      */
     public function __construct( $plugin ) {
         $this->plugin = $plugin;
@@ -35,13 +35,13 @@ class acf_qtranslate_acf_5 implements acf_qtranslate_acf_interface {
         require_once ACF_QTRANSLATE_PLUGIN_DIR . 'src/acf_5/fields/url.php';
         require_once ACF_QTRANSLATE_PLUGIN_DIR . 'src/acf_5/fields/wysiwyg.php';
 
-        acf()->fields->register_field_type( new acf_qtranslate_acf_5_file( $this->plugin ) );
-        acf()->fields->register_field_type( new acf_qtranslate_acf_5_image( $this->plugin ) );
-        acf()->fields->register_field_type( new acf_qtranslate_acf_5_post_object( $this->plugin ) );
-        acf()->fields->register_field_type( new acf_qtranslate_acf_5_text( $this->plugin ) );
-        acf()->fields->register_field_type( new acf_qtranslate_acf_5_textarea( $this->plugin ) );
-        acf()->fields->register_field_type( new acf_qtranslate_acf_5_url( $this->plugin ) );
-        acf()->fields->register_field_type( new acf_qtranslate_acf_5_wysiwyg( $this->plugin ) );
+        acf()->fields->register_field_type( new QTX_Module_Acf_V5_File( $this->plugin ) );
+        acf()->fields->register_field_type( new QTX_Module_Acf_V5_Image( $this->plugin ) );
+        acf()->fields->register_field_type( new QTX_Module_Acf_V5_Post_Object( $this->plugin ) );
+        acf()->fields->register_field_type( new QTX_Module_Acf_V5_Text( $this->plugin ) );
+        acf()->fields->register_field_type( new QTX_Module_Acf_V5_Textarea( $this->plugin ) );
+        acf()->fields->register_field_type( new QTX_Module_Acf_V5_Url( $this->plugin ) );
+        acf()->fields->register_field_type( new QTX_Module_Acf_V5_Wysiwyg( $this->plugin ) );
     }
 
     /**

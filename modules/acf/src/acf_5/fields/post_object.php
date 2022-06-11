@@ -1,17 +1,17 @@
 <?php
 
-class acf_qtranslate_acf_5_post_object extends acf_field_post_object {
+class QTX_Module_Acf_V5_Post_Object extends acf_field_post_object {
 
     /**
      * The plugin instance
-     * @var acf_qtranslate_plugin
+     * @var QTX_Module_Acf_Plugin
      */
     protected $plugin;
 
     /**
      * Constructor
      *
-     * @param acf_qtranslate_plugin $plugin
+     * @param QTX_Module_Acf_Plugin $plugin
      */
     function __construct( $plugin ) {
         $this->plugin = $plugin;

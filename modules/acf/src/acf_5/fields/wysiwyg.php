@@ -1,17 +1,17 @@
 <?php
 
-class acf_qtranslate_acf_5_wysiwyg extends acf_field_wysiwyg {
+class QTX_Module_Acf_V5_Wysiwyg extends acf_field_wysiwyg {
 
     /**
      * The plugin instance
-     * @var acf_qtranslate_plugin
+     * @var QTX_Module_Acf_Plugin
      */
     protected $plugin;
 
     /**
      * Constructor
      *
-     * @param acf_qtranslate_plugin $plugin
+     * @param QTX_Module_Acf_Plugin $plugin
      */
     function __construct( $plugin ) {
         $this->plugin = $plugin;

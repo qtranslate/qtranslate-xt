@@ -1,6 +1,6 @@
 <?php
 
-interface acf_qtranslate_acf_interface {
+interface QTX_Module_Acf_Interface {
 
     /**
      * Get the visible ACF fields

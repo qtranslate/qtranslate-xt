@@ -10,4 +10,4 @@ define( 'ACF_QTRANSLATE_PLUGIN', __FILE__ );
 define( 'ACF_QTRANSLATE_PLUGIN_DIR', plugin_dir_path( ACF_QTRANSLATE_PLUGIN ) );
 
 require_once ACF_QTRANSLATE_PLUGIN_DIR . 'src/plugin.php';
-new acf_qtranslate_plugin;
+new QTX_Module_Acf_Plugin;
