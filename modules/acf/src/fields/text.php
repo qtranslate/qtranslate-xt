@@ -1,22 +1,22 @@
 <?php
 
-class QTX_Module_Acf_V5_Textarea extends acf_field_textarea {
+class QTX_Module_Acf_Field_Text extends acf_field_text {
 
     /**
-     * The plugin instance
-     * @var QTX_Module_Acf_Plugin
+     * The module instance
+     * @var QTX_Module_Acf
      */
-    protected $plugin;
+    protected $module;
 
     /**
      * Constructor
      *
-     * @param QTX_Module_Acf_Plugin $plugin
+     * @param QTX_Module_Acf $module
      */
-    function __construct( $plugin ) {
-        $this->plugin = $plugin;
+    function __construct( $module ) {
+        $this->module = $module;
 
-        if ( version_compare( $plugin->acf_version(), '5.6.0' ) < 0 ) {
+        if ( version_compare( $module->acf_version(), '5.6.0' ) < 0 ) {
             $this->initialize();
         }
 
@@ -24,18 +24,18 @@ class QTX_Module_Acf_V5_Textarea extends acf_field_textarea {
     }
 
     /**
-     * Setup the field type data
+     *  Setup the field type data
      */
     function initialize() {
-        $this->name     = 'qtranslate_textarea';
-        $this->label    = __( "Textarea", 'acf' ) . " (qTranslate-XT)";
+        $this->name     = 'qtranslate_text';
+        $this->label    = __( "Text", 'acf' ) . " (qTranslate-XT)";
         $this->category = "qTranslate-XT";
         $this->defaults = array(
             'default_value' => '',
-            'new_lines'     => '',
             'maxlength'     => '',
             'placeholder'   => '',
-            'rows'          => ''
+            'prepend'       => '',
+            'append'        => ''
         );
     }
 
@@ -47,17 +47,13 @@ class QTX_Module_Acf_V5_Textarea extends acf_field_textarea {
     function render_field( $field ) {
         global $q_config;
         $languages       = qtranxf_getSortedLanguages( true );
-        $values          = $this->plugin->decode_language_values( $field['value'] );
-        $currentLanguage = $this->plugin->get_active_language();
-
-        if ( empty( $field['rows'] ) ) {
-            $field['rows'] = 8;
-        }
+        $values          = $this->module->decode_language_values( $field['value'] );
+        $currentLanguage = $this->module->get_active_language();
 
         $atts = array();
 
-        $keys = array( 'id', 'class', 'name', 'placeholder', 'rows' );
-        if ( $field['maxlength'] !== '' ) {
+        $keys = array( 'type', 'id', 'class', 'name', 'value', 'placeholder' );
+        if ( $field['maxlength'] !== "" ) {
             $keys[] = 'maxlength';
         }
         foreach ( $keys as $k ) {
@@ -83,14 +79,45 @@ class QTX_Module_Acf_V5_Textarea extends acf_field_textarea {
             if ( $language === $currentLanguage ) {
                 $atts['class'] .= ' current-language';
             }
+            $atts['type']          = 'text';
             $atts['name']          = $field['name'] . "[$language]";
+            $atts['value']         = $values[ $language ];
             $atts['data-language'] = $language;
-            echo '<textarea ' . acf_esc_attrs( $atts ) . ' >';
-            echo esc_textarea( $values[ $language ] );
-            echo '</textarea>';
+            echo '<input ' . acf_esc_attrs( $atts ) . ' />';
         }
 
         echo '</div>';
+    }
+
+    /**
+     * Hook/override for ACF render_field_settings
+     *
+     * @param array $field
+     */
+    function render_field_settings( $field ) {
+        // default_value
+        acf_render_field_setting( $field, array(
+            'label'        => __( 'Default Value', 'acf' ),
+            'instructions' => __( 'Appears when creating a new post', 'acf' ),
+            'type'         => 'text',
+            'name'         => 'default_value',
+        ) );
+
+        // placeholder
+        acf_render_field_setting( $field, array(
+            'label'        => __( 'Placeholder Text', 'acf' ),
+            'instructions' => __( 'Appears within the input', 'acf' ),
+            'type'         => 'text',
+            'name'         => 'placeholder',
+        ) );
+
+        // maxlength
+        acf_render_field_setting( $field, array(
+            'label'        => __( 'Character Limit', 'acf' ),
+            'instructions' => __( 'Leave blank for no limit', 'acf' ),
+            'type'         => 'number',
+            'name'         => 'maxlength',
+        ) );
     }
 
     /**
@@ -101,10 +128,10 @@ class QTX_Module_Acf_V5_Textarea extends acf_field_textarea {
      * @param array $field - the field array holding all the field options
      *
      * @return string - the modified value
-     * @see acf_field_textarea::render_field
+     * @see acf_field_text::update_value
      */
     function update_value( $values, $post_id, $field ) {
-        return $this->plugin->encode_language_values( $values );
+        return $this->module->encode_language_values( $values );
     }
 
     /**
@@ -120,7 +147,7 @@ class QTX_Module_Acf_V5_Textarea extends acf_field_textarea {
      */
     function validate_value( $valid, $value, $field, $input ) {
         if ( is_array( $value ) ) {
-            $valid = $this->plugin->validate_language_values( $this, $valid, $value, $field, $input );
+            $valid = $this->module->validate_language_values( $this, $valid, $value, $field, $input );
         }
 
         return $valid;

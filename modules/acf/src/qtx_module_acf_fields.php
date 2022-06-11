@@ -1,22 +1,23 @@
 <?php
 
-require_once ACF_QTRANSLATE_PLUGIN_DIR . 'src/acf_interface.php';
-
-class QTX_Module_Acf_V5 implements QTX_Module_Acf_Interface {
+/**
+ * Allows the integration with the main ACF plugin by setting up the derived fields.
+ */
+class QTX_Module_Acf_Fields {
 
     /**
-     * The plugin instance
-     * @var QTX_Module_Acf_Plugin
+     * The module instance
+     * @var QTX_Module_Acf
      */
-    protected $plugin;
+    protected $module;
 
     /**
      * Constructor
      *
-     * @param QTX_Module_Acf_Plugin $plugin
+     * @param QTX_Module_Acf $module
      */
-    public function __construct( $plugin ) {
-        $this->plugin = $plugin;
+    public function __construct( $module ) {
+        $this->module = $module;
 
         // a higher priority is needed for custom admin options (ACF PRO)
         add_filter( 'acf/format_value', array( $this, 'format_value' ), 5 );
@@ -27,21 +28,21 @@ class QTX_Module_Acf_V5 implements QTX_Module_Acf_Interface {
      * Load javascript and stylesheets on admin pages
      */
     public function include_fields() {
-        require_once ACF_QTRANSLATE_PLUGIN_DIR . 'src/acf_5/fields/file.php';
-        require_once ACF_QTRANSLATE_PLUGIN_DIR . 'src/acf_5/fields/image.php';
-        require_once ACF_QTRANSLATE_PLUGIN_DIR . 'src/acf_5/fields/post_object.php';
-        require_once ACF_QTRANSLATE_PLUGIN_DIR . 'src/acf_5/fields/text.php';
-        require_once ACF_QTRANSLATE_PLUGIN_DIR . 'src/acf_5/fields/textarea.php';
-        require_once ACF_QTRANSLATE_PLUGIN_DIR . 'src/acf_5/fields/url.php';
-        require_once ACF_QTRANSLATE_PLUGIN_DIR . 'src/acf_5/fields/wysiwyg.php';
+        require_once ACF_QTRANSLATE_PLUGIN_DIR . 'src/fields/file.php';
+        require_once ACF_QTRANSLATE_PLUGIN_DIR . 'src/fields/image.php';
+        require_once ACF_QTRANSLATE_PLUGIN_DIR . 'src/fields/post_object.php';
+        require_once ACF_QTRANSLATE_PLUGIN_DIR . 'src/fields/text.php';
+        require_once ACF_QTRANSLATE_PLUGIN_DIR . 'src/fields/textarea.php';
+        require_once ACF_QTRANSLATE_PLUGIN_DIR . 'src/fields/url.php';
+        require_once ACF_QTRANSLATE_PLUGIN_DIR . 'src/fields/wysiwyg.php';
 
-        acf()->fields->register_field_type( new QTX_Module_Acf_V5_File( $this->plugin ) );
-        acf()->fields->register_field_type( new QTX_Module_Acf_V5_Image( $this->plugin ) );
-        acf()->fields->register_field_type( new QTX_Module_Acf_V5_Post_Object( $this->plugin ) );
-        acf()->fields->register_field_type( new QTX_Module_Acf_V5_Text( $this->plugin ) );
-        acf()->fields->register_field_type( new QTX_Module_Acf_V5_Textarea( $this->plugin ) );
-        acf()->fields->register_field_type( new QTX_Module_Acf_V5_Url( $this->plugin ) );
-        acf()->fields->register_field_type( new QTX_Module_Acf_V5_Wysiwyg( $this->plugin ) );
+        acf()->fields->register_field_type( new QTX_Module_Acf_Field_File( $this->module ) );
+        acf()->fields->register_field_type( new QTX_Module_Acf_Field_Image( $this->module ) );
+        acf()->fields->register_field_type( new QTX_Module_Acf_Field_Post_Object( $this->module ) );
+        acf()->fields->register_field_type( new QTX_Module_Acf_Field_Text( $this->module ) );
+        acf()->fields->register_field_type( new QTX_Module_Acf_Field_Textarea( $this->module ) );
+        acf()->fields->register_field_type( new QTX_Module_Acf_Field_Url( $this->module ) );
+        acf()->fields->register_field_type( new QTX_Module_Acf_Field_Wysiwyg( $this->module ) );
     }
 
     /**
@@ -65,6 +66,9 @@ class QTX_Module_Acf_V5 implements QTX_Module_Acf_Interface {
 
     /**
      * Get the visible ACF fields
+     *
+     * TODO: not used anymore. It was called from `qtranslate_load_admin_page_config` and `admin_enqueue_scripts` but it
+     *       was removed with https://github.com/funkjedi/acf-qtranslate/commit/c152248ff1771fd33643bc39dd286cd3e4cb3e57
      *
      * @param null $widget_id
      *
