@@ -1,10 +1,10 @@
 <?php
 
-class acf_qtranslate_plugin {
+class QTX_Module_Acf_Plugin {
 
     /**
      * An ACF instance
-     * @var acf_qtranslate_acf_interface
+     * @var QTX_Module_Acf_Interface
      */
     protected $acf;
 
@@ -34,7 +34,7 @@ class acf_qtranslate_plugin {
         if ( ! $plugin_loaded && $this->acf_enabled() ) {
             if ( $this->acf_major_version() === 5 ) {
                 require_once ACF_QTRANSLATE_PLUGIN_DIR . 'src/acf_5/acf.php';
-                $this->acf = new acf_qtranslate_acf_5( $this );
+                $this->acf = new QTX_Module_Acf_V5( $this );
             }
             $plugin_loaded = true;
         }
