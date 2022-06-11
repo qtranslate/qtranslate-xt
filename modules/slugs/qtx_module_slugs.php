@@ -3,7 +3,7 @@
 /**
  * Main class for translation of slugs, setting up hooks for front-side.
  */
-class QTX_Slugs {
+class QTX_Module_Slugs {
     /**
      * Stores options slugs from database.
      * @var array
