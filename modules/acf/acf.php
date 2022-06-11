@@ -30,26 +30,13 @@ class QTX_Module_Acf {
      */
     public function init() {
         static $plugin_loaded = false;
-        if ( ! $plugin_loaded && $this->acf_enabled() ) {
-            if ( $this->acf_major_version() === 5 ) {
+        if ( ! $plugin_loaded && function_exists( 'acf' ) ) {
+            if ( version_compare( $this->acf_version(), '5.0.0' ) >= 0 ) {
                 require_once __DIR__ . '/src/qtx_module_acf_fields.php';
                 new QTX_Module_Acf_Fields( $this );
             }
             $plugin_loaded = true;
         }
-    }
-
-    /**
-     * Check if Advanced Custom Fields is enabled
-     *
-     * @return boolean
-     */
-    public function acf_enabled() {
-        if ( function_exists( 'acf' ) ) {
-            return $this->acf_major_version() === 5;
-        }
-
-        return false;
     }
 
     /**
@@ -59,15 +46,6 @@ class QTX_Module_Acf {
      */
     public function acf_version() {
         return acf()->settings['version'];
-    }
-
-    /**
-     * Return the major version number for Advanced Custom Fields
-     *
-     * @return int
-     */
-    public function acf_major_version() {
-        return (int) $this->acf_version();
     }
 
     /**
