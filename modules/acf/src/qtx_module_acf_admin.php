@@ -60,7 +60,7 @@ class QTX_Module_Acf_Admin {
      */
     public function admin_head() {
         // Hide the language tabs if they shouldn't be displayed
-        $show_language_tabs = $this->get_plugin_setting( 'show_language_tabs' );
+        $show_language_tabs = $this->get_module_setting( 'show_language_tabs' );
         if ( ! $show_language_tabs ) {
             ?>
             <style>
@@ -76,7 +76,7 @@ class QTX_Module_Acf_Admin {
         }
 
         // Enable translation of standard field types
-        $translate_standard_field_types = $this->get_plugin_setting( 'translate_standard_field_types' );
+        $translate_standard_field_types = $this->get_module_setting( 'translate_standard_field_types' );
         if ( $translate_standard_field_types ) {
             ?>
             <script>
@@ -98,7 +98,7 @@ class QTX_Module_Acf_Admin {
             'admin.php' => 'page=',
         );
 
-        foreach ( explode( "\n", $this->get_plugin_setting( 'show_on_pages' ) ) as $page ) {
+        foreach ( explode( "\n", $this->get_module_setting( 'show_on_pages' ) ) as $page ) {
             $page = trim( $page );
             if ( $page ) {
                 $pages[ $page ] = '';
@@ -153,14 +153,14 @@ class QTX_Module_Acf_Admin {
     }
 
     /**
-     * Retrieve the value of a plugin setting
+     * Retrieve the value of a setting for the ACF module.
      *
      * @param string $name
      * @param mixed $default
      *
      * @return mixed
      */
-    function get_plugin_setting( $name, $default = null ) {
+    function get_module_setting( $name, $default = null ) {
         $options = get_option( QTX_OPTIONS_MODULE_ACF );
         if ( isset( $options[ $name ] ) ) {
             return $options[ $name ];
@@ -230,7 +230,7 @@ class QTX_Module_Acf_Admin {
     function render_setting_translate_standard_field_types() {
         ?>
         <input type="checkbox"
-               name="<?php echo QTX_OPTIONS_MODULE_ACF ?>[translate_standard_field_types]" <?php checked( $this->get_plugin_setting( 'translate_standard_field_types' ), 1 ); ?>
+               name="<?php echo QTX_OPTIONS_MODULE_ACF ?>[translate_standard_field_types]" <?php checked( $this->get_module_setting( 'translate_standard_field_types' ), 1 ); ?>
                value="1">
         <?php
     }
@@ -241,7 +241,7 @@ class QTX_Module_Acf_Admin {
     function render_setting_show_language_tabs() {
         ?>
         <input type="checkbox"
-               name="<?php echo QTX_OPTIONS_MODULE_ACF ?>[show_language_tabs]" <?php checked( $this->get_plugin_setting( 'show_language_tabs' ), 1 ); ?>
+               name="<?php echo QTX_OPTIONS_MODULE_ACF ?>[show_language_tabs]" <?php checked( $this->get_module_setting( 'show_language_tabs' ), 1 ); ?>
                value="1">
         <?php
     }
@@ -253,7 +253,7 @@ class QTX_Module_Acf_Admin {
         ?>
         <textarea name="<?php echo QTX_OPTIONS_MODULE_ACF ?>[show_on_pages]"
                   style="max-width:500px;width:100%;height:200px;padding-top:6px"
-                  placeholder="post.php"><?= esc_html( $this->get_plugin_setting( 'show_on_pages' ) ) ?></textarea><br>
+                  placeholder="post.php"><?= esc_html( $this->get_module_setting( 'show_on_pages' ) ) ?></textarea><br>
         <small>Enter each page on it's own line</small>
         <?php
     }
