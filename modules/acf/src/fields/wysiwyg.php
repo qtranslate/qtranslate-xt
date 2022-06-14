@@ -91,7 +91,7 @@ class QTX_Module_Acf_Field_Wysiwyg extends acf_field_wysiwyg {
 
         $languages       = qtranxf_getSortedLanguages( true );
         $values          = $this->module->decode_language_values( $field['value'] );
-        $currentLanguage = $this->module->get_active_language();
+        $currentLanguage = qtranxf_getLanguage();
 
         echo '<div class="multi-language-field multi-language-field-wysiwyg">';
 

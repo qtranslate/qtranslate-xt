@@ -52,7 +52,7 @@ class QTX_Module_Acf_Field_Post_Object extends acf_field_post_object {
         $languages       = qtranxf_getSortedLanguages( true );
         $decoded         = $this->module->decode_language_values( $field['value'] );
         $values          = array_map( 'maybe_unserialize', $decoded );
-        $currentLanguage = $this->module->get_active_language();
+        $currentLanguage = qtranxf_getLanguage();
 
         $atts = array(
             'id'   => $field['id'],

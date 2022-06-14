@@ -40,20 +40,6 @@ class QTX_Module_Acf {
     }
 
     /**
-     * Get the active language
-     *
-     * IMPORTANT!
-     * The active language should only be used for a default selection but the rendering should be "non-restrictive".
-     * In LSB mode, we should not assume which language the client is going to select eventually.
-     * Though we are likely to select the "wrong" language, the correct selection will be adjusted client-side.
-     * In single mode, the rendering should be the correct one though, as the language remains the same.
-     */
-    public function get_active_language() {
-        return qtranxf_getLanguage();
-    }
-
-
-    /**
      * Encode a multi-language array into a string with bracket tags
      *
      * @param array $values

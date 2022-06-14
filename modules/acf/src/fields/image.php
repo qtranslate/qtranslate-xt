@@ -66,7 +66,7 @@ class QTX_Module_Acf_Field_Image extends acf_field_image {
 
         $languages       = qtranxf_getSortedLanguages( true );
         $values          = $this->module->decode_language_values( $field['value'] );
-        $currentLanguage = $this->module->get_active_language();
+        $currentLanguage = qtranxf_getLanguage();
 
         $uploader = acf_get_setting( 'uploader' );
         if ( $uploader == 'wp' ) {
