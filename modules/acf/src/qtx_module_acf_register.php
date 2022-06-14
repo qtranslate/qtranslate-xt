@@ -1,13 +1,13 @@
 <?php
 
 /**
- * Allows the integration with the main ACF plugin by setting up the derived fields.
+ * Allows the integration with ACF by setting up the derived fields.
  */
 class QTX_Module_Acf_Register {
     /**
      * Constructor
      */
-    public function __construct( ) {
+    public function __construct() {
         // a higher priority is needed for custom admin options (ACF PRO)
         add_filter( 'acf/format_value', array( $this, 'format_value' ), 5 );
         add_action( 'acf/include_fields', array( $this, 'include_fields' ), 5 );
@@ -25,15 +25,16 @@ class QTX_Module_Acf_Register {
         require_once __DIR__ . '/fields/url.php';
         require_once __DIR__ . '/fields/wysiwyg.php';
 
-        $pre_initialize = version_compare( acf()->settings['version'], '5.6.0' ) < 0;
+        // Before ACF 5.6.0 initialize() must be called explicitly in the constructors of the acf_field derived classes.
+        $do_initialize = version_compare( acf()->settings['version'], '5.6.0' ) < 0;
 
-        acf()->fields->register_field_type( new QTX_Module_Acf_Field_File( $this, $pre_initialize ) );
-        acf()->fields->register_field_type( new QTX_Module_Acf_Field_Image( $this, $pre_initialize ) );
-        acf()->fields->register_field_type( new QTX_Module_Acf_Field_Post_Object( $this, $pre_initialize ) );
-        acf()->fields->register_field_type( new QTX_Module_Acf_Field_Text( $this, $pre_initialize ) );
-        acf()->fields->register_field_type( new QTX_Module_Acf_Field_Textarea( $this, $pre_initialize ) );
-        acf()->fields->register_field_type( new QTX_Module_Acf_Field_Url( $this, $pre_initialize ) );
-        acf()->fields->register_field_type( new QTX_Module_Acf_Field_Wysiwyg( $this, $pre_initialize ) );
+        acf()->fields->register_field_type( new QTX_Module_Acf_Field_File( $this, $do_initialize ) );
+        acf()->fields->register_field_type( new QTX_Module_Acf_Field_Image( $this, $do_initialize ) );
+        acf()->fields->register_field_type( new QTX_Module_Acf_Field_Post_Object( $this, $do_initialize ) );
+        acf()->fields->register_field_type( new QTX_Module_Acf_Field_Text( $this, $do_initialize ) );
+        acf()->fields->register_field_type( new QTX_Module_Acf_Field_Textarea( $this, $do_initialize ) );
+        acf()->fields->register_field_type( new QTX_Module_Acf_Field_Url( $this, $do_initialize ) );
+        acf()->fields->register_field_type( new QTX_Module_Acf_Field_Wysiwyg( $this, $do_initialize ) );
     }
 
     /**

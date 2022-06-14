@@ -2,7 +2,7 @@
 
 class QTX_Module_Acf_Field_Image extends acf_field_image {
     /**
-     * The module instance
+     * The register instance
      * @var QTX_Module_Acf_Register
      */
     protected $register;
@@ -11,11 +11,12 @@ class QTX_Module_Acf_Field_Image extends acf_field_image {
      * Constructor
      *
      * @param QTX_Module_Acf_Register $register
+     * @param bool $do_initialize true if initialize() must be called explicitly
      */
-    function __construct( $register, $pre_initialize ) {
+    function __construct( $register, $do_initialize ) {
         $this->register = $register;
 
-        if ( $pre_initialize ) {
+        if ( $do_initialize ) {
             $this->initialize();
         }
 

@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Handle the admin sections and settings.
+ */
 class QTX_Module_Acf_Admin {
     /**
      * Constructor
