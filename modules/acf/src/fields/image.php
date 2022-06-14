@@ -3,19 +3,19 @@
 class QTX_Module_Acf_Field_Image extends acf_field_image {
     /**
      * The module instance
-     * @var QTX_Module_Acf
+     * @var QTX_Module_Acf_Register
      */
-    protected $module;
+    protected $register;
 
     /**
      * Constructor
      *
-     * @param QTX_Module_Acf $module
+     * @param QTX_Module_Acf_Register $register
      */
-    function __construct( $module ) {
-        $this->module = $module;
+    function __construct( $register, $pre_initialize ) {
+        $this->register = $register;
 
-        if ( version_compare( $module->acf_version(), '5.6.0' ) < 0 ) {
+        if ( $pre_initialize ) {
             $this->initialize();
         }
 
@@ -65,7 +65,7 @@ class QTX_Module_Acf_Field_Image extends acf_field_image {
         global $q_config;
 
         $languages       = qtranxf_getSortedLanguages( true );
-        $values          = $this->module->decode_language_values( $field['value'] );
+        $values          = $this->register->decode_language_values( $field['value'] );
         $currentLanguage = qtranxf_getLanguage();
 
         $uploader = acf_get_setting( 'uploader' );
