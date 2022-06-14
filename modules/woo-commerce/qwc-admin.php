@@ -42,8 +42,8 @@ function qtranxf_wc_add_filters_admin() {
         add_filter( $name, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', $priority );
     }
 
-    add_filter( 'woocommerce_attribute_taxonomies' , 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage' );
-    add_filter( 'woocommerce_variation_option_name' , 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage' );
+    add_filter( 'woocommerce_attribute_taxonomies', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage' );
+    add_filter( 'woocommerce_variation_option_name', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage' );
 }
 
 qtranxf_wc_add_filters_admin();
@@ -345,7 +345,7 @@ add_filter( 'option_woocommerce_email_from_name', 'qtranxf_wc_admin_email_option
  * This helps to use order's language on re-sent emails from post.php order edit page.
  *
  * @param $content
- * @param null $order
+ * @param WC_Order $order
  *
  * @return array|mixed|string|void
  */
@@ -353,8 +353,8 @@ function qtranxf_wc_admin_email_translate( $content, $order = null ) {
     global $q_config;
 
     $lang = null;
-    if ( $order && isset( $order->id ) ) {
-        $lang = get_post_meta( $order->id, '_user_language', true );
+    if ( $order && $order->get_id() ) {
+        $lang = get_post_meta( $order->get_id(), '_user_language', true );
     }
     if ( ! $lang ) {
         $lang = $q_config['language'];
@@ -369,14 +369,14 @@ add_filter( 'woocommerce_email_order_items_table', 'qtranxf_wc_admin_email_trans
  * Called to process action when button 'Save Order' pressed in /wp-admin/post.php?post=xxx&action=edit
  * Helps to partly change language in email sent, but not all, since some parts are already translated into admin language.
  *
- * @param $order
+ * @param WC_Order $order
  */
 function qtranxf_wc_admin_before_resend_order_emails( $order ) {
-    if ( ! $order || ! isset( $order->id ) ) {
+    if ( ! ( $order && $order->get_id() ) ) {
         return;
     }
 
-    $lang = get_post_meta( $order->id, '_user_language', true );
+    $lang = get_post_meta( $order->get_id(), '_user_language', true );
     if ( ! $lang ) {
         return;
     }
