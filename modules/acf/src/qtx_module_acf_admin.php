@@ -1,19 +1,13 @@
 <?php
 
-class QTX_Module_Acf_Plugin {
-
-    /**
-     * An ACF instance
-     * @var QTX_Module_Acf_Interface
-     */
-    protected $acf;
-
+/**
+ * Handle the admin sections and settings.
+ */
+class QTX_Module_Acf_Admin {
     /**
      * Constructor
      */
     public function __construct() {
-        add_action( 'plugins_loaded', array( $this, 'init' ), 3 );
-        add_action( 'after_setup_theme', array( $this, 'init' ), -10 );
         add_action( 'acf/input/admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
         add_action( 'admin_footer', array( $this, 'admin_footer' ), -10 );
         add_action( 'admin_head', array( $this, 'admin_head' ) );
@@ -25,70 +19,10 @@ class QTX_Module_Acf_Plugin {
     }
 
     /**
-     * Setup plugin if Advanced Custom Fields is enabled
-     *
-     * @return void
-     */
-    public function init() {
-        static $plugin_loaded = false;
-        if ( ! $plugin_loaded && $this->acf_enabled() ) {
-            if ( $this->acf_major_version() === 5 ) {
-                require_once ACF_QTRANSLATE_PLUGIN_DIR . 'src/acf_5/acf.php';
-                $this->acf = new QTX_Module_Acf_V5( $this );
-            }
-            $plugin_loaded = true;
-        }
-    }
-
-    /**
-     * Check if Advanced Custom Fields is enabled
-     *
-     * @return boolean
-     */
-    public function acf_enabled() {
-        if ( function_exists( 'acf' ) ) {
-            return $this->acf_major_version() === 5;
-        }
-
-        return false;
-    }
-
-    /**
-     * Return the major version number for Advanced Custom Fields
-     *
-     * @return int
-     */
-    public function acf_version() {
-        return acf()->settings['version'];
-    }
-
-    /**
-     * Return the major version number for Advanced Custom Fields
-     *
-     * @return int
-     */
-    public function acf_major_version() {
-        return (int) $this->acf_version();
-    }
-
-    /**
-     * Get the active language
-     *
-     * IMPORTANT!
-     * The active language should only be used for a default selection but the rendering should be "non-restrictive".
-     * In LSB mode, we should not assume which language the client is going to select eventually.
-     * Though we are likely to select the "wrong" language, the correct selection will be adjusted client-side.
-     * In single mode, the rendering should be the correct one though, as the language remains the same.
-     */
-    public function get_active_language() {
-        return qtranxf_getLanguage();
-    }
-
-    /**
      * Load javascript and stylesheets on admin pages
      */
     public function admin_enqueue_scripts() {
-        wp_enqueue_style( 'qtranslate-acf', plugins_url( 'assets/acf.css', ACF_QTRANSLATE_PLUGIN ),
+        wp_enqueue_style( 'qtranslate-acf', plugins_url( 'modules/acf/assets/acf.css', QTRANSLATE_FILE ),
             array( 'acf-input' ), QTX_VERSION );
 
         wp_enqueue_script( 'qtranslate-acf', plugins_url( 'dist/modules/acf.js', QTRANSLATE_FILE ), array(
@@ -99,7 +33,7 @@ class QTX_Module_Acf_Plugin {
     }
 
     /**
-     * Output a hidden block that can be use to force qTranslate-X to include the LSB
+     * Output a hidden block that can be used to force qTranslate-X to include the LSB
      */
     public function admin_footer() {
         ?>
@@ -129,7 +63,7 @@ class QTX_Module_Acf_Plugin {
      */
     public function admin_head() {
         // Hide the language tabs if they shouldn't be displayed
-        $show_language_tabs = $this->get_plugin_setting( 'show_language_tabs' );
+        $show_language_tabs = $this->get_module_setting( 'show_language_tabs' );
         if ( ! $show_language_tabs ) {
             ?>
             <style>
@@ -145,7 +79,7 @@ class QTX_Module_Acf_Plugin {
         }
 
         // Enable translation of standard field types
-        $translate_standard_field_types = $this->get_plugin_setting( 'translate_standard_field_types' );
+        $translate_standard_field_types = $this->get_module_setting( 'translate_standard_field_types' );
         if ( $translate_standard_field_types ) {
             ?>
             <script>
@@ -167,7 +101,7 @@ class QTX_Module_Acf_Plugin {
             'admin.php' => 'page=',
         );
 
-        foreach ( explode( "\n", $this->get_plugin_setting( 'show_on_pages' ) ) as $page ) {
+        foreach ( explode( "\n", $this->get_module_setting( 'show_on_pages' ) ) as $page ) {
             $page = trim( $page );
             if ( $page ) {
                 $pages[ $page ] = '';
@@ -222,14 +156,14 @@ class QTX_Module_Acf_Plugin {
     }
 
     /**
-     * Retrieve the value of a plugin setting
+     * Retrieve the value of a setting for the ACF module.
      *
      * @param string $name
      * @param mixed $default
      *
      * @return mixed
      */
-    function get_plugin_setting( $name, $default = null ) {
+    function get_module_setting( $name, $default = null ) {
         $options = get_option( QTX_OPTIONS_MODULE_ACF );
         if ( isset( $options[ $name ] ) ) {
             return $options[ $name ];
@@ -299,7 +233,7 @@ class QTX_Module_Acf_Plugin {
     function render_setting_translate_standard_field_types() {
         ?>
         <input type="checkbox"
-               name="<?php echo QTX_OPTIONS_MODULE_ACF ?>[translate_standard_field_types]" <?php checked( $this->get_plugin_setting( 'translate_standard_field_types' ), 1 ); ?>
+               name="<?php echo QTX_OPTIONS_MODULE_ACF ?>[translate_standard_field_types]" <?php checked( $this->get_module_setting( 'translate_standard_field_types' ), 1 ); ?>
                value="1">
         <?php
     }
@@ -310,7 +244,7 @@ class QTX_Module_Acf_Plugin {
     function render_setting_show_language_tabs() {
         ?>
         <input type="checkbox"
-               name="<?php echo QTX_OPTIONS_MODULE_ACF ?>[show_language_tabs]" <?php checked( $this->get_plugin_setting( 'show_language_tabs' ), 1 ); ?>
+               name="<?php echo QTX_OPTIONS_MODULE_ACF ?>[show_language_tabs]" <?php checked( $this->get_module_setting( 'show_language_tabs' ), 1 ); ?>
                value="1">
         <?php
     }
@@ -322,84 +256,113 @@ class QTX_Module_Acf_Plugin {
         ?>
         <textarea name="<?php echo QTX_OPTIONS_MODULE_ACF ?>[show_on_pages]"
                   style="max-width:500px;width:100%;height:200px;padding-top:6px"
-                  placeholder="post.php"><?= esc_html( $this->get_plugin_setting( 'show_on_pages' ) ) ?></textarea><br>
+                  placeholder="post.php"><?= esc_html( $this->get_module_setting( 'show_on_pages' ) ) ?></textarea><br>
         <small>Enter each page on it's own line</small>
         <?php
     }
 
-    /**
-     * Encode a multi-language array into a string with bracket tags
-     *
-     * @param array $values
-     *
-     * @return string
-     */
-    public function encode_language_values( $values ) {
-        assert( is_array( $values ) );
-
-        return qtranxf_join_b( $values );
-    }
 
     /**
-     * Decode a multi-language string to an array
+     * Get the visible ACF fields
      *
-     * @param string $values
+     * @param null $widget_id
      *
      * @return array
      */
-    public function decode_language_values( $values ) {
-        return qtranxf_split( $values );
-    }
+    // TODO: restore or remove dead code, used from `qtranslate_load_admin_page_config` and `admin_enqueue_scripts` but it
+    //       was removed by https://github.com/funkjedi/acf-qtranslate/commit/c152248ff1771fd33643bc39dd286cd3e4cb3e57
+    /*
+    public function get_visible_acf_fields( $widget_id = null ) {
+        global $wp_registered_widgets;
 
-    /**
-     * Validate language values
-     *
-     * Validates all the form values for a given field, by iterating over the multi-lang array values as strings:
-     *  - check the required property
-     *  - call the original ACF method for every language string.
-     *
-     * @param object $field_object corresponding to the qtranslate ACF field item
-     * @param bool|string $valid
-     * @param array $values holding a string value per language
-     * @param string $field
-     * @param string $input
-     *
-     * @return    bool|string
-     * @see acf_validation::acf_validate_value
-     */
-    public function validate_language_values( $field_object, $valid, $values, $field, $input ) {
-        global $q_config;
+        $visible_fields = array();
 
-        // retrieve the original ACF validation method for that field (cumbersome, but we can't change acf_field base class)
-        $parent_class = get_parent_class( $field_object );
-        if ( method_exists( $parent_class, 'validate_value' ) ) {
-            try {
-                $validation_method = new ReflectionMethod( $parent_class, 'validate_value' );
-            } catch ( ReflectionException $exception ) {
-                return $exception->getMessage();
+        // build field group filters required for current screen
+        $filter = $this->get_acf_field_group_filters();
+        if ( count( $filter ) === 0 ) {
+            return $visible_fields;
+        }
+
+        // widgets need some special handling since they
+        // require multiple acf_get_field_group_visibility()
+        // calls in order to return all the visible fields
+        if ( acf_is_screen( 'widgets' ) || acf_is_screen( 'customize' ) ) {
+            if ( $widget_id ) {
+                $filter['widget'] = _get_widget_id_base( $widget_id );
+            } else {
+                // process each widget form individually for any visible fields
+                foreach ( $wp_registered_widgets as $widget ) {
+                    $visible_fields += $this->get_visible_acf_fields( $widget['id'] );
+                }
+
+                return $visible_fields;
             }
         }
 
-        // validate every language value as string
-        foreach ( $values as $key_language => $value_language ) {
-            // validate properly the required value (see: acf_validate_value in acf_validation)
-            if ( $field['required'] && empty( $value_language ) ) {
-                return '(' . $q_config['language_name'][ $key_language ] . ') ' . sprintf( __( '%s value is required', 'acf' ), $field['label'] );
-            }
-            // validate with original ACF method
-            if ( isset( $validation_method ) ) {
-                $valid_language = $validation_method->invokeArgs( $field_object, array(
-                    $valid,
-                    $value_language,
-                    $field,
-                    $input
-                ) );
-                if ( ! empty( $valid_language ) && is_string( $valid_language ) ) {
-                    return '(' . $q_config['language_name'][ $key_language ] . ') ' . $valid_language;
+        $supported_field_types = array(
+            'email',
+            'text',
+            'textarea',
+            'repeater',
+            'flexible_content',
+            'qtranslate_file',
+            'qtranslate_image',
+            'qtranslate_post_object',
+            'qtranslate_text',
+            'qtranslate_textarea',
+            'qtranslate_url',
+            'qtranslate_wysiwyg',
+        );
+
+        foreach ( acf_get_field_groups( $filter ) as $field_group ) {
+            $fields = acf_get_fields( $field_group );
+            foreach ( $fields as $field ) {
+                if ( in_array( $field['type'], $supported_field_types ) ) {
+                    $visible_fields[] = array( 'id' => 'acf-' . $field['key'] );
                 }
             }
         }
 
-        return $valid;
+        return $visible_fields;
     }
+    */
+
+    /**
+     * Get field group filters based on active screen.
+     */
+    // TODO: restore or remove dead code, only called by `get_visible_acf_fields`.
+    /*
+    public function get_acf_field_group_filters() {
+        global $post, $pagenow, $typenow, $plugin_page;
+
+        $filter = array();
+        if ( $pagenow === 'post.php' || $pagenow === 'post-new.php' ) {
+            if ( $typenow !== 'acf' ) {
+                $filter['post_id']   = $post->ID;
+                $filter['post_type'] = $typenow;
+            }
+        } elseif ( $pagenow === 'admin.php' && isset( $plugin_page ) ) {
+            if ( acf_get_options_page( $plugin_page ) ) {
+                $filter['post_id'] = acf_get_valid_post_id( 'options' );
+            }
+        } elseif ( $pagenow === 'edit-tags.php' && isset( $_GET['taxonomy'] ) ) {
+            $filter['taxonomy'] = filter_var( $_GET['taxonomy'], FILTER_SANITIZE_STRING );
+        } elseif ( $pagenow === 'profile.php' ) {
+            $filter['user_id']   = get_current_user_id();
+            $filter['user_form'] = 'edit';
+        } elseif ( $pagenow === 'user-edit.php' && isset( $_GET['user_id'] ) ) {
+            $filter['user_id']   = filter_var( $_GET['user_id'], FILTER_SANITIZE_NUMBER_INT );
+            $filter['user_form'] = 'edit';
+        } elseif ( $pagenow === 'user-new.php' ) {
+            $filter['user_id']   = 'new';
+            $filter['user_form'] = 'edit';
+        } elseif ( $pagenow === 'media.php' || $pagenow === 'upload.php' ) {
+            $filter['attachment'] = 'All';
+        } elseif ( acf_is_screen( 'widgets' ) || acf_is_screen( 'customize' ) ) {
+            $filter['widget'] = 'all';
+        }
+
+        return $filter;
+    }
+    */
 }

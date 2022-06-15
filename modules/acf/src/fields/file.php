@@ -1,22 +1,22 @@
 <?php
 
-class QTX_Module_Acf_V5_File extends acf_field_file {
-
+class QTX_Module_Acf_Field_File extends acf_field_file {
     /**
-     * The plugin instance
-     * @var QTX_Module_Acf_Plugin
+     * The register instance
+     * @var QTX_Module_Acf_Register
      */
-    protected $plugin;
+    protected $register;
 
     /**
      * Constructor
      *
-     * @param QTX_Module_Acf_Plugin $plugin
+     * @param QTX_Module_Acf_Register $register
+     * @param bool $do_initialize true if initialize() must be called explicitly
      */
-    function __construct( $plugin ) {
-        $this->plugin = $plugin;
+    function __construct( $register, $do_initialize ) {
+        $this->register = $register;
 
-        if ( version_compare( $plugin->acf_version(), '5.6.0' ) < 0 ) {
+        if ( $do_initialize ) {
             $this->initialize();
         }
 
@@ -56,8 +56,8 @@ class QTX_Module_Acf_V5_File extends acf_field_file {
         global $q_config;
 
         $languages       = qtranxf_getSortedLanguages( true );
-        $values          = $this->plugin->decode_language_values( $field['value'] );
-        $currentLanguage = $this->plugin->get_active_language();
+        $values          = $this->register->decode_language_values( $field['value'] );
+        $currentLanguage = qtranxf_getLanguage();
 
         $uploader = acf_get_setting( 'uploader' );
         if ( $uploader == 'wp' ) {
@@ -209,7 +209,7 @@ class QTX_Module_Acf_V5_File extends acf_field_file {
             }
         }
 
-        return $this->plugin->encode_language_values( $values );
+        return $this->register->encode_language_values( $values );
     }
 
     /**
@@ -225,7 +225,7 @@ class QTX_Module_Acf_V5_File extends acf_field_file {
      */
     function validate_value( $valid, $value, $field, $input ) {
         if ( is_array( $value ) ) {
-            $valid = $this->plugin->validate_language_values( $this, $valid, $value, $field, $input );
+            $valid = $this->register->validate_language_values( $this, $valid, $value, $field, $input );
         }
 
         return $valid;

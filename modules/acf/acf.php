@@ -1,13 +1,31 @@
 <?php
 /**
- * Module: ACF
+ * Module: Advanced Custom Fields (ACF)
  *
  * Converted from: ACF qTranslate (https://github.com/funkjedi/acf-qtranslate)
- * @author: funkjedi (http://funkjedi.com)
  */
 
-define( 'ACF_QTRANSLATE_PLUGIN', __FILE__ );
-define( 'ACF_QTRANSLATE_PLUGIN_DIR', plugin_dir_path( ACF_QTRANSLATE_PLUGIN ) );
+/**
+ * Setup module if Advanced Custom Fields is enabled and version >= 5.0.0
+ *
+ * @return void
+ */
+function qtranxf_acf_init() {
+    static $acf_loaded = false;
 
-require_once ACF_QTRANSLATE_PLUGIN_DIR . 'src/plugin.php';
-new QTX_Module_Acf_Plugin;
+    if ( ! $acf_loaded && function_exists( 'acf' ) ) {
+        if ( version_compare( acf()->settings['version'], '5.0.0' ) >= 0 ) {
+            require_once __DIR__ . '/src/qtx_module_acf_register.php';
+            new QTX_Module_Acf_Register();
+
+            if ( is_admin() ) {
+                require_once __DIR__ . '/src/qtx_module_acf_admin.php';
+                new QTX_Module_Acf_Admin();
+            }
+        }
+        $acf_loaded = true;
+    }
+}
+
+add_action( 'plugins_loaded', 'qtranxf_acf_init', 3 );
+add_action( 'after_setup_theme', 'qtranxf_acf_init', -10 );  // ACF can be delivered by a theme rather than plugin.
