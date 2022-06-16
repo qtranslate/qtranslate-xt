@@ -7,8 +7,16 @@ include_once( dirname( __FILE__ ) . '/slugs-settings.php' );
 // add filters
 add_filter( 'wp_get_object_terms', 'qtranxf_slugs_get_object_terms', 0, 4 );
 add_filter( 'get_terms', 'qtranxf_slugs_get_terms', 0, 3 );
+
 // admin actions
-add_action( 'add_meta_boxes', 'qtranxf_slugs_add_slug_meta_box' );
+
+// add slug metabox
+$curr_post_type = $_GET[ 'post_type' ] ?? get_post_type( intval( $_GET[ 'post' ] ) );
+if ( $curr_post_type !== 'shop_order' && $curr_post_type !== 'shop_coupon' )
+{
+    add_action( 'add_meta_boxes', 'qtranxf_slugs_add_slug_meta_box' );
+}
+
 add_action( 'save_post', 'qtranxf_slugs_save_postdata', 605, 2 );
 add_action( 'edit_attachment', 'qtranxf_slugs_save_postdata' );
 add_action( 'created_term', 'qtranxf_slugs_save_term', 605, 3 );
