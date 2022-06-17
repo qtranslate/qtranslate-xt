@@ -11,7 +11,7 @@ add_filter( 'get_terms', 'qtranxf_slugs_get_terms', 0, 3 );
 // admin actions
 
 // add slug metabox
-$curr_post_type = $_GET[ 'post_type' ] ? $curr_post_type = $_GET[ 'post_type' ] : get_post_type( intval( $_GET[ 'post' ] ) );
+$curr_post_type = $_GET[ 'post_type' ] ? $_GET[ 'post_type' ] : get_post_type( intval( $_GET[ 'post' ] ) );
 if ( $curr_post_type !== 'shop_order' && $curr_post_type !== 'shop_coupon' )
 {
     add_action( 'add_meta_boxes', 'qtranxf_slugs_add_slug_meta_box' );
