@@ -9,10 +9,7 @@ add_filter( 'wp_get_object_terms', 'qtranxf_slugs_get_object_terms', 0, 4 );
 add_filter( 'get_terms', 'qtranxf_slugs_get_terms', 0, 3 );
 
 // admin actions
-
-// add slug metabox
 add_action( 'add_meta_boxes', 'qtranxf_slugs_add_slug_meta_box' );
-
 add_action( 'save_post', 'qtranxf_slugs_save_postdata', 605, 2 );
 add_action( 'edit_attachment', 'qtranxf_slugs_save_postdata' );
 add_action( 'created_term', 'qtranxf_slugs_save_term', 605, 3 );
@@ -21,6 +18,7 @@ add_action( 'admin_head', 'qtranxf_slugs_hide_term_slug_box', 900 );
 add_action( 'init', 'qtranxf_slugs_taxonomies_hooks', 805 );
 add_action( 'admin_head', 'qtranxf_slugs_hide_quick_edit', 600 );
 add_action( 'qtranslate_save_config', 'qtranxf_slugs_ma_module_updated' );
+
 // plugin deactivation/uninstall
 register_deactivation_hook( QTRANSLATE_FILE, 'qtranxf_slugs_deactivate' );
 register_uninstall_hook( QTRANSLATE_FILE, 'qtranxf_slugs_uninstall' );
@@ -115,6 +113,8 @@ function qtranxf_slugs_deactivate() {
  */
 function qtranxf_slugs_add_slug_meta_box() {
     global $post_type;
+
+    // Exclude some WooCommerce shop pages
     $not_applicable_types = [
         'shop_coupon',
         'shop_order',
