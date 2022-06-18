@@ -11,11 +11,7 @@ add_filter( 'get_terms', 'qtranxf_slugs_get_terms', 0, 3 );
 // admin actions
 
 // add slug metabox
-$curr_post_type = $_GET[ 'post_type' ] ? $_GET[ 'post_type' ] : get_post_type( intval( $_GET[ 'post' ] ) );
-if ( $curr_post_type !== 'shop_order' && $curr_post_type !== 'shop_coupon' )
-{
-    add_action( 'add_meta_boxes', 'qtranxf_slugs_add_slug_meta_box' );
-}
+add_action( 'add_meta_boxes', 'qtranxf_slugs_add_slug_meta_box' );
 
 add_action( 'save_post', 'qtranxf_slugs_save_postdata', 605, 2 );
 add_action( 'edit_attachment', 'qtranxf_slugs_save_postdata' );
@@ -118,6 +114,13 @@ function qtranxf_slugs_deactivate() {
  * Creates a metabox for every post type available.
  */
 function qtranxf_slugs_add_slug_meta_box() {
+    global $post_type;
+    $not_applicable_types=[
+        'shop_coupon',
+        'shop_order',
+    ];
+    if ( isset( $post_type ) && in_array( $post_type , $not_applicable_types ) )  return;
+    
     remove_meta_box( 'slugdiv', null, 'normal' );
     add_meta_box( 'qts_sectionid', __( 'Slugs per language', 'qtranslate' ), 'qtranxf_slugs_draw_meta_box', null, 'side', 'high' );
 }
