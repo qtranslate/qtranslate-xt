@@ -7,6 +7,7 @@ include_once( dirname( __FILE__ ) . '/slugs-settings.php' );
 // add filters
 add_filter( 'wp_get_object_terms', 'qtranxf_slugs_get_object_terms', 0, 4 );
 add_filter( 'get_terms', 'qtranxf_slugs_get_terms', 0, 3 );
+
 // admin actions
 add_action( 'add_meta_boxes', 'qtranxf_slugs_add_slug_meta_box' );
 add_action( 'save_post', 'qtranxf_slugs_save_postdata', 605, 2 );
@@ -17,6 +18,7 @@ add_action( 'admin_head', 'qtranxf_slugs_hide_term_slug_box', 900 );
 add_action( 'init', 'qtranxf_slugs_taxonomies_hooks', 805 );
 add_action( 'admin_head', 'qtranxf_slugs_hide_quick_edit', 600 );
 add_action( 'qtranslate_save_config', 'qtranxf_slugs_ma_module_updated' );
+
 // plugin deactivation/uninstall
 register_deactivation_hook( QTRANSLATE_FILE, 'qtranxf_slugs_deactivate' );
 register_uninstall_hook( QTRANSLATE_FILE, 'qtranxf_slugs_uninstall' );
@@ -110,6 +112,17 @@ function qtranxf_slugs_deactivate() {
  * Creates a metabox for every post type available.
  */
 function qtranxf_slugs_add_slug_meta_box() {
+    global $post_type;
+
+    // Exclude some WooCommerce shop pages
+    $not_applicable_types = [
+        'shop_coupon',
+        'shop_order',
+    ];
+    if ( isset( $post_type ) && in_array( $post_type, $not_applicable_types ) ) {
+        return;
+    }
+
     remove_meta_box( 'slugdiv', null, 'normal' );
     add_meta_box( 'qts_sectionid', __( 'Slugs per language', 'qtranslate' ), 'qtranxf_slugs_draw_meta_box', null, 'side', 'high' );
 }
