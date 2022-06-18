@@ -115,12 +115,14 @@ function qtranxf_slugs_deactivate() {
  */
 function qtranxf_slugs_add_slug_meta_box() {
     global $post_type;
-    $not_applicable_types=[
+    $not_applicable_types = [
         'shop_coupon',
         'shop_order',
     ];
-    if ( isset( $post_type ) && in_array( $post_type , $not_applicable_types ) )  return;
-    
+    if ( isset( $post_type ) && in_array( $post_type, $not_applicable_types ) ) {
+        return;
+    }
+
     remove_meta_box( 'slugdiv', null, 'normal' );
     add_meta_box( 'qts_sectionid', __( 'Slugs per language', 'qtranslate' ), 'qtranxf_slugs_draw_meta_box', null, 'side', 'high' );
 }
