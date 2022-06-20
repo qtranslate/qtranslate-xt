@@ -107,14 +107,38 @@ if ( wp_doing_cron() ) {
         remove_filter( 'the_posts', 'qtranxf_postsFilter', 5 );
         remove_action( 'pre_get_posts', 'qtranxf_pre_get_posts', 99 );
 
-        remove_filter( 'get_term', 'qtranxf_useTermLib', 0 );
-        remove_filter( 'get_terms', 'qtranxf_useTermLib', 0 );
+        /* Raw ML format is not applicable to terms, as default lang only is stored in obj->name and translations are in qtx options.
+         * Hence qtranxf_wc_get_term_raw_ML filter is added to mimic a raw ML format to be sent through webhook.
+         */
+        add_filter('get_term', 'qtranxf_wc_get_term_raw_ML');
+        add_filter('get_terms', 'qtranxf_wc_get_term_raw_ML');
+        wp_cache_flush();
+
+        /* Remove WC cached data overwriting current objects. 'product_type' taxonomy is used as a test in WC to avoid multiple registrations.
+         * This is applicable to objects in dedicated WC tables, as product attributes.
+         */
+        delete_transient('wc_attribute_taxonomies');
+        unregister_taxonomy('product_type');
+        WC_Post_Types::register_taxonomies();
     }
 
     add_action( 'woocommerce_deliver_webhook_async', 'qtranxf_wc_deliver_webhook_async', 5, 2 );
 
 } else {
     qtranxf_wc_add_filters_front();
+}
+
+//TODO: check if this function is to be generalized and moved to inc/qtx_taxonomy.php
+function qtranxf_wc_get_term_raw_ML($obj) {
+    $term = qtranxf_useTermLib($obj);
+    if (!empty($term->i18n_config['name']['ts'])) {
+        $term->name = qtranxf_join_b($term->i18n_config['name']['ts']);
+    }
+    if (!empty($term->i18n_config['description']['ts'])) {
+        $term->description = qtranxf_join_b($term->i18n_config['description']['ts']);
+    }
+
+    return $term;
 }
 
 /**
