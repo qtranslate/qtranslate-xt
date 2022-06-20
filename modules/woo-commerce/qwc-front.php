@@ -8,7 +8,7 @@ function qtranxf_wc_add_filters_front() {
     remove_filter( 'get_post_metadata', 'qtranxf_filter_postmeta', 5 );
     add_filter( 'get_post_metadata', 'qtranxf_wc_filter_postmeta', 5, 4 );
 
-    $use_filters = array(
+    $front_hooks = array(
         'woocommerce_attribute'                             => 20,
         'woocommerce_attribute_label'                       => 20,
         'woocommerce_cart_item_name'                        => 20,
@@ -21,7 +21,6 @@ function qtranxf_wc_add_filters_front() {
         'woocommerce_gateway_title'                         => 20,
         'woocommerce_gateway_icon'                          => 20,
         'woocommerce_get_privacy_policy_text'               => 20,
-        //'woocommerce_order_details_after_order_table_items' => 20, //TODO: this is an action, not a filter. Actually does not do anything. Intent also not clear. If intent is translating $purchase_note that could only be done through 'pre_kses' filter currently, to be implemented in case.
         'woocommerce_order_item_display_meta_value'         => 20,
         'woocommerce_order_item_name'                       => 20,
         'woocommerce_order_get_tax_totals'                  => 20,
@@ -36,9 +35,7 @@ function qtranxf_wc_add_filters_front() {
         'wp_mail_from_name'                                 => 20,
     );
 
-    foreach ( $use_filters as $name => $priority ) {
-        add_filter( $name, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', $priority );
-    }
+    qtranxf_add_filters(['text' => $front_hooks]);
 
     add_action( 'woocommerce_dropdown_variation_attribute_options_args', 'qtranxf_wc_dropdown_variation_attribute_options_args', 10, 1 );
     add_filter( 'woocommerce_paypal_args', 'qtranxf_wc_paypal_args' );
