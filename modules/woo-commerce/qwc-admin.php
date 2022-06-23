@@ -44,7 +44,6 @@ function qtranxf_wc_add_filters_admin() {
 }
 
 qtranxf_wc_add_filters_admin();
-global $wp_filter;
 
 add_action( 'admin_enqueue_scripts', 'qtranxf_wc_add_admin_styles' );
 function qtranxf_wc_add_admin_styles() {
