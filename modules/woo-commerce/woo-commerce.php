@@ -44,7 +44,10 @@ function qtranxf_wc_detect_language( $url_info ) {
 add_filter( 'qtranslate_detect_language', 'qtranxf_wc_detect_language', 5 );
 
 /**
- * Dealing with webhooks, which should always send information in Raw ML format
+ * Handler for webhooks, which should always send information in Raw ML format.
+ *
+ * For some cases (e.g. variations updates) the webhook is generated through AJAX instead of cron.
+ * In that context, qwc-admin.php is loaded instead of qwc-front.php
  */
 function qtranxf_wc_deliver_webhook_async( $webhook_id, $arg ) {
     if ( function_exists( 'qtranxf_get_front_page_config' ) ) {
