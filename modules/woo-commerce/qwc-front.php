@@ -92,6 +92,7 @@ function qtranxf_wc_paypal_args( $args ) {
     return $args;
 }
 
+// Prevent unintended filtering when webhooks are fired (through cron for cases where $urlinfo['doing_front_end'] is true).
 if ( ! wp_doing_cron() ) {
     qtranxf_wc_add_filters_front();
 }

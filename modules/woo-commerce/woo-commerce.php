@@ -69,8 +69,8 @@ function qtranxf_wc_deliver_webhook_async( $webhook_id, $arg ) {
     wp_cache_flush();
 
     /* Remove admin filters which can affect webhooks
-     * TODO: check if qtranxf_wc_add_filters_admin() can be called only if not doing cron or relevant filters are needed in other cron operations.
-     * In that case qtranxf_wc_add_filters_admin() can be called conditionally, following qtranxf_remove_filters call can be removed.
+     * TODO: check if any test is applicable to prevent qtranxf_wc_add_filters_admin() call when webhook is fired (through AJAX for cases where $urlinfo['doing_front_end'] is false).
+     * In case qtranxf_wc_add_filters_admin() can be called conditionally, following qtranxf_remove_filters call can be removed.
      * Otherwise all filters affecting webhooks added in qtranxf_wc_add_filters_admin() must be removed here.
      */
     qtranxf_remove_filters( [
