@@ -49,8 +49,8 @@ add_filter( 'qtranslate_detect_language', 'qtranxf_wc_detect_language', 5 );
 function qtranxf_wc_deliver_webhook_async( $webhook_id, $arg ) {
     if ( function_exists( 'qtranxf_get_front_page_config' ) ) {
         $page_configs = qtranxf_get_front_page_config();
-        if (!empty($page_configs['']['filters'])) {
-            qtranxf_remove_filters($page_configs['']['filters']);
+        if ( ! empty( $page_configs['']['filters'] ) ) {
+            qtranxf_remove_filters( $page_configs['']['filters'] );
         }
     }
 
@@ -70,11 +70,12 @@ function qtranxf_wc_deliver_webhook_async( $webhook_id, $arg ) {
      * In that case qtranxf_wc_add_filters_admin() can be called conditionally, following qtranxf_remove_filters call can be removed.
      * Otherwise all filters affecting webhooks added in qtranxf_wc_add_filters_admin() must be removed here.
      */
-    qtranxf_remove_filters( ['text' => [
-                                'woocommerce_attribute_taxonomies' => 20,
-                                'woocommerce_variation_option_name' => 20,
-                            ]
-                        ] );
+    qtranxf_remove_filters( [
+        'text' => [
+            'woocommerce_attribute_taxonomies'  => 20,
+            'woocommerce_variation_option_name' => 20,
+        ]
+    ] );
 
     /* Remove WC cached data overwriting current objects. 'product_type' taxonomy is used as a test in WC to avoid multiple registrations.
      * This is applicable to objects in dedicated WC tables, as product attributes.
@@ -89,10 +90,10 @@ add_action( 'woocommerce_deliver_webhook_async', 'qtranxf_wc_deliver_webhook_asy
 //TODO: check if this function is to be generalized and moved to inc/qtx_taxonomy.php
 function qtranxf_wc_get_term_raw_ML( $obj ) {
     $term = qtranxf_useTermLib( $obj );
-    if ( !empty( $term->i18n_config['name']['ts'] ) ) {
+    if ( ! empty( $term->i18n_config['name']['ts'] ) ) {
         $term->name = qtranxf_join_b( $term->i18n_config['name']['ts'] );
     }
-    if ( !empty( $term->i18n_config['description']['ts'] ) ) {
+    if ( ! empty( $term->i18n_config['description']['ts'] ) ) {
         $term->description = qtranxf_join_b( $term->i18n_config['description']['ts'] );
     }
 

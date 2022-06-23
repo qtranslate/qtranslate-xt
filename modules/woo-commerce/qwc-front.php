@@ -9,33 +9,33 @@ function qtranxf_wc_add_filters_front() {
     add_filter( 'get_post_metadata', 'qtranxf_wc_filter_postmeta', 5, 4 );
 
     $front_hooks = array(
-        'woocommerce_attribute'                             => 20,
-        'woocommerce_attribute_label'                       => 20,
-        'woocommerce_cart_item_name'                        => 20,
-        'woocommerce_cart_item_thumbnail'                   => 20,
-        'woocommerce_cart_shipping_method_full_label'       => 20,
-        'woocommerce_cart_tax_totals'                       => 20,
-        'woocommerce_email_footer_text'                     => 20,
-        'woocommerce_format_content'                        => 20,
-        'woocommerce_gateway_description'                   => 20,
-        'woocommerce_gateway_title'                         => 20,
-        'woocommerce_gateway_icon'                          => 20,
-        'woocommerce_get_privacy_policy_text'               => 20,
-        'woocommerce_order_item_display_meta_value'         => 20,
-        'woocommerce_order_item_name'                       => 20,
-        'woocommerce_order_get_tax_totals'                  => 20,
-        'woocommerce_order_shipping_to_display'             => 20,
-        'woocommerce_order_subtotal_to_display'             => 20,
-        'woocommerce_page_title'                            => 20,
-        'woocommerce_product_get_name'                      => 20,
-        'woocommerce_product_title'                         => 20,
-        'woocommerce_rate_label'                            => 20,
-        'woocommerce_short_description'                     => 20,
-        'woocommerce_variation_option_name'                 => 20,
-        'wp_mail_from_name'                                 => 20,
+        'woocommerce_attribute'                       => 20,
+        'woocommerce_attribute_label'                 => 20,
+        'woocommerce_cart_item_name'                  => 20,
+        'woocommerce_cart_item_thumbnail'             => 20,
+        'woocommerce_cart_shipping_method_full_label' => 20,
+        'woocommerce_cart_tax_totals'                 => 20,
+        'woocommerce_email_footer_text'               => 20,
+        'woocommerce_format_content'                  => 20,
+        'woocommerce_gateway_description'             => 20,
+        'woocommerce_gateway_title'                   => 20,
+        'woocommerce_gateway_icon'                    => 20,
+        'woocommerce_get_privacy_policy_text'         => 20,
+        'woocommerce_order_item_display_meta_value'   => 20,
+        'woocommerce_order_item_name'                 => 20,
+        'woocommerce_order_get_tax_totals'            => 20,
+        'woocommerce_order_shipping_to_display'       => 20,
+        'woocommerce_order_subtotal_to_display'       => 20,
+        'woocommerce_page_title'                      => 20,
+        'woocommerce_product_get_name'                => 20,
+        'woocommerce_product_title'                   => 20,
+        'woocommerce_rate_label'                      => 20,
+        'woocommerce_short_description'               => 20,
+        'woocommerce_variation_option_name'           => 20,
+        'wp_mail_from_name'                           => 20,
     );
 
-    qtranxf_add_filters(['text' => $front_hooks]);
+    qtranxf_add_filters( [ 'text' => $front_hooks ] );
 
     add_action( 'woocommerce_dropdown_variation_attribute_options_args', 'qtranxf_wc_dropdown_variation_attribute_options_args', 10, 1 );
     add_filter( 'woocommerce_paypal_args', 'qtranxf_wc_paypal_args' );

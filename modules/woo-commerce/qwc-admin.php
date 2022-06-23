@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function qtranxf_wc_add_filters_admin() {
- // priority 20 is used because in case other plugins add some untranslated content on normal priority
+    // priority 20 is used because in case other plugins add some untranslated content on normal priority
     // it will still hopefully then get translated.
     $admin_hooks = array(
         'woocommerce_email_footer_text'     => 20,
@@ -34,17 +34,17 @@ function qtranxf_wc_add_filters_admin() {
 
     // not all combinations are in use, but it is ok, they may be added in the future.
     foreach ( $email_ids as $name => $priority ) {
-        $admin_hooks['woocommerce_email_recipient_' . $name]= $priority;
-        $admin_hooks['woocommerce_email_subject_' . $name]= $priority;
-        $admin_hooks['woocommerce_email_heading_' . $name]= $priority;
-        $admin_hooks['woocommerce_email_content_' . $name]= $priority;
+        $admin_hooks[ 'woocommerce_email_recipient_' . $name ] = $priority;
+        $admin_hooks[ 'woocommerce_email_subject_' . $name ]   = $priority;
+        $admin_hooks[ 'woocommerce_email_heading_' . $name ]   = $priority;
+        $admin_hooks[ 'woocommerce_email_content_' . $name ]   = $priority;
     }
 
-    qtranxf_add_filters(['text' => $admin_hooks]);
+    qtranxf_add_filters( [ 'text' => $admin_hooks ] );
 }
 
-    qtranxf_wc_add_filters_admin();
-    global $wp_filter;
+qtranxf_wc_add_filters_admin();
+global $wp_filter;
 
 add_action( 'admin_enqueue_scripts', 'qtranxf_wc_add_admin_styles' );
 function qtranxf_wc_add_admin_styles() {
@@ -400,7 +400,7 @@ function qtranxf_wc_admin_filters() {
     switch ( $pagenow ) {
         case 'admin.php':
             if ( isset( $_SERVER['QUERY_STRING'] ) && strpos( $_SERVER['QUERY_STRING'], 'page=wc-settings&tab=checkout' ) !== false ) {
-                qtranxf_add_filters([ 'text' => [ 'woocommerce_gateway_title' => 5 ] ] );
+                qtranxf_add_filters( [ 'text' => [ 'woocommerce_gateway_title' => 5 ] ] );
             }
             break;
         case 'edit.php':
@@ -408,7 +408,7 @@ function qtranxf_wc_admin_filters() {
             if ( isset( $_SERVER['QUERY_STRING'] )
                  && strpos( $_SERVER['QUERY_STRING'], 'post_type=product' ) !== false
             ) {
-                qtranxf_add_filters([ 'text' => [ 'get_term' => 6 ] ] );
+                qtranxf_add_filters( [ 'text' => [ 'get_term' => 6 ] ] );
             }
             break;
     }
