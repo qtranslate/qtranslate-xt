@@ -47,9 +47,11 @@ add_filter( 'qtranslate_detect_language', 'qtranxf_wc_detect_language', 5 );
  * Dealing with webhooks, which should always send information in Raw ML format
  */
 function qtranxf_wc_deliver_webhook_async( $webhook_id, $arg ) {
-    $page_configs = qtranxf_get_front_page_config();
-    if ( ! empty( $page_configs['']['filters'] ) ) {
-        qtranxf_remove_filters( $page_configs['']['filters'] );
+    if ( function_exists( 'qtranxf_get_front_page_config' ) ) {
+        $page_configs = qtranxf_get_front_page_config();
+        if (!empty($page_configs['']['filters'])) {
+            qtranxf_remove_filters($page_configs['']['filters']);
+        }
     }
 
     remove_filter( 'get_post_metadata', 'qtranxf_filter_postmeta', 5 );
