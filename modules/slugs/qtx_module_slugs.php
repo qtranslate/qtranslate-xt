@@ -973,8 +973,10 @@ class QTX_Module_Slugs {
     private function get_page_id_by_path( $page_path, $post_type = 'page' ) {
         global $wpdb;
 
-        //Handle cases where custom query vars with the same names of specific internal query vars (e.g. 'name') are structured as arrays for any reason.
-        if ( ! is_scalar( $page_path ) ) return null;
+        // Handle cases where custom query vars with the same names of specific internal query vars (e.g. 'name') are structured as arrays for any reason.
+        if ( ! is_scalar( $page_path ) ) {
+            return null;
+        }
 
         $page_path     = rawurlencode( urldecode( $page_path ) );
         $page_path     = str_replace( '%2F', '/', $page_path );
