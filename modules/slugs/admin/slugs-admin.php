@@ -9,7 +9,7 @@ add_filter( 'wp_get_object_terms', 'qtranxf_slugs_get_object_terms', 0, 4 );
 add_filter( 'get_terms', 'qtranxf_slugs_get_terms', 0, 3 );
 
 // admin actions
-add_action( 'add_meta_boxes', 'qtranxf_slugs_add_slug_meta_box' );
+add_action( 'add_meta_boxes', 'qtranxf_slugs_add_slug_meta_box', 900 );
 add_action( 'save_post', 'qtranxf_slugs_save_postdata', 605, 2 );
 add_action( 'edit_attachment', 'qtranxf_slugs_save_postdata' );
 add_action( 'created_term', 'qtranxf_slugs_save_term', 605, 3 );
@@ -112,19 +112,13 @@ function qtranxf_slugs_deactivate() {
  * Creates a metabox for every post type available.
  */
 function qtranxf_slugs_add_slug_meta_box() {
-    global $post_type;
+    global $wp_meta_boxes;
 
-    // Exclude some WooCommerce shop pages
-    $not_applicable_types = [
-        'shop_coupon',
-        'shop_order',
-    ];
-    if ( isset( $post_type ) && in_array( $post_type, $not_applicable_types ) ) {
-        return;
+    //Replace slugs metabox only if existing and not already removed
+    if ( ! empty($wp_meta_boxes[ get_current_screen()->id ][ 'normal' ][ 'core' ][ 'slugdiv' ] ) ) {
+        remove_meta_box( 'slugdiv', null, 'normal' );
+        add_meta_box( 'qts_sectionid', __( 'Slugs per language', 'qtranslate' ), 'qtranxf_slugs_draw_meta_box', null, 'side', 'high' );
     }
-
-    remove_meta_box( 'slugdiv', null, 'normal' );
-    add_meta_box( 'qts_sectionid', __( 'Slugs per language', 'qtranslate' ), 'qtranxf_slugs_draw_meta_box', null, 'side', 'high' );
 }
 
 /**
