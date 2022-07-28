@@ -167,8 +167,14 @@ class QTX_Admin_Gutenberg {
      * Enqueue the JS script
      */
     public function enqueue_block_editor_assets() {
+        // Check qTranslate-XT config, to see if this post type should be off
+        // Use the inverse of that as the default value for the qtranslate_admin_block_editor filter
+        global $q_config;
+        $post_type = qtranxf_post_type();
+        $post_type_off = isset( $q_config['post_type_excluded'] ) && isset( $post_type ) && in_array( $post_type, $q_config['post_type_excluded'] );
+        
         // Filter to allow qTranslate-XT to manage the block editor (single language mode)
-        $admin_block_editor = apply_filters( 'qtranslate_admin_block_editor', true );
+        $admin_block_editor = apply_filters( 'qtranslate_admin_block_editor', !$post_type_off );
         if ( ! $admin_block_editor ) {
             return;
         }
