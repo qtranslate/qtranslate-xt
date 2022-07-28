@@ -576,6 +576,16 @@ function qtranxf_is_rest_request_expected() {
 }
 
 /**
+ * Evaluate if the request URI leads to a GraphQL API call.
+ *
+ * @return bool
+ * @see is_graphql_http_request in https://github.com/wp-graphql/wp-graphql/blob/develop/src/Router.php
+ */
+function qtranxf_is_graphql_request_expected() {
+    return function_exists( 'is_graphql_http_request' ) && is_graphql_http_request();
+}
+
+/**
  * Evaluate if the current request allows HTTP redirection.
  * Admin requests (WP_ADMIN, DOING_AJAX, WP_CLI, DOING_CRON) or REST calls should not be redirected.
  *
@@ -584,6 +594,7 @@ function qtranxf_is_rest_request_expected() {
 function qtranxf_can_redirect() {
     return ! is_admin() && ! wp_doing_ajax() && ! ( defined( 'WP_CLI' ) && WP_CLI ) && ! wp_doing_cron() && empty( $_POST )
            && ( ! qtranxf_is_rest_request_expected() )
+           && ( ! qtranxf_is_graphql_request_expected() )
            // TODO clarify: 'REDIRECT_*' needs more testing --> && !isset($_SERVER['REDIRECT_URL'])
            && ( ! isset( $_SERVER['REDIRECT_STATUS'] ) || $_SERVER['REDIRECT_STATUS'] == '200' );
 }
