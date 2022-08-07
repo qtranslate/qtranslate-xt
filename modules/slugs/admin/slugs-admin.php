@@ -115,7 +115,7 @@ function qtranxf_slugs_add_slug_meta_box() {
     global $wp_meta_boxes;
 
     //Replace slugs metabox only if existing and not already removed
-    if ( ! empty($wp_meta_boxes[ get_current_screen()->id ][ 'normal' ][ 'core' ][ 'slugdiv' ] ) ) {
+    if ( ! empty( $wp_meta_boxes[ get_current_screen()->id ]['normal']['core']['slugdiv'] ) ) {
         remove_meta_box( 'slugdiv', null, 'normal' );
         add_meta_box( 'qts_sectionid', __( 'Slugs per language', 'qtranslate' ), 'qtranxf_slugs_draw_meta_box', null, 'side', 'high' );
     }
