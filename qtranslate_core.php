@@ -180,7 +180,7 @@ function qtranxf_detect_language( &$url_info ) {
 
         if ( $parse_referrer_language ) {
             $ref_info = qtranxf_parseURL( $http_referer );
-            if ( ! qtranxf_external_host( $ref_info['host'] ) ) {
+            if ( isset( $ref_info['host'] ) && ! qtranxf_external_host( $ref_info['host'] ) ) {
                 // determine $ref_info['path-base']
                 qtranxf_complete_url_info( $ref_info );
                 if ( isset( $ref_info['path-base'] ) ) {
