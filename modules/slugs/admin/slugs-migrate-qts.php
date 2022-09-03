@@ -70,7 +70,7 @@ function qtranxf_slugs_migrate_qts_meta( $db_commit ) {
         // Find the related post_id/term_id to delete (not meta_id), to ensure the migrated slugs replace the whole existing groups.
         $id_to_delete = "SELECT DISTINCT($colid) FROM $table WHERE meta_key LIKE '$old_prefix%'";
         if ( $db_commit ) {
-            $results = $wpdb->query( "DELETE FROM $table WHERE meta_key like '$new_prefix%' AND $colid in ($id_to_delete)" );
+            $results = $wpdb->query( "DELETE FROM $table WHERE meta_key like '$new_prefix%' AND $colid in ( SELECT * FROM ( $id_to_delete ) as M )" );
             $msg[]   = sprintf( __( "Deleted %d slugs from %s (%s).", 'qtranslate' ), $results ?: 0, $table, $new_prefix );
             // Rename meta keys.
             $results = $wpdb->query( "UPDATE $table SET meta_key = REPLACE(meta_key, '$old_prefix', '$new_prefix') WHERE meta_key LIKE '$old_prefix%'" );
