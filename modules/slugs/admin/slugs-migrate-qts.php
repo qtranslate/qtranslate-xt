@@ -24,7 +24,8 @@ function qtranxf_slugs_check_migrate_qts() {
      * @return void
      */
     $count_slugs = function ( $table, $prefix, &$msg ) use ( $wpdb ) {
-        $results = $wpdb->get_var( "SELECT count(*) FROM  $table WHERE meta_key like '$prefix%'" );
+        $esc_prefix = str_replace( '_', '\_', $prefix );  // Escape '_' against LIKE wildcards.
+        $results    = $wpdb->get_var( "SELECT count(*) FROM  $table WHERE meta_key LIKE '$esc_prefix%'" );
         if ( $results ) {
             $msg[] = sprintf( __( "Found %d slugs from $table.", 'qtranslate' ), $results );
         }
@@ -34,7 +35,7 @@ function qtranxf_slugs_check_migrate_qts() {
     $count_slugs( $wpdb->postmeta, QTX_SLUGS_LEGACY_QTS_META_PREFIX, $msg );
     $count_slugs( $wpdb->termmeta, QTX_SLUGS_LEGACY_QTS_META_PREFIX, $msg );
 
-    return empty ( $msg ) ? $msg : implode( '<br>', $msg );
+    return empty ( $msg ) ? '' : implode( '<br>', $msg );
 }
 
 /**
@@ -61,23 +62,27 @@ function qtranxf_slugs_migrate_qts_meta( $db_commit ) {
      * @return void
      */
     $migrate_meta = function ( $table, $colid, $db_commit, &$msg ) use ( $wpdb, $old_prefix, $new_prefix ) {
-        $count_qts = $wpdb->get_var( "SELECT count(*) FROM  $table WHERE meta_key like '$old_prefix%'" );
+        // Escape '_' against LIKE wildcards.
+        $old_esc = str_replace( '_', '\_', $old_prefix );
+        $new_esc = str_replace( '_', '\_', $new_prefix );
+
+        $count_qts = $wpdb->get_var( "SELECT count(*) FROM  $table WHERE meta_key LIKE '$old_esc%'" );
         if ( ! $count_qts ) {
             $msg[] = sprintf( __( "No slugs to migrate from %s.", 'qtranslate' ), $table );
 
             return;
         }
         // Find the related post_id/term_id to delete (not meta_id), to ensure the migrated slugs replace the whole existing groups.
-        $id_to_delete = "SELECT DISTINCT($colid) FROM $table WHERE meta_key LIKE '$old_prefix%'";
+        $id_to_delete = "SELECT DISTINCT($colid) FROM $table WHERE meta_key LIKE '$old_esc%'";
         if ( $db_commit ) {
-            $results = $wpdb->query( "DELETE FROM $table WHERE meta_key like '$new_prefix%' AND $colid in ( SELECT * FROM ( $id_to_delete ) as M )" );
+            $results = $wpdb->query( "DELETE FROM $table WHERE meta_key LIKE '$new_esc%' AND $colid in ( SELECT * FROM ( $id_to_delete ) as M )" );
             $msg[]   = sprintf( __( "Deleted %d slugs from %s (%s).", 'qtranslate' ), $results ?: 0, $table, $new_prefix );
             // Rename meta keys.
-            $results = $wpdb->query( "UPDATE $table SET meta_key = REPLACE(meta_key, '$old_prefix', '$new_prefix') WHERE meta_key LIKE '$old_prefix%'" );
+            $results = $wpdb->query( "UPDATE $table SET meta_key = REPLACE(meta_key, '$old_prefix', '$new_prefix') WHERE meta_key LIKE '$old_esc%'" );
             $msg[]   = sprintf( __( "Migrated %d slugs from %s (%s).", 'qtranslate' ), $results ?: 0, $table, $old_prefix );
         } else {
             // Dry-run mode: show how many slugs are to be deleted and migrated, no change in DB.
-            $results = $wpdb->get_var( "SELECT count(*) FROM  $table WHERE meta_key like '$new_prefix%' AND $colid in ($id_to_delete)" );
+            $results = $wpdb->get_var( "SELECT count(*) FROM  $table WHERE meta_key LIKE '$new_esc%' AND $colid in ($id_to_delete)" );
             $msg[]   = sprintf( __( "Deleted %d slugs from %s (%s).", 'qtranslate' ), $results ?: 0, $table, $new_prefix );
             $msg[]   = sprintf( __( "Migrated %d slugs from %s (%s).", 'qtranslate' ), $count_qts, $table, $old_prefix );
         }
