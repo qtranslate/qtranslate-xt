@@ -10,7 +10,7 @@ Modules
 * ACF
   * Refactor ACF module structure (#1191)
 * Slugs
-  * Fix MySQL error in Slugs migration from plugin (#1216)
+  * Fix MySQL error in Slugs migration from plugin (#1206, #1216)
   * Escape `_` in SQL LIKE queries for Slugs import (#1217)
   * Replace metabox only if existing (#1209)
   * Handle custom query var as array (#1200)

@@ -3,7 +3,7 @@
  * Plugin Name: qTranslate-XT
  * Plugin URI: https://github.com/qtranslate/qtranslate-xt/
  * Description: Adds user-friendly multilingual content support, stored in single post.
- * Version: 3.12.0
+ * Version: 3.12.1
  * Author: qTranslate Community
  * Author URI: https://github.com/qtranslate/
  * Tags: multilingual, multi, language, admin, tinymce, Polyglot, bilingual, widget, switcher, professional, human, translation, service, qTranslate, zTranslate, mqTranslate, qTranslate Plus, WPML
