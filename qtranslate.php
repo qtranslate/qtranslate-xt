@@ -54,7 +54,7 @@ if ( ! function_exists( 'add_filter' ) ) {
  * Designed as interface for other plugin integration. The documentation is available at
  * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide/
  */
-define( 'QTX_VERSION', '3.12.0' );
+define( 'QTX_VERSION', '3.12.1' );
 
 if ( ! defined( 'QTRANSLATE_FILE' ) ) {
     define( 'QTRANSLATE_FILE', __FILE__ );

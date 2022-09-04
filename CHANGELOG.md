@@ -1,3 +1,25 @@
+### 3.12.1
+Core
+* Check host key in parsed referrer URL (#1202)
+* Filter excluded types in `qtranslate_admin_block_editor` (#1210)
+* No redirect or cookies on GraphQL requests (#1211)
+* Exclude cron from translation of all options (#1188)
+
+Modules
+* Rename module classes with `QTX_Module` prefix (#1187)
+* ACF
+  * Refactor ACF module structure (#1191)
+* Slugs
+  * Fix MySQL error in Slugs migration from plugin (#1216)
+  * Escape `_` in SQL LIKE queries for Slugs import (#1217)
+  * Replace metabox only if existing (#1209)
+  * Handle custom query var as array (#1200)
+  * Rename all `qts_` functions with `qtranxf_slugs_` prefix (#1184)
+* WooCommerce
+  * Fix unintended translations in webhooks (#1194)
+  * Hide slugs metabox on WC shop pages (#1192)
+  * Fix `$order->id` called incorrectly in order emails (#1189)
+
 ### 3.12.0
 New module: **Slugs** (experimental)
 * Add support for permalink (slug/URL) translations to qTranslate-XT (#671)
