@@ -7,6 +7,7 @@ function qtranxf_wpseo_add_filters_front() {
     // Use indexation on "publish/update" events to save all languages data in indexable tables.
     // If indexation is allowed on the frontend then indexable table saves data of the first visited page
     // and other languages are missed.
+    add_filter( 'Yoast\WP\SEO\should_index_indexables', '__return_false' );
     add_filter( 'wpseo_should_save_indexable', '__return_false' );
     add_filter( 'wpseo_indexing_data', '__return_false' );
 
