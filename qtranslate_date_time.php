@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * [Legacy] Converter of a format given in DateTime format, transformed to the extended "QTX-strftime" format.
+ *
+ * @param string $format in DateTime format.
+ *
+ * @return string
+ * @see https://www.php.net/manual/en/function.strftime.php
+ * @see https://www.php.net/manual/en/datetime.format.php
+ */
 function qtranxf_convertDateFormatToStrftimeFormat( $format ) {
     $mappings = array(
         'd' => '%d',
@@ -59,6 +68,14 @@ function qtranxf_convertDateFormatToStrftimeFormat( $format ) {
     return $format;
 }
 
+/**
+ * [Legacy] Converter of a format/default pair to "QTX-strftime" format, applying 'use_strftime' configuration.
+ *
+ * @param string $format
+ * @param string $default_format
+ *
+ * @return string
+ */
 function qtranxf_convertFormat( $format, $default_format ) {
     global $q_config;
     // if one of special language-neutral formats are requested, don't replace it
@@ -91,6 +108,13 @@ function qtranxf_convertFormat( $format, $default_format ) {
     }
 }
 
+/**
+ * [Legacy] Converter of a date format to "QTX-strftime" format, applying qTranslate 'use_strftime' configuration.
+ *
+ * @param string $format
+ *
+ * @return string
+ */
 function qtranxf_convertDateFormat( $format ) {
     global $q_config;
     if ( isset( $q_config['date_format'][ $q_config['language'] ] ) ) {
@@ -104,6 +128,13 @@ function qtranxf_convertDateFormat( $format ) {
     return qtranxf_convertFormat( $format, $default_format );
 }
 
+/**
+ * [Legacy] Converter of a time format to "QTX-strftime" format, applying qTranslate 'use_strftime' configuration.
+ *
+ * @param string $format
+ *
+ * @return string
+ */
 function qtranxf_convertTimeFormat( $format ) {
     global $q_config;
     if ( isset( $q_config['time_format'][ $q_config['language'] ] ) ) {
@@ -117,25 +148,19 @@ function qtranxf_convertTimeFormat( $format ) {
     return qtranxf_convertFormat( $format, $default_format );
 }
 
-// TODO these format functions don't seem to be used by anyone - temporarily commented before removal
-//function qtranxf_formatCommentDateTime( $format ) {
-//	global $comment;
-//
-//	return qtranxf_strftime( qtranxf_convertFormat( $format, $format ), mysql2date( 'U', $comment->comment_date ), '' );
-//}
-//
-//function qtranxf_formatPostDateTime( $format ) {
-//	global $post;
-//
-//	return qtranxf_strftime( qtranxf_convertFormat( $format, $format ), mysql2date( 'U', $post->post_date ), '' );
-//}
-//
-//function qtranxf_formatPostModifiedDateTime( $format ) {
-//	global $post;
-//
-//	return qtranxf_strftime( qtranxf_convertFormat( $format, $format ), mysql2date( 'U', $post->post_modified ), '' );
-//}
-
+/**
+ * [Legacy] Extension of PHP "QTX-strftime", valid up to PHP 8.0.
+ *
+ * @param string $format extended strftime with additional features such as %q
+ * @param int $date timestamp
+ * @param string $default Default result when $format is empty.
+ * @param string $before Text copied before result.
+ * @param $after Text copied after result.
+ *
+ * @return mixed|string
+ * @deprecated Don't use this since strftime is deprecated from PHP8.1.
+ * @See https://www.php.net/manual/en/function.strftime.php
+ */
 function qtranxf_strftime( $format, $date, $default = '', $before = '', $after = '' ) {
     // don't do anything if format is not given
     if ( $format == '' ) {
@@ -201,12 +226,24 @@ function qtranxf_strftime( $format, $date, $default = '', $before = '', $after =
     return $before . strftime( $format, $date ) . $after;
 }
 
+/**
+ * [Legacy] Generalized formatting of a date, applying qTranslate 'use_strftime' config.
+ *
+ * @param string $format
+ * @param string $mysq_time date string in MySQL format
+ * @param string $default
+ * @param string $before
+ * @param string $after
+ *
+ * @return string
+ */
 function qtranxf_format_date( $format, $mysq_time, $default, $before = '', $after = '' ) {
     global $q_config;
     $ts = mysql2date( 'U', $mysq_time );
     if ( $format == 'U' ) {
         return $ts;
     }
+
     $format = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage( $format );
     if ( ! empty( $format ) && $q_config['use_strftime'] == QTX_STRFTIME ) {
         $format = qtranxf_convertDateFormatToStrftimeFormat( $format );
@@ -215,6 +252,17 @@ function qtranxf_format_date( $format, $mysq_time, $default, $before = '', $afte
     return qtranxf_strftime( qtranxf_convertDateFormat( $format ), $ts, $default, $before, $after );
 }
 
+/**
+ * [Legacy] Generalized formatting of a date, applying qTranslate 'use_strftime' config.
+ *
+ * @param string $format
+ * @param string $mysq_time time string in MySQL format
+ * @param string $default
+ * @param string $before
+ * @param string $after
+ *
+ * @return string
+ */
 function qtranxf_format_time( $format, $mysq_time, $default, $before = '', $after = '' ) {
     global $q_config;
     $ts = mysql2date( 'U', $mysq_time );
@@ -229,6 +277,7 @@ function qtranxf_format_time( $format, $mysq_time, $default, $before = '', $afte
     return qtranxf_strftime( qtranxf_convertTimeFormat( $format ), $ts, $default, $before, $after );
 }
 
+// @see get_the_date
 function qtranxf_dateFromPostForCurrentLanguage( $old_date, $format = '', $post = null ) {
     $post = get_post( $post );
     if ( ! $post ) {
@@ -238,6 +287,7 @@ function qtranxf_dateFromPostForCurrentLanguage( $old_date, $format = '', $post 
     return qtranxf_format_date( $format, $post->post_date, $old_date );
 }
 
+// @see get_the_modified_date
 function qtranxf_dateModifiedFromPostForCurrentLanguage( $old_date, $format = '' ) {
     global $post;
     if ( ! $post ) {
@@ -247,6 +297,7 @@ function qtranxf_dateModifiedFromPostForCurrentLanguage( $old_date, $format = ''
     return qtranxf_format_date( $format, $post->post_modified, $old_date );
 }
 
+// @see get_the_time
 function qtranxf_timeFromPostForCurrentLanguage( $old_date, $format = '', $post = null, $gmt = false ) {
     $post = get_post( $post );
     if ( ! $post ) {
@@ -257,6 +308,7 @@ function qtranxf_timeFromPostForCurrentLanguage( $old_date, $format = '', $post 
     return qtranxf_format_time( $format, $post_date, $old_date );
 }
 
+// @see get_post_modified_time
 function qtranxf_timeModifiedFromPostForCurrentLanguage( $old_date, $format = '', $gmt = false ) {
     global $post;
     if ( ! $post ) {
@@ -267,6 +319,7 @@ function qtranxf_timeModifiedFromPostForCurrentLanguage( $old_date, $format = ''
     return qtranxf_format_time( $format, $post_date, $old_date );
 }
 
+// @see get_comment_date
 function qtranxf_dateFromCommentForCurrentLanguage( $old_date, $format, $comment = null ) {
     if ( ! $comment ) {
         global $comment;  // TODO drop obsolete compatibility with older WP
@@ -278,6 +331,7 @@ function qtranxf_dateFromCommentForCurrentLanguage( $old_date, $format, $comment
     return qtranxf_format_date( $format, $comment->comment_date, $old_date );
 }
 
+// @see get_comment_time
 function qtranxf_timeFromCommentForCurrentLanguage( $old_date, $format = '', $gmt = false, $translate = true, $comment = null ) {
     if ( ! $translate ) {
         return $old_date;
