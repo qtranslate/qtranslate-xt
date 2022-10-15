@@ -47,11 +47,6 @@ function qtranxf_collect_translations( &$qfields, &$request, $edit_lang ) {
         if ( ! qtranxf_isMultilingual( $request ) ) {
             // convert to ML value
             $qfields[ $edit_lang ] = $request;
-            //Handles same translation for all languages to overwrite properly previous translations (change ignored otherwise)
-            if ( ! is_null( qtranxf_allthesame( $qfields ) ) ) {
-                array_walk( $qfields, function( &$value ){ $value=""; } );
-                $qfields[qtranxf_getLanguageDefault()] = $request;
-            }
             $request               = qtranxf_collect_translations_deep( $qfields, $sep );
         } else {
             // raw mode, or user mistakenly put ML value into an LSB-controlled field
