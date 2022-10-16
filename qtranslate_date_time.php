@@ -89,7 +89,6 @@ function qxtranxf_intl_strftime( $format, $timestamp = null, $locale = null ) {
             // Day number in year, 001 to 366
             return sprintf( '%03d', $timestamp->format( 'z' ) + 1 );
         },
-        '%q' => 'S', // Non-standard strftime: '%q' is a qTranslate format to mimic date 'S'.
         '%u' => 'N',
         '%w' => 'w',
 
@@ -154,6 +153,24 @@ function qxtranxf_intl_strftime( $format, $timestamp = null, $locale = null ) {
         '%F' => 'Y-m-d',
         '%s' => 'U',
         '%x' => $intl_formatter,
+
+        // QTranslate: non-standard strftime
+        '%E' => 'j', // Day number no zero
+        '%q' => 'S', // Day english ordinal
+        '%f' => 'w', // Week number
+        '%v' => 'T', // Timezone abbreviation, if known; otherwise the GMT offset.
+        '%i' => 'n', // Numeric representation of a month, without leading zeros
+        '%J' => 't', // Number of days in the given month
+        '%K' => 'B', // Swatch internet time 000-999
+        '%L' => 'G', // 24-hour format of an hour without leading zeros ---> %L should be %k!
+        '%N' => 'u', // Microseconds
+        '%Q' => 'e', // Timezone identifier
+        '%o' => 'I', // 1 if Daylight Saving Time, 0 otherwise.
+        '%O' => 'O', // Difference to Greenwich time (GMT) without colon between hours and minutes
+        '%1' => 'Z', // Timezone offset in seconds
+        '%2' => 'c', // ISO 8601 date
+        '%3' => 'r', // RFC 2822/» RFC 5322 formatted date
+        '%4' => 'U',  // Seconds since the Unix Epoch
     ];
 
     $out = preg_replace_callback( '/(?<!%)(%[a-zA-Z])/', function ( $match ) use ( $translation_table, $timestamp ) {
@@ -193,43 +210,50 @@ function qxtranxf_intl_strftime( $format, $timestamp = null, $locale = null ) {
  */
 function qtranxf_convertDateFormatToStrftimeFormat( $format ) {
     $mappings = array(
+        // day
         'd' => '%d',
         'D' => '%a',
-        'j' => '%E',
         'l' => '%A',
         'N' => '%u',
-        'S' => '%q',
-        'w' => '%f',
-        'z' => '%F',
+        // week
         'W' => '%V',
+        // month
         'F' => '%B',
         'm' => '%m',
         'M' => '%b',
-        'n' => '%i',
-        't' => '%J',
-        'L' => '%k',
+        // year
         'o' => '%G',
         'Y' => '%Y',
         'y' => '%y',
+        // time
         'a' => '%P',
         'A' => '%p',
-        'B' => '%K',
         'g' => '%l',
-        'G' => '%L',
         'h' => '%I',
         'H' => '%H',
         'i' => '%M',
         's' => '%S',
-        'u' => '%N',
-        'e' => '%Q',
-        'I' => '%o',
-        'O' => '%O',
-        'P' => '%s',
-        'T' => '%v',
-        'Z' => '%1',
-        'c' => '%2',
-        'r' => '%3',
-        'U' => '%4'
+        // QTranslate: override strftime, not consistent with date formats :-/
+        'z' => '%F', // z: The day of the year (starting from 0) -- %F: Same as "%Y-%m-%d
+        'P' => '%s', // P: Difference to Greenwich time (GMT) with colon between hours and minutes -- %s: unix timestamp
+        'L' => '%k', // L: leap year -- %k: Hour in 24-hour format, single digit
+        // QTranslate: non-standard strftime to mimic some date formats
+        'j' => '%E', // Day number no zero
+        'S' => '%q', // Day english ordinal
+        'w' => '%f', // Week number
+        'T' => '%v', // Timezone abbreviation, if known; otherwise the GMT offset.
+        'n' => '%i', // Numeric representation of a month, without leading zeros
+        't' => '%J', // Number of days in the given month
+        'B' => '%K', // Swatch internet time 000-999
+        'G' => '%L', // 24-hour format of an hour without leading zeros --> %L should be %k!
+        'u' => '%N', // Microseconds
+        'e' => '%Q', // Timezone identifier
+        'I' => '%o', // 1 if Daylight Saving Time, 0 otherwise.
+        'O' => '%O', // Difference to Greenwich time (GMT) without colon between hours and minutes
+        'Z' => '%1', // Timezone offset in seconds
+        'c' => '%2', // ISO 8601 date
+        'r' => '%3', // RFC 2822/» RFC 5322 formatted date
+        'U' => '%4'  // Seconds since the Unix Epoch
     );
 
     $date_parameters       = array();
@@ -380,7 +404,7 @@ function qtranxf_strftime( $format, $date, $default = '', $before = '', $after =
     $search[]  = '/(([^%])%F|^%F)/';
     $replace[] = '${2}' . date( 'z', $date ); // date z
     $search[]  = '/(([^%])%i|^%i)/';
-    $replace[] = '${2}' . date( 'n', $date ); // date i
+    $replace[] = '${2}' . date( 'n', $date ); // date n
     $search[]  = '/(([^%])%J|^%J)/';
     $replace[] = '${2}' . date( 't', $date ); // date t
     $search[]  = '/(([^%])%k|^%k)/';
