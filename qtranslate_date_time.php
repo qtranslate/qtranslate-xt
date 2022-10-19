@@ -17,7 +17,7 @@
  * @param integer|string|DateTime $timestamp Timestamp
  *
  * @return string
- * @deprecated Don't use this function, only meant for transition from legacy strftime formats.
+ * @deprecated Avoid using this function, meant to transition from legacy strftime formats - might be removed.
  * @see https://gist.github.com/bohwaz/42fc223031e2b2dd2585aab159a20f30 (for the original code).
  */
 function qxtranxf_intl_strftime( $format, $timestamp = null, $locale = null ) {
@@ -371,13 +371,10 @@ function qtranxf_convertTimeFormat( $format ) {
  * @See https://www.php.net/manual/en/function.strftime.php
  */
 function qtranxf_strftime( $format, $date, $default = '', $before = '', $after = '' ) {
+    _deprecated_function( __FUNCTION__, '3.13.0', 'qxtranxf_intl_strftime' );
+
     if ( empty( $format ) ) {
         return $default;
-    }
-
-    // Workaround for legacy strftime formats, using IntlDateFormatter instead.
-    if ( version_compare( PHP_VERSION, '8.1' ) >= 0 ) {
-        return qxtranxf_intl_strftime( $format, $date, get_locale() );
     }
 
     // add date suffix ability (%q) to strftime
@@ -464,7 +461,10 @@ function qtranxf_format_date( $format, $mysq_time, $default, $before = '', $afte
         $format = qtranxf_convertDateFormatToStrftimeFormat( $format );
     }
 
-    return qtranxf_strftime( qtranxf_convertDateFormat( $format ), $ts, $default, $before, $after );
+    $date_format = qtranxf_convertDateFormat( $format );  // strftime format for a date value
+    $date_output = empty( $date_format ) ? $default : qxtranxf_intl_strftime( $date_format, $ts, get_locale() );
+
+    return $before . $date_output . $after;
 }
 
 /**
@@ -491,7 +491,10 @@ function qtranxf_format_time( $format, $mysq_time, $default, $before = '', $afte
         $format = qtranxf_convertDateFormatToStrftimeFormat( $format );
     }
 
-    return qtranxf_strftime( qtranxf_convertTimeFormat( $format ), $ts, $default, $before, $after );
+    $time_format = qtranxf_convertTimeFormat( $format ); // strftime format for a time value
+    $time_output = empty( $time_format ) ? $default : qxtranxf_intl_strftime( $time_format, $ts, get_locale() );
+
+    return $before . $time_output . $after;
 }
 
 // @see get_the_date
