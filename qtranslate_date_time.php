@@ -444,63 +444,64 @@ function qtranxf_strftime( $format, $date, $default = '', $before = '', $after =
 /**
  * [Legacy] Generalized formatting of a date, applying qTranslate 'use_strftime' config.
  *
- * @param string $format
- * @param string $mysq_time date string in MySQL format
- * @param string $default
- * @param string $before
- * @param string $after
+ * @param string $format the requested user format.
+ * @param string $language_format the language date or time format, used by default or for configuration override.
+ * @param string $mysql_date_time date/time string in MySQL format.
+ * @param string $default_value default result in case the format conversion fails.
  *
  * @return string
  */
-function qtranxf_format_date( $format, $mysq_time, $default, $before = '', $after = '' ) {
+function qtranxf_format_date_time( $format, $language_format, $mysql_date_time, $default_value ) {
     global $q_config;
-    $ts = mysql2date( 'U', $mysq_time );
+    $timestamp = mysql2date( 'U', $mysql_date_time );
     if ( $format == 'U' ) {
-        return $ts;
+        return $timestamp;
     }
-
     // TODO: abandon strftime format in qTranslate.
     $format = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage( $format );
     if ( ! empty( $format ) && $q_config['use_strftime'] == QTX_STRFTIME ) {
         $format = qtranxf_convertDateFormatToStrftimeFormat( $format );
     }
-
-    $language_format = qtranxf_get_language_date_or_time_format( 'date_format' );
-    $date_format     = qtranxf_convertFormat( $format, $language_format );
-    $date_output     = empty( $date_format ) ? $default : qxtranxf_intl_strftime( $date_format, $ts, get_locale() );
-
-    return $before . $date_output . $after;
+    $date_format = qtranxf_convertFormat( $format, $language_format );
+    return empty( $date_format ) ? $default_value : qxtranxf_intl_strftime( $date_format, $timestamp, get_locale() );
 }
 
 /**
  * [Legacy] Generalized formatting of a date, applying qTranslate 'use_strftime' config.
  *
  * @param string $format
- * @param string $mysq_time time string in MySQL format
- * @param string $default
- * @param string $before
- * @param string $after
+ * @param string $mysql_time date string in MySQL format
+ * @param string $default_value default date value.
+ * @param string $before Deprecated. Not used, will be removed in a future version.
+ * @param string $after Deprecated. Not used, will be removed in a future version.
  *
  * @return string
  */
-function qtranxf_format_time( $format, $mysq_time, $default, $before = '', $after = '' ) {
-    global $q_config;
-    $ts = mysql2date( 'U', $mysq_time );
-    if ( $format == 'U' ) {
-        return $ts;
+function qtranxf_format_date( $format, $mysql_time, $default_value, $before = '', $after = '' ) {
+    if ( ! empty( $before ) || ! empty( $after ) ) {
+        _deprecated_argument( __FUNCTION__, '3.13.0' );
     }
+    $language_format = qtranxf_get_language_date_or_time_format( 'date_format' );
+    return qtranxf_format_date_time( $format, $language_format, $mysql_time, $default_value );
+}
 
-    // TODO: abandon strftime format in qTranslate.
-    $format = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage( $format );
-    if ( ! empty( $format ) && $q_config['use_strftime'] == QTX_STRFTIME ) {
-        $format = qtranxf_convertDateFormatToStrftimeFormat( $format );
+/**
+ * [Legacy] Generalized formatting of a date, applying qTranslate 'use_strftime' config.
+ *
+ * @param string $format
+ * @param string $mysql_time time string in MySQL format
+ * @param string $default_value default time value.
+ * @param string $before Deprecated. Not used, will be removed in a future version.
+ * @param string $after Deprecated. Not used, will be removed in a future version.
+ *
+ * @return string
+ */
+function qtranxf_format_time( $format, $mysql_time, $default_value, $before = '', $after = '' ) {
+    if ( ! empty( $before ) || ! empty( $after ) ) {
+        _deprecated_argument( __FUNCTION__, '3.13.0' );
     }
-
     $language_format = qtranxf_get_language_date_or_time_format( 'time_format' );
-    $time_format     = qtranxf_convertFormat( $format, $language_format );
-    $time_output     = empty( $time_format ) ? $default : qxtranxf_intl_strftime( $time_format, $ts, get_locale() );
-
-    return $before . $time_output . $after;
+    return qtranxf_format_date_time( $format, $language_format, $mysql_time, $default_value );
 }
 
 // @see get_the_date
