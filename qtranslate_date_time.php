@@ -295,9 +295,6 @@ function qtranxf_convertFormat( $format, $default_format ) {
         default:
             break;
     }
-    // check for multilang formats
-    $format         = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage( $format );
-    $default_format = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage( $default_format );
     switch ( $q_config['use_strftime'] ) {
         case QTX_DATE:
             if ( empty( $format ) ) {
@@ -444,7 +441,7 @@ function qtranxf_strftime( $format, $date, $default = '', $before = '', $after =
 /**
  * [Legacy] Generalized formatting of a date, applying qTranslate 'use_strftime' config.
  *
- * @param string $format the requested user format.
+ * @param string $format the requested user format, in PHP date format.
  * @param string $language_format the language date or time format, used by default or for configuration override.
  * @param string $mysql_date_time date/time string in MySQL format.
  * @param string $default_value default result in case the format conversion fails.
@@ -458,7 +455,6 @@ function qtranxf_format_date_time( $format, $language_format, $mysql_date_time, 
         return $timestamp;
     }
     // TODO: abandon strftime format in qTranslate.
-    $format = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage( $format );
     if ( ! empty( $format ) && $q_config['use_strftime'] == QTX_STRFTIME ) {
         $format = qtranxf_convertDateFormatToStrftimeFormat( $format );
     }
