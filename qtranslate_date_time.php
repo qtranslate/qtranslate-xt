@@ -201,7 +201,7 @@ function qxtranxf_intl_strftime( $format, $timestamp = null, $locale = null ) {
 /**
  * Converter of a format given in DateTime format, transformed to the extended "QTX-strftime" format.
  *
- * @param string $format in DateTime format.
+ * @param string $format in DateTime format. Format characters can be quoted with backslashes.
  *
  * @return string
  * @todo Maybe deprecate. Don't use strftime formats anymore, since strftime is deprecated from PHP8.1.
@@ -261,17 +261,14 @@ function qtranxf_convert_date_format_to_strftime_format( $format ) {
     $date_parameters[]     = '#%#';
     $strftime_parameters[] = '%';
     foreach ( $mappings as $df => $sf ) {
+        // Format characters can be quoted with backslashes.
         $date_parameters[]     = '#(([^%\\\\])' . $df . '|^' . $df . ')#';
         $strftime_parameters[] = '${2}' . $sf;
     }
     // convert everything
     $format = preg_replace( $date_parameters, $strftime_parameters, $format );
-    // remove single backslashes from dates
-    $format = preg_replace( '#\\\\([^\\\\]{1})#', '${1}', $format );
-    // remove double backslashes from dates
-    $format = preg_replace( '#\\\\\\\\#', '\\\\', $format );
-
-    return $format;
+    // Remove single backslashes and convert double to single.
+    return stripslashes( $format );
 }
 
 /**
@@ -288,40 +285,54 @@ function qtranxf_convertDateFormatToStrftimeFormat( $format ) {
 }
 
 /**
- * [Legacy] Converter of a format/default pair to "QTX-strftime" format, applying 'use_strftime' configuration.
+ * Converter of a format/default pair to "QTX-strftime" format, applying 'use_strftime' configuration.
  *
- * @param string $format
- * @param string $default_format
+ * @param string $format ATTENTION - always given in date PHP format.
+ * @param string $default_format language format following the 'use_strftime' configuration.
  *
- * @return string
- * @deprecated Don't use strftime formats anymore, since strftime is deprecated from PHP8.1.
+ * @return string format in strftime
+ * @todo Maybe deprecate. Don't use strftime formats anymore, since strftime is deprecated from PHP8.1.
  */
-function qtranxf_convertFormat( $format, $default_format ) {
+function qtranxf_convert_to_strftime_format_using_config( $format, $default_format ) {
     global $q_config;
-    // if one of special language-neutral formats are requested, don't replace it
+    // If one of special language-neutral formats is requested, don't override it.
     switch ( $format ) {
         case 'Z':
         case 'c':
         case 'r':
         case 'U':
             return qtranxf_convert_date_format_to_strftime_format( $format );
-        default:
-            break;
     }
+    // Attention - this part is quite tricky.
+    // The user format is always given in date format, but not the language format which depends on use_strftime settings.
+    // The language format may contain escape backslash characters that must be unquoted in any case.
     switch ( $q_config['use_strftime'] ) {
         case QTX_DATE:
-            if ( empty( $format ) ) {
-                $format = $default_format;
-            }
-            return qtranxf_convert_date_format_to_strftime_format( $format );
+            // Convert both.
+            return qtranxf_convert_date_format_to_strftime_format( ! empty( $format ) ? $format : $default_format );
         case QTX_DATE_OVERRIDE:
             return qtranxf_convert_date_format_to_strftime_format( $default_format );
         case QTX_STRFTIME:
-            return $format;
+            return ( ! empty( $format ) ? qtranxf_convert_date_format_to_strftime_format( $format ) : stripslashes( $default_format ) );
         case QTX_STRFTIME_OVERRIDE:
+            return stripslashes( $default_format );
         default:
-            return $default_format;
+            return '';
     }
+}
+
+/**
+ * [Legacy] Converter of a format/default pair to "QTX-strftime" format, applying 'use_strftime' configuration.
+ *
+ * @param string $format ATTENTION - always given in date PHP format.
+ * @param string $default_format , following the strftime configuration.
+ *
+ * @return string
+ * @deprecated Use qtranxf_convert_to_strftime_format_using_config.
+ */
+function qtranxf_convertFormat( $format, $default_format ) {
+    _deprecated_function( __FUNCTION__, '3.13.0', 'qtranxf_convert_to_strftime_format_using_config' );
+    return qtranxf_convert_to_strftime_format_using_config( $format, $default_format );
 }
 
 /**
@@ -454,30 +465,6 @@ function qtranxf_strftime( $format, $date, $default = '', $before = '', $after =
 /**
  * [Legacy] Generalized formatting of a date, applying qTranslate 'use_strftime' config.
  *
- * @param string $format the requested user format, in PHP date format.
- * @param string $language_format the language date or time format, used by default or for configuration override.
- * @param string $mysql_date_time date/time string in MySQL format.
- * @param string $default_value default result in case the format conversion fails.
- *
- * @return string
- */
-function qtranxf_format_date_time( $format, $language_format, $mysql_date_time, $default_value ) {
-    global $q_config;
-    $timestamp = mysql2date( 'U', $mysql_date_time );
-    if ( $format == 'U' ) {
-        return $timestamp;
-    }
-    // TODO: abandon strftime format in qTranslate.
-    if ( ! empty( $format ) && $q_config['use_strftime'] == QTX_STRFTIME ) {
-        $format = qtranxf_convert_date_format_to_strftime_format( $format );
-    }
-    $date_format = qtranxf_convertFormat( $format, $language_format );
-    return empty( $date_format ) ? $default_value : qxtranxf_intl_strftime( $date_format, $timestamp, get_locale() );
-}
-
-/**
- * [Legacy] Generalized formatting of a date, applying qTranslate 'use_strftime' config.
- *
  * @param string $format
  * @param string $mysql_time date string in MySQL format
  * @param string $default_value default date value.
@@ -490,8 +477,14 @@ function qtranxf_format_date( $format, $mysql_time, $default_value, $before = ''
     if ( ! empty( $before ) || ! empty( $after ) ) {
         _deprecated_argument( __FUNCTION__, '3.13.0' );
     }
+    $timestamp = mysql2date( 'U', $mysql_time );
+    if ( $format == 'U' ) {
+        return $timestamp;
+    }
     $language_format = qtranxf_get_language_date_or_time_format( 'date_format' );
-    return qtranxf_format_date_time( $format, $language_format, $mysql_time, $default_value );
+    // TODO: abandon strftime format in qTranslate.
+    $date_format = qtranxf_convert_to_strftime_format_using_config( $format, $language_format );
+    return ( ! empty( $date_format ) ? qxtranxf_intl_strftime( $date_format, $timestamp, get_locale() ) : $default_value );
 }
 
 /**
@@ -509,8 +502,14 @@ function qtranxf_format_time( $format, $mysql_time, $default_value, $before = ''
     if ( ! empty( $before ) || ! empty( $after ) ) {
         _deprecated_argument( __FUNCTION__, '3.13.0' );
     }
+    $timestamp = mysql2date( 'U', $mysql_time );
+    if ( $format == 'U' ) {
+        return $timestamp;
+    }
     $language_format = qtranxf_get_language_date_or_time_format( 'time_format' );
-    return qtranxf_format_date_time( $format, $language_format, $mysql_time, $default_value );
+    // TODO: abandon strftime format in qTranslate.
+    $date_format = qtranxf_convert_to_strftime_format_using_config( $format, $language_format );
+    return ( ! empty( $date_format ) ? qxtranxf_intl_strftime( $date_format, $timestamp, get_locale() ) : $default_value );
 }
 
 // @see get_the_date
