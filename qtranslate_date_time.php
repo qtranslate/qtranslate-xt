@@ -17,7 +17,7 @@
  * @param integer|string|DateTime $timestamp Timestamp
  *
  * @return string
- * @deprecated Avoid using this function, meant to transition from legacy strftime formats - might be removed.
+ * @todo Maybe deprecate. Avoid using this function, meant to transition from legacy strftime formats.
  * @see https://gist.github.com/bohwaz/42fc223031e2b2dd2585aab159a20f30 (for the original code).
  */
 function qxtranxf_intl_strftime( $format, $timestamp = null, $locale = null ) {
@@ -199,16 +199,16 @@ function qxtranxf_intl_strftime( $format, $timestamp = null, $locale = null ) {
 }
 
 /**
- * [Legacy] Converter of a format given in DateTime format, transformed to the extended "QTX-strftime" format.
+ * Converter of a format given in DateTime format, transformed to the extended "QTX-strftime" format.
  *
  * @param string $format in DateTime format.
  *
  * @return string
- * @deprecated Don't use strftime formats anymore, since strftime is deprecated from PHP8.1.
+ * @todo Maybe deprecate. Don't use strftime formats anymore, since strftime is deprecated from PHP8.1.
  * @see https://www.php.net/manual/en/function.strftime.php
  * @see https://www.php.net/manual/en/datetime.format.php
  */
-function qtranxf_convertDateFormatToStrftimeFormat( $format ) {
+function qtranxf_convert_date_format_to_strftime_format( $format ) {
     $mappings = array(
         // day
         'd' => '%d',
@@ -275,6 +275,19 @@ function qtranxf_convertDateFormatToStrftimeFormat( $format ) {
 }
 
 /**
+ * [Legacy] Converter of a format given in DateTime format, transformed to the extended "QTX-strftime" format.
+ *
+ * @param string $format in DateTime format.
+ *
+ * @return string
+ * @deprecated Use qtranxf_convert_date_format_to_strftime_format.
+ */
+function qtranxf_convertDateFormatToStrftimeFormat( $format ) {
+    _deprecated_function( __FUNCTION__, '3.13.0', 'qtranxf_convert_date_format_to_strftime_format' );
+    return qtranxf_convert_date_format_to_strftime_format( $format );
+}
+
+/**
  * [Legacy] Converter of a format/default pair to "QTX-strftime" format, applying 'use_strftime' configuration.
  *
  * @param string $format
@@ -291,7 +304,7 @@ function qtranxf_convertFormat( $format, $default_format ) {
         case 'c':
         case 'r':
         case 'U':
-            return qtranxf_convertDateFormatToStrftimeFormat( $format );
+            return qtranxf_convert_date_format_to_strftime_format( $format );
         default:
             break;
     }
@@ -300,9 +313,9 @@ function qtranxf_convertFormat( $format, $default_format ) {
             if ( empty( $format ) ) {
                 $format = $default_format;
             }
-            return qtranxf_convertDateFormatToStrftimeFormat( $format );
+            return qtranxf_convert_date_format_to_strftime_format( $format );
         case QTX_DATE_OVERRIDE:
-            return qtranxf_convertDateFormatToStrftimeFormat( $default_format );
+            return qtranxf_convert_date_format_to_strftime_format( $default_format );
         case QTX_STRFTIME:
             return $format;
         case QTX_STRFTIME_OVERRIDE:
@@ -456,7 +469,7 @@ function qtranxf_format_date_time( $format, $language_format, $mysql_date_time, 
     }
     // TODO: abandon strftime format in qTranslate.
     if ( ! empty( $format ) && $q_config['use_strftime'] == QTX_STRFTIME ) {
-        $format = qtranxf_convertDateFormatToStrftimeFormat( $format );
+        $format = qtranxf_convert_date_format_to_strftime_format( $format );
     }
     $date_format = qtranxf_convertFormat( $format, $language_format );
     return empty( $date_format ) ? $default_value : qxtranxf_intl_strftime( $date_format, $timestamp, get_locale() );
