@@ -166,6 +166,13 @@ function qtranxf_term_sanitize_name_unslashed( $term, $taxonomy = null ) {
  */
 function qtranxf_term_sanitize_name_db( $term, $taxonomy = null ) {
     global $q_config;
+
+    if ( ! qtranxf_isMultilingual( $term ) ) {
+        // Don't call `qtranxf_term_sanitize_name_unslashed`, otherwise the term won't be updated.
+        // The 'term_sanitized' config should remain empty for that term.
+        return $term;
+    }
+
     $term_db = stripcslashes( $term );
     if ( isset( $q_config['terms_sanitized'][ $term_db ] ) ) {
         return $term;
