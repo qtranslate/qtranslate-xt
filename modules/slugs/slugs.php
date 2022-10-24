@@ -1,25 +1,15 @@
 <?php
+const QTX_SLUGS_META_PREFIX = 'qtranslate_slug_';   // The language code is appended.
 
-if ( ! defined( "QTS_PREFIX" ) ) {
-    define( "QTS_PREFIX", '_qts_' );
-}
-if ( ! defined( "QTS_META_PREFIX" ) ) {
-    define( "QTS_META_PREFIX", QTS_PREFIX . 'slug_' );
-}
+include_once( dirname( __FILE__ ) . '/qtx_module_slugs.php' );
+include_once( dirname( __FILE__ ) . '/src/slugs-utils.php' );
 
-// Init the module
-
-include_once( dirname( __FILE__ ) . '/includes/class-qtranslate-slug.php' );
-include_once( dirname( __FILE__ ) . '/includes/qtranslate-slug-utils.php' );
-
-global $qtranslate_slug;
-$qtranslate_slug = new QtranslateSlug();
-
+global $qtranslate_slugs;
+$qtranslate_slugs = new QTX_Module_Slugs();
 
 if ( is_admin() ) {
-    include_once( dirname( __FILE__ ) . '/includes/qtranslate-slug-admin.php' );
+    include_once( dirname( __FILE__ ) . '/admin/slugs-admin.php' );
 }
 
-// plugin init
-add_action( 'plugins_loaded', array( $qtranslate_slug, 'init' ) );
-add_filter( 'qtranslate_convert_url', 'qts_convert_url', 10, 2 );
+add_action( 'plugins_loaded', array( $qtranslate_slugs, 'init' ) );
+add_filter( 'qtranslate_convert_url', 'qtranxf_slugs_convert_url', 10, 2 );

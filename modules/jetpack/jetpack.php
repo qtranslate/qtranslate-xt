@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-class QTX_Jetpack {
+class QTX_Module_Jetpack {
     public function __construct() {
         add_filter( 'jetpack_relatedposts_returned_results', array( $this, 'translate_related_posts' ) );
     }
@@ -30,4 +30,4 @@ class QTX_Jetpack {
 
 }
 
-new QTX_Jetpack();
+new QTX_Module_Jetpack();

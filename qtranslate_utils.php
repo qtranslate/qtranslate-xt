@@ -448,7 +448,7 @@ function qtranxf_getLanguageName( $lang = '' ) {
         // not loaded by default, since this place should not be hit frequently
         $locale = $q_config['locale'][ $q_config['language'] ];
         if ( ! load_textdomain( 'language-names', QTRANSLATE_DIR . '/lang/language-names/language-' . $locale . '.mo' ) ) {
-            if ( strlen( $locale ) >= 2 && $locale[2] == '_' ) {
+            if ( strlen( $locale ) > 2 && $locale[2] == '_' ) {
                 $locale = substr( $locale, 0, 2 );
                 load_textdomain( 'language-names', QTRANSLATE_DIR . '/lang/language-names/language-' . $locale . '.mo' );
             }
@@ -456,15 +456,17 @@ function qtranxf_getLanguageName( $lang = '' ) {
     }
     $translations = get_translations_for_domain( 'language-names' );
     $locale       = $q_config['locale'][ $lang ];
-    while ( ! isset( $translations->entries[ $locale ] ) ) {
-        if ( strlen( $locale ) >= 2 && $locale[2] == '_' ) {
+    if ( ! isset( $translations->entries[ $locale ] ) ) {
+        $found_locale = false;
+        if ( strlen( $locale ) > 2 && $locale[2] == '_' ) {
             $locale = substr( $locale, 0, 2 );
             if ( isset( $translations->entries[ $locale ] ) ) {
-                break;
+                $found_locale = true;
             }
         }
-
-        return $q_config['language-names'][ $lang ] = $q_config['language_name'][ $lang ];
+        if ( ! $found_locale ) {
+            return $q_config['language-names'][ $lang ] = $q_config['language_name'][ $lang ];
+        }
     }
     $n = $translations->entries[ $locale ]->translations[0];
     if ( empty( $q_config['language_name_case'] ) ) {
@@ -574,6 +576,16 @@ function qtranxf_is_rest_request_expected() {
 }
 
 /**
+ * Evaluate if the request URI leads to a GraphQL API call.
+ *
+ * @return bool
+ * @see is_graphql_http_request in https://github.com/wp-graphql/wp-graphql/blob/develop/src/Router.php
+ */
+function qtranxf_is_graphql_request_expected() {
+    return function_exists( 'is_graphql_http_request' ) && is_graphql_http_request();
+}
+
+/**
  * Evaluate if the current request allows HTTP redirection.
  * Admin requests (WP_ADMIN, DOING_AJAX, WP_CLI, DOING_CRON) or REST calls should not be redirected.
  *
@@ -582,6 +594,7 @@ function qtranxf_is_rest_request_expected() {
 function qtranxf_can_redirect() {
     return ! is_admin() && ! wp_doing_ajax() && ! ( defined( 'WP_CLI' ) && WP_CLI ) && ! wp_doing_cron() && empty( $_POST )
            && ( ! qtranxf_is_rest_request_expected() )
+           && ( ! qtranxf_is_graphql_request_expected() )
            // TODO clarify: 'REDIRECT_*' needs more testing --> && !isset($_SERVER['REDIRECT_URL'])
            && ( ! isset( $_SERVER['REDIRECT_STATUS'] ) || $_SERVER['REDIRECT_STATUS'] == '200' );
 }

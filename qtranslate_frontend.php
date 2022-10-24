@@ -417,7 +417,8 @@ function qtranxf_filter_options() {
     global $q_config, $wpdb;
     switch ( $q_config['filter_options_mode'] ) {
         case QTX_FILTER_OPTIONS_ALL:
-            $where = ' WHERE autoload=\'yes\' AND (option_value LIKE \'%![:__!]%\' ESCAPE \'!\' OR option_value LIKE \'%{:__}%\' OR option_value LIKE \'%<!--:__-->%\')';
+            // Exclude the 'cron' option because the cron jobs can't be deleted after translation.
+            $where = ' WHERE autoload=\'yes\' AND option_name != \'cron\' AND (option_value LIKE \'%![:__!]%\' ESCAPE \'!\' OR option_value LIKE \'%{:__}%\' OR option_value LIKE \'%<!--:__-->%\')';
             break;
 
         case QTX_FILTER_OPTIONS_LIST:

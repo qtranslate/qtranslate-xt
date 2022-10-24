@@ -1,22 +1,22 @@
 <?php
 
-class acf_qtranslate_acf_5_image extends acf_field_image {
-
+class QTX_Module_Acf_Field_Image extends acf_field_image {
     /**
-     * The plugin instance
-     * @var acf_qtranslate_plugin
+     * The register instance
+     * @var QTX_Module_Acf_Register
      */
-    protected $plugin;
+    protected $register;
 
     /**
      * Constructor
      *
-     * @param acf_qtranslate_plugin $plugin
+     * @param QTX_Module_Acf_Register $register
+     * @param bool $do_initialize true if initialize() must be called explicitly
      */
-    function __construct( $plugin ) {
-        $this->plugin = $plugin;
+    function __construct( $register, $do_initialize ) {
+        $this->register = $register;
 
-        if ( version_compare( $plugin->acf_version(), '5.6.0' ) < 0 ) {
+        if ( $do_initialize ) {
             $this->initialize();
         }
 
@@ -66,8 +66,8 @@ class acf_qtranslate_acf_5_image extends acf_field_image {
         global $q_config;
 
         $languages       = qtranxf_getSortedLanguages( true );
-        $values          = $this->plugin->decode_language_values( $field['value'] );
-        $currentLanguage = $this->plugin->get_active_language();
+        $values          = $this->register->decode_language_values( $field['value'] );
+        $currentLanguage = qtranxf_getLanguage();
 
         $uploader = acf_get_setting( 'uploader' );
         if ( $uploader == 'wp' ) {

@@ -1,22 +1,22 @@
 <?php
 
-class acf_qtranslate_acf_5_post_object extends acf_field_post_object {
-
+class QTX_Module_Acf_Field_Post_Object extends acf_field_post_object {
     /**
-     * The plugin instance
-     * @var acf_qtranslate_plugin
+     * The register instance
+     * @var QTX_Module_Acf_Register
      */
-    protected $plugin;
+    protected $register;
 
     /**
      * Constructor
      *
-     * @param acf_qtranslate_plugin $plugin
+     * @param QTX_Module_Acf_Register $register
+     * @param bool $do_initialize true if initialize() must be called explicitly
      */
-    function __construct( $plugin ) {
-        $this->plugin = $plugin;
+    function __construct( $register, $do_initialize ) {
+        $this->register = $register;
 
-        if ( version_compare( $plugin->acf_version(), '5.6.0' ) < 0 ) {
+        if ( $do_initialize ) {
             $this->initialize();
         }
 
@@ -51,9 +51,9 @@ class acf_qtranslate_acf_5_post_object extends acf_field_post_object {
     function render_field( $field ) {
         global $q_config;
         $languages       = qtranxf_getSortedLanguages( true );
-        $decoded         = $this->plugin->decode_language_values( $field['value'] );
+        $decoded         = $this->register->decode_language_values( $field['value'] );
         $values          = array_map( 'maybe_unserialize', $decoded );
-        $currentLanguage = $this->plugin->get_active_language();
+        $currentLanguage = qtranxf_getLanguage();
 
         $atts = array(
             'id'   => $field['id'],
@@ -122,7 +122,7 @@ class acf_qtranslate_acf_5_post_object extends acf_field_post_object {
             $value = maybe_serialize( $value );
         }
 
-        return $this->plugin->encode_language_values( $values );
+        return $this->register->encode_language_values( $values );
     }
 
     /**
@@ -138,7 +138,7 @@ class acf_qtranslate_acf_5_post_object extends acf_field_post_object {
      */
     function validate_value( $valid, $value, $field, $input ) {
         if ( is_array( $value ) ) {
-            $valid = $this->plugin->validate_language_values( $this, $valid, $value, $field, $input );
+            $valid = $this->register->validate_language_values( $this, $valid, $value, $field, $input );
         }
 
         return $valid;

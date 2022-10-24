@@ -6,6 +6,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 function qtranxf_wc_add_filters_admin() {
     // priority 20 is used because in case other plugins add some untranslated content on normal priority
     // it will still hopefully then get translated.
+    $admin_hooks = array(
+        'woocommerce_email_footer_text'     => 20,
+        'woocommerce_email_from_address'    => 20,
+        'woocommerce_email_from_name'       => 20,
+        'woocommerce_attribute_taxonomies'  => 20,
+        'woocommerce_variation_option_name' => 20,
+    );
+
     $email_ids = array(
         'backorder'                         => 20,
         'cancelled_order'                   => 20,
@@ -26,24 +34,13 @@ function qtranxf_wc_add_filters_admin() {
 
     // not all combinations are in use, but it is ok, they may be added in the future.
     foreach ( $email_ids as $name => $priority ) {
-        add_filter( 'woocommerce_email_recipient_' . $name, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', $priority );
-        add_filter( 'woocommerce_email_subject_' . $name, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', $priority );
-        add_filter( 'woocommerce_email_heading_' . $name, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', $priority );
-        add_filter( 'woocommerce_email_content_' . $name, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', $priority );
+        $admin_hooks[ 'woocommerce_email_recipient_' . $name ] = $priority;
+        $admin_hooks[ 'woocommerce_email_subject_' . $name ]   = $priority;
+        $admin_hooks[ 'woocommerce_email_heading_' . $name ]   = $priority;
+        $admin_hooks[ 'woocommerce_email_content_' . $name ]   = $priority;
     }
 
-    $email_common = array(
-        'woocommerce_email_footer_text'  => 20,
-        'woocommerce_email_from_address' => 20,
-        'woocommerce_email_from_name'    => 20,
-    );
-
-    foreach ( $email_common as $name => $priority ) {
-        add_filter( $name, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', $priority );
-    }
-
-    add_filter( 'woocommerce_attribute_taxonomies' , 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage' );
-    add_filter( 'woocommerce_variation_option_name' , 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage' );
+    qtranxf_add_filters( [ 'text' => $admin_hooks ] );
 }
 
 qtranxf_wc_add_filters_admin();
@@ -345,7 +342,7 @@ add_filter( 'option_woocommerce_email_from_name', 'qtranxf_wc_admin_email_option
  * This helps to use order's language on re-sent emails from post.php order edit page.
  *
  * @param $content
- * @param null $order
+ * @param WC_Order $order
  *
  * @return array|mixed|string|void
  */
@@ -353,8 +350,8 @@ function qtranxf_wc_admin_email_translate( $content, $order = null ) {
     global $q_config;
 
     $lang = null;
-    if ( $order && isset( $order->id ) ) {
-        $lang = get_post_meta( $order->id, '_user_language', true );
+    if ( $order && $order->get_id() ) {
+        $lang = get_post_meta( $order->get_id(), '_user_language', true );
     }
     if ( ! $lang ) {
         $lang = $q_config['language'];
@@ -369,14 +366,14 @@ add_filter( 'woocommerce_email_order_items_table', 'qtranxf_wc_admin_email_trans
  * Called to process action when button 'Save Order' pressed in /wp-admin/post.php?post=xxx&action=edit
  * Helps to partly change language in email sent, but not all, since some parts are already translated into admin language.
  *
- * @param $order
+ * @param WC_Order $order
  */
 function qtranxf_wc_admin_before_resend_order_emails( $order ) {
-    if ( ! $order || ! isset( $order->id ) ) {
+    if ( ! ( $order && $order->get_id() ) ) {
         return;
     }
 
-    $lang = get_post_meta( $order->id, '_user_language', true );
+    $lang = get_post_meta( $order->get_id(), '_user_language', true );
     if ( ! $lang ) {
         return;
     }
@@ -402,7 +399,7 @@ function qtranxf_wc_admin_filters() {
     switch ( $pagenow ) {
         case 'admin.php':
             if ( isset( $_SERVER['QUERY_STRING'] ) && strpos( $_SERVER['QUERY_STRING'], 'page=wc-settings&tab=checkout' ) !== false ) {
-                add_filter( 'woocommerce_gateway_title', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', 5 );
+                qtranxf_add_filters( [ 'text' => [ 'woocommerce_gateway_title' => 5 ] ] );
             }
             break;
         case 'edit.php':
@@ -410,7 +407,7 @@ function qtranxf_wc_admin_filters() {
             if ( isset( $_SERVER['QUERY_STRING'] )
                  && strpos( $_SERVER['QUERY_STRING'], 'post_type=product' ) !== false
             ) {
-                add_filter( 'get_term', 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', 6 );
+                qtranxf_add_filters( [ 'text' => [ 'get_term' => 6 ] ] );
             }
             break;
     }

@@ -12,9 +12,17 @@ This plugin allows to translate slugs of: posts, pages, custom post types, categ
 
 ### Do I have to configure anything?
 Enable the *Slugs* module from qTranslate options (*Settings/Languages*).
+
 If you want to translate also the base permastructs (ex. *category*, *tag*, etc), go in the *Slugs* options:
 - Set the base permastructs for **post types** and **taxonomies** (If you setup a base permastruct for *categories* or *tags* in *Settings/Permalinks*, these will be overwritten by the translated ones).
 - Save settings and that's all!
+
+### I've been using the QTS plugin, how can I find the existing slugs?
+Enable the *Slugs* module, go in the "Import" settings of qTranslate and import QTS data.
+The dry-run mode allows to test the import and see the number of rows changed before updating the database.
+
+**Attention!** Do not uninstall QTS before migrating data to qTranslate, it deletes data permanently.
+Once the migration is done, the data is not be visible in QTS anymore and the QTS plugin can be uninstalled.
 
 ### I get a 404 error, what can I do?
 In the admin go to *Settings/Permalinks* or *Settings/Languages* (qTranslate) options and save.

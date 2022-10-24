@@ -3,7 +3,7 @@ Developed by: new qTranslate community, from qTranslate-X by John Clause and qTr
 Contributors: herrvigg, johnclause, chineseleper, Vavooon, grafcom  
 Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, translation  
 Requires: 4.8  
-Tested up to: 5.8.2  
+Tested up to: 6.0.2  
 Stable tag: N/A  
 License: GPLv2 or later  
 License URI: https://www.gnu.org/licenses/gpl-2.0.html  
@@ -42,14 +42,14 @@ Yes and it's very easy! Currently you can have both qTranslate-X and qTranslate-
 
 *Disclaimer: be sure to backup your database regularly.*
 
-### Is the Block Editor (Gutenberg) supported? ###
+### Is the Block Editor (Gutenberg) supported?
 It is partially supported, with some limitations. Read carefully our [Gutenberg FAQ](https://github.com/qtranslate/qtranslate-xt/wiki/FAQ#gutenberg) before use.
 
-### Is WooCommerce, ACF, ... supported? ###
-WooCommerce, ACF and other plugins are now supported as built-in modules. Developers able to test properly are much welcome! Please send PR for bug fixes.
+### Is WooCommerce, ACF, QTS (Slugs), ... supported?
+WooCommerce, ACF, Slugs and other plugins are now supported as built-in modules. Developers able to test properly are much welcome! Please send PR for bug fixes.
 See the complete list of [available modules](https://github.com/qtranslate/qtranslate-xt/tree/master/modules) in our repo.
 
-### Is any plugin/themes supported? ###
+### Is any plugin/themes supported?
 Some major plugins are now supported with the built-in modules. Some plugins are also supported with built-in i18n configurations. For other plugins you need to provide custom integration through i18n configuration (json) and/or code (PHP/JS). A major refactoring is needed to make this easier.
 
 ### I'm new to qTranslate, where can I find detailed instructions for startup?
@@ -73,8 +73,10 @@ Note for developers:
 ## Upgrade Notice
 
 ### 3.12.0
-* New module: **Slugs** (experimental) for permalink (slug/URL) translations, integrated from [qtranslate-slug](https://github.com/not-only-code/qtranslate-slug) plugin (v1.1.18)
-* New module settings with manual activation and integrated custom settings for ACF and Slugs
+* New module: **Slugs** (experimental) for permalink (slug/URL) translations
+  * Enable module and see qTranslate import settings to migrate QTS data
+  * See [modules/slugs/README.md](https://github.com/qtranslate/qtranslate-xt/blob/master/modules/slugs/README.md) for more info
+* New module settings with manual activation for all modules and integrated custom settings for ACF and Slugs
 
 ### 3.11.0
 Major fix! Enable language switch for text widget with TinyMCE editor.  
@@ -115,7 +117,7 @@ The [legacy issues](https://github.com/qtranslate/qtranslate-xt/wiki/Known-Issue
 ## Credentials
 
 * Thank you to all people motivated to make this plugin live again!
-* Thank you to the authors of the legacy versions, first of all qTranslate-X by John Clause, qTranslate by Qian Qin and all the previous contributors.
+* Thank you to the authors of the legacy versions, qTranslate-X by John Clause, qTranslate by Qian Qin and all the previous contributors.
 
 ## Desirable Unimplemented Features
 

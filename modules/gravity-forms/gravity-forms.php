@@ -7,7 +7,7 @@
  * @link https://michel.weimerskirch.net
  */
 
-class qTranslateSupportForGravityforms {
+class QTX_Module_Gravity_Forms {
     public function __construct() {
         add_filter( 'gform_pre_render', array( $this, 'gform_pre_render' ) );
         add_filter( 'gform_pre_submission_filter', array( $this, 'gform_pre_render' ) );
@@ -156,4 +156,4 @@ class qTranslateSupportForGravityforms {
     }
 }
 
-new qTranslateSupportForGravityforms();
+new QTX_Module_Gravity_Forms();

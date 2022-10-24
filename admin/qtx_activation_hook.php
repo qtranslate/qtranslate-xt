@@ -755,10 +755,10 @@ function qtranxf_clear_debug_log() {
 
 function qtranxf_activation_hook() {
     qtranxf_clear_debug_log();
-    if ( version_compare( PHP_VERSION, '5.4' ) < 0 ) {
+    if ( version_compare( PHP_VERSION, '5.5' ) < 0 ) {
         // Deactivate ourself
         load_plugin_textdomain( 'qtranslate', false, basename( QTRANSLATE_DIR ) . '/lang' );
-        $msg = sprintf( __( 'Plugin %s requires PHP version %s at least. This server instance runs PHP version %s. A PHP version %s or higher is recommended. The plugin has not been activated.', 'qtranslate' ), qtranxf_get_plugin_link(), '5.4', PHP_VERSION, '7.4' );
+        $msg = sprintf( __( 'Plugin %s requires PHP version %s at least. This server instance runs PHP version %s. A PHP version %s or higher is recommended. The plugin has not been activated.', 'qtranslate' ), qtranxf_get_plugin_link(), '5.5', PHP_VERSION, '8.1' );
         deactivate_plugins( plugin_basename( QTRANSLATE_FILE ) );
         wp_die( $msg );
     }
@@ -787,7 +787,6 @@ function qtranxf_activation_hook() {
     // Migrate (rename/import) legacy options, temporary transitions during evolutions.
     qtranxf_rename_legacy_option( 'qtranslate_modules', QTX_OPTIONS_MODULES_STATE );
     qtranxf_import_legacy_option( 'acf_qtranslate', QTX_OPTIONS_MODULE_ACF, false );
-    qtranxf_import_legacy_option( 'qts_options', QTX_OPTIONS_MODULE_SLUGS, false );
 
     $ts                     = time();
     $next_thanks            = get_option( 'qtranslate_next_thanks' );
@@ -932,6 +931,30 @@ function qtranxf_admin_notices_gutenberg() {
 
 add_action( 'admin_notices', 'qtranxf_admin_notices_gutenberg' );
 
+function qtranxf_admin_notices_slugs_migrate() {
+    if ( qtranxf_check_admin_notice( 'slugs-migrate' ) || ! QTX_Module_Loader::is_module_active( 'slugs' ) ) {
+        return;
+    }
+    $old_value = get_option( 'qts_options' );  // Very quick check to avoid loading more code.
+    if ( ! $old_value ) {
+        return;
+    }
+    require_once( QTRANSLATE_DIR . '/modules/slugs/admin/slugs-migrate-qts.php' );
+    $msg = qtranxf_slugs_check_migrate_qts();  // More advanced checks with QTS meta.
+    if ( empty( $msg ) ) {
+        return;
+    }
+    qtranxf_admin_notice_dismiss_script();
+    echo '<div class="notice notice-warning qtranxs-notice-ajax is-dismissible" id="qtranxs-slugs-migrate"><p>';
+    $options_link = admin_url( 'options-general.php?page=qtranslate-xt#import' );
+    echo '<p>' . sprintf( __( '%s : found slugs meta that can be migrated. Go to the <a href="%s">import settings</a> to migrate.', 'qtranslate' ), qtranxf_get_plugin_link(), $options_link ) . '</p>';
+    echo '<p>' . $msg . '</p>';
+    echo '</p><p><a class="button qtranxs-notice-dismiss" href="javascript:void(0);">' . __( 'I have already done it, dismiss this message.', 'qtranslate' );
+    echo '</a></p></div>';
+}
+
+add_action( 'admin_notices', 'qtranxf_admin_notices_slugs_migrate' );
+
 function qtranxf_admin_notice_deactivate_plugin( $name, $plugin ) {
     deactivate_plugins( $plugin, true );
     $d        = dirname( $plugin );
@@ -1028,6 +1051,14 @@ function qtranxf_update_option_admin_notices( $messages, $id, $set = true ) {
     return $messages;
 }
 
+/**
+ * Update an admin notice to be set (hidden) / unset (shown).
+ *
+ * @param string $id
+ * @param bool $set true to set the message as seen (hide), false to unset (show)
+ *
+ * @return array|mixed
+ */
 function qtranxf_update_admin_notice( $id, $set ) {
     $messages = get_option( 'qtranslate_admin_notices', array() );
 

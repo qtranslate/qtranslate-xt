@@ -42,12 +42,10 @@ function qtranxf_edit_config() {
     $original_lang = &$q_config['posted']['original_lang'];
 
     // check for action
-    if ( isset( $_POST['qtranslate_reset'] ) && isset( $_POST['qtranslate_reset2'] ) ) {
+    if ( isset( $_POST['qtranslate_reset_all'] ) && isset( $_POST['qtranslate_reset_confirm'] ) ) {
         $messages[] = __( 'qTranslate has been reset.', 'qtranslate' );
     } elseif ( isset( $_POST['default_language'] ) ) {
-
         qtranxf_update_settings();
-
         // execute actions
         qtranxf_executeOnUpdate();
     }
@@ -335,7 +333,7 @@ function qtranxf_reset_config() {
         qtranxf_add_message( __( 'Admin notices have been reset. You will see all applicable notices on admin pages and may dismiss them again.', 'qtranslate' ) );
     }
 
-    if ( ! isset( $_POST['qtranslate_reset'] ) || ! isset( $_POST['qtranslate_reset2'] ) ) {
+    if ( ! isset( $_POST['qtranslate_reset_all'] ) || ! isset( $_POST['qtranslate_reset_confirm'] ) ) {
         return;
     }
 
@@ -373,7 +371,7 @@ function qtranxf_reset_config() {
     delete_option( 'qtranslate_versions' );
     delete_option( 'qtranslate_disable_header_css' );
 
-    if ( isset( $_POST['qtranslate_reset3'] ) ) {
+    if ( isset( $_POST['qtranslate_reset_terms'] ) ) {
         delete_option( 'qtranslate_term_name' );
     }
 
@@ -970,6 +968,12 @@ function qtranxf_executeOnUpdate() {
         if ( $msg ) {
             $messages[] = $msg;
         }
+    }
+
+    if ( isset( $_POST['qtranslate_import_slugs_migrate'] ) && $_POST['qtranslate_import_slugs_migrate'] ) {
+        require_once( QTRANSLATE_DIR . '/modules/slugs/admin/slugs-migrate-qts.php' );
+        $db_commit  = isset( $_POST['qtranslate_import_slugs_confirm'] ) && $_POST['qtranslate_import_slugs_confirm'];
+        $messages[] = qtranxf_slugs_migrate_qts_data( $db_commit );
     }
 }
 

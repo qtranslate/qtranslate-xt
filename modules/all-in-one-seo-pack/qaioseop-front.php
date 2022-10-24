@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 
 /*
-function qaioseop_add_filters_front() {
+function qtranxf_aioseop_add_filters_front() {
 	$use_filters = array(
 		'aiosp_title' => 20,
 		'aiosp_meta' => 20,
@@ -18,5 +18,5 @@ function qaioseop_add_filters_front() {
 		add_filter( $name, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', $priority );
 	}
 }
-qaioseop_add_filters_front();
+qtranxf_aioseop_add_filters_front();
 */

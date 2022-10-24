@@ -1,48 +1,92 @@
+### 3.12.1
+Core
+* Check host key in parsed referrer URL (#1202)
+* Filter excluded types in `qtranslate_admin_block_editor` (#1210)
+* No redirect or cookies on GraphQL requests (#1211)
+* Exclude cron from translation of all options (#1188)
+
+Modules
+* Rename module classes with `QTX_Module` prefix (#1187)
+* ACF
+  * Refactor ACF module structure (#1191)
+* Slugs
+  * Fix MySQL error in Slugs migration from plugin (#1206, #1216)
+  * Escape `_` in SQL LIKE queries for Slugs import (#1217)
+  * Replace metabox only if existing (#1209)
+  * Handle custom query var as array (#1200)
+  * Rename all `qts_` functions with `qtranxf_slugs_` prefix (#1184)
+* WooCommerce
+  * Fix unintended translations in webhooks (#1194)
+  * Hide slugs metabox on WC shop pages (#1192)
+  * Fix `$order->id` called incorrectly in order emails (#1189)
+
 ### 3.12.0
 New module: **Slugs** (experimental)
 * Add support for permalink (slug/URL) translations to qTranslate-XT (#671)
 * Integrated from [qtranslate-slug (QTS)](https://github.com/not-only-code/qtranslate-slug) plugin v1.1.18 (#1060)
+* Enable module and see qTranslate import settings to **migrate QTS data** (#1171)
+* See [modules/slugs/README.md](https://github.com/qtranslate/qtranslate-xt/blob/master/modules/slugs/README.md) for more info
 
 Core
-* Add `qtranslate_admin_block_editor` filter to disable Gutenberg support (#1112)
-* Refactor bool-array setting to `QTX_BOOLEAN_SET` (#1151)
+* Add new filter: `qtranslate_admin_block_editor` to disable Gutenberg support (#1112)
+* Fix Uninitialized string offset in getLanguageName (#1175)
 * Fix 'Headers already sent' for `wp_doing_cron` (#1114)
 * Fix regression on reset config (#1109)
 * Fix deprecated `preg_split` with PHP8.1 (#1085)
-* Check qTranslate-X plugin disabled on QT-XT activation
+* Fix missing check: qTranslate-X plugin must be disabled on QT-XT activation
+* Remove `hreflang` from `a` tag in widget (#1088)
+* Relax composer/installers version requirement (#1170)
+* Generalize double checkboxes in QTX options (#1177)
+* Refactor bool-array setting to `QTX_BOOLEAN_SET` (#1151)
+* Align translation files to current sources, complete it_IT translation (#1165)
+
+Admin
+* New module settings with manual activation for all modules (#1147, #1137, #1135, #1136)
+* Generalize custom module settings tabs (#1146)
+* Harmonize module options as `qtranslate_module_<name>` (#1158)
+* Refactor module classes and file structure (#1153)
 
 Modules
-* Admin modules
-  * Generalize manual activation (#1147, #1137, #1135, #1136)
-  * Generalize custom module settings tabs (#1146)
-  * Harmonize module options as `qtranslate_module_<name>` (#1158)
-  * Refactor module classes and file structure (#1153)
 * ACF
   * Integrate ACF settings in modules tab (#1154)
   * Simplify module init (#1139)
 * Gravity Forms
   * Fix translation of choice text in Gravity Forms (#1095)
 * Slugs
-  * separate admin functions from qts class, cleaning, refactoring (#1134, #1141)
-  * refactor language setup with internal `q_config` (#1130)
-  * refactor with new `qtranslate_convert_url` filter (#1117)
-  * refactor and fix add/edit terms slugs (#1126)
-  * improve slug admin metabox handling (#1124)
-  * rationalize get post_types/taxonomies (#1121)
-  * fix hide slug field in post quickedit (#1125)
-  * refactor install with WP API (#1122)
-  * merge qts textdomain to qtranslate, update l10n (#1120)
-  * remove nav functions and cleanup (#1118)
-  * handle deactivation, remove widget, cleanup (#1111)
-  * remove obsolete migration functions and styling (#1113)
-  * integrate Slugs settings in qtranslate (#1115, #1107)
-  * use `$post` arg in `validate_post_slug` (#1102)
-  * fix warnings and major cleanup (PHPDoc, termmeta wrappers) (#671)
-  * delete unused function raising warning in PHP8.1 (#1103)
-* WooComerce
-  * Removed unneeded action mistakenly used as a filter (#1145)
+  * New features
+    * Import QTS slugs options and meta data into QTX (#1171)
+    * Improve slugs layout with flags (#1163)
+  * Fix
+    * Filter query vars in slugs, fix 404 mismatch (#1180)
+    * Fix many PhpPStorm warnings (#1172)
+    * Fix slugs in Cyrillic due to `esc_sql()` 4.8.3 breaking change (#1156, #1157)
+    * Fix page/post conflict and utf8 chars in filter_request (#1168)
+    * Remove slug fields for WC attributes add/edit page (#1164)
+    * Fix hide slug field in post quickedit (#1125)
+    * Fix warnings and major cleanup (PHPDoc, termmeta wrappers) (#671)
+    * Delete unused function raising warning in PHP8.1 (#1103)
+  * Refactoring
+    * Remove internal QTS filter hooks (#1176)
+    * Replace slugs `qts_page_request` cache with transient (#1182)
+    * Create `qts_show_list_term_fields` for add/edit term  (#1163)
+    * Separate admin functions from qts class, cleaning, refactoring (#1134, #1141)
+    * Refactor language setup with internal `q_config` (#1130)
+    * Refactor with new `qtranslate_convert_url` filter (#1117)
+    * Refactor and fix add/edit terms slugs (#1126)
+    * Improve slug admin metabox handling (#1124)
+    * Rationalize get post_types/taxonomies (#1121)
+    * Refactor install with WP API (#1122)
+    * Merge `qts` textdomain to `qtranslate`, update l10n (#1120)
+    * Remove nav functions and cleanup (#1118)
+    * Handle deactivation, remove widget, cleanup (#1111)
+    * Remove obsolete migration functions and styling (#1113)
+    * Integrate slugs settings in qtranslate (#1115, #1107)
+    * Use `$post` arg in `validate_post_slug` (#1102)
+* WooCommerce
+  * Fix attribute edit page hidden fields (#1161)
   * Fix untranslated options in product variations (#1144)
   * Fix product attributes translations (#1143)
+  * Remove unneeded action mistakenly used as a filter (#1145)
 
 ### 3.11.4
 * Fix Yoast filter front schema webpage (#1086)

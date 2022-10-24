@@ -180,7 +180,7 @@ function qtranxf_detect_language( &$url_info ) {
 
         if ( $parse_referrer_language ) {
             $ref_info = qtranxf_parseURL( $http_referer );
-            if ( ! qtranxf_external_host( $ref_info['host'] ) ) {
+            if ( isset( $ref_info['host'] ) && ! qtranxf_external_host( $ref_info['host'] ) ) {
                 // determine $ref_info['path-base']
                 qtranxf_complete_url_info( $ref_info );
                 if ( isset( $ref_info['path-base'] ) ) {
@@ -215,8 +215,8 @@ function qtranxf_detect_language( &$url_info ) {
 
     $url_info['language'] = $lang;
 
-    // REST calls should be deterministic (stateless), no special language detection e.g. based on cookie
-    $url_info['set_cookie'] = ! wp_doing_ajax() && ! qtranxf_is_rest_request_expected();
+    // REST and GraphQL API calls should be deterministic (stateless), no special language detection e.g. based on cookie
+    $url_info['set_cookie'] = ! wp_doing_ajax() && ! qtranxf_is_rest_request_expected() && ! qtranxf_is_graphql_request_expected();
 
     /**
      * Hook for possible other methods
@@ -435,6 +435,7 @@ function qtranxf_detect_language_front( &$url_info ) {
 
     if ( ! isset( $url_info['doredirect'] )
          && ( ! qtranxf_is_rest_request_expected() ) // fallback case where language can be read from cookie with REST
+         && ( ! qtranxf_is_graphql_request_expected() )
          && ( ! $q_config['hide_default_language'] || $lang != $q_config['default_language'] )
          && ( ! qtranxf_language_neutral_path( $url_info['wp-path'] ) )
     ) {

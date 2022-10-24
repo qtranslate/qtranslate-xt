@@ -8,37 +8,34 @@ function qtranxf_wc_add_filters_front() {
     remove_filter( 'get_post_metadata', 'qtranxf_filter_postmeta', 5 );
     add_filter( 'get_post_metadata', 'qtranxf_wc_filter_postmeta', 5, 4 );
 
-    $use_filters = array(
-        'woocommerce_attribute'                             => 20,
-        'woocommerce_attribute_label'                       => 20,
-        'woocommerce_cart_item_name'                        => 20,
-        'woocommerce_cart_item_thumbnail'                   => 20,
-        'woocommerce_cart_shipping_method_full_label'       => 20,
-        'woocommerce_cart_tax_totals'                       => 20,
-        'woocommerce_email_footer_text'                     => 20,
-        'woocommerce_format_content'                        => 20,
-        'woocommerce_gateway_description'                   => 20,
-        'woocommerce_gateway_title'                         => 20,
-        'woocommerce_gateway_icon'                          => 20,
-        'woocommerce_get_privacy_policy_text'               => 20,
-        //'woocommerce_order_details_after_order_table_items' => 20, //TODO: this is an action, not a filter. Actually does not do anything. Intent also not clear. If intent is translating $purchase_note that could only be done through 'pre_kses' filter currently, to be implemented in case.
-        'woocommerce_order_item_display_meta_value'         => 20,
-        'woocommerce_order_item_name'                       => 20,
-        'woocommerce_order_get_tax_totals'                  => 20,
-        'woocommerce_order_shipping_to_display'             => 20,
-        'woocommerce_order_subtotal_to_display'             => 20,
-        'woocommerce_page_title'                            => 20,
-        'woocommerce_product_get_name'                      => 20,
-        'woocommerce_product_title'                         => 20,
-        'woocommerce_rate_label'                            => 20,
-        'woocommerce_short_description'                     => 20,
-        'woocommerce_variation_option_name'                 => 20,
-        'wp_mail_from_name'                                 => 20,
+    $front_hooks = array(
+        'woocommerce_attribute'                       => 20,
+        'woocommerce_attribute_label'                 => 20,
+        'woocommerce_cart_item_name'                  => 20,
+        'woocommerce_cart_item_thumbnail'             => 20,
+        'woocommerce_cart_shipping_method_full_label' => 20,
+        'woocommerce_cart_tax_totals'                 => 20,
+        'woocommerce_email_footer_text'               => 20,
+        'woocommerce_format_content'                  => 20,
+        'woocommerce_gateway_description'             => 20,
+        'woocommerce_gateway_title'                   => 20,
+        'woocommerce_gateway_icon'                    => 20,
+        'woocommerce_get_privacy_policy_text'         => 20,
+        'woocommerce_order_item_display_meta_value'   => 20,
+        'woocommerce_order_item_name'                 => 20,
+        'woocommerce_order_get_tax_totals'            => 20,
+        'woocommerce_order_shipping_to_display'       => 20,
+        'woocommerce_order_subtotal_to_display'       => 20,
+        'woocommerce_page_title'                      => 20,
+        'woocommerce_product_get_name'                => 20,
+        'woocommerce_product_title'                   => 20,
+        'woocommerce_rate_label'                      => 20,
+        'woocommerce_short_description'               => 20,
+        'woocommerce_variation_option_name'           => 20,
+        'wp_mail_from_name'                           => 20,
     );
 
-    foreach ( $use_filters as $name => $priority ) {
-        add_filter( $name, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', $priority );
-    }
+    qtranxf_add_filters( [ 'text' => $front_hooks ] );
 
     add_action( 'woocommerce_dropdown_variation_attribute_options_args', 'qtranxf_wc_dropdown_variation_attribute_options_args', 10, 1 );
     add_filter( 'woocommerce_paypal_args', 'qtranxf_wc_paypal_args' );
@@ -95,28 +92,8 @@ function qtranxf_wc_paypal_args( $args ) {
     return $args;
 }
 
-/**
- * Dealing with webhooks, which should always send information in Raw ML format
- */
-if ( wp_doing_cron() ) {
-
-    function qtranxf_wc_deliver_webhook_async( $webhook_id, $arg ) {
-        $page_configs = qtranxf_get_front_page_config();
-        if ( ! empty( $page_configs['']['filters'] ) ) {
-            qtranxf_remove_filters( $page_configs['']['filters'] );
-        }
-
-        remove_filter( 'get_post_metadata', 'qtranxf_filter_postmeta', 5 );
-        remove_filter( 'the_posts', 'qtranxf_postsFilter', 5 );
-        remove_action( 'pre_get_posts', 'qtranxf_pre_get_posts', 99 );
-
-        remove_filter( 'get_term', 'qtranxf_useTermLib', 0 );
-        remove_filter( 'get_terms', 'qtranxf_useTermLib', 0 );
-    }
-
-    add_action( 'woocommerce_deliver_webhook_async', 'qtranxf_wc_deliver_webhook_async', 5, 2 );
-
-} else {
+// Prevent unintended filtering when webhooks are fired (through cron for cases where $urlinfo['doing_front_end'] is true).
+if ( ! wp_doing_cron() ) {
     qtranxf_wc_add_filters_front();
 }
 
