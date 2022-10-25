@@ -96,13 +96,16 @@ function qtranxf_wp_get_nav_menu_items( $items, $menu, $args ) {
             $item_title = $item->title;
             if ( ! empty( $item_title ) ) {
                 if ( empty( $item->post_title ) && ! qtranxf_isMultilingual( $item_title ) ) {
-                    //$item does not have custom menu title, then it fetches information from post_title, but it is already translated with ShowEmpty=false, which gives either valid translation or possibly something like "(English) English Text". We need to translate again and to skip menu item if translation does not exist.
+                    // Item does not have custom menu title.
                     switch ( $item->type ) {
                         case 'post_type':
-                            $p = get_post( $item->object_id );
-                            if ( $p ) {
-                                $post_title_ml = isset( $p->post_title_ml ) ? $p->post_title_ml : $p->post_title;
-                                $item_title    = qtranxf_use_language( $language, $post_title_ml, false, true );
+                            // Fetch information from post_title, but it's already translated with ShowEmpty=false,
+                            // which gives either valid translation or possibly something like "(English) English Text".
+                            // Translate again and skip menu item if translation does not exist.
+                            $post = get_post( $item->object_id );
+                            if ( $post ) {
+                                $post_title_ml = isset( $post->post_title_ml ) ? $post->post_title_ml : $post->post_title;
+                                $item_title    = qtranxf_use_language( $language, $post_title_ml, false, ! $q_config['show_menu_alternative_language'] );
                             }
                             break;
                         case 'taxonomy':
@@ -120,7 +123,7 @@ function qtranxf_wp_get_nav_menu_items( $items, $menu, $args ) {
                             break;
                     }
                 } else {
-                    $item_title = qtranxf_use_language( $language, $item_title, false, true );
+                    $item_title = qtranxf_use_language( $language, $item_title, false, ! $q_config['show_menu_alternative_language'] );
                 }
             }
             if ( empty( $item_title ) ) {
