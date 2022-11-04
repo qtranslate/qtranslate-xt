@@ -561,17 +561,19 @@ class QTX_Admin_Settings {
                         <input type="radio" name="use_strftime"
                                value="<?php echo QTX_DATE; ?>" <?php checked( $q_config['use_strftime'], QTX_DATE ) ?>/> <?php _e( 'Use emulated date function.', 'qtranslate' ) ?>
                     </label><br/>
-                    <label>
+                    <label class="<?php echo( ( $q_config['use_strftime'] == QTX_DATE_OVERRIDE ) ? "qtranxs-deprecated-warning" : "qtranxs-deprecated" ) ?>">
                         <input type="radio" name="use_strftime"
                                value="<?php echo QTX_DATE_OVERRIDE; ?>" <?php checked( $q_config['use_strftime'], QTX_DATE_OVERRIDE ) ?>/> <?php _e( 'Use emulated date function and replace formats with the predefined formats for each language.', 'qtranslate' ) ?>
+                        <span><?php _e( 'Deprecated.', 'qtranslate' ); ?></span>
                     </label><br/>
                     <label>
                         <input type="radio" name="use_strftime"
                                value="<?php echo QTX_STRFTIME; ?>" <?php checked( $q_config['use_strftime'], QTX_STRFTIME ) ?>/> <?php _e( 'Use strftime instead of date.', 'qtranslate' ) ?>
                     </label><br/>
-                    <label>
+                    <label class="<?php echo( ( $q_config['use_strftime'] == QTX_STRFTIME_OVERRIDE ) ? "qtranxs-deprecated-warning" : "qtranxs-deprecated" ) ?>">
                         <input type="radio" name="use_strftime"
                                value="<?php echo QTX_STRFTIME_OVERRIDE; ?>" <?php checked( $q_config['use_strftime'], QTX_STRFTIME_OVERRIDE ) ?>/> <?php _e( 'Use strftime instead of date and replace formats with the predefined formats for each language.', 'qtranslate' ) ?>
+                        <span><?php _e( 'Deprecated.', 'qtranslate' ); ?></span>
                     </label>
                     <p class="qtranxs-notes"><?php _e( 'Depending on the mode selected, additional customizations of the theme may be needed.', 'qtranslate' ) ?></p>
                 </td>
@@ -782,12 +784,11 @@ class QTX_Admin_Settings {
                 </td>
             </tr>
             <tr>
-                <th scope="row"><?php _e( 'Custom Configuration', 'qtranslate' ) ?></th>
+                <th scope="row"><?php _e( 'Custom Configuration', 'qtranslate' ); ?></th>
                 <td><label for="qtranxs_json_custom_i18n_config"
-                           class="qtranxs_explanation"><?php
-                        if ( ! empty( $q_config['custom_i18n_config'] ) ) {
-                            echo( '<p class="qtranxs-deprecated">' . __( 'Deprecated', 'qtranslate' ) . '</p>' );
-                        }
+                           class="qtranxs_explanation <?php echo( empty( $q_config['custom_i18n_config'] ) ? "qtranxs-deprecated" : "qtranxs-deprecated-warning" ) ?>"><?php
+                        _e( 'Deprecated.', 'qtranslate' );
+                        echo( '<br/>' );
                         printf( __( 'Additional custom JSON-encoded configuration of %s for all admin pages. It is processed after all files from option "%s" are loaded, providing opportunity to add or to override configuration tokens as necessary.', 'qtranslate' ), 'qTranslate&#8209;XT', __( 'Configuration Files', 'qtranslate' ) ); ?></label>
                     <br/><textarea name="json_custom_i18n_config" id="qtranxs_json_custom_i18n_config"
                                    rows="4"

@@ -145,13 +145,21 @@ function qtranxf_admin_init() {
 
     if ( current_user_can( 'manage_options' ) ) {
         add_action( 'admin_notices', 'qtranxf_admin_notices_config' );
-    }
 
-    if ( current_user_can( 'manage_options' ) && qtranxf_admin_is_config_page()
-        // TODO run this only if one of the forms or actions submitted --> && !empty($_POST)
-    ) {
-        require_once( QTRANSLATE_DIR . '/admin/qtx_admin_options_update.php' );
-        qtranxf_edit_config();
+        if ( qtranxf_admin_is_config_page() ) {
+            // TODO run this only if one of the forms or actions submitted --> && !empty($_POST)
+            require_once( QTRANSLATE_DIR . '/admin/qtx_admin_options_update.php' );
+            qtranxf_edit_config();
+        }
+
+        // Check for deprecated options.
+        if ( isset( $q_config['use_strftime'] ) && ( $q_config['use_strftime'] ) == QTX_STRFTIME_OVERRIDE || $q_config['use_strftime'] == QTX_DATE_OVERRIDE ) {
+            $options_link = admin_url( 'options-general.php?page=qtranslate-xt#advanced' );
+            $options_desc = __( 'advanced settings', 'qtranslate' );
+            $warning      = sprintf( __( 'The value set for option "%s" is deprecated, it will not be supported in the future. Go to the <a href="%s">%s</a> to update it.', 'qtranslate' ),
+                __( 'Date / Time Conversion', 'qtranslate' ), $options_link, $options_desc );
+            qtranxf_add_warning( $warning );
+        }
     }
 
     $next_thanks = get_option( 'qtranslate_next_thanks' );

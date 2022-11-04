@@ -22,12 +22,12 @@ define( 'QTX_URL_DOMAIN', 3 );
 // domain per language
 define( 'QTX_URL_DOMAINS', 4 );
 
-define( 'QTX_DATE_WP', 0 );// default
-// strftime usage (backward compability)
-define( 'QTX_STRFTIME_OVERRIDE', 1 );
-define( 'QTX_DATE_OVERRIDE', 2 );
-define( 'QTX_DATE', 3 );// old default
-define( 'QTX_STRFTIME', 4 );
+// Date/time conversion -> "use_strftime" option
+define( 'QTX_DATE_WP', 0 );
+define( 'QTX_STRFTIME_OVERRIDE', 1 ); // TODO: deprecate strftime format
+define( 'QTX_DATE_OVERRIDE', 2 ); // deprecated
+define( 'QTX_DATE', 3 ); // default format at first activation - not consistent with default date/time values
+define( 'QTX_STRFTIME', 4 ); // deprecated
 
 define( 'QTX_FILTER_OPTIONS_ALL', 0 );
 define( 'QTX_FILTER_OPTIONS_LIST', 1 );
@@ -85,7 +85,7 @@ function qtranxf_set_default_options( &$ops ) {
 
     $ops['front']['int'] = array(
         'url_mode'            => QTX_URL_PATH,  // sets default url mode
-        'use_strftime'        => QTX_DATE,  // strftime usage (backward compability)
+        'use_strftime'        => QTX_DATE,  // strftime usage (backward compatibility)
         'filter_options_mode' => QTX_FILTER_OPTIONS_ALL,
         'language_name_case'  => 0  //Camel Case
     );
@@ -297,6 +297,7 @@ function qtranxf_default_not_available() {
 
 /**
  * Date Configuration
+ * @todo Deprecate strftime format
  * @since 3.3
  */
 function qtranxf_default_date_format() {
@@ -342,6 +343,7 @@ function qtranxf_default_date_format() {
 
 /**
  * Time Configuration
+ * @todo Deprecate strftime format
  * @since 3.3
  */
 function qtranxf_default_time_format() {
