@@ -95,7 +95,7 @@ class QTX_Module_Acf_Field_File extends acf_field_file {
             $field['name'] = $field_name . '[' . $language . ']';
             $field['value']       = $values[ $language ];
             $div['data-language'] = $language;
-            $div['class']         = 'acf-file-uploader acf-cf';
+            $div['class']         = 'acf-file-uploader acf-cf qtranxs-translatable';
 
             if ( $field['value'] ) {
                 $file = get_post( $field['value'] );

@@ -75,7 +75,7 @@ class QTX_Module_Acf_Field_Text extends acf_field_text {
         }
 
         foreach ( $languages as $language ) {
-            $atts['class'] = $field['class'];
+            $atts['class'] = $field['class'] . ' qtranxs-translatable';
             if ( $language === $currentLanguage ) {
                 $atts['class'] .= ' current-language';
             }

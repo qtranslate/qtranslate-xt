@@ -137,7 +137,8 @@ class QTX_Module_Acf_Field_Wysiwyg extends acf_field_wysiwyg {
                     <?php endif; ?>
                 </div>
                 <div id="wp-<?php echo $id; ?>-editor-container" class="wp-editor-container">
-                    <textarea id="<?php echo $id; ?>" class="qtx-wp-editor-area" name="<?php echo $name; ?>"
+                    <textarea id="<?php echo $id; ?>" class="qtx-wp-editor-area qtranxs-translatable"
+                              name="<?php echo $name; ?>"
                               <?php if ( $height ): ?>style="height:<?php echo $height; ?>px;"<?php endif; ?>><?php echo $value; ?></textarea>
                 </div>
             </div>

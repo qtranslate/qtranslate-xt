@@ -112,14 +112,24 @@ const register_fields = () => {
                 // select2
                 this.select2 = [];
                 this.$('.acf-post-object select').each(function () {
-                    self.select2.push(acf.newSelect2($(this), {
+                    const $newSelect2 = acf.newSelect2($(this), {
                         field: self,
                         ajax: self.get('ajax'),
                         multiple: self.get('multiple'),
                         placeholder: self.get('placeholder'),
                         allowNull: self.get('allow_null'),
                         ajaxAction: ajaxAction,
-                    }));
+                    });
+                    self.select2.push($newSelect2);
+
+                    // UI design hack to set the "qtranxs-translatable" class to the proper UI element.
+                    // It can't be set properly in PHP because the select element doesn't exist yet.
+                    // It's set to the post-object div element but it doesn't look nice as it contains the field name.
+                    // So we move it down from div to the span field displaying the selected text.
+                    const $postObjectDiv = $newSelect2.$el.parents('.acf-post-object.qtranxs-translatable');
+                    $postObjectDiv.removeClass('qtranxs-translatable');
+                    const $selectionSpan = $postObjectDiv.find('span.select2-selection');
+                    $selectionSpan.addClass('qtranxs-translatable');
                 });
             }
         },

@@ -497,7 +497,7 @@ function qtranxf_add_admin_highlight_css() {
 }
 
 function qtranxf_get_admin_highlight_css( $highlight_mode ) {
-    $css = 'input.qtranxs-translatable, textarea.qtranxs-translatable, div.qtranxs-translatable {' . PHP_EOL;
+    $css = 'input.qtranxs-translatable, textarea.qtranxs-translatable, div.qtranxs-translatable, span.qtranxs-translatable {' . PHP_EOL;
     switch ( $highlight_mode ) {
         case QTX_HIGHLIGHT_MODE_BORDER_LEFT:
             $css .= 'border-left: 3px solid #UserColor2 !important;' . PHP_EOL;

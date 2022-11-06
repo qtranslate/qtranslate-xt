@@ -104,7 +104,7 @@ class QTX_Module_Acf_Field_Image extends acf_field_image {
             $field['value'] = $values[ $language ];
 
             $div['data-language'] = $language;
-            $div['class']         = 'acf-image-uploader acf-cf';
+            $div['class']         = 'acf-image-uploader acf-cf qtranxs-translatable';
 
             if ( $field['value'] ) {
                 $url = wp_get_attachment_image_src( $field['value'], $field['preview_size'] );

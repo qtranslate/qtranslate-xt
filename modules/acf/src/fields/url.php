@@ -77,7 +77,7 @@ class QTX_Module_Acf_Field_Url extends acf_field_url {
         echo '<i class="acf-icon -globe -small"></i>';
 
         foreach ( $languages as $language ) {
-            $atts['class'] = $field['class'];
+            $atts['class'] = $field['class'] . ' qtranxs-translatable';
             if ( $language === $currentLanguage ) {
                 $atts['class'] .= ' current-language';
             }
