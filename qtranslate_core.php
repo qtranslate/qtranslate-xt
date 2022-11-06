@@ -3,8 +3,9 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-require_once( QTRANSLATE_DIR . '/modules/qtx_module_loader.php' );
 require_once( QTRANSLATE_DIR . '/qtranslate_language_blocks.php' );
+require_once( QTRANSLATE_DIR . '/qtranslate_options.php' );
+require_once( QTRANSLATE_DIR . '/modules/qtx_module_loader.php' );
 
 function qtranxf_init_language() {
     global $q_config, $pagenow;
@@ -624,6 +625,7 @@ function qtranxf_load_option_flag_location( $nm ) {
 }
 
 function qtranxf_validateBool( $var, $default_value ) {
+    _deprecated_function( __FUNCTION__, '3.13.0' );
     if ( $var === '0' ) {
         return false;
     } elseif ( $var === '1' ) {
@@ -633,117 +635,11 @@ function qtranxf_validateBool( $var, $default_value ) {
     }
 }
 
-function qtranxf_load_option( $name, $default_value = null ) {
-    global $q_config, $qtranslate_options;
-    $val = get_option( 'qtranslate_' . $name );
-    if ( $val === false ) {
-        if ( is_null( $default_value ) ) {
-            if ( ! isset( $qtranslate_options['default_value'][ $name ] ) ) {
-                return;
-            }
-            $default_value = $qtranslate_options['default_value'][ $name ];
-        }
-        if ( is_string( $default_value ) && function_exists( $default_value ) ) {
-            $val = call_user_func( $default_value );
-        } else {
-            $val = $default_value;
-        }
-    }
-    $q_config[ $name ] = $val;
-}
-
-function qtranxf_load_option_array( $name, $default_value = null ) {
-    global $q_config;
-    $vals = get_option( 'qtranslate_' . $name );
-    if ( $vals === false ) {
-        if ( is_null( $default_value ) ) {
-            return;
-        }
-        if ( is_string( $default_value ) ) {
-            if ( function_exists( $default_value ) ) {
-                $vals = call_user_func( $default_value );
-            } else {
-                $vals = preg_split( '/[\s,]+/', $default_value, -1, PREG_SPLIT_NO_EMPTY );
-            }
-        } else if ( is_array( $default_value ) ) {
-            $vals = $default_value;
-        }
-    }
-    if ( ! is_array( $vals ) ) {
-        return;
-    }
-
-    // clean up array due to previous configuration imperfections
-    foreach ( $vals as $key => $val ) {
-        if ( isset( $val ) ) {
-            continue;
-        }
-        unset( $vals[ $key ] );
-        if ( isset( $vals ) ) {
-            continue;
-        }
-        delete_option( 'qtranslate_' . $name );
-        break;
-    }
-    $q_config[ $name ] = $vals;
-}
-
-function qtranxf_load_option_bool( $name, $default_value = null ) {
-    global $q_config;
-    $val = get_option( 'qtranslate_' . $name );
-    if ( $val === false ) {
-        if ( ! is_null( $default_value ) ) {
-            $q_config[ $name ] = $default_value;
-        }
-    } else {
-        switch ( $val ) {
-            case '0':
-                $q_config[ $name ] = false;
-                break;
-            case '1':
-                $q_config[ $name ] = true;
-                break;
-            default:
-                $val = strtolower( $val );
-                switch ( $val ) {
-                    case 'n':
-                    case 'no':
-                        $q_config[ $name ] = false;
-                        break;
-                    case 'y':
-                    case 'yes':
-                        $q_config[ $name ] = true;
-                        break;
-                    default:
-                        $q_config[ $name ] = ! empty( $val );
-                        break;
-                }
-                break;
-        }
-    }
-}
-
-function qtranxf_load_option_func( $name, $opn = null, $func = null ) {
-    global $q_config;
-    if ( ! $opn ) {
-        $opn = 'qtranslate_' . $name;
-    }
-    $val = get_option( $opn );
-    if ( $val === false ) {
-        if ( ! $func ) {
-            $func = 'qtranxf_default_' . $name;
-        }
-        $val = call_user_func( $func );
-    }
-    $q_config[ $name ] = $val;
-}
-
 function qtranxf_is_permalink_structure_query() {
     $permalink_structure = get_option( 'permalink_structure' );
 
     return empty( $permalink_structure ) || strpos( $permalink_structure, '?' ) !== false || strpos( $permalink_structure, 'index.php' ) !== false;
 }
-
 
 function qtranxf_loadConfig() {
     _deprecated_function( __FUNCTION__, '3.10.0', 'qtranxf_load_config' );

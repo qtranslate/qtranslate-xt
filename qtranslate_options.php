@@ -228,3 +228,108 @@ function qtranxf_load_languages_enabled() {
         $q_config[ $name ] = $val;
     }
 }
+
+function qtranxf_load_option( $name, $default_value = null ) {
+    global $q_config, $qtranslate_options;
+    $val = get_option( 'qtranslate_' . $name );
+    if ( $val === false ) {
+        if ( is_null( $default_value ) ) {
+            if ( ! isset( $qtranslate_options['default_value'][ $name ] ) ) {
+                return;
+            }
+            $default_value = $qtranslate_options['default_value'][ $name ];
+        }
+        if ( is_string( $default_value ) && function_exists( $default_value ) ) {
+            $val = call_user_func( $default_value );
+        } else {
+            $val = $default_value;
+        }
+    }
+    $q_config[ $name ] = $val;
+}
+
+function qtranxf_load_option_array( $name, $default_value = null ) {
+    global $q_config;
+    $vals = get_option( 'qtranslate_' . $name );
+    if ( $vals === false ) {
+        if ( is_null( $default_value ) ) {
+            return;
+        }
+        if ( is_string( $default_value ) ) {
+            if ( function_exists( $default_value ) ) {
+                $vals = call_user_func( $default_value );
+            } else {
+                $vals = preg_split( '/[\s,]+/', $default_value, -1, PREG_SPLIT_NO_EMPTY );
+            }
+        } else if ( is_array( $default_value ) ) {
+            $vals = $default_value;
+        }
+    }
+    if ( ! is_array( $vals ) ) {
+        return;
+    }
+
+    // clean up array due to previous configuration imperfections
+    foreach ( $vals as $key => $val ) {
+        if ( isset( $val ) ) {
+            continue;
+        }
+        unset( $vals[ $key ] );
+        if ( isset( $vals ) ) {
+            continue;
+        }
+        delete_option( 'qtranslate_' . $name );
+        break;
+    }
+    $q_config[ $name ] = $vals;
+}
+
+function qtranxf_load_option_bool( $name, $default_value = null ) {
+    global $q_config;
+    $val = get_option( 'qtranslate_' . $name );
+    if ( $val === false ) {
+        if ( ! is_null( $default_value ) ) {
+            $q_config[ $name ] = $default_value;
+        }
+    } else {
+        switch ( $val ) {
+            case '0':
+                $q_config[ $name ] = false;
+                break;
+            case '1':
+                $q_config[ $name ] = true;
+                break;
+            default:
+                $val = strtolower( $val );
+                switch ( $val ) {
+                    case 'n':
+                    case 'no':
+                        $q_config[ $name ] = false;
+                        break;
+                    case 'y':
+                    case 'yes':
+                        $q_config[ $name ] = true;
+                        break;
+                    default:
+                        $q_config[ $name ] = ! empty( $val );
+                        break;
+                }
+                break;
+        }
+    }
+}
+
+function qtranxf_load_option_func( $name, $opn = null, $func = null ) {
+    global $q_config;
+    if ( ! $opn ) {
+        $opn = 'qtranslate_' . $name;
+    }
+    $val = get_option( $opn );
+    if ( $val === false ) {
+        if ( ! $func ) {
+            $func = 'qtranxf_default_' . $name;
+        }
+        $val = call_user_func( $func );
+    }
+    $q_config[ $name ] = $val;
+}
