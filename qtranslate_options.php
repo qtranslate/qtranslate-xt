@@ -64,7 +64,7 @@ const QTX_COOKIE_NAME_ADMIN = 'qtrans_admin_language';
 const QTX_COOKIE_SAMESITE   = 'Lax';
 
 /**
- * Extensions excluded for the translations of URL links, assumed to be language-independent.
+ * File extensions excluded for the translations of URL links, assumed to be language-independent.
  */
 const QTX_IGNORE_FILE_TYPES = 'gif,jpg,jpeg,png,svg,pdf,swf,tif,rar,zip,7z,mpg,divx,mpeg,avi,css,js,mp3,mp4,apk';
 
@@ -74,7 +74,7 @@ const QTX_IGNORE_FILE_TYPES = 'gif,jpg,jpeg,png,svg,pdf,swf,tif,rar,zip,7z,mpg,d
 const QTX_LANG_CODE_FORMAT = '[a-z]{2,3}';
 
 /**
- * Option names.
+ * Module option names.
  */
 const QTX_OPTIONS_MODULES_STATE = 'qtranslate_modules_state';
 const QTX_OPTIONS_MODULE_ACF    = 'qtranslate_module_acf';
@@ -165,93 +165,90 @@ function qtranxf_set_default_options( &$ops ) {
 }
 
 /**
- * Names for languages in the corresponding language, add more if needed
+ * Names for languages in the corresponding native language.
  * @since 3.3
  */
 function qtranxf_default_language_name() {
-    // Native Name
-    $nnm       = array();
-    $nnm['de'] = 'Deutsch';
-    $nnm['en'] = 'English';
-    $nnm['zh'] = '中文';// 简体中文
-    $nnm['ru'] = 'Русский';
-    $nnm['fi'] = 'suomi';
-    $nnm['fr'] = 'Français';
-    $nnm['nl'] = 'Nederlands';
-    $nnm['sv'] = 'Svenska';
-    $nnm['it'] = 'Italiano';
-    $nnm['ro'] = 'Română';
-    $nnm['md'] = 'Moldovenească';//June 1 2016
-    $nnm['hu'] = 'Magyar';
-    $nnm['ja'] = '日本語';
-    $nnm['es'] = 'Español';
-    $nnm['vi'] = 'Tiếng Việt';
-    $nnm['ar'] = 'العربية';
-    $nnm['pt'] = 'Português';
-    $nnm['pb'] = 'Português do Brasil';
-    $nnm['pl'] = 'Polski';
-    $nnm['gl'] = 'galego';
-    $nnm['tr'] = 'Turkish';
-    $nnm['et'] = 'Eesti';
-    $nnm['hr'] = 'Hrvatski';
-    $nnm['eu'] = 'Euskera';
-    $nnm['el'] = 'Ελληνικά';
-    $nnm['uk'] = 'Українська';
-    $nnm['ua'] = $nnm['uk'];
-    $nnm['cy'] = 'Cymraeg';
-    $nnm['ca'] = 'Català';
-    $nnm['sk'] = 'Slovenčina';
-    $nnm['lt'] = 'Lietuvių';
-    $nnm['kk'] = 'Қазақ тілі';
-    $nnm['cs'] = 'Čeština';
-
-    // $nnm['tw'] = '繁體中文';
-    return $nnm;
+    return array(
+        'en' => 'English',
+        'zh' => '中文',   // 简体中
+        'de' => 'Deutsch',
+        'ru' => 'Русский',
+        'fi' => 'suomi',
+        'fr' => 'Français',
+        'nl' => 'Nederlands',
+        'sv' => 'Svenska',
+        'it' => 'Italiano',
+        'ro' => 'Română',
+        'md' => 'Moldovenească',
+        'hu' => 'Magyar',
+        'ja' => '日本語',
+        'es' => 'Español',
+        'vi' => 'Tiếng Việt',
+        'ar' => 'العربية',
+        'pt' => 'Português',
+        'pb' => 'Português do Brasil',
+        'pl' => 'Polski',
+        'gl' => 'galego',
+        'tr' => 'Turkish',
+        'et' => 'Eesti',
+        'hr' => 'Hrvatski',
+        'eu' => 'Euskera',
+        'el' => 'Ελληνικά',
+        'uk' => 'Українська',
+        'ua' => 'Українська',  // TODO: disambiguate uk vs ua
+        'cy' => 'Cymraeg',
+        'ca' => 'Català',
+        'sk' => 'Slovenčina',
+        'lt' => 'Lietuvių',
+        'kk' => 'Қазақ тілі',
+        'cs' => 'Čeština',
+        // tw => '繁體中文',
+    );
 }
 
 /**
- * Locales for languages
+ * Locales for languages, matching WordPress locales when possible.
  * @since 3.3
  */
 function qtranxf_default_locale() {
     // see locale -a for available locales
-    $loc       = array();
-    $loc['de'] = 'de_DE';
-    $loc['en'] = 'en_US';
-    $loc['zh'] = 'zh_CN';
-    $loc['ru'] = 'ru_RU';
-    $loc['fi'] = 'fi';  // changed from fi_FI on Nov 10 2015 to match WordPress locale
-    $loc['fr'] = 'fr_FR';
-    $loc['nl'] = 'nl_NL';
-    $loc['sv'] = 'sv_SE';
-    $loc['it'] = 'it_IT';
-    $loc['ro'] = 'ro_RO';
-    $loc['md'] = 'ro_RO';
-    $loc['hu'] = 'hu_HU';
-    $loc['ja'] = 'ja';
-    $loc['es'] = 'es_ES';
-    $loc['vi'] = 'vi';
-    $loc['ar'] = 'ar';
-    $loc['pt'] = 'pt_PT';
-    $loc['pb'] = 'pt_BR';
-    $loc['pl'] = 'pl_PL';
-    $loc['gl'] = 'gl_ES';
-    $loc['tr'] = 'tr_TR';
-    $loc['et'] = 'et';  // changed from et_EE on Nov 10 2015 to match WordPress locale
-    $loc['hr'] = 'hr';  // changed from hr_HR on Nov 10 2015 to match WordPress locale
-    $loc['eu'] = 'eu';  // changed from eu_ES on Nov 10 2015 to match WordPress locale
-    $loc['el'] = 'el';  // corrected from el_GR on Nov 10 2015 http://qtranslate-x.com/support/index.php?topic=27
-    $loc['uk'] = 'uk';
-    $loc['ua'] = $loc['uk'];
-    $loc['cy'] = 'cy';  // not 'cy_GB'
-    $loc['ca'] = 'ca';
-    $loc['sk'] = 'sk_SK';
-    $loc['lt'] = 'lt_LT';
-    $loc['kk'] = 'kk';
-    $loc['cs'] = 'cs_CZ';
-
-    // $loc['tw'] = 'zh_TW';
-    return $loc;
+    return array(
+        'de' => 'de_DE',
+        'en' => 'en_US',
+        'zh' => 'zh_CN',
+        'ru' => 'ru_RU',
+        'fi' => 'fi',
+        'fr' => 'fr_FR',
+        'nl' => 'nl_NL',
+        'sv' => 'sv_SE',
+        'it' => 'it_IT',
+        'ro' => 'ro_RO',
+        'md' => 'ro_RO',
+        'hu' => 'hu_HU',
+        'ja' => 'ja',
+        'es' => 'es_ES',
+        'vi' => 'vi',
+        'ar' => 'ar',
+        'pt' => 'pt_PT',
+        'pb' => 'pt_BR',
+        'pl' => 'pl_PL',
+        'gl' => 'gl_ES',
+        'tr' => 'tr_TR',
+        'et' => 'et',
+        'hr' => 'hr',
+        'eu' => 'eu',
+        'el' => 'el',
+        'uk' => 'uk',
+        'ua' => 'uk',  // TODO: disambiguate uk vs ua
+        'cy' => 'cy',
+        'ca' => 'ca',
+        'sk' => 'sk_SK',
+        'lt' => 'lt_LT',
+        'kk' => 'kk',
+        'cs' => 'cs_CZ',
+        // 'tw' => 'zh_TW',
+    );
 }
 
 /**
@@ -271,357 +268,351 @@ function qtranxf_default_not_available() {
     // %LANG:<normal_separator>:<last_separator>% generates a list of languages separated by <normal_separator>
     // except for the last one, where <last_separator> will be used instead.
     // Not Available Message
-    $nam = array();
     // Sorry, this entry is only available in "%LANG:, :" and "%".
-    $nam['de'] = 'Leider ist der Eintrag nur auf %LANG:, : und % verfügbar.';//ok
-    $nam['en'] = 'Sorry, this entry is only available in %LANG:, : and %.';//ok
-    $nam['zh'] = '对不起，此内容只适用于%LANG:，:和%。';
-    $nam['ru'] = 'Извините, этот текст доступен только на &ldquo;%LANG:&rdquo;, &ldquo;:&rdquo; и &ldquo;%&rdquo;.';//ok
-    $nam['fi'] = 'Tämä teksti on valitettavasti saatavilla vain kielillä: %LANG:, : ja %.';//Jyrki Vanamo, Oct 20 2015, 3.4.6.5
-    $nam['fr'] = 'Désolé, cet article est seulement disponible en %LANG:, : et %.';
-    $nam['nl'] = 'Onze verontschuldigingen, dit bericht is alleen beschikbaar in het %LANG:, : en %.';
-    $nam['sv'] = 'Tyvärr är denna artikel enbart tillgänglig på %LANG:, : och %.';
-    $nam['it'] = 'Ci spiace, ma questo articolo è disponibile soltanto in %LANG:, : e %.';
-    $nam['ro'] = 'Din păcate acest articol este disponibil doar în %LANG:, : și %.';
-    $nam['md'] = 'Ne pare rău, acest articol este disponibil numai în %LANG:, : şi  %.';
-    $nam['hu'] = 'Sajnos ennek a bejegyzésnek csak %LANG:, : és % nyelvű változata van.';
-    $nam['ja'] = '申し訳ありません、このコンテンツはただ今　%LANG:、 :と %　のみです。';
-    $nam['es'] = 'Disculpa, pero esta entrada está disponible sólo en %LANG:, : y %.';
-    $nam['vi'] = 'Rất tiếc, mục này chỉ tồn tại ở %LANG:, : và %.';
-    $nam['ar'] = 'عفوا، هذه المدخلة موجودة فقط في %LANG:, : و %.';
-    $nam['pt'] = 'Desculpe, este conteúdo só está disponível em %LANG:, : e %.';
-    $nam['pb'] = 'Desculpe-nos, mas este texto está apenas disponível em %LANG:, : y %.';
-    $nam['pl'] = 'Przepraszamy, ten wpis jest dostępny tylko w języku %LANG:, : i %.';
-    $nam['gl'] = 'Sentímolo moito, ista entrada atopase unicamente en %LANG;,: e %.';
-    $nam['tr'] = 'Sorry, this entry is only available in %LANG:, : and %.';
-    $nam['et'] = 'Vabandame, see kanne on saadaval ainult %LANG : ja %.';
-    $nam['hr'] = 'Žao nam je, ne postoji prijevod na raspolaganju za ovaj proizvod još %LANG:, : i %.';
-    $nam['eu'] = 'Sentitzen dugu, baina sarrera hau %LANG-z:, : eta % bakarrik dago.';
-    $nam['el'] = 'Συγγνώμη,αυτή η εγγραφή είναι διαθέσιμη μόνο στα %LANG:, : και %.';
-    $nam['uk'] = 'Вибачте цей текст доступний тільки в &ldquo;%LANG:&rdquo;, &ldquo;: і &ldquo;%&rdquo;.';//ok
-    $nam['ua'] = $nam['uk'];
-    $nam['cy'] = 'Mae&#8217;n ddrwg gen i, mae\'r cofnod hwn dim ond ar gael mewn %LANG:, : a %.';//ok
-    $nam['ca'] = 'Ho sentim, aquesta entrada es troba disponible únicament en %LANG:, : i %.';//ok
-    $nam['sk'] = 'Ľutujeme, táto stránka je dostupná len v %LANG:, : a %.';//ok
-    $nam['lt'] = 'Atsiprašome, šis puslapis galimas tik %LANG:, : ir %.';
-    $nam['kk'] = 'Кешіріңіз, бұл кіріс тек %LANG:, : және % тілінде ғана қол жетімді.';
-    $nam['cs'] = 'Omlouváme se, tato položka je k dispozici pouze v %LANG:, : a %.';
-
-    // $nam['tw'] = '对不起，此内容只适用于%LANG:，:和%。';
-    return $nam;
+    return array(
+        'de' => 'Leider ist der Eintrag nur auf %LANG:, : und % verfügbar.',
+        'en' => 'Sorry, this entry is only available in %LANG:, : and %.',
+        'zh' => '对不起，此内容只适用于%LANG:，:和%。',
+        'ru' => 'Извините, этот текст доступен только на &ldquo;%LANG:&rdquo;, &ldquo;:&rdquo; и &ldquo;%&rdquo;.',
+        'fi' => 'Tämä teksti on valitettavasti saatavilla vain kielillä: %LANG:, : ja %.',
+        'fr' => 'Désolé, cet article est seulement disponible en %LANG:, : et %.',
+        'nl' => 'Onze verontschuldigingen, dit bericht is alleen beschikbaar in het %LANG:, : en %.',
+        'sv' => 'Tyvärr är denna artikel enbart tillgänglig på %LANG:, : och %.',
+        'it' => 'Ci spiace, ma questo articolo è disponibile soltanto in %LANG:, : e %.',
+        'ro' => 'Din păcate acest articol este disponibil doar în %LANG:, : și %.',
+        'md' => 'Ne pare rău, acest articol este disponibil numai în %LANG:, : şi  %.',
+        'hu' => 'Sajnos ennek a bejegyzésnek csak %LANG:, : és % nyelvű változata van.',
+        'ja' => '申し訳ありません、このコンテンツはただ今　%LANG:、 :と %　のみです。',
+        'es' => 'Disculpa, pero esta entrada está disponible sólo en %LANG:, : y %.',
+        'vi' => 'Rất tiếc, mục này chỉ tồn tại ở %LANG:, : và %.',
+        'ar' => 'عفوا، هذه المدخلة موجودة فقط في %LANG:, : و %.',
+        'pt' => 'Desculpe, este conteúdo só está disponível em %LANG:, : e %.',
+        'pb' => 'Desculpe-nos, mas este texto está apenas disponível em %LANG:, : y %.',
+        'pl' => 'Przepraszamy, ten wpis jest dostępny tylko w języku %LANG:, : i %.',
+        'gl' => 'Sentímolo moito, ista entrada atopase unicamente en %LANG;,: e %.',
+        'tr' => 'Sorry, this entry is only available in %LANG:, : and %.',
+        'et' => 'Vabandame, see kanne on saadaval ainult %LANG : ja %.',
+        'hr' => 'Žao nam je, ne postoji prijevod na raspolaganju za ovaj proizvod još %LANG:, : i %.',
+        'eu' => 'Sentitzen dugu, baina sarrera hau %LANG-z:, : eta % bakarrik dago.',
+        'el' => 'Συγγνώμη,αυτή η εγγραφή είναι διαθέσιμη μόνο στα %LANG:, : και %.',
+        'uk' => 'Вибачте цей текст доступний тільки в &ldquo;%LANG:&rdquo;, &ldquo;: і &ldquo;%&rdquo;.',
+        'ua' => 'Вибачте цей текст доступний тільки в &ldquo;%LANG:&rdquo;, &ldquo;: і &ldquo;%&rdquo;.',
+        // TODO: disambiguate uk vs ua
+        'cy' => 'Mae&#8217;n ddrwg gen i, mae\'r cofnod hwn dim ond ar gael mewn %LANG:, : a %.',
+        'ca' => 'Ho sentim, aquesta entrada es troba disponible únicament en %LANG:, : i %.',
+        'sk' => 'Ľutujeme, táto stránka je dostupná len v %LANG:, : a %.',
+        'lt' => 'Atsiprašome, šis puslapis galimas tik %LANG:, : ir %.',
+        'kk' => 'Кешіріңіз, бұл кіріс тек %LANG:, : және % тілінде ғана қол жетімді.',
+        'cs' => 'Omlouváme se, tato položka je k dispozici pouze v %LANG:, : a %.',
+        // 'tw' => '对不起，此内容只适用于%LANG:，:和%。',
+    );
 }
 
 /**
- * Date Configuration
+ * Default date format by language.
  * @todo Deprecate strftime format
  * @since 3.3
  */
 function qtranxf_default_date_format() {
-    $dtf       = array();
-    $dtf['en'] = '%A %B %e%q, %Y';
-    $dtf['de'] = '%A, \d\e\r %e. %B %Y';
-    $dtf['zh'] = '%x %A';
-    $dtf['ru'] = '%A %B %e%q, %Y';
-    //$dtf['fi'] = '%e.&m.%C';
-    $dtf['fi'] = '%d.%m.%Y';//Jyrki Vanamo, Oct 20 2015, 3.4.6.5
-    $dtf['fr'] = '%A %e %B %Y';
-    $dtf['nl'] = '%d/%m/%y';
-    $dtf['sv'] = '%Y-%m-%d';
-    $dtf['it'] = '%e %B %Y';
-    $dtf['ro'] = '%A, %e %B %Y';
-    $dtf['md'] = '%A, %e %B %Y';
-    $dtf['hu'] = '%Y %B %e, %A';
-    $dtf['ja'] = '%Y年%m月%d日';
-    $dtf['es'] = '%d \d\e %B \d\e %Y';
-    $dtf['vi'] = '%d/%m/%Y';
-    $dtf['ar'] = '%d/%m/%Y';
-    $dtf['pt'] = '%A, %e \d\e %B \d\e %Y';
-    $dtf['pb'] = '%d \d\e %B \d\e %Y';
-    $dtf['pl'] = '%d/%m/%y';
-    $dtf['gl'] = '%d \d\e %B \d\e %Y';
-    $dtf['tr'] = '%A %B %e%q, %Y';
-    $dtf['et'] = '%A %B %e%q, %Y';
-    $dtf['hr'] = '%d/%m/%Y';
-    $dtf['eu'] = '%Y %B %e, %A';
-    $dtf['el'] = '%d/%m/%y';
-    $dtf['uk'] = '%A %B %e%q, %Y';
-    $dtf['ua'] = $dtf['uk'];
-    $dtf['cy'] = '%A %B %e%q, %Y';  // TODO check if valid
-    $dtf['ca'] = 'j F, Y';
-    $dtf['sk'] = 'j.F Y';
-    $dtf['lt'] = '%Y.%m.%d';
-    $dtf['kk'] = '%A, \d\e\r %e. %B %Y';
-    $dtf['cs'] = '%e. %m. %Y';
-
-    // $dtf['tw'] = '%x %A';
-    return $dtf;
+    return array(
+        'en' => '%A %B %e%q, %Y',
+        'de' => '%A, \d\e\r %e. %B %Y',
+        'zh' => '%x %A',
+        'ru' => '%A %B %e%q, %Y',
+        'fi' => '%d.%m.%Y',
+        'fr' => '%A %e %B %Y',
+        'nl' => '%d/%m/%y',
+        'sv' => '%Y-%m-%d',
+        'it' => '%e %B %Y',
+        'ro' => '%A, %e %B %Y',
+        'md' => '%A, %e %B %Y',
+        'hu' => '%Y %B %e, %A',
+        'ja' => '%Y年%m月%d日',
+        'es' => '%d \d\e %B \d\e %Y',
+        'vi' => '%d/%m/%Y',
+        'ar' => '%d/%m/%Y',
+        'pt' => '%A, %e \d\e %B \d\e %Y',
+        'pb' => '%d \d\e %B \d\e %Y',
+        'pl' => '%d/%m/%y',
+        'gl' => '%d \d\e %B \d\e %Y',
+        'tr' => '%A %B %e%q, %Y',
+        'et' => '%A %B %e%q, %Y',
+        'hr' => '%d/%m/%Y',
+        'eu' => '%Y %B %e, %A',
+        'el' => '%d/%m/%y',
+        'uk' => '%A %B %e%q, %Y',
+        'ua' => '%A %B %e%q, %Y',  // TODO: disambiguate uk vs ua
+        'cy' => '%A %B %e%q, %Y',  // TODO check if valid
+        'ca' => 'j F, Y',
+        'sk' => 'j.F Y',
+        'lt' => '%Y.%m.%d',
+        'kk' => '%A, \d\e\r %e. %B %Y',
+        'cs' => '%e. %m. %Y',
+        // 'tw'  => '%x %A',
+    );
 }
 
 /**
- * Time Configuration
+ * Default time format by language.
  * @todo Deprecate strftime format
  * @since 3.3
  */
 function qtranxf_default_time_format() {
-    $tmf       = array();
-    $tmf['en'] = '%I:%M %p';
-    $tmf['de'] = '%H:%M';
-    $tmf['zh'] = '%I:%M%p';
-    $tmf['ru'] = '%H:%M';
-    $tmf['fi'] = '%H:%M';
-    $tmf['fr'] = '%H:%M';
-    $tmf['nl'] = '%H:%M';
-    $tmf['sv'] = '%H:%M';
-    $tmf['it'] = '%H:%M';
-    $tmf['ro'] = '%H:%M';
-    $tmf['md'] = '%H:%M';
-    $tmf['hu'] = '%H:%M';
-    $tmf['ja'] = '%H:%M';
-    $tmf['es'] = '%H:%M hrs.';
-    $tmf['vi'] = '%H:%M';
-    $tmf['ar'] = '%H:%M';
-    $tmf['pt'] = '%H:%M';
-    $tmf['pb'] = '%H:%M hrs.';
-    $tmf['pl'] = '%H:%M';
-    $tmf['gl'] = '%H:%M hrs.';
-    $tmf['tr'] = '%H:%M';
-    $tmf['et'] = '%H:%M';
-    $tmf['hr'] = '%H:%M';
-    $tmf['eu'] = '%H:%M';
-    $tmf['el'] = '%H:%M';
-    $tmf['uk'] = '%H:%M';
-    $tmf['ua'] = $tmf['uk'];
-    $tmf['cy'] = '%I:%M %p';    // TODO check if valid
-    $tmf['ca'] = 'G:i';
-    $tmf['sk'] = 'G:i';
-    $tmf['lt'] = '%H:%M';
-    $tmf['kk'] = '%H:%M';
-    $tmf['cs'] = '%H : %m';
-
-    //$tmf['tw'] = '%I:%M%p';
-    return $tmf;
+    return array(
+        'en' => '%I:%M %p',
+        'de' => '%H:%M',
+        'zh' => '%I:%M%p',
+        'ru' => '%H:%M',
+        'fi' => '%H:%M',
+        'fr' => '%H:%M',
+        'nl' => '%H:%M',
+        'sv' => '%H:%M',
+        'it' => '%H:%M',
+        'ro' => '%H:%M',
+        'md' => '%H:%M',
+        'hu' => '%H:%M',
+        'ja' => '%H:%M',
+        'es' => '%H:%M hrs.',
+        'vi' => '%H:%M',
+        'ar' => '%H:%M',
+        'pt' => '%H:%M',
+        'pb' => '%H:%M hrs.',
+        'pl' => '%H:%M',
+        'gl' => '%H:%M hrs.',
+        'tr' => '%H:%M',
+        'et' => '%H:%M',
+        'hr' => '%H:%M',
+        'eu' => '%H:%M',
+        'el' => '%H:%M',
+        'uk' => '%H:%M',
+        'ua' => '%H:%M',    // TODO: disambiguate uk vs ua
+        'cy' => '%I:%M %p', // TODO check if valid
+        'ca' => 'G:i',
+        'sk' => 'G:i',
+        'lt' => '%H:%M',
+        'kk' => '%H:%M',
+        'cs' => '%H : %m',
+        // 'tw' => '%I:%M%p',
+    );
 }
 
 /**
- * Flag images configuration
- * Look in /flags/ directory for a huge list of flags for usage
+ * Default flag file by language.
+ * Look in /flags/ directory for a huge list of flags for usage.
  * @since 3.3
  */
 function qtranxf_default_flag() {
-    $flg       = array();
-    $flg['en'] = 'gb.png';
-    $flg['de'] = 'de.png';
-    $flg['zh'] = 'cn.png';
-    $flg['ru'] = 'ru.png';
-    $flg['fi'] = 'fi.png';
-    $flg['fr'] = 'fr.png';
-    $flg['nl'] = 'nl.png';
-    $flg['sv'] = 'se.png';
-    $flg['it'] = 'it.png';
-    $flg['ro'] = 'ro.png';
-    $flg['md'] = 'md.png';
-    $flg['hu'] = 'hu.png';
-    $flg['ja'] = 'jp.png';
-    $flg['es'] = 'es.png';
-    $flg['vi'] = 'vn.png';
-    $flg['ar'] = 'arle.png';
-    $flg['pt'] = 'pt.png';
-    $flg['pb'] = 'br.png';
-    $flg['pl'] = 'pl.png';
-    $flg['gl'] = 'galego.png';
-    $flg['tr'] = 'tr.png';
-    $flg['et'] = 'ee.png';
-    $flg['hr'] = 'hr.png';
-    $flg['eu'] = 'eu_ES.png';
-    $flg['el'] = 'gr.png';
-    $flg['uk'] = 'ua.png';
-    $flg['ua'] = $flg['uk'];
-    $flg['cy'] = 'cy_GB.png';
-    $flg['ca'] = 'catala.png';
-    $flg['sk'] = 'sk.png';
-    $flg['lt'] = 'lt.png';
-    $flg['kk'] = 'kz.png';
-    $flg['cs'] = 'cz.png';
-
-    //$flg['tw'] = 'tw.png';
-    return $flg;
+    return array(
+        'en' => 'gb.png',
+        'de' => 'de.png',
+        'zh' => 'cn.png',
+        'ru' => 'ru.png',
+        'fi' => 'fi.png',
+        'fr' => 'fr.png',
+        'nl' => 'nl.png',
+        'sv' => 'se.png',
+        'it' => 'it.png',
+        'ro' => 'ro.png',
+        'md' => 'md.png',
+        'hu' => 'hu.png',
+        'ja' => 'jp.png',
+        'es' => 'es.png',
+        'vi' => 'vn.png',
+        'ar' => 'arle.png',
+        'pt' => 'pt.png',
+        'pb' => 'br.png',
+        'pl' => 'pl.png',
+        'gl' => 'galego.png',
+        'tr' => 'tr.png',
+        'et' => 'ee.png',
+        'hr' => 'hr.png',
+        'eu' => 'eu_ES.png',
+        'el' => 'gr.png',
+        'uk' => 'ua.png',
+        'ua' => 'ua.png',  // TODO: disambiguate uk vs ua
+        'cy' => 'cy_GB.png',
+        'ca' => 'catala.png',
+        'sk' => 'sk.png',
+        'lt' => 'lt.png',
+        'kk' => 'kz.png',
+        'cs' => 'cz.png',
+        // 'tw' = 'tw.png',
+    );
 }
 
 /**
- * Full country names as locales for Windows systems
+ * Full country names as locales for Windows systems, in English.
  * @since 3.3
  */
 function qtranxf_default_windows_locale() {
-    //English Name
-    $enm       = array();
-    $enm['aa'] = "Afar";
-    $enm['ab'] = "Abkhazian";
-    $enm['ae'] = "Avestan";
-    $enm['af'] = "Afrikaans";
-    $enm['am'] = "Amharic";
-    $enm['ar'] = "Arabic";
-    $enm['as'] = "Assamese";
-    $enm['ay'] = "Aymara";
-    $enm['az'] = "Azerbaijani";
-    $enm['ba'] = "Bashkir";
-    $enm['be'] = "Belarusian";
-    $enm['bg'] = "Bulgarian";
-    $enm['bh'] = "Bihari";
-    $enm['bi'] = "Bislama";
-    $enm['bn'] = "Bengali";
-    $enm['bo'] = "Tibetan";
-    $enm['br'] = "Breton";
-    $enm['bs'] = "Bosnian";
-    $enm['ca'] = "Catalan";
-    $enm['ce'] = "Chechen";
-    $enm['ch'] = "Chamorro";
-    $enm['co'] = "Corsican";
-    $enm['cs'] = "Czech";
-    $enm['cu'] = "Church Slavic";
-    $enm['cv'] = "Chuvash";
-    $enm['cy'] = "Welsh";
-    $enm['da'] = "Danish";
-    $enm['de'] = "German";
-    $enm['dz'] = "Dzongkha";
-    $enm['el'] = "Greek";
-    $enm['en'] = "English";
-    $enm['eo'] = "Esperanto";
-    $enm['es'] = "Spanish";
-    $enm['et'] = "Estonian";
-    $enm['eu'] = "Basque";
-    $enm['fa'] = "Persian";
-    $enm['fi'] = "Finnish";
-    $enm['fj'] = "Fijian";
-    $enm['fo'] = "Faeroese";
-    $enm['fr'] = "French";
-    $enm['fy'] = "Frisian";
-    $enm['ga'] = "Irish";
-    $enm['gd'] = "Gaelic (Scots)";
-    $enm['gl'] = "Gallegan";
-    $enm['gn'] = "Guarani";
-    $enm['gu'] = "Gujarati";
-    $enm['gv'] = "Manx";
-    $enm['ha'] = "Hausa";
-    $enm['he'] = "Hebrew";
-    $enm['hi'] = "Hindi";
-    $enm['ho'] = "Hiri Motu";
-    $enm['hr'] = "Croatian";
-    $enm['hu'] = "Hungarian";
-    $enm['hy'] = "Armenian";
-    $enm['hz'] = "Herero";
-    $enm['ia'] = "Interlingua";
-    $enm['id'] = "Indonesian";
-    $enm['ie'] = "Interlingue";
-    $enm['ik'] = "Inupiaq";
-    $enm['is'] = "Icelandic";
-    $enm['it'] = "Italian";
-    $enm['iu'] = "Inuktitut";
-    $enm['ja'] = "Japanese";
-    $enm['jw'] = "Javanese";
-    $enm['ka'] = "Georgian";
-    $enm['ki'] = "Kikuyu";
-    $enm['kj'] = "Kuanyama";
-    $enm['kk'] = "Kazakh";
-    $enm['kl'] = "Kalaallisut";
-    $enm['km'] = "Khmer";
-    $enm['kn'] = "Kannada";
-    $enm['ko'] = "Korean";
-    $enm['ks'] = "Kashmiri";
-    $enm['ku'] = "Kurdish";
-    $enm['kv'] = "Komi";
-    $enm['kw'] = "Cornish";
-    $enm['ky'] = "Kirghiz";
-    $enm['la'] = "Latin";
-    $enm['lb'] = "Letzeburgesch";
-    $enm['ln'] = "Lingala";
-    $enm['lo'] = "Lao";
-    $enm['lt'] = "Lithuanian";
-    $enm['lv'] = "Latvian";
-    $enm['mg'] = "Malagasy";
-    $enm['mh'] = "Marshall";
-    $enm['mi'] = "Maori";
-    $enm['mk'] = "Macedonian";
-    $enm['ml'] = "Malayalam";
-    $enm['mn'] = "Mongolian";
-    $enm['mo'] = "Moldavian";
-    $enm['mr'] = "Marathi";
-    $enm['ms'] = "Malay";
-    $enm['mt'] = "Maltese";
-    $enm['my'] = "Burmese";
-    $enm['na'] = "Nauru";
-    $enm['nb'] = "Norwegian Bokmal";
-    $enm['nd'] = "Ndebele, North";
-    $enm['ne'] = "Nepali";
-    $enm['ng'] = "Ndonga";
-    $enm['nl'] = "Dutch";
-    $enm['nn'] = "Norwegian Nynorsk";
-    $enm['no'] = "Norwegian";
-    $enm['nr'] = "Ndebele, South";
-    $enm['nv'] = "Navajo";
-    $enm['ny'] = "Chichewa; Nyanja";
-    $enm['oc'] = "Occitan (post 1500)";
-    $enm['om'] = "Oromo";
-    $enm['or'] = "Oriya";
-    $enm['os'] = "Ossetian; Ossetic";
-    $enm['pa'] = "Panjabi";
-    $enm['pi'] = "Pali";
-    $enm['pl'] = "Polish";
-    $enm['ps'] = "Pushto";
-    $enm['pt'] = "Portuguese";
-    $enm['pb'] = "Brazilian Portuguese";
-    $enm['qu'] = "Quechua";
-    $enm['rm'] = "Rhaeto-Romance";
-    $enm['rn'] = "Rundi";
-    $enm['ro'] = "Romanian";
-    $enm['ru'] = "Russian";
-    $enm['rw'] = "Kinyarwanda";
-    $enm['sa'] = "Sanskrit";
-    $enm['sc'] = "Sardinian";
-    $enm['sd'] = "Sindhi";
-    $enm['se'] = "Sami";
-    $enm['sg'] = "Sango";
-    $enm['si'] = "Sinhalese";
-    $enm['sk'] = "Slovak";
-    $enm['sl'] = "Slovenian";
-    $enm['sm'] = "Samoan";
-    $enm['sn'] = "Shona";
-    $enm['so'] = "Somali";
-    $enm['sq'] = "Albanian";
-    $enm['sr'] = "Serbian";
-    $enm['ss'] = "Swati";
-    $enm['st'] = "Sotho";
-    $enm['su'] = "Sundanese";
-    $enm['sv'] = "Swedish";
-    $enm['sw'] = "Swahili";
-    $enm['ta'] = "Tamil";
-    $enm['te'] = "Telugu";
-    $enm['tg'] = "Tajik";
-    $enm['th'] = "Thai";
-    $enm['ti'] = "Tigrinya";
-    $enm['tk'] = "Turkmen";
-    $enm['tl'] = "Tagalog";
-    $enm['tn'] = "Tswana";
-    $enm['to'] = "Tonga";
-    $enm['tr'] = "Turkish";
-    $enm['ts'] = "Tsonga";
-    $enm['tt'] = "Tatar";
-    $enm['tw'] = "Twi";
-    $enm['ug'] = "Uighur";
-    $enm['uk'] = "Ukrainian";
-    $enm['ua'] = $enm['uk'];
-    $enm['ur'] = "Urdu";
-    $enm['uz'] = "Uzbek";
-    $enm['vi'] = "Vietnamese";
-    $enm['vo'] = "Volapuk";
-    $enm['wo'] = "Wolof";
-    $enm['xh'] = "Xhosa";
-    $enm['yi'] = "Yiddish";
-    $enm['yo'] = "Yoruba";
-    $enm['za'] = "Zhuang";
-    $enm['zh'] = "Chinese";
-    $enm['zu'] = "Zulu";
-
-    return $enm;
+    return array(
+        'aa' => "Afar",
+        'ab' => "Abkhazian",
+        'ae' => "Avestan",
+        'af' => "Afrikaans",
+        'am' => "Amharic",
+        'ar' => "Arabic",
+        'as' => "Assamese",
+        'ay' => "Aymara",
+        'az' => "Azerbaijani",
+        'ba' => "Bashkir",
+        'be' => "Belarusian",
+        'bg' => "Bulgarian",
+        'bh' => "Bihari",
+        'bi' => "Bislama",
+        'bn' => "Bengali",
+        'bo' => "Tibetan",
+        'br' => "Breton",
+        'bs' => "Bosnian",
+        'ca' => "Catalan",
+        'ce' => "Chechen",
+        'ch' => "Chamorro",
+        'co' => "Corsican",
+        'cs' => "Czech",
+        'cu' => "Church Slavic",
+        'cv' => "Chuvash",
+        'cy' => "Welsh",
+        'da' => "Danish",
+        'de' => "German",
+        'dz' => "Dzongkha",
+        'el' => "Greek",
+        'en' => "English",
+        'eo' => "Esperanto",
+        'es' => "Spanish",
+        'et' => "Estonian",
+        'eu' => "Basque",
+        'fa' => "Persian",
+        'fi' => "Finnish",
+        'fj' => "Fijian",
+        'fo' => "Faeroese",
+        'fr' => "French",
+        'fy' => "Frisian",
+        'ga' => "Irish",
+        'gd' => "Gaelic (Scots)",
+        'gl' => "Gallegan",
+        'gn' => "Guarani",
+        'gu' => "Gujarati",
+        'gv' => "Manx",
+        'ha' => "Hausa",
+        'he' => "Hebrew",
+        'hi' => "Hindi",
+        'ho' => "Hiri Motu",
+        'hr' => "Croatian",
+        'hu' => "Hungarian",
+        'hy' => "Armenian",
+        'hz' => "Herero",
+        'ia' => "Interlingua",
+        'id' => "Indonesian",
+        'ie' => "Interlingue",
+        'ik' => "Inupiaq",
+        'is' => "Icelandic",
+        'it' => "Italian",
+        'iu' => "Inuktitut",
+        'ja' => "Japanese",
+        'jw' => "Javanese",
+        'ka' => "Georgian",
+        'ki' => "Kikuyu",
+        'kj' => "Kuanyama",
+        'kk' => "Kazakh",
+        'kl' => "Kalaallisut",
+        'km' => "Khmer",
+        'kn' => "Kannada",
+        'ko' => "Korean",
+        'ks' => "Kashmiri",
+        'ku' => "Kurdish",
+        'kv' => "Komi",
+        'kw' => "Cornish",
+        'ky' => "Kirghiz",
+        'la' => "Latin",
+        'lb' => "Letzeburgesch",
+        'ln' => "Lingala",
+        'lo' => "Lao",
+        'lt' => "Lithuanian",
+        'lv' => "Latvian",
+        'mg' => "Malagasy",
+        'mh' => "Marshall",
+        'mi' => "Maori",
+        'mk' => "Macedonian",
+        'ml' => "Malayalam",
+        'mn' => "Mongolian",
+        'mo' => "Moldavian",
+        'mr' => "Marathi",
+        'ms' => "Malay",
+        'mt' => "Maltese",
+        'my' => "Burmese",
+        'na' => "Nauru",
+        'nb' => "Norwegian Bokmal",
+        'nd' => "debele, North",
+        'ne' => "Nepali",
+        'ng' => "Ndonga",
+        'nl' => "Dutch",
+        'nn' => "Norwegian Nynorsk",
+        'no' => "Norwegian",
+        'nr' => "debele, South",
+        'nv' => "Navajo",
+        'ny' => "hichewa; Nyanja",
+        'oc' => "Occitan (ost 1500)",
+        'om' => "Oromo",
+        'or' => "Oriya",
+        'os' => "ssetian; Ossetic",
+        'pa' => "Panjabi",
+        'pi' => "Pali",
+        'pl' => "Polish",
+        'ps' => "Pushto",
+        'pt' => "Portuguese",
+        'pb' => "Brazilian Portuguese",
+        'qu' => "Quechua",
+        'rm' => "haeto-Romance",
+        'rn' => "Rundi",
+        'ro' => "Romanian",
+        'ru' => "Russian",
+        'rw' => "Kinyarwanda",
+        'sa' => "Sanskrit",
+        'sc' => "Sardinian",
+        'sd' => "Sindhi",
+        'se' => "Sami",
+        'sg' => "Sango",
+        'si' => "Sinhalese",
+        'sk' => "Slovak",
+        'sl' => "Slovenian",
+        'sm' => "Samoan",
+        'sn' => "Shona",
+        'so' => "Somali",
+        'sq' => "Albanian",
+        'sr' => "Serbian",
+        'ss' => "Swati",
+        'st' => "Sotho",
+        'su' => "Sundanese",
+        'sv' => "Swedish",
+        'sw' => "Swahili",
+        'ta' => "Tamil",
+        'te' => "Telugu",
+        'tg' => "Tajik",
+        'th' => "Thai",
+        'ti' => "Tigrinya",
+        'tk' => "Turkmen",
+        'tl' => "Tagalog",
+        'tn' => "Tswana",
+        'to' => "Tonga",
+        'tr' => "Turkish",
+        'ts' => "Tsonga",
+        'tt' => "Tatar",
+        'tw' => "Twi",
+        'ug' => "Uighur",
+        'uk' => "Ukrainian",
+        'ua' => "Ukrainian",
+        'ur' => "Urdu",
+        'uz' => "Uzbek",
+        'vi' => "Vietnamese",
+        'vo' => "Volapuk",
+        'wo' => "Wolof",
+        'xh' => "Xhosa",
+        'yi' => "Yiddish",
+        'yo' => "Yoruba",
+        'za' => "Zhuang",
+        'zh' => "Chinese",
+        'zu' => "Zulu",
+    );
 }
 
 function qtranxf_language_predefined( $lang ) {
