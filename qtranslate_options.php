@@ -3,57 +3,75 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-/* There is no need to edit anything here! */
-define( 'QTX_STRING', 1 );
-define( 'QTX_BOOLEAN', 2 );
-define( 'QTX_INTEGER', 3 );
-define( 'QTX_URL', 4 );
-define( 'QTX_LANGUAGE', 5 );
-define( 'QTX_ARRAY', 6 );
-define( 'QTX_BOOLEAN_SET', 7 );
-define( 'QTX_TEXT', 8 ); // multi-line string
+/**
+ * Option types for front/admin settings.
+ */
+const QTX_STRING      = 1;
+const QTX_BOOLEAN     = 2;
+const QTX_INTEGER     = 3;
+const QTX_URL         = 4;
+const QTX_LANGUAGE    = 5;
+const QTX_ARRAY       = 6;
+const QTX_BOOLEAN_SET = 7;
+const QTX_TEXT        = 8;  // multi-line string
 
-// query: domain.com?lang=en
-define( 'QTX_URL_QUERY', 1 );
-// pre path: domain.com/en
-define( 'QTX_URL_PATH', 2 );
-// pre domain: en.domain.com
-define( 'QTX_URL_DOMAIN', 3 );
-// domain per language
-define( 'QTX_URL_DOMAINS', 4 );
+/**
+ * URL modes defining how the languages are set for HTTP.
+ */
+const QTX_URL_QUERY   = 1;  // Query string: domain.com?lang=en
+const QTX_URL_PATH    = 2;  // Pre-path: domain.com/en (default)
+const QTX_URL_DOMAIN  = 3;  // Pre-domain: en.domain.com
+const QTX_URL_DOMAINS = 4;  // Domain per language
 
-// Date/time conversion -> "use_strftime" option
-define( 'QTX_DATE_WP', 0 );
-define( 'QTX_STRFTIME_OVERRIDE', 1 ); // TODO: deprecate strftime format
-define( 'QTX_DATE_OVERRIDE', 2 ); // deprecated
-define( 'QTX_DATE', 3 ); // default format at first activation - not consistent with default date/time values
-define( 'QTX_STRFTIME', 4 ); // deprecated
+/**
+ * Date/time conversion, see "use_strftime" option.
+ */
+const QTX_DATE_WP           = 0;  // obsolete, value reserved
+const QTX_STRFTIME_OVERRIDE = 1;  // TODO: deprecate strftime format
+const QTX_DATE_OVERRIDE     = 2;  // deprecated
+const QTX_DATE              = 3;  // default format at first activation - not consistent with default date/time values
+const QTX_STRFTIME          = 4;  // deprecated
 
-define( 'QTX_FILTER_OPTIONS_ALL', 0 );
-define( 'QTX_FILTER_OPTIONS_LIST', 1 );
-define( 'QTX_FILTER_OPTIONS_DEFAULT', 'blogname blogdescription widget_%' );
+/**
+ * Translation of WordPress / qTranslate options.
+ */
+const QTX_FILTER_OPTIONS_ALL     = 0;
+const QTX_FILTER_OPTIONS_LIST    = 1;
+const QTX_FILTER_OPTIONS_DEFAULT = 'blogname blogdescription widget_%';
 
-define( 'QTX_EX_DATE_FORMATS_DEFAULT', '\'U\'' );
+/**
+ * Editor mode to handle the ML translations.
+ */
+const QTX_EDITOR_MODE_LSB    = 0;  // Language Switching Buttons
+const QTX_EDITOR_MODE_RAW    = 1;  // ML not translated
+const QTX_EDITOR_MODE_SINGLE = 2;  // ML translated for current admin language
 
-define( 'QTX_EDITOR_MODE_LSB', 0 ); // Language Switching Buttons
-define( 'QTX_EDITOR_MODE_RAW', 1 );
-define( 'QTX_EDITOR_MODE_SINGLE', 2 );
+/**
+ * How the translatable fields are highlighted (CSS styles).
+ */
+const QTX_HIGHLIGHT_MODE_NONE        = 0;
+const QTX_HIGHLIGHT_MODE_BORDER_LEFT = 1;
+const QTX_HIGHLIGHT_MODE_BORDER      = 2;
+const QTX_HIGHLIGHT_MODE_LEFT_SHADOW = 3;
+const QTX_HIGHLIGHT_MODE_OUTLINE     = 4;
+const QTX_HIGHLIGHT_MODE_CUSTOM_CSS  = 9;
 
-define( 'QTX_HIGHLIGHT_MODE_NONE', 0 );
-define( 'QTX_HIGHLIGHT_MODE_BORDER_LEFT', 1 );
-define( 'QTX_HIGHLIGHT_MODE_BORDER', 2 );
-define( 'QTX_HIGHLIGHT_MODE_LEFT_SHADOW', 3 );
-define( 'QTX_HIGHLIGHT_MODE_OUTLINE', 4 );
-define( 'QTX_HIGHLIGHT_MODE_CUSTOM_CSS', 9 );
+/**
+ * Cookies settings.
+ */
+const QTX_COOKIE_NAME_FRONT = 'qtrans_front_language';
+const QTX_COOKIE_NAME_ADMIN = 'qtrans_admin_language';
+const QTX_COOKIE_SAMESITE   = 'Lax';
 
-define( 'QTX_COOKIE_NAME_FRONT', 'qtrans_front_language' );
-define( 'QTX_COOKIE_NAME_ADMIN', 'qtrans_admin_language' );
-define( 'QTX_COOKIE_SAMESITE', 'Lax' );
+/**
+ * Extensions excluded for the translations of URL links, assumed to be language-independent.
+ */
+const QTX_IGNORE_FILE_TYPES = 'gif,jpg,jpeg,png,svg,pdf,swf,tif,rar,zip,7z,mpg,divx,mpeg,avi,css,js,mp3,mp4,apk';
 
-define( 'QTX_IGNORE_FILE_TYPES', 'gif,jpg,jpeg,png,svg,pdf,swf,tif,rar,zip,7z,mpg,divx,mpeg,avi,css,js,mp3,mp4,apk' );
-
-// Language code format: ISO 639-1 (2 alpha), 639-2 or 639-3 (3 alpha)
-define( 'QTX_LANG_CODE_FORMAT', '[a-z]{2,3}' );
+/**
+ * Language code format: ISO 639-1 (2 alpha), 639-2 or 639-3 (3 alpha).
+ */
+const QTX_LANG_CODE_FORMAT = '[a-z]{2,3}';
 
 /**
  * Option names.
@@ -63,12 +81,12 @@ const QTX_OPTIONS_MODULE_ACF    = 'qtranslate_module_acf';
 const QTX_OPTIONS_MODULE_SLUGS  = 'qtranslate_module_slugs';
 
 /**
- * @global array Global configuration, interpreted from settings and i18n configuration loaded from JSON.
+ * @global array $q_config Global configuration, interpreted from settings and i18n configuration loaded from JSON.
  */
 global $q_config;
 
 /**
- * @global array Global options, mapped at a lower level to the settings.
+ * @global array $qtranslate_options Global options, mapped at a lower level to the settings.
  */
 global $qtranslate_options;
 
@@ -180,12 +198,12 @@ function qtranxf_default_language_name() {
     $nnm['el'] = 'Ελληνικά';
     $nnm['uk'] = 'Українська';
     $nnm['ua'] = $nnm['uk'];
-    $nnm['cy'] = 'Cymraeg'; // Oct 22 2015
-    $nnm['ca'] = 'Català';  // Nov 6 2015
-    $nnm['sk'] = 'Slovenčina';  // Nov 12 2015
-    $nnm['lt'] = 'Lietuvių';    // May 3 2016
-    $nnm['kk'] = 'Қазақ тілі';  // May 27 2016
-    $nnm['cs'] = 'Čeština'; // July 9 2016
+    $nnm['cy'] = 'Cymraeg';
+    $nnm['ca'] = 'Català';
+    $nnm['sk'] = 'Slovenčina';
+    $nnm['lt'] = 'Lietuvių';
+    $nnm['kk'] = 'Қазақ тілі';
+    $nnm['cs'] = 'Čeština';
 
     // $nnm['tw'] = '繁體中文';
     return $nnm;
@@ -242,9 +260,7 @@ function qtranxf_default_locale() {
  */
 function qtranxf_default_locale_html() {
     //HTML locales for languages are not provided by default
-    $cfg = array();
-
-    return $cfg;
+    return array();
 }
 
 /**
@@ -330,7 +346,7 @@ function qtranxf_default_date_format() {
     $dtf['el'] = '%d/%m/%y';
     $dtf['uk'] = '%A %B %e%q, %Y';
     $dtf['ua'] = $dtf['uk'];
-    $dtf['cy'] = '%A %B %e%q, %Y';//not verified
+    $dtf['cy'] = '%A %B %e%q, %Y';  // TODO check if valid
     $dtf['ca'] = 'j F, Y';
     $dtf['sk'] = 'j.F Y';
     $dtf['lt'] = '%Y.%m.%d';
@@ -375,7 +391,7 @@ function qtranxf_default_time_format() {
     $tmf['el'] = '%H:%M';
     $tmf['uk'] = '%H:%M';
     $tmf['ua'] = $tmf['uk'];
-    $tmf['cy'] = '%I:%M %p';//not verified
+    $tmf['cy'] = '%I:%M %p';    // TODO check if valid
     $tmf['ca'] = 'G:i';
     $tmf['sk'] = 'G:i';
     $tmf['lt'] = '%H:%M';
