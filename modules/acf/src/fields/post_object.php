@@ -68,9 +68,8 @@ class QTX_Module_Acf_Field_Post_Object extends acf_field_post_object {
         }
 
         foreach ( $languages as $language ) {
-            // See UI hack in JS registerFieldType PostObjectField
-            // Set the translatable class to the main div here and move it down to the selection span later.
-            $class = 'acf-post-object qtranxs-translatable';
+            // The select2 UI item is created later, so the "qtranxs-translatable" style class is set by JS code.
+            $class = 'acf-post-object';
             if ( $language === $currentLanguage ) {
                 $class .= ' current-language';
             }
