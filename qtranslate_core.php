@@ -106,7 +106,11 @@ function qtranxf_init_language() {
     // $q_config['url_info']['url'] = qtranxf_convertURL(add_query_arg('lang',$q_config['default_language'],$q_config['url_info']['url']));
 
     // qtranslate_hooks.php has to go before load_plugin_textdomain()
-    require_once( dirname( __FILE__ ) . '/qtranslate_hooks.php' );//common hooks moved here from qtranslate.php since 3.2.9.2, because they all need language already detected
+    require_once( __DIR__ . '/qtranslate_hooks.php' );  // common hooks moved here from qtranslate.php since 3.2.9.2, because they all need language already detected
+    qtranxf_add_main_filters();
+
+    require_once( __DIR__ . '/qtranslate_widget.php' );
+    add_action( 'widgets_init', 'qtranxf_widget_init' );
 
     // load plugin translations
     // since 3.2-b3 moved it here as https://codex.wordpress.org/Function_Reference/load_plugin_textdomain seem to recommend to run load_plugin_textdomain in 'plugins_loaded' action, which is this function responds to

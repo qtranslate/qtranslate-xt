@@ -8,8 +8,6 @@ require_once( QTRANSLATE_DIR . '/qtranslate_utils.php' );
 require_once( QTRANSLATE_DIR . '/qtranslate_core.php' );
 require_once( QTRANSLATE_DIR . '/inc/qtx_taxonomy.php' );
 
-require_once( QTRANSLATE_DIR . '/qtranslate_widget.php' );
-
 /**
  * Implementation of WP_Translator interface.
  * For a function documentation look up definition of WP_Translator.
