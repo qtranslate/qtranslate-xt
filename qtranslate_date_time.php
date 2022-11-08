@@ -316,6 +316,7 @@ function qtranxf_convert_to_strftime_format_using_config( $format, $default_form
             return ( ! empty( $format ) ? qtranxf_convert_date_format_to_strftime_format( $format ) : stripslashes( $default_format ) );
         case QTX_STRFTIME_OVERRIDE:
             return stripslashes( $default_format );
+        case QTX_DATE_WP:
         default:
             return '';
     }

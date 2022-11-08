@@ -28,7 +28,7 @@ const QTX_URL_DOMAINS = 4;  // Domain per language
 /**
  * Date/time conversion, see "use_strftime" option.
  */
-const QTX_DATE_WP           = 0;  // obsolete, value reserved
+const QTX_DATE_WP           = 0;  // Use WordPress options and translation, disable all date / time hooks.
 const QTX_STRFTIME_OVERRIDE = 1;  // TODO: deprecate strftime format
 const QTX_DATE_OVERRIDE     = 2;  // deprecated
 const QTX_DATE              = 3;  // default format at first activation - not consistent with default date/time values
