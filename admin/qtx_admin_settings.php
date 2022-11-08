@@ -559,6 +559,10 @@ class QTX_Admin_Settings {
                 <td>
                     <label>
                         <input type="radio" name="use_strftime"
+                               value="<?php echo QTX_DATE_WP; ?>" <?php checked( $q_config['use_strftime'], QTX_DATE_WP ) ?>/> <?php _e( 'Use WordPress options and translation. Ignore language date / time formats.', 'qtranslate' ) ?>
+                    </label><br/>
+                    <label>
+                        <input type="radio" name="use_strftime"
                                value="<?php echo QTX_DATE; ?>" <?php checked( $q_config['use_strftime'], QTX_DATE ) ?>/> <?php _e( 'Use emulated date function.', 'qtranslate' ) ?>
                     </label><br/>
                     <label class="<?php echo( ( $q_config['use_strftime'] == QTX_DATE_OVERRIDE ) ? "qtranxs-deprecated-warning" : "qtranxs-deprecated" ) ?>">

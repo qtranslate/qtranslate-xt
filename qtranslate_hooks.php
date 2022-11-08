@@ -123,6 +123,8 @@ function qtranxf_ngettext( $translated_text ) {
  * @return void
  */
 function qtranxf_add_main_filters() {
+    global $q_config;
+
     // Hooks defined differently in admin and frontend
     add_filter( 'wp_trim_words', 'qtranxf_trim_words', 0, 4 );
 
@@ -138,12 +140,14 @@ function qtranxf_add_main_filters() {
     add_filter( 'the_excerpt', 'qtranxf_useCurrentLanguageIfNotFoundShowAvailable', 0 );
     add_filter( 'the_excerpt_rss', 'qtranxf_useCurrentLanguageIfNotFoundShowAvailable', 0 );
 
-    add_filter( 'get_comment_date', 'qtranxf_dateFromCommentForCurrentLanguage', 0, 3 );
-    add_filter( 'get_comment_time', 'qtranxf_timeFromCommentForCurrentLanguage', 0, 5 );
-    add_filter( 'get_post_modified_time', 'qtranxf_timeModifiedFromPostForCurrentLanguage', 0, 3 );
-    add_filter( 'get_the_time', 'qtranxf_timeFromPostForCurrentLanguage', 0, 3 );
-    add_filter( 'get_the_date', 'qtranxf_dateFromPostForCurrentLanguage', 0, 3 );
-    add_filter( 'get_the_modified_date', 'qtranxf_dateModifiedFromPostForCurrentLanguage', 0, 2 );
+    if ( $q_config['use_strftime'] != QTX_DATE_WP ) {
+        add_filter( 'get_comment_date', 'qtranxf_dateFromCommentForCurrentLanguage', 0, 3 );
+        add_filter( 'get_comment_time', 'qtranxf_timeFromCommentForCurrentLanguage', 0, 5 );
+        add_filter( 'get_post_modified_time', 'qtranxf_timeModifiedFromPostForCurrentLanguage', 0, 3 );
+        add_filter( 'get_the_time', 'qtranxf_timeFromPostForCurrentLanguage', 0, 3 );
+        add_filter( 'get_the_date', 'qtranxf_dateFromPostForCurrentLanguage', 0, 3 );
+        add_filter( 'get_the_modified_date', 'qtranxf_dateModifiedFromPostForCurrentLanguage', 0, 2 );
+    }
 
     add_filter( 'locale', 'qtranxf_localeForCurrentLanguage', 99 );
     add_filter( 'core_version_check_locale', 'qtranxf_versionLocale' );
