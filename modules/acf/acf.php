@@ -27,5 +27,6 @@ function qtranxf_acf_init() {
     }
 }
 
-add_action( 'plugins_loaded', 'qtranxf_acf_init', 3 );
 add_action( 'after_setup_theme', 'qtranxf_acf_init', -10 );  // ACF can be delivered by a theme rather than plugin.
+
+qtranxf_acf_init();
