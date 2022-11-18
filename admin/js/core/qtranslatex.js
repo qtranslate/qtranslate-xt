@@ -207,8 +207,23 @@ const qTranslateX = function (pg) {
             }
         }
 
-        let contents;
+        const inputFieldFormId = $(inputField).attr('form');
+        const $form = (inputFieldFormId !== undefined) ? $('#' + inputFieldFormId) : $(inputField).closest('form');
+        if (!$form.length) {
+            console.error('No form found for translatable field id=', inputField.id);
+            return;
+        }
+        const form = $form[0];
+        const formContainsInput = ($(inputField).closest($form).length > 0);
+        const addElementToForm = function (newField) {
+            if (formContainsInput) {
+                inputField.parentNode.insertBefore(newField, inputField);
+            } else {
+                $form.append(newField);
+            }
+        }
 
+        let contents;
         hook.fields = {};
         if (!qTranslateConfig.RAW) {
             // Most crucial moment when untranslated content is parsed
@@ -224,22 +239,17 @@ const qTranslateX = function (pg) {
                     newName += suffixName;
                 const newField = qtranxj_ce('input', {name: newName, type: 'hidden', className: 'hidden', value: text});
                 hook.fields[lang] = newField;
-                inputField.parentNode.insertBefore(newField, inputField);
+                addElementToForm(newField);
             }
 
             // insert a hidden element in the form so that the edit language is sent to the server
-            const $form = $(inputField).closest('form');
-            if ($form.length) {
-                const $hidden = $form.find('input[name="qtranslate-edit-language"]');
-                if (!$hidden.length) {
-                    qtranxj_ce('input', {
-                        type: 'hidden',
-                        name: 'qtranslate-edit-language',
-                        value: qTranslateConfig.activeLanguage
-                    }, $form[0], true);
-                }
-            } else {
-                console.error('No form found for translatable field id=', inputField.id);
+            const $hidden = $form.find('input[name="qtranslate-edit-language"]');
+            if (!$hidden.length) {
+                qtranxj_ce('input', {
+                    type: 'hidden',
+                    name: 'qtranslate-edit-language',
+                    value: qTranslateConfig.activeLanguage
+                }, form, true);
             }
         }
 
@@ -271,8 +281,9 @@ const qTranslateX = function (pg) {
                 break;
         }
 
-        if (hook.sepfield)
-            inputField.parentNode.insertBefore(hook.sepfield, inputField);
+        if (hook.sepfield) {
+            addElementToForm(hook.sepfield);
+        }
 
         return hook;
     };
