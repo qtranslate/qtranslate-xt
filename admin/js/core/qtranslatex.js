@@ -214,14 +214,6 @@ const qTranslateX = function (pg) {
             return;
         }
         const form = $form[0];
-        const formContainsInput = ($(inputField).closest($form).length > 0);
-        const addElementToForm = function (newField) {
-            if (formContainsInput) {
-                inputField.parentNode.insertBefore(newField, inputField);
-            } else {
-                $form.append(newField);
-            }
-        }
 
         let contents;
         hook.fields = {};
@@ -237,19 +229,26 @@ const qTranslateX = function (pg) {
                 let newName = baseName + '[' + lang + ']';
                 if (suffixName)
                     newName += suffixName;
-                const newField = qtranxj_ce('input', {name: newName, type: 'hidden', className: 'hidden', value: text});
+                const newField = qtranxj_ce('input', {
+                    name: newName,
+                    type: 'hidden',
+                    className: 'hidden',
+                    value: text
+                }, inputField.parentNode, inputField);
+                if (inputFieldFormId !== undefined) {
+                    $(newField).attr('form', inputFieldFormId);
+                }
                 hook.fields[lang] = newField;
-                addElementToForm(newField);
             }
 
-            // insert a hidden element in the form so that the edit language is sent to the server
+            // The edit language allows the server to assign the fields being edited to the active language (not switched).
             const $hidden = $form.find('input[name="qtranslate-edit-language"]');
             if (!$hidden.length) {
                 qtranxj_ce('input', {
                     type: 'hidden',
                     name: 'qtranslate-edit-language',
                     value: qTranslateConfig.activeLanguage
-                }, form, true);
+                }, form, form.firstChild);
             }
         }
 
@@ -265,7 +264,7 @@ const qTranslateX = function (pg) {
                     type: 'hidden',
                     className: 'hidden',
                     value: contents[qTranslateConfig.default_language]
-                });
+                }, inputField.parentNode, inputField);
             }
                 break;
             default: {
@@ -275,14 +274,14 @@ const qTranslateX = function (pg) {
                         type: 'hidden',
                         className: 'hidden',
                         value: encode
-                    });
+                    }, inputField.parentNode, inputField);
                 }
             }
                 break;
         }
 
-        if (hook.sepfield) {
-            addElementToForm(hook.sepfield);
+        if (hook.sepfield && inputFieldFormId !== undefined) {
+            $(hook.sepfield).attr('form', inputFieldFormId);
         }
 
         return hook;
