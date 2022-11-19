@@ -26,6 +26,9 @@ $(window).on('load', function () {
 
     // Whitelist fields for translation
     function isTranslatableField(field) {
+        if (field === undefined) {
+            return false;
+        }
         if (post_type === 'acf-field-group') {
             if (field.id.match(/acf_fields-\d+-label/)) return true;
             if (field.id.match(/acf_fields-\d+-instructions/)) return true;
@@ -37,20 +40,31 @@ $(window).on('load', function () {
 
     // Setup field types
     $.each(field_types, function (field_type, selector) {
-
         // Add content hooks for existing fields
-        acf.get_fields({type: field_type}).each(function () {
-            const form = $(this).closest('form').get(0);
-            const field = $(this).find(selector).get(0);
-            if (!isTranslatableField(field)) return;
+        acf.findFields({type: field_type}).each(function () {
+            const field = $(this).find(selector)[0];
+            if (!isTranslatableField(field)) {
+                return;
+            }
+            const form = $(this).closest('form')[0];
+            if (form === undefined) {
+                console.log('qTranslate: form not found for ACF field.id=', field.id);
+                return;
+            }
             qtx.addContentHookC(field, form);
         });
 
         // Watch and add content hooks when new fields are added
-        acf.add_action('append_field/type=' + field_type, function ($el) {
-            const form = $el.closest('form').get(0);
-            const field = $el.find(selector).get(0);
-            if (!isTranslatableField(field)) return;
+        acf.addAction('append_field/type=' + field_type, function ($el) {
+            const field = $el.find(selector)[0];
+            if (!isTranslatableField(field)) {
+                return;
+            }
+            const form = $(this).closest('form')[0];
+            if (form === undefined) {
+                console.log('qTranslate: form not found for ACF field.id=', field.id);
+                return;
+            }
             qtx.addContentHookC(field, form);
 
             if ($(field).hasClass('wp-editor-area')) {
