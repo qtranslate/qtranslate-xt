@@ -10,85 +10,58 @@ $(window).on('load', function () {
         return;
     }
 
-    // Selectors for supported field types
-    const field_types = {
-        text: 'input:text',
-        textarea: 'textarea',
-        wysiwyg: '.wp-editor-area',
-    };
-
-    // Remove content hooks from ACF Fields
-    $('.acf-postbox .acf-field').find('.qtranxs-translatable').each(function () {
-        qtx.removeContentHook(this);
-    });
-
-    const post_type = $('#post_type').val();
-
-    // Whitelist fields for translation
-    function isTranslatableField(field) {
-        if (field === undefined) {
-            return false;
+    const postType = $('#post_type').val();
+    if (postType === 'acf-field-group') {
+        const isTranslatableSetting = function (element) {
+            // Numerical id for existing field, 'field_<alphanum>' for new field being added.
+            return element.id.match(/acf_fields-(\d+|field_[a-z0-9]+)-(label|instructions|default_value)/);
         }
-        if (post_type === 'acf-field-group') {
-            if (field.id.match(/acf_fields-\d+-label/)) return true;
-            if (field.id.match(/acf_fields-\d+-instructions/)) return true;
-            if (field.id.match(/acf_fields-\d+-default_value/)) return true;
-            return false;
-        }
-        return true;
-    }
-
-    // Setup field types
-    $.each(field_types, function (field_type, selector) {
-        // Add content hooks for existing fields
-        acf.findFields({type: field_type}).each(function () {
-            const field = $(this).find(selector)[0];
-            if (!isTranslatableField(field)) {
-                return;
-            }
-            const form = $(this).closest('form')[0];
-            if (form === undefined) {
-                console.log('qTranslate: form not found for ACF field.id=', field.id);
-                return;
-            }
-            qtx.addContentHookC(field, form);
+        // Click on "Edit" or "Add" opens the settings for that field.
+        acf.addAction('open_field_object', function (settingField) {
+            console.log('add', settingField);
+            // When a field is edited or created, it contains many "settingFields" to set label, name, ...
+            // They are given as .acf-field but the hooks must be set on the child elements like input and texts.
+            settingField.$el.find('input:text, textarea').each(function () {
+                const element = this;
+                if (!qtx.hasContentHook(element) && isTranslatableSetting(element)) {
+                    qtx.addContentHookC(element);
+                }
+            });
         });
 
-        // Watch and add content hooks when new fields are added
-        acf.addAction('append_field/type=' + field_type, function ($el) {
-            const field = $el.find(selector)[0];
-            if (!isTranslatableField(field)) {
-                return;
-            }
-            const form = $(this).closest('form')[0];
-            if (form === undefined) {
-                console.log('qTranslate: form not found for ACF field.id=', field.id);
-                return;
-            }
-            qtx.addContentHookC(field, form);
+        return;
+    }
 
-            if ($(field).hasClass('wp-editor-area')) {
-                // qtx.addContentHooksTinyMCE();
-
-                // We must manually trigger load event so that the
-                // loadTinyMceHooks function which calls setEditorHooks is executed
-                const loadEvent = document.createEvent('UIEvents');
-                loadEvent.initEvent('load', false, false, window);
-                window.dispatchEvent(loadEvent);
-            }
-
-            // Run at higher integer priority than the default in case the ACF handlers
-            // change the id of the underlying input
-        }, 100);
-
+    // Add hooks for translatable standard fields, defined as field type -> selector.
+    const fieldTypes = {
+        text: 'input:text',
+        textarea: 'textarea',
+        wysiwyg: '.wp-editor-area',  // TODO: fix wysiwyg #1186
+    };
+    $.each(fieldTypes, function (fieldType, selector) {
+        acf.findFields({type: fieldType}).each(function () {
+            // The hooks must be set on the child elements found by the selector, assuming a single one by field.
+            $(this).find(selector).each(function () {
+                if (!qtx.hasContentHook(this)) {
+                    qtx.addContentHookC(this);
+                }
+            });
+        });
     });
 
-    // qtx.addContentHooksTinyMCE();
+    // Add display hooks for translatable settings.
+    acf.findFields().each(function () {
+        $(this).find('.acf-label label, .acf-label p.description').each(function () {
+            if (!qtx.hasContentHook(this)) {
+                qtx.addDisplayHook(this);
+            }
+        });
+    });
 
     // Watch and remove content hooks when fields are removed
     // however ACF removes the elements from the DOM early so
     // we must hook into handler and perform updates there
-    // TODO: is RepeaterField obsolete?
+    // TODO: fix RepeaterField #882
     // const repeaterFieldRemove = acf.models ?
     //     acf.models.RepeaterField.prototype.remove :
     //     acf.fields.repeater.remove;
