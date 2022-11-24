@@ -18,7 +18,6 @@ $(window).on('load', function () {
         }
         // Click on "Edit" or "Add" opens the settings for that field.
         acf.addAction('open_field_object', function (settingField) {
-            console.log('add', settingField);
             // When a field is edited or created, it contains many "settingFields" to set label, name, ...
             // They are given as .acf-field but the hooks must be set on the child elements like input and texts.
             settingField.$el.find('input:text, textarea').each(function () {
@@ -50,8 +49,9 @@ $(window).on('load', function () {
     });
 
     // Add display hooks for translatable settings.
+    const displaySelector = '.acf-label > label, .acf-label > p.description, .acf-input > p.description';
     acf.findFields().each(function () {
-        $(this).find('.acf-label label, .acf-label p.description').each(function () {
+        $(this).find(displaySelector).each(function () {
             if (!qtx.hasContentHook(this)) {
                 qtx.addDisplayHook(this);
             }
