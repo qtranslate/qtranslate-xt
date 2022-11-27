@@ -23,7 +23,7 @@ $(window).on('load', function () {
             settingField.$el.find('input:text, textarea').each(function () {
                 const element = this;
                 if (!qtx.hasContentHook(element) && isTranslatableSetting(element)) {
-                    qtx.addContentHookC(element);
+                    qtx.addContentHookB(element);
                 }
             });
         });
@@ -41,7 +41,7 @@ $(window).on('load', function () {
             // The hooks must be set on the child elements found by the selector, assuming a single one by field.
             $(this).find(selector).each(function () {
                 if (!qtx.hasContentHook(this)) {
-                    qtx.addContentHookC(this);
+                    qtx.addContentHookB(this);
                 }
             });
         });
