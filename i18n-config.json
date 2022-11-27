@@ -24,7 +24,7 @@
               "encode": "display"
             },
             "wp-editor-area": {
-              "jquery": ".wp-editor-area"
+              "jquery": ".wp-editor-area:not([id^=acf-editor])"
             },
             "gallery-caption": {
               "jquery": ".gallery-caption",

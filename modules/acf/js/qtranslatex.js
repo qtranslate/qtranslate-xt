@@ -34,8 +34,7 @@ $(window).on('load', function () {
     // Add hooks for translatable standard fields, defined as field type -> selector.
     const fieldTypes = {
         text: 'input:text',
-        textarea: 'textarea',
-        wysiwyg: '.wp-editor-area',  // TODO: fix wysiwyg #1186
+        textarea: 'textarea', // only regular textarea, not wysiwyg editors (.wp-editor-area).
     };
     $.each(fieldTypes, function (fieldType, selector) {
         acf.findFields({type: fieldType}).each(function () {
@@ -47,6 +46,26 @@ $(window).on('load', function () {
             });
         });
     });
+
+    // The wysiwyg editor must be handled later than the usual sequence, because ACF are destroying some HTML fields:
+    // See https://github.com/AdvancedCustomFields/acf/issues/767
+    // If the usual content hooks are created before, the references point to HTML objects becoming detached from the doc.
+    acf.addFilter('wysiwyg_tinymce_settings', function (mceInit, id, field) {
+        // In this filter the elements with new ID have been created, so we can finally create the content hooks.
+        const newFieldTextArea = field.$input()[0];
+        qtx.addContentHookB(newFieldTextArea);
+        // Link the init CB for the visual mode (HTML -> tinymce).
+        // Note: wysiwyg_tinymce_init event is not triggered if the Visual Mode is selected later.
+        const origInitCB = mceInit.init_instance_callback;
+        mceInit.init_instance_callback = function (editor) {
+            qtx.attachEditorHook(editor);
+            if (origInitCB !== undefined) {
+                origInitCB();
+            }
+        }
+        return mceInit;
+    });
+
 
     // Add display hooks for translatable settings.
     const displaySelector = '.acf-label > label, .acf-label > p.description, .acf-input > p.description';
