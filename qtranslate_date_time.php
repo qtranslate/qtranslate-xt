@@ -465,7 +465,6 @@ function qtranxf_strftime( $format, $date, $default = '', $before = '', $after =
 
 /**
  * [Legacy] Generalized formatting of a date, applying qTranslate 'use_strftime' config.
- * Requires `IntlDateFormatter` in most cases.
  *
  * @param string $format
  * @param string $mysql_time date string in MySQL format
@@ -473,7 +472,7 @@ function qtranxf_strftime( $format, $date, $default = '', $before = '', $after =
  * @param string $before Deprecated. Not used, will be removed in a future version.
  * @param string $after Deprecated. Not used, will be removed in a future version.
  *
- * @return string date/time if the format is valid and `IntlDateFormatter` is found, default value otherwise.
+ * @return string date/time if the format is valid, default value otherwise.
  */
 function qtranxf_format_date( $format, $mysql_time, $default_value, $before = '', $after = '' ) {
     if ( ! empty( $before ) || ! empty( $after ) ) {
@@ -482,9 +481,6 @@ function qtranxf_format_date( $format, $mysql_time, $default_value, $before = ''
     $timestamp = mysql2date( 'U', $mysql_time );
     if ( $format == 'U' ) {
         return $timestamp;
-    }
-    if ( ! class_exists( 'IntlDateFormatter' ) ) {
-        return $default_value;
     }
     $language_format = qtranxf_get_language_date_or_time_format( 'date_format' );
     // TODO: abandon strftime format in qTranslate.
@@ -501,7 +497,7 @@ function qtranxf_format_date( $format, $mysql_time, $default_value, $before = ''
  * @param string $before Deprecated. Not used, will be removed in a future version.
  * @param string $after Deprecated. Not used, will be removed in a future version.
  *
- * @return string
+ * @return string date/time if the format is valid, default value otherwise.
  */
 function qtranxf_format_time( $format, $mysql_time, $default_value, $before = '', $after = '' ) {
     if ( ! empty( $before ) || ! empty( $after ) ) {
@@ -585,4 +581,22 @@ function qtranxf_timeFromCommentForCurrentLanguage( $old_date, $format = '', $gm
     $comment_date = $gmt ? $comment->comment_date_gmt : $comment->comment_date;
 
     return qtranxf_format_time( $format, $comment_date, $old_date );
+}
+
+/**
+ * Add date/time filters if the configuration allows it.
+ *
+ * @return void
+ */
+function qtranxf_add_date_time_filters() {
+    global $q_config;
+
+    if ( $q_config['use_strftime'] != QTX_DATE_WP && class_exists( 'IntlDateFormatter' ) ) {
+        add_filter( 'get_comment_date', 'qtranxf_dateFromCommentForCurrentLanguage', 0, 3 );
+        add_filter( 'get_comment_time', 'qtranxf_timeFromCommentForCurrentLanguage', 0, 5 );
+        add_filter( 'get_post_modified_time', 'qtranxf_timeModifiedFromPostForCurrentLanguage', 0, 3 );
+        add_filter( 'get_the_time', 'qtranxf_timeFromPostForCurrentLanguage', 0, 3 );
+        add_filter( 'get_the_date', 'qtranxf_dateFromPostForCurrentLanguage', 0, 3 );
+        add_filter( 'get_the_modified_date', 'qtranxf_dateModifiedFromPostForCurrentLanguage', 0, 2 );
+    }
 }
