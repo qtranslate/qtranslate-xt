@@ -152,13 +152,20 @@ function qtranxf_admin_init() {
             qtranxf_edit_config();
         }
 
-        // Check for deprecated options.
-        if ( isset( $q_config['use_strftime'] ) && ( $q_config['use_strftime'] ) == QTX_STRFTIME_OVERRIDE || $q_config['use_strftime'] == QTX_DATE_OVERRIDE ) {
-            $options_link = admin_url( 'options-general.php?page=qtranslate-xt#advanced' );
-            $options_desc = __( 'advanced settings', 'qtranslate' );
-            $warning      = sprintf( __( 'The value set for option "%s" is deprecated, it will not be supported in the future. Go to the <a href="%s">%s</a> to update it.', 'qtranslate' ),
-                __( 'Date / Time Conversion', 'qtranslate' ), $options_link, $options_desc );
-            qtranxf_add_warning( $warning );
+        // Check for deprecated and invalid options.
+        if ( isset( $q_config['use_strftime'] ) ) {
+            if ( $q_config['use_strftime'] == QTX_STRFTIME_OVERRIDE || $q_config['use_strftime'] == QTX_DATE_OVERRIDE ) {
+                $warning = sprintf( __( 'The value set for option "%s" is deprecated, it will not be supported in the future. Go to the <a href="%s">%s</a> to update it.', 'qtranslate' ),
+                    __( 'Date / Time Conversion', 'qtranslate' ), admin_url( 'options-general.php?page=qtranslate-xt#advanced' ), __( 'advanced settings', 'qtranslate' ) );
+                qtranxf_add_warning( $warning );
+            }
+            if ( $q_config['use_strftime'] != QTX_DATE_WP && ! class_exists( 'IntlDateFormatter' ) ) {
+                $warning = sprintf( __( 'The value set for option "%s" cannot be used.', 'qtranslate' ), __( 'Date / Time Conversion', 'qtranslate' ) ) . ' ';
+                $warning .= sprintf( __( 'Class not found: <a href="%s">%s</a> likely due to missing PHP extension: <a href="%s">%s</a>.', 'qtranslate' ),
+                    'https://www.php.net/manual/en/class.intldateformatter.php', '`IntlDateFormatter`',
+                    'https://www.php.net/manual/en/intl.setup.php', '`Intl`' );
+                qtranxf_add_error( $warning );
+            }
         }
     }
 

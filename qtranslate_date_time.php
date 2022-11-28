@@ -465,6 +465,7 @@ function qtranxf_strftime( $format, $date, $default = '', $before = '', $after =
 
 /**
  * [Legacy] Generalized formatting of a date, applying qTranslate 'use_strftime' config.
+ * Requires `IntlDateFormatter` in most cases.
  *
  * @param string $format
  * @param string $mysql_time date string in MySQL format
@@ -472,7 +473,7 @@ function qtranxf_strftime( $format, $date, $default = '', $before = '', $after =
  * @param string $before Deprecated. Not used, will be removed in a future version.
  * @param string $after Deprecated. Not used, will be removed in a future version.
  *
- * @return string
+ * @return string date/time if the format is valid and `IntlDateFormatter` is found, default value otherwise.
  */
 function qtranxf_format_date( $format, $mysql_time, $default_value, $before = '', $after = '' ) {
     if ( ! empty( $before ) || ! empty( $after ) ) {
@@ -481,6 +482,9 @@ function qtranxf_format_date( $format, $mysql_time, $default_value, $before = ''
     $timestamp = mysql2date( 'U', $mysql_time );
     if ( $format == 'U' ) {
         return $timestamp;
+    }
+    if ( ! class_exists( 'IntlDateFormatter' ) ) {
+        return $default_value;
     }
     $language_format = qtranxf_get_language_date_or_time_format( 'date_format' );
     // TODO: abandon strftime format in qTranslate.
