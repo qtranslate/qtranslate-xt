@@ -32,7 +32,7 @@ class QTX_Module_Acf_Field_Image extends acf_field_image {
         $this->category = "qTranslate-XT";
         $this->defaults = array(
             'return_format' => 'array',
-            'preview_size'  => 'thumbnail',
+            'preview_size'  => 'medium',
             'library'       => 'all',
             'min_width'     => 0,
             'min_height'    => 0,
@@ -69,23 +69,25 @@ class QTX_Module_Acf_Field_Image extends acf_field_image {
         $values          = $this->register->decode_language_values( $field['value'] );
         $currentLanguage = qtranxf_getLanguage();
 
+        $field_name = $field['name'];
+
         $uploader = acf_get_setting( 'uploader' );
-        if ( $uploader == 'wp' ) {
+        if ( $uploader === 'wp' ) {
             acf_enqueue_uploader();
         }
 
-        $url  = '';
-        $alt  = '';
-        $size = acf_get_image_size( $field['preview_size'] );
-
-        $field_name = $field['name'];
-
-        $div                = array(
-            'class'             => 'acf-image-uploader acf-cf',
+        $default_value     = '';
+        $default_div_attrs = array(
+            'class'             => 'acf-image-uploader qtranxs-translatable',
             'data-preview_size' => $field['preview_size'],
             'data-library'      => $field['library'],
             'data-mime_types'   => $field['mime_types'],
-            'data-uploader'     => $uploader
+            'data-uploader'     => $uploader,
+        );
+        $default_img_attrs = array(
+            'src'       => '',
+            'alt'       => '',
+            'data-name' => 'image',
         );
 
         echo '<div class="multi-language-field multi-language-field-image">';
@@ -99,63 +101,71 @@ class QTX_Module_Acf_Field_Image extends acf_field_image {
         }
 
         foreach ( $languages as $language ):
+            $field['name']              = $field_name . '[' . $language . ']';
+            $field['value']             = $values[ $language ];
+            $value                      = $default_value;
+            $div_attrs                  = $default_div_attrs;
+            $img_attrs                  = $default_img_attrs;
+            $div_attrs['data-language'] = $language;
 
-            $field['name'] = $field_name . '[' . $language . ']';
-            $field['value'] = $values[ $language ];
-
-            $div['data-language'] = $language;
-            $div['class']         = 'acf-image-uploader acf-cf qtranxs-translatable';
-
-            if ( $field['value'] ) {
-                $url = wp_get_attachment_image_src( $field['value'], $field['preview_size'] );
-                $alt = get_post_meta( $field['value'], '_wp_attachment_image_alt', true );
-                // url exists
-                if ( $url ) {
-                    // TODO clarify this
-                    $url = $url[0];
-                }
-                if ( $url ) {
-                    $div['class'] .= ' has-value';
+            if ( $field['value'] && is_numeric( $field['value'] ) ) {
+                $image = wp_get_attachment_image_src( $field['value'], $field['preview_size'] );
+                if ( $image ) {
+                    $value              = $field['value'];
+                    $img_attrs['src']   = $image[0];
+                    $img_attrs['alt']   = get_post_meta( $field['value'], '_wp_attachment_image_alt', true );
+                    $div_attrs['class'] .= ' has-value';
                 }
             }
 
+            // Add "preview size" max width and height style.
+            // Apply max-width to wrap, and max-height to img for max compatibility with field widths.
+            $size               = acf_get_image_size( $field['preview_size'] );
+            $size_w             = $size['width'] ? $size['width'] . 'px' : '100%';
+            $size_h             = $size['height'] ? $size['height'] . 'px' : '100%';
+            $img_attrs['style'] = sprintf( 'max-height: %s;', $size_h );
+
             if ( $language === $currentLanguage ) {
-                $div['class'] .= ' current-language';
+                $div_attrs['class'] .= ' current-language';
             }
 
             ?>
-            <div <?php echo acf_esc_attrs( $div ); ?>>
-                <?php acf_hidden_input( array( 'name' => $field['name'], 'value' => $field['value'] ) ); ?>
-                <div class="show-if-value image-wrap"
-                     <?php if ( $size['width'] ): ?>style="<?php echo esc_attr( 'max-width: ' . $size['width'] . 'px' ); ?>"<?php endif; ?>>
-                    <img data-name="image" src="<?php echo esc_url( $url ); ?>" alt="<?php echo esc_attr( $alt ); ?>"/>
+            <div <?php echo acf_esc_attrs( $div_attrs ); ?>>
+                <?php
+                acf_hidden_input(
+                    array(
+                        'name'  => $field['name'],
+                        'value' => $value,
+                    )
+                );
+                ?>
+                <div class="show-if-value image-wrap" style="max-width: <?php echo esc_attr( $size_w ); ?>">
+                    <img <?php echo acf_esc_attrs( $img_attrs ); ?> />
                     <div class="acf-actions -hover">
-                        <?php
-                        if ( $uploader != 'basic' ):
-                            ?><a class="acf-icon -pencil dark" data-name="edit" href="#"
-                                 title="<?php _e( 'Edit', 'acf' ); ?>"></a><?php
-                        endif;
-                        ?><a class="acf-icon -cancel dark" data-name="remove" href="#"
-                             title="<?php _e( 'Remove', 'acf' ); ?>"></a>
+                        <?php if ( $uploader !== 'basic' ) : ?>
+                            <a class="acf-icon -pencil dark" data-name="edit" href="#" title="<?php _e( 'Edit', 'acf' ); ?>"></a>
+                        <?php endif; ?>
+                        <a class="acf-icon -cancel dark" data-name="remove" href="#" title="<?php _e( 'Remove', 'acf' ); ?>"></a>
                     </div>
                 </div>
                 <div class="hide-if-value">
-                    <?php if ( $uploader == 'basic' ): ?>
-
-                        <?php if ( $field['value'] && ! is_numeric( $field['value'] ) ): ?>
+                    <?php if ( $uploader === 'basic' ) : ?>
+                        <?php if ( $field['value'] && ! is_numeric( $field['value'] ) ) : ?>
                             <div class="acf-error-message"><p><?php echo acf_esc_html( $field['value'] ); ?></p></div>
                         <?php endif; ?>
-
                         <label class="acf-basic-uploader">
-                            <?php acf_file_input( array( 'name' => $field['name'], 'id' => $field['id'] ) ); ?>
+                            <?php
+                            acf_file_input(
+                                array(
+                                    'name' => $field['name'],
+                                    'id'   => $field['id'],
+                                    'key'  => $field['key'],
+                                )
+                            );
+                            ?>
                         </label>
-
-                    <?php else: ?>
-
-                        <p><?php _e( 'No image selected', 'acf' ); ?> <a data-name="add" class="acf-button button"
-                                                                         href="#"><?php _e( 'Add Image', 'acf' ); ?></a>
-                        </p>
-
+                    <?php else : ?>
+                        <p><?php _e( 'No image selected', 'acf' ); ?> <a data-name="add" class="acf-button button" href="#"><?php _e( 'Add Image', 'acf' ); ?></a></p>
                     <?php endif; ?>
                 </div>
             </div>
