@@ -170,7 +170,7 @@ function qtranxf_wpseo_add_filters_front() {
         global $q_config;
 
         //$data['@id'] = qtranxf_convertURL($data['@id'], $lang); //Not sure is it required to filter or not???
-        if ( $data['image']['@id'] ) {
+        if ( isset( $data['image']['@id'] ) ) {
             $data['image']['@id'] = qtranxf_convertURL( $data['image']['@id'], $q_config['language'] );
         }
 
