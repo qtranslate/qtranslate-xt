@@ -128,9 +128,9 @@ function qtranxf_init_language() {
     }
     apply_filters( 'wp_translator', null );//create QTX_Translator object
 
-    qtranxf_load_option_qtrans_compatibility();
-
     QTX_Module_Loader::load_active_modules();
+
+    qtranxf_load_option_qtrans_compatibility();
 
     /**
      * allow other plugins and modules to initialize whatever they need for language
