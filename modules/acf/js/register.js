@@ -151,10 +151,10 @@ const register_fields = () => {
 
     acf.registerFieldType(acf.models.WysiwygField.extend({
         type: 'qtranslate_wysiwyg',
-
         initializeEditor: function () {
             const self = this;
             this.$('.acf-editor-wrap').each(function () {
+
                 const $wrap = $(this);
                 const $textarea = $wrap.find('textarea');
                 const args = {
@@ -185,6 +185,20 @@ const register_fields = () => {
             });
         }
     }));
+    // The 'qtranslate_wysiwyg' field contains an editor wrapper for each language, already translated in each of those.
+    // No hooks should be set, but we update tinymce CSS to show it's translatable. For textarea html it's already set.
+    acf.addFilter('wysiwyg_tinymce_settings', function (mceInit, id, field) {
+        if (field.type === 'qtranslate_wysiwyg') {
+            const initCB = mceInit.init_instance_callback;
+            mceInit.init_instance_callback = function (editor) {
+                if (initCB !== undefined) {
+                    initCB();
+                }
+                editor.getContentAreaContainer().classList.add('qtranxs-translatable');
+            };
+        }
+        return mceInit;
+    });
 };
 
 register_fields();
