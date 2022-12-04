@@ -3,15 +3,12 @@ const $ = jQuery;
 const register_fields = () => {
     acf.registerFieldType(acf.models.FileField.extend({
         type: 'qtranslate_file',
-
         $control: function () {
             return this.$('.acf-file-uploader.current-language');
         },
-
         $input: function () {
             return this.$('.acf-file-uploader.current-language input[type="hidden"]');
         },
-
         render: function (attachment) {
 
             // vars
@@ -47,15 +44,12 @@ const register_fields = () => {
 
     acf.registerFieldType(acf.models.ImageField.extend({
         type: 'qtranslate_image',
-
         $control: function () {
             return this.$('.acf-image-uploader.current-language');
         },
-
         $input: function () {
             return this.$('.acf-image-uploader.current-language input[type="hidden"]');
         },
-
         render: function (attachment) {
 
             // vars
@@ -85,11 +79,12 @@ const register_fields = () => {
 
     acf.registerFieldType(acf.models.PostObjectField.extend({
         type: 'qtranslate_post_object',
-
+        $control: function () {
+            return this.$('.acf-post-object.current-language');
+        },
         $input: function () {
             return this.$('.acf-post-object.current-language select');
         },
-
         initialize: function () {
             const self = this;
 
@@ -138,11 +133,9 @@ const register_fields = () => {
 
     acf.registerFieldType(acf.models.UrlField.extend({
         type: 'qtranslate_url',
-
         $control: function () {
             return this.$('.acf-input-wrap.current-language');
         },
-
         $input: function () {
             return this.$('.acf-input-wrap.current-language input[type="url"]');
         }
@@ -151,6 +144,12 @@ const register_fields = () => {
 
     acf.registerFieldType(acf.models.WysiwygField.extend({
         type: 'qtranslate_wysiwyg',
+        $control: function () {
+            return this.$('.acf-editor-wrap.current-language');
+        },
+        $input: function () {
+            return this.$('.acf-editor-wrap.current-language textarea');
+        },
         initializeEditor: function () {
             const self = this;
             this.$('.acf-editor-wrap').each(function () {
