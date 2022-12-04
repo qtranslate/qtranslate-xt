@@ -51,21 +51,22 @@ $(window).on('load', function () {
     // See https://github.com/AdvancedCustomFields/acf/issues/767
     // If the usual content hooks are created before, the references point to HTML objects becoming detached from the doc.
     acf.addFilter('wysiwyg_tinymce_settings', function (mceInit, id, field) {
-        // In this filter the elements with new ID have been created, so we can finally create the content hooks.
-        const newFieldTextArea = field.$input()[0];
-        qtx.addContentHookB(newFieldTextArea);
-        // Link the init CB for the visual mode (HTML -> tinymce).
-        // Note: wysiwyg_tinymce_init event is not triggered if the Visual Mode is selected later.
-        const origInitCB = mceInit.init_instance_callback;
-        mceInit.init_instance_callback = function (editor) {
-            qtx.attachEditorHook(editor);
-            if (origInitCB !== undefined) {
-                origInitCB();
-            }
+        if (field.type === 'wysiwyg') {
+            // In this filter the elements with new ID have been created, so we can finally create the content hooks.
+            const newFieldTextArea = field.$input()[0];
+            qtx.addContentHookB(newFieldTextArea);
+            // Link the init CB for the visual mode (HTML -> tinymce).
+            // Note: wysiwyg_tinymce_init event is not triggered if the Visual Mode is selected later.
+            const initCB = mceInit.init_instance_callback;
+            mceInit.init_instance_callback = function (editor) {
+                if (initCB !== undefined) {
+                    initCB();
+                }
+                qtx.attachEditorHook(editor);
+            };
         }
         return mceInit;
     });
-
 
     // Add display hooks for translatable settings.
     const displaySelector = '.acf-label > label, .acf-label > p.description, .acf-input > p.description';
