@@ -3,7 +3,7 @@ Developed by: new qTranslate community, from qTranslate-X by John Clause and qTr
 Contributors: herrvigg, johnclause, chineseleper, Vavooon, grafcom  
 Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, translation  
 Requires: 4.8  
-Tested up to: 6.0.2  
+Tested up to: 6.1.1  
 Stable tag: N/A  
 License: GPLv2 or later  
 License URI: https://www.gnu.org/licenses/gpl-2.0.html  
@@ -20,15 +20,15 @@ GitHub repository of the new repo: [https://github.com/qtranslate/qtranslate-xt.
 
 Since the -XT version is not officially available at Wordpress.org the initial installation must be done *manually*. You require the permissions to access the `plugins` folder of your Wordpress installation. Contact your system administrator if needed.
 
-1. Download the [last release from GitHub](https://github.com/qTranslate/qtranslate-xt/releases) in zip or tar.gz format (usually zip for Windows users). Alternatively, for developers and those familiar with git, you can `git clone` the new repo and work on the current branch.
-1. Uncompress the archive in your `plugins` folder and rename it to `qtranslate-xt`.
-1. Deactivate plugin qTranslate-X, qTranslate, mqTranslate, qTranslate Plus, zTranslate or any other multilingual plugin, if you are running any.
-1. Activate qTranslate-XT through the 'Plugins' admin page in WordPress (`/wp-admin/plugins.php`).
+1. Download the [last release from GitHub](https://github.com/qTranslate/qtranslate-xt/releases) in zip or tar.gz format (usually zip for Windows users). Alternatively, download the [current master branch](https://github.com/qtranslate/qtranslate-xt/archive/refs/heads/master.zip) to test the last updates before a version release. Developers are encouraged to `git clone` the repo.
+2. Uncompress the archive in your `plugins` folder and rename it to `qtranslate-xt`.
+3. Deactivate plugin qTranslate-X, qTranslate, mqTranslate, qTranslate Plus, zTranslate or any other multilingual plugin, if you are running any.
+4. Activate qTranslate-XT through the 'Plugins' admin page in WordPress (`/wp-admin/plugins.php`).
 
 If you didn't already have qTranslate-X, proceed with the initial setup of qTranslate-XT:
 
 1. Open Settings > Languages configuration page and add/delete/disable any languages you need.
-1. Add the "qTranslate Language Chooser" widget or "Language Switcher" menu item to let your visitors switch the language.
+2. Add the "qTranslate Language Chooser" widget or "Language Switcher" menu item to let your visitors switch the language.
 
 Check the FAQ for further instructions.
 
