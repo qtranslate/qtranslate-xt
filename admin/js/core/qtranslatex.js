@@ -383,7 +383,7 @@ const qTranslateX = function (pg) {
         }
         if (hook.mce) {
             const editor = hook.mce;
-            editor.getContainer().classList.remove('qtranxs-translatable');
+            editor.getContentAreaContainer().classList.remove('qtranxs-translatable');
             editor.getElement().classList.remove('qtranxs-translatable');
         }
         // The current content field may not be the same as the input field, in case it was re-attached (e.g. widgets)
@@ -818,7 +818,7 @@ const qTranslateX = function (pg) {
         }
         hook.mce = editor;
 
-        editor.getContainer().classList.add('qtranxs-translatable');
+        editor.getContentAreaContainer().classList.add('qtranxs-translatable');
         editor.getElement().classList.add('qtranxs-translatable');
 
         return hook;
