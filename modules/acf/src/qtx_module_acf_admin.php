@@ -9,7 +9,6 @@ class QTX_Module_Acf_Admin {
      */
     public function __construct() {
         add_action( 'acf/input/admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
-        add_action( 'admin_footer', array( $this, 'admin_footer' ), -10 );
         add_action( 'admin_head', array( $this, 'admin_head' ) );
         add_action( 'admin_init', array( $this, 'admin_init' ) );
 
@@ -30,32 +29,11 @@ class QTX_Module_Acf_Admin {
             'underscore',
             'qtranslate-admin-main'
         ), QTX_VERSION );
-    }
 
-    /**
-     * Output a hidden block that can be used to force qTranslate-X to include the LSB
-     */
-    public function admin_footer() {
-        ?>
-        <script>
-            (function ($) {
-                var anchors = {
-                    '#post-body-content': 'prepend',
-                    '#widgets-right': 'before',
-                    '#posts-filter': 'prepend',
-                    '#wpbody-content h1': 'after',
-                    '#wpbody-content': 'prepend'
-                };
-                $.each(anchors, function (anchor, fn) {
-                    var $anchor = $(anchor);
-                    if ($anchor.length) {
-                        $anchor[fn]('<span id="acf-qtranslate-lsb-shim" style="display:none">[:en]LSB[:]</span>');
-                        return false;
-                    }
-                });
-            })(jQuery);
-        </script>
-        <?php
+        $current_screen = get_current_screen();
+        wp_localize_script( 'qtranslate-acf', 'acf_qtranslate', [
+            'current_screen' => isset( $current_screen ) ? $current_screen->id : '',
+        ] );
     }
 
     /**
@@ -77,80 +55,133 @@ class QTX_Module_Acf_Admin {
             </style>
             <?php
         }
-
-        // Enable translation of standard field types
-        $translate_standard_field_types = $this->get_module_setting( 'translate_standard_field_types' );
-        if ( $translate_standard_field_types ) {
-            ?>
-            <script>
-                var acf_qtranslate_translate_standard_field_types = <?= json_encode( $translate_standard_field_types ) ?>;
-            </script>
-            <?php
-        }
     }
 
     /**
-     * Enable the display of the LSB on ACF Options pages
+     * Enable the LSB and display hooks for ACF.
      *
      * @param array $config
      *
      * @return array
      */
     public function filter_qtranslate_admin_config( $config ) {
-        $pages = array(
-            'admin.php' => 'page=',
-        );
+        // Display for posts with ACF fields.
+        $config['acf-post'] = [
+            'pages' => [
+                'post.php'     => '',
+                'post-new.php' => '',
+            ],
+            'forms' => [
+                'post' => [
+                    'fields' => [
+                        'acf-field-group-handle' => [
+                            'jquery' => '.acf-postbox h2 span',
+                            'encode' => 'display',
+                        ],
+                        'acf-field-label'        => [
+                            'jquery' => '.acf-label > label, .acf-label > p.description',
+                            'encode' => 'display',
+                        ],
+                    ]
+                ]
+            ]
+        ];
 
-        foreach ( explode( "\n", $this->get_module_setting( 'show_on_pages' ) ) as $page ) {
-            $page = trim( $page );
-            if ( $page ) {
-                $pages[ $page ] = '';
-            }
-        }
-
-        $config['acf-display-nodes'] = array(
-            'pages'   => $pages,
-            'anchors' => array(
-                'acf-qtranslate-lsb-shim' => array( 'where' => 'after' ),
-            ),
-            'forms'   => array(
-                'wpwrap' => array(
-                    'fields' => array(
-                        'lsb-shim'                => array(
-                            'jquery' => '#acf-qtranslate-lsb-shim',
-                            'encode' => 'display',
-                        ),
-                        'acf5-field-group-handle' => array(
-                            'jquery' => '.acf-postbox h2 span,.acf-postbox h3 span',
-                            'encode' => 'display',
-                        ),
-                        'acf5-field-label'        => array(
-                            'jquery' => '.acf-field .acf-label label',
-                            'encode' => 'display',
-                        ),
-                        'acf5-field-description'  => array(
-                            'jquery' => '.acf-field .acf-label p.description',
-                            'encode' => 'display',
-                        ),
-                    )
-                ),
-            ),
-        );
-
-        $config['acf-field-group'] = array(
-            'pages'     => array( 'post.php' => '' ),
+        // Display for ACF options: edit ACF field group.
+        $config['acf-field-group'] = [
+            'pages'     => [ 'post.php' => '' ],
             'post_type' => 'acf-field-group',
-            'forms'     => array(
-                'post' => array(
-                    'fields' => array(
-                        'field-group-object-label' => array(
+            'forms'     => [
+                'post' => [
+                    'fields' => [
+                        'acf-field-group-object-label' => [
                             'jquery' => '.li-field-label .edit-field',
                             'encode' => 'display',
-                        ),
-                    )
-                ),
-            ),
-        );
+                        ],
+                    ]
+                ],
+            ],
+        ];
+
+        // Display for ACF options: custom admin options (ACF Pro).
+        $config['acf-admin'] = [
+            'pages' => [
+                'admin.php' => '',
+            ],
+            'forms' => [
+                'wpbody-content' => [
+                    'fields' => [
+                        'acf-field-postbox' => [
+                            'jquery' => '.acf-postbox .postbox-header h2',  // Not captured by main i18n config.
+                            'encode' => 'display',
+                        ],
+                        'acf-field-label'   => [
+                            'jquery' => '.acf-label > label, .acf-label > p.description',
+                            'encode' => 'display',
+                        ],
+                    ],
+                ],
+            ],
+        ];
+
+        // Display for generic forms with ACF fields.
+        $config['acf-forms'] = [
+            'pages'   => [
+                // TODO: see how to handle this more dynamically with current_screen.
+                'user-edit.php' => '',
+                'user-new.php'  => '',
+                'widgets.php'   => '',
+                'comment.php'   => '',
+                'nav-menus.php' => '',
+            ],
+            'anchors' => [
+                'acf-form-data' => [ 'where' => 'after' ],
+            ],
+            'forms'   => [
+                'wpbody-content' => [
+                    'fields' => [
+                        'acf-form-data-title' => [
+                            'jquery' => '#acf-form-data ~ h2, .acf-postbox h3, .acf-menu-settings h2',
+                            'encode' => 'display'
+                        ],
+                        'acf-field-group'     => [
+                            'jquery' => '.acf-postbox h2 span',
+                            'encode' => 'display',
+                        ],
+                        'acf-field-label'     => [
+                            'jquery' => '.acf-label > label, .acf-label > p.description',
+                            'encode' => 'display',
+                        ],
+                    ]
+                ]
+            ]
+        ];
+
+        // Display for taxonomy with ACF fields.
+        $config['acf-taxonomy'] = [
+            'pages'   => [
+                'edit-tags.php' => 'taxonomy=',
+                'term.php'      => 'taxonomy=',
+            ],
+            'anchors' => [
+                'acf-form-data' => [ 'where' => 'after' ],
+                'edittag'       => [ 'where' => 'before' ], // To enforce the top LSB (usually wrap).
+            ],
+            'forms'   => [
+                'wpbody-content' => [
+                    'fields' => [
+                        'acf-form-data-title'         => [
+                            'jquery' => '#acf-form-data ~ h2',
+                            'encode' => 'display'
+                        ],
+                        'acf-field-input-description' => [
+                            'jquery' => '.acf-label > label, .acf-input > p.description',
+                            'encode' => 'display',
+                        ],
+                    ]
+                ]
+            ]
+        ];
 
         return $config;
     }
@@ -187,25 +218,9 @@ class QTX_Module_Acf_Admin {
         );
 
         add_settings_field(
-            'translate_standard_field_types',
-            'Enable translation for Standard Field Types',
-            array( $this, 'render_setting_translate_standard_field_types' ),
-            'settings-qtranslate-acf',
-            'section-acf'
-        );
-
-        add_settings_field(
             'show_language_tabs',
             'Display language tabs',
             array( $this, 'render_setting_show_language_tabs' ),
-            'settings-qtranslate-acf',
-            'section-acf'
-        );
-
-        add_settings_field(
-            'show_on_pages',
-            'Display the LSB on the following pages',
-            array( $this, 'render_setting_show_on_pages' ),
             'settings-qtranslate-acf',
             'section-acf'
         );
@@ -230,17 +245,6 @@ class QTX_Module_Acf_Admin {
     /**
      * Render setting
      */
-    function render_setting_translate_standard_field_types() {
-        ?>
-        <input type="checkbox"
-               name="<?php echo QTX_OPTIONS_MODULE_ACF ?>[translate_standard_field_types]" <?php checked( $this->get_module_setting( 'translate_standard_field_types' ), 1 ); ?>
-               value="1">
-        <?php
-    }
-
-    /**
-     * Render setting
-     */
     function render_setting_show_language_tabs() {
         ?>
         <input type="checkbox"
@@ -248,19 +252,6 @@ class QTX_Module_Acf_Admin {
                value="1">
         <?php
     }
-
-    /**
-     * Render setting
-     */
-    function render_setting_show_on_pages() {
-        ?>
-        <textarea name="<?php echo QTX_OPTIONS_MODULE_ACF ?>[show_on_pages]"
-                  style="max-width:500px;width:100%;height:200px;padding-top:6px"
-                  placeholder="post.php"><?= esc_html( $this->get_module_setting( 'show_on_pages' ) ) ?></textarea><br>
-        <small>Enter each page on it's own line</small>
-        <?php
-    }
-
 
     /**
      * Get the visible ACF fields

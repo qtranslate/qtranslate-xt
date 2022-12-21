@@ -5,11 +5,6 @@ $(window).on('load', function () {
 
     qtx.enableLanguageSwitchingButtons('block');
 
-    // Ensure that translation of standard field types is enabled
-    if (!window.acf_qtranslate_translate_standard_field_types) {
-        return;
-    }
-
     const postType = $('#post_type').val();
     if (postType === 'acf-field-group') {
         const isTranslatableSetting = function (element) {
@@ -66,16 +61,6 @@ $(window).on('load', function () {
             };
         }
         return mceInit;
-    });
-
-    // Add display hooks for translatable settings.
-    const displaySelector = '.acf-label > label, .acf-label > p.description, .acf-input > p.description';
-    acf.findFields().each(function () {
-        $(this).find(displaySelector).each(function () {
-            if (!qtx.hasContentHook(this)) {
-                qtx.addDisplayHook(this);
-            }
-        });
     });
 
     // Watch and remove content hooks when fields are removed
