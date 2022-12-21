@@ -29,11 +29,6 @@ class QTX_Module_Acf_Admin {
             'underscore',
             'qtranslate-admin-main'
         ), QTX_VERSION );
-
-        $current_screen = get_current_screen();
-        wp_localize_script( 'qtranslate-acf', 'acf_qtranslate', [
-            'current_screen' => isset( $current_screen ) ? $current_screen->id : '',
-        ] );
     }
 
     /**
@@ -86,7 +81,6 @@ class QTX_Module_Acf_Admin {
                 ]
             ]
         ];
-
         // Display for ACF options: edit ACF field group.
         $config['acf-field-group'] = [
             'pages'     => [ 'post.php' => '' ],
@@ -102,7 +96,6 @@ class QTX_Module_Acf_Admin {
                 ],
             ],
         ];
-
         // Display for ACF options: custom admin options (ACF Pro).
         $config['acf-admin'] = [
             'pages' => [
@@ -123,7 +116,6 @@ class QTX_Module_Acf_Admin {
                 ],
             ],
         ];
-
         // Display for generic forms with ACF fields.
         $config['acf-forms'] = [
             'pages'   => [
@@ -156,7 +148,6 @@ class QTX_Module_Acf_Admin {
                 ]
             ]
         ];
-
         // Display for taxonomy with ACF fields.
         $config['acf-taxonomy'] = [
             'pages'   => [
