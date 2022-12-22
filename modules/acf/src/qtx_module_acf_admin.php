@@ -67,19 +67,20 @@ class QTX_Module_Acf_Admin {
                 'post-new.php' => '',
             ],
             'forms' => [
-                'post' => [
+                // classic LSB (above #post) and blocks SLM (no #post)
+                'wpbody-content' => [
                     'fields' => [
-                        'acf-field-group-handle' => [
-                            'jquery' => '.acf-postbox h2 span',
+                        'acf-field-postbox' => [
+                            'jquery' => '.acf-postbox .postbox-header h2',
                             'encode' => 'display',
                         ],
-                        'acf-field-label'        => [
+                        'acf-field-label'   => [
                             'jquery' => '.acf-label > label, .acf-label > p.description',
                             'encode' => 'display',
                         ],
-                    ]
-                ]
-            ]
+                    ],
+                ],
+            ],
         ];
         // Display for ACF options: edit ACF field group.
         $config['acf-field-group'] = [
@@ -96,35 +97,16 @@ class QTX_Module_Acf_Admin {
                 ],
             ],
         ];
-        // Display for ACF options: custom admin options (ACF Pro).
-        $config['acf-admin'] = [
-            'pages' => [
-                'admin.php' => '',
-            ],
-            'forms' => [
-                'wpbody-content' => [
-                    'fields' => [
-                        'acf-field-postbox' => [
-                            'jquery' => '.acf-postbox .postbox-header h2',  // Not captured by main i18n config.
-                            'encode' => 'display',
-                        ],
-                        'acf-field-label'   => [
-                            'jquery' => '.acf-label > label, .acf-label > p.description',
-                            'encode' => 'display',
-                        ],
-                    ],
-                ],
-            ],
-        ];
         // Display for generic forms with ACF fields.
         $config['acf-forms'] = [
             'pages'   => [
                 // TODO: see how to handle this more dynamically with current_screen.
+                'admin.php'     => '',  // custom admin options (ACF Pro).
+                'comment.php'   => '',
+                'nav-menus.php' => '',
                 'user-edit.php' => '',
                 'user-new.php'  => '',
                 'widgets.php'   => '',
-                'comment.php'   => '',
-                'nav-menus.php' => '',
             ],
             'anchors' => [
                 'acf-form-data' => [ 'where' => 'after' ],
@@ -132,16 +114,16 @@ class QTX_Module_Acf_Admin {
             'forms'   => [
                 'wpbody-content' => [
                     'fields' => [
-                        'acf-form-data-title' => [
+                        'acf-form-data-title'   => [
                             'jquery' => '#acf-form-data ~ h2, .acf-postbox h3, .acf-menu-settings h2',
                             'encode' => 'display'
                         ],
-                        'acf-field-group'     => [
-                            'jquery' => '.acf-postbox h2 span',
+                        'acf-field-label'       => [
+                            'jquery' => '.acf-label > label, .acf-label > p.description',
                             'encode' => 'display',
                         ],
-                        'acf-field-label'     => [
-                            'jquery' => '.acf-label > label, .acf-label > p.description',
+                        'acf-admin-field-title' => [
+                            'jquery' => '.acf-postbox .postbox-header h2',  // admin.php not set in main i18n.
                             'encode' => 'display',
                         ],
                     ]
