@@ -121,7 +121,7 @@ class QTX_Admin_Module {
             ],
             [
                 'id'           => 'wp-seo',
-                'name'         => 'Yoast SEO',
+                'name'         => 'Yoast SEO (degraded)',
                 'plugins'      => [ 'wordpress-seo/wp-seo.php' ],
                 'incompatible' => 'wp-seo-qtranslate-x/wordpress-seo-qtranslate-x.php',
             ],
