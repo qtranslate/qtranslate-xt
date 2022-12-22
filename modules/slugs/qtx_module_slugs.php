@@ -32,11 +32,6 @@ class QTX_Module_Slugs {
      * Initialise the Class with all hooks.
      */
     function init() {
-        // TODO: remove `plugins_loaded` hook to initialize the module, it is loaded by QTX handler not WordPress.
-        if ( ! QTX_Module_Loader::is_module_active( 'slugs' ) ) {
-            return;
-        }
-
         $this->options_buffer      = get_option( QTX_OPTIONS_MODULE_SLUGS, array() );
         $this->permalink_structure = get_option( 'permalink_structure' );
 
