@@ -1,3 +1,46 @@
+### 3.13.0
+Summary
+* Compatibility with PHP8.1 (#1085)
+  * Major refactoring of date/time without `strftime` (deprecated in PHP8.1)
+  * **Attention**: date/time features require PHP `intl` module (`IntlDateFormatter`)
+  * Note: `strftime` format options are still supported by conversion but they may become deprecated (#1234)
+* Major fixes for ACF
+  * Fix standard wysiwyg field, better admin support (ACF6, display fields, UI), simplify options
+  * Note: it is encouraged to use ACF standard fields, extended QTX fields may become deprecated in next releases
+* New feature! Add setting to show menu items in alternative language (#1063).
+
+Core
+* Improve translatable UI for tinymce editor
+* Add support of `form` attribute for detached `input` (#1253, #1252)
+* Fix term update with same value for all langs (#1215, #1230)
+* Date/time refactoring for PHP 8.1 (#1085)
+  * Replace `strftime` with `IntlDateFormatter` for PHP8.1 (#1228, #1224)
+  * Deprecate date/strftime "override" options, because the use case is very unclear (#1245)
+  * Add date/time option to use WP date format and ignore QTX custom formats by disabling any conversion (#1248)
+  * Check if class `IntlDateFormatter` exists, or warn about missing `intl` module (#1251)
+  * Refactor date-time conversions using `qtranxf_intl_strftime` (#1238)
+
+Modules
+* ACF
+  * Generalize ACF config and simplify options (#1267)
+    * Remove obsolete option for standard ACF form fields (input, wysiwyg), always active
+    * Remove ACF page options, handled natively with new admin config for display and anchors
+    * Remove obsolete JS "shim" anchor hack
+  * Fix ACF standard wysiwyg editor field (#1186, #1261)
+  * Fix ACF translatable standard settings (#1255)
+  * Fix ACF display in taxonomy (#908)
+  * Fix field group title overwritten with ACF6 (#1252)
+  * Fix JS error reading `id` with ACF6 (#1254)
+  * Fix broken ACF init sequence for options LSB (#1233, #1243)
+  * Fix translatable style in ACF-QTX fields (#1246)
+  * Resync ACF image `render_field` code (#1241)
+* Slugs
+  * Tidy up slugs module init
+* Yoast
+  * Mark Yoast module degraded (#1257)
+  * Fix wp-seo undefined array key `image` (#1262)
+  * Add front filter to disable indexables in Yoast 18.2+ (#1219)
+
 ### 3.12.1
 Core
 * Check host key in parsed referrer URL (#1202)

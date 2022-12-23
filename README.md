@@ -72,6 +72,16 @@ Note for developers:
 
 ## Upgrade Notice
 
+### 3.13.0
+* Compatibility with PHP8.1
+  * Major refactoring of date/time without `strftime` (deprecated in PHP8.1)
+  * **Attention**: date/time features require PHP `intl` module (`IntlDateFormatter`)
+  * Note: `strftime` format options are still supported by conversion but they may become deprecated (#1234)
+* Major fixes for ACF
+  * Fix standard wysiwyg field, better admin support (ACF6, display fields, UI), simplify options
+  * Note: it is encouraged to use ACF standard fields, extended QTX fields may become deprecated in next releases
+* New feature! Add setting to show menu items in alternative language (#1063).
+
 ### 3.12.0
 * New module: **Slugs** (experimental) for permalink (slug/URL) translations
   * Enable module and see qTranslate import settings to migrate QTS data
