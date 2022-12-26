@@ -104,6 +104,7 @@ class QTX_Module_Acf_Admin {
                 'admin.php'     => '',  // custom admin options (ACF Pro).
                 'comment.php'   => '',
                 'nav-menus.php' => '',
+                'profile.php'   => '',
                 'user-edit.php' => '',
                 'user-new.php'  => '',
                 'widgets.php'   => '',
