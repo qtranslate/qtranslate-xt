@@ -139,7 +139,7 @@ function qtranxf_slugs_draw_meta_box( $post ) {
         $name  = $q_config['language_name'][ $lang ];
         $title = sprintf( __( 'Slug' ) . ' (%s)', $name );
         echo "<tr>" . PHP_EOL;
-        echo "<th><img class='qtranxs-lang-flag' src='${flag_location}{$q_config['flag'][ $lang ]}' alt='${name}' title='${name}' /></th>" . PHP_EOL;
+        echo "<th><img class='qtranxs-lang-flag' src='{$flag_location}{$q_config['flag'][ $lang ]}' alt='{$name}' title='{$name}' /></th>" . PHP_EOL;
         echo "<td><input type='text' id='qts_{$lang}_slug' name='qts_{$lang}_slug' value=\"" . urldecode( $value ) . "\" title='$title' /></td>" . PHP_EOL;
         echo "</tr>" . PHP_EOL;
     endforeach;
@@ -402,7 +402,7 @@ function qtranxf_slugs_show_list_term_fields( $term ) {
             $flag  = $q_config['flag'][ $lang ];
             $name  = $q_config['language_name'][ $lang ];
             $title = sprintf( __( 'Slug' ) . ' (%s)', $name );
-            echo "<li><img class='qtranxs-lang-flag' src='${flag_location}${flag}' alt='$name' title='$name' />" . PHP_EOL;
+            echo "<li><img class='qtranxs-lang-flag' src='{$flag_location}{$flag}' alt='$name' title='$name' />" . PHP_EOL;
             echo "<input type='text' name='qts_{$lang}_slug' value='" . urldecode( $value ) . "' title='$title' /></li>" . PHP_EOL;
         } ?>
     </ul>

@@ -91,8 +91,8 @@ function qtranxf_slugs_show_form_field( $args = array() ) {
                 $lang    = $item[1];
                 $flag    = $q_config['flag'][ $lang ];
                 $name    = $q_config['language_name'][ $lang ];
-                $item_id = "$id|${item[1]}";
-                echo "<li><img class='qtranxs-lang-flag' src='${flag_location}${flag}' alt='$name' title='$name' />" . PHP_EOL;
+                $item_id = "$id|{$item[1]}";
+                echo "<li><img class='qtranxs-lang-flag' src='{$flag_location}{$flag}' alt='$name' title='$name' />" . PHP_EOL;
                 echo "<input class='$field_class' type='text' name='" . QTX_OPTIONS_MODULE_SLUGS . "[$item_id]' value='" . urldecode( $value ) . "' title='{$item[0]}' /></li>" . PHP_EOL;
             }
             echo "</ul>";
