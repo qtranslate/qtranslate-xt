@@ -87,8 +87,10 @@ function qtranxf_init_language() {
              * @return mixed A new URL to be redirected to instead of $url_lang or "false" to cancel redirection.
              */
             $target = apply_filters( 'qtranslate_language_detect_redirect', $url_lang, $url_orig, $url_info );
+
             if ( $target !== false && $target != $url_orig ) {
-                wp_redirect( $target );
+                // rickfix,, we want redirects to be "permanent" and not default 302
+                wp_redirect( $target, 301 );
                 nocache_headers(); // prevent browser from caching redirection
                 exit();
             } else {
@@ -221,7 +223,7 @@ function qtranxf_detect_language( &$url_info ) {
     $url_info['language'] = $lang;
 
     // REST calls should be deterministic (stateless), no special language detection e.g. based on cookie
-    $url_info['set_cookie'] = ! wp_doing_ajax() && ! qtranxf_is_rest_request_expected();
+    $url_info['set_cookie'] = ! wp_doing_ajax() && ! wp_doing_cron() && ! qtranxf_is_rest_request_expected(); 
 
     /**
      * Hook for possible other methods
