@@ -18,6 +18,30 @@ class QTX_Module_Acf_Admin {
     }
 
     /**
+     * Return the list of standard content fields e.g. post or page.
+     * @return array
+     */
+    public static function content_fields() {
+        return [
+            'text'     => _x( 'Text', 'ACF settings', 'qtranslate' ),
+            'textarea' => _x( 'Textarea', 'ACF settings', 'qtranslate' ),
+            'wysiwyg'  => _x( 'Wysiwyg', 'ACF settings', 'qtranslate' ),
+        ];
+    }
+
+    /**
+     * Return the list of meta fields supported in group settings.
+     * @return array
+     */
+    public static function group_meta_fields() {
+        return [
+            'label'         => _x( 'Label', 'ACF settings', 'qtranslate' ),
+            'instructions'  => _x( 'Instructions', 'ACF settings', 'qtranslate' ),
+            'default_value' => _x( 'Default value', 'ACF settings', 'qtranslate' ),
+        ];
+    }
+
+    /**
      * Load javascript and stylesheets on admin pages
      */
     public function admin_enqueue_scripts() {
@@ -29,6 +53,8 @@ class QTX_Module_Acf_Admin {
             'underscore',
             'qtranslate-admin-main'
         ), QTX_VERSION );
+
+        wp_localize_script( 'qtranslate-acf', 'qTranslateModuleAcf', get_option( QTX_OPTIONS_MODULE_ACF ) );
     }
 
     /**
@@ -162,41 +188,68 @@ class QTX_Module_Acf_Admin {
 
     /**
      * Retrieve the value of a setting for the ACF module.
+     * The default is set in register_setting so this works only for admin.
      *
      * @param string $name
-     * @param mixed $default
      *
      * @return mixed
      */
-    function get_module_setting( $name, $default = null ) {
+    function get_module_setting( $name ) {
         $options = get_option( QTX_OPTIONS_MODULE_ACF );
         if ( isset( $options[ $name ] ) ) {
             return $options[ $name ];
         }
 
-        return $default;
+        return null;
     }
 
     /**
      * Register settings and default fields
      */
     function admin_init() {
-        register_setting( 'settings-qtranslate-acf', QTX_OPTIONS_MODULE_ACF );
+        // The default is set in a "default_option_{$option_name}" filter.
+        $default = [
+            'content_fields'     => array_keys( $this->content_fields() ),
+            'group_meta_fields'  => array_keys( $this->group_meta_fields() ),
+            'show_language_tabs' => false,
+        ];
+        register_setting( 'settings-qtranslate-acf', QTX_OPTIONS_MODULE_ACF, [ 'default' => $default ] );
 
-        // Define a placeholder for the fields without title or content.
+        // Standard fields (ACF builtin fields)
         add_settings_section(
-            'section-acf',
+            'section-acf-standard',
+            __( 'Standard fields', 'qtranslate' ),
             '',
-            '__return_false',
             'settings-qtranslate-acf'
         );
+        add_settings_field(
+            'translate_content_fields',
+            __( 'Translate content fields', 'qtranslate' ),
+            array( $this, 'render_setting_content_fields' ),
+            'settings-qtranslate-acf',
+            'section-acf-standard'
+        );
+        add_settings_field(
+            'translate_group_meta_fields',
+            __( 'Translate group meta fields', 'qtranslate' ),
+            array( $this, 'render_setting_group_meta_fields' ),
+            'settings-qtranslate-acf',
+            'section-acf-standard'
+        );
 
+        // Extended fields (ACF-QTX overridden fields)
+        add_settings_section(
+            'section-acf-extended',
+            __( 'Extended fields', 'qtranslate' ),
+            '',
+            'settings-qtranslate-acf'
+        );
         add_settings_field(
             'show_language_tabs',
             'Display language tabs',
             array( $this, 'render_setting_show_language_tabs' ),
             'settings-qtranslate-acf',
-            'section-acf'
+            'section-acf-extended'
         );
     }
 
@@ -214,6 +267,38 @@ class QTX_Module_Acf_Admin {
         }
         $options = isset( $_POST[ QTX_OPTIONS_MODULE_ACF ] ) ? $_POST[ QTX_OPTIONS_MODULE_ACF ] : null;
         update_option( QTX_OPTIONS_MODULE_ACF, $options, false );
+    }
+
+    /**
+     * Render setting
+     */
+    function render_setting_content_fields() {
+        $settings = $this->get_module_setting( 'content_fields' );
+        $fields   = $this->content_fields();
+        foreach ( $fields as $field_id => $field_label ): ?>
+            <label>
+                <input type="checkbox"
+                       name="<?php echo QTX_OPTIONS_MODULE_ACF ?>[content_fields][]" <?php checked( in_array( $field_id, $settings ) ); ?>
+                       value="<?php echo $field_id ?>"/><?php echo $field_label ?>
+            </label>
+            <br/>
+        <?php endforeach;
+    }
+
+    /**
+     * Render setting
+     */
+    function render_setting_group_meta_fields() {
+        $settings = $this->get_module_setting( 'group_meta_fields' );
+        $fields   = $this->group_meta_fields();
+        foreach ( $fields as $field_id => $field_label ): ?>
+            <label>
+                <input type="checkbox"
+                       name="<?php echo QTX_OPTIONS_MODULE_ACF ?>[group_meta_fields][]" <?php checked( in_array( $field_id, $settings ) ); ?>
+                       value="<?php echo $field_id ?>"/><?php echo $field_label ?>
+            </label>
+            <br/>
+        <?php endforeach;
     }
 
     /**
