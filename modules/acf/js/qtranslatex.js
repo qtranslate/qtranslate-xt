@@ -6,12 +6,10 @@ $(window).on('load', function () {
     qtx.enableLanguageSwitchingButtons('block');
 
     const isTranslatableContentField = function (fieldType) {
-        const opt = window.qTranslateModuleAcf?.content_fields;
-        return opt && opt.indexOf(fieldType) !== -1;
+        return !!window.qTranslateModuleAcf?.content_fields?.[fieldType];
     }
     const isTranslatableGroupMetaField = function (fieldType) {
-        const opt = window.qTranslateModuleAcf?.group_meta_fields;
-        return opt && opt.indexOf(fieldType) !== -1;
+        return !!window.qTranslateModuleAcf?.group_meta_fields?.[fieldType];
     }
 
     const postType = $('#post_type').val();

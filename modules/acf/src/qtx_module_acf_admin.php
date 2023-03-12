@@ -18,19 +18,19 @@ class QTX_Module_Acf_Admin {
     }
 
     /**
-     * Return the list of standard content fields e.g. post or page.
+     * Return a map of id->label for the standard content fields e.g. post or page.
      * @return array
      */
     public static function content_fields() {
         return [
             'text'     => __( 'Text', 'acf' ),
-            'textarea' => __( 'Text Area', 'acf' ) ,
-            'wysiwyg'  => __( 'Wysiwyg Editor', 'acf'),
+            'textarea' => __( 'Text Area', 'acf' ),
+            'wysiwyg'  => __( 'Wysiwyg Editor', 'acf' ),
         ];
     }
 
     /**
-     * Return the list of meta fields supported in group settings.
+     * Return a map of id->label for the meta fields supported in group settings.
      * @return array
      */
     public static function group_meta_fields() {
@@ -208,9 +208,15 @@ class QTX_Module_Acf_Admin {
      */
     function admin_init() {
         // The default is set in a "default_option_{$option_name}" filter.
+        // Remap the labels to boolean values.
+        // Attention: once saved by admin, they are stored as "1" strings if checked, nothing if unchecked.
         $default = [
-            'content_fields'     => array_keys( $this->content_fields() ),
-            'group_meta_fields'  => array_keys( $this->group_meta_fields() ),
+            'content_fields'     => array_map( function () {
+                return true;
+            }, $this->content_fields() ),
+            'group_meta_fields'  => array_map( function () {
+                return true;
+            }, $this->group_meta_fields() ),
             'show_language_tabs' => false,
         ];
         register_setting( 'settings-qtranslate-acf', QTX_OPTIONS_MODULE_ACF, [ 'default' => $default ] );
@@ -275,11 +281,11 @@ class QTX_Module_Acf_Admin {
     function render_setting_content_fields() {
         $settings = $this->get_module_setting( 'content_fields' );
         $fields   = $this->content_fields();
-        foreach ( $fields as $field_id => $field_label ): ?>
+        foreach ( $fields as $f_id => $f_label ): ?>
             <label>
                 <input type="checkbox"
-                       name="<?php echo QTX_OPTIONS_MODULE_ACF ?>[content_fields][]" <?php checked( in_array( $field_id, $settings ) ); ?>
-                       value="<?php echo $field_id ?>"/><?php echo $field_label ?>
+                       name="<?php echo QTX_OPTIONS_MODULE_ACF ?>[content_fields][<?php echo $f_id ?>]" <?php checked( isset( $settings[ $f_id ] ) && $settings[ $f_id ] ); ?>
+                       value="1"/><?php echo $f_label ?>
             </label>
             <br/>
         <?php endforeach;
@@ -291,11 +297,11 @@ class QTX_Module_Acf_Admin {
     function render_setting_group_meta_fields() {
         $settings = $this->get_module_setting( 'group_meta_fields' );
         $fields   = $this->group_meta_fields();
-        foreach ( $fields as $field_id => $field_label ): ?>
+        foreach ( $fields as $f_id => $f_label ): ?>
             <label>
                 <input type="checkbox"
-                       name="<?php echo QTX_OPTIONS_MODULE_ACF ?>[group_meta_fields][]" <?php checked( in_array( $field_id, $settings ) ); ?>
-                       value="<?php echo $field_id ?>"/><?php echo $field_label ?>
+                       name="<?php echo QTX_OPTIONS_MODULE_ACF ?>[group_meta_fields][<?php echo $f_id ?>]" <?php checked( isset( $settings[ $f_id ] ) && $settings[ $f_id ] ); ?>
+                       value="1"/><?php echo $f_label ?>
             </label>
             <br/>
         <?php endforeach;
