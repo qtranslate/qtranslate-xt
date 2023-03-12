@@ -23,9 +23,9 @@ class QTX_Module_Acf_Admin {
      */
     public static function content_fields() {
         return [
-            'text'     => _x( 'Text', 'ACF settings', 'qtranslate' ),
-            'textarea' => _x( 'Textarea', 'ACF settings', 'qtranslate' ),
-            'wysiwyg'  => _x( 'Wysiwyg', 'ACF settings', 'qtranslate' ),
+            'text'     => __( 'Text', 'acf' ),
+            'textarea' => __( 'Text Area', 'acf' ) ,
+            'wysiwyg'  => __( 'Wysiwyg Editor', 'acf'),
         ];
     }
 
@@ -35,9 +35,9 @@ class QTX_Module_Acf_Admin {
      */
     public static function group_meta_fields() {
         return [
-            'label'         => _x( 'Label', 'ACF settings', 'qtranslate' ),
-            'instructions'  => _x( 'Instructions', 'ACF settings', 'qtranslate' ),
-            'default_value' => _x( 'Default value', 'ACF settings', 'qtranslate' ),
+            'label'         => __( 'Label', 'acf' ),
+            'instructions'  => __( 'Instructions', 'acf' ),
+            'default_value' => __( 'Default Value', 'acf' ),
         ];
     }
 
