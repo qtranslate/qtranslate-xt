@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-require_once( QTRANSLATE_DIR . '/qtranslate_default_language_config.php' );
+require_once QTRANSLATE_DIR . '/src/qtx_default_language_config.php';
 
 /**
  * Option types for front/admin settings.

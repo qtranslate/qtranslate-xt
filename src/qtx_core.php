@@ -3,8 +3,8 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-require_once( QTRANSLATE_DIR . '/qtranslate_language_blocks.php' );
-require_once( QTRANSLATE_DIR . '/qtranslate_options.php' );
+require_once QTRANSLATE_DIR . '/src/qtx_language_blocks.php';
+require_once QTRANSLATE_DIR . '/src/qtx_options.php';
 require_once( QTRANSLATE_DIR . '/modules/qtx_module_loader.php' );
 
 function qtranxf_init_language() {
@@ -106,10 +106,10 @@ function qtranxf_init_language() {
     // $q_config['url_info']['url'] = qtranxf_convertURL(add_query_arg('lang',$q_config['default_language'],$q_config['url_info']['url']));
 
     // qtranslate_hooks.php has to go before load_plugin_textdomain()
-    require_once( __DIR__ . '/qtranslate_hooks.php' );  // common hooks moved here from qtranslate.php since 3.2.9.2, because they all need language already detected
+    require_once QTRANSLATE_DIR . '/src/qtx_hooks.php';  // Common hooks need language already detected.
     qtranxf_add_main_filters();
 
-    require_once( __DIR__ . '/qtranslate_widget.php' );
+    require_once QTRANSLATE_DIR . '/src/qtx_widget.php';
     add_action( 'widgets_init', 'qtranxf_widget_init' );
 
     // load plugin translations
@@ -122,7 +122,7 @@ function qtranxf_init_language() {
     do_action( 'qtranslate_load_front_admin', $url_info );
 
     if ( $q_config['url_info']['doing_front_end'] ) {
-        require_once( QTRANSLATE_DIR . '/qtranslate_frontend.php' );
+        require_once QTRANSLATE_DIR . '/src/qtx_frontend.php';
     } else {
         require_once( QTRANSLATE_DIR . '/admin/qtx_admin.php' );
     }
@@ -412,7 +412,7 @@ function qtranxf_parse_language_info( &$url_info, $link = false ) {
 }
 
 function qtranxf_detect_language_admin( &$url_info ) {
-    require_once( dirname( __FILE__ ) . '/admin/qtx_admin_utils.php' );
+    require_once QTRANSLATE_DIR . '/admin/qtx_admin_utils.php';
     $url_info = apply_filters( 'qtranslate_detect_admin_language', $url_info );
 
     return $url_info['lang_admin'];
@@ -567,7 +567,7 @@ function qtranxf_load_option_qtrans_compatibility() {
     if ( ! isset( $q_config['qtrans_compatibility'] ) || ! $q_config['qtrans_compatibility'] ) {
         return;
     }
-    require_once( dirname( __FILE__ ) . '/qtranslate_compatibility.php' );
+    require_once QTRANSLATE_DIR . '/src/qtx_compatibility.php';
 }
 
 function qtranxf_load_plugin_textdomain() {
