@@ -64,6 +64,6 @@ if ( ! defined( 'QTRANSLATE_FILE' ) ) {
 require_once QTRANSLATE_DIR . '/inc/qtx_class_translator.php';
 
 if ( is_admin() ) {
-    require_once QTRANSLATE_DIR . '/admin/qtx_activation_hook.php';
+    require_once QTRANSLATE_DIR . '/src/admin/qtx_activation_hook.php';
     qtranxf_register_activation_hooks();
 }

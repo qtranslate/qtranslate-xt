@@ -3,12 +3,12 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-require_once QTRANSLATE_DIR . '/admin/qtx_admin_utils.php';
-require_once QTRANSLATE_DIR . '/admin/qtx_admin_options.php';
-require_once QTRANSLATE_DIR . '/admin/qtx_languages.php';
-require_once QTRANSLATE_DIR . '/admin/qtx_admin_class_translator.php';
-require_once QTRANSLATE_DIR . '/admin/qtx_user_options.php';
-require_once QTRANSLATE_DIR . '/admin/qtx_admin_taxonomy.php';
+require_once QTRANSLATE_DIR . '/src/admin/qtx_admin_utils.php';
+require_once QTRANSLATE_DIR . '/src/admin/qtx_admin_options.php';
+require_once QTRANSLATE_DIR . '/src/admin/qtx_languages.php';
+require_once QTRANSLATE_DIR . '/src/admin/qtx_admin_class_translator.php';
+require_once QTRANSLATE_DIR . '/src/admin/qtx_user_options.php';
+require_once QTRANSLATE_DIR . '/src/admin/qtx_admin_taxonomy.php';
 
 /**
  * @see qtranxf_collect_translations
@@ -148,7 +148,7 @@ function qtranxf_admin_init() {
 
         if ( qtranxf_admin_is_config_page() ) {
             // TODO run this only if one of the forms or actions submitted --> && !empty($_POST)
-            require_once QTRANSLATE_DIR . '/admin/qtx_admin_options_update.php';
+            require_once QTRANSLATE_DIR . '/src/admin/qtx_admin_options_update.php';
             qtranxf_edit_config();
         }
 
@@ -527,7 +527,7 @@ function qtranxf_get_admin_highlight_css( $highlight_mode ) {
 function qtranxf_add_admin_css() {
     global $q_config;
 
-    wp_register_style( 'qtranslate-admin-style', plugins_url( 'css/qtranslate_configuration.css', __FILE__ ), array(), QTX_VERSION );
+    wp_register_style( 'qtranslate-admin-style', plugins_url( 'admin/css/qtranslate_configuration.css', QTRANSLATE_FILE ), array(), QTX_VERSION );
     wp_enqueue_style( 'qtranslate-admin-style' );
     qtranxf_add_admin_lang_icons();
     $css = qtranxf_add_admin_highlight_css();
@@ -578,7 +578,7 @@ function qtranxf_customize_allowed_urls( $urls ) {
 
 /** @since 3.4 */
 function qtranxf_settings_page() {
-    require_once QTRANSLATE_DIR . '/admin/qtx_admin_settings.php';
+    require_once QTRANSLATE_DIR . '/src/admin/qtx_admin_settings.php';
     $admin_settings = new QTX_Admin_Settings();
     $admin_settings->display();
 }
@@ -876,7 +876,7 @@ function qtranxf_admin_load() {
 
     global $wp_version;
     if ( version_compare( $wp_version, '5.0' ) >= 0 ) {
-        require_once QTRANSLATE_DIR . '/admin/qtx_admin_gutenberg.php';
+        require_once QTRANSLATE_DIR . '/src/admin/qtx_admin_gutenberg.php';
     }
 
     // Disable the block editor from managing widgets, including the Gutenberg plugin

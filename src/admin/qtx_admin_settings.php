@@ -3,9 +3,9 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-require_once QTRANSLATE_DIR . '/admin/qtx_admin_options_update.php';
-require_once QTRANSLATE_DIR . '/admin/qtx_admin_settings_language_list.php';
-require_once QTRANSLATE_DIR . '/admin/qtx_import_export.php';
+require_once QTRANSLATE_DIR . '/src/admin/qtx_admin_options_update.php';
+require_once QTRANSLATE_DIR . '/src/admin/qtx_admin_settings_language_list.php';
+require_once QTRANSLATE_DIR . '/src/admin/qtx_import_export.php';
 require_once QTRANSLATE_DIR . '/modules/qtx_admin_module_settings.php';
 
 /**

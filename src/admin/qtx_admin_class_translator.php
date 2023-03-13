@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-require_once QTRANSLATE_DIR . '/admin/i18n-interface-admin.php';
+require_once QTRANSLATE_DIR . '/src/admin/i18n-interface-admin.php';
 
 /**
  *

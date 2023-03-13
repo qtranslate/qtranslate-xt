@@ -124,7 +124,7 @@ function qtranxf_init_language() {
     if ( $q_config['url_info']['doing_front_end'] ) {
         require_once QTRANSLATE_DIR . '/src/qtx_frontend.php';
     } else {
-        require_once QTRANSLATE_DIR . '/admin/qtx_admin.php';
+        require_once QTRANSLATE_DIR . '/src/admin/qtx_admin.php';
     }
     apply_filters( 'wp_translator', null );//create QTX_Translator object
 
@@ -412,7 +412,7 @@ function qtranxf_parse_language_info( &$url_info, $link = false ) {
 }
 
 function qtranxf_detect_language_admin( &$url_info ) {
-    require_once QTRANSLATE_DIR . '/admin/qtx_admin_utils.php';
+    require_once QTRANSLATE_DIR . '/src/admin/qtx_admin_utils.php';
     $url_info = apply_filters( 'qtranslate_detect_admin_language', $url_info );
 
     return $url_info['lang_admin'];
@@ -746,8 +746,8 @@ function qtranxf_load_config() {
 
     if ( empty( $q_config['front_config'] ) ) {
         // TODO this should be granulated to load only what is needed
-        require_once QTRANSLATE_DIR . '/admin/qtx_activation_hook.php';
-        require_once QTRANSLATE_DIR . '/admin/qtx_admin_options_update.php';
+        require_once QTRANSLATE_DIR . '/src/admin/qtx_activation_hook.php';
+        require_once QTRANSLATE_DIR . '/src/admin/qtx_admin_options_update.php';
         qtranxf_update_i18n_config();
     }
 
