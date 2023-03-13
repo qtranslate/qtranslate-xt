@@ -8,9 +8,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function qtranxf_wc_init_language( $url_info ) {
     if ( $url_info['doing_front_end'] ) {
-        require_once( dirname( __FILE__ ) . "/qwc-front.php" );
+        require_once __DIR__ . '/qwc-front.php';
     } else {
-        require_once( dirname( __FILE__ ) . "/qwc-admin.php" );
+        require_once __DIR__ . '/qwc-admin.php';
     }
 }
 

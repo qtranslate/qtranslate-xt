@@ -3,9 +3,9 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-require_once( QTRANSLATE_DIR . '/admin/qtx_admin_options.php' );
-require_once( QTRANSLATE_DIR . '/admin/qtx_import_export.php' );
-require_once( QTRANSLATE_DIR . '/modules/qtx_admin_module_manager.php' );
+require_once QTRANSLATE_DIR . '/admin/qtx_admin_options.php';
+require_once QTRANSLATE_DIR . '/admin/qtx_import_export.php';
+require_once QTRANSLATE_DIR . '/modules/qtx_admin_module_manager.php';
 
 function qtranxf_editConfig() {
     _deprecated_function( __FUNCTION__, '3.10.0', 'qtranxf_edit_config' );
@@ -963,7 +963,7 @@ function qtranxf_executeOnUpdate() {
 
     // ==== import/export msg was here
     if ( isset( $_POST['convert_database'] ) ) {
-        require_once( QTRANSLATE_DIR . '/admin/qtx_admin_utils_db.php' );
+        require_once QTRANSLATE_DIR . '/admin/qtx_admin_utils_db.php';
         $msg = qtranxf_convert_database( $_POST['convert_database'] );
         if ( $msg ) {
             $messages[] = $msg;
@@ -971,7 +971,7 @@ function qtranxf_executeOnUpdate() {
     }
 
     if ( isset( $_POST['qtranslate_import_slugs_migrate'] ) && $_POST['qtranslate_import_slugs_migrate'] ) {
-        require_once( QTRANSLATE_DIR . '/modules/slugs/admin/slugs-migrate-qts.php' );
+        require_once QTRANSLATE_DIR . '/modules/slugs/admin/slugs-migrate-qts.php';
         $db_commit  = isset( $_POST['qtranslate_import_slugs_confirm'] ) && $_POST['qtranslate_import_slugs_confirm'];
         $messages[] = qtranxf_slugs_migrate_qts_data( $db_commit );
     }

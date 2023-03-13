@@ -1,8 +1,8 @@
 <?php
 
-require_once( QTRANSLATE_DIR . '/modules/qtx_admin_module_manager.php' );
-require_once( QTRANSLATE_DIR . '/modules/qtx_admin_module.php' );
-require_once( QTRANSLATE_DIR . '/modules/qtx_module_state.php' );
+require_once QTRANSLATE_DIR . '/modules/qtx_admin_module_manager.php';
+require_once QTRANSLATE_DIR . '/modules/qtx_admin_module.php';
+require_once QTRANSLATE_DIR . '/modules/qtx_module_state.php';
 
 /**
  * Module admin settings, for display in the settings panels.

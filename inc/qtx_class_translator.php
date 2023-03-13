@@ -3,10 +3,10 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-require_once( QTRANSLATE_DIR . '/inc/i18n-interface.php' );
+require_once QTRANSLATE_DIR . '/inc/i18n-interface.php';
 require_once QTRANSLATE_DIR . '/src/qtx_utils.php';
 require_once QTRANSLATE_DIR . '/src/qtx_core.php';
-require_once( QTRANSLATE_DIR . '/inc/qtx_taxonomy.php' );
+require_once QTRANSLATE_DIR . '/inc/qtx_taxonomy.php';
 
 /**
  * Implementation of WP_Translator interface.

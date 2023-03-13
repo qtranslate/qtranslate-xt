@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( WP_DEBUG ) {
-    require_once( QTRANSLATE_DIR . '/inc/qtx_dbg.php' );
+    require_once QTRANSLATE_DIR . '/inc/qtx_dbg.php';
 }
 
 /**

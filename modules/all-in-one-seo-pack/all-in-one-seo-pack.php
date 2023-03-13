@@ -5,9 +5,9 @@
 
 function qtranxf_aioseop_init_language( $url_info ) {
     if ( $url_info['doing_front_end'] ) {
-        require_once( dirname( __FILE__ ) . "/qaioseop-front.php" );
+        require_once __DIR__ . '/qaioseop-front.php';
     } else {
-        require_once( dirname( __FILE__ ) . "/qaioseop-admin.php" );
+        require_once __DIR__ . '/qaioseop-admin.php';
     }
 }
 

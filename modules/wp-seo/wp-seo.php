@@ -7,9 +7,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function qtranxf_wpseo_init_language( $url_info ) {
     if ( $url_info['doing_front_end'] ) {
-        require_once( dirname( __FILE__ ) . '/wp-seo-front.php' );
+        require_once __DIR__ . '/wp-seo-front.php';
     } else {
-        require_once( dirname( __FILE__ ) . '/wp-seo-admin.php' );
+        require_once __DIR__ . '/wp-seo-admin.php';
     }
 }
 

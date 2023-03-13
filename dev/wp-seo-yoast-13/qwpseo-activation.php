@@ -1,17 +1,17 @@
 <?php
 //if(is_admin() && !wp_doing_ajax()){
-//	require_once(dirname(__FILE__).'/qwpseo-activation.php');
+//	require_once __DIR__ . '/qwpseo-activation.php';
 //	$file = wp_normalize_path(__FILE__);
 //	register_activation_hook($file, 'qwpseo_activation_hook');
 //}
 
 //if(wp_doing_ajax()){
-//	require_once(dirname(__FILE__).'/qwpseo-activation.php');
+//	require_once __DIR__ . '/qwpseo-activation.php';
 //	add_action('wp_ajax_qwpseo_meta_fix', 'qwpseo_ajax_meta_fix');
 //}else{
 //	$n = get_option('qwpseo_meta_fix');
 //	if(!is_numeric($n) || $n > 0){
-//		require_once(dirname(__FILE__).'/qwpseo-activation.php');
+//		require_once __DIR__ . '/qwpseo-activation.php';
 //		qwpseo_meta_check();
 //	}
 

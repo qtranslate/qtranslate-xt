@@ -3,8 +3,8 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-require_once( QTRANSLATE_DIR . '/admin/qtx_admin_utils.php' );
-require_once( QTRANSLATE_DIR . '/modules/qtx_admin_module.php' );
+require_once QTRANSLATE_DIR . '/admin/qtx_admin_utils.php';
+require_once QTRANSLATE_DIR . '/modules/qtx_admin_module.php';
 
 function qtranxf_admin_set_default_options( &$options ) {
     // options processed in a standardized way
@@ -81,7 +81,7 @@ function qtranxf_admin_load_config() {
     qtranxf_load_option_array( 'admin_enabled_modules', $qtranslate_options['admin']['admin_enabled_modules'] );
 
     if ( empty( $q_config['admin_config'] ) ) {
-        require_once( QTRANSLATE_DIR . '/admin/qtx_admin_options_update.php' );
+        require_once QTRANSLATE_DIR . '/admin/qtx_admin_options_update.php';
         qtranxf_update_i18n_config();
     }
 

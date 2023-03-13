@@ -1,7 +1,7 @@
 <?php
 
-require_once( QTRANSLATE_DIR . '/modules/qtx_admin_module.php' );
-require_once( QTRANSLATE_DIR . '/modules/qtx_module_state.php' );
+require_once QTRANSLATE_DIR . '/modules/qtx_admin_module.php';
+require_once QTRANSLATE_DIR . '/modules/qtx_module_state.php';
 
 /**
  * Module admin management, taking care of the state updates and notices.
@@ -33,7 +33,7 @@ class QTX_Admin_Module_Manager {
         global $q_config;
 
         $option_modules = array();
-        require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+        require_once ABSPATH . 'wp-admin/includes/plugin.php';
         foreach ( QTX_Admin_Module::get_modules() as $module ) {
             $state = self::can_module_be_activated( $module, $func_is_active );
             if ( $state == QTX_MODULE_STATE_ACTIVE ) {
@@ -68,7 +68,7 @@ class QTX_Admin_Module_Manager {
             return true; // Attention: should not be interpreted as "having a plugin".
         }
 
-        require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+        require_once ABSPATH . 'wp-admin/includes/plugin.php';
         // TODO the call_user_func should be replaced by direct calls from PHP7
         foreach ( $module->plugins as $plugin ) {
             if ( call_user_func( $func_is_active, $plugin ) ) {

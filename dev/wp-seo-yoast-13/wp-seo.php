@@ -13,9 +13,9 @@ function qwpseo_init_language( $url_info ) {
     }
     global $q_config;
     if ( $url_info['doing_front_end'] ) {
-        require_once( dirname( __FILE__ ) . '/qwpseo-front.php' );
+        require_once __DIR__ . '/qwpseo-front.php';
     } else {
-        require_once( dirname( __FILE__ ) . '/qwpseo-admin.php' );
+        require_once __DIR__ . '/qwpseo-admin.php';
     }
 }
 
