@@ -35,7 +35,7 @@ class QTX_Module_Loader {
 
         foreach ( $modules_state as $module_id => $state ) {
             if ( $state === QTX_MODULE_STATE_ACTIVE ) {
-                include_once( QTRANSLATE_DIR . '/modules/' . $module_id . '/' . $module_id . '.php' );
+                require_once QTRANSLATE_DIR . '/modules/' . $module_id . '/' . $module_id . '.php';
             }
         }
     }

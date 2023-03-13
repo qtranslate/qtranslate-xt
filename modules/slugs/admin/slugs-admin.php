@@ -2,7 +2,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
-include_once( dirname( __FILE__ ) . '/slugs-settings.php' );
+require_once __DIR__ . '/slugs-settings.php';
 
 // add filters
 add_filter( 'wp_get_object_terms', 'qtranxf_slugs_get_object_terms', 0, 4 );
