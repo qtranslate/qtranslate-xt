@@ -3,10 +3,6 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-if ( WP_DEBUG ) {
-    require_once QTRANSLATE_DIR . '/inc/qtx_dbg.php';
-}
-
 /**
  * Default domain translation for strings already translated by WordPress.
  * Use of this function prevents xgettext, poedit and other translating parsers from including the string that does not need translation.
