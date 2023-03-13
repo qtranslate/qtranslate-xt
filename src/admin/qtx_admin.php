@@ -527,11 +527,11 @@ function qtranxf_get_admin_highlight_css( $highlight_mode ) {
 function qtranxf_add_admin_css() {
     global $q_config;
 
-    wp_register_style( 'qtranslate-admin-style', plugins_url( 'admin/css/qtranslate_configuration.css', QTRANSLATE_FILE ), array(), QTX_VERSION );
+    wp_register_style( 'qtranslate-admin-style', plugins_url( 'css/qtranslate_configuration.css', QTRANSLATE_FILE ), array(), QTX_VERSION );
     wp_enqueue_style( 'qtranslate-admin-style' );
     qtranxf_add_admin_lang_icons();
     $css = qtranxf_add_admin_highlight_css();
-    $fn  = QTRANSLATE_DIR . '/admin/css/opLSBStyle/' . $q_config['lsb_style'];
+    $fn  = QTRANSLATE_DIR . '/css/opLSBStyle/' . $q_config['lsb_style'];
     if ( file_exists( $fn ) ) {
         $css .= file_get_contents( $fn );
     }

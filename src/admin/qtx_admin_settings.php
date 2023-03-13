@@ -632,7 +632,7 @@ class QTX_Admin_Settings {
                 </td>
             </tr>
             <?php
-            $options = qtranxf_fetch_file_selection( QTRANSLATE_DIR . '/admin/css/opLSBStyle' );
+            $options = qtranxf_fetch_file_selection( QTRANSLATE_DIR . '/css/opLSBStyle' );
             if ( $options ) {
                 ?>
                 <tr id="option_lsb_style">
