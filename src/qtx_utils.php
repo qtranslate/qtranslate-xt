@@ -386,7 +386,7 @@ function qtranxf_external_host( $host ) {
 function qtranxf_isMultilingual( $str ) {
     $lang_code = QTX_LANG_CODE_FORMAT;
 
-    return preg_match( "/<!--:$lang_code-->|\[:$lang_code]|{:$lang_code}/im", $str );
+	return !is_null($str) && preg_match( "/<!--:$lang_code-->|\[:$lang_code]|{:$lang_code}/im", $str );
 }
 
 function qtranxf_is_multilingual_deep( $value ) {
