@@ -444,8 +444,8 @@ function qtranxf_admin_footer() {
 
     $config['lang_code_format'] = QTX_LANG_CODE_FORMAT;
 
-    // Last chance to customize Java script variable qTranslateConfig
-    $config = apply_filters( 'qtranslate_admin_page_config', $config );
+    $config = apply_filters_deprecated( 'qtranslate_admin_page_config', array( $config ), '3.13.1', '',
+        'No clear use case, create a request on https://github.com/qtranslate/qtranslate-xt/issues if needed.' );
 
     qtranxf_enqueue_scripts( $page_config['js'] );
     ?>
