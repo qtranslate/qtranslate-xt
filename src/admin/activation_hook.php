@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-require_once QTRANSLATE_DIR . '/src/modules/qtx_admin_module_manager.php';
+require_once QTRANSLATE_DIR . '/src/modules/admin_module_manager.php';
 
 /**
  * Save language properties from configuration to WP options
@@ -763,8 +763,8 @@ function qtranxf_activation_hook() {
         wp_die( $msg );
     }
 
-    require_once QTRANSLATE_DIR . '/src/admin/qtx_admin_options.php';
-    require_once QTRANSLATE_DIR . '/src/admin/qtx_import_export.php';
+    require_once QTRANSLATE_DIR . '/src/admin/admin_options.php';
+    require_once QTRANSLATE_DIR . '/src/admin/import_export.php';
 
     // Check if other qTranslate forks are activated.
     if ( is_plugin_active( 'mqtranslate/mqtranslate.php' ) ) {

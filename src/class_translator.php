@@ -4,9 +4,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once QTRANSLATE_DIR . '/src/i18n-interface.php';
-require_once QTRANSLATE_DIR . '/src/qtx_utils.php';
-require_once QTRANSLATE_DIR . '/src/qtx_core.php';
-require_once QTRANSLATE_DIR . '/src/qtx_taxonomy.php';
+require_once QTRANSLATE_DIR . '/src/utils.php';
+require_once QTRANSLATE_DIR . '/src/core.php';
+require_once QTRANSLATE_DIR . '/src/taxonomy.php';
 
 /**
  * Implementation of WP_Translator interface.

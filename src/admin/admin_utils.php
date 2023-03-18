@@ -362,7 +362,7 @@ function qtranxf_updateGettextDatabases( $force = false, $only_for_language = ''
 }
 
 function qtranxf_update_gettext_databases( $force = false, $only_for_language = '' ) {
-    require_once QTRANSLATE_DIR . '/src/admin/qtx_update_gettext_db.php';
+    require_once QTRANSLATE_DIR . '/src/admin/update_gettext_db.php';
 
     return qtranxf_update_gettext_databases_ex( $force, $only_for_language );
 }

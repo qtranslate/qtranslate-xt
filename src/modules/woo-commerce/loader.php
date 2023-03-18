@@ -90,7 +90,7 @@ function qtranxf_wc_deliver_webhook_async( $webhook_id, $arg ) {
 
 add_action( 'woocommerce_deliver_webhook_async', 'qtranxf_wc_deliver_webhook_async', 5, 2 );
 
-//TODO: check if this function is to be generalized and moved to qtx_taxonomy.php
+//TODO: check if this function is to be generalized and moved to taxonomy.php
 function qtranxf_wc_get_term_raw_ML( $obj ) {
     $term = qtranxf_useTermLib( $obj );
     if ( ! empty( $term->i18n_config['name']['ts'] ) ) {

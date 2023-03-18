@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-require_once QTRANSLATE_DIR . '/src/qtx_date_time.php';
+require_once QTRANSLATE_DIR . '/src/date_time.php';
 
 /**
  * locale for current language and set it on PHP.

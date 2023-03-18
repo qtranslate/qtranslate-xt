@@ -18,7 +18,7 @@ function qtranxf_load_languages( &$cfg ) {
     return $cfg;
 }
 
-// function qtranxf_save_languages($cfg) is in qtx_activation_hook.php as it is in use there
+// function qtranxf_save_languages($cfg) is in activation_hook.php as it is in use there
 
 /**
  * Remove language $lang properties from hash $langs.

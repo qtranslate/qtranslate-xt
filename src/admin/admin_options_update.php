@@ -3,9 +3,9 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-require_once QTRANSLATE_DIR . '/src/admin/qtx_admin_options.php';
-require_once QTRANSLATE_DIR . '/src/admin/qtx_import_export.php';
-require_once QTRANSLATE_DIR . '/src/modules/qtx_admin_module_manager.php';
+require_once QTRANSLATE_DIR . '/src/admin/admin_options.php';
+require_once QTRANSLATE_DIR . '/src/admin/import_export.php';
+require_once QTRANSLATE_DIR . '/src/modules/admin_module_manager.php';
 
 function qtranxf_editConfig() {
     _deprecated_function( __FUNCTION__, '3.10.0', 'qtranxf_edit_config' );
@@ -963,7 +963,7 @@ function qtranxf_executeOnUpdate() {
 
     // ==== import/export msg was here
     if ( isset( $_POST['convert_database'] ) ) {
-        require_once QTRANSLATE_DIR . '/src/admin/qtx_admin_utils_db.php';
+        require_once QTRANSLATE_DIR . '/src/admin/admin_utils_db.php';
         $msg = qtranxf_convert_database( $_POST['convert_database'] );
         if ( $msg ) {
             $messages[] = $msg;

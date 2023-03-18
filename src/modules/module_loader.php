@@ -1,6 +1,6 @@
 <?php
 
-require_once QTRANSLATE_DIR . '/src/modules/qtx_module_state.php';
+require_once QTRANSLATE_DIR . '/src/modules/module_state.php';
 
 /**
  * Provide the ability to load the modules and check the stored state, with a minimal overhead for the front-side.
