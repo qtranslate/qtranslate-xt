@@ -3,7 +3,7 @@
 module.exports = {
     entry: {
         'main': './js/main.js',
-        'editor-gutenberg': './js/editor-gutenberg.js',
+        'block-editor': './js/block-editor.js',
         'notices': './js/notices.js',
         'options': './js/options.js',
         'modules/acf': './js/acf/index.js',

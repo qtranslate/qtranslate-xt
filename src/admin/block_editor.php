@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin handler for Gutenberg
+ * Admin handler for the block editor (Gutenberg)
  * @author: herrvigg
  */
 
@@ -9,14 +9,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Class QTX_Admin_Gutenberg
+ * Class QTX_Admin_Block_Editor
  *
- * Manages the Gutenberg block editor with the related REST API.
+ * Manages the block editor (Gutenberg) with the related REST API.
  * Limitation: only the single language mode is supported.
  */
-class QTX_Admin_Gutenberg {
+class QTX_Admin_Block_Editor {
     /**
-     * QTX_Admin_Gutenberg constructor
+     * Constructor.
      */
     public function __construct() {
         add_action( 'rest_api_init', array( $this, 'rest_api_init' ) );
@@ -179,13 +179,13 @@ class QTX_Admin_Gutenberg {
         }
 
         wp_register_script(
-            'qtx-gutenberg',
-            plugins_url( 'dist/editor-gutenberg.js', QTRANSLATE_FILE ),
+            'qtx-block-editor',
+            plugins_url( 'dist/block-editor.js', QTRANSLATE_FILE ),
             array(),
             QTX_VERSION,
             true
         );
-        wp_enqueue_script( 'qtx-gutenberg' );
+        wp_enqueue_script( 'qtx-block-editor' );
     }
 
     /**
@@ -215,4 +215,4 @@ class QTX_Admin_Gutenberg {
 
 }
 
-new QTX_Admin_Gutenberg();
+new QTX_Admin_Block_Editor();

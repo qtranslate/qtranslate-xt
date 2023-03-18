@@ -825,7 +825,7 @@ function qtranxf_activation_hook() {
         }
     }
 
-    // show gutenberg notice again if there is no active support for Classic or alternative
+    // Show block editor (Gutenberg) notice again if there is no active support for Classic or alternative.
     if ( ! qtranxf_is_classic_editor_supported() && isset( $messages['gutenberg-support'] ) ) {
         qtranxf_update_option_admin_notices( $messages, 'gutenberg-support', false );
     }
@@ -905,9 +905,9 @@ function qtranxf_admin_notice_first_install() {
 add_action( 'admin_notices', 'qtranxf_admin_notice_first_install' );
 
 /**
- * Show admin notice for Gutenberg
+ * Show admin notice for block editor (Gutenberg)
  */
-function qtranxf_admin_notices_gutenberg() {
+function qtranxf_admin_notices_block_editor() {
     if ( qtranxf_check_admin_notice( 'gutenberg-support' ) ) {
         return;
     }
@@ -929,7 +929,7 @@ function qtranxf_admin_notices_gutenberg() {
     <?php
 }
 
-add_action( 'admin_notices', 'qtranxf_admin_notices_gutenberg' );
+add_action( 'admin_notices', 'qtranxf_admin_notices_block_editor' );
 
 function qtranxf_admin_notices_slugs_migrate() {
     if ( qtranxf_check_admin_notice( 'slugs-migrate' ) || ! QTX_Module_Loader::is_module_active( 'slugs' ) ) {

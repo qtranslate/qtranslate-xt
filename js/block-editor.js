@@ -1,5 +1,5 @@
 /**
- * middleware handler for Gutenberg editor
+ * Middleware handler for the block editor (Gutenberg).
  *
  * $author herrvigg
  */

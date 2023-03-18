@@ -881,7 +881,7 @@ function qtranxf_admin_load() {
 
     global $wp_version;
     if ( version_compare( $wp_version, '5.0' ) >= 0 ) {
-        require_once QTRANSLATE_DIR . '/src/admin/admin_gutenberg.php';
+        require_once QTRANSLATE_DIR . '/src/admin/block_editor.php';
     }
 
     // Disable the block editor from managing widgets, including the Gutenberg plugin
