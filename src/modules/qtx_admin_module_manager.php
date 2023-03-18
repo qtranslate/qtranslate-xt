@@ -1,7 +1,7 @@
 <?php
 
-require_once QTRANSLATE_DIR . '/modules/qtx_admin_module.php';
-require_once QTRANSLATE_DIR . '/modules/qtx_module_state.php';
+require_once QTRANSLATE_DIR . '/src/modules/qtx_admin_module.php';
+require_once QTRANSLATE_DIR . '/src/modules/qtx_module_state.php';
 
 /**
  * Module admin management, taking care of the state updates and notices.

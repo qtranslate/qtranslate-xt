@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-require_once QTRANSLATE_DIR . '/modules/qtx_admin_module_manager.php';
+require_once QTRANSLATE_DIR . '/src/modules/qtx_admin_module_manager.php';
 
 /**
  * Save language properties from configuration to WP options
@@ -939,7 +939,7 @@ function qtranxf_admin_notices_slugs_migrate() {
     if ( ! $old_value ) {
         return;
     }
-    require_once QTRANSLATE_DIR . '/modules/slugs/admin/slugs-migrate-qts.php';
+    require_once QTRANSLATE_DIR . '/src/modules/slugs/admin_migrate_qts.php';
     $msg = qtranxf_slugs_check_migrate_qts();  // More advanced checks with QTS meta.
     if ( empty( $msg ) ) {
         return;

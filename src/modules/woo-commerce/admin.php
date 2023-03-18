@@ -47,7 +47,7 @@ qtranxf_wc_add_filters_admin();
 
 add_action( 'admin_enqueue_scripts', 'qtranxf_wc_add_admin_styles' );
 function qtranxf_wc_add_admin_styles() {
-    wp_enqueue_style( 'qtranxf_wc_qtranslate_admin', plugins_url( '/qwc-admin.css', __FILE__ ), array(), QTX_VERSION );
+    wp_enqueue_style( 'qtranxf_wc_qtranslate_admin', plugins_url( '/css/modules/woo-commerce.css', QTRANSLATE_FILE ), array(), QTX_VERSION );
 }
 
 add_filter( 'qtranslate_admin_config', 'qtranxf_wc_add_admin_page_config' );

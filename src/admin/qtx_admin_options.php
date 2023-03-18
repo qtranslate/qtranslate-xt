@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once QTRANSLATE_DIR . '/src/admin/qtx_admin_utils.php';
-require_once QTRANSLATE_DIR . '/modules/qtx_admin_module.php';
+require_once QTRANSLATE_DIR . '/src/modules/qtx_admin_module.php';
 
 function qtranxf_admin_set_default_options( &$options ) {
     // options processed in a standardized way

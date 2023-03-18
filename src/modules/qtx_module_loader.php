@@ -1,6 +1,6 @@
 <?php
 
-require_once QTRANSLATE_DIR . '/modules/qtx_module_state.php';
+require_once QTRANSLATE_DIR . '/src/modules/qtx_module_state.php';
 
 /**
  * Provide the ability to load the modules and check the stored state, with a minimal overhead for the front-side.
@@ -35,7 +35,7 @@ class QTX_Module_Loader {
 
         foreach ( $modules_state as $module_id => $state ) {
             if ( $state === QTX_MODULE_STATE_ACTIVE ) {
-                require_once QTRANSLATE_DIR . '/modules/' . $module_id . '/' . $module_id . '.php';
+                require_once QTRANSLATE_DIR . '/src/modules/' . $module_id . '/' . 'loader.php';
             }
         }
     }

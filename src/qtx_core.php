@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once QTRANSLATE_DIR . '/src/qtx_language_blocks.php';
 require_once QTRANSLATE_DIR . '/src/qtx_options.php';
-require_once QTRANSLATE_DIR . '/modules/qtx_module_loader.php';
+require_once QTRANSLATE_DIR . '/src/modules/qtx_module_loader.php';
 
 function qtranxf_init_language() {
     global $q_config, $pagenow;
