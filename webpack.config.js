@@ -6,7 +6,7 @@ module.exports = {
         'editor-gutenberg': './js/editor-gutenberg.js',
         'notices': './js/notices.js',
         'options': './js/options.js',
-        'modules/acf': './modules/acf/js/index.js',
+        'modules/acf': './js/acf/index.js',
     },
     output: {
         clean: true,

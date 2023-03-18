@@ -143,6 +143,11 @@ function qtranxf_admin_is_config_page() {
 function qtranxf_admin_init() {
     global $q_config;
 
+    add_filter( 'qtranslate_admin_page_config', function ( $config ) {
+        return $config;
+    } );
+
+
     if ( current_user_can( 'manage_options' ) ) {
         add_action( 'admin_notices', 'qtranxf_admin_notices_config' );
 

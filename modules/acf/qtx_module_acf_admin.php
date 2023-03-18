@@ -45,7 +45,7 @@ class QTX_Module_Acf_Admin {
      * Load javascript and stylesheets on admin pages
      */
     public function admin_enqueue_scripts() {
-        wp_enqueue_style( 'qtranslate-acf', plugins_url( 'modules/acf/assets/acf.css', QTRANSLATE_FILE ),
+        wp_enqueue_style( 'qtranslate-acf', plugins_url( 'css/acf/acf.css', QTRANSLATE_FILE ),
             array( 'acf-input' ), QTX_VERSION );
 
         wp_enqueue_script( 'qtranslate-acf', plugins_url( 'dist/modules/acf.js', QTRANSLATE_FILE ), array(
