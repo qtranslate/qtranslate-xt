@@ -54,14 +54,14 @@ if ( ! function_exists( 'add_filter' ) ) {
  * Designed as interface for other plugin integration. The documentation is available at
  * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide/
  */
-define( 'QTX_VERSION', '3.13.1.dev.1' );
+define( 'QTX_VERSION', '3.13.1.dev.2' );
 
 if ( ! defined( 'QTRANSLATE_FILE' ) ) {
     define( 'QTRANSLATE_FILE', __FILE__ );
     define( 'QTRANSLATE_DIR', __DIR__ );
 }
 
-require_once QTRANSLATE_DIR . '/inc/qtx_class_translator.php';
+require_once QTRANSLATE_DIR . '/src/qtx_class_translator.php';
 
 if ( is_admin() ) {
     require_once QTRANSLATE_DIR . '/src/admin/qtx_activation_hook.php';

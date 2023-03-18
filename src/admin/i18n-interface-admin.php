@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /**
  * WP_Translator interface for admin side.
- * See also documentation of interface WP_Translator in ./inc/i18n-interface.php
+ * See also documentation of interface WP_Translator in i18n-interface.php
  *
  * @since 3.4
  */

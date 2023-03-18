@@ -39,7 +39,7 @@ define( 'TRANSLATE_SHOW_EMPTY', 4 );
  *   $term = apply_filters('translate_term', $term, $lang=null, $taxonomy=null);
  *   $url  = apply_filters('translate_url', $url, $lang=null);
  *
- * Available at admin-side only (see ./admin/i18n-interface-admin.php for function documentations):
+ * Available at admin-side only (see admin/i18n-interface-admin.php for function documentations):
  *
  *   $term = apply_filters('multilingual_term', $term, $term_default=null, $taxonomy=null);
  *
