@@ -488,13 +488,13 @@ function qtranxf_add_admin_lang_icons() {
 }
 
 /**
- * Add CSS code to highlight the translatable fields
+ * Echo CSS code to highlight the translatable fields.
  */
 function qtranxf_add_admin_highlight_css() {
     global $q_config;
 
     if ( $q_config['highlight_mode'] == QTX_HIGHLIGHT_MODE_NONE || get_the_author_meta( 'qtranslate_highlight_disabled', get_current_user_id() ) ) {
-        return '';
+        return;
     }
     $highlight_mode = $q_config['highlight_mode'];
     switch ( $highlight_mode ) {
@@ -503,11 +503,25 @@ function qtranxf_add_admin_highlight_css() {
             break;
         default:
             $css = qtranxf_get_admin_highlight_css( $highlight_mode );
+            break;
     }
-
-    return $css;
+    $current_color_scheme = qtranxf_get_user_admin_color();
+    foreach ( $current_color_scheme as $key => $color ) {
+        $css = preg_replace( '/#UserColor' . $key . '/m', $color, $css );
+    }
+    echo '<style media="screen">' . PHP_EOL;
+    echo $css;
+    do_action_deprecated( 'qtranslate_admin_css', array(), '3.10.0', 'admin_enqueue_scripts', 'Discourage internal CSS' );
+    echo '</style>' . PHP_EOL;
 }
 
+/**
+ * Retrieve the CSS as string for a highlight mode corresponding to a preset.
+ *
+ * @param string $highlight_mode
+ *
+ * @return string
+ */
 function qtranxf_get_admin_highlight_css( $highlight_mode ) {
     $css = 'input.qtranxs-translatable, textarea.qtranxs-translatable, div.qtranxs-translatable, span.qtranxs-translatable {' . PHP_EOL;
     switch ( $highlight_mode ) {
@@ -523,6 +537,8 @@ function qtranxf_get_admin_highlight_css( $highlight_mode ) {
         case QTX_HIGHLIGHT_MODE_OUTLINE:
             $css .= 'outline: 2px solid #UserColor2 !important;' . PHP_EOL;
             break;
+        default:
+            assert( false ); // Unexpected value for this function that handles presets only.
     }
     $css .= '}' . PHP_EOL;
 
@@ -531,22 +547,12 @@ function qtranxf_get_admin_highlight_css( $highlight_mode ) {
 
 function qtranxf_add_admin_css() {
     global $q_config;
-
     wp_register_style( 'qtranslate-admin', plugins_url( 'css/admin.css', QTRANSLATE_FILE ), array(), QTX_VERSION );
     wp_enqueue_style( 'qtranslate-admin' );
     wp_register_style( 'qtranslate-admin-lsb', plugins_url( 'css/lsb/' . $q_config['lsb_style'], QTRANSLATE_FILE ), array(), QTX_VERSION );
     wp_enqueue_style( 'qtranslate-admin-lsb' );
-
     qtranxf_add_admin_lang_icons();
-    $css                  = qtranxf_add_admin_highlight_css();
-    $current_color_scheme = qtranxf_get_user_admin_color();
-    foreach ( $current_color_scheme as $key => $color ) {
-        $css = preg_replace( '/#UserColor' . $key . '/m', $color, $css );
-    }
-    echo '<style media="screen">' . PHP_EOL;
-    echo $css;
-    do_action_deprecated( 'qtranslate_admin_css', array(), '3.10.0', 'admin_enqueue_scripts', 'Discourage internal CSS' );
-    echo '</style>' . PHP_EOL;
+    qtranxf_add_admin_highlight_css();
 }
 
 function qtranxf_admin_head() {
