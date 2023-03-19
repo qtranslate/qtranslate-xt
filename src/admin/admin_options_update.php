@@ -910,6 +910,10 @@ function qtranxf_update_settings() {
     if ( $_POST['highlight_mode'] != QTX_HIGHLIGHT_MODE_CUSTOM_CSS ) {
         $_POST['highlight_mode_custom_css'] = '';
     }
+    if ( isset( $_POST['lsb_style'] ) && $_POST['lsb_style'] !== QTX_LSB_STYLE_CUSTOM ) {
+        // Admin can only select some option, if CSS file doesn't exist in expected path it's a bug, not a config error.
+        assert( file_exists( QTRANSLATE_DIR . '/css/lsb/' . $_POST['lsb_style'] ) );
+    }
 
     qtranxf_parse_post_type_excluded();
     // special cases handling for admin options - end
