@@ -22,7 +22,7 @@ function qtranxf_admin_set_default_options( &$options ) {
 
     // single line options
     $options['admin']['str'] = array(
-        'lsb_style' => 'simple-buttons.css'
+        'lsb_style' => QTX_LSB_STYLE_SIMPLE_BUTTONS
     );
 
     // multi-line options

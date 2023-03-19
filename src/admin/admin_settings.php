@@ -633,12 +633,11 @@ class QTX_Admin_Settings {
             </tr>
             <?php
             $lsb_styles = [
-                'simple-buttons.css' => __( 'Simple Buttons', 'qtranslate' ),
-                'simple-tabs.css'    => __( 'Simple Tabs', 'qtranslate' ),
-                'tabs-in-block.css'  => __( 'Tabs in Block', 'qtranslate' ),
-                'custom'             => __( 'Use custom CSS', 'qtranslate' ),
-            ];
-            ?>
+                QTX_LSB_STYLE_SIMPLE_BUTTONS => __( 'Simple Buttons', 'qtranslate' ),
+                QTX_LSB_STYLE_SIMPLE_TABS    => __( 'Simple Tabs', 'qtranslate' ),
+                QTX_LSB_STYLE_TABS_IN_BLOCK  => __( 'Tabs in Block', 'qtranslate' ),
+                QTX_LSB_STYLE_CUSTOM         => __( 'Use custom CSS', 'qtranslate' ),
+            ]; ?>
             <tr id="option_lsb_style">
                 <th scope="row"><?php _e( 'LSB Style', 'qtranslate' ) ?></th>
                 <td>

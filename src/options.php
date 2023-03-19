@@ -49,6 +49,14 @@ const QTX_EDITOR_MODE_RAW    = 1;  // ML not translated
 const QTX_EDITOR_MODE_SINGLE = 2;  // ML translated for current admin language
 
 /**
+ * CSS style for the Language Switching Buttons (LSB).
+ */
+const QTX_LSB_STYLE_SIMPLE_BUTTONS = 'simple-buttons.css';
+const QTX_LSB_STYLE_SIMPLE_TABS    = 'simple-tabs.css';
+const QTX_LSB_STYLE_TABS_IN_BLOCK  = 'tabs-in-block.css';
+const QTX_LSB_STYLE_CUSTOM         = 'custom';
+
+/**
  * How the translatable fields are highlighted (CSS styles).
  */
 const QTX_HIGHLIGHT_MODE_NONE        = 0;

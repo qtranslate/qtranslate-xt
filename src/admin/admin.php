@@ -390,9 +390,9 @@ function qtranxf_admin_footer() {
     foreach ( $keys as $key ) {
         $config[ $key ] = $q_config[ $key ];
     }
-    $config['lsb_style_subitem']      = ( $q_config['lsb_style'] == 'simple-buttons.css' ) ? 'button' : '';
-    $config['lsb_style_active_class'] = ( $q_config['lsb_style'] == 'tabs-in-block.css' ) ? 'wp-ui-highlight' : 'active';
-    $config['lsb_style_wrap_class']   = ( $q_config['lsb_style'] == 'tabs-in-block.css' ) ? 'wp-ui-primary' : '';
+    $config['lsb_style_subitem']      = ( $q_config['lsb_style'] == QTX_LSB_STYLE_SIMPLE_BUTTONS ) ? 'button' : '';
+    $config['lsb_style_active_class'] = ( $q_config['lsb_style'] == QTX_LSB_STYLE_TABS_IN_BLOCK ) ? 'wp-ui-highlight' : 'active';
+    $config['lsb_style_wrap_class']   = ( $q_config['lsb_style'] == QTX_LSB_STYLE_TABS_IN_BLOCK ) ? 'wp-ui-primary' : '';
 
     $config['custom_fields']        = apply_filters( 'qtranslate_custom_fields', $q_config['custom_fields'] );
     $config['custom_field_classes'] = apply_filters( 'qtranslate_custom_field_classes', $q_config['custom_field_classes'] );
