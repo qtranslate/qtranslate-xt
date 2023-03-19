@@ -22,7 +22,7 @@ function qtranxf_admin_set_default_options( &$options ) {
 
     // single line options
     $options['admin']['str'] = array(
-        'lsb_style' => 'Simple_Buttons.css'
+        'lsb_style' => 'simple-buttons.css'
     );
 
     // multi-line options
@@ -84,6 +84,9 @@ function qtranxf_admin_load_config() {
         require_once QTRANSLATE_DIR . '/src/admin/admin_options_update.php';
         qtranxf_update_i18n_config();
     }
+
+    // TODO in future versions, remove temporary conversion for legacy CSS LSB values before 3.13.1
+    $q_config['lsb_style'] = str_replace( '_', '-', strtolower( $q_config['lsb_style'] ) );
 
     // opportunity to load additional admin features
     do_action( 'qtranslate_admin_load_config' );

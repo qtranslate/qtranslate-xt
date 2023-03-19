@@ -390,9 +390,9 @@ function qtranxf_admin_footer() {
     foreach ( $keys as $key ) {
         $config[ $key ] = $q_config[ $key ];
     }
-    $config['lsb_style_subitem']      = ( $q_config['lsb_style'] == 'Simple_Buttons.css' ) ? 'button' : '';
-    $config['lsb_style_active_class'] = ( $q_config['lsb_style'] == 'Tabs_in_Block.css' ) ? 'wp-ui-highlight' : 'active';
-    $config['lsb_style_wrap_class']   = ( $q_config['lsb_style'] == 'Tabs_in_Block.css' ) ? 'wp-ui-primary' : '';
+    $config['lsb_style_subitem']      = ( $q_config['lsb_style'] == 'simple-buttons.css' ) ? 'button' : '';
+    $config['lsb_style_active_class'] = ( $q_config['lsb_style'] == 'tabs-in-block.css' ) ? 'wp-ui-highlight' : 'active';
+    $config['lsb_style_wrap_class']   = ( $q_config['lsb_style'] == 'tabs-in-block.css' ) ? 'wp-ui-primary' : '';
 
     $config['custom_fields']        = apply_filters( 'qtranslate_custom_fields', $q_config['custom_fields'] );
     $config['custom_field_classes'] = apply_filters( 'qtranslate_custom_field_classes', $q_config['custom_field_classes'] );
@@ -532,17 +532,13 @@ function qtranxf_get_admin_highlight_css( $highlight_mode ) {
 function qtranxf_add_admin_css() {
     global $q_config;
 
-    wp_register_style( 'qtranslate-admin-style', plugins_url( 'css/qtranslate_configuration.css', QTRANSLATE_FILE ), array(), QTX_VERSION );
-    wp_enqueue_style( 'qtranslate-admin-style' );
+    wp_register_style( 'qtranslate-admin', plugins_url( 'css/admin.css', QTRANSLATE_FILE ), array(), QTX_VERSION );
+    wp_enqueue_style( 'qtranslate-admin' );
+    wp_register_style( 'qtranslate-admin-lsb', plugins_url( 'css/lsb/' . $q_config['lsb_style'], QTRANSLATE_FILE ), array(), QTX_VERSION );
+    wp_enqueue_style( 'qtranslate-admin-lsb' );
+
     qtranxf_add_admin_lang_icons();
-    $css = qtranxf_add_admin_highlight_css();
-    $fn  = QTRANSLATE_DIR . '/css/opLSBStyle/' . $q_config['lsb_style'];
-    if ( file_exists( $fn ) ) {
-        $css .= file_get_contents( $fn );
-    }
-    $css                  = preg_replace( '!/\\*.*?\\*/!ms', '', $css );
-    $css                  = preg_replace( '!//.*?$!m', '', $css );
-    $css                  = preg_replace( '/\\n\\s*\\n/m', "\n", $css );
+    $css                  = qtranxf_add_admin_highlight_css();
     $current_color_scheme = qtranxf_get_user_admin_color();
     foreach ( $current_color_scheme as $key => $color ) {
         $css = preg_replace( '/#UserColor' . $key . '/m', $color, $css );
