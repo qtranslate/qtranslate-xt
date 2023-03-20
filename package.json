@@ -23,10 +23,10 @@
   "homepage": "https://github.com/qtranslate/qtranslate-xt#readme",
   "devDependencies": {
     "@babel/cli": "^7.21.0",
-    "@babel/core": "^7.21.0",
+    "@babel/core": "^7.21.3",
     "@babel/preset-env": "^7.20.2",
     "babel-loader": "^9.1.2",
-    "webpack": "^5.76.1",
+    "webpack": "^5.76.2",
     "webpack-cli": "^5.0.1"
   },
   "dependencies": {}
