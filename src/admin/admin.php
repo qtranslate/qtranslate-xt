@@ -474,6 +474,11 @@ function qtranxf_admin_footer() {
     <?php
 }
 
+/**
+ * Echo CSS code for the flag icons of the active languages.
+ *
+ * @return void
+ */
 function qtranxf_add_admin_lang_icons() {
     global $q_config;
 
@@ -489,6 +494,8 @@ function qtranxf_add_admin_lang_icons() {
 
 /**
  * Echo CSS code to highlight the translatable fields.
+ *
+ * @return void
  */
 function qtranxf_add_admin_highlight_css() {
     global $q_config;
@@ -518,7 +525,7 @@ function qtranxf_add_admin_highlight_css() {
 /**
  * Retrieve the CSS as string for a highlight mode corresponding to a preset.
  *
- * @param string $highlight_mode
+ * @param int $highlight_mode
  *
  * @return string
  */
@@ -546,13 +553,7 @@ function qtranxf_get_admin_highlight_css( $highlight_mode ) {
 }
 
 function qtranxf_add_admin_css() {
-    global $q_config;
-    wp_register_style( 'qtranslate-admin', plugins_url( 'css/admin.css', QTRANSLATE_FILE ), array(), QTX_VERSION );
-    wp_enqueue_style( 'qtranslate-admin' );
-    wp_register_style( 'qtranslate-admin-lsb', plugins_url( 'css/lsb/' . $q_config['lsb_style'], QTRANSLATE_FILE ), array(), QTX_VERSION );
-    wp_enqueue_style( 'qtranslate-admin-lsb' );
-    qtranxf_add_admin_lang_icons();
-    qtranxf_add_admin_highlight_css();
+    _deprecated_function( __FUNCTION__, '3.13.1', 'qtranxf_admin_enqueue_scripts' );
 }
 
 function qtranxf_admin_head() {
@@ -560,7 +561,13 @@ function qtranxf_admin_head() {
 }
 
 function qtranxf_admin_enqueue_scripts() {
-    qtranxf_add_admin_css();
+    global $q_config;
+    wp_register_style( 'qtranslate-admin', plugins_url( 'css/admin.css', QTRANSLATE_FILE ), array(), QTX_VERSION );
+    wp_enqueue_style( 'qtranslate-admin' );
+    wp_register_style( 'qtranslate-admin-lsb', plugins_url( 'css/lsb/' . $q_config['lsb_style'], QTRANSLATE_FILE ), array(), QTX_VERSION );
+    wp_enqueue_style( 'qtranslate-admin-lsb' );
+    qtranxf_add_admin_lang_icons();
+    qtranxf_add_admin_highlight_css();
 
     if ( qtranxf_admin_is_config_page() ) {
         wp_enqueue_script( 'qtranslate-admin-options', plugins_url( 'dist/options.js', QTRANSLATE_FILE ), array(), QTX_VERSION );
