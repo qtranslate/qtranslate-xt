@@ -15,46 +15,20 @@ class QTX_Module_Acf_Field_Image extends acf_field_image {
      */
     function __construct( $register, $do_initialize ) {
         $this->register = $register;
-
         if ( $do_initialize ) {
             $this->initialize();
         }
-
-        acf_field::__construct();
+        parent::__construct();
     }
 
     /**
      *  Setup the field type data
      */
     function initialize() {
+        parent::initialize();
         $this->name     = 'qtranslate_image';
-        $this->label    = __( "Image", 'acf' ) . " (qTranslate-XT)";
-        $this->category = "qTranslate-XT";
-        $this->defaults = array(
-            'return_format' => 'array',
-            'preview_size'  => 'medium',
-            'library'       => 'all',
-            'min_width'     => 0,
-            'min_height'    => 0,
-            'min_size'      => 0,
-            'max_width'     => 0,
-            'max_height'    => 0,
-            'max_size'      => 0,
-            'mime_types'    => ''
-        );
-        $this->l10n     = array(
-            'select'     => __( "Select Image", 'acf' ),
-            'edit'       => __( "Edit Image", 'acf' ),
-            'update'     => __( "Update Image", 'acf' ),
-            'uploadedTo' => __( "Uploaded to this post", 'acf' ),
-            'all'        => __( "All images", 'acf' ),
-        );
-
-        add_filter( 'get_media_item_args', array( $this, 'get_media_item_args' ) );
-        // removed from ACF 5.8.3
-        if ( method_exists( $this, 'wp_prepare_attachment_for_js' ) ) {
-            add_filter( 'wp_prepare_attachment_for_js', array( $this, 'wp_prepare_attachment_for_js' ), 10, 3 );
-        }
+        $this->category = QTX_Module_Acf_Register::ACF_CATEGORY_QTX;
+        $this->label    .= ' [' . $this->category . ']';
     }
 
     /**
@@ -76,15 +50,15 @@ class QTX_Module_Acf_Field_Image extends acf_field_image {
             acf_enqueue_uploader();
         }
 
-        $default_value     = '';
-        $default_div_attrs = array(
+        $default_value                  = '';
+        $default_div_attrs              = array(
             'class'             => 'acf-image-uploader qtranxs-translatable',
             'data-preview_size' => $field['preview_size'],
             'data-library'      => $field['library'],
             'data-mime_types'   => $field['mime_types'],
             'data-uploader'     => $uploader,
         );
-        $default_img_attrs = array(
+        $default_img_attrs              = array(
             'src'       => '',
             'alt'       => '',
             'data-name' => 'image',
@@ -101,7 +75,7 @@ class QTX_Module_Acf_Field_Image extends acf_field_image {
         }
 
         foreach ( $languages as $language ):
-            $field['name']              = $field_name . '[' . $language . ']';
+            $field['name'] = $field_name . '[' . $language . ']';
             $field['value']             = $values[ $language ];
             $value                      = $default_value;
             $div_attrs                  = $default_div_attrs;
@@ -143,9 +117,11 @@ class QTX_Module_Acf_Field_Image extends acf_field_image {
                     <img <?php echo acf_esc_attrs( $img_attrs ); ?> />
                     <div class="acf-actions -hover">
                         <?php if ( $uploader !== 'basic' ) : ?>
-                            <a class="acf-icon -pencil dark" data-name="edit" href="#" title="<?php _e( 'Edit', 'acf' ); ?>"></a>
+                            <a class="acf-icon -pencil dark" data-name="edit" href="#"
+                               title="<?php _e( 'Edit', 'acf' ); ?>"></a>
                         <?php endif; ?>
-                        <a class="acf-icon -cancel dark" data-name="remove" href="#" title="<?php _e( 'Remove', 'acf' ); ?>"></a>
+                        <a class="acf-icon -cancel dark" data-name="remove" href="#"
+                           title="<?php _e( 'Remove', 'acf' ); ?>"></a>
                     </div>
                 </div>
                 <div class="hide-if-value">
@@ -165,7 +141,9 @@ class QTX_Module_Acf_Field_Image extends acf_field_image {
                             ?>
                         </label>
                     <?php else : ?>
-                        <p><?php _e( 'No image selected', 'acf' ); ?> <a data-name="add" class="acf-button button" href="#"><?php _e( 'Add Image', 'acf' ); ?></a></p>
+                        <p><?php _e( 'No image selected', 'acf' ); ?> <a data-name="add" class="acf-button button"
+                                                                         href="#"><?php _e( 'Add Image', 'acf' ); ?></a>
+                        </p>
                     <?php endif; ?>
                 </div>
             </div>

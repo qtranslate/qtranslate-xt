@@ -15,36 +15,20 @@ class QTX_Module_Acf_Field_File extends acf_field_file {
      */
     function __construct( $register, $do_initialize ) {
         $this->register = $register;
-
         if ( $do_initialize ) {
             $this->initialize();
         }
-
-        acf_field::__construct();
+        parent::__construct();
     }
 
     /**
      * Setup the field type data
      */
     function initialize() {
+        parent::initialize();
         $this->name     = 'qtranslate_file';
-        $this->label    = __( "File", 'acf' ) . " (qTranslate-XT)";
-        $this->category = "qTranslate-XT";
-        $this->defaults = array(
-            'return_format' => 'array',
-            'library'       => 'all',
-            'min_size'      => 0,
-            'max_size'      => 0,
-            'mime_types'    => ''
-        );
-        $this->l10n     = array(
-            'select'     => __( "Select File", 'acf' ),
-            'edit'       => __( "Edit File", 'acf' ),
-            'update'     => __( "Update File", 'acf' ),
-            'uploadedTo' => __( "Uploaded to this post", 'acf' ),
-        );
-
-        add_filter( 'get_media_item_args', array( $this, 'get_media_item_args' ) );
+        $this->category = QTX_Module_Acf_Register::ACF_CATEGORY_QTX;
+        $this->label    .= ' [' . $this->category . ']';
     }
 
     /**
