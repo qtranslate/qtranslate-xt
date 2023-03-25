@@ -15,25 +15,20 @@ class QTX_Module_Acf_Field_Url extends acf_field_url {
      */
     function __construct( $register, $do_initialize ) {
         $this->register = $register;
-
         if ( $do_initialize ) {
             $this->initialize();
         }
-
-        acf_field::__construct();
+        parent::__construct();
     }
 
     /**
      * Setup the field type data
      */
     function initialize() {
+        parent::initialize();
         $this->name     = 'qtranslate_url';
-        $this->label    = __( "Url", 'acf' ) . " (qTranslate-XT)";
-        $this->category = "qTranslate-XT";
-        $this->defaults = array(
-            'default_value' => '',
-            'placeholder'   => '',
-        );
+        $this->category = QTX_Module_Acf_Register::ACF_CATEGORY_QTX;
+        $this->label    .= ' [' . $this->category . ']';
     }
 
     /**

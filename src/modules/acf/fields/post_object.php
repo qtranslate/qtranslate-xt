@@ -15,32 +15,20 @@ class QTX_Module_Acf_Field_Post_Object extends acf_field_post_object {
      */
     function __construct( $register, $do_initialize ) {
         $this->register = $register;
-
         if ( $do_initialize ) {
             $this->initialize();
         }
-
-        acf_field::__construct();
+        parent::__construct();
     }
 
     /**
      *  Setup the field type data
      */
     function initialize() {
+        parent::initialize();
         $this->name     = 'qtranslate_post_object';
-        $this->label    = __( "Post Object", 'acf' ) . " (qTranslate-XT)";
-        $this->category = "qTranslate-XT";
-        $this->defaults = array(
-            'post_type'     => array(),
-            'taxonomy'      => array(),
-            'allow_null'    => 0,
-            'multiple'      => 0,
-            'return_format' => 'object',
-            'ui'            => 1,
-        );
-
-        add_action( 'wp_ajax_acf/fields/qtranslate_post_object/query', array( $this, 'ajax_query' ) );
-        add_action( 'wp_ajax_nopriv_acf/fields/qtranslate_post_object/query', array( $this, 'ajax_query' ) );
+        $this->category = QTX_Module_Acf_Register::ACF_CATEGORY_QTX;
+        $this->label    .= ' [' . $this->category . ']';
     }
 
     /**

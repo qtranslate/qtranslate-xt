@@ -5,6 +5,11 @@
  */
 class QTX_Module_Acf_Register {
     /**
+     * @var string ACF category ID for the qTranslate extended fields.
+     */
+    const ACF_CATEGORY_QTX = 'qTranslate-XT';
+
+    /**
      * Constructor
      */
     public function __construct() {
