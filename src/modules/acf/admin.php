@@ -9,6 +9,7 @@ class QTX_Module_Acf_Admin {
      */
     public function __construct() {
         add_action( 'acf/input/admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
+        add_filter( 'acf/get_field_types', array( $this, 'get_field_types' ) );
         add_action( 'admin_head', array( $this, 'admin_head' ) );
         add_action( 'admin_init', array( $this, 'admin_init' ) );
 
@@ -39,6 +40,51 @@ class QTX_Module_Acf_Admin {
             'instructions'  => __( 'Instructions', 'acf' ),
             'default_value' => __( 'Default Value', 'acf' ),
         ];
+    }
+
+    /**
+     * Return the qtranslate fields e.g. post or page.
+     * @return array
+     */
+    public static function qtranslate_fields() {
+        return [
+            'qtranslate_file',
+            'qtranslate_image',
+            'qtranslate_post_object',
+            'qtranslate_text',
+            'qtranslate_textarea',
+            'qtranslate_url',
+            'qtranslate_wysiwyg',
+        ];
+    }
+
+    /**
+     * Filter the field types to exclude the extended fields that have been deactivated in settings.
+     *
+     * @param array $groups
+     *
+     * @return array
+     */
+    public function get_field_types( $groups ) {
+        if ( ! isset ( $groups[ QTX_Module_Acf_Register::ACF_CATEGORY_QTX ] ) ) {
+            return $groups;
+        }
+        $fields    = array_keys( self::qtranslate_fields() );
+        $default   = array_fill_keys( array_keys( $fields ), false );
+        $settings  = self::get_module_setting( 'qtranslate_fields', $default );
+        $is_active = function ( $field ) use ( $settings ) {
+            return isset( $settings[ $field ] ) && $settings[ $field ];
+        };
+        $group_qtx = &$groups[ QTX_Module_Acf_Register::ACF_CATEGORY_QTX ];
+        foreach ( $group_qtx as $field_id => $field_object ) {
+            if ( ! $is_active( $field_id ) ) {
+                unset( $group_qtx[ $field_id ] );
+            }
+        }
+        if ( empty( $group_qtx ) ) {
+            unset( $groups[ QTX_Module_Acf_Register::ACF_CATEGORY_QTX ] );
+        }
+        return $groups;
     }
 
     /**
@@ -190,6 +236,7 @@ class QTX_Module_Acf_Admin {
      * Retrieve the value of a setting for the ACF module.
      *
      * @param string $name
+     * @param mixed $default
      *
      * @return mixed
      */
@@ -230,12 +277,21 @@ class QTX_Module_Acf_Admin {
             'section-acf-standard'
         );
 
-        // Extended fields (ACF-QTX overridden fields)
+        // Extended fields (overridden "qTranslate-XT" fields)
         add_settings_section(
             'section-acf-extended',
-            __( 'Extended fields', 'qtranslate' ),
-            '',
+            __( 'Extended qTranslate fields', 'qtranslate' ),
+            function () {
+                _e( 'Additional types with a specific handling and rendering for qTranslate. Prefer the standard ACF fields as much as possible.', 'qtranslate' );
+            },
             'settings-qtranslate-acf'
+        );
+        add_settings_field(
+            'select_qtranslate_fields',
+            __( 'Active types', 'qtranslate' ),
+            array( $this, 'render_setting_qtranslate_fields' ),
+            'settings-qtranslate-acf',
+            'section-acf-extended'
         );
         add_settings_field(
             'show_language_tabs',
@@ -295,6 +351,28 @@ class QTX_Module_Acf_Admin {
                 <input type="checkbox"
                        name="<?php echo QTX_OPTIONS_MODULE_ACF ?>[group_sub_fields][<?php echo $id ?>]" <?php checked( isset( $settings[ $id ] ) && $settings[ $id ] ); ?>
                        value="1"/><?php echo $label ?>
+            </label>
+            <br/>
+        <?php endforeach;
+    }
+
+    /**
+     * Render setting
+     */
+    public function render_setting_qtranslate_fields() {
+        $fields   = self::qtranslate_fields();
+        $default  = array_fill_keys( array_keys( $fields ), false );
+        $settings = self::get_module_setting( 'qtranslate_fields', $default );
+        foreach ( $fields as $id ):
+            $acf_type = acf()->fields->get_field_type( $id );
+            if ( ! isset( $acf_type ) ) {
+                continue;
+            }
+            ?>
+            <label>
+                <input type="checkbox"
+                       name="<?php echo QTX_OPTIONS_MODULE_ACF ?>[qtranslate_fields][<?php echo $id ?>]" <?php checked( isset( $settings[ $id ] ) && $settings[ $id ] ); ?>
+                       value="1"/><?php echo $acf_type->label ?>
             </label>
             <br/>
         <?php endforeach;
