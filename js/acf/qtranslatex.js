@@ -5,11 +5,11 @@ $(window).on('load', function () {
 
     qtx.enableLanguageSwitchingButtons('block');
 
-    const isTranslatableContentField = function (fieldType) {
-        return !!window.qTranslateModuleAcf?.content_fields?.[fieldType];
+    const isTranslatableStandardField = function (fieldType) {
+        return !!window.qTranslateModuleAcf?.standard_fields?.[fieldType];
     }
-    const isTranslatableGroupMetaField = function (fieldType) {
-        return !!window.qTranslateModuleAcf?.group_meta_fields?.[fieldType];
+    const isTranslatableGroupSubField = function (fieldType) {
+        return !!window.qTranslateModuleAcf?.group_sub_fields?.[fieldType];
     }
 
     const postType = $('#post_type').val();
@@ -17,9 +17,9 @@ $(window).on('load', function () {
         const isTranslatableGroupElement = function (element) {
             // Numerical id for existing field, 'field_<alphanum>' for new field being added.
             const match = element.id.match(/acf_fields-(\d+|field_[a-z0-9]+)-(label|instructions|default_value)/);
-            return match && isTranslatableGroupMetaField(match[2]) &&
+            return match && isTranslatableGroupSubField(match[2]) &&
                 // Special case for default value, requires both group and content type enabled.
-                ((match[2] !== 'default_value') || isTranslatableContentField(element.type));
+                ((match[2] !== 'default_value') || isTranslatableStandardField(element.type));
         }
         // Click on "Edit" or "Add" opens the settings for that field.
         acf.addAction('open_field_object', function (settingField) {
@@ -42,7 +42,7 @@ $(window).on('load', function () {
         textarea: 'textarea', // only regular textarea, not wysiwyg editors (.wp-editor-area).
     };
     $.each(fieldTypes, function (fieldType, selector) {
-        if (!isTranslatableContentField(fieldType)) {
+        if (!isTranslatableStandardField(fieldType)) {
             return;
         }
         acf.findFields({type: fieldType}).each(function () {
@@ -55,7 +55,7 @@ $(window).on('load', function () {
         });
     });
 
-    if (isTranslatableContentField('wysiwyg')) {
+    if (isTranslatableStandardField('wysiwyg')) {
         // The wysiwyg editor must be handled later than the usual sequence, because ACF are destroying some HTML fields:
         // See https://github.com/AdvancedCustomFields/acf/issues/767
         // If the usual content hooks are created before, the references point to HTML objects becoming detached from the doc.
