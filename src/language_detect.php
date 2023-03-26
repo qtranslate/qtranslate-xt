@@ -100,6 +100,26 @@ function qtranxf_detect_language( &$url_info ) {
     return $lang;
 }
 
+function qtranxf_resolveLangCase( $lang, &$caseredirect ) {
+    if ( qtranxf_isEnabled( $lang ) ) {
+        return $lang;
+    }
+    $lng = strtolower( $lang );
+    if ( qtranxf_isEnabled( $lng ) ) {
+        $caseredirect = true;
+
+        return $lng;
+    }
+    $lng = strtoupper( $lang );
+    if ( qtranxf_isEnabled( $lng ) ) {
+        $caseredirect = true;
+
+        return $lng;
+    }
+
+    return false;
+}
+
 /**
  * Parse language from the URL and/or query var, update url_info accordingly
  *

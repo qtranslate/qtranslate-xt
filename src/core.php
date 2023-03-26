@@ -141,26 +141,6 @@ function qtranxf_init_language() {
     do_action( 'qtranslate_init_language', $url_info );
 }
 
-function qtranxf_resolveLangCase( $lang, &$caseredirect ) {
-    if ( qtranxf_isEnabled( $lang ) ) {
-        return $lang;
-    }
-    $lng = strtolower( $lang );
-    if ( qtranxf_isEnabled( $lng ) ) {
-        $caseredirect = true;
-
-        return $lng;
-    }
-    $lng = strtoupper( $lang );
-    if ( qtranxf_isEnabled( $lng ) ) {
-        $caseredirect = true;
-
-        return $lng;
-    }
-
-    return false;
-}
-
 function qtranxf_load_option_qtrans_compatibility() {
     global $q_config;
     qtranxf_load_option_bool( 'qtrans_compatibility', false );
