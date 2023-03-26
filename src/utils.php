@@ -154,32 +154,6 @@ function qtranxf_insertDropDownElement( $language, $url, $id ) {
     return $html;
 }
 
-function qtranxf_isMultilingual( $str ) {
-    $lang_code = QTX_LANG_CODE_FORMAT;
-
-	return ! is_null( $str ) && preg_match( "/<!--:$lang_code-->|\[:$lang_code]|{:$lang_code}/im", $str );
-}
-
-function qtranxf_is_multilingual_deep( $value ) {
-    if ( is_string( $value ) ) {
-        return qtranxf_isMultilingual( $value );
-    } else if ( is_array( $value ) ) {
-        foreach ( $value as $item ) {
-            if ( qtranxf_is_multilingual_deep( $item ) ) {
-                return true;
-            }
-        }
-    } else if ( is_object( $value ) || $value instanceof __PHP_Incomplete_Class ) {
-        foreach ( get_object_vars( $value ) as $item ) {
-            if ( qtranxf_is_multilingual_deep( $item ) ) {
-                return true;
-            }
-        }
-    }
-
-    return false;
-}
-
 function qtranxf_getLanguage() {
     global $q_config;
 
@@ -296,27 +270,7 @@ function qtranxf_endsWith( $string, $needle ) {
     return true;
 }
 
-function qtranxf_getAvailableLanguages( $text ) {
-    global $q_config;
-    $blocks = qtranxf_get_language_blocks( $text );
-    if ( count( $blocks ) <= 1 ) {
-        return false; // no languages set
-    }
-    $result  = array();
-    $content = qtranxf_split_languages( $blocks );
-    foreach ( $content as $language => $lang_text ) {
-        $lang_text = trim( $lang_text );
-        if ( ! empty( $lang_text ) ) {
-            $result[] = $language;
-        }
-    }
-    if ( sizeof( $result ) == 0 ) {
-        // add default language to keep default URL
-        $result[] = $q_config['language'];
-    }
 
-    return $result;
-}
 
 function qtranxf_getSortedLanguages( $reverse = false ) {
     global $q_config;
