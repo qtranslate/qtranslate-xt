@@ -73,114 +73,6 @@ function qtranxf_plugin_dirname_from_wp_content() {
     return $dirname;
 }
 
-function qtranxf_parseURL( $url ) {
-    // this is not the same as native parse_url and so it is in use
-    // it should also work quicker than native parse_url, so we should keep it?
-    preg_match( '!(?:(\w+)://)?(?:(\w+):(\w+)@)?([^/:?#]+)?(?::(\d*))?([^#?]+)?(?:\?([^#]+))?(?:#(.+$))?!', $url, $out );
-    $result = array();
-    if ( ! empty( $out[1] ) ) {
-        $result['scheme'] = $out[1];
-    }
-    if ( ! empty( $out[2] ) ) {
-        $result['user'] = $out[2];
-    }
-    if ( ! empty( $out[3] ) ) {
-        $result['pass'] = $out[3];
-    }
-    if ( ! empty( $out[4] ) ) {
-        $result['host'] = $out[4];
-    }
-    if ( ! empty( $out[6] ) ) {
-        $result['path'] = $out[6];
-    }
-    if ( ! empty( $out[7] ) ) {
-        $result['query'] = $out[7];
-    }
-    if ( ! empty( $out[8] ) ) {
-        $result['fragment'] = $out[8];
-    }
-    if ( ! empty( $out[5] ) ) {
-        $result['host'] .= ':' . $out[5];
-    }
-
-    return $result;
-}
-
-/**
- * @since 3.2.8
- */
-function qtranxf_buildURL( $urlinfo, $homeinfo ) {
-    if ( empty( $urlinfo['host'] ) ) {
-        $url = ''; // relative path stays relative
-    } else {
-        $url = ( empty( $urlinfo['scheme'] ) ? $homeinfo['scheme'] : $urlinfo['scheme'] ) . '://';
-        if ( ! empty( $urlinfo['user'] ) ) {
-            $url .= $urlinfo['user'];
-            if ( ! empty( $urlinfo['pass'] ) ) {
-                $url .= ':' . $urlinfo['pass'];
-            }
-            $url .= '@';
-        } elseif ( ! empty( $homeinfo['user'] ) ) {
-            $url .= $homeinfo['user'];
-            if ( ! empty( $homeinfo['pass'] ) ) {
-                $url .= ':' . $homeinfo['pass'];
-            }
-            $url .= '@';
-        }
-        $url .= empty( $urlinfo['host'] ) ? $homeinfo['host'] : $urlinfo['host'];
-    }
-    if ( ! empty( $urlinfo['path-base'] ) ) {
-        $url .= $urlinfo['path-base'];
-    }
-    if ( ! empty( $urlinfo['wp-path'] ) ) {
-        $url .= $urlinfo['wp-path'];
-    }
-    if ( ! empty( $urlinfo['query'] ) ) {
-        $url .= '?' . $urlinfo['query'];
-    }
-    if ( ! empty( $urlinfo['fragment'] ) ) {
-        $url .= '#' . $urlinfo['fragment'];
-    }
-
-    return $url;
-}
-
-/**
- * @since 3.2.8 Copies the data needed for qtranxf_buildURL and qtranxf_url_set_language
- */
-function qtranxf_copy_url_info( $urlinfo ) {
-    $copy = array();
-    if ( isset( $urlinfo['scheme'] ) ) {
-        $copy['scheme'] = $urlinfo['scheme'];
-    }
-    if ( isset( $urlinfo['user'] ) ) {
-        $copy['user'] = $urlinfo['user'];
-    }
-    if ( isset( $urlinfo['pass'] ) ) {
-        $copy['pass'] = $urlinfo['pass'];
-    }
-    if ( isset( $urlinfo['host'] ) ) {
-        $copy['host'] = $urlinfo['host'];
-    }
-    if ( isset( $urlinfo['path-base'] ) ) {
-        $copy['path-base'] = $urlinfo['path-base'];
-    }
-    if ( isset( $urlinfo['wp-path'] ) ) {
-        $copy['wp-path'] = $urlinfo['wp-path'];
-    }
-    if ( isset( $urlinfo['query'] ) ) {
-        $copy['query'] = $urlinfo['query'];
-    }
-    if ( isset( $urlinfo['fragment'] ) ) {
-        $copy['fragment'] = $urlinfo['fragment'];
-    }
-    if ( isset( $urlinfo['query_amp'] ) ) {
-        $copy['query_amp'] = $urlinfo['query_amp'];
-    }
-
-    return $copy;
-}
-
 function qtranxf_get_address_info( $url ) {
     $info = qtranxf_parseURL( $url );
     if ( ! isset( $info['path'] ) ) {
@@ -208,80 +100,6 @@ function qtranxf_get_site_info() {
     }
 
     return $site_info;
-}
-
-function qtranxf_get_url_info( $url ) {
-    $urlinfo = qtranxf_parseURL( $url );
-    qtranxf_complete_url_info( $urlinfo );
-    qtranxf_complete_url_info_path( $urlinfo );
-
-    return $urlinfo;
-}
-
-/**
- * Complete urlinfo with 'path-base' according to home and site info.
- * If they differ, 'doing_front_end' might be set.
- *
- * @param array $urlinfo
- */
-function qtranxf_complete_url_info( &$urlinfo ) {
-    if ( ! isset( $urlinfo['path'] ) ) {
-        $urlinfo['path'] = '';
-    }
-    $path      = $urlinfo['path'];
-    $home_info = qtranxf_get_home_info();
-    $site_info = qtranxf_get_site_info();
-    $home_path = $home_info['path'];
-    $site_path = $site_info['path'];
-
-    if ( $home_path === $site_path ) {
-        if ( qtranxf_startsWith( $path, $home_path ) ) {
-            $urlinfo['path-base'] = $home_path;
-        }
-    } else {
-        if ( strlen( $home_path ) < strlen( $site_path ) ) {
-            if ( qtranxf_startsWith( $path, $site_path ) ) {
-                $urlinfo['path-base']       = $site_path;
-                $urlinfo['doing_front_end'] = false;
-            } elseif ( qtranxf_startsWith( $path, $home_path ) ) {
-                $urlinfo['path-base']       = $home_path;
-                $urlinfo['doing_front_end'] = true;
-            }
-        } else {
-            if ( qtranxf_startsWith( $path, $home_path ) ) {
-                $urlinfo['path-base']       = $home_path;
-                $urlinfo['doing_front_end'] = true;
-            } elseif ( qtranxf_startsWith( $path, $site_path ) ) {
-                $urlinfo['path-base']       = $site_path;
-                $urlinfo['doing_front_end'] = false;
-            }
-        }
-    }
-}
-
-/**
- * Complete urlinfo with 'wp-path'.
- * If 'wp-path' is not set, this means url does not belong to this WP installation.
- *
- * @param array $urlinfo
- *
- * @since 3.2.8
- */
-function qtranxf_complete_url_info_path( &$urlinfo ) {
-    if ( isset( $urlinfo['path-base'] ) ) {
-        if ( empty( $urlinfo['path-base'] ) ) {
-            $urlinfo['wp-path'] = $urlinfo['path'];
-        } elseif ( ! empty( $urlinfo['path'] ) && qtranxf_startsWith( $urlinfo['path'], $urlinfo['path-base'] ) ) {
-            $base_length = strlen( $urlinfo['path-base'] );
-            if ( isset( $urlinfo['path'][ $base_length ] ) ) {
-                if ( $urlinfo['path'][ $base_length ] === '/' ) {
-                    $urlinfo['wp-path'] = substr( $urlinfo['path'], $base_length );
-                }
-            } else {
-                $urlinfo['wp-path'] = '';
-            }
-        }
-    }
 }
 
 /**
@@ -316,18 +134,6 @@ function qtranxf_del_query_arg( &$query, $key ) {
     }
 }
 
-/*
- * @since 2.3.8 simplified version of esc_url
- */
-function qtranxf_sanitize_url( $url ) {
-    $url   = preg_replace( '|[^a-z0-9-~+_.?#=!&;,/:%@$\|*\'()\[\]\\x80-\\xff]|i', '', $url );
-    $strip = array( '%0d', '%0a', '%0D', '%0A' );
-    do {
-        $url = str_replace( $strip, '', $url, $count );
-    } while ( $count );
-
-    return $url;
-}
 
 function qtranxf_insertDropDownElement( $language, $url, $id ) {
     global $q_config;
@@ -346,37 +152,6 @@ function qtranxf_insertDropDownElement( $language, $url, $id ) {
 		";
 
     return $html;
-}
-
-function qtranxf_external_host_ex( $host, $homeinfo ) {
-    global $q_config;
-
-    switch ( $q_config['url_mode'] ) {
-        case QTX_URL_QUERY:
-        case QTX_URL_PATH:
-            return $homeinfo['host'] != $host;
-        case QTX_URL_DOMAIN:
-            return ! qtranxf_endsWith( $host, $homeinfo['host'] );
-        case QTX_URL_DOMAINS:
-            foreach ( $q_config['domains'] as $host_item ) {
-                if ( $host_item == $host ) {
-                    return false;
-                }
-            }
-            if ( $homeinfo['host'] == $host ) {
-                return false;
-            }
-
-            return true;
-        default:
-            return true;
-    }
-}
-
-function qtranxf_external_host( $host ) {
-    $homeinfo = qtranxf_get_home_info();
-
-    return qtranxf_external_host_ex( $host, $homeinfo );
 }
 
 function qtranxf_isMultilingual( $str ) {
@@ -987,22 +762,3 @@ function qtranxf_match_language_locale( $locale ) {
     return null;
 }
 
-function qtranxf_get_page_referer() {
-    if ( wp_doing_ajax() ) {
-        global $q_config;
-        if ( isset( $q_config['url_info']['page_referer'] ) ) {
-            return $q_config['url_info']['page_referer'];
-        }
-        if ( ! empty( $q_config['url_info']['http_referer'] ) ) {
-            $page                                 = basename( $q_config['url_info']['http_referer'] );
-            $epage                                = explode( '?', $page );
-            $page                                 = $epage[0];
-            $q_config['url_info']['page_referer'] = $page;
-
-            return $page;
-        }
-    }
-    global $pagenow;
-
-    return $pagenow;
-}
