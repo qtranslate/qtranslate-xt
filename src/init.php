@@ -3,11 +3,14 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+require_once QTRANSLATE_DIR . '/src/class_translator.php';
 require_once QTRANSLATE_DIR . '/src/language_blocks.php';
 require_once QTRANSLATE_DIR . '/src/language_config.php';
 require_once QTRANSLATE_DIR . '/src/language_detect.php';
 require_once QTRANSLATE_DIR . '/src/options.php';
 require_once QTRANSLATE_DIR . '/src/url.php';
+require_once QTRANSLATE_DIR . '/src/utils.php';
+require_once QTRANSLATE_DIR . '/src/taxonomy.php';
 require_once QTRANSLATE_DIR . '/src/modules/module_loader.php';
 
 function qtranxf_init_language() {
@@ -126,8 +129,12 @@ function qtranxf_init_language() {
 
     if ( $q_config['url_info']['doing_front_end'] ) {
         require_once QTRANSLATE_DIR . '/src/frontend.php';
+        add_filter( 'wp_translator', 'QTX_Translator::get_translator' );
+        qtranxf_add_front_filters();
     } else {
         require_once QTRANSLATE_DIR . '/src/admin/admin.php';
+        add_filter( 'wp_translator', 'QTX_Translator_Admin::get_translator' );
+        qtranxf_admin_load();
     }
     apply_filters( 'wp_translator', null );//create QTX_Translator object
 
