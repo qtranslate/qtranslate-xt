@@ -149,14 +149,13 @@ function qtranxf_init_language() {
 }
 
 /**
- * Response to action 'init', which runs after user is authenticated.
- * Currently unused.
- * Is in use by 3rd-party plugins (for example, alo_easymail) to test q-X presence,
- * which they should have done by testing "if ( defined( 'QTRANSLATE_FILE' )" instead.
+ * @deprecated Legacy hook for `init` action, to be removed in next major release.
+ * Might be wrongly used by 3rd-party plugins (for example, alo_easymail) to test qTranslate-XT presence.
+ * Recommended usage: is_plugin_active( 'qtranslate-xt/qtranslate.php' )
  * @since 3.4
  */
-// TODO this function should be removed but some legacy plugins might still use this to check if q-XT is enabled...
 function qtranxf_init() {
+    _deprecated_function( __FUNCTION__, '3.14.0' );
 }
 
 /**
@@ -188,5 +187,4 @@ function qtranxf_rest_api_register_rewrites() {
 
 // core setup
 add_action( 'plugins_loaded', 'qtranxf_init_language', 2 ); // user is not authenticated yet
-add_action( 'init', 'qtranxf_init', 2 ); // user is authenticated
 add_action( 'init', 'qtranxf_rest_api_register_rewrites', 11 );
