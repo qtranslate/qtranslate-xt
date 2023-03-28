@@ -54,7 +54,7 @@ if ( ! function_exists( 'add_filter' ) ) {
  * Designed as interface for other plugin integration. The documentation is available at
  * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide/
  */
-define( 'QTX_VERSION', '3.13.1.dev.3' );
+define( 'QTX_VERSION', '3.14.0.dev.1' );
 
 if ( ! defined( 'QTRANSLATE_FILE' ) ) {
     define( 'QTRANSLATE_FILE', __FILE__ );
@@ -62,6 +62,7 @@ if ( ! defined( 'QTRANSLATE_FILE' ) ) {
 }
 
 require_once QTRANSLATE_DIR . '/src/init.php';
+add_action( 'plugins_loaded', 'qtranxf_init_language', 2 ); // User is not authenticated yet, high priority needed.
 
 if ( is_admin() ) {
     require_once QTRANSLATE_DIR . '/src/admin/activation_hook.php';

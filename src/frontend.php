@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function qtranxf_get_front_page_config() {
-    static $page_configs;//cache
+    static $page_configs;
     if ( $page_configs ) {
         return $page_configs;
     }

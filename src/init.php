@@ -13,6 +13,15 @@ require_once QTRANSLATE_DIR . '/src/utils.php';
 require_once QTRANSLATE_DIR . '/src/taxonomy.php';
 require_once QTRANSLATE_DIR . '/src/modules/module_loader.php';
 
+/**
+ * Main initialization of qTranslate-XT for language detection and plugin loading.
+ *
+ * Redirect to a canonical URL if it doesn't match the detected language.
+ * @see https://github.com/qtranslate/qtranslate-xt/wiki/Browser-redirection
+ * Load configuration, common hooks, detect and load front/admin configuration, load modules.
+ *
+ * @return void
+ */
 function qtranxf_init_language() {
     global $q_config, $pagenow;
 
@@ -111,15 +120,23 @@ function qtranxf_init_language() {
     // TODO clarify fix url to prevent xss - how does this prevents xss?
     // $q_config['url_info']['url'] = qtranxf_convertURL(add_query_arg('lang',$q_config['default_language'],$q_config['url_info']['url']));
 
-    // qtranslate_hooks.php has to go before load_plugin_textdomain()
-    require_once QTRANSLATE_DIR . '/src/hooks.php';  // Common hooks need language already detected.
-    qtranxf_add_main_filters();
+    require_once QTRANSLATE_DIR . '/src/rest_api.php';
+    add_action( 'init', 'qtranxf_rest_api_register_rewrites', 11 );
 
     require_once QTRANSLATE_DIR . '/src/widget.php';
     add_action( 'widgets_init', 'qtranxf_widget_init' );
 
-    // load plugin translations
-    // since 3.2-b3 moved it here as https://codex.wordpress.org/Function_Reference/load_plugin_textdomain seem to recommend to run load_plugin_textdomain in 'plugins_loaded' action, which is this function responds to
+    require_once QTRANSLATE_DIR . '/src/hooks.php';  // Common hooks need language already detected.
+    qtranxf_add_main_filters();
+
+    require_once QTRANSLATE_DIR . '/src/date_time.php';
+    qtranxf_add_date_time_filters();
+
+    // TODO delay to `init` action?
+    // See https://developer.wordpress.org/reference/functions/load_plugin_textdomain/
+    // Loading the plugin translations should not be done during plugins_loaded action since that is too early and prevent
+    // other language related plugins from correctly hooking up with load_textdomain() function and doing whatever they want to do.
+    // Calling load_plugin_textdomain() should be delayed until init action.
     qtranxf_load_plugin_textdomain();
 
     /**
@@ -136,7 +153,7 @@ function qtranxf_init_language() {
         add_filter( 'wp_translator', 'QTX_Translator_Admin::get_translator' );
         qtranxf_admin_load();
     }
-    apply_filters( 'wp_translator', null );//create QTX_Translator object
+    apply_filters( 'wp_translator', null ); // Create QTX_Translator object.
 
     QTX_Module_Loader::load_active_modules();
 
@@ -157,34 +174,3 @@ function qtranxf_init_language() {
 function qtranxf_init() {
     _deprecated_function( __FUNCTION__, '3.14.0' );
 }
-
-/**
- * Add specific rewrites to handle API REST for the default language, when hidden in QTX_URL_PATH mode.
- * Most of the requests don't need this, as they are handled through custom home_url with the language.
- * Note: to make it work you have to flush your rewrite rules by saving the permalink structures from the admin page!
- *
- * Example with 'en' as default language and hidden option enabled:
- *   /wp-json/wp/...    -> home_url = '/' (default, hidden)
- *   /fr/wp-json/wp/... -> home_url = '/fr'
- *   /en/wp-json/wp/... -> home_url = '/' (default, hidden but requested) -> fails with standard rewrites (404)
- * This function allows to handle specifically this last case.
- *
- * @see rest_api_register_rewrites in wp_includes/rest-api.php
- */
-function qtranxf_rest_api_register_rewrites() {
-    global $q_config;
-    if ( ! $q_config['hide_default_language'] || $q_config['url_mode'] !== QTX_URL_PATH ) {
-        return;
-    }
-
-    global $wp_rewrite;
-    $default_lang = $q_config['default_language'];
-    add_rewrite_rule( '^' . $default_lang . '/' . rest_get_url_prefix() . '/?$', 'index.php?rest_route=/', 'top' );
-    add_rewrite_rule( '^' . $default_lang . '/' . rest_get_url_prefix() . '/(.*)?', 'index.php?rest_route=/$matches[1]', 'top' );
-    add_rewrite_rule( '^' . $default_lang . '/' . $wp_rewrite->index . '/' . rest_get_url_prefix() . '/?$', 'index.php?rest_route=/', 'top' );
-    add_rewrite_rule( '^' . $default_lang . '/' . $wp_rewrite->index . '/' . rest_get_url_prefix() . '/(.*)?', 'index.php?rest_route=/$matches[1]', 'top' );
-}
-
-// core setup
-add_action( 'plugins_loaded', 'qtranxf_init_language', 2 ); // user is not authenticated yet
-add_action( 'init', 'qtranxf_rest_api_register_rewrites', 11 );
