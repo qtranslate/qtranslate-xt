@@ -28,7 +28,7 @@ class QTX_Module_Acf_Field_Text extends acf_field_text {
         parent::initialize();
         $this->name     = 'qtranslate_text';
         $this->category = QTX_Module_Acf_Register::ACF_CATEGORY_QTX;
-        $this->label .= ' [' . $this->category . ']';
+        $this->label    .= ' [' . $this->category . ']' . ' - ' . __( 'Deprecated', 'qtranslate' );
     }
 
     /**

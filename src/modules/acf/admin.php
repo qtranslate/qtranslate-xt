@@ -282,13 +282,13 @@ class QTX_Module_Acf_Admin {
             'section-acf-extended',
             __( 'Extended qTranslate fields', 'qtranslate' ),
             function () {
-                _e( 'Additional types with a specific handling and rendering for qTranslate. Prefer the standard ACF fields as much as possible.', 'qtranslate' );
+                _e( 'Additional types specific to qTranslate. Prefer the standard ACF fields.', 'qtranslate' );
             },
             'settings-qtranslate-acf'
         );
         add_settings_field(
             'select_qtranslate_fields',
-            __( 'Active types', 'qtranslate' ),
+            __( 'Types enabled for selection', 'qtranslate' ),
             array( $this, 'render_setting_qtranslate_fields' ),
             'settings-qtranslate-acf',
             'section-acf-extended'
