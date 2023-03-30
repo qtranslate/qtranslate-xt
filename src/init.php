@@ -146,14 +146,15 @@ function qtranxf_init_language() {
 
     if ( $q_config['url_info']['doing_front_end'] ) {
         require_once QTRANSLATE_DIR . '/src/frontend.php';
-        add_filter( 'wp_translator', 'QTX_Translator::get_translator' );
         qtranxf_add_front_filters();
+        QTX_Translator::get_translator();
+
     } else {
         require_once QTRANSLATE_DIR . '/src/admin/admin.php';
-        add_filter( 'wp_translator', 'QTX_Translator_Admin::get_translator' );
         qtranxf_admin_load();
+        QTX_Translator_Admin::get_translator();
     }
-    apply_filters( 'wp_translator', null ); // Create QTX_Translator object.
+    apply_filters_deprecated( 'wp_translator', array( null ), '3.14.0', '', 'This filter will be removed in next major release. Open a ticket on https://github.com/qtranslate/qtranslate-xt/issues if you need this!' );
 
     QTX_Module_Loader::load_active_modules();
 
