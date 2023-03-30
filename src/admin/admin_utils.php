@@ -259,7 +259,7 @@ function qtranxf_language_column( $column ) {
 }
 
 function qtranxf_fetch_file_selection( $dir, $suffix = '.css' ) {
-    _deprecated_function( __FUNCTION__, '3.13.1' );
+    _deprecated_function( __FUNCTION__, '3.14.0' );
     $files      = array();
     $dir_handle = @opendir( $dir );
     if ( ! $dir_handle ) {

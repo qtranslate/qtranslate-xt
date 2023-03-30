@@ -85,7 +85,7 @@ function qtranxf_admin_load_config() {
         qtranxf_update_i18n_config();
     }
 
-    // TODO in future versions, remove temporary conversion for legacy CSS LSB values before 3.13.1
+    // TODO in future versions, remove temporary conversion for legacy CSS LSB values before 3.14.0
     $q_config['lsb_style'] = str_replace( '_', '-', strtolower( $q_config['lsb_style'] ) );
 
     // opportunity to load additional admin features

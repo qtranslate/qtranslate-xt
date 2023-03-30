@@ -449,7 +449,7 @@ function qtranxf_admin_footer() {
 
     $config['lang_code_format'] = QTX_LANG_CODE_FORMAT;
 
-    $config = apply_filters_deprecated( 'qtranslate_admin_page_config', array( $config ), '3.13.1', '',
+    $config = apply_filters_deprecated( 'qtranslate_admin_page_config', array( $config ), '3.14.0', '',
         'No clear use case, create a request on https://github.com/qtranslate/qtranslate-xt/issues if needed.' );
 
     qtranxf_enqueue_scripts( $page_config['js'] );
@@ -553,7 +553,7 @@ function qtranxf_get_admin_highlight_css( $highlight_mode ) {
 }
 
 function qtranxf_add_admin_css() {
-    _deprecated_function( __FUNCTION__, '3.13.1', 'qtranxf_admin_enqueue_scripts' );
+    _deprecated_function( __FUNCTION__, '3.14.0', 'qtranxf_admin_enqueue_scripts' );
 }
 
 function qtranxf_admin_head() {
