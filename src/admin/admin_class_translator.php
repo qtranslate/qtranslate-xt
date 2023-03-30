@@ -30,5 +30,3 @@ class QTX_Translator_Admin extends QTX_Translator implements WP_Translator_Admin
         return qtranxf_get_terms_joined( $terms, $taxonomy );
     }
 }
-
-add_filter( 'wp_translator', 'QTX_Translator_Admin::get_translator' );

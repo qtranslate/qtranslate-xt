@@ -341,3 +341,190 @@ function qtranxf_load_option_func( $name, $opn = null, $func = null ) {
     }
     $q_config[ $name ] = $val;
 }
+
+function qtranxf_validateBool( $var, $default_value ) {
+    _deprecated_function( __FUNCTION__, '3.13.0' );
+    if ( $var === '0' ) {
+        return false;
+    } elseif ( $var === '1' ) {
+        return true;
+    } else {
+        return $default_value;
+    }
+}
+
+function qtranxf_load_option_qtrans_compatibility() {
+    global $q_config;
+    qtranxf_load_option_bool( 'qtrans_compatibility', false );
+    $q_config['qtrans_compatibility'] = apply_filters( 'qtranslate_compatibility', $q_config['qtrans_compatibility'] );
+    if ( ! isset( $q_config['qtrans_compatibility'] ) || ! $q_config['qtrans_compatibility'] ) {
+        return;
+    }
+    require_once QTRANSLATE_DIR . '/src/compatibility.php';
+}
+
+function qtranxf_load_plugin_textdomain() {
+    if ( load_plugin_textdomain( 'qtranslate', false, basename( QTRANSLATE_DIR ) . '/lang' ) ) {
+        return true;
+    }
+
+    return false;
+}
+
+function qtranxf_is_permalink_structure_query() {
+    $permalink_structure = get_option( 'permalink_structure' );
+
+    return empty( $permalink_structure ) || strpos( $permalink_structure, '?' ) !== false || strpos( $permalink_structure, 'index.php' ) !== false;
+}
+
+function qtranxf_front_header_css_default() {
+    global $q_config;
+    $flag_location = qtranxf_flag_location();
+    $css           = '';
+    foreach ( $q_config['enabled_languages'] as $lang ) {
+        $css .= '.qtranxs_flag_' . $lang . ' {background-image: url(' . $flag_location . $q_config['flag'][ $lang ] . '); background-repeat: no-repeat;}' . PHP_EOL;
+    }
+
+    return $css;
+}
+
+function qtranxf_flag_location() {
+    global $q_config;
+
+    return trailingslashit( content_url() ) . $q_config['flag_location'];
+}
+
+function qtranxf_flag_location_default() {
+    return qtranxf_plugin_dirname_from_wp_content() . '/flags/';
+}
+
+function qtranxf_load_option_flag_location( $nm ) {
+    global $q_config;
+    $default_value = qtranxf_flag_location_default();
+    $option_value  = get_option( 'qtranslate_' . $nm );
+    if ( $option_value === false ) {
+        $q_config[ $nm ] = $default_value;
+    } else {
+        // url fix for upgrading users
+        $flag_location = trailingslashit( preg_replace( '#^wp-content/#', '', $option_value ) );
+        if ( file_exists( trailingslashit( WP_CONTENT_DIR ) . $flag_location ) && $default_value != $flag_location ) {
+            $q_config[ $nm ] = $flag_location;
+        } else {
+            $q_config[ $nm ] = $default_value;
+            delete_option( 'qtranslate_' . $nm );
+        }
+    }
+}
+
+function qtranxf_loadConfig() {
+    _deprecated_function( __FUNCTION__, '3.10.0', 'qtranxf_load_config' );
+    qtranxf_load_config();
+}
+
+function qtranxf_load_config() {
+    global $qtranslate_options, $q_config;
+    qtranxf_set_default_options( $qtranslate_options );
+
+    $q_config = array();
+
+    qtranxf_load_option_func( 'default_language' );
+    qtranxf_load_option_array( 'enabled_languages' );
+
+    qtranxf_load_option_flag_location( 'flag_location' );
+    qtranxf_load_languages_enabled();
+
+    foreach ( $qtranslate_options['front']['int'] as $name => $def ) {
+        qtranxf_load_option( $name, $def );
+    }
+
+    foreach ( $qtranslate_options['front']['bool'] as $name => $def ) {
+        qtranxf_load_option_bool( $name, $def );
+    }
+
+    foreach ( $qtranslate_options['front']['str'] as $name => $def ) {
+        qtranxf_load_option( $name, $def );
+    }
+
+    foreach ( $qtranslate_options['front']['text'] as $name => $def ) {
+        qtranxf_load_option( $name, $def );
+    }
+
+    foreach ( $qtranslate_options['front']['array'] as $name => $def ) {
+        qtranxf_load_option_array( $name, $def );
+    }
+
+    qtranxf_load_option_array( 'term_name', array() );
+
+    if ( $q_config['filter_options_mode'] == QTX_FILTER_OPTIONS_LIST ) {
+        qtranxf_load_option_array( 'filter_options', QTX_FILTER_OPTIONS_DEFAULT );
+    }
+
+    $url_mode = $q_config['url_mode'];
+    // check for invalid permalink/url mode combinations
+    if ( qtranxf_is_permalink_structure_query() ) {
+        switch ( $url_mode ) {
+            case QTX_URL_QUERY:
+            case QTX_URL_DOMAIN:
+            case QTX_URL_DOMAINS:
+                break;
+            default:
+                $q_config['url_mode'] = $url_mode = QTX_URL_QUERY;
+                break;
+        }
+    }
+
+    switch ( $url_mode ) {
+        case QTX_URL_DOMAINS:
+            $q_config['domains'] = array();
+            qtranxf_load_option_array( 'domains' );
+            //qtranxf_dbg_echo('domains loaded: ',$q_config['domains']);
+            foreach ( $q_config['enabled_languages'] as $lang ) {
+                if ( isset( $q_config['domains'][ $lang ] ) ) {
+                    continue;
+                }
+                $homeinfo                     = qtranxf_get_home_info();
+                $q_config['domains'][ $lang ] = $lang . '.' . $homeinfo['host'];
+            }
+            $q_config['disable_client_cookies'] = true;
+            $q_config['hide_default_language']  = false;
+            break;
+        case QTX_URL_QUERY:
+        case QTX_URL_PATH:
+            $q_config['disable_client_cookies'] = false;
+            qtranxf_load_option_bool( 'disable_client_cookies' );
+            break;
+        case QTX_URL_DOMAIN:
+        default:
+            $q_config['disable_client_cookies'] = true;
+            break;
+    }
+
+    $ignore_file_types = get_option( 'qtranslate_ignore_file_types' );
+    $val               = explode( ',', QTX_IGNORE_FILE_TYPES );
+    if ( ! empty( $ignore_file_types ) ) {
+        $vals = preg_split( '/[\s,]+/', strtolower( $ignore_file_types ), -1, PREG_SPLIT_NO_EMPTY );
+        foreach ( $vals as $v ) {
+            if ( empty( $v ) ) {
+                continue;
+            }
+            if ( in_array( $v, $val ) ) {
+                continue;
+            }
+            $val[] = $v;
+        }
+    }
+    $q_config['ignore_file_types'] = $val;
+
+    if ( empty( $q_config['front_config'] ) ) {
+        // TODO this should be granulated to load only what is needed
+        require_once QTRANSLATE_DIR . '/src/admin/activation_hook.php';
+        require_once QTRANSLATE_DIR . '/src/admin/admin_options_update.php';
+        qtranxf_update_i18n_config();
+    }
+
+    /**
+     * Opportunity to load additional front-end features.
+     */
+    do_action( 'qtranslate_load_config' );
+    do_action_deprecated( 'qtranslate_loadConfig', array(), '3.10.0', 'qtranslate_load_config' );
+}

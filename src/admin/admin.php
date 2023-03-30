@@ -897,5 +897,3 @@ function qtranxf_admin_load() {
     add_filter( 'gutenberg_use_widgets_block_editor', '__return_false', 99 );
     add_filter( 'use_widgets_block_editor', '__return_false', 99 );
 }
-
-qtranxf_admin_load();

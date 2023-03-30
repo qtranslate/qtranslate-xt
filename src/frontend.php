@@ -3,10 +3,8 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-add_filter( 'wp_translator', 'QTX_Translator::get_translator' );
-
 function qtranxf_get_front_page_config() {
-    static $page_configs;//cache
+    static $page_configs;
     if ( $page_configs ) {
         return $page_configs;
     }
@@ -59,8 +57,6 @@ function qtranxf_wp_head() {
     }
 }
 
-add_action( 'wp_head', 'qtranxf_wp_head' );
-
 /**
  * Moved line '<meta name="generator"' to a separate action.
  * Developers may use code
@@ -71,8 +67,6 @@ add_action( 'wp_head', 'qtranxf_wp_head' );
 function qtranxf_wp_head_meta_generator() {
     echo '<meta name="generator" content="qTranslate-XT ' . QTX_VERSION . '" />' . PHP_EOL;
 }
-
-add_action( 'wp_head', 'qtranxf_wp_head_meta_generator' );
 
 function qtranxf_wp_get_nav_menu_items( $items, $menu, $args ) {
     global $q_config;
@@ -183,8 +177,6 @@ function qtranxf_wp_get_nav_menu_items( $items, $menu, $args ) {
 
     return $items;
 }
-
-add_filter( 'wp_get_nav_menu_items', 'qtranxf_wp_get_nav_menu_items', 20, 3 );
 
 function qtranxf_add_language_menu_item( &$items, &$menu_order, &$itemid, $key, $language ) {
     global $q_config;
@@ -444,8 +436,6 @@ function qtranxf_filter_options() {
     }
 }
 
-qtranxf_filter_options();
-
 /**
  * @since 3.4.7
  */
@@ -527,8 +517,6 @@ function qtranxf_postsFilter( $posts, $query ) {
     return $posts;
 }
 
-add_filter( 'the_posts', 'qtranxf_postsFilter', 5, 2 );
-
 /** allow all filters within WP_Query - many other add_filters may not be needed now? */
 function qtranxf_pre_get_posts( $query ) {//WP_Query
     if ( isset( $query->query_vars['post_type'] ) ) {
@@ -541,8 +529,6 @@ function qtranxf_pre_get_posts( $query ) {//WP_Query
     }
     $query->query_vars['suppress_filters'] = false;
 }
-
-add_action( 'pre_get_posts', 'qtranxf_pre_get_posts', 99 );
 
 /**
  * since 3.1-b3 new query to pass empty content and content without closing tags (sliders, galleries and other special kind of posts that never get translated)
@@ -650,8 +636,6 @@ function qtranxf_get_attachment_image_attributes( $attr, $attachment = null, $si
     return $attr;
 }
 
-add_filter( 'wp_get_attachment_image_attributes', 'qtranxf_get_attachment_image_attributes', 5, 3 );
-
 function qtranxf_home_url( $url, $path, $orig_scheme, $blog_id ) {
     global $q_config;
     $lang = $q_config['language'];
@@ -668,8 +652,6 @@ function qtranxf_esc_html( $text ) {
      */
     return qtranxf_useCurrentLanguageIfNotFoundShowEmpty( $text );
 }
-
-add_filter( 'esc_html', 'qtranxf_esc_html', 0 );
 
 if ( ! function_exists( 'qtranxf_trim_words' ) ) {
 // filter added in qtranslate_hooks.php
@@ -823,8 +805,6 @@ function qtranxf_filter_postmeta( $original_value, $object_id, $meta_key = '', $
     return qtranxf_translate_metadata( 'post', $original_value, $object_id, $meta_key, $single );
 }
 
-add_filter( 'get_post_metadata', 'qtranxf_filter_postmeta', 5, 4 );
-
 /**
  * @since 3.2.9.9.6
  * Delete translated post_meta cache for all languages on cache update.
@@ -834,7 +814,6 @@ function qtranxf_updated_postmeta( $meta_id, $object_id, $meta_key, $meta_value 
     qtranxf_cache_delete_metadata( 'post', $object_id );
 }
 
-add_action( 'updated_postmeta', 'qtranxf_updated_postmeta', 5, 4 );
 
 /**
  * @since 3.4 translation of usermeta
@@ -842,8 +821,6 @@ add_action( 'updated_postmeta', 'qtranxf_updated_postmeta', 5, 4 );
 function qtranxf_filter_usermeta( $original_value, $object_id, $meta_key = '', $single = false ) {
     return qtranxf_translate_metadata( 'user', $original_value, $object_id, $meta_key, $single );
 }
-
-add_filter( 'get_user_metadata', 'qtranxf_filter_usermeta', 5, 4 );
 
 /**
  * @since 3.4
@@ -854,8 +831,6 @@ function qtranxf_updated_usermeta( $meta_id, $object_id, $meta_key, $meta_value 
     qtranxf_cache_delete_metadata( 'user', $object_id );
 }
 
-add_action( 'updated_usermeta', 'qtranxf_updated_usermeta', 5, 4 );
-
 function qtranxf_checkCanonical( $redirect_url, $requested_url ) {
     global $q_config;
     $lang = $q_config['language'];
@@ -864,8 +839,6 @@ function qtranxf_checkCanonical( $redirect_url, $requested_url ) {
 
     return $redirect_url_lang;
 }
-
-add_filter( 'redirect_canonical', 'qtranxf_checkCanonical', 10, 2 );
 
 /**
  * @since 3.2.8 moved here from _hooks.php
@@ -893,13 +866,31 @@ function qtranxf_pagenum_link( $url ) {
     return qtranxf_convertURL( $url_fixed );
 }
 
-add_filter( 'get_pagenum_link', 'qtranxf_pagenum_link' );
-
 /**
  * @since 3.3.7
  */
 function qtranxf_add_front_filters() {
     global $q_config;
+
+    add_action( 'wp_head', 'qtranxf_wp_head' );
+    add_action( 'wp_head', 'qtranxf_wp_head_meta_generator' );
+    add_filter( 'wp_get_nav_menu_items', 'qtranxf_wp_get_nav_menu_items', 20, 3 );
+    add_filter( 'wp_get_attachment_image_attributes', 'qtranxf_get_attachment_image_attributes', 5, 3 );
+    add_filter( 'esc_html', 'qtranxf_esc_html', 0 );
+    add_filter( 'the_posts', 'qtranxf_postsFilter', 5, 2 );
+    add_action( 'pre_get_posts', 'qtranxf_pre_get_posts', 99 );
+    add_filter( 'get_post_metadata', 'qtranxf_filter_postmeta', 5, 4 );
+    add_action( 'updated_postmeta', 'qtranxf_updated_postmeta', 5, 4 );
+    add_filter( 'get_user_metadata', 'qtranxf_filter_usermeta', 5, 4 );
+    add_action( 'updated_usermeta', 'qtranxf_updated_usermeta', 5, 4 );
+    add_filter( 'redirect_canonical', 'qtranxf_checkCanonical', 10, 2 );
+    add_filter( 'get_pagenum_link', 'qtranxf_pagenum_link' );
+
+    // Time critical filters, not needed on admin side.
+    // In particular, they break WPBakery Visual Composer in raw Editor Mode.
+    add_filter( 'gettext', 'qtranxf_gettext', 0 );
+    add_filter( 'gettext_with_context', 'qtranxf_gettext_with_context', 0 );
+    add_filter( 'ngettext', 'qtranxf_ngettext', 0 );
 
     if ( $q_config['hide_untranslated'] ) {
         add_filter( 'wp_list_pages_excludes', 'qtranxf_excludePages' );//moved here from _hooks.php since 3.2.8
@@ -925,12 +916,5 @@ function qtranxf_add_front_filters() {
         add_filter( 'home_url', 'qtranxf_home_url', 0, 4 );
     }
 
-    // Hooks (execution time critical filters)
-    // since 3.2.9.9.4 gettext* filters moved to frontend.php
-    // they should not be needed on admin side and they, in particular, broke WPBakery Visual Composer in raw Editor Mode.
-    add_filter( 'gettext', 'qtranxf_gettext', 0 );
-    add_filter( 'gettext_with_context', 'qtranxf_gettext_with_context', 0 );
-    add_filter( 'ngettext', 'qtranxf_ngettext', 0 );
+    qtranxf_filter_options();
 }
-
-qtranxf_add_front_filters();
