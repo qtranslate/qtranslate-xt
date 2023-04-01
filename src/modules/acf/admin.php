@@ -250,7 +250,7 @@ class QTX_Module_Acf_Admin {
     }
 
     /**
-     * Register settings and default fields
+     * Register settings and validation hooks.
      */
     public function admin_init() {
         register_setting( 'settings-qtranslate-acf', QTX_OPTIONS_MODULE_ACF );
@@ -300,6 +300,85 @@ class QTX_Module_Acf_Admin {
             'settings-qtranslate-acf',
             'section-acf-extended'
         );
+
+        // Enable multi-language validation, typically the max length must be checked for each language and not the raw string.
+        $fields   = self::standard_fields();
+        $default  = array_fill_keys( $fields, true );
+        $settings = self::get_module_setting( 'standard_fields', $default );
+        foreach ( $fields as $tag ) {
+            $acf_type = acf_get_field_type( $tag );
+            if ( ! isset( $acf_type ) || ! isset( $settings[ $tag ] ) ) {
+                continue;
+            }
+            add_filter( 'acf/validate_value/type=' . $tag, array( $this, 'validate_raw_value_standard' ), 5, 4 );
+        }
+    }
+
+    /**
+     * Validates the form multilingual raw values for a given standard field.
+     *
+     * @param bool|string $valid
+     * @param string $value raw value
+     * @param array $field info
+     * @param string $input
+     *
+     * @return bool|string
+     * @see acf_validation::acf_validate_value
+     */
+    public static function validate_raw_value_standard( $valid, $value, $field, $input ) {
+        if ( is_string( $value ) && qtranxf_isMultilingual( $value ) ) {
+            // Remove the standard validation that is likely to fail for the raw value.
+            $instance = acf_get_field_type( $field['type'] );
+            remove_filter( 'acf/validate_value/type=' . $field['type'], array( $instance, 'validate_value' ) );
+            // Validate all the values for each language.
+            $ml_values = qtranxf_split( $value );
+            $valid     = self::validate_language_values_standard( $instance, $valid, $ml_values, $field, $input );
+        }
+        return $valid;
+    }
+
+    /**
+     * Validate language values for a standard field.
+     *
+     * Validates all the form values for a given field, by iterating over the multi-lang array values as strings:
+     *  - check the required property
+     *  - call the original ACF method for every language string.
+     *
+     * @param object $field_object corresponding to the qtranslate ACF field item
+     * @param bool|string $valid
+     * @param array $values holding a string value per language
+     * @param array $field info
+     * @param string $input
+     *
+     * @return    bool|string
+     * @see acf_validation::acf_validate_value
+     */
+    protected static function validate_language_values_standard( $field_object, $valid, $values, $field, $input ) {
+        global $q_config;
+
+        // Validate every language value as string.
+        foreach ( $values as $key_language => $value_language ) {
+            // validate properly the required value (see: acf_validate_value in acf_validation)
+            if ( $field['required'] && empty( $value_language ) ) {
+                // TODO: retrieve the label for the language being edited.
+                $label = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage( $field['label'] );
+                return '(' . $q_config['language_name'][ $key_language ] . ') ' . sprintf( __( '%s value is required', 'acf' ), $label );
+            }
+            // Validate with original ACF method.
+            if ( method_exists( $field_object, 'validate_value' ) ) {
+                $valid_language = $field_object->validate_value(
+                    $valid,
+                    $value_language,
+                    $field,
+                    $input
+                );
+                if ( ! empty( $valid_language ) && is_string( $valid_language ) ) {
+                    return '(' . $q_config['language_name'][ $key_language ] . ') ' . $valid_language;
+                }
+            }
+        }
+
+        return $valid;
     }
 
     public function display_settings() {
