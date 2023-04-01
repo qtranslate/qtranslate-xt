@@ -486,9 +486,19 @@ function qtranxf_admin_debug_info() {
 
         $info['configuration'] = $q_config;
         // clear config information, too verbose and generally irrelevant
-        unset( $info['configuration']['front_config'] );
-        unset( $info['configuration']['admin_config'] );
-        unset( $info['configuration']['i18n-cache'] );
+        $info_config = &$info['configuration'];
+        unset( $info_config['front_config'] );
+        unset( $info_config['admin_config'] );
+        unset( $info_config['i18n-cache'] );
+        unset( $info_config['flag_location'] );
+        unset( $info_config['language_name'] );
+        unset( $info_config['locale_html'] );
+        unset( $info_config['not_available'] );
+        unset( $info_config['flag'] );
+        unset( $info_config['header_css'] );
+        unset( $info_config['term_name'] );
+        unset( $info_config['ignore_file_types'] );
+        unset( $info_config['custom_i18n_config'] );
 
         $plugins         = get_option( 'active_plugins' );
         $plugin_versions = array();
