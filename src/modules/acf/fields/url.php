@@ -2,32 +2,12 @@
 
 class QTX_Module_Acf_Field_Url extends acf_field_url {
     /**
-     * The register instance
-     * @var QTX_Module_Acf_Register
-     */
-    protected $register;
-
-    /**
-     * Constructor
-     *
-     * @param QTX_Module_Acf_Register $register
-     * @param bool $do_initialize true if initialize() must be called explicitly
-     */
-    function __construct( $register, $do_initialize ) {
-        $this->register = $register;
-        if ( $do_initialize ) {
-            $this->initialize();
-        }
-        parent::__construct();
-    }
-
-    /**
      * Setup the field type data
      */
     function initialize() {
         parent::initialize();
         $this->name     = 'qtranslate_url';
-        $this->category = QTX_Module_Acf_Register::ACF_CATEGORY_QTX;
+        $this->category = QTX_Module_Acf_Extended::ACF_CATEGORY_QTX;
         $this->label    .= ' [' . $this->category . ']';
     }
 
@@ -39,7 +19,7 @@ class QTX_Module_Acf_Field_Url extends acf_field_url {
     function render_field( $field ) {
         global $q_config;
         $languages       = qtranxf_getSortedLanguages( true );
-        $values          = $this->register->decode_language_values( $field['value'] );
+        $values          = QTX_Module_Acf_Extended::decode_language_values( $field['value'] );
         $currentLanguage = qtranxf_getLanguage();
 
         $atts = array();
@@ -97,7 +77,7 @@ class QTX_Module_Acf_Field_Url extends acf_field_url {
      * @return string - the modified value
      */
     function update_value( $values, $post_id, $field ) {
-        return $this->register->encode_language_values( $values );
+        return QTX_Module_Acf_Extended::encode_language_values( $values );
     }
 
     /**
@@ -113,7 +93,7 @@ class QTX_Module_Acf_Field_Url extends acf_field_url {
      */
     function validate_value( $valid, $value, $field, $input ) {
         if ( is_array( $value ) ) {
-            $valid = $this->register->validate_language_values( $this, $valid, $value, $field, $input );
+            $valid = QTX_Module_Acf_Extended::validate_language_values( $this, $valid, $value, $field, $input );
         }
 
         return $valid;

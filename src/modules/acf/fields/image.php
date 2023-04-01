@@ -2,32 +2,12 @@
 
 class QTX_Module_Acf_Field_Image extends acf_field_image {
     /**
-     * The register instance
-     * @var QTX_Module_Acf_Register
-     */
-    protected $register;
-
-    /**
-     * Constructor
-     *
-     * @param QTX_Module_Acf_Register $register
-     * @param bool $do_initialize true if initialize() must be called explicitly
-     */
-    function __construct( $register, $do_initialize ) {
-        $this->register = $register;
-        if ( $do_initialize ) {
-            $this->initialize();
-        }
-        parent::__construct();
-    }
-
-    /**
      *  Setup the field type data
      */
     function initialize() {
         parent::initialize();
         $this->name     = 'qtranslate_image';
-        $this->category = QTX_Module_Acf_Register::ACF_CATEGORY_QTX;
+        $this->category = QTX_Module_Acf_Extended::ACF_CATEGORY_QTX;
         $this->label    .= ' [' . $this->category . ']';
     }
 
@@ -40,7 +20,7 @@ class QTX_Module_Acf_Field_Image extends acf_field_image {
         global $q_config;
 
         $languages       = qtranxf_getSortedLanguages( true );
-        $values          = $this->register->decode_language_values( $field['value'] );
+        $values          = QTX_Module_Acf_Extended::decode_language_values( $field['value'] );
         $currentLanguage = qtranxf_getLanguage();
 
         $field_name = $field['name'];
