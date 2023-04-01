@@ -1,3 +1,32 @@
+### 3.14.0
+Summary
+* Major update for ACF, bump minimal version 5.6.0
+  * New settings to select more precisely the supported fields (standard / sub / extended)
+  * Deprecate redundant qTranslate `text/textarea/wysiwyg` extended fields to promote ACF standard fields
+* Refactor source file structure and core loaders at init
+
+Core
+* Deprecate filter `wp_translator` (#1304)
+* Deprecate filter `qtranslate_admin_page_config` (not `qtranslate_admin_config`)
+* Re-organize source file structure as `/css`, `/js`, `/src` for CSS / JavaScript / PHP sources, including modules
+* Refactor core file structure and init loaders (#1303)
+* Refactor admin CSS and LSB files, deprecate `qtranxf_add_admin_css` (#1294)
+* Fix string interpolation deprecated in PHP8.2 (#1271)
+* Fix PHP Deprecated warning in `qtranxf_isMultilingual` (#1290)
+* Rewrite `require_once` as language constructs
+* Rename `Gutenberg` refs as `block editor`
+
+Modules
+* ACF
+  * Bump ACF minimal version 5.6.0 (#1307)
+  * Add new ACF settings to select extended types (#1300)
+  * Add new settings for ACF standard fields (#1279)
+  * Deprecate qTranslate `text/textarea/wysiwyg` extended fields (#1305)
+  * Fix validation of standard fields (#1292)
+  * Fix missing LSB for user profile (#1270)
+  * Fix JS error no form found for `id=acf_content` (#1301)
+  * Refactor ACF init of qTranslate fields (#1299)
+
 ### 3.13.0
 Summary
 * Compatibility with PHP8.1 (#1085)

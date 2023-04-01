@@ -3,7 +3,7 @@ Developed by: new qTranslate community, from qTranslate-X by John Clause and qTr
 Contributors: herrvigg, johnclause, chineseleper, Vavooon, grafcom  
 Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, translation  
 Requires: 4.8  
-Tested up to: 6.1.1  
+Tested up to: 6.2  
 Stable tag: N/A  
 License: GPLv2 or later  
 License URI: https://www.gnu.org/licenses/gpl-2.0.html  
@@ -72,6 +72,11 @@ Note for developers:
 
 ## Upgrade Notice
 
+### 3.14.0
+* Major update for ACF, bump minimal version 5.6.0
+  * New settings to select more precisely the supported fields (standard / sub / extended)
+  * Deprecate redundant qTranslate `text/textarea/wysiwyg` extended fields to promote ACF standard fields
+
 ### 3.13.0
 * Compatibility with PHP8.1
   * Major refactoring of date/time without `strftime` (deprecated in PHP8.1)
@@ -131,9 +136,10 @@ The [legacy issues](https://github.com/qtranslate/qtranslate-xt/wiki/Known-Issue
 
 ## Desirable Unimplemented Features
 
+* rename to a new official plugin (#601) and migrate with a separate configuration
 * refactor integration API, possibly without json files (i18n-config.json)
 * support for [localized hreflang](https://support.google.com/webmasters/answer/189077) with country/region codes (ISO 3166-1 alpha-2)
-* full support for Gutenberg (with LSB)
+* full support for block editor (Gutenberg) with LSB (see #1097)
 * unit/integration tests, automated CI tests
 * utilities for DB maintenance (audit, cleanup)
 * legacy of [desirable features](https://github.com/qtranslate/qtranslate-xt/wiki/Legacy-Desirable-Features).
