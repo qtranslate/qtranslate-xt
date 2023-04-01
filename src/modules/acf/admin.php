@@ -66,7 +66,7 @@ class QTX_Module_Acf_Admin {
      * @return array
      */
     public function get_field_types( $groups ) {
-        if ( ! isset ( $groups[ QTX_Module_Acf_Register::ACF_CATEGORY_QTX ] ) ) {
+        if ( ! isset ( $groups[ QTX_Module_Acf_Extended::ACF_CATEGORY_QTX ] ) ) {
             return $groups;
         }
         $fields    = array_keys( self::qtranslate_fields() );
@@ -75,14 +75,14 @@ class QTX_Module_Acf_Admin {
         $is_active = function ( $field ) use ( $settings ) {
             return isset( $settings[ $field ] ) && $settings[ $field ];
         };
-        $group_qtx = &$groups[ QTX_Module_Acf_Register::ACF_CATEGORY_QTX ];
+        $group_qtx = &$groups[ QTX_Module_Acf_Extended::ACF_CATEGORY_QTX ];
         foreach ( $group_qtx as $field_id => $field_object ) {
             if ( ! $is_active( $field_id ) ) {
                 unset( $group_qtx[ $field_id ] );
             }
         }
         if ( empty( $group_qtx ) ) {
-            unset( $groups[ QTX_Module_Acf_Register::ACF_CATEGORY_QTX ] );
+            unset( $groups[ QTX_Module_Acf_Extended::ACF_CATEGORY_QTX ] );
         }
         return $groups;
     }

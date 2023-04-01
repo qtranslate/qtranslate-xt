@@ -6,7 +6,7 @@
  */
 
 /**
- * Setup module if Advanced Custom Fields is enabled and version >= 5.0.0
+ * Setup module if Advanced Custom Fields is enabled and version >= 5.6.0
  *
  * @return void
  */
@@ -14,9 +14,9 @@ function qtranxf_acf_init() {
     static $acf_loaded = false;
 
     if ( ! $acf_loaded && function_exists( 'acf' ) ) {
-        if ( version_compare( acf()->settings['version'], '5.0.0' ) >= 0 ) {
-            require_once __DIR__ . '/register.php';
-            new QTX_Module_Acf_Register();
+        if ( version_compare( acf()->settings['version'], '5.6.0' ) >= 0 ) {
+            require_once __DIR__ . '/extended.php';
+            new QTX_Module_Acf_Extended();
 
             if ( is_admin() ) {
                 require_once __DIR__ . '/admin.php';
