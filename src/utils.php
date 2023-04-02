@@ -318,7 +318,7 @@ function qtranxf_parse_page_config( $config, $url_path, $url_query ) {
 
     $page_configs = array();
     foreach ( $config as $pgkey => $pgcfg ) {
-        $delimiter = isset( $pgcfg['preg_delimiter'] ) ? $pgcfg['preg_delimiter'] : '!';
+        $delimiter = $pgcfg['preg_delimiter'] ?? '!';
         $matched   = qtranxf_match_page( $pgcfg, $url_path, $url_query, $delimiter );
         if ( $matched === false ) {
             continue;
@@ -479,7 +479,7 @@ function qtranxf_write_config_log( $config, $suffix = '', $url_path = null, $url
         }
     }
     if ( ! is_null( $url_query ) && empty( $url_query ) ) {
-        $url_query = isset( $q_config['url_info']['query'] ) ? $q_config['url_info']['query'] : '';
+        $url_query = $q_config['url_info']['query'] ?? '';
     }
 
     $name = '';

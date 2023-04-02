@@ -11,7 +11,7 @@ function qtranxf_get_front_page_config() {
 
     global $q_config;
     $url_path  = $q_config['url_info']['wp-path'];
-    $url_query = isset( $q_config['url_info']['query'] ) ? $q_config['url_info']['query'] : '';
+    $url_query = $q_config['url_info']['query'] ?? '';
 
     $front_config = $q_config['front_config'];
     /**
@@ -98,7 +98,7 @@ function qtranxf_wp_get_nav_menu_items( $items, $menu, $args ) {
                             // Translate again and skip menu item if translation does not exist.
                             $post = get_post( $item->object_id );
                             if ( $post ) {
-                                $post_title_ml = isset( $post->post_title_ml ) ? $post->post_title_ml : $post->post_title;
+                                $post_title_ml = $post->post_title_ml ?? $post->post_title;
                                 $item_title    = qtranxf_use_language( $language, $post_title_ml, false, ! $q_config['show_menu_alternative_language'] );
                             }
                             break;

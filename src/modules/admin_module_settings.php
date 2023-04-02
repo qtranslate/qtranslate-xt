@@ -110,7 +110,7 @@ class QTX_Admin_Module_Settings {
         $states   = get_option( QTX_OPTIONS_MODULES_STATE, array() );
         $settings = array();
         foreach ( QTX_Admin_Module::get_modules() as $module ) {
-            $state      = isset( $states[ $module->id ] ) ? $states[ $module->id ] : QTX_MODULE_STATE_UNDEFINED;
+            $state      =  $states[ $module->id ] ?? QTX_MODULE_STATE_UNDEFINED;
             $settings[] = new QTX_Admin_Module_Settings( $module, $state );
         }
 

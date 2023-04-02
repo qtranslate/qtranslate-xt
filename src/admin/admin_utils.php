@@ -52,9 +52,9 @@ function qtranxf_enqueue_scripts( $jss ) {
     $deps = array();
     foreach ( $jss as $key => $js ) {
         if ( isset( $js['src'] ) ) {
-            $handle = isset( $js['handle'] ) ? $js['handle'] : ( is_string( $key ) ? $key : 'qtranslate-admin-js-' . ( ++$cnt ) );
+            $handle = $js['handle'] ?? ( is_string( $key ) ? $key : 'qtranslate-admin-js-' . ( ++$cnt ) );
             $src    = $js['src'];
-            $ver    = isset( $js['ver'] ) ? $js['ver'] : QTX_VERSION;
+            $ver    = $js['ver'] ?? QTX_VERSION;
             $url    = content_url( $src );
             if ( isset( $js['deps'] ) ) {
                 $deps = array_merge( $deps, $js['deps'] );
@@ -239,7 +239,7 @@ function qtranxf_language_column( $column ) {
                     if ( ! $language_names ) {
                         $language_names = qtranxf_default_language_name();
                     }
-                    $language_name = isset( $language_names[ $language ] ) ? $language_names[ $language ] : __( 'Unknown Language', 'qtranslate' );
+                    $language_name = $language_names[ $language ] ?? __( 'Unknown Language', 'qtranslate' );
                     $language_name .= ' (' . __( 'Not enabled', 'qtranslate' ) . ')';
                 }
                 $available_languages_name[] = $language_name;

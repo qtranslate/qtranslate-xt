@@ -256,7 +256,7 @@ function qwpseo_parse_value_posted( $key, $value, $value_posted = null, $value_o
 
 /**
  * Response to
- * apply_filters( 'wpseo_sanitize_tax_meta_' . $key, $clean[ $key ], ( isset( $meta_data[ $key ] ) ? $meta_data[ $key ] : null ), ( isset( $old_meta[ $key ] ) ? $old_meta[ $key ] : null ) );
+ * apply_filters( 'wpseo_sanitize_tax_meta_' . $key, $clean[ $key ], (  $meta_data[ $key ] ?? null ), (  $old_meta[ $key ] ?? null ) );
  *
  * @param mixed $value
  * @param mixed $value_posted

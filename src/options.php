@@ -230,7 +230,7 @@ function qtranxf_load_languages_enabled() {
                 if ( is_null( $def ) && function_exists( $func ) ) {
                     $def = call_user_func( $func );
                 }
-                $val[ $lang ] = isset( $def[ $lang ] ) ? $def[ $lang ] : '';
+                $val[ $lang ] = $def[ $lang ] ?? '';
             }
         }
         $q_config[ $name ] = $val;

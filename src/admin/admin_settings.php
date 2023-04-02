@@ -83,18 +83,18 @@ class QTX_Admin_Settings {
     private function add_language_form( $form_action, $button_name, $nonce_action ) {
         global $q_config;
 
-        $language_code = isset( $q_config['posted']['language_code'] ) ? $q_config['posted']['language_code'] : '';
-        $original_lang = isset( $q_config['posted']['original_lang'] ) ? $q_config['posted']['original_lang'] : '';
+        $language_code = $q_config['posted']['language_code'] ?? '';
+        $original_lang = $q_config['posted']['original_lang'] ?? '';
 
-        $lang_props = isset( $q_config['posted']['lang_props'] ) ? $q_config['posted']['lang_props'] : array();
+        $lang_props = $q_config['posted']['lang_props'] ?? array();
 
-        $language_name        = isset( $lang_props['language_name'] ) ? $lang_props['language_name'] : '';
-        $language_locale      = isset( $lang_props['locale'] ) ? $lang_props['locale'] : '';
-        $language_locale_html = isset( $lang_props['locale_html'] ) ? $lang_props['locale_html'] : '';
-        $language_date_format = isset( $lang_props['date_format'] ) ? $lang_props['date_format'] : '';
-        $language_time_format = isset( $lang_props['time_format'] ) ? $lang_props['time_format'] : '';
-        $language_flag        = isset( $lang_props['flag'] ) ? $lang_props['flag'] : '';
-        $language_na_message  = isset( $lang_props['not_available'] ) ? $lang_props['not_available'] : '';
+        $language_name        = $lang_props['language_name'] ?? '';
+        $language_locale      = $lang_props['locale'] ?? '';
+        $language_locale_html = $lang_props['locale_html'] ?? '';
+        $language_date_format = $lang_props['date_format'] ?? '';
+        $language_time_format = $lang_props['time_format'] ?? '';
+        $language_flag        = $lang_props['flag'] ?? '';
+        $language_na_message  = $lang_props['not_available'] ?? '';
         ?>
         <div class="form-wrap">
             <form action="<?php echo $form_action ?>" id="qtranxs-edit-language" method="post"
@@ -364,7 +364,7 @@ class QTX_Admin_Settings {
                             $home_host = $home_info['host'];
                             foreach ( $q_config['enabled_languages'] as $lang ) {
                                 $id     = 'language_domain_' . $lang;
-                                $domain = isset( $q_config['domains'][ $lang ] ) ? $q_config['domains'][ $lang ] : $lang . '.' . $home_host;
+                                $domain = $q_config['domains'][ $lang ] ?? $lang . '.' . $home_host;
                                 ?>
                                 <a href="<?php echo $this->options_uri . '&edit=' . $lang ?>"><img
                                             src="<?php echo $flag_location . $q_config['flag'][ $lang ] ?>"

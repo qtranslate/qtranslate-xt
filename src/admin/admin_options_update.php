@@ -218,13 +218,13 @@ function qtranxf_edit_config() {
 
         $langs = array();
         qtranxf_languages_configured( $langs );
-        $lang_props['language_name'] = isset( $langs['language_name'][ $lang ] ) ? $langs['language_name'][ $lang ] : '';
-        $lang_props['locale']        = isset( $langs['locale'][ $lang ] ) ? $langs['locale'][ $lang ] : '';
-        $lang_props['locale_html']   = isset( $langs['locale_html'][ $lang ] ) ? $langs['locale_html'][ $lang ] : '';
-        $lang_props['date_format']   = isset( $langs['date_format'][ $lang ] ) ? $langs['date_format'][ $lang ] : '';
-        $lang_props['time_format']   = isset( $langs['time_format'][ $lang ] ) ? $langs['time_format'][ $lang ] : '';
-        $lang_props['not_available'] = isset( $langs['not_available'][ $lang ] ) ? $langs['not_available'][ $lang ] : '';
-        $lang_props['flag']          = isset( $langs['flag'][ $lang ] ) ? $langs['flag'][ $lang ] : '';
+        $lang_props['language_name'] = $langs['language_name'][ $lang ] ?? '';
+        $lang_props['locale']        = $langs['locale'][ $lang ] ?? '';
+        $lang_props['locale_html']   = $langs['locale_html'][ $lang ] ?? '';
+        $lang_props['date_format']   = $langs['date_format'][ $lang ] ?? '';
+        $lang_props['time_format']   = $langs['time_format'][ $lang ] ?? '';
+        $lang_props['not_available'] = $langs['not_available'][ $lang ] ?? '';
+        $lang_props['flag']          = $langs['flag'][ $lang ] ?? '';
     } elseif ( isset( $_GET['delete'] ) ) {
         $lang = sanitize_text_field( $_GET['delete'] );
         $err  = qtranxf_deleteLanguage( $lang );
@@ -506,7 +506,7 @@ function qtranxf_reloadConfig() {
 
 function qtranxf_reload_config() {
     global $q_config;
-    $url_info = isset( $q_config['url_info'] ) ? $q_config['url_info'] : null;
+    $url_info = $q_config['url_info'] ?? null;
     qtranxf_del_conf_filters();
     qtranxf_load_config();
     qtranxf_admin_load_config();
@@ -598,7 +598,7 @@ function qtranxf_update_setting( $var, $type = QTX_STRING, $def = null ) {
             return true;
 
         case QTX_ARRAY:
-            $val = isset( $_POST[ $var ] ) ? $_POST[ $var ] : array();
+            $val = $_POST[ $var ] ?? array();
             if ( ! is_array( $val ) ) {
                 $val = sanitize_text_field( $val );
                 $val = preg_split( '/[\s,]+/', $val, -1, PREG_SPLIT_NO_EMPTY );
@@ -619,7 +619,7 @@ function qtranxf_update_setting( $var, $type = QTX_STRING, $def = null ) {
             return true;
 
         case QTX_BOOLEAN_SET:
-            $val = isset( $_POST[ $var ] ) ? $_POST[ $var ] : array();
+            $val = $_POST[ $var ] ?? array();
             // Convert all input values to boolean types
             foreach ( $val as &$value ) {
                 $value = (bool) $value;
@@ -847,7 +847,7 @@ function qtranxf_update_settings() {
             break;
     }
 
-    $domains = isset( $q_config['domains'] ) ? $q_config['domains'] : array();
+    $domains = $q_config['domains'] ?? array();
     foreach ( $q_config['enabled_languages'] as $lang ) {
         $id = 'language_domain_' . $lang;
         if ( ! isset( $_POST[ $id ] ) ) {

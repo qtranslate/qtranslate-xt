@@ -47,7 +47,7 @@ function qtranxf_init_language() {
 
     if ( WP_DEBUG ) {
         $url_info['pagenow']        = $pagenow;
-        $url_info['REQUEST_METHOD'] = isset( $_SERVER['REQUEST_METHOD'] ) ? $_SERVER['REQUEST_METHOD'] : '';
+        $url_info['REQUEST_METHOD'] = $_SERVER['REQUEST_METHOD'] ?? '';
         if ( is_admin() ) {
             $url_info['WP_ADMIN'] = true;
         }
@@ -62,7 +62,7 @@ function qtranxf_init_language() {
     // fill url_info similarly to qtranxf_parseURL
     $url_info['scheme'] = is_ssl() ? 'https' : 'http';
     // see https://wordpress.org/support/topic/messy-wp-cronphp-command-line-output
-    $url_info['host'] = isset( $_SERVER['HTTP_HOST'] ) ? $_SERVER['HTTP_HOST'] : '';
+    $url_info['host'] = $_SERVER['HTTP_HOST'] ?? '';
     $url_info['path'] = strtok( $_SERVER['REQUEST_URI'], '?' );
     if ( ! empty ( $_SERVER['QUERY_STRING'] ) ) {
         $url_info['query'] = qtranxf_sanitize_url( $_SERVER['QUERY_STRING'] ); // to prevent xss
