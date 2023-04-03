@@ -2,7 +2,7 @@
 Developed by: new qTranslate community, from qTranslate-X by John Clause and qTranslate by Qian Qin
 Contributors: herrvigg, johnclause, chineseleper, Vavooon, grafcom
 Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, translation
-Requires: 4.8
+Requires: 5.0
 Tested up to: 6.2
 Stable tag: N/A
 License: GPLv2 or later

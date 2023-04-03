@@ -868,8 +868,6 @@ function qtranxf_admin_load() {
 
     // Caution:  we are being called in 'plugins_loaded' from core with a higher priority, but we add a later hook
     add_action( 'plugins_loaded', 'qtranxf_collect_translations_posted', 5 );
-
-
     add_action( 'admin_init', 'qtranxf_admin_init', 2 );
     add_action( 'admin_enqueue_scripts', 'qtranxf_admin_enqueue_scripts' );
     add_action( 'admin_footer', 'qtranxf_admin_footer', 999 );
@@ -888,10 +886,7 @@ function qtranxf_admin_load() {
 
     add_action( 'wp_ajax_admin_debug_info', 'qtranxf_admin_debug_info' );
 
-    global $wp_version;
-    if ( version_compare( $wp_version, '5.0' ) >= 0 ) {
-        require_once QTRANSLATE_DIR . '/src/admin/block_editor.php';
-    }
+    require_once QTRANSLATE_DIR . '/src/admin/block_editor.php';
 
     // Disable the block editor from managing widgets, including the Gutenberg plugin
     add_filter( 'gutenberg_use_widgets_block_editor', '__return_false', 99 );
