@@ -24,7 +24,8 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots to help explain your problem.
 
 **Debug info**
-Reach `<YOUR_SITE>/wp-admin/options-general.php?page=qtranslate-xt#troubleshooting`, press `Collect information` button and copy/paste the output below.
+Go to `<YOUR_SITE>/wp-admin/options-general.php?page=qtranslate-xt#troubleshooting`.
+Press `Collect information` button and copy/paste the output below.
 ```
 Versions [REQUIRED!] ...
 Configuration [If applicable] ...
