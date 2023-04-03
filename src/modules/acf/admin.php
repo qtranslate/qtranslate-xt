@@ -393,7 +393,7 @@ class QTX_Module_Acf_Admin {
         if ( ! isset( $_POST['nonce_acf'] ) || ! wp_verify_nonce( $_POST['nonce_acf'], 'acf' ) ) {
             return;
         }
-        $options = isset( $_POST[ QTX_OPTIONS_MODULE_ACF ] ) ? $_POST[ QTX_OPTIONS_MODULE_ACF ] : null;
+        $options =  $_POST[ QTX_OPTIONS_MODULE_ACF ] ?? null;
         update_option( QTX_OPTIONS_MODULE_ACF, $options, false );
     }
 

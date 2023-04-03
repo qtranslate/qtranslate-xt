@@ -315,7 +315,7 @@ function qtranxf_generateLanguageSelectCode( $args = array(), $id = '' ) {
             break;
         case 'custom':
             {
-                $format = isset( $args['format'] ) ? $args['format'] : '';
+                $format = $args['format'] ?? '';
                 foreach ( qtranxf_getSortedLanguages() as $language ) {
                     $alt     = $q_config['language_name'][ $language ] . ' (' . $language . ')';
                     $s       = $flag_location . $q_config['flag'][ $language ];

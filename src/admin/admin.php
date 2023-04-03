@@ -212,7 +212,7 @@ function qtranxf_get_admin_page_config() {
     $admin_config = apply_filters_deprecated( 'i18n_admin_config', array( $admin_config ), '3.10.0', 'qtranslate_admin_config' );
     $admin_config = apply_filters_deprecated( 'qtranslate_load_admin_page_config', array( $admin_config ), '3.10.0', 'qtranslate_admin_config' );
 
-    $url_query    = isset( $q_config['url_info']['query'] ) ? $q_config['url_info']['query'] : '';
+    $url_query    = $q_config['url_info']['query'] ?? '';
     $page_configs = qtranxf_parse_page_config( $admin_config, $pagenow, $url_query );
 
     $q_config['i18n-cache']['admin_page_configs'] = $page_configs;
@@ -242,7 +242,7 @@ function qtranxf_get_admin_page_config_post_type( $post_type ) {
     }
     $page_configs = qtranxf_get_admin_page_config();
 
-    $page_config = isset( $page_configs[''] ) ? $page_configs[''] : array();
+    $page_config = $page_configs[''] ?? array();
     if ( $post_type ) {
         foreach ( $page_configs as $key => $cfg ) {
             if ( empty( $key ) ) {

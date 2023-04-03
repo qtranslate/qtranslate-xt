@@ -375,7 +375,7 @@ function qtranxf_slugs_save_term( $term_id, $tt_id, $taxonomy ) {
     $term = get_term( $term_id, $taxonomy );
     foreach ( $q_config['enabled_languages'] as $lang ) {
         // condition is needed in case term is added through ajax e.g. in post edit page
-        $slug = isset( $_POST["qts_{$lang}_slug"] ) ? $_POST["qts_{$lang}_slug"] : '';
+        $slug =  $_POST["qts_{$lang}_slug"] ?? '';
         $slug = qtranxf_slugs_sanitize_term_slug( $slug, $term, $lang );
         $slug = qtranxf_slugs_unique_term_slug( $slug, $term, $lang );
 

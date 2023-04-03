@@ -64,7 +64,7 @@ class QTX_Admin_Settings_Language_List extends WP_List_Table {
             if ( isset( $q_config['locale'][ $lang ] ) ) {
                 $locale_item = $q_config['locale'][ $lang ];
             } else {
-                $locale_item = isset( $locales[ $lang ] ) ? $locales[ $lang ] : '?';
+                $locale_item = $locales[ $lang ] ?? '?';
             }
 
             $icon_enable  = 'dashicons dashicons-insert';

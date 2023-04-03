@@ -125,7 +125,7 @@ function qtranxf_add_row_migrate( $nm, $plugin, $args = null ) {
     if ( ! file_exists( WP_PLUGIN_DIR . '/' . $plugin ) && ! file_exists( WPMU_PLUGIN_DIR . '/' . $plugin ) ) {
         return;
     }
-    $href = isset( $args['href'] ) ? $args['href'] : 'https://wordpress.org/plugins/' . $plugin;
+    $href = $args['href'] ?? 'https://wordpress.org/plugins/' . $plugin;
     ?>
     <tr id="qtranslate-<?php echo $plugin; ?>">
         <th scope="row"><?php _e( 'Plugin' ) ?> <a href="<?php echo $href; ?>/" target="_blank"><?php echo $nm; ?></a>
