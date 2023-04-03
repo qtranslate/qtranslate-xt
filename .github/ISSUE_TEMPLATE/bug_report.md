@@ -1,38 +1,35 @@
-### Describe the bug
+---
+name: Bug report
+about: Help us to understand and reproduce the issue
+title: "[Module name if applicable] Brief title"
+labels: bug
+assignees: ''
+
+---
+
+**Describe the bug**
 A clear and concise description of what the bug is.
 
-### To Reproduce
-Describe the steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '...'
-3. Scroll down to '...'
+**To Reproduce**
+Steps to reproduce the behavior:
+1. Go to page '...'
+2. Edit value '....'
+3. Click Save
 4. See error
 
-### Expected behavior
+**Expected behavior**
 A clear and concise description of what you expected to happen.
 
-### Screenshots
+**Screenshots**
 If applicable, add screenshots to help explain your problem.
 
-### Debug info
+**Debug info**
 Reach `<YOUR_SITE>/wp-admin/options-general.php?page=qtranslate-xt#troubleshooting`, press `Collect information` button and copy/paste the output below.
-
-Versions
 ```
-[REQUIRED!] ...
-```
-
-Configuration
-```
-[If applicable] ...
+Versions [REQUIRED!] ...
+Configuration [If applicable] ...
+Browser [If applicable] ...
 ```
 
-Browser
-```
-[If applicable] ...
-```
-
-If you are using the `master` branch instead of a stable release, please provide also the reference commit.
-
-### Additional context
-Add any other context about the problem here.
+**Additional context**
+Add any other context about the problem here. If you are using the `master` branch instead of a stable release, please provide also the reference commit.
