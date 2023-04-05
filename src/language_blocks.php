@@ -177,28 +177,6 @@ function qtranxf_getAvailableLanguages( $text ) {
     return $result;
 }
 
-// TODO: this function is not used, remove it?
-function qtranxf_is_multilingual_deep( $value ) {
-    _deprecated_function( __FUNCTION__, '3.14.0' );
-    if ( is_string( $value ) ) {
-        return qtranxf_isMultilingual( $value );
-    } else if ( is_array( $value ) ) {
-        foreach ( $value as $item ) {
-            if ( qtranxf_is_multilingual_deep( $item ) ) {
-                return true;
-            }
-        }
-    } else if ( is_object( $value ) || $value instanceof __PHP_Incomplete_Class ) {
-        foreach ( get_object_vars( $value ) as $item ) {
-            if ( qtranxf_is_multilingual_deep( $item ) ) {
-                return true;
-            }
-        }
-    }
-
-    return false;
-}
-
 function qtranxf_allthesame( $texts ) {
     $text = null;
     // take first not empty

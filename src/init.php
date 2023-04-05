@@ -165,13 +165,3 @@ function qtranxf_init_language() {
      */
     do_action( 'qtranslate_init_language', $url_info );
 }
-
-/**
- * @deprecated Legacy hook for `init` action, to be removed in next major release.
- * Might be wrongly used by 3rd-party plugins (for example, alo_easymail) to test qTranslate-XT presence.
- * Recommended usage: is_plugin_active( 'qtranslate-xt/qtranslate.php' )
- * @since 3.4
- */
-function qtranxf_init() {
-    _deprecated_function( __FUNCTION__, '3.14.0' );
-}

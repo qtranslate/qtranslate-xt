@@ -179,11 +179,6 @@ function qtranxf_ensure_language_set( &$langs, $lang, $default_value = null ) {
     return '';
 }
 
-function qtranxf_getLanguageEdit() {
-    _deprecated_function( __FUNCTION__, '3.10.0', 'qtranxf_get_edit_language' );
-    qtranxf_get_edit_language();
-}
-
 function qtranxf_get_edit_language() {
     global $q_config;
 
@@ -258,34 +253,6 @@ function qtranxf_language_column( $column ) {
     return $column;
 }
 
-function qtranxf_fetch_file_selection( $dir, $suffix = '.css' ) {
-    _deprecated_function( __FUNCTION__, '3.14.0' );
-    $files      = array();
-    $dir_handle = @opendir( $dir );
-    if ( ! $dir_handle ) {
-        return false;
-    }
-    while ( false !== ( $file = readdir( $dir_handle ) ) ) {
-        if ( ! qtranxf_endsWith( $file, $suffix ) ) {
-            continue;
-        }
-        $name = basename( $file, $suffix );
-        if ( ! $name ) {
-            continue;
-        }
-        $name = str_replace( '_', ' ', $name );
-        if ( qtranxf_endsWith( $name, '.min' ) ) {
-            $name           = substr( $name, -4 );
-            $files[ $name ] = $file;
-        } elseif ( ! isset( $files[ $name ] ) ) {
-            $files[ $name ] = $file;
-        }
-    }
-    ksort( $files );
-
-    return $files;
-}
-
 function qtranxf_before_admin_bar_render() {
     global $wp_admin_bar, $q_config;
     if ( ! isset( $wp_admin_bar ) ) {
@@ -338,28 +305,6 @@ if ( ! function_exists( 'qtranxf_trim_words' ) ) {
         // has to be 'b', because 'c' gets stripped in /wp-admin/includes/nav-menu.php:182: esc_html( $item->description )
         return qtranxf_join_b( $texts );
     }
-}
-
-/* @since 3.3.8.7 use filter 'admin_title' instead
- * function qtranxf_filter_options_general($value){
- * global $q_config;
- * global $pagenow;
- * switch($pagenow){
- * case 'options-general.php':
- * case 'customize.php'://there is more work to do for this case
- * return $value;
- * default: break;
- * }
- * $lang = $q_config['language'];
- * return qtranxf_use_language($lang,$value,false,false);
- * }
- * add_filter('option_blogname', 'qtranxf_filter_options_general');
- * add_filter('option_blogdescription', 'qtranxf_filter_options_general');
- */
-
-function qtranxf_updateGettextDatabases( $force = false, $only_for_language = '' ) {
-    _deprecated_function( __FUNCTION__, '3.10.0', 'qtranxf_update_gettext_databases' );
-    qtranxf_update_gettext_databases( $force, $only_for_language );
 }
 
 function qtranxf_update_gettext_databases( $force = false, $only_for_language = '' ) {
@@ -445,24 +390,6 @@ add_action( 'add_meta_boxes', 'qtranxf_add_meta_box_LSB', 10, 2 );
  */
 function qtranxf_post_type_optional( $post_type ) {
     return ! in_array( $post_type, [ 'revision', 'nav_menu_item' ] );
-}
-
-function qtranxf_json_encode( $o ) {
-    _deprecated_function( __FUNCTION__, '3.10.0' );
-    return json_encode( $o, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES );
-}
-
-/**
- * @since 3.4
- * return reference to $page_config['forms'][$name]['fields']
- */
-function qtranxf_config_add_form( &$page_config, $name ) {
-    _deprecated_function( __FUNCTION__, '3.10.0' );
-    if ( ! isset( $page_config['forms'][ $name ] ) ) {
-        $page_config['forms'][ $name ] = array( 'fields' => array() );
-    } else if ( ! isset( $page_config['forms'][ $name ]['fields'] ) ) {
-        $page_config['forms'][ $name ]['fields'] = array();
-    }
 }
 
 /**
