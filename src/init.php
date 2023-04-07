@@ -4,6 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once QTRANSLATE_DIR . '/src/class_translator.php';
+require_once QTRANSLATE_DIR . '/src/deprecated.php';
 require_once QTRANSLATE_DIR . '/src/language_blocks.php';
 require_once QTRANSLATE_DIR . '/src/language_config.php';
 require_once QTRANSLATE_DIR . '/src/language_detect.php';

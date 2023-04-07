@@ -62,7 +62,6 @@ if ( ! defined( 'QTRANSLATE_FILE' ) ) {
 }
 
 require_once QTRANSLATE_DIR . '/src/init.php';
-require_once QTRANSLATE_DIR . '/src/deprecated.php';
 add_action( 'plugins_loaded', 'qtranxf_init_language', 2 ); // User is not authenticated yet, high priority needed.
 
 if ( is_admin() ) {
