@@ -3,11 +3,6 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-function qtranxf_updateGettextDatabasesEx( $force = false, $only_for_language = '' ) {
-    _deprecated_function( __FUNCTION__, '3.10.0', 'qtranxf_update_gettext_databases_ex' );
-    qtranxf_update_gettext_databases_ex( $force, $only_for_language );
-}
-
 /**
  * return 'true', if no update needed,
  * or 'false', if update is impossible to do,

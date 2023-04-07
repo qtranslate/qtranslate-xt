@@ -7,11 +7,6 @@ require_once QTRANSLATE_DIR . '/src/admin/admin_options.php';
 require_once QTRANSLATE_DIR . '/src/admin/import_export.php';
 require_once QTRANSLATE_DIR . '/src/modules/admin_module_manager.php';
 
-function qtranxf_editConfig() {
-    _deprecated_function( __FUNCTION__, '3.10.0', 'qtranxf_edit_config' );
-    qtranxf_edit_config();
-}
-
 function qtranxf_edit_config() {
     global $q_config;
     if ( ! qtranxf_verify_nonce( 'qtranslate-x_configuration_form' ) ) {
@@ -316,11 +311,6 @@ function qtranxf_edit_config() {
     }
 }
 
-function qtranxf_resetConfig() {
-    _deprecated_function( __FUNCTION__, '3.10.0', 'qtranxf_admin_reset_config' );
-    qtranxf_reset_config();
-}
-
 function qtranxf_reset_config() {
     global $qtranslate_options;
 
@@ -429,11 +419,6 @@ function qtranxf_update_option_bool( $nm, $default_value = null ) {
     }
 }
 
-function qtranxf_saveConfig() {
-    _deprecated_function( __FUNCTION__, '3.10.0', 'qtranxf_save_config' );
-    qtranxf_save_config();
-}
-
 /**
  * saves entire configuration
  */
@@ -499,11 +484,6 @@ function qtranxf_save_config() {
     do_action_deprecated( 'qtranslate_saveConfig', array(), '3.10.0', 'qtranslate_save_config' );
 }
 
-function qtranxf_reloadConfig() {
-    _deprecated_function( __FUNCTION__, '3.10.0', 'qtranxf_reload_config' );
-    qtranxf_reload_config();
-}
-
 function qtranxf_reload_config() {
     global $q_config;
     $url_info = $q_config['url_info'] ?? null;
@@ -520,11 +500,6 @@ function qtranxf_reload_config() {
         }
     }
     qtranxf_load_option_qtrans_compatibility();
-}
-
-function qtranxf_updateSetting( $var, $type = QTX_STRING, $def = null ) {
-    _deprecated_function( __FUNCTION__, '3.10.0', 'qtranxf_update_setting' );
-    qtranxf_update_setting( $var, $type, $def );
 }
 
 function qtranxf_update_setting( $var, $type = QTX_STRING, $def = null ) {
@@ -697,11 +672,6 @@ function qtranxf_update_i18n_config() {
     }
 }
 
-function qtranxf_updateSettingFlagLocation( $name ) {
-    _deprecated_function( __FUNCTION__, '3.10.0', 'qtranxf_update_setting_flag_location' );
-    qtranxf_update_setting_flag_location( $name );
-}
-
 function qtranxf_update_setting_flag_location( $nm ) {
     global $q_config;
     if ( ! isset( $_POST['submit'] ) ) {
@@ -728,11 +698,6 @@ function qtranxf_update_setting_flag_location( $nm ) {
     }
 
     return true;
-}
-
-function qtranxf_updateSettingIgnoreFileTypes( $name ) {
-    _deprecated_function( __FUNCTION__, '3.10.0', 'qtranxf_update_setting_ignore_file_types' );
-    qtranxf_update_setting_ignore_file_types( $name );
 }
 
 function qtranxf_update_setting_ignore_file_types( $name ) {
@@ -787,11 +752,6 @@ function qtranxf_parse_post_type_excluded() {
     $_POST['post_type_excluded'] = $post_type_excluded;
 
     return true;
-}
-
-function qtranxf_updateSettings() {
-    _deprecated_function( __FUNCTION__, '3.10.0', 'qtranxf_update_settings' );
-    qtranxf_update_settings();
 }
 
 function qtranxf_update_settings() {

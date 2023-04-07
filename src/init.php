@@ -4,6 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once QTRANSLATE_DIR . '/src/class_translator.php';
+require_once QTRANSLATE_DIR . '/src/deprecated.php';
 require_once QTRANSLATE_DIR . '/src/language_blocks.php';
 require_once QTRANSLATE_DIR . '/src/language_config.php';
 require_once QTRANSLATE_DIR . '/src/language_detect.php';
@@ -164,14 +165,4 @@ function qtranxf_init_language() {
      * allow other plugins and modules to initialize whatever they need for language
      */
     do_action( 'qtranslate_init_language', $url_info );
-}
-
-/**
- * @deprecated Legacy hook for `init` action, to be removed in next major release.
- * Might be wrongly used by 3rd-party plugins (for example, alo_easymail) to test qTranslate-XT presence.
- * Recommended usage: is_plugin_active( 'qtranslate-xt/qtranslate.php' )
- * @since 3.4
- */
-function qtranxf_init() {
-    _deprecated_function( __FUNCTION__, '3.14.0' );
 }

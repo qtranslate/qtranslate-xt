@@ -342,17 +342,6 @@ function qtranxf_load_option_func( $name, $opn = null, $func = null ) {
     $q_config[ $name ] = $val;
 }
 
-function qtranxf_validateBool( $var, $default_value ) {
-    _deprecated_function( __FUNCTION__, '3.13.0' );
-    if ( $var === '0' ) {
-        return false;
-    } elseif ( $var === '1' ) {
-        return true;
-    } else {
-        return $default_value;
-    }
-}
-
 function qtranxf_load_option_qtrans_compatibility() {
     global $q_config;
     qtranxf_load_option_bool( 'qtrans_compatibility', false );
@@ -414,11 +403,6 @@ function qtranxf_load_option_flag_location( $nm ) {
             delete_option( 'qtranslate_' . $nm );
         }
     }
-}
-
-function qtranxf_loadConfig() {
-    _deprecated_function( __FUNCTION__, '3.10.0', 'qtranxf_load_config' );
-    qtranxf_load_config();
 }
 
 function qtranxf_load_config() {

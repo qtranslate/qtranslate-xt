@@ -552,14 +552,6 @@ function qtranxf_get_admin_highlight_css( $highlight_mode ) {
     return $css;
 }
 
-function qtranxf_add_admin_css() {
-    _deprecated_function( __FUNCTION__, '3.14.0', 'qtranxf_admin_enqueue_scripts' );
-}
-
-function qtranxf_admin_head() {
-    _deprecated_function( __FUNCTION__, '3.10.0', 'qtranxf_admin_enqueue_scripts' );
-}
-
 function qtranxf_admin_enqueue_scripts() {
     global $q_config;
     wp_register_style( 'qtranslate-admin', plugins_url( 'css/admin.css', QTRANSLATE_FILE ), array(), QTX_VERSION );
