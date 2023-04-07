@@ -46,7 +46,7 @@
   },
   "require": {
     "composer/installers": ">=1.0",
-    "php": ">=7.0",
+    "php": ">=7.1",
     "ext-intl": "*"
   },
   "extra": {
