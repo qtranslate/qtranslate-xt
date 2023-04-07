@@ -71,9 +71,12 @@ $(function () {
 
     $('#qtranxs_debug_query').on('click', function () {
         const cookies = document.cookie.split(';');
+        // Check "RegExp: @@split" support, see also: https://caniuse.com/mdn-javascript_builtins_regexp_--split
+        const isRegexSplitSupported = ('a~b'.split(/(~)/).length === 3);
         const browserInfo = {
             'cookies': [],
-            'navigator': navigator.userAgent
+            'navigator': navigator.userAgent,
+            'Javascript built-in RegExp: @@split': isRegexSplitSupported ? 'supported' : 'not supported!',
         };
         for (let i = 0; i < cookies.length; i++) {
             const cookieStr = cookies[i].trim();
@@ -82,10 +85,13 @@ $(function () {
             }
         }
 
-        $('#qtranxs_debug_info').show();
+        if (!isRegexSplitSupported) {
+            $('#qtranxs_debug_info_browser').css('color', 'red');
+        }
         $('#qtranxs_debug_info_browser').val(JSON.stringify(browserInfo, null, 2));
         $('#qtranxs_debug_info_versions').val('...');
         $('#qtranxs_debug_info_configuration').val('...');
+        $('#qtranxs_debug_info').show();
 
         $.ajax({
             url: ajaxurl,

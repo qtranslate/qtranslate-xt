@@ -7,26 +7,9 @@ const qTranslateConfig = window.qTranslateConfig;
 export const qtranxj_get_split_blocks = function (text) {
     const regex = '(<!--:lang-->|<!--:-->|\\[:lang]|\\[:]|{:lang}|{:})'.replace(/lang/g, qTranslateConfig.lang_code_format);
     const splitRegex = new RegExp(regex, "gi");
-
-    // Most browsers support RegExp.prototype[@@split]()... except IE
-    if ('a~b'.split(/(~)/).length === 3) {
-        return text.split(splitRegex);
-    }
-
-    // compatibility for unsupported engines
-    let start = 0, arr = [];
-    let result;
-    while ((result = splitRegex.exec(text)) != null) {
-        arr.push(text.slice(start, result.index));
-        if (result.length > 1)
-            arr.push(result[1]);
-        start = splitRegex.lastIndex;
-    }
-    if (start < text.length)
-        arr.push(text.slice(start));
-    if (start === text.length)
-        arr.push(''); // delimiter at the end
-    return arr;
+    // Most browsers support RegExp.prototype[@@split]()... except IE (see debug info from troubleshooting)
+    // https://caniuse.com/mdn-javascript_builtins_regexp_--split
+    return text.split(splitRegex);
 };
 
 export const qtranxj_split = function (text) {
