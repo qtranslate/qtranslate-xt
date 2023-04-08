@@ -34,7 +34,7 @@ function qtranxf_convert_database( string $action ): string {
             }
             break;
         case 'db_clean_terms':
-            return gtranxf_db_clean_terms();
+            return qtranxf_db_clean_terms();
         default:
             break;
     }
@@ -485,8 +485,7 @@ function qtranxf_extract_languages( $text, array $lang2keep ): string {
     return $s;
 }
 
-// TODO: fix gtranxf typo
-function gtranxf_db_clean_terms(): string {
+function qtranxf_db_clean_terms(): string {
     global $wpdb, $q_config;
     $errors   = &$q_config['url_info']['errors'];
     $messages = &$q_config['url_info']['messages'];
