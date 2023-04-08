@@ -2,8 +2,9 @@
 Developed by: new qTranslate community, from qTranslate-X by John Clause and qTranslate by Qian Qin  
 Contributors: herrvigg, johnclause, chineseleper, Vavooon, grafcom  
 Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, translation  
-Requires: 5.0  
+Requires at least: 5.0  
 Tested up to: 6.2  
+Requires PHP: 7.1  
 Stable tag: N/A  
 License: GPLv2 or later  
 License URI: https://www.gnu.org/licenses/gpl-2.0.html  
