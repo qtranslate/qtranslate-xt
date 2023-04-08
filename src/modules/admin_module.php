@@ -47,9 +47,9 @@ class QTX_Admin_Module {
     function __construct( $fields ) {
         $this->id           = $fields['id'];
         $this->name         = $fields['name'];
-        $this->plugins      =  $fields['plugins'] ?? array();
-        $this->incompatible =  $fields['incompatible'] ?? null;
-        $this->has_settings =  $fields['has_settings'] ?? false;
+        $this->plugins      = $fields['plugins'] ?? array();
+        $this->incompatible = $fields['incompatible'] ?? null;
+        $this->has_settings = $fields['has_settings'] ?? false;
     }
 
     /**

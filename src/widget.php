@@ -119,15 +119,16 @@ class qTranslateXWidget extends WP_Widget {
         }
         ?>
         <p><label for="<?php echo $this->get_field_id( 'title' ) ?>"><?php _e( 'Title:', 'qtranslate' ) ?> <input
-                        class="widefat" id="<?php echo $this->get_field_id( 'title' ) ?>"
-                        name="<?php echo $this->get_field_name( 'title' ) ?>" type="text"
-                        value="<?php echo esc_attr( $title ) ?>"/></label></p>
+                    class="widefat" id="<?php echo $this->get_field_id( 'title' ) ?>"
+                    name="<?php echo $this->get_field_name( 'title' ) ?>" type="text"
+                    value="<?php echo esc_attr( $title ) ?>"/></label></p>
         <p><label for="<?php echo $this->get_field_id( 'hide-title' ) ?>"><?php _e( 'Hide Title:', 'qtranslate' ) ?>
                 <input type="checkbox" id="<?php echo $this->get_field_id( 'hide-title' ) ?>"
                        name="<?php echo $this->get_field_name( 'hide-title' ) ?>" <?php checked( $hide_title ) ?>/></label>
         </p>
         <p>
-            <label for="<?php echo $this->get_field_id( 'hide-title-colon' ) ?>"><?php _e( 'Hide Title Colon:', 'qtranslate' ) ?>
+            <label
+                for="<?php echo $this->get_field_id( 'hide-title-colon' ) ?>"><?php _e( 'Hide Title Colon:', 'qtranslate' ) ?>
                 <input type="checkbox" id="<?php echo $this->get_field_id( 'hide-title-colon' ) ?>"
                        name="<?php echo $this->get_field_name( 'hide-title-colon' ) ?>" <?php checked( $hide_title_colon ) ?>/></label>
         </p>

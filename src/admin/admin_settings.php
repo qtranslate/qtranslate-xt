@@ -55,7 +55,7 @@ class QTX_Admin_Settings {
             <h2><?php _e( 'Edit Language', 'qtranslate' ) ?></h2>
             <?php $this->add_language_form( '#', __( 'Save Changes &raquo;', 'qtranslate' ), $nonce_action ); ?>
             <p class="qtranxs-notes"><a
-                        href="<?php echo $this->options_uri . '#languages' ?>"><?php _e( 'back to configuration page', 'qtranslate' ) ?></a>
+                    href="<?php echo $this->options_uri . '#languages' ?>"><?php _e( 'back to configuration page', 'qtranslate' ) ?></a>
             </p>
         <?php else: ?>
             <h2><?php _e( 'Language Management (qTranslate-XT Configuration)', 'qtranslate' ) ?></h2>
@@ -132,7 +132,8 @@ class QTX_Admin_Settings {
                             <?php
                             foreach ( $files as $file ) {
                                 ?>
-                                <option value="<?php echo $file; ?>" <?php echo ( $language_flag == $file ) ? 'selected="selected"' : '' ?>><?php echo $file; ?></option>
+                                <option
+                                    value="<?php echo $file; ?>" <?php echo ( $language_flag == $file ) ? 'selected="selected"' : '' ?>><?php echo $file; ?></option>
                                 <?php
                             }
                             ?>
@@ -367,8 +368,8 @@ class QTX_Admin_Settings {
                                 $domain = $q_config['domains'][ $lang ] ?? $lang . '.' . $home_host;
                                 ?>
                                 <a href="<?php echo $this->options_uri . '&edit=' . $lang ?>"><img
-                                            src="<?php echo $flag_location . $q_config['flag'][ $lang ] ?>"
-                                            alt="<?php echo $q_config['language_name'][ $lang ] ?>"/></a>
+                                        src="<?php echo $flag_location . $q_config['flag'][ $lang ] ?>"
+                                        alt="<?php echo $q_config['language_name'][ $lang ] ?>"/></a>
 
                                 <input type="text" class="regular-text" name="<?php echo $id ?>" id="<?php echo $id ?>"
                                        value="<?php echo $domain ?>"
@@ -475,9 +476,9 @@ class QTX_Admin_Settings {
                             <span style="margin-right: 12pt"><input type="hidden"
                                                                     name="post_types_all[<?php echo $post_type ?>]"
                                                                     value="<?php echo $post_type_off ? '0' : '1' ?>"><input
-                                        type="checkbox" name="post_types[<?php echo $post_type ?>]"
-                                        id="post_type_<?php echo $post_type ?>"
-                                        value="1"<?php checked( ! $post_type_off ) ?> />&nbsp;<?php echo $post_type ?></span>
+                                    type="checkbox" name="post_types[<?php echo $post_type ?>]"
+                                    id="post_type_<?php echo $post_type ?>"
+                                    value="1"<?php checked( ! $post_type_off ) ?> />&nbsp;<?php echo $post_type ?></span>
                             <?php
                         }
                         ?>
@@ -565,7 +566,8 @@ class QTX_Admin_Settings {
                         <input type="radio" name="use_strftime"
                                value="<?php echo QTX_DATE; ?>" <?php checked( $q_config['use_strftime'], QTX_DATE ) ?>/> <?php _e( 'Use emulated date function.', 'qtranslate' ) ?>
                     </label><br/>
-                    <label class="<?php echo( ( $q_config['use_strftime'] == QTX_DATE_OVERRIDE ) ? "qtranxs-deprecated-warning" : "qtranxs-deprecated" ) ?>">
+                    <label
+                        class="<?php echo( ( $q_config['use_strftime'] == QTX_DATE_OVERRIDE ) ? "qtranxs-deprecated-warning" : "qtranxs-deprecated" ) ?>">
                         <input type="radio" name="use_strftime"
                                value="<?php echo QTX_DATE_OVERRIDE; ?>" <?php checked( $q_config['use_strftime'], QTX_DATE_OVERRIDE ) ?>/> <?php _e( 'Use emulated date function and replace formats with the predefined formats for each language.', 'qtranslate' ) ?>
                         <span><?php _e( 'Deprecated.', 'qtranslate' ); ?></span>
@@ -574,7 +576,8 @@ class QTX_Admin_Settings {
                         <input type="radio" name="use_strftime"
                                value="<?php echo QTX_STRFTIME; ?>" <?php checked( $q_config['use_strftime'], QTX_STRFTIME ) ?>/> <?php _e( 'Use strftime instead of date.', 'qtranslate' ) ?>
                     </label><br/>
-                    <label class="<?php echo( ( $q_config['use_strftime'] == QTX_STRFTIME_OVERRIDE ) ? "qtranxs-deprecated-warning" : "qtranxs-deprecated" ) ?>">
+                    <label
+                        class="<?php echo( ( $q_config['use_strftime'] == QTX_STRFTIME_OVERRIDE ) ? "qtranxs-deprecated-warning" : "qtranxs-deprecated" ) ?>">
                         <input type="radio" name="use_strftime"
                                value="<?php echo QTX_STRFTIME_OVERRIDE; ?>" <?php checked( $q_config['use_strftime'], QTX_STRFTIME_OVERRIDE ) ?>/> <?php _e( 'Use strftime instead of date and replace formats with the predefined formats for each language.', 'qtranslate' ) ?>
                         <span><?php _e( 'Deprecated.', 'qtranslate' ); ?></span>
@@ -653,7 +656,7 @@ class QTX_Admin_Settings {
                         <br/><input type="checkbox" name="hide_lsb_copy_content"
                                     id="hide_lsb_copy_content"
                                     value="1"<?php checked( ! empty( $q_config['hide_lsb_copy_content'] ) ) ?> ><label
-                                for="hide_lsb_copy_content"><?php _e( 'Hide button "Copy From", which allows to copy multilingual content from other language.', 'qtranslate' ) ?></label>
+                            for="hide_lsb_copy_content"><?php _e( 'Hide button "Copy From", which allows to copy multilingual content from other language.', 'qtranslate' ) ?></label>
                     </fieldset>
                 </td>
             </tr>
@@ -677,7 +680,8 @@ class QTX_Admin_Settings {
                                    value="<?php echo QTX_HIGHLIGHT_MODE_NONE; ?>" <?php checked( $highlight_mode, QTX_HIGHLIGHT_MODE_NONE ) ?> />
                             <?php _e( 'Do not highlight the translatable fields.', 'qtranslate' ) ?>
                         </label><br/>
-                        <label title="<?php _e( 'Show a line on the left border of translatable fields.', 'qtranslate' ) ?>">
+                        <label
+                            title="<?php _e( 'Show a line on the left border of translatable fields.', 'qtranslate' ) ?>">
                             <input type="radio" name="highlight_mode"
                                    value="<?php echo QTX_HIGHLIGHT_MODE_BORDER_LEFT; ?>" <?php checked( $highlight_mode, QTX_HIGHLIGHT_MODE_BORDER_LEFT ) ?> />
                             <?php _e( 'Show a line on the left border of translatable fields.', 'qtranslate' ) ?>
