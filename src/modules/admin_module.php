@@ -44,7 +44,7 @@ class QTX_Admin_Module {
      *
      * @see QTX_Admin_Module
      */
-    function __construct( $fields ) {
+    function __construct( array $fields ) {
         $this->id           = $fields['id'];
         $this->name         = $fields['name'];
         $this->plugins      = $fields['plugins'] ?? array();
@@ -57,7 +57,7 @@ class QTX_Admin_Module {
      *
      * @return bool
      */
-    function is_default_enabled() {
+    function is_default_enabled(): bool {
         return ! empty( $this->plugins );
     }
 
@@ -73,7 +73,7 @@ class QTX_Admin_Module {
      *
      * @return array[] ordered by module name
      */
-    protected static function get_builtin_setup() {
+    protected static function get_builtin_setup(): array {
         return [
             [
                 'id'           => 'acf',
@@ -139,7 +139,7 @@ class QTX_Admin_Module {
      *
      * @return QTX_Admin_Module[] ordered by name
      */
-    public static function get_modules() {
+    public static function get_modules(): array {
         static $modules;
         if ( isset( $modules ) ) {
             return $modules;

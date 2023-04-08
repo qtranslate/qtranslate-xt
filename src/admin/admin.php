@@ -13,7 +13,7 @@ require_once QTRANSLATE_DIR . '/src/admin/admin_taxonomy.php';
 /**
  * @see qtranxf_collect_translations
  */
-function qtranxf_collect_translations_deep( $qfields, $sep ) {
+function qtranxf_collect_translations_deep( $qfields, string $sep ) {
     $content = reset( $qfields );
     if ( is_string( $content ) ) {
         return qtranxf_join_texts( $qfields, $sep );
@@ -40,7 +40,7 @@ function qtranxf_collect_translations_deep( $qfields, $sep ) {
  * @param array|string $request an ML field of $_REQUEST.
  * @param string $edit_lang language of the active LSB at the time of sending the request.
  */
-function qtranxf_collect_translations( &$qfields, &$request, $edit_lang ) {
+function qtranxf_collect_translations( array &$qfields, &$request, string $edit_lang ): void {
     if ( isset( $qfields['qtranslate-separator'] ) ) {
         $sep = $qfields['qtranslate-separator'];
         unset( $qfields['qtranslate-separator'] );

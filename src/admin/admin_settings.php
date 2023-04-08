@@ -24,16 +24,16 @@ class QTX_Admin_Settings {
         $this->options_uri = admin_url( 'options-general.php?page=qtranslate-xt' );
     }
 
-    public static function add_submit_button( $button_name ) {
+    public static function add_submit_button( string $button_name ): void {
         echo '<p class="submit"><input type="submit" name="submit" class="button-primary"';
         echo ' value="' . $button_name . '" /></p>' . PHP_EOL;
     }
 
-    public static function open_section( $name ) {
+    public static function open_section( string $name ): void {
         echo '<div id="tab-' . $name . '" class="hidden">' . PHP_EOL;
     }
 
-    public static function close_section( $name, $button_name = null ) {
+    public static function close_section( string $name, ?string $button_name = null ): void {
         if ( $button_name !== false ) {
             if ( is_null( $button_name ) ) {
                 $button_name = __( 'Save Changes', 'qtranslate' );
@@ -43,7 +43,7 @@ class QTX_Admin_Settings {
         echo '</div>' . PHP_EOL;
     }
 
-    public function display() {
+    public function display(): void {
         $nonce_action = 'qtranslate-x_configuration_form';
         if ( ! qtranxf_verify_nonce( $nonce_action ) ) {
             return;
@@ -80,7 +80,7 @@ class QTX_Admin_Settings {
         <?php
     }
 
-    private function add_language_form( $form_action, $button_name, $nonce_action ) {
+    private function add_language_form( string $form_action, string $button_name, $nonce_action ): void {
         global $q_config;
 
         $language_code = $q_config['posted']['language_code'] ?? '';
@@ -204,7 +204,7 @@ class QTX_Admin_Settings {
         <?php
     }
 
-    private function add_configuration_inspector() {
+    private function add_configuration_inspector(): void {
         global $q_config;
 
         $admin_config = $q_config['admin_config'];
@@ -245,7 +245,7 @@ class QTX_Admin_Settings {
         <?php
     }
 
-    private function add_sections( $nonce_action ) {
+    private function add_sections( $nonce_action ): void {
         $admin_sections             = array();
         $admin_sections['general']  = __( 'General', 'qtranslate' );
         $admin_sections['advanced'] = __( 'Advanced', 'qtranslate' );
@@ -287,7 +287,7 @@ class QTX_Admin_Settings {
         <?php
     }
 
-    private function add_general_section() {
+    private function add_general_section(): void {
         global $q_config;
 
         $permalink_is_query = qtranxf_is_permalink_structure_query();
@@ -454,7 +454,7 @@ class QTX_Admin_Settings {
         $this->close_section( 'general' );
     }
 
-    private function add_advanced_section() {
+    private function add_advanced_section(): void {
         global $q_config;
         $url_mode = $q_config['url_mode'];
 
@@ -724,7 +724,7 @@ class QTX_Admin_Settings {
      *
      * @return void
      */
-    private function add_integration_section( $settings_modules ) {
+    private function add_integration_section( array $settings_modules ): void {
         global $q_config;
 
         $this->open_section( 'integration' ); ?>
@@ -859,7 +859,7 @@ class QTX_Admin_Settings {
         <?php $this->close_section( 'integration' );
     }
 
-    private function add_troubleshooting_section() {
+    private function add_troubleshooting_section(): void {
         $this->open_section( 'troubleshooting' ); ?>
         <table class="form-table qtranxs-form-table" id="qtranxs_troubleshooting_config">
             <tr>
@@ -893,7 +893,7 @@ class QTX_Admin_Settings {
         $this->close_section( 'troubleshooting' );
     }
 
-    private function add_languages_section( $nonce_action ) {
+    private function add_languages_section( $nonce_action ): void {
         $this->open_section( 'languages' ); ?>
         <div id="col-container">
 

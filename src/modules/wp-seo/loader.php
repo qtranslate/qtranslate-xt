@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-function qtranxf_wpseo_init_language( $url_info ) {
+function qtranxf_wpseo_init_language( array $url_info ): void {
     if ( $url_info['doing_front_end'] ) {
         require_once __DIR__ . '/wp-seo-front.php';
     } else {

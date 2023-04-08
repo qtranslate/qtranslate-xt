@@ -22,7 +22,7 @@ class QTX_Module_Acf_Admin {
      * Return the standard ACF fields (built-in) supported for content translation e.g. post or page.
      * @return string[]
      */
-    public static function standard_fields() {
+    public static function standard_fields(): array {
         return [
             'text',
             'textarea',
@@ -34,7 +34,7 @@ class QTX_Module_Acf_Admin {
      * Return the sub-fields (built-in) supported in group settings, with their labels.
      * @return array string ID => string label
      */
-    public static function group_sub_fields() {
+    public static function group_sub_fields(): array {
         return [
             'label'         => __( 'Label', 'acf' ),
             'instructions'  => __( 'Instructions', 'acf' ),
@@ -46,7 +46,7 @@ class QTX_Module_Acf_Admin {
      * Return the qtranslate fields e.g. post or page.
      * @return array
      */
-    public static function qtranslate_fields() {
+    public static function qtranslate_fields(): array {
         return [
             'qtranslate_file',
             'qtranslate_image',
@@ -65,7 +65,7 @@ class QTX_Module_Acf_Admin {
      *
      * @return array
      */
-    public function get_field_types( $groups ) {
+    public function get_field_types( array $groups ): array {
         if ( ! isset ( $groups[ QTX_Module_Acf_Extended::ACF_CATEGORY_QTX ] ) ) {
             return $groups;
         }
@@ -90,7 +90,7 @@ class QTX_Module_Acf_Admin {
     /**
      * Load javascript and stylesheets on admin pages
      */
-    public function admin_enqueue_scripts() {
+    public function admin_enqueue_scripts(): void {
         wp_enqueue_style( 'qtranslate-acf', plugins_url( 'css/modules/acf.css', QTRANSLATE_FILE ),
             array( 'acf-input' ), QTX_VERSION );
 
@@ -106,7 +106,7 @@ class QTX_Module_Acf_Admin {
     /**
      * Add additional styles and scripts to head
      */
-    public function admin_head() {
+    public function admin_head(): void {
         // Hide the language tabs if they shouldn't be displayed
         $show_language_tabs = self::get_module_setting( 'show_language_tabs' );
         if ( ! $show_language_tabs ) {
@@ -131,7 +131,7 @@ class QTX_Module_Acf_Admin {
      *
      * @return array
      */
-    public function filter_qtranslate_admin_config( $config ) {
+    public function filter_qtranslate_admin_config( array $config ): array {
         // Display for posts with ACF fields.
         $config['acf-post'] = [
             'pages' => [
@@ -240,7 +240,7 @@ class QTX_Module_Acf_Admin {
      *
      * @return mixed
      */
-    protected static function get_module_setting( $name, $default = null ) {
+    protected static function get_module_setting( string $name, $default = null ) {
         $options = get_option( QTX_OPTIONS_MODULE_ACF );
         if ( isset( $options[ $name ] ) ) {
             return $options[ $name ];
@@ -252,7 +252,7 @@ class QTX_Module_Acf_Admin {
     /**
      * Register settings and validation hooks.
      */
-    public function admin_init() {
+    public function admin_init(): void {
         register_setting( 'settings-qtranslate-acf', QTX_OPTIONS_MODULE_ACF );
 
         // Standard fields (ACF builtin fields)
@@ -325,7 +325,7 @@ class QTX_Module_Acf_Admin {
      * @return bool|string
      * @see acf_validation::acf_validate_value
      */
-    public static function validate_raw_value_standard( $valid, $value, $field, $input ) {
+    public static function validate_raw_value_standard( $valid, $value, array $field, $input ) {
         if ( is_string( $value ) && qtranxf_isMultilingual( $value ) ) {
             // Remove the standard validation that is likely to fail for the raw value.
             $instance = acf_get_field_type( $field['type'] );
@@ -353,7 +353,7 @@ class QTX_Module_Acf_Admin {
      * @return    bool|string
      * @see acf_validation::acf_validate_value
      */
-    protected static function validate_language_values_standard( $field_object, $valid, $values, $field, $input ) {
+    protected static function validate_language_values_standard( $field_object, $valid, array $values, array $field, $input ) {
         global $q_config;
 
         // Validate every language value as string.
@@ -381,14 +381,14 @@ class QTX_Module_Acf_Admin {
         return $valid;
     }
 
-    public function display_settings() {
+    public function display_settings(): void {
         QTX_Admin_Settings::open_section( 'acf' );
         wp_nonce_field( 'acf', 'nonce_acf', false );
         do_settings_sections( 'settings-qtranslate-acf' );
         QTX_Admin_Settings::close_section( 'acf' );
     }
 
-    public function update_settings() {
+    public function update_settings(): void {
         // The nonce allows to validate the settings tab was displayed but also to have checkbox fields only.
         if ( ! isset( $_POST['nonce_acf'] ) || ! wp_verify_nonce( $_POST['nonce_acf'], 'acf' ) ) {
             return;
@@ -400,7 +400,7 @@ class QTX_Module_Acf_Admin {
     /**
      * Render setting
      */
-    public function render_setting_standard_fields() {
+    public function render_setting_standard_fields(): void {
         $fields   = self::standard_fields();
         $default  = array_fill_keys( $fields, true );
         $settings = self::get_module_setting( 'standard_fields', $default );
@@ -421,7 +421,7 @@ class QTX_Module_Acf_Admin {
     /**
      * Render setting
      */
-    public function render_setting_group_sub_fields() {
+    public function render_setting_group_sub_fields(): void {
         $fields   = self::group_sub_fields();
         $default  = array_fill_keys( array_keys( $fields ), true );
         $settings = self::get_module_setting( 'group_sub_fields', $default );
@@ -438,7 +438,7 @@ class QTX_Module_Acf_Admin {
     /**
      * Render setting
      */
-    public function render_setting_qtranslate_fields() {
+    public function render_setting_qtranslate_fields(): void {
         $fields   = self::qtranslate_fields();
         $default  = array_fill_keys( array_keys( $fields ), false );
         $settings = self::get_module_setting( 'qtranslate_fields', $default );
@@ -460,7 +460,7 @@ class QTX_Module_Acf_Admin {
     /**
      * Render setting
      */
-    public function render_setting_show_language_tabs() {
+    public function render_setting_show_language_tabs(): void {
         ?>
         <input type="checkbox"
                name="<?php echo QTX_OPTIONS_MODULE_ACF ?>[show_language_tabs]" <?php checked( self::get_module_setting( 'show_language_tabs', false ), 1 ); ?>

@@ -18,7 +18,7 @@ class QTX_Module_Gravity_Forms {
         add_filter( "gform_pre_send_email", array( $this, "gform_pre_send_email" ) );
     }
 
-    public function gform_pre_render( $form ) {
+    public function gform_pre_render( array $form ): array {
         if ( ! $this->isEnabled() ) {
             return $form;
         }
@@ -92,13 +92,13 @@ class QTX_Module_Gravity_Forms {
         return $form;
     }
 
-    public function gform_form_action_attribute( $matches ) {
+    public function gform_form_action_attribute( array $matches ): string {
         global $q_config;
 
         return 'action="' . $this->convertURL( $matches[1], $q_config['language'] ) . '"';
     }
 
-    public function gform_form_tag( $tag ) {
+    public function gform_form_tag( string $tag ): string {
         if ( ! $this->isEnabled() ) {
             return $tag;
         }
@@ -107,7 +107,7 @@ class QTX_Module_Gravity_Forms {
         return $tag;
     }
 
-    public function gform_savecontinue_link( $save_button, $form ) {
+    public function gform_savecontinue_link( string $save_button, array $form ) {
         if ( ! $this->isEnabled() ) {
             return $save_button;
         }
@@ -116,7 +116,7 @@ class QTX_Module_Gravity_Forms {
         return $save_button;
     }
 
-    public function gform_confirmation( $confirmation, $form, $lead, $ajax ) {
+    public function gform_confirmation( $confirmation, $form, $lead, bool $ajax ) {
         if ( ! $this->isEnabled() ) {
             return $confirmation;
         }
@@ -125,7 +125,7 @@ class QTX_Module_Gravity_Forms {
         return $confirmation;
     }
 
-    public function gform_pre_send_email( $email ) {
+    public function gform_pre_send_email( array $email ): array {
         if ( ! $this->isEnabled() ) {
             return $email;
         }
@@ -135,7 +135,7 @@ class QTX_Module_Gravity_Forms {
         return $email;
     }
 
-    private function isEnabled() {
+    private function isEnabled(): bool {
         return ( function_exists( 'qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage' ) || function_exists( 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage' ) );
     }
 
@@ -147,7 +147,7 @@ class QTX_Module_Gravity_Forms {
         }
     }
 
-    private function convertURL( $url, $lang ) {
+    private function convertURL( string $url, string $lang ): string {
         if ( function_exists( 'qtranxf_convertURL' ) ) {
             return qtranxf_convertURL( $url, $lang );
         } else {

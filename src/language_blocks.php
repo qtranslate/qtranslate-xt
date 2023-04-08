@@ -35,7 +35,7 @@ function qtranxf_get_language_blocks( $text ) {
  *
  * @return string[] array of string items indexed by language.
  */
-function qtranxf_split( $text ) {
+function qtranxf_split( $text ): array {
     $blocks = qtranxf_get_language_blocks( $text );
 
     return qtranxf_split_blocks( $blocks );
@@ -50,7 +50,7 @@ function qtranxf_split( $text ) {
  * @return string[] array of string items indexed by language.
  * @since 3.4.5.2 $found added
  */
-function qtranxf_split_blocks( $blocks, &$found = array() ) {
+function qtranxf_split_blocks( array $blocks, array &$found = array() ): array {
     global $q_config;
 
     $result = array();
@@ -109,7 +109,7 @@ function qtranxf_split_blocks( $blocks, &$found = array() ) {
 /**
  * gets only part with encoded languages
  */
-function qtranxf_split_languages( $blocks ) {
+function qtranxf_split_languages( array $blocks ): array {
     $result           = array();
     $current_language = false;
     $lang_code        = QTX_LANG_CODE_FORMAT;
@@ -177,7 +177,7 @@ function qtranxf_getAvailableLanguages( $text ) {
     return $result;
 }
 
-function qtranxf_allthesame( $texts ) {
+function qtranxf_allthesame( array $texts ): ?string {
     $text = null;
     // take first not empty
     foreach ( $texts as $lang => $lang_text ) {
@@ -199,7 +199,7 @@ function qtranxf_allthesame( $texts ) {
     return $text;
 }
 
-function qtranxf_join_c( $texts ) {
+function qtranxf_join_c( array $texts ): string {
     $text = qtranxf_allthesame( $texts );
     if ( ! is_null( $text ) ) {
         return $text;
@@ -215,7 +215,7 @@ function qtranxf_join_c( $texts ) {
     return $text;
 }
 
-function qtranxf_join_b_no_closing( $texts ) {
+function qtranxf_join_b_no_closing( array $texts ): string {
     $text = qtranxf_allthesame( $texts );
     if ( ! is_null( $text ) ) {
         return $text;
@@ -231,7 +231,7 @@ function qtranxf_join_b_no_closing( $texts ) {
     return $text;
 }
 
-function qtranxf_join_b( $texts ) {
+function qtranxf_join_b( array $texts ): string {
     $text = qtranxf_allthesame( $texts );
     if ( ! is_null( $text ) ) {
         return $text;
@@ -253,7 +253,7 @@ function qtranxf_join_b( $texts ) {
 /**
  * @since 3.3.6 swirly bracket encoding
  */
-function qtranxf_join_s( $texts ) {
+function qtranxf_join_s( array $texts ): string {
     $text = qtranxf_allthesame( $texts );
     if ( ! is_null( $text ) ) {
         return $text;
@@ -276,7 +276,7 @@ function qtranxf_join_s( $texts ) {
  * Prepares multilingual text leaving text that matches $regex_sep outside of language tags.
  * @since 3.4.6.2
  */
-function qtranxf_join_byseparator( $texts, $regex_sep ) {
+function qtranxf_join_byseparator( array $texts, string $regex_sep ): string {
     $text = qtranxf_allthesame( $texts );
     if ( ! is_null( $text ) ) {
         return $text;
@@ -316,7 +316,7 @@ function qtranxf_join_byseparator( $texts, $regex_sep ) {
 /**
  * Prepare multilingal text leaving new line outside of language tags '[:]'.
  */
-function qtranxf_join_byline( $texts ) {
+function qtranxf_join_byline( array $texts ): string {
     $text = qtranxf_allthesame( $texts );
     if ( ! is_null( $text ) ) {
         return $text;
@@ -351,7 +351,8 @@ function qtranxf_join_byline( $texts ) {
     return $text;
 }
 
-function qtranxf_use( $lang, $text, $show_available = false, $show_empty = false ) {
+// TODO: this function signature is way too generic and weakly typed, break it by input type.
+function qtranxf_use( string $lang, $text, bool $show_available = false, bool $show_empty = false ) {
     // return full string if language is not enabled
     if ( is_array( $text ) ) {
         // handle arrays recursively
@@ -382,7 +383,7 @@ function qtranxf_use( $lang, $text, $show_available = false, $show_empty = false
 }
 
 /** when $text is already known to be string */
-function qtranxf_use_language( $lang, $text, $show_available = false, $show_empty = false ) {
+function qtranxf_use_language( string $lang, string $text, bool $show_available = false, bool $show_empty = false ) {
     $blocks = qtranxf_get_language_blocks( $text );
     if ( count( $blocks ) <= 1 )//no language is encoded in the $text, the most frequent case
     {
@@ -392,14 +393,14 @@ function qtranxf_use_language( $lang, $text, $show_available = false, $show_empt
     return qtranxf_use_block( $lang, $blocks, $show_available, $show_empty );
 }
 
-function qtranxf_use_block( $lang, $blocks, $show_available = false, $show_empty = false ) {
+function qtranxf_use_block( string $lang, array $blocks, bool $show_available = false, bool $show_empty = false ): string {
     $available_langs = array();
     $content         = qtranxf_split_blocks( $blocks, $available_langs );
 
     return qtranxf_use_content( $lang, $content, $available_langs, $show_available, $show_empty );
 }
 
-function qtranxf_use_content( $lang, $content, $available_langs, $show_available = false, $show_empty = false ) {
+function qtranxf_use_content( string $lang, $content, array $available_langs, bool $show_available = false, bool $show_empty = false ): string {
     global $q_config;
     // show the content in the requested language, if available
     if ( ! empty( $available_langs[ $lang ] ) ) {
@@ -461,7 +462,7 @@ function qtranxf_use_content( $lang, $content, $available_langs, $show_available
     return apply_filters( 'i18n_content_translation_not_available', $output, $lang, $language_list, $alt_lang, $alt_content, $msg, $q_config );
 }
 
-function qtranxf_showAllSeparated( $text ) {
+function qtranxf_showAllSeparated( $text ): string {
     if ( empty( $text ) ) {
         return $text;
     }

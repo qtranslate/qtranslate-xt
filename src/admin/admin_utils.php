@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * @since 3.3.8.4
  */
-function qtranxf_add_admin_notice( $msg, $kind ) {
+function qtranxf_add_admin_notice( string $msg, string $kind ): void {
     global $q_config;
     if ( isset( $q_config['url_info'][ $kind ] ) ) {
         if ( ! in_array( $msg, $q_config['url_info'][ $kind ] ) ) {
@@ -23,22 +23,22 @@ function qtranxf_add_admin_notice( $msg, $kind ) {
 /**
  * @since 3.3.7
  */
-function qtranxf_add_error( $msg ) {
+function qtranxf_add_error( string $msg ): void {
     qtranxf_add_admin_notice( $msg, 'errors' );
 }
 
-function qtranxf_add_warning( $msg ) {
+function qtranxf_add_warning( string $msg ): void {
     qtranxf_add_admin_notice( $msg, 'warnings' );
 }
 
-function qtranxf_add_message( $msg ) {
+function qtranxf_add_message( string $msg ): void {
     qtranxf_add_admin_notice( $msg, 'messages' );
 }
 
 /**
  * @since 3.3.1
  */
-function qtranxf_error_log( $msg ) {
+function qtranxf_error_log( string $msg ): void {
     qtranxf_add_error( $msg );
     error_log( 'qTranslate-X: ' . strip_tags( $msg ) );
 }
@@ -47,7 +47,7 @@ function qtranxf_error_log( $msg ) {
  * Enqueue Javascript files listed in $jss.
  * @since 3.5.1
  */
-function qtranxf_enqueue_scripts( $jss ) {
+function qtranxf_enqueue_scripts( array $jss ): void {
     $cnt  = 0;
     $deps = array();
     foreach ( $jss as $key => $js ) {
@@ -66,7 +66,7 @@ function qtranxf_enqueue_scripts( $jss ) {
     }
 }
 
-function qtranxf_detect_admin_language( $url_info ) {
+function qtranxf_detect_admin_language( array $url_info ): array {
     global $q_config;
     $cs   = null;
     $lang = null;
@@ -115,7 +115,7 @@ add_filter( 'qtranslate_detect_admin_language', 'qtranxf_detect_admin_language' 
 /**
  * @return bool true if $a and $b are equal.
  */
-function qtranxf_array_compare( $a, $b ) {
+function qtranxf_array_compare( $a, $b ): bool {
     if ( ! is_array( $a ) || ! is_array( $b ) ) {
         return false;
     }
@@ -140,7 +140,7 @@ function qtranxf_array_compare( $a, $b ) {
     return true;
 }
 
-function qtranxf_join_texts( $texts, $sep ) {
+function qtranxf_join_texts( $texts, string $sep ): string {
     switch ( $sep ) {
         case 'byline':
             return qtranxf_join_byline( $texts );
@@ -154,13 +154,14 @@ function qtranxf_join_texts( $texts, $sep ) {
 /**
  * @since 3.4.6.9
  */
-function qtranxf_clean_request( $name ) {
+function qtranxf_clean_request( string $name ): void {
     unset( $_GET[ $name ] );
     unset( $_POST[ $name ] );
     unset( $_REQUEST[ $name ] );
 }
 
-function qtranxf_ensure_language_set( &$langs, $lang, $default_value = null ) {
+// TODO clarify return value
+function qtranxf_ensure_language_set( array &$langs, string $lang, ?string $default_value = null ) {
     if ( ! empty( $langs[ $lang ] ) ) {
         return $langs[ $lang ];
     }
@@ -179,7 +180,7 @@ function qtranxf_ensure_language_set( &$langs, $lang, $default_value = null ) {
     return '';
 }
 
-function qtranxf_get_edit_language() {
+function qtranxf_get_edit_language(): string {
     global $q_config;
 
     if ( ! isset( $_REQUEST['qtranslate-edit-language'] ) ) {
@@ -194,7 +195,7 @@ function qtranxf_get_edit_language() {
     return $lang;
 }
 
-function qtranxf_language_column_header( $columns ) {
+function qtranxf_language_column_header( array $columns ): array {
     $new_columns = array();
     if ( isset( $columns['cb'] ) ) {
         $new_columns['cb'] = '';
@@ -216,7 +217,7 @@ function qtranxf_language_column_header( $columns ) {
     return array_merge( $new_columns, $columns );
 }
 
-function qtranxf_language_column( $column ) {
+function qtranxf_language_column( string $column ) {
     global $q_config, $post;
     if ( $column == 'language' ) {
         $missing_languages   = null;
@@ -253,7 +254,7 @@ function qtranxf_language_column( $column ) {
     return $column;
 }
 
-function qtranxf_before_admin_bar_render() {
+function qtranxf_before_admin_bar_render(): void {
     global $wp_admin_bar, $q_config;
     if ( ! isset( $wp_admin_bar ) ) {
         return;
@@ -271,7 +272,7 @@ function qtranxf_before_admin_bar_render() {
     }
 }
 
-function qtranxf_admin_the_title( $title ) {
+function qtranxf_admin_the_title( string $title ): string {
     // For nav menus, keep the raw value as the languages are handled client-side (LSB)
     if ( wp_doing_ajax() && isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'add-menu-item' ) {
         // When a nav menu is being added it is first handled by AJAX, see "wp_ajax_add_menu_item" in ajax-actions.php
@@ -292,7 +293,8 @@ function qtranxf_admin_the_title( $title ) {
 add_filter( 'the_title', 'qtranxf_admin_the_title', 0 );
 
 if ( ! function_exists( 'qtranxf_trim_words' ) ) {
-    function qtranxf_trim_words( $text, $num_words, $more, $original_text ) {
+    // TODO clarify duplicate function name, defined in frontend!
+    function qtranxf_trim_words( string $text, int $num_words, string $more, string $original_text ) {
         $blocks = qtranxf_get_language_blocks( $original_text );
         if ( count( $blocks ) <= 1 ) {
             return $text;
@@ -487,6 +489,6 @@ function qtranxf_decode_name_value( $name_values ) {
 }
 
 add_filter( 'manage_posts_columns', 'qtranxf_language_column_header' );
-add_filter( 'manage_posts_custom_column', 'qtranxf_language_column' );
+add_filter( 'manage_posts_custom_column', 'qtranxf_language_column' );  // TODO this should be an action!
 add_filter( 'manage_pages_columns', 'qtranxf_language_column_header' );
-add_filter( 'manage_pages_custom_column', 'qtranxf_language_column' );
+add_filter( 'manage_pages_custom_column', 'qtranxf_language_column' );  // TODO this should be an action!

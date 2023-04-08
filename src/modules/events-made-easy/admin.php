@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 //}
 
 add_filter( 'qtranslate_admin_config', 'qtranxf_eme_add_admin_page_config' );
-function qtranxf_eme_add_admin_page_config( $page_configs ) {
+function qtranxf_eme_add_admin_page_config( array $page_configs ): array {
     {//admin.php?page=eme-manager
         $page_config = array();
 

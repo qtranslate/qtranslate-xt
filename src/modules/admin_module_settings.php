@@ -31,7 +31,7 @@ class QTX_Admin_Module_Settings {
      * @param QTX_Admin_Module $module
      * @param integer $state
      */
-    public function __construct( $module, $state ) {
+    public function __construct( QTX_Admin_Module $module, int $state ) {
         $this->id     = $module->id;
         $this->name   = $module->name;
         $this->module = $module;
@@ -67,7 +67,7 @@ class QTX_Admin_Module_Settings {
      *
      * @return bool
      */
-    public function is_checked() {
+    public function is_checked(): bool {
         global $q_config;
 
         return ( isset( $q_config['admin_enabled_modules'][ $this->module->id ] ) && $q_config['admin_enabled_modules'][ $this->module->id ] ) || ( $this->state == QTX_MODULE_STATE_ACTIVE );
@@ -78,7 +78,7 @@ class QTX_Admin_Module_Settings {
      *
      * @return bool
      */
-    public function is_disabled() {
+    public function is_disabled(): bool {
         return ( QTX_Admin_Module_Manager::can_module_be_activated( $this->module ) != QTX_MODULE_STATE_ACTIVE );
     }
 
@@ -87,7 +87,7 @@ class QTX_Admin_Module_Settings {
      *
      * @return bool
      */
-    public function is_active() {
+    public function is_active(): bool {
         return $this->state == QTX_MODULE_STATE_ACTIVE;
     }
 
@@ -96,7 +96,7 @@ class QTX_Admin_Module_Settings {
      *
      * @return bool
      */
-    public function has_settings() {
+    public function has_settings(): bool {
         return $this->module->has_settings;
     }
 
@@ -106,7 +106,7 @@ class QTX_Admin_Module_Settings {
      *
      * @return QTX_Admin_Module_Settings[]
      */
-    public static function get_settings_modules() {
+    public static function get_settings_modules(): array {
         $states   = get_option( QTX_OPTIONS_MODULES_STATE, array() );
         $settings = array();
         foreach ( QTX_Admin_Module::get_modules() as $module ) {

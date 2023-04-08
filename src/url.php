@@ -12,7 +12,7 @@
  *
  * @return string
  */
-function qtranxf_convertURL( $url = '', $lang = '', $forceadmin = false, $showDefaultLanguage = false ) {
+function qtranxf_convertURL( string $url = '', string $lang = '', bool $forceadmin = false, bool $showDefaultLanguage = false ): string {
     global $q_config;
 
     if ( empty( $lang ) ) {
@@ -37,7 +37,7 @@ function qtranxf_convertURL( $url = '', $lang = '', $forceadmin = false, $showDe
     return $complete;
 }
 
-function qtranxf_convertURLs( $url, $lang = '', $forceadmin = false, $showDefaultLanguage = false ) {
+function qtranxf_convertURLs( $url, string $lang = '', bool $forceadmin = false, bool $showDefaultLanguage = false ) {
     global $q_config;
     if ( empty( $lang ) ) {
         $lang = $q_config['language'];
@@ -58,7 +58,7 @@ function qtranxf_convertURLs( $url, $lang = '', $forceadmin = false, $showDefaul
 /**
  * @since 3.0
  */
-function qtranxf_url_del_language( &$urlinfo ) {
+function qtranxf_url_del_language( array &$urlinfo ): void {
     global $q_config;
 
     if ( ! empty( $urlinfo['query'] ) ) {
@@ -107,7 +107,7 @@ function qtranxf_url_del_language( &$urlinfo ) {
     }
 }
 
-function qtranxf_url_set_language( $urlinfo, $lang, $showLanguage ) {
+function qtranxf_url_set_language( array $urlinfo, $lang, bool $showLanguage ): array {
     global $q_config;
     $urlinfo = qtranxf_copy_url_info( $urlinfo );
     if ( $showLanguage ) {
@@ -152,7 +152,7 @@ function qtranxf_url_set_language( $urlinfo, $lang, $showLanguage ) {
     return $urlinfo;
 }
 
-function qtranxf_get_url_for_language( $url, $lang, $showLanguage = true ) {
+function qtranxf_get_url_for_language( string $url, string $lang, bool $showLanguage = true ): string {
     global $q_config;
     static $url_cache = array();
     if ( ! isset( $url_cache[ $url ] ) ) {
@@ -254,7 +254,7 @@ function qtranxf_get_url_for_language( $url, $lang, $showLanguage = true ) {
 }
 
 // check if it is a link to an ignored file type
-function qtranxf_ignored_file_type( $path ) {
+function qtranxf_ignored_file_type( string $path ): bool {
     global $q_config;
     $i = strpos( $path, '?' );
     if ( $i !== false ) {
@@ -273,7 +273,7 @@ function qtranxf_ignored_file_type( $path ) {
     return in_array( $ext, $q_config['ignore_file_types'] );
 }
 
-function qtranxf_language_neutral_path( $path ) {
+function qtranxf_language_neutral_path( string $path ): bool {
     if ( empty( $path ) ) {
         return false;
     }
@@ -299,7 +299,7 @@ function qtranxf_language_neutral_path( $path ) {
 /*
  * @since 2.3.8 simplified version of esc_url
  */
-function qtranxf_sanitize_url( $url ) {
+function qtranxf_sanitize_url( string $url ): string {
     $url   = preg_replace( '|[^a-z0-9-~+_.?#=!&;,/:%@$\|*\'()\[\]\\x80-\\xff]|i', '', $url );
     $strip = array( '%0d', '%0a', '%0D', '%0A' );
     do {
@@ -310,7 +310,7 @@ function qtranxf_sanitize_url( $url ) {
 }
 
 
-function qtranxf_get_url_info( $url ) {
+function qtranxf_get_url_info( string $url ): array {
     $urlinfo = qtranxf_parseURL( $url );
     qtranxf_complete_url_info( $urlinfo );
     qtranxf_complete_url_info_path( $urlinfo );
@@ -324,7 +324,7 @@ function qtranxf_get_url_info( $url ) {
  *
  * @param array $urlinfo
  */
-function qtranxf_complete_url_info( &$urlinfo ) {
+function qtranxf_complete_url_info( array &$urlinfo ): void {
     if ( ! isset( $urlinfo['path'] ) ) {
         $urlinfo['path'] = '';
     }
@@ -367,7 +367,7 @@ function qtranxf_complete_url_info( &$urlinfo ) {
  *
  * @since 3.2.8
  */
-function qtranxf_complete_url_info_path( &$urlinfo ) {
+function qtranxf_complete_url_info_path( array &$urlinfo ): void {
     if ( isset( $urlinfo['path-base'] ) ) {
         if ( empty( $urlinfo['path-base'] ) ) {
             $urlinfo['wp-path'] = $urlinfo['path'];
@@ -384,7 +384,7 @@ function qtranxf_complete_url_info_path( &$urlinfo ) {
     }
 }
 
-function qtranxf_parseURL( $url ) {
+function qtranxf_parseURL( string $url ): array {
     // this is not the same as native parse_url and so it is in use
     // it should also work quicker than native parse_url, so we should keep it?
     preg_match( '!(?:(\w+)://)?(?:(\w+):(\w+)@)?([^/:?#]+)?(?::(\d*))?([^#?]+)?(?:\?([^#]+))?(?:#(.+$))?!', $url, $out );
@@ -420,7 +420,7 @@ function qtranxf_parseURL( $url ) {
 /**
  * @since 3.2.8
  */
-function qtranxf_buildURL( $urlinfo, $homeinfo ) {
+function qtranxf_buildURL( array $urlinfo, array $homeinfo ): string {
     if ( empty( $urlinfo['host'] ) ) {
         $url = ''; // relative path stays relative
     } else {
@@ -459,7 +459,7 @@ function qtranxf_buildURL( $urlinfo, $homeinfo ) {
 /**
  * @since 3.2.8 Copies the data needed for qtranxf_buildURL and qtranxf_url_set_language
  */
-function qtranxf_copy_url_info( $urlinfo ) {
+function qtranxf_copy_url_info( array $urlinfo ): array {
     $copy = array();
     if ( isset( $urlinfo['scheme'] ) ) {
         $copy['scheme'] = $urlinfo['scheme'];
@@ -492,7 +492,7 @@ function qtranxf_copy_url_info( $urlinfo ) {
     return $copy;
 }
 
-function qtranxf_external_host_ex( $host, $homeinfo ) {
+function qtranxf_external_host_ex( string $host, array $homeinfo ): bool {
     global $q_config;
 
     switch ( $q_config['url_mode'] ) {
@@ -517,13 +517,13 @@ function qtranxf_external_host_ex( $host, $homeinfo ) {
     }
 }
 
-function qtranxf_external_host( $host ) {
+function qtranxf_external_host( string $host ): bool {
     $homeinfo = qtranxf_get_home_info();
 
     return qtranxf_external_host_ex( $host, $homeinfo );
 }
 
-function qtranxf_get_page_referer() {
+function qtranxf_get_page_referer(): string {
     if ( wp_doing_ajax() ) {
         global $q_config;
         if ( isset( $q_config['url_info']['page_referer'] ) ) {

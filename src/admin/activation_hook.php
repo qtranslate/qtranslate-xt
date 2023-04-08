@@ -13,7 +13,7 @@ require_once QTRANSLATE_DIR . '/src/modules/admin_module_manager.php';
  * @return array
  * @since 3.3
  */
-function qtranxf_save_languages( $cfg ) {
+function qtranxf_save_languages( array $cfg ): array {
     global $qtranslate_options;
     foreach ( $qtranslate_options['languages'] as $key => $option ) {
         if ( is_array( $cfg[ $key ] ) ) {
@@ -36,7 +36,7 @@ function qtranxf_save_languages( $cfg ) {
 /**
  * since 3.2.9.2
  */
-function qtranxf_default_enabled_languages() {
+function qtranxf_default_enabled_languages(): array {
     $locale = get_locale();
     if ( ! $locale ) {
         $locale = 'en_US';
@@ -70,7 +70,7 @@ function qtranxf_default_enabled_languages() {
 /**
  * since 3.2.9.2
  */
-function qtranxf_default_default_language() {
+function qtranxf_default_default_language(): string {
     global $q_config;
     $enabled_languages = qtranxf_default_enabled_languages();
     $default_language  = $enabled_languages[0];
@@ -88,7 +88,7 @@ function qtranxf_default_default_language() {
  * @return array configuration dictionary
  * @since 3.3.2
  */
-function qtranxf_load_config_files( $json_files ) {
+function qtranxf_load_config_files( array $json_files ): array {
     $content_dir = null;
     $qtransx_dir = null;
     foreach ( $json_files as $index => $config_file ) {
@@ -184,7 +184,7 @@ function qtranxf_load_config_files( $json_files ) {
 /**
  * @since 3.4
  */
-function qtranxf_get_option_config_files() {
+function qtranxf_get_option_config_files(): array {
     $config_files_def = array( './i18n-config.json' );
     $config_files     = get_option( 'qtranslate_config_files', $config_files_def );
     if ( ! is_array( $config_files ) ) {
@@ -201,7 +201,7 @@ function qtranxf_get_option_config_files() {
  * @return bool
  * @since 3.4
  */
-function qtranxf_set_field_jquery( &$field ) {
+function qtranxf_set_field_jquery( array &$field ): bool {
     if ( isset( $field['jquery'] ) ) {
         return false;
     }
@@ -233,7 +233,7 @@ function qtranxf_set_field_jquery( &$field ) {
  * @return array
  * @since 3.4
  */
-function qtranxf_standardize_config_fields( $fields ) {
+function qtranxf_standardize_config_fields( array $fields ): array {
     foreach ( $fields as $key => $field ) {
         if ( ! is_array( $field ) ) {
             continue;
@@ -291,7 +291,7 @@ function qtranxf_standardize_config_anchor( &$anchor ) {
  * @return array
  * @since 3.4
  */
-function qtranxf_standardize_front_config( $cfg_front ) {
+function qtranxf_standardize_front_config( array $cfg_front ): array {
     foreach ( $cfg_front as $key => $cfg ) {
         if ( ! isset( $cfg['filters'] ) ) {
             continue;
@@ -330,7 +330,7 @@ function qtranxf_standardize_front_config( $cfg_front ) {
  * @return array
  * @since 3.4
  */
-function qtranxf_standardize_admin_config( $configs ) {
+function qtranxf_standardize_admin_config( array $configs ): array {
     foreach ( $configs as $key => $config ) {
         if ( ! is_array( $config ) ) {
             continue;
@@ -388,7 +388,7 @@ function qtranxf_standardize_admin_config( $configs ) {
  * @return array
  * @since 3.4
  */
-function qtranxf_standardize_i18n_config( $configs ) {
+function qtranxf_standardize_i18n_config( array $configs ): array {
     if ( isset( $configs['admin-config'] ) ) {
         $configs['admin-config'] = qtranxf_standardize_admin_config( $configs['admin-config'] );
     }
@@ -408,7 +408,7 @@ function qtranxf_standardize_i18n_config( $configs ) {
  * @return array dictionary
  * @since 3.4
  */
-function qtranxf_load_config_all( $json_files, $custom_config ) {
+function qtranxf_load_config_all( array $json_files, array $custom_config ): array {
     global $q_config;
     $nerr = isset( $q_config['url_info']['errors'] ) ? count( $q_config['url_info']['errors'] ) : 0;
     $cfg  = qtranxf_load_config_files( $json_files );
@@ -442,7 +442,7 @@ function qtranxf_load_config_all( $json_files, $custom_config ) {
  *
  * @since 3.4
  */
-function qtranxf_update_config_options( $config_files, $changed = true ) {
+function qtranxf_update_config_options( array $config_files, bool $changed = true ): void {
     if ( $changed ) {
         update_option( 'qtranslate_config_files', $config_files );
         qtranxf_update_admin_notice( 'config-files-changed', true ); // notify admin
@@ -462,7 +462,7 @@ function qtranxf_update_config_options( $config_files, $changed = true ) {
  * @return array config files in absolute paths
  * @since 3.4
  */
-function qtranxf_search_config_files_theme( $theme = null ) {
+function qtranxf_search_config_files_theme( $theme = null ): array {
     if ( ! $theme ) {
         $theme = wp_get_theme();
     } elseif ( is_string( $theme ) ) {
@@ -500,7 +500,7 @@ function qtranxf_search_config_files_theme( $theme = null ) {
  * @return array of normalized paths
  * @since 3.4
  */
-function qtranxf_normalize_config_files( $file_paths ) {
+function qtranxf_normalize_config_files( array $file_paths ): array {
     $nc = strlen( WP_CONTENT_DIR );
     $np = strlen( QTRANSLATE_DIR );
     foreach ( $file_paths as $index => $path ) {
@@ -525,7 +525,7 @@ function qtranxf_normalize_config_files( $file_paths ) {
  * @return array of normalized paths
  * @since 3.4
  */
-function qtranxf_search_config_files() {
+function qtranxf_search_config_files(): array {
     $found = qtranxf_search_config_files_theme();
 
     $mu_plugins = wp_get_mu_plugins();
@@ -579,7 +579,7 @@ function qtranxf_search_config_files() {
  * @return array of normalized paths
  * @since 3.4
  */
-function qtranxf_add_config_file( $config_files, $add_file ) {
+function qtranxf_add_config_file( array $config_files, string $add_file ): array {
     $updated   = array_slice( $config_files, 0, 1 );
     $updated[] = $add_file;
     foreach ( array_slice( $config_files, 1 ) as $file ) {
@@ -604,7 +604,7 @@ function qtranxf_add_config_file( $config_files, $add_file ) {
  *
  * @since 3.4
  */
-function qtranxf_add_config_files( &$config_files, $add_files ) {
+function qtranxf_add_config_files( array &$config_files, array $add_files ): bool {
     $changed = false;
     foreach ( $add_files as $file ) {
         $index = array_search( $file, $config_files );
@@ -618,7 +618,7 @@ function qtranxf_add_config_files( &$config_files, $add_files ) {
     return $changed;
 }
 
-function qtranxf_del_config_files( &$config_files, $del_files ) {
+function qtranxf_del_config_files( array &$config_files, array $del_files ): bool {
     $changed = false;
     foreach ( $del_files as $file ) {
         $index = array_search( $file, $config_files );
@@ -635,14 +635,14 @@ function qtranxf_del_config_files( &$config_files, $del_files ) {
 /**
  * @since 3.4
  */
-function qtranxf_update_config_files() {
+function qtranxf_update_config_files(): void {
     $config_files = qtranxf_get_option_config_files();
     $found        = qtranxf_search_config_files();
     $changed      = qtranxf_add_config_files( $config_files, $found );
     qtranxf_update_config_options( $config_files, $changed );
 }
 
-function qtranxf_on_switch_theme( $new_name, $new_theme ) {
+function qtranxf_on_switch_theme( string $new_name, WP_Theme $new_theme ): void {
     $config_files = qtranxf_get_option_config_files();
     $changed      = false;
 
@@ -675,7 +675,7 @@ add_action( 'switch_theme', 'qtranxf_on_switch_theme', 10, 2 );
  *
  * @return string|bool path normalized for qTranslate config, false if not found
  */
-function qtranxf_find_plugin_config_file( $plugin ) {
+function qtranxf_find_plugin_config_file( string $plugin ) {
     $plugin_dirname = dirname( $plugin );
 
     // external configuration prevails
@@ -693,7 +693,7 @@ function qtranxf_find_plugin_config_file( $plugin ) {
     return false;
 }
 
-function qtranxf_adjust_config_files( $file_to_add, $file_to_del ) {
+function qtranxf_adjust_config_files( ?array $file_to_add, ?array $file_to_del ): void {
     $config_files = qtranxf_get_option_config_files();
     if ( $file_to_add ) {
         if ( in_array( $file_to_add, $config_files ) ) {
@@ -715,7 +715,7 @@ function qtranxf_adjust_config_files( $file_to_add, $file_to_del ) {
     }
 }
 
-function qtranxf_on_activate_plugin( $plugin, $network_wide = false ) {
+function qtranxf_on_activate_plugin( string $plugin, bool $network_wide = false ): void {
     if ( $plugin === plugin_basename( QTRANSLATE_FILE ) ) {
         return;
     }
@@ -727,7 +727,7 @@ function qtranxf_on_activate_plugin( $plugin, $network_wide = false ) {
 
 add_action( 'activate_plugin', 'qtranxf_on_activate_plugin' );
 
-function qtranxf_on_deactivate_plugin( $plugin, $network_deactivating = false ) {
+function qtranxf_on_deactivate_plugin( string $plugin, bool $network_deactivating = false ): void {
     if ( $plugin === plugin_basename( QTRANSLATE_FILE ) ) {
         return;
     }
@@ -739,7 +739,7 @@ function qtranxf_on_deactivate_plugin( $plugin, $network_deactivating = false ) 
 
 add_action( 'deactivate_plugin', 'qtranxf_on_deactivate_plugin' );
 
-function qtranxf_clear_debug_log() {
+function qtranxf_clear_debug_log(): void {
     //clear file debug-qtranslate.log
     $file = WP_CONTENT_DIR . '/debug-qtranslate.log';
     if ( file_exists( $file ) ) {
@@ -753,7 +753,7 @@ function qtranxf_clear_debug_log() {
     }
 }
 
-function qtranxf_activation_hook() {
+function qtranxf_activation_hook(): void {
     qtranxf_clear_debug_log();
     if ( version_compare( PHP_VERSION, '7.1' ) < 0 ) {
         // Deactivate ourself
@@ -852,7 +852,7 @@ function qtranxf_activation_hook() {
  *
  * @return bool
  */
-function qtranxf_is_classic_editor_supported() {
+function qtranxf_is_classic_editor_supported(): bool {
     return class_exists( 'Classic_Editor' ) ||
            is_plugin_active( 'disable-gutenberg/disable-gutenberg.php' ) ||
            is_plugin_active( 'no-gutenberg/no-gutenberg.php' );
@@ -861,7 +861,7 @@ function qtranxf_is_classic_editor_supported() {
 /**
  * @since 3.4
  */
-function qtranxf_deactivation_hook() {
+function qtranxf_deactivation_hook(): void {
 
     /**
      * A chance to execute deactivation actions specifically for this plugin.
@@ -869,7 +869,7 @@ function qtranxf_deactivation_hook() {
     do_action( 'qtranslate_deactivation_hook' );
 }
 
-function qtranxf_admin_notice_config_files_changed() {
+function qtranxf_admin_notice_config_files_changed(): void {
     if ( ! qtranxf_check_admin_notice( 'config-files-changed' ) ) {
         return;
     }
@@ -888,7 +888,7 @@ function qtranxf_admin_notice_config_files_changed() {
 
 add_action( 'admin_notices', 'qtranxf_admin_notice_config_files_changed' );
 
-function qtranxf_admin_notice_first_install() {
+function qtranxf_admin_notice_first_install(): void {
     if ( qtranxf_check_admin_notice( 'initial-install' ) ) {
         return;
     }
@@ -907,7 +907,7 @@ add_action( 'admin_notices', 'qtranxf_admin_notice_first_install' );
 /**
  * Show admin notice for block editor (Gutenberg)
  */
-function qtranxf_admin_notices_block_editor() {
+function qtranxf_admin_notices_block_editor(): void {
     if ( qtranxf_check_admin_notice( 'gutenberg-support' ) ) {
         return;
     }
@@ -931,7 +931,7 @@ function qtranxf_admin_notices_block_editor() {
 
 add_action( 'admin_notices', 'qtranxf_admin_notices_block_editor' );
 
-function qtranxf_admin_notices_slugs_migrate() {
+function qtranxf_admin_notices_slugs_migrate(): void {
     if ( qtranxf_check_admin_notice( 'slugs-migrate' ) || ! QTX_Module_Loader::is_module_active( 'slugs' ) ) {
         return;
     }
@@ -955,7 +955,7 @@ function qtranxf_admin_notices_slugs_migrate() {
 
 add_action( 'admin_notices', 'qtranxf_admin_notices_slugs_migrate' );
 
-function qtranxf_admin_notice_deactivate_plugin( $name, $plugin ) {
+function qtranxf_admin_notice_deactivate_plugin( $name, $plugin ): void {
     deactivate_plugins( $plugin, true );
     $d        = dirname( $plugin );
     $link     = '<a href="https://wordpress.org/plugins/' . $d . '/" target="_blank">' . $name . '</a>';
@@ -981,7 +981,7 @@ function qtranxf_admin_notice_deactivate_plugin( $name, $plugin ) {
     wp_die( '<p>' . $msg . '</p>' );
 }
 
-function qtranxf_admin_notice_plugin_conflict( $title, $plugin ) {
+function qtranxf_admin_notice_plugin_conflict( $title, $plugin ): void {
     if ( ! is_plugin_active( $plugin ) ) {
         return;
     }
@@ -999,7 +999,7 @@ function qtranxf_admin_notice_plugin_conflict( $title, $plugin ) {
     echo '</p></div>';
 }
 
-function qtranxf_admin_notices_plugin_conflicts() {
+function qtranxf_admin_notices_plugin_conflicts(): void {
     qtranxf_admin_notice_plugin_conflict( 'qTranslate', 'qtranslate/qtranslate.php' );
     qtranxf_admin_notice_plugin_conflict( 'mqTranslate', 'mqtranslate/mqtranslate.php' );
     qtranxf_admin_notice_plugin_conflict( 'qTranslate Plus', 'qtranslate-xp/ppqtranslate.php' );
@@ -1009,11 +1009,11 @@ function qtranxf_admin_notices_plugin_conflicts() {
 
 add_action( 'admin_notices', 'qtranxf_admin_notices_plugin_conflicts' );
 
-function qtranxf_get_plugin_link() {
+function qtranxf_get_plugin_link(): string {
     return '<a href="https://github.com/qTranslate/qtranslate-xt/" target="_blank">qTranslate&#8209;XT</a>';
 }
 
-function qtranxf_admin_notices_errors() {
+function qtranxf_admin_notices_errors(): void {
     $msgs = get_option( 'qtranslate_config_errors' );
     if ( ! is_array( $msgs ) ) {
         return;
@@ -1028,7 +1028,7 @@ function qtranxf_admin_notices_errors() {
 
 add_action( 'admin_notices', 'qtranxf_admin_notices_errors' );
 
-function qtranxf_check_admin_notice( $id ) {
+function qtranxf_check_admin_notice( string $id ) {
     $messages = get_option( 'qtranslate_admin_notices' );
     if ( isset( $messages[ $id ] ) ) {
         return $messages[ $id ];
@@ -1037,7 +1037,7 @@ function qtranxf_check_admin_notice( $id ) {
     return false;
 }
 
-function qtranxf_update_option_admin_notices( $messages, $id, $set = true ) {
+function qtranxf_update_option_admin_notices( $messages, string $id, bool $set = true ) {
     if ( ! is_array( $messages ) ) {
         $messages = array();
     }
@@ -1059,13 +1059,13 @@ function qtranxf_update_option_admin_notices( $messages, $id, $set = true ) {
  *
  * @return array|mixed
  */
-function qtranxf_update_admin_notice( $id, $set ) {
+function qtranxf_update_admin_notice( string $id, bool $set ) {
     $messages = get_option( 'qtranslate_admin_notices', array() );
 
     return qtranxf_update_option_admin_notices( $messages, $id, $set );
 }
 
-function qtranxf_ajax_qtranslate_admin_notice() {
+function qtranxf_ajax_qtranslate_admin_notice(): void {
     if ( ! isset( $_POST['notice_id'] ) ) {
         return;
     }
@@ -1076,7 +1076,7 @@ function qtranxf_ajax_qtranslate_admin_notice() {
 
 add_action( 'wp_ajax_qtranslate_admin_notice', 'qtranxf_ajax_qtranslate_admin_notice' );
 
-function qtranxf_admin_notice_dismiss_script() {
+function qtranxf_admin_notice_dismiss_script(): void {
     static $admin_notice_dismiss_script;
     if ( $admin_notice_dismiss_script ) {
         return;
@@ -1087,7 +1087,7 @@ function qtranxf_admin_notice_dismiss_script() {
 }
 
 /** register activation/deactivation hooks */
-function qtranxf_register_activation_hooks() {
+function qtranxf_register_activation_hooks(): void {
     $qtx_plugin_basename = plugin_basename( QTRANSLATE_FILE );
     register_activation_hook( $qtx_plugin_basename, 'qtranxf_activation_hook' );
     register_deactivation_hook( $qtx_plugin_basename, 'qtranxf_deactivation_hook' );

@@ -4,7 +4,7 @@
  * Names for languages in the corresponding native language.
  * @since 3.3
  */
-function qtranxf_default_language_name() {
+function qtranxf_default_language_name(): array {
     return array(
         'en' => 'English',
         'zh' => '中文',   // 简体中
@@ -47,7 +47,7 @@ function qtranxf_default_language_name() {
  * Locales for languages, matching WordPress locales when possible.
  * @since 3.3
  */
-function qtranxf_default_locale() {
+function qtranxf_default_locale(): array {
     // see locale -a for available locales
     return array(
         'de' => 'de_DE',
@@ -91,7 +91,7 @@ function qtranxf_default_locale() {
  * HTML locales for languages
  * @since 3.4
  */
-function qtranxf_default_locale_html() {
+function qtranxf_default_locale_html(): array {
     //HTML locales for languages are not provided by default
     return array();
 }
@@ -100,7 +100,7 @@ function qtranxf_default_locale_html() {
  * Language not available messages
  * @since 3.3
  */
-function qtranxf_default_not_available() {
+function qtranxf_default_not_available(): array {
     // %LANG:<normal_separator>:<last_separator>% generates a list of languages separated by <normal_separator>
     // except for the last one, where <last_separator> will be used instead.
     // Not Available Message
@@ -149,7 +149,7 @@ function qtranxf_default_not_available() {
  * @todo Deprecate strftime format
  * @since 3.3
  */
-function qtranxf_default_date_format() {
+function qtranxf_default_date_format(): array {
     return array(
         'en' => '%A %B %e%q, %Y',
         'de' => '%A, \d\e\r %e. %B %Y',
@@ -193,7 +193,7 @@ function qtranxf_default_date_format() {
  * @todo Deprecate strftime format
  * @since 3.3
  */
-function qtranxf_default_time_format() {
+function qtranxf_default_time_format(): array {
     return array(
         'en' => '%I:%M %p',
         'de' => '%H:%M',
@@ -237,7 +237,7 @@ function qtranxf_default_time_format() {
  * Look in /flags/ directory for a huge list of flags for usage.
  * @since 3.3
  */
-function qtranxf_default_flag() {
+function qtranxf_default_flag(): array {
     return array(
         'en' => 'gb.png',
         'de' => 'de.png',
@@ -280,7 +280,7 @@ function qtranxf_default_flag() {
  * Full country names as locales for Windows systems, in English.
  * @since 3.3
  */
-function qtranxf_default_windows_locale() {
+function qtranxf_default_windows_locale(): array {
     return array(
         'aa' => "Afar",
         'ab' => "Abkhazian",

@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 require_once QTRANSLATE_DIR . '/src/admin/admin_utils.php';
 require_once QTRANSLATE_DIR . '/src/modules/admin_module.php';
 
-function qtranxf_admin_set_default_options( &$options ) {
+function qtranxf_admin_set_default_options( array &$options ): void {
     // options processed in a standardized way
     $options['admin'] = array();
 
@@ -49,7 +49,7 @@ function qtranxf_admin_set_default_options( &$options ) {
     $options = apply_filters( 'qtranslate_option_config_admin', $options );
 }
 
-function qtranxf_admin_load_config() {
+function qtranxf_admin_load_config(): void {
     global $q_config, $qtranslate_options;
     qtranxf_admin_set_default_options( $qtranslate_options );
 
@@ -99,7 +99,7 @@ function qtranxf_admin_load_config() {
  *
  * @return void
  */
-function qtranxf_import_legacy_option( $old_name, $new_name, $autoload = null ) {
+function qtranxf_import_legacy_option( string $old_name, string $new_name, $autoload = null ): void {
     assert( strpos( $new_name, 'qtranslate_' ) === 0 );
     if ( ! get_option( $new_name ) ) {
         $old_value = get_option( $old_name );
@@ -115,11 +115,11 @@ function qtranxf_import_legacy_option( $old_name, $new_name, $autoload = null ) 
  *
  * @param string $old_name
  * @param string $new_name
- * @param bool|string $autoload as in update_option
+ * @param bool|string|null $autoload as in update_option
  *
  * @return void
  */
-function qtranxf_rename_legacy_option( $old_name, $new_name, $autoload = null ) {
+function qtranxf_rename_legacy_option( string $old_name, string $new_name, $autoload = null ): void {
     assert( strpos( $new_name, 'qtranslate_' ) === 0 );
     assert( strpos( $old_name, 'qtranslate_' ) === 0 );
     qtranxf_import_legacy_option( $old_name, $new_name, $autoload );

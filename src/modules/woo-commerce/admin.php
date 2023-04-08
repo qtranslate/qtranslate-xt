@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-function qtranxf_wc_add_filters_admin() {
+function qtranxf_wc_add_filters_admin(): void {
     // priority 20 is used because in case other plugins add some untranslated content on normal priority
     // it will still hopefully then get translated.
     $admin_hooks = array(
@@ -46,12 +46,12 @@ function qtranxf_wc_add_filters_admin() {
 qtranxf_wc_add_filters_admin();
 
 add_action( 'admin_enqueue_scripts', 'qtranxf_wc_add_admin_styles' );
-function qtranxf_wc_add_admin_styles() {
+function qtranxf_wc_add_admin_styles(): void {
     wp_enqueue_style( 'qtranxf_wc_qtranslate_admin', plugins_url( '/css/modules/woo-commerce.css', QTRANSLATE_FILE ), array(), QTX_VERSION );
 }
 
 add_filter( 'qtranslate_admin_config', 'qtranxf_wc_add_admin_page_config' );
-function qtranxf_wc_add_admin_page_config( $page_configs ) {
+function qtranxf_wc_add_admin_page_config( array $page_configs ): array {
     // post.php
     // TODO refactor append config
     if ( ! isset( $page_configs['post'] ) ) {
@@ -241,7 +241,7 @@ function qtranxf_wc_add_admin_page_config( $page_configs ) {
     return $page_configs;
 }
 
-function qtranxf_wc_email_get_option( $value_translated, $wce /* WC_Email object*/, $value = null, $key = null, $empty_value = null ) {
+function qtranxf_wc_email_get_option( $value_translated, WC_Email $wce, $value = null, $key = null, $empty_value = null ) {
     if ( ! $value ) {
         return $value_translated; // so that older WC versions do not get nasty output
     }
@@ -257,11 +257,11 @@ add_filter( 'woocommerce_variation_option_name', 'qtranxf_term_name_encoded', 5 
  * Append the language to the link for changing the order status, so that mails are sent in the language the customer
  * used during the order process
  *
- * @param $url
+ * @param string $url
  *
  * @return string
  */
-function qtranxf_wc_admin_url_append_language( $url ) {
+function qtranxf_wc_admin_url_append_language( string $url ): string {
     if ( strpos( $url, 'action=woocommerce_mark_order_status' ) ) {
         $components = parse_url( $url );
         $params     = array();
@@ -285,11 +285,11 @@ add_filter( 'admin_url', 'qtranxf_wc_admin_url_append_language' );
  * Append the language to ajax links on the order edit page, so that mails are sent in the language the customer used
  * during the order process
  *
- * @param $url
+ * @param string $url
  *
  * @return string
  */
-function qtranxf_wc_admin_url_append_language_edit_page( $url ) {
+function qtranxf_wc_admin_url_append_language_edit_page( string $url ): string {
     if ( strpos( $url, 'admin-ajax.php' ) === false || ! isset( $_GET['action'] ) || ! isset( $_GET['post'] ) || $_GET['action'] != 'edit' ) {
         return $url;
     }
@@ -342,7 +342,7 @@ add_filter( 'option_woocommerce_email_from_name', 'qtranxf_wc_admin_email_option
  * This helps to use order's language on re-sent emails from post.php order edit page.
  *
  * @param $content
- * @param WC_Order $order
+ * @param WC_Order|null $order
  *
  * @return array|mixed|string|void
  */
@@ -368,7 +368,7 @@ add_filter( 'woocommerce_email_order_items_table', 'qtranxf_wc_admin_email_trans
  *
  * @param WC_Order $order
  */
-function qtranxf_wc_admin_before_resend_order_emails( $order ) {
+function qtranxf_wc_admin_before_resend_order_emails( $order ): void {
     if ( ! ( $order && $order->get_id() ) ) {
         return;
     }
@@ -387,14 +387,14 @@ add_action( 'woocommerce_before_resend_order_emails', 'qtranxf_wc_admin_before_r
 /**
  * Undo the effect of qtranxf_wc_admin_before_resend_order_emails
  */
-function qtranxf_wc_admin_after_resend_order_emails( $order ) {
+function qtranxf_wc_admin_after_resend_order_emails( $order ): void {
     global $q_config;
     $q_config['language'] = $q_config['url_info']['language'];
 }
 
 add_action( 'woocommerce_after_resend_order_email', 'qtranxf_wc_admin_after_resend_order_emails' );
 
-function qtranxf_wc_admin_filters() {
+function qtranxf_wc_admin_filters(): void {
     global $pagenow;
     switch ( $pagenow ) {
         case 'admin.php':

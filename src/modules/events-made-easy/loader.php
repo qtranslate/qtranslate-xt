@@ -6,7 +6,7 @@
  * @author: johnclause, liedekef
  */
 
-function qtranxf_eme_init_language( $url_info ) {
+function qtranxf_eme_init_language( array $url_info ): void {
     if ( ! $url_info['doing_front_end'] ) {
         require_once __DIR__ . '/admin.php';
     }

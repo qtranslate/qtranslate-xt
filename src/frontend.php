@@ -27,7 +27,7 @@ function qtranxf_get_front_page_config() {
     return $page_configs;
 }
 
-function qtranxf_wp_head() {
+function qtranxf_wp_head(): void {
     global $q_config;
 
     if ( $q_config['header_css_on'] ) {
@@ -64,7 +64,7 @@ function qtranxf_wp_head() {
  * to remove this line from the header.
  * @since 3.4.5.4
  */
-function qtranxf_wp_head_meta_generator() {
+function qtranxf_wp_head_meta_generator(): void {
     echo '<meta name="generator" content="qTranslate-XT ' . QTX_VERSION . '" />' . PHP_EOL;
 }
 
@@ -655,7 +655,7 @@ function qtranxf_esc_html( $text ) {
 
 if ( ! function_exists( 'qtranxf_trim_words' ) ) {
 // filter added in qtranslate_hooks.php
-    function qtranxf_trim_words( $text, $num_words, $more, $original_text ) {
+    function qtranxf_trim_words( string $text, int $num_words, string $more, string $original_text ): string {
         global $q_config;
         $blocks = qtranxf_get_language_blocks( $original_text );
         if ( count( $blocks ) <= 1 ) {
@@ -673,7 +673,7 @@ if ( ! function_exists( 'qtranxf_trim_words' ) ) {
  * Delete translated post_meta cache for all languages.
  * Cache may have a few languages, if it is persistent.
  */
-function qtranxf_cache_delete_metadata( $meta_type, $object_id ) {//, $meta_key) {
+function qtranxf_cache_delete_metadata( string $meta_type, int $object_id ): void {
     global $q_config;
     // maybe optimized to only replace the meta_key needed ?
     foreach ( $q_config['enabled_languages'] as $lang ) {
@@ -686,7 +686,7 @@ function qtranxf_cache_delete_metadata( $meta_type, $object_id ) {//, $meta_key)
  * @since 3.2.3 translation of meta data
  * @since 3.4.6.4 improved caching algorithm
  */
-function qtranxf_translate_metadata( $meta_type, $original_value, $object_id, $meta_key = '', $single = false ) {
+function qtranxf_translate_metadata( string $meta_type, $original_value, int $object_id, string $meta_key = '', bool $single = false ) {
     global $q_config;
     static $meta_cache_unserialized = array();
     if ( ! isset( $q_config['url_info'] ) ) {
@@ -801,7 +801,7 @@ function qtranxf_translate_metadata( $meta_type, $original_value, $object_id, $m
 /**
  * @since 3.2.3 translation of postmeta
  */
-function qtranxf_filter_postmeta( $original_value, $object_id, $meta_key = '', $single = false ) {
+function qtranxf_filter_postmeta( $original_value, int $object_id, string $meta_key = '', bool $single = false ) {
     return qtranxf_translate_metadata( 'post', $original_value, $object_id, $meta_key, $single );
 }
 
@@ -810,7 +810,7 @@ function qtranxf_filter_postmeta( $original_value, $object_id, $meta_key = '', $
  * Delete translated post_meta cache for all languages on cache update.
  * Cache may have a few languages, if it is persistent.
  */
-function qtranxf_updated_postmeta( $meta_id, $object_id, $meta_key, $meta_value ) {
+function qtranxf_updated_postmeta( int $meta_id, int $object_id, string $meta_key, $meta_value ) {
     qtranxf_cache_delete_metadata( 'post', $object_id );
 }
 
@@ -818,7 +818,7 @@ function qtranxf_updated_postmeta( $meta_id, $object_id, $meta_key, $meta_value 
 /**
  * @since 3.4 translation of usermeta
  */
-function qtranxf_filter_usermeta( $original_value, $object_id, $meta_key = '', $single = false ) {
+function qtranxf_filter_usermeta( $original_value, int $object_id, string $meta_key = '', bool $single = false ) {
     return qtranxf_translate_metadata( 'user', $original_value, $object_id, $meta_key, $single );
 }
 
@@ -827,11 +827,12 @@ function qtranxf_filter_usermeta( $original_value, $object_id, $meta_key = '', $
  * Delete translated user_meta cache for all languages on cache update.
  * Cache may have a few languages, if it is persistent.
  */
-function qtranxf_updated_usermeta( $meta_id, $object_id, $meta_key, $meta_value ) {
+function qtranxf_updated_usermeta( int $meta_id, int $object_id, string $meta_key, $meta_value ) {
     qtranxf_cache_delete_metadata( 'user', $object_id );
 }
 
-function qtranxf_checkCanonical( $redirect_url, $requested_url ) {
+// TODO check API with Yoast, seems it's only 1 parameter?
+function qtranxf_checkCanonical( string $redirect_url, string $requested_url ): string {
     global $q_config;
     $lang = $q_config['language'];
     // fix canonical conflicts with language urls
@@ -843,7 +844,7 @@ function qtranxf_checkCanonical( $redirect_url, $requested_url ) {
 /**
  * @since 3.2.8 moved here from _hooks.php
  */
-function qtranxf_convertBlogInfoURL( $url, $what ) {
+function qtranxf_convertBlogInfoURL( string $url, string $what ): string {
     switch ( $what ) {
         case 'stylesheet_url':
         case 'template_url':
@@ -859,9 +860,10 @@ function qtranxf_convertBlogInfoURL( $url, $what ) {
  * @since 3.3.1
  * Moved here from qtranslate_hooks.php and modified.
  */
-function qtranxf_pagenum_link( $url ) {
+function qtranxf_pagenum_link( string $url ): string {
     $lang_code = QTX_LANG_CODE_FORMAT;
-    $url_fixed = preg_replace( "#\?lang=$lang_code/#i", '/', $url ); //kind of ugly fix for function get_pagenum_link in /wp-includes/link-template.php. Maybe we should cancel filter 'bloginfo_url' instead?
+    // TODO kind of ugly fix for function get_pagenum_link in /wp-includes/link-template.php. Maybe we should cancel filter 'bloginfo_url' instead?
+    $url_fixed = preg_replace( "#\?lang=$lang_code/#i", '/', $url );
 
     return qtranxf_convertURL( $url_fixed );
 }
@@ -869,7 +871,7 @@ function qtranxf_pagenum_link( $url ) {
 /**
  * @since 3.3.7
  */
-function qtranxf_add_front_filters() {
+function qtranxf_add_front_filters(): void {
     global $q_config;
 
     add_action( 'wp_head', 'qtranxf_wp_head' );

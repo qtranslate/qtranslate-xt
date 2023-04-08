@@ -8,7 +8,7 @@ add_action( 'qtranslate_configuration', 'qtranxf_slugs_show_settings_page' );
  *
  * @return array
  */
-function qtranxf_slugs_get_settings() {
+function qtranxf_slugs_get_settings(): array {
     $output                      = array();
     $output['qts_page_sections'] = qtranxf_slugs_options_page_sections();
     $output['qts_page_fields']   = qtranxf_slugs_options_page_fields();
@@ -21,7 +21,7 @@ function qtranxf_slugs_get_settings() {
  *
  * @return void echoes output
  */
-function qtranxf_slugs_section_fn( $section_id = '' ) {
+function qtranxf_slugs_section_fn( string $section_id = '' ): void {
     switch ( $section_id ) {
         case 'post_types':
             echo "<p>" . __( 'For example, the post_type <kbd>books</kbd>, in Spanish would be displayed as <code>https://example.org/es/libros/post-type-name/</code>. If you leave this blank will use the default option when you <a href="https://developer.wordpress.org/reference/functions/register_post_type/">registered</a> the post_type.', 'qtranslate' ) . "</p>";
@@ -38,7 +38,7 @@ function qtranxf_slugs_section_fn( $section_id = '' ) {
  *
  * @return void echoes output
  */
-function qtranxf_slugs_show_form_field( $args = array() ) {
+function qtranxf_slugs_show_form_field( array $args = array() ): void {
     global $qtranslate_slugs;
     global $q_config;
 
@@ -189,7 +189,7 @@ function qtranxf_slugs_show_form_field( $args = array() ) {
  *
  * @return void echoes output
  */
-function qtranxf_slugs_show_settings_page() {
+function qtranxf_slugs_show_settings_page(): void {
     $settings_output = qtranxf_slugs_get_settings();
 
     if ( empty( $settings_output['qts_page_sections'] ) ) {
@@ -217,7 +217,7 @@ function qtranxf_slugs_show_settings_page() {
  *
  * @return array
  */
-function qtranxf_slugs_validate_options( $input ) {
+function qtranxf_slugs_validate_options( array $input ): array {
     global $q_config;
     // Initialize lookup array to be used to make sure slug for a specific language is unique
     $slugs_lookup_array = array();
@@ -352,7 +352,7 @@ function qtranxf_slugs_validate_options( $input ) {
     return $valid_input;
 }
 
-function qtranxf_slugs_update_settings() {
+function qtranxf_slugs_update_settings(): void {
     global $qtranslate_slugs;
 
     $qts_settings = isset( $_POST[ QTX_OPTIONS_MODULE_SLUGS ] ) ? qtranxf_slugs_validate_options( $_POST[ QTX_OPTIONS_MODULE_SLUGS ] ) : array();
@@ -372,7 +372,7 @@ function qtranxf_slugs_update_settings() {
  *
  * @return array key=$id, array value=$title in: add_settings_section( $id, $title, $callback, $page );
  */
-function qtranxf_slugs_options_page_sections() {
+function qtranxf_slugs_options_page_sections(): array {
     $sections               = array();
     $sections['post_types'] = __( 'Post types', 'qtranslate' );
     $sections['taxonomies'] = __( 'Taxonomies', 'qtranslate' );
@@ -385,7 +385,7 @@ function qtranxf_slugs_options_page_sections() {
  *
  * @return array
  */
-function qtranxf_slugs_get_multi_txt_choices() {
+function qtranxf_slugs_get_multi_txt_choices(): array {
     global $q_config;
 
     $choices = array();
@@ -402,7 +402,7 @@ function qtranxf_slugs_get_multi_txt_choices() {
  *
  * @return array
  */
-function qtranxf_slugs_options_page_fields() {
+function qtranxf_slugs_options_page_fields(): array {
     global $qtranslate_slugs;
     $options = array();
 
@@ -419,7 +419,7 @@ function qtranxf_slugs_options_page_fields() {
     return array_filter( $options );
 }
 
-function qtranxf_slugs_options_page_build_slug_fields( $object, $target_section, $id_prefix ) {
+function qtranxf_slugs_options_page_build_slug_fields( $object, string $target_section, string $id_prefix ): array {
     if ( is_array( $object->rewrite ) && array_key_exists( 'slug', $object->rewrite ) ) {
         $slug = ltrim( $object->rewrite['slug'], "/" );
     } else {

@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-function qtranxf_migrate_options_update( $name_to, $name_from ) {
+function qtranxf_migrate_options_update( string $name_to, string $name_from ): void {
     global $wpdb;
     $option_names = $wpdb->get_col( "SELECT `option_name` FROM {$wpdb->options} WHERE `option_name` LIKE '$name_to\_%'" );
     foreach ( $option_names as $name ) {
@@ -19,7 +19,7 @@ function qtranxf_migrate_options_update( $name_to, $name_from ) {
     }
 }
 
-function qtranxf_migrate_options_copy( $name_to, $name_from ) {
+function qtranxf_migrate_options_copy( string $name_to, string $name_from ): void {
     global $wpdb;
     $options = $wpdb->get_results( "SELECT option_name, option_value FROM {$wpdb->options} WHERE `option_name` LIKE '$name_from\_%'" );
 
@@ -61,39 +61,39 @@ function qtranxf_migrate_options_copy( $name_to, $name_from ) {
     }
 }
 
-function qtranxf_migrate_import_mqtranslate() {
+function qtranxf_migrate_import_mqtranslate(): void {
     qtranxf_migrate_import( 'mqTranslate', 'mqtranslate' );
     update_option( 'qtranslate_qtrans_compatibility', '1' );//since 3.1
     $nm = '<strong>mqTranslate</strong>';
     qtranxf_add_warning( sprintf( __( 'Option "%s" has also been turned on, as the most common case for importing configuration from %s. You may turn it off manually if your setup does not require it. Refer to %sFAQ%s for more information.', 'qtranslate' ), __( 'Compatibility Functions', 'qtranslate' ), $nm, '<a href="https://github.com/qtranslate/qtranslate-xt/wiki/FAQ#compatibility-functions" target="_blank">', '</a>' ) );
 }
 
-function qtranxf_migrate_export_mqtranslate() {
+function qtranxf_migrate_export_mqtranslate(): void {
     qtranxf_migrate_export( 'mqTranslate', 'mqtranslate' );
 }
 
-function qtranxf_migrate_import_qtranslate_xp() {
+function qtranxf_migrate_import_qtranslate_xp(): void {
     qtranxf_migrate_import( 'qTranslate Plus', 'ppqtranslate' );
 }
 
-function qtranxf_migrate_export_qtranslate_xp() {
+function qtranxf_migrate_export_qtranslate_xp(): void {
     qtranxf_migrate_export( 'qTranslate Plus', 'ppqtranslate' );
 }
 
-function qtranxf_migrate_import( $plugin_name, $name_from ) {
+function qtranxf_migrate_import( string $plugin_name, string $name_from ): void {
     qtranxf_migrate_options_update( 'qtranslate', $name_from );
     $nm = '<strong>' . $plugin_name . '</strong>';
     qtranxf_add_warning( sprintf( __( 'Applicable options and taxonomy names from plugin %s have been imported. Note that the multilingual content of posts, pages and other objects has not been altered during this operation. There is no additional operation needed to import content, since its format is compatible with %s.', 'qtranslate' ), $nm, 'qTranslate&#8209;XT' ) . ' ' . sprintf( __( 'It might be a good idea to review %smigration instructions%s, if you have not yet done so.', 'qtranslate' ), '<a href="https://github.com/qtranslate/qtranslate-xt/wiki/Migration-Guide" target="_blank">', '</a>' ) );
     qtranxf_add_warning( sprintf( __( '%sImportant%s: Before you start making edits to post and pages, please, make sure that both, your front site and admin back-end, work under this configuration. It may help to review "%s" and see if any of conflicting plugins mentioned there are used here. While the current content, coming from %s, is compatible with this plugin, the newly modified posts and pages will be saved with a new square-bracket-only encoding, which has a number of advantages comparing to former %s encoding. However, the new encoding is not straightforwardly compatible with %s and you will need an additional step available under "%s" option if you ever decide to go back to %s. Even with this additional conversion step, the 3rd-party plugins custom-stored data will not be auto-converted, but manual editing will still work. That is why it is advisable to create a test-copy of your site before making any further changes. In case you encounter a problem, please give us a chance to improve %s, send the login information to the test-copy of your site to %s along with a detailed step-by-step description of what is not working, and continue using your main site with %s meanwhile. It would also help, if you share a success story as well, either on %sthe forum%s, or via the same e-mail as mentioned above. Thank you very much for trying %s.', 'qtranslate' ), '<strong>', '</strong>', '<a href="https://github.com/qtranslate/qtranslate-xt/issues" target="_blank">' . 'Known Issues' . '</a>', $nm, 'qTranslate', $nm, '<a href="https://github.com/qtranslate/qtranslate-xt/wiki/Migration-Guide#convert-database" target="_blank"><strong>' . __( 'Convert Database', 'qtranslate' ) . '</strong></a>', $nm, 'qTranslate&#8209;XT', '[no mail support]', $nm, '<a href="https://github.com/qTranslate/qtranslate-xt/issues">', '</a>', 'qTranslate&#8209;XT' ) . '<br/>' . __( 'This is a one-time message, which you will not see again, unless the same import is repeated.', 'qtranslate' ) );
 }
 
-function qtranxf_migrate_export( $plugin_name, $name_to ) {
+function qtranxf_migrate_export( string $plugin_name, string $name_to ): void {
     qtranxf_migrate_options_copy( $name_to, 'qtranslate' );
     $nm = '<strong>' . $plugin_name . '</strong>';
     qtranxf_add_message( sprintf( __( 'Applicable options have been exported to plugin %s. If you have done some post or page updates after migrating from %s, then "%s" operation is also required to convert the content to "dual language tag" style in order for plugin %s to function.', 'qtranslate' ), $nm, $nm, '<a href="https://github.com/qtranslate/qtranslate-xt/wiki/Migration-Guide/convert-database/" target="_blank"><strong>' . __( 'Convert Database', 'qtranslate' ) . '</strong></a>', $nm ) );
 }
 
-function qtranxf_migrate_plugins() {
+function qtranxf_migrate_plugins(): void {
     if ( ! current_user_can( 'manage_options' ) ) {
         return;
     }
@@ -121,7 +121,7 @@ function qtranxf_migrate_plugins() {
 
 add_action( 'qtranslate_save_config', 'qtranxf_migrate_plugins', 30 );
 
-function qtranxf_add_row_migrate( $nm, $plugin, $args = null ) {
+function qtranxf_add_row_migrate( string $nm, string $plugin, ?array $args = null ): void {
     if ( ! file_exists( WP_PLUGIN_DIR . '/' . $plugin ) && ! file_exists( WPMU_PLUGIN_DIR . '/' . $plugin ) ) {
         return;
     }
@@ -168,7 +168,7 @@ function qtranxf_add_row_migrate( $nm, $plugin, $args = null ) {
     <?php
 }
 
-function qtranxf_admin_section_import_export( $request_uri ) {
+function qtranxf_admin_section_import_export( string $request_uri ): void {
     global $q_config;
 
     QTX_Admin_Settings::open_section( 'import' );
