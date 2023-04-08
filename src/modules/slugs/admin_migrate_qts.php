@@ -11,7 +11,7 @@ const QTX_SLUGS_LEGACY_QTS_OPTIONS_NAME   = 'qts_options';
  *
  * @return string messages giving details, empty if new meta found or no legacy meta found.
  */
-function qtranxf_slugs_check_migrate_qts() {
+function qtranxf_slugs_check_migrate_qts(): string {
     global $wpdb;
 
     /**
@@ -46,7 +46,7 @@ function qtranxf_slugs_check_migrate_qts() {
  *
  * @return string messages giving details.
  */
-function qtranxf_slugs_migrate_qts_meta( $db_commit ) {
+function qtranxf_slugs_migrate_qts_meta( bool $db_commit ): string {
     global $wpdb;
 
     $new_prefix = QTX_SLUGS_META_PREFIX;
@@ -57,11 +57,12 @@ function qtranxf_slugs_migrate_qts_meta( $db_commit ) {
      *
      * @param string $table name of the meta table (postmeta, termmeta)
      * @param string $colid column name of the parent id (post_id, term_id)
+     * @param bool $db_commit true to commit changes, false for dry-run mode.
      * @param string[] $msg array of messages, updated
      *
      * @return void
      */
-    $migrate_meta = function ( $table, $colid, $db_commit, &$msg ) use ( $wpdb, $old_prefix, $new_prefix ) {
+    $migrate_meta = function ( string $table, string $colid, bool $db_commit, array &$msg ) use ( $wpdb, $old_prefix, $new_prefix ): void {
         // Escape '_' against LIKE wildcards.
         $old_esc = str_replace( '_', '\_', $old_prefix );
         $new_esc = str_replace( '_', '\_', $new_prefix );
@@ -103,7 +104,7 @@ function qtranxf_slugs_migrate_qts_meta( $db_commit ) {
  *
  * @return string messages giving details.
  */
-function qtranxf_slugs_migrate_qts_options( $db_commit ) {
+function qtranxf_slugs_migrate_qts_options( bool $db_commit ): string {
     $msg = [];
 
     $qts_options = get_option( QTX_SLUGS_LEGACY_QTS_OPTIONS_NAME );
@@ -148,7 +149,7 @@ function qtranxf_slugs_migrate_qts_options( $db_commit ) {
  *
  * @return string messages giving details.
  */
-function qtranxf_slugs_migrate_qts_data( $db_commit ) {
+function qtranxf_slugs_migrate_qts_data( bool $db_commit ): string {
     $msg   = [];
     $msg[] = $db_commit ? __( 'Migrate slugs:', 'qtranslate' ) : __( "Dry-run mode:", 'qtranslate' );
     $msg[] = qtranxf_slugs_migrate_qts_meta( $db_commit );

@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 add_filter( 'qtranslate_admin_config', 'qtranxf_aioseop_add_admin_page_config' );
-function qtranxf_aioseop_add_admin_page_config( $page_configs ) {
+function qtranxf_aioseop_add_admin_page_config( array $page_configs ): array {
     // post.php
     $page_config          = array();
     $page_config['pages'] = array( 'post.php' => '', 'term.php' => '' );

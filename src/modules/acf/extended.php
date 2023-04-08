@@ -21,7 +21,7 @@ class QTX_Module_Acf_Extended {
     /**
      * Register the fields in the ACF plugin.
      */
-    public function include_fields() {
+    public function include_fields(): void {
         require_once __DIR__ . '/fields/file.php';
         require_once __DIR__ . '/fields/image.php';
         require_once __DIR__ . '/fields/post_object.php';
@@ -45,7 +45,7 @@ class QTX_Module_Acf_Extended {
      * This filter is applied to the $value after it is loaded from the db and
      * before it is returned to the template via functions such as get_field().
      *
-     * @param $value
+     * @param mixed $value
      *
      * @return array|mixed|string|void
      */
@@ -65,20 +65,18 @@ class QTX_Module_Acf_Extended {
      *
      * @return string
      */
-    public static function encode_language_values( $values ) {
-        assert( is_array( $values ) );
-
+    public static function encode_language_values( array $values ): string {
         return qtranxf_join_b( $values );
     }
 
     /**
      * Decode a multi-language string to an array
      *
-     * @param string $values
+     * @param string|null $values
      *
      * @return array
      */
-    public static function decode_language_values( $values ) {
+    public static function decode_language_values( ?string $values ): array {
         return qtranxf_split( $values );
     }
 
@@ -98,7 +96,7 @@ class QTX_Module_Acf_Extended {
      * @return    bool|string
      * @see acf_validation::acf_validate_value
      */
-    public static function validate_language_values( $field_object, $valid, $values, $field, $input ) {
+    public static function validate_language_values( $field_object, $valid, array $values, array $field, $input ) {
         global $q_config;
 
         // retrieve the original ACF validation method for that field (cumbersome, but we can't change acf_field base class)

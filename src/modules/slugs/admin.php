@@ -26,7 +26,7 @@ register_uninstall_hook( QTRANSLATE_FILE, 'qtranxf_slugs_uninstall' );
 /**
  * Add support for taxonomies and optional integration with WooCommerce.
  */
-function qtranxf_slugs_taxonomies_hooks() {
+function qtranxf_slugs_taxonomies_hooks(): void {
     global $qtranslate_slugs;
 
     $taxonomies = $qtranslate_slugs->get_public_taxonomies();
@@ -49,7 +49,7 @@ function qtranxf_slugs_taxonomies_hooks() {
 /**
  * Do the installation, support multisite.
  */
-function qtranxf_slugs_multi_activate() {
+function qtranxf_slugs_multi_activate(): void {
     if ( is_plugin_active_for_network( plugin_basename( QTRANSLATE_FILE ) ) ) {
         $old_blog = get_current_blog_id();
         $blogs    = get_sites();
@@ -68,7 +68,7 @@ function qtranxf_slugs_multi_activate() {
 /**
  * Delete plugin stored data ( options and postmeta data ).
  */
-function qtranxf_slugs_uninstall() {
+function qtranxf_slugs_uninstall(): void {
     global $q_config, $wpdb;
 
     delete_option( QTX_OPTIONS_MODULE_SLUGS );
@@ -88,7 +88,7 @@ function qtranxf_slugs_uninstall() {
 /**
  * Activates and do the installation.
  */
-function qtranxf_slugs_activate() {
+function qtranxf_slugs_activate(): void {
     global $qtranslate_slugs;
 
     // regenerate rewrite rules in db
@@ -99,7 +99,7 @@ function qtranxf_slugs_activate() {
 /**
  * Actions when deactivating the plugin.
  */
-function qtranxf_slugs_deactivate() {
+function qtranxf_slugs_deactivate(): void {
     global $wp_rewrite;
     global $qtranslate_slugs;
 
@@ -111,7 +111,7 @@ function qtranxf_slugs_deactivate() {
 /**
  * Creates a metabox for every post type available.
  */
-function qtranxf_slugs_add_slug_meta_box() {
+function qtranxf_slugs_add_slug_meta_box(): void {
     global $wp_meta_boxes;
 
     //Replace slugs metabox only if existing and not already removed
@@ -126,7 +126,7 @@ function qtranxf_slugs_add_slug_meta_box() {
  *
  * @param $post (object) current post object
  */
-function qtranxf_slugs_draw_meta_box( $post ) {
+function qtranxf_slugs_draw_meta_box( $post ): void {
     global $q_config;
 
     // Use nonce for verification
@@ -155,7 +155,7 @@ function qtranxf_slugs_draw_meta_box( $post ) {
  *
  * @return string sanitized slug
  */
-function qtranxf_slugs_sanitize_post_slug( $slug, $post, $lang ) {
+function qtranxf_slugs_sanitize_post_slug( string $slug, WP_Post $post, string $lang ): string {
     $post_title = trim( qtranxf_use( $lang, $post->post_title ) );
     $post_name  = get_post_meta( $post->ID, QTX_SLUGS_META_PREFIX . $lang, true );
     if ( ! $post_name ) {
@@ -180,7 +180,7 @@ function qtranxf_slugs_sanitize_post_slug( $slug, $post, $lang ) {
  *
  * @return string the slug validated
  */
-function qtranxf_slugs_unique_post_slug( $slug, $post, $lang ) {
+function qtranxf_slugs_unique_post_slug( string $slug, WP_Post $post, string $lang ): string {
 
     $original_status = $post->post_status;
 
@@ -203,10 +203,11 @@ function qtranxf_slugs_unique_post_slug( $slug, $post, $lang ) {
  * @param string $post_status no uniqueness checks are made if the post is still draft or pending
  * @param string $post_type
  * @param integer $post_parent
+ * @param string $lang
  *
  * @return string unique slug for the post, based on language meta_value (with a -1, -2, etc. suffix)
  */
-function qtranxf_slugs_wp_unique_post_slug( $slug, $post_ID, $post_status, $post_type, $post_parent, $lang ) {
+function qtranxf_slugs_wp_unique_post_slug( string $slug, int $post_ID, string $post_status, string $post_type, int $post_parent, string $lang ): string {
     if ( in_array( $post_status, array( 'draft', 'pending', 'auto-draft' ) ) ) {
         return $slug;
     }
@@ -260,11 +261,11 @@ function qtranxf_slugs_wp_unique_post_slug( $slug, $post_ID, $post_status, $post
  * Saves the translated slug when the page is saved.
  *
  * @param int $post_id the post id
- * @param WP_Post $post the post object
+ * @param WP_Post|null $post the post object
  *
  * @return void
  */
-function qtranxf_slugs_save_postdata( $post_id, $post = null ) {
+function qtranxf_slugs_save_postdata( int $post_id, ?WP_Post $post = null ): void {
     global $q_config;
     if ( is_null( $post ) ) {
         $post = get_post( $post_id );
@@ -317,13 +318,13 @@ function qtranxf_slugs_sanitize_term_slug( $slug, $term, $lang ) {
  *
  * @param string $slug term slug to be made unique
  * @param WP_Term $term the term object the slug belongs to
- * @param object $lang language
+ * @param string $lang language
  *
  * @return string unique slug
  *
  * @since 1.0
  */
-function qtranxf_slugs_unique_term_slug( $slug, $term, $lang ) {
+function qtranxf_slugs_unique_term_slug( string $slug, WP_Term $term, string $lang ): string {
     global $wpdb;
 
     $query       = $wpdb->prepare( "SELECT term_id FROM $wpdb->termmeta WHERE meta_key = '%s' AND meta_value = '%s' AND term_id != %d ", QTX_SLUGS_META_PREFIX . $lang, $slug, $term->term_id );
@@ -362,7 +363,7 @@ function qtranxf_slugs_unique_term_slug( $slug, $term, $lang ) {
  *
  * @return void
  */
-function qtranxf_slugs_save_term( $term_id, $tt_id, $taxonomy ) {
+function qtranxf_slugs_save_term( int $term_id, int $tt_id, $taxonomy ): void {
     global $q_config;
     $cur_screen = get_current_screen();
     if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
@@ -391,7 +392,7 @@ function qtranxf_slugs_save_term( $term_id, $tt_id, $taxonomy ) {
  *
  * @return void
  */
-function qtranxf_slugs_show_list_term_fields( $term ) {
+function qtranxf_slugs_show_list_term_fields( ?WP_Term $term ): void {
     global $q_config;
 
     $flag_location = qtranxf_flag_location(); ?>
@@ -413,7 +414,7 @@ function qtranxf_slugs_show_list_term_fields( $term ) {
  * Display multiple input fields, one per language for add term page.
  *
  */
-function qtranxf_slugs_show_add_term_fields() {
+function qtranxf_slugs_show_add_term_fields(): void {
     ?>
     <div class="form-field term-slug-wrap">
         <label><?php _e( 'Slugs per language', 'qtranslate' ) ?></label>
@@ -427,7 +428,7 @@ function qtranxf_slugs_show_add_term_fields() {
  *
  * @param WP_Term $term the term object
  */
-function qtranxf_slugs_show_edit_term_fields( $term ) {
+function qtranxf_slugs_show_edit_term_fields( WP_Term $term ): void {
     ?>
     <tr class="form-field term-slug-wrap">
         <th><?php _e( 'Slugs per language', 'qtranslate' ) ?></th>
@@ -440,7 +441,7 @@ function qtranxf_slugs_show_edit_term_fields( $term ) {
  * Display link to slugs settings for add custom tax admin page (e.g. WooCommerce product attributes).
  *
  */
-function qtranxf_slugs_show_add_taxonomy_slugs_option_link() {
+function qtranxf_slugs_show_add_taxonomy_slugs_option_link(): void {
     ?>
     <div class="form-field term-slug-wrap">
         <label><?php _e( 'Slugs per language', 'qtranslate' ) ?></label>
@@ -456,7 +457,7 @@ function qtranxf_slugs_show_add_taxonomy_slugs_option_link() {
  * Display link to slugs settings for edit custom tax admin page (e.g. WooCommerce product attributes).
  *
  */
-function qtranxf_slugs_show_edit_taxonomy_slugs_option_link() {
+function qtranxf_slugs_show_edit_taxonomy_slugs_option_link(): void {
     ?>
     <tr class="form-field term-slug-wrap">
         <th><?php _e( 'Slugs per language', 'qtranslate' ) ?></th>
@@ -473,7 +474,7 @@ function qtranxf_slugs_show_edit_taxonomy_slugs_option_link() {
 /**
  * Hide automatically the wordpress slug box in edit terms page.
  */
-function qtranxf_slugs_hide_term_slug_box() {
+function qtranxf_slugs_hide_term_slug_box(): void {
     global $pagenow;
     switch ( $pagenow ):
         case 'edit-tags.php':
@@ -522,21 +523,21 @@ function qtranxf_slugs_hide_term_slug_box() {
 /**
  * Hide quickedit slug.
  */
-function qtranxf_slugs_hide_quick_edit() {
+function qtranxf_slugs_hide_quick_edit(): void {
     echo "<!-- QTS remove quick edit box -->" . PHP_EOL;
     echo "<style media=\"screen\">" . PHP_EOL;
     echo "  .inline-edit-row fieldset.inline-edit-col-left .inline-edit-col *:first-child + label { display: none !important }" . PHP_EOL;
     echo "</style>" . PHP_EOL;
 }
 
-function qtranxf_slugs_taxonomy_columns( $columns ) {
+function qtranxf_slugs_taxonomy_columns( array $columns ): array {
     unset( $columns['slug'] );
     $columns['qts-slug'] = __( 'Slug' );
 
     return $columns;
 }
 
-function qtranxf_slugs_taxonomy_custom_column( $str, $column_name, $term_id ) {
+function qtranxf_slugs_taxonomy_custom_column( $str, string $column_name, int $term_id ): bool {
     global $q_config;
 
     if ( $column_name === 'qts-slug' ) {
@@ -557,9 +558,9 @@ function qtranxf_slugs_taxonomy_custom_column( $str, $column_name, $term_id ) {
  * @param (array) $terms
  * @param (int|array) $obj_id
  * @param (string|array) $taxonomy
- * @param (array) $taxonomy
+ * @param (array) $args
  */
-function qtranxf_slugs_get_object_terms( $terms, $obj_id, $taxonomy, $args ) {
+function qtranxf_slugs_get_object_terms( array $terms, $obj_id, $taxonomy, array $args ): array {
 
     global $pagenow;
     global $q_config;
@@ -596,7 +597,7 @@ function qtranxf_slugs_get_object_terms( $terms, $obj_id, $taxonomy, $args ) {
  * @param (array) $terms
  * @param (string|array) $taxonomy
  */
-function qtranxf_slugs_get_terms( $terms, $taxonomy ) {
+function qtranxf_slugs_get_terms( array $terms, $taxonomy ): array {
 
     global $pagenow;
     global $q_config;
@@ -622,7 +623,7 @@ function qtranxf_slugs_get_terms( $terms, $taxonomy ) {
     return $terms;
 }
 
-function qtranxf_slugs_ma_module_updated() {
+function qtranxf_slugs_ma_module_updated(): void {
     if ( QTX_Module_Loader::is_module_active( 'slugs' ) ) {
         qtranxf_slugs_multi_activate();
     } else {

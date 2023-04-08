@@ -498,13 +498,13 @@ class QTX_Module_Slugs {
     /**
      * Parse a hierarquical name and extract the last one
      *
-     * @param string $lang Page path
+     * @param string|bool $lang Page path
      *
      * @return string
      *
      * @since 1.0
      */
-    public function get_current_url( $lang = false ) {
+    public function get_current_url( $lang = false ): string {
 
         if ( ! $lang ) {
             $lang = $this->get_temp_lang();
@@ -520,13 +520,14 @@ class QTX_Module_Slugs {
     /**
      * Retrieve the home url for a given site.
      *
-     * @param int $blog_id (optional) Blog ID. Defaults to current blog.
-     * @param string $path (optional) Path relative to the home url.
-     * @param string $scheme (optional) Scheme to give the home url context. Currently 'http', 'https'.
+     * @param string $url The complete home URL including scheme and path.
+     * @param string $path Path relative to the home url.
+     * @param string|null $scheme (optional) Scheme to give the home url context. Currently 'http', 'https'.
+     * @param int|null $blog_id (optional) Site ID, or null for the current site.
      *
      * @return string Home url link with optional path appended.
      */
-    public function home_url( $url, $path, $scheme, $blog_id ) {
+    public function home_url( string $url, string $path, ?string $scheme, ?int $blog_id ): string {
         if ( ! in_array( $scheme, array( 'http', 'https' ) ) ) {
             $scheme = is_ssl() && ! is_admin() ? 'https' : 'http';
         }
@@ -562,7 +563,7 @@ class QTX_Module_Slugs {
      *
      * @return string processed permastruct
      */
-    public function get_extra_permastruct( $permastruct = false, $name = false ) {
+    public function get_extra_permastruct( $permastruct = false, $name = false ): string {
 
         if ( ! $name || ! $permastruct ) {
             return '';
@@ -641,9 +642,9 @@ class QTX_Module_Slugs {
      * @param WP_Post $post the post data
      * @param bool $leavename parameter used by get_permalink. Whether to keep post name or page name.
      *
-     * @return string the link translated
+     * @return string|false the link translated
      */
-    public function post_link( $link, $post, $leavename ) {
+    public function post_link( string $link, WP_Post $post, bool $leavename ) {
         global $q_config; //TODO: q_config  : url_mode
 
         $rewritecode = array(
@@ -744,7 +745,7 @@ class QTX_Module_Slugs {
      *
      * @return string the link translated
      */
-    public function _get_page_link( $link, $id ) {
+    public function _get_page_link( string $link, int $id ): string {
         global $post, $wp_rewrite, $q_config;  //TODO: q_config  : url_mode
 
         $current_post = $post;
@@ -785,10 +786,10 @@ class QTX_Module_Slugs {
      * @param WP_Term $term
      * @param object $taxonomy
      *
-     * @return string the link translated
+     * @return string|WP_Error the link translated
      */
     //TODO: review this function vs get_term_link(), e.g. checks and error handling may be unneeded here
-    public function term_link( $link, $term, $taxonomy ) {
+    public function term_link( string $link, WP_Term $term, $taxonomy ) {
         global $wp_rewrite;
 
         // parse normal term names for ?tag=tagname
@@ -875,7 +876,7 @@ class QTX_Module_Slugs {
      *
      * @return array of public taxonomies objects
      */
-    public function get_public_taxonomies() {
+    public function get_public_taxonomies(): array {
         $all_taxonomies = get_taxonomies( array( 'public' => true, 'show_ui' => true ), 'objects' );
         $taxonomies     = array();
 
@@ -893,7 +894,7 @@ class QTX_Module_Slugs {
      *
      * @return array of public post_types objects
      */
-    public function get_public_post_types() {
+    public function get_public_post_types(): array {
         $all_post_types = get_post_types( array( 'public' => true ), 'objects' );
         $post_types     = array();
 
@@ -918,7 +919,7 @@ class QTX_Module_Slugs {
     /**
      * Helper: news rules to translate the URL bases.
      *
-     * @param string $name name of extra permastruct
+     * @param string|false $name name of extra permastruct
      */
     private function generate_extra_rules( $name = false ) {
         global $q_config;
@@ -948,7 +949,7 @@ class QTX_Module_Slugs {
      *
      * @return string
      */
-    private function get_last_slash( $slug ) {
+    private function get_last_slash( string $slug ): string {
         $slug          = rawurlencode( urldecode( $slug ) );
         $slug          = str_replace( '%2F', '/', $slug );
         $slug          = str_replace( '%20', ' ', $slug );
@@ -965,7 +966,7 @@ class QTX_Module_Slugs {
      *
      * @return mixed Null when complete.
      */
-    private function get_page_id_by_path( $page_path, $post_type = 'page' ) {
+    private function get_page_id_by_path( string $page_path, string $post_type = 'page' ) {
         global $wpdb;
 
         // Handle cases where custom query vars with the same names of specific internal query vars (e.g. 'name') are structured as arrays for any reason.
@@ -1034,7 +1035,7 @@ class QTX_Module_Slugs {
      *
      * @return array|WP_Post|null Null when complete.
      */
-    private function get_page_by_path( $page_path, $post_type = 'page' ) {
+    private function get_page_by_path( string $page_path, string $post_type = 'page' ) {
         $foundid = $this->get_page_id_by_path( $page_path, $post_type );
         if ( $foundid ) {
             return get_post( $foundid );
@@ -1048,7 +1049,7 @@ class QTX_Module_Slugs {
      *
      * @return boolean
      */
-    private function ignore_rewrite_caller() {
+    private function ignore_rewrite_caller(): bool {
         $backtrace = debug_backtrace();
 
         $ignore_functions = array(
@@ -1087,7 +1088,7 @@ class QTX_Module_Slugs {
      * @return string
      */
     //TODO: $link seems to be unused (always false), to be removed and function cleaned up
-    private function get_category_parents( $id, $link = false, $separator = '/', $nicename = false, $visited = array() ) {
+    private function get_category_parents( int $id, bool $link = false, string $separator = '/', bool $nicename = false, array $visited = array() ): string {
         $chain  = '';
         $parent = get_category( $id );
 
@@ -1127,7 +1128,7 @@ class QTX_Module_Slugs {
      *
      * @return string Page URI.
      */
-    private function get_page_uri( $page ) {
+    private function get_page_uri( $page ): string {
         if ( ! is_object( $page ) ) {
             $page = get_post( $page );
         }
@@ -1166,7 +1167,7 @@ class QTX_Module_Slugs {
      * @return array|false|object|WP_Error|WP_Term|null Term Row from database. Will return false if $taxonomy does not exist or $term was not found.
      * TODO: simplify return type and error handling, unexpected results may cause bugs!
      */
-    private function get_term_by( $field, $value, $taxonomy ) {
+    private function get_term_by( string $field, $value, string $taxonomy ) {
         global $wpdb;
 
         if ( ! taxonomy_exists( $taxonomy ) ) {

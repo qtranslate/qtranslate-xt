@@ -10,7 +10,7 @@ class QTX_Admin_Module_Manager {
     /**
      * Register hooks for modules and related plugins
      */
-    public static function register_hooks() {
+    public static function register_hooks(): void {
         add_action( 'admin_notices', 'QTX_Admin_Module_Manager::admin_notices' );
         add_action( 'activated_plugin', 'QTX_Admin_Module_Manager::register_plugin_activated' );
         add_action( 'deactivated_plugin', 'QTX_Admin_Module_Manager::register_plugin_deactivated' );
@@ -29,7 +29,7 @@ class QTX_Admin_Module_Manager {
      *
      * @param callable $func_is_active callback to evaluate if a plugin is active
      */
-    public static function update_modules_state( $func_is_active = 'is_plugin_active' ) {
+    public static function update_modules_state( $func_is_active = 'is_plugin_active' ): void {
         global $q_config;
 
         $option_modules = array();
@@ -63,7 +63,7 @@ class QTX_Admin_Module_Manager {
      *
      * @return bool true if the integration plugin is active OR if the module does not have any.
      */
-    public static function is_module_plugin_active( $module, $func_is_active = 'is_plugin_active' ) {
+    public static function is_module_plugin_active( QTX_Admin_Module $module, $func_is_active = 'is_plugin_active' ): bool {
         if ( empty( $module->plugins ) ) {
             return true; // Attention: should not be interpreted as "having a plugin".
         }
@@ -91,7 +91,7 @@ class QTX_Admin_Module_Manager {
      *
      * @return integer module state
      */
-    public static function can_module_be_activated( $module, $func_is_active = 'is_plugin_active' ) {
+    public static function can_module_be_activated( QTX_Admin_Module $module, $func_is_active = 'is_plugin_active' ): int {
         $state = QTX_MODULE_STATE_INACTIVE;
 
         if ( self::is_module_plugin_active( $module, $func_is_active ) ) {
@@ -110,7 +110,7 @@ class QTX_Admin_Module_Manager {
      *
      * @param string $activated_plugin name of the plugin being activated.
      */
-    public static function register_plugin_activated( $activated_plugin ) {
+    public static function register_plugin_activated( string $activated_plugin ): void {
         // We could use "is_plugin_active" because the "active_plugins" option is updated BEFORE the action is called.
         // However, this is not the case for the deactivation so for consistency we use the counterpart check.
         self::update_modules_state( function ( $check_plugin ) use ( $activated_plugin ) {
@@ -123,7 +123,7 @@ class QTX_Admin_Module_Manager {
      *
      * @param string $deactivated_plugin name of the plugin being deactivated.
      */
-    public static function register_plugin_deactivated( $deactivated_plugin ) {
+    public static function register_plugin_deactivated( string $deactivated_plugin ): void {
         // We can't use "is_plugin_active" because the "active_plugins" option is updated AFTER the action is called!
         // This is a problem of WP Core, but we pass a custom function as a workaround.
         self::update_modules_state( function ( $check_plugin ) use ( $deactivated_plugin ) {
@@ -131,7 +131,7 @@ class QTX_Admin_Module_Manager {
         } );
     }
 
-    public static function admin_notices() {
+    public static function admin_notices(): void {
         $options_modules = get_option( QTX_OPTIONS_MODULES_STATE, array() );
         if ( empty( $options_modules ) ) {
             $msg   = '<p>' . sprintf( __( 'Modules state undefined in %s. Please deactivate it and reactivate it again from the plugins page.', 'qtranslate' ), 'qTranslate&#8209;XT' ) . '</p>';

@@ -19,7 +19,7 @@ class QTX_Module_Jetpack {
      * @return array updated related posts
      * @see get_related_post_data_for_post in jetpack/modules/related_posts/jetpack-related-posts.php
      */
-    function translate_related_posts( $results ) {
+    function translate_related_posts( array $results ): array {
         return array_map( function ( $result ) {
             $result['title']   = qtranxf_useCurrentLanguageIfNotFoundShowAvailable( $result['title'] );
             $result['excerpt'] = qtranxf_useCurrentLanguageIfNotFoundShowAvailable( $result['excerpt'] );

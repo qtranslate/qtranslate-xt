@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 add_filter( 'qtranslate_admin_config', 'qtranxf_wpseo_load_admin_page_config' );
-function qtranxf_wpseo_load_admin_page_config( $page_configs ) {
+function qtranxf_wpseo_load_admin_page_config( array $page_configs ): array {
     assert( ! isset( $page_configs['yoast_wpseo'] ) );
 
     $page_configs['yoast_wpseo'] = array(

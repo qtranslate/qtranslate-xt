@@ -10,7 +10,7 @@
  *
  * @return void
  */
-function qtranxf_acf_init() {
+function qtranxf_acf_init(): void {
     static $acf_loaded = false;
 
     if ( ! $acf_loaded && function_exists( 'acf' ) ) {

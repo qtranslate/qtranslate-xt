@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-function qtranxf_wpseo_add_filters_front() {
+function qtranxf_wpseo_add_filters_front(): void {
     // Use indexation on "publish/update" events to save all languages data in indexable tables.
     // If indexation is allowed on the frontend then indexable table saves data of the first visited page
     // and other languages are missed.
@@ -31,7 +31,7 @@ function qtranxf_wpseo_add_filters_front() {
         add_filter( $name, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', $priority );
     }
 
-    function qtranxf_wpseo_webpage_schema( $piece, $context ) {
+    function qtranxf_wpseo_webpage_schema( array $piece, string $context ): array {
         if ( isset( $piece['description'] ) ) {
             $piece['description'] = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage( $piece['description'] );
         }
@@ -44,7 +44,7 @@ function qtranxf_wpseo_add_filters_front() {
 
     add_filter( 'wpseo_schema_webpage', 'qtranxf_wpseo_webpage_schema', 10, 2 );
 
-    function qtranxf_wpseo_breadcrumbs_link( $link_info, $index, $crumbs ) {
+    function qtranxf_wpseo_breadcrumbs_link( array $link_info, int $index, array $crumbs ): array {
         global $q_config;
 
         if ( isset( $link_info['text'] ) ) {
@@ -59,7 +59,7 @@ function qtranxf_wpseo_add_filters_front() {
 
     add_filter( 'wpseo_breadcrumb_single_link_info', 'qtranxf_wpseo_breadcrumbs_link', 10, 3 );
 
-    function qtranxf_wpseo_schema_organization( $data ) {
+    function qtranxf_wpseo_schema_organization( array $data ): array {
         global $q_config;
 
         if ( isset( $data['@id'] ) ) {
@@ -86,7 +86,7 @@ function qtranxf_wpseo_add_filters_front() {
 
     add_filter( 'wpseo_schema_organization', 'qtranxf_wpseo_schema_organization' );
 
-    function qtranxf_wpseo_schema_website( $data ) {
+    function qtranxf_wpseo_schema_website( array $data ): array {
         global $q_config;
 
         if ( isset( $data['@id'] ) ) {
@@ -104,7 +104,7 @@ function qtranxf_wpseo_add_filters_front() {
 
     add_filter( 'wpseo_schema_website', 'qtranxf_wpseo_schema_website' );
 
-    function qtranxf_wpseo_json_ld_search_url( $search_url ) {
+    function qtranxf_wpseo_json_ld_search_url( string $search_url ): string {
         global $q_config;
 
         return qtranxf_convertURL( $search_url, $q_config['language'] );
@@ -112,7 +112,7 @@ function qtranxf_wpseo_add_filters_front() {
 
     add_filter( 'wpseo_json_ld_search_url', 'qtranxf_wpseo_json_ld_search_url', 10, 3 );
 
-    function qtranxf_wpseo_schema_imageobject( $data ) {
+    function qtranxf_wpseo_schema_imageobject( array $data ): array {
         global $q_config;
 
         if ( isset( $data['@id'] ) ) {
@@ -124,7 +124,7 @@ function qtranxf_wpseo_add_filters_front() {
 
     add_filter( 'wpseo_schema_imageobject', 'qtranxf_wpseo_schema_imageobject' );
 
-    function qtranxf_wpseo_schema_webpage( $data ) {
+    function qtranxf_wpseo_schema_webpage( array $data ): array {
         global $q_config;
 
         $lang = $q_config['language'];
@@ -154,7 +154,7 @@ function qtranxf_wpseo_add_filters_front() {
 
     add_filter( 'wpseo_schema_webpage', 'qtranxf_wpseo_schema_webpage' );
 
-    function qtranxf_wpseo_schema_breadcrumb( $data ) {
+    function qtranxf_wpseo_schema_breadcrumb( array $data ): array {
         global $q_config;
 
         if ( isset( $data['@id'] ) ) {
@@ -166,7 +166,7 @@ function qtranxf_wpseo_add_filters_front() {
 
     add_filter( 'wpseo_schema_breadcrumb', 'qtranxf_wpseo_schema_breadcrumb' );
 
-    function qtranxf_wpseo_schema_person( $data ) {
+    function qtranxf_wpseo_schema_person( array $data ): array {
         global $q_config;
 
         //$data['@id'] = qtranxf_convertURL($data['@id'], $lang); //Not sure is it required to filter or not???
@@ -179,7 +179,7 @@ function qtranxf_wpseo_add_filters_front() {
 
     add_filter( 'wpseo_schema_person', 'qtranxf_wpseo_schema_person' );
 
-    function qtranxf_wpseo_next_prev_filter( $link ) {
+    function qtranxf_wpseo_next_prev_filter( string $link ): string {
         global $q_config;
 
         if ( preg_match_all( '/<link[^>]+href=([\'"])(?<href>.+?)\1[^>]*>/i', $link, $link_extract_href ) &&

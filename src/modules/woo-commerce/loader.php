@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-function qtranxf_wc_init_language( $url_info ) {
+function qtranxf_wc_init_language( array $url_info ): void {
     if ( $url_info['doing_front_end'] ) {
         require_once __DIR__ . '/front.php';
     } else {
@@ -27,7 +27,7 @@ add_action( 'qtranslate_init_language', 'qtranxf_wc_init_language' );
  *
  * @return array possibly modified $url_info.
  */
-function qtranxf_wc_detect_language( $url_info ) {
+function qtranxf_wc_detect_language( array $url_info ): array {
     if ( isset( $url_info['cookie_lang_front'] ) && $url_info['cookie_lang_front'] != $url_info['language'] ) {
         // language is about to switch
         if ( ! empty( $_GET['wc-ajax'] ) && ! empty( $url_info['doing_front_end'] ) ) {
@@ -49,7 +49,7 @@ add_filter( 'qtranslate_detect_language', 'qtranxf_wc_detect_language', 5 );
  * For some cases (e.g. variations updates) the webhook is generated through AJAX instead of cron.
  * In that context, qwc-admin.php is loaded instead of qwc-front.php
  */
-function qtranxf_wc_deliver_webhook_async( $webhook_id, $arg ) {
+function qtranxf_wc_deliver_webhook_async( $webhook_id, $arg ): void {
     if ( function_exists( 'qtranxf_get_front_page_config' ) ) {
         $page_configs = qtranxf_get_front_page_config();
         if ( ! empty( $page_configs['']['filters'] ) ) {
