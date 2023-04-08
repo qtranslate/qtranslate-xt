@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Default domain translation for strings already translated by WordPress.
  * Use of this function prevents xgettext, poedit and other translating parsers from including the string that does not need translation.
  */
-function qtranxf_translate_wp( $string ) {
+function qtranxf_translate_wp( $string ): ?string {
     return __( $string );
 }
 
@@ -22,7 +22,7 @@ function qtranxf_translate_wp( $string ) {
  * @return string path to plugin folder relative to WP_CONTENT_DIR.
  * @since 3.4.5
  */
-function qtranxf_dir_from_wp_content( $plugin ) {
+function qtranxf_dir_from_wp_content( string $plugin ): string {
     global $wp_plugin_paths;
     $plugin_realpath = wp_normalize_path( dirname( realpath( $plugin ) ) );
     $plugin_dir      = $plugin_realpath;
@@ -64,7 +64,7 @@ function qtranxf_dir_from_wp_content( $plugin ) {
  * @since 3.4
  * @since 3.4.5 modified for multisite.
  */
-function qtranxf_plugin_dirname_from_wp_content() {
+function qtranxf_plugin_dirname_from_wp_content(): string {
     static $dirname;
     if ( ! $dirname ) {
         $dirname = qtranxf_dir_from_wp_content( QTRANSLATE_FILE );
@@ -73,7 +73,7 @@ function qtranxf_plugin_dirname_from_wp_content() {
     return $dirname;
 }
 
-function qtranxf_get_address_info( $url ) {
+function qtranxf_get_address_info( string $url ): array {
     $info = qtranxf_parseURL( $url );
     if ( ! isset( $info['path'] ) ) {
         $info['path'] = '';
@@ -82,7 +82,7 @@ function qtranxf_get_address_info( $url ) {
     return $info;
 }
 
-function qtranxf_get_home_info() {
+function qtranxf_get_home_info(): array {
     static $home_info;
     if ( ! $home_info ) {
         $url       = get_option( 'home' );
@@ -92,7 +92,7 @@ function qtranxf_get_home_info() {
     return $home_info;
 }
 
-function qtranxf_get_site_info() {
+function qtranxf_get_site_info(): array {
     static $site_info;
     if ( ! $site_info ) {
         $url       = get_option( 'siteurl' );
@@ -106,7 +106,7 @@ function qtranxf_get_site_info() {
  * Simplified version of WP's add_query_arg
  * @since 3.2.8
  */
-function qtranxf_add_query_arg( &$query, $key_value ) {
+function qtranxf_add_query_arg( string &$query, string $key_value ): void {
     if ( empty( $query ) ) {
         $query = $key_value;
     } else {
@@ -118,7 +118,7 @@ function qtranxf_add_query_arg( &$query, $key_value ) {
  * Simplified version of WP's remove_query_arg
  * @since 3.2.8
  */
-function qtranxf_del_query_arg( &$query, $key ) {
+function qtranxf_del_query_arg( string &$query, string $key ): void {
     while ( preg_match( '/(&|&amp;|&#038;|^)(' . $key . '=[^&]+)(&|&amp;|&#038;|$)/i', $query, $matches ) ) {
         $pos   = strpos( $query, $matches[2] );
         $count = strlen( $matches[2] );
@@ -135,7 +135,7 @@ function qtranxf_del_query_arg( &$query, $key ) {
 }
 
 
-function qtranxf_insertDropDownElement( $language, $url, $id ) {
+function qtranxf_insertDropDownElement( string $language, string $url, $id ): string {
     global $q_config;
     $html = "
 		var sb = document.getElementById('qtranxs_select_" . $id . "');
@@ -157,7 +157,7 @@ function qtranxf_insertDropDownElement( $language, $url, $id ) {
 /**
  * @since 3.2.8 - change code to improve performance
  */
-function qtranxf_startsWith( $string, $needle ) {
+function qtranxf_startsWith( string $string, string $needle ): bool {
     $len = strlen( $needle );
     if ( $len > strlen( $string ) ) {
         return false;
@@ -174,7 +174,7 @@ function qtranxf_startsWith( $string, $needle ) {
 /**
  * @since 3.2.8
  */
-function qtranxf_endsWith( $string, $needle ) {
+function qtranxf_endsWith( string $string, string $needle ): bool {
     $len  = strlen( $needle );
     $base = strlen( $string ) - $len;
     if ( $base < 0 ) {
@@ -197,7 +197,7 @@ function qtranxf_endsWith( $string, $needle ) {
  * @see parse_request in wp_includes/class-wp.php for the final processing of REQUEST_URI
  * @see rest_api_register_rewrites in wp_includes/rest-api.php for the REST rewrite rules using query_var = rest_route
  */
-function qtranxf_is_rest_request_expected() {
+function qtranxf_is_rest_request_expected(): bool {
     return stripos( $_SERVER['REQUEST_URI'], '/' . rest_get_url_prefix() . '/' ) !== false;
 }
 
@@ -207,7 +207,7 @@ function qtranxf_is_rest_request_expected() {
  * @return bool
  * @see is_graphql_http_request in https://github.com/wp-graphql/wp-graphql/blob/develop/src/Router.php
  */
-function qtranxf_is_graphql_request_expected() {
+function qtranxf_is_graphql_request_expected(): bool {
     return function_exists( 'is_graphql_http_request' ) && is_graphql_http_request();
 }
 
@@ -217,7 +217,7 @@ function qtranxf_is_graphql_request_expected() {
  *
  * @return bool
  */
-function qtranxf_can_redirect() {
+function qtranxf_can_redirect(): bool {
     return ! is_admin() && ! wp_doing_ajax() && ! ( defined( 'WP_CLI' ) && WP_CLI ) && ! wp_doing_cron() && empty( $_POST )
            && ( ! qtranxf_is_rest_request_expected() )
            && ( ! qtranxf_is_graphql_request_expected() )
@@ -247,7 +247,7 @@ function qtranxf_post_type() {
  * Test $cfg['pages'] against $url_path and $url_query ($_SERVER['QUERY_STRING'])
  * @since 3.4
  */
-function qtranxf_match_page( $cfg, $url_path, $url_query, $d ) {
+function qtranxf_match_page( array $cfg, string $url_path, string $url_query, string $d ): bool {
     if ( ! isset( $cfg['pages'] ) ) {
         return true;
     }
@@ -266,7 +266,7 @@ function qtranxf_match_page( $cfg, $url_path, $url_query, $d ) {
 /**
  * @since 3.4
  */
-function qtranxf_match_post_type( $cfg_post_type, $post_type ) {
+function qtranxf_match_post_type( $cfg_post_type, $post_type ): ?bool {
 
     if ( is_string( $cfg_post_type ) ) {
         return preg_match( $cfg_post_type, $post_type ) === 1;
@@ -284,7 +284,7 @@ function qtranxf_match_post_type( $cfg_post_type, $post_type ) {
 /**
  * @since 3.3.2
  */
-function qtranxf_merge_config( $cfg_all, $cfg ) {
+function qtranxf_merge_config( array $cfg_all, array $cfg ): array {
     foreach ( $cfg as $k => $value ) {
         if ( is_array( $value ) && isset( $cfg_all[ $k ] ) ) {
             $cfg_all[ $k ] = qtranxf_merge_config( $cfg_all[ $k ], $value );
@@ -302,7 +302,7 @@ function qtranxf_merge_config( $cfg_all, $cfg ) {
  *
  * @return array of active configurations, per post type
  */
-function qtranxf_parse_page_config( $config, $url_path, $url_query ) {
+function qtranxf_parse_page_config( array $config, string $url_path, string $url_query ): array {
     global $q_config;
 
     if ( isset( $q_config['i18n-log-dir'] ) ) {
@@ -465,7 +465,7 @@ function qtranxf_parse_page_config( $config, $url_path, $url_query ) {
     return $page_configs;
 }
 
-function qtranxf_write_config_log( $config, $suffix = '', $url_path = null, $url_query = null, $post_type = null ) {
+function qtranxf_write_config_log( array $config, string $suffix = '', ?string $url_path = null, ?string $url_query = null, ?string $post_type = null ): void {
     global $q_config;
     if ( empty( $q_config['i18n-log-dir'] ) ) {
         return;
@@ -530,7 +530,7 @@ function qtranxf_write_config_log( $config, $suffix = '', $url_path = null, $url
 /**
  * @since 3.4
  */
-function qtranxf_add_filters( $filters ) {
+function qtranxf_add_filters( array $filters ): void {
     if ( ! empty( $filters['text'] ) ) {
         foreach ( $filters['text'] as $name => $prio ) {
             if ( $prio === '' ) {
@@ -560,7 +560,7 @@ function qtranxf_add_filters( $filters ) {
 /**
  * @since 3.4.6.9
  */
-function qtranxf_remove_filters( $filters ) {
+function qtranxf_remove_filters( array $filters ): void {
     if ( ! empty( $filters['text'] ) ) {
         foreach ( $filters['text'] as $name => $prio ) {
             if ( $prio === '' ) {

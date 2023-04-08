@@ -148,8 +148,9 @@ class QTX_Admin_Block_Editor {
      *
      * @return mixed
      */
-    public function rest_request_after_callbacks( $response, $handler, $request ) {
-        if ( $request->get_param( 'context' ) !== 'edit' || $request->get_method() !== 'PUT' && $request->get_method() !== 'POST' ) {
+    public function rest_request_after_callbacks( $response, array $handler, WP_REST_Request $request ) {
+        if ( ! $response instanceof WP_HTTP_Response // This includes WP_REST_Response that derives from it.
+             || $request->get_param( 'context' ) !== 'edit' || ( $request->get_method() !== 'PUT' && $request->get_method() !== 'POST' ) ) {
             return $response;
         }
 
@@ -194,7 +195,7 @@ class QTX_Admin_Block_Editor {
      * @param WP_HTTP_Response|WP_REST_Response $response
      * @param string $editor_lang
      *
-     * @return mixed
+     * @return WP_HTTP_Response|WP_REST_Response
      */
     private function select_raw_response_language( $response, string $editor_lang ) {
         $response_data = $response->get_data();

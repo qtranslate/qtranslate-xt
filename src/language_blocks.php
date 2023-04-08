@@ -3,11 +3,11 @@
 /**
  * Check if a string contains at least one language token
  *
- * @param string $str
+ * @param string|null $str
  *
  * @return bool
  */
-function qtranxf_isMultilingual( $str ) {
+function qtranxf_isMultilingual( ?string $str ): bool {
     $lang_code = QTX_LANG_CODE_FORMAT;
     return ! is_null( $str ) && preg_match( "/<!--:$lang_code-->|\[:$lang_code]|{:$lang_code}/im", $str );
 }
@@ -21,7 +21,7 @@ function qtranxf_isMultilingual( $str ) {
  * @return string[] array of string tokens, including the ML tags.
  * @since 3.3.6 swirly bracket encoding added
  */
-function qtranxf_get_language_blocks( $text ) {
+function qtranxf_get_language_blocks( $text ): array {
     $lang_code   = QTX_LANG_CODE_FORMAT;
     $split_regex = "#(<!--:$lang_code-->|<!--:-->|\[:$lang_code\]|\[:\]|\{:$lang_code\}|\{:\})#ism";
 

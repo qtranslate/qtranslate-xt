@@ -294,7 +294,7 @@ add_filter( 'the_title', 'qtranxf_admin_the_title', 0 );
 
 if ( ! function_exists( 'qtranxf_trim_words' ) ) {
     // TODO clarify duplicate function name, defined in frontend!
-    function qtranxf_trim_words( string $text, int $num_words, string $more, string $original_text ) {
+    function qtranxf_trim_words( string $text, int $num_words, string $more, string $original_text ): string {
         $blocks = qtranxf_get_language_blocks( $original_text );
         if ( count( $blocks ) <= 1 ) {
             return $text;
@@ -390,7 +390,7 @@ add_action( 'add_meta_boxes', 'qtranxf_add_meta_box_LSB', 10, 2 );
  * @return true if post type is listed in option 'Post Types'.
  * @since 3.3
  */
-function qtranxf_post_type_optional( $post_type ) {
+function qtranxf_post_type_optional( string $post_type ): bool {
     return ! in_array( $post_type, [ 'revision', 'nav_menu_item' ] );
 }
 
@@ -404,7 +404,7 @@ function qtranxf_post_type_optional( $post_type ) {
  * @since 3.4.5
  * check the WP Nonce - OK if POST is empty
  */
-function qtranxf_verify_nonce( $nonce_name, $nonce_field = '_wpnonce' ) {
+function qtranxf_verify_nonce( string $nonce_name, string $nonce_field = '_wpnonce' ): bool {
     return empty( $_POST ) || check_admin_referer( $nonce_name, $nonce_field );
 }
 
@@ -479,7 +479,7 @@ function qtranxf_decode_name_value_pair( &$a, $name, $value ) {
  * TODO this looks unnecessary, it might be possible to use json_decode directly with right options
  * @since 3.4.6.5
  */
-function qtranxf_decode_name_value( $name_values ) {
+function qtranxf_decode_name_value( $name_values ): array {
     $decoded = array();
     foreach ( $name_values as $name_value ) {
         qtranxf_decode_name_value_pair( $decoded, $name_value->name, wp_slash( $name_value->value ) );

@@ -693,7 +693,7 @@ function qtranxf_find_plugin_config_file( string $plugin ) {
     return false;
 }
 
-function qtranxf_adjust_config_files( ?array $file_to_add, ?array $file_to_del ): void {
+function qtranxf_adjust_config_files( ?string $file_to_add, ?string $file_to_del ): void {
     $config_files = qtranxf_get_option_config_files();
     if ( $file_to_add ) {
         if ( in_array( $file_to_add, $config_files ) ) {

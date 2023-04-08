@@ -13,7 +13,7 @@ class QTX_Module_Loader {
      *
      * @param string $module_id
      *
-     * @bool true if module active.
+     * @return bool true if module active.
      */
     public static function is_module_active( string $module_id ): bool {
         $modules_state = get_option( QTX_OPTIONS_MODULES_STATE, array() );

@@ -533,7 +533,7 @@ function qtranxf_pre_get_posts( $query ) {//WP_Query
 /**
  * since 3.1-b3 new query to pass empty content and content without closing tags (sliders, galleries and other special kind of posts that never get translated)
  */
-function qtranxf_where_clause_translated_posts( $lang, $table_posts ) {
+function qtranxf_where_clause_translated_posts( $lang, $table_posts ): string {
     $post_content = $table_posts . '.post_content';
 
     return "($post_content='' OR $post_content LIKE '%![:$lang!]%' ESCAPE '!' OR $post_content LIKE '%<!--:$lang-->%' OR ($post_content NOT LIKE '%![:!]%' ESCAPE '!' AND $post_content NOT LIKE '%<!--:-->%'))";
@@ -563,7 +563,7 @@ function qtranxf_excludePages( $pages ) {
  * $where = apply_filters( "get_{$adjacent}_post_where", $wpdb->prepare( "WHERE p.post_date $op %s AND p.post_type = %s $where", $current_post_date, $post->post_type ), $in_same_term, $excluded_terms );
  *
  */
-function qtranxf_excludeUntranslatedAdjacentPosts( $where ) {
+function qtranxf_excludeUntranslatedAdjacentPosts( $where ): string {
     $lang  = qtranxf_getLanguage();
     $where .= ' AND ' . qtranxf_where_clause_translated_posts( $lang, 'p' );
 
@@ -636,7 +636,7 @@ function qtranxf_get_attachment_image_attributes( $attr, $attachment = null, $si
     return $attr;
 }
 
-function qtranxf_home_url( $url, $path, $orig_scheme, $blog_id ) {
+function qtranxf_home_url( $url, $path, $orig_scheme, $blog_id ): string {
     global $q_config;
     $lang = $q_config['language'];
     $url  = qtranxf_get_url_for_language( $url, $lang, ! $q_config['hide_default_language'] || $lang != $q_config['default_language'] );

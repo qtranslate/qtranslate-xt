@@ -67,7 +67,7 @@ function qtranxf_collect_translations( array &$qfields, &$request, string $edit_
 /**
  * @since 3.4.6.5
  */
-function qtranxf_decode_json_name_value( $value ) {
+function qtranxf_decode_json_name_value( $value ): ?array {
     if ( strpos( $value, 'qtranslate-fields' ) === false ) {
         return null;
     }
@@ -132,7 +132,7 @@ function qtranxf_load_admin_page_config() {
  * @return bool true when the current page is the configuration page of QT-XT.
  * @since 3.4.7
  */
-function qtranxf_admin_is_config_page() {
+function qtranxf_admin_is_config_page(): bool {
     global $q_config, $pagenow;
 
     return ( $pagenow == 'options-general.php' )
@@ -529,7 +529,7 @@ function qtranxf_add_admin_highlight_css() {
  *
  * @return string
  */
-function qtranxf_get_admin_highlight_css( $highlight_mode ) {
+function qtranxf_get_admin_highlight_css( int $highlight_mode ): string {
     $css = 'input.qtranxs-translatable, textarea.qtranxs-translatable, div.qtranxs-translatable, span.qtranxs-translatable {' . PHP_EOL;
     switch ( $highlight_mode ) {
         case QTX_HIGHLIGHT_MODE_BORDER_LEFT:

@@ -7,7 +7,7 @@ if ( ! defined( 'QTRANS_INIT' ) ) {
     define( 'QTRANS_INIT', true );
 }
 if ( ! function_exists( 'qtrans_convertURL' ) ) {
-    function qtrans_convertURL( $url = '', $lang = '', $forceadmin = false, $showDefaultLanguage = false ) {
+    function qtrans_convertURL( $url = '', $lang = '', $forceadmin = false, $showDefaultLanguage = false ): string {
         return qtranxf_convertURL( $url, $lang, $forceadmin, $showDefaultLanguage );
     }
 }
@@ -21,7 +21,7 @@ if ( ! function_exists( 'qtrans_generateLanguageSelectCode' ) ) {
  * Some 3rd-party plugins (for example "Google XML Sitemaps v3 for qTranslate") use this function and expect an array in return.
  */
 if ( ! function_exists( 'qtrans_getAvailableLanguages' ) ) {
-    function qtrans_getAvailableLanguages( $text ) {
+    function qtrans_getAvailableLanguages( $text ): array {
         $langs = qtranxf_getAvailableLanguages( $text );
         if ( is_array( $langs ) ) {
             return $langs;
