@@ -13,7 +13,7 @@
  *
  * @see rest_api_register_rewrites in wp_includes/rest-api.php
  */
-function qtranxf_rest_api_register_rewrites() {
+function qtranxf_rest_api_register_rewrites(): void {
     global $q_config;
     if ( ! $q_config['hide_default_language'] || $q_config['url_mode'] !== QTX_URL_PATH ) {
         return;

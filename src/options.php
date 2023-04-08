@@ -105,7 +105,7 @@ global $qtranslate_options;
  * other plugins and themes should not use global variables directly, they are subject to change at any time.
  * @since 3.3
  */
-function qtranxf_set_default_options( &$ops ) {
+function qtranxf_set_default_options( ?array &$ops ): void {
     $ops = array();
 
     // options processed in a standardized way
@@ -175,13 +175,13 @@ function qtranxf_set_default_options( &$ops ) {
 }
 
 
-function qtranxf_language_predefined( $lang ) {
+function qtranxf_language_predefined( string $lang ): bool {
     $language_names = qtranxf_default_language_name();
 
     return isset( $language_names[ $lang ] );
 }
 
-function qtranxf_language_configured( $prop, $opn = null ) {
+function qtranxf_language_configured( string $prop, ?string $opn = null ) {
     global $qtranslate_options;
     $val = call_user_func( 'qtranxf_default_' . $prop );
     if ( ! $opn ) {
@@ -203,7 +203,7 @@ function qtranxf_language_configured( $prop, $opn = null ) {
  * Fill merged array of stored and pre-defined language properties
  * @since 3.3
  */
-function qtranxf_languages_configured( &$cfg ) {
+function qtranxf_languages_configured( array &$cfg ): array {
     global $qtranslate_options;
     foreach ( $qtranslate_options['languages'] as $name => $option ) {
         $cfg[ $name ] = qtranxf_language_configured( $name, $option );
@@ -216,7 +216,7 @@ function qtranxf_languages_configured( &$cfg ) {
  * Load enabled languages properties from  database
  * @since 3.3
  */
-function qtranxf_load_languages_enabled() {
+function qtranxf_load_languages_enabled(): void {
     global $q_config, $qtranslate_options;
     foreach ( $qtranslate_options['languages'] as $name => $option ) {
         $func = 'qtranxf_default_' . $name;
@@ -237,7 +237,7 @@ function qtranxf_load_languages_enabled() {
     }
 }
 
-function qtranxf_load_option( $name, $default_value = null ) {
+function qtranxf_load_option( string $name, $default_value = null ): void {
     global $q_config, $qtranslate_options;
     $val = get_option( 'qtranslate_' . $name );
     if ( $val === false ) {
@@ -256,7 +256,7 @@ function qtranxf_load_option( $name, $default_value = null ) {
     $q_config[ $name ] = $val;
 }
 
-function qtranxf_load_option_array( $name, $default_value = null ) {
+function qtranxf_load_option_array( string $name, $default_value = null ): void {
     global $q_config;
     $vals = get_option( 'qtranslate_' . $name );
     if ( $vals === false ) {
@@ -292,7 +292,7 @@ function qtranxf_load_option_array( $name, $default_value = null ) {
     $q_config[ $name ] = $vals;
 }
 
-function qtranxf_load_option_bool( $name, $default_value = null ) {
+function qtranxf_load_option_bool( string $name, ?bool $default_value = null ): void {
     global $q_config;
     $val = get_option( 'qtranslate_' . $name );
     if ( $val === false ) {
@@ -327,7 +327,7 @@ function qtranxf_load_option_bool( $name, $default_value = null ) {
     }
 }
 
-function qtranxf_load_option_func( $name, $opn = null, $func = null ) {
+function qtranxf_load_option_func( string $name, string $opn = null, $func = null ): void {
     global $q_config;
     if ( ! $opn ) {
         $opn = 'qtranslate_' . $name;
@@ -342,7 +342,7 @@ function qtranxf_load_option_func( $name, $opn = null, $func = null ) {
     $q_config[ $name ] = $val;
 }
 
-function qtranxf_load_option_qtrans_compatibility() {
+function qtranxf_load_option_qtrans_compatibility(): void {
     global $q_config;
     qtranxf_load_option_bool( 'qtrans_compatibility', false );
     $q_config['qtrans_compatibility'] = apply_filters( 'qtranslate_compatibility', $q_config['qtrans_compatibility'] );
@@ -352,7 +352,7 @@ function qtranxf_load_option_qtrans_compatibility() {
     require_once QTRANSLATE_DIR . '/src/compatibility.php';
 }
 
-function qtranxf_load_plugin_textdomain() {
+function qtranxf_load_plugin_textdomain(): bool {
     if ( load_plugin_textdomain( 'qtranslate', false, basename( QTRANSLATE_DIR ) . '/lang' ) ) {
         return true;
     }
@@ -360,13 +360,13 @@ function qtranxf_load_plugin_textdomain() {
     return false;
 }
 
-function qtranxf_is_permalink_structure_query() {
+function qtranxf_is_permalink_structure_query(): bool {
     $permalink_structure = get_option( 'permalink_structure' );
 
     return empty( $permalink_structure ) || strpos( $permalink_structure, '?' ) !== false || strpos( $permalink_structure, 'index.php' ) !== false;
 }
 
-function qtranxf_front_header_css_default() {
+function qtranxf_front_header_css_default(): string {
     global $q_config;
     $flag_location = qtranxf_flag_location();
     $css           = '';
@@ -377,17 +377,17 @@ function qtranxf_front_header_css_default() {
     return $css;
 }
 
-function qtranxf_flag_location() {
+function qtranxf_flag_location(): string {
     global $q_config;
 
     return trailingslashit( content_url() ) . $q_config['flag_location'];
 }
 
-function qtranxf_flag_location_default() {
+function qtranxf_flag_location_default(): string {
     return qtranxf_plugin_dirname_from_wp_content() . '/flags/';
 }
 
-function qtranxf_load_option_flag_location( $nm ) {
+function qtranxf_load_option_flag_location( string $nm ): void {
     global $q_config;
     $default_value = qtranxf_flag_location_default();
     $option_value  = get_option( 'qtranslate_' . $nm );
@@ -405,7 +405,7 @@ function qtranxf_load_option_flag_location( $nm ) {
     }
 }
 
-function qtranxf_load_config() {
+function qtranxf_load_config(): void {
     global $qtranslate_options, $q_config;
     qtranxf_set_default_options( $qtranslate_options );
 

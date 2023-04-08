@@ -27,13 +27,13 @@ class QTX_Translator implements WP_Translator {
         return $q_config['translator'];
     }
 
-    public function get_language() {
+    public function get_language(): string {
         global $q_config;
 
         return $q_config['language'];
     }
 
-    public function set_language( $lang ) {
+    public function set_language( string $lang ): string {
         global $q_config;
         $lang_curr = $q_config['language'];
         if ( qtranxf_isEnabled( $lang ) ) {
@@ -43,7 +43,7 @@ class QTX_Translator implements WP_Translator {
         return $lang_curr;
     }
 
-    public function translate_text( $text, $lang = null, $flags = 0 ) {
+    public function translate_text( $text, ?string $lang = null, int $flags = 0 ): string {
         global $q_config;
         if ( ! $lang ) {
             $lang = $q_config['language'];
@@ -54,7 +54,7 @@ class QTX_Translator implements WP_Translator {
         return qtranxf_use( $lang, $text, $show_available, $show_empty );
     }
 
-    public function translate_term( $term, $lang = null, $taxonomy = null ) {
+    public function translate_term( $term, ?string $lang = null, ?string $taxonomy = null ): string {
         global $q_config;
         if ( ! $lang ) {
             $lang = $q_config['language'];
@@ -63,7 +63,7 @@ class QTX_Translator implements WP_Translator {
         return qtranxf_term_use( $lang, $term, $taxonomy );
     }
 
-    public function translate_url( $url, $lang = null ) {
+    public function translate_url( $url, ?string $lang = null ): string {
         global $q_config;
         if ( $lang ) {
             $showLanguage = true;

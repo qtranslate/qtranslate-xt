@@ -20,7 +20,7 @@
  * @todo Maybe deprecate. Avoid using this function, meant to transition from legacy strftime formats.
  * @see https://gist.github.com/bohwaz/42fc223031e2b2dd2585aab159a20f30 (for the original code).
  */
-function qxtranxf_intl_strftime( $format, $timestamp = null, $locale = null ) {
+function qxtranxf_intl_strftime( string $format, $timestamp = null, ?string $locale = null ): string {
     if ( null === $timestamp ) {
         $timestamp = new \DateTime;
     } elseif ( is_numeric( $timestamp ) ) {
@@ -48,7 +48,7 @@ function qxtranxf_intl_strftime( $format, $timestamp = null, $locale = null ) {
     ];
 
     // \DateTimeInterface, string
-    $intl_formatter = function ( $timestamp, $format ) use ( $intl_formats, $locale ) {
+    $intl_formatter = function ( DateTimeInterface $timestamp, string $format ) use ( $intl_formats, $locale ) {
         $tz        = $timestamp->getTimezone();
         $date_type = \IntlDateFormatter::FULL;
         $time_type = \IntlDateFormatter::FULL;
@@ -208,7 +208,7 @@ function qxtranxf_intl_strftime( $format, $timestamp = null, $locale = null ) {
  * @see https://www.php.net/manual/en/function.strftime.php
  * @see https://www.php.net/manual/en/datetime.format.php
  */
-function qtranxf_convert_date_format_to_strftime_format( $format ) {
+function qtranxf_convert_date_format_to_strftime_format( string $format ): string {
     $mappings = array(
         // day
         'd' => '%d',
@@ -280,7 +280,7 @@ function qtranxf_convert_date_format_to_strftime_format( $format ) {
  * @return string format in strftime
  * @todo Maybe deprecate. Don't use strftime formats anymore, since strftime is deprecated from PHP8.1.
  */
-function qtranxf_convert_to_strftime_format_using_config( $format, $default_format ) {
+function qtranxf_convert_to_strftime_format_using_config( string $format, string $default_format ): string {
     global $q_config;
     // If one of special language-neutral formats is requested, don't override it.
     switch ( $format ) {
@@ -316,7 +316,7 @@ function qtranxf_convert_to_strftime_format_using_config( $format, $default_form
  *
  * @return string
  */
-function qtranxf_get_language_date_or_time_format( $config_key ) {
+function qtranxf_get_language_date_or_time_format( string $config_key ): string {
     assert( $config_key == 'date_format' || $config_key == 'time_format' );
     global $q_config;
     if ( isset( $q_config[ $config_key ][ $q_config['language'] ] ) ) {
@@ -339,7 +339,7 @@ function qtranxf_get_language_date_or_time_format( $config_key ) {
  *
  * @return string date/time if the format is valid, default value otherwise.
  */
-function qtranxf_format_date( $format, $mysql_time, $default_value, $before = '', $after = '' ) {
+function qtranxf_format_date( string $format, string $mysql_time, string $default_value, string $before = '', string $after = '' ): string {
     if ( ! empty( $before ) || ! empty( $after ) ) {
         _deprecated_argument( __FUNCTION__, '3.13.0' );
     }
@@ -364,7 +364,7 @@ function qtranxf_format_date( $format, $mysql_time, $default_value, $before = ''
  *
  * @return string date/time if the format is valid, default value otherwise.
  */
-function qtranxf_format_time( $format, $mysql_time, $default_value, $before = '', $after = '' ) {
+function qtranxf_format_time( string $format, string $mysql_time, string $default_value, string $before = '', string $after = '' ): string {
     if ( ! empty( $before ) || ! empty( $after ) ) {
         _deprecated_argument( __FUNCTION__, '3.13.0' );
     }
@@ -379,7 +379,7 @@ function qtranxf_format_time( $format, $mysql_time, $default_value, $before = ''
 }
 
 // @see get_the_date
-function qtranxf_dateFromPostForCurrentLanguage( $old_date, $format = '', $post = null ) {
+function qtranxf_dateFromPostForCurrentLanguage( string $old_date, string $format = '', $post = null ): string {
     $post = get_post( $post );
     if ( ! $post ) {
         return $old_date;
@@ -389,7 +389,7 @@ function qtranxf_dateFromPostForCurrentLanguage( $old_date, $format = '', $post 
 }
 
 // @see get_the_modified_date
-function qtranxf_dateModifiedFromPostForCurrentLanguage( $old_date, $format = '' ) {
+function qtranxf_dateModifiedFromPostForCurrentLanguage( string $old_date, string $format = '' ): string {
     global $post;
     if ( ! $post ) {
         return $old_date;
@@ -399,7 +399,7 @@ function qtranxf_dateModifiedFromPostForCurrentLanguage( $old_date, $format = ''
 }
 
 // @see get_the_time
-function qtranxf_timeFromPostForCurrentLanguage( $old_date, $format = '', $post = null, $gmt = false ) {
+function qtranxf_timeFromPostForCurrentLanguage( string $old_date, string $format = '', $post = null, bool $gmt = false ): string {
     $post = get_post( $post );
     if ( ! $post ) {
         return $old_date;
@@ -410,7 +410,7 @@ function qtranxf_timeFromPostForCurrentLanguage( $old_date, $format = '', $post 
 }
 
 // @see get_post_modified_time
-function qtranxf_timeModifiedFromPostForCurrentLanguage( $old_date, $format = '', $gmt = false ) {
+function qtranxf_timeModifiedFromPostForCurrentLanguage( string $old_date, string $format = '', bool $gmt = false ): string {
     global $post;
     if ( ! $post ) {
         return $old_date;
@@ -421,7 +421,7 @@ function qtranxf_timeModifiedFromPostForCurrentLanguage( $old_date, $format = ''
 }
 
 // @see get_comment_date
-function qtranxf_dateFromCommentForCurrentLanguage( $old_date, $format, $comment = null ) {
+function qtranxf_dateFromCommentForCurrentLanguage( string $old_date, string $format, ?string $comment = null ): string {
     if ( ! $comment ) {
         global $comment;  // TODO drop obsolete compatibility with older WP
     }
@@ -433,7 +433,7 @@ function qtranxf_dateFromCommentForCurrentLanguage( $old_date, $format, $comment
 }
 
 // @see get_comment_time
-function qtranxf_timeFromCommentForCurrentLanguage( $old_date, $format = '', $gmt = false, $translate = true, $comment = null ) {
+function qtranxf_timeFromCommentForCurrentLanguage( string $old_date, string $format = '', bool $gmt = false, bool $translate = true, ?string $comment = null ): string {
     if ( ! $translate ) {
         return $old_date;
     }
@@ -453,7 +453,7 @@ function qtranxf_timeFromCommentForCurrentLanguage( $old_date, $format = '', $gm
  *
  * @return void
  */
-function qtranxf_add_date_time_filters() {
+function qtranxf_add_date_time_filters(): void {
     global $q_config;
 
     if ( $q_config['use_strftime'] != QTX_DATE_WP && class_exists( 'IntlDateFormatter' ) ) {

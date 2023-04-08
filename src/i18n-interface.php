@@ -55,7 +55,7 @@ interface WP_Translator {
      * @return string two-letter code of active language.
      * @since 3.4.6.9
      */
-    public function get_language();
+    public function get_language(): string;
 
     /**
      * @param string $lang two-letter code of language to be set as active. Further translations will be to this language unless desired languge is specified.
@@ -64,7 +64,7 @@ interface WP_Translator {
      * @since 3.4.6.9
      *
      */
-    public function set_language( $lang );
+    public function set_language( string $lang ): string;
 
     /**
      * Get translated value from a multilingual string.
@@ -76,7 +76,7 @@ interface WP_Translator {
      *     TRANSLATE_SHOW_AVALABLE - return a list of available languages with language-encoded links to the current page.
      *     TRANSLATE_SHOW_EMPTY - return empty string.
      */
-    public function translate_text( $text, $lang = null, $flags = 0 );
+    public function translate_text( $text, ?string $lang = null, int $flags = 0 ): string;
 
     /**
      * Get translated value for a term name.
@@ -85,7 +85,7 @@ interface WP_Translator {
      * @param (string)(optional) $lang - A two-letter language code of the language to translate $term to. If omitted or null, then the currently active language is assumed.
      * @param (string)(optional) $taxonomy - Taxonomy name that $term is part of. Currently unused, since all term names assumed to be unique across all taxonomies.
      */
-    public function translate_term( $term, $lang = null, $taxonomy = null );
+    public function translate_term( $term, ?string $lang = null, ?string $taxonomy = null ): string;
 
     /**
      * Get language-encoded value for a URL.
@@ -93,6 +93,6 @@ interface WP_Translator {
      * @param (mixed) $url - The URL to be encoded. It may be an array of URLs.
      * @param (string)(optional) $lang - A two-letter language code of the language to encode $url with. If omitted or null, then the currently active language is assumed.
      */
-    public function translate_url( $url, $lang = null );
+    public function translate_url( $url, ?string $lang = null ): string;
 
 }

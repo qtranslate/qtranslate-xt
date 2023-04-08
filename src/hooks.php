@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * locale for current language and set it on PHP.
  */
-function qtranxf_localeForCurrentLanguage( $locale ) {
+function qtranxf_localeForCurrentLanguage( string $locale ): string {
     static $locale_lang;
     if ( ! empty( $locale_lang ) ) {
         return $locale_lang;
@@ -72,11 +72,11 @@ function qtranxf_useDefaultLanguage( $content ) {
     return qtranxf_use( $q_config['default_language'], $content, false, false );
 }
 
-function qtranxf_versionLocale() {
+function qtranxf_versionLocale(): string {
     return 'en_US';
 }
 
-function qtranxf_useRawTitle( $title, $raw_title = '', $context = 'save' ) {
+function qtranxf_useRawTitle( string $title, string $raw_title = '', string $context = 'save' ): string {
     switch ( $context ) {
         case 'save':
             {
@@ -120,7 +120,7 @@ function qtranxf_ngettext( $translated_text ) {
  *
  * @return void
  */
-function qtranxf_add_main_filters() {
+function qtranxf_add_main_filters(): void {
     add_filter( 'wp_trim_words', 'qtranxf_trim_words', 0, 4 );
     add_filter( 'sanitize_title', 'qtranxf_useRawTitle', 0, 3 );
     add_filter( 'comment_moderation_subject', 'qtranxf_useDefaultLanguage', 0 );

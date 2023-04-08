@@ -23,7 +23,7 @@ require_once QTRANSLATE_DIR . '/src/modules/module_loader.php';
  *
  * @return void
  */
-function qtranxf_init_language() {
+function qtranxf_init_language(): void {
     global $q_config, $pagenow;
 
     qtranxf_load_config();

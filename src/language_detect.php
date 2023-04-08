@@ -1,6 +1,6 @@
 <?php
 
-function qtranxf_detect_language( &$url_info ) {
+function qtranxf_detect_language( array &$url_info ) {
     global $q_config;
 
     if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
@@ -100,7 +100,7 @@ function qtranxf_detect_language( &$url_info ) {
     return $lang;
 }
 
-function qtranxf_resolveLangCase( $lang, &$caseredirect ) {
+function qtranxf_resolveLangCase( string $lang, ?bool &$caseredirect ): string {
     if ( qtranxf_isEnabled( $lang ) ) {
         return $lang;
     }
@@ -134,7 +134,7 @@ function qtranxf_resolveLangCase( $lang, &$caseredirect ) {
  *
  * @return bool|string
  */
-function qtranxf_parse_language_info( &$url_info, $link = false ) {
+function qtranxf_parse_language_info( array &$url_info, bool $link = false ) {
     global $q_config;
 
     qtranxf_complete_url_info_path( $url_info );
@@ -293,14 +293,14 @@ function qtranxf_parse_language_info( &$url_info, $link = false ) {
     return $parsed_lang;
 }
 
-function qtranxf_detect_language_admin( &$url_info ) {
+function qtranxf_detect_language_admin( array &$url_info ): string {
     require_once QTRANSLATE_DIR . '/src/admin/admin_utils.php';
     $url_info = apply_filters( 'qtranslate_detect_admin_language', $url_info );
 
     return $url_info['lang_admin'];
 }
 
-function qtranxf_detect_language_front( &$url_info ) {
+function qtranxf_detect_language_front( array &$url_info ): string {
     global $q_config;
 
     $lang = null;
@@ -333,7 +333,7 @@ function qtranxf_detect_language_front( &$url_info ) {
     return $lang;
 }
 
-function qtranxf_setcookie_language( $lang, $cookie_name, $cookie_path ) {
+function qtranxf_setcookie_language( string $lang, string $cookie_name, string $cookie_path ): void {
     global $q_config;
 
     // Sometimes wp_cron.php SEEMS to be the source of headers being sent prematurely.
@@ -356,7 +356,7 @@ function qtranxf_setcookie_language( $lang, $cookie_name, $cookie_path ) {
     }
 }
 
-function qtranxf_set_language_cookie( $lang ) {
+function qtranxf_set_language_cookie( string $lang ): void {
     global $q_config;
 
     assert( ! qtranxf_is_rest_request_expected() );
@@ -367,7 +367,7 @@ function qtranxf_set_language_cookie( $lang ) {
     }
 }
 
-function qtranxf_get_browser_language() {
+function qtranxf_get_browser_language(): ?string {
     if ( ! isset( $_SERVER["HTTP_ACCEPT_LANGUAGE"] ) ) {
         return null;
     }
@@ -396,7 +396,7 @@ function qtranxf_get_browser_language() {
     return null;
 }
 
-function qtranxf_http_negotiate_language() {
+function qtranxf_http_negotiate_language(): ?string {
     global $q_config;
     if ( function_exists( 'http_negotiate_language' ) ) {
         $default_language = $q_config['default_language'];

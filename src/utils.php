@@ -590,11 +590,11 @@ function qtranxf_remove_filters( $filters ) {
 /**
  * @since 3.4
  */
-function qtranxf_html_locale( $locale ) {
+function qtranxf_html_locale( string $locale ): string {
     return str_replace( '_', '-', $locale );
 }
 
-function qtranxf_match_language_locale( $locale ) {
+function qtranxf_match_language_locale( string $locale ): ?string {
     global $q_config;
     foreach ( $q_config['enabled_languages'] as $lang ) {
         if ( qtranxf_html_locale( $q_config['locale'][ $lang ] ) == $locale ) {

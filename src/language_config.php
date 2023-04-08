@@ -1,12 +1,12 @@
 <?php
 
-function qtranxf_getLanguage() {
+function qtranxf_getLanguage(): string {
     global $q_config;
 
     return $q_config['language'];
 }
 
-function qtranxf_getLanguageDefault() {
+function qtranxf_getLanguageDefault(): string {
     global $q_config;
 
     return $q_config['default_language'];
@@ -15,7 +15,7 @@ function qtranxf_getLanguageDefault() {
 /**
  * @since 3.4.5.4 - return language name in native language, former qtranxf_getLanguageName.
  */
-function qtranxf_getLanguageNameNative( $lang = '' ) {
+function qtranxf_getLanguageNameNative( string $lang = '' ): string {
     global $q_config;
     if ( empty( $lang ) ) {
         $lang = $q_config['language'];
@@ -27,7 +27,7 @@ function qtranxf_getLanguageNameNative( $lang = '' ) {
 /**
  * @since 3.4.5.4 - return language name in active language, if available, otherwise the name in native language.
  */
-function qtranxf_getLanguageName( $lang = '' ) {
+function qtranxf_getLanguageName( string $lang = '' ): string {
     global $q_config, $l10n;
     if ( empty( $lang ) ) {
         return $q_config['language_name'][ $q_config['language'] ];
@@ -74,14 +74,14 @@ function qtranxf_getLanguageName( $lang = '' ) {
     return $q_config['language-names'][ $lang ] = $n;
 }
 
-function qtranxf_isEnabled( $lang ) {
+function qtranxf_isEnabled( string $lang ): bool {
     global $q_config;
 
     // only available languages are loaded, works quicker
     return isset( $q_config['locale'][ $lang ] );
 }
 
-function qtranxf_getSortedLanguages( $reverse = false ) {
+function qtranxf_getSortedLanguages( bool $reverse = false ): array {
     global $q_config;
     $languages = $q_config['enabled_languages'];
     ksort( $languages );

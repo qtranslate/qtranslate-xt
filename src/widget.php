@@ -39,7 +39,7 @@ class qTranslateXWidget extends WP_Widget {
         parent::__construct( 'qtranslate', __( 'qTranslate Language Chooser', 'qtranslate' ), $widget_ops );
     }
 
-    function widget( $args, $instance ) {
+    function widget( $args, $instance ): void {
         if ( ! isset( $instance['widget-css-off'] ) ) {
             echo '<style>' . PHP_EOL;
             echo empty( $instance['widget-css'] ) ? QTX_WIDGET_CSS : $instance['widget-css'];
@@ -61,7 +61,7 @@ class qTranslateXWidget extends WP_Widget {
         echo $args['after_widget'];
     }
 
-    function update( $new_instance, $old_instance ) {
+    function update( $new_instance, $old_instance ): array {
         $instance          = $old_instance;
         $instance['title'] = $new_instance['title'];
 
@@ -100,8 +100,8 @@ class qTranslateXWidget extends WP_Widget {
         return $instance;
     }
 
-    function form( $instance ) {
-        $instance         = wp_parse_args( (array) $instance, array(
+    function form( $instance ): void {
+        $instance         = wp_parse_args( $instance, array(
             'title'      => '',
             'type'       => 'text',
             'format'     => '',
