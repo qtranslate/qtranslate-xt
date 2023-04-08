@@ -17,5 +17,6 @@ interface WP_Translator_Admin extends WP_Translator {
      * @param (mixed)(optional) $term_default - The default term name to be encoded or null. It may be an array of terms.
      * @param (string)(optional) $taxonomy - Taxonomy name that $term is part of. Currently unused, since all term names assumed to be unique across all taxonomies.
      */
+    // TODO this function is never used (only in test and filter hook never triggered...), delete?
     public function multilingual_term( $term, $term_default = null, $taxonomy = null );
 }

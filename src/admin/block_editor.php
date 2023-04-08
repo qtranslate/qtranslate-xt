@@ -26,7 +26,7 @@ class QTX_Admin_Block_Editor {
     /**
      * Register the REST filters
      */
-    public function rest_api_init() {
+    public function rest_api_init(): void {
         global $q_config;
 
         // Filter to allow qTranslate-XT to manage the block editor (single language mode)
@@ -58,7 +58,7 @@ class QTX_Admin_Block_Editor {
      *
      * @return mixed
      */
-    public function rest_prepare( $response, $post, $request ) {
+    public function rest_prepare( WP_REST_Response $response, WP_Post $post, WP_REST_Request $request ) {
         global $q_config;
 
         if ( $request->get_param( 'context' ) !== 'edit' || $request->get_method() !== 'GET' ) {
@@ -85,13 +85,13 @@ class QTX_Admin_Block_Editor {
     /**
      * Intercepts the post update and recompose the multi-language fields before being written in DB
      *
-     * @param WP_HTTP_Response $response
+     * @param WP_REST_Response|WP_HTTP_Response|WP_Error|mixed $response
      * @param array $handler
      * @param WP_REST_Request $request
      *
      * @return mixed
      */
-    public function rest_request_before_callbacks( $response, $handler, $request ) {
+    public function rest_request_before_callbacks( $response, array $handler, WP_REST_Request $request ) {
         if ( $request->get_method() !== 'PUT' && $request->get_method() !== 'POST' ) {
             return $response;
         }
@@ -142,7 +142,7 @@ class QTX_Admin_Block_Editor {
     /**
      * Restore the raw content of the post just updated and set the 'qtx_editor_lang', as for the prepare step
      *
-     * @param WP_HTTP_Response $response
+     * @param WP_REST_Response|WP_HTTP_Response|WP_Error|mixed $response
      * @param array $handler
      * @param WP_REST_Request $request
      *
@@ -166,7 +166,7 @@ class QTX_Admin_Block_Editor {
     /**
      * Enqueue the JS script
      */
-    public function enqueue_block_editor_assets() {
+    public function enqueue_block_editor_assets(): void {
         // By default, excluded post types are filtered out.
         global $q_config;
         $post_type          = qtranxf_post_type();
@@ -196,7 +196,7 @@ class QTX_Admin_Block_Editor {
      *
      * @return mixed
      */
-    private function select_raw_response_language( $response, $editor_lang ) {
+    private function select_raw_response_language( $response, string $editor_lang ) {
         $response_data = $response->get_data();
         if ( isset( $response_data['content'] ) && is_array( $response_data['content'] ) && isset( $response_data['content']['raw'] ) ) {
             $response_data['title']['raw']   = qtranxf_use( $editor_lang, $response_data['title']['raw'], false, true );

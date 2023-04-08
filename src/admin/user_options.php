@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 add_action( 'show_user_profile', 'qtranxf_show_extra_profile_fields' );
 add_action( 'edit_user_profile', 'qtranxf_show_extra_profile_fields' );
 
-function qtranxf_show_extra_profile_fields( $user ) {
+function qtranxf_show_extra_profile_fields( WP_User $user ): void {
     global $q_config;
     if ( $q_config['highlight_mode'] != QTX_HIGHLIGHT_MODE_NONE ) { ?>
         <h3><?php _e( 'Translation options', 'qtranslate' ) ?></h3>
@@ -31,11 +31,11 @@ function qtranxf_show_extra_profile_fields( $user ) {
 add_action( 'personal_options_update', 'qtranxf_save_extra_profile_fields' );
 add_action( 'edit_user_profile_update', 'qtranxf_save_extra_profile_fields' );
 
-function qtranxf_save_extra_profile_fields( $user_id ) {
+function qtranxf_save_extra_profile_fields( int $user_id ): void {
     global $q_config;
 
     if ( ! current_user_can( 'edit_user', $user_id ) ) {
-        return false;
+        return;
     }
 
     if ( $q_config['highlight_mode'] != QTX_HIGHLIGHT_MODE_NONE ) {
@@ -46,6 +46,4 @@ function qtranxf_save_extra_profile_fields( $user_id ) {
             update_user_meta( $user_id, 'qtranslate_highlight_disabled', true );
         }
     }
-
-    return true;
 }

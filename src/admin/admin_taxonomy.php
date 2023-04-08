@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @return string Raw ML string
  */
-function qtranxf_term_name_encoded( $name ) {
+function qtranxf_term_name_encoded( string $name ): string {
     global $q_config;
     if ( isset( $q_config['term_name'][ $name ] ) ) {
         $name = qtranxf_join_b( $q_config['term_name'][ $name ] );
@@ -19,7 +19,7 @@ function qtranxf_term_name_encoded( $name ) {
     return $name;
 }
 
-function qtranxf_get_term_joined( $obj, $taxonomy = null ) {
+function qtranxf_get_term_joined( $obj, ?string $taxonomy = null ) {
     global $q_config;
     if ( is_object( $obj ) ) {
         // WP_Term object conversion
@@ -39,16 +39,16 @@ function qtranxf_get_term_joined( $obj, $taxonomy = null ) {
 }
 
 /**
- * @param string $lang two-letter language code to search for $term.
- * @param string $default_lang two-letter language code of the default language.
+ * @param string $lang language code to search for $term.
+ * @param string $default_lang language code of the default language.
  * @param string $term name of term in language $lang.
- * @param string $taxonomy is not used for now.
+ * @param string|null $taxonomy is not used for now.
  *
  * @return array translations of the term found.
  *
  * @since 3.4.6.8
  */
-function qtranxf_term_find_translations( $lang, $default_lang, $term, $taxonomy = null ) {
+function qtranxf_term_find_translations( string $lang, string $default_lang, string $term, ?string $taxonomy = null ): ?array {
     global $q_config;
     if ( empty( $default_lang ) ) {
         $default_lang = $q_config['default_language'];
@@ -108,10 +108,18 @@ function qtranxf_useAdminTermLibJoin( $obj, $taxonomies = null, $args = null ) {
 }
 
 /**
- * @since 3.4.6.8
+ * Sanitize term name.
  * Called in 'sanitize_term_field' with default context like 'display'.
+ *
+ * @param mixed $value
+ * @param int|WP_Term $term
+ * @param string|null $taxonomy
+ * @param string|null $context
+ *
+ * @return __PHP_Incomplete_Class|array|mixed|string
+ * @since 3.4.6.8
  */
-function qtranxf_term_sanitize_name( $value, $term, $taxonomy = null, $context = null ) {
+function qtranxf_term_sanitize_name( $value, $term, ?string $taxonomy = null, ?string $context = null ) {
     global $pagenow;
     if ( $context == 'display' && $pagenow == 'edit.php' ) {
         return qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage( $value );
@@ -120,14 +128,14 @@ function qtranxf_term_sanitize_name( $value, $term, $taxonomy = null, $context =
     return $value;
 }
 
-add_filter( 'term_name', 'qtranxf_term_sanitize_name', 5, 4 );//used in function sanitize_term_field called from function sanitize_term with default context like 'display'
+add_filter( 'term_name', 'qtranxf_term_sanitize_name', 5, 4 ); // used in function sanitize_term_field called from function sanitize_term with default context like 'display'
 
 /**
  * @since 3.4.6.9
  * Version of function qtranxf_term_sanitize_name_db for unslashed argument $term.
  * ['terms_sanitized'][$term] for possible further processing.
  */
-function qtranxf_term_sanitize_name_unslashed( $term, $taxonomy = null ) {
+function qtranxf_term_sanitize_name_unslashed( $term, ?string $taxonomy = null ) {
     global $q_config;
     $default_lang = $q_config['default_language'];
     if ( qtranxf_isMultilingual( $term ) ) {
@@ -156,15 +164,15 @@ function qtranxf_term_sanitize_name_unslashed( $term, $taxonomy = null ) {
 }
 
 /**
- * @param string $term slashed value of a term name, which may be an ML value.
- * @param string $taxonomy provided to the filter, but is not used here.
+ * @param mixed $term slashed value of a term name, which may be an ML value.
+ * @param string|null $taxonomy provided to the filter, but is not used here.
  *
- * @return string slashed term name in the default language. Translations found are stored for possible further processing in $q_config['terms_sanitized'][$term_db], where $term_db is an unslashed value of term name in the default language.
+ * @return mixed slashed term name in the default language. Translations found are stored for possible further processing in $q_config['terms_sanitized'][$term_db], where $term_db is an unslashed value of term name in the default language.
  * @since 3.4.6.9
  * Response to filter "pre_term_{$field}" in function 'sanitize_term_field' with $field='name' and $context='db'
  *
  */
-function qtranxf_term_sanitize_name_db( $term, $taxonomy = null ) {
+function qtranxf_term_sanitize_name_db( $term, ?string $taxonomy = null ) {
     global $q_config;
 
     if ( ! qtranxf_isMultilingual( $term ) ) {
@@ -186,7 +194,7 @@ function qtranxf_term_sanitize_name_db( $term, $taxonomy = null ) {
  * @since 3.4.6.9
  * Response to filter 'get_terms_args', data is unslashed.
  */
-function qtranxf_term_get_args( $args, $taxonomies = null ) {
+function qtranxf_term_get_args( array $args, ?array $taxonomies = null ): array {
     if ( ! empty( $args['name'] ) ) {
         // expected in default language after applying sanitize_term_field
         $names = $args['name'];
@@ -234,7 +242,7 @@ function qtranxf_term_get_args( $args, $taxonomies = null ) {
  * response to action 'edit_term', removes old translations
  * @since 3.4.6.9
  */
-function qtranxf_term_del_translation( $term_id, $tt_id, $taxonomy ) {
+function qtranxf_term_del_translation( int $term_id, int $tt_id, string $taxonomy ) {
     $term = wp_cache_get( $term_id, 'terms' );
     if ( ! $term ) {
         return;
@@ -266,7 +274,7 @@ add_action( 'edit_term', 'qtranxf_term_del_translation', 5, 3 );
  * response to actions 'created_term' and 'edited_term'
  * @since 3.4.6.9
  */
-function qtranxf_term_set_translation( $term_id, $tt_id, $taxonomy ) {
+function qtranxf_term_set_translation( int $term_id, int $tt_id, string $taxonomy ): void {
     global $q_config;
     if ( empty( $q_config['terms_sanitized'] ) ) {
         return;
@@ -320,7 +328,7 @@ function qtranxf_term_set_translation( $term_id, $tt_id, $taxonomy ) {
 add_action( 'created_term', 'qtranxf_term_set_translation', 5, 3 );
 add_action( 'edited_term', 'qtranxf_term_set_translation', 5, 3 );
 
-function qtranxf_term_delete( $term, $tt_id, $taxonomy, $deleted_term, $object_ids ) {
+function qtranxf_term_delete( int $term, int $tt_id, string $taxonomy, WP_Term $deleted_term, array $object_ids ): void {
     global $q_config;
     if ( isset( $deleted_term->i18n_config['name'] ) ) {
         $default_language = $q_config['default_language'];
@@ -338,7 +346,7 @@ function qtranxf_term_delete( $term, $tt_id, $taxonomy, $deleted_term, $object_i
 
 add_action( 'delete_term', 'qtranxf_term_delete', 5, 5 );
 
-function qtranxf_admin_list_cats( $text ) {
+function qtranxf_admin_list_cats( string $text ): string {
     global $pagenow;
     switch ( $pagenow ) {
         case 'edit-tags.php':
@@ -359,7 +367,7 @@ function qtranxf_admin_list_cats( $text ) {
 
 add_filter( 'list_cats', 'qtranxf_admin_list_cats', 0 );
 
-function qtranxf_admin_dropdown_cats( $text ) {
+function qtranxf_admin_dropdown_cats( string $text ): string {
     global $pagenow;
     switch ( $pagenow ) {
         case 'edit-tags.php':
@@ -372,7 +380,7 @@ function qtranxf_admin_dropdown_cats( $text ) {
 
 add_filter( 'wp_dropdown_cats', 'qtranxf_admin_dropdown_cats', 0 );
 
-function qtranxf_admin_category_description( $text ) {
+function qtranxf_admin_category_description( string $text ): string {
     global $pagenow;
     switch ( $pagenow ) {
         case 'term.php':
@@ -396,7 +404,7 @@ function qtranxf_term_admin_add_filters() {
     add_filter( 'get_term', 'qtranxf_useAdminTermLibJoin', 5, 2 );
     add_filter( 'get_terms', 'qtranxf_useAdminTermLibJoin', 5, 3 );
     add_filter( 'get_terms_args', 'qtranxf_term_get_args', 5, 2 );
-    add_filter( 'pre_term_name', 'qtranxf_term_sanitize_name_db', 999, 2 );//"pre_term_{$field}" in function sanitize_term_field with $field='name' and $context='db'
+    add_filter( 'pre_term_name', 'qtranxf_term_sanitize_name_db', 999, 2 ); // "pre_term_{$field}" in function sanitize_term_field with $field='name' and $context='db'
 }
 
 qtranxf_term_admin_add_filters();

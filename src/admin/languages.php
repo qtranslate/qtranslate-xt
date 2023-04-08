@@ -8,14 +8,12 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Load array of stored in options language properties
  * @since 3.3
  */
-function qtranxf_load_languages( &$cfg ) {
+function qtranxf_load_languages( array &$cfg ): void {
     global $qtranslate_options;
     //$cfg = array();
     foreach ( $qtranslate_options['languages'] as $name => $opn ) {
         $cfg[ $name ] = get_option( $opn, array() );
     }
-
-    return $cfg;
 }
 
 // function qtranxf_save_languages($cfg) is in activation_hook.php as it is in use there
@@ -24,7 +22,7 @@ function qtranxf_load_languages( &$cfg ) {
  * Remove language $lang properties from hash $langs.
  * @since 3.3
  */
-function qtranxf_unsetLanguage( &$langs, $lang ) {
+function qtranxf_unsetLanguage( array &$langs, string $lang ): void {
     unset( $langs['language_name'][ $lang ] );
     unset( $langs['flag'][ $lang ] );
     unset( $langs['locale'][ $lang ] );
@@ -38,7 +36,7 @@ function qtranxf_unsetLanguage( &$langs, $lang ) {
 /**
  * @since 3.4.2
  */
-function qtranxf_setLanguageAdmin( $lang ) {
+function qtranxf_setLanguageAdmin( string $lang ): void {
     global $q_config;
 
     $q_config['language'] = $lang;
@@ -49,7 +47,7 @@ function qtranxf_setLanguageAdmin( $lang ) {
  * Remove language $lang properties from hash $langs.
  * @since 3.3
  */
-function qtranxf_copyLanguage( &$langs, $cfg, $lang ) {
+function qtranxf_copyLanguage( array &$langs, array $cfg, string $lang ): void {
     $langs['language_name'][ $lang ] = $cfg['language_name'][ $lang ];
     $langs['flag'][ $lang ]          = $cfg['flag'][ $lang ];
     $langs['locale'][ $lang ]        = $cfg['locale'][ $lang ];
@@ -63,7 +61,7 @@ function qtranxf_copyLanguage( &$langs, $cfg, $lang ) {
     $langs['not_available'][ $lang ] = $cfg['not_available'][ $lang ];
 }
 
-function qtranxf_update_config_header_css() {
+function qtranxf_update_config_header_css(): void {
     global $q_config;
 
     $header_css = get_option( 'qtranslate_header_css' );
@@ -75,7 +73,7 @@ function qtranxf_update_config_header_css() {
     }
 }
 
-function qtranxf_disableLanguage( $lang ) {
+function qtranxf_disableLanguage( string $lang ): bool {
     global $q_config;
 
     if ( ! qtranxf_isEnabled( $lang ) ) {
@@ -97,7 +95,7 @@ function qtranxf_disableLanguage( $lang ) {
     return true;
 }
 
-function qtranxf_enableLanguage( $lang ) {
+function qtranxf_enableLanguage( string $lang ): bool {
     global $q_config;
 
     if ( qtranxf_isEnabled( $lang ) ) {
@@ -120,7 +118,7 @@ function qtranxf_enableLanguage( $lang ) {
  * Remove language $lang from the database.
  * @since 3.3
  */
-function qtranxf_deleteLanguage( $lang ) {
+function qtranxf_deleteLanguage( string $lang ): string {
     global $q_config;
 
     if ( ! qtranxf_language_predefined( $lang ) ) {

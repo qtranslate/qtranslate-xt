@@ -23,7 +23,7 @@ class QTX_Admin_Settings_Language_List extends WP_List_Table {
         $this->options_uri    = $options_uri;
     }
 
-    public function get_columns() {
+    public function get_columns(): array {
         return array(
             'code'   => _x( 'Code', 'Two-letter Language Code meant.', 'qtranslate' ),
             'flag'   => __( 'Flag', 'qtranslate' ),
@@ -36,7 +36,7 @@ class QTX_Admin_Settings_Language_List extends WP_List_Table {
         );
     }
 
-    public function prepare_items() {
+    public function prepare_items(): void {
         global $q_config;
 
         $flags                 = qtranxf_language_configured( 'flag' );
@@ -109,18 +109,18 @@ class QTX_Admin_Settings_Language_List extends WP_List_Table {
         $this->items = $data;
     }
 
-    protected function column_default( $item, $column_name ) {
+    protected function column_default( $item, $column_name ): string {
         return $item[ $column_name ];
     }
 
-    protected function get_default_primary_column_name() {
+    protected function get_default_primary_column_name(): string {
         return 'name';
     }
 
-    protected function display_tablenav( $which ) {
+    protected function display_tablenav( $which ): void {
     }
 
-    protected function get_table_classes() {
+    protected function get_table_classes(): array {
         return array( 'widefat', 'qtranxs-language-list' );
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-function qtranxf_convert_database( $action ) {
+function qtranxf_convert_database( string $action ): string {
     switch ( $action ) {
         case 'b_only':
         case 'c_dual':
@@ -179,7 +179,7 @@ function qtranxf_convert_to_b_no_closing_deep( $text ) {
     return qtranxf_convert_to_b_no_closing( $text );
 }
 
-function qtranxf_convert_database_options( $action ) {
+function qtranxf_convert_database_options( string $action ): void {
     global $wpdb;
 
     $wpdb->show_errors();
@@ -223,7 +223,7 @@ function qtranxf_convert_database_options( $action ) {
     }
 }
 
-function qtranxf_convert_database_posts( $action ) {
+function qtranxf_convert_database_posts( string $action ): void {
     global $wpdb;
 
     $result = $wpdb->get_results( 'SELECT ID, post_title, post_content, post_excerpt FROM ' . $wpdb->posts );
@@ -260,7 +260,7 @@ function qtranxf_convert_database_posts( $action ) {
     }
 }
 
-function qtranxf_convert_database_postmeta( $action ) {
+function qtranxf_convert_database_postmeta( string $action ): void {
     global $wpdb;
     $result = $wpdb->get_results( 'SELECT meta_id, meta_value FROM ' . $wpdb->postmeta );
     if ( ! $result ) {
@@ -302,7 +302,7 @@ function qtranxf_convert_database_postmeta( $action ) {
 
 /**
  */
-function qtranxf_split_database_file( $ifp, $languages_to_keep ) {
+function qtranxf_split_database_file( string $ifp, array $languages_to_keep ): string {
     global $q_config;
     $errors = $q_config['url_info']['errors'];
     $ifh    = fopen( $ifp, 'r' );
@@ -425,7 +425,7 @@ function qtranxf_split_database_file( $ifp, $languages_to_keep ) {
     return sprintf( __( 'The database file provided has been split as requested. Number of multilingual strings found is %s. The result files are:%s', 'qtranslate' ), $cnt, $fns );
 }
 
-function qtranxf_extract_languages( $text, $lang2keep ) {
+function qtranxf_extract_languages( $text, array $lang2keep ): string {
     $blocks           = qtranxf_get_language_blocks( $text );
     $s                = '';
     $current_language = false;
@@ -485,7 +485,8 @@ function qtranxf_extract_languages( $text, $lang2keep ) {
     return $s;
 }
 
-function gtranxf_db_clean_terms() {
+// TODO: fix gtranxf typo
+function gtranxf_db_clean_terms(): string {
     global $wpdb, $q_config;
     $errors   = &$q_config['url_info']['errors'];
     $messages = &$q_config['url_info']['messages'];

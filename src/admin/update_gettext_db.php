@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * or 0, if all languages were updated successfully,
  * or positive integer number of errors occurred on languages update.
  */
-function qtranxf_update_gettext_databases_ex( $force = false, $only_for_language = '' ) {
+function qtranxf_update_gettext_databases_ex( bool $force = false, string $only_for_language = '' ) {
     global $q_config;
 
     if ( $only_for_language && ! qtranxf_isEnabled( $only_for_language ) ) {
