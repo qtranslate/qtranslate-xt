@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 require_once QTRANSLATE_DIR . '/src/admin/admin_utils.php';
 require_once QTRANSLATE_DIR . '/src/modules/admin_module.php';
 
-function qtranxf_admin_set_default_options( array &$options ): void {
+function qtranxf_admin_set_default_options( ?array &$options ): void {
     // options processed in a standardized way
     $options['admin'] = array();
 
