@@ -193,9 +193,7 @@ function qxtranxf_intl_strftime( string $format, $timestamp = null, ?string $loc
         }
     }, $format );
 
-    $out = str_replace( '%%', '%', $out );
-
-    return $out;
+    return str_replace( '%%', '%', $out );
 }
 
 /**

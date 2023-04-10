@@ -77,9 +77,7 @@ class QTX_Admin_Block_Editor {
         // TODO allow user to select editor lang with buttons
         $editor_lang = $q_config['url_info']['language'];
 
-        $response = $this->select_raw_response_language( $response, $editor_lang );
-
-        return $response;
+        return $this->select_raw_response_language( $response, $editor_lang );
     }
 
     /**
@@ -159,9 +157,7 @@ class QTX_Admin_Block_Editor {
             return $response;
         }
 
-        $response = $this->select_raw_response_language( $response, $editor_lang );
-
-        return $response;
+        return $this->select_raw_response_language( $response, $editor_lang );
     }
 
     /**

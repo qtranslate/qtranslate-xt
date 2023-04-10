@@ -341,7 +341,7 @@ function qtranxf_reset_config(): void {
     foreach ( $qtranslate_options['default_value'] as $nm => $def ) {
         delete_option( 'qtranslate_' . $nm );
     }
-    foreach ( $qtranslate_options['languages'] as $nm => $opn ) {
+    foreach ( $qtranslate_options['languages'] as $opn ) {
         delete_option( $opn );
     }
 

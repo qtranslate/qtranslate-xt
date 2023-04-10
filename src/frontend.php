@@ -370,9 +370,7 @@ function qtranxf_translate_deep( $value, $lang ) {
 
             return serialize( $value );
         }
-        $lang_value = qtranxf_use_language( $lang, $value );
-
-        return $lang_value;
+        return qtranxf_use_language( $lang, $value );
     } else if ( is_array( $value ) ) {
         foreach ( $value as $k => $v ) {
             $value[ $k ] = qtranxf_translate_deep( $v, $lang );
@@ -639,9 +637,7 @@ function qtranxf_get_attachment_image_attributes( $attr, $attachment = null, $si
 function qtranxf_home_url( $url, $path, $orig_scheme, $blog_id ): string {
     global $q_config;
     $lang = $q_config['language'];
-    $url  = qtranxf_get_url_for_language( $url, $lang, ! $q_config['hide_default_language'] || $lang != $q_config['default_language'] );
-
-    return $url;
+    return qtranxf_get_url_for_language( $url, $lang, ! $q_config['hide_default_language'] || $lang != $q_config['default_language'] );
 }
 
 function qtranxf_esc_html( $text ) {
@@ -836,9 +832,7 @@ function qtranxf_checkCanonical( string $redirect_url, string $requested_url ): 
     global $q_config;
     $lang = $q_config['language'];
     // fix canonical conflicts with language urls
-    $redirect_url_lang = qtranxf_convertURL( $redirect_url, $lang );
-
-    return $redirect_url_lang;
+    return qtranxf_convertURL( $redirect_url, $lang );
 }
 
 /**

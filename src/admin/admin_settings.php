@@ -309,7 +309,7 @@ class QTX_Admin_Settings {
                         <table id="qtranxs-enabled-languages">
                             <?php
                             $flag_location = qtranxf_flag_location();
-                            foreach ( qtranxf_getSortedLanguages() as $key => $language ) {
+                            foreach ( qtranxf_getSortedLanguages() as $language ) {
                                 echo '<tr>';
                                 echo '<td><label title="' . $q_config['language_name'][ $language ] . '"><input type="radio" name="default_language" value="' . $language . '"';
                                 checked( $language, $q_config['default_language'] );
