@@ -35,8 +35,8 @@ function qtranxf_term_use( string $lang, $obj, $taxonomy ) {
     global $q_config;
     if ( is_array( $obj ) ) {
         // handle arrays recursively
-        foreach ( $obj as $key => $t ) {
-            $obj[ $key ] = qtranxf_term_use( $lang, $obj[ $key ], $taxonomy );
+        foreach ( $obj as $key => $term ) {
+            $obj[ $key ] = qtranxf_term_use( $lang, $term, $taxonomy );
         }
 
         return $obj;

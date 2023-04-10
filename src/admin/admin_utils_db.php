@@ -362,21 +362,15 @@ function qtranxf_split_database_file( string $ifp, array $languages_to_keep ): s
                     fflush( $dfh );
                     copy( $dfp, $lfp );
                     $lfh = fopen( $lfp, 'a+' );
-                    if ( ! $lfh || ! $dfh ) {
+                    if ( ! $lfh ) {
                         fclose( $ifh );
-                        foreach ( $files as &$file ) {
+                        foreach ( $files as $file ) {
                             if ( ! isset( $file['fh'] ) ) {
                                 continue;
                             }
                             fclose( $file['fh'] );
                         }
-                        if ( ! $lfh ) {
-                            $errors[] = sprintf( __( 'Failed to open output database file "%s"', 'qtranslate' ), $lfp );
-                        }
-                        if ( ! $dfh ) {
-                            $errors[] = sprintf( __( 'Failed to re-open output database file "%s"', 'qtranslate' ), $dfp );
-                        }
-
+                        $errors[] = sprintf( __( 'Failed to open output database file "%s"', 'qtranslate' ), $lfp );
                         return '';
                     }
                     $files[ $lang ] = array( 'fp' => $lfp, 'fh' => $lfh );
@@ -407,7 +401,7 @@ function qtranxf_split_database_file( string $ifp, array $languages_to_keep ): s
         }
     }
     fclose( $ifh );
-    foreach ( $files as &$file ) {
+    foreach ( $files as $file ) {
         fclose( $file['fh'] );
     }
     if ( $mfh ) {
@@ -534,7 +528,7 @@ function qtranxf_db_clean_terms(): string {
                     break;
                 }
             }
-        } else if ( isset( $term_name_cur[ $nm ] ) && is_array( $term_name_cur[ $nm ] ) && ! empty( $term_name_cur[ $nm ] ) ) {
+        } else if ( ! empty( $term_name_cur[ $nm ] ) && is_array( $term_name_cur[ $nm ] ) ) {
             $ts = $term_name_cur[ $nm ];
         } else {
             continue;

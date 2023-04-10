@@ -813,7 +813,7 @@ function qtranxf_update_settings(): void {
         if ( ! isset( $_POST[ $id ] ) ) {
             continue;
         }
-        $domain           = preg_replace( '#^/*#', '', untrailingslashit( trim( $_POST[ $id ] ) ) );
+        $domain           = trim( $_POST[ $id ], " /" );
         $domains[ $lang ] = $domain;
     }
     if ( ! empty( $domains ) && ( ! isset( $q_config['domains'] ) || ! qtranxf_array_compare( $q_config['domains'], $domains ) ) ) {

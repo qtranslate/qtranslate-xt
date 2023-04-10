@@ -455,7 +455,7 @@ function qtranxf_use_content( string $lang, $content, array $available_langs, bo
 
     $msg    = preg_replace( '/%LANG:([^:]*):([^%]*)%/', $language_list, $q_config['not_available'][ $lang ] );
     $output = '<p class="qtranxs-available-languages-message qtranxs-available-languages-message-' . $lang . '">' . $msg . '</p>';
-    if ( ! empty( $q_config['show_alternative_content'] ) && $q_config['show_alternative_content'] ) {
+    if ( ! empty( $q_config['show_alternative_content'] ) ) {
         $output .= $alt_content;
     }
 
