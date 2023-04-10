@@ -324,7 +324,7 @@ function qtranxf_slugs_sanitize_term_slug( $slug, $term, $lang ) {
  *
  * @since 1.0
  */
-function qtranxf_slugs_unique_term_slug( string $slug, WP_Term $term, string $lang ): string {
+function qtranxf_slugs_unique_term_slug( string $slug, $term, string $lang ): string {
     global $wpdb;
 
     $query       = $wpdb->prepare( "SELECT term_id FROM $wpdb->termmeta WHERE meta_key = '%s' AND meta_value = '%s' AND term_id != %d ", QTX_SLUGS_META_PREFIX . $lang, $slug, $term->term_id );
@@ -392,7 +392,7 @@ function qtranxf_slugs_save_term( int $term_id, int $tt_id, $taxonomy ): void {
  *
  * @return void
  */
-function qtranxf_slugs_show_list_term_fields( ?WP_Term $term ): void {
+function qtranxf_slugs_show_list_term_fields( $term ): void {
     global $q_config;
 
     $flag_location = qtranxf_flag_location(); ?>
@@ -428,7 +428,7 @@ function qtranxf_slugs_show_add_term_fields(): void {
  *
  * @param WP_Term $term the term object
  */
-function qtranxf_slugs_show_edit_term_fields( WP_Term $term ): void {
+function qtranxf_slugs_show_edit_term_fields( $term ): void {
     ?>
     <tr class="form-field term-slug-wrap">
         <th><?php _e( 'Slugs per language', 'qtranslate' ) ?></th>

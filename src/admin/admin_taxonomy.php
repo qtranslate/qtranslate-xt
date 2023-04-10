@@ -327,8 +327,8 @@ function qtranxf_term_set_translation( int $term_id, int $tt_id, string $taxonom
 
 add_action( 'created_term', 'qtranxf_term_set_translation', 5, 3 );
 add_action( 'edited_term', 'qtranxf_term_set_translation', 5, 3 );
-
-function qtranxf_term_delete( int $term, int $tt_id, string $taxonomy, WP_Term $deleted_term, array $object_ids ): void {
+;
+function qtranxf_term_delete( int $term, int $tt_id, string $taxonomy, $deleted_term, array $object_ids ): void {
     global $q_config;
     if ( isset( $deleted_term->i18n_config['name'] ) ) {
         $default_language = $q_config['default_language'];

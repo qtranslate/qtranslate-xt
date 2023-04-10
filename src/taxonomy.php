@@ -72,7 +72,7 @@ function qtranxf_useTermLib( $obj ) {
  * @since 3.4.6.9
  *
  */
-function qtranxf_term_name_in( string $lang, WP_Term $term ): string {
+function qtranxf_term_name_in( string $lang, $term ): string {
     if ( isset( $term->i18n_config['name']['ts'][ $lang ] ) ) {
         return $term->i18n_config['name']['ts'][ $lang ];
     }
