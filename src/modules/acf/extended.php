@@ -77,7 +77,7 @@ class QTX_Module_Acf_Extended {
      * @return array
      */
     public static function decode_language_values( ?string $values ): array {
-        return qtranxf_split( $values );
+        return qtranxf_split( $values ?? '' );
     }
 
     /**

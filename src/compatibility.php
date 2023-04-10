@@ -53,7 +53,7 @@ if ( ! function_exists( 'qtrans_getSortedLanguages' ) ) {
 if ( ! function_exists( 'qtrans_join' ) ) {
     function qtrans_join( $texts ): string {
         if ( ! is_array( $texts ) ) {
-            $texts = qtranxf_split( $texts );
+            $texts = qtranxf_split( $texts ?? '' );
         }
 
         return qtranxf_join_b( $texts );
@@ -61,7 +61,7 @@ if ( ! function_exists( 'qtrans_join' ) ) {
 }
 if ( ! function_exists( 'qtrans_split' ) ) {
     function qtrans_split( $text, bool $quicktags = true ): array {
-        return qtranxf_split( $text );
+        return qtranxf_split( $text ?? '' );
     }
 }
 if ( ! function_exists( 'qtrans_use' ) ) {

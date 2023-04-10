@@ -30,14 +30,14 @@ function qtranxf_get_language_blocks( $text ): array {
 
 /**
  * Split a multilingual string into array of tokens by language.
+ * If the string is empty or non-multilingual, it is repeated for each language.
  *
- * @param string $text multilingual string.
+ * @param string $text String that can contain multilingual tokens.
  *
  * @return string[] array of string items indexed by language.
  */
-function qtranxf_split( $text ): array {
+function qtranxf_split( string $text ): array {
     $blocks = qtranxf_get_language_blocks( $text );
-
     return qtranxf_split_blocks( $blocks );
 }
 
