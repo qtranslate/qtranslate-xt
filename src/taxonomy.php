@@ -4,12 +4,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * @param WP_Term $term
+ * @param WP_Term|object $term
  *
  * @since 3.4.6.9
  *
  */
-function qtranxf_term_set_i18n_config( WP_Term $term ) {
+function qtranxf_term_set_i18n_config( $term ) {
     $term->i18n_config = array();
     if ( isset( $term->name ) ) {
         global $q_config;
