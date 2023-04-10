@@ -357,9 +357,7 @@ function qtranxf_admin_list_cats( string $text ): string {
                 return $text;
             }
             $texts = qtranxf_split_blocks( $blocks );
-            $text  = qtranxf_join_b( $texts ); // with closing tag
-
-            return $text;
+            return qtranxf_join_b( $texts );  // with closing tag
         default:
             return qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage( $text );
     }

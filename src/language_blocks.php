@@ -180,7 +180,7 @@ function qtranxf_getAvailableLanguages( $text ) {
 function qtranxf_allthesame( array $texts ): ?string {
     $text = null;
     // take first not empty
-    foreach ( $texts as $lang => $lang_text ) {
+    foreach ( $texts as $lang_text ) {
         if ( ! $lang_text || $lang_text == '' ) {
             continue;
         }
@@ -190,7 +190,7 @@ function qtranxf_allthesame( array $texts ): ?string {
     if ( empty( $text ) ) {
         return '';
     }
-    foreach ( $texts as $lang => $lang_text ) {
+    foreach ( $texts as $lang_text ) {
         if ( $lang_text != $text ) {
             return null;
         }

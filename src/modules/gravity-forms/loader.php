@@ -102,27 +102,21 @@ class QTX_Module_Gravity_Forms {
         if ( ! $this->isEnabled() ) {
             return $tag;
         }
-        $tag = preg_replace_callback( "|action='([^']+)'|", array( &$this, 'gform_form_action_attribute' ), $tag );
-
-        return $tag;
+        return preg_replace_callback( "|action='([^']+)'|", array( &$this, 'gform_form_action_attribute' ), $tag );
     }
 
     public function gform_savecontinue_link( string $save_button, array $form ) {
         if ( ! $this->isEnabled() ) {
             return $save_button;
         }
-        $save_button = $this->translate( $save_button );
-
-        return $save_button;
+        return $this->translate( $save_button );
     }
 
     public function gform_confirmation( $confirmation, $form, $lead, bool $ajax ) {
         if ( ! $this->isEnabled() ) {
             return $confirmation;
         }
-        $confirmation = $this->translate( $confirmation );
-
-        return $confirmation;
+        return $this->translate( $confirmation );
     }
 
     public function gform_pre_send_email( array $email ): array {

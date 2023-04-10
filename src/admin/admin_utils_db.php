@@ -364,7 +364,7 @@ function qtranxf_split_database_file( string $ifp, array $languages_to_keep ): s
                     $lfh = fopen( $lfp, 'a+' );
                     if ( ! $lfh || ! $dfh ) {
                         fclose( $ifh );
-                        foreach ( $files as $lang_file => &$file ) {
+                        foreach ( $files as &$file ) {
                             if ( ! isset( $file['fh'] ) ) {
                                 continue;
                             }
@@ -398,7 +398,7 @@ function qtranxf_split_database_file( string $ifp, array $languages_to_keep ): s
                 fputs( $files[ $lang ]['fh'], $ln . PHP_EOL );
             }
         } else {
-            foreach ( $files as $lang => &$file ) {
+            foreach ( $files as &$file ) {
                 fputs( $file['fh'], $s );
             }
             if ( $mfh ) {
@@ -407,7 +407,7 @@ function qtranxf_split_database_file( string $ifp, array $languages_to_keep ): s
         }
     }
     fclose( $ifh );
-    foreach ( $files as $lang => &$file ) {
+    foreach ( $files as &$file ) {
         fclose( $file['fh'] );
     }
     if ( $mfh ) {
