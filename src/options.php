@@ -185,11 +185,7 @@ function qtranxf_language_configured( string $prop, ?string $opn = null ) {
     global $qtranslate_options;
     $val = call_user_func( 'qtranxf_default_' . $prop );
     if ( ! $opn ) {
-        if ( isset( $qtranslate_options['languages'][ $prop ] ) ) {
-            $opn = $qtranslate_options['languages'][ $prop ];
-        } else {
-            $opn = 'qtranslate_' . $prop;
-        }
+        $opn = $qtranslate_options['languages'][ $prop ] ?? 'qtranslate_' . $prop;
     }
     $opt = get_option( $opn, array() );
     if ( $opt ) {

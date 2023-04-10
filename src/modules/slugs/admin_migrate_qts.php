@@ -49,9 +49,6 @@ function qtranxf_slugs_check_migrate_qts(): string {
 function qtranxf_slugs_migrate_qts_meta( bool $db_commit ): string {
     global $wpdb;
 
-    $new_prefix = QTX_SLUGS_META_PREFIX;
-    $old_prefix = QTX_SLUGS_LEGACY_QTS_META_PREFIX;
-
     /**
      * Generic function that migrates QTS meta to QTX meta.
      *
@@ -62,7 +59,9 @@ function qtranxf_slugs_migrate_qts_meta( bool $db_commit ): string {
      *
      * @return void
      */
-    $migrate_meta = function ( string $table, string $colid, bool $db_commit, array &$msg ) use ( $wpdb, $old_prefix, $new_prefix ): void {
+    $migrate_meta = function ( string $table, string $colid, bool $db_commit, array &$msg ) use ( $wpdb ): void {
+        $new_prefix = QTX_SLUGS_META_PREFIX;
+        $old_prefix = QTX_SLUGS_LEGACY_QTS_META_PREFIX;
         // Escape '_' against LIKE wildcards.
         $old_esc = str_replace( '_', '\_', $old_prefix );
         $new_esc = str_replace( '_', '\_', $new_prefix );

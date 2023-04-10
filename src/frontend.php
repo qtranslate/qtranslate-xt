@@ -105,11 +105,7 @@ function qtranxf_wp_get_nav_menu_items( $items, $menu, $args ) {
                         case 'taxonomy':
                             $term = wp_cache_get( $item->object_id, $item->object );
                             if ( $term ) {
-                                if ( isset( $q_config['term_name'][ $term->name ][ $language ] ) ) {
-                                    $item_title = $q_config['term_name'][ $term->name ][ $language ];
-                                } else {
-                                    $item_title = '';
-                                }
+                                $item_title = $q_config['term_name'][ $term->name ][ $language ] ?? '';
                                 if ( ! empty( $term->description ) ) {
                                     $item->description = $term->description;
                                 }
@@ -568,7 +564,7 @@ function qtranxf_excludeUntranslatedAdjacentPosts( $where ): string {
     return $where;
 }
 
-function qtranxf_excludeUntranslatedPosts( $where, $query ) {//WP_Query
+function qtranxf_excludeUntranslatedPosts( $where, $query ) {  // WP_Query
     switch ( $query->query_vars['post_type'] ) {
         //known not to filter
         case 'nav_menu_item':
@@ -581,17 +577,9 @@ function qtranxf_excludeUntranslatedPosts( $where, $query ) {//WP_Query
         default:
             break;
     }
-    $single_post_query = $query->is_singular();//since 3.1 instead of top is_singular()
-    while ( ! $single_post_query ) {
-        $single_post_query = preg_match( '/ID\s*=\s*[\'"]*(\d+)[\'"]*/i', $where, $matches ) == 1;
-        if ( $single_post_query ) {
-            break;
-        }
-        $single_post_query = preg_match( '/post_name\s*=\s*[^\s]+/i', $where, $matches ) == 1;
-        break;
-    }
-
-    if ( ! $single_post_query ) {
+    if ( ! $query->is_singular() &&
+         preg_match( '/ID\s*=\s*[\'"]*(\d+)[\'"]*/i', $where, $matches ) != 1 &&
+         preg_match( '/post_name\s*=\s*\S+/i', $where, $matches ) != 1 ) {
         global $wpdb;
         $lang  = qtranxf_getLanguage();
         $where .= ' AND ' . qtranxf_where_clause_translated_posts( $lang, $wpdb->posts );
@@ -600,11 +588,11 @@ function qtranxf_excludeUntranslatedPosts( $where, $query ) {//WP_Query
     return $where;
 }
 
-function qtranxf_excludeUntranslatedPostComments( $clauses, $q/*WP_Comment_Query*/ ) {
+function qtranxf_excludeUntranslatedPostComments( $clauses, $q /*WP_Comment_Query*/ ) {
     global $wpdb;
 
 
-    if ( ! isset( $clauses['join'] ) || empty( $clauses['join'] ) ) {
+    if ( empty( $clauses['join'] ) ) {
         $clauses['join'] = "JOIN $wpdb->posts ON $wpdb->posts.ID = $wpdb->comments.comment_post_ID";
     } elseif ( strpos( $clauses['join'], $wpdb->posts ) === false ) {
         //do not break some more complex JOIN if it ever happens

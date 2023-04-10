@@ -39,20 +39,19 @@ function qxtranxf_intl_strftime( string $format, $timestamp = null, ?string $loc
 
     $locale = substr( (string) $locale, 0, 5 );
 
-    $intl_formats = [
-        '%a' => 'EEE',    // An abbreviated textual representation of the day	Sun through Sat
-        '%A' => 'EEEE',    // A full textual representation of the day	Sunday through Saturday
-        '%b' => 'MMM',    // Abbreviated month name, based on the locale	Jan through Dec
-        '%B' => 'MMMM',    // Full month name, based on the locale	January through December
-        '%h' => 'MMM',    // Abbreviated month name, based on the locale (an alias of %b)	Jan through Dec
-    ];
-
     // \DateTimeInterface, string
-    $intl_formatter = function ( DateTimeInterface $timestamp, string $format ) use ( $intl_formats, $locale ) {
-        $tz        = $timestamp->getTimezone();
-        $date_type = \IntlDateFormatter::FULL;
-        $time_type = \IntlDateFormatter::FULL;
-        $pattern   = '';
+    $intl_formatter = function ( DateTimeInterface $timestamp, string $format ) use ( $locale ) {
+        $intl_formats = [
+            '%a' => 'EEE',    // An abbreviated textual representation of the day	Sun through Sat
+            '%A' => 'EEEE',    // A full textual representation of the day	Sunday through Saturday
+            '%b' => 'MMM',    // Abbreviated month name, based on the locale	Jan through Dec
+            '%B' => 'MMMM',    // Full month name, based on the locale	January through December
+            '%h' => 'MMM',    // Abbreviated month name, based on the locale (an alias of %b)	Jan through Dec
+        ];
+        $tz           = $timestamp->getTimezone();
+        $date_type    = \IntlDateFormatter::FULL;
+        $time_type    = \IntlDateFormatter::FULL;
+        $pattern      = '';
 
         // %c = Preferred date and time stamp based on locale
         // Example: Tue Feb 5 00:45:10 2009 for February 5, 2009 at 12:45:10 AM

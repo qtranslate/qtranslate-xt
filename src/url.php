@@ -436,7 +436,7 @@ function qtranxf_buildURL( array $urlinfo, array $homeinfo ): string {
             }
             $url .= '@';
         }
-        $url .= empty( $urlinfo['host'] ) ? $homeinfo['host'] : $urlinfo['host'];
+        $url .= $urlinfo['host'];
     }
     if ( ! empty( $urlinfo['path-base'] ) ) {
         $url .= $urlinfo['path-base'];

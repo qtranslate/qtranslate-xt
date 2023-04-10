@@ -59,13 +59,8 @@ class QTX_Admin_Settings_Language_List extends WP_List_Table {
             } else {
                 $flag_url = $flag_location_url_def . $flag;
             }
-            $flag_item = '<img src="' . $flag_url . '" alt="' . sprintf( __( '%s Flag', 'qtranslate' ), $language ) . '">';
-
-            if ( isset( $q_config['locale'][ $lang ] ) ) {
-                $locale_item = $q_config['locale'][ $lang ];
-            } else {
-                $locale_item = $locales[ $lang ] ?? '?';
-            }
+            $flag_item   = '<img src="' . $flag_url . '" alt="' . sprintf( __( '%s Flag', 'qtranslate' ), $language ) . '">';
+            $locale_item = $q_config['locale'][ $lang ] ?? $locales[ $lang ] ?? '?';
 
             $icon_enable  = 'dashicons dashicons-insert';
             $icon_disable = 'dashicons dashicons-remove';
@@ -73,12 +68,11 @@ class QTX_Admin_Settings_Language_List extends WP_List_Table {
                 if ( $q_config['default_language'] == $lang ) {
                     $status = '<span class="dashicons dashicons-star-filled" title="' . esc_attr( __( 'Default', 'qtranslate' ) ) . '"></span>';
                     $action = '<span class="disabled ' . $icon_disable . '"></span>';
-                    $action .= '<span class="disabled ' . $icon_enable . '"></span>';
                 } else {
                     $status = '<span class="dashicons dashicons-star-empty" title="' . esc_attr( __( 'Enabled', 'qtranslate' ) ) . '"></span>';
                     $action = '<a class="edit" href="' . $options_uri . '&disable=' . $lang . '#languages" title="' . esc_attr( __( 'Disable', 'qtranslate' ) ) . '"><span class="' . $icon_disable . '"></span></a>';
-                    $action .= '<span class="disabled ' . $icon_enable . '"></span>';
                 }
+                $action .= '<span class="disabled ' . $icon_enable . '"></span>';
             } else {
                 $status = '';
                 $action = '<span class="disabled ' . $icon_disable . '"></span>';
