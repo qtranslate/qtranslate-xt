@@ -106,7 +106,7 @@ function qtranxf_get_site_info(): array {
  * Simplified version of WP's add_query_arg
  * @since 3.2.8
  */
-function qtranxf_add_query_arg( string &$query, string $key_value ): void {
+function qtranxf_add_query_arg( ?string &$query, string $key_value ): void {
     if ( empty( $query ) ) {
         $query = $key_value;
     } else {
