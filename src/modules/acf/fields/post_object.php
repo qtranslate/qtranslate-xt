@@ -9,6 +9,12 @@ class QTX_Module_Acf_Field_Post_Object extends acf_field_post_object {
         $this->name     = 'qtranslate_post_object';
         $this->category = QTX_Module_Acf_Extended::ACF_CATEGORY_QTX;
         $this->label    .= ' [' . $this->category . ']';
+
+        // Re-create the hooks with the new field name.
+        add_action( 'wp_ajax_acf/fields/qtranslate_post_object/query', array( $this, 'ajax_query' ) );
+        add_action( 'wp_ajax_nopriv_acf/fields/qtranslate_post_object/query', array( $this, 'ajax_query' ) );
+        remove_action( 'wp_ajax_acf/fields/post_object/query', array( $this, 'ajax_query' ) );
+        remove_action( 'wp_ajax_nopriv_acf/fields/post_object/query', array( $this, 'ajax_query' ) );
     }
 
     /**
