@@ -11,6 +11,7 @@ function qtranxf_wpseo_add_filters_front(): void {
     add_filter( 'wpseo_should_save_indexable', '__return_false' );
     add_filter( 'wpseo_indexing_data', '__return_false' );
 
+    // TODO: rewrite Yoast hooks, second argument is Indexable_Presentation, not a string giving the requested URL.
     add_filter( 'wpseo_canonical', 'qtranxf_checkCanonical', 10, 2 );
     add_filter( 'wpseo_opengraph_url', 'qtranxf_checkCanonical', 10, 2 );
 
@@ -31,7 +32,7 @@ function qtranxf_wpseo_add_filters_front(): void {
         add_filter( $name, 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage', $priority );
     }
 
-    function qtranxf_wpseo_webpage_schema( array $piece, string $context ): array {
+    function qtranxf_wpseo_webpage_schema( $piece, $context ): array {
         if ( isset( $piece['description'] ) ) {
             $piece['description'] = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage( $piece['description'] );
         }
@@ -44,7 +45,7 @@ function qtranxf_wpseo_add_filters_front(): void {
 
     add_filter( 'wpseo_schema_webpage', 'qtranxf_wpseo_webpage_schema', 10, 2 );
 
-    function qtranxf_wpseo_breadcrumbs_link( array $link_info, int $index, array $crumbs ): array {
+    function qtranxf_wpseo_breadcrumbs_link( $link_info, $index, $crumbs ): array {
         global $q_config;
 
         if ( isset( $link_info['text'] ) ) {
@@ -59,7 +60,7 @@ function qtranxf_wpseo_add_filters_front(): void {
 
     add_filter( 'wpseo_breadcrumb_single_link_info', 'qtranxf_wpseo_breadcrumbs_link', 10, 3 );
 
-    function qtranxf_wpseo_schema_organization( array $data ): array {
+    function qtranxf_wpseo_schema_organization( $data ) {
         global $q_config;
 
         if ( isset( $data['@id'] ) ) {
@@ -86,7 +87,7 @@ function qtranxf_wpseo_add_filters_front(): void {
 
     add_filter( 'wpseo_schema_organization', 'qtranxf_wpseo_schema_organization' );
 
-    function qtranxf_wpseo_schema_website( array $data ): array {
+    function qtranxf_wpseo_schema_website( $data ) {
         global $q_config;
 
         if ( isset( $data['@id'] ) ) {
@@ -104,7 +105,7 @@ function qtranxf_wpseo_add_filters_front(): void {
 
     add_filter( 'wpseo_schema_website', 'qtranxf_wpseo_schema_website' );
 
-    function qtranxf_wpseo_json_ld_search_url( string $search_url ): string {
+    function qtranxf_wpseo_json_ld_search_url( $search_url ) {
         global $q_config;
 
         return qtranxf_convertURL( $search_url, $q_config['language'] );
@@ -112,7 +113,7 @@ function qtranxf_wpseo_add_filters_front(): void {
 
     add_filter( 'wpseo_json_ld_search_url', 'qtranxf_wpseo_json_ld_search_url', 10, 3 );
 
-    function qtranxf_wpseo_schema_imageobject( array $data ): array {
+    function qtranxf_wpseo_schema_imageobject( $data ) {
         global $q_config;
 
         if ( isset( $data['@id'] ) ) {
@@ -124,7 +125,7 @@ function qtranxf_wpseo_add_filters_front(): void {
 
     add_filter( 'wpseo_schema_imageobject', 'qtranxf_wpseo_schema_imageobject' );
 
-    function qtranxf_wpseo_schema_webpage( array $data ): array {
+    function qtranxf_wpseo_schema_webpage( $data ) {
         global $q_config;
 
         $lang = $q_config['language'];
@@ -154,7 +155,7 @@ function qtranxf_wpseo_add_filters_front(): void {
 
     add_filter( 'wpseo_schema_webpage', 'qtranxf_wpseo_schema_webpage' );
 
-    function qtranxf_wpseo_schema_breadcrumb( array $data ): array {
+    function qtranxf_wpseo_schema_breadcrumb( $data ) {
         global $q_config;
 
         if ( isset( $data['@id'] ) ) {
@@ -166,7 +167,7 @@ function qtranxf_wpseo_add_filters_front(): void {
 
     add_filter( 'wpseo_schema_breadcrumb', 'qtranxf_wpseo_schema_breadcrumb' );
 
-    function qtranxf_wpseo_schema_person( array $data ): array {
+    function qtranxf_wpseo_schema_person( $data ) {
         global $q_config;
 
         //$data['@id'] = qtranxf_convertURL($data['@id'], $lang); //Not sure is it required to filter or not???
@@ -179,7 +180,7 @@ function qtranxf_wpseo_add_filters_front(): void {
 
     add_filter( 'wpseo_schema_person', 'qtranxf_wpseo_schema_person' );
 
-    function qtranxf_wpseo_next_prev_filter( string $link ): string {
+    function qtranxf_wpseo_next_prev_filter( $link ) {
         global $q_config;
 
         if ( preg_match_all( '/<link[^>]+href=([\'"])(?<href>.+?)\1[^>]*>/i', $link, $link_extract_href ) &&
