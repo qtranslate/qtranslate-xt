@@ -1,3 +1,20 @@
+### 3.15.0
+New requirements!
+  * Bump required PHP version to 7.1 or higher (#1084), recommend PHP8.2
+  * Bump required WordPress version to 5.0 or higher (#1084)
+  * Abandon support for Internet Explorer (#1313), note it's no longer supported from WP5.8
+
+Core
+* Add PHP7.1 type check declarations (#1314), this may create regressions occasionally but also help to find latent bugs
+* Make use of PHP7.0 null coalesce `??` operator (#1084)
+* Lint PHP by removing unnecessary local vars (#1316)
+* Lint PHP by simplifying expressions (#1317)
+* Move deprecated functions to a separate file (#1311)
+* Fix warning deprecated `qtranslate_admin_page_config` hook (#1315)
+
+Modules
+* Fix regression in 3.14.0 with ACF Post Object [qT-XT] (#1320)
+
 ### 3.14.0
 Summary
 * Major update for ACF, bump minimal version 5.6.0
