@@ -3,14 +3,14 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-require_once QTRANSLATE_DIR . '/src/i18n-interface.php';
+require_once QTRANSLATE_DIR . '/src/translator_interface.php';
 
 /**
- * Implementation of WP_Translator interface.
- * For a function documentation look up definition of WP_Translator.
+ * Implementation of QTX_Translator_Interface interface.
+ * For a function documentation look up definition of QTX_Translator_Interface.
  * @since 3.4
  */
-class QTX_Translator implements WP_Translator {
+class QTX_Translator implements QTX_Translator_Interface {
     public function __construct() {
         add_filter( 'translate_text', array( $this, 'translate_text' ), 10, 3 );
         add_filter( 'translate_term', array( $this, 'translate_term' ), 10, 3 );
@@ -48,8 +48,8 @@ class QTX_Translator implements WP_Translator {
         if ( ! $lang ) {
             $lang = $q_config['language'];
         }
-        $show_available = $flags & TRANSLATE_SHOW_AVALABLE;
-        $show_empty     = $flags & TRANSLATE_SHOW_EMPTY;
+        $show_available = $flags & QTX_TRANSLATOR_SHOW_AVAILABLE;
+        $show_empty     = $flags & QTX_TRANSLATOR_SHOW_EMPTY;
 
         return qtranxf_use( $lang, $text, $show_available, $show_empty );
     }
