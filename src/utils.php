@@ -118,7 +118,7 @@ function qtranxf_add_query_arg( ?string &$query, string $key_value ): void {
  * Simplified version of WP's remove_query_arg
  * @since 3.2.8
  */
-function qtranxf_del_query_arg( string &$query, string $key ): void {
+function qtranxf_del_query_arg( ?string &$query, string $key ): void {
     while ( preg_match( '/(&|&amp;|&#038;|^)(' . $key . '=[^&]+)(&|&amp;|&#038;|$)/i', $query, $matches ) ) {
         $pos   = strpos( $query, $matches[2] );
         $count = strlen( $matches[2] );
@@ -247,7 +247,7 @@ function qtranxf_post_type() {
  * Test $cfg['pages'] against $url_path and $url_query ($_SERVER['QUERY_STRING'])
  * @since 3.4
  */
-function qtranxf_match_page( array $cfg, string $url_path, string $url_query, string $d ): bool {
+function qtranxf_match_page( ?array $cfg, string $url_path, string $url_query, string $d ): bool {
     if ( ! isset( $cfg['pages'] ) ) {
         return true;
     }

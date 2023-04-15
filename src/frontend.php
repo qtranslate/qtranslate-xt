@@ -639,7 +639,7 @@ function qtranxf_esc_html( $text ) {
 
 if ( ! function_exists( 'qtranxf_trim_words' ) ) {
 // filter added in qtranslate_hooks.php
-    function qtranxf_trim_words( string $text, int $num_words, string $more, string $original_text ): string {
+    function qtranxf_trim_words( $text, int $num_words, $more, $original_text ): string {
         global $q_config;
         $blocks = qtranxf_get_language_blocks( $original_text );
         if ( count( $blocks ) <= 1 ) {
@@ -833,7 +833,7 @@ function qtranxf_checkCanonical( $redirect_url, $requested_url ): string {
 /**
  * @since 3.2.8 moved here from _hooks.php
  */
-function qtranxf_convertBlogInfoURL( string $url, string $what ): string {
+function qtranxf_convertBlogInfoURL( $url, string $what ): string {
     switch ( $what ) {
         case 'stylesheet_url':
         case 'template_url':

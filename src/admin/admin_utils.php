@@ -294,7 +294,7 @@ add_filter( 'the_title', 'qtranxf_admin_the_title', 0 );
 
 if ( ! function_exists( 'qtranxf_trim_words' ) ) {
     // TODO clarify duplicate function name, defined in frontend!
-    function qtranxf_trim_words( string $text, int $num_words, string $more, string $original_text ): string {
+    function qtranxf_trim_words( $text, int $num_words, $more, $original_text ): string {
         $blocks = qtranxf_get_language_blocks( $original_text );
         if ( count( $blocks ) <= 1 ) {
             return $text;
