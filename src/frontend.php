@@ -815,12 +815,19 @@ function qtranxf_updated_usermeta( int $meta_id, int $object_id, string $meta_ke
     qtranxf_cache_delete_metadata( 'user', $object_id );
 }
 
-// TODO check API with Yoast, seems it's only 1 parameter?
-function qtranxf_checkCanonical( string $redirect_url, string $requested_url ): string {
-    global $q_config;
-    $lang = $q_config['language'];
+/**
+ * Hook for redirect_canonical.
+ *
+ * @param string|false $redirect_url Attention! WordPress documents it as string, but it can be false.
+ * @param mixed $requested_url Attention! WordPress documents it as string, but it can be array or null.
+ *
+ */
+function qtranxf_checkCanonical( $redirect_url, $requested_url ): string {
+    if ( $redirect_url === false ) {
+        return false;
+    }
     // fix canonical conflicts with language urls
-    return qtranxf_convertURL( $redirect_url, $lang );
+    return qtranxf_convertURL( $redirect_url );
 }
 
 /**
