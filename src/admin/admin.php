@@ -6,7 +6,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 require_once QTRANSLATE_DIR . '/src/admin/admin_utils.php';
 require_once QTRANSLATE_DIR . '/src/admin/admin_options.php';
 require_once QTRANSLATE_DIR . '/src/admin/languages.php';
-require_once QTRANSLATE_DIR . '/src/admin/admin_class_translator.php';
 require_once QTRANSLATE_DIR . '/src/admin/user_options.php';
 require_once QTRANSLATE_DIR . '/src/admin/admin_taxonomy.php';
 
