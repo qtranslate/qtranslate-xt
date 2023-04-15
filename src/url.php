@@ -93,7 +93,9 @@ function qtranxf_url_del_language( array &$urlinfo ): void {
             break;
 
         case QTX_URL_DOMAINS:
-            $urlinfo['host'] = $q_config['domains'][ $q_config['default_language'] ];
+            if ( isset( $q_config['domains'][ $q_config['default_language'] ] ) ) {
+                $urlinfo['host'] = $q_config['domains'][ $q_config['default_language'] ];
+            }
             break;
 
         case QTX_URL_QUERY:
@@ -120,7 +122,9 @@ function qtranxf_url_set_language( array $urlinfo, $lang, bool $showLanguage ): 
                 break;
 
             case QTX_URL_DOMAINS:
-                $urlinfo['host'] = $q_config['domains'][ $lang ];
+                if ( isset( $q_config['domains'][ $lang ] ) ) {
+                    $urlinfo['host'] = $q_config['domains'][ $lang ];
+                }
                 break;
 
             case QTX_URL_QUERY:
@@ -500,16 +504,7 @@ function qtranxf_external_host_ex( string $host, array $homeinfo ): bool {
         case QTX_URL_DOMAIN:
             return ! qtranxf_endsWith( $host, $homeinfo['host'] );
         case QTX_URL_DOMAINS:
-            foreach ( $q_config['domains'] as $host_item ) {
-                if ( $host_item == $host ) {
-                    return false;
-                }
-            }
-            if ( $homeinfo['host'] == $host ) {
-                return false;
-            }
-
-            return true;
+            return ( $homeinfo['host'] != $host && isset( $q_config['domains'] ) && ! in_array( $host, $q_config['domains'] ) );
         default:
             return true;
     }

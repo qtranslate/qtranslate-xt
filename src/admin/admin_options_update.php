@@ -797,28 +797,35 @@ function qtranxf_update_settings(): void {
 
     switch ( $q_config['url_mode'] ) {
         case QTX_URL_DOMAIN:
+            $q_config['disable_client_cookies'] = true;
+            break;
         case QTX_URL_DOMAINS:
             $q_config['disable_client_cookies'] = true;
+            // Reload 'domains' option, in case the URL mode was just changed.
+            qtranxf_load_option_array( 'domains' );
+            // 'domains' require a special handling for default values.
+            $domains = $q_config['domains'] ?? array();
+            foreach ( $q_config['enabled_languages'] as $lang ) {
+                $id = 'language_domain_' . $lang;
+                if ( isset( $_POST[ $id ] ) ) {
+                    $domains[ $lang ] = trim( $_POST[ $id ], " /" );
+                }
+                // Reset empty domains to default value.
+                if ( empty ( $domains[ $lang ] ) ) {
+                    $home_info        = qtranxf_get_home_info();
+                    $domains[ $lang ] = $lang . '.' . $home_info['host'];
+                }
+            }
+            if ( ! isset( $q_config['domains'] ) || ! qtranxf_array_compare( $q_config['domains'], $domains ) ) {
+                $q_config['domains'] = $domains;
+                qtranxf_update_option( 'domains' );
+            }
             break;
         case QTX_URL_QUERY:
         case QTX_URL_PATH:
         default:
             qtranxf_update_setting( 'disable_client_cookies', QTX_BOOLEAN );
             break;
-    }
-
-    $domains = $q_config['domains'] ?? array();
-    foreach ( $q_config['enabled_languages'] as $lang ) {
-        $id = 'language_domain_' . $lang;
-        if ( ! isset( $_POST[ $id ] ) ) {
-            continue;
-        }
-        $domain           = trim( $_POST[ $id ], " /" );
-        $domains[ $lang ] = $domain;
-    }
-    if ( ! empty( $domains ) && ( ! isset( $q_config['domains'] ) || ! qtranxf_array_compare( $q_config['domains'], $domains ) ) ) {
-        $q_config['domains'] = $domains;
-        qtranxf_update_option( 'domains' );
     }
 
     // update admin settings
