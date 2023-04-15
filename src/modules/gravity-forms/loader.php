@@ -18,7 +18,7 @@ class QTX_Module_Gravity_Forms {
         add_filter( "gform_pre_send_email", array( $this, "gform_pre_send_email" ) );
     }
 
-    public function gform_pre_render( array $form ): array {
+    public function gform_pre_render( $form ) {
         if ( ! $this->isEnabled() ) {
             return $form;
         }
@@ -92,34 +92,34 @@ class QTX_Module_Gravity_Forms {
         return $form;
     }
 
-    public function gform_form_action_attribute( array $matches ): string {
+    public function gform_form_action_attribute( $matches ) {
         global $q_config;
 
         return 'action="' . $this->convertURL( $matches[1], $q_config['language'] ) . '"';
     }
 
-    public function gform_form_tag( string $tag ): string {
+    public function gform_form_tag( $tag ): string {
         if ( ! $this->isEnabled() ) {
             return $tag;
         }
         return preg_replace_callback( "|action='([^']+)'|", array( &$this, 'gform_form_action_attribute' ), $tag );
     }
 
-    public function gform_savecontinue_link( string $save_button, array $form ) {
+    public function gform_savecontinue_link( $save_button, $form ) {
         if ( ! $this->isEnabled() ) {
             return $save_button;
         }
         return $this->translate( $save_button );
     }
 
-    public function gform_confirmation( $confirmation, $form, $lead, bool $ajax ) {
+    public function gform_confirmation( $confirmation, $form, $lead, $ajax ) {
         if ( ! $this->isEnabled() ) {
             return $confirmation;
         }
         return $this->translate( $confirmation );
     }
 
-    public function gform_pre_send_email( array $email ): array {
+    public function gform_pre_send_email( $email ) {
         if ( ! $this->isEnabled() ) {
             return $email;
         }

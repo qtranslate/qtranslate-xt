@@ -66,7 +66,7 @@ function qtranxf_wc_filter_postmeta( $original_value, int $object_id, string $me
  * @see wc_dropdown_variation_attribute_options (single-product/add-to-cart/variable.php)
  *
  */
-function qtranxf_wc_dropdown_variation_attribute_options_args( array $args ): array {
+function qtranxf_wc_dropdown_variation_attribute_options_args( $args ) {
     if ( isset( $args['options'] ) ) {
         $args['options'] = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage( $args['options'] );
     }
@@ -86,7 +86,7 @@ function qtranxf_wc_save_post_meta( $order_id ) {
     add_post_meta( $order_id, '_user_language', $q_config['language'], true );
 }
 
-function qtranxf_wc_paypal_args( array $args ): array {
+function qtranxf_wc_paypal_args( $args ) {
     $args['lc'] = get_locale();
 
     return $args;
@@ -104,7 +104,7 @@ if ( ! wp_doing_cron() ) {
  *
  * @return string cart hash with language information
  */
-function qtranxf_wc_get_cart_hash( array $cart ): string {
+function qtranxf_wc_get_cart_hash( $cart ): string {
     $lang = qtranxf_getLanguage();
 
     return md5( json_encode( $cart ) . $lang );
@@ -116,7 +116,7 @@ function qtranxf_wc_get_cart_hash( array $cart ): string {
  *
  * @param array $cart wc variable holding contents of the cart without language information.
  */
-function qtranxf_wc_set_cookies_cart_hash( array $cart ): void {
+function qtranxf_wc_set_cookies_cart_hash( $cart ): void {
     $hash = qtranxf_wc_get_cart_hash( $cart );
     wc_setcookie( 'woocommerce_cart_hash', $hash );
 }
@@ -127,7 +127,7 @@ function qtranxf_wc_set_cookies_cart_hash( array $cart ): void {
  *
  * @param WC_Cart $wc_cart wc object without language information.
  */
-function qtranxf_wc_cart_loaded_from_session( WC_Cart $wc_cart ): void {
+function qtranxf_wc_cart_loaded_from_session( $wc_cart ): void {
     if ( headers_sent() ) {
         return;
     }
@@ -143,7 +143,7 @@ add_action( 'woocommerce_cart_loaded_from_session', 'qtranxf_wc_cart_loaded_from
  *
  * @param bool $set is true if cookies need to be set, otherwse they are unset in calling function.
  */
-function qtranxf_wc_set_cart_cookies( bool $set ): void {
+function qtranxf_wc_set_cart_cookies( $set ): void {
     if ( $set ) {
         $wc      = WC();
         $wc_cart = $wc->cart;
@@ -163,7 +163,7 @@ add_action( 'woocommerce_set_cart_cookies', 'qtranxf_wc_set_cart_cookies' );
  *
  * @return string cart hash with language information
  */
-function qtranxf_wc_cart_hash( string $hash, array $cart ): string {
+function qtranxf_wc_cart_hash( $hash, $cart ) {
     $new_hash = qtranxf_wc_get_cart_hash( $cart );
     if ( ! headers_sent() ) {
         wc_setcookie( 'woocommerce_cart_hash', $new_hash );

@@ -241,7 +241,7 @@ function qtranxf_wc_add_admin_page_config( array $page_configs ): array {
     return $page_configs;
 }
 
-function qtranxf_wc_email_get_option( $value_translated, WC_Email $wce, $value = null, $key = null, $empty_value = null ) {
+function qtranxf_wc_email_get_option( $value_translated, $wc_email, $value = null, $key = null, $empty_value = null ) {
     if ( ! $value ) {
         return $value_translated; // so that older WC versions do not get nasty output
     }
@@ -261,7 +261,7 @@ add_filter( 'woocommerce_variation_option_name', 'qtranxf_term_name_encoded', 5 
  *
  * @return string
  */
-function qtranxf_wc_admin_url_append_language( string $url ): string {
+function qtranxf_wc_admin_url_append_language( $url ) {
     if ( strpos( $url, 'action=woocommerce_mark_order_status' ) ) {
         $components = parse_url( $url );
         $params     = array();
@@ -289,7 +289,7 @@ add_filter( 'admin_url', 'qtranxf_wc_admin_url_append_language' );
  *
  * @return string
  */
-function qtranxf_wc_admin_url_append_language_edit_page( string $url ): string {
+function qtranxf_wc_admin_url_append_language_edit_page( $url ) {
     if ( strpos( $url, 'admin-ajax.php' ) === false || ! isset( $_GET['action'] ) || ! isset( $_GET['post'] ) || $_GET['action'] != 'edit' ) {
         return $url;
     }
