@@ -1,3 +1,10 @@
+### 3.14.1
+Core
+* Fix warning deprecated `qtranslate_admin_page_config` hook (#1315)
+
+Modules
+* Fix regression in 3.14.0 with ACF Post Object [qT-XT] (#1320)
+
 ### 3.14.0
 Summary
 * Major update for ACF, bump minimal version 5.6.0
