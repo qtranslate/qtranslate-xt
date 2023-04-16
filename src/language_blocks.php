@@ -459,7 +459,16 @@ function qtranxf_use_content( string $lang, $content, array $available_langs, bo
         $output .= $alt_content;
     }
 
-    return apply_filters( 'i18n_content_translation_not_available', $output, $lang, $language_list, $alt_lang, $alt_content, $msg, $q_config );
+    $output = apply_filters_deprecated( 'i18n_content_translation_not_available', array(
+        $output,
+        $lang,
+        $language_list,
+        $alt_lang,
+        $alt_content,
+        $msg,
+        $q_config
+    ), '3.15.0', 'qtranslate_content_translation_not_available' );
+    return apply_filters( 'qtranslate_content_translation_not_available', $output, $lang, $language_list, $alt_lang, $alt_content, $msg, $q_config );
 }
 
 function qtranxf_showAllSeparated( $text ): string {
