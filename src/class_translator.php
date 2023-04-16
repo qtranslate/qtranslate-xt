@@ -12,9 +12,9 @@ require_once QTRANSLATE_DIR . '/src/translator_interface.php';
  */
 class QTX_Translator implements QTX_Translator_Interface {
     public function __construct() {
-        add_filter( 'translate_text', array( $this, 'translate_text' ), 10, 3 );
-        add_filter( 'translate_term', array( $this, 'translate_term' ), 10, 3 );
-        add_filter( 'translate_url', array( $this, 'translate_url' ), 10, 2 );
+        add_filter( 'qtranslate_text', array( $this, 'translate_text' ), 10, 3 );
+        add_filter( 'qtranslate_term', array( $this, 'translate_term' ), 10, 3 );
+        add_filter( 'qtranslate_url', array( $this, 'translate_url' ), 10, 2 );
         // TODO what about 'translate_date' and 'translate_time'?
     }
 

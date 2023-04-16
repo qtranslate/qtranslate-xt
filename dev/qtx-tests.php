@@ -18,23 +18,17 @@ function qtranxf_check_test( $result, $expected, $test_name ) {
 }
 
 function qtranxf_test_interface() {
-    $t = apply_filters( 'wp_translator', null );
-    qtranxf_tst_log( 'qtranxf_test_interface: $t: ', $t );
-
-    $text = apply_filters( 'translate_text', '[:en](EN)text[:de](DE)text[:]' );
+    $text = apply_filters( 'qtranslate_text', '[:en](EN)text[:de](DE)text[:]' );
     qtranxf_tst_log( 'qtranxf_test_interface: $text: ', $text );
 
-    $text = apply_filters( 'translate_text', '[:en](EN)text[:de](DE)text[:]', 'de' );
+    $text = apply_filters( 'qtranslate_text', '[:en](EN)text[:de](DE)text[:]', 'de' );
     qtranxf_check_test( $text, '(DE)text', 'qtranxf_test_interface: translate_text' );
 
-    $url = apply_filters( 'translate_url', '' );
+    $url = apply_filters( 'qtranslate_url', '' );
     qtranxf_tst_log( 'qtranxf_test_interface: $url: ', $url );
 
-    $term = apply_filters( 'translate_term', '(EN) Cat1' );
+    $term = apply_filters( 'qtranslate_term', '(EN) Cat1' );
     qtranxf_tst_log( 'qtranxf_test_interface: $term: ', $term );
-
-    $mlterm = apply_filters( 'multilingual_term', '(EN) Cat1' );
-    qtranxf_tst_log( 'qtranxf_test_interface: $mlterm: ', $mlterm );
 }
 
 function qtranxf_test_meta_cache() {
