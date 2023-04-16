@@ -10,6 +10,9 @@ Core
 * Lint PHP by removing unnecessary local vars (#1316)
 * Lint PHP by simplifying expressions (#1317)
 * Move deprecated functions to a separate file (#1311)
+
+### 3.14.1
+Core
 * Fix warning deprecated `qtranslate_admin_page_config` hook (#1315)
 
 Modules
