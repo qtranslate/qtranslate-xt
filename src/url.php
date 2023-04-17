@@ -283,7 +283,10 @@ function qtranxf_language_neutral_path( string $path ): bool {
     if ( isset( $language_neutral_path_cache[ $path ] ) ) {
         return $language_neutral_path_cache[ $path ];
     }
-    if ( preg_match( '#^/(wp-.*\.php|wp-login/|wp-admin/|xmlrpc.php|robots.txt|oauth/)#', $path ) ) {
+    //fix custom admin url error
+    preg_match('/\/.+\/(.+)\//', admin_url(), $adminNeedle);
+
+    if ( preg_match( '#^/(wp-.*\.php|wp-login/|'.$adminNeedle[1].'/|xmlrpc.php|robots.txt|oauth/)#', $path ) ) {
         $language_neutral_path_cache[ $path ] = true;
 
         return true;
