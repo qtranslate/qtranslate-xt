@@ -1,3 +1,12 @@
+### 3.14.2
+* Fix wrong assert with cancelled redirections (#1326), should also fix related issues:
+  * NextGen Gallery uploader not working (#1266, #1096)
+  * AJAX response error in Advanced Woo Search plugin under PHP8+ (#1284)
+  * Problem with script in PHP CLI (#766)
+  * 502 Bad Gateway with ultra fast PHP (#986)
+  * Language needs to be shown in URL (#1068)
+* Fix third-party Ajax requests not detected (#1327), might prevent wrong redirects and cookies set
+
 ### 3.14.1
 Core
 * Fix warning deprecated `qtranslate_admin_page_config` hook (#1315)
