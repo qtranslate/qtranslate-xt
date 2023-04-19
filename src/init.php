@@ -53,10 +53,10 @@ function qtranxf_init_language(): void {
             $url_info['WP_ADMIN'] = true;
         }
         if ( wp_doing_ajax() ) {
-            $url_info['DOING_AJAX_POST'] = $_POST;
+            $url_info['WP_DOING_AJAX_POST'] = $_POST;
         }
         if ( wp_doing_cron() ) {
-            $url_info['DOING_CRON_POST'] = $_POST;
+            $url_info['WP_DOING_CRON_POST'] = $_POST;
         }
     }
 
@@ -82,40 +82,16 @@ function qtranxf_init_language(): void {
     $url_info['language'] = qtranxf_detect_language( $url_info );
     $q_config['language'] = apply_filters( 'qtranslate_language', $url_info['language'], $url_info );
 
+    assert( isset( $q_config['url_info']['doing_front_end'] ) );
     if ( $q_config['url_info']['doing_front_end'] && qtranxf_can_redirect() ) {
-        $lang     = $q_config['language'];
-        $url_orig = $url_info['scheme'] . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-        $url_lang = qtranxf_convertURL( '', $lang ); // uses $q_config['url_info'] and caches information, which will be needed later anyway.
-        if ( ! isset( $url_info['doredirect'] ) && $url_orig != $url_lang ) {
-            $url_info['doredirect'] = '$url_orig != $url_lang';
-        }
-        if ( isset( $url_info['doredirect'] ) ) {
-            /**
-             * Filter provides a chance to alter redirect behaviour.
-             *
-             * @param string $url_lang proposed target URL for the active language to redirect to.
-             * @param string $url_orig original URL supplied to browser, which needs to be standardized.
-             * @param array $url_info a hash of various information parsed from original URL, coockies and other site configuration. The key names should be self-explanatory.
-             *
-             * @return mixed A new URL to be redirected to instead of $url_lang or "false" to cancel redirection.
-             */
-            $target = apply_filters( 'qtranslate_language_detect_redirect', $url_lang, $url_orig, $url_info );
-            if ( $target !== false && $target != $url_orig ) {
-                wp_redirect( $target );
-                nocache_headers(); // prevent browser from caching redirection
-                exit();
-            } else {
-                // neutral path
-                $url_info['doredirect'] .= ' - cancelled, because it goes to the same target - neutral URL';
-                if ( $pagenow == 'index.php' && $q_config['url_mode'] == QTX_URL_PATH ) {
-                    $_SERVER['REQUEST_URI'] = trailingslashit( $url_info['path-base'] ) . $lang . $url_info['wp-path']; // should not hurt?
-                }
-            }
-        }
+        qtranxf_check_url_maybe_redirect( $url_info );
     } elseif ( isset( $url_info['doredirect'] ) ) {
+        // This should not happen!
+        // We are possibly in a bad state as the specified language is missing in the request.
+        // But we can't redirect (e.g. AJAX request or CLI command), or the request is detected as doing_admin.
+        // So we leave a potential bug but we avoid any HTTP interference that could break some functionalities.
+        // TODO log these events for the admin (with url_info dump), they should not be left unnoticed.
         $url_info['doredirect'] .= ' - cancelled by can_redirect';
-        // this should never happen! We are now in a bad state.
-        assert( false, $url_info['doredirect'] . ', url_info=' . json_encode( $url_info, JSON_PRETTY_PRINT ) );
     }
 
     // TODO clarify fix url to prevent xss - how does this prevents xss?

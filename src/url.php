@@ -517,7 +517,7 @@ function qtranxf_external_host( string $host ): bool {
 }
 
 function qtranxf_get_page_referer(): string {
-    if ( wp_doing_ajax() ) {
+    if ( qtranxf_is_ajax_request() ) {
         global $q_config;
         if ( isset( $q_config['url_info']['page_referer'] ) ) {
             return $q_config['url_info']['page_referer'];

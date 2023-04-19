@@ -23,7 +23,7 @@ function qtranxf_detect_language( array &$url_info ) {
     // TODO check if we shouldn't generalize the referrer parsing to all cases, do we need all these limitations?
     $parse_referrer = qtranxf_is_rest_request_expected() ||
                       ( ( ! $lang || ! isset( $url_info['doing_front_end'] ) ) &&
-                        ( wp_doing_ajax() || ! $url_info['cookie_front_or_admin_found'] ) );
+                        ( qtranxf_is_ajax_request() || ! $url_info['cookie_front_or_admin_found'] ) );
 
     // parse language and front info from HTTP_REFERER
     if ( isset( $_SERVER['HTTP_REFERER'] ) && $parse_referrer ) {
@@ -84,7 +84,7 @@ function qtranxf_detect_language( array &$url_info ) {
     $url_info['language'] = $lang;
 
     // REST and GraphQL API calls should be deterministic (stateless), no special language detection e.g. based on cookie
-    $url_info['set_cookie'] = ! wp_doing_ajax() && ! qtranxf_is_rest_request_expected() && ! qtranxf_is_graphql_request_expected();
+    $url_info['set_cookie'] = ! ( qtranxf_is_ajax_request() || qtranxf_is_rest_request_expected() || qtranxf_is_graphql_request_expected() );
 
     /**
      * Hook for possible other methods
@@ -419,5 +419,50 @@ function qtranxf_http_negotiate_language(): ?string {
         return qtranxf_match_language_locale( $locale_negotiated );
     } else {
         return qtranxf_get_browser_language();
+    }
+}
+
+/**
+ * Check if a URL redirection is needed and attempt to do so.
+ * Two main causes of redirect:
+ *  - the fetched URL info contains already a 'doredirect' order, previously set;
+ *  - the URL is not canonical for the detected language.
+ *  In case a redirection is needed, the request is filtered with 'qtranslate_language_detect_redirect'.
+ *
+ * @param $url_info
+ *
+ * @return void
+ */
+function qtranxf_check_url_maybe_redirect( &$url_info ) {
+    global $q_config, $pagenow;
+
+    $lang     = $q_config['language'];
+    $url_orig = $url_info['scheme'] . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+    $url_lang = qtranxf_convertURL( '', $lang ); // uses $q_config['url_info'] and caches information, which will be needed later anyway.
+    if ( ! isset( $url_info['doredirect'] ) && $url_orig != $url_lang ) {
+        $url_info['doredirect'] = '$url_orig != $url_lang';
+    }
+    if ( isset( $url_info['doredirect'] ) ) {
+        /**
+         * Filter for the redirect behaviour.
+         *
+         * @param string $url_lang proposed target URL for the active language to redirect to.
+         * @param string $url_orig original URL supplied to browser, which needs to be standardized.
+         * @param array $url_info a hash of various information parsed from original URL, cookies and other site configuration. The key names should be self-explanatory.
+         *
+         * @return mixed A new URL to be redirected to instead of $url_lang or "false" to cancel redirection.
+         */
+        $target = apply_filters( 'qtranslate_language_detect_redirect', $url_lang, $url_orig, $url_info );
+        if ( $target !== false && $target != $url_orig ) {
+            wp_redirect( $target );
+            nocache_headers(); // prevent browser from caching redirection
+            exit();
+        } else {
+            // neutral path
+            $url_info['doredirect'] .= ' - cancelled, because it goes to the same target - neutral URL';
+            if ( $pagenow == 'index.php' && $q_config['url_mode'] == QTX_URL_PATH ) {
+                $_SERVER['REQUEST_URI'] = trailingslashit( $url_info['path-base'] ) . $lang . $url_info['wp-path']; // should not hurt?
+            }
+        }
     }
 }

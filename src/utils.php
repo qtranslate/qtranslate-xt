@@ -212,13 +212,25 @@ function qtranxf_is_graphql_request_expected(): bool {
 }
 
 /**
+ * Evaluate if the request is an AJAX request, from WordPress or another plugin.
+ *
+ * @return bool
+ * @link https://datatracker.ietf.org/doc/html/rfc6648 RFC6648 Deprecating the "X-" Prefix
+ */
+function qtranxf_is_ajax_request(): bool {
+    return wp_doing_ajax() ||
+           ( isset( $_SERVER['HTTP_X_REQUESTED_WITH'] ) && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest' ) ||
+           ( isset( $_SERVER['HTTP_REQUESTED_WITH'] ) && $_SERVER['HTTP_REQUESTED_WITH'] === 'XMLHttpRequest' );
+}
+
+/**
  * Evaluate if the current request allows HTTP redirection.
  * Admin requests (WP_ADMIN, DOING_AJAX, WP_CLI, DOING_CRON) or REST calls should not be redirected.
  *
  * @return bool
  */
 function qtranxf_can_redirect(): bool {
-    return ! is_admin() && ! wp_doing_ajax() && ! ( defined( 'WP_CLI' ) && WP_CLI ) && ! wp_doing_cron() && empty( $_POST )
+    return ! is_admin() && ! qtranxf_is_ajax_request() && ! ( defined( 'WP_CLI' ) && WP_CLI ) && ! wp_doing_cron() && empty( $_POST )
            && ( ! qtranxf_is_rest_request_expected() )
            && ( ! qtranxf_is_graphql_request_expected() )
            // TODO clarify: 'REDIRECT_*' needs more testing --> && !isset($_SERVER['REDIRECT_URL'])
