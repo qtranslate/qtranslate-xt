@@ -1,4 +1,4 @@
-### 3.15.0
+### Next (3.15.0)
 New requirements!
   * Bump required PHP version to 7.1 or higher (#1084), recommend PHP8.2
   * Bump required WordPress version to 5.0 or higher (#1084)
@@ -9,6 +9,11 @@ Core
 * Make use of PHP7.0 null coalesce `??` operator (#1084)
 * Lint PHP by removing unnecessary local vars (#1316)
 * Lint PHP by simplifying expressions (#1317)
+* Rename `i18n_content_translation_not_available` filter to `qtranslate_content_translation_not_available` (#1322)
+* Delete admin translator, tidy up front interface (#1321)
+  * Delete `QTX_Translator_Admin` class and `WP_Translator_Admin` interface.
+  * Delete the `multilingual_term` hook that is specific to qTranslate.
+* Fix undefined keys when URL mode set to per-domain (user setting) (#1319)
 * Move deprecated functions to a separate file (#1311)
 
 ### 3.14.2
