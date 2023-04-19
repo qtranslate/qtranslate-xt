@@ -325,14 +325,11 @@ class QTX_Module_Slugs {
                 } );
             }
 
-            //fix custom admin url error
-            preg_match('/\/.+\/(.+)\//', admin_url(), $adminNeedle);
-
             // If req_uri is empty or if it is a request for ourself, unset error.
-            if ( empty( $request ) || $req_uri == $self || strpos( $_SERVER['PHP_SELF'], $adminNeedle[1].'/' ) !== false ) {
+            if ( empty( $request ) || $req_uri == $self || strpos( $_SERVER['PHP_SELF'], qtranxf_get_admin_base().'/' ) !== false ) {
                 unset( $_GET['error'] );
                 unset( $error );
-                if ( isset( $perma_query_vars ) && strpos( $_SERVER['PHP_SELF'], $adminNeedle[1].'/' ) !== false ) {
+                if ( isset( $perma_query_vars ) && strpos( $_SERVER['PHP_SELF'], qtranxf_get_admin_base().'/' ) !== false ) {
                     unset( $perma_query_vars );
                 }
                 $wp->did_permalink = false;

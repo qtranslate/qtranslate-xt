@@ -30,12 +30,10 @@ function qtranxf_detect_language( array &$url_info ) {
         $http_referer             = $_SERVER['HTTP_REFERER'];
         $url_info['http_referer'] = $http_referer;
 
-        //fix custom admin url error
-        preg_match('/\/.+\/(.+)\//', admin_url(), $adminNeedle);
 
         // if needed, detect front- vs back-end
         $parse_referrer_language = true;
-        if ( strpos( $http_referer, '/'.$adminNeedle[1] ) !== false ) {
+        if ( strpos( $http_referer, '/'.qtranxf_get_admin_base() ) !== false ) {
             $url_info['referer_admin'] = true;
             if ( ! isset( $url_info['doing_front_end'] ) ) {
                 $url_info['doing_front_end'] = false;
