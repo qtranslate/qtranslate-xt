@@ -323,7 +323,6 @@ function qtranxf_get_url_info( string $url ): array {
 
 /**
  * Returns the base admin url of the WordPress backend name e.g. wp-admin
- * If the $admin_base is empty it returns the standard WordPress backend name
  *
  * @author Sebastian Poetter https://github.com/poetter-sebastian
  * @link https://github.com/qtranslate/qtranslate-xt/pull/1324 repo pull request
@@ -332,13 +331,11 @@ function qtranxf_get_url_info( string $url ): array {
  */
 function qtranxf_get_admin_base():string
 {
-    $admin_base = str_replace( [site_url(), '/'], '', admin_url() );
-    return strlen($admin_base) == 0? 'wp-admin' : $admin_base;
+    return trim( str_replace( site_url(), '', admin_url() ), '/');
 }
 
 /**
- * Returns the base admin url of the WordPress backend login url e.g. wp-login
- * If the $login_base is empty it returns the standard WordPress backend login name
+ * Returns the base admin url of the WordPress backend login url e.g. wp-login.php
  *
  * @author Sebastian Poetter https://github.com/poetter-sebastian
  * @link https://github.com/qtranslate/qtranslate-xt/pull/1324 repo pull request
@@ -347,8 +344,7 @@ function qtranxf_get_admin_base():string
  */
 function qtranxf_get_login_base():string
 {
-    $login_base = str_replace( [site_url(), '/', '.php'], '', wp_login_url() );
-    return strlen($login_base) == 0? 'wp-login' : $login_base;
+    return trim( str_replace( site_url(), '', wp_login_url() ), '/');
 }
 
 /**
