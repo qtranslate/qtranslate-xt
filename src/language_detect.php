@@ -23,7 +23,7 @@ function qtranxf_detect_language( &$url_info ) {
     // TODO check if we shouldn't generalize the referrer parsing to all cases, do we need all these limitations?
     $parse_referrer = qtranxf_is_rest_request_expected() ||
                       ( ( ! $lang || ! isset( $url_info['doing_front_end'] ) ) &&
-                        ( wp_doing_ajax() || ! $url_info['cookie_front_or_admin_found'] ) );
+                        ( qtranxf_is_ajax_request() || ! $url_info['cookie_front_or_admin_found'] ) );
 
     // parse language and front info from HTTP_REFERER
     if ( isset( $_SERVER['HTTP_REFERER'] ) && $parse_referrer ) {
@@ -84,7 +84,7 @@ function qtranxf_detect_language( &$url_info ) {
     $url_info['language'] = $lang;
 
     // REST and GraphQL API calls should be deterministic (stateless), no special language detection e.g. based on cookie
-    $url_info['set_cookie'] = ! wp_doing_ajax() && ! qtranxf_is_rest_request_expected() && ! qtranxf_is_graphql_request_expected();
+    $url_info['set_cookie'] = ! ( qtranxf_is_ajax_request() || qtranxf_is_rest_request_expected() || qtranxf_is_graphql_request_expected() );
 
     /**
      * Hook for possible other methods

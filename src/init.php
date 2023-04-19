@@ -52,10 +52,10 @@ function qtranxf_init_language() {
             $url_info['WP_ADMIN'] = true;
         }
         if ( wp_doing_ajax() ) {
-            $url_info['DOING_AJAX_POST'] = $_POST;
+            $url_info['WP_DOING_AJAX_POST'] = $_POST;
         }
         if ( wp_doing_cron() ) {
-            $url_info['DOING_CRON_POST'] = $_POST;
+            $url_info['WP_DOING_CRON_POST'] = $_POST;
         }
     }
 
