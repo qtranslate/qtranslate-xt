@@ -2,7 +2,7 @@
 name: Bug report
 about: Help us to understand and reproduce the issue
 title: "[Module name if applicable] Brief title"
-labels: bug
+labels: maybe bug
 assignees: ''
 
 ---
