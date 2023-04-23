@@ -322,10 +322,7 @@ function qtranxf_get_url_info( string $url ): array {
 }
 
 /**
- * Returns the base admin url of the WordPress backend name e.g. wp-admin
- *
- * @author Sebastian Poetter https://github.com/poetter-sebastian
- * @link https://github.com/qtranslate/qtranslate-xt/pull/1324 repo pull request
+ * Return the base admin url of the WordPress backend name e.g. wp-admin.
  *
  * @return string WordPress backend name
  */
@@ -334,10 +331,7 @@ function qtranxf_get_admin_base(): string {
 }
 
 /**
- * Returns the base admin url of the WordPress backend login url e.g. wp-login.php
- *
- * @author Sebastian Poetter https://github.com/poetter-sebastian
- * @link https://github.com/qtranslate/qtranslate-xt/pull/1324 repo pull request
+ * Return the base admin url of the WordPress backend login url e.g. wp-login.php.
  *
  * @return string WordPress backend login name
  */
