@@ -284,7 +284,7 @@ function qtranxf_language_neutral_path( string $path ): bool {
         return $language_neutral_path_cache[ $path ];
     }
 
-    if ( preg_match( '#^/(wp-.*\.php|'.qtranxf_get_login_base().'/|'.qtranxf_get_admin_base().'/|xmlrpc.php|robots.txt|oauth/)#', $path ) ) {
+    if ( preg_match( '#^/(wp-.*\.php|' . qtranxf_get_login_base() . '/|' . qtranxf_get_admin_base() . '/|xmlrpc.php|robots.txt|oauth/)#', $path ) ) {
         $language_neutral_path_cache[ $path ] = true;
 
         return true;
@@ -329,9 +329,8 @@ function qtranxf_get_url_info( string $url ): array {
  *
  * @return string WordPress backend name
  */
-function qtranxf_get_admin_base():string
-{
-    return trim( str_replace( site_url(), '', admin_url() ), '/');
+function qtranxf_get_admin_base(): string {
+    return trim( str_replace( site_url(), '', admin_url() ), '/' );
 }
 
 /**
@@ -342,9 +341,8 @@ function qtranxf_get_admin_base():string
  *
  * @return string WordPress backend login name
  */
-function qtranxf_get_login_base():string
-{
-    return trim( str_replace( site_url(), '', wp_login_url() ), '/');
+function qtranxf_get_login_base(): string {
+    return trim( str_replace( site_url(), '', wp_login_url() ), '/' );
 }
 
 /**
