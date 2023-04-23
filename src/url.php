@@ -283,15 +283,14 @@ function qtranxf_language_neutral_path( string $path ): bool {
     if ( isset( $language_neutral_path_cache[ $path ] ) ) {
         return $language_neutral_path_cache[ $path ];
     }
-
-    if ( preg_match( '#^/(wp-.*\.php|' . qtranxf_get_login_base() . '/|' . qtranxf_get_admin_base() . '/|xmlrpc.php|robots.txt|oauth/)#', $path ) ) {
+    // WordPress doesn't provide the partial path to wp-admin or login, so check those from the site URL.
+    $site_url_path = site_url( $path );
+    if ( str_starts_with( $site_url_path, admin_url() ) ||
+         $site_url_path === wp_login_url() ||
+         preg_match( '#^/(wp-.*\.php|xmlrpc.php|robots.txt|oauth/)#', $path ) ||
+         qtranxf_ignored_file_type( $path )
+    ) {
         $language_neutral_path_cache[ $path ] = true;
-
-        return true;
-    }
-    if ( qtranxf_ignored_file_type( $path ) ) {
-        $language_neutral_path_cache[ $path ] = true;
-
         return true;
     }
     $language_neutral_path_cache[ $path ] = false;
