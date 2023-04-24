@@ -321,21 +321,12 @@ function qtranxf_get_url_info( string $url ): array {
 }
 
 /**
- * Return the base admin url of the WordPress backend name e.g. wp-admin.
+ * Return the base admin url of the WordPress backend name e.g. `wp-admin` for a default install.
  *
  * @return string WordPress backend name
  */
 function qtranxf_get_admin_base(): string {
     return trim( str_replace( site_url(), '', admin_url() ), '/' );
-}
-
-/**
- * Return the base admin url of the WordPress backend login url e.g. wp-login.php.
- *
- * @return string WordPress backend login name
- */
-function qtranxf_get_login_base(): string {
-    return trim( str_replace( site_url(), '', wp_login_url() ), '/' );
 }
 
 /**
