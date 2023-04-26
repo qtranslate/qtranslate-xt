@@ -326,10 +326,11 @@ class QTX_Module_Slugs {
             }
 
             // If req_uri is empty or if it is a request for ourself, unset error.
-            if ( empty( $request ) || $req_uri == $self || strpos( $_SERVER['PHP_SELF'], 'wp-admin/' ) !== false ) {
+            // TODO: improve string check if admin base is found at other positions in URL.
+            if ( empty( $request ) || $req_uri == $self || strpos( $_SERVER['PHP_SELF'], qtranxf_get_admin_base() . '/' ) !== false ) {
                 unset( $_GET['error'] );
                 unset( $error );
-                if ( isset( $perma_query_vars ) && strpos( $_SERVER['PHP_SELF'], 'wp-admin/' ) !== false ) {
+                if ( isset( $perma_query_vars ) && strpos( $_SERVER['PHP_SELF'], qtranxf_get_admin_base() . '/' ) !== false ) {
                     unset( $perma_query_vars );
                 }
                 $wp->did_permalink = false;

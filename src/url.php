@@ -283,14 +283,14 @@ function qtranxf_language_neutral_path( string $path ): bool {
     if ( isset( $language_neutral_path_cache[ $path ] ) ) {
         return $language_neutral_path_cache[ $path ];
     }
-    if ( preg_match( '#^/(wp-.*\.php|wp-login/|wp-admin/|xmlrpc.php|robots.txt|oauth/)#', $path ) ) {
+    // WordPress doesn't provide the partial path to wp-admin or login, so check those from the site URL.
+    $site_url_path = site_url( $path );
+    if ( str_starts_with( $site_url_path, admin_url() ) ||
+         $site_url_path === wp_login_url() ||
+         preg_match( '#^/(wp-.*\.php|xmlrpc.php|robots.txt|oauth/)#', $path ) ||
+         qtranxf_ignored_file_type( $path )
+    ) {
         $language_neutral_path_cache[ $path ] = true;
-
-        return true;
-    }
-    if ( qtranxf_ignored_file_type( $path ) ) {
-        $language_neutral_path_cache[ $path ] = true;
-
         return true;
     }
     $language_neutral_path_cache[ $path ] = false;
@@ -318,6 +318,15 @@ function qtranxf_get_url_info( string $url ): array {
     qtranxf_complete_url_info_path( $urlinfo );
 
     return $urlinfo;
+}
+
+/**
+ * Return the base admin url of the WordPress backend name e.g. `wp-admin` for a default install.
+ *
+ * @return string WordPress backend name
+ */
+function qtranxf_get_admin_base(): string {
+    return trim( str_replace( site_url(), '', admin_url() ), '/' );
 }
 
 /**

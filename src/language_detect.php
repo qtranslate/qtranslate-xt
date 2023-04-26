@@ -29,10 +29,11 @@ function qtranxf_detect_language( array &$url_info ) {
     if ( isset( $_SERVER['HTTP_REFERER'] ) && $parse_referrer ) {
         $http_referer             = $_SERVER['HTTP_REFERER'];
         $url_info['http_referer'] = $http_referer;
-
         // if needed, detect front- vs back-end
         $parse_referrer_language = true;
-        if ( strpos( $http_referer, '/wp-admin' ) !== false ) {
+        // Attention: the referrer can be a full or partial path.
+        // TODO: improve check if admin base is found at other positions in URL
+        if ( strpos( $http_referer, '/' . qtranxf_get_admin_base() ) !== false ) {
             $url_info['referer_admin'] = true;
             if ( ! isset( $url_info['doing_front_end'] ) ) {
                 $url_info['doing_front_end'] = false;
