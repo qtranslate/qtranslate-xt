@@ -13,8 +13,12 @@ Core
 * Delete admin translator, tidy up front interface (#1321)
   * Delete `QTX_Translator_Admin` class and `WP_Translator_Admin` interface.
   * Delete the `multilingual_term` hook that is specific to qTranslate.
+* Fix custom URL for admin area and login page (#1324)
 * Fix undefined keys when URL mode set to per-domain (user setting) (#1319)
 * Move deprecated functions to a separate file (#1311)
+
+ACF
+* Fix ACF category settings can't all be disabled (#1332)
 
 ## 3.14.2
 * Fix wrong assert with cancelled redirections (#1326), should also fix related issues:
