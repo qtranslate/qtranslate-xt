@@ -73,48 +73,7 @@ Note for developers:
 
 ## Upgrade Notice
 
-### 3.14.0
-* Major update for ACF, bump minimal version 5.6.0
-  * New settings to select more precisely the supported fields (standard / sub / extended)
-  * Deprecate redundant qTranslate `text/textarea/wysiwyg` extended fields to promote ACF standard fields
-
-### 3.13.0
-* Compatibility with PHP8.1
-  * Major refactoring of date/time without `strftime` (deprecated in PHP8.1)
-  * **Attention**: date/time features require PHP `intl` module (`IntlDateFormatter`)
-  * Note: `strftime` format options are still supported by conversion but they may become deprecated (#1234)
-* Major fixes for ACF
-  * Fix standard wysiwyg field, better admin support (ACF6, display fields, UI), simplify options
-  * Note: it is encouraged to use ACF standard fields, extended QTX fields may become deprecated in next releases
-* New feature! Add setting to show menu items in alternative language (#1063).
-
-### 3.12.0
-* New module: **Slugs** (experimental) for permalink (slug/URL) translations
-  * Enable module and see qTranslate import settings to migrate QTS data
-  * See [modules/slugs/README.md](https://github.com/qtranslate/qtranslate-xt/blob/master/modules/slugs/README.md) for more info
-* New module settings with manual activation for all modules and integrated custom settings for ACF and Slugs
-
-### 3.11.0
-Major fix! Enable language switch for text widget with TinyMCE editor.
-Warning: disable new block-based widget editor with WordPress 5.8. See [#1058](https://github.com/qtranslate/qtranslate-xt/issues/1058).
-
-### 3.10.0
-New feature! Javascript code bundled with Webpack and Babel. New paths updated on plugin reactivation or by saving your qTranslate-XT language settings.
-
-### 3.9.0
-New feature! Extend language code to 2-letter (ISO 639-1) or 3-letter (ISO 639-2 and ISO 639-3). Enforce lower case for new entries. Upper case only allowed for existing 2-letter codes as legacy support, but a migration will be required, see [#884](https://github.com/qtranslate/qtranslate-xt/issues/884).
-
-### 3.8.0
-New feature! Initial support of Gutenberg, with some limitations. Read carefully our [Gutenberg FAQ](https://github.com/qtranslate/qtranslate-xt/wiki/FAQ#gutenberg) before use.
-
-### 3.6.0
-New feature! The built-in modules replace the legacy plugins for integration. You have to **deactivate/reactivate qTranslate-XT** to detect the active modules. See [README.md](https://github.com/qtranslate/qtranslate-xt/blob/master/modules/README.md) in modules for more info.
-
-### 3.5.3
-Fix REST API: no redirect allowed. Your rewrite rules should be updated by saving the permalink structures from the admin page.
-
-### 3.5.0
-This is the first official release of qTranslate-XT! Please check the CHANGELOG and FAQ.
+See [Github releases](https://github.com/qtranslate/qtranslate-xt/releases).
 
 ## Screenshots
 
@@ -122,7 +81,7 @@ See [original plugin](https://wordpress.org/plugins/qtranslate-x/).
 
 ## Changelog
 
-Check the CHANGELOG.md for the full history.
+See [CHANGELOG.md](https://github.com/qtranslate/qtranslate-xt/blob/master/CHANGELOG.md) for the full history.
 
 ## Known Issues
 

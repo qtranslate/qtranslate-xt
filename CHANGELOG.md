@@ -1,4 +1,4 @@
-## Next (3.15.0)
+## 3.15.0
 New requirements
  * Bump minimum PHP version to 7.1 (#1084), recommend PHP 8.2
  * Bump minimum WordPress version to 5.0 (#1084)
