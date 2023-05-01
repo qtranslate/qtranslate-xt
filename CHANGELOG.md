@@ -1,4 +1,4 @@
-## 3.15.0
+### 3.15.0
 New requirements
  * Bump minimum PHP version to 7.1 (#1084), recommend PHP 8.2
  * Bump minimum WordPress version to 5.0 (#1084)
@@ -20,7 +20,7 @@ Core
 ACF
 * Fix ACF category settings can't all be disabled (#1332)
 
-## 3.14.2
+### 3.14.2
 * Fix wrong assert with cancelled redirections (#1326), should also fix related issues:
   * NextGen Gallery uploader not working (#1266, #1096)
   * AJAX response error in Advanced Woo Search plugin under PHP8+ (#1284)
@@ -29,11 +29,11 @@ ACF
   * Language needs to be shown in URL (#1068)
 * Fix third-party Ajax requests not detected (#1327), might prevent wrong redirects and cookies set
 
-## 3.14.1
+### 3.14.1
 * Fix warning deprecated `qtranslate_admin_page_config` hook (#1315)
 * Fix regression in 3.14.0 with ACF Post Object [qT-XT] (#1320)
 
-## 3.14.0
+### 3.14.0
 Summary
 * Major update for ACF, bump minimal version 5.6.0
   * New settings to select more precisely the supported fields (standard / sub / extended)
@@ -62,7 +62,7 @@ ACF
 * Fix JS error no form found for `id=acf_content` (#1301)
 * Refactor ACF init of qTranslate fields (#1299)
 
-## 3.13.0
+### 3.13.0
 Summary
 * Compatibility with PHP 8.1 (#1085)
   * Major refactoring of date/time without `strftime` (deprecated in PHP 8.1)
@@ -106,7 +106,7 @@ Yoast
 * Fix wp-seo undefined array key `image` (#1262)
 * Add front filter to disable indexables in Yoast 18.2+ (#1219)
 
-## 3.12.1
+### 3.12.1
 Core
 * Check host key in parsed referrer URL (#1202)
 * Filter excluded types in `qtranslate_admin_block_editor` (#1210)
@@ -129,7 +129,7 @@ WooCommerce
 * Hide slugs metabox on WC shop pages (#1192)
 * Fix `$order->id` called incorrectly in order emails (#1189)
 
-## 3.12.0
+### 3.12.0
 New module: **Slugs** (experimental)
 * Add support for permalink (slug/URL) translations to qTranslate-XT (#671)
 * Integrated from [qtranslate-slug (QTS)](https://github.com/not-only-code/qtranslate-slug) plugin v1.1.18 (#1060)
@@ -194,17 +194,17 @@ WooCommerce
 * Fix product attributes translations (#1143)
 * Remove unneeded action mistakenly used as a filter (#1145)
 
-## 3.11.4
+### 3.11.4
 * Fix Yoast filter front schema webpage (#1086)
 
-## 3.11.3
+### 3.11.3
 * Fix regression Yoast filter front in 3.11.2 (#1086)
 * Add Yoast filters for organization schema and publisher (#1090)
 
-## 3.11.2
+### 3.11.2
 * Fix warnings with Yoast breadcrumbs front (#1086)
 
-## 3.11.1
+### 3.11.1
 Core
 * Remove obsolete HTML `type` attributes from `script` and `style` tags (#1074)
 
@@ -222,7 +222,7 @@ Yoast
 WooCommerce
 * Add hook for WC privacy policy text (#1083)
 
-## 3.11.0
+### 3.11.0
 Core
 * Enable language switch for text widget with TinyMCE editor (#1042, #529, #616, #912)
 * Disable the block-based widget editor with WordPress 5.8 (#1058, #1042)
@@ -239,7 +239,7 @@ Localization
 * Update language names for km (85%) (#420)
 * Update POT template
 
-## 3.10.1
+### 3.10.1
 Core
 * Add qtranxs-flag class to flags on frontend (#1015)
 * Remove obsolete wpautop hack for editor init (#1019)
@@ -252,7 +252,7 @@ Yoast
 * Fix Yoast 'name' schema for WebPages (#1033)
 * Fix Yoast canonical URL (#1032)
 
-## 3.10.0
+### 3.10.0
 Core
 * Major overhaul of Javascript builds
   * New feature! Javascript bundled with Webpack and Babel (#990), production builds delivered in `dist`
@@ -283,7 +283,7 @@ ACF
 * Fix visual editor switch with ACF tabs (#1007)
 * Refactor ACF js with ES6 const let (#997)
 
-## 3.9.3
+### 3.9.3
 Core
 * Fix Javascript init for Classic Editor with WP5.6 (#946, #931)
   * Fix async ready/load events with jQuery3
@@ -311,7 +311,7 @@ WooCommerce
 * Add front filter for product_get_name (#957)
 * Add support for Paypal Checkout (#949)
 
-## 3.9.2
+### 3.9.2
 Core
 * Fix unitialized string offset in urlinfo (#928, #939, #940)
 
@@ -326,7 +326,7 @@ WooCommerce
 * Fix disable translations emails (#652)
 * Fix additional content not translatable (#943)
 
-## 3.9.1
+### 3.9.1
 Core
 * Fix warning in admin language tab (#900, #916)
 * Fix display title placeholder for new post (#897)
@@ -344,7 +344,7 @@ ACF
 WooCommerce
 * Fix CSS path for products (#894)
 
-## 3.9.0
+### 3.9.0
 Core
 * New feature: extend language code to 3-letter (ISO 639-2 and ISO 639-3), lower case (#836, #668)
 * Major refactoring with unique regex of language code for future ISO 3166 and 15924 support (#880, #668)
@@ -354,7 +354,7 @@ Core
 WooCommerce
 * Fix language column CSS in WC products (#831, #804)
 
-## 3.8.1
+### 3.8.1
 Core
 * Fix no language buttons with WP4 (#825)
 * Fix built-in i18n config search (#824)
@@ -364,10 +364,10 @@ Core
 WooCommerce
 * Fix translate product name in WC order admin page (#827)
 
-## 3.8.0
+### 3.8.0
 New feature! Initial support of Gutenberg, with some limitations. Read carefully our [Gutenberg FAQ](https://github.com/qtranslate/qtranslate-xt/wiki/FAQ#gutenberg) before use.
 
-## 3.7.3
+### 3.7.3
 Core
 * Fix plugin, mu-plugin and theme config search (#797)
 * Refactor plugin dirname and basename (#796)
@@ -385,7 +385,7 @@ WooCommerce
 * Fix translations checkout and account settings (#787)
 * Refactor admin page configs
 
-## 3.7.2
+### 3.7.2
 Core
 * No front-detect redirect on neutral path (#749)
 * Add url info in assert no redirect (#757)
@@ -395,7 +395,7 @@ ACF
 * Fix missing ACF dependency on qtranslate (#759)
 * Check `SCRIPT_DEBUG` properly in ACF
 
-## 3.7.1
+### 3.7.1
 License
 * Update license to GPLv2 or later. Meant for harmonization for the WordPress community. More info in related commit.
 * *Important*: if you ever redistribute this work you should also do it under the same license.
@@ -419,7 +419,7 @@ Core
 * Cleanup .gitattributes, clarify text (check-in) and EOL (check-out) conversions for source files
 * Remove irrelevant .gitignore # NB: use git global/system config for your IDE or OS crap ;)
 
-## 3.7.0
+### 3.7.0
 Core
 * Fix critical overwrite content issues due to duplicate cookies (#741, #711, #724, #739)
 * Remove session cookie `qtrans_edit_language`, replaced by sessionStorage `qtranslate-xt-admin-edit-language`
@@ -444,7 +444,7 @@ ACF
 * Add support for SCRIPT_DEBUG and minified scripts in ACF
 * Refactor ACF without `qtrans_edit_language` cookie, with a temporary fix for the initial language selection
 
-## 3.6.3
+### 3.6.3
 Core
 * Update minimum requirement to PHP 5.4 (#732)
 * Remove unused action `qtranslate_head_add_css`
@@ -470,13 +470,13 @@ ACF
 * Fix parameter mismatch in ACF
 * Fix missing return in sitemap Yoast SEO and cleanup
 
-## 3.6.2
+### 3.6.2
 * Fix media library broken with ACF 5.8.3 (#718)
 * Fix ACF language values not validated (#710)
 * Fix ACF image field rendering (#708)
 * Fix ACF validation of url field (#703)
 
-## 3.6.1
+### 3.6.1
 Core
 * New [Wiki pages](https://github.com/qtranslate/qtranslate-xt/wiki)! Help and doc hyperlinks now point to our internal Wiki.
 * Fix translation embedded content (#673), for fields given by oembed_response_data
@@ -489,13 +489,13 @@ Modules
 * Fix Jetpack: translate related post titles (#699), with a new module for Jetpack
 * Fix deprecated WC filters: product attributes (#686), woocommerce_add_cart_hash
 
-## 3.6.0
+### 3.6.0
 * New feature: the built-in **modules** replace the legacy integration plugins. You have to **deactivate/reactivate qTranslate-XT** to detect the active modules. See the integration tab and the main modules [README](https://github.com/qtranslate/qtranslate-xt/blob/master/modules/README.md) for more info.
 * New modules ACF, All in One SEO Pack, Events Made Easy, Gravity Forms, WooCommerce. Note: these modules have been converted from the last available versions of the legacy plugins, but they still remain the same. See each module README for more info.
 * Fix CSS admin notices (#664)
 * Cleanup obsolete admin version notices. The version options become obsolete (`qtranslate_version_previous, qtranslate_versions`).
 
-## 3.5.5
+### 3.5.5
 * Add support for Composer (#659)
 * Fix no LSB on categories (#643): this issue occurred with NextGen Gallery but there might be other plugins concerned.
 * Code cleanup: fix potential minor bugs with variables overwritten in loops, fix missing returns, undefined variables, unused local variables, reformat json
@@ -503,25 +503,25 @@ Modules
 * Revert to legacy suffix for integration config files (searched in "-qtranslate-x" folders instead of "-qtranslate-xt") for consistency with legacy online documentation
 * Fix typo in qtranxf_find_plugin_by_folder (deprecate old version with errated name)
 
-## 3.5.4
+### 3.5.4
 * Shorten front-end message for alternative content (#655). The long part "For the sake of convenience... " is removed, for sake of convenience. Only the first part with the available languages is kept, also sent in the 'i18n_content_translation_not_available' filter.
 * Disambiguate the admin options for untranslated content: clarify descriptions, reorder by relevance.
 * Fix JS loading for early get_ctx (#650) for better admin-side integration. Could lead to LSB not shown (qTranslateConfig.js.get_qtx() not declared).
 * Fix no CSPRNG for gettext DB update (#649). Could raise PHP Fatal error : 'no suitable CSPRNG installed' when cryptographic libraries are missing.
 * Fix date periods for DST (#653) by using strtime() instead of time() + sec. Could affect some admin checks, notices and cookie expirations (very minor impacts).
 
-## 3.5.3
+### 3.5.3
 * Fix REST API: no redirect allowed (PR #621, issues #609, #575, #528, #489, #427). NOTE: your rewrite rules should be updated by saving the permalink structures from the admin page.
 * Fix warning PHP 7.3
 * Fix migration DB: skipped options, warning PHP 7.3 (PR #633)
 * Disable admin notice for unsupported block editor with plugins disable-gutenberg, no-gutenberg
 
-## 3.5.2
+### 3.5.2
 * Add admin notice for WP 5.0: "Gutenberg" block editor not supported, install Classic Editor plugin.
 * Fix unresolved variables and unused PHP syntax error in dev code.
 * Fix deprecated jQuery.ready JS handler, refactor jQuery wrapper/closure functions and standard coding style.
 
-## 3.5.1
+### 3.5.1
 * Cleanup: reformat all PHP code with WordPress coding style, remove lots of commented code for better clarity. Breathe again!
 * Redesign admin Language Switching Buttons (built-in LSB styles) and 'Copy From' button with new ergonomics.
 * Remove admin options `lsb_style_wrap_class` & `lsb_style_active_class`. No impact for built-in LSB styles, please make a request if further custom CSS needed.
@@ -531,23 +531,23 @@ Modules
 * Cleanup: rename `qTranslate-X` to `qTranslate-XT` as plugin name and for options pages. Replace obsolete links in admin pages, now redirecting to github.
 * Localization: update `fr_FR`.
 
-## 3.5.0
+### 3.5.0
 > **First release of qTranslate-XT**! Read carefully the new instructions, FAQ and changelog.
 * Reorganize project structure for releases through git archives with support of GitHub Updater (see FAQ).
 * Fix PHP 7.1+ warnings (expected references)
 * Re-package the pending pre-releases (3.4.6.9, 3.4.7, 3.4.8) that were never distributed to wordpress.org (!): new feature "Copy From" and many other changes. Note the last official release of qTranslate-X is 3.4.6.8. Check the changelog for more details.
 
-## 3.4.8
+### 3.4.8
 * Feature: Button "Copy From", which allows to copy multilingual content from other language. Option 'Hide button "Copy From"' on page `/wp-admin/options-general.php?page=qtranslate-x#advanced` to turn this feature off is also provided.
 * Workaround: added `addContentHooksTinyMCE` back to `qTranslateConfig.qtx` namespace in order to recover compatibility with outdated code of plugin [ACF qTranslate](https://wordpress.org/plugins/acf-qtranslate/).
 
-## 3.4.7
+### 3.4.7
 * Improvement: cached values of raw ML fields in WP_Post object, function `qtranxf_translate_object_property` [Topic #426](http://qtranslate-x.com/support/index.php?topic=426).
 * Language preset 'md': locale 'ro_RO' (Moldovan, Moldovenească).
 * Language preset 'cs': locale 'cs_CZ' (Czech, Čeština).
 * Fix: "Invalid argument supplied for foreach() ... on line 14": [Issue #392](https://github.com/qTranslate-Team/qtranslate-x/issues/392).
 
-## 3.4.6.9
+### 3.4.6.9
 * Improvement: Consistent term framework. Database operation "Clean Legacy Term Names" (at plugin settings page `/wp-admin/options-general.php?page=qtranslate-x#import`), which cleans up old imperfections of taxonomy framework.
 * Improvement: editing of categories and tags in Raw Editor Mode [WP Topic](https://wordpress.org/support/topic/taxonomy-term-translate-filter-in-editor-raw-mode-in-admin)
 * Improvement: using now native code for editing of terms. Script `edit-tag-exec.js` is no longer needed.
