@@ -404,11 +404,8 @@ function qtranxf_dateModifiedFromPostForCurrentLanguage( $old_date, string $form
 /**
  * Filter for `get_the_time`.
  */
-function qtranxf_timeFromPostForCurrentLanguage( $old_date, string $format, WP_Post $post, bool $gmt = false ): string {
-    // TODO fix wrong parameter #4, $gmt is not given part of the WordPress `get_the_time` filter!
-    $post_date = $gmt ? $post->post_date_gmt : $post->post_date;
-
-    return qtranxf_format_time( $format, $post_date, $old_date );
+function qtranxf_timeFromPostForCurrentLanguage( $old_date, string $format, WP_Post $post ) {
+    return qtranxf_format_time( $format, $post->post_date, $old_date );
 }
 
 /**
