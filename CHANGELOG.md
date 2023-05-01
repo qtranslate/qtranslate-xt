@@ -1,3 +1,9 @@
+### 3.15.1
+* Fix undefined `str_starts_with` with PHP 7 (#1334)
+* Fix wrong PHP types with date/time filters (#1335)
+* Fix unused `gmt` parameter with `get_the_time` filter (#1335)
+* Fix `modified_date/time` filters should not use global post (#1336)
+
 ### 3.15.0
 New requirements
  * Bump minimum PHP version to 7.1 (#1084), recommend PHP 8.2
