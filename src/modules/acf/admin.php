@@ -400,26 +400,24 @@ class QTX_Module_Acf_Admin {
         if ( ! isset( $_POST['nonce_acf'] ) || ! wp_verify_nonce( $_POST['nonce_acf'], 'acf' ) ) {
             return;
         }
-        $options = $_POST[ QTX_OPTIONS_MODULE_ACF ] ?? [];
+        $post_acf = $_POST[ QTX_OPTIONS_MODULE_ACF ] ?? [];
         // Unchecked boxes are not part of the POST data. We want to store explicit values for two reasons:
         // 1) the settings falls back to default when all values are unchecked (not set in POST)
         // 2) if new options come in later, we have no way to tell it's undefined or unchecked after user update.
-        function set_bool( &$item, $key, $post_data ): void {
-            // If set, convert '1'  strings to `true`, otherwise `false` (the current value is ignored).
-            $item = isset( $post_data[ $key ] ) && $post_data[ $key ];
-        }
-
-        // Ensure we set all values by going through all the setting keys, though the default values are ignored.
-        $all_set = self::standard_fields_default();
-        array_walk( $all_set, 'set_bool', $options ['standard_fields'] ?? [] );
-        $options ['standard_fields'] = $all_set;
-        $all_set                     = self::group_sub_fields_default();
-        array_walk( $all_set, 'set_bool', $options ['group_sub_fields'] ?? [] );
-        $options ['group_sub_fields'] = $all_set;
-        $all_set                      = self::qtranslate_fields_default();
-        array_walk( $all_set, 'set_bool', $options ['qtranslate_fields'] ?? [] );
-        $options ['qtranslate_fields']  = $all_set;
-        $options ['show_language_tabs'] = isset( $options ['show_language_tabs'] ) && $options ['show_language_tabs'];
+        // Ensure we set values for all keys though the default values are ignored.
+        $options  = [
+            'standard_fields'    => self::standard_fields_default(),
+            'group_sub_fields'   => self::group_sub_fields_default(),
+            'qtranslate_fields'  => self::qtranslate_fields_default(),
+            'show_language_tabs' => isset( $post_acf['show_language_tabs'] ) && $post_acf['show_language_tabs'],
+        ];
+        // If checked, convert '1' strings to `true`, otherwise `false` (ignore the current value = default).
+        $set_bool = function ( &$item, $key, $post_fields ): void {
+            $item = isset( $post_fields[ $key ] ) && $post_fields[ $key ];
+        };
+        array_walk( $options['standard_fields'], $set_bool, $post_acf['standard_fields'] ?? [] );
+        array_walk( $options['group_sub_fields'], $set_bool, $post_acf['group_sub_fields'] ?? [] );
+        array_walk( $options['qtranslate_fields'], $set_bool, $post_acf['qtranslate_fields'] ?? [] );
         update_option( QTX_OPTIONS_MODULE_ACF, $options, false );
     }
 
