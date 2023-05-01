@@ -334,13 +334,16 @@ function qtranxf_get_language_date_or_time_format( string $config_key ): string 
  * @param string $before Deprecated. Not used, will be removed in a future version.
  * @param string $after Deprecated. Not used, will be removed in a future version.
  *
- * @return string date/time if the format is valid, default value otherwise.
+ * @return string|int date/time if $format and $mysql_time are valid, default value otherwise.
  */
-function qtranxf_format_date( string $format, string $mysql_time, string $default_value, string $before = '', string $after = '' ): string {
+function qtranxf_format_date( string $format, string $mysql_time, string $default_value, string $before = '', string $after = '' ) {
     if ( ! empty( $before ) || ! empty( $after ) ) {
         _deprecated_argument( __FUNCTION__, '3.13.0' );
     }
     $timestamp = mysql2date( 'U', $mysql_time );
+    if ( $timestamp === false ) {
+        return $default_value;
+    }
     if ( $format == 'U' ) {
         return $timestamp;
     }
@@ -359,13 +362,16 @@ function qtranxf_format_date( string $format, string $mysql_time, string $defaul
  * @param string $before Deprecated. Not used, will be removed in a future version.
  * @param string $after Deprecated. Not used, will be removed in a future version.
  *
- * @return string date/time if the format is valid, default value otherwise.
+ * @return string|int date/time if $format and $mysql_time are valid, default value otherwise.
  */
-function qtranxf_format_time( string $format, string $mysql_time, string $default_value, string $before = '', string $after = '' ): string {
+function qtranxf_format_time( string $format, string $mysql_time, string $default_value, string $before = '', string $after = '' ) {
     if ( ! empty( $before ) || ! empty( $after ) ) {
         _deprecated_argument( __FUNCTION__, '3.13.0' );
     }
     $timestamp = mysql2date( 'U', $mysql_time );
+    if ( $timestamp === false ) {
+        return $default_value;
+    }
     if ( $format == 'U' ) {
         return $timestamp;
     }
@@ -375,18 +381,18 @@ function qtranxf_format_time( string $format, string $mysql_time, string $defaul
     return ( ! empty( $date_format ) ? qxtranxf_intl_strftime( $date_format, $timestamp, get_locale() ) : $default_value );
 }
 
-// @see get_the_date
-function qtranxf_dateFromPostForCurrentLanguage( string $old_date, string $format = '', $post = null ): string {
-    $post = get_post( $post );
-    if ( ! $post ) {
-        return $old_date;
-    }
-
+/**
+ * Filter for `get_the_date`.
+ */
+function qtranxf_dateFromPostForCurrentLanguage( $old_date, string $format, WP_Post $post ) {
     return qtranxf_format_date( $format, $post->post_date, $old_date );
 }
 
-// @see get_the_modified_date
-function qtranxf_dateModifiedFromPostForCurrentLanguage( string $old_date, string $format = '' ): string {
+/**
+ * Filter for `get_the_modified_date`.
+ */
+function qtranxf_dateModifiedFromPostForCurrentLanguage( $old_date, string $format ) {
+    // TODO fix missing parameter #3 given as WP_Post|null, don't use global.
     global $post;
     if ( ! $post ) {
         return $old_date;
@@ -395,53 +401,44 @@ function qtranxf_dateModifiedFromPostForCurrentLanguage( string $old_date, strin
     return qtranxf_format_date( $format, $post->post_modified, $old_date );
 }
 
-// @see get_the_time
-function qtranxf_timeFromPostForCurrentLanguage( string $old_date, string $format = '', $post = null, bool $gmt = false ): string {
-    $post = get_post( $post );
-    if ( ! $post ) {
-        return $old_date;
-    }
+/**
+ * Filter for `get_the_time`.
+ */
+function qtranxf_timeFromPostForCurrentLanguage( $old_date, string $format, WP_Post $post, bool $gmt = false ): string {
+    // TODO fix wrong parameter #4, $gmt is not given part of the WordPress `get_the_time` filter!
     $post_date = $gmt ? $post->post_date_gmt : $post->post_date;
 
     return qtranxf_format_time( $format, $post_date, $old_date );
 }
 
-// @see get_post_modified_time
-function qtranxf_timeModifiedFromPostForCurrentLanguage( string $old_date, string $format = '', bool $gmt = false ): string {
+/**
+ * Filter for `get_post_modified_time`.
+ */
+function qtranxf_timeModifiedFromPostForCurrentLanguage( $old_date, string $format, bool $gmt ) {
+    // TODO no post given in the filter, but it's wrong to use the global post object if another post is called in the `get_post_modified_time` function.
     global $post;
     if ( ! $post ) {
         return $old_date;
     }
     $post_date = $gmt ? $post->post_modified_gmt : $post->post_modified;
-
     return qtranxf_format_time( $format, $post_date, $old_date );
 }
 
-// @see get_comment_date
-function qtranxf_dateFromCommentForCurrentLanguage( string $old_date, string $format, ?string $comment = null ): string {
-    if ( ! $comment ) {
-        global $comment;  // TODO drop obsolete compatibility with older WP
-    }
-    if ( ! $comment ) {
-        return $old_date;
-    }
-
+/**
+ * Filter for `get_comment_date`.
+ */
+function qtranxf_dateFromCommentForCurrentLanguage( $old_date, string $format, WP_Comment $comment ) {
     return qtranxf_format_date( $format, $comment->comment_date, $old_date );
 }
 
-// @see get_comment_time
-function qtranxf_timeFromCommentForCurrentLanguage( string $old_date, string $format = '', bool $gmt = false, bool $translate = true, ?string $comment = null ): string {
+/**
+ * Filter for `get_comment_time`.
+ */
+function qtranxf_timeFromCommentForCurrentLanguage( $old_date, string $format, bool $gmt, bool $translate, WP_Comment $comment ) {
     if ( ! $translate ) {
         return $old_date;
     }
-    if ( ! $comment ) {
-        global $comment; // TODO drop obsolete compatibility with older WP
-    }
-    if ( ! $comment ) {
-        return $old_date;
-    }
     $comment_date = $gmt ? $comment->comment_date_gmt : $comment->comment_date;
-
     return qtranxf_format_time( $format, $comment_date, $old_date );
 }
 
