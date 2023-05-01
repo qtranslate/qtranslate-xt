@@ -398,27 +398,17 @@ function qtranxf_timeFromPostForCurrentLanguage( $old_date, string $format, WP_P
 /**
  * Filter for `get_the_modified_date`.
  */
-function qtranxf_dateModifiedFromPostForCurrentLanguage( $old_date, string $format ) {
-    // TODO fix missing parameter #3 given as WP_Post|null, don't use global.
-    global $post;
-    if ( ! $post ) {
-        return $old_date;
-    }
-
-    return qtranxf_format_date( $format, $post->post_modified, $old_date );
+function qtranxf_dateModifiedFromPostForCurrentLanguage( $old_date, string $format, ?WP_Post $post ) {
+    return isset( $post ) ? qtranxf_format_date( $format, $post->post_modified, $old_date ) : $old_date;
 }
 
 /**
  * Filter for `get_post_modified_time`.
  */
-function qtranxf_timeModifiedFromPostForCurrentLanguage( $old_date, string $format, bool $gmt ) {
-    // TODO no post given in the filter, but it's wrong to use the global post object if another post is called in the `get_post_modified_time` function.
-    global $post;
-    if ( ! $post ) {
-        return $old_date;
-    }
-    $post_date = $gmt ? $post->post_modified_gmt : $post->post_modified;
-    return qtranxf_format_time( $format, $post_date, $old_date );
+function qtranxf_timeModifiedFromPostForCurrentLanguage( $time, string $format, bool $gmt ) {
+    // No post given in the WordPress filter, there's nothing valuable we can do :(
+    // TODO make a feature request to WordPress to get the WP_Post object as for `get_the_modified_date`.
+    return $time;
 }
 
 /**
@@ -450,7 +440,7 @@ function qtranxf_add_date_time_filters(): void {
     if ( $q_config['use_strftime'] != QTX_DATE_WP && class_exists( 'IntlDateFormatter' ) ) {
         add_filter( 'get_the_date', 'qtranxf_dateFromPostForCurrentLanguage', 0, 3 );
         add_filter( 'get_the_time', 'qtranxf_timeFromPostForCurrentLanguage', 0, 3 );
-        add_filter( 'get_the_modified_date', 'qtranxf_dateModifiedFromPostForCurrentLanguage', 0, 2 );
+        add_filter( 'get_the_modified_date', 'qtranxf_dateModifiedFromPostForCurrentLanguage', 0, 3 );
         add_filter( 'get_post_modified_time', 'qtranxf_timeModifiedFromPostForCurrentLanguage', 0, 3 );
         add_filter( 'get_comment_date', 'qtranxf_dateFromCommentForCurrentLanguage', 0, 3 );
         add_filter( 'get_comment_time', 'qtranxf_timeFromCommentForCurrentLanguage', 0, 5 );
