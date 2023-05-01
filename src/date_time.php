@@ -389,6 +389,13 @@ function qtranxf_dateFromPostForCurrentLanguage( $old_date, string $format, WP_P
 }
 
 /**
+ * Filter for `get_the_time`.
+ */
+function qtranxf_timeFromPostForCurrentLanguage( $old_date, string $format, WP_Post $post ) {
+    return qtranxf_format_time( $format, $post->post_date, $old_date );
+}
+
+/**
  * Filter for `get_the_modified_date`.
  */
 function qtranxf_dateModifiedFromPostForCurrentLanguage( $old_date, string $format ) {
@@ -399,13 +406,6 @@ function qtranxf_dateModifiedFromPostForCurrentLanguage( $old_date, string $form
     }
 
     return qtranxf_format_date( $format, $post->post_modified, $old_date );
-}
-
-/**
- * Filter for `get_the_time`.
- */
-function qtranxf_timeFromPostForCurrentLanguage( $old_date, string $format, WP_Post $post ) {
-    return qtranxf_format_time( $format, $post->post_date, $old_date );
 }
 
 /**
@@ -448,11 +448,11 @@ function qtranxf_add_date_time_filters(): void {
     global $q_config;
 
     if ( $q_config['use_strftime'] != QTX_DATE_WP && class_exists( 'IntlDateFormatter' ) ) {
+        add_filter( 'get_the_date', 'qtranxf_dateFromPostForCurrentLanguage', 0, 3 );
+        add_filter( 'get_the_time', 'qtranxf_timeFromPostForCurrentLanguage', 0, 3 );
+        add_filter( 'get_the_modified_date', 'qtranxf_dateModifiedFromPostForCurrentLanguage', 0, 2 );
+        add_filter( 'get_post_modified_time', 'qtranxf_timeModifiedFromPostForCurrentLanguage', 0, 3 );
         add_filter( 'get_comment_date', 'qtranxf_dateFromCommentForCurrentLanguage', 0, 3 );
         add_filter( 'get_comment_time', 'qtranxf_timeFromCommentForCurrentLanguage', 0, 5 );
-        add_filter( 'get_post_modified_time', 'qtranxf_timeModifiedFromPostForCurrentLanguage', 0, 3 );
-        add_filter( 'get_the_time', 'qtranxf_timeFromPostForCurrentLanguage', 0, 3 );
-        add_filter( 'get_the_date', 'qtranxf_dateFromPostForCurrentLanguage', 0, 3 );
-        add_filter( 'get_the_modified_date', 'qtranxf_dateModifiedFromPostForCurrentLanguage', 0, 2 );
     }
 }
