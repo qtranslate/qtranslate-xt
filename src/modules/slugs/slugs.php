@@ -522,13 +522,13 @@ class QTX_Module_Slugs {
      * Retrieve the home url for a given site.
      *
      * @param string $url The complete home URL including scheme and path.
-     * @param string $path Path relative to the home url.
+     * @param string|null $path Path relative to the home url. Null allowed for https://github.com/arnowelzel/lightbox-photoswipe/issues/98.
      * @param string|null $scheme (optional) Scheme to give the home url context. Currently 'http', 'https'.
      * @param int|null $blog_id (optional) Site ID, or null for the current site.
      *
      * @return string Home url link with optional path appended.
      */
-    public function home_url( string $url, string $path, ?string $scheme, ?int $blog_id ): string {
+    public function home_url( string $url, ?string $path, ?string $scheme, ?int $blog_id ): string {
         if ( ! in_array( $scheme, array( 'http', 'https' ) ) ) {
             $scheme = is_ssl() && ! is_admin() ? 'https' : 'http';
         }
