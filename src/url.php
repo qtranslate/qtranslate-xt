@@ -285,7 +285,7 @@ function qtranxf_language_neutral_path( string $path ): bool {
     }
     // WordPress doesn't provide the partial path to wp-admin or login, so check those from the site URL.
     $site_url_path = site_url( $path );
-    if ( str_starts_with( $site_url_path, admin_url() ) ||
+    if ( strpos( $site_url_path, admin_url() ) === 0 ||
          $site_url_path === wp_login_url() ||
          preg_match( '#^/(wp-.*\.php|xmlrpc.php|robots.txt|oauth/)#', $path ) ||
          qtranxf_ignored_file_type( $path )
