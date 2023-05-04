@@ -124,11 +124,11 @@ function qtranxf_init_language(): void {
     if ( $q_config['url_info']['doing_front_end'] ) {
         require_once QTRANSLATE_DIR . '/src/frontend.php';
         qtranxf_add_front_filters();
-        QTX_Translator::get_translator();
     } else {
         require_once QTRANSLATE_DIR . '/src/admin/admin.php';
         qtranxf_admin_load();
     }
+    QTX_Translator::get_translator();
     apply_filters_deprecated( 'wp_translator', array( null ), '3.14.0', '', 'This filter will be removed in next major release. Open a ticket on https://github.com/qtranslate/qtranslate-xt/issues if you need this!' );
 
     QTX_Module_Loader::load_active_modules();
