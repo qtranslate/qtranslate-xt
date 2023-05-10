@@ -430,7 +430,7 @@ class QTX_Module_Slugs {
                 }
             }
             if ( isset( $query['post_type'] ) ) {
-                if ( count( $query ) == 1 ) {
+                if ( count( $query ) == 1 || ( count( $query ) == 2 && ! empty( $query['paged'] ) ) ) {
                     $function = 'get_post_type_archive_link';
                     $id       = $query['post_type'];
                 } else {
