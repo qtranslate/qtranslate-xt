@@ -350,6 +350,7 @@ class QTX_Module_Slugs {
     function filter_request( $query ) {
         global $q_config;
         global $wp;
+        $query_orig = $query;
 
         if ( isset( $wp->matched_query ) ) {
             if ( isset( $query['error'] ) ) {
@@ -375,14 +376,13 @@ class QTX_Module_Slugs {
                 $page = isset( $query['page_id'] ) ? get_post( $query['page_id'] ) : $this->get_page_by_path( $query['pagename'] );
             }
             delete_transient( 'qtranslate_slugs_matched_page' );
-            if ( ! $page ) {
-                return $query;
+            if ( $page ) {
+                $id          = $page->ID;
+                $cache_array = array( $page );
+                update_post_caches( $cache_array, 'page' );
+                $query['pagename'] = get_page_uri( $page );
+                $function          = 'get_page_link';
             }
-            $id          = $page->ID;
-            $cache_array = array( $page );
-            update_post_caches( $cache_array, 'page' );
-            $query['pagename'] = get_page_uri( $page );
-            $function          = 'get_page_link';
 
         // -> category
         // If 'name' key is defined, query is relevant to a post with a /%category%/%postname%/ permalink structure and will be captured later.
@@ -394,26 +394,24 @@ class QTX_Module_Slugs {
                 $term = get_term( $query['cat'], 'category' );
             }
 
-            if ( ! $term ) {
-                return $query;
+            if ( $term ) {
+                $cache_array = array( $term );
+                update_term_cache( $cache_array, 'category' ); // caching query :)
+                $id                     = $term->term_id;
+                $query['category_name'] = $term->slug; // uri
+                $function               = 'get_category_link';
             }
-            $cache_array = array( $term );
-            update_term_cache( $cache_array, 'category' ); // caching query :)
-            $id                     = $term->term_id;
-            $query['category_name'] = $term->slug; // uri
-            $function               = 'get_category_link';
 
         // -> tag
         elseif ( isset( $query['tag'] ) ):
             $term = $this->get_term_by( 'slug', $query['tag'], 'post_tag' );
-            if ( ! $term ) {
-                return $query;
+            if ( $term ) {
+                $cache_array = array( $term );
+                update_term_cache( $cache_array, 'post_tag' ); // caching query :)
+                $id           = $term->term_id;
+                $query['tag'] = $term->slug;
+                $function     = 'get_tag_link';
             }
-            $cache_array = array( $term );
-            update_term_cache( $cache_array, 'post_tag' ); // caching query :)
-            $id           = $term->term_id;
-            $query['tag'] = $term->slug;
-            $function     = 'get_tag_link';
 
         else:
 
@@ -436,14 +434,13 @@ class QTX_Module_Slugs {
                 } else {
                     $page_slug = ( isset( $query['name'] ) && ! empty( $query['name'] ) ) ? $query['name'] : $query[ $query['post_type'] ];
                     $page      = $this->get_page_by_path( $page_slug, $query['post_type'] );
-                    if ( ! $page ) {
-                        return $query;
+                    if ( $page ) {
+                        $id          = $page->ID;
+                        $cache_array = array( $page );
+                        update_post_caches( $cache_array, $query['post_type'] ); // caching query :)
+                        $query['name'] = $query[ $query['post_type'] ] = get_page_uri( $page );
+                        $function      = 'get_post_permalink';
                     }
-                    $id          = $page->ID;
-                    $cache_array = array( $page );
-                    update_post_caches( $cache_array, $query['post_type'] ); // caching query :)
-                    $query['name'] = $query[ $query['post_type'] ] = get_page_uri( $page );
-                    $function      = 'get_post_permalink';
                 }
             }
 
@@ -452,14 +449,13 @@ class QTX_Module_Slugs {
                 if ( isset( $query[ $item->name ] ) ) {
                     $term_slug = $this->get_last_slash( empty( $query[ $item->name ] ) ? $wp->request : $query[ $item->name ] );
                     $term      = $this->get_term_by( 'slug', $term_slug, $item->name );
-                    if ( ! $term ) {
-                        return $query;
+                    if ( $term ) {
+                        $cache_array = array( $term );
+                        update_term_cache( $cache_array, $item->name ); // caching query :)
+                        $id                   = $term;
+                        $query[ $item->name ] = $term->slug;
+                        $function             = 'get_term_link';
                     }
-                    $cache_array = array( $term );
-                    update_term_cache( $cache_array, $item->name ); // caching query :)
-                    $id                   = $term;
-                    $query[ $item->name ] = $term->slug;
-                    $function             = 'get_term_link';
                 }
             endforeach;
 
@@ -472,14 +468,13 @@ class QTX_Module_Slugs {
             // -> post
             if ( ! isset( $function ) && ( isset( $query['name'] ) || isset( $query['p'] ) ) ) {
                 $post = isset( $query['p'] ) ? get_post( $query['p'] ) : $this->get_page_by_path( $query['name'], 'post' );
-                if ( ! $post ) {
-                    return $query;
+                if ( $post ) {
+                    $query['name'] = $post->post_name;
+                    $id            = $post->ID;
+                    $cache_array   = array( $post );
+                    update_post_caches( $cache_array );
+                    $function = 'get_permalink';
                 }
-                $query['name'] = $post->post_name;
-                $id            = $post->ID;
-                $cache_array   = array( $post );
-                update_post_caches( $cache_array );
-                $function = 'get_permalink';
             }
         endif;
 
@@ -491,6 +486,10 @@ class QTX_Module_Slugs {
                 $this->current_url[ $lang ] = esc_url( $this->parse_url_args( $url ) );
             }
             $this->temp_lang = false;
+
+        /* If no handling function has been identified, original query is restored (probably going to 404) */
+        } else {
+            $query = $query_orig;
         }
 
         return $query;
