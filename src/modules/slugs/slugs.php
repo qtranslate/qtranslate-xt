@@ -43,8 +43,7 @@ class QTX_Module_Slugs {
 
         // remove from qtranslate the discouraged meta http-equiv, inline styles
         // (including flag URLs) and wrong hreflang links
-        remove_action( 'wp_head', 'qtranxf_wp_head' ); //TODO: check if it is needed, and why it is not in the main plugin in case
-
+        remove_action( 'wp_head', 'qtranxf_wp_head' );
         // add proper hreflang links
         add_action( 'wp_head', array( &$this, 'head_hreflang' ) );
 
@@ -71,22 +70,29 @@ class QTX_Module_Slugs {
 
     /**
      * Adds proper links to the content with available translations.
-     * Fixes issue #25
+     * This function is mostly same as qtranxf_wp_head() except for the functions
+     * used to retrieve the href links.
      *
      * @global QtranslateSlug $qtranslate_slugs used to convert the url
      * @global array $q_config available languages
+     * @see qtranxf_wp_head()
      */
     public function head_hreflang() {
         global $q_config;
+
         if ( is_404() ) {
             return;
         }
-        //TODO: double check following comment:
-        // taken from qtx but see our #341 ticket for clarification
-        echo '<link hreflang="x-default" href="' . esc_url( $this->get_current_url( $q_config['default_language'] ) ) . '" rel="alternate" />' . PHP_EOL;
-        foreach ( $q_config['enabled_languages'] as $language ) {
 
-            echo '<link hreflang="' . $language . '" href="' . esc_url( $this->get_current_url( $language ) ) . '" rel="alternate" />' . "\n";
+        $hreflangs = array();
+        foreach ( $q_config['enabled_languages'] as $lang ) {
+            $hreflang = ! empty ( $q_config['locale_html'][ $lang ] ) ? $q_config['locale_html'][ $lang ] : $lang;
+            $hreflangs[ $hreflang ] = esc_url( $this->get_current_url( $lang ) );
+        }
+        $hreflangs['x-default'] = esc_url( $this->get_current_url( $q_config['default_language'] ) );
+
+        foreach ( $hreflangs as $hreflang => $href ) {
+            echo '<link hreflang="' . $hreflang . '" href="' . $href . '" rel="alternate" />' . PHP_EOL;
         }
     }
 
