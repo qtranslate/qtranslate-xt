@@ -528,27 +528,30 @@ class QTX_Module_Slugs {
      * @return string Home url link with optional path appended.
      */
     public function home_url( string $url, string $path, ?string $scheme, ?int $blog_id ): string {
-        if ( ! in_array( $scheme, array( 'http', 'https' ) ) ) {
+        if ( ! isset($scheme) ){
             $scheme = is_ssl() && ! is_admin() ? 'https' : 'http';
         }
 
-        if ( empty( $blog_id ) || ! is_multisite() ) {
-            $url = get_option( 'home' );
-        } else {
-            $url = get_blog_option( $blog_id, 'home' );
+        if ( $scheme === 'rest' ) {
+                return $url;
+
+        } elseif ( $scheme !== 'relative' ) {
+            if ( empty( $blog_id ) || ! is_multisite() ) {
+                $url = get_option( 'home' );
+            } else {
+                $url = get_blog_option( $blog_id, 'home' );
+            }
+
+            if ( 'http' != $scheme ) {
+                $url = str_replace( 'http://', "$scheme://", $url );
+            }
+
+            if ( ! empty( $path ) && is_string( $path ) && strpos( $path, '..' ) === false ) {
+                $url .= '/' . ltrim( $path, '/' );
+            }
         }
 
-        if ( 'http' != $scheme ) {
-            $url = str_replace( 'http://', "$scheme://", $url );
-        }
-
-        $ignore_caller = $this->ignore_rewrite_caller();
-
-        if ( ! empty( $path ) && is_string( $path ) && strpos( $path, '..' ) === false ) {
-            $url .= '/' . ltrim( $path, '/' );
-        }
-
-        if ( ! $ignore_caller ) {
+        if ( ! $this->ignore_rewrite_caller() ) {
             $url = qtranxf_convertURL( $url, $this->get_temp_lang(), true );
         }
 
