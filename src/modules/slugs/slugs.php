@@ -437,8 +437,9 @@ class QTX_Module_Slugs {
                     $function = 'get_post_type_archive_link';
                     $id       = $query['post_type'];
                 } else {
-                    $page_slug = ( isset( $query['name'] ) && ! empty( $query['name'] ) ) ? $query['name'] : $query[ $query['post_type'] ];
-                    $page      = $this->get_page_by_path( $page_slug, $query['post_type'] );
+
+                    $page_slug = $query['name'] ?? $query[ $query['post_type'] ];
+                    $page      = isset( $page_slug ) ? $this->get_page_by_path( $page_slug, $query['post_type'] ) : null;
                     if ( $page ) {
                         $id          = $page->ID;
                         $cache_array = array( $page );
@@ -452,8 +453,8 @@ class QTX_Module_Slugs {
             // -> taxonomy
             foreach ( $this->get_public_taxonomies() as $item ) {
                 if ( isset( $query[ $item->name ] ) ) {
-                    $term_slug = $this->get_last_slash( empty( $query[ $item->name ] ) ? $wp->request : $query[ $item->name ] );
-                    $term      = $this->get_term_by( 'slug', $term_slug, $item->name );
+                    $term_slug = $this->get_last_slash( $query[ $item->name ] ?? $wp->request );
+                    $term      = isset( $term_slug ) ? $this->get_term_by( 'slug', $term_slug, $item->name ) : null;
                     if ( $term ) {
                         $cache_array = array( $term );
                         update_term_cache( $cache_array, $item->name ); // caching query :)
