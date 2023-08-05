@@ -365,17 +365,17 @@ class QTX_Module_Slugs {
         }
 
         // -> home url
-        if ( empty( $query ) || isset( $query['error'] ) ):
+        if ( empty( $query ) || isset( $query['error'] ) ) {
             $function = 'home_url';
             $id       = '';
 
         // -> search
-        elseif ( isset( $query['s'] ) ):
+        } elseif ( isset( $query['s'] ) ) {
             $id       = $query['s'];
             $function = "get_search_link";
 
         // -> page
-        elseif ( isset( $query['pagename'] ) || isset( $query['page_id'] ) ):
+        } elseif ( isset( $query['pagename'] ) || isset( $query['page_id'] ) ){
             $page = get_transient( 'qtranslate_slugs_matched_page' );
             if ( $page === false ) {
                 $page = isset( $query['page_id'] ) ? get_post( $query['page_id'] ) : $this->get_page_by_path( $query['pagename'] );
@@ -391,7 +391,7 @@ class QTX_Module_Slugs {
 
         // -> category
         // If 'name' key is defined, query is relevant to a post with a /%category%/%postname%/ permalink structure and will be captured later.
-        elseif ( ( ( isset( $query['category_name'] ) || isset( $query['cat'] ) ) && ! isset( $query['name'] ) ) ):
+        } elseif ( ( isset( $query['category_name'] ) || isset( $query['cat'] ) ) && ! isset( $query['name'] ) ) {
             if ( isset( $query['category_name'] ) ) {
                 $term_slug = $this->get_last_slash( empty( $query['category_name'] ) ? $wp->request : $query['category_name'] );
                 $term      = $this->get_term_by( 'slug', $term_slug, 'category' );
@@ -408,7 +408,7 @@ class QTX_Module_Slugs {
             }
 
         // -> tag
-        elseif ( isset( $query['tag'] ) ):
+        } elseif ( isset( $query['tag'] ) ) {
             $term = $this->get_term_by( 'slug', $query['tag'], 'post_tag' );
             if ( $term ) {
                 $cache_array = array( $term );
@@ -418,7 +418,7 @@ class QTX_Module_Slugs {
                 $function     = 'get_tag_link';
             }
 
-        else:
+        } else {
 
             // If none of the conditions above are matched, specific tests to identify custom post types and taxonomies are performed here.
 
@@ -450,7 +450,7 @@ class QTX_Module_Slugs {
             }
 
             // -> taxonomy
-            foreach ( $this->get_public_taxonomies() as $item ):
+            foreach ( $this->get_public_taxonomies() as $item ) {
                 if ( isset( $query[ $item->name ] ) ) {
                     $term_slug = $this->get_last_slash( empty( $query[ $item->name ] ) ? $wp->request : $query[ $item->name ] );
                     $term      = $this->get_term_by( 'slug', $term_slug, $item->name );
@@ -462,7 +462,7 @@ class QTX_Module_Slugs {
                         $function             = 'get_term_link';
                     }
                 }
-            endforeach;
+            }
 
             /* As 'name' key is present also at least both for pages and custom post types, this condition alone cannot be used to identify uniquely the posts.
              * For pages and custom post types specific tests can be and are performed earlier but no additional specific condition seems to be applicable for posts.
@@ -481,7 +481,7 @@ class QTX_Module_Slugs {
                     $function = 'get_permalink';
                 }
             }
-        endif;
+        }
 
         if ( isset( $function ) && isset( $id ) ) {
             // parse all languages links
