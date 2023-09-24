@@ -43,9 +43,7 @@ class QTX_Module_Slugs {
 
         // remove from qtranslate the discouraged meta http-equiv, inline styles
         // (including flag URLs) and wrong hreflang links
-        remove_action( 'wp_head', 'qtranxf_header' ); //TODO: check if it is needed, and why it is not in the main plugin in case
-        remove_action( 'wp_head', 'qtranxf_wp_head' ); //TODO: check if it is needed, and why it is not in the main plugin in case
-
+        remove_action( 'wp_head', 'qtranxf_wp_head' );
         // add proper hreflang links
         add_action( 'wp_head', array( &$this, 'head_hreflang' ) );
 
@@ -72,22 +70,29 @@ class QTX_Module_Slugs {
 
     /**
      * Adds proper links to the content with available translations.
-     * Fixes issue #25
+     * This function is mostly same as qtranxf_wp_head() except for the functions
+     * used to retrieve the href links.
      *
      * @global QtranslateSlug $qtranslate_slugs used to convert the url
      * @global array $q_config available languages
+     * @see qtranxf_wp_head()
      */
     public function head_hreflang() {
         global $q_config;
+
         if ( is_404() ) {
             return;
         }
-        //TODO: double check following comment:
-        // taken from qtx but see our #341 ticket for clarification
-        echo '<link hreflang="x-default" href="' . esc_url( $this->get_current_url( $q_config['default_language'] ) ) . '" rel="alternate" />' . PHP_EOL;
-        foreach ( $q_config['enabled_languages'] as $language ) {
 
-            echo '<link hreflang="' . $language . '" href="' . esc_url( $this->get_current_url( $language ) ) . '" rel="alternate" />' . "\n";
+        $hreflangs = array();
+        foreach ( $q_config['enabled_languages'] as $lang ) {
+            $hreflang = ! empty ( $q_config['locale_html'][ $lang ] ) ? $q_config['locale_html'][ $lang ] : $lang;
+            $hreflangs[ $hreflang ] = esc_url( $this->get_current_url( $lang ) );
+        }
+        $hreflangs['x-default'] = esc_url( $this->get_current_url( $q_config['default_language'] ) );
+
+        foreach ( $hreflangs as $hreflang => $href ) {
+            echo '<link hreflang="' . $hreflang . '" href="' . $href . '" rel="alternate" />' . PHP_EOL;
         }
     }
 
@@ -350,6 +355,7 @@ class QTX_Module_Slugs {
     function filter_request( $query ) {
         global $q_config;
         global $wp;
+        $query_orig = $query;
 
         if ( isset( $wp->matched_query ) ) {
             if ( isset( $query['error'] ) ) {
@@ -359,34 +365,33 @@ class QTX_Module_Slugs {
         }
 
         // -> home url
-        if ( empty( $query ) || isset( $query['error'] ) ):
+        if ( empty( $query ) || isset( $query['error'] ) ) {
             $function = 'home_url';
             $id       = '';
 
         // -> search
-        elseif ( isset( $query['s'] ) ):
+        } elseif ( isset( $query['s'] ) ) {
             $id       = $query['s'];
             $function = "get_search_link";
 
         // -> page
-        elseif ( isset( $query['pagename'] ) || isset( $query['page_id'] ) ):
+        } elseif ( isset( $query['pagename'] ) || isset( $query['page_id'] ) ){
             $page = get_transient( 'qtranslate_slugs_matched_page' );
             if ( $page === false ) {
                 $page = isset( $query['page_id'] ) ? get_post( $query['page_id'] ) : $this->get_page_by_path( $query['pagename'] );
             }
             delete_transient( 'qtranslate_slugs_matched_page' );
-            if ( ! $page ) {
-                return $query;
+            if ( $page ) {
+                $id          = $page->ID;
+                $cache_array = array( $page );
+                update_post_caches( $cache_array, 'page' );
+                $query['pagename'] = get_page_uri( $page );
+                $function          = 'get_page_link';
             }
-            $id          = $page->ID;
-            $cache_array = array( $page );
-            update_post_caches( $cache_array, 'page' );
-            $query['pagename'] = get_page_uri( $page );
-            $function          = 'get_page_link';
 
         // -> category
         // If 'name' key is defined, query is relevant to a post with a /%category%/%postname%/ permalink structure and will be captured later.
-        elseif ( ( ( isset( $query['category_name'] ) || isset( $query['cat'] ) ) && ! isset( $query['name'] ) ) ):
+        } elseif ( ( isset( $query['category_name'] ) || isset( $query['cat'] ) ) && ! isset( $query['name'] ) ) {
             if ( isset( $query['category_name'] ) ) {
                 $term_slug = $this->get_last_slash( empty( $query['category_name'] ) ? $wp->request : $query['category_name'] );
                 $term      = $this->get_term_by( 'slug', $term_slug, 'category' );
@@ -394,28 +399,26 @@ class QTX_Module_Slugs {
                 $term = get_term( $query['cat'], 'category' );
             }
 
-            if ( ! $term ) {
-                return $query;
+            if ( $term ) {
+                $cache_array = array( $term );
+                update_term_cache( $cache_array, 'category' ); // caching query :)
+                $id                     = $term->term_id;
+                $query['category_name'] = $term->slug; // uri
+                $function               = 'get_category_link';
             }
-            $cache_array = array( $term );
-            update_term_cache( $cache_array, 'category' ); // caching query :)
-            $id                     = $term->term_id;
-            $query['category_name'] = $term->slug; // uri
-            $function               = 'get_category_link';
 
         // -> tag
-        elseif ( isset( $query['tag'] ) ):
+        } elseif ( isset( $query['tag'] ) ) {
             $term = $this->get_term_by( 'slug', $query['tag'], 'post_tag' );
-            if ( ! $term ) {
-                return $query;
+            if ( $term ) {
+                $cache_array = array( $term );
+                update_term_cache( $cache_array, 'post_tag' ); // caching query :)
+                $id           = $term->term_id;
+                $query['tag'] = $term->slug;
+                $function     = 'get_tag_link';
             }
-            $cache_array = array( $term );
-            update_term_cache( $cache_array, 'post_tag' ); // caching query :)
-            $id           = $term->term_id;
-            $query['tag'] = $term->slug;
-            $function     = 'get_tag_link';
 
-        else:
+        } else {
 
             // If none of the conditions above are matched, specific tests to identify custom post types and taxonomies are performed here.
 
@@ -434,34 +437,33 @@ class QTX_Module_Slugs {
                     $function = 'get_post_type_archive_link';
                     $id       = $query['post_type'];
                 } else {
-                    $page_slug = ( isset( $query['name'] ) && ! empty( $query['name'] ) ) ? $query['name'] : $query[ $query['post_type'] ];
-                    $page      = $this->get_page_by_path( $page_slug, $query['post_type'] );
-                    if ( ! $page ) {
-                        return $query;
+
+                    $page_slug = $query['name'] ?? $query[ $query['post_type'] ];
+                    $page      = isset( $page_slug ) ? $this->get_page_by_path( $page_slug, $query['post_type'] ) : null;
+                    if ( $page ) {
+                        $id          = $page->ID;
+                        $cache_array = array( $page );
+                        update_post_caches( $cache_array, $query['post_type'] ); // caching query :)
+                        $query['name'] = $query[ $query['post_type'] ] = get_page_uri( $page );
+                        $function      = 'get_post_permalink';
                     }
-                    $id          = $page->ID;
-                    $cache_array = array( $page );
-                    update_post_caches( $cache_array, $query['post_type'] ); // caching query :)
-                    $query['name'] = $query[ $query['post_type'] ] = get_page_uri( $page );
-                    $function      = 'get_post_permalink';
                 }
             }
 
             // -> taxonomy
-            foreach ( $this->get_public_taxonomies() as $item ):
+            foreach ( $this->get_public_taxonomies() as $item ) {
                 if ( isset( $query[ $item->name ] ) ) {
-                    $term_slug = $this->get_last_slash( empty( $query[ $item->name ] ) ? $wp->request : $query[ $item->name ] );
-                    $term      = $this->get_term_by( 'slug', $term_slug, $item->name );
-                    if ( ! $term ) {
-                        return $query;
+                    $term_slug = $this->get_last_slash( $query[ $item->name ] ?? $wp->request );
+                    $term      = isset( $term_slug ) ? $this->get_term_by( 'slug', $term_slug, $item->name ) : null;
+                    if ( $term ) {
+                        $cache_array = array( $term );
+                        update_term_cache( $cache_array, $item->name ); // caching query :)
+                        $id                   = $term;
+                        $query[ $item->name ] = $term->slug;
+                        $function             = 'get_term_link';
                     }
-                    $cache_array = array( $term );
-                    update_term_cache( $cache_array, $item->name ); // caching query :)
-                    $id                   = $term;
-                    $query[ $item->name ] = $term->slug;
-                    $function             = 'get_term_link';
                 }
-            endforeach;
+            }
 
             /* As 'name' key is present also at least both for pages and custom post types, this condition alone cannot be used to identify uniquely the posts.
              * For pages and custom post types specific tests can be and are performed earlier but no additional specific condition seems to be applicable for posts.
@@ -472,16 +474,15 @@ class QTX_Module_Slugs {
             // -> post
             if ( ! isset( $function ) && ( isset( $query['name'] ) || isset( $query['p'] ) ) ) {
                 $post = isset( $query['p'] ) ? get_post( $query['p'] ) : $this->get_page_by_path( $query['name'], 'post' );
-                if ( ! $post ) {
-                    return $query;
+                if ( $post ) {
+                    $query['name'] = $post->post_name;
+                    $id            = $post->ID;
+                    $cache_array   = array( $post );
+                    update_post_caches( $cache_array );
+                    $function = 'get_permalink';
                 }
-                $query['name'] = $post->post_name;
-                $id            = $post->ID;
-                $cache_array   = array( $post );
-                update_post_caches( $cache_array );
-                $function = 'get_permalink';
             }
-        endif;
+        }
 
         if ( isset( $function ) && isset( $id ) ) {
             // parse all languages links
@@ -491,6 +492,10 @@ class QTX_Module_Slugs {
                 $this->current_url[ $lang ] = esc_url( $this->parse_url_args( $url ) );
             }
             $this->temp_lang = false;
+
+        /* If no handling function has been identified, original query is restored (probably going to 404) */
+        } else {
+            $query = $query_orig;
         }
 
         return $query;
@@ -529,27 +534,30 @@ class QTX_Module_Slugs {
      * @return string Home url link with optional path appended.
      */
     public function home_url( string $url, string $path, ?string $scheme, ?int $blog_id ): string {
-        if ( ! in_array( $scheme, array( 'http', 'https' ) ) ) {
+        if ( ! isset($scheme) ){
             $scheme = is_ssl() && ! is_admin() ? 'https' : 'http';
         }
 
-        if ( empty( $blog_id ) || ! is_multisite() ) {
-            $url = get_option( 'home' );
-        } else {
-            $url = get_blog_option( $blog_id, 'home' );
+        if ( $scheme === 'rest' ) {
+                return $url;
+
+        } elseif ( $scheme !== 'relative' ) {
+            if ( empty( $blog_id ) || ! is_multisite() ) {
+                $url = get_option( 'home' );
+            } else {
+                $url = get_blog_option( $blog_id, 'home' );
+            }
+
+            if ( 'http' != $scheme ) {
+                $url = str_replace( 'http://', "$scheme://", $url );
+            }
+
+            if ( ! empty( $path ) && is_string( $path ) && strpos( $path, '..' ) === false ) {
+                $url .= '/' . ltrim( $path, '/' );
+            }
         }
 
-        if ( 'http' != $scheme ) {
-            $url = str_replace( 'http://', "$scheme://", $url );
-        }
-
-        $ignore_caller = $this->ignore_rewrite_caller();
-
-        if ( ! empty( $path ) && is_string( $path ) && strpos( $path, '..' ) === false ) {
-            $url .= '/' . ltrim( $path, '/' );
-        }
-
-        if ( ! $ignore_caller ) {
+        if ( ! $this->ignore_rewrite_caller() ) {
             $url = qtranxf_convertURL( $url, $this->get_temp_lang(), true );
         }
 
