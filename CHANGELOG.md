@@ -1,3 +1,9 @@
+### 3.15.2
+* Fix missing base `QTX_Translator` hooks in admin (#1337)
+* Fix ACF settings for post type and taxonomy (#1342)
+* Fix localize script with missing ACF options (#1341)
+* Fix Slugs paged custom post types archives (#1340)
+
 ### 3.15.1
 * Fix undefined `str_starts_with` with PHP 7 (#1334)
 * Fix wrong PHP types with date/time filters (#1335)

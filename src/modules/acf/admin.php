@@ -71,6 +71,19 @@ class QTX_Module_Acf_Admin {
     }
 
     /**
+     * Return the default built-in options without querying the options in DB.
+     * @return array
+     */
+    private static function default_options(): array {
+        return [
+            'standard_fields'    => self::standard_fields_default(),
+            'group_sub_fields'   => self::group_sub_fields_default(),
+            'qtranslate_fields'  => self::qtranslate_fields_default(),
+            'show_language_tabs' => false,
+        ];
+    }
+
+    /**
      * Filter the field types to exclude the extended fields that have been deactivated in settings.
      *
      * @param array $groups
@@ -109,7 +122,7 @@ class QTX_Module_Acf_Admin {
             'qtranslate-admin-main'
         ), QTX_VERSION );
 
-        wp_localize_script( 'qtranslate-acf', 'qTranslateModuleAcf', get_option( QTX_OPTIONS_MODULE_ACF ) );
+        wp_localize_script( 'qtranslate-acf', 'qTranslateModuleAcf', get_option( QTX_OPTIONS_MODULE_ACF, self::default_options() ) );
     }
 
     /**
@@ -405,12 +418,7 @@ class QTX_Module_Acf_Admin {
         // 1) the settings falls back to default when all values are unchecked (not set in POST)
         // 2) if new options come in later, we have no way to tell it's undefined or unchecked after user update.
         // Ensure we set values for all keys though the default values are ignored.
-        $options  = [
-            'standard_fields'    => self::standard_fields_default(),
-            'group_sub_fields'   => self::group_sub_fields_default(),
-            'qtranslate_fields'  => self::qtranslate_fields_default(),
-            'show_language_tabs' => isset( $post_acf['show_language_tabs'] ) && $post_acf['show_language_tabs'],
-        ];
+        $options = self::default_options();
         // If checked, convert '1' strings to `true`, otherwise `false` (ignore the current value = default).
         $set_bool = function ( &$item, $key, $post_fields ): void {
             $item = isset( $post_fields[ $key ] ) && $post_fields[ $key ];
@@ -418,6 +426,7 @@ class QTX_Module_Acf_Admin {
         array_walk( $options['standard_fields'], $set_bool, $post_acf['standard_fields'] ?? [] );
         array_walk( $options['group_sub_fields'], $set_bool, $post_acf['group_sub_fields'] ?? [] );
         array_walk( $options['qtranslate_fields'], $set_bool, $post_acf['qtranslate_fields'] ?? [] );
+        $options['show_language_tabs'] = isset( $post_acf['show_language_tabs'] ) && $post_acf['show_language_tabs'];
         update_option( QTX_OPTIONS_MODULE_ACF, $options, false );
     }
 

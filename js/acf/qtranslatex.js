@@ -5,11 +5,13 @@ $(window).on('load', function () {
 
     qtx.enableLanguageSwitchingButtons('block');
 
+    // Type of field e.g. text, textarea, wysiwyg.
     const isTranslatableStandardField = function (fieldType) {
         return !!window.qTranslateModuleAcf?.standard_fields?.[fieldType];
     }
-    const isTranslatableGroupSubField = function (fieldType) {
-        return !!window.qTranslateModuleAcf?.group_sub_fields?.[fieldType];
+    // Type of sub-field in a group e.g. label, instructions, default_value.
+    const isTranslatableGroupSubField = function (groupType) {
+        return !!window.qTranslateModuleAcf?.group_sub_fields?.[groupType];
     }
 
     const postType = $('#post_type').val();
@@ -36,19 +38,24 @@ $(window).on('load', function () {
         return;
     }
 
+    const isTranslatableElementForPostType = function (element, postType) {
+        // For special ACF post type settings we usually care only about the sub-groups types.
+        if (postType === 'acf-post-type' || postType === 'acf-taxonomy') {
+            return isTranslatableGroupSubField('label') && element.id.match(/acf_(post_type|taxonomy)-labels.*/);
+        }
+        // The general case is for content fields, not in ACF settings.
+        return isTranslatableStandardField(element.type);
+    }
     // Add hooks for translatable standard fields, defined as field type -> selector.
     const fieldTypes = {
         text: 'input:text',
         textarea: 'textarea', // only regular textarea, not wysiwyg editors (.wp-editor-area).
     };
     $.each(fieldTypes, function (fieldType, selector) {
-        if (!isTranslatableStandardField(fieldType)) {
-            return;
-        }
         acf.findFields({type: fieldType}).each(function () {
             // The hooks must be set on the child elements found by the selector, assuming a single one by field.
             $(this).find(selector).each(function () {
-                if (!qtx.hasContentHook(this)) {
+                if (!qtx.hasContentHook(this) && isTranslatableElementForPostType(this, postType)) {
                     qtx.addContentHookB(this);
                 }
             });
@@ -95,4 +102,7 @@ $(window).on('load', function () {
     //     // call the original handler
     //     repeaterFieldRemove.call(this, $el);
     // }
+
+    // LSB might have been skipped due to missing hooks, create them now if new hooks have been set.
+    qtx.setupLanguageSwitch();
 });
