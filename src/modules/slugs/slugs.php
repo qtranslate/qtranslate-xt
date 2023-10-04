@@ -438,7 +438,7 @@ class QTX_Module_Slugs {
                     $id       = $query['post_type'];
                 } else {
 
-                    $page_slug = $query['name'] ?? $query[ $query['post_type'] ];
+                    $page_slug = $query['name'] ?? $query[ $query['post_type'] ] ?? null;
                     $page      = isset( $page_slug ) ? $this->get_page_by_path( $page_slug, $query['post_type'] ) : null;
                     if ( $page ) {
                         $id          = $page->ID;
