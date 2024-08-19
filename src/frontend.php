@@ -106,6 +106,9 @@ function qtranxf_wp_get_nav_menu_items( $items, $menu, $args ) {
                             $term = wp_cache_get( $item->object_id, $item->object );
                             if ( $term ) {
                                 $item_title = $q_config['term_name'][ $term->name ][ $language ] ?? '';
+                                 if ($item_title == '' && $q_config['show_menu_alternative_language']) {
+                                	$item_title = $item->title;
+                                }
                                 if ( ! empty( $term->description ) ) {
                                     $item->description = $term->description;
                                 }
