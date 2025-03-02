@@ -575,7 +575,7 @@ function qtranxf_slugs_get_object_terms( array $terms, $obj_id, $taxonomy, array
 
         if ( ! empty( $terms ) ) {
             foreach ( $terms as $term ) {
-                if ( isset( $meta[ $term->name ][ $q_config['language'] ] ) ) {
+                if ( isset( $term->name ) && isset( $meta[ $term->name ][ $q_config['language'] ] ) ) {
                     $term->name = $meta[ $term->name ][ $q_config['language'] ];
                 }
             }
