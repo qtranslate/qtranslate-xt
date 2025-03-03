@@ -63,7 +63,7 @@ if ( ! defined( 'QTRANSLATE_FILE' ) ) {
 }
 
 require_once QTRANSLATE_DIR . '/src/init.php';
-add_action( 'plugins_loaded', 'qtranxf_init_language', 2 ); // User is not authenticated yet, high priority needed.
+add_action( 'init', 'qtranxf_init_language', 2 );
 
 if ( is_admin() ) {
     require_once QTRANSLATE_DIR . '/src/admin/activation_hook.php';
