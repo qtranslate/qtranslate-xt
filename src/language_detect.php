@@ -212,12 +212,12 @@ function qtranxf_parse_language_info( array &$url_info, bool $link = false ) {
     // parse query lang (even for non query mode!)
     $query_lang = false;
     if ( ! $link ) {
-        if ( isset( $_GET['lang'] ) ) {
+        if ( isset( $_GET['lang'] ) && is_string( $_GET['lang'] ) ) {
             $query_lang = qtranxf_resolveLangCase( $_GET['lang'], $doredirect );
             if ( $query_lang ) {
                 $url_info['lang_query_get'] = $query_lang;  // only used in qtranxf_url_set_language
             }
-        } else if ( isset( $_POST['lang'] ) ) {
+        } else if ( isset( $_POST['lang'] ) && is_string( $_POST['lang'] ) ) {
             $query_lang = qtranxf_resolveLangCase( $_POST['lang'], $doredirect );
         }
     } elseif ( ! empty( $url_info['query'] ) && preg_match( '/(^|&|&amp;|&#038;|\?)lang=($lang_code)/i', $url_info['query'], $match ) ) {
