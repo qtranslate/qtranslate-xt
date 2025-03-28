@@ -1,3 +1,15 @@
+### 3.15.3
+Core
+* Fix WP6.7 warning loading textdomain (#1422)
+* Fix wp-cli incompatibility (#1387)
+* Fix `qtranxf_resolveLangCase` called with array (#1416)
+
+Slugs
+* Fix several filter and URL issues (#1363, #1358, #1359, #1373, #1273)
+* Fix php warning (#1398)
+* Slugs/WC: fix warning on post_type missing key (#1378)
+* Update detailed instructions to migrate from legacy QTS (#1404)
+
 ### 3.15.2
 * Fix missing base `QTX_Translator` hooks in admin (#1337)
 * Fix ACF settings for post type and taxonomy (#1342)
