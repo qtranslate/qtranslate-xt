@@ -342,19 +342,13 @@ function qtranxf_setcookie_language( string $lang, string $cookie_name, string $
         return;
     }
 
-    // SameSite only available with options API from PHP 7.3.0
-    if ( version_compare( PHP_VERSION, '7.3.0' ) >= 0 ) {
-        setcookie( $cookie_name, $lang, [
-            'expires'  => strtotime( '+1year' ),
-            'path'     => $cookie_path,
-            'secure'   => $q_config['use_secure_cookie'],
-            'httponly' => true,
-            'samesite' => QTX_COOKIE_SAMESITE
-        ] );
-    } else {
-        // only meant for server-side, set 'httponly' flag
-        setcookie( $cookie_name, $lang, strtotime( '+1year' ), $cookie_path, null, $q_config['use_secure_cookie'], true );
-    }
+    setcookie( $cookie_name, $lang, [
+        'expires'  => strtotime( '+1year' ),
+        'path'     => $cookie_path,
+        'secure'   => $q_config['use_secure_cookie'],
+        'httponly' => true,
+        'samesite' => QTX_COOKIE_SAMESITE
+    ] );
 }
 
 function qtranxf_set_language_cookie( string $lang ): void {
