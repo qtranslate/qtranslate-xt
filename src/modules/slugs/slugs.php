@@ -533,7 +533,7 @@ class QTX_Module_Slugs {
      *
      * @return string Home url link with optional path appended.
      */
-    public function home_url( string $url, string $path, ?string $scheme, ?int $blog_id ): string {
+    public function home_url( string $url, ?string $path, ?string $scheme, ?int $blog_id ): string {
         if ( ! isset($scheme) ){
             $scheme = is_ssl() && ! is_admin() ? 'https' : 'http';
         }
