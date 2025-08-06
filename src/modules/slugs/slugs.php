@@ -527,7 +527,7 @@ class QTX_Module_Slugs {
      * Retrieve the home url for a given site.
      *
      * @param string $url The complete home URL including scheme and path.
-     * @param string $path Path relative to the home url.
+     * @param string|null $path (optional) Path relative to the home url.
      * @param string|null $scheme (optional) Scheme to give the home url context. Currently 'http', 'https'.
      * @param int|null $blog_id (optional) Site ID, or null for the current site.
      *
