@@ -753,6 +753,7 @@ class QTX_Admin_Settings {
                         <tbody>
                         <?php
                         foreach ( $settings_modules as $module ) :
+                            $state_info = $module->state_info();
                             ?>
                             <tr>
                                 <td>
@@ -765,10 +766,10 @@ class QTX_Admin_Settings {
                                         <?php echo $module->name; ?>
                                     </label>
                                 </td>
-                                <td><?php echo $module->plugin_state_label ?></td>
-                                <td style="color: <?php echo $module->color ?>">
-                                    <span class="dashicons <?php echo $module->icon ?>"></span>
-                                    <?php echo $module->module_state_label ?>
+                                <td><?php echo $module->plugin_state_label() ?></td>
+                                <td style="color: <?php echo $state_info['color'] ?>">
+                                    <span class="dashicons <?php echo $state_info['icon'] ?>"></span>
+                                    <?php echo $state_info['label'] ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
