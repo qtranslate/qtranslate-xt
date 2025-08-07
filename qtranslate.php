@@ -3,7 +3,7 @@
  * Plugin Name: qTranslate-XT
  * Plugin URI: https://github.com/qtranslate/qtranslate-xt/
  * Description: Adds user-friendly multilingual content support, stored in single post.
- * Version: 3.15.3
+ * Version: 3.15.4
  * Requires at least: 5.0
  * Requires PHP: 7.3
  * Author: qTranslate Community
