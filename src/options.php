@@ -323,7 +323,7 @@ function qtranxf_load_option_bool( string $name, ?bool $default_value = null ): 
     }
 }
 
-function qtranxf_load_option_func( string $name, string $opn = null, $func = null ): void {
+function qtranxf_load_option_func( string $name, ?string $opn = null, $func = null ): void {
     global $q_config;
     if ( ! $opn ) {
         $opn = 'qtranslate_' . $name;
