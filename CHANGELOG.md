@@ -1,3 +1,9 @@
+### 3.15.4
+* Fix `_load_textdomain_just_in_time` notice (#1433, #1438)
+* Fix link to modules in readme (#1442)
+* Fix deprecated implicit nullable in PHP8.4 (#1450)
+* Make path optional in Slugs `home_url` (#1436)
+
 ### 3.15.3
 Core
 * Fix WP6.7 warning loading textdomain (#1422)
