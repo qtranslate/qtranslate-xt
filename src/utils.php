@@ -477,7 +477,7 @@ function qtranxf_parse_page_config( array $config, string $url_path, string $url
     return $page_configs;
 }
 
-function qtranxf_write_config_log( array $config, string $suffix = '', ?string $url_path = null, ?string $url_query = null, ?string $post_type = null ): void {
+function qtranxf_write_config_log( array $config, string $suffix = '', ?string $url_path = null, ?string $url_query = null, $post_type = null ): void {
     global $q_config;
     if ( empty( $q_config['i18n-log-dir'] ) ) {
         return;
