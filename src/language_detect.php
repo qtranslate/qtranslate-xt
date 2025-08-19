@@ -418,7 +418,7 @@ function qtranxf_http_negotiate_language(): ?string {
 }
 
 /**
- * Check if a URL redirection is needed and attempt to do so.
+ * Check if a URL redirection (301 permanent) is needed and attempt to do so.
  * Two main causes of redirect:
  *  - the fetched URL info contains already a 'doredirect' order, previously set;
  *  - the URL is not canonical for the detected language.
@@ -449,7 +449,7 @@ function qtranxf_check_url_maybe_redirect( &$url_info ) {
          */
         $target = apply_filters( 'qtranslate_language_detect_redirect', $url_lang, $url_orig, $url_info );
         if ( $target !== false && $target != $url_orig ) {
-            wp_redirect( $target );
+            wp_redirect( $target, 301, 'qTranslate-XT' );  # Permanent redirect.
             nocache_headers(); // prevent browser from caching redirection
             exit();
         } else {
