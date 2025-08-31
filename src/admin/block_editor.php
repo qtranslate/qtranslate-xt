@@ -82,12 +82,16 @@ class QTX_Admin_Block_Editor {
 
     /**
      * Intercepts the post update and recompose the multi-language fields before being written in DB
+     * For title, content, excerpt:
+     * - the new input value is only for the current language (single language mode)
+     * - retrieve the other languages from the post in DB
+     * It is hacky, but we don't have all ML data on the client-side.
      *
      * @param WP_REST_Response|WP_HTTP_Response|WP_Error|mixed $response
      * @param array $handler
      * @param WP_REST_Request $request
      *
-     * @return mixed
+     * @return mixed REST response
      */
     public function rest_request_before_callbacks( $response, array $handler, WP_REST_Request $request ) {
         if ( $request->get_method() !== 'PUT' && $request->get_method() !== 'POST' ) {
@@ -108,43 +112,50 @@ class QTX_Admin_Block_Editor {
                 continue; // only the changed fields are set in the REST request
             }
 
-            // split original values with empty strings by default
-            $original_value = $post[ 'post_' . $field ];
-            $split          = qtranxf_split( $original_value );
-
-            // replace current language with the new value
-            $split[ $editor_lang ] = $request_body[ $field ];
-
-            // remove auto-draft default title for other languages (not the correct translation)
-            if ( $field === 'title' && $post['post_status'] === 'auto-draft' ) {
-                global $q_config;
-                foreach ( $q_config['enabled_languages'] as $lang ) {
-                    if ( $lang !== $editor_lang ) {
-                        $split[ $lang ] = '';
+            // Local function to replace the new value with full ML content, updated with the input for the current language
+            $replace_post_field_editor_lang = function ( string &$raw_value ) use ( $field, $post, $editor_lang ): void {
+                // split original post values with empty strings by default
+                $original_value        = $post[ 'post_' . $field ];
+                $split                 = qtranxf_split( $original_value );
+                $split[ $editor_lang ] = $raw_value;
+                // remove auto-draft default title for other languages (not the correct translation)
+                if ( $field === 'title' && $post['post_status'] === 'auto-draft' ) {
+                    global $q_config;
+                    foreach ( $q_config['enabled_languages'] as $lang ) {
+                        if ( $lang !== $editor_lang ) {
+                            $split[ $lang ] = '';
+                        }
                     }
                 }
+
+                $raw_value = qtranxf_join_b( $split );
+            };
+
+            // Attention: the input can come as string or array[ 'raw': value, 'rendered': xxx ]
+            // We store only raw values, for string it is implicitly raw.
+            // The input structure should not be modified in the request, only the raw value.
+            $request_field = $request_body[ $field ];
+            if ( is_string( $request_field ) ) {
+                $replace_post_field_editor_lang( $request_field );
+            } elseif ( is_array( $request_field ) && isset( $request_field['raw'] ) ) {
+                $replace_post_field_editor_lang( $request_field['raw'] );
             }
 
-            // TODO handle custom separator
-            //$sep = '[';
-            //$new_data = qtranxf_collect_translations_deep( $split, $sep );
-            //$new_data = qtranxf_join_texts( $split, $sep );
-            $new_data = qtranxf_join_b( $split );
-
-            $request->set_param( $field, $new_data );
+            $request->set_param( $field, $request_field );
         }
 
         return $response;
     }
 
     /**
-     * Restore the raw content of the post just updated and set the 'qtx_editor_lang', as for the prepare step
+     * Restore the raw content of the post just updated and set the 'qtx_editor_lang', as for the before REST step.
+     * For the DB update all languages were set, now we return only values for the current language to the REST client.
      *
      * @param WP_REST_Response|WP_HTTP_Response|WP_Error|mixed $response
      * @param array $handler
      * @param WP_REST_Request $request
      *
-     * @return mixed
+     * @return mixed REST response
      */
     public function rest_request_after_callbacks( $response, array $handler, WP_REST_Request $request ) {
         if ( ! $response instanceof WP_HTTP_Response // This includes WP_REST_Response that derives from it.
@@ -206,6 +217,7 @@ class QTX_Admin_Block_Editor {
         }
         $response_data['qtx_editor_lang'] = $editor_lang;
         $response->set_data( $response_data );
+
         return $response;
     }
 
