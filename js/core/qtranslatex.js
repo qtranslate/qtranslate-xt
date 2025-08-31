@@ -1138,7 +1138,7 @@ const qTranslateX = function (pg) {
 
         const langSwitchWrap = qtx.createSetOfLSBwith(qTranslateConfig.lsb_style_wrap_class);
         span.appendChild(langSwitchWrap);
-        $('#qtranxs-meta-box-lsb .hndle').unbind('click.postboxes');
+        $('#qtranxs-meta-box-lsb .hndle').off('click.postboxes');
     };
 
     const setupAnchorsLSB = function () {
