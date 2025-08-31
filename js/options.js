@@ -58,7 +58,7 @@ const onFlagChange = function (url) {
 };
 
 $(function () {
-    $(window).bind('hashchange', function () {
+    $(window).on('hashchange', function () {
         onHashChange();
     });
     onHashChange('#general');

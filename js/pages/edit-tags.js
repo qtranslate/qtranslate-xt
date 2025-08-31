@@ -34,7 +34,7 @@ $(document).on('qtxLoadAdmin:edit-tags', (event, qtx) => {
     };
 
     $theList.each(function (i, e) {
-        $(e).bind("DOMSubtreeModified", onRowAdd);
+        $(e).on("DOMSubtreeModified", onRowAdd);
     });
 
     // remove "Quick Edit" links for now
