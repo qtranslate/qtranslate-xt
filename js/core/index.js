@@ -30,4 +30,4 @@ $(window).on('load', function () {
 });
 
 export * from './dom';
-export * from './qblocks';
+export * from './multi-lang-tags';

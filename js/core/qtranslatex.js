@@ -11,7 +11,7 @@
  */
 'use strict';
 import {domCreateElement} from './dom';
-import {mlSplitRaw, mlExplode, mlParseTokens} from './qblocks';
+import {mlSplitRaw, mlExplode, mlParseTokens} from './multi-lang-tags';
 import {getStoredEditLanguage, storeEditLanguage} from './store';
 
 const $ = jQuery;
@@ -439,12 +439,12 @@ const qTranslateX = function (pg) {
     const addDisplayHookNode = function (node) {
         if (!node.nodeValue)
             return 0;
-        const blocks = mlSplitRaw(node.nodeValue);
-        if (!blocks || !blocks.length || blocks.length === 1)
+        const tokens = mlSplitRaw(node.nodeValue);
+        if (!tokens || !tokens.length || tokens.length === 1)
             return 0;
         const hook = {};
         hook.nd = node;
-        hook.contents = mlParseTokens(blocks);
+        hook.contents = mlParseTokens(tokens);
         completeDisplayContent(hook.contents);
         node.nodeValue = hook.contents[qTranslateConfig.activeLanguage];
         displayHookNodes.push(hook);
@@ -457,13 +457,13 @@ const qTranslateX = function (pg) {
     const addDisplayHookAttr = function (node, attr) {
         if (!node.hasAttribute(attr)) return 0;
         const value = node.getAttribute(attr);
-        const blocks = mlSplitRaw(value);
-        if (!blocks || !blocks.length || blocks.length === 1)
+        const tokens = mlSplitRaw(value);
+        if (!tokens || !tokens.length || tokens.length === 1)
             return 0;
         const hook = {};
         hook.nd = node;
         hook.attr = attr;
-        hook.contents = mlParseTokens(blocks);
+        hook.contents = mlParseTokens(tokens);
         completeDisplayContent(hook.contents);
         node.setAttribute(attr, hook.contents[qTranslateConfig.activeLanguage]);
         displayHookAttrs.push(hook);
@@ -559,8 +559,8 @@ const qTranslateX = function (pg) {
             }
 
             const text = hook.contentField.value.trim();
-            const blocks = mlSplitRaw(text);
-            if (!blocks || blocks.length <= 1) {
+            const tokens = mlSplitRaw(text);
+            if (!tokens || tokens.length <= 1) {
                 // value is not ML, switch it to other language
                 hook.fields[hook.lang].value = text;
                 hook.lang = lang;
@@ -578,7 +578,7 @@ const qTranslateX = function (pg) {
                 }
             } else {
                 // value is ML, fill out values per language
-                const contents = mlParseTokens(blocks);
+                const contents = mlParseTokens(tokens);
                 for (const langField in hook.fields) {
                     hook.fields[langField].value = contents[langField];
                 }

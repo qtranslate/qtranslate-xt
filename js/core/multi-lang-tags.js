@@ -1,5 +1,5 @@
 /**
- * Utilities for multi-lang blocks
+ * Utilities for multi-lang tags
  */
 'use strict';
 const qTranslateConfig = window.qTranslateConfig;
@@ -13,20 +13,20 @@ export const mlSplitRaw = function (rawText) {
 };
 
 export const mlExplode = function (rawText) {
-    const blocks = mlSplitRaw(rawText);
-    return mlParseTokens(blocks);
+    const tokens = mlSplitRaw(rawText);
+    return mlParseTokens(tokens);
 };
 
-export const mlParseTokens = function (blocks) {
+export const mlParseTokens = function (tokens) {
     const result = new Object;
     for (const lang in qTranslateConfig.language_config) {
         result[lang] = '';
     }
-    if (!blocks || !blocks.length)
+    if (!tokens || !tokens.length)
         return result;
-    if (blocks.length === 1) {
+    if (tokens.length === 1) {
         // no language separator found, enter it to all languages
-        const b = blocks[0];
+        const b = tokens[0];
         for (const lang in qTranslateConfig.language_config) {
             result[lang] += b;
         }
@@ -37,8 +37,8 @@ export const mlParseTokens = function (blocks) {
     const slang_regex = new RegExp('{:(lang)}'.replace(/lang/g, qTranslateConfig.lang_code_format), 'gi');
     let lang = false;
     let matches;
-    for (let i = 0; i < blocks.length; ++i) {
-        const b = blocks[i];
+    for (let i = 0; i < tokens.length; ++i) {
+        const b = tokens[i];
         if (!b.length)
             continue;
         matches = clang_regex.exec(b);
