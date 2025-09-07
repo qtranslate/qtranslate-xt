@@ -4,6 +4,27 @@
 'use strict';
 const qTranslateConfig = window.qTranslateConfig;
 
+/**
+ * Decompose a string containing ML tags into an object with keys for each language.
+ * Example: '[:en]EN-content[:fr]FR-contenu[:]' -> {en: 'EN-content', fr: 'FR-contenu'}
+ *
+ * If no tag is found the same content is set to each langage.
+ * Example: 'unique content' -> {en: 'unique content', fr: 'unique content'}
+ *
+ * @param {string} rawText
+ * @returns {Object}
+ */
+export const mlExplode = function (rawText) {
+    const tokens = mlSplitRaw(rawText);
+    return mlParseTokens(tokens);
+};
+
+/**
+ * Decompose a raw string containing ML tag+content (endTag) into an ordered array of tokens with tags and contents.
+ *
+ * @param {string} rawText
+ * @returns {string[]}
+ */
 export const mlSplitRaw = function (rawText) {
     const regex = '(<!--:lang-->|<!--:-->|\\[:lang]|\\[:]|{:lang}|{:})'.replace(/lang/g, qTranslateConfig.lang_code_format);
     const splitRegex = new RegExp(regex, "gi");
@@ -12,11 +33,13 @@ export const mlSplitRaw = function (rawText) {
     return rawText.split(splitRegex);
 };
 
-export const mlExplode = function (rawText) {
-    const tokens = mlSplitRaw(rawText);
-    return mlParseTokens(tokens);
-};
-
+/**
+ * Parse an ordered array of tokens of ML tag+content (endTag) and assign them to an object,
+ * where keys are language and values the respective content.
+ *
+ * @param {string[]} tokens
+ * @returns {Object}
+ */
 export const mlParseTokens = function (tokens) {
     const result = new Object;
     for (const lang in qTranslateConfig.language_config) {

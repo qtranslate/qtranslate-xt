@@ -3,6 +3,15 @@
  */
 'use strict';
 
+/**
+ * Create an HTML element in the DOM with optional props, parentNode, beforeNode.
+ *
+ * @param {string} tagName
+ * @param {Object=} props
+ * @param {HTMLElement=} parentNode
+ * @param {HTMLElement=} beforeNode
+ * @returns {HTMLElement}
+ */
 export const domCreateElement = function (tagName, props, parentNode, beforeNode) {
     const elem = document.createElement(tagName);
     if (props) {
