@@ -20,7 +20,7 @@
             return;
 
         //Yoast will delete this field in term-scraper
-        var contents = qtranxj_split(d.val());
+        var contents = mlExplode(d.val());
         h.contentField.value = contents[qTranslateConfig.activeLanguage];
         for (var lang in h.fields) {
             h.fields[lang].value = contents[lang];

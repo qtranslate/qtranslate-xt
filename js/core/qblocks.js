@@ -1,23 +1,23 @@
 /**
- * Utilities for qTranslate blocks
+ * Utilities for multi-lang blocks
  */
 'use strict';
 const qTranslateConfig = window.qTranslateConfig;
 
-export const qtranxj_get_split_blocks = function (text) {
+export const mlSplitRaw = function (rawText) {
     const regex = '(<!--:lang-->|<!--:-->|\\[:lang]|\\[:]|{:lang}|{:})'.replace(/lang/g, qTranslateConfig.lang_code_format);
     const splitRegex = new RegExp(regex, "gi");
     // Most browsers support RegExp.prototype[@@split]()... except IE (see debug info from troubleshooting)
     // https://caniuse.com/mdn-javascript_builtins_regexp_--split
-    return text.split(splitRegex);
+    return rawText.split(splitRegex);
 };
 
-export const qtranxj_split = function (text) {
-    const blocks = qtranxj_get_split_blocks(text);
-    return qtranxj_split_blocks(blocks);
+export const mlExplode = function (rawText) {
+    const blocks = mlSplitRaw(rawText);
+    return mlParseTokens(blocks);
 };
 
-export const qtranxj_split_blocks = function (blocks) {
+export const mlParseTokens = function (blocks) {
     const result = new Object;
     for (const lang in qTranslateConfig.language_config) {
         result[lang] = '';

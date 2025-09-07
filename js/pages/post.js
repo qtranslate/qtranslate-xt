@@ -58,7 +58,7 @@ $(document).on('qtxLoadAdmin:post', (event, qtx) => {
             if (btnViewPostA.tagName !== 'A')
                 return;
             origUrl = btnViewPostA.href;
-            langUrl = qtranxj_ce('a', {});
+            langUrl = domCreateElement('a', {});
             origUrlQ = origUrl.search(/\?/) > 0;
         }
 

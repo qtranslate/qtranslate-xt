@@ -10,8 +10,8 @@
  * Read Integration Guide: https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide for more information.
  */
 'use strict';
-import {qtranxj_ce} from './dom';
-import {qtranxj_get_split_blocks, qtranxj_split, qtranxj_split_blocks} from './qblocks';
+import {domCreateElement} from './dom';
+import {mlSplitRaw, mlExplode, mlParseTokens} from './qblocks';
 import {getStoredEditLanguage, storeEditLanguage} from './store';
 
 const $ = jQuery;
@@ -62,7 +62,7 @@ const qTranslateX = function (pg) {
      * Designed as interface for other plugin integration. The documentation is available at
      * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
      * return true if 'lang' is in the hash of enabled languages.
-     * This function maybe needed, as function qtranxj_split may return languages,
+     * This function maybe needed, as function mlExplode may return languages,
      * which are not enabled, in case they were previously enabled and had some data.
      * Such data is preserved and re-saved until user deletes it manually.
      */
@@ -219,7 +219,7 @@ const qTranslateX = function (pg) {
         hook.fields = {};
         if (!qTranslateConfig.RAW) {
             // Most crucial moment when untranslated content is parsed
-            contents = qtranxj_split(inputField.value);
+            contents = mlExplode(inputField.value);
             // Substitute the current ML content with translated content for the current language
             inputField.value = contents[hook.lang];
 
@@ -229,7 +229,7 @@ const qTranslateX = function (pg) {
                 let newName = baseName + '[' + lang + ']';
                 if (suffixName)
                     newName += suffixName;
-                const newField = qtranxj_ce('input', {
+                const newField = domCreateElement('input', {
                     name: newName,
                     type: 'hidden',
                     className: 'hidden',
@@ -244,7 +244,7 @@ const qTranslateX = function (pg) {
             // The edit language allows the server to assign the fields being edited to the active language (not switched).
             const $hidden = $form.find('input[name="qtranslate-edit-language"]');
             if (!$hidden.length) {
-                qtranxj_ce('input', {
+                domCreateElement('input', {
                     type: 'hidden',
                     name: 'qtranslate-edit-language',
                     value: qTranslateConfig.activeLanguage
@@ -258,8 +258,8 @@ const qTranslateX = function (pg) {
             case 'slug':
             case 'term': {
                 if (qTranslateConfig.RAW)
-                    contents = qtranxj_split(inputField.value);
-                hook.sepfield = qtranxj_ce('input', {
+                    contents = mlExplode(inputField.value);
+                hook.sepfield = domCreateElement('input', {
                     name: baseName + '[qtranslate-original-value]',
                     type: 'hidden',
                     className: 'hidden',
@@ -269,7 +269,7 @@ const qTranslateX = function (pg) {
                 break;
             default: {
                 if (!qTranslateConfig.RAW) {
-                    hook.sepfield = qtranxj_ce('input', {
+                    hook.sepfield = domCreateElement('input', {
                         name: baseName + '[qtranslate-separator]',
                         type: 'hidden',
                         className: 'hidden',
@@ -439,12 +439,12 @@ const qTranslateX = function (pg) {
     const addDisplayHookNode = function (node) {
         if (!node.nodeValue)
             return 0;
-        const blocks = qtranxj_get_split_blocks(node.nodeValue);
+        const blocks = mlSplitRaw(node.nodeValue);
         if (!blocks || !blocks.length || blocks.length === 1)
             return 0;
         const hook = {};
         hook.nd = node;
-        hook.contents = qtranxj_split_blocks(blocks);
+        hook.contents = mlParseTokens(blocks);
         completeDisplayContent(hook.contents);
         node.nodeValue = hook.contents[qTranslateConfig.activeLanguage];
         displayHookNodes.push(hook);
@@ -457,13 +457,13 @@ const qTranslateX = function (pg) {
     const addDisplayHookAttr = function (node, attr) {
         if (!node.hasAttribute(attr)) return 0;
         const value = node.getAttribute(attr);
-        const blocks = qtranxj_get_split_blocks(value);
+        const blocks = mlSplitRaw(value);
         if (!blocks || !blocks.length || blocks.length === 1)
             return 0;
         const hook = {};
         hook.nd = node;
         hook.attr = attr;
-        hook.contents = qtranxj_split_blocks(blocks);
+        hook.contents = mlParseTokens(blocks);
         completeDisplayContent(hook.contents);
         node.setAttribute(attr, hook.contents[qTranslateConfig.activeLanguage]);
         displayHookAttrs.push(hook);
@@ -559,7 +559,7 @@ const qTranslateX = function (pg) {
             }
 
             const text = hook.contentField.value.trim();
-            const blocks = qtranxj_get_split_blocks(text);
+            const blocks = mlSplitRaw(text);
             if (!blocks || blocks.length <= 1) {
                 // value is not ML, switch it to other language
                 hook.fields[hook.lang].value = text;
@@ -578,7 +578,7 @@ const qTranslateX = function (pg) {
                 }
             } else {
                 // value is ML, fill out values per language
-                const contents = qtranxj_split_blocks(blocks);
+                const contents = mlParseTokens(blocks);
                 for (const langField in hook.fields) {
                     hook.fields[langField].value = contents[langField];
                 }
@@ -1071,7 +1071,7 @@ const qTranslateX = function (pg) {
      * @since 3.3.2
      */
     this.createSetOfLSBwith = function (lsb_style_extra_wrap_classes) {
-        const langSwitchWrap = qtranxj_ce('ul', {className: 'qtranxs-lang-switch-wrap ' + lsb_style_extra_wrap_classes});
+        const langSwitchWrap = domCreateElement('ul', {className: 'qtranxs-lang-switch-wrap ' + lsb_style_extra_wrap_classes});
         const langs = qTranslateConfig.language_config;
         if (!qTranslateConfig.tabSwitches)
             qTranslateConfig.tabSwitches = {};
@@ -1079,7 +1079,7 @@ const qTranslateX = function (pg) {
             const lang_conf = langs[lang];
             const flag_location = qTranslateConfig.flag_location;
             const li_title = qTranslateConfig.strings.ShowIn + lang_conf.admin_name + ' [:' + lang + ']';
-            const tabSwitch = qtranxj_ce('li', {
+            const tabSwitch = domCreateElement('li', {
                 lang: lang,
                 className: 'qtranxs-lang-switch qtranxs-lang-switch-' + lang,
                 title: li_title,
@@ -1088,10 +1088,10 @@ const qTranslateX = function (pg) {
             let tabItem = tabSwitch;
             if (qTranslateConfig.lsb_style_subitem === 'button') {
                 // reuse WordPress secondary button
-                tabItem = qtranxj_ce('button', {className: 'button button-secondary', type: 'button'}, tabSwitch);
+                tabItem = domCreateElement('button', {className: 'button button-secondary', type: 'button'}, tabSwitch);
             }
-            qtranxj_ce('img', {src: flag_location + lang_conf.flag}, tabItem);
-            qtranxj_ce('span', {innerHTML: lang_conf.name}, tabItem);
+            domCreateElement('img', {src: flag_location + lang_conf.flag}, tabItem);
+            domCreateElement('span', {innerHTML: lang_conf.name}, tabItem);
             if (qTranslateConfig.activeLanguage === lang) {
                 tabSwitch.classList.add(qTranslateConfig.lsb_style_active_class);
                 $(tabSwitch).find('.button').addClass('active');
@@ -1101,14 +1101,14 @@ const qTranslateX = function (pg) {
             qTranslateConfig.tabSwitches[lang].push(tabSwitch);
         }
         if (!qTranslateConfig.hide_lsb_copy_content) {
-            const tab = qtranxj_ce('li', {className: 'qtranxs-lang-copy'}, langSwitchWrap);
-            const btn = qtranxj_ce('button', {
+            const tab = domCreateElement('li', {className: 'qtranxs-lang-copy'}, langSwitchWrap);
+            const btn = domCreateElement('button', {
                 className: 'button button-secondary',
                 type: 'button',
                 title: qTranslateConfig.strings.CopyFromAlt,
                 onclick: qtx.toggleCopyFrom
             }, tab);
-            qtranxj_ce('span', {innerHTML: qTranslateConfig.strings.CopyFrom}, btn);
+            domCreateElement('span', {innerHTML: qTranslateConfig.strings.CopyFrom}, btn);
         }
         return langSwitchWrap;
     };
