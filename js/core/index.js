@@ -5,5 +5,6 @@
 
 import './loader';
 
-export * from './dom';
+// The public API is exported here
 export * from './multi-lang-tags';
+export * from './qtranslatex';

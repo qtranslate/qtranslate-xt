@@ -2,7 +2,14 @@
 
 module.exports = {
     entry: {
-        'main': './js/main.js',
+        'main': {
+            import: './js/main.js',
+            library:
+                {
+                    name: 'qTranx',
+                    type: 'var',
+                },
+        },
         'block-editor': './js/block-editor.js',
         'notices': './js/notices.js',
         'options': './js/options.js',
