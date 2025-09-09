@@ -26,7 +26,7 @@
             for (var key in wpseoReplaceVarsL10n.replace_vars) {
                 var rv = wpseoReplaceVarsL10n.replace_vars[key];
                 if (typeof rv === 'string') {
-                    var rvs = qtranxj_split(rv);
+                    var rvs = mlExplode(rv);
                     for (var lang in qTranslateConfig.language_config) {
                         qreplace_vars[lang][key] = rvs[lang];
                     }

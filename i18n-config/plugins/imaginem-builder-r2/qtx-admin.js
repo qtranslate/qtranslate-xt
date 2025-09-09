@@ -6,9 +6,9 @@
         if (!qtx.get_ml) {
             qtx.get_ml = function (h, sep) {
                 var text = h.contentField.value.trim();
-                var blocks = qtranxj_get_split_blocks(text);
-                if (!blocks || blocks.length > 1) {//already ML
-                    var contents = qtranxj_split_blocks(blocks);
+                var tokens = mlSplitRaw(text);
+                if (!tokens || tokens.length > 1) {//already ML
+                    var contents = mlParseTokens(tokens);
                     for (var lang in h.fields) {
                         h.fields[lang].value = contents[lang];
                     }
