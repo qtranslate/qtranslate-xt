@@ -1,7 +1,7 @@
 const $ = jQuery;
 
 $(window).on('load', function () {
-    const qtx = qTranslateConfig.js.get_qtx();
+    const qtx = qTranx.hooks;
 
     qtx.enableLanguageSwitchingButtons('block');
 

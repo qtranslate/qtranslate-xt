@@ -58,9 +58,8 @@ $body.on('click', '.wp-editor-tabs .wp-switch-editor', function () {
 $(function () {
     if (!qTranslateConfig.LSB)
         return;
-    const qtx = qTranslateConfig.js.get_qtx();
     // select the edit tab from active language
-    const language = qtx.getActiveLanguage();
+    const language = qTranx.hooks.getActiveLanguage();
     if (language) {
         // show the correct ACF fields
         onLanguageSwitch(language);

@@ -823,8 +823,8 @@ function qtranxf_admin_tiny_mce_init( $mce_settings ) {
     if ( isset( $mce_settings ) ):
         ?>
         <script>
-            if (window.qTranslateConfig !== undefined && window.qTranslateConfig.js !== undefined)
-                window.qTranslateConfig.js.get_qtx();
+            if (window.qTranx !== undefined)
+                window.qTranx.hooks.init();
         </script>
     <?php
     endif;

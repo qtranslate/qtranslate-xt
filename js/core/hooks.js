@@ -1,12 +1,6 @@
 /**
- * Main qTranslateX class for LSB and content hooks
+ * Multi-lang hooks for LSB (Language Switching Buttons), ML content, editors and display.
  *
- * Search for 'Designed as interface for other plugin integration' in comments to functions
- * to find out which functions are safe to use in the 3rd-party integration.
- * Avoid accessing internal variables directly, as they are subject to be re-designed at any time.
- * Single global variable 'qTranslateConfig' is an entry point to the interface.
- * - qTranslateConfig.qtx - is a shorthand reference to the only global object of type 'qTranslateX'.
- * - qTranslateConfig.js - is a place where custom Java script functions are stored, if needed.
  * Read Integration Guide: https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide for more information.
  */
 'use strict';
@@ -1209,7 +1203,17 @@ const qTranslateX = function () {
         languageSwitchInitialized = true;
     }
 
-    const initialize = function () {
+    /**
+     * Initialize the internal state of hooks and switch.
+     * - restore the active language
+     * - setup hooks for the page config
+     * - setup MCE callbacs for editors created with preIinit
+     *
+     * ATTENTION! NOT SUPPORTED IN THE OFFICIAL API.
+     * This function is only meant for internal usage at loading time and may change.
+     * The current behavior may change in next releases. If you reall think you need to use this, ask on github.
+     */
+    this.init = function () {
         if (qTranslateConfig.LSB) {
             qTranslateConfig.activeLanguage = getStoredEditLanguage();
             if (!qTranslateConfig.activeLanguage || !qtx.isLanguageEnabled(qTranslateConfig.activeLanguage)) {
@@ -1243,9 +1247,13 @@ const qTranslateX = function () {
 
         qtx.setupLanguageSwitch();
     };
-
-    initialize();
 };
+
+/**
+ * Object instance for plugin integration (public API).
+ * Attention! The object is not fully initialized before the `qtxLoadAdmin` event.
+ */
+export const hooks = new qTranslateX();
 
 /**
  * Designed as interface for other plugin integration. The documentation is available at
@@ -1256,10 +1264,13 @@ const qTranslateX = function () {
  *
  * Note: be sure to enqueue this script before using it in other plugin (!)
  *
+ * @deprecated Use `qTranx.hooks` from new API.
  * @since 3.4
  */
 qTranslateConfig.js.get_qtx = function () {
+    console.warn('qTranslate-XT: deprecated function qTranslateConfig.js.get_qtx() will be removed in next major release. See release notes to use new API.');
+    // Legacy support, do not use the `qtx` object neither - it will also be removed! Use `qTranx.hooks` instead.
     if (!qTranslateConfig.qtx)
-        qTranslateConfig.qtx = new qTranslateX();
+        qTranslateConfig.qtx = hooks;
     return qTranslateConfig.qtx;
 };
