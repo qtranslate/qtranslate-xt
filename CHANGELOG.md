@@ -1,3 +1,11 @@
+### 3.15.5
+* Change language Redirect 302 to 301 (permanent) (#1440)
+* Fix autosave in block editor (#1441)
+* Fix restore backup warning in block editor (#809)
+* Fix type mismatch in `qtranxf_write_config_log` (#1444)
+* Fix jQuery deprecated `bind/unbind` (#1453)
+* Make `checkCanonical` more robust (#1432)
+
 ### 3.15.4
 * Fix `_load_textdomain_just_in_time` notice (#1433, #1438)
 * Fix link to modules in readme (#1442)
