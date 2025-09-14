@@ -18,7 +18,7 @@ const $ = jQuery;
 
 const qTranslateConfig = window.qTranslateConfig;
 
-const qTranslateX = function (pg) {
+const qTranslateX = function () {
     const qtx = this;
 
     /**
@@ -1160,11 +1160,9 @@ const qTranslateX = function (pg) {
             }
         }
         if (!anchors.length) {
-            let target = pg.langSwitchWrapAnchor;
-            if (!target) {
-                target = getWrapForm();
-            }
-            if (target) anchors.push({target: target, where: 'before'});
+            const target = getWrapForm();
+            if (target)
+                anchors.push({target: target, where: 'before'});
         }
         for (let i = 0; i < anchors.length; ++i) {
             const anchor = anchors[i];
@@ -1207,9 +1205,6 @@ const qTranslateX = function (pg) {
         setupAnchorsLSB();
         // Synchronization of multiple sets of Language Switching Buttons
         qtx.addLanguageSwitchListener(onTabSwitch);
-        if (pg.onTabSwitch) {
-            qtx.addLanguageSwitchListener(pg.onTabSwitch);
-        }
 
         languageSwitchInitialized = true;
     }
@@ -1239,9 +1234,6 @@ const qTranslateX = function (pg) {
         if (!qTranslateConfig.onTabSwitchFunctionsLoad)
             qTranslateConfig.onTabSwitchFunctionsLoad = [];
 
-        if (typeof (pg.addContentHooks) == "function")
-            pg.addContentHooks(qtx);
-
         if (qTranslateConfig.page_config && qTranslateConfig.page_config.forms)
             addPageHooks(qTranslateConfig.page_config.forms);
 
@@ -1268,6 +1260,6 @@ const qTranslateX = function (pg) {
  */
 qTranslateConfig.js.get_qtx = function () {
     if (!qTranslateConfig.qtx)
-        qTranslateConfig.qtx = new qTranslateX(qTranslateConfig.js);
+        qTranslateConfig.qtx = new qTranslateX();
     return qTranslateConfig.qtx;
 };
