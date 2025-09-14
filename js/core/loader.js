@@ -3,7 +3,7 @@
  */
 'use strict';
 
-import {hooks} from './hooks';
+import {init, loadAdditionalTinyMceHooks} from './hooks';
 
 const qTranslateConfig = window.qTranslateConfig;
 
@@ -20,13 +20,13 @@ const $ = jQuery;
 $(window).on('load', function () {
     // The hooks may already be initialized (see 'wp_tiny_mce_init' for the Classic Editor)
     // This `init` below is needed by pages not having such type of editor, for example the WP tags page.
-    hooks.init();
+    init();
 
     // Setup hooks for additional TinyMCE editors initialized dynamically, for example WISYWYG ACF.
-    hooks.loadAdditionalTinyMceHooks();
+    loadAdditionalTinyMceHooks();
 
     const configKeys = pageConfigKeys();
     configKeys.forEach(key => {
-        $(document).trigger('qtxLoadAdmin:' + key, [hooks]);
+        $(document).trigger('qtxLoadAdmin:' + key, [qTranx.hooks]);
     });
 });

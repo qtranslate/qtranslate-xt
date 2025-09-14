@@ -6,5 +6,5 @@
 import './loader';
 
 // The public API is exported here
+export * as hooks from './hooks';
 export * from './multi-lang-tags';
-export * from './hooks';
