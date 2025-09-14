@@ -1,0 +1,1153 @@
+/**
+ * Multi-lang hooks for LSB (Language Switching Buttons), ML content, editors and display.
+ *
+ * Attention! The interface is not fully initialized before the `qtxLoadAdmin` event.
+ * @see init function
+ *
+ * Read Integration Guide: https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide for more information.
+ */
+'use strict';
+import {domCreateElement} from './dom';
+import {mlSplitRaw, mlExplode, mlParseTokens} from './multi-lang-tags';
+import {getStoredEditLanguage, storeEditLanguage} from './store';
+
+const $ = jQuery;
+
+const qTranslateConfig = window.qTranslateConfig;
+
+/**
+ * Internal state of hooks and languageSwitch, not exposed
+ */
+const contentHooks = {};
+const displayHookNodes = [];
+const displayHookAttrs = [];
+let languageSwitchInitialized = false;
+
+/**
+ * Get language meta-data.
+ *
+ * @returns {*} dictionnary indexed by two-letter language code.
+ *  .name in native language
+ *  .admin_name in the admin language chosen
+ *  .flag
+ *  .locale
+ *  .locale_html
+ */
+export const getLanguages = function () {
+    return qTranslateConfig.language_config;
+};
+
+/**
+ * Get URL to folder with flag images.
+ *
+ * @returns {string}
+ */
+export const getFlagLocation = function () {
+    return qTranslateConfig.flag_location;
+};
+
+/**
+ * Check if a language is enabled.
+ *
+ * @param {string} lang
+ * @returns {boolean} true if 'lang' is in the hash of enabled languages.
+ * This function maybe needed, as function mlExplode may return languages,
+ * which are not enabled, in case they were previously enabled and had some data.
+ * Such data is preserved and re-saved until user deletes it manually.
+ */
+export const isLanguageEnabled = function (lang) {
+    return !!qTranslateConfig.language_config[lang];
+};
+
+/**
+ * Get the currently active language selected in LSB.
+ *
+ * @returns {string}
+ */
+export const getActiveLanguage = function () {
+    return qTranslateConfig.activeLanguage;
+};
+
+/**
+ * Check if a content hooks exists.
+ * @param {string} id hook
+ * @returns {*}
+ */
+export const hasContentHook = function (id) {
+    return contentHooks[id];
+};
+
+/**
+ * Attach an input field to an existing content hook.
+ *
+ * Usually, this function is called internally for an input field edited by the user.
+ * In some cases (e.g. widgets), the editable fields are different from those containing
+ * the translatable content. This function allows to attach them to the hook.
+ * The single content field initially attached is not updated anymore but the hidden fields
+ * storing each language content are still updated.
+ * @see addContentHook
+ * @see attachEditorHook
+ *
+ * @param inputField field editable by the user
+ * @param contentId optional element ID to override the content hook key (default: input ID)
+ */
+export const attachContentHook = function (inputField, contentId) {
+    const hook = contentHooks[contentId ? contentId : inputField.id];
+    if (!hook) {
+        return;
+    }
+    inputField.classList.add('qtranxs-translatable');
+    hook.contentField = inputField;
+}
+
+/**
+ * Add a content hook.
+ */
+export const addContentHook = function (inputField, encode, fieldName) {
+    if (!inputField) return false;
+    switch (inputField.tagName) {
+        case 'TEXTAREA':
+            break;
+        case 'INPUT':
+            // reject the types which cannot be multilingual
+            switch (inputField.type) {
+                case 'button':
+                case 'checkbox':
+                case 'password':
+                case 'radio':
+                case 'submit':
+                    return false;
+            }
+            break;
+        default:
+            return false;
+    }
+
+    if (!fieldName) {
+        if (!inputField.name) {
+            console.error('Missing name in field', inputField);
+            return false;
+        }
+        fieldName = inputField.name;
+    }
+
+    if (inputField.id) {
+        if (contentHooks[inputField.id]) {
+            if ($.contains(document, inputField))
+                return contentHooks[inputField.id];
+            // otherwise some Java script already removed previously hooked element
+            console.warn('No input field with id=', inputField.id);
+            removeContentHook(inputField);
+        }
+    } else if (!contentHooks[fieldName]) {
+        inputField.id = fieldName;
+    } else {
+        let idx = 0;
+        do {
+            ++idx;
+            inputField.id = fieldName + idx;
+        } while (contentHooks[inputField.id]);
+    }
+
+    const hook = contentHooks[inputField.id] = {};
+    hook.name = fieldName;
+    hook.lang = qTranslateConfig.activeLanguage;
+    attachContentHook(inputField);
+
+    let qtxPrefix;
+    if (encode) {
+        switch (encode) {
+            case 'slug':
+                qtxPrefix = 'qtranslate-slugs[';
+                break;
+            case 'term':
+                qtxPrefix = 'qtranslate-terms[';
+                break;
+            default:
+                qtxPrefix = 'qtranslate-fields[';
+                break;
+        }
+    } else {
+        // since 3.1 we get rid of <--:--> encoding
+        encode = '[';
+        qtxPrefix = 'qtranslate-fields[';
+    }
+
+    hook.encode = encode;
+
+    let baseName, suffixName;
+    const pos = hook.name.indexOf('[');
+    if (pos < 0) {
+        baseName = qtxPrefix + hook.name + ']';
+    } else {
+        baseName = qtxPrefix + hook.name.substring(0, pos) + ']';
+        if (hook.name.lastIndexOf('[]') < 0) {
+            baseName += hook.name.substring(pos);
+        } else {
+            const len = hook.name.length - 2;
+            if (len > pos)
+                baseName += hook.name.substring(pos, len);
+            suffixName = '[]';
+        }
+    }
+
+    const inputFieldFormId = $(inputField).attr('form');
+    const $form = (inputFieldFormId !== undefined) ? $('#' + inputFieldFormId) : $(inputField).closest('form');
+    if (!$form.length) {
+        console.error('No form found for translatable field id=', inputField.id);
+        return;
+    }
+    const form = $form[0];
+
+    let contents;
+    hook.fields = {};
+    if (!qTranslateConfig.RAW) {
+        // Most crucial moment when untranslated content is parsed
+        contents = mlExplode(inputField.value);
+        // Substitute the current ML content with translated content for the current language
+        inputField.value = contents[hook.lang];
+
+        // Insert translated content for each language before the current field
+        for (const lang in contents) {
+            const text = contents[lang];
+            let newName = baseName + '[' + lang + ']';
+            if (suffixName)
+                newName += suffixName;
+            const newField = domCreateElement('input', {
+                name: newName,
+                type: 'hidden',
+                className: 'hidden',
+                value: text
+            }, inputField.parentNode, inputField);
+            if (inputFieldFormId !== undefined) {
+                $(newField).attr('form', inputFieldFormId);
+            }
+            hook.fields[lang] = newField;
+        }
+
+        // The edit language allows the server to assign the fields being edited to the active language (not switched).
+        const $hidden = $form.find('input[name="qtranslate-edit-language"]');
+        if (!$hidden.length) {
+            domCreateElement('input', {
+                type: 'hidden',
+                name: 'qtranslate-edit-language',
+                value: qTranslateConfig.activeLanguage
+            }, form, form.firstChild);
+        }
+    }
+
+    // since 3.2.9.8 - hook.contents -> hook.fields
+    // since 3.3.8.7 - slug & term
+    switch (encode) {
+        case 'slug':
+        case 'term': {
+            if (qTranslateConfig.RAW)
+                contents = mlExplode(inputField.value);
+            hook.sepfield = domCreateElement('input', {
+                name: baseName + '[qtranslate-original-value]',
+                type: 'hidden',
+                className: 'hidden',
+                value: contents[qTranslateConfig.default_language]
+            }, inputField.parentNode, inputField);
+        }
+            break;
+        default: {
+            if (!qTranslateConfig.RAW) {
+                hook.sepfield = domCreateElement('input', {
+                    name: baseName + '[qtranslate-separator]',
+                    type: 'hidden',
+                    className: 'hidden',
+                    value: encode
+                }, inputField.parentNode, inputField);
+            }
+        }
+            break;
+    }
+
+    if (hook.sepfield && inputFieldFormId !== undefined) {
+        $(hook.sepfield).attr('form', inputFieldFormId);
+    }
+
+    return hook;
+};
+export const addContentHookC = function (inputField) {
+    return addContentHook(inputField, '['); // TODO shouldn't it be '<' ?!
+};
+export const addContentHookB = function (inputField) {
+    return addContentHook(inputField, '[');
+};
+
+export const addContentHookById = function (id, sep, name) {
+    return addContentHook(document.getElementById(id), sep, name);
+};
+export const addContentHookByIdName = function (name) {
+    let sep;
+    switch (name[0]) {
+        case '<':
+        case '[':
+            sep = name.substring(0, 1);
+            name = name.substring(1);
+            break;
+        default:
+            break;
+    }
+    return addContentHookById(name, sep);
+};
+
+export const addContentHookByIdC = function (id) {
+    return addContentHookById(id, '['); // TODO shouldn't it be '<' ?!
+};
+
+export const addContentHookByIdB = function (id) {
+    return addContentHookById(id, '[');
+};
+
+export const addContentHooks = function (fields, sep, fieldName) {
+    for (let i = 0; i < fields.length; ++i) {
+        const field = fields[i];
+        addContentHook(field, sep, fieldName);
+    }
+};
+
+const addContentHooksByClassName = function (name, container, sep) {
+    if (!container)
+        container = document;
+    const fields = container.getElementsByClassName(name);
+    addContentHooks(fields, sep);
+};
+
+export const addContentHooksByClass = function (name, container) {
+    let sep;
+    if (name.indexOf('<') === 0 || name.indexOf('[') === 0) {
+        sep = name.substring(0, 1);
+        name = name.substring(1);
+    }
+    addContentHooksByClassName(name, container, sep);
+};
+
+export const addContentHooksByTagInClass = function (name, tag, container) {
+    const elems = container.getElementsByClassName(name);
+    for (let i = 0; i < elems.length; ++i) {
+        const elem = elems[i];
+        const items = elem.getElementsByTagName(tag);
+        addContentHooks(items);
+    }
+};
+
+export const removeContentHook = function (inputField) {
+    if (!inputField || !inputField.id) {
+        return false;
+    }
+    const hook = contentHooks[inputField.id];
+    if (!hook) {
+        return false;
+    }
+    if (hook.sepfield) {
+        $(hook.sepfield).remove();
+    }
+    for (const lang in hook.fields) {
+        const langField = hook.fields[lang];
+        $(langField).remove();
+    }
+    if (hook.mce) {
+        const editor = hook.mce;
+        editor.getContentAreaContainer().classList.remove('qtranxs-translatable');
+        editor.getElement().classList.remove('qtranxs-translatable');
+    }
+    // The current content field may not be the same as the input field, in case it was re-attached (e.g. widgets)
+    hook.contentField.classList.remove('qtranxs-translatable');
+    delete contentHooks[inputField.id];
+    inputField.classList.remove('qtranxs-translatable');
+    return true;
+};
+
+export const refreshContentHook = function (inputField) {
+    removeContentHook(inputField);
+    return addContentHook(inputField);
+};
+
+const getDisplayContentDefaultValue = function (contents) {
+    if (contents[qTranslateConfig.language])
+        return '(' + qTranslateConfig.language + ') ' + contents[qTranslateConfig.language];
+    if (contents[qTranslateConfig.default_language])
+        return '(' + qTranslateConfig.default_language + ') ' + contents[qTranslateConfig.default_language];
+    for (const lang in contents) {
+        if (!contents[lang])
+            continue;
+        return '(' + lang + ') ' + contents[lang];
+    }
+    return '';
+};
+
+const completeDisplayContent = function (contents) {
+    let default_value = null;
+    for (const lang in contents) {
+        if (contents[lang])
+            continue;
+        if (!default_value)
+            default_value = getDisplayContentDefaultValue(contents);
+        contents[lang] = default_value;
+    }
+};
+
+const addDisplayHookNode = function (node) {
+    if (!node.nodeValue)
+        return 0;
+    const tokens = mlSplitRaw(node.nodeValue);
+    if (!tokens || !tokens.length || tokens.length === 1)
+        return 0;
+    const hook = {};
+    hook.nd = node;
+    hook.contents = mlParseTokens(tokens);
+    completeDisplayContent(hook.contents);
+    node.nodeValue = hook.contents[qTranslateConfig.activeLanguage];
+    displayHookNodes.push(hook);
+    return 1;
+};
+
+const addDisplayHookAttr = function (node, attr) {
+    if (!node.hasAttribute(attr)) return 0;
+    const value = node.getAttribute(attr);
+    const tokens = mlSplitRaw(value);
+    if (!tokens || !tokens.length || tokens.length === 1)
+        return 0;
+    const hook = {};
+    hook.nd = node;
+    hook.attr = attr;
+    hook.contents = mlParseTokens(tokens);
+    completeDisplayContent(hook.contents);
+    node.setAttribute(attr, hook.contents[qTranslateConfig.activeLanguage]);
+    displayHookAttrs.push(hook);
+    return 1;
+};
+
+export const addDisplayHook = function (elem) {
+    if (!elem || !elem.tagName)
+        return 0;
+    switch (elem.tagName) {
+        case 'TEXTAREA':
+            return 0;
+        case 'INPUT':
+            if (elem.type === 'submit' && elem.value) {
+                return addDisplayHookAttr(elem, 'value');
+            }
+            return 0;
+        default:
+            break;
+    }
+
+    let nbHooks = 0;
+    if (elem.childNodes && elem.childNodes.length) {
+        for (let i = 0; i < elem.childNodes.length; ++i) {
+            const node = elem.childNodes[i];
+            switch (node.nodeType) {
+                // https://www.w3.org/TR/REC-DOM-Level-1/level-one-core.html#ID-1950641247
+                case 1: // ELEMENT_NODE
+                    nbHooks += addDisplayHook(node);
+                    break;
+                case 2: // ATTRIBUTE_NODE
+                case 3: // TEXT_NODE
+                    nbHooks += addDisplayHookNode(node);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+    return nbHooks;
+};
+
+export const addDisplayHookById = function (id) {
+    return addDisplayHook(document.getElementById(id));
+};
+
+const updateMceEditorContent = function (hook) {
+    let text = hook.contentField.value;
+    if (hook.mce.settings.wpautop && window.switchEditors) {
+        text = window.switchEditors.wpautop(text);
+    }
+    hook.mce.setContent(text);
+};
+
+const onTabSwitch = function (lang) {
+    storeEditLanguage(lang);
+
+    for (let i = displayHookNodes.length; --i >= 0;) {
+        const hook = displayHookNodes[i];
+        if (hook.nd.parentNode) {
+            hook.nd.nodeValue = hook.contents[lang]; // IE gets upset here if node was removed
+        } else {
+            displayHookNodes.splice(i, 1); // node was removed by some other function
+        }
+    }
+    for (let i = displayHookAttrs.length; --i >= 0;) {
+        const hook = displayHookAttrs[i];
+        if (hook.nd.parentNode) {
+            hook.nd.setAttribute(hook.attr, hook.contents[lang]);
+        } else {
+            displayHookAttrs.splice(i, 1); // node was removed by some other function
+        }
+    }
+    if (qTranslateConfig.RAW)
+        return;
+    for (const key in contentHooks) {
+        const hook = contentHooks[key];
+        const visualMode = hook.mce && !hook.mce.hidden;
+        if (visualMode) {
+            hook.mce.save();
+        }
+
+        const text = hook.contentField.value.trim();
+        const tokens = mlSplitRaw(text);
+        if (!tokens || tokens.length <= 1) {
+            // value is not ML, switch it to other language
+            hook.fields[hook.lang].value = text;
+            hook.lang = lang;
+            const value = hook.fields[hook.lang].value;
+            if (hook.contentField.placeholder && value !== '') {
+                // since 3.2.7
+                hook.contentField.placeholder = '';
+            }
+
+            hook.contentField.value = value;
+            // Some widgets such as text-widget sync the widget content on 'change' event on the input field
+            $(hook.contentField).trigger('change');
+            if (visualMode) {
+                updateMceEditorContent(hook);
+            }
+        } else {
+            // value is ML, fill out values per language
+            const contents = mlParseTokens(tokens);
+            for (const langField in hook.fields) {
+                hook.fields[langField].value = contents[langField];
+            }
+            hook.lang = lang;
+        }
+    }
+};
+
+export const addDisplayHooks = function (elems) {
+    for (let i = 0; i < elems.length; ++i) {
+        const e = elems[i];
+        addDisplayHook(e);
+    }
+};
+
+export const addDisplayHookAttrs = function (elem, attrs) {
+    for (let j = 0; j < attrs.length; ++j) {
+        const a = attrs[j];
+        addDisplayHookAttr(elem, a);
+    }
+};
+
+export const addDisplayHooksAttrs = function (elems, attrs) {
+    for (let i = 0; i < elems.length; ++i) {
+        const e = elems[i];
+        addDisplayHookAttrs(e, attrs);
+    }
+};
+
+export const addDisplayHooksByClass = function (name, container) {
+    const elems = container.getElementsByClassName(name);
+    addDisplayHooks(elems);
+};
+
+export const addDisplayHooksByTagInClass = function (name, tag, container) {
+    const elems = container.getElementsByClassName(name);
+    for (let i = 0; i < elems.length; ++i) {
+        const elem = elems[i];
+        const items = elem.getElementsByTagName(tag);
+        addDisplayHooks(items);
+    }
+};
+
+/**
+ * Add custom hooks from configuration.
+ */
+export const addCustomContentHooks = function () {
+    for (let i = 0; i < qTranslateConfig.custom_fields.length; ++i) {
+        const fieldName = qTranslateConfig.custom_fields[i];
+        addContentHookByIdName(fieldName);
+    }
+    for (let i = 0; i < qTranslateConfig.custom_field_classes.length; ++i) {
+        const className = qTranslateConfig.custom_field_classes[i];
+        addContentHooksByClass(className);
+    }
+    addContentHooksTinyMCE();
+};
+
+/**
+ * Add translatable hooks for fields marked with classes
+ * - i18n-multilingual
+ * - i18n-multilingual-curly
+ * - i18n-multilingual-term
+ * - i18n-multilingual-slug
+ * - i18n-multilingual-display
+ */
+const addMultilingualHooks = function () {
+    $('.i18n-multilingual').each(function (i, e) {
+        addContentHook(e, '[');
+    });
+    $('.i18n-multilingual-curly').each(function (i, e) {
+        addContentHook(e, '{');
+    });
+    $('.i18n-multilingual-term').each(function (i, e) {
+        addContentHook(e, 'term');
+    });
+    $('.i18n-multilingual-slug').each(function (i, e) {
+        addContentHook(e, 'slug');
+    });
+    $('.i18n-multilingual-display').each(function (i, e) {
+        addDisplayHook(e);
+    });
+};
+
+/**
+ * Parse page configuration, loaded in qtranxf_get_admin_page_config_post_type.
+ */
+const addPageHooks = function (pageConfigForms) {
+    for (const formId in pageConfigForms) {
+        const formConfig = pageConfigForms[formId];
+        let form;
+        if (formConfig.form) {
+            if (formConfig.form.id) {
+                form = document.getElementById(formConfig.form.id);
+            } else if (formConfig.form.jquery) {
+                form = $(formConfig.form.jquery);
+            } else if (formConfig.form.name) {
+                const elms = document.getElementsByName(formConfig.form.name);
+                if (elms && elms.length) {
+                    form = elms[0];
+                }
+            }
+        } else {
+            form = document.getElementById(formId);
+        }
+        if (!form) {
+            form = getWrapForm();
+            if (!form)
+                form = document;
+        }
+        for (const handle in formConfig.fields) {
+            const field = formConfig.fields[handle];
+            let containers = [];
+            if (field.container_id) {
+                const container = document.getElementById(field.container_id);
+                if (container)
+                    containers.push(container);
+            } else if (field.container_jquery) {
+                containers = $(field.container_jquery);
+            } else if (field.container_class) {
+                containers = document.getElementsByClassName(field.container_class);
+            } else {// if(form){
+                containers.push(form);
+            }
+            const sep = field.encode;
+            switch (sep) {
+                case 'none':
+                    break;
+                case 'display':
+                    if (field.jquery) {
+                        for (let i = 0; i < containers.length; ++i) {
+                            const container = containers[i];
+                            const fields = $(container).find(field.jquery);
+                            if (field.attrs) {
+                                addDisplayHooksAttrs(fields, field.attrs);
+                            } else {
+                                addDisplayHooks(fields);
+                            }
+                        }
+                    } else {
+                        const id = field.id ? field.id : handle;
+                        const element = document.getElementById(id);
+                        if (field.attrs) {
+                            addDisplayHookAttrs(element, field.attrs);
+                        } else {
+                            addDisplayHook(element);
+                        }
+                    }
+                    break;
+                case '[': // b - bracket
+                case '<': // c - comment
+                case '{': // s - swirly/curly bracket
+                case 'byline':
+                default:
+                    if (field.jquery) {
+                        for (let i = 0; i < containers.length; ++i) {
+                            const container = containers[i];
+                            const fields = $(container).find(field.jquery);
+                            addContentHooks(fields, sep, field.name);
+                        }
+                    } else {
+                        const id = field.id ? field.id : handle;
+                        addContentHookById(id, sep, field.name);
+                    }
+                    break;
+            }
+        }
+    }
+};
+
+/**
+ * Link a TinyMCE editor with translatable content.
+ *
+ * Usually, this function is called internally for an input field edited by the user.
+ * In some cases (e.g. widgets), the editable fields are different from those containing
+ * the translatable content. This function allows to attach them to the hook.
+ * The single content field initially attached is not updated anymore but the hidden fields
+ * storing each language content are still updated.
+ * @see attachContentHook
+ *
+ * @param editor tinyMCE editor, should be initialized for TinyMCE
+ * @param contentId optional element ID to override the content hook key (default: input ID)
+ * @return hook
+ */
+export const attachEditorHook = function (editor, contentId) {
+    if (!editor.id)
+        return null;
+    // The MCE editor can be linked to translatable content having a different ID, e.g. for widgets
+    if (!contentId) {
+        contentId = editor.id;
+    }
+    const hook = contentHooks[contentId];
+    if (!hook)
+        return null;
+    // The hook may have been created for a different content field, e.g. for widgets
+    // The main content field should always match the editor ID so that its value is synced on tab switch
+    if (contentId !== editor.id) {
+        hook.contentField = document.getElementById(editor.id);
+    }
+    if (hook.mce) {
+        return hook;  // already initialized for qTranslate
+    }
+    hook.mce = editor;
+
+    editor.getContentAreaContainer().classList.add('qtranxs-translatable');
+    editor.getElement().classList.add('qtranxs-translatable');
+
+    return hook;
+}
+
+/**
+ * Sets hooks on HTML-loaded TinyMCE editors via tinyMCEPreInit.mceInit.
+ */
+export const addContentHooksTinyMCE = function () {
+    if (!window.tinyMCEPreInit || qTranslateConfig.RAW) {
+        return;
+    }
+    for (const key in contentHooks) {
+        const hook = contentHooks[key];
+        if (hook.contentField.tagName !== 'TEXTAREA' || hook.mce || hook.mceInit || !tinyMCEPreInit.mceInit[key])
+            continue;
+        hook.mceInit = tinyMCEPreInit.mceInit[key];
+        tinyMCEPreInit.mceInit[key].init_instance_callback = function (editor) {
+            attachEditorHook(editor);
+        }
+    }
+};
+
+/**
+ * Adds more TinyMCE editors, which may have been initialized dynamically.
+ */
+export const loadAdditionalTinyMceHooks = function () {
+    if (window.tinyMCE) {
+        tinyMCE.get().forEach(function (editor) {
+            attachEditorHook(editor);
+        });
+    }
+};
+
+export const addLanguageSwitchListener = function (func) {
+    qTranslateConfig.onTabSwitchFunctions.push(func);
+};
+
+/**
+ * The function passed will be called when user presses one of the Language Switching Buttons
+ * before the content of all fields hooked is replaced with an appropriate language.
+ * Two arguments are supplied:
+ * - two-letter language code of currently active language from which the edit language is being switched.
+ * - the language code to which the edit language is being switched.
+ */
+export const addLanguageSwitchBeforeListener = function (func) {
+    qTranslateConfig.onTabSwitchFunctionsSave.push(func);
+};
+
+/**
+ * Delete handler previously added by function addLanguageSwitchBeforeListener.
+ */
+export const delLanguageSwitchBeforeListener = function (func) {
+    for (let i = 0; i < qTranslateConfig.onTabSwitchFunctionsSave.length; ++i) {
+        const funcSave = qTranslateConfig.onTabSwitchFunctionsSave[i];
+        if (funcSave !== func)
+            continue;
+        qTranslateConfig.onTabSwitchFunctionsSave.splice(i, 1);
+        return;
+    }
+};
+
+/**
+ * The function passed will be called when user presses one of the Language Switching Buttons
+ * after the content of all fields hooked is replaced with an appropriate language.
+ * Two arguments are supplied:
+ * - two-letter language code of active language to which the edit language is already switched.
+ * - the language code from which the edit language is being switched.
+ */
+export const addLanguageSwitchAfterListener = function (func) {
+    qTranslateConfig.onTabSwitchFunctionsLoad.push(func);
+};
+
+/**
+ * Delete handler previously added by function addLanguageSwitchAfterListener.
+ */
+export const delLanguageSwitchAfterListener = function (func) {
+    for (let i = 0; i < qTranslateConfig.onTabSwitchFunctionsLoad.length; ++i) {
+        const funcLoad = qTranslateConfig.onTabSwitchFunctionsLoad[i];
+        if (funcLoad !== func)
+            continue;
+        qTranslateConfig.onTabSwitchFunctionsLoad.splice(i, 1);
+        return;
+    }
+};
+
+export const enableLanguageSwitchingButtons = function (on) {
+    const display = on ? 'block' : 'none';
+    for (const lang in qTranslateConfig.tabSwitches) {
+        const tabSwitches = qTranslateConfig.tabSwitches[lang];
+        for (let i = 0; i < tabSwitches.length; ++i) {
+            const tabSwitchParent = tabSwitches[i].parentElement;
+            tabSwitchParent.style.display = display;
+            break;
+        }
+        break;
+    }
+};
+
+const getWrapForm = function () {
+    const wraps = document.getElementsByClassName('wrap');
+    for (let i = 0; i < wraps.length; ++i) {
+        const wrap = wraps[i];
+        const forms = wrap.getElementsByTagName('form');
+        if (forms.length)
+            return forms[0];
+    }
+    const forms = document.getElementsByTagName('form');
+    if (forms.length === 1)
+        return forms[0];
+    for (let i = 0; i < forms.length; ++i) {
+        const form = forms[i];
+        const wraps = form.getElementsByClassName('wrap');
+        if (wraps.length)
+            return form;
+    }
+    return null;
+};
+
+export const onLoadLanguage = function (lang, langFrom) {
+    const onTabSwitchFunctionsLoad = qTranslateConfig.onTabSwitchFunctionsLoad;
+    for (let i = 0; i < onTabSwitchFunctionsLoad.length; ++i) {
+        // TODO: deprecate qtx arg
+        onTabSwitchFunctionsLoad[i].call(qTranx.hooks, lang, langFrom);
+    }
+};
+
+/**
+ * Switch to a new active language.
+ *
+ * @param lang
+ */
+export const switchActiveLanguage = function (lang) {
+    if (qTranslateConfig.activeLanguage === lang) {
+        return;
+    }
+    if (qTranslateConfig.activeLanguage) {
+        let ok2switch = true;
+        const onTabSwitchFunctionsSave = qTranslateConfig.onTabSwitchFunctionsSave;
+        for (let i = 0; i < onTabSwitchFunctionsSave.length; ++i) {
+            // TODO: deprecate qtx arg
+            const ok = onTabSwitchFunctionsSave[i].call(qTranx.hooks, qTranslateConfig.activeLanguage, lang);
+            if (ok === false)
+                ok2switch = false;
+        }
+        if (!ok2switch)
+            return; // cancel button switch, if one of onTabSwitchFunctionsSave returned 'false'
+
+        const tabSwitches = qTranslateConfig.tabSwitches[qTranslateConfig.activeLanguage];
+        for (let i = 0; i < tabSwitches.length; ++i) {
+            tabSwitches[i].classList.remove(qTranslateConfig.lsb_style_active_class);
+            $(tabSwitches[i]).find('.button').removeClass('active');
+        }
+    }
+
+    const langFrom = qTranslateConfig.activeLanguage;
+    qTranslateConfig.activeLanguage = lang;
+    $('input[name="qtranslate-edit-language"]').val(lang);
+
+    {
+        const tabSwitches = qTranslateConfig.tabSwitches[qTranslateConfig.activeLanguage];
+        for (let i = 0; i < tabSwitches.length; ++i) {
+            tabSwitches[i].classList.add(qTranslateConfig.lsb_style_active_class);
+            $(tabSwitches[i]).find('.button').addClass('active');
+        }
+    }
+    const onTabSwitchFunctions = qTranslateConfig.onTabSwitchFunctions;
+    for (let i = 0; i < onTabSwitchFunctions.length; ++i) {
+        // TODO: deprecate qtx arg
+        onTabSwitchFunctions[i].call(qTranx.hooks, lang, langFrom);
+    }
+    onLoadLanguage(lang, langFrom);
+};
+
+export const clickSwitchLanguage = function () {
+    const tabSwitch = $(this).hasClass('button') ? this.parentNode : this;
+    const lang = tabSwitch.lang;
+    if (!lang) {
+        alert('qTranslate-XT: This should not have happened: Please, report this incident to the developers: !lang');
+        return;
+    }
+    if ($('.qtranxs-lang-switch-wrap').hasClass('copying')) {
+        copyContentFrom(lang);
+        $(tabSwitch).find('.button').blur();	// remove focus of source language in case of layout with button
+        $('.qtranxs-lang-switch-wrap').removeClass('copying');
+        $('.qtranxs-lang-copy .button').removeClass('active');
+    } else {
+        switchActiveLanguage(lang);
+    }
+};
+
+export const toggleCopyFrom = function () {
+    $('.qtranxs-lang-switch-wrap').toggleClass('copying');
+    $('.qtranxs-lang-copy .button').toggleClass('active');
+    // store or restore original title according to current mode (copy or switch)
+    if ($('.qtranxs-lang-switch-wrap').hasClass('copying')) {
+        $('.qtranxs-lang-switch').each(function () {
+            $(this).attr('orig-title', $(this).attr('title'));
+            if ($(this).attr('lang') === qTranslateConfig.activeLanguage)
+                $(this).attr('title', qTranslateConfig.strings.CopyFromAlt);
+            else
+                $(this).attr('title', qTranslateConfig.strings.CopyFrom + ' [:' + $(this).attr('lang') + ']');
+        });
+    } else {
+        $('.qtranxs-lang-switch').each(function () {
+            $(this).attr('title', $(this).attr('orig-title'));
+        });
+    }
+};
+
+export const copyContentFrom = function (langFrom) {
+    const lang = qTranslateConfig.activeLanguage;
+    let changed = false;
+    for (const key in contentHooks) {
+        const hook = contentHooks[key];
+        const visualMode = hook.mce && !hook.mce.hidden;
+        let value = visualMode ? hook.mce.getContent() : hook.contentField.value;
+        if (value)
+            continue; // do not overwrite existent content
+        value = hook.fields[langFrom].value;
+        if (!value)
+            continue;
+        hook.contentField.value = value;
+        if (visualMode) {
+            updateMceEditorContent(hook);
+        }
+        changed = true;
+    }
+    if (changed)
+        onLoadLanguage(lang, langFrom);
+};
+
+export const createSetOfLSBwith = function (lsb_style_extra_wrap_classes) {
+    const langSwitchWrap = domCreateElement('ul', {className: 'qtranxs-lang-switch-wrap ' + lsb_style_extra_wrap_classes});
+    const langs = qTranslateConfig.language_config;
+    if (!qTranslateConfig.tabSwitches)
+        qTranslateConfig.tabSwitches = {};
+    for (const lang in langs) {
+        const lang_conf = langs[lang];
+        const flag_location = qTranslateConfig.flag_location;
+        const li_title = qTranslateConfig.strings.ShowIn + lang_conf.admin_name + ' [:' + lang + ']';
+        const tabSwitch = domCreateElement('li', {
+            lang: lang,
+            className: 'qtranxs-lang-switch qtranxs-lang-switch-' + lang,
+            title: li_title,
+            onclick: clickSwitchLanguage
+        }, langSwitchWrap);
+        let tabItem = tabSwitch;
+        if (qTranslateConfig.lsb_style_subitem === 'button') {
+            // reuse WordPress secondary button
+            tabItem = domCreateElement('button', {className: 'button button-secondary', type: 'button'}, tabSwitch);
+        }
+        domCreateElement('img', {src: flag_location + lang_conf.flag}, tabItem);
+        domCreateElement('span', {innerHTML: lang_conf.name}, tabItem);
+        if (qTranslateConfig.activeLanguage === lang) {
+            tabSwitch.classList.add(qTranslateConfig.lsb_style_active_class);
+            $(tabSwitch).find('.button').addClass('active');
+        }
+        if (!qTranslateConfig.tabSwitches[lang])
+            qTranslateConfig.tabSwitches[lang] = [];
+        qTranslateConfig.tabSwitches[lang].push(tabSwitch);
+    }
+    if (!qTranslateConfig.hide_lsb_copy_content) {
+        const tab = domCreateElement('li', {className: 'qtranxs-lang-copy'}, langSwitchWrap);
+        const btn = domCreateElement('button', {
+            className: 'button button-secondary',
+            type: 'button',
+            title: qTranslateConfig.strings.CopyFromAlt,
+            onclick: toggleCopyFrom
+        }, tab);
+        domCreateElement('span', {innerHTML: qTranslateConfig.strings.CopyFrom}, btn);
+    }
+    return langSwitchWrap;
+};
+
+/**
+ * @since 3.4.8
+ */
+export const createSetOfLSB = function () {
+    return createSetOfLSBwith(qTranslateConfig.lsb_style_wrap_class + ' widefat');
+};
+
+const setupMetaBoxLSB = function () {
+    const metaBox = document.getElementById('qtranxs-meta-box-lsb');
+    if (!metaBox)
+        return;
+
+    const insideElems = metaBox.getElementsByClassName('inside');
+    if (!insideElems.length)
+        return; // consistency check in case WP did some changes
+
+    metaBox.classList.add('closed');
+    $(metaBox).find('.hndle').remove(); // original h3 element is replaced with span below
+
+    const span = document.createElement('span');
+    metaBox.insertBefore(span, insideElems[0]);
+    span.classList.add('hndle', 'ui-sortable-handle');
+
+    const langSwitchWrap = createSetOfLSBwith(qTranslateConfig.lsb_style_wrap_class);
+    span.appendChild(langSwitchWrap);
+    $('#qtranxs-meta-box-lsb .hndle').off('click.postboxes');
+};
+
+const setupAnchorsLSB = function () {
+    // create sets of LSB
+    const anchors = [];
+    if (qTranslateConfig.page_config && qTranslateConfig.page_config.anchors) {
+        for (const id in qTranslateConfig.page_config.anchors) {
+            const anchor = qTranslateConfig.page_config.anchors[id];
+            const target = document.getElementById(id);
+            if (target) {
+                anchors.push({target: target, where: anchor.where});
+            } else if (anchor.jquery) {
+                const targets = $(anchor.jquery);
+                for (let i = 0; i < targets.length; ++i) {
+                    const target = targets[i];
+                    anchors.push({target: target, where: anchor.where});
+                }
+            }
+        }
+    }
+    if (!anchors.length) {
+        const target = getWrapForm();
+        if (target)
+            anchors.push({target: target, where: 'before'});
+    }
+    for (let i = 0; i < anchors.length; ++i) {
+        const anchor = anchors[i];
+        if (!anchor.where || anchor.where.indexOf('before') >= 0) {
+            const langSwitchWrap = createSetOfLSB();
+            anchor.target.parentNode.insertBefore(langSwitchWrap, anchor.target);
+        }
+        if (anchor.where && anchor.where.indexOf('after') >= 0) {
+            const langSwitchWrap = createSetOfLSB();
+            anchor.target.parentNode.insertBefore(langSwitchWrap, anchor.target.nextSibling);
+        }
+        if (anchor.where && anchor.where.indexOf('first') >= 0) {
+            const langSwitchWrap = createSetOfLSB();
+            anchor.target.insertBefore(langSwitchWrap, anchor.target.firstChild);
+        }
+        if (anchor.where && anchor.where.indexOf('last') >= 0) {
+            const langSwitchWrap = createSetOfLSB();
+            anchor.target.insertBefore(langSwitchWrap, null);
+        }
+    }
+};
+
+/**
+ * Setup the language switching buttons, meta box and listeners.
+ *
+ * Usually, this is called internally after the display and content hooks have been added.
+ * However some pages may initialize the hooks later on events (e.g. widget-added).
+ * Switching buttons should only be created if there is at least one hook, so this offers
+ * the possibility to setup the language switch dynamically later.
+ */
+export const setupLanguageSwitch = function () {
+    if (languageSwitchInitialized || !qTranslateConfig.LSB) {
+        return;
+    }
+    if (!displayHookNodes.length && !displayHookAttrs.length && !Object.keys(contentHooks).length) {
+        return;
+    }
+
+    setupMetaBoxLSB();
+    setupAnchorsLSB();
+    // Synchronization of multiple sets of Language Switching Buttons
+    addLanguageSwitchListener(onTabSwitch);
+
+    languageSwitchInitialized = true;
+}
+
+/**
+ * Initialize the internal state of hooks and switch.
+ * - restore the active language
+ * - setup hooks for the page config
+ * - setup MCE callbacs for editors created with preIinit
+ *
+ * ATTENTION! NOT SUPPORTED IN THE OFFICIAL API.
+ * Integration plugins should wait for the `qtxLoadAdmin` event before using hooks.
+ * This function is only meant for internal usage at loading time and may change.
+ * The current behavior may change in next releases. If you reall think you need to use this, ask on github.
+ */
+export const init = function () {
+    if (qTranslateConfig.LSB) {
+        qTranslateConfig.activeLanguage = getStoredEditLanguage();
+        if (!qTranslateConfig.activeLanguage || !isLanguageEnabled(qTranslateConfig.activeLanguage)) {
+            qTranslateConfig.activeLanguage = qTranslateConfig.language;
+            if (isLanguageEnabled(qTranslateConfig.activeLanguage)) {
+                storeEditLanguage(qTranslateConfig.activeLanguage);
+            } else {
+                // fallback to single mode
+                qTranslateConfig.LSB = false;
+            }
+        }
+    } else {
+        qTranslateConfig.activeLanguage = qTranslateConfig.language;
+        // no need to store for the current mode, but just in case the LSB are used later
+        storeEditLanguage(qTranslateConfig.activeLanguage);
+    }
+
+    if (!qTranslateConfig.onTabSwitchFunctions)
+        qTranslateConfig.onTabSwitchFunctions = [];
+    if (!qTranslateConfig.onTabSwitchFunctionsSave)
+        qTranslateConfig.onTabSwitchFunctionsSave = [];
+    if (!qTranslateConfig.onTabSwitchFunctionsLoad)
+        qTranslateConfig.onTabSwitchFunctionsLoad = [];
+
+    if (qTranslateConfig.page_config && qTranslateConfig.page_config.forms)
+        addPageHooks(qTranslateConfig.page_config.forms);
+
+    addMultilingualHooks();
+
+    addContentHooksTinyMCE();
+
+    setupLanguageSwitch();
+};
+
+/**
+ * Legacy support for plugin integration.
+ *
+ * @deprecated Use `qTranx.hooks` from new API.
+ * @since 3.4
+ */
+// TODO: remove in next major release
+qTranslateConfig.js.get_qtx = function () {
+    console.warn('qTranslate-XT: deprecated function qTranslateConfig.js.get_qtx() will be removed in next major release. See release notes to use new API.');
+    return qTranx.hooks;
+};
