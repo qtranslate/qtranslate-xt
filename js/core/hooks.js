@@ -24,38 +24,33 @@ const displayHookAttrs = [];
 let languageSwitchInitialized = false;
 
 /**
- * Designed as interface for other plugin integration. The documentation is available at
- * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
- * return array keyed by two-letter language code. Example of usage:
- * const langs = getLanguages();
- * for(const lang_code in langs){
- *  const lang_conf = langs[lang_code];
- *  // variables available:
- *  //lang_conf.name //name of language in native language
- *  //lang_conf.admin_name //in the admin language chosen
- *  //lang_conf.flag
- *  //lang_conf.locale
- *  // and may be more properties later
- * }
- * @since 3.3
+ * Get language meta-data.
+ *
+ * @returns {*} dictionnary indexed by two-letter language code.
+ *  .name in native language
+ *  .admin_name in the admin language chosen
+ *  .flag
+ *  .locale
+ *  .locale_html
  */
 export const getLanguages = function () {
     return qTranslateConfig.language_config;
 };
 
 /**
- * Designed as interface for other plugin integration. The documentation is available at
- * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
- * return URL to folder with flag images.
+ * Get URL to folder with flag images.
+ *
+ * @returns {string}
  */
 export const getFlagLocation = function () {
     return qTranslateConfig.flag_location;
 };
 
 /**
- * Designed as interface for other plugin integration. The documentation is available at
- * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
- * return true if 'lang' is in the hash of enabled languages.
+ * Check if a language is enabled.
+ *
+ * @param {string} lang
+ * @returns {boolean} true if 'lang' is in the hash of enabled languages.
  * This function maybe needed, as function mlExplode may return languages,
  * which are not enabled, in case they were previously enabled and had some data.
  * Such data is preserved and re-saved until user deletes it manually.
@@ -65,20 +60,18 @@ export const isLanguageEnabled = function (lang) {
 };
 
 /**
- * Designed as interface for other plugin integration. The documentation is available at
- * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
+ * Get the currently active language selected in LSB.
  *
- * @since 3.3
+ * @returns {string}
  */
 export const getActiveLanguage = function () {
     return qTranslateConfig.activeLanguage;
 };
 
 /**
- * Designed as interface for other plugin integration. The documentation is available at
- * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
- *
- * @since 3.3.4
+ * Check if a content hooks exists.
+ * @param {string} id hook
+ * @returns {*}
  */
 export const hasContentHook = function (id) {
     return contentHooks[id];
@@ -108,10 +101,7 @@ export const attachContentHook = function (inputField, contentId) {
 }
 
 /**
- * Designed as interface for other plugin integration. The documentation is available at
- * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
- *
- * @since 3.3.2
+ * Add a content hook.
  */
 export const addContentHook = function (inputField, encode, fieldName) {
     if (!inputField) return false;
@@ -303,19 +293,15 @@ export const addContentHookByIdName = function (name) {
     }
     return addContentHookById(name, sep);
 };
+
 export const addContentHookByIdC = function (id) {
     return addContentHookById(id, '['); // TODO shouldn't it be '<' ?!
 };
+
 export const addContentHookByIdB = function (id) {
     return addContentHookById(id, '[');
 };
 
-/**
- * Designed as interface for other plugin integration. The documentation is available at
- * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
- *
- * @since 3.1-b2
- */
 export const addContentHooks = function (fields, sep, fieldName) {
     for (let i = 0; i < fields.length; ++i) {
         const field = fields[i];
@@ -339,12 +325,6 @@ export const addContentHooksByClass = function (name, container) {
     addContentHooksByClassName(name, container, sep);
 };
 
-/**
- * Designed as interface for other plugin integration. The documentation is available at
- * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
- *
- * @since 3.3.2
- */
 export const addContentHooksByTagInClass = function (name, tag, container) {
     const elems = container.getElementsByClassName(name);
     for (let i = 0; i < elems.length; ++i) {
@@ -354,12 +334,6 @@ export const addContentHooksByTagInClass = function (name, tag, container) {
     }
 };
 
-/**
- * Designed as interface for other plugin integration. The documentation is available at
- * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
- *
- * @since 3.3
- */
 export const removeContentHook = function (inputField) {
     if (!inputField || !inputField.id) {
         return false;
@@ -387,19 +361,11 @@ export const removeContentHook = function (inputField) {
     return true;
 };
 
-/**
- * Designed as interface for other plugin integration. The documentation is available at
- * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
- * Re-create a hook, after a piece of HTML is dynamically replaced with a custom Java script.
- */
 export const refreshContentHook = function (inputField) {
     removeContentHook(inputField);
     return addContentHook(inputField);
 };
 
-/**
- * @since 3.4.6.9
- */
 const getDisplayContentDefaultValue = function (contents) {
     if (contents[qTranslateConfig.language])
         return '(' + qTranslateConfig.language + ') ' + contents[qTranslateConfig.language];
@@ -413,9 +379,6 @@ const getDisplayContentDefaultValue = function (contents) {
     return '';
 };
 
-/**
- * @since 3.4.6.9
- */
 const completeDisplayContent = function (contents) {
     let default_value = null;
     for (const lang in contents) {
@@ -427,9 +390,6 @@ const completeDisplayContent = function (contents) {
     }
 };
 
-/**
- * @since 3.2.7
- */
 const addDisplayHookNode = function (node) {
     if (!node.nodeValue)
         return 0;
@@ -445,9 +405,6 @@ const addDisplayHookNode = function (node) {
     return 1;
 };
 
-/**
- * @since 3.2.7
- */
 const addDisplayHookAttr = function (node, attr) {
     if (!node.hasAttribute(attr)) return 0;
     const value = node.getAttribute(attr);
@@ -464,12 +421,6 @@ const addDisplayHookAttr = function (node, attr) {
     return 1;
 };
 
-/**
- * Designed as interface for other plugin integration. The documentation is available at
- * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
- *
- * @since 3.2.7 switched to use of nodeValue instead of innerHTML.
- */
 export const addDisplayHook = function (elem) {
     if (!elem || !elem.tagName)
         return 0;
@@ -506,12 +457,6 @@ export const addDisplayHook = function (elem) {
     return nbHooks;
 };
 
-/**
- * Designed as interface for other plugin integration. The documentation is available at
- * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
- *
- * @since 3.0
- */
 export const addDisplayHookById = function (id) {
     return addDisplayHook(document.getElementById(id));
 };
@@ -581,12 +526,6 @@ const onTabSwitch = function (lang) {
     }
 };
 
-/**
- * Designed as interface for other plugin integration. The documentation is available at
- * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
- *
- * @since 3.0
- */
 export const addDisplayHooks = function (elems) {
     for (let i = 0; i < elems.length; ++i) {
         const e = elems[i];
@@ -594,12 +533,6 @@ export const addDisplayHooks = function (elems) {
     }
 };
 
-/**
- * Designed as interface for other plugin integration. The documentation is available at
- * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
- *
- * @since 3.4.7
- */
 export const addDisplayHookAttrs = function (elem, attrs) {
     for (let j = 0; j < attrs.length; ++j) {
         const a = attrs[j];
@@ -607,12 +540,6 @@ export const addDisplayHookAttrs = function (elem, attrs) {
     }
 };
 
-/**
- * Designed as interface for other plugin integration. The documentation is available at
- * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
- *
- * @since 3.4.7
- */
 export const addDisplayHooksAttrs = function (elems, attrs) {
     for (let i = 0; i < elems.length; ++i) {
         const e = elems[i];
@@ -620,23 +547,11 @@ export const addDisplayHooksAttrs = function (elems, attrs) {
     }
 };
 
-/**
- * Designed as interface for other plugin integration. The documentation is available at
- * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
- *
- * @since 3.3
- */
 export const addDisplayHooksByClass = function (name, container) {
     const elems = container.getElementsByClassName(name);
     addDisplayHooks(elems);
 };
 
-/**
- * Designed as interface for other plugin integration. The documentation is available at
- * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
- *
- * @since 3.3
- */
 export const addDisplayHooksByTagInClass = function (name, tag, container) {
     const elems = container.getElementsByClassName(name);
     for (let i = 0; i < elems.length; ++i) {
@@ -646,11 +561,8 @@ export const addDisplayHooksByTagInClass = function (name, tag, container) {
     }
 };
 
-
 /**
- * adds custom hooks from configuration
- * @since 3.1-b2 - renamed to addCustomContentHooks, since addContentHooks used in qTranslateConfig.js
- * @since 3.0 - addContentHooks
+ * Add custom hooks from configuration.
  */
 export const addCustomContentHooks = function () {
     for (let i = 0; i < qTranslateConfig.custom_fields.length; ++i) {
@@ -665,13 +577,12 @@ export const addCustomContentHooks = function () {
 };
 
 /**
- * adds translatable hooks for fields marked with classes
- * i18n-multilingual
- * i18n-multilingual-curly
- * i18n-multilingual-term
- * i18n-multilingual-slug
- * i18n-multilingual-display
- * @since 3.4
+ * Add translatable hooks for fields marked with classes
+ * - i18n-multilingual
+ * - i18n-multilingual-curly
+ * - i18n-multilingual-term
+ * - i18n-multilingual-slug
+ * - i18n-multilingual-display
  */
 const addMultilingualHooks = function () {
     $('.i18n-multilingual').each(function (i, e) {
@@ -692,8 +603,7 @@ const addMultilingualHooks = function () {
 };
 
 /**
- * Parses page configuration, loaded in qtranxf_get_admin_page_config_post_type.
- * @since 3.1-b2
+ * Parse page configuration, loaded in qtranxf_get_admin_page_config_post_type.
  */
 const addPageHooks = function (pageConfigForms) {
     for (const formId in pageConfigForms) {
@@ -852,9 +762,6 @@ export const addLanguageSwitchListener = function (func) {
 };
 
 /**
- * @since 3.2.9.8.6
- * Designed as interface for other plugin integration. The documentation is available at
- * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
  * The function passed will be called when user presses one of the Language Switching Buttons
  * before the content of all fields hooked is replaced with an appropriate language.
  * Two arguments are supplied:
@@ -866,9 +773,6 @@ export const addLanguageSwitchBeforeListener = function (func) {
 };
 
 /**
- * @since 3.3.2
- * Designed as interface for other plugin integration. The documentation is available at
- * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
  * Delete handler previously added by function addLanguageSwitchBeforeListener.
  */
 export const delLanguageSwitchBeforeListener = function (func) {
@@ -882,9 +786,6 @@ export const delLanguageSwitchBeforeListener = function (func) {
 };
 
 /**
- * @since 3.2.9.8.6
- * Designed as interface for other plugin integration. The documentation is available at
- * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
  * The function passed will be called when user presses one of the Language Switching Buttons
  * after the content of all fields hooked is replaced with an appropriate language.
  * Two arguments are supplied:
@@ -896,9 +797,6 @@ export const addLanguageSwitchAfterListener = function (func) {
 };
 
 /**
- * @since 3.3.2
- * Designed as interface for other plugin integration. The documentation is available at
- * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
  * Delete handler previously added by function addLanguageSwitchAfterListener.
  */
 export const delLanguageSwitchAfterListener = function (func) {
@@ -911,12 +809,6 @@ export const delLanguageSwitchAfterListener = function (func) {
     }
 };
 
-/**
- * @since 3.2.9.8.9
- * Designed as interface for other plugin integration. The documentation is available at
- * https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide
- *
- */
 export const enableLanguageSwitchingButtons = function (on) {
     const display = on ? 'block' : 'none';
     for (const lang in qTranslateConfig.tabSwitches) {
@@ -959,8 +851,9 @@ export const onLoadLanguage = function (lang, langFrom) {
 };
 
 /**
- * former switchTab
- * @since 3.3.2
+ * Switch to a new active language.
+ *
+ * @param lang
  */
 export const switchActiveLanguage = function (lang) {
     if (qTranslateConfig.activeLanguage === lang) {
@@ -1062,9 +955,6 @@ export const copyContentFrom = function (langFrom) {
         onLoadLanguage(lang, langFrom);
 };
 
-/**
- * @since 3.3.2
- */
 export const createSetOfLSBwith = function (lsb_style_extra_wrap_classes) {
     const langSwitchWrap = domCreateElement('ul', {className: 'qtranxs-lang-switch-wrap ' + lsb_style_extra_wrap_classes});
     const langs = qTranslateConfig.language_config;
