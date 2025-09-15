@@ -309,6 +309,40 @@ function qtranxf_merge_config( array $cfg_all, array $cfg ): array {
 }
 
 /**
+ * Unify the selector formats in a JSON field to a single class selector in a `jquery` key.
+ *
+ * @param array $field dictionary
+ *
+ * @return bool
+ * @since 3.4
+ */
+function qtranxf_set_field_jquery( array &$field ): bool {
+    if ( isset( $field['jquery'] ) ) {
+        return false;
+    }
+    if ( isset( $field['class'] ) ) {
+        $jq = '.' . $field['class'];
+        unset( $field['class'] );
+    } else {
+        $jq = '';
+    }
+    if ( isset( $field['tag'] ) ) {
+        $jq = $field['tag'] . $jq;
+        unset( $field['tag'] );
+    }
+    if ( isset( $field['name'] ) ) {
+        $jq .= '[name="' . $field['name'] . '"]';
+        unset( $field['name'] );
+    }
+    if ( empty( $jq ) ) {
+        return false;
+    }
+    $field['jquery'] = $jq;
+
+    return true;
+}
+
+/**
  * Parse i18n configurations, filtered for the current page URL and query.
  * The post type is not filtered yet.
  *

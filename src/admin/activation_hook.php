@@ -5,6 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once QTRANSLATE_DIR . '/src/admin/admin_notices.php';
 require_once QTRANSLATE_DIR . '/src/modules/admin_module_manager.php';
+require_once QTRANSLATE_DIR . '/src/utils.php';
 
 /**
  * Save language properties from configuration to WP options
@@ -194,38 +195,6 @@ function qtranxf_get_option_config_files(): array {
     }
 
     return $config_files;
-}
-
-/**
- * @param array $field dictionary
- *
- * @return bool
- * @since 3.4
- */
-function qtranxf_set_field_jquery( array &$field ): bool {
-    if ( isset( $field['jquery'] ) ) {
-        return false;
-    }
-    if ( isset( $field['class'] ) ) {
-        $jq = '.' . $field['class'];
-        unset( $field['class'] );
-    } else {
-        $jq = '';
-    }
-    if ( isset( $field['tag'] ) ) {
-        $jq = $field['tag'] . $jq;
-        unset( $field['tag'] );
-    }
-    if ( isset( $field['name'] ) ) {
-        $jq .= '[name="' . $field['name'] . '"]';
-        unset( $field['name'] );
-    }
-    if ( empty( $jq ) ) {
-        return false;
-    }
-    $field['jquery'] = $jq;
-
-    return true;
 }
 
 /**
