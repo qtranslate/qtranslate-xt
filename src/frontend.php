@@ -822,6 +822,7 @@ function qtranxf_updated_usermeta( int $meta_id, int $object_id, string $meta_ke
  *
  * @param string|false|null $redirect_url Attention! WordPress documents it as string, but it can be false. Allow null for plugins.
  * @param mixed $requested_url Attention! WordPress documents it as string, but it can be array or null.
+ *
  * @return string|false Canonical URL or false to cancel the redirect.
  *
  */

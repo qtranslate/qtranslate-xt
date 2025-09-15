@@ -370,7 +370,7 @@ function qtranxf_admin_footer() {
     wp_dequeue_script( 'autosave' );
     wp_deregister_script( 'autosave' );
 
-    $config = array();
+    $config                = array();
     $config['page_config'] = $page_config;
     unset( $config['page_config']['js'] );  // No need for javascript.
     // TODO missing 'term_name' ?
@@ -781,6 +781,7 @@ function qtranxf_admin_home_url( $url, $path, $orig_scheme, $blog_id ) {
     } else {
         $lang = $q_config['default_language'];
     }
+
     return qtranxf_get_url_for_language( $url, $lang, ! $q_config['hide_default_language'] || $lang != $q_config['default_language'] );
 }
 

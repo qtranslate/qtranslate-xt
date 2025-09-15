@@ -106,6 +106,7 @@ class QTX_Module_Acf_Admin {
         if ( empty( $group_qtx ) ) {
             unset( $groups[ QTX_Module_Acf_Extended::ACF_CATEGORY_QTX ] );
         }
+
         return $groups;
     }
 
@@ -265,6 +266,7 @@ class QTX_Module_Acf_Admin {
     protected static function get_module_setting( string $name, $default = null ) {
         $options  = get_option( QTX_OPTIONS_MODULE_ACF ); // Global key for all ACF settings, ignore default.
         $settings = $options[ $name ] ?? $default;
+
         // If new sub-keys are added to array settings, ensure the default values complete missing entries in storage.
         return is_array( $default ) ? array_merge( $default, $settings ) : $settings;
     }
@@ -354,6 +356,7 @@ class QTX_Module_Acf_Admin {
             $ml_values = qtranxf_split( $value );
             $valid     = self::validate_language_values_standard( $instance, $valid, $ml_values, $field, $input );
         }
+
         return $valid;
     }
 
@@ -382,6 +385,7 @@ class QTX_Module_Acf_Admin {
             if ( $field['required'] && empty( $value_language ) ) {
                 // TODO: retrieve the label for the language being edited.
                 $label = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage( $field['label'] );
+
                 return '(' . $q_config['language_name'][ $key_language ] . ') ' . sprintf( __( '%s value is required', 'acf' ), $label );
             }
             // Validate with original ACF method.

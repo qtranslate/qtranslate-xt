@@ -371,6 +371,7 @@ function qtranxf_split_database_file( string $ifp, array $languages_to_keep ): s
                             fclose( $file['fh'] );
                         }
                         $errors[] = sprintf( __( 'Failed to open output database file "%s"', 'qtranslate' ), $lfp );
+
                         return '';
                     }
                     $files[ $lang ] = array( 'fp' => $lfp, 'fh' => $lfh );

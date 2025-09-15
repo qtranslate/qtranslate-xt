@@ -102,6 +102,7 @@ class QTX_Module_Gravity_Forms {
         if ( ! $this->isEnabled() ) {
             return $tag;
         }
+
         return preg_replace_callback( "|action='([^']+)'|", array( &$this, 'gform_form_action_attribute' ), $tag );
     }
 
@@ -109,6 +110,7 @@ class QTX_Module_Gravity_Forms {
         if ( ! $this->isEnabled() ) {
             return $save_button;
         }
+
         return $this->translate( $save_button );
     }
 
@@ -116,6 +118,7 @@ class QTX_Module_Gravity_Forms {
         if ( ! $this->isEnabled() ) {
             return $confirmation;
         }
+
         return $this->translate( $confirmation );
     }
 

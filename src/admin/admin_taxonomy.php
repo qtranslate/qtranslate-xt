@@ -327,7 +327,6 @@ function qtranxf_term_set_translation( int $term_id, int $tt_id, string $taxonom
 
 add_action( 'created_term', 'qtranxf_term_set_translation', 5, 3 );
 add_action( 'edited_term', 'qtranxf_term_set_translation', 5, 3 );
-;
 function qtranxf_term_delete( int $term, int $tt_id, string $taxonomy, $deleted_term, array $object_ids ): void {
     global $q_config;
     if ( isset( $deleted_term->i18n_config['name'] ) ) {
@@ -357,6 +356,7 @@ function qtranxf_admin_list_cats( string $text ): string {
                 return $text;
             }
             $texts = qtranxf_split_blocks( $blocks );
+
             return qtranxf_join_b( $texts );  // with closing tag
         default:
             return qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage( $text );

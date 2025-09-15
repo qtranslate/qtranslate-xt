@@ -115,6 +115,7 @@ class QTX_Module_Acf_Extended {
             if ( $field['required'] && empty( $value_language ) ) {
                 // TODO: retrieve the label for the language being edited.
                 $label = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage( $field['label'] );
+
                 return '(' . $q_config['language_name'][ $key_language ] . ') ' . sprintf( __( '%s value is required', 'acf' ), $label );
             }
             // validate with original ACF method
