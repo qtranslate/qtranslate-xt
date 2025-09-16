@@ -5,14 +5,9 @@ $(function () {
     $('.notice-dismiss, .qtranxs-notice-dismiss').each(
         function () {
             const $notice = $(this);
-            const $div = $notice.closest('div.is-dismissible');
+            const $div = $notice.closest('div.is-dismissible.qtranxs-notice-ajax');
             if (!$div.length)
                 return;
-            if (!$notice.hasClass('qtranxs-notice-dismiss')) {
-                const $dismiss = $div.find('.qtranxs-notice-dismiss');
-                if (!$dismiss.length)
-                    return;
-            }
             let id = $div.attr('id');
             if (!id)
                 return;

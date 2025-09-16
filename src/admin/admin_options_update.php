@@ -3,6 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+require_once QTRANSLATE_DIR . '/src/admin/admin_notices.php';
 require_once QTRANSLATE_DIR . '/src/admin/admin_options.php';
 require_once QTRANSLATE_DIR . '/src/admin/import_export.php';
 require_once QTRANSLATE_DIR . '/src/modules/admin_module_manager.php';
@@ -346,6 +347,7 @@ function qtranxf_reset_config(): void {
     }
 
     // internal private options not loaded by default
+    delete_option( 'qtranslate_admin_notices' );
     delete_option( 'qtranslate_next_update_mo' );
     delete_option( 'qtranslate_next_thanks' );
     delete_option( QTX_OPTIONS_MODULES_STATE );
@@ -883,6 +885,7 @@ function qtranxf_update_settings(): void {
     }
 
     qtranxf_parse_post_type_excluded();
+    qtranxf_unset_admin_notices_deprecated();
     // special cases handling for admin options - end
 
     do_action( 'qtranslate_update_settings_admin' );

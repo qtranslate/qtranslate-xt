@@ -141,6 +141,7 @@ function qtranxf_admin_init() {
 
     if ( current_user_can( 'manage_options' ) ) {
         add_action( 'admin_notices', 'qtranxf_admin_notices_config' );
+        add_action( 'admin_notices', 'qtranxf_admin_notices_deprecated_settings' );
 
         if ( qtranxf_admin_is_config_page() ) {
             // TODO run this only if one of the forms or actions submitted --> && !empty($_POST)
@@ -148,14 +149,11 @@ function qtranxf_admin_init() {
             qtranxf_edit_config();
         }
 
-        // Check for deprecated and invalid options.
+        // This is more of a system health check with PHP extensions, not sure where to put it and how to handle the notice.
+        // Probably this should better be triggered on (1) edit config and (2) plugin activation.
+        // For now, it triggers a warning that can't really be dismissed (generic warnings are not persistently dismissed in options).
         if ( isset( $q_config['use_strftime'] ) ) {
-            if ( $q_config['use_strftime'] == QTX_STRFTIME_OVERRIDE || $q_config['use_strftime'] == QTX_DATE_OVERRIDE ) {
-                $warning = sprintf( __( 'The value set for option "%s" is deprecated, it will not be supported in the future. Go to the <a href="%s">%s</a> to update it.', 'qtranslate' ),
-                    __( 'Date / Time Conversion', 'qtranslate' ), admin_url( 'options-general.php?page=qtranslate-xt#advanced' ), __( 'advanced settings', 'qtranslate' ) );
-                qtranxf_add_warning( $warning );
-            }
-            if ( $q_config['use_strftime'] != QTX_DATE_WP && ! class_exists( 'IntlDateFormatter' ) ) {
+            if ( $q_config['use_strftime'] != QTX_DATE_WP && class_exists( 'IntlDateFormatter' ) ) {
                 $warning = sprintf( __( 'The value set for option "%s" cannot be used.', 'qtranslate' ), __( 'Date / Time Conversion', 'qtranslate' ) ) . ' ';
                 $warning .= sprintf( __( 'Class not found: <a href="%s">%s</a> likely due to missing PHP extension: <a href="%s">%s</a>.', 'qtranslate' ),
                     'https://www.php.net/manual/en/class.intldateformatter.php', '`IntlDateFormatter`',
