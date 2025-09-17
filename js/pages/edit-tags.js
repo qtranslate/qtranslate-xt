@@ -4,7 +4,9 @@
 'use strict';
 const $ = jQuery;
 
-$(document).on('qtxLoadAdmin:edit-tags', (event, qtx) => {
+export default function () {
+    const qtx = qTranx.hooks;
+
     const addDisplayHook = function (i, e) {
         qtx.addDisplayHook(e);
     };
@@ -39,4 +41,4 @@ $(document).on('qtxLoadAdmin:edit-tags', (event, qtx) => {
 
     // remove "Quick Edit" links for now
     $('#the-list > tr > td.name span.inline').css('display', 'none');
-});
+}

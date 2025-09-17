@@ -55,7 +55,7 @@ $body.on('click', '.wp-editor-tabs .wp-switch-editor', function () {
     });
 });
 
-$(function () {
+wp.hooks.addAction('qtranx.load', 'qtranx/acf/switch', function () {
     if (!qTranslateConfig.LSB)
         return;
     // select the edit tab from active language
@@ -69,4 +69,3 @@ $(function () {
         $mlFields.find('[data-language="' + language + '"]').addClass('current-language');
     }
 });
-

@@ -4,7 +4,9 @@
 'use strict';
 const $ = jQuery;
 
-$(document).on('qtxLoadAdmin:nav-menus', (event, qtx) => {
+export default function () {
+    const qtx = qTranx.hooks;
+
     const addMenuItemHooks = function (li) {
         qtx.addContentHooksByClass('edit-menu-item-title', li);
         qtx.addContentHooksByClass('edit-menu-item-attr-title', li);
@@ -53,4 +55,4 @@ $(document).on('qtxLoadAdmin:nav-menus', (event, qtx) => {
     onLanguageSwitchAfter();
 
     qtx.addLanguageSwitchAfterListener(onLanguageSwitchAfter);
-});
+}

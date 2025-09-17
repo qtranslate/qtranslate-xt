@@ -2,10 +2,10 @@
  /wp-admin/widgets.php
 */
 'use strict';
-
 const $ = jQuery;
 
-$(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
+export default function () {
+    const qtx = qTranx.hooks;
     if (!window.wpWidgets)
         return;
 
@@ -77,4 +77,4 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
     };
 
     qtx.addLanguageSwitchAfterListener(onLanguageSwitchAfter);
-});
+}

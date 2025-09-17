@@ -1,6 +1,6 @@
 const $ = jQuery;
 
-$(window).on('load', function () {
+wp.hooks.addAction('qtranx.load', 'qtranx/acf/main', function () {
     const qtx = qTranx.hooks;
 
     qtx.enableLanguageSwitchingButtons('block');
