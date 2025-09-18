@@ -3,6 +3,8 @@
  /wp-admin/post-new.php
 */
 'use strict';
+import * as hooks from '../core/hooks';
+
 const $ = jQuery;
 
 const UrlMode = Object.freeze({
@@ -13,7 +15,6 @@ const UrlMode = Object.freeze({
 });
 
 export default function () {
-    const qtx = qTranx.hooks;
     const convertURL = function (url, lang) {
         switch (qTranslateConfig.url_mode) {
             case UrlMode.QTX_URL_QUERY:
@@ -114,13 +115,13 @@ export default function () {
         }
     };
 
-    qtx.addCustomContentHooks(); // handles values of option 'Custom Fields'
-    setSlugLanguage(qtx.getActiveLanguage());
+    hooks.addCustomContentHooks(); // handles values of option 'Custom Fields'
+    setSlugLanguage(hooks.getActiveLanguage());
 
-    qtx.addLanguageSwitchAfterListener(setSlugLanguage);
+    hooks.addLanguageSwitchAfterListener(setSlugLanguage);
 
     if (labelTitle && fieldTitle) {
-        qtx.addLanguageSwitchAfterListener(hide_title_prompt_text);
+        hooks.addLanguageSwitchAfterListener(hide_title_prompt_text);
     }
 
     function parseQuery(queryString) {
@@ -134,7 +135,7 @@ export default function () {
     }
 
     // language menu bar handler
-    for (const lang in qtx.getLanguages()) {
+    for (const lang in hooks.getLanguages()) {
         $('#wp-admin-bar-' + lang + ' a').on('click', function (e) {
             e.preventDefault();
             const params = parseQuery(window.location.search);

@@ -2,13 +2,13 @@
  /wp-admin/edit-tags.php (without action=edit)
 */
 'use strict';
+import * as hooks from '../core/hooks';
+
 const $ = jQuery;
 
 export default function () {
-    const qtx = qTranx.hooks;
-
     const addDisplayHook = function (i, e) {
-        qtx.addDisplayHook(e);
+        hooks.addDisplayHook(e);
     };
 
     const updateRow = function (row) {

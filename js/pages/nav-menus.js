@@ -2,18 +2,18 @@
  /wp-admin/nav-menus.php
 */
 'use strict';
+import * as hooks from '../core/hooks';
+
 const $ = jQuery;
 
 export default function () {
-    const qtx = qTranx.hooks;
-
     const addMenuItemHooks = function (li) {
-        qtx.addContentHooksByClass('edit-menu-item-title', li);
-        qtx.addContentHooksByClass('edit-menu-item-attr-title', li);
-        qtx.addContentHooksByClass('[edit-menu-item-description', li); // must use '[:]' separator style
+        hooks.addContentHooksByClass('edit-menu-item-title', li);
+        hooks.addContentHooksByClass('edit-menu-item-attr-title', li);
+        hooks.addContentHooksByClass('[edit-menu-item-description', li); // must use '[:]' separator style
 
-        qtx.addDisplayHooksByClass('menu-item-title', li);
-        qtx.addDisplayHooksByTagInClass('link-to-original', 'A', li);
+        hooks.addDisplayHooksByClass('menu-item-title', li);
+        hooks.addDisplayHooksByTagInClass('link-to-original', 'A', li);
     };
 
     const onAddMenuItem = function (menuMarkup) {
@@ -54,5 +54,5 @@ export default function () {
     };
     onLanguageSwitchAfter();
 
-    qtx.addLanguageSwitchAfterListener(onLanguageSwitchAfter);
+    hooks.addLanguageSwitchAfterListener(onLanguageSwitchAfter);
 }
