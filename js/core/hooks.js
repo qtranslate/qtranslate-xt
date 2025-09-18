@@ -23,6 +23,11 @@ const displayHookNodes = [];
 const displayHookAttrs = [];
 let languageSwitchInitialized = false;
 
+// TODO: remove deprecated switch handlers in next major release
+const onTabSwitchFunctionsAction = [];
+const onTabSwitchFunctionsLoad = [];
+const onTabSwitchFunctionsSave = [];
+
 /**
  * Get language meta-data.
  *
@@ -758,7 +763,7 @@ export const loadAdditionalTinyMceHooks = function () {
 };
 
 export const addLanguageSwitchListener = function (func) {
-    qTranslateConfig.onTabSwitchFunctions.push(func);
+    onTabSwitchFunctionsAction.push(func);
 };
 
 /**
@@ -769,18 +774,18 @@ export const addLanguageSwitchListener = function (func) {
  * - the language code to which the edit language is being switched.
  */
 export const addLanguageSwitchBeforeListener = function (func) {
-    qTranslateConfig.onTabSwitchFunctionsSave.push(func);
+    onTabSwitchFunctionsSave.push(func);
 };
 
 /**
  * Delete handler previously added by function addLanguageSwitchBeforeListener.
  */
 export const delLanguageSwitchBeforeListener = function (func) {
-    for (let i = 0; i < qTranslateConfig.onTabSwitchFunctionsSave.length; ++i) {
-        const funcSave = qTranslateConfig.onTabSwitchFunctionsSave[i];
+    for (let i = 0; i < onTabSwitchFunctionsSave.length; ++i) {
+        const funcSave = onTabSwitchFunctionsSave[i];
         if (funcSave !== func)
             continue;
-        qTranslateConfig.onTabSwitchFunctionsSave.splice(i, 1);
+        onTabSwitchFunctionsSave.splice(i, 1);
         return;
     }
 };
@@ -793,18 +798,18 @@ export const delLanguageSwitchBeforeListener = function (func) {
  * - the language code from which the edit language is being switched.
  */
 export const addLanguageSwitchAfterListener = function (func) {
-    qTranslateConfig.onTabSwitchFunctionsLoad.push(func);
+    onTabSwitchFunctionsLoad.push(func);
 };
 
 /**
  * Delete handler previously added by function addLanguageSwitchAfterListener.
  */
 export const delLanguageSwitchAfterListener = function (func) {
-    for (let i = 0; i < qTranslateConfig.onTabSwitchFunctionsLoad.length; ++i) {
-        const funcLoad = qTranslateConfig.onTabSwitchFunctionsLoad[i];
+    for (let i = 0; i < onTabSwitchFunctionsLoad.length; ++i) {
+        const funcLoad = onTabSwitchFunctionsLoad[i];
         if (funcLoad !== func)
             continue;
-        qTranslateConfig.onTabSwitchFunctionsLoad.splice(i, 1);
+        onTabSwitchFunctionsLoad.splice(i, 1);
         return;
     }
 };
@@ -843,7 +848,6 @@ const getWrapForm = function () {
 };
 
 export const onLoadLanguage = function (lang, langFrom) {
-    const onTabSwitchFunctionsLoad = qTranslateConfig.onTabSwitchFunctionsLoad;
     for (let i = 0; i < onTabSwitchFunctionsLoad.length; ++i) {
         // TODO: deprecate qtx arg
         onTabSwitchFunctionsLoad[i].call(qTranx.hooks, lang, langFrom);
@@ -861,7 +865,6 @@ export const switchActiveLanguage = function (lang) {
     }
     if (qTranslateConfig.activeLanguage) {
         let ok2switch = true;
-        const onTabSwitchFunctionsSave = qTranslateConfig.onTabSwitchFunctionsSave;
         for (let i = 0; i < onTabSwitchFunctionsSave.length; ++i) {
             // TODO: deprecate qtx arg
             const ok = onTabSwitchFunctionsSave[i].call(qTranx.hooks, qTranslateConfig.activeLanguage, lang);
@@ -889,10 +892,10 @@ export const switchActiveLanguage = function (lang) {
             $(tabSwitches[i]).find('.button').addClass('active');
         }
     }
-    const onTabSwitchFunctions = qTranslateConfig.onTabSwitchFunctions;
-    for (let i = 0; i < onTabSwitchFunctions.length; ++i) {
+
+    for (let i = 0; i < onTabSwitchFunctionsAction.length; ++i) {
         // TODO: deprecate qtx arg
-        onTabSwitchFunctions[i].call(qTranx.hooks, lang, langFrom);
+        onTabSwitchFunctionsAction[i].call(qTranx.hooks, lang, langFrom);
     }
     onLoadLanguage(lang, langFrom);
 };
@@ -1122,13 +1125,6 @@ export const init = function () {
         // no need to store for the current mode, but just in case the LSB are used later
         storeEditLanguage(qTranslateConfig.activeLanguage);
     }
-
-    if (!qTranslateConfig.onTabSwitchFunctions)
-        qTranslateConfig.onTabSwitchFunctions = [];
-    if (!qTranslateConfig.onTabSwitchFunctionsSave)
-        qTranslateConfig.onTabSwitchFunctionsSave = [];
-    if (!qTranslateConfig.onTabSwitchFunctionsLoad)
-        qTranslateConfig.onTabSwitchFunctionsLoad = [];
 
     if (qTranslateConfig.page_config && qTranslateConfig.page_config.forms)
         addPageHooks(qTranslateConfig.page_config.forms);
