@@ -71,11 +71,11 @@ export default function () {
     $(document).on('widget-added', onWidgetAdded);
     $(document).on('widget-updated', onWidgetUpdate);
 
-    const onLanguageSwitchAfter = function () {
+    const onLanguageSwitch = function () {
         $('#widgets-right .widget').each(function () {
             wpWidgets.appendTitle(this);
         });
     };
 
-    hooks.addLanguageSwitchAfterListener(onLanguageSwitchAfter);
+    wp.hooks.addAction('qtranx.languageSwitch', 'qtranx/pages/widgets', onLanguageSwitch);
 }

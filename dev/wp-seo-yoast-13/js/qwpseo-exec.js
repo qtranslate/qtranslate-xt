@@ -60,7 +60,7 @@
 
         // saveSnippetData
 
-        qtx.addLanguageSwitchAfterListener(
+        wp.hooks.addAction('qtranx.languageSwitch', 'qtranx/plugins/yoast',
             function (lang) {
 
                 if (window.wpseoReplaceVarsL10n) {

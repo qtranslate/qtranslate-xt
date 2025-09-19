@@ -120,7 +120,8 @@ class QTX_Module_Acf_Admin {
         wp_enqueue_script( 'qtranslate-acf', plugins_url( 'dist/modules/acf.js', QTRANSLATE_FILE ), array(
             'acf-input',
             'underscore',
-            'qtranslate-admin-main'
+            'qtranslate-admin-main',
+            'wp-hooks',
         ), QTX_VERSION );
 
         wp_localize_script( 'qtranslate-acf', 'qTranslateModuleAcf', get_option( QTX_OPTIONS_MODULE_ACF, self::default_options() ) );

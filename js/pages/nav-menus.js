@@ -42,7 +42,7 @@ export default function () {
         }
     }
 
-    const onLanguageSwitchAfter = function (lang) {
+    const onLanguageSwitch = function (lang) {
         if (wpNavMenu) {
             if (typeof wpNavMenu.refreshKeyboardAccessibility == 'function') {
                 wpNavMenu.refreshKeyboardAccessibility();
@@ -52,7 +52,6 @@ export default function () {
             }
         }
     };
-    onLanguageSwitchAfter();
-
-    hooks.addLanguageSwitchAfterListener(onLanguageSwitchAfter);
+    onLanguageSwitch();
+    wp.hooks.addAction('qtranx.languageSwitch', 'qtranx/pages/nav-menus', onLanguageSwitch);
 }

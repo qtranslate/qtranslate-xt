@@ -474,7 +474,7 @@ const updateMceEditorContent = function (hook) {
     hook.mce.setContent(text);
 };
 
-const onTabSwitch = function (lang) {
+const doTabSwitch = function (lang) {
     storeEditLanguage(lang);
 
     for (let i = displayHookNodes.length; --i >= 0;) {
@@ -864,6 +864,8 @@ export const switchActiveLanguage = function (lang) {
         return;
     }
     if (qTranslateConfig.activeLanguage) {
+        wp.hooks.doAction('qtranx.languageSwitchPre', lang, qTranslateConfig.activeLanguage);
+        // TODO: remove deprecated switch handlers
         let ok2switch = true;
         for (let i = 0; i < onTabSwitchFunctionsSave.length; ++i) {
             // TODO: deprecate qtx arg
@@ -873,6 +875,7 @@ export const switchActiveLanguage = function (lang) {
         }
         if (!ok2switch)
             return; // cancel button switch, if one of onTabSwitchFunctionsSave returned 'false'
+        // TODO: substitute cancel logic with a lock design
 
         const tabSwitches = qTranslateConfig.tabSwitches[qTranslateConfig.activeLanguage];
         for (let i = 0; i < tabSwitches.length; ++i) {
@@ -893,10 +896,12 @@ export const switchActiveLanguage = function (lang) {
         }
     }
 
+    doTabSwitch(lang);
     for (let i = 0; i < onTabSwitchFunctionsAction.length; ++i) {
         // TODO: deprecate qtx arg
         onTabSwitchFunctionsAction[i].call(qTranx.hooks, lang, langFrom);
     }
+    wp.hooks.doAction('qtranx.languageSwitch', lang, langFrom);
     onLoadLanguage(lang, langFrom);
 };
 
@@ -1091,8 +1096,6 @@ export const setupLanguageSwitch = function () {
 
     setupMetaBoxLSB();
     setupAnchorsLSB();
-    // Synchronization of multiple sets of Language Switching Buttons
-    addLanguageSwitchListener(onTabSwitch);
 
     languageSwitchInitialized = true;
 }

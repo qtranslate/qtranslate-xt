@@ -118,11 +118,12 @@ export default function () {
     hooks.addCustomContentHooks(); // handles values of option 'Custom Fields'
     setSlugLanguage(hooks.getActiveLanguage());
 
-    hooks.addLanguageSwitchAfterListener(setSlugLanguage);
-
-    if (labelTitle && fieldTitle) {
-        hooks.addLanguageSwitchAfterListener(hide_title_prompt_text);
-    }
+    wp.hooks.addAction('qtranx.languageSwitch', 'qtranx/pages/post', function () {
+        setSlugLanguage(lang);
+        if (labelTitle && fieldTitle) {
+            hide_title_prompt_text(lang);
+        }
+    });
 
     function parseQuery(queryString) {
         const query = {};
