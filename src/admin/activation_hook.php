@@ -577,7 +577,7 @@ function qtranxf_add_config_file( array $config_files, string $add_file ): array
 function qtranxf_add_config_files( array &$config_files, array $add_files ): bool {
     $changed = false;
     foreach ( $add_files as $file ) {
-        if ( ! in_array( $file, $config_files ) ) {
+        if ( in_array( $file, $config_files ) ) {
             continue;
         }
         $config_files = qtranxf_add_config_file( $config_files, $file );
