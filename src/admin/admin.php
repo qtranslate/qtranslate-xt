@@ -306,7 +306,7 @@ function qtranxf_get_admin_page_config_post_type( $post_type ) {
         $page_config['js'][] = array(
             'handle' => 'qtranslate-admin-main',
             'src'    => './dist/main.js',
-            'deps'   => [ 'wp-hooks' ]
+            'deps'   => [ 'wp-deprecated', 'wp-hooks' ],
         );
 
         if ( isset( $page_config['js-exec'] ) ) {

@@ -763,6 +763,12 @@ export const loadAdditionalTinyMceHooks = function () {
 };
 
 export const addLanguageSwitchListener = function (func) {
+    wp.deprecated('addLanguageSwitchListener', {
+        since: '3.16.0',
+        version: '4.0.0',
+        plugin: 'qTranslate-XT',
+        alternative: 'wp.hooks.addAction("qtranx.LanguageSwitch", ...)'
+    });
     onTabSwitchFunctionsAction.push(func);
 };
 
@@ -774,6 +780,12 @@ export const addLanguageSwitchListener = function (func) {
  * - the language code to which the edit language is being switched.
  */
 export const addLanguageSwitchBeforeListener = function (func) {
+    wp.deprecated('addLanguageSwitchBeforeListener', {
+        since: '3.16.0',
+        version: '4.0.0',
+        plugin: 'qTranslate-XT',
+        alternative: 'wp.hooks.addAction("qtranx.LanguageSwitchPre", ...)'
+    });
     onTabSwitchFunctionsSave.push(func);
 };
 
@@ -781,6 +793,12 @@ export const addLanguageSwitchBeforeListener = function (func) {
  * Delete handler previously added by function addLanguageSwitchBeforeListener.
  */
 export const delLanguageSwitchBeforeListener = function (func) {
+    wp.deprecated('delLanguageSwitchBeforeListener', {
+        since: '3.16.0',
+        version: '4.0.0',
+        plugin: 'qTranslate-XT',
+        alternative: 'wp.hooks.removeAction("qtranx.LanguageSwitchPre", ...)'
+    });
     for (let i = 0; i < onTabSwitchFunctionsSave.length; ++i) {
         const funcSave = onTabSwitchFunctionsSave[i];
         if (funcSave !== func)
@@ -798,6 +816,12 @@ export const delLanguageSwitchBeforeListener = function (func) {
  * - the language code from which the edit language is being switched.
  */
 export const addLanguageSwitchAfterListener = function (func) {
+    wp.deprecated('addLanguageSwitchAfterListener', {
+        since: '3.16.0',
+        version: '4.0.0',
+        plugin: 'qTranslate-XT',
+        alternative: 'wp.hooks.addAction("qtranx.LanguageSwitch", ...)'
+    });
     onTabSwitchFunctionsLoad.push(func);
 };
 
@@ -805,6 +829,12 @@ export const addLanguageSwitchAfterListener = function (func) {
  * Delete handler previously added by function addLanguageSwitchAfterListener.
  */
 export const delLanguageSwitchAfterListener = function (func) {
+    wp.deprecated('delLanguageSwitchAfterListener', {
+        since: '3.16.0',
+        version: '4.0.0',
+        plugin: 'qTranslate-XT',
+        alternative: 'wp.hooks.removeAction("qtranx.LanguageSwitch", ...)'
+    });
     for (let i = 0; i < onTabSwitchFunctionsLoad.length; ++i) {
         const funcLoad = onTabSwitchFunctionsLoad[i];
         if (funcLoad !== func)
@@ -864,6 +894,12 @@ export const switchActiveLanguage = function (lang) {
         return;
     }
     if (qTranslateConfig.activeLanguage) {
+        /**
+         * Action triggered before a language switch.
+         *
+         * @param langTo language code of currently active language from which the edit language is being switched.
+         * @param langFrom the language code to which the edit language is being switched.
+         */
         wp.hooks.doAction('qtranx.languageSwitchPre', lang, qTranslateConfig.activeLanguage);
         // TODO: remove deprecated switch handlers
         let ok2switch = true;
@@ -901,6 +937,13 @@ export const switchActiveLanguage = function (lang) {
         // TODO: deprecate qtx arg
         onTabSwitchFunctionsAction[i].call(qTranx.hooks, lang, langFrom);
     }
+
+    /**
+     * Action triggered after a language switch.
+     *
+     * @param langTo language code of currently active language from which the edit language is being switched.
+     * @param langFrom the language code to which the edit language is being switched.
+     */
     wp.hooks.doAction('qtranx.languageSwitch', lang, langFrom);
     onLoadLanguage(lang, langFrom);
 };
@@ -1147,6 +1190,12 @@ export const init = function () {
  */
 // TODO: remove in next major release
 qTranslateConfig.js.get_qtx = function () {
-    console.warn('qTranslate-XT: deprecated function qTranslateConfig.js.get_qtx() will be removed in next major release. See release notes to use new API.');
+    wp.deprecated('qTranslateConfig.js.get_qtx', {
+        since: '3.16.0',
+        version: '4.0.0',
+        plugin: 'qTranslate-XT',
+        alternative: 'qTranx.hooks',
+        hint: 'See release notes to use new API.'
+    });
     return qTranx.hooks;
 };
