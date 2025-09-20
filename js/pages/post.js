@@ -8,10 +8,10 @@ import * as hooks from '../core/hooks';
 const $ = jQuery;
 
 const UrlMode = Object.freeze({
-   QTX_URL_QUERY: 1,
-   QTX_URL_PATH: 2,
-   QTX_URL_DOMAIN: 3,
-   QTX_URL_DOMAINS: 4,
+    QTX_URL_QUERY: 1,
+    QTX_URL_PATH: 2,
+    QTX_URL_DOMAIN: 3,
+    QTX_URL_DOMAINS: 4,
 });
 
 export default function () {
@@ -118,7 +118,7 @@ export default function () {
     hooks.addCustomContentHooks(); // handles values of option 'Custom Fields'
     setSlugLanguage(hooks.getActiveLanguage());
 
-    wp.hooks.addAction('qtranx.languageSwitch', 'qtranx/pages/post', function () {
+    wp.hooks.addAction('qtranx.languageSwitch', 'qtranx/pages/post', function (lang) {
         setSlugLanguage(lang);
         if (labelTitle && fieldTitle) {
             hide_title_prompt_text(lang);

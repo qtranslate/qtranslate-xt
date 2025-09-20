@@ -55,7 +55,7 @@ if ( ! function_exists( 'add_filter' ) ) {
  * The constants defined below are designed as interface for other plugin integration.
  * @see https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide/
  */
-const QTX_VERSION = '3.16.0.dev.1';
+const QTX_VERSION = '3.16.0.dev.2';
 
 if ( ! defined( 'QTRANSLATE_FILE' ) ) {
     define( 'QTRANSLATE_FILE', __FILE__ );
