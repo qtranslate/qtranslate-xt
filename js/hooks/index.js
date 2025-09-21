@@ -7,9 +7,9 @@
  * Read Integration Guide: https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide for more information.
  */
 'use strict';
-import {domCreateElement} from './dom';
-import {mlSplitRaw, mlExplode, mlParseTokens} from './multi-lang-tags';
-import {getStoredEditLanguage, storeEditLanguage} from './store';
+import {domCreateElement} from '../core/dom';
+import {mlSplitRaw, mlExplode, mlParseTokens} from '../core/multi-lang-tags';
+import {getStoredEditLanguage, storeEditLanguage} from '../core/store';
 
 const $ = jQuery;
 

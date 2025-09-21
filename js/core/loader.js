@@ -2,7 +2,7 @@
  * Main loader for core module.
  */
 'use strict';
-import {init, loadAdditionalTinyMceHooks} from './hooks';
+import {init, loadAdditionalTinyMceHooks} from '../hooks';
 
 const $ = jQuery;
 const qTranslateConfig = window.qTranslateConfig;
