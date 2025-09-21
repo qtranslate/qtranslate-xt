@@ -22,6 +22,7 @@ const _contentHooks = {};
 const _displayHookNodes = [];
 const _displayHookAttrs = [];
 let _languageSwitchInitialized = false;
+const _tabSwitchElements = {};  // DOM elements indexed by language.
 
 // TODO: remove deprecated switch handlers in next major release
 const _onTabSwitchFunctionsAction = [];
@@ -846,8 +847,8 @@ export const delLanguageSwitchAfterListener = function (func) {
 
 export const enableLanguageSwitchingButtons = function (on) {
     const display = on ? 'block' : 'none';
-    for (const lang in qTranslateConfig.tabSwitches) {
-        const tabSwitches = qTranslateConfig.tabSwitches[lang];
+    for (const lang in _tabSwitchElements) {
+        const tabSwitches = _tabSwitchElements[lang];
         for (let i = 0; i < tabSwitches.length; ++i) {
             const tabSwitchParent = tabSwitches[i].parentElement;
             tabSwitchParent.style.display = display;
@@ -913,7 +914,7 @@ export const switchActiveLanguage = function (lang) {
             return; // cancel button switch, if one of _onTabSwitchFunctionsSave returned 'false'
         // TODO: substitute cancel logic with a lock design
 
-        const tabSwitches = qTranslateConfig.tabSwitches[qTranslateConfig.activeLanguage];
+        const tabSwitches = _tabSwitchElements[qTranslateConfig.activeLanguage];
         for (let i = 0; i < tabSwitches.length; ++i) {
             tabSwitches[i].classList.remove(qTranslateConfig.lsb_style_active_class);
             $(tabSwitches[i]).find('.button').removeClass('active');
@@ -925,7 +926,7 @@ export const switchActiveLanguage = function (lang) {
     $('input[name="qtranslate-edit-language"]').val(lang);
 
     {
-        const tabSwitches = qTranslateConfig.tabSwitches[qTranslateConfig.activeLanguage];
+        const tabSwitches = _tabSwitchElements[qTranslateConfig.activeLanguage];
         for (let i = 0; i < tabSwitches.length; ++i) {
             tabSwitches[i].classList.add(qTranslateConfig.lsb_style_active_class);
             $(tabSwitches[i]).find('.button').addClass('active');
@@ -1009,8 +1010,6 @@ export const copyContentFrom = function (langFrom) {
 export const createSetOfLSBwith = function (lsb_style_extra_wrap_classes) {
     const langSwitchWrap = domCreateElement('ul', {className: 'qtranxs-lang-switch-wrap ' + lsb_style_extra_wrap_classes});
     const langs = qTranslateConfig.language_config;
-    if (!qTranslateConfig.tabSwitches)
-        qTranslateConfig.tabSwitches = {};
     for (const lang in langs) {
         const lang_conf = langs[lang];
         const flag_location = qTranslateConfig.flag_location;
@@ -1032,9 +1031,9 @@ export const createSetOfLSBwith = function (lsb_style_extra_wrap_classes) {
             tabSwitch.classList.add(qTranslateConfig.lsb_style_active_class);
             $(tabSwitch).find('.button').addClass('active');
         }
-        if (!qTranslateConfig.tabSwitches[lang])
-            qTranslateConfig.tabSwitches[lang] = [];
-        qTranslateConfig.tabSwitches[lang].push(tabSwitch);
+        if (!_tabSwitchElements[lang])
+            _tabSwitchElements[lang] = [];
+        _tabSwitchElements[lang].push(tabSwitch);
     }
     if (!qTranslateConfig.hide_lsb_copy_content) {
         const tab = domCreateElement('li', {className: 'qtranxs-lang-copy'}, langSwitchWrap);
