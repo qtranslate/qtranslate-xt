@@ -2,7 +2,7 @@
  /wp-admin/term.php
 */
 (function ($) {
-    wp.hooks.addAction('qtranx.load', 'qtranx/plugins/yoast-qwpseo-prep', function () {
+    wp.hooks.addAction('qtranx.load', 'qtranx/plugins/yoast/qwpseo-prep', function () {
         var qtx = qTranx.hooks;
         var h = qtx.hasContentHook('description');
         if (!h)

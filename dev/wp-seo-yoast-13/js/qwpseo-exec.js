@@ -4,7 +4,7 @@
  /wp-admin/term.php
 */
 (function ($) {
-    wp.hooks.addAction('qtranx.load', 'qtranx/plugins/yoast-qwpseo-exec', function () {
+    wp.hooks.addAction('qtranx.load', 'qtranx/plugins/yoast/qwpseo-exec', function () {
         if (!window.YoastSEO || !window.YoastSEO.app)
             return;
         var qtx = qTranx.hooks;
@@ -58,7 +58,7 @@
 
         // saveSnippetData
 
-        wp.hooks.addAction('qtranx.languageSwitch', 'qtranx/plugins/yoast',
+        wp.hooks.addAction('qtranx.languageSwitch', 'qtranx/plugins/yoast/qwpseo-exec',
             function (lang) {
 
                 if (window.wpseoReplaceVarsL10n) {
