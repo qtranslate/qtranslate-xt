@@ -2,7 +2,7 @@
  /wp-admin/edit-tags.php (without action=edit)
 */
 'use strict';
-import * as hooks from '../core/hooks';
+import * as hooks from '../hooks';
 
 const $ = jQuery;
 

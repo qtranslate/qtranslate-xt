@@ -3,9 +3,5 @@
  */
 'use strict';
 
-import './loader';
-
-// The public API is exported here
-export * as hooks from './hooks';
-export * from './loader';
+export * from './config';
 export * from './multi-lang-tags';

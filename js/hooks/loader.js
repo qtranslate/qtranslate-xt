@@ -1,18 +1,14 @@
 /**
- * Main loader for core module.
+ * Main loader for hooks module.
  */
 'use strict';
-import {init, loadAdditionalTinyMceHooks} from './hooks';
+import {init, loadAdditionalTinyMceHooks} from './handlers';
 
 const $ = jQuery;
 const qTranslateConfig = window.qTranslateConfig;
 
 const pageConfigKeys = function () {
     return qTranslateConfig['page_config']?.['keys'] ?? [];
-};
-
-export const isPageActive = function (page) {
-    return (pageConfigKeys().indexOf(page) >= 0);
 };
 
 // With jQuery3 ready handlers fire asynchronously and may be fired after load.

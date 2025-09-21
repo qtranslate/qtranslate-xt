@@ -1,5 +1,5 @@
 'use strict';
-import {isPageActive} from "../core/loader";
+import {isPageActive} from "../core";
 import loadEditTags from './edit-tags';
 import loadtNavMenus from './nav-menus';
 import loadPost from './post';
