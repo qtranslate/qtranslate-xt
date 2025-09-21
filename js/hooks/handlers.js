@@ -1149,7 +1149,7 @@ export const setupLanguageSwitch = function () {
  * - setup MCE callbacs for editors created with preIinit
  *
  * ATTENTION! NOT SUPPORTED IN THE OFFICIAL API.
- * Integration plugins should wait for the `qtxLoadAdmin` event before using hooks.
+ * Integration plugins should subscribe for the `qtranx.load` WP action before using ML hooks.
  * This function is only meant for internal usage at loading time and may change.
  * The current behavior may change in next releases. If you reall think you need to use this, ask on github.
  */
@@ -1179,22 +1179,4 @@ export const init = function () {
     addContentHooksTinyMCE();
 
     setupLanguageSwitch();
-};
-
-/**
- * Legacy support for plugin integration.
- *
- * @deprecated Use `qTranx.hooks` from new API.
- * @since 3.4
- */
-// TODO: remove in next major release
-qTranslateConfig.js.get_qtx = function () {
-    wp.deprecated('qTranslateConfig.js.get_qtx', {
-        since: '3.16.0',
-        version: '4.0.0',
-        plugin: 'qTranslate-XT',
-        alternative: 'qTranx.hooks',
-        hint: 'See release notes to use new API.'
-    });
-    return qTranx.hooks;
 };
