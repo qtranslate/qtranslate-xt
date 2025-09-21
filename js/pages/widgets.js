@@ -2,7 +2,7 @@
  /wp-admin/widgets.php
 */
 'use strict';
-import * as hooks from '../hooks';
+import * as hooks from '../core/hooks';
 
 const $ = jQuery;
 
