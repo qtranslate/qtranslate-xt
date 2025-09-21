@@ -1,4 +1,5 @@
 <?php
+require_once QTRANSLATE_DIR . '/src/modules/module_loader.php';
 
 function qtranxf_detect_language( array &$url_info ) {
     global $q_config;
@@ -418,6 +419,33 @@ function qtranxf_http_negotiate_language(): ?string {
 }
 
 /**
+ * Disables default redirection when language is not detectable from url (e.g. default language url with hide_default_language activated).
+ * Exception is made for site_url(), for which language detection feature is preserved.
+ *
+ * @param string $url_lang proposed target URL for the active language to redirect to.
+ * @param string $url_orig original URL supplied to browser, which needs to be standardized.
+ * @param array $url_info a hash of various information parsed from original URL, cookies and other site configuration.
+ *
+ * @return string resulting redirection url
+ * @see qtranxf_check_url_maybe_redirect
+ */
+function qtranxf_slugs_language_detect_redirect( $url_lang, $url_orig, $url_info ): string {
+    global $q_config;
+    // Make sure URLs with no lang info are treated as default language, unless it's site_url
+    if ( untrailingslashit( site_url() ) != untrailingslashit( $url_orig ) && empty( $url_info['lang_url'] ) ) {
+        return qtranxf_convertURL( $url_orig, $q_config['default_language'], false, true );
+        // The following fixes the case when the browser removes language marker from default language site URL (caching?) passing directly _$SERVER['REQUEST_URI'] with language info removed.
+        // In this case is not possible to switch to default language from site URL.
+        // Application of this hack is narrowed down to the cases where referer is site URL in current language, to preserve language detection feature as much as possible.
+        // TODO: check if a cleaner fix is applicable.
+    } else if ( $q_config['hide_default_language'] && untrailingslashit( site_url() ) == untrailingslashit( $url_orig ) && untrailingslashit( $url_lang ) === untrailingslashit( wp_get_raw_referer() ) ) {
+        return qtranxf_convertURL( $url_orig, $q_config['default_language'], false, true );
+    }
+
+    return $url_lang;
+}
+
+/**
  * Check if a URL redirection (301 permanent) is needed and attempt to do so.
  * Two main causes of redirect:
  *  - the fetched URL info contains already a 'doredirect' order, previously set;
@@ -438,6 +466,11 @@ function qtranxf_check_url_maybe_redirect( &$url_info ) {
         $url_info['doredirect'] = '$url_orig != $url_lang';
     }
     if ( isset( $url_info['doredirect'] ) ) {
+        if ( QTX_Module_Loader::is_module_active( 'slugs' ) ) {
+            // Special redirect handling with Slugs
+            $url_lang = qtranxf_slugs_language_detect_redirect( $url_lang, $url_orig, $url_info );
+        }
+
         /**
          * Filter for the redirect behaviour.
          *

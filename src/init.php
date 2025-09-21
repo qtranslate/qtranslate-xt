@@ -82,8 +82,6 @@ function qtranxf_init_language(): void {
     $url_info['language'] = qtranxf_detect_language( $url_info );
     $q_config['language'] = apply_filters( 'qtranslate_language', $url_info['language'], $url_info );
 
-    QTX_Module_Loader::load_active_modules_early_hooks();
-
     assert( isset( $q_config['url_info']['doing_front_end'] ) );
     if ( $q_config['url_info']['doing_front_end'] && qtranxf_can_redirect() ) {
         qtranxf_check_url_maybe_redirect( $url_info );

@@ -39,24 +39,4 @@ class QTX_Module_Loader {
             }
         }
     }
-
-    /**
-     * Loads early hooks from modules previously activated in the options.
-     *
-     * Attention! This assumes the current states stored in the options are valid.
-     * This doesn't perform any check, neither on the plugin conditions nor the folder structure.
-     * In the worst case the state can be refreshed by reactivating the plugin.
-     *
-     * Note also the modules should be loaded before "qtranslate_init_language" is triggered.
-     */
-    public static function load_active_modules_early_hooks(): void {
-        $modules_state = get_option( QTX_OPTIONS_MODULES_STATE, array() );
-
-        foreach ( $modules_state as $module_id => $state ) {
-            $target = QTRANSLATE_DIR . '/src/modules/' . $module_id . '/' . 'early_hooks.php';
-            if ( $state === QTX_MODULE_STATE_ACTIVE && file_exists( $target ) ) {
-                require_once( $target );
-            }
-        }
-    }
 }
