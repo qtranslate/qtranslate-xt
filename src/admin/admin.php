@@ -303,7 +303,11 @@ function qtranxf_get_admin_page_config_post_type( $post_type ) {
             unset( $page_config['js-conf'] );
         }
 
-        $page_config['js'][] = array( 'handle' => 'qtranslate-admin-main', 'src' => './dist/main.js' );
+        $page_config['js'][] = array(
+            'handle' => 'qtranslate-admin-main',
+            'src'    => './dist/main.js',
+            'deps'   => [ 'jquery', 'wp-deprecated', 'wp-hooks' ],
+        );
 
         if ( isset( $page_config['js-exec'] ) ) {
             foreach ( $page_config['js-exec'] as $key => $js ) {
@@ -370,7 +374,7 @@ function qtranxf_admin_footer() {
     wp_dequeue_script( 'autosave' );
     wp_deregister_script( 'autosave' );
 
-    $config = array();
+    $config                = array();
     $config['page_config'] = $page_config;
     unset( $config['page_config']['js'] );  // No need for javascript.
     // TODO missing 'term_name' ?
@@ -453,7 +457,7 @@ function qtranxf_admin_footer() {
             }
         }
         if ( $q_config['qtrans_compatibility'] ) {
-            echo 'qtrans_use = function(lang, text) { var result = qtranxj_split(text); return result[lang]; }' . PHP_EOL;
+            echo 'qtrans_use = function(lang, text) { var result = qTranx.mlExplode(text); return result[lang]; }' . PHP_EOL;
         }
         do_action( 'qtranslate_add_admin_footer_js' );
         ?>
@@ -550,7 +554,7 @@ function qtranxf_admin_enqueue_scripts() {
     qtranxf_add_admin_highlight_css();
 
     if ( qtranxf_admin_is_config_page() ) {
-        wp_enqueue_script( 'qtranslate-admin-options', plugins_url( 'dist/options.js', QTRANSLATE_FILE ), array(), QTX_VERSION );
+        wp_enqueue_script( 'qtranslate-admin-options', plugins_url( 'dist/options.js', QTRANSLATE_FILE ), array( 'jquery' ), QTX_VERSION );
     }
 }
 
@@ -781,6 +785,7 @@ function qtranxf_admin_home_url( $url, $path, $orig_scheme, $blog_id ) {
     } else {
         $lang = $q_config['default_language'];
     }
+
     return qtranxf_get_url_for_language( $url, $lang, ! $q_config['hide_default_language'] || $lang != $q_config['default_language'] );
 }
 
@@ -823,8 +828,8 @@ function qtranxf_admin_tiny_mce_init( $mce_settings ) {
     if ( isset( $mce_settings ) ):
         ?>
         <script>
-            if (window.qTranslateConfig !== undefined && window.qTranslateConfig.js !== undefined)
-                window.qTranslateConfig.js.get_qtx();
+            if (window.qTranx !== undefined)
+                window.qTranx.hooks.init();
         </script>
     <?php
     endif;

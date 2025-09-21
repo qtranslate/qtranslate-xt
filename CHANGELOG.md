@@ -1,3 +1,29 @@
+### 3.15.5
+* Change language Redirect 302 to 301 (permanent) (#1440)
+* Fix autosave in block editor (#1441)
+* Fix restore backup warning in block editor (#809)
+* Fix type mismatch in `qtranxf_write_config_log` (#1444)
+* Fix jQuery deprecated `bind/unbind` (#1453)
+* Make `checkCanonical` more robust (#1432)
+
+### 3.15.4
+* Fix `_load_textdomain_just_in_time` notice (#1433, #1438)
+* Fix link to modules in readme (#1442)
+* Fix deprecated implicit nullable in PHP8.4 (#1450)
+* Make path optional in Slugs `home_url` (#1436)
+
+### 3.15.3
+Core
+* Fix WP6.7 warning loading textdomain (#1422)
+* Fix wp-cli incompatibility (#1387)
+* Fix `qtranxf_resolveLangCase` called with array (#1416)
+
+Slugs
+* Fix several filter and URL issues (#1363, #1358, #1359, #1373, #1273)
+* Fix php warning (#1398)
+* Slugs/WC: fix warning on post_type missing key (#1378)
+* Update detailed instructions to migrate from legacy QTS (#1404)
+
 ### 3.15.2
 * Fix missing base `QTX_Translator` hooks in admin (#1337)
 * Fix ACF settings for post type and taxonomy (#1342)

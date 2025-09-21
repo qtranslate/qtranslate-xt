@@ -753,6 +753,7 @@ class QTX_Admin_Settings {
                         <tbody>
                         <?php
                         foreach ( $settings_modules as $module ) :
+                            $state_info = $module->state_info();
                             ?>
                             <tr>
                                 <td>
@@ -765,10 +766,10 @@ class QTX_Admin_Settings {
                                         <?php echo $module->name; ?>
                                     </label>
                                 </td>
-                                <td><?php echo $module->plugin_state_label ?></td>
-                                <td style="color: <?php echo $module->color ?>">
-                                    <span class="dashicons <?php echo $module->icon ?>"></span>
-                                    <?php echo $module->module_state_label ?>
+                                <td><?php echo $module->plugin_state_label() ?></td>
+                                <td style="color: <?php echo $state_info['color'] ?>">
+                                    <span class="dashicons <?php echo $state_info['icon'] ?>"></span>
+                                    <?php echo $state_info['label'] ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -803,7 +804,7 @@ class QTX_Admin_Settings {
                             echo sanitize_text_field( stripslashes( $_POST['json_custom_i18n_config'] ) );
                         } else if ( ! empty( $q_config['custom_i18n_config'] ) )
                             echo json_encode( $q_config['custom_i18n_config'], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES ) ?></textarea>
-                    <p class="qtranxs-notes"><?php printf( __( 'It would make no difference, if the content of this field is stored in a file, which name is listed last in option "%s". Therefore, this field only provides flexibility for the sake of convenience.', 'qtranslate' ), __( 'Configuration Files', 'qtranslate' ) );
+                    <p class="qtranxs-notes <?php echo( empty( $q_config['custom_i18n_config'] ) ? "qtranxs-deprecated" : "qtranxs-deprecated-warning" ) ?>"><?php printf( __( 'It would make no difference, if the content of this field is stored in a file, which name is listed last in option "%s". Therefore, this field only provides flexibility for the sake of convenience.', 'qtranslate' ), __( 'Configuration Files', 'qtranslate' ) );
                         echo ' ';
                         printf( __( 'Please, read %sIntegration Guide%s for more information.', 'qtranslate' ), '<a href="https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide" target="_blank">', '</a>' );
                         echo ' ';
@@ -847,12 +848,15 @@ class QTX_Admin_Settings {
             <tr>
                 <th scope="row"><?php _e( 'Compatibility Functions', 'qtranslate' ) ?></th>
                 <td>
-                    <label for="qtranxs_qtrans_compatibility"><input type="checkbox"
-                                                                     name="qtrans_compatibility"
-                                                                     id="qtranxs_qtrans_compatibility"
-                                                                     value="1"<?php checked( $q_config['qtrans_compatibility'] ) ?>/>&nbsp;<?php printf( __( 'Enable function name compatibility (%s).', 'qtranslate' ), 'qtrans_convertURL, qtrans_getAvailableLanguages, qtrans_generateLanguageSelectCode, qtrans_getLanguage, qtrans_getLanguageName, qtrans_getSortedLanguages, qtrans_join, qtrans_split, qtrans_use, qtrans_useCurrentLanguageIfNotFoundShowAvailable, qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage, qtrans_useDefaultLanguage, qtrans_useTermLib' ) ?>
+                    <label for="qtranxs_qtrans_compatibility"
+                           class="qtranxs_explanation <?php echo( empty( $q_config['qtrans_compatibility'] ) ? "qtranxs-deprecated" : "qtranxs-deprecated-warning" ) ?>">
+                        <?php _e( 'Deprecated.', 'qtranslate' ); ?><br>
+                        <input type="checkbox"
+                               name="qtrans_compatibility"
+                               id="qtranxs_qtrans_compatibility"
+                               value="1"<?php checked( $q_config['qtrans_compatibility'] ) ?>/>&nbsp;<?php printf( __( 'Enable function name compatibility (%s).', 'qtranslate' ), 'qtrans_convertURL, qtrans_getAvailableLanguages, qtrans_generateLanguageSelectCode, qtrans_getLanguage, qtrans_getLanguageName, qtrans_getSortedLanguages, qtrans_join, qtrans_split, qtrans_use, qtrans_useCurrentLanguageIfNotFoundShowAvailable, qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage, qtrans_useDefaultLanguage, qtrans_useTermLib' ) ?>
                     </label><br/>
-                    <p class="qtranxs-notes"><?php printf( __( 'Some plugins and themes use direct calls to the functions listed, which are defined in former %s plugin and some of its forks. Turning this flag on will enable those function to exists, which will make the dependent plugins and themes to work. WordPress policy prohibits to define functions with the same names as in other plugins, since it generates user-unfriendly fatal errors, when two conflicting plugins are activated simultaneously. Before turning this option on, you have to make sure that there are no other plugins active, which define those functions.', 'qtranslate' ), '<a href="https://wordpress.org/plugins/qtranslate/" target="_blank">qTranslate</a>' ) ?></p>
+                    <p class="qtranxs-notes <?php echo( empty( $q_config['qtrans_compatibility'] ) ? "qtranxs-deprecated" : "qtranxs-deprecated-warning" ) ?>"><?php printf( __( 'Some plugins and themes use direct calls to the functions listed, which are defined in former %s plugin and some of its forks. Turning this flag on will enable those function to exists, which will make the dependent plugins and themes to work. WordPress policy prohibits to define functions with the same names as in other plugins, since it generates user-unfriendly fatal errors, when two conflicting plugins are activated simultaneously. Before turning this option on, you have to make sure that there are no other plugins active, which define those functions.', 'qtranslate' ), '<a href="https://wordpress.org/plugins/qtranslate/" target="_blank">qTranslate</a>' ) ?></p>
                 </td>
             </tr>
         </table>

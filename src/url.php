@@ -291,6 +291,7 @@ function qtranxf_language_neutral_path( string $path ): bool {
          qtranxf_ignored_file_type( $path )
     ) {
         $language_neutral_path_cache[ $path ] = true;
+
         return true;
     }
     $language_neutral_path_cache[ $path ] = false;

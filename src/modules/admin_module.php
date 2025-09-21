@@ -127,7 +127,7 @@ class QTX_Admin_Module {
             ],
             [
                 'id'           => 'slugs',
-                'name'         => __( 'Slugs translation', 'qtranslate' ) . sprintf( ' (%s)', __( 'experimental' ) ),
+                'name'         => 'Slugs translation (experimental)',
                 'incompatible' => 'qtranslate-slug/qtranslate-slug.php',
                 'has_settings' => true,
             ]

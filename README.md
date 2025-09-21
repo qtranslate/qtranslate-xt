@@ -3,8 +3,8 @@ Developed by: new qTranslate community, from qTranslate-X by John Clause and qTr
 Contributors: herrvigg, johnclause, chineseleper, Vavooon, grafcom  
 Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, translation  
 Requires at least: 5.0  
-Tested up to: 6.2.2  
-Requires PHP: 7.1  
+Tested up to: 6.8.2  
+Requires PHP: 7.3  
 Stable tag: N/A  
 License: GPLv2 or later  
 License URI: https://www.gnu.org/licenses/gpl-2.0.html  
@@ -48,7 +48,7 @@ It is partially supported, with some limitations. Read carefully our [Gutenberg 
 
 ### Is WooCommerce, ACF, QTS (Slugs), ... supported?
 WooCommerce, ACF, Slugs and other plugins are now supported as built-in modules. Developers able to test properly are much welcome! Please send PR for bug fixes.
-See the complete list of [available modules](https://github.com/qtranslate/qtranslate-xt/tree/master/modules) in our repo.
+See the complete list of [available modules](https://github.com/qtranslate/qtranslate-xt/tree/master/src/modules) in our repo.
 
 ### Is any plugin/themes supported?
 Some major plugins are now supported with the built-in modules. Some plugins are also supported with built-in i18n configurations. For other plugins you need to provide custom integration through i18n configuration (json) and/or code (PHP/JS). A major refactoring is needed to make this easier.

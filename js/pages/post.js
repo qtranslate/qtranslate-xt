@@ -3,16 +3,18 @@
  /wp-admin/post-new.php
 */
 'use strict';
+import * as hooks from '../hooks';
+
 const $ = jQuery;
 
 const UrlMode = Object.freeze({
-   QTX_URL_QUERY: 1,
-   QTX_URL_PATH: 2,
-   QTX_URL_DOMAIN: 3,
-   QTX_URL_DOMAINS: 4,
+    QTX_URL_QUERY: 1,
+    QTX_URL_PATH: 2,
+    QTX_URL_DOMAIN: 3,
+    QTX_URL_DOMAINS: 4,
 });
 
-$(document).on('qtxLoadAdmin:post', (event, qtx) => {
+export default function () {
     const convertURL = function (url, lang) {
         switch (qTranslateConfig.url_mode) {
             case UrlMode.QTX_URL_QUERY:
@@ -58,7 +60,7 @@ $(document).on('qtxLoadAdmin:post', (event, qtx) => {
             if (btnViewPostA.tagName !== 'A')
                 return;
             origUrl = btnViewPostA.href;
-            langUrl = qtranxj_ce('a', {});
+            langUrl = domCreateElement('a', {});
             origUrlQ = origUrl.search(/\?/) > 0;
         }
 
@@ -113,14 +115,15 @@ $(document).on('qtxLoadAdmin:post', (event, qtx) => {
         }
     };
 
-    qtx.addCustomContentHooks(); // handles values of option 'Custom Fields'
-    setSlugLanguage(qtx.getActiveLanguage());
+    hooks.addCustomContentHooks(); // handles values of option 'Custom Fields'
+    setSlugLanguage(hooks.getActiveLanguage());
 
-    qtx.addLanguageSwitchAfterListener(setSlugLanguage);
-
-    if (labelTitle && fieldTitle) {
-        qtx.addLanguageSwitchAfterListener(hide_title_prompt_text);
-    }
+    wp.hooks.addAction('qtranx.languageSwitch', 'qtranx/pages/post', function (lang) {
+        setSlugLanguage(lang);
+        if (labelTitle && fieldTitle) {
+            hide_title_prompt_text(lang);
+        }
+    });
 
     function parseQuery(queryString) {
         const query = {};
@@ -133,7 +136,7 @@ $(document).on('qtxLoadAdmin:post', (event, qtx) => {
     }
 
     // language menu bar handler
-    for (const lang in qtx.getLanguages()) {
+    for (const lang in hooks.getLanguages()) {
         $('#wp-admin-bar-' + lang + ' a').on('click', function (e) {
             e.preventDefault();
             const params = parseQuery(window.location.search);
@@ -142,4 +145,4 @@ $(document).on('qtxLoadAdmin:post', (event, qtx) => {
             window.location = window.location.origin + window.location.pathname + '?' + $.param(params);
         })
     }
-});
+}

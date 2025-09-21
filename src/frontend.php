@@ -366,6 +366,7 @@ function qtranxf_translate_deep( $value, $lang ) {
 
             return serialize( $value );
         }
+
         return qtranxf_use_language( $lang, $value );
     } else if ( is_array( $value ) ) {
         foreach ( $value as $k => $v ) {
@@ -625,6 +626,7 @@ function qtranxf_get_attachment_image_attributes( $attr, $attachment = null, $si
 function qtranxf_home_url( $url, $path, $orig_scheme, $blog_id ): string {
     global $q_config;
     $lang = $q_config['language'];
+
     return qtranxf_get_url_for_language( $url, $lang, ! $q_config['hide_default_language'] || $lang != $q_config['default_language'] );
 }
 
@@ -818,14 +820,17 @@ function qtranxf_updated_usermeta( int $meta_id, int $object_id, string $meta_ke
 /**
  * Hook for redirect_canonical.
  *
- * @param string|false $redirect_url Attention! WordPress documents it as string, but it can be false.
+ * @param string|false|null $redirect_url Attention! WordPress documents it as string, but it can be false. Allow null for plugins.
  * @param mixed $requested_url Attention! WordPress documents it as string, but it can be array or null.
  *
+ * @return string|false Canonical URL or false to cancel the redirect.
+ *
  */
-function qtranxf_checkCanonical( $redirect_url, $requested_url ): string {
-    if ( $redirect_url === false ) {
+function qtranxf_checkCanonical( $redirect_url, $requested_url ) {
+    if ( $redirect_url === false || ! isset( $redirect_url ) ) {
         return false;
     }
+
     // fix canonical conflicts with language urls
     return qtranxf_convertURL( $redirect_url );
 }

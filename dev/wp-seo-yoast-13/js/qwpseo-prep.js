@@ -2,9 +2,8 @@
  /wp-admin/term.php
 */
 (function ($) {
-    $(function () {
-        var qtx = qTranslateConfig.js.get_qtx();
-
+    wp.hooks.addAction('qtranx.load', 'qtranx/plugins/yoast/qwpseo-prep', function () {
+        var qtx = qTranx.hooks;
         var h = qtx.hasContentHook('description');
         if (!h)
             return;
@@ -20,7 +19,7 @@
             return;
 
         //Yoast will delete this field in term-scraper
-        var contents = qtranxj_split(d.val());
+        var contents = mlExplode(d.val());
         h.contentField.value = contents[qTranslateConfig.activeLanguage];
         for (var lang in h.fields) {
             h.fields[lang].value = contents[lang];

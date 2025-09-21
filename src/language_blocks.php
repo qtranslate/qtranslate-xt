@@ -9,6 +9,7 @@
  */
 function qtranxf_isMultilingual( ?string $str ): bool {
     $lang_code = QTX_LANG_CODE_FORMAT;
+
     return ! is_null( $str ) && preg_match( "/<!--:$lang_code-->|\[:$lang_code]|{:$lang_code}/im", $str );
 }
 
@@ -38,6 +39,7 @@ function qtranxf_get_language_blocks( $text ): array {
  */
 function qtranxf_split( string $text ): array {
     $blocks = qtranxf_get_language_blocks( $text );
+
     return qtranxf_split_blocks( $blocks );
 }
 
@@ -468,6 +470,7 @@ function qtranxf_use_content( string $lang, $content, array $available_langs, bo
         $msg,
         $q_config
     ), '3.15.0', 'qtranslate_content_translation_not_available' );
+
     return apply_filters( 'qtranslate_content_translation_not_available', $output, $lang, $language_list, $alt_lang, $alt_content, $msg, $q_config );
 }
 

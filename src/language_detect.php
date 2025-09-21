@@ -212,12 +212,12 @@ function qtranxf_parse_language_info( array &$url_info, bool $link = false ) {
     // parse query lang (even for non query mode!)
     $query_lang = false;
     if ( ! $link ) {
-        if ( isset( $_GET['lang'] ) ) {
+        if ( isset( $_GET['lang'] ) && is_string( $_GET['lang'] ) ) {
             $query_lang = qtranxf_resolveLangCase( $_GET['lang'], $doredirect );
             if ( $query_lang ) {
                 $url_info['lang_query_get'] = $query_lang;  // only used in qtranxf_url_set_language
             }
-        } else if ( isset( $_POST['lang'] ) ) {
+        } else if ( isset( $_POST['lang'] ) && is_string( $_POST['lang'] ) ) {
             $query_lang = qtranxf_resolveLangCase( $_POST['lang'], $doredirect );
         }
     } elseif ( ! empty( $url_info['query'] ) && preg_match( '/(^|&|&amp;|&#038;|\?)lang=($lang_code)/i', $url_info['query'], $match ) ) {
@@ -342,19 +342,13 @@ function qtranxf_setcookie_language( string $lang, string $cookie_name, string $
         return;
     }
 
-    // SameSite only available with options API from PHP 7.3.0
-    if ( version_compare( PHP_VERSION, '7.3.0' ) >= 0 ) {
-        setcookie( $cookie_name, $lang, [
-            'expires'  => strtotime( '+1year' ),
-            'path'     => $cookie_path,
-            'secure'   => $q_config['use_secure_cookie'],
-            'httponly' => true,
-            'samesite' => QTX_COOKIE_SAMESITE
-        ] );
-    } else {
-        // only meant for server-side, set 'httponly' flag
-        setcookie( $cookie_name, $lang, strtotime( '+1year' ), $cookie_path, null, $q_config['use_secure_cookie'], true );
-    }
+    setcookie( $cookie_name, $lang, [
+        'expires'  => strtotime( '+1year' ),
+        'path'     => $cookie_path,
+        'secure'   => $q_config['use_secure_cookie'],
+        'httponly' => true,
+        'samesite' => QTX_COOKIE_SAMESITE
+    ] );
 }
 
 function qtranxf_set_language_cookie( string $lang ): void {
@@ -424,7 +418,7 @@ function qtranxf_http_negotiate_language(): ?string {
 }
 
 /**
- * Check if a URL redirection is needed and attempt to do so.
+ * Check if a URL redirection (301 permanent) is needed and attempt to do so.
  * Two main causes of redirect:
  *  - the fetched URL info contains already a 'doredirect' order, previously set;
  *  - the URL is not canonical for the detected language.
@@ -455,7 +449,7 @@ function qtranxf_check_url_maybe_redirect( &$url_info ) {
          */
         $target = apply_filters( 'qtranslate_language_detect_redirect', $url_lang, $url_orig, $url_info );
         if ( $target !== false && $target != $url_orig ) {
-            wp_redirect( $target );
+            wp_redirect( $target, 301, 'qTranslate-XT' );  # Permanent redirect.
             nocache_headers(); // prevent browser from caching redirection
             exit();
         } else {

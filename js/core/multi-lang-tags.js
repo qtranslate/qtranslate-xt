@@ -1,32 +1,55 @@
 /**
- * Utilities for qTranslate blocks
+ * Utilities for multi-lang tags
  */
 'use strict';
 const qTranslateConfig = window.qTranslateConfig;
 
-export const qtranxj_get_split_blocks = function (text) {
+/**
+ * Decompose a string containing ML tags into an object with keys for each language.
+ * Example: '[:en]EN-content[:fr]FR-contenu[:]' -> {en: 'EN-content', fr: 'FR-contenu'}
+ *
+ * If no tag is found the same content is set to each langage.
+ * Example: 'unique content' -> {en: 'unique content', fr: 'unique content'}
+ *
+ * @param {string} rawText
+ * @returns {Object}
+ */
+export const mlExplode = function (rawText) {
+    const tokens = mlSplitRaw(rawText);
+    return mlParseTokens(tokens);
+};
+
+/**
+ * Decompose a raw string containing ML tag+content (endTag) into an ordered array of tokens with tags and contents.
+ *
+ * @param {string} rawText
+ * @returns {string[]}
+ */
+export const mlSplitRaw = function (rawText) {
     const regex = '(<!--:lang-->|<!--:-->|\\[:lang]|\\[:]|{:lang}|{:})'.replace(/lang/g, qTranslateConfig.lang_code_format);
     const splitRegex = new RegExp(regex, "gi");
     // Most browsers support RegExp.prototype[@@split]()... except IE (see debug info from troubleshooting)
     // https://caniuse.com/mdn-javascript_builtins_regexp_--split
-    return text.split(splitRegex);
+    return rawText.split(splitRegex);
 };
 
-export const qtranxj_split = function (text) {
-    const blocks = qtranxj_get_split_blocks(text);
-    return qtranxj_split_blocks(blocks);
-};
-
-export const qtranxj_split_blocks = function (blocks) {
+/**
+ * Parse an ordered array of tokens of ML tag+content (endTag) and assign them to an object,
+ * where keys are language and values the respective content.
+ *
+ * @param {string[]} tokens
+ * @returns {Object}
+ */
+export const mlParseTokens = function (tokens) {
     const result = new Object;
     for (const lang in qTranslateConfig.language_config) {
         result[lang] = '';
     }
-    if (!blocks || !blocks.length)
+    if (!tokens || !tokens.length)
         return result;
-    if (blocks.length === 1) {
+    if (tokens.length === 1) {
         // no language separator found, enter it to all languages
-        const b = blocks[0];
+        const b = tokens[0];
         for (const lang in qTranslateConfig.language_config) {
             result[lang] += b;
         }
@@ -37,8 +60,8 @@ export const qtranxj_split_blocks = function (blocks) {
     const slang_regex = new RegExp('{:(lang)}'.replace(/lang/g, qTranslateConfig.lang_code_format), 'gi');
     let lang = false;
     let matches;
-    for (let i = 0; i < blocks.length; ++i) {
-        const b = blocks[i];
+    for (let i = 0; i < tokens.length; ++i) {
+        const b = tokens[i];
         if (!b.length)
             continue;
         matches = clang_regex.exec(b);

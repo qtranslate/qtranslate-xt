@@ -264,6 +264,7 @@ function qtranxf_convert_date_format_to_strftime_format( string $format ): strin
     }
     // convert everything
     $format = preg_replace( $date_parameters, $strftime_parameters, $format );
+
     // Remove single backslashes and convert double to single.
     return stripslashes( $format );
 }
@@ -350,6 +351,7 @@ function qtranxf_format_date( string $format, string $mysql_time, string $defaul
     $language_format = qtranxf_get_language_date_or_time_format( 'date_format' );
     // TODO: abandon strftime format in qTranslate.
     $date_format = qtranxf_convert_to_strftime_format_using_config( $format, $language_format );
+
     return ( ! empty( $date_format ) ? qxtranxf_intl_strftime( $date_format, $timestamp, get_locale() ) : $default_value );
 }
 
@@ -378,6 +380,7 @@ function qtranxf_format_time( string $format, string $mysql_time, string $defaul
     $language_format = qtranxf_get_language_date_or_time_format( 'time_format' );
     // TODO: abandon strftime format in qTranslate.
     $date_format = qtranxf_convert_to_strftime_format_using_config( $format, $language_format );
+
     return ( ! empty( $date_format ) ? qxtranxf_intl_strftime( $date_format, $timestamp, get_locale() ) : $default_value );
 }
 
@@ -426,6 +429,7 @@ function qtranxf_timeFromCommentForCurrentLanguage( $old_date, string $format, b
         return $old_date;
     }
     $comment_date = $gmt ? $comment->comment_date_gmt : $comment->comment_date;
+
     return qtranxf_format_time( $format, $comment_date, $old_date );
 }
 

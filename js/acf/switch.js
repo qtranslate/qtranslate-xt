@@ -3,7 +3,7 @@ const $ = jQuery;
 const $body = $('body');
 
 /**
- * Sync qtranslate language switchers with qtranslatex language switchers.
+ * Sync language switchers for legacy fields not handled natively by qTranslate-XT
  */
 const onLanguageSwitch = function (language) {
     const parent = $('.multi-language-field');
@@ -11,13 +11,12 @@ const onLanguageSwitch = function (language) {
     parent.find('[data-language="' + language + '"]').addClass('current-language');
     parent.find('input[data-language="' + language + '"], textarea[data-language="' + language + '"]');
 };
-$body.on('click', '.qtranxs-lang-switch', function () {
-    const language = $(this).attr('lang');
+wp.hooks.addAction('qtranx.languageSwitch', 'qtranx/acf/switch', function (language) {
     onLanguageSwitch(language);
 });
 
 /**
- * Setup qtranslate language switchers.
+ * Setup language switchers.
  */
 $body.on('click', '.wp-switch-editor[data-language]', function () {
     const parent = $(this).parent('.multi-language-field'), language = $(this).data('language');
@@ -55,12 +54,11 @@ $body.on('click', '.wp-editor-tabs .wp-switch-editor', function () {
     });
 });
 
-$(function () {
+wp.hooks.addAction('qtranx.load', 'qtranx/acf/switch', function () {
     if (!qTranslateConfig.LSB)
         return;
-    const qtx = qTranslateConfig.js.get_qtx();
     // select the edit tab from active language
-    const language = qtx.getActiveLanguage();
+    const language = qTranx.hooks.getActiveLanguage();
     if (language) {
         // show the correct ACF fields
         onLanguageSwitch(language);
@@ -70,4 +68,3 @@ $(function () {
         $mlFields.find('[data-language="' + language + '"]').addClass('current-language');
     }
 });
-

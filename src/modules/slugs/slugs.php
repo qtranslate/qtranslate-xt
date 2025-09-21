@@ -86,7 +86,7 @@ class QTX_Module_Slugs {
 
         $hreflangs = array();
         foreach ( $q_config['enabled_languages'] as $lang ) {
-            $hreflang = ! empty ( $q_config['locale_html'][ $lang ] ) ? $q_config['locale_html'][ $lang ] : $lang;
+            $hreflang               = ! empty ( $q_config['locale_html'][ $lang ] ) ? $q_config['locale_html'][ $lang ] : $lang;
             $hreflangs[ $hreflang ] = esc_url( $this->get_current_url( $lang ) );
         }
         $hreflangs['x-default'] = esc_url( $this->get_current_url( $q_config['default_language'] ) );
@@ -369,13 +369,13 @@ class QTX_Module_Slugs {
             $function = 'home_url';
             $id       = '';
 
-        // -> search
+            // -> search
         } elseif ( isset( $query['s'] ) ) {
             $id       = $query['s'];
             $function = "get_search_link";
 
-        // -> page
-        } elseif ( isset( $query['pagename'] ) || isset( $query['page_id'] ) ){
+            // -> page
+        } elseif ( isset( $query['pagename'] ) || isset( $query['page_id'] ) ) {
             $page = get_transient( 'qtranslate_slugs_matched_page' );
             if ( $page === false ) {
                 $page = isset( $query['page_id'] ) ? get_post( $query['page_id'] ) : $this->get_page_by_path( $query['pagename'] );
@@ -389,8 +389,8 @@ class QTX_Module_Slugs {
                 $function          = 'get_page_link';
             }
 
-        // -> category
-        // If 'name' key is defined, query is relevant to a post with a /%category%/%postname%/ permalink structure and will be captured later.
+            // -> category
+            // If 'name' key is defined, query is relevant to a post with a /%category%/%postname%/ permalink structure and will be captured later.
         } elseif ( ( isset( $query['category_name'] ) || isset( $query['cat'] ) ) && ! isset( $query['name'] ) ) {
             if ( isset( $query['category_name'] ) ) {
                 $term_slug = $this->get_last_slash( empty( $query['category_name'] ) ? $wp->request : $query['category_name'] );
@@ -407,7 +407,7 @@ class QTX_Module_Slugs {
                 $function               = 'get_category_link';
             }
 
-        // -> tag
+            // -> tag
         } elseif ( isset( $query['tag'] ) ) {
             $term = $this->get_term_by( 'slug', $query['tag'], 'post_tag' );
             if ( $term ) {
@@ -438,7 +438,7 @@ class QTX_Module_Slugs {
                     $id       = $query['post_type'];
                 } else {
 
-                    $page_slug = $query['name'] ?? $query[ $query['post_type'] ];
+                    $page_slug = $query['name'] ?? $query[ $query['post_type'] ] ?? null;
                     $page      = isset( $page_slug ) ? $this->get_page_by_path( $page_slug, $query['post_type'] ) : null;
                     if ( $page ) {
                         $id          = $page->ID;
@@ -493,7 +493,7 @@ class QTX_Module_Slugs {
             }
             $this->temp_lang = false;
 
-        /* If no handling function has been identified, original query is restored (probably going to 404) */
+            /* If no handling function has been identified, original query is restored (probably going to 404) */
         } else {
             $query = $query_orig;
         }
@@ -527,19 +527,19 @@ class QTX_Module_Slugs {
      * Retrieve the home url for a given site.
      *
      * @param string $url The complete home URL including scheme and path.
-     * @param string $path Path relative to the home url.
+     * @param string|null $path (optional) Path relative to the home url.
      * @param string|null $scheme (optional) Scheme to give the home url context. Currently 'http', 'https'.
      * @param int|null $blog_id (optional) Site ID, or null for the current site.
      *
      * @return string Home url link with optional path appended.
      */
-    public function home_url( string $url, string $path, ?string $scheme, ?int $blog_id ): string {
-        if ( ! isset($scheme) ){
+    public function home_url( string $url, ?string $path, ?string $scheme, ?int $blog_id ): string {
+        if ( ! isset( $scheme ) ) {
             $scheme = is_ssl() && ! is_admin() ? 'https' : 'http';
         }
 
         if ( $scheme === 'rest' ) {
-                return $url;
+            return $url;
 
         } elseif ( $scheme !== 'relative' ) {
             if ( empty( $blog_id ) || ! is_multisite() ) {

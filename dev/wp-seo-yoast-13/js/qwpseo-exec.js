@@ -4,12 +4,10 @@
  /wp-admin/term.php
 */
 (function ($) {
-    $(function () {
+    wp.hooks.addAction('qtranx.load', 'qtranx/plugins/yoast/qwpseo-exec', function () {
         if (!window.YoastSEO || !window.YoastSEO.app)
             return;
-
-        var qtx = qTranslateConfig.js.get_qtx();
-
+        var qtx = qTranx.hooks;
         //deal with imperfection of QTranslate Slug
         if ($('#qts_nonce').length) {
             $('#snippet-editor-slug').closest('label').hide();
@@ -26,7 +24,7 @@
             for (var key in wpseoReplaceVarsL10n.replace_vars) {
                 var rv = wpseoReplaceVarsL10n.replace_vars[key];
                 if (typeof rv === 'string') {
-                    var rvs = qtranxj_split(rv);
+                    var rvs = mlExplode(rv);
                     for (var lang in qTranslateConfig.language_config) {
                         qreplace_vars[lang][key] = rvs[lang];
                     }
@@ -60,7 +58,7 @@
 
         // saveSnippetData
 
-        qtx.addLanguageSwitchAfterListener(
+        wp.hooks.addAction('qtranx.languageSwitch', 'qtranx/plugins/yoast/qwpseo-exec',
             function (lang) {
 
                 if (window.wpseoReplaceVarsL10n) {
