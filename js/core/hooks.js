@@ -18,15 +18,15 @@ const qTranslateConfig = window.qTranslateConfig;
 /**
  * Internal state of hooks and languageSwitch, not exposed
  */
-const contentHooks = {};
-const displayHookNodes = [];
-const displayHookAttrs = [];
-let languageSwitchInitialized = false;
+const _contentHooks = {};
+const _displayHookNodes = [];
+const _displayHookAttrs = [];
+let _languageSwitchInitialized = false;
 
 // TODO: remove deprecated switch handlers in next major release
-const onTabSwitchFunctionsAction = [];
-const onTabSwitchFunctionsLoad = [];
-const onTabSwitchFunctionsSave = [];
+const _onTabSwitchFunctionsAction = [];
+const _onTabSwitchFunctionsLoad = [];
+const _onTabSwitchFunctionsSave = [];
 
 /**
  * Get language meta-data.
@@ -79,7 +79,7 @@ export const getActiveLanguage = function () {
  * @returns {*}
  */
 export const hasContentHook = function (id) {
-    return contentHooks[id];
+    return _contentHooks[id];
 };
 
 /**
@@ -97,7 +97,7 @@ export const hasContentHook = function (id) {
  * @param contentId optional element ID to override the content hook key (default: input ID)
  */
 export const attachContentHook = function (inputField, contentId) {
-    const hook = contentHooks[contentId ? contentId : inputField.id];
+    const hook = _contentHooks[contentId ? contentId : inputField.id];
     if (!hook) {
         return;
     }
@@ -137,24 +137,24 @@ export const addContentHook = function (inputField, encode, fieldName) {
     }
 
     if (inputField.id) {
-        if (contentHooks[inputField.id]) {
+        if (_contentHooks[inputField.id]) {
             if ($.contains(document, inputField))
-                return contentHooks[inputField.id];
+                return _contentHooks[inputField.id];
             // otherwise some Java script already removed previously hooked element
             console.warn('No input field with id=', inputField.id);
             removeContentHook(inputField);
         }
-    } else if (!contentHooks[fieldName]) {
+    } else if (!_contentHooks[fieldName]) {
         inputField.id = fieldName;
     } else {
         let idx = 0;
         do {
             ++idx;
             inputField.id = fieldName + idx;
-        } while (contentHooks[inputField.id]);
+        } while (_contentHooks[inputField.id]);
     }
 
-    const hook = contentHooks[inputField.id] = {};
+    const hook = _contentHooks[inputField.id] = {};
     hook.name = fieldName;
     hook.lang = qTranslateConfig.activeLanguage;
     attachContentHook(inputField);
@@ -343,7 +343,7 @@ export const removeContentHook = function (inputField) {
     if (!inputField || !inputField.id) {
         return false;
     }
-    const hook = contentHooks[inputField.id];
+    const hook = _contentHooks[inputField.id];
     if (!hook) {
         return false;
     }
@@ -361,7 +361,7 @@ export const removeContentHook = function (inputField) {
     }
     // The current content field may not be the same as the input field, in case it was re-attached (e.g. widgets)
     hook.contentField.classList.remove('qtranxs-translatable');
-    delete contentHooks[inputField.id];
+    delete _contentHooks[inputField.id];
     inputField.classList.remove('qtranxs-translatable');
     return true;
 };
@@ -406,7 +406,7 @@ const addDisplayHookNode = function (node) {
     hook.contents = mlParseTokens(tokens);
     completeDisplayContent(hook.contents);
     node.nodeValue = hook.contents[qTranslateConfig.activeLanguage];
-    displayHookNodes.push(hook);
+    _displayHookNodes.push(hook);
     return 1;
 };
 
@@ -422,7 +422,7 @@ const addDisplayHookAttr = function (node, attr) {
     hook.contents = mlParseTokens(tokens);
     completeDisplayContent(hook.contents);
     node.setAttribute(attr, hook.contents[qTranslateConfig.activeLanguage]);
-    displayHookAttrs.push(hook);
+    _displayHookAttrs.push(hook);
     return 1;
 };
 
@@ -477,26 +477,26 @@ const updateMceEditorContent = function (hook) {
 const doTabSwitch = function (lang) {
     storeEditLanguage(lang);
 
-    for (let i = displayHookNodes.length; --i >= 0;) {
-        const hook = displayHookNodes[i];
+    for (let i = _displayHookNodes.length; --i >= 0;) {
+        const hook = _displayHookNodes[i];
         if (hook.nd.parentNode) {
             hook.nd.nodeValue = hook.contents[lang]; // IE gets upset here if node was removed
         } else {
-            displayHookNodes.splice(i, 1); // node was removed by some other function
+            _displayHookNodes.splice(i, 1); // node was removed by some other function
         }
     }
-    for (let i = displayHookAttrs.length; --i >= 0;) {
-        const hook = displayHookAttrs[i];
+    for (let i = _displayHookAttrs.length; --i >= 0;) {
+        const hook = _displayHookAttrs[i];
         if (hook.nd.parentNode) {
             hook.nd.setAttribute(hook.attr, hook.contents[lang]);
         } else {
-            displayHookAttrs.splice(i, 1); // node was removed by some other function
+            _displayHookAttrs.splice(i, 1); // node was removed by some other function
         }
     }
     if (qTranslateConfig.RAW)
         return;
-    for (const key in contentHooks) {
-        const hook = contentHooks[key];
+    for (const key in _contentHooks) {
+        const hook = _contentHooks[key];
         const visualMode = hook.mce && !hook.mce.hidden;
         if (visualMode) {
             hook.mce.save();
@@ -714,7 +714,7 @@ export const attachEditorHook = function (editor, contentId) {
     if (!contentId) {
         contentId = editor.id;
     }
-    const hook = contentHooks[contentId];
+    const hook = _contentHooks[contentId];
     if (!hook)
         return null;
     // The hook may have been created for a different content field, e.g. for widgets
@@ -740,8 +740,8 @@ export const addContentHooksTinyMCE = function () {
     if (!window.tinyMCEPreInit || qTranslateConfig.RAW) {
         return;
     }
-    for (const key in contentHooks) {
-        const hook = contentHooks[key];
+    for (const key in _contentHooks) {
+        const hook = _contentHooks[key];
         if (hook.contentField.tagName !== 'TEXTAREA' || hook.mce || hook.mceInit || !tinyMCEPreInit.mceInit[key])
             continue;
         hook.mceInit = tinyMCEPreInit.mceInit[key];
@@ -769,7 +769,7 @@ export const addLanguageSwitchListener = function (func) {
         plugin: 'qTranslate-XT',
         alternative: 'wp.hooks.addAction("qtranx.LanguageSwitch", ...)'
     });
-    onTabSwitchFunctionsAction.push(func);
+    _onTabSwitchFunctionsAction.push(func);
 };
 
 /**
@@ -786,7 +786,7 @@ export const addLanguageSwitchBeforeListener = function (func) {
         plugin: 'qTranslate-XT',
         alternative: 'wp.hooks.addAction("qtranx.LanguageSwitchPre", ...)'
     });
-    onTabSwitchFunctionsSave.push(func);
+    _onTabSwitchFunctionsSave.push(func);
 };
 
 /**
@@ -799,11 +799,11 @@ export const delLanguageSwitchBeforeListener = function (func) {
         plugin: 'qTranslate-XT',
         alternative: 'wp.hooks.removeAction("qtranx.LanguageSwitchPre", ...)'
     });
-    for (let i = 0; i < onTabSwitchFunctionsSave.length; ++i) {
-        const funcSave = onTabSwitchFunctionsSave[i];
+    for (let i = 0; i < _onTabSwitchFunctionsSave.length; ++i) {
+        const funcSave = _onTabSwitchFunctionsSave[i];
         if (funcSave !== func)
             continue;
-        onTabSwitchFunctionsSave.splice(i, 1);
+        _onTabSwitchFunctionsSave.splice(i, 1);
         return;
     }
 };
@@ -822,7 +822,7 @@ export const addLanguageSwitchAfterListener = function (func) {
         plugin: 'qTranslate-XT',
         alternative: 'wp.hooks.addAction("qtranx.LanguageSwitch", ...)'
     });
-    onTabSwitchFunctionsLoad.push(func);
+    _onTabSwitchFunctionsLoad.push(func);
 };
 
 /**
@@ -835,11 +835,11 @@ export const delLanguageSwitchAfterListener = function (func) {
         plugin: 'qTranslate-XT',
         alternative: 'wp.hooks.removeAction("qtranx.LanguageSwitch", ...)'
     });
-    for (let i = 0; i < onTabSwitchFunctionsLoad.length; ++i) {
-        const funcLoad = onTabSwitchFunctionsLoad[i];
+    for (let i = 0; i < _onTabSwitchFunctionsLoad.length; ++i) {
+        const funcLoad = _onTabSwitchFunctionsLoad[i];
         if (funcLoad !== func)
             continue;
-        onTabSwitchFunctionsLoad.splice(i, 1);
+        _onTabSwitchFunctionsLoad.splice(i, 1);
         return;
     }
 };
@@ -878,9 +878,9 @@ const getWrapForm = function () {
 };
 
 export const onLoadLanguage = function (lang, langFrom) {
-    for (let i = 0; i < onTabSwitchFunctionsLoad.length; ++i) {
+    for (let i = 0; i < _onTabSwitchFunctionsLoad.length; ++i) {
         // TODO: deprecate qtx arg
-        onTabSwitchFunctionsLoad[i].call(qTranx.hooks, lang, langFrom);
+        _onTabSwitchFunctionsLoad[i].call(qTranx.hooks, lang, langFrom);
     }
 };
 
@@ -903,14 +903,14 @@ export const switchActiveLanguage = function (lang) {
         wp.hooks.doAction('qtranx.languageSwitchPre', lang, qTranslateConfig.activeLanguage);
         // TODO: remove deprecated switch handlers
         let ok2switch = true;
-        for (let i = 0; i < onTabSwitchFunctionsSave.length; ++i) {
+        for (let i = 0; i < _onTabSwitchFunctionsSave.length; ++i) {
             // TODO: deprecate qtx arg
-            const ok = onTabSwitchFunctionsSave[i].call(qTranx.hooks, qTranslateConfig.activeLanguage, lang);
+            const ok = _onTabSwitchFunctionsSave[i].call(qTranx.hooks, qTranslateConfig.activeLanguage, lang);
             if (ok === false)
                 ok2switch = false;
         }
         if (!ok2switch)
-            return; // cancel button switch, if one of onTabSwitchFunctionsSave returned 'false'
+            return; // cancel button switch, if one of _onTabSwitchFunctionsSave returned 'false'
         // TODO: substitute cancel logic with a lock design
 
         const tabSwitches = qTranslateConfig.tabSwitches[qTranslateConfig.activeLanguage];
@@ -933,9 +933,9 @@ export const switchActiveLanguage = function (lang) {
     }
 
     doTabSwitch(lang);
-    for (let i = 0; i < onTabSwitchFunctionsAction.length; ++i) {
+    for (let i = 0; i < _onTabSwitchFunctionsAction.length; ++i) {
         // TODO: deprecate qtx arg
-        onTabSwitchFunctionsAction[i].call(qTranx.hooks, lang, langFrom);
+        _onTabSwitchFunctionsAction[i].call(qTranx.hooks, lang, langFrom);
     }
 
     /**
@@ -987,8 +987,8 @@ export const toggleCopyFrom = function () {
 export const copyContentFrom = function (langFrom) {
     const lang = qTranslateConfig.activeLanguage;
     let changed = false;
-    for (const key in contentHooks) {
-        const hook = contentHooks[key];
+    for (const key in _contentHooks) {
+        const hook = _contentHooks[key];
         const visualMode = hook.mce && !hook.mce.hidden;
         let value = visualMode ? hook.mce.getContent() : hook.contentField.value;
         if (value)
@@ -1130,17 +1130,17 @@ const setupAnchorsLSB = function () {
  * the possibility to setup the language switch dynamically later.
  */
 export const setupLanguageSwitch = function () {
-    if (languageSwitchInitialized || !qTranslateConfig.LSB) {
+    if (_languageSwitchInitialized || !qTranslateConfig.LSB) {
         return;
     }
-    if (!displayHookNodes.length && !displayHookAttrs.length && !Object.keys(contentHooks).length) {
+    if (!_displayHookNodes.length && !_displayHookAttrs.length && !Object.keys(_contentHooks).length) {
         return;
     }
 
     setupMetaBoxLSB();
     setupAnchorsLSB();
 
-    languageSwitchInitialized = true;
+    _languageSwitchInitialized = true;
 }
 
 /**
