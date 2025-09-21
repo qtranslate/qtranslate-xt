@@ -879,11 +879,21 @@ const getWrapForm = function () {
 };
 
 export const onLoadLanguage = function (lang, langFrom) {
+    wp.deprecated('onLoadLanguage', {
+        since: '3.16.0',
+        version: '4.0.0',
+        plugin: 'qTranslate-XT',
+        hint: 'Internal function, should not be used.'
+    });
+    _onLoadLanguage(lang, langFrom);
+};
+
+const _onLoadLanguage = function (lang, langFrom) {
     for (let i = 0; i < _onTabSwitchFunctionsLoad.length; ++i) {
         // TODO: deprecate qtx arg
         _onTabSwitchFunctionsLoad[i].call(qTranx.hooks, lang, langFrom);
     }
-};
+}
 
 /**
  * Switch to a new active language.
@@ -946,18 +956,28 @@ export const switchActiveLanguage = function (lang) {
      * @param langFrom the language code to which the edit language is being switched.
      */
     wp.hooks.doAction('qtranx.languageSwitch', lang, langFrom);
-    onLoadLanguage(lang, langFrom);
+    _onLoadLanguage(lang, langFrom);
 };
 
 export const clickSwitchLanguage = function () {
+    wp.deprecated('clickSwitchLanguage', {
+        since: '3.16.0',
+        version: '4.0.0',
+        plugin: 'qTranslate-XT',
+        hint: 'Internal callback, should not be used.'
+    });
+    _clickSwitchLanguage.call(this);
+}
+
+const _clickSwitchLanguage = function () {
     const tabSwitch = $(this).hasClass('button') ? this.parentNode : this;
     const lang = tabSwitch.lang;
     if (!lang) {
-        alert('qTranslate-XT: This should not have happened: Please, report this incident to the developers: !lang');
+        log.error('qTranslate-XT: This should not have happened: Please, report this incident to the developers: !lang');
         return;
     }
     if ($('.qtranxs-lang-switch-wrap').hasClass('copying')) {
-        copyContentFrom(lang);
+        _copyContentFrom(lang);
         $(tabSwitch).find('.button').blur();	// remove focus of source language in case of layout with button
         $('.qtranxs-lang-switch-wrap').removeClass('copying');
         $('.qtranxs-lang-copy .button').removeClass('active');
@@ -967,6 +987,16 @@ export const clickSwitchLanguage = function () {
 };
 
 export const toggleCopyFrom = function () {
+    wp.deprecated('toggleCopyFrom', {
+        since: '3.16.0',
+        version: '4.0.0',
+        plugin: 'qTranslate-XT',
+        hint: 'Internal callback, should not be used.'
+    });
+    _toggleCopyFrom.call(this);
+}
+
+const _toggleCopyFrom = function () {
     $('.qtranxs-lang-switch-wrap').toggleClass('copying');
     $('.qtranxs-lang-copy .button').toggleClass('active');
     // store or restore original title according to current mode (copy or switch)
@@ -986,6 +1016,16 @@ export const toggleCopyFrom = function () {
 };
 
 export const copyContentFrom = function (langFrom) {
+    wp.deprecated('copyContentFrom', {
+        since: '3.16.0',
+        version: '4.0.0',
+        plugin: 'qTranslate-XT',
+        hint: 'Internal function, should not be used.'
+    });
+    _copyContentFrom.call(langFrom);
+}
+
+const _copyContentFrom = function (langFrom) {
     const lang = qTranslateConfig.activeLanguage;
     let changed = false;
     for (const key in _contentHooks) {
@@ -1004,7 +1044,7 @@ export const copyContentFrom = function (langFrom) {
         changed = true;
     }
     if (changed)
-        onLoadLanguage(lang, langFrom);
+        _onLoadLanguage(lang, langFrom);
 };
 
 export const createSetOfLSBwith = function (lsb_style_extra_wrap_classes) {
@@ -1018,7 +1058,7 @@ export const createSetOfLSBwith = function (lsb_style_extra_wrap_classes) {
             lang: lang,
             className: 'qtranxs-lang-switch qtranxs-lang-switch-' + lang,
             title: li_title,
-            onclick: clickSwitchLanguage
+            onclick: _clickSwitchLanguage
         }, langSwitchWrap);
         let tabItem = tabSwitch;
         if (qTranslateConfig.lsb_style_subitem === 'button') {
@@ -1041,7 +1081,7 @@ export const createSetOfLSBwith = function (lsb_style_extra_wrap_classes) {
             className: 'button button-secondary',
             type: 'button',
             title: qTranslateConfig.strings.CopyFromAlt,
-            onclick: toggleCopyFrom
+            onclick: _toggleCopyFrom
         }, tab);
         domCreateElement('span', {innerHTML: qTranslateConfig.strings.CopyFrom}, btn);
     }
