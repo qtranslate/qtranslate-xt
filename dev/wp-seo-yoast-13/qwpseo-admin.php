@@ -33,20 +33,20 @@ function qwpseo_add_admin_page_config( $page_configs ) {
 
     switch ( $pagenow ) {
         case 'term.php':
-            $js[]   = array(
+            $js[] = array(
                 'handle' => 'qwpseo-prep',
                 'src'    => $dir . '/js/qwpseo-prep.min.js',
                 'ver'    => QWPSEO_VERSION,
-                'deps'   => array( 'qtranslate-admin-main' )
+                'deps'   => array( 'qtranslate-admin-main', 'wp-hooks' )
             );
-            $deps[] = 'yoast-seo-term-scraper';
+            $deps = 'yoast-seo-term-scraper';
             break;
         case 'post-new.php':
         case 'post.php':
-            $deps[] = 'yoast-seo-post-edit-classic';
+            $deps = 'yoast-seo-post-edit-classic';
             break;
         default:
-            $deps = array();
+            $deps = '';
             break;
     }
 
@@ -55,7 +55,7 @@ function qwpseo_add_admin_page_config( $page_configs ) {
             'handle' => 'qwpseo-exec',
             'src'    => $dir . '/js/qwpseo-exec.min.js',
             'ver'    => QWPSEO_VERSION,
-            'deps'   => $deps
+            'deps'   => array( $deps, 'wp-hooks' )
         );
     }
 

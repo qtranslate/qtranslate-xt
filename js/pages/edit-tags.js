@@ -2,11 +2,13 @@
  /wp-admin/edit-tags.php (without action=edit)
 */
 'use strict';
+import * as hooks from '../core/hooks';
+
 const $ = jQuery;
 
-$(document).on('qtxLoadAdmin:edit-tags', (event, qtx) => {
+export default function () {
     const addDisplayHook = function (i, e) {
-        qtx.addDisplayHook(e);
+        hooks.addDisplayHook(e);
     };
 
     const updateRow = function (row) {
@@ -39,4 +41,4 @@ $(document).on('qtxLoadAdmin:edit-tags', (event, qtx) => {
 
     // remove "Quick Edit" links for now
     $('#the-list > tr > td.name span.inline').css('display', 'none');
-});
+}

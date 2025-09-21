@@ -2,9 +2,8 @@
  /wp-admin/term.php
 */
 (function ($) {
-    $(function () {
-        var qtx = qTranslateConfig.js.get_qtx();
-
+    wp.hooks.addAction('qtranx.load', 'qtranx/plugins/yoast-qwpseo-prep', function () {
+        var qtx = qTranx.hooks;
         var h = qtx.hasContentHook('description');
         if (!h)
             return;

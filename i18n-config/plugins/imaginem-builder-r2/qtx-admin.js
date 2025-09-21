@@ -1,8 +1,8 @@
 (function ($) {
-    $(document).on('qtxLoadAdmin:aqpb-post', function (evt, qtx) {
+    wp.hooks.addAction('qtranx.load', 'qtranx/plugins/imaginem-builder-r2', function () {
         if (!$.fn.wp_editor)
             return;
-
+        var qtx = qTranx.hooks;
         if (!qtx.get_ml) {
             qtx.get_ml = function (h, sep) {
                 var text = h.contentField.value.trim();

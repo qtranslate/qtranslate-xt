@@ -23,6 +23,11 @@ const displayHookNodes = [];
 const displayHookAttrs = [];
 let languageSwitchInitialized = false;
 
+// TODO: remove deprecated switch handlers in next major release
+const onTabSwitchFunctionsAction = [];
+const onTabSwitchFunctionsLoad = [];
+const onTabSwitchFunctionsSave = [];
+
 /**
  * Get language meta-data.
  *
@@ -469,7 +474,7 @@ const updateMceEditorContent = function (hook) {
     hook.mce.setContent(text);
 };
 
-const onTabSwitch = function (lang) {
+const doTabSwitch = function (lang) {
     storeEditLanguage(lang);
 
     for (let i = displayHookNodes.length; --i >= 0;) {
@@ -758,7 +763,13 @@ export const loadAdditionalTinyMceHooks = function () {
 };
 
 export const addLanguageSwitchListener = function (func) {
-    qTranslateConfig.onTabSwitchFunctions.push(func);
+    wp.deprecated('addLanguageSwitchListener', {
+        since: '3.16.0',
+        version: '4.0.0',
+        plugin: 'qTranslate-XT',
+        alternative: 'wp.hooks.addAction("qtranx.LanguageSwitch", ...)'
+    });
+    onTabSwitchFunctionsAction.push(func);
 };
 
 /**
@@ -769,18 +780,30 @@ export const addLanguageSwitchListener = function (func) {
  * - the language code to which the edit language is being switched.
  */
 export const addLanguageSwitchBeforeListener = function (func) {
-    qTranslateConfig.onTabSwitchFunctionsSave.push(func);
+    wp.deprecated('addLanguageSwitchBeforeListener', {
+        since: '3.16.0',
+        version: '4.0.0',
+        plugin: 'qTranslate-XT',
+        alternative: 'wp.hooks.addAction("qtranx.LanguageSwitchPre", ...)'
+    });
+    onTabSwitchFunctionsSave.push(func);
 };
 
 /**
  * Delete handler previously added by function addLanguageSwitchBeforeListener.
  */
 export const delLanguageSwitchBeforeListener = function (func) {
-    for (let i = 0; i < qTranslateConfig.onTabSwitchFunctionsSave.length; ++i) {
-        const funcSave = qTranslateConfig.onTabSwitchFunctionsSave[i];
+    wp.deprecated('delLanguageSwitchBeforeListener', {
+        since: '3.16.0',
+        version: '4.0.0',
+        plugin: 'qTranslate-XT',
+        alternative: 'wp.hooks.removeAction("qtranx.LanguageSwitchPre", ...)'
+    });
+    for (let i = 0; i < onTabSwitchFunctionsSave.length; ++i) {
+        const funcSave = onTabSwitchFunctionsSave[i];
         if (funcSave !== func)
             continue;
-        qTranslateConfig.onTabSwitchFunctionsSave.splice(i, 1);
+        onTabSwitchFunctionsSave.splice(i, 1);
         return;
     }
 };
@@ -793,18 +816,30 @@ export const delLanguageSwitchBeforeListener = function (func) {
  * - the language code from which the edit language is being switched.
  */
 export const addLanguageSwitchAfterListener = function (func) {
-    qTranslateConfig.onTabSwitchFunctionsLoad.push(func);
+    wp.deprecated('addLanguageSwitchAfterListener', {
+        since: '3.16.0',
+        version: '4.0.0',
+        plugin: 'qTranslate-XT',
+        alternative: 'wp.hooks.addAction("qtranx.LanguageSwitch", ...)'
+    });
+    onTabSwitchFunctionsLoad.push(func);
 };
 
 /**
  * Delete handler previously added by function addLanguageSwitchAfterListener.
  */
 export const delLanguageSwitchAfterListener = function (func) {
-    for (let i = 0; i < qTranslateConfig.onTabSwitchFunctionsLoad.length; ++i) {
-        const funcLoad = qTranslateConfig.onTabSwitchFunctionsLoad[i];
+    wp.deprecated('delLanguageSwitchAfterListener', {
+        since: '3.16.0',
+        version: '4.0.0',
+        plugin: 'qTranslate-XT',
+        alternative: 'wp.hooks.removeAction("qtranx.LanguageSwitch", ...)'
+    });
+    for (let i = 0; i < onTabSwitchFunctionsLoad.length; ++i) {
+        const funcLoad = onTabSwitchFunctionsLoad[i];
         if (funcLoad !== func)
             continue;
-        qTranslateConfig.onTabSwitchFunctionsLoad.splice(i, 1);
+        onTabSwitchFunctionsLoad.splice(i, 1);
         return;
     }
 };
@@ -843,7 +878,6 @@ const getWrapForm = function () {
 };
 
 export const onLoadLanguage = function (lang, langFrom) {
-    const onTabSwitchFunctionsLoad = qTranslateConfig.onTabSwitchFunctionsLoad;
     for (let i = 0; i < onTabSwitchFunctionsLoad.length; ++i) {
         // TODO: deprecate qtx arg
         onTabSwitchFunctionsLoad[i].call(qTranx.hooks, lang, langFrom);
@@ -860,8 +894,15 @@ export const switchActiveLanguage = function (lang) {
         return;
     }
     if (qTranslateConfig.activeLanguage) {
+        /**
+         * Action triggered before a language switch.
+         *
+         * @param langTo language code of currently active language from which the edit language is being switched.
+         * @param langFrom the language code to which the edit language is being switched.
+         */
+        wp.hooks.doAction('qtranx.languageSwitchPre', lang, qTranslateConfig.activeLanguage);
+        // TODO: remove deprecated switch handlers
         let ok2switch = true;
-        const onTabSwitchFunctionsSave = qTranslateConfig.onTabSwitchFunctionsSave;
         for (let i = 0; i < onTabSwitchFunctionsSave.length; ++i) {
             // TODO: deprecate qtx arg
             const ok = onTabSwitchFunctionsSave[i].call(qTranx.hooks, qTranslateConfig.activeLanguage, lang);
@@ -870,6 +911,7 @@ export const switchActiveLanguage = function (lang) {
         }
         if (!ok2switch)
             return; // cancel button switch, if one of onTabSwitchFunctionsSave returned 'false'
+        // TODO: substitute cancel logic with a lock design
 
         const tabSwitches = qTranslateConfig.tabSwitches[qTranslateConfig.activeLanguage];
         for (let i = 0; i < tabSwitches.length; ++i) {
@@ -889,11 +931,20 @@ export const switchActiveLanguage = function (lang) {
             $(tabSwitches[i]).find('.button').addClass('active');
         }
     }
-    const onTabSwitchFunctions = qTranslateConfig.onTabSwitchFunctions;
-    for (let i = 0; i < onTabSwitchFunctions.length; ++i) {
+
+    doTabSwitch(lang);
+    for (let i = 0; i < onTabSwitchFunctionsAction.length; ++i) {
         // TODO: deprecate qtx arg
-        onTabSwitchFunctions[i].call(qTranx.hooks, lang, langFrom);
+        onTabSwitchFunctionsAction[i].call(qTranx.hooks, lang, langFrom);
     }
+
+    /**
+     * Action triggered after a language switch.
+     *
+     * @param langTo language code of currently active language from which the edit language is being switched.
+     * @param langFrom the language code to which the edit language is being switched.
+     */
+    wp.hooks.doAction('qtranx.languageSwitch', lang, langFrom);
     onLoadLanguage(lang, langFrom);
 };
 
@@ -1088,8 +1139,6 @@ export const setupLanguageSwitch = function () {
 
     setupMetaBoxLSB();
     setupAnchorsLSB();
-    // Synchronization of multiple sets of Language Switching Buttons
-    addLanguageSwitchListener(onTabSwitch);
 
     languageSwitchInitialized = true;
 }
@@ -1123,13 +1172,6 @@ export const init = function () {
         storeEditLanguage(qTranslateConfig.activeLanguage);
     }
 
-    if (!qTranslateConfig.onTabSwitchFunctions)
-        qTranslateConfig.onTabSwitchFunctions = [];
-    if (!qTranslateConfig.onTabSwitchFunctionsSave)
-        qTranslateConfig.onTabSwitchFunctionsSave = [];
-    if (!qTranslateConfig.onTabSwitchFunctionsLoad)
-        qTranslateConfig.onTabSwitchFunctionsLoad = [];
-
     if (qTranslateConfig.page_config && qTranslateConfig.page_config.forms)
         addPageHooks(qTranslateConfig.page_config.forms);
 
@@ -1148,6 +1190,12 @@ export const init = function () {
  */
 // TODO: remove in next major release
 qTranslateConfig.js.get_qtx = function () {
-    console.warn('qTranslate-XT: deprecated function qTranslateConfig.js.get_qtx() will be removed in next major release. See release notes to use new API.');
+    wp.deprecated('qTranslateConfig.js.get_qtx', {
+        since: '3.16.0',
+        version: '4.0.0',
+        plugin: 'qTranslate-XT',
+        alternative: 'qTranx.hooks',
+        hint: 'See release notes to use new API.'
+    });
     return qTranx.hooks;
 };

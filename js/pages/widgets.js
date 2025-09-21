@@ -2,10 +2,11 @@
  /wp-admin/widgets.php
 */
 'use strict';
+import * as hooks from '../core/hooks';
 
 const $ = jQuery;
 
-$(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
+export default function () {
     if (!window.wpWidgets)
         return;
 
@@ -16,10 +17,10 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
         // But the widget input fields are created dynamically by WP when the area is shown
         const titleContentId = 'widget-' + widgetId + '-title';
         widget.find(".text-widget-fields input[id$='_title']").each(function (i, e) {
-            qtx.attachContentHook(e, titleContentId);
+            hooks.attachContentHook(e, titleContentId);
         });
         const textContentId = 'widget-' + widgetId + '-text';
-        qtx.attachEditorHook(editor, textContentId);
+        hooks.attachEditorHook(editor, textContentId);
     });
 
     const onWidgetUpdate = function (evt, widget) {
@@ -29,16 +30,16 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
                 const widgetId = widget.find('.widget-id').val();
                 const fieldTitle = widget.find(".text-widget-fields input[id$='_title']");
                 widget.find(".widget-content input[id^='widget-text-'][id$='-title']").each(function (i, e) {
-                    qtx.refreshContentHook(e);
-                    qtx.attachContentHook(fieldTitle[0], e.id);
+                    hooks.refreshContentHook(e);
+                    hooks.attachContentHook(fieldTitle[0], e.id);
                 });
 
                 const fieldText = widget.find(".text-widget-fields textarea[id$='_text']");
                 const editor = window.tinyMCE.get(fieldText[0].id);
                 widget.find(".widget-content textarea[id^='widget-text-'][id$='-text']").each(function (i, e) {
-                    qtx.refreshContentHook(e);
+                    hooks.refreshContentHook(e);
                     if (editor) {
-                        qtx.attachEditorHook(editor, e.id);
+                        hooks.attachEditorHook(editor, e.id);
                         // The text field has not been synced after translation yet.
                         // Because the text field has not been updated by wp.widgets when in Visual Mode,
                         // it still has the translated content before saving the widget.
@@ -53,7 +54,7 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
                 break;
             default:
                 widget.find(".widget-content input[id^='widget-'][id$='-title']").each(function (i, e) {
-                    qtx.refreshContentHook(e);
+                    hooks.refreshContentHook(e);
                 });
                 break;
         }
@@ -64,17 +65,17 @@ $(document).on('qtxLoadAdmin:widgets', (event, qtx) => {
         // Rely on refreshContent to create hooks
         onWidgetUpdate(evt, widget);
         // The LSB may not be initialized yet if all widget areas were empty on page load
-        qtx.setupLanguageSwitch();
+        hooks.setupLanguageSwitch();
     };
 
     $(document).on('widget-added', onWidgetAdded);
     $(document).on('widget-updated', onWidgetUpdate);
 
-    const onLanguageSwitchAfter = function () {
+    const onLanguageSwitch = function () {
         $('#widgets-right .widget').each(function () {
             wpWidgets.appendTitle(this);
         });
     };
 
-    qtx.addLanguageSwitchAfterListener(onLanguageSwitchAfter);
-});
+    wp.hooks.addAction('qtranx.languageSwitch', 'qtranx/pages/widgets', onLanguageSwitch);
+}
