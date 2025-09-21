@@ -119,6 +119,7 @@ class QTX_Module_Acf_Admin {
 
         wp_enqueue_script( 'qtranslate-acf', plugins_url( 'dist/modules/acf.js', QTRANSLATE_FILE ), array(
             'acf-input',
+            'jquery',
             'underscore',
             'qtranslate-admin-main',
             'wp-hooks',

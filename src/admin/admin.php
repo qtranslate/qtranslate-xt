@@ -306,7 +306,7 @@ function qtranxf_get_admin_page_config_post_type( $post_type ) {
         $page_config['js'][] = array(
             'handle' => 'qtranslate-admin-main',
             'src'    => './dist/main.js',
-            'deps'   => [ 'wp-deprecated', 'wp-hooks' ],
+            'deps'   => [ 'jquery', 'wp-deprecated', 'wp-hooks' ],
         );
 
         if ( isset( $page_config['js-exec'] ) ) {
@@ -554,7 +554,7 @@ function qtranxf_admin_enqueue_scripts() {
     qtranxf_add_admin_highlight_css();
 
     if ( qtranxf_admin_is_config_page() ) {
-        wp_enqueue_script( 'qtranslate-admin-options', plugins_url( 'dist/options.js', QTRANSLATE_FILE ), array(), QTX_VERSION );
+        wp_enqueue_script( 'qtranslate-admin-options', plugins_url( 'dist/options.js', QTRANSLATE_FILE ), array( 'jquery' ), QTX_VERSION );
     }
 }
 

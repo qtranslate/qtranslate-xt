@@ -189,7 +189,7 @@ class QTX_Admin_Block_Editor {
         wp_register_script(
             'qtx-block-editor',
             plugins_url( 'dist/block-editor.js', QTRANSLATE_FILE ),
-            array(),
+            array( 'wp-api-fetch', 'wp-data' ),
             QTX_VERSION,
             true
         );
