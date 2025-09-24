@@ -34,7 +34,7 @@
                     }
                 }
             }
-            wpseoReplaceVarsL10n.replace_vars = qreplace_vars[qTranslateConfig.activeLanguage];
+            wpseoReplaceVarsL10n.replace_vars = qreplace_vars[qTranx.hooks.getActiveLanguage()];
         }
 
         var focuskw_input = $('#yoast_wpseo_focuskw');

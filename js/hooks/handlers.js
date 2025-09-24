@@ -23,6 +23,7 @@ const _displayHookNodes = [];
 const _displayHookAttrs = [];
 let _languageSwitchInitialized = false;
 const _tabSwitchElements = {};  // DOM elements indexed by language.
+let _activeLanguage;
 
 // TODO: remove deprecated switch handlers in next major release
 const _onTabSwitchFunctionsAction = [];
@@ -89,7 +90,12 @@ export const isLanguageEnabled = function (lang) {
  * @returns {string}
  */
 export const getActiveLanguage = function () {
-    return qTranslateConfig.activeLanguage;
+    return _activeLanguage;
+};
+
+const _setActiveLanguage = function (lang) {
+    _activeLanguage = lang;
+    qTranslateConfig.activeLanguage = lang;  // Deprecated, do not use!
 };
 
 /**
@@ -175,7 +181,7 @@ export const addContentHook = function (inputField, encode, fieldName) {
 
     const hook = _contentHooks[inputField.id] = {};
     hook.name = fieldName;
-    hook.lang = qTranslateConfig.activeLanguage;
+    hook.lang = _activeLanguage;
     attachContentHook(inputField);
 
     let qtxPrefix;
@@ -225,7 +231,7 @@ export const addContentHook = function (inputField, encode, fieldName) {
 
     let contents;
     hook.fields = {};
-        if (!config.isEditorModeRAW()) {
+    if (!config.isEditorModeRAW()) {
         // Most crucial moment when untranslated content is parsed
         contents = mlExplode(inputField.value);
         // Substitute the current ML content with translated content for the current language
@@ -255,7 +261,7 @@ export const addContentHook = function (inputField, encode, fieldName) {
             domCreateElement('input', {
                 type: 'hidden',
                 name: 'qtranslate-edit-language',
-                value: qTranslateConfig.activeLanguage
+                value: _activeLanguage
             }, form, form.firstChild);
         }
     }
@@ -424,7 +430,7 @@ const _addDisplayHookNode = function (node) {
     hook.nd = node;
     hook.contents = mlParseTokens(tokens);
     _completeDisplayContent(hook.contents);
-    node.nodeValue = hook.contents[qTranslateConfig.activeLanguage];
+    node.nodeValue = hook.contents[_activeLanguage];
     _displayHookNodes.push(hook);
     return 1;
 };
@@ -440,7 +446,7 @@ const _addDisplayHookAttr = function (node, attr) {
     hook.attr = attr;
     hook.contents = mlParseTokens(tokens);
     _completeDisplayContent(hook.contents);
-    node.setAttribute(attr, hook.contents[qTranslateConfig.activeLanguage]);
+    node.setAttribute(attr, hook.contents[_activeLanguage]);
     _displayHookAttrs.push(hook);
     return 1;
 };
@@ -608,7 +614,7 @@ export const addCustomContentHooks = function () {
  * - i18n-multilingual-slug
  * - i18n-multilingual-display
  */
-    const _addMultilingualHooks = function () {
+const _addMultilingualHooks = function () {
     $('.i18n-multilingual').each(function (i, e) {
         addContentHook(e, '[');
     });
@@ -919,22 +925,22 @@ const _onLoadLanguage = function (lang, langFrom) {
  * @param lang
  */
 export const switchActiveLanguage = function (lang) {
-    if (qTranslateConfig.activeLanguage === lang) {
+    if (_activeLanguage === lang) {
         return;
     }
-    if (qTranslateConfig.activeLanguage) {
+    if (_activeLanguage) {
         /**
          * Action triggered before a language switch.
          *
          * @param langTo language code of currently active language from which the edit language is being switched.
          * @param langFrom the language code to which the edit language is being switched.
          */
-        wp.hooks.doAction('qtranx.languageSwitchPre', lang, qTranslateConfig.activeLanguage);
+        wp.hooks.doAction('qtranx.languageSwitchPre', lang, _activeLanguage);
         // TODO: remove deprecated switch handlers
         let ok2switch = true;
         for (let i = 0; i < _onTabSwitchFunctionsSave.length; ++i) {
             // TODO: deprecate qtx arg
-            const ok = _onTabSwitchFunctionsSave[i].call(qTranx.hooks, qTranslateConfig.activeLanguage, lang);
+            const ok = _onTabSwitchFunctionsSave[i].call(qTranx.hooks, _activeLanguage, lang);
             if (ok === false)
                 ok2switch = false;
         }
@@ -942,19 +948,19 @@ export const switchActiveLanguage = function (lang) {
             return; // cancel button switch, if one of _onTabSwitchFunctionsSave returned 'false'
         // TODO: substitute cancel logic with a lock design
 
-        const tabSwitches = _tabSwitchElements[qTranslateConfig.activeLanguage];
+        const tabSwitches = _tabSwitchElements[_activeLanguage];
         for (let i = 0; i < tabSwitches.length; ++i) {
             tabSwitches[i].classList.remove(config.styles.lsb.activeClass);
             $(tabSwitches[i]).find('.button').removeClass('active');
         }
     }
 
-    const langFrom = qTranslateConfig.activeLanguage;
-    qTranslateConfig.activeLanguage = lang;
+    const langFrom = _activeLanguage;
+    _setActiveLanguage(lang);
     $('input[name="qtranslate-edit-language"]').val(lang);
 
     {
-        const tabSwitches = _tabSwitchElements[qTranslateConfig.activeLanguage];
+        const tabSwitches = _tabSwitchElements[_activeLanguage];
         for (let i = 0; i < tabSwitches.length; ++i) {
             tabSwitches[i].classList.add(config.styles.lsb.activeClass);
             $(tabSwitches[i]).find('.button').addClass('active');
@@ -1021,7 +1027,7 @@ const _toggleCopyFrom = function () {
     if ($('.qtranxs-lang-switch-wrap').hasClass('copying')) {
         $('.qtranxs-lang-switch').each(function () {
             $(this).attr('orig-title', $(this).attr('title'));
-            if ($(this).attr('lang') === qTranslateConfig.activeLanguage)
+            if ($(this).attr('lang') === _activeLanguage)
                 $(this).attr('title', config.l10n.CopyFromAlt);
             else
                 $(this).attr('title', config.l10n.CopyFrom + ' [:' + $(this).attr('lang') + ']');
@@ -1044,7 +1050,7 @@ export const copyContentFrom = function (langFrom) {
 }
 
 const _copyContentFrom = function (langFrom) {
-    const lang = qTranslateConfig.activeLanguage;
+    const lang = _activeLanguage;
     let changed = false;
     for (const key in _contentHooks) {
         const hook = _contentHooks[key];
@@ -1083,7 +1089,7 @@ export const createSetOfLSBwith = function (lsb_style_extra_wrap_classes) {
         }
         domCreateElement('img', {src: config.path.flags + lang_conf.flag}, tabItem);
         domCreateElement('span', {innerHTML: lang_conf.name}, tabItem);
-        if (qTranslateConfig.activeLanguage === lang) {
+        if (_activeLanguage === lang) {
             tabSwitch.classList.add(config.styles.lsb.activeClass);
             $(tabSwitch).find('.button').addClass('active');
         }
@@ -1211,20 +1217,20 @@ export const setupLanguageSwitch = function () {
  */
 export const init = function () {
     if (config.isEditorModeLSB()) {
-        qTranslateConfig.activeLanguage = getStoredEditLanguage();
-        if (!qTranslateConfig.activeLanguage || !config.isLanguageEnabled(qTranslateConfig.activeLanguage)) {
-            qTranslateConfig.activeLanguage = config.lang.detected;
-            if (config.isLanguageEnabled(qTranslateConfig.activeLanguage)) {
-                storeEditLanguage(qTranslateConfig.activeLanguage);
+        _setActiveLanguage(getStoredEditLanguage());
+        if (!_activeLanguage || !config.isLanguageEnabled(_activeLanguage)) {
+            _setActiveLanguage(config.lang.detected);
+            if (config.isLanguageEnabled(_activeLanguage)) {
+                storeEditLanguage(_activeLanguage);
             } else {
                 // fallback to single mode
                 config.editorMode = config.defs.EditorMode.SINGLE;
             }
         }
     } else {
-        qTranslateConfig.activeLanguage = config.lang.detected;
+        _setActiveLanguage(config.lang.detected);
         // no need to store for the current mode, but just in case the LSB are used later
-        storeEditLanguage(qTranslateConfig.activeLanguage);
+        storeEditLanguage(_activeLanguage);
     }
 
     if (config.pageConfig.forms)
