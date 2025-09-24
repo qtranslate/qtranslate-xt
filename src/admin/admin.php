@@ -421,14 +421,17 @@ function qtranxf_admin_footer() {
     // For Gutenberg, enforce the editor mode to QTX_EDITOR_MODE_SINGLE
     $current_screen = get_current_screen();
     if ( method_exists( $current_screen, 'is_block_editor' ) && $current_screen->is_block_editor() ) {
-        $config['LSB'] = false;
-        $config['RAW'] = false;
+        $config['editorMode'] = QTX_EDITOR_MODE_SINGLE;
+        $config['LSB'] = false;  // deprecated key
+        $config['RAW'] = false;  // deprecated key
     } else {
-        $config['LSB'] = $q_config['editor_mode'] == QTX_EDITOR_MODE_LSB;
-        $config['RAW'] = $q_config['editor_mode'] == QTX_EDITOR_MODE_RAW;
+        $config['editorMode'] = $q_config['editor_mode'];
+        $config['LSB'] = $q_config['editor_mode'] == QTX_EDITOR_MODE_LSB;  // deprecated key
+        $config['RAW'] = $q_config['editor_mode'] == QTX_EDITOR_MODE_RAW;  // deprecated key
     }
 
     if ( empty( $q_config['hide_lsb_copy_content'] ) ) {
+        $config['hide_lsb_copy_content'] = false;
         // translators: Prompt on hover over button "Copy From" to copy content from other language
         $config['strings']['CopyFromAlt'] = __( 'Fill empty multilingual fields with content from other language', 'qtranslate' );
         // translators: Prompt on hover over select-element to choose the language to copy content from

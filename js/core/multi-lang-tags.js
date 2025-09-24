@@ -2,7 +2,7 @@
  * Utilities for multi-lang tags
  */
 'use strict';
-const qTranslateConfig = window.qTranslateConfig;
+import {config} from './config';
 
 /**
  * Decompose a string containing ML tags into an object with keys for each language.
@@ -26,7 +26,7 @@ export const mlExplode = function (rawText) {
  * @returns {string[]}
  */
 export const mlSplitRaw = function (rawText) {
-    const regex = '(<!--:lang-->|<!--:-->|\\[:lang]|\\[:]|{:lang}|{:})'.replace(/lang/g, qTranslateConfig.lang_code_format);
+    const regex = '(<!--:lang-->|<!--:-->|\\[:lang]|\\[:]|{:lang}|{:})'.replace(/lang/g, config.lang.formatRegex);
     const splitRegex = new RegExp(regex, "gi");
     // Most browsers support RegExp.prototype[@@split]()... except IE (see debug info from troubleshooting)
     // https://caniuse.com/mdn-javascript_builtins_regexp_--split
@@ -42,7 +42,7 @@ export const mlSplitRaw = function (rawText) {
  */
 export const mlParseTokens = function (tokens) {
     const result = new Object;
-    for (const lang in qTranslateConfig.language_config) {
+    for (const lang in config.languages) {
         result[lang] = '';
     }
     if (!tokens || !tokens.length)
@@ -50,14 +50,14 @@ export const mlParseTokens = function (tokens) {
     if (tokens.length === 1) {
         // no language separator found, enter it to all languages
         const b = tokens[0];
-        for (const lang in qTranslateConfig.language_config) {
+        for (const lang in config.languages) {
             result[lang] += b;
         }
         return result;
     }
-    const clang_regex = new RegExp('<!--:(lang)-->'.replace(/lang/g, qTranslateConfig.lang_code_format), 'gi');
-    const blang_regex = new RegExp('\\[:(lang)]'.replace(/lang/g, qTranslateConfig.lang_code_format), 'gi');
-    const slang_regex = new RegExp('{:(lang)}'.replace(/lang/g, qTranslateConfig.lang_code_format), 'gi');
+    const clang_regex = new RegExp('<!--:(lang)-->'.replace(/lang/g, config.lang.formatRegex), 'gi');
+    const blang_regex = new RegExp('\\[:(lang)]'.replace(/lang/g, config.lang.formatRegex), 'gi');
+    const slang_regex = new RegExp('{:(lang)}'.replace(/lang/g, config.lang.formatRegex), 'gi');
     let lang = false;
     let matches;
     for (let i = 0; i < tokens.length; ++i) {

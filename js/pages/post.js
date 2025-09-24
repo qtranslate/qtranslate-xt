@@ -3,21 +3,15 @@
  /wp-admin/post-new.php
 */
 'use strict';
+import {config} from '../core/config'
 import * as hooks from '../hooks';
 
 const $ = jQuery;
 
-const UrlMode = Object.freeze({
-    QTX_URL_QUERY: 1,
-    QTX_URL_PATH: 2,
-    QTX_URL_DOMAIN: 3,
-    QTX_URL_DOMAINS: 4,
-});
-
 export default function () {
     const convertURL = function (url, lang) {
-        switch (qTranslateConfig.url_mode) {
-            case UrlMode.QTX_URL_QUERY:
+        switch (config.urlMode) {
+            case config.defs.UrlMode.QUERY:
                 if (url.search) {
                     url.search += '&lang=' + lang;
                 } else {
@@ -25,7 +19,7 @@ export default function () {
                 }
                 break;
 
-            case UrlMode.QTX_URL_PATH:
+            case config.defs.UrlMode.PATH:
                 const homepath = qTranslateConfig.home_url_path;
                 let path = url.pathname;
                 if (path[0] !== '/')
@@ -35,11 +29,11 @@ export default function () {
                     url.pathname = qTranslateConfig.homeinfo_path + lang + path.substring(i + homepath.length - 1);
                 break;
 
-            case UrlMode.QTX_URL_DOMAIN:
+            case config.defs.UrlMode.DOMAIN:
                 url.host = lang + '.' + url.host;
                 break;
 
-            case UrlMode.QTX_URL_DOMAINS:
+            case config.defs.UrlMode.DOMAINS:
                 url.host = qTranslateConfig.domains[lang];
                 break;
         }
@@ -73,7 +67,7 @@ export default function () {
             btnPreviewAction.children[0].href = langUrl.href;
         }
 
-        if (qTranslateConfig.url_mode !== UrlMode.QTX_URL_QUERY) {
+        if (config.urlMode !== config.defs.UrlMode.QUERY) {
             if (!slugSamplePermalink) {
                 const slugEl = document.getElementById('sample-permalink');
                 if (slugEl && slugEl.offsetHeight > 0 && slugEl.childNodes.length) {
@@ -136,7 +130,7 @@ export default function () {
     }
 
     // language menu bar handler
-    for (const lang in hooks.getLanguages()) {
+    for (const lang in config.languages) {
         $('#wp-admin-bar-' + lang + ' a').on('click', function (e) {
             e.preventDefault();
             const params = parseQuery(window.location.search);

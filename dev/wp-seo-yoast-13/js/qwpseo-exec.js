@@ -17,7 +17,7 @@
         var qreplace_vars = {};
         if (window.wpseoReplaceVarsL10n) {
 
-            for (var lang in qTranslateConfig.language_config) {
+            for (var lang in qTranx.config.languages) {
                 qreplace_vars[lang] = {};
             }
 
@@ -25,11 +25,11 @@
                 var rv = wpseoReplaceVarsL10n.replace_vars[key];
                 if (typeof rv === 'string') {
                     var rvs = mlExplode(rv);
-                    for (var lang in qTranslateConfig.language_config) {
+                    for (var lang in qTranx.config.languages) {
                         qreplace_vars[lang][key] = rvs[lang];
                     }
                 } else {
-                    for (var lang in qTranslateConfig.language_config) {
+                    for (var lang in qTranx.config.languages) {
                         qreplace_vars[lang][key] = rv;
                     }
                 }

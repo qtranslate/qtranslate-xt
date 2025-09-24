@@ -7,6 +7,7 @@
  * Read Integration Guide: https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide for more information.
  */
 'use strict';
+import {config} from '../core';
 import {domCreateElement} from '../core/dom';
 import {mlSplitRaw, mlExplode, mlParseTokens} from '../core/multi-lang-tags';
 import {getStoredEditLanguage, storeEditLanguage} from '../core/store';
@@ -14,7 +15,6 @@ import {getStoredEditLanguage, storeEditLanguage} from '../core/store';
 const $ = jQuery;
 
 const qTranslateConfig = window.qTranslateConfig;
-
 /**
  * Internal state of hooks and languageSwitch, not exposed
  */
@@ -40,7 +40,13 @@ const _onTabSwitchFunctionsSave = [];
  *  .locale_html
  */
 export const getLanguages = function () {
-    return qTranslateConfig.language_config;
+    wp.deprecated('getLanguages', {
+        since: '3.16.0',
+        version: '4.0.0',
+        plugin: 'qTranslate-XT',
+        alternative: 'qTranx.config.languages'
+    });
+    return config.languages;
 };
 
 /**
@@ -49,7 +55,13 @@ export const getLanguages = function () {
  * @returns {string}
  */
 export const getFlagLocation = function () {
-    return qTranslateConfig.flag_location;
+    wp.deprecated('getFlagLocation', {
+        since: '3.16.0',
+        version: '4.0.0',
+        plugin: 'qTranslate-XT',
+        alternative: 'qTranx.config.path.flags'
+    });
+    return config.path.flags;
 };
 
 /**
@@ -62,7 +74,13 @@ export const getFlagLocation = function () {
  * Such data is preserved and re-saved until user deletes it manually.
  */
 export const isLanguageEnabled = function (lang) {
-    return !!qTranslateConfig.language_config[lang];
+    wp.deprecated('isLanguageEnabled', {
+        since: '3.16.0',
+        version: '4.0.0',
+        plugin: 'qTranslate-XT',
+        alternative: 'qTranx.config.isLanguageEnabled'
+    });
+    return config.isLanguageEnabled(lang);
 };
 
 /**
@@ -207,7 +225,7 @@ export const addContentHook = function (inputField, encode, fieldName) {
 
     let contents;
     hook.fields = {};
-    if (!qTranslateConfig.RAW) {
+        if (!config.isEditorModeRAW()) {
         // Most crucial moment when untranslated content is parsed
         contents = mlExplode(inputField.value);
         // Substitute the current ML content with translated content for the current language
@@ -247,18 +265,18 @@ export const addContentHook = function (inputField, encode, fieldName) {
     switch (encode) {
         case 'slug':
         case 'term': {
-            if (qTranslateConfig.RAW)
+            if (config.isEditorModeRAW())
                 contents = mlExplode(inputField.value);
             hook.sepfield = domCreateElement('input', {
                 name: baseName + '[qtranslate-original-value]',
                 type: 'hidden',
                 className: 'hidden',
-                value: contents[qTranslateConfig.default_language]
+                value: contents[config.lang.default]
             }, inputField.parentNode, inputField);
         }
             break;
         default: {
-            if (!qTranslateConfig.RAW) {
+            if (!config.isEditorModeRAW()) {
                 hook.sepfield = domCreateElement('input', {
                     name: baseName + '[qtranslate-separator]',
                     type: 'hidden',
@@ -373,10 +391,10 @@ export const refreshContentHook = function (inputField) {
 };
 
 const getDisplayContentDefaultValue = function (contents) {
-    if (contents[qTranslateConfig.language])
-        return '(' + qTranslateConfig.language + ') ' + contents[qTranslateConfig.language];
-    if (contents[qTranslateConfig.default_language])
-        return '(' + qTranslateConfig.default_language + ') ' + contents[qTranslateConfig.default_language];
+    if (contents[config.lang.detected])
+        return '(' + config.lang.detected + ') ' + contents[config.lang.detected];
+    if (contents[config.lang.default])
+        return '(' + config.lang.default + ') ' + contents[config.lang.default];
     for (const lang in contents) {
         if (!contents[lang])
             continue;
@@ -494,7 +512,7 @@ const doTabSwitch = function (lang) {
             _displayHookAttrs.splice(i, 1); // node was removed by some other function
         }
     }
-    if (qTranslateConfig.RAW)
+    if (config.isEditorModeRAW())
         return;
     for (const key in _contentHooks) {
         const hook = _contentHooks[key];
@@ -571,12 +589,12 @@ export const addDisplayHooksByTagInClass = function (name, tag, container) {
  * Add custom hooks from configuration.
  */
 export const addCustomContentHooks = function () {
-    for (let i = 0; i < qTranslateConfig.custom_fields.length; ++i) {
-        const fieldName = qTranslateConfig.custom_fields[i];
+    for (let i = 0; i < config.customFields.ids.length; ++i) {
+        const fieldName = config.customFields.ids[i];
         addContentHookByIdName(fieldName);
     }
-    for (let i = 0; i < qTranslateConfig.custom_field_classes.length; ++i) {
-        const className = qTranslateConfig.custom_field_classes[i];
+    for (let i = 0; i < config.customFields.classes.length; ++i) {
+        const className = config.customFields.classes[i];
         addContentHooksByClass(className);
     }
     addContentHooksTinyMCE();
@@ -738,7 +756,7 @@ export const attachEditorHook = function (editor, contentId) {
  * Sets hooks on HTML-loaded TinyMCE editors via tinyMCEPreInit.mceInit.
  */
 export const addContentHooksTinyMCE = function () {
-    if (!window.tinyMCEPreInit || qTranslateConfig.RAW) {
+    if (!window.tinyMCEPreInit || config.isEditorModeRAW()) {
         return;
     }
     for (const key in _contentHooks) {
@@ -926,7 +944,7 @@ export const switchActiveLanguage = function (lang) {
 
         const tabSwitches = _tabSwitchElements[qTranslateConfig.activeLanguage];
         for (let i = 0; i < tabSwitches.length; ++i) {
-            tabSwitches[i].classList.remove(qTranslateConfig.lsb_style_active_class);
+            tabSwitches[i].classList.remove(config.styles.lsb.activeClass);
             $(tabSwitches[i]).find('.button').removeClass('active');
         }
     }
@@ -938,7 +956,7 @@ export const switchActiveLanguage = function (lang) {
     {
         const tabSwitches = _tabSwitchElements[qTranslateConfig.activeLanguage];
         for (let i = 0; i < tabSwitches.length; ++i) {
-            tabSwitches[i].classList.add(qTranslateConfig.lsb_style_active_class);
+            tabSwitches[i].classList.add(config.styles.lsb.activeClass);
             $(tabSwitches[i]).find('.button').addClass('active');
         }
     }
@@ -1004,9 +1022,9 @@ const _toggleCopyFrom = function () {
         $('.qtranxs-lang-switch').each(function () {
             $(this).attr('orig-title', $(this).attr('title'));
             if ($(this).attr('lang') === qTranslateConfig.activeLanguage)
-                $(this).attr('title', qTranslateConfig.strings.CopyFromAlt);
+                $(this).attr('title', config.l10n.CopyFromAlt);
             else
-                $(this).attr('title', qTranslateConfig.strings.CopyFrom + ' [:' + $(this).attr('lang') + ']');
+                $(this).attr('title', config.l10n.CopyFrom + ' [:' + $(this).attr('lang') + ']');
         });
     } else {
         $('.qtranxs-lang-switch').each(function () {
@@ -1049,11 +1067,9 @@ const _copyContentFrom = function (langFrom) {
 
 export const createSetOfLSBwith = function (lsb_style_extra_wrap_classes) {
     const langSwitchWrap = domCreateElement('ul', {className: 'qtranxs-lang-switch-wrap ' + lsb_style_extra_wrap_classes});
-    const langs = qTranslateConfig.language_config;
-    for (const lang in langs) {
-        const lang_conf = langs[lang];
-        const flag_location = qTranslateConfig.flag_location;
-        const li_title = qTranslateConfig.strings.ShowIn + lang_conf.admin_name + ' [:' + lang + ']';
+    for (const lang in config.languages) {
+        const lang_conf = config.languages[lang];
+        const li_title = config.l10n.ShowIn + lang_conf.admin_name + ' [:' + lang + ']';
         const tabSwitch = domCreateElement('li', {
             lang: lang,
             className: 'qtranxs-lang-switch qtranxs-lang-switch-' + lang,
@@ -1061,29 +1077,29 @@ export const createSetOfLSBwith = function (lsb_style_extra_wrap_classes) {
             onclick: _clickSwitchLanguage
         }, langSwitchWrap);
         let tabItem = tabSwitch;
-        if (qTranslateConfig.lsb_style_subitem === 'button') {
+        if (config.styles.lsb.subItem === 'button') {
             // reuse WordPress secondary button
             tabItem = domCreateElement('button', {className: 'button button-secondary', type: 'button'}, tabSwitch);
         }
-        domCreateElement('img', {src: flag_location + lang_conf.flag}, tabItem);
+        domCreateElement('img', {src: config.path.flags + lang_conf.flag}, tabItem);
         domCreateElement('span', {innerHTML: lang_conf.name}, tabItem);
         if (qTranslateConfig.activeLanguage === lang) {
-            tabSwitch.classList.add(qTranslateConfig.lsb_style_active_class);
+            tabSwitch.classList.add(config.styles.lsb.activeClass);
             $(tabSwitch).find('.button').addClass('active');
         }
         if (!_tabSwitchElements[lang])
             _tabSwitchElements[lang] = [];
         _tabSwitchElements[lang].push(tabSwitch);
     }
-    if (!qTranslateConfig.hide_lsb_copy_content) {
+    if (!config.styles.lsb.hideCopyContent) {
         const tab = domCreateElement('li', {className: 'qtranxs-lang-copy'}, langSwitchWrap);
         const btn = domCreateElement('button', {
             className: 'button button-secondary',
             type: 'button',
-            title: qTranslateConfig.strings.CopyFromAlt,
+            title: config.l10n.CopyFromAlt,
             onclick: _toggleCopyFrom
         }, tab);
-        domCreateElement('span', {innerHTML: qTranslateConfig.strings.CopyFrom}, btn);
+        domCreateElement('span', {innerHTML: config.l10n.CopyFrom}, btn);
     }
     return langSwitchWrap;
 };
@@ -1092,7 +1108,7 @@ export const createSetOfLSBwith = function (lsb_style_extra_wrap_classes) {
  * @since 3.4.8
  */
 export const createSetOfLSB = function () {
-    return createSetOfLSBwith(qTranslateConfig.lsb_style_wrap_class + ' widefat');
+    return createSetOfLSBwith(config.styles.lsb.wrapClass + ' widefat');
 };
 
 const setupMetaBoxLSB = function () {
@@ -1111,7 +1127,7 @@ const setupMetaBoxLSB = function () {
     metaBox.insertBefore(span, insideElems[0]);
     span.classList.add('hndle', 'ui-sortable-handle');
 
-    const langSwitchWrap = createSetOfLSBwith(qTranslateConfig.lsb_style_wrap_class);
+    const langSwitchWrap = createSetOfLSBwith(config.styles.lsb.wrapClass);
     span.appendChild(langSwitchWrap);
     $('#qtranxs-meta-box-lsb .hndle').off('click.postboxes');
 };
@@ -1119,9 +1135,9 @@ const setupMetaBoxLSB = function () {
 const setupAnchorsLSB = function () {
     // create sets of LSB
     const anchors = [];
-    if (qTranslateConfig.page_config && qTranslateConfig.page_config.anchors) {
-        for (const id in qTranslateConfig.page_config.anchors) {
-            const anchor = qTranslateConfig.page_config.anchors[id];
+    if (config.pageConfig.anchors) {
+        for (const id in config.pageConfig.anchors) {
+            const anchor = config.pageConfig.anchors[id];
             const target = document.getElementById(id);
             if (target) {
                 anchors.push({target: target, where: anchor.where});
@@ -1169,7 +1185,7 @@ const setupAnchorsLSB = function () {
  * the possibility to setup the language switch dynamically later.
  */
 export const setupLanguageSwitch = function () {
-    if (_languageSwitchInitialized || !qTranslateConfig.LSB) {
+    if (_languageSwitchInitialized || !config.isEditorModeLSB()) {
         return;
     }
     if (!_displayHookNodes.length && !_displayHookAttrs.length && !Object.keys(_contentHooks).length) {
@@ -1186,33 +1202,33 @@ export const setupLanguageSwitch = function () {
  * Initialize the internal state of hooks and switch.
  * - restore the active language
  * - setup hooks for the page config
- * - setup MCE callbacs for editors created with preIinit
+ * - setup MCE callbacks for editors created with preInit
  *
  * ATTENTION! NOT SUPPORTED IN THE OFFICIAL API.
  * Integration plugins should subscribe for the `qtranx.load` WP action before using ML hooks.
  * This function is only meant for internal usage at loading time and may change.
- * The current behavior may change in next releases. If you reall think you need to use this, ask on github.
+ * The current behavior may change in next releases. If you really think you need to use this, ask on github.
  */
 export const init = function () {
-    if (qTranslateConfig.LSB) {
+    if (config.isEditorModeLSB()) {
         qTranslateConfig.activeLanguage = getStoredEditLanguage();
-        if (!qTranslateConfig.activeLanguage || !isLanguageEnabled(qTranslateConfig.activeLanguage)) {
-            qTranslateConfig.activeLanguage = qTranslateConfig.language;
-            if (isLanguageEnabled(qTranslateConfig.activeLanguage)) {
+        if (!qTranslateConfig.activeLanguage || !config.isLanguageEnabled(qTranslateConfig.activeLanguage)) {
+            qTranslateConfig.activeLanguage = config.lang.detected;
+            if (config.isLanguageEnabled(qTranslateConfig.activeLanguage)) {
                 storeEditLanguage(qTranslateConfig.activeLanguage);
             } else {
                 // fallback to single mode
-                qTranslateConfig.LSB = false;
+                config.editorMode = config.defs.EditorMode.SINGLE;
             }
         }
     } else {
-        qTranslateConfig.activeLanguage = qTranslateConfig.language;
+        qTranslateConfig.activeLanguage = config.lang.detected;
         // no need to store for the current mode, but just in case the LSB are used later
         storeEditLanguage(qTranslateConfig.activeLanguage);
     }
 
-    if (qTranslateConfig.page_config && qTranslateConfig.page_config.forms)
-        addPageHooks(qTranslateConfig.page_config.forms);
+    if (config.pageConfig.forms)
+        addPageHooks(config.pageConfig.forms);
 
     addMultilingualHooks();
 

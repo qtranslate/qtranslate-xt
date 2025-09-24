@@ -1,18 +1,18 @@
 'use strict';
-import {isPageActive} from "../core";
+import {config} from "../core/config";
 import loadEditTags from './edit-tags';
 import loadtNavMenus from './nav-menus';
 import loadPost from './post';
 import loadWidgets from './widgets';
 
-if (isPageActive('edit-tags'))
+if (config.isPageActive('edit-tags'))
     wp.hooks.addAction('qtranx.load', 'qtranx/pages/edit-tags', loadEditTags);
 
-if (isPageActive('nav-menus'))
+if (config.isPageActive('nav-menus'))
     wp.hooks.addAction('qtranx.load', 'qtranx/pages/nav-menus', loadtNavMenus);
 
-if (isPageActive('post'))
+if (config.isPageActive('post'))
     wp.hooks.addAction('qtranx.load', 'qtranx/pages/post', loadPost);
 
-if (isPageActive('widgets'))
+if (config.isPageActive('widgets'))
     wp.hooks.addAction('qtranx.load', 'qtranx/pages/widgets', loadWidgets);
