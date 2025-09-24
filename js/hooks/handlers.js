@@ -333,7 +333,7 @@ export const addContentHooks = function (fields, sep, fieldName) {
     }
 };
 
-const addContentHooksByClassName = function (name, container, sep) {
+const _addContentHooksByClassName = function (name, container, sep) {
     if (!container)
         container = document;
     const fields = container.getElementsByClassName(name);
@@ -346,7 +346,7 @@ export const addContentHooksByClass = function (name, container) {
         sep = name.substring(0, 1);
         name = name.substring(1);
     }
-    addContentHooksByClassName(name, container, sep);
+    _addContentHooksByClassName(name, container, sep);
 };
 
 export const addContentHooksByTagInClass = function (name, tag, container) {
@@ -390,7 +390,7 @@ export const refreshContentHook = function (inputField) {
     return addContentHook(inputField);
 };
 
-const getDisplayContentDefaultValue = function (contents) {
+const _getDisplayContentDefaultValue = function (contents) {
     if (contents[config.lang.detected])
         return '(' + config.lang.detected + ') ' + contents[config.lang.detected];
     if (contents[config.lang.default])
@@ -403,18 +403,18 @@ const getDisplayContentDefaultValue = function (contents) {
     return '';
 };
 
-const completeDisplayContent = function (contents) {
+const _completeDisplayContent = function (contents) {
     let default_value = null;
     for (const lang in contents) {
         if (contents[lang])
             continue;
         if (!default_value)
-            default_value = getDisplayContentDefaultValue(contents);
+            default_value = _getDisplayContentDefaultValue(contents);
         contents[lang] = default_value;
     }
 };
 
-const addDisplayHookNode = function (node) {
+const _addDisplayHookNode = function (node) {
     if (!node.nodeValue)
         return 0;
     const tokens = mlSplitRaw(node.nodeValue);
@@ -423,13 +423,13 @@ const addDisplayHookNode = function (node) {
     const hook = {};
     hook.nd = node;
     hook.contents = mlParseTokens(tokens);
-    completeDisplayContent(hook.contents);
+    _completeDisplayContent(hook.contents);
     node.nodeValue = hook.contents[qTranslateConfig.activeLanguage];
     _displayHookNodes.push(hook);
     return 1;
 };
 
-const addDisplayHookAttr = function (node, attr) {
+const _addDisplayHookAttr = function (node, attr) {
     if (!node.hasAttribute(attr)) return 0;
     const value = node.getAttribute(attr);
     const tokens = mlSplitRaw(value);
@@ -439,7 +439,7 @@ const addDisplayHookAttr = function (node, attr) {
     hook.nd = node;
     hook.attr = attr;
     hook.contents = mlParseTokens(tokens);
-    completeDisplayContent(hook.contents);
+    _completeDisplayContent(hook.contents);
     node.setAttribute(attr, hook.contents[qTranslateConfig.activeLanguage]);
     _displayHookAttrs.push(hook);
     return 1;
@@ -453,7 +453,7 @@ export const addDisplayHook = function (elem) {
             return 0;
         case 'INPUT':
             if (elem.type === 'submit' && elem.value) {
-                return addDisplayHookAttr(elem, 'value');
+                return _addDisplayHookAttr(elem, 'value');
             }
             return 0;
         default:
@@ -471,7 +471,7 @@ export const addDisplayHook = function (elem) {
                     break;
                 case 2: // ATTRIBUTE_NODE
                 case 3: // TEXT_NODE
-                    nbHooks += addDisplayHookNode(node);
+                    nbHooks += _addDisplayHookNode(node);
                     break;
                 default:
                     break;
@@ -485,7 +485,7 @@ export const addDisplayHookById = function (id) {
     return addDisplayHook(document.getElementById(id));
 };
 
-const updateMceEditorContent = function (hook) {
+const _updateMceEditorContent = function (hook) {
     let text = hook.contentField.value;
     if (hook.mce.settings.wpautop && window.switchEditors) {
         text = window.switchEditors.wpautop(text);
@@ -493,7 +493,7 @@ const updateMceEditorContent = function (hook) {
     hook.mce.setContent(text);
 };
 
-const doTabSwitch = function (lang) {
+const _doTabSwitch = function (lang) {
     storeEditLanguage(lang);
 
     for (let i = _displayHookNodes.length; --i >= 0;) {
@@ -537,7 +537,7 @@ const doTabSwitch = function (lang) {
             // Some widgets such as text-widget sync the widget content on 'change' event on the input field
             $(hook.contentField).trigger('change');
             if (visualMode) {
-                updateMceEditorContent(hook);
+                _updateMceEditorContent(hook);
             }
         } else {
             // value is ML, fill out values per language
@@ -557,17 +557,17 @@ export const addDisplayHooks = function (elems) {
     }
 };
 
-export const addDisplayHookAttrs = function (elem, attrs) {
+export const _addDisplayHookAttrs = function (elem, attrs) {
     for (let j = 0; j < attrs.length; ++j) {
         const a = attrs[j];
-        addDisplayHookAttr(elem, a);
+        _addDisplayHookAttr(elem, a);
     }
 };
 
 export const addDisplayHooksAttrs = function (elems, attrs) {
     for (let i = 0; i < elems.length; ++i) {
         const e = elems[i];
-        addDisplayHookAttrs(e, attrs);
+        _addDisplayHookAttrs(e, attrs);
     }
 };
 
@@ -608,7 +608,7 @@ export const addCustomContentHooks = function () {
  * - i18n-multilingual-slug
  * - i18n-multilingual-display
  */
-const addMultilingualHooks = function () {
+    const _addMultilingualHooks = function () {
     $('.i18n-multilingual').each(function (i, e) {
         addContentHook(e, '[');
     });
@@ -629,7 +629,7 @@ const addMultilingualHooks = function () {
 /**
  * Parse page configuration, loaded in qtranxf_get_admin_page_config_post_type.
  */
-const addPageHooks = function (pageConfigForms) {
+const _addPageHooks = function (pageConfigForms) {
     for (const formId in pageConfigForms) {
         const formConfig = pageConfigForms[formId];
         let form;
@@ -648,7 +648,7 @@ const addPageHooks = function (pageConfigForms) {
             form = document.getElementById(formId);
         }
         if (!form) {
-            form = getWrapForm();
+            form = _getWrapForm();
             if (!form)
                 form = document;
         }
@@ -685,7 +685,7 @@ const addPageHooks = function (pageConfigForms) {
                         const id = field.id ? field.id : handle;
                         const element = document.getElementById(id);
                         if (field.attrs) {
-                            addDisplayHookAttrs(element, field.attrs);
+                            _addDisplayHookAttrs(element, field.attrs);
                         } else {
                             addDisplayHook(element);
                         }
@@ -876,7 +876,7 @@ export const enableLanguageSwitchingButtons = function (on) {
     }
 };
 
-const getWrapForm = function () {
+const _getWrapForm = function () {
     const wraps = document.getElementsByClassName('wrap');
     for (let i = 0; i < wraps.length; ++i) {
         const wrap = wraps[i];
@@ -961,7 +961,7 @@ export const switchActiveLanguage = function (lang) {
         }
     }
 
-    doTabSwitch(lang);
+    _doTabSwitch(lang);
     for (let i = 0; i < _onTabSwitchFunctionsAction.length; ++i) {
         // TODO: deprecate qtx arg
         _onTabSwitchFunctionsAction[i].call(qTranx.hooks, lang, langFrom);
@@ -1057,7 +1057,7 @@ const _copyContentFrom = function (langFrom) {
             continue;
         hook.contentField.value = value;
         if (visualMode) {
-            updateMceEditorContent(hook);
+            _updateMceEditorContent(hook);
         }
         changed = true;
     }
@@ -1111,7 +1111,7 @@ export const createSetOfLSB = function () {
     return createSetOfLSBwith(config.styles.lsb.wrapClass + ' widefat');
 };
 
-const setupMetaBoxLSB = function () {
+const _setupMetaBoxLSB = function () {
     const metaBox = document.getElementById('qtranxs-meta-box-lsb');
     if (!metaBox)
         return;
@@ -1132,7 +1132,7 @@ const setupMetaBoxLSB = function () {
     $('#qtranxs-meta-box-lsb .hndle').off('click.postboxes');
 };
 
-const setupAnchorsLSB = function () {
+const _setupAnchorsLSB = function () {
     // create sets of LSB
     const anchors = [];
     if (config.pageConfig.anchors) {
@@ -1151,7 +1151,7 @@ const setupAnchorsLSB = function () {
         }
     }
     if (!anchors.length) {
-        const target = getWrapForm();
+        const target = _getWrapForm();
         if (target)
             anchors.push({target: target, where: 'before'});
     }
@@ -1192,8 +1192,8 @@ export const setupLanguageSwitch = function () {
         return;
     }
 
-    setupMetaBoxLSB();
-    setupAnchorsLSB();
+    _setupMetaBoxLSB();
+    _setupAnchorsLSB();
 
     _languageSwitchInitialized = true;
 }
@@ -1228,9 +1228,9 @@ export const init = function () {
     }
 
     if (config.pageConfig.forms)
-        addPageHooks(config.pageConfig.forms);
+        _addPageHooks(config.pageConfig.forms);
 
-    addMultilingualHooks();
+    _addMultilingualHooks();
 
     addContentHooksTinyMCE();
 
