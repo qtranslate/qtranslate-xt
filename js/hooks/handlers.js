@@ -1224,7 +1224,7 @@ export const init = function () {
                 storeEditLanguage(_activeLanguage);
             } else {
                 // fallback to single mode
-                config.editorMode = config.defs.EditorMode.SINGLE;
+                config.editorMode = config.enum.EditorMode.SINGLE;
             }
         }
     } else {

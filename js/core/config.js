@@ -1,5 +1,5 @@
 'use strict';
-import {EditorMode, UrlMode} from './config-defs';
+import {EditorMode} from './config-defs';
 
 const qTranslateConfig = window.qTranslateConfig;
 
@@ -86,10 +86,6 @@ export const config = {
         keys: qTranslateConfig?.page_config?.keys,
         pages: qTranslateConfig?.page_config?.pages,
     },
-    /**
-     * @type {UrlMode}
-     */
-    urlMode: qTranslateConfig?.url_mode,
 
     /**
      * Check if a language is enabled.
@@ -124,10 +120,9 @@ export const config = {
      */
     rawData: qTranslateConfig,
     /**
-     * Type definitions.
+     * Enum type definitions.
      */
-    defs: {
+    enum: {
         EditorMode: EditorMode,
-        UrlMode: UrlMode,
     },
 };
