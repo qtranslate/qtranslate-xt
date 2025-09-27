@@ -2,6 +2,7 @@
  /wp-admin/options-general.php
 */
 'use strict';
+
 const $ = jQuery;
 
 const keySection = 'qtranslate-xt-admin-section';
@@ -57,6 +58,18 @@ const onFlagChange = function (url) {
     $preview.attr('src', $preview.attr('data-flag-path') + url);
 };
 
+const beautifyJson = function (json) {
+    const implodeArray = (key, value) => {
+        if (Array.isArray(value))
+            return value.join(', ');
+        return value;
+    };
+    const imploded = JSON.stringify(json, implodeArray, 2);
+    // Truncate first and last rows, dedent first level.
+    const trunc = imploded.substring(imploded.indexOf('\n') + 1);
+    return trunc.substring(0, trunc.lastIndexOf('\n')).replace(/^[ ]{2}(.*)$/gm, '$1');
+};
+
 $(function () {
     $(window).on('hashchange', function () {
         onHashChange();
@@ -88,21 +101,24 @@ $(function () {
         if (!isRegexSplitSupported) {
             $('#qtranxs_debug_info_browser').css('color', 'red');
         }
-        $('#qtranxs_debug_info_browser').val(JSON.stringify(browserInfo, null, 2));
+        $('#qtranxs_debug_info_browser').val(beautifyJson(browserInfo));
         $('#qtranxs_debug_info_versions').val('...');
         $('#qtranxs_debug_info_configuration').val('...');
+        $('#qtranxs_debug_info_url_info').val('...');
         $('#qtranxs_debug_info').show();
 
         $.ajax({
             url: ajaxurl,
             dataType: 'json',
             data: {
-                action: 'admin_debug_info'
+                action: 'admin_debug_info',
+                filter_default: $('#qtranxs_debug_filter_default').is(':checked') ? 1 : 0,
             },
             success: function (response) {
                 console.log('debug-info', response);
-                $('#qtranxs_debug_info_versions').val(JSON.stringify(response['versions'], null, 2));
-                $('#qtranxs_debug_info_configuration').val(JSON.stringify(response['configuration'], null, 2));
+                $('#qtranxs_debug_info_versions').val(beautifyJson(response['versions']));
+                $('#qtranxs_debug_info_configuration').val(beautifyJson(response['configuration']));
+                $('#qtranxs_debug_info_url_info').val(beautifyJson(response['url_info']));
             },
             error: function (xhr) {
                 console.error('debug-info', xhr);
