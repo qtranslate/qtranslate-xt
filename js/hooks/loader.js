@@ -18,7 +18,7 @@ $(window).on('load', function () {
 
     wp.hooks.doAction('qtranx.load');
 
-    config.pageConfig.keys.forEach(key => {
+    config.i18n.setup.keys.forEach(key => {
         $(document).trigger('qtxLoadAdmin:' + key, [qTranx.hooks, "Deprecated event 'qtxLoadAdmin', use wp.hooks.addAction('qtranx.load', namespace, callback) instead."]);
     });
 });

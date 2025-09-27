@@ -595,12 +595,12 @@ export const addDisplayHooksByTagInClass = function (name, tag, container) {
  * Add custom hooks from configuration.
  */
 export const addCustomContentHooks = function () {
-    for (let i = 0; i < config.customFields.ids.length; ++i) {
-        const fieldName = config.customFields.ids[i];
+    for (let i = 0; i < config.i18n.customFields.ids.length; ++i) {
+        const fieldName = config.i18n.customFields.ids[i];
         addContentHookByIdName(fieldName);
     }
-    for (let i = 0; i < config.customFields.classes.length; ++i) {
-        const className = config.customFields.classes[i];
+    for (let i = 0; i < config.i18n.customFields.classes.length; ++i) {
+        const className = config.i18n.customFields.classes[i];
         addContentHooksByClass(className);
     }
     addContentHooksTinyMCE();
@@ -1141,9 +1141,9 @@ const _setupMetaBoxLSB = function () {
 const _setupAnchorsLSB = function () {
     // create sets of LSB
     const anchors = [];
-    if (config.pageConfig.anchors) {
-        for (const id in config.pageConfig.anchors) {
-            const anchor = config.pageConfig.anchors[id];
+    if (config.i18n.setup.anchors) {
+        for (const id in config.i18n.setup.anchors) {
+            const anchor = config.i18n.setup.anchors[id];
             const target = document.getElementById(id);
             if (target) {
                 anchors.push({target: target, where: anchor.where});
@@ -1233,8 +1233,8 @@ export const init = function () {
         storeEditLanguage(_activeLanguage);
     }
 
-    if (config.pageConfig.forms)
-        _addPageHooks(config.pageConfig.forms);
+    if (config.i18n.setup.forms)
+        _addPageHooks(config.i18n.setup.forms);
 
     _addMultilingualHooks();
 

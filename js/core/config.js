@@ -6,27 +6,37 @@ const qTranslateConfig = window.qTranslateConfig;
 /**
  * Object providing a public interface to retrieve the current configuration.
  *
- * DO NOT USE `qTranslateConfig` directly, this is exported from PHP but the internal format may change at any time.
+ * DO NOT USE `qTranslateConfig` directly, this is exported from PHP and the internal format may change at any time.
  * This mapping also allows to document the types and allows auto-completion.
  * The values of plain fields are not supposed to be changed by plugins. Modifying them may lead to undefined behavior.
  *
  * @type {*}
  */
 export const config = {
-    customFields: {
-        /**
-         * @type [string]
-         */
-        classes: qTranslateConfig?.custom_field_classes,
-        /**
-         * @type [string]
-         */
-        ids: qTranslateConfig?.custom_fields,
-    },
     /**
      * @type EditorMode
      */
-    editorMode: qTranslateConfig?.editor_mode,
+    editorMode: qTranslateConfig?.editorMode,
+    /**
+     * Dictionary of i18n configurations (mapped from JSON structure).
+     * @type {*}
+     */
+    i18n: {
+        customFields: {
+            /**
+             * @type [string]
+             */
+            classes: qTranslateConfig?.custom_field_classes,
+            /**
+             * @type [string]
+             */
+            ids: qTranslateConfig?.custom_fields,
+        },
+        anchors: qTranslateConfig?.page_config?.anchors,
+        forms: qTranslateConfig?.page_config?.forms,
+        keys: qTranslateConfig?.page_config?.keys,
+        pages: qTranslateConfig?.page_config?.pages,
+    },
     lang: {
         /**
          * Default language (code) in settings.
@@ -76,16 +86,6 @@ export const config = {
             hideCopyContent: qTranslateConfig?.hide_lsb_copy_content,
         },
     },
-    /**
-     * Dictionary of i18n configurations (mapped from JSON structure).
-     * @type {*}
-     */
-    pageConfig: {
-        anchors: qTranslateConfig?.page_config?.anchors,
-        forms: qTranslateConfig?.page_config?.forms,
-        keys: qTranslateConfig?.page_config?.keys,
-        pages: qTranslateConfig?.page_config?.pages,
-    },
 
     /**
      * Check if a language is enabled.
@@ -96,11 +96,17 @@ export const config = {
      * which are not enabled, in case they were previously enabled and had some data.
      * Such data is preserved and re-saved until user deletes it manually.
      */
-    isLanguageEnabled: (lang) => {
-        return !!qTranslateConfig?.language_config[lang];
+    isLanguageEnabled: function (lang) {
+        return !!this.languages[lang];
     },
+    /**
+     * Check if a page config is active.
+     *
+     * @param page
+     * @returns {boolean}
+     */
     isPageActive: function (page) {
-        return (this.pageConfig.keys?.indexOf(page) >= 0);
+        return (this.i18n.setup.keys?.indexOf(page) >= 0);
     },
     /**
      * @type bool
