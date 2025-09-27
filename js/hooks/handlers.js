@@ -594,15 +594,23 @@ export const addDisplayHooksByTagInClass = function (name, tag, container) {
 /**
  * Add custom hooks from configuration.
  */
+export const _addCustomContentHooks = function () {
+    for (const customId of (config.i18n._custom?.ids ?? [])) {
+        addContentHookByIdName(customId);
+    }
+    for (const customClass of (config.i18n._custom?.classes ?? [])) {
+        addContentHooksByClass(customClass);
+    }
+};
+
 export const addCustomContentHooks = function () {
-    for (let i = 0; i < config.i18n.customFields.ids.length; ++i) {
-        const fieldName = config.i18n.customFields.ids[i];
-        addContentHookByIdName(fieldName);
-    }
-    for (let i = 0; i < config.i18n.customFields.classes.length; ++i) {
-        const className = config.i18n.customFields.classes[i];
-        addContentHooksByClass(className);
-    }
+    wp.deprecated('addCustomContentHooks', {
+        since: '3.16.0',
+        version: '4.0.0',
+        plugin: 'qTranslate-XT',
+        hint: 'Custom fields are handled internally.'
+    });
+    _addCustomContentHooks();
     addContentHooksTinyMCE();
 };
 
@@ -637,6 +645,7 @@ const _addMultilingualHooks = function () {
  */
 const _addPageHooks = function (pageConfigForms) {
     for (const formId in pageConfigForms) {
+        console.log('addPageHook', formId)
         const formConfig = pageConfigForms[formId];
         let form;
         if (formConfig.form) {
@@ -1141,9 +1150,9 @@ const _setupMetaBoxLSB = function () {
 const _setupAnchorsLSB = function () {
     // create sets of LSB
     const anchors = [];
-    if (config.i18n.setup.anchors) {
-        for (const id in config.i18n.setup.anchors) {
-            const anchor = config.i18n.setup.anchors[id];
+    if (config.i18n.anchors) {
+        for (const id in config.i18n.anchors) {
+            const anchor = config.i18n.anchors[id];
             const target = document.getElementById(id);
             if (target) {
                 anchors.push({target: target, where: anchor.where});
@@ -1233,12 +1242,11 @@ export const init = function () {
         storeEditLanguage(_activeLanguage);
     }
 
-    if (config.i18n.setup.forms)
-        _addPageHooks(config.i18n.setup.forms);
+    if (config.i18n.forms)
+        _addPageHooks(config.i18n.forms);
 
+    _addCustomContentHooks();
     _addMultilingualHooks();
-
     addContentHooksTinyMCE();
-
     setupLanguageSwitch();
 };

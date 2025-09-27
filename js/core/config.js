@@ -10,6 +10,7 @@ const qTranslateConfig = window.qTranslateConfig;
  * This mapping also allows to document the types and allows auto-completion.
  * The values of plain fields are not supposed to be changed by plugins. Modifying them may lead to undefined behavior.
  *
+ * @since 3.16.0
  * @type {*}
  */
 export const config = {
@@ -18,24 +19,20 @@ export const config = {
      */
     editorMode: qTranslateConfig?.editorMode,
     /**
-     * Dictionary of i18n configurations (mapped from JSON structure).
+     * Enum type definitions.
+     */
+    enum: {
+        EditorMode: EditorMode,
+    },
+    /**
+     * Dictionary of i18n page configurations mapped from JSON structure.
+     * @see https://github.com/qtranslate/qtranslate-xt/wiki/JSON-Configuration
      * @type {*}
      */
     i18n: {
-        customFields: {
-            /**
-             * @type [string]
-             */
-            classes: qTranslateConfig?.custom_field_classes,
-            /**
-             * @type [string]
-             */
-            ids: qTranslateConfig?.custom_fields,
-        },
         anchors: qTranslateConfig?.page_config?.anchors,
         forms: qTranslateConfig?.page_config?.forms,
         keys: qTranslateConfig?.page_config?.keys,
-        pages: qTranslateConfig?.page_config?.pages,
     },
     lang: {
         /**
@@ -106,7 +103,7 @@ export const config = {
      * @returns {boolean}
      */
     isPageActive: function (page) {
-        return (this.i18n.setup.keys?.indexOf(page) >= 0);
+        return (this.i18n.keys?.indexOf(page) >= 0);
     },
     /**
      * @type bool
@@ -124,11 +121,13 @@ export const config = {
     /**
      * This should NOT be used, only in case of fallback. If you need a parameter that is missing, open a ticket.
      */
-    rawData: qTranslateConfig,
-    /**
-     * Enum type definitions.
-     */
-    enum: {
-        EditorMode: EditorMode,
-    },
+    _raw: qTranslateConfig,
+};
+
+/**
+ * Internal fields under construction, do NOT use!
+ */
+config.i18n._custom = {
+    classes: qTranslateConfig?.custom_field_classes,
+        ids: qTranslateConfig?.custom_fields,
 };

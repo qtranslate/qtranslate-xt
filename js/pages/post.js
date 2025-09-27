@@ -110,7 +110,6 @@ export default function () {
     const fieldTitle = $('#title');
     const labelTitle = $('#title-prompt-text');
 
-    hooks.addCustomContentHooks(); // handles values of option 'Custom Fields'
     _setSlugLanguage(hooks.getActiveLanguage());
 
     wp.hooks.addAction('qtranx.languageSwitch', 'qtranx/pages/post', function (lang) {
