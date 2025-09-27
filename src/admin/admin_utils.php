@@ -2,6 +2,9 @@
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
+require_once QTRANSLATE_DIR . '/src/admin/admin_options.php';
+require_once QTRANSLATE_DIR . '/src/options.php';
+require_once QTRANSLATE_DIR . '/src/url.php';
 
 /**
  * @since 3.3.8.4
@@ -412,10 +415,21 @@ function qtranxf_admin_debug_info() {
     $info = array();
     if ( current_user_can( 'manage_options' ) ) {
         global $q_config, $wp_version;
-
+        // Most is configuration from settings, extract 'url_info' which is a special section.
         $info['configuration'] = $q_config;
-        // clear config information, too verbose and generally irrelevant
-        $info_config = &$info['configuration'];
+        $info_config           = &$info['configuration'];
+        $info['url_info']      = $info_config['url_info'];
+        unset( $info_config['url_info'] );
+        // Anonymize sensitive URL info
+        if ( isset( $info['url_info']['http_referer'] ) ) {
+            $url_ref = qtranxf_parseURL( $info['url_info']['http_referer'] );
+            if ( isset ( $url_ref['host'] ) ) {
+                $info['url_info']['http_referer'] = str_replace( $url_ref['host'], '<host>', $info['url_info']['http_referer'] );
+            }
+        }
+        unset( $info['url_info']['host'] );  // sensitive
+        unset( $info['url_info']['warnings'] );
+        // Clear config information, too verbose and generally irrelevant
         unset( $info_config['front_config'] );
         unset( $info_config['admin_config'] );
         unset( $info_config['i18n-cache'] );
@@ -425,22 +439,54 @@ function qtranxf_admin_debug_info() {
         unset( $info_config['not_available'] );
         unset( $info_config['flag'] );
         unset( $info_config['header_css'] );
+        unset( $info_config['header_css_on'] );
         unset( $info_config['term_name'] );
         unset( $info_config['ignore_file_types'] );
         unset( $info_config['custom_i18n_config'] );
-
-        $plugins         = get_option( 'active_plugins' );
-        $plugin_versions = array();
-        foreach ( $plugins as $plugin ) {
-            $plugin_data       = get_plugin_data( WP_PLUGIN_DIR . '/' . $plugin );
-            $plugin_versions[] = $plugin_data['Name'] . ' ' . $plugin_data['Version'];
+        unset( $info_config['hide_lsb_copy_content'] );
+        unset( $info_config['translator'] );
+        // Remove empty entries
+        foreach ( $info_config as $info_key => $info_item ) {
+            if ( empty ( $info_item ) && ( is_array( $info_item ) || is_string( $info_item ) ) ) {
+                unset ( $info_config[ $info_key ] );
+            }
         }
+        // Remove options having default values if requested
+        if ( $_REQUEST['filter_default'] ?? false ) {
+            $default_opt = array();
+            qtranxf_set_default_options( $default_opt );
+            $default_opt_all = array_merge( $default_opt['front']['int'], $default_opt['front']['bool'], $default_opt['front']['str'], $default_opt['default_value'] );
+            // Keep only language options that are found in info config.
+            $default_opt_languages = array_intersect( array_keys( $default_opt['languages'] ), array_keys( $info_config ) );
+            qtranxf_admin_set_default_options( $default_opt );
+            $default_opt_all = array_merge( $default_opt_all, $default_opt['admin']['int'], $default_opt['admin']['bool'], $default_opt['admin']['str'] );
+            foreach ( $info_config as $info_key => $info_item ) {
+                if ( $info_item === ( $default_opt_all[ $info_key ] ?? '' ) ) {
+                    unset ( $info_config[ $info_key ] );
+                }
+            }
+            // Associative arrays for languages, filter each entry for each option.
+            foreach ( $default_opt_languages as $info_key ) {
+                $default_values           = call_user_func( 'qtranxf_default_' . $info_key );
+                $info_config[ $info_key ] = array_filter( $info_config[ $info_key ], function ( $value, $key ) use ( $default_values ) {
+                    return $value !== ( $default_values[ $key ] ?? '' );
+                }, ARRAY_FILTER_USE_BOTH );
+            }
+        }
+        $info_config['admin_enabled_modules'] = array_keys( array_filter( $info_config['admin_enabled_modules'], function ( $value ) {
+            return ( $value );  // keep only active modules.
+        } ) );
 
+        $active_plugins   = array_map( function ( $plugin ) {
+            $plugin_data = get_plugin_data( WP_PLUGIN_DIR . '/' . $plugin );
+
+            return $plugin_data['Name'] . ': ' . $plugin_data['Version'];
+        }, get_option( 'active_plugins' ) );
         $info['versions'] = array(
             'PHP_VERSION' => PHP_VERSION,
             'WP_VERSION'  => $wp_version,
             'QTX_VERSION' => QTX_VERSION,
-            'Plugins'     => $plugin_versions
+            'Plugins'     => $active_plugins
         );
     }
     echo json_encode( $info, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT );

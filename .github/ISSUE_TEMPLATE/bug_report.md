@@ -27,9 +27,17 @@ If applicable, add screenshots to help explain your problem.
 Go to `<YOUR_SITE>/wp-admin/options-general.php?page=qtranslate-xt#troubleshooting`.
 Press `Collect information` button and copy/paste the output below.
 ```
-Versions [REQUIRED!] ...
-Configuration [If applicable] ...
-Browser [If applicable] ...
+Versions
+[REQUIRED! ... ]
+
+Configuration
+[If applicable - about your setup ... ]
+
+URL info
+[If applicable - about the current page, language detection, redirection, ... ]
+
+Browser
+[If applicable - quite unusual, if you suspect some browser incompatibility... ]
 ```
 
 **Additional context**

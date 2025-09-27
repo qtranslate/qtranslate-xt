@@ -872,22 +872,33 @@ class QTX_Admin_Settings {
                     <p class="qtranxs_explanation"><?php printf( __( 'If you encounter any problems and you are unable to solve them yourself, you can visit the <a href="%s">Support Forum</a>. Posting the following Content will help other detect any misconfigurations.', 'qtranslate' ), 'https://github.com/qTranslate/qtranslate-xt/issues' ) ?></p>
                     <br>
                     <input type="button" id="qtranxs_debug_query" class="button"
-                           value="<?php _e( 'Collect information', 'qtranslate' ); ?>">
+                           value="<?php _e( 'Collect information', 'qtranslate' ); ?>" style="margin: 10px 20px;">
+                    <input type="checkbox"
+                           name="debug_filter_default"
+                           id="qtranxs_debug_filter_default"
+                           value="1" checked style="margin: 15px 5px;">
+                    <label
+                        for="qtranxs_debug_filter_default"><?php _e( 'Exclude configuration options with default values', 'qtranslate' ); ?></label>
                     <br>
                     <div id="qtranxs_debug_info" style="display: none; margin: 20px 0;">
                         <p class="qtranxs_explanation"><?php _e( 'Versions', 'qtranslate' ) ?></p>
                         <textarea readonly="readonly" id="qtranxs_debug_info_versions"
-                                  rows="10"
+                                  rows="4"
                                   style="width: 90%;">...</textarea>
                         <br>
                         <p class="qtranxs_explanation"><?php _e( 'Configuration', 'qtranslate' ) ?></p>
                         <textarea readonly="readonly" id="qtranxs_debug_info_configuration"
-                                  rows="15"
+                                  rows="12"
+                                  style="width: 90%;">...</textarea>
+                        <br>
+                        <p class="qtranxs_explanation"><?php _e( 'URL info', 'qtranslate' ) ?></p>
+                        <textarea readonly="readonly" id="qtranxs_debug_info_url_info"
+                                  rows="10"
                                   style="width: 90%;">...</textarea>
                         <br>
                         <p class="qtranxs_explanation "><?php _e( 'Browser', 'qtranslate' ) ?></p>
                         <textarea readonly="readonly" id="qtranxs_debug_info_browser"
-                                  rows="5"
+                                  rows="3"
                                   style="width: 90%;">...</textarea>
                     </div>
                 </td>
