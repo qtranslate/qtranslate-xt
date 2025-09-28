@@ -130,7 +130,13 @@ export const attachContentHook = function (inputField, contentId) {
 }
 
 /**
- * Add a content hook.
+ * Add a content hook by associating it to a given DOM element (field).
+ *
+ * @param {DOMElement} inputField a unique DOM element.
+ * @param {string} [encode] separator used for serialization '[' by default - TODO clarify supported values (1)
+ * @param {string} [fieldName] provide an explicit name in case the inputField lacks name prop.
+ *
+ * (1) TODO special cases for encoding of slug and term
  */
 export const addContentHook = function (inputField, encode, fieldName) {
     if (!inputField) return false;
@@ -300,34 +306,69 @@ export const addContentHook = function (inputField, encode, fieldName) {
     return hook;
 };
 export const addContentHookC = function (inputField) {
-    return addContentHook(inputField, '['); // TODO shouldn't it be '<' ?!
+    wp.deprecated('addContentHookC', {
+        since: '3.16.0',
+        version: '4.0.0',
+        plugin: 'qTranslate-XT',
+        alternative: 'addContentHook(inputField, "<"))',
+        hint: 'Comment separators are not supported in addContentHookC since 3.2.9.8.5.'
+    });
+    return addContentHook(inputField, '['); // Enforced to B-separator since 3.2.9.8.5.
 };
 export const addContentHookB = function (inputField) {
+    wp.deprecated('addContentHookB', {
+        since: '3.16.0',
+        version: '4.0.0',
+        plugin: 'qTranslate-XT',
+        alternative: 'addContentHook',
+        hint: 'Bracket separator is the default.'
+    });
     return addContentHook(inputField, '[');
 };
 
 export const addContentHookById = function (id, sep, name) {
+    wp.deprecated('addContentHookId', {
+        since: '3.16.0',
+        version: '4.0.0',
+        plugin: 'qTranslate-XT',
+        alternative: 'addContentHook(document.getElementById(id), sep, name)',
+    });
     return addContentHook(document.getElementById(id), sep, name);
 };
 export const addContentHookByIdName = function (name) {
+    // TODO clarify support of separator extracted from ID name
     let sep;
     switch (name[0]) {
         case '<':
         case '[':
             sep = name.substring(0, 1);
-            name = name.substring(1);
+            name = name.substring(1);  // The rest hold the element ID.
             break;
         default:
             break;
     }
-    return addContentHookById(name, sep);
+    return addContentHook(document.getElementById(name), sep);
 };
 
 export const addContentHookByIdC = function (id) {
-    return addContentHookById(id, '['); // TODO shouldn't it be '<' ?!
+    wp.deprecated('addContentHookByIdC', {
+        since: '3.16.0',
+        version: '4.0.0',
+        plugin: 'qTranslate-XT',
+        alternative: 'addContentHook(document.getElementById(id), "<")',
+        hint: 'Comment separators are not supported in addContentHookByIdC since 3.2.9.8.5.'
+    });
+    return addContentHookById(id, '[');  // Enforced to B-separator since 3.2.9.8.5.
 };
 
 export const addContentHookByIdB = function (id) {
+    wp.deprecated('addContentHookByIdB', {
+        since: '3.16.0',
+        version: '4.0.0',
+        plugin: 'qTranslate-XT',
+        alternative: 'addContentHook(document.getElementById(id))',
+        hint: 'Bracket separator is the default and id prop is used first for selection.'
+    });
     return addContentHookById(id, '[');
 };
 
@@ -346,6 +387,7 @@ const _addContentHooksByClassName = function (name, container, sep) {
 };
 
 export const addContentHooksByClass = function (name, container) {
+    // TODO clarify support of separator extracted from class name
     let sep;
     if (name.indexOf('<') === 0 || name.indexOf('[') === 0) {
         sep = name.substring(0, 1);
@@ -355,6 +397,13 @@ export const addContentHooksByClass = function (name, container) {
 };
 
 export const addContentHooksByTagInClass = function (name, tag, container) {
+    wp.deprecated('addContentHooksByTagInClass', {
+        since: '3.16.0',
+        version: '4.0.0',
+        plugin: 'qTranslate-XT',
+        alternative: 'addContentHooks',
+        hint: 'Select items by class name then by tag.'
+    });
     const elems = container.getElementsByClassName(name);
     for (let i = 0; i < elems.length; ++i) {
         const elem = elems[i];
@@ -563,6 +612,7 @@ export const addDisplayHooks = function (elems) {
 };
 
 export const _addDisplayHookAttrs = function (elem, attrs) {
+    // TODO revert private
     for (let j = 0; j < attrs.length; ++j) {
         const a = attrs[j];
         _addDisplayHookAttr(elem, a);
@@ -719,7 +769,7 @@ const _addPageHooks = function () {
                         }
                     } else {
                         const id = field.id ? field.id : handle;
-                        addContentHookById(id, sep, field.name);
+                        addContentHook(document.getElementById(id), sep, field.name);
                     }
                     break;
             }
