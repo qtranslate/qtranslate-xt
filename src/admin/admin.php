@@ -304,8 +304,8 @@ function qtranxf_get_admin_page_config_post_type( $post_type ) {
         }
 
         $page_config['js'][] = array(
-            'handle' => 'qtranslate-admin-main',
-            'src'    => './dist/main.js',
+            'handle' => 'qtranslate-admin-main',  // TODO rename `main` to `core` in next major release
+            'src'    => './dist/core.js',
             'deps'   => [ 'jquery', 'wp-deprecated', 'wp-hooks' ],
         );
 

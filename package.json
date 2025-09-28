@@ -2,7 +2,7 @@
   "name": "qtranslate-xt",
   "version": "1.0.0",
   "description": "qTranslate-XT (eXTended)",
-  "main": "dist/main.js",
+  "main": "dist/core.js",
   "private": true,
   "scripts": {
     "build": "webpack --mode=production --progress",
