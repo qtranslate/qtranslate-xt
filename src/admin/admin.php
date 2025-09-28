@@ -392,8 +392,9 @@ function qtranxf_admin_footer() {
     $config['lsb_style_wrap_class']   = ( $q_config['lsb_style'] == QTX_LSB_STYLE_TABS_IN_BLOCK ) ? 'wp-ui-primary' : '';
 
     if ( in_array( 'post', $config['page_config']['keys'] ?? [] ) ) {
-        $config['custom_fields']        = apply_filters( 'qtranslate_custom_fields', $q_config['custom_fields'] );
-        $config['custom_field_classes'] = apply_filters( 'qtranslate_custom_field_classes', $q_config['custom_field_classes'] );
+        // TODO remove deprecated filters in 4.0.0
+        $config['custom_fields']        = apply_filters_deprecated( 'qtranslate_custom_fields', array( $q_config['custom_fields'] ), '3.16.0', '', 'To be removed in 4.0.0. Use JSON config or create a ticket on github.' );
+        $config['custom_field_classes'] = apply_filters_deprecated( 'qtranslate_custom_field_classes', array( $q_config['custom_field_classes'] ), '3.16.0', '', 'To be removed in 4.0.0. Use JSON config or create a ticket on github.' );
     }
     if ( $q_config['url_mode'] == QTX_URL_DOMAINS ) {
         $config['domains'] = $q_config['domains'];
