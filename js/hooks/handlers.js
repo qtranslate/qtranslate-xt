@@ -2,14 +2,14 @@
  * Multi-lang hooks for LSB (Language Switching Buttons), ML content, editors and display.
  *
  * Attention! The interface is not fully initialized before the `qtranx.load` action.
- * @see init function
+ * @see init
  * @see [Integration Guide](https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide)
  */
 'use strict';
 import {config} from '../core';
-import {domCreateElement} from '../core/dom';
 import {mlUnserializeLangs, mlUnserializeTokens, mlParseTokens} from '../core/multi-lang';
-import {getStoredEditLanguage, storeEditLanguage} from '../core/store';
+import {getStoredEditLanguage, storeEditLanguage} from '../support/store';
+import {domCreateElement} from '../support/dom';
 
 const $ = jQuery;
 

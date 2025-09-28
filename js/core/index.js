@@ -1,5 +1,5 @@
 /**
- * Shared core functionalities and setup
+ * Shared core functionalities and configuration, part of the public API.
  */
 'use strict';
 

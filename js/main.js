@@ -1,7 +1,7 @@
 /**
  * Common API and core functionalities for qTranslate-XT
  */
-import './pages';
+import './pages';  // Load WP hooks for QTX actions.
 import * as hooks from './hooks';
 
 // TODO: remove legacy support in next major release
