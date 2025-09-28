@@ -3,17 +3,14 @@
 */
 'use strict';
 import * as hooks from '../hooks';
+import {addDisplayHooks, addDisplayHooksByTagInClass} from "../hooks";
 
 const $ = jQuery;
 
 export default function () {
     const addMenuItemHooks = function (li) {
-        hooks.addContentHooksByClass('edit-menu-item-title', li);
-        hooks.addContentHooksByClass('edit-menu-item-attr-title', li);
-        hooks.addContentHooksByClass('[edit-menu-item-description', li); // must use '[:]' separator style
-
-        hooks.addDisplayHooksByClass('menu-item-title', li);
-        hooks.addDisplayHooksByTagInClass('link-to-original', 'A', li);
+        hooks.addContentHooks($(li).find('.edit-menu-item-title,.edit-menu-item-attr-title,.edit-menu-item-description'));
+        hooks.addDisplayHooks($(li).find('.menu-item-title,.link-to-original A'));
     };
 
     const onAddMenuItem = function (menuMarkup) {

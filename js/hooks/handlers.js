@@ -134,7 +134,7 @@ export const attachContentHook = function (inputField, contentId) {
  *
  * @param {DOMElement} inputField a unique DOM element.
  * @param {string} [encode] separator used for serialization '[' by default - TODO clarify supported values (1)
- * @param {string} [fieldName] provide an explicit name in case the inputField lacks name prop.
+ * @param {string} [fieldName] provide an explicit name in case the input field lacks name prop. Used in POST.
  *
  * (1) TODO special cases for encoding of slug and term
  */
@@ -336,8 +336,15 @@ export const addContentHookById = function (id, sep, name) {
     return addContentHook(document.getElementById(id), sep, name);
 };
 export const addContentHookByIdName = function (name) {
-    // TODO clarify support of separator extracted from ID name
-    let sep;
+    wp.deprecated('addContentHookByIdName', {
+        since: '3.16.0',
+        version: '4.0.0',
+        plugin: 'qTranslate-XT',
+        alternative: 'addContentHook(document.getElementById(nameWithoutSeparator),container,sep)',
+        hint: 'Only meant for custom fields (separator extracted from name), now handled internally.'
+    });
+    // ATTENTION we don't support this separator extraction in addContentHooks!
+    let sep = '[';
     switch (name[0]) {
         case '<':
         case '[':
@@ -372,6 +379,14 @@ export const addContentHookByIdB = function (id) {
     return addContentHookById(id, '[');
 };
 
+/**
+ * Add multiple content hooks by associating them to given DOM elements (fields).
+ *
+ * @see addContentHook
+ * @param {DOMElement} inputField a unique DOM element.
+ * @param {string} [encode] separator used for serialization '[' by default
+ * @param {string} [fieldName] provide an explicit name in case the fields lack name prop. Used in POST.
+ */
 export const addContentHooks = function (fields, sep, fieldName) {
     for (let i = 0; i < fields.length; ++i) {
         const field = fields[i];
@@ -387,8 +402,15 @@ const _addContentHooksByClassName = function (name, container, sep) {
 };
 
 export const addContentHooksByClass = function (name, container) {
-    // TODO clarify support of separator extracted from class name
-    let sep;
+    wp.deprecated('addContentHooksByClass', {
+        since: '3.16.0',
+        version: '4.0.0',
+        plugin: 'qTranslate-XT',
+        alternative: 'addContentHooks(container.getElementsByClassName(nameWithoutSeparator),container,sep)',
+        hint: 'Only meant for custom fields (separator extracted from name), now handled internally.'
+    });
+    // ATTENTION we don't support this separator extraction in addContentHooks!
+    let sep = '[';
     if (name.indexOf('<') === 0 || name.indexOf('[') === 0) {
         sep = name.substring(0, 1);
         name = name.substring(1);
@@ -401,15 +423,10 @@ export const addContentHooksByTagInClass = function (name, tag, container) {
         since: '3.16.0',
         version: '4.0.0',
         plugin: 'qTranslate-XT',
-        alternative: 'addContentHooks',
-        hint: 'Select items by class name then by tag.'
+        alternative: 'addContentHooks($(container).find("." + name + " " + tag));',
+        hint: 'Select items by class name then sub-items by tag.'
     });
-    const elems = container.getElementsByClassName(name);
-    for (let i = 0; i < elems.length; ++i) {
-        const elem = elems[i];
-        const items = elem.getElementsByTagName(tag);
-        addContentHooks(items);
-    }
+    addContentHooks($(container).find('.' + name + ' ' + tag));
 };
 
 export const removeContentHook = function (inputField) {
@@ -499,6 +516,11 @@ const _addDisplayHookAttr = function (node, attr) {
     return 1;
 };
 
+/**
+ * Add a display hook (read-only) by associating it to a given DOM element.
+ *
+ * @param {DOMElement} elem a unique DOM element.
+ */
 export const addDisplayHook = function (elem) {
     if (!elem || !elem.tagName)
         return 0;
@@ -536,6 +558,12 @@ export const addDisplayHook = function (elem) {
 };
 
 export const addDisplayHookById = function (id) {
+    wp.deprecated('addDisplayHookById', {
+        since: '3.16.0',
+        version: '4.0.0',
+        plugin: 'qTranslate-XT',
+        alternative: 'addDisplayHook(document.getElementById(id))',
+    });
     return addDisplayHook(document.getElementById(id));
 };
 
@@ -604,6 +632,12 @@ const _doTabSwitch = function (lang) {
     }
 };
 
+/**
+ * Add multiple display hooks by associating them to a given DOM elements.
+ *
+ * @see addDisplayHook
+ * @param {DOMElement[]} elems array of DOM elements.
+ */
 export const addDisplayHooks = function (elems) {
     for (let i = 0; i < elems.length; ++i) {
         const e = elems[i];
@@ -626,28 +660,47 @@ export const addDisplayHooksAttrs = function (elems, attrs) {
 };
 
 export const addDisplayHooksByClass = function (name, container) {
+    wp.deprecated('addDisplayHooksByClass', {
+        since: '3.16.0',
+        version: '4.0.0',
+        plugin: 'qTranslate-XT',
+        alternative: 'addDisplayHooks(container.getElementsByClassName(name))',
+    });
     const elems = container.getElementsByClassName(name);
     addDisplayHooks(elems);
 };
 
 export const addDisplayHooksByTagInClass = function (name, tag, container) {
-    const elems = container.getElementsByClassName(name);
-    for (let i = 0; i < elems.length; ++i) {
-        const elem = elems[i];
-        const items = elem.getElementsByTagName(tag);
-        addDisplayHooks(items);
-    }
+    wp.deprecated('addDisplayHooksByTagInClass', {
+        since: '3.16.0',
+        version: '4.0.0',
+        plugin: 'qTranslate-XT',
+        alternative: 'addDisplayHooks($(container).find("." + name + " " + tag)',
+        hint: 'Select items by class name then sub-items by tag.'
+    });
+    addDisplayHooks($(container).find('.' + name + ' ' + tag));
 };
 
 /**
  * Add custom hooks from configuration.
  */
 export const _addCustomContentHooks = function () {
+    // Special handling for custom fields that may contain the separator in the first character
+    // TODO This format is quite convoluted, not sure we should still support this. Anyway broken because HTML encoded...
+    const _parseSeparatorFromName = function (name) {
+        const sepFound = (name.indexOf('<') === 0 || name.indexOf('[') === 0);
+        return {
+            sep: sepFound ? name.substring(0, 1) : '[',
+            name: sepFound ? name.substring(1) : name,
+        };
+    }
     for (const customId of (config.i18n._custom?.ids ?? [])) {
-        addContentHookByIdName(customId);
+        const parsed = _parseSeparatorFromName(customId);
+        addContentHook(document.getElementById(parsed.name), parsed.sep); // unique
     }
     for (const customClass of (config.i18n._custom?.classes ?? [])) {
-        addContentHooksByClass(customClass);
+        const parsed = _parseSeparatorFromName(customClass);
+        addContentHooks(document.getElementsByClassName(parsed.name), parsed.sep); // multiple
     }
 };
 
