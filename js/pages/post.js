@@ -4,20 +4,15 @@
 */
 'use strict';
 import {config} from '../core/config'
-import {UrlMode} from '../core/config-defs';
+import {UrlMode} from '../core/config-enums';
 import * as hooks from '../hooks';
 
-const qTranslateConfig = window.qTranslateConfig;
 const $ = jQuery;
 
-// For now this function is private, using internal config data.
-const _getUrlMode = function () {
-    return qTranslateConfig?.url_mode;
-};
-
-// For now this function is private, quite specific to URL element and using internal config data.
+// For now this function is private, quite specific to URL element in DOM and using internal config data (anti-pattern).
 const _convertElementURL = function (url, lang) {
-    switch (_getUrlMode()) {
+    const qTranslateConfig = window.qTranslateConfig;  // Do not re-use this pattern, use public `qTranx.config` API.
+    switch (config._urlMode) {
         case UrlMode.QUERY:
             if (url.search) {
                 url.search += '&lang=' + lang;
@@ -76,7 +71,7 @@ export default function () {
             btnPreviewAction.children[0].href = langUrl.href;
         }
 
-        if (_getUrlMode() !== UrlMode.QUERY) {
+        if (config._urlMode !== UrlMode.QUERY) {
             if (!slugSamplePermalink) {
                 const slugEl = document.getElementById('sample-permalink');
                 if (slugEl && slugEl.offsetHeight > 0 && slugEl.childNodes.length) {

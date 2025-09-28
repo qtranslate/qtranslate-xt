@@ -1,10 +1,9 @@
 /**
  * Multi-lang hooks for LSB (Language Switching Buttons), ML content, editors and display.
  *
- * Attention! The interface is not fully initialized before the `qtxLoadAdmin` event.
+ * Attention! The interface is not fully initialized before the `qtranx.load` action.
  * @see init function
- *
- * Read Integration Guide: https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide for more information.
+ * @see [Integration Guide](https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide)
  */
 'use strict';
 import {config} from '../core';
@@ -641,11 +640,12 @@ const _addMultilingualHooks = function () {
 };
 
 /**
- * Parse page configuration, loaded in qtranxf_get_admin_page_config_post_type.
+ * Parse page i18n form configuration, loaded in qtranxf_get_admin_page_config_post_type.
+ * @see https://github.com/qtranslate/qtranslate-xt/wiki/JSON-Configuration
  */
-const _addPageHooks = function (pageConfigForms) {
+const _addPageHooks = function () {
+    const pageConfigForms = config.i18n.forms ?? [];
     for (const formId in pageConfigForms) {
-        console.log('addPageHook', formId)
         const formConfig = pageConfigForms[formId];
         let form;
         if (formConfig.form) {
@@ -1206,10 +1206,8 @@ export const setupLanguageSwitch = function () {
     if (!_displayHookNodes.length && !_displayHookAttrs.length && !Object.keys(_contentHooks).length) {
         return;
     }
-
     _setupMetaBoxLSB();
     _setupAnchorsLSB();
-
     _languageSwitchInitialized = true;
 }
 
@@ -1241,10 +1239,7 @@ export const init = function () {
         // no need to store for the current mode, but just in case the LSB are used later
         storeEditLanguage(_activeLanguage);
     }
-
-    if (config.i18n.forms)
-        _addPageHooks(config.i18n.forms);
-
+    _addPageHooks();
     _addCustomContentHooks();
     _addMultilingualHooks();
     addContentHooksTinyMCE();

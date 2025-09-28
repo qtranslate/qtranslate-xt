@@ -1,14 +1,14 @@
 'use strict';
-import {EditorMode} from './config-defs';
+import {EditorMode} from './config-enums';
 
 const qTranslateConfig = window.qTranslateConfig;
 
 /**
- * Object providing a public interface to retrieve the current configuration.
+ * Object providing a public interface to retrieve the current configuration for the active page.
  *
  * DO NOT USE `qTranslateConfig` directly, this is exported from PHP and the internal format may change at any time.
  * This mapping also allows to document the types and allows auto-completion.
- * The values of plain fields are not supposed to be changed by plugins. Modifying them may lead to undefined behavior.
+ * The values and properties are NOT supposed to be changed by plugins. Modifying them will lead to undefined behavior.
  *
  * @since 3.16.0
  * @type {*}
@@ -25,9 +25,9 @@ export const config = {
         EditorMode: EditorMode,
     },
     /**
-     * Dictionary of i18n page configurations mapped from JSON structure.
+     * Dictionary of i18n page configurations for multi-lang hooks.
      * @see https://github.com/qtranslate/qtranslate-xt/wiki/JSON-Configuration
-     * @type {*}
+     * @type {*} mapped partially from i18n JSON structure (sub-selection)
      */
     i18n: {
         anchors: qTranslateConfig?.page_config?.anchors,
@@ -55,7 +55,8 @@ export const config = {
      * @type {*} Dictionary indexed by language code.
      */
     languages: qTranslateConfig.language_config,
-    /**§
+    /**
+     * Localization strings.
      * @type {string}
      */
     l10n: qTranslateConfig?.strings,
@@ -97,10 +98,14 @@ export const config = {
         return !!this.languages[lang];
     },
     /**
-     * Check if a page config is active.
+     * Check if a page i18n config is currently active, meaning its selectors have matched the current URL.
      *
-     * @param page
-     * @returns {boolean}
+     * Several pages can be activated for the current URL, matched from multiple i18n configurations or entries.
+     * This function allows to narrow down the selection, for example to trigger code conditionally for one entry.
+     * @see https://github.com/qtranslate/qtranslate-xt/wiki/JSON-Configuration
+     *
+     * @param {string} page main page key in the i18n configuration
+     * @return {boolean} true if the page i18n entry has been selected for the current URL
      */
     isPageActive: function (page) {
         return (this.i18n.keys?.indexOf(page) >= 0);
@@ -125,9 +130,12 @@ export const config = {
 };
 
 /**
- * Internal fields under construction, do NOT use!
+ * Internal fields under construction (WIP), do NOT use!
  */
+// Might be generalized in page config fields
 config.i18n._custom = {
     classes: qTranslateConfig?.custom_field_classes,
-        ids: qTranslateConfig?.custom_fields,
+    ids: qTranslateConfig?.custom_fields,
 };
+// Consider a URL section domains, url info, ...
+config._urlMode = qTranslateConfig?.url_mode;
