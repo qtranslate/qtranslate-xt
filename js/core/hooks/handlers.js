@@ -323,8 +323,8 @@ export const refreshContentHook = function (inputField) {
 };
 
 const _getDisplayContentDefaultValue = function (contents) {
-    if (contents[config.lang.detected])
-        return '(' + config.lang.detected + ') ' + contents[config.lang.detected];
+    if (contents[config.page.detectedLang])
+        return '(' + config.page.detectedLang + ') ' + contents[config.page.detectedLang];
     if (contents[config.lang.default])
         return '(' + config.lang.default + ') ' + contents[config.lang.default];
     for (const lang in contents) {
@@ -513,7 +513,7 @@ export const addDisplayHooksAttrs = function (elems, attrs) {
 /**
  * Add custom hooks from configuration.
  */
-export const _addCustomContentHooks = function () {
+export const _addCustomContentHooks = function (i18nCustomFields) {
     // Special handling for custom fields that may contain the separator in the first character
     // TODO This format is quite convoluted, not sure we should still support this. Anyway broken because HTML encoded...
     const _parseSeparatorFromName = function (name) {
@@ -523,11 +523,11 @@ export const _addCustomContentHooks = function () {
             name: sepFound ? name.substring(1) : name,
         };
     }
-    for (const customId of (config.i18n._custom?.ids ?? [])) {
+    for (const customId of (i18nCustomFields?.ids ?? [])) {
         const parsed = _parseSeparatorFromName(customId);
         addContentHook(document.getElementById(parsed.name), parsed.sep); // unique
     }
-    for (const customClass of (config.i18n._custom?.classes ?? [])) {
+    for (const customClass of (i18nCustomFields?.classes ?? [])) {
         const parsed = _parseSeparatorFromName(customClass);
         addContentHooks(document.getElementsByClassName(parsed.name), parsed.sep); // multiple
     }
@@ -540,7 +540,7 @@ export const addCustomContentHooks = function () {
         plugin: 'qTranslate-XT',
         hint: 'Custom fields are handled internally.'
     });
-    _addCustomContentHooks();
+    _addCustomContentHooks(config.page.i18n._custom);
     addContentHooksTinyMCE();
 };
 
@@ -574,10 +574,9 @@ const _addMultilingualHooks = function () {
  * Parse page i18n form configuration, loaded in qtranxf_get_admin_page_config_post_type.
  * @see https://github.com/qtranslate/qtranslate-xt/wiki/JSON-Configuration
  */
-const _addPageHooks = function () {
-    const pageConfigForms = config.i18n.forms ?? [];
-    for (const formId in pageConfigForms) {
-        const formConfig = pageConfigForms[formId];
+const _addPageHooks = function (i18nPageConfigForms) {
+    for (const formId in (i18nPageConfigForms ?? [])) {
+        const formConfig = i18nPageConfigForms[formId];
         let form;
         if (formConfig.form) {
             if (formConfig.form.id) {
@@ -1078,12 +1077,12 @@ const _setupMetaBoxLSB = function () {
     $('#qtranxs-meta-box-lsb .hndle').off('click.postboxes');
 };
 
-const _setupAnchorsLSB = function () {
+const _setupAnchorsLSB = function (i18nPageAnchors) {
     // create sets of LSB
     const anchors = [];
-    if (config.i18n.anchors) {
-        for (const id in config.i18n.anchors) {
-            const anchor = config.i18n.anchors[id];
+    if (i18nPageAnchors) {
+        for (const id in i18nPageAnchors) {
+            const anchor = i18nPageAnchors[id];
             const target = document.getElementById(id);
             if (target) {
                 anchors.push({target: target, where: anchor.where});
@@ -1138,7 +1137,7 @@ export const setupLanguageSwitch = function () {
         return;
     }
     _setupMetaBoxLSB();
-    _setupAnchorsLSB();
+    _setupAnchorsLSB(config.page.i18n.anchors);
     _languageSwitchInitialized = true;
 }
 
@@ -1157,7 +1156,7 @@ export const init = function () {
     if (config.isEditorModeLSB()) {
         _setActiveLanguage(getStoredEditLanguage());
         if (!_activeLanguage || !config.isLanguageEnabled(_activeLanguage)) {
-            _setActiveLanguage(config.lang.detected);
+            _setActiveLanguage(config.page.detectedLang);
             if (config.isLanguageEnabled(_activeLanguage)) {
                 storeEditLanguage(_activeLanguage);
             } else {
@@ -1166,12 +1165,12 @@ export const init = function () {
             }
         }
     } else {
-        _setActiveLanguage(config.lang.detected);
+        _setActiveLanguage(config.page.detectedLang);
         // no need to store for the current mode, but just in case the LSB are used later
         storeEditLanguage(_activeLanguage);
     }
-    _addPageHooks();
-    _addCustomContentHooks();
+    _addPageHooks(config.page.i18n.forms);
+    _addCustomContentHooks(config.page.i18n._custom);
     _addMultilingualHooks();
     addContentHooksTinyMCE();
     setupLanguageSwitch();

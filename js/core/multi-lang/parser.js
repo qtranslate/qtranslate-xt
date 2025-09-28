@@ -29,7 +29,7 @@ export const splitLangs = function (rawText) {
  * @return {string[]} array of string tokens in sequence e.g. [ '[:en]', 'my-text', '[:fr]', 'mon-texte', '[:]' ]
  */
 export const splitTokens = function (rawText) {
-    const regex = '(<!--:lang-->|<!--:-->|\\[:lang]|\\[:]|{:lang}|{:})'.replace(/lang/g, config.lang.formatRegex);
+    const regex = '(<!--:lang-->|<!--:-->|\\[:lang]|\\[:]|{:lang}|{:})'.replace(/lang/g, config.lang.codeRegex);
     const splitRegex = new RegExp(regex, "gi");
     // Most browsers support RegExp.prototype[@@split]()... except IE (see debug info from troubleshooting)
     // https://caniuse.com/mdn-javascript_builtins_regexp_--split
@@ -63,9 +63,9 @@ export const parseTokens = function (tokens) {
         }
         return result;
     }
-    const clang_regex = new RegExp('<!--:(lang)-->'.replace(/lang/g, config.lang.formatRegex), 'gi');
-    const blang_regex = new RegExp('\\[:(lang)]'.replace(/lang/g, config.lang.formatRegex), 'gi');
-    const slang_regex = new RegExp('{:(lang)}'.replace(/lang/g, config.lang.formatRegex), 'gi');
+    const clang_regex = new RegExp('<!--:(lang)-->'.replace(/lang/g, config.lang.codeRegex), 'gi');
+    const blang_regex = new RegExp('\\[:(lang)]'.replace(/lang/g, config.lang.codeRegex), 'gi');
+    const slang_regex = new RegExp('{:(lang)}'.replace(/lang/g, config.lang.codeRegex), 'gi');
     let lang = false;
     let matches;
     for (let i = 0; i < tokens.length; ++i) {

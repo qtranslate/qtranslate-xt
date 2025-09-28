@@ -27,31 +27,16 @@ export const config = {
     enum: {
         EditorMode: EditorMode,
     },
-    /**
-     * Dictionary of i18n page configurations for multi-lang hooks.
-     * @see https://github.com/qtranslate/qtranslate-xt/wiki/JSON-Configuration
-     * @type {*} mapped partially from i18n JSON structure (sub-selection)
-     */
-    i18n: {
-        anchors: qTranslateConfig?.page_config?.anchors,
-        forms: qTranslateConfig?.page_config?.forms,
-        keys: qTranslateConfig?.page_config?.keys,
-    },
     lang: {
+        /**
+         * @type string
+         */
+        codeRegex: qTranslateConfig?.lang_code_format,
         /**
          * Default language (code) in settings.
          * @type string
          */
         default: qTranslateConfig?.default_language,
-        /**
-         * Language detected from server-side.
-         * @type string
-         */
-        detected: qTranslateConfig.language,
-        /**
-         * @type string
-         */
-        formatRegex: qTranslateConfig?.lang_code_format,
     },
     /**
      * Enabled languages with their settings.
@@ -63,6 +48,27 @@ export const config = {
      * @type {string}
      */
     l10n: qTranslateConfig?.strings,
+    /**
+     * Triggers for active page.
+     * @type {*}
+     */
+    page: {
+        /**
+         * Language detected from page URL server-side.
+         * @type string
+         */
+        detectedLang: qTranslateConfig.language,
+        /**
+         * Dictionary of active i18n page configurations for multi-lang hooks.
+         * @see https://github.com/qtranslate/qtranslate-xt/wiki/JSON-Configuration
+         * @type {*} mapped partially from i18n JSON structure (sub-selection)
+         */
+        i18n: {
+            anchors: qTranslateConfig?.page_config?.anchors,  // To set LSB
+            forms: qTranslateConfig?.page_config?.forms,      // Main entry point for ML fields
+            keys: qTranslateConfig?.page_config?.keys,        // Keys of active pages being matched
+        },
+    },
     /**
      * Paths to resources.
      * @type {*}
@@ -107,11 +113,11 @@ export const config = {
      * This function allows to narrow down the selection, for example to trigger code conditionally for one entry.
      * @see https://github.com/qtranslate/qtranslate-xt/wiki/JSON-Configuration
      *
-     * @param {string} page main page key in the i18n configuration
+     * @param {string} pageKey main page key in the i18n configuration
      * @return {boolean} true if the page i18n entry has been selected for the current URL
      */
-    isPageActive: function (page) {
-        return (this.i18n.keys?.indexOf(page) >= 0);
+    isPageActive: function (pageKey) {
+        return (this.page.i18n.keys?.indexOf(pageKey) >= 0);
     },
     /**
      * @type bool
@@ -136,7 +142,7 @@ export const config = {
  * Internal fields under construction (WIP), do NOT use!
  */
 // Might be generalized in page config fields
-config.i18n._custom = {
+config.page.i18n._custom = {
     classes: qTranslateConfig?.custom_field_classes,
     ids: qTranslateConfig?.custom_fields,
 };
