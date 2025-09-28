@@ -611,8 +611,7 @@ export const addDisplayHooks = function (elems) {
     }
 };
 
-export const _addDisplayHookAttrs = function (elem, attrs) {
-    // TODO revert private
+export const addDisplayHookAttrs = function (elem, attrs) {
     for (let j = 0; j < attrs.length; ++j) {
         const a = attrs[j];
         _addDisplayHookAttr(elem, a);
@@ -622,7 +621,7 @@ export const _addDisplayHookAttrs = function (elem, attrs) {
 export const addDisplayHooksAttrs = function (elems, attrs) {
     for (let i = 0; i < elems.length; ++i) {
         const e = elems[i];
-        _addDisplayHookAttrs(e, attrs);
+        addDisplayHookAttrs(e, attrs);
     }
 };
 
@@ -750,7 +749,7 @@ const _addPageHooks = function () {
                         const id = field.id ? field.id : handle;
                         const element = document.getElementById(id);
                         if (field.attrs) {
-                            _addDisplayHookAttrs(element, field.attrs);
+                            addDisplayHookAttrs(element, field.attrs);
                         } else {
                             addDisplayHook(element);
                         }
