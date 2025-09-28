@@ -50,7 +50,7 @@ export const getFlagLocation = function () {
  *
  * @param {string} lang
  * @returns {boolean} true if 'lang' is in the hash of enabled languages.
- * This function maybe needed, as function mlUnserializeLangs may return languages,
+ * This function maybe needed, as function mlSplitLangs may return languages,
  * which are not enabled, in case they were previously enabled and had some data.
  * Such data is preserved and re-saved until user deletes it manually.
  */

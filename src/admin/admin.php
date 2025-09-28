@@ -462,7 +462,7 @@ function qtranxf_admin_footer() {
             }
         }
         if ( $q_config['qtrans_compatibility'] ) {
-            echo 'qtrans_use = function(lang, text) { var result = qTranx.mlUnserializeLangs(text); return result[lang]; }' . PHP_EOL;
+            echo 'qtrans_use = function(lang, text) { var result = qTranx.mlSplitLangs(text); return result[lang]; }' . PHP_EOL;
         }
         do_action( 'qtranslate_add_admin_footer_js' );
         ?>

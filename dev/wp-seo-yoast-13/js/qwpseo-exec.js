@@ -24,7 +24,7 @@
             for (var key in wpseoReplaceVarsL10n.replace_vars) {
                 var rv = wpseoReplaceVarsL10n.replace_vars[key];
                 if (typeof rv === 'string') {
-                    var rvs = mlUnserializeLangs(rv);
+                    var rvs = mlSplitLangs(rv);
                     for (var lang in qTranx.config.languages) {
                         qreplace_vars[lang][key] = rvs[lang];
                     }
