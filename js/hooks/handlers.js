@@ -6,10 +6,9 @@
  * @see [Integration Guide](https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide)
  */
 'use strict';
-import {config} from '../core';
-import {mlSplitLangs, mlSplitTokens, mlParseTokens} from '../core/multi-lang';
-import {getStoredEditLanguage, storeEditLanguage} from '../support/store';
-import {domCreateElement} from '../support/dom';
+import {config} from '../config';
+import {splitLangs, splitTokens, parseTokens} from '../multi-lang';
+import {domCreateElement, getStoredEditLanguage, storeEditLanguage} from '../support';
 
 const $ = jQuery;
 
@@ -184,7 +183,7 @@ export const addContentHook = function (inputField, encode, fieldName) {
     hook.fields = {};
     if (!config.isEditorModeRAW()) {
         // Most crucial moment when untranslated content is parsed
-        contents = mlSplitLangs(inputField.value);
+        contents = splitLangs(inputField.value);
         // Substitute the current ML content with translated content for the current language
         inputField.value = contents[hook.lang];
 
@@ -223,7 +222,7 @@ export const addContentHook = function (inputField, encode, fieldName) {
         case 'slug':
         case 'term': {
             if (config.isEditorModeRAW())
-                contents = mlSplitLangs(inputField.value);
+                contents = splitLangs(inputField.value);
             hook.sepfield = domCreateElement('input', {
                 name: baseName + '[qtranslate-original-value]',
                 type: 'hidden',
@@ -350,12 +349,12 @@ const _completeDisplayContent = function (contents) {
 const _addDisplayHookNode = function (node) {
     if (!node.nodeValue)
         return 0;
-    const tokens = mlSplitTokens(node.nodeValue);
+    const tokens = splitTokens(node.nodeValue);
     if (!tokens || !tokens.length || tokens.length === 1)
         return 0;
     const hook = {};
     hook.nd = node;
-    hook.contents = mlParseTokens(tokens);
+    hook.contents = parseTokens(tokens);
     _completeDisplayContent(hook.contents);
     node.nodeValue = hook.contents[_activeLanguage];
     _displayHookNodes.push(hook);
@@ -365,13 +364,13 @@ const _addDisplayHookNode = function (node) {
 const _addDisplayHookAttr = function (node, attr) {
     if (!node.hasAttribute(attr)) return 0;
     const value = node.getAttribute(attr);
-    const tokens = mlSplitTokens(value);
+    const tokens = splitTokens(value);
     if (!tokens || !tokens.length || tokens.length === 1)
         return 0;
     const hook = {};
     hook.nd = node;
     hook.attr = attr;
-    hook.contents = mlParseTokens(tokens);
+    hook.contents = parseTokens(tokens);
     _completeDisplayContent(hook.contents);
     node.setAttribute(attr, hook.contents[_activeLanguage]);
     _displayHookAttrs.push(hook);
@@ -456,7 +455,7 @@ const _doTabSwitch = function (lang) {
         }
 
         const text = hook.contentField.value.trim();
-        const tokens = mlSplitTokens(text);
+        const tokens = splitTokens(text);
         if (!tokens || tokens.length <= 1) {
             // value is not ML, switch it to other language
             hook.fields[hook.lang].value = text;
@@ -475,7 +474,7 @@ const _doTabSwitch = function (lang) {
             }
         } else {
             // value is ML, fill out values per language
-            const contents = mlParseTokens(tokens);
+            const contents = parseTokens(tokens);
             for (const langField in hook.fields) {
                 hook.fields[langField].value = contents[langField];
             }

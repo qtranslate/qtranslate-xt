@@ -3,8 +3,8 @@
  /wp-admin/post-new.php
 */
 'use strict';
-import {config} from '../core/config'
-import {UrlMode} from '../core/config-enums';
+import {config} from '../config'
+import {UrlMode} from '../config/enums';
 import * as hooks from '../hooks';
 import {domCreateElement} from '../support/dom';
 

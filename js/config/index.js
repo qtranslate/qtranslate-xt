@@ -1,5 +1,8 @@
+/**
+ * Package to retrieve the configuration in a convenient way.
+ */
 'use strict';
-import {EditorMode} from './config-enums';
+import {EditorMode} from './enums';
 
 const qTranslateConfig = window.qTranslateConfig;
 
@@ -90,7 +93,7 @@ export const config = {
      *
      * @param {string} lang
      * @return {boolean} true if 'lang' is in the hash of enabled languages.
-     * This function maybe needed, as function mlSplitLangs may return languages,
+     * This function maybe needed, as function ml.splitLangs may return languages,
      * which are not enabled, in case they were previously enabled and had some data.
      * Such data is preserved and re-saved until user deletes it manually.
      */

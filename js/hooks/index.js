@@ -1,3 +1,6 @@
+/**
+ * Package for multi-lang hooks (LSB editor, ML content and display).
+ */
 'use strict';
 import './loader';
 

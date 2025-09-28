@@ -1,5 +1,8 @@
+/**
+ * Package to handle the loaders depending on the active page.
+ */
 'use strict';
-import {config} from "../core/config";
+import {config} from "../config";
 import loadEditTags from './edit-tags';
 import loadtNavMenus from './nav-menus';
 import loadPost from './post';

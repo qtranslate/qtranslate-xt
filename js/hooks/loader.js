@@ -2,7 +2,7 @@
  * Main loader for hooks module.
  */
 'use strict';
-import {config} from '../core/config'
+import {config} from '../config'
 import {init, loadAdditionalTinyMceHooks} from './handlers';
 
 const $ = jQuery;

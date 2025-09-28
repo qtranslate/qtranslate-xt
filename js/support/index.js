@@ -4,4 +4,4 @@
 'use strict';
 
 export * from './dom';
-export * from './support';
+export * from './store';

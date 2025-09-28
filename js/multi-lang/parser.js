@@ -2,21 +2,21 @@
  * Utilities for multi-lang text.
  */
 'use strict';
-import {config} from './config';
+import {config} from '../config';
 
 /**
  * Decompose a string containing ML tags into an object with keys for each language.
  * Former name: qtranxj_split
  *
- * @see mlParseTokens
+ * @see parseTokens
  * Attention! The result is dependent on the current language configuration.
  *
  * @param {string} rawText e.g. '[:en]my text[:fr]mon texte[:]'
  * @return {Object} dictionary indexed by langs (code) e.g. {en: 'my text', fr: 'mon texte'}
  */
-export const mlSplitLangs = function (rawText) {
-    const tokens = mlSplitTokens(rawText);
-    return mlParseTokens(tokens);
+export const splitLangs = function (rawText) {
+    const tokens = splitTokens(rawText);
+    return parseTokens(tokens);
 };
 
 /**
@@ -28,7 +28,7 @@ export const mlSplitLangs = function (rawText) {
  * @param {string} rawText e.g. '[:en]my text[:fr]mon texte[:]'
  * @return {string[]} array of string tokens in sequence e.g. [ '[:en]', 'my-text', '[:fr]', 'mon-texte', '[:]' ]
  */
-export const mlSplitTokens = function (rawText) {
+export const splitTokens = function (rawText) {
     const regex = '(<!--:lang-->|<!--:-->|\\[:lang]|\\[:]|{:lang}|{:})'.replace(/lang/g, config.lang.formatRegex);
     const splitRegex = new RegExp(regex, "gi");
     // Most browsers support RegExp.prototype[@@split]()... except IE (see debug info from troubleshooting)
@@ -48,7 +48,7 @@ export const mlSplitTokens = function (rawText) {
  * @param {string[]} array of string tokens in sequence e.g. [ '[:en]', 'my-text', '[:fr]', 'mon-texte', '[:]' ]
  * @return {Object} dictionary indexed by langs (code) e.g. {en: 'my text', fr: 'mon texte'}
  */
-export const mlParseTokens = function (tokens) {
+export const parseTokens = function (tokens) {
     const result = new Object;
     for (const lang in config.languages) {
         result[lang] = '';

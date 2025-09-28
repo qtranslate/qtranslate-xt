@@ -26,5 +26,6 @@ qTranslateConfig.js.get_qtx = function () {
     return qTranx.hooks;
 };
 
-export * from './core';
+export * from './config';
+export * as ml from './multi-lang';
 export {hooks};
