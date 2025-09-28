@@ -4,4 +4,4 @@
 'use strict';
 
 export * from './config';
-export * from './multi-lang-tags';
+export * from './multi-lang';

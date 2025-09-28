@@ -90,7 +90,7 @@ export const config = {
      *
      * @param {string} lang
      * @return {boolean} true if 'lang' is in the hash of enabled languages.
-     * This function maybe needed, as function mlExplode may return languages,
+     * This function maybe needed, as function mlUnserializeLangs may return languages,
      * which are not enabled, in case they were previously enabled and had some data.
      * Such data is preserved and re-saved until user deletes it manually.
      */

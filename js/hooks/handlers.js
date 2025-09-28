@@ -8,7 +8,7 @@
 'use strict';
 import {config} from '../core';
 import {domCreateElement} from '../core/dom';
-import {mlSplitRaw, mlExplode, mlParseTokens} from '../core/multi-lang-tags';
+import {mlUnserializeLangs, mlUnserializeTokens, mlParseTokens} from '../core/multi-lang';
 import {getStoredEditLanguage, storeEditLanguage} from '../core/store';
 
 const $ = jQuery;
@@ -184,7 +184,7 @@ export const addContentHook = function (inputField, encode, fieldName) {
     hook.fields = {};
     if (!config.isEditorModeRAW()) {
         // Most crucial moment when untranslated content is parsed
-        contents = mlExplode(inputField.value);
+        contents = mlUnserializeLangs(inputField.value);
         // Substitute the current ML content with translated content for the current language
         inputField.value = contents[hook.lang];
 
@@ -223,7 +223,7 @@ export const addContentHook = function (inputField, encode, fieldName) {
         case 'slug':
         case 'term': {
             if (config.isEditorModeRAW())
-                contents = mlExplode(inputField.value);
+                contents = mlUnserializeLangs(inputField.value);
             hook.sepfield = domCreateElement('input', {
                 name: baseName + '[qtranslate-original-value]',
                 type: 'hidden',
@@ -350,7 +350,7 @@ const _completeDisplayContent = function (contents) {
 const _addDisplayHookNode = function (node) {
     if (!node.nodeValue)
         return 0;
-    const tokens = mlSplitRaw(node.nodeValue);
+    const tokens = mlUnserializeTokens(node.nodeValue);
     if (!tokens || !tokens.length || tokens.length === 1)
         return 0;
     const hook = {};
@@ -365,7 +365,7 @@ const _addDisplayHookNode = function (node) {
 const _addDisplayHookAttr = function (node, attr) {
     if (!node.hasAttribute(attr)) return 0;
     const value = node.getAttribute(attr);
-    const tokens = mlSplitRaw(value);
+    const tokens = mlUnserializeTokens(value);
     if (!tokens || !tokens.length || tokens.length === 1)
         return 0;
     const hook = {};
@@ -456,7 +456,7 @@ const _doTabSwitch = function (lang) {
         }
 
         const text = hook.contentField.value.trim();
-        const tokens = mlSplitRaw(text);
+        const tokens = mlUnserializeTokens(text);
         if (!tokens || tokens.length <= 1) {
             // value is not ML, switch it to other language
             hook.fields[hook.lang].value = text;

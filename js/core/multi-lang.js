@@ -6,26 +6,28 @@ import {config} from './config';
 
 /**
  * Decompose a string containing ML tags into an object with keys for each language.
- * Example: '[:en]EN-content[:fr]FR-contenu[:]' -> {en: 'EN-content', fr: 'FR-contenu'}
+ * Former name: qtranxj_split
  *
- * If no tag is found the same content is set to each langage.
- * Example: 'unique content' -> {en: 'unique content', fr: 'unique content'}
+ * @see mlParseTokens
+ * Attention! The result is dependent on the current language configuration.
  *
- * @param {string} rawText
- * @returns {Object}
+ * @param {string} rawText e.g. '[:en]my text[:fr]mon texte[:]'
+ * @return {Object} dictionary indexed by langs (code) e.g. {en: 'my text', fr: 'mon texte'}
  */
-export const mlExplode = function (rawText) {
-    const tokens = mlSplitRaw(rawText);
+export const mlUnserializeLangs = function (rawText) {
+    const tokens = mlUnserializeTokens(rawText);
     return mlParseTokens(tokens);
 };
 
 /**
  * Decompose a raw string containing ML tag+content (endTag) into an ordered array of tokens with tags and contents.
+ * Former name: qtranxj_get_split_blocks
  *
- * @param {string} rawText
- * @returns {string[]}
+ * Attention! This is a lower level function for raw parsing, independent of the enabled languages.
+ * @param {string} rawText e.g. '[:en]my text[:fr]mon texte[:]'
+ * @return {string[]} array of string tokens in sequence e.g. [ '[:en]', 'my-text', '[:fr]', 'mon-texte', '[:]' ]
  */
-export const mlSplitRaw = function (rawText) {
+export const mlUnserializeTokens = function (rawText) {
     const regex = '(<!--:lang-->|<!--:-->|\\[:lang]|\\[:]|{:lang}|{:})'.replace(/lang/g, config.lang.formatRegex);
     const splitRegex = new RegExp(regex, "gi");
     // Most browsers support RegExp.prototype[@@split]()... except IE (see debug info from troubleshooting)
@@ -36,9 +38,14 @@ export const mlSplitRaw = function (rawText) {
 /**
  * Parse an ordered array of tokens of ML tag+content (endTag) and assign them to an object,
  * where keys are language and values the respective content.
+ * Former nane: qtranxj_split_blocks
  *
- * @param {string[]} tokens
- * @returns {Object}
+ * Attention! The result is dependent on the current language configuration.
+ * If no tag is found the same content is set to each langage.
+ * Example: 'unique content' -> {en: 'unique content', fr: 'unique content'}
+ *
+ * @param {string[]} array of string tokens in sequence e.g. [ '[:en]', 'my-text', '[:fr]', 'mon-texte', '[:]' ]
+ * @return {Object} dictionary indexed by langs (code) e.g. {en: 'my text', fr: 'mon texte'}
  */
 export const mlParseTokens = function (tokens) {
     const result = new Object;

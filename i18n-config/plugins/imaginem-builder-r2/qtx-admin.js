@@ -6,7 +6,7 @@
         if (!qtx.get_ml) {
             qtx.get_ml = function (h, sep) {
                 var text = h.contentField.value.trim();
-                var tokens = mlSplitRaw(text);
+                var tokens = mlUnserializeTokens(text);
                 if (!tokens || tokens.length > 1) {//already ML
                     var contents = mlParseTokens(tokens);
                     for (var lang in h.fields) {
