@@ -845,13 +845,14 @@ const _onLoadLanguage = function (lang, langFrom) {
 }
 
 /**
- * Switch to a new active language.
+ * Switch to a new active language, triggering a `qtranx.languageSwitch` action.
  *
- * @param lang
+ * @param {string} lang the requested language
+ * @return {bool} true if the language was switched, false otherwise
  */
 export const switchActiveLanguage = function (lang) {
-    if (_activeLanguage === lang) {
-        return;
+    if (_activeLanguage === lang || !config.isLanguageEnabled(lang)) {
+        return false;
     }
     if (_activeLanguage) {
         /**
@@ -870,7 +871,7 @@ export const switchActiveLanguage = function (lang) {
                 ok2switch = false;
         }
         if (!ok2switch)
-            return; // cancel button switch, if one of _deprecatedSwitch.saveFuncs returned 'false'
+            return false; // cancel button switch, if one of _deprecatedSwitch.saveFuncs returned 'false'
         // TODO: substitute cancel logic with a lock design
 
         const tabSwitches = _tabSwitchElements[_activeLanguage];
@@ -906,6 +907,7 @@ export const switchActiveLanguage = function (lang) {
      */
     wp.hooks.doAction('qtranx.languageSwitch', lang, langFrom);
     _onLoadLanguage(lang, langFrom);
+    return true;
 };
 
 export const clickSwitchLanguage = function () {
