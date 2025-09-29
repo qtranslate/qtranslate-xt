@@ -39,16 +39,16 @@
 
         var focuskw_input = $('#yoast_wpseo_focuskw');
         var focuskw_edit = $('#yoast_wpseo_focuskw_text_input');
-        focuskw_edit.addClass('qtranxs-translatable');
+        focuskw_edit.addClass(qTranx.config.styles.translatable);
 
         //var title_snippet = $('#snippet_title');
         //var title_input = $('#yoast_wpseo_title');
         var title_edit = $('#snippet-editor-title');
-        title_edit.addClass('qtranxs-translatable');
+        title_edit.addClass(qTranx.config.styles.translatable);
 
         //var metadesc_input = $('#yoast_wpseo_metadesc');
         var metadesc_edit = $('#snippet-editor-meta-description');
-        metadesc_edit.addClass('qtranxs-translatable');
+        metadesc_edit.addClass(qTranx.config.styles.translatable);
 
         var removeChildren = function (e) {
             while (e.firstChild) {

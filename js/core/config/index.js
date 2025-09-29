@@ -4,12 +4,12 @@
 'use strict';
 import {EditorMode} from './enums';
 
-const qTranslateConfig = window.qTranslateConfig;
+// DO NOT USE `qTranslateConfig` directly, this is exported from PHP and the internal format may change at any time.
+const rawConfig = window.qTranslateConfig;
 
 /**
  * Object providing a public interface to retrieve the current configuration for the active page.
  *
- * DO NOT USE `qTranslateConfig` directly, this is exported from PHP and the internal format may change at any time.
  * This mapping also allows to document the types and allows auto-completion.
  * The values and properties are NOT supposed to be changed by plugins. Modifying them will lead to undefined behavior.
  *
@@ -20,7 +20,7 @@ export const config = {
     /**
      * @type EditorMode
      */
-    editorMode: qTranslateConfig?.editorMode,
+    editorMode: rawConfig?.editorMode,
     /**
      * Enum type definitions.
      */
@@ -31,23 +31,23 @@ export const config = {
         /**
          * @type string
          */
-        codeRegex: qTranslateConfig?.lang_code_format,
+        codeRegex: rawConfig?.lang_code_format,
         /**
          * Default language (code) in settings.
          * @type string
          */
-        default: qTranslateConfig?.default_language,
+        default: rawConfig?.default_language,
     },
     /**
      * Enabled languages with their settings.
      * @type {*} Dictionary indexed by language code.
      */
-    languages: qTranslateConfig.language_config,
+    languages: rawConfig.language_config,
     /**
      * Localization strings.
      * @type {string}
      */
-    l10n: qTranslateConfig?.strings,
+    l10n: rawConfig?.strings,
     /**
      * Triggers for active page.
      * @type {*}
@@ -57,16 +57,16 @@ export const config = {
          * Language detected from page URL server-side.
          * @type string
          */
-        detectedLang: qTranslateConfig.language,
+        detectedLang: rawConfig.language,
         /**
          * Dictionary of active i18n page configurations for multi-lang hooks.
          * @see https://github.com/qtranslate/qtranslate-xt/wiki/JSON-Configuration
          * @type {*} mapped partially from i18n JSON structure (sub-selection)
          */
         i18n: {
-            anchors: qTranslateConfig?.page_config?.anchors,  // To set LSB
-            forms: qTranslateConfig?.page_config?.forms,      // Main entry point for ML fields
-            keys: qTranslateConfig?.page_config?.keys,        // Keys of active pages being matched
+            anchors: rawConfig?.page_config?.anchors,  // To set LSB
+            forms: rawConfig?.page_config?.forms,      // Main entry point for ML fields
+            keys: rawConfig?.page_config?.keys,        // Keys of active pages being matched
         },
     },
     /**
@@ -77,21 +77,22 @@ export const config = {
         /**
          * @type string
          */
-        flags: qTranslateConfig?.flag_location,
+        flags: rawConfig?.flag_location,
     },
     /**
      * @type {*}
      */
     styles: {
         lsb: {
-            activeClass: qTranslateConfig?.lsb_style_active_class,
-            subItem: qTranslateConfig?.lsb_style_subitem,
-            wrapClass: qTranslateConfig?.lsb_style_wrap_class,
+            activeClass: rawConfig?.lsb_style_active_class,
+            subItem: rawConfig?.lsb_style_subitem,
+            wrapClass: rawConfig?.lsb_style_wrap_class,
             /**
              * @type bool
              */
-            hideCopyContent: qTranslateConfig?.hide_lsb_copy_content,
+            hideCopyContent: rawConfig?.hide_lsb_copy_content,
         },
+        translatable: 'qtranxs-translatable',
     },
 
     /**
@@ -135,7 +136,7 @@ export const config = {
     /**
      * This should NOT be used, only in case of fallback. If you need a parameter that is missing, open a ticket.
      */
-    _raw: qTranslateConfig,
+    _raw: rawConfig,
 };
 
 /**
@@ -143,8 +144,8 @@ export const config = {
  */
 // Might be generalized in page config fields
 config.page.i18n._custom = {
-    classes: qTranslateConfig?.custom_field_classes,
-    ids: qTranslateConfig?.custom_fields,
+    classes: rawConfig?.custom_field_classes,
+    ids: rawConfig?.custom_fields,
 };
 // Consider a URL section domains, url info, ...
-config._urlMode = qTranslateConfig?.url_mode;
+config._urlMode = rawConfig?.url_mode;

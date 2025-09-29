@@ -55,7 +55,7 @@
                 var id = h.contentField.id;
                 var ed = tinyMCE.editors[id];
                 h.mce = ed;
-                $(ed.getContainer()).addClass('qtranxs-translatable');
+                $(ed.getContainer()).addClass(qTranx.config.styles.translatable);
             }
         }
 

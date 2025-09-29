@@ -12,7 +12,7 @@ const $ = jQuery;
 
 // For now this function is private, quite specific to URL element in DOM and using internal config data (anti-pattern).
 const _convertElementURL = function (url, lang) {
-    const qTranslateConfig = window.qTranslateConfig;  // Do not re-use this pattern, use public `qTranx.config` API.
+    const rawConfig = window.qTranslateConfig;  // Do not re-use this pattern, use public `qTranx.config` API.
     switch (config._urlMode) {
         case UrlMode.QUERY:
             if (url.search) {
@@ -23,13 +23,13 @@ const _convertElementURL = function (url, lang) {
             break;
 
         case UrlMode.PATH:
-            const homepath = qTranslateConfig.home_url_path;
+            const homepath = rawConfig.home_url_path;
             let path = url.pathname;
             if (path[0] !== '/')
                 path = '/' + path; // to deal with IE imperfection: https://stackoverflow.com/questions/956233/javascript-pathname-ie-quirk
             const i = path.indexOf(homepath);
             if (i >= 0)
-                url.pathname = qTranslateConfig.homeinfo_path + lang + path.substring(i + homepath.length - 1);
+                url.pathname = rawConfig.homeinfo_path + lang + path.substring(i + homepath.length - 1);
             break;
 
         case UrlMode.DOMAIN:
@@ -37,7 +37,7 @@ const _convertElementURL = function (url, lang) {
             break;
 
         case UrlMode.DOMAINS:
-            url.host = qTranslateConfig.domains[lang];
+            url.host = rawConfig.domains[lang];
             break;
     }
 };

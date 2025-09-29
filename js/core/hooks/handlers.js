@@ -12,7 +12,6 @@ import {domCreateElement, getStoredEditLanguage, storeEditLanguage} from '../sup
 
 const $ = jQuery;
 
-const qTranslateConfig = window.qTranslateConfig;
 /**
  * Internal state of hooks and languageSwitch, not exposed
  */
@@ -24,9 +23,11 @@ const _tabSwitchElements = {};  // DOM elements indexed by language.
 let _activeLanguage;
 
 // TODO: remove deprecated switch handlers in next major release
-const _onTabSwitchFunctionsAction = [];
-const _onTabSwitchFunctionsLoad = [];
-const _onTabSwitchFunctionsSave = [];
+const _deprecatedSwitch = {
+    actionFuncs: [],
+    loadFuncs: [],
+    saveFuncs: [],
+};
 
 /**
  * Get the currently active language selected in LSB.
@@ -39,7 +40,7 @@ export const getActiveLanguage = function () {
 
 const _setActiveLanguage = function (lang) {
     _activeLanguage = lang;
-    qTranslateConfig.activeLanguage = lang;  // Deprecated, do not use!
+    window.qTranslateConfig.activeLanguage = lang;  // Deprecated, do not use!
 };
 
 /**
@@ -70,7 +71,7 @@ export const attachContentHook = function (inputField, contentId) {
     if (!hook) {
         return;
     }
-    inputField.classList.add('qtranxs-translatable');
+    inputField.classList.add(config.styles.translatable);
     hook.contentField = inputField;
 }
 
@@ -307,13 +308,13 @@ export const removeContentHook = function (inputField) {
     }
     if (hook.mce) {
         const editor = hook.mce;
-        editor.getContentAreaContainer().classList.remove('qtranxs-translatable');
-        editor.getElement().classList.remove('qtranxs-translatable');
+        editor.getContentAreaContainer().classList.remove(config.styles.translatable);
+        editor.getElement().classList.remove(config.styles.translatable);
     }
     // The current content field may not be the same as the input field, in case it was re-attached (e.g. widgets)
-    hook.contentField.classList.remove('qtranxs-translatable');
+    hook.contentField.classList.remove(config.styles.translatable);
     delete _contentHooks[inputField.id];
-    inputField.classList.remove('qtranxs-translatable');
+    inputField.classList.remove(config.styles.translatable);
     return true;
 };
 
@@ -545,29 +546,14 @@ export const addCustomContentHooks = function () {
 };
 
 /**
- * Add translatable hooks for fields marked with classes
- * - i18n-multilingual
- * - i18n-multilingual-curly
- * - i18n-multilingual-term
- * - i18n-multilingual-slug
- * - i18n-multilingual-display
+ * Add translatable hooks for fields marked with predefined classes.
  */
 const _addMultilingualHooks = function () {
-    $('.i18n-multilingual').each(function (i, e) {
-        addContentHook(e, '[');
-    });
-    $('.i18n-multilingual-curly').each(function (i, e) {
-        addContentHook(e, '{');
-    });
-    $('.i18n-multilingual-term').each(function (i, e) {
-        addContentHook(e, 'term');
-    });
-    $('.i18n-multilingual-slug').each(function (i, e) {
-        addContentHook(e, 'slug');
-    });
-    $('.i18n-multilingual-display').each(function (i, e) {
-        addDisplayHook(e);
-    });
+    addContentHooks($('.i18n-multilingual'), '[');
+    addContentHooks($('.i18n-multilingual-curly'), '{');
+    addContentHooks($('.i18n-multilingual-term'), 'term');
+    addContentHooks($('.i18n-multilingual-slug'), 'slug');
+    addDisplayHooks($('.i18n-multilingual-display'));
 };
 
 /**
@@ -691,8 +677,8 @@ export const attachEditorHook = function (editor, contentId) {
     }
     hook.mce = editor;
 
-    editor.getContentAreaContainer().classList.add('qtranxs-translatable');
-    editor.getElement().classList.add('qtranxs-translatable');
+    editor.getContentAreaContainer().classList.add(config.styles.translatable);
+    editor.getElement().classList.add(config.styles.translatable);
 
     return hook;
 }
@@ -733,7 +719,7 @@ export const addLanguageSwitchListener = function (func) {
         plugin: 'qTranslate-XT',
         alternative: 'wp.hooks.addAction("qtranx.LanguageSwitch", ...)'
     });
-    _onTabSwitchFunctionsAction.push(func);
+    _deprecatedSwitch.actionFuncs.push(func);
 };
 
 /**
@@ -750,7 +736,7 @@ export const addLanguageSwitchBeforeListener = function (func) {
         plugin: 'qTranslate-XT',
         alternative: 'wp.hooks.addAction("qtranx.LanguageSwitchPre", ...)'
     });
-    _onTabSwitchFunctionsSave.push(func);
+    _deprecatedSwitch.saveFuncs.push(func);
 };
 
 /**
@@ -763,11 +749,11 @@ export const delLanguageSwitchBeforeListener = function (func) {
         plugin: 'qTranslate-XT',
         alternative: 'wp.hooks.removeAction("qtranx.LanguageSwitchPre", ...)'
     });
-    for (let i = 0; i < _onTabSwitchFunctionsSave.length; ++i) {
-        const funcSave = _onTabSwitchFunctionsSave[i];
+    for (let i = 0; i < _deprecatedSwitch.saveFuncs.length; ++i) {
+        const funcSave = _deprecatedSwitch.saveFuncs[i];
         if (funcSave !== func)
             continue;
-        _onTabSwitchFunctionsSave.splice(i, 1);
+        _deprecatedSwitch.saveFuncs.splice(i, 1);
         return;
     }
 };
@@ -786,7 +772,7 @@ export const addLanguageSwitchAfterListener = function (func) {
         plugin: 'qTranslate-XT',
         alternative: 'wp.hooks.addAction("qtranx.LanguageSwitch", ...)'
     });
-    _onTabSwitchFunctionsLoad.push(func);
+    _deprecatedSwitch.loadFuncs.push(func);
 };
 
 /**
@@ -799,11 +785,11 @@ export const delLanguageSwitchAfterListener = function (func) {
         plugin: 'qTranslate-XT',
         alternative: 'wp.hooks.removeAction("qtranx.LanguageSwitch", ...)'
     });
-    for (let i = 0; i < _onTabSwitchFunctionsLoad.length; ++i) {
-        const funcLoad = _onTabSwitchFunctionsLoad[i];
+    for (let i = 0; i < _deprecatedSwitch.loadFuncs.length; ++i) {
+        const funcLoad = _deprecatedSwitch.loadFuncs[i];
         if (funcLoad !== func)
             continue;
-        _onTabSwitchFunctionsLoad.splice(i, 1);
+        _deprecatedSwitch.loadFuncs.splice(i, 1);
         return;
     }
 };
@@ -852,9 +838,9 @@ export const onLoadLanguage = function (lang, langFrom) {
 };
 
 const _onLoadLanguage = function (lang, langFrom) {
-    for (let i = 0; i < _onTabSwitchFunctionsLoad.length; ++i) {
+    for (let i = 0; i < _deprecatedSwitch.loadFuncs.length; ++i) {
         // TODO: deprecate qtx arg
-        _onTabSwitchFunctionsLoad[i].call(qTranx.hooks, lang, langFrom);
+        _deprecatedSwitch.loadFuncs[i].call(qTranx.hooks, lang, langFrom);
     }
 }
 
@@ -877,14 +863,14 @@ export const switchActiveLanguage = function (lang) {
         wp.hooks.doAction('qtranx.languageSwitchPre', lang, _activeLanguage);
         // TODO: remove deprecated switch handlers
         let ok2switch = true;
-        for (let i = 0; i < _onTabSwitchFunctionsSave.length; ++i) {
+        for (let i = 0; i < _deprecatedSwitch.saveFuncs.length; ++i) {
             // TODO: deprecate qtx arg
-            const ok = _onTabSwitchFunctionsSave[i].call(qTranx.hooks, _activeLanguage, lang);
+            const ok = _deprecatedSwitch.saveFuncs[i].call(qTranx.hooks, _activeLanguage, lang);
             if (ok === false)
                 ok2switch = false;
         }
         if (!ok2switch)
-            return; // cancel button switch, if one of _onTabSwitchFunctionsSave returned 'false'
+            return; // cancel button switch, if one of _deprecatedSwitch.saveFuncs returned 'false'
         // TODO: substitute cancel logic with a lock design
 
         const tabSwitches = _tabSwitchElements[_activeLanguage];
@@ -907,9 +893,9 @@ export const switchActiveLanguage = function (lang) {
     }
 
     _doTabSwitch(lang);
-    for (let i = 0; i < _onTabSwitchFunctionsAction.length; ++i) {
+    for (let i = 0; i < _deprecatedSwitch.actionFuncs.length; ++i) {
         // TODO: deprecate qtx arg
-        _onTabSwitchFunctionsAction[i].call(qTranx.hooks, lang, langFrom);
+        _deprecatedSwitch.actionFuncs[i].call(qTranx.hooks, lang, langFrom);
     }
 
     /**

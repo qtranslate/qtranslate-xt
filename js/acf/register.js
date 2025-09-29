@@ -118,7 +118,7 @@ const register_fields = () => {
 
                 // Set the "qtranxs-translatable" class to the proper UI element.
                 // It can't be done in PHP because the select element doesn't exist yet.
-                this.$('.acf-post-object span.select2-selection').addClass('qtranxs-translatable');
+                this.$('.acf-post-object span.select2-selection').addClass(qTranx.config.styles.translatable);
             }
         },
         onRemove: function () {
@@ -193,7 +193,7 @@ const register_fields = () => {
                 if (initCB !== undefined) {
                     initCB();
                 }
-                editor.getContentAreaContainer().classList.add('qtranxs-translatable');
+                editor.getContentAreaContainer().classList.add(qTranx.config.styles.translatable);
             };
         }
         return mceInit;
