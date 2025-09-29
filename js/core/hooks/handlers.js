@@ -45,11 +45,12 @@ const _setActiveLanguage = function (lang) {
 
 /**
  * Check if a content hooks exists.
+ *
  * @param {string} id hook
- * @returns {*}
+ * @returns {bool} True if the hooks exists, false otherwise.
  */
 export const hasContentHook = function (id) {
-    return _contentHooks[id];
+    return !!_contentHooks[id];
 };
 
 /**
@@ -63,16 +64,18 @@ export const hasContentHook = function (id) {
  * @see addContentHook
  * @see attachEditorHook
  *
- * @param inputField field editable by the user
- * @param contentId optional element ID to override the content hook key (default: input ID)
+ * @param {string} inputField field editable by the user
+ * @param {string} contentId optional element ID to override the content hook key (default: input ID)
+ * @return {bool} True if the hook was found, false otherwise.
  */
 export const attachContentHook = function (inputField, contentId) {
     const hook = _contentHooks[contentId ? contentId : inputField.id];
     if (!hook) {
-        return;
+        return false;
     }
     inputField.classList.add(config.styles.translatable);
     hook.contentField = inputField;
+    return true;
 }
 
 /**
@@ -81,6 +84,7 @@ export const attachContentHook = function (inputField, contentId) {
  * @param {DOMElement} inputField a unique DOM element.
  * @param {string} [encode] separator used for serialization '[' by default - TODO clarify supported values (1)
  * @param {string} [fieldName] provide an explicit name in case the input field lacks name prop. Used in POST.
+ * @return {bool} True if the hook was created, false otherwise.
  *
  * (1) TODO special cases for encoding of slug and term
  */
@@ -114,11 +118,13 @@ export const addContentHook = function (inputField, encode, fieldName) {
 
     if (inputField.id) {
         if (_contentHooks[inputField.id]) {
-            if ($.contains(document, inputField))
-                return _contentHooks[inputField.id];
+            if ($.contains(document, inputField)) {
+                return false;
+            }
             // otherwise some Java script already removed previously hooked element
             console.warn('No input field with id=', inputField.id);
             removeContentHook(inputField);
+            return false;
         }
     } else if (!_contentHooks[fieldName]) {
         inputField.id = fieldName;
@@ -130,10 +136,24 @@ export const addContentHook = function (inputField, encode, fieldName) {
         } while (_contentHooks[inputField.id]);
     }
 
-    const hook = _contentHooks[inputField.id] = {};
+    const inputFieldFormId = $(inputField).attr('form');
+    const $form = (inputFieldFormId !== undefined) ? $('#' + inputFieldFormId) : $(inputField).closest('form');
+    if (!$form.length) {
+        console.error('No form found for translatable field id=', inputField.id);
+        return false;
+    }
+    const form = $form[0];
+
+    const hook = {};
     hook.name = fieldName;
     hook.lang = _activeLanguage;
-    attachContentHook(inputField);
+
+    _contentHooks[inputField.id] = hook;
+    if (!attachContentHook(inputField)) {
+        console.error('Failed to attachContentHook', inputField.id);
+        removeContentHook(inputField);
+        return false;
+    }
 
     let qtxPrefix;
     if (encode) {
@@ -153,7 +173,6 @@ export const addContentHook = function (inputField, encode, fieldName) {
         encode = '[';
         qtxPrefix = 'qtranslate-fields[';
     }
-
     hook.encode = encode;
 
     let baseName, suffixName;
@@ -171,14 +190,6 @@ export const addContentHook = function (inputField, encode, fieldName) {
             suffixName = '[]';
         }
     }
-
-    const inputFieldFormId = $(inputField).attr('form');
-    const $form = (inputFieldFormId !== undefined) ? $('#' + inputFieldFormId) : $(inputField).closest('form');
-    if (!$form.length) {
-        console.error('No form found for translatable field id=', inputField.id);
-        return;
-    }
-    const form = $form[0];
 
     let contents;
     hook.fields = {};
@@ -249,7 +260,7 @@ export const addContentHook = function (inputField, encode, fieldName) {
         $(hook.sepfield).attr('form', inputFieldFormId);
     }
 
-    return hook;
+    return true;
 };
 
 /**
