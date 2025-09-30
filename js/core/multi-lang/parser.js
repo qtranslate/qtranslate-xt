@@ -6,13 +6,15 @@ import {config} from '../config';
 
 /**
  * Decompose a string containing ML tags into an object with keys for each language.
- * Former name: qtranxj_split
- *
- * @see parseTokens
  * Attention! The result is dependent on the current language configuration.
  *
- * @param {string} rawText e.g. '[:en]my text[:fr]mon texte[:]'
- * @return {Object} dictionary indexed by langs (code) e.g. {en: 'my text', fr: 'mon texte'}
+ * @example
+ * '[:en]my text[:fr]mon texte[:]' -> {en: 'my text', fr: 'mon texte'}
+ * @see parseTokens
+ * @param {string} rawText
+ * @return {Object} dictionary indexed by langs (code)
+ * @alias qtranxj_split
+ * @since 3.16.0
  */
 export const splitLangs = function (rawText) {
     const tokens = splitTokens(rawText);
@@ -21,12 +23,15 @@ export const splitLangs = function (rawText) {
 
 /**
  * Decompose a raw string containing ML tag+content (endTag) into an ordered array of tokens with tags and contents.
- * Former name: qtranxj_get_split_blocks
  *
  * Attention! This is a lower-level function for raw parsing, independent of the enabled languages.
  *
- * @param {string} rawText e.g. '[:en]my text[:fr]mon texte[:]'
- * @return {string[]} array of string tokens in sequence e.g. [ '[:en]', 'my-text', '[:fr]', 'mon-texte', '[:]' ]
+ * @example
+ * '[:en]my text[:fr]mon texte[:]' -> [ '[:en]', 'my-text', '[:fr]', 'mon-texte', '[:]' ]
+ * @param {string} rawText
+ * @return {string[]} array of string tokens in sequence
+ * @alias qtranxj_get_split_blocks
+ * @since 3.16.0
  */
 export const splitTokens = function (rawText) {
     const regex = '(<!--:lang-->|<!--:-->|\\[:lang]|\\[:]|{:lang}|{:})'.replace(/lang/g, config.lang.codeRegex);
@@ -39,14 +44,18 @@ export const splitTokens = function (rawText) {
 /**
  * Parse an ordered array of tokens of ML tag+content (endTag) and assign them to an object,
  * where keys are language and values the respective content.
- * Former nane: qtranxj_split_blocks
  *
  * Attention! The result is dependent on the current language configuration.
  * If no tag is found the same content is set to each langage.
- * Example: 'unique content' -> {en: 'unique content', fr: 'unique content'}
  *
- * @param {string[]} array of string tokens in sequence e.g. [ '[:en]', 'my-text', '[:fr]', 'mon-texte', '[:]' ]
- * @return {Object} dictionary indexed by langs (code) e.g. {en: 'my text', fr: 'mon texte'}
+ * @example
+ * [ '[:en]', 'my-text', '[:fr]', 'mon-texte', '[:]' ] -> {en: 'my text', fr: 'mon texte'}
+ * @example
+ * 'unique content' -> {en: 'unique content', fr: 'unique content'}
+ * @param {string[]} array of string tokens in sequence
+ * @return {Object} dictionary indexed by langs (code)
+ * @alias qtranxj_split_blocks
+ * @since 3.16.0
  */
 export const parseTokens = function (tokens) {
     const result = new Object;

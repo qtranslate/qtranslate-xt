@@ -82,11 +82,9 @@ export const attachContentHook = function (inputField, contentId) {
  * Add a content hook by associating it to a given DOM element (field).
  *
  * @param {DOMElement} inputField a unique DOM element.
- * @param {string} [encode] separator used for serialization '[' by default - TODO clarify supported values (1)
+ * @param {string} [encode] separator used for serialization '[' by default - TODO clarify supported values
  * @param {string} [fieldName] provide an explicit name in case the input field lacks name prop. Used in POST.
- * @return {bool} True if the hook was created, false otherwise.
- *
- * (1) TODO special cases for encoding of slug and term
+ * @return {boolean} True if the hook was created, false otherwise.
  */
 export const addContentHook = function (inputField, encode, fieldName) {
     if (!inputField) return false;
@@ -858,8 +856,10 @@ const _onLoadLanguage = function (lang, langFrom) {
 /**
  * Switch to a new active language, triggering a `qtranx.languageSwitch` action.
  *
+ * @fires qtranx.languageSwitchPre
+ * @fires qtranx.languageSwitch
  * @param {string} lang the requested language
- * @return {bool} true if the language was switched, false otherwise
+ * @return {boolean} true if the language was switched, false otherwise
  */
 export const switchActiveLanguage = function (lang) {
     if (_activeLanguage === lang || !config.isLanguageEnabled(lang)) {
@@ -868,7 +868,7 @@ export const switchActiveLanguage = function (lang) {
     if (_activeLanguage) {
         /**
          * Action triggered before a language switch.
-         *
+         * @event qtranx.languageSwitchPre
          * @param langTo language code of currently active language from which the edit language is being switched.
          * @param langFrom the language code to which the edit language is being switched.
          */
@@ -912,7 +912,7 @@ export const switchActiveLanguage = function (lang) {
 
     /**
      * Action triggered after a language switch.
-     *
+     * @event qtranx.languageSwitch
      * @param langTo language code of currently active language from which the edit language is being switched.
      * @param langFrom the language code to which the edit language is being switched.
      */

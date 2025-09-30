@@ -13,8 +13,9 @@ const rawConfig = window.qTranslateConfig;
  * This mapping also allows to document the types and allows auto-completion.
  * The values and properties are NOT supposed to be changed by plugins. Modifying them will lead to undefined behavior.
  *
- * @since 3.16.0
+ * @readonly
  * @type {*}
+ * @since 3.16.0
  */
 export const config = {
     /**
@@ -27,6 +28,9 @@ export const config = {
     enum: {
         EditorMode: EditorMode,
     },
+    /**
+     * Language settings.
+     */
     lang: {
         /**
          * @type string
@@ -50,7 +54,7 @@ export const config = {
     l10n: rawConfig?.strings,
     /**
      * Triggers for active page.
-     * @type {*}
+     * @private Should only be used internally.
      */
     page: {
         /**
@@ -71,7 +75,6 @@ export const config = {
     },
     /**
      * Paths to resources.
-     * @type {*}
      */
     path: {
         /**
@@ -80,9 +83,12 @@ export const config = {
         flags: rawConfig?.flag_location,
     },
     /**
-     * @type {*}
+     * Style attributes, implicitly CSS classes.
      */
     styles: {
+        /**
+         * @private LSB styles should only be used internally.
+         */
         lsb: {
             activeClass: rawConfig?.lsb_style_active_class,
             subItem: rawConfig?.lsb_style_subitem,
@@ -92,17 +98,20 @@ export const config = {
              */
             hideCopyContent: rawConfig?.hide_lsb_copy_content,
         },
+        /**
+         * @type string
+         */
         translatable: 'qtranxs-translatable',
     },
 
     /**
      * Check if a language is enabled.
-     *
-     * @param {string} lang
-     * @return {boolean} true if 'lang' is in the hash of enabled languages.
      * This function maybe needed, as function ml.splitLangs may return languages,
      * which are not enabled, in case they were previously enabled and had some data.
      * Such data is preserved and re-saved until user deletes it manually.
+     *
+     * @param {string} lang
+     * @return {boolean} true if 'lang' is in the hash of enabled languages.
      */
     isLanguageEnabled: function (lang) {
         return !!this.languages[lang];
@@ -121,13 +130,13 @@ export const config = {
         return (this.page.i18n.keys?.indexOf(pageKey) >= 0);
     },
     /**
-     * @type bool
+     * @return {boolean}
      */
     isEditorModeRAW: function () {
         return this.editorMode == EditorMode.RAW;
     },
     /**
-     * @type bool
+     * @return {boolean}
      */
     isEditorModeLSB: function () {
         return this.editorMode == EditorMode.LSB;
