@@ -30,7 +30,7 @@ wp.hooks.addAction('qtranx.load', 'qtranx/acf/main', function () {
             settingField.$el.find('input:text, textarea').each(function () {
                 const element = this;
                 if (!qtx.hasContentHook(element) && isTranslatableGroupElement(element)) {
-                    qtx.addContentHookB(element);
+                    qtx.addContentHook(element);
                 }
             });
         });
@@ -56,7 +56,7 @@ wp.hooks.addAction('qtranx.load', 'qtranx/acf/main', function () {
             // The hooks must be set on the child elements found by the selector, assuming a single one by field.
             $(this).find(selector).each(function () {
                 if (!qtx.hasContentHook(this) && isTranslatableElementForPostType(this, postType)) {
-                    qtx.addContentHookB(this);
+                    qtx.addContentHook(this);
                 }
             });
         });
@@ -70,7 +70,7 @@ wp.hooks.addAction('qtranx.load', 'qtranx/acf/main', function () {
             if (field.type === 'wysiwyg') {
                 // In this filter the elements with new ID have been created, so we can finally create the content hooks.
                 const newFieldTextArea = field.$input()[0];
-                qtx.addContentHookB(newFieldTextArea);
+                qtx.addContentHook(newFieldTextArea);
                 // Link the init CB for the visual mode (HTML -> tinymce).
                 // Note: wysiwyg_tinymce_init event is not triggered if the Visual Mode is selected later.
                 const initCB = mceInit.init_instance_callback;

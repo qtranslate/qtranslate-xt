@@ -6,9 +6,9 @@
         if (!qtx.get_ml) {
             qtx.get_ml = function (h, sep) {
                 var text = h.contentField.value.trim();
-                var tokens = mlSplitRaw(text);
+                var tokens = qtranx.ml.splitTokens(text);
                 if (!tokens || tokens.length > 1) {//already ML
-                    var contents = mlParseTokens(tokens);
+                    var contents = qTranx.ml.parseTokens(tokens);
                     for (var lang in h.fields) {
                         h.fields[lang].value = contents[lang];
                     }
@@ -55,7 +55,7 @@
                 var id = h.contentField.id;
                 var ed = tinyMCE.editors[id];
                 h.mce = ed;
-                $(ed.getContainer()).addClass('qtranxs-translatable');
+                $(ed.getContainer()).addClass(qTranx.config.styles.translatable);
             }
         }
 

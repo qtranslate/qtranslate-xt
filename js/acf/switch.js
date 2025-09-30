@@ -9,7 +9,6 @@ const onLanguageSwitch = function (language) {
     const parent = $('.multi-language-field');
     parent.find('.current-language').removeClass('current-language');
     parent.find('[data-language="' + language + '"]').addClass('current-language');
-    parent.find('input[data-language="' + language + '"], textarea[data-language="' + language + '"]');
 };
 wp.hooks.addAction('qtranx.languageSwitch', 'qtranx/acf/switch', function (language) {
     onLanguageSwitch(language);
@@ -19,12 +18,11 @@ wp.hooks.addAction('qtranx.languageSwitch', 'qtranx/acf/switch', function (langu
  * Setup language switchers.
  */
 $body.on('click', '.wp-switch-editor[data-language]', function () {
-    const parent = $(this).parent('.multi-language-field'), language = $(this).data('language');
-    parent.find('.current-language').removeClass('current-language');
-    parent.find('[data-language="' + language + '"]').addClass('current-language');
-    parent.find('input[data-language="' + language + '"], textarea[data-language="' + language + '"]').focus();
-    // TODO shouldn't we use qtx.switchActiveLanguage instead?
-    $('.qtranxs-lang-switch[lang="' + language + '"]:first').trigger('click');
+    const language = $(this).data('language');
+    if (qTranx.hooks.switchActiveLanguage(language)) {
+        const parent = $(this).parent('.multi-language-field');
+        parent.find('input[data-language="' + language + '"], textarea[data-language="' + language + '"]').trigger("focus");
+    }
     // Prevent default behavior switching Visual Editor
     return false;
 });
@@ -55,7 +53,7 @@ $body.on('click', '.wp-editor-tabs .wp-switch-editor', function () {
 });
 
 wp.hooks.addAction('qtranx.load', 'qtranx/acf/switch', function () {
-    if (!qTranslateConfig.LSB)
+    if (!qTranx.config.isEditorModeLSB())
         return;
     // select the edit tab from active language
     const language = qTranx.hooks.getActiveLanguage();

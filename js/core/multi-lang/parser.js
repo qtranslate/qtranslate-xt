@@ -1,32 +1,40 @@
 /**
- * Utilities for multi-lang tags
+ * Utilities for multi-lang text.
  */
 'use strict';
-const qTranslateConfig = window.qTranslateConfig;
+import {config} from '../config';
 
 /**
  * Decompose a string containing ML tags into an object with keys for each language.
- * Example: '[:en]EN-content[:fr]FR-contenu[:]' -> {en: 'EN-content', fr: 'FR-contenu'}
+ * Attention! The result is dependent on the current language configuration.
  *
- * If no tag is found the same content is set to each langage.
- * Example: 'unique content' -> {en: 'unique content', fr: 'unique content'}
- *
+ * @example
+ * '[:en]my text[:fr]mon texte[:]' -> {en: 'my text', fr: 'mon texte'}
+ * @see parseTokens
  * @param {string} rawText
- * @returns {Object}
+ * @return {Object} dictionary indexed by langs (code)
+ * @alias qtranxj_split
+ * @since 3.16.0
  */
-export const mlExplode = function (rawText) {
-    const tokens = mlSplitRaw(rawText);
-    return mlParseTokens(tokens);
+export const splitLangs = function (rawText) {
+    const tokens = splitTokens(rawText);
+    return parseTokens(tokens);
 };
 
 /**
  * Decompose a raw string containing ML tag+content (endTag) into an ordered array of tokens with tags and contents.
  *
+ * Attention! This is a lower-level function for raw parsing, independent of the enabled languages.
+ *
+ * @example
+ * '[:en]my text[:fr]mon texte[:]' -> [ '[:en]', 'my-text', '[:fr]', 'mon-texte', '[:]' ]
  * @param {string} rawText
- * @returns {string[]}
+ * @return {string[]} array of string tokens in sequence
+ * @alias qtranxj_get_split_blocks
+ * @since 3.16.0
  */
-export const mlSplitRaw = function (rawText) {
-    const regex = '(<!--:lang-->|<!--:-->|\\[:lang]|\\[:]|{:lang}|{:})'.replace(/lang/g, qTranslateConfig.lang_code_format);
+export const splitTokens = function (rawText) {
+    const regex = '(<!--:lang-->|<!--:-->|\\[:lang]|\\[:]|{:lang}|{:})'.replace(/lang/g, config.lang.codeRegex);
     const splitRegex = new RegExp(regex, "gi");
     // Most browsers support RegExp.prototype[@@split]()... except IE (see debug info from troubleshooting)
     // https://caniuse.com/mdn-javascript_builtins_regexp_--split
@@ -37,12 +45,21 @@ export const mlSplitRaw = function (rawText) {
  * Parse an ordered array of tokens of ML tag+content (endTag) and assign them to an object,
  * where keys are language and values the respective content.
  *
- * @param {string[]} tokens
- * @returns {Object}
+ * Attention! The result is dependent on the current language configuration.
+ * If no tag is found the same content is set to each langage.
+ *
+ * @example
+ * [ '[:en]', 'my-text', '[:fr]', 'mon-texte', '[:]' ] -> {en: 'my text', fr: 'mon texte'}
+ * @example
+ * 'unique content' -> {en: 'unique content', fr: 'unique content'}
+ * @param {string[]} array of string tokens in sequence
+ * @return {Object} dictionary indexed by langs (code)
+ * @alias qtranxj_split_blocks
+ * @since 3.16.0
  */
-export const mlParseTokens = function (tokens) {
+export const parseTokens = function (tokens) {
     const result = new Object;
-    for (const lang in qTranslateConfig.language_config) {
+    for (const lang in config.languages) {
         result[lang] = '';
     }
     if (!tokens || !tokens.length)
@@ -50,14 +67,14 @@ export const mlParseTokens = function (tokens) {
     if (tokens.length === 1) {
         // no language separator found, enter it to all languages
         const b = tokens[0];
-        for (const lang in qTranslateConfig.language_config) {
+        for (const lang in config.languages) {
             result[lang] += b;
         }
         return result;
     }
-    const clang_regex = new RegExp('<!--:(lang)-->'.replace(/lang/g, qTranslateConfig.lang_code_format), 'gi');
-    const blang_regex = new RegExp('\\[:(lang)]'.replace(/lang/g, qTranslateConfig.lang_code_format), 'gi');
-    const slang_regex = new RegExp('{:(lang)}'.replace(/lang/g, qTranslateConfig.lang_code_format), 'gi');
+    const clang_regex = new RegExp('<!--:(lang)-->'.replace(/lang/g, config.lang.codeRegex), 'gi');
+    const blang_regex = new RegExp('\\[:(lang)]'.replace(/lang/g, config.lang.codeRegex), 'gi');
+    const slang_regex = new RegExp('{:(lang)}'.replace(/lang/g, config.lang.codeRegex), 'gi');
     let lang = false;
     let matches;
     for (let i = 0; i < tokens.length; ++i) {

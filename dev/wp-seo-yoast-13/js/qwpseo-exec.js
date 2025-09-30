@@ -17,38 +17,38 @@
         var qreplace_vars = {};
         if (window.wpseoReplaceVarsL10n) {
 
-            for (var lang in qTranslateConfig.language_config) {
+            for (var lang in qTranx.config.languages) {
                 qreplace_vars[lang] = {};
             }
 
             for (var key in wpseoReplaceVarsL10n.replace_vars) {
                 var rv = wpseoReplaceVarsL10n.replace_vars[key];
                 if (typeof rv === 'string') {
-                    var rvs = mlExplode(rv);
-                    for (var lang in qTranslateConfig.language_config) {
+                    var rvs = qtranx.ml.splitLangs(rv);
+                    for (var lang in qTranx.config.languages) {
                         qreplace_vars[lang][key] = rvs[lang];
                     }
                 } else {
-                    for (var lang in qTranslateConfig.language_config) {
+                    for (var lang in qTranx.config.languages) {
                         qreplace_vars[lang][key] = rv;
                     }
                 }
             }
-            wpseoReplaceVarsL10n.replace_vars = qreplace_vars[qTranslateConfig.activeLanguage];
+            wpseoReplaceVarsL10n.replace_vars = qreplace_vars[qTranx.hooks.getActiveLanguage()];
         }
 
         var focuskw_input = $('#yoast_wpseo_focuskw');
         var focuskw_edit = $('#yoast_wpseo_focuskw_text_input');
-        focuskw_edit.addClass('qtranxs-translatable');
+        focuskw_edit.addClass(qTranx.config.styles.translatable);
 
         //var title_snippet = $('#snippet_title');
         //var title_input = $('#yoast_wpseo_title');
         var title_edit = $('#snippet-editor-title');
-        title_edit.addClass('qtranxs-translatable');
+        title_edit.addClass(qTranx.config.styles.translatable);
 
         //var metadesc_input = $('#yoast_wpseo_metadesc');
         var metadesc_edit = $('#snippet-editor-meta-description');
-        metadesc_edit.addClass('qtranxs-translatable');
+        metadesc_edit.addClass(qTranx.config.styles.translatable);
 
         var removeChildren = function (e) {
             while (e.firstChild) {

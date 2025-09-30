@@ -3,55 +3,54 @@
  /wp-admin/post-new.php
 */
 'use strict';
+import {config} from '../config'
+import {UrlMode} from '../config/enums';
 import * as hooks from '../hooks';
+import {domCreateElement} from '../support/dom';
 
 const $ = jQuery;
 
-const UrlMode = Object.freeze({
-    QTX_URL_QUERY: 1,
-    QTX_URL_PATH: 2,
-    QTX_URL_DOMAIN: 3,
-    QTX_URL_DOMAINS: 4,
-});
+// For now this function is private, quite specific to URL element in DOM and using internal config data (anti-pattern).
+const _convertElementURL = function (url, lang) {
+    const rawConfig = window.qTranslateConfig;  // Do not re-use this pattern, use public `qTranx.config` API.
+    switch (config._urlMode) {
+        case UrlMode.QUERY:
+            if (url.search) {
+                url.search += '&lang=' + lang;
+            } else {
+                url.search = '?lang=' + lang;
+            }
+            break;
+
+        case UrlMode.PATH:
+            const homepath = rawConfig.home_url_path;
+            let path = url.pathname;
+            if (path[0] !== '/')
+                path = '/' + path; // to deal with IE imperfection: https://stackoverflow.com/questions/956233/javascript-pathname-ie-quirk
+            const i = path.indexOf(homepath);
+            if (i >= 0)
+                url.pathname = rawConfig.homeinfo_path + lang + path.substring(i + homepath.length - 1);
+            break;
+
+        case UrlMode.DOMAIN:
+            url.host = lang + '.' + url.host;
+            break;
+
+        case UrlMode.DOMAINS:
+            url.host = rawConfig.domains[lang];
+            break;
+    }
+};
 
 export default function () {
-    const convertURL = function (url, lang) {
-        switch (qTranslateConfig.url_mode) {
-            case UrlMode.QTX_URL_QUERY:
-                if (url.search) {
-                    url.search += '&lang=' + lang;
-                } else {
-                    url.search = '?lang=' + lang;
-                }
-                break;
-
-            case UrlMode.QTX_URL_PATH:
-                const homepath = qTranslateConfig.home_url_path;
-                let path = url.pathname;
-                if (path[0] !== '/')
-                    path = '/' + path; // to deal with IE imperfection: https://stackoverflow.com/questions/956233/javascript-pathname-ie-quirk
-                const i = path.indexOf(homepath);
-                if (i >= 0)
-                    url.pathname = qTranslateConfig.homeinfo_path + lang + path.substring(i + homepath.length - 1);
-                break;
-
-            case UrlMode.QTX_URL_DOMAIN:
-                url.host = lang + '.' + url.host;
-                break;
-
-            case UrlMode.QTX_URL_DOMAINS:
-                url.host = qTranslateConfig.domains[lang];
-                break;
-        }
-    };
-
     let btnViewPostA; // a node of 'View Page/Post' link.
     let origUrl, langUrl, origUrlQ;
     let slugSamplePermalink; // 'sample-permalink' node
     let origSamplePermalink;
     let view_link;
     let permalink_query_field;
-    const setSlugLanguage = function (lang) {
+
+    const _setSlugLanguage = function (lang) {
         if (!btnViewPostA) {
             const btnViewPost = document.getElementById('view-post-btn');
             if (!btnViewPost || !btnViewPost.children.length)
@@ -65,7 +64,7 @@ export default function () {
         }
 
         langUrl.href = origUrl;
-        convertURL(langUrl, lang);
+        _convertElementURL(langUrl, lang);
         btnViewPostA.href = langUrl.href;
 
         const btnPreviewAction = document.getElementById('preview-action');
@@ -73,7 +72,7 @@ export default function () {
             btnPreviewAction.children[0].href = langUrl.href;
         }
 
-        if (qTranslateConfig.url_mode !== UrlMode.QTX_URL_QUERY) {
+        if (config._urlMode !== UrlMode.QUERY) {
             if (!slugSamplePermalink) {
                 const slugEl = document.getElementById('sample-permalink');
                 if (slugEl && slugEl.offsetHeight > 0 && slugEl.childNodes.length) {
@@ -83,7 +82,7 @@ export default function () {
             }
             if (slugSamplePermalink) {
                 langUrl.href = origSamplePermalink;
-                convertURL(langUrl, lang);
+                _convertElementURL(langUrl, lang);
                 slugSamplePermalink.nodeValue = langUrl.href;
             }
         } else {
@@ -106,22 +105,18 @@ export default function () {
     // handle prompt text of empty field 'title', not important
     const fieldTitle = $('#title');
     const labelTitle = $('#title-prompt-text');
-    const hide_title_prompt_text = function (lang) {
-        const value = fieldTitle.val();
-        if (value) {
-            labelTitle.addClass('screen-reader-text');
-        } else {
-            labelTitle.removeClass('screen-reader-text');
-        }
-    };
 
-    hooks.addCustomContentHooks(); // handles values of option 'Custom Fields'
-    setSlugLanguage(hooks.getActiveLanguage());
+    _setSlugLanguage(hooks.getActiveLanguage());
 
     wp.hooks.addAction('qtranx.languageSwitch', 'qtranx/pages/post', function (lang) {
-        setSlugLanguage(lang);
+        _setSlugLanguage(lang);
         if (labelTitle && fieldTitle) {
-            hide_title_prompt_text(lang);
+            const value = fieldTitle.val();
+            if (value) {
+                labelTitle.addClass('screen-reader-text');
+            } else {
+                labelTitle.removeClass('screen-reader-text');
+            }
         }
     });
 
@@ -136,7 +131,7 @@ export default function () {
     }
 
     // language menu bar handler
-    for (const lang in hooks.getLanguages()) {
+    for (const lang in config.languages) {
         $('#wp-admin-bar-' + lang + ' a').on('click', function (e) {
             e.preventDefault();
             const params = parseQuery(window.location.search);

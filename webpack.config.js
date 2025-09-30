@@ -2,8 +2,8 @@
 
 module.exports = {
     entry: {
-        'main': {
-            import: './js/main.js',
+        'core': {
+            import: './js/core',
             library:
                 {
                     name: 'qTranx',
@@ -13,7 +13,7 @@ module.exports = {
         'block-editor': './js/block-editor.js',
         'notices': './js/notices.js',
         'options': './js/options.js',
-        'modules/acf': './js/acf/index.js',
+        'modules/acf': './js/acf',
     },
     output: {
         clean: true,

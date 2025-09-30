@@ -304,8 +304,8 @@ function qtranxf_get_admin_page_config_post_type( $post_type ) {
         }
 
         $page_config['js'][] = array(
-            'handle' => 'qtranslate-admin-main',
-            'src'    => './dist/main.js',
+            'handle' => 'qtranslate-admin-main',  // TODO rename `main` to `core` in next major release
+            'src'    => './dist/core.js',
             'deps'   => [ 'jquery', 'wp-deprecated', 'wp-hooks' ],
         );
 
@@ -391,8 +391,11 @@ function qtranxf_admin_footer() {
     $config['lsb_style_active_class'] = ( $q_config['lsb_style'] == QTX_LSB_STYLE_TABS_IN_BLOCK ) ? 'wp-ui-highlight' : 'active';
     $config['lsb_style_wrap_class']   = ( $q_config['lsb_style'] == QTX_LSB_STYLE_TABS_IN_BLOCK ) ? 'wp-ui-primary' : '';
 
-    $config['custom_fields']        = apply_filters( 'qtranslate_custom_fields', $q_config['custom_fields'] );
-    $config['custom_field_classes'] = apply_filters( 'qtranslate_custom_field_classes', $q_config['custom_field_classes'] );
+    if ( in_array( 'post', $config['page_config']['keys'] ?? [] ) ) {
+        // TODO remove deprecated filters in 4.0.0
+        $config['custom_fields']        = apply_filters_deprecated( 'qtranslate_custom_fields', array( $q_config['custom_fields'] ), '3.16.0', '', 'To be removed in 4.0.0. Use JSON config or create a ticket on github.' );
+        $config['custom_field_classes'] = apply_filters_deprecated( 'qtranslate_custom_field_classes', array( $q_config['custom_field_classes'] ), '3.16.0', '', 'To be removed in 4.0.0. Use JSON config or create a ticket on github.' );
+    }
     if ( $q_config['url_mode'] == QTX_URL_DOMAINS ) {
         $config['domains'] = $q_config['domains'];
     }
@@ -400,7 +403,7 @@ function qtranxf_admin_footer() {
     $config['homeinfo_path'] = trailingslashit( $homeinfo['path'] );
     $config['home_url_path'] = parse_url( home_url( '/' ), PHP_URL_PATH ); // TODO optimize
     $config['flag_location'] = qtranxf_flag_location();
-    $config['js']            = array();
+    $config['js']            = array();  // deprecated key
 
     $config['strings'] = array();
     // translators: The beginning of the prompt on hover over an LSB. This string is appended with a edit-language name in admin language, so that the space at the end matters.
@@ -421,14 +424,17 @@ function qtranxf_admin_footer() {
     // For Gutenberg, enforce the editor mode to QTX_EDITOR_MODE_SINGLE
     $current_screen = get_current_screen();
     if ( method_exists( $current_screen, 'is_block_editor' ) && $current_screen->is_block_editor() ) {
-        $config['LSB'] = false;
-        $config['RAW'] = false;
+        $config['editorMode'] = QTX_EDITOR_MODE_SINGLE;
+        $config['LSB']        = false;  // deprecated key
+        $config['RAW']        = false;  // deprecated key
     } else {
-        $config['LSB'] = $q_config['editor_mode'] == QTX_EDITOR_MODE_LSB;
-        $config['RAW'] = $q_config['editor_mode'] == QTX_EDITOR_MODE_RAW;
+        $config['editorMode'] = $q_config['editor_mode'];
+        $config['LSB']        = $q_config['editor_mode'] == QTX_EDITOR_MODE_LSB;  // deprecated key
+        $config['RAW']        = $q_config['editor_mode'] == QTX_EDITOR_MODE_RAW;  // deprecated key
     }
 
     if ( empty( $q_config['hide_lsb_copy_content'] ) ) {
+        $config['hide_lsb_copy_content'] = false;
         // translators: Prompt on hover over button "Copy From" to copy content from other language
         $config['strings']['CopyFromAlt'] = __( 'Fill empty multilingual fields with content from other language', 'qtranslate' );
         // translators: Prompt on hover over select-element to choose the language to copy content from
@@ -457,7 +463,7 @@ function qtranxf_admin_footer() {
             }
         }
         if ( $q_config['qtrans_compatibility'] ) {
-            echo 'qtrans_use = function(lang, text) { var result = qTranx.mlExplode(text); return result[lang]; }' . PHP_EOL;
+            echo 'qtrans_use = function(lang, text) { var result = qTranx.ml.splitLangs(text); return result[lang]; }' . PHP_EOL;
         }
         do_action( 'qtranslate_add_admin_footer_js' );
         ?>
