@@ -5,13 +5,14 @@ const $body = $('body');
 /**
  * Sync language switchers for legacy fields not handled natively by qTranslate-XT
  */
-const onLanguageSwitch = function (language) {
+export const syncLanguageSwitch = function (language) {
     const parent = $('.multi-language-field');
     parent.find('.current-language').removeClass('current-language');
     parent.find('[data-language="' + language + '"]').addClass('current-language');
 };
+
 wp.hooks.addAction('qtranx.languageSwitch', 'qtranx/acf/switch', function (language) {
-    onLanguageSwitch(language);
+    syncLanguageSwitch(language);
 });
 
 /**
@@ -50,19 +51,4 @@ $body.on('click', '.wp-editor-tabs .wp-switch-editor', function () {
             window.switchEditors.go(id, editor);
         }
     });
-});
-
-wp.hooks.addAction('qtranx.load', 'qtranx/acf/switch', function () {
-    if (!qTranx.config.isEditorModeLSB())
-        return;
-    // select the edit tab from active language
-    const language = qTranx.hooks.getActiveLanguage();
-    if (language) {
-        // show the correct ACF fields
-        onLanguageSwitch(language);
-        // sync the switch editors
-        const $mlFields = $('.multi-language-field');
-        $mlFields.find('.current-language').removeClass('current-language');
-        $mlFields.find('[data-language="' + language + '"]').addClass('current-language');
-    }
 });

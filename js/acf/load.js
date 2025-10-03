@@ -1,9 +1,13 @@
+'use strict';
+import {registerExtendedFields} from "./register";
+import {syncLanguageSwitch} from "./switch";
+
 const $ = jQuery;
 
-wp.hooks.addAction('qtranx.load', 'qtranx/acf/main', function () {
-    const qtx = qTranx.hooks;
+registerExtendedFields(window.qTranslateModuleAcf?.qtranslate_fields ?? []);
 
-    qtx.enableLanguageSwitchingButtons('block');
+wp.hooks.addAction('qtranx.load', 'qtranx/acf/load', function () {
+    qTranx.hooks.enableLanguageSwitchingButtons('block');
 
     // Type of field e.g. text, textarea, wysiwyg.
     const isTranslatableStandardField = function (fieldType) {
@@ -29,8 +33,8 @@ wp.hooks.addAction('qtranx.load', 'qtranx/acf/main', function () {
             // They are given as .acf-field but the hooks must be set on the child elements like input and texts.
             settingField.$el.find('input:text, textarea').each(function () {
                 const element = this;
-                if (!qtx.hasContentHook(element) && isTranslatableGroupElement(element)) {
-                    qtx.addContentHook(element);
+                if (!qTranx.hooks.hasContentHook(element) && isTranslatableGroupElement(element)) {
+                    qTranx.hooks.addContentHook(element);
                 }
             });
         });
@@ -55,8 +59,8 @@ wp.hooks.addAction('qtranx.load', 'qtranx/acf/main', function () {
         acf.findFields({type: fieldType}).each(function () {
             // The hooks must be set on the child elements found by the selector, assuming a single one by field.
             $(this).find(selector).each(function () {
-                if (!qtx.hasContentHook(this) && isTranslatableElementForPostType(this, postType)) {
-                    qtx.addContentHook(this);
+                if (!qTranx.hooks.hasContentHook(this) && isTranslatableElementForPostType(this, postType)) {
+                    qTranx.hooks.addContentHook(this);
                 }
             });
         });
@@ -70,7 +74,7 @@ wp.hooks.addAction('qtranx.load', 'qtranx/acf/main', function () {
             if (field.type === 'wysiwyg') {
                 // In this filter the elements with new ID have been created, so we can finally create the content hooks.
                 const newFieldTextArea = field.$input()[0];
-                qtx.addContentHook(newFieldTextArea);
+                qTranx.hooks.addContentHook(newFieldTextArea);
                 // Link the init CB for the visual mode (HTML -> tinymce).
                 // Note: wysiwyg_tinymce_init event is not triggered if the Visual Mode is selected later.
                 const initCB = mceInit.init_instance_callback;
@@ -78,7 +82,7 @@ wp.hooks.addAction('qtranx.load', 'qtranx/acf/main', function () {
                     if (initCB !== undefined) {
                         initCB();
                     }
-                    qtx.attachEditorHook(editor);
+                    qTranx.hooks.attachEditorHook(editor);
                 };
             }
             return mceInit;
@@ -97,12 +101,17 @@ wp.hooks.addAction('qtranx.load', 'qtranx/acf/main', function () {
     // function repeaterRemove($el) {
     //     const row = ($el.$el || $el).closest('.acf-row'); // support old versions of ACF5PRO as well
     //     row.find(_.toArray(field_types).join(',')).filter('.qtranxs-translatable').each(function () {
-    //         qtx.removeContentHook(this);
+    //         qTranx.hooks.removeContentHook(this);
     //     });
     //     // call the original handler
     //     repeaterFieldRemove.call(this, $el);
     // }
 
     // LSB might have been skipped due to missing hooks, create them now if new hooks have been set.
-    qtx.setupLanguageSwitch();
+    qTranx.hooks.setupLanguageSwitch();
+
+    if (qTranx.config.isEditorModeLSB()) {
+        // select the edit tab from active language
+        syncLanguageSwitch(qTranx.hooks.getActiveLanguage());
+    }
 });
