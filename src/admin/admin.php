@@ -153,7 +153,7 @@ function qtranxf_admin_init() {
         // Probably this should better be triggered on (1) edit config and (2) plugin activation.
         // For now, it triggers a warning that can't really be dismissed (generic warnings are not persistently dismissed in options).
         if ( isset( $q_config['use_strftime'] ) ) {
-            if ( $q_config['use_strftime'] != QTX_DATE_WP && class_exists( 'IntlDateFormatter' ) ) {
+            if ( $q_config['use_strftime'] != QTX_DATE_WP && ! class_exists( 'IntlDateFormatter' ) ) {
                 $warning = sprintf( __( 'The value set for option "%s" cannot be used.', 'qtranslate' ), __( 'Date / Time Conversion', 'qtranslate' ) ) . ' ';
                 $warning .= sprintf( __( 'Class not found: <a href="%s">%s</a> likely due to missing PHP extension: <a href="%s">%s</a>.', 'qtranslate' ),
                     'https://www.php.net/manual/en/class.intldateformatter.php', '`IntlDateFormatter`',
