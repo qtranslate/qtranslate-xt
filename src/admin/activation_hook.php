@@ -382,15 +382,8 @@ function qtranxf_load_config_all( array $json_files, array $custom_config ): arr
     global $q_config;
     $nerr = isset( $q_config['url_info']['errors'] ) ? count( $q_config['url_info']['errors'] ) : 0;
     $cfg  = qtranxf_load_config_files( $json_files );
-    if ( ! empty( $custom_config ) ) {
-        $warning = sprintf( __( 'Deprecated configuration key(s) in %s:', 'qtranslate' ), 'qTranslate-XT' );
-        $warning .= '<pre>"custom_i18n_config" (settings / integration)</pre>';
-        $warning .= sprintf( __( 'This configuration will become incompatible in next releases. For more information, see: %s.', 'qtranslate' ),
-            '<a href="https://github.com/qtranslate/qtranslate-xt/issues/1012">github</a>' );
-        qtranxf_add_warning( $warning );
-    }
-    $cfg = qtranxf_merge_config( $cfg, $custom_config );
-    $cfg = qtranxf_standardize_i18n_config( $cfg );
+    $cfg  = qtranxf_merge_config( $cfg, $custom_config );
+    $cfg  = qtranxf_standardize_i18n_config( $cfg );
     // store the errors permanently until an admin fixes them,
     // otherwise admin may not realise that not all configurations are loaded.
     if ( ! empty( $q_config['url_info']['errors'] ) && $nerr != count( $q_config['url_info']['errors'] ) ) {
@@ -798,6 +791,8 @@ function qtranxf_activation_hook(): void {
     if ( ! qtranxf_is_classic_editor_supported() && isset( $messages['gutenberg-support'] ) ) {
         qtranxf_update_option_admin_notices( $messages, 'gutenberg-support', false );
     }
+
+    qtranxf_unset_admin_notices_deprecated();
 
     // To initialize the modules state we need the default enabled modules but the `q_config` has not been loaded yet.
     // For the first activation, the default options are used.

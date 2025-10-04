@@ -50,6 +50,20 @@ function qtranxf_update_admin_notice( string $id, bool $set ) {
     return qtranxf_update_option_admin_notices( $messages, $id, $set );
 }
 
+/**
+ * Unset all deprecated notices in the option so that they are shown again (making it "annoying" on purpose).
+ * @return void
+ */
+function qtranxf_unset_admin_notices_deprecated(): void {
+    $messages = get_option( 'qtranslate_admin_notices', array() );
+    foreach ( $messages as $id => $message ) {
+        if ( str_starts_with( $id, "deprecated" ) ) {
+            unset( $messages[ $id ] );
+        }
+    }
+    update_option( 'qtranslate_admin_notices', $messages );
+}
+
 function qtranxf_admin_notice_config_files_changed(): void {
     if ( ! qtranxf_check_admin_notice( 'config-files-changed' ) ) {
         return;
@@ -204,6 +218,81 @@ function qtranxf_admin_notices_errors(): void {
 }
 
 add_action( 'admin_notices', 'qtranxf_admin_notices_errors' );
+
+/**
+ * Return meta info for deprecated settings.
+ *
+ * @return array[] Attributes to handle notices of deprecated settings.
+ */
+function qtranx_admin_deprecated_settings(): array {
+    global $q_config;
+
+    return [
+        'custom_i18n_config'             => [
+            'check'   => ! empty( $q_config['custom_i18n_config'] ),
+            'name'    => __( 'Custom Configuration', 'qtranslate' ),
+            'section' => 'integration',
+            'hint'    => '<a href="https://github.com/qtranslate/qtranslate-xt/issues/1012">github #1024</a>',
+        ],
+        'qtrans_compatibility'           => [
+            'check'   => $q_config['qtrans_compatibility'],
+            'name'    => __( 'Compatibility Functions', 'qtranslate' ),
+            'section' => 'integration',
+            'hint'    => '<a href="https://github.com/qtranslate/qtranslate-xt/issues/1461">github #1461</a>',
+        ],
+        'use_strftime_date_override'     => [
+            'check'   => $q_config['use_strftime'] == QTX_DATE_OVERRIDE,
+            'name'    => __( 'Date / Time Conversion', 'qtranslate' ),
+            'section' => 'advanced',
+            'hint'    => '<a href="https://github.com/qtranslate/qtranslate-xt/issues/1234">github #1234</a>',
+        ],
+        'use_strftime_strftime_override' => [
+            'check'   => $q_config['use_strftime'] == QTX_STRFTIME_OVERRIDE,
+            'name'    => __( 'Date / Time Conversion', 'qtranslate' ),
+            'section' => 'advanced',
+            'hint'    => '<a href="https://github.com/qtranslate/qtranslate-xt/issues/1234">github #1234</a>',
+        ],
+    ];
+}
+
+/**
+ * Check if deprecated settings are set and display a dismissible warning for each case.
+ *
+ * IDs are used as "deprecated-<id>" keys in the admin notice option.
+ * @return void
+ */
+function qtranxf_admin_notices_deprecated_settings(): void {
+    $options_url = admin_url( 'options-general.php?page=qtranslate-xt' );
+    $title       = '<a href="' . $options_url . '">qTranslate-XT</a>&nbsp;';
+    foreach ( qtranx_admin_deprecated_settings() as $setting_key => $setting_data ) {
+        $setting_id = "deprecated-" . $setting_key;
+        if ( qtranxf_check_admin_notice( $setting_id ) ) {
+            continue;
+        }
+        if ( $setting_data['check'] ) {
+            qtranxf_admin_notice_dismiss_script();
+            $message     = $title . '&nbsp;';
+            $message     .= sprintf( __( '%s:', 'qtranslate' ), '<strong>' . __( 'Warning', 'qtranslate' ) . '</strong>' ) . '&nbsp;';
+            $section_url = $options_url . '#' . $setting_data['section'];
+            switch ( $setting_data['section'] ) {
+                case 'advanced':
+                    $section_name = __( 'Advanced', 'qtranslate' );
+                    break;
+                case 'integration':
+                    $section_name = __( 'Integration', 'qtranslate' );
+                    break;
+                default:
+                    $section_name = '?';
+                    break;
+            }
+            $message .= sprintf( __( 'The value set for option "%s" is deprecated, it will not be supported in the future. Go to "%s" settings to change it.', 'qtranslate' ),
+                '<strong>' . $setting_data['name'] . '</strong>', sprintf( '<a href="%s">%s</a>', $section_url, $section_name ) );
+            $message .= '&nbsp;' . sprintf( __( 'For more information, see %s.', 'qtranslate' ), $setting_data['hint'] );
+
+            echo '<div class="notice notice-warning qtranxs-notice-ajax is-dismissible" id="qtranxs-' . $setting_id . '"><p>' . $message . '</p></div>';
+        }
+    }
+}
 
 function qtranxf_ajax_qtranslate_admin_notice(): void {
     if ( ! isset( $_POST['notice_id'] ) ) {
