@@ -221,6 +221,7 @@ add_action( 'admin_notices', 'qtranxf_admin_notices_errors' );
 
 /**
  * Return meta info for deprecated settings.
+ *
  * @return array[] Attributes to handle notices of deprecated settings.
  */
 function qtranx_admin_deprecated_settings(): array {
@@ -257,6 +258,7 @@ function qtranx_admin_deprecated_settings(): array {
 /**
  * Check if deprecated settings are set and display a dismissible warning for each case.
  *
+ * IDs are used as "deprecated-<id>" keys in the admin notice option.
  * @return void
  */
 function qtranxf_admin_notices_deprecated_settings(): void {
@@ -269,9 +271,8 @@ function qtranxf_admin_notices_deprecated_settings(): void {
         }
         if ( $setting_data['check'] ) {
             qtranxf_admin_notice_dismiss_script();
-            // $warning = sprintf( __( 'Deprecated setting in %s:', 'qtranslate' ), 'qTranslate-XT' );
-            $warning     = $title . '&nbsp;';
-            $warning     .= sprintf( __( '%s:', 'qtranslate' ), '<strong>' . __( 'Warning', 'qtranslate' ) . '</strong>' ) . '&nbsp;';
+            $message     = $title . '&nbsp;';
+            $message     .= sprintf( __( '%s:', 'qtranslate' ), '<strong>' . __( 'Warning', 'qtranslate' ) . '</strong>' ) . '&nbsp;';
             $section_url = $options_url . '#' . $setting_data['section'];
             switch ( $setting_data['section'] ) {
                 case 'advanced':
@@ -284,13 +285,11 @@ function qtranxf_admin_notices_deprecated_settings(): void {
                     $section_name = '?';
                     break;
             }
-            $warning .= sprintf( __( 'The value set for option "%s" is deprecated, it will not be supported in the future. Go to "%s" settings to change it.', 'qtranslate' ),
+            $message .= sprintf( __( 'The value set for option "%s" is deprecated, it will not be supported in the future. Go to "%s" settings to change it.', 'qtranslate' ),
                 '<strong>' . $setting_data['name'] . '</strong>', sprintf( '<a href="%s">%s</a>', $section_url, $section_name ) );
-            $warning .= '&nbsp;' . sprintf( __( 'For more info, see %s.', 'qtranslate' ), $setting_data['hint'] );
+            $message .= '&nbsp;' . sprintf( __( 'For more information, see %s.', 'qtranslate' ), $setting_data['hint'] );
 
-            echo '<div class="notice notice-warning qtranxs-notice-ajax is-dismissible" id="qtranxs-' . $setting_id . '"><p>';
-            echo $warning;
-            echo '</div>';
+            echo '<div class="notice notice-warning qtranxs-notice-ajax is-dismissible" id="qtranxs-' . $setting_id . '"><p>' . $message . '</p></div>';
         }
     }
 }
