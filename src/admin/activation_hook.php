@@ -717,10 +717,10 @@ function qtranxf_clear_debug_log(): void {
 
 function qtranxf_activation_hook(): void {
     qtranxf_clear_debug_log();
-    if ( version_compare( PHP_VERSION, '7.3' ) < 0 ) {
+    if ( version_compare( PHP_VERSION, '7.4' ) < 0 ) {
         // Deactivate ourself
         load_plugin_textdomain( 'qtranslate', false, basename( QTRANSLATE_DIR ) . '/lang' );
-        $msg = sprintf( __( 'Plugin %s requires PHP version %s at least. This server instance runs PHP version %s. A PHP version %s or higher is recommended. The plugin has not been activated.', 'qtranslate' ), qtranxf_get_plugin_link(), '7.3', PHP_VERSION, '8.4' );
+        $msg = sprintf( __( 'Plugin %s requires PHP version %s at least. This server instance runs PHP version %s. A PHP version %s or higher is recommended. The plugin has not been activated.', 'qtranslate' ), qtranxf_get_plugin_link(), '7.4', PHP_VERSION, '8.4' );
         deactivate_plugins( plugin_basename( QTRANSLATE_FILE ) );
         wp_die( $msg );
     }

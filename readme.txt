@@ -3,8 +3,8 @@ Developed by: new qTranslate community, from qTranslate-X by John Clause and qTr
 Contributors: herrvigg, johnclause, chineseleper, Vavooon, grafcom
 Tags: multilingual, language, admin, tinymce, bilingual, widget, switcher, i18n, l10n, multilanguage, translation
 Requires at least: 5.0
-Tested up to: 6.8.2
-Requires PHP: 7.3
+Tested up to: 6.8.3
+Requires PHP: 7.4
 Stable tag: N/A
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html

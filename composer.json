@@ -46,8 +46,9 @@
   },
   "require": {
     "composer/installers": ">=1.0",
-    "php": ">=7.3",
-    "ext-intl": "*"
+    "php": ">=7.4",
+    "ext-intl": "*",
+    "ext-json": "*"
   },
   "extra": {
     "installer-name": "qtranslate-xt"

@@ -5,7 +5,7 @@
  * Description: Adds user-friendly multilingual content support, stored in single post.
  * Version: 3.15.5
  * Requires at least: 5.0
- * Requires PHP: 7.3
+ * Requires PHP: 7.4
  * Author: qTranslate Community
  * Author URI: https://github.com/qtranslate/
  * Tags: multilingual, multi, language, admin, tinymce, Polyglot, bilingual, widget, switcher, professional, human, translation, service, qTranslate, zTranslate, mqTranslate, qTranslate Plus, WPML
@@ -55,7 +55,7 @@ if ( ! function_exists( 'add_filter' ) ) {
  * The constants defined below are designed as interface for other plugin integration.
  * @see https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide/
  */
-const QTX_VERSION = '3.16.0.dev.3';
+const QTX_VERSION = '3.16.0.dev.4';
 
 if ( ! defined( 'QTRANSLATE_FILE' ) ) {
     define( 'QTRANSLATE_FILE', __FILE__ );
