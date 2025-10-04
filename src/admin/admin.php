@@ -43,7 +43,7 @@ function qtranxf_collect_translations( &$qfields, &$request, $edit_lang ): void 
     if ( isset( $qfields['qtranslate-separator'] ) ) {
         $sep = $qfields['qtranslate-separator'];
         unset( $qfields['qtranslate-separator'] );
-        if ( is_string($request) && ! qtranxf_isMultilingual( $request ) ) {
+        if ( is_string( $request ) && ! qtranxf_isMultilingual( $request ) ) {
             // convert to ML value
             $qfields[ $edit_lang ] = $request;
             $request               = qtranxf_collect_translations_deep( $qfields, $sep );
