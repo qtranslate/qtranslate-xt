@@ -34,11 +34,11 @@ class QTX_Admin_Settings {
     /**
      * Get the CSS deprecated class, with a warning depending on the value that was checked.
      *
-     * @see qtranx_admin_deprecated_settings
      * @param string $setting_id The deprecated id, must be valid (otherwise an assert is triggered).
      * @param ?bool $show_deprecated Show the field is deprecated regardless of value, but without warning in that case.
      *
      * @return string CSS class with warning if value is deprecated.
+     * @see qtranx_admin_deprecated_settings
      */
     public function deprecated_class( string $setting_id, ?bool $show_deprecated = true ): string {
         // Make sure a correct deprecated ID is used. If the settings is no longer deprecated this should not be called.
@@ -838,25 +838,29 @@ class QTX_Admin_Settings {
             <tr>
                 <th scope="row"><?php _e( 'Custom Fields', 'qtranslate' ) ?></th>
                 <td><p class="qtranxs_explanation">
-                        <?php printf( __( 'Enter "%s" or "%s" attribute of text fields from your theme, which you wish to translate. This applies to post, page and media editors (%s). To lookup "%s" or "%s", right-click on the field in the post or the page editor and choose "%s". Look for an attribute of the field named "%s" or "%s". Enter it below, as many as you need, space- or comma-separated. After saving configuration, these fields will start responding to the language switching buttons, and you can enter different text for each language. The input fields of type %s will be parsed using %s syntax, while single line text fields will use %s syntax. If you need to override this behaviour, prepend prefix %s or %s to the name of the field to specify which syntax to use. For more information, read %sFAQ%s.', 'qtranslate' ), 'id', 'class', '/wp-admin/post*', 'id', 'class', _x( 'Inspect Element', 'browser option', 'qtranslate' ), 'id', 'class', '\'textarea\'', esc_html( '<!--:-->' ), '[:]', esc_html( '\'<\'' ), '\'[\'', '<a href="https://github.com/qtranslate/qtranslate-xt/wiki/FAQ#custom-fields">', '</a>' ) ?></p>
+                        <?php printf( __( 'Enter "%s" or "%s" attribute of text fields from your theme, which you wish to translate. This applies to post, page and media editors (%s). To lookup "%s" or "%s", right-click on the field in the post or the page editor and choose "%s". Look for an attribute of the field named "%s" or "%s". Enter it below, as many as you need, space- or comma-separated. After saving configuration, these fields will start responding to the language switching buttons, and you can enter different text for each language. The input fields of type %s will be parsed using %s syntax, while single line text fields will use %s syntax. For more information, read %sFAQ%s.', 'qtranslate' ), 'id', 'class', '/wp-admin/post*', 'id', 'class', _x( 'Inspect Element', 'browser option', 'qtranslate' ), 'id', 'class', '\'textarea\'', esc_html( '<!--:-->' ), '[:]', '<a href="https://github.com/qtranslate/qtranslate-xt/wiki/FAQ#custom-fields">', '</a>' ) ?></p>
                 </td>
             </tr>
             <tr>
                 <th scope="row" style="text-align: right">id</th>
-                <td><label for="qtranxs_custom_fields" class="qtranxs_explanation">
+                <td><label for="qtranxs_custom_fields"
+                           class="qtranxs_explanation <?php echo( $this->deprecated_class( 'custom_fields_format', false ) ) ?>">
                         <input type="text" name="custom_fields" id="qtranxs_custom_fields"
                                value="<?php echo implode( ' ', $q_config['custom_fields'] ) ?>"
                                style="width:100%"></label>
-                    <p class="qtranxs-notes"><?php _e( 'The value of "id" attribute is normally unique within one page, otherwise the first field found, having an id specified, is picked up.', 'qtranslate' ) ?></p>
+                    <p class="qtranxs-notes <?php echo( $this->deprecated_class( 'custom_fields_format' ) ) ?>">
+                        <?php _e( 'The value of "id" attribute is normally unique within one page, otherwise the first field found, having an id specified, is picked up.', 'qtranslate' ) ?></p>
                 </td>
             </tr>
             <tr>
                 <th scope="row" style="text-align: right">class</th>
-                <td><label for="qtranxs_custom_field_classes" class="qtranxs_explanation">
+                <td><label for="qtranxs_custom_field_classes"
+                           class="qtranxs_explanation <?php echo( $this->deprecated_class( 'custom_field_classes_format', false ) ) ?>">
                         <input type="text" name="custom_field_classes" id="qtranxs_custom_field_classes"
                                value="<?php echo implode( ' ', $q_config['custom_field_classes'] ) ?>"
                                style="width:100%"></label>
-                    <p class="qtranxs-notes"><?php printf( __( 'All the fields of specified classes will respond to Language Switching Buttons. Be careful not to include a class, which would affect language-neutral fields. If you cannot uniquely identify a field needed neither by %s, nor by %s attribute, report the issue on %sSupport Forum%s', 'qtranslate' ), '"id"', '"class"', '<a href="https://github.com/qTranslate/qtranslate-xt/issues">', '</a>' ) ?></p>
+                    <p class="qtranxs-notes <?php echo( $this->deprecated_class( 'custom_field_classes_format' ) ) ?>">
+                        <?php printf( __( 'All the fields of specified classes will respond to Language Switching Buttons. Be careful not to include a class, which would affect language-neutral fields. If you cannot uniquely identify a field needed neither by %s, nor by %s attribute, report the issue on %sSupport Forum%s', 'qtranslate' ), '"id"', '"class"', '<a href="https://github.com/qTranslate/qtranslate-xt/issues">', '</a>' ) ?></p>
                 </td>
             </tr>
             <tr>

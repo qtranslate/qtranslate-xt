@@ -227,6 +227,8 @@ add_action( 'admin_notices', 'qtranxf_admin_notices_errors' );
 function qtranx_admin_deprecated_settings(): array {
     global $q_config;
 
+    $deprecated_custom_fields = fn( $custom_fields ) => array_any( $custom_fields, fn( $str ) => ( str_contains( $str, '[' ) || str_contains( str_replace( "&lt;", "<", $str ), '<' ) ) );
+
     return [
         'custom_i18n_config'             => [
             'check'   => ! empty( $q_config['custom_i18n_config'] ),
@@ -251,6 +253,18 @@ function qtranx_admin_deprecated_settings(): array {
             'name'    => __( 'Date / Time Conversion', 'qtranslate' ),
             'section' => 'advanced',
             'hint'    => '<a href="https://github.com/qtranslate/qtranslate-xt/issues/1234">github #1234</a>',
+        ],
+        'custom_fields_format'           => [
+            'check'   => $deprecated_custom_fields( $q_config['custom_fields'] ),
+            'name'    => __( 'Custom Fields', 'qtranslate' ) . ' - id',
+            'section' => 'integration',
+            'hint'    => '<a href="https://github.com/qtranslate/qtranslate-xt/issues/1472">github #1472</a>',
+        ],
+        'custom_field_classes_format'    => [
+            'check'   => $deprecated_custom_fields( $q_config['custom_field_classes'] ),
+            'name'    => __( 'Custom Fields', 'qtranslate' ) . ' - class',
+            'section' => 'integration',
+            'hint'    => '<a href="https://github.com/qtranslate/qtranslate-xt/issues/1472">github #1472</a>',
         ],
     ];
 }
