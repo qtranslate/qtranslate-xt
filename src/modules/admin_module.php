@@ -9,12 +9,12 @@ class QTX_Admin_Module {
     /**
      * @var string Internal id.
      */
-    public $id;
+    public string $id;
 
     /**
      * @var string Name for display.
      */
-    public $name;
+    public string $name;
 
     /**
      * Array of required plugin(s) defined in the WP format (directory/file.php).
@@ -22,7 +22,7 @@ class QTX_Admin_Module {
      *
      * @var string[]
      */
-    public $plugins;
+    public array $plugins;
 
     /**
      * Incompatible plugin in the WP format, only one or zero supported.
@@ -35,12 +35,12 @@ class QTX_Admin_Module {
     /**
      * @var bool A module can have specific admin settings.
      */
-    public $has_settings;
+    public bool $has_settings;
 
     /**
      * Constructor from fields array.
      *
-     * @param array[] $fields
+     * @param array $fields
      *
      * @see QTX_Admin_Module
      */

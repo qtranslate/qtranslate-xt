@@ -8,17 +8,17 @@ class QTX_Module_Slugs {
      * Stores options slugs from database.
      * @var array
      */
-    public $options_buffer;
+    public array $options_buffer;
 
     /**
      * Stores permalink_structure option, for save queries to db.
-     * @var string
+     * @var string|false
      */
     private $permalink_structure;
 
     /**
      * Variable used to override the language.
-     * @var string
+     * @var string|false
      */
     private $temp_lang = false;
 
@@ -26,7 +26,7 @@ class QTX_Module_Slugs {
      * Array of translated versions of the current url.
      * @var array
      */
-    private $current_url = array();
+    private array $current_url = array();
 
     /**
      * Initialise the Class with all hooks.

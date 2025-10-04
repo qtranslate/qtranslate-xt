@@ -10,12 +10,12 @@ class QTX_Admin_Settings_Language_List extends WP_List_Table {
     /**
      * @var string URI to the admin options page of qTranslate-XT
      */
-    private $options_uri;
+    private string $options_uri;
 
     /**
      * @var array names of the available languages, translated in the current admin language
      */
-    private $language_names;
+    private array $language_names;
 
     public function __construct( $language_names, $options_uri ) {
         parent::__construct( array( 'screen' => 'language' ) );

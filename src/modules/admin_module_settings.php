@@ -8,18 +8,18 @@ require_once QTRANSLATE_DIR . '/src/modules/module_state.php';
  * Module admin settings, for display in the settings panels.
  */
 class QTX_Admin_Module_Settings {
-    public $id;
-    public $name;
+    public string $id;
+    public string $name;
 
     /**
      * @var int Internal state.
      */
-    protected $state;
+    protected int $state;
 
     /**
      * @var QTX_Admin_Module Underlying module definition.
      */
-    protected $module;
+    protected QTX_Admin_Module $module;
 
     /**
      * Constructor.
