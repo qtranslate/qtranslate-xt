@@ -3,6 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+require_once QTRANSLATE_DIR . '/src/admin/admin_notices.php';
 require_once QTRANSLATE_DIR . '/src/admin/admin_options_update.php';
 require_once QTRANSLATE_DIR . '/src/admin/admin_settings_language_list.php';
 require_once QTRANSLATE_DIR . '/src/admin/import_export.php';
@@ -18,10 +19,32 @@ class QTX_Admin_Settings {
     /**
      * @var string URI to the admin options page of qTranslate-XT
      */
-    private $options_uri;
+    private string $options_uri;
+
+    /**
+     * @var array Deprecated settings and their attributes.
+     */
+    private array $deprecated_settings;
 
     public function __construct() {
-        $this->options_uri = admin_url( 'options-general.php?page=qtranslate-xt' );
+        $this->options_uri         = admin_url( 'options-general.php?page=qtranslate-xt' );
+        $this->deprecated_settings = qtranx_admin_deprecated_settings();
+    }
+
+    /**
+     * Get the CSS deprecated class, with a warning depending on the value that was checked.
+     *
+     * @see qtranx_admin_deprecated_settings
+     * @param string $setting_id The deprecated id, must be valid (otherwise an assert is triggered).
+     * @param ?bool $show_deprecated Show the field is deprecated regardless of value, but without warning in that case.
+     *
+     * @return string CSS class with warning if value is deprecated.
+     */
+    public function deprecated_class( string $setting_id, ?bool $show_deprecated = true ): string {
+        // Make sure a correct deprecated ID is used. If the settings is no longer deprecated this should not be called.
+        assert( array_key_exists( $setting_id, $this->deprecated_settings ) );
+
+        return $this->deprecated_settings[ $setting_id ]['check'] ? "qtranxs-deprecated-warning" : ( $show_deprecated ? "qtranxs-deprecated" : "" );
     }
 
     public static function add_submit_button( string $button_name ): void {
@@ -567,7 +590,7 @@ class QTX_Admin_Settings {
                                value="<?php echo QTX_DATE; ?>" <?php checked( $q_config['use_strftime'], QTX_DATE ) ?>/> <?php _e( 'Use emulated date function.', 'qtranslate' ) ?>
                     </label><br/>
                     <label
-                        class="<?php echo( ( $q_config['use_strftime'] == QTX_DATE_OVERRIDE ) ? "qtranxs-deprecated-warning" : "qtranxs-deprecated" ) ?>">
+                        class="<?php echo( $this->deprecated_class( 'use_strftime_date_override' ) ) ?>">
                         <input type="radio" name="use_strftime"
                                value="<?php echo QTX_DATE_OVERRIDE; ?>" <?php checked( $q_config['use_strftime'], QTX_DATE_OVERRIDE ) ?>/> <?php _e( 'Use emulated date function and replace formats with the predefined formats for each language.', 'qtranslate' ) ?>
                         <span><?php _e( 'Deprecated.', 'qtranslate' ); ?></span>
@@ -577,7 +600,7 @@ class QTX_Admin_Settings {
                                value="<?php echo QTX_STRFTIME; ?>" <?php checked( $q_config['use_strftime'], QTX_STRFTIME ) ?>/> <?php _e( 'Use strftime instead of date.', 'qtranslate' ) ?>
                     </label><br/>
                     <label
-                        class="<?php echo( ( $q_config['use_strftime'] == QTX_STRFTIME_OVERRIDE ) ? "qtranxs-deprecated-warning" : "qtranxs-deprecated" ) ?>">
+                        class="<?php echo( $this->deprecated_class( 'use_strftime_strftime_override' ) ) ?>">
                         <input type="radio" name="use_strftime"
                                value="<?php echo QTX_STRFTIME_OVERRIDE; ?>" <?php checked( $q_config['use_strftime'], QTX_STRFTIME_OVERRIDE ) ?>/> <?php _e( 'Use strftime instead of date and replace formats with the predefined formats for each language.', 'qtranslate' ) ?>
                         <span><?php _e( 'Deprecated.', 'qtranslate' ); ?></span>
@@ -794,7 +817,7 @@ class QTX_Admin_Settings {
             <tr>
                 <th scope="row"><?php _e( 'Custom Configuration', 'qtranslate' ); ?></th>
                 <td><label for="qtranxs_json_custom_i18n_config"
-                           class="qtranxs_explanation <?php echo( empty( $q_config['custom_i18n_config'] ) ? "qtranxs-deprecated" : "qtranxs-deprecated-warning" ) ?>"><?php
+                           class="qtranxs_explanation <?php echo( $this->deprecated_class( 'custom_i18n_config' ) ) ?>"><?php
                         _e( 'Deprecated.', 'qtranslate' );
                         echo( '<br/>' );
                         printf( __( 'Additional custom JSON-encoded configuration of %s for all admin pages. It is processed after all files from option "%s" are loaded, providing opportunity to add or to override configuration tokens as necessary.', 'qtranslate' ), 'qTranslate&#8209;XT', __( 'Configuration Files', 'qtranslate' ) ); ?></label>
@@ -804,7 +827,7 @@ class QTX_Admin_Settings {
                             echo sanitize_text_field( stripslashes( $_POST['json_custom_i18n_config'] ) );
                         } else if ( ! empty( $q_config['custom_i18n_config'] ) )
                             echo json_encode( $q_config['custom_i18n_config'], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES ) ?></textarea>
-                    <p class="qtranxs-notes <?php echo( empty( $q_config['custom_i18n_config'] ) ? "qtranxs-deprecated" : "qtranxs-deprecated-warning" ) ?>"><?php printf( __( 'It would make no difference, if the content of this field is stored in a file, which name is listed last in option "%s". Therefore, this field only provides flexibility for the sake of convenience.', 'qtranslate' ), __( 'Configuration Files', 'qtranslate' ) );
+                    <p class="qtranxs-notes <?php echo( $this->deprecated_class( 'custom_i18n_config' ) ) ?>"><?php printf( __( 'It would make no difference, if the content of this field is stored in a file, which name is listed last in option "%s". Therefore, this field only provides flexibility for the sake of convenience.', 'qtranslate' ), __( 'Configuration Files', 'qtranslate' ) );
                         echo ' ';
                         printf( __( 'Please, read %sIntegration Guide%s for more information.', 'qtranslate' ), '<a href="https://github.com/qtranslate/qtranslate-xt/wiki/Integration-Guide" target="_blank">', '</a>' );
                         echo ' ';
@@ -849,14 +872,14 @@ class QTX_Admin_Settings {
                 <th scope="row"><?php _e( 'Compatibility Functions', 'qtranslate' ) ?></th>
                 <td>
                     <label for="qtranxs_qtrans_compatibility"
-                           class="qtranxs_explanation <?php echo( empty( $q_config['qtrans_compatibility'] ) ? "qtranxs-deprecated" : "qtranxs-deprecated-warning" ) ?>">
+                           class="qtranxs_explanation <?php echo( $this->deprecated_class( 'qtrans_compatibility' ) ) ?>">
                         <?php _e( 'Deprecated.', 'qtranslate' ); ?><br>
                         <input type="checkbox"
                                name="qtrans_compatibility"
                                id="qtranxs_qtrans_compatibility"
                                value="1"<?php checked( $q_config['qtrans_compatibility'] ) ?>/>&nbsp;<?php printf( __( 'Enable function name compatibility (%s).', 'qtranslate' ), 'qtrans_convertURL, qtrans_getAvailableLanguages, qtrans_generateLanguageSelectCode, qtrans_getLanguage, qtrans_getLanguageName, qtrans_getSortedLanguages, qtrans_join, qtrans_split, qtrans_use, qtrans_useCurrentLanguageIfNotFoundShowAvailable, qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage, qtrans_useDefaultLanguage, qtrans_useTermLib' ) ?>
                     </label><br/>
-                    <p class="qtranxs-notes <?php echo( empty( $q_config['qtrans_compatibility'] ) ? "qtranxs-deprecated" : "qtranxs-deprecated-warning" ) ?>"><?php printf( __( 'Some plugins and themes use direct calls to the functions listed, which are defined in former %s plugin and some of its forks. Turning this flag on will enable those function to exists, which will make the dependent plugins and themes to work. WordPress policy prohibits to define functions with the same names as in other plugins, since it generates user-unfriendly fatal errors, when two conflicting plugins are activated simultaneously. Before turning this option on, you have to make sure that there are no other plugins active, which define those functions.', 'qtranslate' ), '<a href="https://wordpress.org/plugins/qtranslate/" target="_blank">qTranslate</a>' ) ?></p>
+                    <p class="qtranxs-notes <?php echo( $this->deprecated_class( 'qtrans_compatibility' ) ) ?>"><?php printf( __( 'Some plugins and themes use direct calls to the functions listed, which are defined in former %s plugin and some of its forks. Turning this flag on will enable those function to exists, which will make the dependent plugins and themes to work. WordPress policy prohibits to define functions with the same names as in other plugins, since it generates user-unfriendly fatal errors, when two conflicting plugins are activated simultaneously. Before turning this option on, you have to make sure that there are no other plugins active, which define those functions.', 'qtranslate' ), '<a href="https://wordpress.org/plugins/qtranslate/" target="_blank">qTranslate</a>' ) ?></p>
                 </td>
             </tr>
         </table>
