@@ -131,7 +131,7 @@ class QTX_Admin_Settings {
                     <input name="language_code" id="language_code" type="text" value="<?php echo $language_code; ?>"
                            size="3" maxlength="3"/>
                     <p class="qtranxs-notes"><?php
-                        printf( __( 'Language %sISO 639 code%s, two-letter (ISO 639-1) or three-letter (ISO 639-2 and 639-3), lower case. (Examples: en, fr, zh, nds)', 'qtranslate' ), '<a href="https://en.wikipedia.org/wiki/ISO_639">', '</a>' );
+                        printf( __( 'Language <a href="%s">ISO 639 code</a>, two-letter (ISO 639-1) or three-letter (ISO 639-2 and 639-3), lower case. (Examples: en, fr, zh, nds)', 'qtranslate' ), 'https://en.wikipedia.org/wiki/ISO_639">' );
                         echo '<br/>';
                         echo __( 'The language code is used in language tags and in URLs. The code may be arbitrary chosen by site owner, although it is preferable to use already commonly accepted code if available. Once a language code is created and entries for this language are made, it is difficult to change it, please make a careful decision.', 'qtranslate' )
                         ?></p>
@@ -200,13 +200,15 @@ class QTX_Admin_Settings {
                     <label for="language_date_format"><?php _e( 'Date Format', 'qtranslate' ) ?><br/></label>
                     <input name="language_date_format" id="language_date_format" type="text"
                            value="<?php echo $language_date_format; ?>"/>
-                    <p class="qtranxs-notes"><?php _e( 'Depending on your Date / Time Conversion Mode, you can either enter a <a href="https://www.php.net/manual/function.strftime.php">strftime</a> (use %q for day suffix (st,nd,rd,th)) or <a href="https://www.php.net/manual/function.date.php">date</a> format. This field is optional. (Example: %A %B %e%q, %Y)', 'qtranslate' ) ?></p>
+                    <p class="qtranxs-notes"><?php printf( __( 'Depending on your Date / Time Conversion Mode, you can either enter a <a href="%s">strftime</a> (use %s for day suffix) or <a href="%s">date</a> format. This field is optional. (Example: %s)', 'qtranslate' ),
+                            'https://www.php.net/manual/function.strftime.php', '%q', 'https://www.php.net/manual/function.date.php', '%A %B %e%q, %Y' ) ?></p>
                 </div>
                 <div class="form-field">
                     <label for="language_time_format"><?php _e( 'Time Format', 'qtranslate' ) ?><br/></label>
                     <input name="language_time_format" id="language_time_format" type="text"
                            value="<?php echo $language_time_format; ?>"/>
-                    <p class="qtranxs-notes"><?php _e( 'Depending on your Date / Time Conversion Mode, you can either enter a <a href="https://www.php.net/manual/function.strftime.php">strftime</a> or <a href="https://www.php.net/manual/function.date.php">date</a> format. This field is optional. (Example: %I:%M %p)', 'qtranslate' ) ?></p>
+                    <p class="qtranxs-notes"><?php printf( __( 'Depending on your Date / Time Conversion Mode, you can either enter a <a href="%s">strftime</a> or <a href="%s">date</a> format. This field is optional. (Example: %s)', 'qtranslate' ),
+                            'https://www.php.net/manual/function.strftime.php', 'https://www.php.net/manual/function.date.php', '%I:%M %p' ) ?></p>
                 </div>
                 <div class="form-field">
                     <label for="language_na_message"><?php _e( 'Not Available Message', 'qtranslate' ) ?><br/></label>
@@ -362,14 +364,14 @@ class QTX_Admin_Settings {
                         <label title="Pre-Path Mode">
                             <input type="radio" name="url_mode"
                                    value="<?php echo QTX_URL_PATH; ?>" <?php checked( $url_mode, QTX_URL_PATH );
-                            disabled( $permalink_is_query ) ?> /> <?php echo __( 'Use Pre-Path Mode (Default, puts /en/ in front of URL)', 'qtranslate' ) . '. ' . __( 'SEO friendly.', 'qtranslate' );
+                            disabled( $permalink_is_query ) ?> /> <?php echo sprintf( __( 'Use Pre-Path Mode (puts %s in front of URL)', 'qtranslate' ), '/en/' ) . '. ' . __( 'SEO friendly.', 'qtranslate' ) . ' [' . __( 'Default', 'qtranslate' ) . ']';
                             if ( $permalink_is_query ) {
                                 echo ' ' . __( 'Requires a permalink structure without query string or index.php (not Plain).', 'qtranslate' );
                             } ?>
                         </label><br/>
                         <label title="Pre-Domain Mode">
                             <input type="radio" name="url_mode"
-                                   value="<?php echo QTX_URL_DOMAIN; ?>" <?php checked( $url_mode, QTX_URL_DOMAIN ) ?> /> <?php echo __( 'Use Pre-Domain Mode (uses https://en.yoursite.com)', 'qtranslate' ) . '. ' . __( 'You will need to configure DNS sub-domains on your site.', 'qtranslate' ) ?>
+                                   value="<?php echo QTX_URL_DOMAIN; ?>" <?php checked( $url_mode, QTX_URL_DOMAIN ) ?> /> <?php echo sprintf( __( 'Use Pre-Domain Mode (%s)', 'qtranslate' ), 'https://en.yoursite.com' ) . '. ' . __( 'You will need to configure DNS sub-domains on your site.', 'qtranslate' ) ?>
                         </label><br/>
                         <label title="Per-Domain Mode">
                             <input type="radio" name="url_mode"
@@ -377,7 +379,7 @@ class QTX_Admin_Settings {
                         </label><br/>
                         <label title="Query Mode">
                             <input type="radio" name="url_mode"
-                                   value="<?php echo QTX_URL_QUERY; ?>" <?php checked( $url_mode, QTX_URL_QUERY ) ?> /> <?php echo __( 'Use Query Mode (?lang=en)', 'qtranslate' ) . '. ' . __( 'Most SEO unfriendly, not recommended.', 'qtranslate' ) ?>
+                                   value="<?php echo QTX_URL_QUERY; ?>" <?php checked( $url_mode, QTX_URL_QUERY ) ?> /> <?php echo sprintf( __( 'Use Query Mode (%s)', 'qtranslate' ), '?lang=en' ) . '. ' . __( 'Most SEO unfriendly, not recommended.', 'qtranslate' ) ?>
                         </label><br/>
                     </fieldset>
                     <?php

@@ -24,11 +24,13 @@ function qtranxf_slugs_get_settings(): array {
 function qtranxf_slugs_section_fn( string $section_id = '' ): void {
     switch ( $section_id ) {
         case 'post_types':
-            echo "<p>" . __( 'For example, the post_type <kbd>books</kbd>, in Spanish would be displayed as <code>https://example.org/es/libros/post-type-name/</code>. If you leave this blank will use the default option when you <a href="https://developer.wordpress.org/reference/functions/register_post_type/">registered</a> the post_type.', 'qtranslate' ) . "</p>";
+            echo "<p>" . sprintf( __( 'For example, the post_type <kbd>books</kbd> in Spanish would be displayed as <code>%s</code>. If you leave this blank will use the default option when you <a href="%s">registered</a> the post_type.', 'qtranslate' ),
+                    'https://example.org/es/libros/post-type-name/', 'https://developer.wordpress.org/reference/functions/register_post_type/' ) . "</p>";
             break;
 
         case 'taxonomies':
-            echo "<p>" . __( 'For example, the taxonomy <kbd>category</kbd>, in Spanish would be displayed as <code>https://example.org/es/categoria/taxonomy-name/</code>. If you leave this blank will use the default option when you <a href="https://developer.wordpress.org/reference/functions/register_taxonomy/">registered</a> the taxonomy (if you previously setup a base permastruct for <u>categories</u> or <u>tags</u> in <a href="options-permalink.php">permalinks</a> page, these bases will be overwritten by the translated ones).', 'qtranslate' ) . "</p>";
+            echo "<p>" . sprintf( __( 'For example, the taxonomy <kbd>category</kbd> in Spanish would be displayed as <code>%s</code>. If you leave this blank will use the default option when you <a href="%s">registered</a> the taxonomy (if you previously setup a base permastruct for <u>categories</u> or <u>tags</u> in <a href="%s">permalinks</a> page, these bases will be overwritten by the translated ones).', 'qtranslate' ),
+                    'https://example.org/es/categoria/taxonomy-name/', 'https://developer.wordpress.org/reference/functions/register_taxonomy/', 'options-permalink.php' ) . "</p>";
             break;
     }
 }
@@ -197,7 +199,8 @@ function qtranxf_slugs_show_settings_page(): void {
     }
     QTX_Admin_Settings::open_section( 'slugs' );
     ?>
-    <p class="heading"><?php _e( 'If you activated previously the <a href="options-permalink.php">pretty permalinks</a>, in this section you can translate the <abbr title="en inglés, Universal Resource Locator">URLs</abbr> <strong>bases</strong> for <a href="https://developer.wordpress.org/reference/functions/register_post_type/#parameters">public</a> post_types, categories, tags and taxonomies.', 'qtranslate' ); ?> </p>
+    <p class="heading"><?php printf( __( 'If you activated previously the <a href="%s">pretty permalinks</a>, in this section you can translate the <abbr title="en inglés, Universal Resource Locator">URLs</abbr> <strong>bases</strong> for <a href="%s">public</a> post_types, categories, tags and taxonomies.', 'qtranslate' ),
+            'options-permalink.php', 'https://developer.wordpress.org/reference/functions/register_post_type/#parameters' ); ?> </p>
 
     <?php foreach ( $settings_output['qts_page_sections'] as $id => $title ) { ?>
         <h2><?php echo $title; ?></h2>
