@@ -364,14 +364,14 @@ class QTX_Admin_Settings {
                         <label title="Pre-Path Mode">
                             <input type="radio" name="url_mode"
                                    value="<?php echo QTX_URL_PATH; ?>" <?php checked( $url_mode, QTX_URL_PATH );
-                            disabled( $permalink_is_query ) ?> /> <?php echo sprintf( __( 'Use Pre-Path Mode (puts %s in front of URL)', 'qtranslate' ), '/en/' ) . '. ' . __( 'SEO friendly.', 'qtranslate' ) . ' [' . __( 'Default', 'qtranslate' ) . ']';
+                            disabled( $permalink_is_query ) ?> /> <?php echo sprintf( __( 'Use Pre-Path Mode (puts %s in front of URL)', 'qtranslate' ), '/' . $q_config['language'] ?? 'en' . '/' ) . '. ' . __( 'SEO friendly.', 'qtranslate' ) . ' [' . __( 'Default', 'qtranslate' ) . ']';
                             if ( $permalink_is_query ) {
                                 echo ' ' . __( 'Requires a permalink structure without query string or index.php (not Plain).', 'qtranslate' );
                             } ?>
                         </label><br/>
                         <label title="Pre-Domain Mode">
                             <input type="radio" name="url_mode"
-                                   value="<?php echo QTX_URL_DOMAIN; ?>" <?php checked( $url_mode, QTX_URL_DOMAIN ) ?> /> <?php echo sprintf( __( 'Use Pre-Domain Mode (%s)', 'qtranslate' ), 'https://en.yoursite.com' ) . '. ' . __( 'You will need to configure DNS sub-domains on your site.', 'qtranslate' ) ?>
+                                   value="<?php echo QTX_URL_DOMAIN; ?>" <?php checked( $url_mode, QTX_URL_DOMAIN ) ?> /> <?php echo sprintf( __( 'Use Pre-Domain Mode (%s)', 'qtranslate' ), 'https://' . $q_config['language'] ?? 'en' . '.yoursite.com' ) . '. ' . __( 'You will need to configure DNS sub-domains on your site.', 'qtranslate' ) ?>
                         </label><br/>
                         <label title="Per-Domain Mode">
                             <input type="radio" name="url_mode"
@@ -379,7 +379,7 @@ class QTX_Admin_Settings {
                         </label><br/>
                         <label title="Query Mode">
                             <input type="radio" name="url_mode"
-                                   value="<?php echo QTX_URL_QUERY; ?>" <?php checked( $url_mode, QTX_URL_QUERY ) ?> /> <?php echo sprintf( __( 'Use Query Mode (%s)', 'qtranslate' ), '?lang=en' ) . '. ' . __( 'Most SEO unfriendly, not recommended.', 'qtranslate' ) ?>
+                                   value="<?php echo QTX_URL_QUERY; ?>" <?php checked( $url_mode, QTX_URL_QUERY ) ?> /> <?php echo sprintf( __( 'Use Query Mode (%s)', 'qtranslate' ), '?lang=' . $q_config['language'] ?? 'en' ) . '. ' . __( 'Most SEO unfriendly, not recommended.', 'qtranslate' ) ?>
                         </label><br/>
                     </fieldset>
                     <?php
