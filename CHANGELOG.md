@@ -1,3 +1,34 @@
+### 3.16.0
+* **Bump minimum requirements PHP7.4** (#1471)
+* **New Javascript API (#1462)**
+  * See new [Javascript API Wiki](https://github.com/qtranslate/qtranslate-xt/wiki/Javascript-API)
+  * New `qTranx.config` object, to replace `qTranslateConfig` global variable (#1462)
+  * New `qTranx.hooks` module, to replace `qTranslateX`/`get_qtx()` global object (#1456, #1458)
+  * New `qTranx.ml` module for multi-lingual functions like ML token parsers (#1435)
+  * Use WP action hooks to replace QTX jQuery/LSB events (#1464)
+  * Major refactoring for new JS API (#1469, #1458, #1457)
+* Deprecations
+  * **Attention!** Legacy JS API is *mostly* compatible in 3.16.0 but deprecated functions and events will be **removed** in 4.0.0.
+  * See [Javascript Migration Guide](https://github.com/qtranslate/qtranslate-xt/wiki/Javascript-Migration-Guide)
+  * Deprecate **many** legacy JS functions and jQuery events (#1462, #1469)
+  * Deprecate QTX "Custom Fields" legacy format, first character as separator is broken (#1472)
+  * Deprecate "Compatibility Functions" (#1461)
+  * Deprecate PHP filters related to QTX "custom fields"
+    * `qtranslate_custom_fields`
+    * `qtranslate_custom_field_classes`
+* Features
+  * Generalize admin notices for deprecated settings (#1470)
+  * Improve debug info collection (#1466)
+* Bug fixes
+  * Fix array given to `qtranxf_isMultilingual` (#1451)
+  * Fix theme JSON config not loaded (#1463)
+  * Fix call to undefined `qtranxf_set_field_jquery` (#1459)
+  * [Slugs] Fix language autodetection (#1364)
+* Localizations (l10n)
+  * Update l10n POT template
+  * Update l10n FR and IT with 100%
+  * Update a few l10n (ES, DE, RU, CN) with minor changes for CN
+
 ### 3.15.5
 * Change language Redirect 302 to 301 (permanent) (#1440)
 * Fix autosave in block editor (#1441)
