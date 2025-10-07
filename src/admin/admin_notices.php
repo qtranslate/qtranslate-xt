@@ -227,7 +227,15 @@ add_action( 'admin_notices', 'qtranxf_admin_notices_errors' );
 function qtranx_admin_deprecated_settings(): array {
     global $q_config;
 
-    $deprecated_custom_fields = fn( $custom_fields ) => array_any( $custom_fields, fn( $str ) => ( str_contains( $str, '[' ) || str_contains( str_replace( "&lt;", "<", $str ), '<' ) ) );
+    $deprecated_custom_fields = function ( $custom_fields ) {
+        foreach ( $custom_fields as $field ) {
+            if ( str_contains( $field, '[' ) || str_contains( str_replace( "&lt;", "<", $field ), '<' ) ) {
+                return true;
+            }
+        }
+
+        return false;
+    };
 
     return [
         'custom_i18n_config'             => [
