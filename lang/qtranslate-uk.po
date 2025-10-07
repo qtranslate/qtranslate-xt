@@ -1,0 +1,1804 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: qTranslate-XT 3.16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-10-05 17:31+0200\n"
+"PO-Revision-Date: 2025-10-07 18:49+0300\n"
+"Last-Translator: Valentyn Ilinov <v.ilinov@adtelligent.com>\n"
+"Language-Team: qTranslate Team Translators\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ../src\n"
+"X-Poedit-KeywordsList: __:1;_e:1;_n:1,2;_n_noop:1,2;_x:1,2c;_ex:1,2c;_nx:1,2,4c;_nx_noop:1,2,3c;_n_js:1,2;_nx_js:1,2,3c;esc_attr__:1;esc_html__:1;esc_attr_e:1;esc_html_e:1;esc_attr_x:1,2c;esc_html_x:1,2c\n"
+"X-Generator: Poedit 3.7\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: admin/activation_hook.php:116
+#, php-format
+msgid "Could not find file \"%s\" listed in option \"%s\"."
+msgstr "Не вдалося знайти файл \"%s\", вказаний у налаштуванні \"%s\"."
+
+#: admin/activation_hook.php:116 admin/activation_hook.php:128
+#: admin/activation_hook.php:133 admin/admin_notices.php:74
+#: admin/admin_notices.php:77 admin/admin_settings.php:256
+#: admin/admin_settings.php:806 admin/admin_settings.php:825
+#: admin/admin_settings.php:832 admin/admin_settings.php:836
+msgid "Configuration Files"
+msgstr "Файли конфігурації"
+
+#: admin/activation_hook.php:116
+msgid "Please, either put file in place or update the option."
+msgstr "Будь ласка, або розмістіть файл на місці, або оновіть налаштування."
+
+#: admin/activation_hook.php:116 admin/activation_hook.php:128
+#: admin/activation_hook.php:133
+#, php-format
+msgid "Once the problem is fixed, re-save the configuration by pressing button \"%s\" on plugin %ssettings page%s."
+msgstr "Щойно проблему буде виправлено, повторно збережіть конфігурацію, натиснувши кнопку \"%s\" на %sсторінці налаштувань%s плагіна."
+
+#: admin/activation_hook.php:116 admin/activation_hook.php:128
+#: admin/activation_hook.php:133 admin/admin_settings.php:62
+msgid "Save Changes"
+msgstr "Зберегти зміни"
+
+#: admin/activation_hook.php:128
+#, php-format
+msgid "Could not load file \"%s\" listed in option \"%s\"."
+msgstr "Не вдалося завантажити файл \"%s\", вказаний у налаштуванні \"%s\"."
+
+#: admin/activation_hook.php:128
+msgid "Please, make sure the file is accessible and readable."
+msgstr "Будь ласка, переконайтеся, що файл доступний і читабельний."
+
+#: admin/activation_hook.php:133
+#, php-format
+msgid "Could not parse %s file \"%s\" listed in option \"%s\"."
+msgstr "Не вдалося розібрати %s файл \"%s\", вказаний у налаштуванні \"%s\"."
+
+#: admin/activation_hook.php:133
+msgid "Please, correct the syntax error in the file."
+msgstr "Будь ласка, виправте синтаксичну помилку у файлі."
+
+#: admin/activation_hook.php:177
+#, php-format
+msgid "Deprecated configuration key(s) in %s:"
+msgstr "Застарілі ключі конфігурації у %s:"
+
+#: admin/activation_hook.php:179
+#, php-format
+msgid "This configuration will become incompatible in next releases. For more information, see: %s."
+msgstr "Ця конфігурація стане несумісною в наступних випусках. Для отримання додаткової інформації див.: %s."
+
+#: admin/activation_hook.php:723
+#, php-format
+msgid "Plugin %s requires PHP version %s at least. This server instance runs PHP version %s. A PHP version %s or higher is recommended. The plugin has not been activated."
+msgstr "Для плагіна %s потрібна версія PHP щонайменше %s. На цьому сервері працює версія PHP %s. Рекомендована версія PHP %s або вище. Плагін не було активовано."
+
+#: admin/admin.php:157
+#, php-format
+msgid "The value set for option \"%s\" cannot be used."
+msgstr "Значення, встановлене для параметра \"%s\", не може бути використане."
+
+#: admin/admin.php:157 admin/admin_notices.php:247 admin/admin_notices.php:253
+#: admin/admin_settings.php:584
+msgid "Date / Time Conversion"
+msgstr "Перетворення дати / часу"
+
+#: admin/admin.php:158
+#, php-format
+msgid "Class not found: <a href=\"%s\">%s</a> likely due to missing PHP extension: <a href=\"%s\">%s</a>."
+msgstr "Клас не знайдено: <a href=\"%s\">%s</a>, ймовірно, через відсутність розширення PHP: <a href=\"%s\">%s</a>."
+
+#: admin/admin.php:353
+#, php-format
+msgid "Could not find script file \"%s\" for handle \"%s\"."
+msgstr "Не вдалося знайти файл скрипта \"%s\" для ідентифікатора \"%s\"."
+
+#: admin/admin.php:408
+msgid "Show multilingual content in "
+msgstr "Показувати багатомовний вміст у "
+
+#: admin/admin.php:437
+msgid "Fill empty multilingual fields with content from other language"
+msgstr "Заповнити порожні багатомовні поля вмістом з іншої мови"
+
+#: admin/admin.php:439
+msgid "Choose language to copy multilingual content from"
+msgstr "Виберіть мову, з якої потрібно скопіювати багатомовний вміст"
+
+#: admin/admin.php:441
+msgid "Copy from"
+msgstr "Копіювати з"
+
+#: admin/admin.php:616
+msgid "Language Management"
+msgstr "Керування мовами"
+
+#: admin/admin.php:616 admin/admin_settings.php:290 admin/admin_utils.php:218
+msgid "Languages"
+msgstr "Мови"
+
+#: admin/admin.php:623
+msgid "Language Menu"
+msgstr "Мовне меню"
+
+#: admin/admin.php:662
+msgid "Help"
+msgstr "Довідка"
+
+#: admin/admin.php:665
+msgid "Menu item added is replaced with a drop-down menu of available languages, when menu is rendered."
+msgstr "Доданий елемент меню замінюється спадним меню доступних мов під час відображення меню."
+
+#: admin/admin.php:667
+#, php-format
+msgid "The rendered menu items have CSS classes %s and %s (\"%s\" is a language code), which can be defined in theme style, if desired. The label of language menu can also be customized via field \"%s\" in the menu configuration."
+msgstr "Відтворені елементи меню мають CSS-класи %s та %s (\"%s\" — це код мови), які можна визначити у стилі теми, якщо це необхідно. Мітку мовного меню також можна налаштувати через поле \"%s\" у конфігурації меню."
+
+#: admin/admin.php:669
+#, php-format
+msgid "The field \"%s\" of inserted menu item allows additional configuration described in our %sWiki%s."
+msgstr "Поле \"%s\" вставленого елемента меню дозволяє додаткове налаштування, описане в нашій %sWiki%s."
+
+#: admin/admin.php:676
+msgid "Add to Menu"
+msgstr "Додати до меню"
+
+#: admin/admin.php:686
+msgid "Language Switcher"
+msgstr "Перемикач мов"
+
+#: admin/admin.php:752 admin/admin.php:762 admin/admin_notices.php:215
+#: admin/admin_notices.php:289 frontend.php:261 widget.php:55
+#, php-format
+msgid "%s:"
+msgstr "%s:"
+
+#: admin/admin.php:752 admin/admin_notices.php:215
+msgid "Error"
+msgstr "Помилка"
+
+#: admin/admin.php:762 admin/admin_notices.php:289
+msgid "Warning"
+msgstr "Попередження"
+
+#: admin/admin.php:798
+#, php-format
+msgid "Thank you for using plugin %s!"
+msgstr "Дякуємо, що використовуєте плагін %s!"
+
+#: admin/admin.php:807
+#, php-format
+msgid "Plugin Version %s"
+msgstr "Версія плагіна %s"
+
+#: admin/admin.php:818
+#, php-format
+msgctxt "%s is a version number of a plugin. It is a shortcut for \"Get version %s of such a such plugin.\""
+msgid "Get %s"
+msgstr "Отримати %s"
+
+#: admin/admin_notices.php:74
+#, php-format
+msgid "Option \"%s\" for plugin %s has been auto-adjusted after recent changes in the site configuration. It might be a good idea to %sreview the changes%s in the list of configuration files."
+msgstr "Налаштування \"%s\" для плагіна %s було автоматично скориговано після останніх змін у конфігурації сайту. Можливо, варто %sпереглянути зміни%s у списку файлів конфігурації."
+
+#: admin/admin_notices.php:77
+#, php-format
+msgid "Review Option \"%s\""
+msgstr "Переглянути налаштування \"%s\""
+
+#: admin/admin_notices.php:79
+msgid "Read Integration Guide"
+msgstr "Прочитати посібник з інтеграції"
+
+#: admin/admin_notices.php:80 admin/admin_notices.php:96
+#: admin/admin_notices.php:121 admin/admin_notices.php:147
+msgid "I have already done it, dismiss this message."
+msgstr "Я вже це зробив, приховати це повідомлення."
+
+#: admin/admin_notices.php:92
+#, php-format
+msgid "Are you new to plugin %s?"
+msgstr "Ви вперше використовуєте плагін %s?"
+
+#: admin/admin_notices.php:95
+msgid "Read Startup Guide"
+msgstr "Прочитати посібник для початківців"
+
+#: admin/admin_notices.php:112
+#, php-format
+msgid "<b>Caution!</b> The block editor (Gutenberg) is supported only recently in %s with some limitations. Use at your own discretion!"
+msgstr "<b>Увага!</b> Блоковий редактор (Gutenberg) підтримується у %s лише нещодавно та з деякими обмеженнями. Використовуйте на власний розсуд!"
+
+#: admin/admin_notices.php:113
+#, php-format
+msgid "Currently only the single language edit mode is supported. For more details, please read carefully our <a href=\"%s\">Gutenberg FAQ</a>."
+msgstr "Наразі підтримується лише режим редагування однією мовою. Для отримання додаткових відомостей, будь ласка, уважно прочитайте наш <a href=\"%s\">FAQ про Gutenberg</a>."
+
+#: admin/admin_notices.php:117
+#, php-format
+msgid "It is recommended to install the <a href=\"%s\">%s</a> in your <a href=\"%s\">plugins</a>."
+msgstr "Рекомендується встановити <a href=\"%s\">%s</a> у ваших <a href=\"%s\">плагінах</a>."
+
+#: admin/admin_notices.php:145
+#, php-format
+msgid "%s : found slugs meta that can be migrated. Go to the <a href=\"%s\">import settings</a> to migrate."
+msgstr "%s : знайдено метадані слаґів, які можна перенести. Перейдіть до <a href=\"%s\">налаштувань імпорту</a> для перенесення."
+
+#: admin/admin_notices.php:169 admin/admin_notices.php:188
+#: admin/import_export.php:86
+#, php-format
+msgid "It might be a good idea to review %smigration instructions%s, if you have not yet done so."
+msgstr "Можливо, варто переглянути %sінструкції з перенесення%s, якщо ви цього ще не зробили."
+
+#: admin/admin_notices.php:170
+#, php-format
+msgid "Activation of plugin %s deactivated plugin %s since they cannot run simultaneously."
+msgstr "Активація плагіну %s деактивувала плагін %s, оскільки вони не можуть працювати одночасно."
+
+#: admin/admin_notices.php:172
+#, php-format
+msgid "The compatible settings from %s have been imported to %s. Further tuning, import, export and reset of options can be done at Settings/Languages configuration page, once %s is running.%sContinue%s"
+msgstr "Сумісні налаштування з %s були імпортовані в %s. Подальше налаштування, імпорт, експорт та скидання параметрів можна виконати на сторінці конфігурації Налаштування/Мови, як тільки %s працюватиме.%sПродовжити%s"
+
+#: admin/admin_notices.php:174
+#, php-format
+msgid "You may import/export compatible settings from %s to %s on Settings/Languages configuration page, once %s is running.%sContinue%s"
+msgstr "Ви можете імпортувати/експортувати сумісні налаштування з %s до %s на сторінці конфігурації Налаштування/Мови, як тільки %s працюватиме.%sПродовжити%s"
+
+#: admin/admin_notices.php:186
+#, php-format
+msgid "%sError:%s plugin %s cannot run concurrently with plugin %s. You may import and export compatible settings between %s and %s on Settings/<a href=\"%s\">Languages</a> configuration page. Then you have to deactivate one of the plugins to continue."
+msgstr "%sПомилка:%s плагін %s не може працювати одночасно з плагіном %s. Ви можете імпортувати та експортувати сумісні налаштування між %s та %s на сторінці конфігурації Налаштування/<a href=\"%s\">Мови</a>. Потім вам доведеться деактивувати один із плагінів, щоб продовжити."
+
+#: admin/admin_notices.php:191 admin/admin_notices.php:193
+#: modules/admin_module_manager.php:139
+#, php-format
+msgid "Deactivate %s"
+msgstr "Деактивувати %s"
+
+#: admin/admin_notices.php:235 admin/admin_options_update.php:874
+#: admin/admin_settings.php:256 admin/admin_settings.php:813
+#: admin/admin_settings.php:820
+msgid "Custom Configuration"
+msgstr "Користувацька конфігурація"
+
+#: admin/admin_notices.php:241 admin/admin_settings.php:878
+#: admin/import_export.php:68
+msgid "Compatibility Functions"
+msgstr "Функції сумісності"
+
+#: admin/admin_notices.php:259 admin/admin_notices.php:265
+#: admin/admin_settings.php:841
+msgid "Custom Fields"
+msgstr "Користувацькі поля"
+
+#: admin/admin_notices.php:293 admin/admin_settings.php:276
+msgid "Advanced"
+msgstr "Розширені"
+
+#: admin/admin_notices.php:296 admin/admin_settings.php:281
+msgid "Integration"
+msgstr "Інтеграція"
+
+#: admin/admin_notices.php:302
+#, php-format
+msgid "The value set for option \"%s\" is deprecated, it will not be supported in the future. Go to \"%s\" settings to change it."
+msgstr "Встановлене значення для налаштування \"%s\" є застарілим і не підтримуватиметься в майбутньому. Перейдіть до налаштувань \"%s\", щоб змінити його."
+
+#: admin/admin_notices.php:304
+#, php-format
+msgid "For more information, see %s."
+msgstr "Для отримання додаткової інформації див. %s."
+
+#: admin/admin_options_update.php:42
+msgid "qTranslate has been reset."
+msgstr "qTranslate було скинуто."
+
+#: admin/admin_options_update.php:54
+msgid "The Language must have a Not-Available Message!"
+msgstr "Мова повинна мати повідомлення про недоступність!"
+
+#: admin/admin_options_update.php:57
+msgid "The Language must have a Locale!"
+msgstr "Мова повинна мати локаль!"
+
+#: admin/admin_options_update.php:60
+msgid "The Language must have a name!"
+msgstr "Мова повинна мати назву!"
+
+#: admin/admin_options_update.php:65 admin/admin_options_update.php:207
+#, php-format
+msgid "The 2-letter language code \"%s\" should be lower case (ISO 639-1). Upper case is still allowed for legacy codes but not for new entries."
+msgstr "2-літерний код мови \"%s\" має бути в нижньому регістрі (ISO 639-1). Верхній регістр все ще дозволено для застарілих кодів, але не для нових записів."
+
+#: admin/admin_options_update.php:67 admin/admin_options_update.php:209
+msgid "Invalid language code!"
+msgstr "Недійсний код мови!"
+
+#: admin/admin_options_update.php:77 admin/admin_options_update.php:82
+msgid "There is already a language with the same Language Code!"
+msgstr "Вже існує мова з таким самим кодом мови!"
+
+#: admin/admin_options_update.php:134
+#, php-format
+msgid "The new language properties have been saved. If you think these properties should be the preset default, please %ssend email%s to the development team."
+msgstr "Нові властивості мови збережено. Якщо ви вважаєте, що ці властивості мають бути стандартними за замовчуванням, будь ласка, %sнадішліть листа%s команді розробників."
+
+#: admin/admin_options_update.php:157
+#, php-format
+msgid "%d database entries have been converted."
+msgstr "%d записів бази даних було перетворено."
+
+#: admin/admin_options_update.php:159
+msgid "No database entry has been affected while processing the conversion request."
+msgstr "Жоден запис бази даних не було змінено під час обробки запиту на перетворення."
+
+#: admin/admin_options_update.php:189
+#, php-format
+msgid "%d pages have been processed to set the default language."
+msgstr "%d сторінок було оброблено для встановлення мови за замовчуванням."
+
+#: admin/admin_options_update.php:191
+msgid "No initially untranslated pages found to set the default language"
+msgstr "Не знайдено початково неперекладених сторінок для встановлення мови за замовчуванням"
+
+#: admin/admin_options_update.php:195
+#, php-format
+msgid "%d posts have been processed to set the default language."
+msgstr "%d дописів було оброблено для встановлення мови за замовчуванням."
+
+#: admin/admin_options_update.php:197
+msgid "No initially untranslated posts found to set the default language."
+msgstr "Не знайдено початково неперекладених дописів для встановлення мови за замовчуванням."
+
+#: admin/admin_options_update.php:200
+msgid "Post types other than \"post\" or \"page\", as well as unpublished entries, will have to be adjusted manually as needed, since there is no common way to automate setting the default language otherwise."
+msgstr "Типи дописів, окрім \"post\" або \"page\", а також неопубліковані записи, потрібно буде налаштувати вручну за необхідності, оскільки іншого поширеного способу автоматизувати встановлення мови за замовчуванням немає."
+
+#: admin/admin_options_update.php:234
+msgid "Language is already enabled or invalid!"
+msgstr "Мова вже увімкнена або недійсна!"
+
+#: admin/admin_options_update.php:240
+msgid "Cannot disable Default Language!"
+msgstr "Неможливо вимкнути Мову за замовчуванням!"
+
+#: admin/admin_options_update.php:244 admin/admin_options_update.php:254
+#: admin/admin_options_update.php:274
+msgid "No such language!"
+msgstr "Такої мови не існує!"
+
+#: admin/admin_options_update.php:249
+msgid "Language is already disabled!"
+msgstr "Мова вже вимкнена!"
+
+#: admin/admin_options_update.php:260
+msgid "Language is already first!"
+msgstr "Мова вже перша!"
+
+#: admin/admin_options_update.php:266 admin/admin_options_update.php:286
+msgid "New order saved."
+msgstr "Новий порядок збережено."
+
+#: admin/admin_options_update.php:280
+msgid "Language is already last!"
+msgstr "Мова вже остання!"
+
+#: admin/admin_options_update.php:301
+msgid "Options saved."
+msgstr "Налаштування збережено."
+
+#: admin/admin_options_update.php:307
+#, php-format
+msgid "Could not write to \"%s\", Gettext Databases could not be downloaded!"
+msgstr "Не вдалося записати до \"%s\", бази даних Gettext не було завантажено!"
+
+#: admin/admin_options_update.php:324
+msgid "Admin notices have been reset. You will see all applicable notices on admin pages and may dismiss them again."
+msgstr "Адміністративні сповіщення скинуто. Ви побачите всі застосовні сповіщення на сторінках адміністратора і зможете знову їх приховати."
+
+#: admin/admin_options_update.php:874
+#, php-format
+msgid "Cannot parse JSON code in the field \"%s\"."
+msgstr "Неможливо розібрати код JSON у полі \"%s\"."
+
+#: admin/admin_options_update.php:934
+msgid "Gettext databases updated."
+msgstr "Бази даних Gettext оновлено."
+
+#: admin/admin_settings.php:78
+msgid "Edit Language"
+msgstr "Редагувати мову"
+
+#: admin/admin_settings.php:79
+msgid "Save Changes &raquo;"
+msgstr "Зберегти зміни &raquo;"
+
+#: admin/admin_settings.php:81 admin/admin_settings.php:252
+#: admin/admin_settings.php:268
+msgid "back to configuration page"
+msgstr "назад до сторінки конфігурації"
+
+#: admin/admin_settings.php:84
+msgid "Language Management (qTranslate-XT Configuration)"
+msgstr "Керування мовами (Конфігурація qTranslate-XT)"
+
+#: admin/admin_settings.php:86
+#, php-format
+msgid "For help on how to configure qTranslate correctly, take a look at the <a href=\"%1$s\">qTranslate FAQ</a> and the <a href=\"%2$s\">Support Forum</a>."
+msgstr "Щоб отримати допомогу щодо правильного налаштування qTranslate, перегляньте <a href=\"%1$s\">FAQ qTranslate</a> та <a href=\"%2$s\">Форум підтримки</a>."
+
+#: admin/admin_settings.php:130 admin/admin_settings.php:195
+msgid "Language Code"
+msgstr "Код мови"
+
+#: admin/admin_settings.php:134
+#, php-format
+msgid "Language <a href=\"%s\">ISO 639 code</a>, two-letter (ISO 639-1) or three-letter (ISO 639-2 and 639-3), lower case. (Examples: en, fr, zh, nds)"
+msgstr "Мовний <a href=\"%s\">код ISO 639</a>, дволітерний (ISO 639-1) або трилітерний (ISO 639-2 та 639-3), у нижньому регістрі. (Приклади: en, fr, zh, nds)"
+
+#: admin/admin_settings.php:136
+msgid "The language code is used in language tags and in URLs. The code may be arbitrary chosen by site owner, although it is preferable to use already commonly accepted code if available. Once a language code is created and entries for this language are made, it is difficult to change it, please make a careful decision."
+msgstr "Код мови використовується в мовних тегах та в URL-адресах. Власник сайту може обрати довільний код, хоча бажано використовувати загальноприйнятий код, якщо такий є. Після створення коду мови та внесення записів для цієї мови його важко змінити, тому, будь ласка, прийміть обережне рішення."
+
+#: admin/admin_settings.php:140 admin/admin_settings.php:164
+#: admin/admin_settings_language_list.php:29
+msgid "Flag"
+msgstr "Прапор"
+
+#: admin/admin_settings.php:169
+msgid "Incorrect Flag Image Path! Please correct it!"
+msgstr "Неправильний шлях до зображення прапора! Будь ласка, виправте його!"
+
+#: admin/admin_settings.php:172
+msgid "Choose the corresponding country flag for language. (Example: gb.png)"
+msgstr "Оберіть відповідний прапор країни для мови. (Приклад: ua.png)"
+
+#: admin/admin_settings.php:175 admin/admin_settings_language_list.php:31
+msgid "Name"
+msgstr "Назва"
+
+#: admin/admin_settings.php:177
+msgid "(in native alphabet)"
+msgstr "(рідним алфавітом)"
+
+#: admin/admin_settings.php:179
+msgid "The Name of the language, which will be displayed on the site. (Example: English)"
+msgstr "Назва мови, яка відображатиметься на сайті. (Приклад: Українська)"
+
+#: admin/admin_settings.php:182 admin/admin_settings_language_list.php:30
+msgid "Locale"
+msgstr "Локаль"
+
+#: admin/admin_settings.php:186
+msgid "PHP and Wordpress Locale for the language. (Example: en_US)"
+msgstr "Локаль PHP та Wordpress для мови. (Приклад: uk)"
+
+#: admin/admin_settings.php:187
+msgid "You will need to install the .mo file for this language."
+msgstr "Вам потрібно буде встановити файл .mo для цієї мови."
+
+#: admin/admin_settings.php:191
+msgid "Locale at front-end"
+msgstr "Локаль на зовнішньому інтерфейсі"
+
+#: admin/admin_settings.php:195
+#, php-format
+msgid "Locale to be used in browser at front-end to set %s HTML attributes to specify alternative languages on a page. If left empty, then \"%s\" is used by default."
+msgstr "Локаль, яка використовуватиметься в браузері на зовнішньому інтерфейсі для встановлення HTML-атрибутів %s, щоб вказати альтернативні мови на сторінці. Якщо залишити порожнім, за замовчуванням використовується \"%s\"."
+
+#: admin/admin_settings.php:200
+msgid "Date Format"
+msgstr "Формат дати"
+
+#: admin/admin_settings.php:203
+#, php-format
+msgid "Depending on your Date / Time Conversion Mode, you can either enter a <a href=\"%s\">strftime</a> (use %s for day suffix) or <a href=\"%s\">date</a> format. This field is optional. (Example: %s)"
+msgstr "Залежно від режиму перетворення дати/часу, ви можете ввести формат <a href=\"%s\">strftime</a> (використовуйте %s для суфікса дня) або <a href=\"%s\">date</a>. Це поле необов'язкове. (Приклад: %s)"
+
+#: admin/admin_settings.php:207
+msgid "Time Format"
+msgstr "Формат часу"
+
+#: admin/admin_settings.php:210
+#, php-format
+msgid "Depending on your Date / Time Conversion Mode, you can either enter a <a href=\"%s\">strftime</a> or <a href=\"%s\">date</a> format. This field is optional. (Example: %s)"
+msgstr "Залежно від режиму перетворення дати/часу, ви можете ввести формат <a href=\"%s\">strftime</a> або <a href=\"%s\">date</a>. Це поле необов'язкове. (Приклад: %s)"
+
+#: admin/admin_settings.php:214 admin/admin_settings.php:463
+msgid "Not Available Message"
+msgstr "Повідомлення про недоступність"
+
+#: admin/admin_settings.php:218
+msgid "Message to display if post is not available in the requested language. (Example: Sorry, this entry is only available in %LANG:, : and %.)"
+msgstr "Повідомлення, яке відображатиметься, якщо допис недоступний у запитаній мові. (Приклад: Вибачте, цей запис доступний лише мовами %LANG:, : та %.)"
+
+#: admin/admin_settings.php:220
+msgid "%LANG:&lt;normal_separator&gt;:&lt;last_separator&gt;% generates a list of languages separated by &lt;normal_separator&gt; except for the last one, where &lt;last_separator&gt; will be used instead."
+msgstr "%LANG:&lt;normal_separator&gt;:&lt;last_separator&gt;% генерує список мов, розділених &lt;normal_separator&gt;, за винятком останньої, де замість нього використовуватиметься &lt;last_separator&gt;."
+
+#: admin/admin_settings.php:222
+#, php-format
+msgid "The language names substituted into the list of available languages are shown translated in the active language. The nominative form of language names is used as it is fetched from %s may not fit the grammar rules of your language. It is then advisable to include quotes in this message like this \"%s\". Alternatively you may modify \"%s\" files in folder \"%s\" with names that fit your grammar rules. Please, %scontact the development team%s, if you decide to modify \"%s\" files."
+msgstr "Назви мов, підставлені у список доступних мов, відображаються перекладеними на активну мову. Використовується називний відмінок назв мов, оскільки вони отримуються з %s, що може не відповідати граматичним правилам вашої мови. Тому радимо включити лапки в це повідомлення, наприклад, так: \"%s\". Крім того, ви можете змінити файли \"%s\" у папці \"%s\" на імена, що відповідають вашим граматичним правилам. Будь ласка, %sзв'яжіться з командою розробників%s, якщо вирішите змінити файли \"%s\"."
+
+#: admin/admin_settings.php:254 admin/admin_settings.php:813
+#: admin/admin_settings.php:836
+msgid "Configuration Inspector"
+msgstr "Інспектор конфігурації"
+
+#: admin/admin_settings.php:256
+#, php-format
+msgid "Review a combined JSON-encoded configuration as loaded from options %s and %s, as well as from the theme and other plugins via filters %s and %s."
+msgstr "Перегляньте комбіновану JSON-кодовану конфігурацію, завантажену з налаштувань %s та %s, а також з теми та інших плагінів через фільтри %s та %s."
+
+#: admin/admin_settings.php:258 admin/admin_settings.php:815
+#: admin/admin_settings.php:834
+#, php-format
+msgid "Please, read %sIntegration Guide%s for more information."
+msgstr "Будь ласка, прочитайте %sПосібник з інтеграції%s для отримання додаткової інформації."
+
+#: admin/admin_settings.php:265
+#, php-format
+msgid "Note to developers: ensure that front-end filter %s is also active on admin side, otherwise the changes it makes will not show up here. Having this filter active on admin side does not affect admin pages functionality, except this field."
+msgstr "Примітка для розробників: переконайтеся, що фільтр зовнішнього інтерфейсу %s також активний на стороні адміністратора, інакше внесені ним зміни тут не відображатимуться. Активність цього фільтра на стороні адміністратора не впливає на функціональність сторінок адміністратора, окрім цього поля."
+
+#: admin/admin_settings.php:275
+msgid "General"
+msgstr "Загальні"
+
+#: admin/admin_settings.php:289 admin/admin_settings.php:429
+msgid "Import"
+msgstr "Імпорт"
+
+#: admin/admin_settings.php:289 admin/admin_settings.php:429
+msgid "Export"
+msgstr "Експорт"
+
+#: admin/admin_settings.php:291
+msgid "Troubleshooting"
+msgstr "Вирішення проблем"
+
+#: admin/admin_settings.php:296
+#, php-format
+msgid "Click to switch to %s"
+msgstr "Натисніть, щоб переключитися на %s"
+
+#: admin/admin_settings.php:326 admin/admin_settings.php:436
+#: admin/admin_settings.php:444
+msgid "Default Language / Order"
+msgstr "Мова за замовчуванням / Порядок"
+
+#: admin/admin_settings.php:328
+msgid "Every multilingual field is expected to have a meaningful content in the \"Default Language\". Usually, it is the language of your site before it became multilingual."
+msgstr "Очікується, що кожне багатомовне поле матиме змістовний вміст на \"Мові за замовчуванням\". Зазвичай, це мова вашого сайту до того, як він став багатомовним."
+
+#: admin/admin_settings.php:330
+msgid "Order of languages defines in which order they are listed, when languages need to be listed, otherwise it is not important."
+msgstr "Порядок мов визначає, в якому порядку вони перелічуються, коли потрібно їх перелічити, в іншому випадку це не має значення."
+
+#: admin/admin_settings.php:333
+msgid "Default Language"
+msgstr "Мова за замовчуванням"
+
+#: admin/admin_settings.php:347 admin/admin_settings.php:955
+#: admin/admin_settings_language_list.php:34
+#: admin/admin_settings_language_list.php:82 modules/acf/fields/image.php:101
+msgid "Edit"
+msgstr "Редагувати"
+
+#: admin/admin_settings.php:347 admin/admin_settings.php:953
+#: admin/admin_settings_language_list.php:73
+msgid "Disable"
+msgstr "Вимкнути"
+
+#: admin/admin_settings.php:355
+#, php-format
+msgid "Choose the default language of your blog. This is the language which will be shown on %s. You can also change the order the languages by clicking on the arrows above."
+msgstr "Оберіть мову за замовчуванням для свого блогу. Це мова, яка відображатиметься на %s. Ви також можете змінити порядок мов, натискаючи на стрілки вище."
+
+#: admin/admin_settings.php:360 admin/admin_settings.php:363
+#: admin/admin_settings.php:556
+msgid "URL Modification Mode"
+msgstr "Режим зміни URL-адреси"
+
+#: admin/admin_settings.php:367
+#, php-format
+msgid "Use Pre-Path Mode (puts %s in front of URL)"
+msgstr "Використовувати режим Pre-Path (розміщує %s перед URL-адресою)"
+
+#: admin/admin_settings.php:367
+msgid "SEO friendly."
+msgstr "Дружній до SEO."
+
+#: admin/admin_settings.php:367 admin/admin_settings_language_list.php:69
+msgid "Default"
+msgstr "За замовчуванням"
+
+#: admin/admin_settings.php:369
+msgid "Requires a permalink structure without query string or index.php (not Plain)."
+msgstr "Потребує структури постійних посилань без рядка запиту або index.php (не Простий)."
+
+#: admin/admin_settings.php:374
+#, php-format
+msgid "Use Pre-Domain Mode (%s)"
+msgstr "Використовувати режим Pre-Domain (%s)"
+
+#: admin/admin_settings.php:374
+msgid "You will need to configure DNS sub-domains on your site."
+msgstr "Вам потрібно буде налаштувати субдомени DNS на своєму сайті."
+
+#: admin/admin_settings.php:378
+msgid "Use Per-Domain mode: specify separate user-defined domain for each language."
+msgstr "Використовувати режим Per-Domain: вказати окремий визначений користувачем домен для кожної мови."
+
+#: admin/admin_settings.php:382
+#, php-format
+msgid "Use Query Mode (%s)"
+msgstr "Використовувати режим Query (%s)"
+
+#: admin/admin_settings.php:382
+msgid "Most SEO unfriendly, not recommended."
+msgstr "Найменш дружній до SEO, не рекомендується."
+
+#: admin/admin_settings.php:401
+msgid "Domain for"
+msgstr "Домен для"
+
+#: admin/admin_settings.php:412
+msgid "Hide URL language information for default language."
+msgstr "Приховати інформацію про мову в URL-адресі для мови за замовчуванням."
+
+#: admin/admin_settings.php:414
+msgid "This is only applicable to Pre-Path and Pre-Domain mode."
+msgstr "Це стосується лише режимів Pre-Path та Pre-Domain."
+
+#: admin/admin_settings.php:418
+msgid "Untranslated Content"
+msgstr "Неперекладений вміст"
+
+#: admin/admin_settings.php:420
+#, php-format
+msgid "The choices below define how to handle untranslated content at front-end of the site. A content of a page or a post is considered untranslated if the main text (%s) is empty for a given language, regardless of other fields like title, excerpt, etc. All three options are independent of each other."
+msgstr "Наведені нижче варіанти визначають, як обробляти неперекладений вміст на зовнішньому інтерфейсі сайту. Вміст сторінки або допису вважається неперекладеним, якщо основний текст (%s) порожній для певної мови, незалежно від інших полів, таких як заголовок, уривок тощо. Усі три опції незалежні одна від одної."
+
+#: admin/admin_settings.php:424
+msgid "Hide posts which content is not available for the selected language."
+msgstr "Приховувати дописи, вміст яких недоступний обраною мовою."
+
+#: admin/admin_settings.php:427
+msgid "When checked, posts will be hidden if the content is not available for the selected language. If unchecked, a message will appear showing all the languages the content is available in."
+msgstr "Якщо позначено, дописи будуть приховані, якщо вміст недоступний обраною мовою. Якщо не позначено, з'явиться повідомлення, що показує всі мови, якими доступний вміст."
+
+#: admin/admin_settings.php:428
+msgid "The message about available languages for the content of a post or a page may also appear if a single post display with an untranslated content if viewed directly."
+msgstr "Повідомлення про доступні мови для вмісту допису чи сторінки також може з'явитися, якщо окремий допис відображається з неперекладеним вмістом під час безпосереднього перегляду."
+
+#: admin/admin_settings.php:429
+#, php-format
+msgid "This function will not work correctly if you installed %s on a blog with existing entries. In this case you will need to take a look at option \"%s\" under \"%s\" section."
+msgstr "Ця функція працюватиме неправильно, якщо ви встановили %s на блозі з наявними записами. У цьому випадку вам потрібно буде подивитися на налаштування \"%s\" у розділі \"%s\"."
+
+#: admin/admin_settings.php:429 admin/import_export.php:87
+#: admin/import_export.php:93 admin/import_export.php:178
+msgid "Convert Database"
+msgstr "Конвертувати базу даних"
+
+#: admin/admin_settings.php:433
+msgid "Show menu items in an alternative language when translation is not available for the selected language."
+msgstr "Показувати елементи меню альтернативною мовою, якщо переклад недоступний для обраної мови."
+
+#: admin/admin_settings.php:436
+#, php-format
+msgid "When checked, menus are shown in the first available language ordered as defined by option \"%s\". If unchecked, menus are displayed only if translated in the current language."
+msgstr "Якщо позначено, меню відображаються першою доступною мовою, упорядкованою відповідно до налаштування \"%s\". Якщо не позначено, меню відображається лише в тому випадку, якщо воно перекладено поточною мовою."
+
+#: admin/admin_settings.php:442
+msgid "Show post content in an alternative language when translation is not available for the selected language."
+msgstr "Показувати вміст допису альтернативною мовою, якщо переклад недоступний для обраної мови."
+
+#: admin/admin_settings.php:444
+#, php-format
+msgid "When a page or a post with an untranslated content is viewed, a message with a list of other available languages is displayed, in which languages are ordered as defined by option \"%s\". If this option is on, then the content of the first available language will also be shown, instead of the expected language, for the sake of user convenience."
+msgstr "Коли переглядається сторінка або допис із неперекладеним вмістом, відображається повідомлення зі списком інших доступних мов, у якому мови впорядковані відповідно до налаштування \"%s\". Якщо ця опція увімкнена, то вміст першої доступної мови також буде показаний замість очікуваної мови, для зручності користувача."
+
+#: admin/admin_settings.php:450
+msgid "Show displayed language prefix when field content is not available for the selected language."
+msgstr "Показувати префікс мови відображення, якщо вміст поля недоступний для обраної мови."
+
+#: admin/admin_settings.php:453
+msgid "This is relevant to all fields other than the main content of posts and pages. Such untranslated fields are always shown in an alternative available language, and will be prefixed with the language name in parentheses, if this option is on."
+msgstr "Це стосується всіх полів, окрім основного вмісту дописів та сторінок. Такі неперекладені поля завжди відображаються альтернативною доступною мовою та матимуть префікс з назвою мови у дужках, якщо цю опцію увімкнено."
+
+#: admin/admin_settings.php:457
+msgid "Language Names"
+msgstr "Назви мов"
+
+#: admin/admin_settings.php:461
+msgid "Show language names in \"Camel Case\"."
+msgstr "Показувати назви мов у стилі \"Camel Case\"."
+
+#: admin/admin_settings.php:463
+#, php-format
+msgid "Define how to display translated language names, whenever languages need to be listed, for example, in \"%s\" statement."
+msgstr "Визначте, як відображати перекладені назви мов, коли потрібно перелічити мови, наприклад, у виразі \"%s\"."
+
+#: admin/admin_settings.php:467
+msgid "Detect Browser Language"
+msgstr "Визначити мову браузера"
+
+#: admin/admin_settings.php:472
+msgid "Detect the language of the browser and redirect accordingly."
+msgstr "Визначити мову браузера та перенаправити відповідно."
+
+#: admin/admin_settings.php:474
+msgid "When the frontpage is visited via bookmark/external link/type-in, the visitor will be forwarded to the correct URL for the language specified by his browser."
+msgstr "Коли відвідувач заходить на головну сторінку за допомогою закладки/зовнішнього посилання/введення, він буде перенаправлений на правильну URL-адресу для мови, вказаної його браузером."
+
+#: admin/admin_settings.php:489
+msgid "Post Types"
+msgstr "Типи дописів"
+
+#: admin/admin_settings.php:491
+msgid "Post types enabled for translation:"
+msgstr "Типи дописів, увімкнені для перекладу:"
+
+#: admin/admin_settings.php:511
+msgid "If a post type unchecked, no fields in a post of that type are treated as translatable on editing pages. However, the manual raw multilingual entries with language tags may still get translated in a usual way at front-end."
+msgstr "Якщо тип допису не позначено, жодне поле в дописі цього типу не розглядатиметься як таке, що можна перекладати на сторінках редагування. Однак, багатомовні записи, введені вручну з мовними тегами, все ще можуть бути перекладені звичайним способом на зовнішньому інтерфейсі."
+
+#: admin/admin_settings.php:515
+msgid "Flag Image Path"
+msgstr "Шлях до зображення прапора"
+
+#: admin/admin_settings.php:522
+#, php-format
+msgid "Path to the flag images under wp-content, with trailing slash. (Default: %s, clear the value above to reset it to the default)"
+msgstr "Шлях до зображень прапорів у wp-content, з кінцевою косою рискою. (За замовчуванням: %s, очистіть значення вище, щоб скинути його до стандартного)"
+
+#: admin/admin_settings.php:526
+msgid "Ignore Links"
+msgstr "Ігнорувати посилання"
+
+#: admin/admin_settings.php:531
+#, php-format
+msgid "Don't convert links to files of the given file types. (Always included: %s)"
+msgstr "Не перетворювати посилання на файли вказаних типів. (Завжди включено: %s)"
+
+#: admin/admin_settings.php:535 admin/languages.php:72 widget.php:184
+msgid "Head inline CSS"
+msgstr "Вбудований CSS у заголовку"
+
+#: admin/admin_settings.php:540
+msgid "CSS code added by plugin in the head of front-end pages:"
+msgstr "Код CSS, доданий плагіном у заголовок сторінок зовнішнього інтерфейсу:"
+
+#: admin/admin_settings.php:545 admin/admin_settings.php:738
+#: admin/admin_settings.php:816 widget.php:184
+msgid "To reset to default, clear the text."
+msgstr "Щоб скинути до значень за замовчуванням, очистіть текст."
+
+#: admin/admin_settings.php:545 widget.php:184
+msgid "To disable this inline CSS, clear the check box."
+msgstr "Щоб вимкнути цей вбудований CSS, зніміть позначку."
+
+#: admin/admin_settings.php:549
+msgid "Cookie Settings"
+msgstr "Налаштування файлів Cookie"
+
+#: admin/admin_settings.php:554
+#, php-format
+msgid "Disable language client cookie \"%s\" (not recommended)."
+msgstr "Вимкнути файл cookie мови клієнта \"%s\" (не рекомендується)."
+
+#: admin/admin_settings.php:556
+#, php-format
+msgid "Language cookie is auto-disabled for \"%s\" \"Pre-Domain\" and \"Per-Domain\", as language is always unambiguously defined by a url in those modes."
+msgstr "Файл cookie мови автоматично вимикається для \"%s\" \"Pre-Domain\" та \"Per-Domain\", оскільки в цих режимах мова завжди однозначно визначається URL-адресою."
+
+#: admin/admin_settings.php:556
+#, php-format
+msgid "Otherwise, use this option with a caution, for simple enough sites only. If checked, the user choice of browsing language will not be saved between sessions and some AJAX calls may deliver unexpected language, as well as some undesired language switching during browsing may occur under certain themes (%sRead More%s)."
+msgstr "В іншому випадку, використовуйте цю опцію обережно, лише для досить простих сайтів. Якщо позначено, вибір мови перегляду користувачем не зберігатиметься між сеансами, а деякі виклики AJAX можуть видавати неочікувану мову, а також може відбуватися небажане перемикання мови під час перегляду в деяких темах (%sДетальніше%s)."
+
+#: admin/admin_settings.php:561
+#, php-format
+msgid "Make %s cookies available only through HTTPS connections."
+msgstr "Зробити файли cookie %s доступними лише через з'єднання HTTPS."
+
+#: admin/admin_settings.php:563
+msgid "Don't check this if you don't know what you're doing!"
+msgstr "Не позначайте це, якщо не знаєте, що робите!"
+
+#: admin/admin_settings.php:567
+msgid "Update Gettext Databases"
+msgstr "Оновити бази даних Gettext"
+
+#: admin/admin_settings.php:572
+msgid "Automatically check for .mo-Database Updates of installed languages."
+msgstr "Автоматично перевіряти наявність оновлень баз даних .mo для встановлених мов."
+
+#: admin/admin_settings.php:578
+msgid "Update Gettext databases now."
+msgstr "Оновити бази даних Gettext зараз."
+
+#: admin/admin_settings.php:580
+msgid "qTranslate will query the Wordpress Localisation Repository every week and download the latest Gettext Databases (.mo Files)."
+msgstr "qTranslate щотижня надсилатиме запити до Репозиторію локалізації WordPress та завантажуватиме найновіші бази даних Gettext (файли .mo)."
+
+#: admin/admin_settings.php:588
+msgid "Use WordPress options and translation. Ignore language date / time formats."
+msgstr "Використовувати налаштування та переклад WordPress. Ігнорувати мовні формати дати/часу."
+
+#: admin/admin_settings.php:592
+msgid "Use emulated date function."
+msgstr "Використовувати емульовану функцію дати."
+
+#: admin/admin_settings.php:597
+msgid "Use emulated date function and replace formats with the predefined formats for each language."
+msgstr "Використовувати емульовану функцію дати та замінити формати на попередньо визначені формати для кожної мови."
+
+#: admin/admin_settings.php:598 admin/admin_settings.php:608
+#: admin/admin_settings.php:823 admin/admin_settings.php:882
+msgid "Deprecated."
+msgstr "Застаріло."
+
+#: admin/admin_settings.php:602
+msgid "Use strftime instead of date."
+msgstr "Використовувати strftime замість date."
+
+#: admin/admin_settings.php:607
+msgid "Use strftime instead of date and replace formats with the predefined formats for each language."
+msgstr "Використовувати strftime замість date та замінити формати на попередньо визначені формати для кожної мови."
+
+#: admin/admin_settings.php:610
+msgid "Depending on the mode selected, additional customizations of the theme may be needed."
+msgstr "Залежно від обраного режиму можуть знадобитися додаткові налаштування теми."
+
+#: admin/admin_settings.php:614
+msgid "Translation of options"
+msgstr "Переклад налаштувань"
+
+#: admin/admin_settings.php:620
+msgid "Filter all WordPress options for translation at front-end. It may hurt performance of the site, but ensures that all options are translated."
+msgstr "Фільтрувати всі налаштування WordPress для перекладу на зовнішньому інтерфейсі. Це може вплинути на продуктивність сайту, але гарантує переклад усіх налаштувань."
+
+#: admin/admin_settings.php:620
+msgid "Starting from version 3.2.5, only options with multilingual content get filtered, which should help on performance issues."
+msgstr "Починаючи з версії 3.2.5, фільтруються лише налаштування з багатомовним вмістом, що має допомогти з проблемами продуктивності."
+
+#: admin/admin_settings.php:627
+msgid "Translate only options listed below (for experts only):"
+msgstr "Перекладати лише налаштування, перелічені нижче (лише для експертів):"
+
+#: admin/admin_settings.php:633
+#, php-format
+msgid "By default, all options are filtered to be translated at front-end for the sake of simplicity of configuration. However, for a developed site, this may cause a considerable performance degradation. Normally, there are very few options, which actually need a translation. You may simply list them above to minimize the performance impact, while still getting translations needed. Options names must match the field \"%s\" of table \"%s\" of WordPress database. A minimum common set of option, normally needed a translation, is already entered in the list above as a default example. Option names in the list may contain wildcard with symbol \"%s\"."
+msgstr "За замовчуванням усі налаштування фільтруються для перекладу на зовнішньому інтерфейсі заради спрощення конфігурації. Однак для розробленого сайту це може спричинити значне погіршення продуктивності. Зазвичай є дуже мало налаштувань, які насправді потребують перекладу. Ви можете просто перелічити їх вище, щоб мінімізувати вплив на продуктивність, але все одно отримати необхідні переклади. Імена налаштувань повинні відповідати полю \"%s\" таблиці \"%s\" бази даних WordPress. Мінімальний загальний набір налаштувань, які зазвичай потребують перекладу, вже внесено у список вище як приклад за замовчуванням. Імена налаштувань у списку можуть містити шаблонний символ \"%s\"."
+
+#: admin/admin_settings.php:637
+msgid "Editor Mode"
+msgstr "Режим редактора"
+
+#: admin/admin_settings.php:642
+msgid "Use Language Switching Buttons (LSB)."
+msgstr "Використовувати Кнопки Перемикання Мови - КПМ (LSB)."
+
+#: admin/admin_settings.php:644
+msgid "This is the default mode."
+msgstr "Це режим за замовчуванням."
+
+#: admin/admin_settings.php:644
+msgid "Pages with translatable fields have Language Switching Buttons, which control what language is being edited, while admin language stays the same."
+msgstr "Сторінки з полями, що можна перекладати, мають Кнопки Перемикання Мови (LSB), які контролюють, яка мова редагується, тоді як мова адміністратора залишається незмінною."
+
+#: admin/admin_settings.php:649
+msgid "Editor Raw Mode"
+msgstr "Режим сирого редагування"
+
+#: admin/admin_settings.php:650
+msgid "Do not use Language Switching Buttons to edit multi-language text entries."
+msgstr "Не використовувати Кнопки Перемикання Мови (LSB) для редагування багатомовних текстових записів."
+
+#: admin/admin_settings.php:652
+msgid "Some people prefer to edit the raw entries containing all languages together separated by language defining tags, as they are stored in database."
+msgstr "Деякі люди вважають за краще редагувати сирі записи, що містять усі мови разом, розділені тегами, що визначають мову, як вони зберігаються у базі даних."
+
+#: admin/admin_settings.php:657
+msgid "Single Language Mode."
+msgstr "Режим однієї мови."
+
+#: admin/admin_settings.php:657
+msgid "The language edited is the same as admin language."
+msgstr "Мова, що редагується, збігається з мовою адміністратора."
+
+#: admin/admin_settings.php:659
+msgid "Edit language cannot be switched without page re-loading. Try this mode, if some of the advanced translatable fields do not properly respond to the Language Switching Buttons due to incompatibility with a plugin, which severely alters the default WP behaviour. This mode is the most compatible with other themes and plugins."
+msgstr "Мову редагування не можна перемкнути без перезавантаження сторінки. Спробуйте цей режим, якщо деякі з розширених полів, що можна перекладати, не реагують належним чином на Кнопки Перемикання Мови (LSB) через несумісність із плагіном, який суттєво змінює стандартну поведінку WP. Цей режим є найбільш сумісним з іншими темами та плагінами."
+
+#: admin/admin_settings.php:659
+msgid "One may find convenient to use the default Editor Mode, while remembering not to switch edit languages on custom advanced translatable fields, where LSB do not work."
+msgstr "Може бути зручно використовувати стандартний Режим редактора, пам'ятаючи при цьому не перемикати мови редагування в спеціальних розширених полях, що можна перекладати, де КПМ (LSB) не працюють."
+
+#: admin/admin_settings.php:664
+msgid "Simple Buttons"
+msgstr "Прості кнопки"
+
+#: admin/admin_settings.php:665
+msgid "Simple Tabs"
+msgstr "Прості вкладки"
+
+#: admin/admin_settings.php:666
+msgid "Tabs in Block"
+msgstr "Вкладки у блоці"
+
+#: admin/admin_settings.php:667 admin/admin_settings.php:680
+#: admin/admin_settings.php:729 admin/admin_settings.php:732
+msgid "Use custom CSS"
+msgstr "Використовувати власний CSS"
+
+#: admin/admin_settings.php:670 admin/admin_settings.php:673
+msgid "LSB Style"
+msgstr "Стиль КПМ (LSB)"
+
+#: admin/admin_settings.php:674
+msgid "Choose CSS style for how Language Switching Buttons are rendered:"
+msgstr "Оберіть стиль CSS для відображення Кнопок Перемикання Мови (LSB):"
+
+#: admin/admin_settings.php:680
+#, php-format
+msgid "Choice \"%s\" disables this option and allows one to use its own custom CSS provided by other means."
+msgstr "Вибір \"%s\" вимикає цю опцію і дозволяє використовувати власний CSS, наданий іншими засобами."
+
+#: admin/admin_settings.php:684
+msgid "Hide button \"Copy From\", which allows to copy multilingual content from other language."
+msgstr "Приховати кнопку \"Копіювати з\", яка дозволяє копіювати багатомовний вміст з іншої мови."
+
+#: admin/admin_settings.php:698 admin/admin_settings.php:702
+#: admin/user_options.php:23
+msgid "Highlight Style"
+msgstr "Стиль виділення"
+
+#: admin/admin_settings.php:700
+msgid "When there are many integrated or customized translatable fields, it may become confusing to know which field has multilingual value. The highlighting of translatable fields may come handy then:"
+msgstr "Коли є багато інтегрованих або налаштованих полів, що можна перекладати, може стати складно зрозуміти, яке поле має багатомовне значення. Тоді може стати у пригоді виділення полів, що можна перекладати:"
+
+#: admin/admin_settings.php:703 admin/admin_settings.php:706
+msgid "Do not highlight the translatable fields."
+msgstr "Не виділяти поля, що можна перекладати."
+
+#: admin/admin_settings.php:709 admin/admin_settings.php:712
+msgid "Show a line on the left border of translatable fields."
+msgstr "Показувати лінію на лівій межі полів, що можна перекладати."
+
+#: admin/admin_settings.php:714 admin/admin_settings.php:717
+msgid "Draw a border around translatable fields."
+msgstr "Намалювати рамку навколо полів, що можна перекладати."
+
+#: admin/admin_settings.php:719 admin/admin_settings.php:722
+msgid "Show a shadow on the left of translatable fields."
+msgstr "Показувати тінь ліворуч від полів, що можна перекладати."
+
+#: admin/admin_settings.php:724 admin/admin_settings.php:727
+msgid "Outline border around translatable fields."
+msgstr "Обвести рамкою поля, що можна перекладати."
+
+#: admin/admin_settings.php:739
+#, php-format
+msgid "The color in use is taken from your profile option %s, the third color."
+msgstr "Використовуваний колір береться з налаштування вашого профілю %s, третій колір."
+
+#: admin/admin_settings.php:759
+#, php-format
+msgid "If your theme or some plugins are not fully integrated with %s, suggest their authors to review the %sIntegration Guide%s. In many cases they would only need to create a simple text file in order to be fully compatible with %s. Alternatively, you may create such a file for them and for yourselves."
+msgstr "Якщо ваша тема або деякі плагіни не повністю інтегровані з %s, порадьте їхнім авторам переглянути %sПосібник з інтеграції%s. У багатьох випадках їм потрібно лише створити простий текстовий файл, щоб бути повністю сумісними з %s. Крім того, ви можете створити такий файл для них та для себе."
+
+#: admin/admin_settings.php:761
+#, php-format
+msgid "Read %sIntegration Guide%s for more information..."
+msgstr "Прочитайте %sПосібник з інтеграції%s для отримання додаткової інформації..."
+
+#: admin/admin_settings.php:768
+msgid "Add a new language"
+msgstr "Додати нову мову"
+
+#: admin/admin_settings.php:771
+msgid "Add New Language"
+msgstr "Додати нову мову"
+
+#: admin/admin_settings.php:788
+msgid "Edit Language Properties"
+msgstr "Редагувати властивості мови"
+
+#: admin/admin_settings.php:793
+msgid "Delete Language"
+msgstr "Видалити мову"
+
+#: admin/admin_settings.php:794
+#, php-format
+msgid "Are you sure you want to delete language \"%s\"?"
+msgstr "Ви впевнені, що хочете видалити мову \"%s\"?"
+
+#: admin/admin_settings.php:796
+msgid "Delete Language &raquo;"
+msgstr "Видалити мову &raquo;"
+
+#: admin/admin_settings.php:805
+msgid "File Configuration"
+msgstr "Конфігурація файлу"
+
+#: admin/admin_settings.php:810
+msgid "Theme Integration"
+msgstr "Інтеграція з темою"
+
+#: admin/admin_settings.php:820
+msgid "Configuration Defaults"
+msgstr "Стандартні налаштування конфігурації"
+
+#: admin/admin_settings.php:829
+msgid "Other Configuration"
+msgstr "Інша конфігурація"
+
+#: admin/admin_settings.php:847
+msgid "Filter Custom Fields"
+msgstr "Фільтрувати користувацькі поля"
+
+#: admin/admin_settings.php:850
+msgid "Custom fields listed here will be processed for language tags on display, and will use language switching buttons on edit pages, if applicable."
+msgstr "Користувацькі поля, перелічені тут, будуть оброблятися на наявність мовних тегів під час відображення, і використовуватимуть Кнопки Перемикання Мови (LSB) на сторінках редагування, якщо це застосовно."
+
+#: admin/admin_settings.php:854
+msgid "Filter Custom Fields and Meta"
+msgstr "Фільтрувати користувацькі поля та метадані"
+
+#: admin/admin_settings.php:857
+msgid "Custom fields listed here will be processed for language tags and will be stored with language tags in database."
+msgstr "Користувацькі поля, перелічені тут, будуть оброблятися на наявність мовних тегів та зберігатимуться з мовними тегами у базі даних."
+
+#: admin/admin_settings.php:861
+msgid "Custom Fields to be excluded from filtering"
+msgstr "Користувацькі поля, які потрібно виключити з фільтрування"
+
+#: admin/admin_settings.php:864
+msgid "These fields will be ignored from filtering for language tags."
+msgstr "Ці поля будуть ігноруватися під час фільтрування на наявність мовних тегів."
+
+#: admin/admin_settings.php:869
+msgid "Compatibility"
+msgstr "Сумісність"
+
+#: admin/admin_settings.php:874
+msgid "Alternative Language Source"
+msgstr "Альтернативне джерело мови"
+
+#: admin/admin_settings.php:878
+msgid "Use alternative theme compatibility functions."
+msgstr "Використовувати альтернативні функції сумісності теми."
+
+#: admin/admin_settings.php:879
+msgid "Try to use theme compatibility functions for retrieving current language instead of the default core functions."
+msgstr "Спробувати використати функції сумісності теми для отримання поточної мови замість стандартних основних функцій."
+
+#: admin/admin_settings.php:885
+msgid "Use filter to retrieve the language of the post instead of its actual language from meta."
+msgstr "Використовувати фільтр для отримання мови допису замість його фактичної мови з метаданих."
+
+#: admin/admin_settings.php:889
+msgid "Compatibility with WordPress Multisite"
+msgstr "Сумісність із WordPress Multisite"
+
+#: admin/admin_settings.php:893
+msgid "Use unique database fields for each site on WordPress Multisite."
+msgstr "Використовувати унікальні поля бази даних для кожного сайту на WordPress Multisite."
+
+#: admin/admin_settings.php:900
+msgid "Reset all dismissible admin notices."
+msgstr "Скинути всі адміністративні сповіщення, які можна приховати."
+
+#: admin/admin_settings.php:904
+msgid "Reset Admin Notices"
+msgstr "Скинути адміністративні сповіщення"
+
+#: admin/admin_settings.php:914
+msgid "Language Switcher Options"
+msgstr "Налаштування Перемикача Мов"
+
+#: admin/admin_settings.php:918
+msgid "Widget"
+msgstr "Віджет"
+
+#: admin/admin_settings.php:922
+msgid "Display Language Switcher in the Admin Bar."
+msgstr "Відображати Перемикач Мов на Панелі Адміністратора."
+
+#: admin/admin_settings.php:926
+msgid "The widget option enables the Language Switcher to be put anywhere with a simple function call, which may be needed for some themes or plugins."
+msgstr "Опція віджета дозволяє розмістити Перемикач Мов у будь-якому місці за допомогою простого виклику функції, що може знадобитися для деяких тем або плагінів."
+
+#: admin/admin_settings.php:930
+msgid "Language Switcher functions may also be used in themes."
+msgstr "Функції Перемикача Мов також можуть використовуватися в темах."
+
+#: admin/admin_settings.php:933
+msgid "Menu item"
+msgstr "Елемент меню"
+
+#: admin/admin_settings.php:936
+msgid "Adds the Language Switcher as a regular menu item to the Appearance/Menus configuration page."
+msgstr "Додає Перемикач Мов як звичайний елемент меню на сторінку налаштувань Вигляд/Меню."
+
+#: admin/admin_settings.php:945
+msgid "Language Menu Label:"
+msgstr "Мітка Мовного Меню:"
+
+#: admin/admin_settings.php:949
+msgid "You can customize the label of the language menu here. The label is only used for the Language Switcher added as a menu item."
+msgstr "Тут можна налаштувати мітку мовного меню. Мітка використовується лише для Перемикача Мов, доданого як елемент меню."
+
+#: admin/admin_settings_language_list.php:28
+msgid "Order"
+msgstr "Порядок"
+
+#: admin/admin_settings_language_list.php:32
+msgid "Not Avail."
+msgstr "Недоступ."
+
+#: admin/admin_settings_language_list.php:33
+msgid "Enabled"
+msgstr "Увімкнено"
+
+#: admin/admin_settings_language_list.php:34
+msgid "Set as Default"
+msgstr "Встановити як стандартну"
+
+#: admin/admin_settings_language_list.php:78
+msgid "Enable"
+msgstr "Увімкнути"
+
+#: admin/admin_settings_language_list.php:86
+msgid "Move Up"
+msgstr "Перемістити вгору"
+
+#: admin/admin_settings_language_list.php:89
+msgid "Move Down"
+msgstr "Перемістити вниз"
+
+#: admin/admin_settings_language_list.php:93
+msgid "Move to First"
+msgstr "Перемістити на початок"
+
+#: admin/admin_settings_language_list.php:96
+msgid "Move to Last"
+msgstr "Перемістити в кінець"
+
+#: admin/admin_utils.php:214
+msgid "Language List"
+msgstr "Список мов"
+
+#: admin/admin_utils.php:237
+msgid "Code"
+msgstr "Код"
+
+#: admin/admin_utils.php:240
+msgid "Flag File"
+msgstr "Файл прапора"
+
+#: admin/admin_utils.php:243
+msgid "No Available Message"
+msgstr "Повідомлення про недоступність"
+
+#: admin/admin_utils.php:244
+msgid "URL Domain"
+msgstr "Домен URL-адреси"
+
+#: admin/import_export.php:31
+msgid "Import and Export"
+msgstr "Імпорт та Експорт"
+
+#: admin/import_export.php:33
+#, php-format
+msgid "From this page you can convert existing entries to multi-language entries or export existing multi-language entries to other multilingual plugins. For more information, see %sWiki%s."
+msgstr "На цій сторінці ви можете перетворити наявні записи на багатомовні записи або експортувати наявні багатомовні записи для інших багатомовних плагінів. Для отримання додаткової інформації див. %sWiki%s."
+
+#: admin/import_export.php:36
+msgid "Import / Export Compatible Settings"
+msgstr "Імпорт / Експорт сумісних налаштувань"
+
+#: admin/import_export.php:39
+#, php-format
+msgid "Import compatible settings from plugin %s to %s. All existing settings of plugin %s will be overwritten."
+msgstr "Імпортувати сумісні налаштування з плагіна %s до %s. Усі наявні налаштування плагіна %s буде перезаписано."
+
+#: admin/import_export.php:40
+#, php-format
+msgid "Import settings from %s"
+msgstr "Імпортувати налаштування з %s"
+
+#: admin/import_export.php:44
+#, php-format
+msgid "Export compatible settings from plugin %s to %s. All existing settings of plugin %s will be overwritten."
+msgstr "Експортувати сумісні налаштування з плагіна %s до %s. Усі наявні налаштування плагіна %s буде перезаписано."
+
+#: admin/import_export.php:45
+#, php-format
+msgid "Export settings to %s"
+msgstr "Експортувати налаштування до %s"
+
+#: admin/import_export.php:50
+msgid "Import/Export Slugs"
+msgstr "Імпорт/Експорт слаґів"
+
+#: admin/import_export.php:53
+#, php-format
+msgid "You may import %s language slugs to %s. Existing slugs will be preserved."
+msgstr "Ви можете імпортувати слаґи мови %s до %s. Наявні слаґи будуть збережені."
+
+#: admin/import_export.php:54
+#, php-format
+msgid "Import slugs from %s"
+msgstr "Імпортувати слаґи з %s"
+
+#: admin/import_export.php:57
+#, php-format
+msgid "You may export %s language slugs to %s. Existing slugs will be overwritten."
+msgstr "Ви можете експортувати слаґи мови %s до %s. Наявні слаґи будуть перезаписані."
+
+#: admin/import_export.php:58
+#, php-format
+msgid "Export slugs to %s"
+msgstr "Експортувати слаґи до %s"
+
+#: admin/import_export.php:65
+msgid "Data Conversion"
+msgstr "Перетворення даних"
+
+#: admin/import_export.php:73
+msgid "Multi-Language Text to Other Format"
+msgstr "Багатомовний текст в інший формат"
+
+#: admin/import_export.php:76
+msgid "Select a multi-language content of posts and pages to be converted and extracted to an alternative format which can be used by other multilingual plugins."
+msgstr "Оберіть багатомовний вміст дописів і сторінок для перетворення та вилучення в альтернативний формат, який може використовуватися іншими багатомовними плагінами."
+
+#: admin/import_export.php:80
+msgid "Post Type"
+msgstr "Тип допису"
+
+#: admin/import_export.php:82
+msgid "All available post types"
+msgstr "Усі доступні типи дописів"
+
+#: admin/import_export.php:85
+msgid "Custom Post Types Only"
+msgstr "Лише користувацькі типи дописів"
+
+#: admin/import_export.php:90
+msgid "Extract only pages and posts"
+msgstr "Витягти лише сторінки та дописи"
+
+#: admin/import_export.php:91
+msgid "Extract all available post types"
+msgstr "Витягти всі доступні типи дописів"
+
+#: admin/import_export.php:97
+msgid "Use the language code as a slug."
+msgstr "Використовувати код мови як слаґ."
+
+#: admin/import_export.php:98
+msgid "If checked, the converted single language entries will have the language code prepended to the slug."
+msgstr "Якщо позначено, перетворені записи однією мовою матимуть префікс коду мови перед слаґом."
+
+#: admin/import_export.php:100
+msgid "Convert post/page slug from multi-language to single language."
+msgstr "Перетворити слаґ допису/сторінки з багатомовного на одномовний."
+
+#: admin/import_export.php:104
+msgid "Other Multi-Language Format to Multi-Language Text"
+msgstr "Інший багатомовний формат у багатомовний текст"
+
+#: admin/import_export.php:107
+msgid "Select an alternative format of posts and pages to be converted to qTranslate multi-language format, which can be extracted from other multilingual plugins."
+msgstr "Оберіть альтернативний формат дописів і сторінок для перетворення у багатомовний формат qTranslate, який можна вилучити з інших багатомовних плагінів."
+
+#: admin/import_export.php:111
+msgid "Format Source"
+msgstr "Джерело формату"
+
+#: admin/import_export.php:123
+msgid "Multi-Language"
+msgstr "Багатомовний"
+
+#: admin/import_export.php:125
+msgid "Use default multi-language format."
+msgstr "Використовувати стандартний багатомовний формат."
+
+#: admin/import_export.php:127
+msgid "Multi-Language with Tags"
+msgstr "Багатомовний з тегами"
+
+#: admin/import_export.php:129
+msgid "Wrap multi-language content with tags."
+msgstr "Обгорнути багатомовний вміст тегами."
+
+#: admin/import_export.php:131
+msgid "Multi-Language with Newline"
+msgstr "Багатомовний з новим рядком"
+
+#: admin/import_export.php:133
+msgid "Separate multi-language content with newline."
+msgstr "Розділяти багатомовний вміст новим рядком."
+
+#: admin/import_export.php:137
+msgid "Convert post/page slug from single language to multi-language."
+msgstr "Перетворити слаґ допису/сторінки з одномовного на багатомовний."
+
+#: admin/import_export.php:143
+msgid "Reset"
+msgstr "Скинути"
+
+#: admin/import_export.php:147
+msgid "This option resets ALL qTranslate options to the default setting. Are you sure you want to continue?"
+msgstr "Ця опція скидає ВСІ налаштування qTranslate до стандартних значень. Ви впевнені, що хочете продовжити?"
+
+#: admin/import_export.php:148
+msgid "Reset Options &raquo;"
+msgstr "Скинути налаштування &raquo;"
+
+#: admin/import_export.php:160
+msgid "Convert existing content to multi-language format."
+msgstr "Перетворити наявний вміст на багатомовний формат."
+
+#: admin/import_export.php:164
+msgid "Convert Existing Content"
+msgstr "Перетворити наявний вміст"
+
+#: admin/import_export.php:167
+msgid "Post / Page"
+msgstr "Допис / Сторінка"
+
+#: admin/import_export.php:168
+msgid "Post"
+msgstr "Допис"
+
+#: admin/import_export.php:168
+msgid "Page"
+msgstr "Сторінка"
+
+#: admin/import_export.php:170
+msgid "Select post types to perform conversion on. Usually, you only need conversion for posts and pages, since custom post types are usually handled differently in a theme."
+msgstr "Оберіть типи дописів для виконання перетворення. Зазвичай, вам потрібне перетворення лише для дописів та сторінок, оскільки користувацькі типи дописів зазвичай обробляються в темі інакше."
+
+#: admin/import_export.php:173
+msgid "All Custom Post Types"
+msgstr "Усі користувацькі типи дописів"
+
+#: admin/import_export.php:179
+msgid "The conversion will wrap the old content of a post or a page with the language tag of the currently default language. The old content will become the new translated content of the default language."
+msgstr "Перетворення обгорне старий вміст допису або сторінки тегом мови поточної мови за замовчуванням. Старий вміст стане новим перекладеним вмістом мови за замовчуванням."
+
+#: admin/import_export.php:181
+msgid "Set Default Language to Existing Content"
+msgstr "Встановити мову за замовчуванням для наявного вмісту"
+
+#: admin/import_export.php:183
+msgid "This feature is useful if you installed qTranslate on a blog with existing entries, which do not have a default language set yet. It sets the default language on all pages and posts, which do not have multi-language content yet. No content will be modified."
+msgstr "Ця функція корисна, якщо ви встановили qTranslate на блозі з наявними записами, для яких ще не встановлено мову за замовчуванням. Вона встановлює мову за замовчуванням для всіх сторінок та дописів, які ще не мають багатомовного вмісту. Жоден вміст не буде змінений."
+
+#: admin/languages.php:68 widget.php:180
+msgid "CSS Classes"
+msgstr "Класи CSS"
+
+#: admin/languages.php:73 widget.php:185
+msgid "The label of the item."
+msgstr "Мітка елемента."
+
+#: admin/languages.php:74
+msgid "The label of the language item. Empty means the language name is used. Language tags are allowed, e.g. [:en]English[:de]Deutsch"
+msgstr "Мітка мовного елемента. Порожнє значення означає використання назви мови. Дозволені мовні теги, наприклад: [:en]English[:de]Deutsch"
+
+#: admin/languages.php:75
+msgid "URL"
+msgstr "URL"
+
+#: admin/languages.php:76
+msgid "Title attribute"
+msgstr "Атрибут Title"
+
+#: admin/languages.php:77
+msgid "HTML id attribute"
+msgstr "Атрибут HTML id"
+
+#: admin/languages.php:78
+msgid "HTML rel attribute"
+msgstr "Атрибут HTML rel"
+
+#: admin/languages.php:79
+msgid "HTML class attribute"
+msgstr "Атрибут HTML class"
+
+#: admin/languages.php:80
+msgid "CSS style attribute"
+msgstr "Атрибут CSS style"
+
+#: admin/languages.php:81
+msgid "HTML target attribute"
+msgstr "Атрибут HTML target"
+
+#: admin/languages.php:82
+msgid "HTML a-tag on-click attribute"
+msgstr "Атрибут HTML a-tag on-click"
+
+#: admin/languages.php:83
+msgid "Additional item menu configuration options"
+msgstr "Додаткові параметри конфігурації елемента меню"
+
+#: admin/languages.php:97
+msgid "Switch language to"
+msgstr "Перемкнути мову на"
+
+#: admin/languages.php:100
+msgid "Current language is"
+msgstr "Поточна мова"
+
+#: admin/languages.php:111
+msgid "Language"
+msgstr "Мова"
+
+#: admin/languages.php:112
+msgid "Language code"
+msgstr "Код мови"
+
+#: admin/languages.php:113
+msgid "Not available message"
+msgstr "Повідомлення про недоступність"
+
+#: admin/languages.php:114
+msgid "Show alternative language"
+msgstr "Показати альтернативну мову"
+
+#: admin/languages.php:115
+msgid "Hide if not available"
+msgstr "Приховати, якщо недоступно"
+
+#: admin/languages.php:120
+msgid "Flag Path"
+msgstr "Шлях до прапора"
+
+#: admin/languages.php:121
+msgid "Flag Image"
+msgstr "Зображення прапора"
+
+#: admin/languages.php:122
+msgid "HTML lang attribute"
+msgstr "Атрибут HTML lang"
+
+#: admin/languages.php:124
+msgid "Multilingual"
+msgstr "Багатомовний"
+
+#: admin/languages.php:132
+msgid "Language is not available."
+msgstr "Мова недоступна."
+
+#: admin/languages.php:134
+msgid "Use alternative language."
+msgstr "Використовувати альтернативну мову."
+
+#: admin/languages.php:137
+msgid "Hide if not available."
+msgstr "Приховати, якщо недоступно."
+
+#: admin/languages.php:143
+msgid "Use Custom Domain"
+msgstr "Використовувати власний домен"
+
+#: admin/languages.php:149
+msgid "Use custom domain for this language."
+msgstr "Використовувати власний домен для цієї мови."
+
+#: admin/languages.php:154
+msgid "URL Code"
+msgstr "Код URL-адреси"
+
+#: admin/languages.php:159
+msgid "Use custom URL code for this language."
+msgstr "Використовувати власний код URL-адреси для цієї мови."
+
+#: admin/user_options.php:25
+msgid "Highlighting of translatable fields:"
+msgstr "Виділення полів, що можна перекладати:"
+
+#: modules/acf/acf.php:218
+#, php-format
+msgid "Plugin %s requires ACF version %s or newer to enable full support."
+msgstr "Для повної підтримки плагіну %s потрібна версія ACF %s або новіша."
+
+#: modules/acf/acf.php:218
+msgid "Advanced Custom Fields"
+msgstr "Розширені користувацькі поля"
+
+#: modules/admin_module_manager.php:136
+#, php-format
+msgid "Module \"%s\" is loaded but not active."
+msgstr "Модуль \"%s\" завантажено, але він не активний."
+
+#: modules/admin_module_manager.php:144
+#, php-format
+msgid "Activate %s"
+msgstr "Активувати %s"
+
+#: modules/admin_module_manager.php:147
+#, php-format
+msgid "Module \"%s\" is loaded and active."
+msgstr "Модуль \"%s\" завантажено та він активний."
+
+#: modules/admin_module_manager.php:151
+#, php-format
+msgid "Module \"%s\" has failed to load."
+msgstr "Модуль \"%s\" не вдалося завантажити."
+
+#: modules/admin_module_manager.php:154
+msgid "Could not load class for the module."
+msgstr "Не вдалося завантажити клас для модуля."
+
+#: modules/admin_module_manager.php:157
+msgid "Unknown module status."
+msgstr "Невідомий статус модуля."
+
+#: modules/admin_module_manager.php:164
+msgid "Module Manager"
+msgstr "Менеджер модулів"
+
+#: modules/admin_module_manager.php:166
+msgid "Modules"
+msgstr "Модулі"
+
+#: modules/admin_module_manager.php:177
+msgid "Module"
+msgstr "Модуль"
+
+#: modules/admin_module_manager.php:178
+msgid "Description"
+msgstr "Опис"
+
+#: modules/admin_module_manager.php:179
+msgid "Status"
+msgstr "Статус"
+
+#: modules/admin_module_manager.php:220
+msgid "Module Management"
+msgstr "Керування модулями"
+
+#: modules/admin_module_manager.php:222
+msgid "All modules"
+msgstr "Усі модулі"
+
+#: modules/admin_module_manager.php:223
+msgid "Active modules"
+msgstr "Активні модулі"
+
+#: modules/admin_module_manager.php:224
+msgid "Inactive modules"
+msgstr "Неактивні модулі"
+
+#: modules/admin_module_manager.php:225
+msgid "Failed modules"
+msgstr "Невдалі модулі"
+
+#: modules/admin_module_manager.php:227
+msgid "List all modules"
+msgstr "Перелічити всі модулі"
+
+#: modules/module_acf.php:67
+msgid "Advanced Custom Fields (ACF) Module"
+msgstr "Модуль Розширених користувацьких полів (ACF)"
+
+#: modules/module_acf.php:69
+msgid "Adds support for ACF to handle multi-language fields on edit pages and front-end."
+msgstr "Додає підтримку ACF для обробки багатомовних полів на сторінках редагування та зовнішньому інтерфейсі."
+
+#: modules/module_compat.php:40
+msgid "Compatibility Module"
+msgstr "Модуль сумісності"
+
+#: modules/module_compat.php:42
+msgid "Adds functions for compatibility with other multilingual plugins."
+msgstr "Додає функції для сумісності з іншими багатомовними плагінами."
+
+#: modules/module_lsb.php:48
+msgid "Language Switching Buttons (LSB) Module"
+msgstr "Модуль Кнопок Перемикання Мови - КПМ (LSB)"
+
+#: modules/module_lsb.php:50
+msgid "Manages the Language Switching Buttons on edit pages to switch edit language and display content in a single language."
+msgstr "Керує Кнопками Перемикання Мови (LSB) на сторінках редагування для перемикання мови редагування та відображення вмісту однією мовою."
+
+#: modules/module_qss.php:48
+msgid "qTranslate Search Strings (QSS) Module"
+msgstr "Модуль Рядків пошуку qTranslate (QSS)"
+
+#: modules/module_qss.php:50
+msgid "Allows searching multilingual content by providing search strings in current language. Also adds support for full text search."
+msgstr "Дозволяє здійснювати пошук багатомовного вмісту, надаючи рядки пошуку поточною мовою. Також додає підтримку повнотекстового пошуку."
+
+#: modules/module_qss.php:51
+msgid "Optional: requires full text search capability of database."
+msgstr "Необов'язково: потребує можливості повнотекстового пошуку бази даних."
+
+#: modules/module_qtx_migrator.php:48
+msgid "qTranslate-XT Migrator Module"
+msgstr "Модуль міграції qTranslate-XT"
+
+#: modules/module_qtx_migrator.php:50
+msgid "Provides features for migrating from qTranslate to qTranslate-XT and vice-versa."
+msgstr "Надає функції для міграції з qTranslate на qTranslate-XT і навпаки."
+
+#: modules/module_surl.php:48
+msgid "Simplified URL (SURL) Module"
+msgstr "Модуль спрощених URL-адрес (SURL)"
+
+#: modules/module_surl.php:50
+msgid "Allows one to use a simplified URL structure (without /xx/ or ?lang=xx) for the default language."
+msgstr "Дозволяє використовувати спрощену структуру URL-адреси (без /xx/ або ?lang=xx) для мови за замовчуванням."
+
+#: modules/module_widgets.php:47
+msgid "Widgets Module"
+msgstr "Модуль віджетів"
+
+#: modules/module_widgets.php:49
+msgid "Provides widgets for multilingual features."
+msgstr "Надає віджети для багатомовних функцій."
+
+#: modules/module_wpml_compat.php:46
+msgid "WPML Compatibility Module"
+msgstr "Модуль сумісності з WPML"
+
+#: modules/module_wpml_compat.php:48
+msgid "Provides some functions to retrieve multilingual content that are compatible with WPML."
+msgstr "Надає деякі функції для отримання багатомовного вмісту, сумісні з WPML."
+
+#: modules/module_x.php:50
+msgid "X-Module"
+msgstr "X-Модуль"
+
+#: modules/module_x.php:52
+msgid "Adds experimental features."
+msgstr "Додає експериментальні функції."
+
+#: widget.php:37
+msgid "Allows your visitors to choose a Language."
+msgstr "Дозволяє відвідувачам обирати мову."
+
+#: widget.php:39
+msgid "qTranslate Language Chooser"
+msgstr "Перемикач мов qTranslate"
+
+#: widget.php:121
+msgid "Title:"
+msgstr "Заголовок:"
+
+#: widget.php:125
+msgid "Hide Title:"
+msgstr "Приховати заголовок:"
+
+#: widget.php:131
+msgid "Hide Title Colon:"
+msgstr "Приховати двокрапку заголовка:"
+
+#: widget.php:135
+msgid "Display:"
+msgstr "Відображення:"
+
+#: widget.php:139
+msgid "Text only"
+msgstr "Лише текст"
+
+#: widget.php:144
+msgid "Image only"
+msgstr "Лише зображення"
+
+#: widget.php:149 widget.php:175
+msgid "Text and Image"
+msgstr "Текст та зображення"
+
+#: widget.php:154
+msgid "Dropdown Box"
+msgstr "Спадний список"
+
+#: widget.php:159
+msgid "Custom list item format:"
+msgstr "Власний формат елемента списку:"
+
+#: widget.php:167
+msgid "Accepted format arguments:"
+msgstr "Допустимі аргументи формату:"
+
+#: widget.php:168
+msgid "Flag Image HTML"
+msgstr "HTML-код зображення прапора"
+
+#: widget.php:169
+msgid "Flag Image URL"
+msgstr "URL-адреса зображення прапора"
+
+#: widget.php:170
+msgid "Language Code (lower case)"
+msgstr "Код мови (нижній регістр)"
+
+#: widget.php:171
+msgid "Language Name"
+msgstr "Назва мови"
+
+#: widget.php:172
+msgid "Language Name (lower case)"
+msgstr "Назва мови (нижній регістр)"
+
+#: widget.php:173
+msgid "Language Name (Camel Case)"
+msgstr "Назва мови (Camel Case)"
+
+#: widget.php:174
+msgid "Text only (Language Name)"
+msgstr "Лише текст (Назва мови)"
+
+#: widget.php:176
+msgid "Image only (Flag Image)"
+msgstr "Лише зображення (Зображення прапора)"
+
+#: widget.php:177
+msgid "Custom item menu label"
+msgstr "Мітка власного елементу меню"
+
+#: widget.php:193
+msgid "Hide unavailable languages:"
+msgstr "Приховати недоступні мови:"
+
+#: widget.php:197
+msgid "Display only available languages."
+msgstr "Відображати лише доступні мови."
+
+#: widget.php:199
+msgid "Use Custom Language URL:"
+msgstr "Використовувати власну URL-адресу мови:"
+
+#: widget.php:204
+msgid "Choose URL to use for all languages."
+msgstr "Оберіть URL-адресу для використання для всіх мов."
+
+#: widget.php:206
+msgid "Use custom URL for all languages. The URL will be modified for each language according to URL Modification Mode. Language tags are allowed, e.g. [:en]http://example.com/en/[:de]http://example.com/de/"
+msgstr "Використовувати власну URL-адресу для всіх мов. URL-адреса буде змінена для кожної мови відповідно до Режиму зміни URL-адреси. Дозволені мовні теги, наприклад: [:en]http://example.com/en/[:de]http://example.com/de/"
+
+#: widget.php:208
+msgid "Hide current language:"
+msgstr "Приховати поточну мову:"
+
+#: widget.php:212
+msgid "Do not display current language in the switcher."
+msgstr "Не відображати поточну мову в перемикачі."
+
+#: widget.php:216
+msgid "Use Custom Language Order:"
+msgstr "Використовувати власний порядок мов:"
+
+#: widget.php:220
+msgid "Choose language order for display."
+msgstr "Оберіть порядок мов для відображення."
+
+#: widget.php:222
+msgid "Use custom language order. Comma-separated list of language codes, e.g. en,de,fr"
+msgstr "Використовувати власний порядок мов. Список кодів мов, розділений комами, наприклад: en,de,fr"
+
+#: widget.php:224
+msgid "Additional CSS Classes for the widget itself:"
+msgstr "Додаткові класи CSS для самого віджета:"
+
+#: widget.php:228
+msgid "Enter additional CSS classes for the widget itself."
+msgstr "Введіть додаткові класи CSS для самого віджета."
