@@ -221,7 +221,7 @@ function qtranxf_parse_language_info( array &$url_info, bool $link = false ) {
         } else if ( isset( $_POST['lang'] ) && is_string( $_POST['lang'] ) ) {
             $query_lang = qtranxf_resolveLangCase( $_POST['lang'], $doredirect );
         }
-    } elseif ( ! empty( $url_info['query'] ) && preg_match( '/(^|&|&amp;|&#038;|\?)lang=($lang_code)/i', $url_info['query'], $match ) ) {
+    } elseif ( ! empty( $url_info['query'] ) && preg_match( "/(^|&|&amp;|&#038;|\?)lang=($lang_code)/i", $url_info['query'], $match ) ) {
         // checked for query mode, see https://github.com/qTranslate-Team/qtranslate-x/issues/288
         $query_lang = qtranxf_resolveLangCase( $match[2], $doredirect );
     }
