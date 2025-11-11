@@ -493,7 +493,7 @@ function qtranxf_db_clean_terms(): string {
         return __( 'Nothing has been altered.', 'qtranslate' );
     }
     qtranxf_term_admin_remove_filters();
-    $default_langauge      = $q_config['default_language'];
+    $default_language      = $q_config['default_language'];
     $term_name_cur         = $q_config['term_name'];
     $q_config['term_name'] = array();//to exclude any possible alternations of term names via filters.
     $term_name             = array();
@@ -518,14 +518,14 @@ function qtranxf_db_clean_terms(): string {
         }
         if ( qtranxf_isMultilingual( $nm ) ) {
             $ts = qtranxf_split( $nm );
-            if ( empty( $ts[ $default_langauge ] ) ) {
+            if ( empty( $ts[ $default_language ] ) ) {
                 foreach ( $q_config['enabled_languages'] as $lng ) {
                     $v          = trim( $ts[ $lng ] );
                     $ts[ $lng ] = $v;
                     if ( empty( $v ) ) {
                         continue;
                     }
-                    $ts[ $default_langauge ] = $v;
+                    $ts[ $default_language ] = $v;
                     break;
                 }
             }
@@ -544,14 +544,14 @@ function qtranxf_db_clean_terms(): string {
             $val        = stripcslashes( $val );
             $ts[ $lng ] = $val;
         }
-        $ok = ! empty( $ts[ $default_langauge ] );
+        $ok = ! empty( $ts[ $default_language ] );
         if ( ! $ok ) {
-            $ts[ $default_langauge ] = $nm_cur;
+            $ts[ $default_language ] = $nm_cur;
         } else {
-            $ok = ( $ts[ $default_langauge ] == $nm_cur );
+            $ok = ( $ts[ $default_language ] == $nm_cur );
         }
         if ( ! $ok ) {
-            $nm = $ts[ $default_langauge ];
+            $nm = $ts[ $default_language ];
             wp_update_term( $id, $taxonomy, array( 'name' => $nm ) );
         }
         $term_name[ $nm ] = $ts;
