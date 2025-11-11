@@ -39,7 +39,7 @@ function qtranxf_collect_translations_deep( $qfields, $sep ) {
  * @param array|string $request an ML field of $_REQUEST.
  * @param string $edit_lang language of the active LSB at the time of sending the request.
  */
-function qtranxf_collect_translations( &$qfields, &$request, $edit_lang ): void {
+function qtranxf_collect_translations( array &$qfields, &$request, string $edit_lang ): void {
     if ( isset( $qfields['qtranslate-separator'] ) ) {
         $sep = $qfields['qtranslate-separator'];
         unset( $qfields['qtranslate-separator'] );
@@ -623,18 +623,17 @@ function qtranxf_nav_menu_metabox( $object ) {
     $elems = array( '#qtransLangSwLM#' => __( 'Language Menu', 'qtranslate' ) );
 
     class qtranxcLangSwItems {
-        public $db_id = 0;
-        public $object = 'qtranslangsw';
-        public $object_id;
-        public $menu_item_parent = 0;
-        public $type = 'custom';
-        public $title;// = 'Language';
-        public $label;
-        public $url;
-        public $target = '';
-        public $attr_title = '';
-        public $classes = array();
-        public $xfn = '';
+        public string $object = 'qtranslangsw';
+        public string $object_id;
+        public int $menu_item_parent = 0;
+        public string $type = 'custom';
+        public string $title;
+        public string $label;
+        public string $url;
+        public string $target = '';
+        public string $attr_title = '';
+        public array $classes = array();
+        public string $xfn = '';
     }
 
     $elems_obj = array();
@@ -780,7 +779,7 @@ function qtranxf_admin_notices_config() {
  * Encode front end language on home_url, since, on admin side, it is mostly in use to create links to a preview pages.
  * @since 3.4.5
  */
-function qtranxf_admin_home_url( $url, $path, $orig_scheme, $blog_id ) {
+function qtranxf_admin_home_url( $url, $path, $orig_scheme, $blog_id ): string {
     global $q_config;
 
     // TODO clarify why don't we use QTX_COOKIE_NAME_ADMIN instead?

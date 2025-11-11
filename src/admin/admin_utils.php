@@ -220,7 +220,7 @@ function qtranxf_language_column_header( array $columns ): array {
     return array_merge( $new_columns, $columns );
 }
 
-function qtranxf_language_column( string $column ) {
+function qtranxf_language_column( string $column ): string {
     global $q_config, $post;
     if ( $column == 'language' ) {
         $missing_languages   = null;
@@ -345,7 +345,7 @@ function qtranxf_del_conf_filters() {
  * Get the currently selected admin color scheme (to be used for generated CSS)
  * @return array
  */
-function qtranxf_get_user_admin_color() {
+function qtranxf_get_user_admin_color(): array {
     global $_wp_admin_css_colors;
     $user_id          = get_current_user_id();
     $user_admin_color = get_user_meta( $user_id, 'admin_color', true );
