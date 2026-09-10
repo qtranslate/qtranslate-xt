@@ -117,13 +117,30 @@ class QTX_Module_Acf_Admin {
         wp_enqueue_style( 'qtranslate-acf', plugins_url( 'css/modules/acf.css', QTRANSLATE_FILE ),
             array( 'acf-input' ), QTX_VERSION );
 
+        // qtranslate-admin-main is registered from page config in admin_footer.
+        // WordPress 6.9.1+ warns (and may skip the script) if that handle is
+        // missing when header scripts are resolved, so enqueue ACF JS after it.
+        if ( ! has_action( 'admin_footer', array( $this, 'enqueue_scripts_after_qtranslate' ) ) ) {
+            add_action( 'admin_footer', array( $this, 'enqueue_scripts_after_qtranslate' ), 1000 );
+            add_action( 'wp_footer', array( $this, 'enqueue_scripts_after_qtranslate' ), 1000 );
+        }
+    }
+
+    /**
+     * Enqueue ACF JS after qTranslate has registered its admin core script.
+     */
+    public function enqueue_scripts_after_qtranslate(): void {
+        if ( ! wp_script_is( 'qtranslate-admin-main', 'registered' ) || wp_script_is( 'qtranslate-acf', 'enqueued' ) ) {
+            return;
+        }
+
         wp_enqueue_script( 'qtranslate-acf', plugins_url( 'dist/modules/acf.js', QTRANSLATE_FILE ), array(
             'acf-input',
             'jquery',
             'underscore',
             'qtranslate-admin-main',
             'wp-hooks',
-        ), QTX_VERSION );
+        ), QTX_VERSION, true );
 
         wp_localize_script( 'qtranslate-acf', 'qTranslateModuleAcf', get_option( QTX_OPTIONS_MODULE_ACF, self::default_options() ) );
     }
