@@ -1,3 +1,10 @@
+### 3.16.2
+* Fix `str_starts_with` in admin notices (#1497)
+* Fix plugin activation with i18n config (#1483)
+* Fix resolve language for Ajax/links requests in query mode (#1482)
+* Fix error of the link formatting in admin notes (#1475)
+* Add `uk` (Ukrainian) PO/MO (#1475)
+
 ### 3.16.1
 * Fix `array_any` not supported in PHP 7.4 (#1473)
 
