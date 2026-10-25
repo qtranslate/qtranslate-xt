@@ -57,7 +57,7 @@ function qtranxf_update_admin_notice( string $id, bool $set ) {
 function qtranxf_unset_admin_notices_deprecated(): void {
     $messages = get_option( 'qtranslate_admin_notices', array() );
     foreach ( $messages as $id => $message ) {
-        if ( str_starts_with( $id, "deprecated" ) ) {
+        if ( strpos( $id, "deprecated" ) === 0 ) {  # TODO: replace with `str_starts_with` (PHP8)
             unset( $messages[ $id ] );
         }
     }
