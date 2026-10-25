@@ -97,7 +97,7 @@ function qtranxf_load_config_files( array $json_files ): array {
         if ( file_exists( $config_file ) ) {
             continue;
         }
-        $full_path = null;
+        $full_path = '';
         if ( $config_file[0] == '.' && $config_file[1] == '/' ) {
             if ( ! $qtransx_dir ) {
                 $qtransx_dir = QTRANSLATE_DIR;
