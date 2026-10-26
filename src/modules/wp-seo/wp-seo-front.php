@@ -3,13 +3,43 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+/**
+ * Translate Yoast replacement variables before they are inserted
+ * into multilingual SEO templates.
+ *
+ * Prevents nested qTranslate language blocks such as:
+ * [:en]Text [:en]Title[:de]Titel[:][:]
+ *
+ * @param array $replacements Replacement variable values.
+ *
+ * @return array
+ */
+function qtranxf_wpseo_translate_replacements( $replacements ) {
+    if ( ! is_array( $replacements ) ) {
+        return $replacements;
+    }
+
+    foreach ( $replacements as $variable => $value ) {
+        if ( ! is_string( $value ) || $value === '' ) {
+            continue;
+        }
+
+        $replacements[ $variable ] =
+            qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage( $value );
+    }
+
+    return $replacements;
+}
+
 function qtranxf_wpseo_add_filters_front(): void {
+    // Prevents nested qTranslate language blocks
+    add_filter( 'wpseo_replacements', 'qtranxf_wpseo_translate_replacements', 20, 1 );
+
     // Use indexation on "publish/update" events to save all languages data in indexable tables.
     // If indexation is allowed on the frontend then indexable table saves data of the first visited page
     // and other languages are missed.
     add_filter( 'Yoast\WP\SEO\should_index_indexables', '__return_false' );
     add_filter( 'wpseo_should_save_indexable', '__return_false' );
-    add_filter( 'wpseo_indexing_data', '__return_false' );
 
     // TODO: rewrite Yoast hooks, second argument is Indexable_Presentation, not a string giving the requested URL.
     add_filter( 'wpseo_canonical', 'qtranxf_checkCanonical', 10, 2 );
