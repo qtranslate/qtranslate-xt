@@ -21,18 +21,18 @@ function qtranxf_term_name_encoded( string $name ): string {
 
 function qtranxf_get_term_joined( $obj, ?string $taxonomy = null ) {
     global $q_config;
+
     if ( is_object( $obj ) ) {
-        // WP_Term object conversion
         if ( ! isset( $obj->i18n_config ) ) {
             qtranxf_term_set_i18n_config( $obj );
-            if ( isset( $obj->i18n_config['name']['ts'] ) ) {
-                $ml        = qtranxf_join_b( $obj->i18n_config['name']['ts'] );
-                $obj->name = $obj->i18n_config['name']['ml'] = $ml;
-            }
+        }
+
+        if ( isset( $obj->i18n_config['name']['ts'] ) ) {
+            $ml = qtranxf_join_b( $obj->i18n_config['name']['ts'] );
+            $obj->name = $obj->i18n_config['name']['ml'] = $ml;
         }
     } elseif ( isset( $q_config['term_name'][ $obj ] ) ) {
         $obj = qtranxf_join_b( $q_config['term_name'][ $obj ] );
-        // TODO dead code? we probably do not need it
     }
 
     return $obj;
