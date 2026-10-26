@@ -33,24 +33,28 @@ function qtranxf_term_set_i18n_config( $term ) {
  */
 function qtranxf_term_use( string $lang, $obj, $taxonomy ) {
     global $q_config;
+
     if ( is_array( $obj ) ) {
-        // handle arrays recursively
+        // Handle arrays recursively.
         foreach ( $obj as $key => $term ) {
             $obj[ $key ] = qtranxf_term_use( $lang, $term, $taxonomy );
         }
 
         return $obj;
     }
+
     if ( is_object( $obj ) ) {
-        // object conversion
         if ( ! isset( $obj->i18n_config ) ) {
             qtranxf_term_set_i18n_config( $obj );
-            if ( isset( $obj->i18n_config['name']['ts'][ $lang ] ) ) {
-                $obj->name = $obj->i18n_config['name']['ts'][ $lang ];
-            }
-            if ( isset( $obj->i18n_config['description']['ts'][ $lang ] ) ) {
-                $obj->description = $obj->i18n_config['description']['ts'][ $lang ];
-            }
+        }
+
+        if ( isset( $obj->i18n_config['name']['ts'][ $lang ] ) ) {
+            $obj->name = $obj->i18n_config['name']['ts'][ $lang ];
+        }
+
+        if ( isset( $obj->i18n_config['description']['ts'][ $lang ] ) ) {
+            $obj->description =
+                $obj->i18n_config['description']['ts'][ $lang ];
         }
     } elseif ( isset( $q_config['term_name'][ $obj ][ $lang ] ) ) {
         $obj = $q_config['term_name'][ $obj ][ $lang ];

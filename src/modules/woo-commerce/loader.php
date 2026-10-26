@@ -7,6 +7,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function qtranxf_wc_init_language( array $url_info ): void {
+    /*
+     * WooCommerce caches the filtered result of
+     * `woocommerce_attribute_taxonomies`. Since qTranslate-XT translates
+     * this result, a persistent object cache would store the language of
+     * the first request for all subsequent requests.
+     */
+    if ( function_exists( 'wp_cache_add_non_persistent_groups' ) ) {
+        wp_cache_add_non_persistent_groups( array( 'woocommerce-attributes' ) );
+    }
+
     if ( $url_info['doing_front_end'] ) {
         require_once __DIR__ . '/front.php';
     } else {
