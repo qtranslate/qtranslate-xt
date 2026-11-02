@@ -53,8 +53,7 @@ function qtranxf_term_use( string $lang, $obj, $taxonomy ) {
         }
 
         if ( isset( $obj->i18n_config['description']['ts'][ $lang ] ) ) {
-            $obj->description =
-                $obj->i18n_config['description']['ts'][ $lang ];
+            $obj->description = $obj->i18n_config['description']['ts'][ $lang ];
         }
     } elseif ( isset( $q_config['term_name'][ $obj ][ $lang ] ) ) {
         $obj = $q_config['term_name'][ $obj ][ $lang ];
