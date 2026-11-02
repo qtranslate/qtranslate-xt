@@ -3,10 +3,27 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+/**
+ * Translate product terms after WooCommerce retrieves them from cache.
+ *
+ * WooCommerce product-term cache keys do not include the current language,
+ * so a persistent object cache may return terms translated during an
+ * earlier request in another language.
+ *
+ * @param array $terms Product terms.
+ *
+ * @return array
+ */
+function qtranxf_wc_translate_product_terms( $terms ) {
+    return qtranxf_useTermLib( $terms );
+}
+
 function qtranxf_wc_add_filters_front(): void {
 
     remove_filter( 'get_post_metadata', 'qtranxf_filter_postmeta', 5 );
     add_filter( 'get_post_metadata', 'qtranxf_wc_filter_postmeta', 5, 4 );
+
+    add_filter( 'woocommerce_get_product_terms', 'qtranxf_wc_translate_product_terms', 20, 1 );
 
     $front_hooks = array(
         'woocommerce_attribute'                       => 20,
