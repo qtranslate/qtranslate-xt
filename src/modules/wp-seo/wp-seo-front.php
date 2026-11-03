@@ -4,8 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Translate Yoast replacement variables before they are inserted
- * into multilingual SEO templates.
+ * Translate Yoast replacement variables before they are inserted into multilingual SEO templates.
  *
  * Prevents nested qTranslate language blocks such as:
  * [:en]Text [:en]Title[:de]Titel[:][:]
@@ -24,8 +23,7 @@ function qtranxf_wpseo_translate_replacements( $replacements ) {
             continue;
         }
 
-        $replacements[ $variable ] =
-            qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage( $value );
+        $replacements[ $variable ] = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage( $value );
     }
 
     return $replacements;
