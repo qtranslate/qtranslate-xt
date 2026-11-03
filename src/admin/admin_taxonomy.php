@@ -28,7 +28,7 @@ function qtranxf_get_term_joined( $obj, ?string $taxonomy = null ) {
         }
 
         if ( isset( $obj->i18n_config['name']['ts'] ) ) {
-            $ml = qtranxf_join_b( $obj->i18n_config['name']['ts'] );
+            $ml        = qtranxf_join_b( $obj->i18n_config['name']['ts'] );
             $obj->name = $obj->i18n_config['name']['ml'] = $ml;
         }
     } elseif ( isset( $q_config['term_name'][ $obj ] ) ) {
