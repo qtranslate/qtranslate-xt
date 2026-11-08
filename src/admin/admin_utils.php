@@ -350,19 +350,18 @@ function qtranxf_get_user_admin_color(): array {
     $user_id          = get_current_user_id();
     $user_admin_color = get_user_meta( $user_id, 'admin_color', true );
 
-    if (
-        empty( $user_admin_color ) ||
-        ! isset( $_wp_admin_css_colors[ $user_admin_color ] ) ||
-        empty( $_wp_admin_css_colors[ $user_admin_color ]->colors ) ||
-        ! is_array( $_wp_admin_css_colors[ $user_admin_color ]->colors )
-    ) { // AJAX calls or users without a valid admin color scheme.
+    if ( empty( $user_admin_color ) ||
+         ! isset( $_wp_admin_css_colors[ $user_admin_color ] ) ||
+         empty( $_wp_admin_css_colors[ $user_admin_color ]->colors ) ||
+         ! is_array( $_wp_admin_css_colors[ $user_admin_color ]->colors )
+    ) {
+        // AJAX calls or users without a valid admin color scheme.
         $user_admin_color = 'fresh';
     }
 
-    if (
-        isset( $_wp_admin_css_colors[ $user_admin_color ] ) &&
-        isset( $_wp_admin_css_colors[ $user_admin_color ]->colors ) &&
-        is_array( $_wp_admin_css_colors[ $user_admin_color ]->colors )
+    if ( isset( $_wp_admin_css_colors[ $user_admin_color ] ) &&
+         isset( $_wp_admin_css_colors[ $user_admin_color ]->colors ) &&
+         is_array( $_wp_admin_css_colors[ $user_admin_color ]->colors )
     ) {
         return $_wp_admin_css_colors[ $user_admin_color ]->colors;
     }
