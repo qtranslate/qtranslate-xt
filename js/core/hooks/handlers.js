@@ -885,7 +885,7 @@ export const switchActiveLanguage = function (lang) {
             return false; // cancel button switch, if one of _deprecatedSwitch.saveFuncs returned 'false'
         // TODO: substitute cancel logic with a lock design
 
-        const tabSwitches = _tabSwitchElements[_activeLanguage];
+        const tabSwitches = _tabSwitchElements[_activeLanguage] || [];
         for (let i = 0; i < tabSwitches.length; ++i) {
             tabSwitches[i].classList.remove(config.styles.lsb.activeClass);
             $(tabSwitches[i]).find('.button').removeClass('active');
@@ -897,7 +897,7 @@ export const switchActiveLanguage = function (lang) {
     $('input[name="qtranslate-edit-language"]').val(lang);
 
     {
-        const tabSwitches = _tabSwitchElements[_activeLanguage];
+        const tabSwitches = _tabSwitchElements[_activeLanguage] || [];
         for (let i = 0; i < tabSwitches.length; ++i) {
             tabSwitches[i].classList.add(config.styles.lsb.activeClass);
             $(tabSwitches[i]).find('.button').addClass('active');
